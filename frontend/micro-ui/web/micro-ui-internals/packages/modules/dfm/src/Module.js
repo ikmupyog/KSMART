@@ -2,6 +2,10 @@ import { Header, CitizenHomeCard, CaseIcon, HomeLink } from "@egovernments/digit
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
+import DFMApplicationDetails from "../src/pageComponents/DFMApplicationDetails";
+import DFMAddressDetails from "../src/pageComponents/DFMAddressDetails";
+import DFMServiceDetails from "../src/pageComponents/DFMServiceDetails";
+import DFMDocumentDetails from "../src/pageComponents/DFMDocumentDetails";
 // import TradeLicense from "../src/pageComponents/TradeLicense";
 // import TLSelectGeolocation from "../src/pageComponents/TLSelectGeolocation";
 // import TLSelectAddress from "./pageComponents/TLSelectAddress";
@@ -54,6 +58,7 @@ import Response from "./pages/Response";
 // import RenewTrade from "./pages/citizen/Renewal/renewTrade";
 // import SearchTradeComponent from "./pages/citizen/SearchTrade";
 
+
 import CitizenApp from "./pages/citizen";
 import EmployeeApp from "./pages/employee";
 
@@ -83,26 +88,30 @@ export const DFMLinks = ({ matchPath, userType }) => {
 
   const links = [
     {
-      link: `${matchPath}/tradelicence/new-application`,
-      i18nKey: t("DFM"),
+      link: `${matchPath}/submenu`,
+      i18nKey: t("Apply for new Service"), 
     },
     {
-      link: `${matchPath}/tradelicence/renewal-list`,
-      i18nKey: t("TL_RENEWAL_HEADER"),
+      link: `${matchPath}/my-application`,
+      i18nKey: t("My Application"),
     },
-    {
-      link: `${matchPath}/tradelicence/my-application`,
-      i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
-    },
+    // {
+    //   link: `${matchPath}/tradelicence/my-application`,
+    //   i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
+    // },
   ];
 
   return <CitizenHomeCard header={t("Digital File Management")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
-};
+}; 
 
 const componentsToRegister = {
   DFMModule,
   DFMLinks,
   DFMCard,
+  DFMApplicationDetails,
+  DFMAddressDetails,
+  DFMServiceDetails,
+  DFMDocumentDetails,
   // SelectLand,
   // SelectBuilding,
   // SelectBusinessCategory,
@@ -111,6 +120,7 @@ const componentsToRegister = {
   // SelectTLWater,
   // TradeLicense,
   // SelectTradeName,
+  
   // SelectStructureType,
   // SelectVehicleType,
   // SelectBuildingType,

@@ -1,5 +1,7 @@
 package org.egov.filemgmnt.web.models;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -14,11 +16,14 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.TestConfig;
 import org.egov.filemgmnt.util.FMUtils;
+import org.egov.tracer.model.CustomException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
@@ -58,25 +63,53 @@ class ApplicantPersonalRequestTests {
         log.info(" *** APPLICANT PERSONAL JSON \n {}", FMUtils.toJson(request));
     }
 
+    @Test
+    void validateSearchParams() {
+        ApplicantPersonal applicant = ApplicantPersonal.builder()
+                                                       .id(UUID.randomUUID()
+                                                               .toString())
+                                                       .firstName("FirstName")
+                                                       .lastName("LastName")
+                                                       .mobileNo("9446903827")
+                                                       .tenantId("kl")
+                                                       .aadhaarNo("123456789123")
+                                                       .build();
+
+        List<String> allowedParams = Collections.singletonList("firstName");
+        BeanWrapper bw = new BeanWrapperImpl(applicant);
+
+        log.info("*** firstName: {}", bw.getPropertyValue("firstName"));
+        log.info("*** mobileNo: {}", bw.getPropertyValue("mobileNo"));
+
+        FMUtils.validateSearchParam(bw, "firstName", allowedParams);
+
+        Assertions.assertThatThrownBy(() -> {
+            FMUtils.validateSearchParam(bw, "mobileNo", allowedParams);
+        })
+                  .isInstanceOf(CustomException.class)
+                  .hasMessageContaining("Search on mobileNo is not allowed");
+    }
+
     @ParameterizedTest
     @MethodSource("validateArguments")
     void validateApplicantPersonalRequest(Validator validator, ApplicantPersonalRequest request) {
-        request.addApplicantPersonal(ApplicantPersonal.builder()
-                                                      .id(UUID.randomUUID()
-                                                              .toString())
-                                                      .firstName("FirstName<script></script>")
-                                                      .lastName("LastName")
-                                                      .mobileNo("9446903827")
-                                                      .tenantId("kl")
-                                                      .aadhaarNo("123456789123")
-                                                      .email("demo@gmail.com")
-//                                                      .serviceDetails(new ServiceDetails())
-//                                                      .applicantAddress(new ApplicantAddress())
-//                                                      .applicantServiceDocuments(new ApplicantServiceDocuments())
-//                                                      .applicantDocuments(new ApplicantDocuments())
-//                                                      .fileDetail(new FileDetail())
-//                                                      .auditDetails(new AuditDetails())
-                                                      .build());
+        ApplicantPersonal applicant = ApplicantPersonal.builder()
+                                                       .id(UUID.randomUUID()
+                                                               .toString())
+                                                       .firstName("FirstName")
+                                                       .lastName("LastName")
+                                                       .mobileNo("9446903827")
+                                                       .tenantId("kl")
+                                                       .aadhaarNo("123456789123")
+                                                       .email("demo@gmail.com")
+//            .serviceDetails(new ServiceDetails())
+//            .applicantAddress(new ApplicantAddress())
+//            .applicantServiceDocuments(new ApplicantServiceDocuments())
+//            .applicantDocuments(new ApplicantDocuments())
+//            .fileDetail(new FileDetail())
+//            .auditDetails(new AuditDetails())
+                                                       .build();
+        request.addApplicantPersonal(applicant);
 
         Set<ConstraintViolation<ApplicantPersonalRequest>> constraintViolations = validator.validate(request);
         constraintViolations.forEach(System.out::println);

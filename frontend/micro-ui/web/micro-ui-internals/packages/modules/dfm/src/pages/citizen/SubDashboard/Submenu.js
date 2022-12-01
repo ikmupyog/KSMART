@@ -7,38 +7,40 @@ import { useTranslation } from 'react-i18next';
 const Submenu = ({ path }) => {
     const { t } = useTranslation();
     const state = useSelector(state => state);
-    console.log(state);
+    // console.log(state);
     let modules = state.common.modules
     let stateInfo = state.common.stateInfo
-  console.log(path,modules);
+  // console.log(path,modules);
   const cardMenuData = [
     {
       title: "Finance",
       subTitle: "Inbox",},
 
     {
-      title: "Trade License",
+      title: "Create",
       subTitle: "Inbox",
-      link: `${path}/form-ui`,
+      link: `${path}/sub-type`,
+      // link: `${path}/create`,
+      // link: `${path}/form-ui`,
     },
     {
-      title: "Trade License-1",
-      subTitle: "Inbox",
-    },
-    {
-      title: "Trade License-2",
+      title: "BPA",
       subTitle: "Inbox",
     },
     {
-      title: "Trade License-3",
+      title: "PGR",
       subTitle: "Inbox",
     },
     {
-      title: "Trade License-4",
+      title: "Pension",
       subTitle: "Inbox",
     },
     {
-      title: "Trade License-5",
+      title: "License-1",
+      subTitle: "Inbox",
+    },
+    {
+      title: " License-2",
       subTitle: "Inbox",
     },
   ];

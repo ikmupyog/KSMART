@@ -48,21 +48,28 @@ const Home = ({
   });
 
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage }, index) => {
+    // console.log(code);
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
     return (
       <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
         <div className="moduleLinkHomePage">
           <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
           <BackButton className="moduleLinkHomePageBackButton" />
-          <h1>{t("MODULE_" + code.toUpperCase())}</h1>
+          {code === "DFM"? <h1>{t("file management".toUpperCase())}</h1>
+          : <h1>{t("MODULE_" + code.toUpperCase())}</h1>
+          }
+         
         </div>
-        {code === "DFM" ? (
+        <div className="moduleLinkHomePageModuleLinks">
+            <Links key={index} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
+          </div>
+        {/* {code === "DFM" ? (
           <Dashboard path={path} />
         ) : (
           <div className="moduleLinkHomePageModuleLinks">
             <Links key={index} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
           </div>
-        )}
+        )} */}
       </Route>
     );
   });

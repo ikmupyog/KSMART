@@ -102,6 +102,14 @@ const Urls = {
     update: "/tl-services/v1/_update",
     billingslab: "/tl-calculator/billingslab/_search",
   },
+  dfm: {
+    create: "/filemgmnt/v1/applicantpersonals/_create",
+    search: "/filemgmnt/v1/applicantpersonals/_search",
+    update: "/filemgmnt/v1/applicantpersonals/_update",
+    fetch_payment_details: "/billing-service/bill/v2/_fetchbill",
+    download_pdf: "/egov-pdf/download/TL/",
+    billingslab: "/tl-calculator/billingslab/_search",   
+  },
   receipts: {
     receipt_download: "/egov-pdf/download/PAYMENT/consolidatedreceipt",
     payments: "/collection-services/payments",
