@@ -64,4 +64,16 @@ public class Institution {
   @SafeHtml
   @JsonProperty("address")
   private String address;
+
+  @Size(max=64)
+  @SafeHtml
+  @JsonProperty("natureOfInstitution")
+  private String natureOfInstitution;
+
+  @Size(max=64)
+  @SafeHtml
+  @JsonProperty("email")
+  private String email;
+
+
 }

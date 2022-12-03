@@ -1,6 +1,8 @@
 package org.egov.tl.validator;
 
 import com.jayway.jsonpath.JsonPath;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.extern.slf4j.Slf4j;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.mdms.model.MdmsCriteriaReq;
@@ -47,14 +49,14 @@ public class MDMSValidator {
         Map<String, List<String>> masterData = getAttributeValues(mdmsData);
 
         String[] masterArray = { TLConstants.ACCESSORIES_CATEGORY, TLConstants.TRADE_TYPE,
-                TLConstants.OWNERSHIP_CATEGORY, TLConstants.STRUCTURE_TYPE, TLConstants.STRUCTURE_PLACE_TYPE };
+                TLConstants.OWNERSHIP_CATEGORY, TLConstants.STRUCTURE_TYPE, TLConstants.STRUCTURE_PLACE_TYPE,
+                TLConstants.NATURE_INSTITUTION };
         validateIfMasterPresent(masterArray, masterData);
 
         Map<String, String> tradeTypeUomMap = getTradeTypeUomMap(mdmsData);
         Map<String, String> accessoryeUomMap = getAccessoryUomMap(mdmsData);
 
         licenseRequest.getLicenses().forEach(license -> {
-
             String businessService = license.getBusinessService();
             if (businessService == null)
                 businessService = businessService_TL;
@@ -127,6 +129,13 @@ public class MDMSValidator {
                             }
                         });
                     }
+
+                    if (!masterData.get(TLConstants.NATURE_INSTITUTION)
+                            .contains(license
+                                    .getTradeLicenseDetail().getInstitution().getNatureOfInstitution()))
+                        errorMap.put("INVALID NATURE OF INSTITUTION", "The nature of institution '"
+                                + license.getTradeLicenseDetail().getInstitution().getNatureOfInstitution()
+                                + "' does not exists");
                     break;
 
                 case businessService_BPA:
@@ -179,7 +188,6 @@ public class MDMSValidator {
                 TLConstants.COMMON_MASTER_JSONPATH_CODE);
         final Map<String, List<String>> mdmsResMap = new HashMap<>();
         modulepaths.forEach(modulepath -> {
-            System.out.println();
             try {
                 mdmsResMap.putAll(JsonPath.read(mdmsData, modulepath));
             } catch (Exception e) {
