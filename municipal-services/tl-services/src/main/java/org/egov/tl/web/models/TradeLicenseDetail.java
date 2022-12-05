@@ -170,6 +170,36 @@ public class TradeLicenseDetail {
   @JsonProperty("enterpriseType")
   private String enterpriseType;
 
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("licenseUnitType")
+  private String licenseUnitType;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("licenseUnitId")
+  private String licenseUnitId;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("structurePlaceSubtype")
+  private String structurePlaceSubtype;
+
+  @Size(max = 300)
+  @SafeHtml
+  @JsonProperty("customDetailType")
+  private String customDetailType = null;
+
+  @Size(max = 1024)
+  @SafeHtml
+  @JsonProperty("businessActivityDesc")
+  private String businessActivityDesc = null;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("licenseeType")
+  private String licenseeType;
+
   @JsonProperty("auditDetails")
   private AuditDetails auditDetails = null;
 

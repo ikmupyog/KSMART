@@ -23,7 +23,7 @@ import javax.validation.constraints.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OwnerInfo extends User  {
+public class OwnerInfo extends User {
 
         @JsonProperty("isPrimaryOwner")
         private Boolean isPrimaryOwner;
@@ -31,12 +31,12 @@ public class OwnerInfo extends User  {
         @JsonProperty("ownerShipPercentage")
         private Double ownerShipPercentage;
 
-        @Size(max=64)
+        @Size(max = 64)
         @SafeHtml
         @JsonProperty("ownerType")
         private String ownerType;
 
-        @Size(max=64)
+        @Size(max = 64)
         @SafeHtml
         @JsonProperty("institutionId")
         private String institutionId;
@@ -79,45 +79,60 @@ public class OwnerInfo extends User  {
         @JsonProperty("relationship")
         private RelationshipEnum relationship;
 
+        @Size(max = 150)
+        @SafeHtml
+        @JsonProperty("consentAgreementPlace")
+        private String consentAgreementPlace;
 
+        @JsonProperty("consentAgreementDate")
+        private Long consentAgreementDate;
+
+        @JsonProperty("consentAgreementEndDate")
+        private Long consentAgreementEndDate;
 
         @Builder
         public OwnerInfo(Long id, String uuid, String userName, String password, String salutation, String name,
-                         String gender, String mobileNumber, String emailId, String altContactNumber,
-                         String pan, String aadhaarNumber, String permanentAddress, String permanentCity,
-                         String permanentPincode, String correspondenceCity, String correspondencePincode,
-                         String correspondenceAddress, Boolean active, Long dob, Long pwdExpiryDate,
-                         String locale, String type, String signature, Boolean accountLocked,
-                         List<Role> roles, String fatherOrHusbandName, String bloodGroup,
-                         String identificationMark, String photo, String createdBy, Long createdDate,
-                         String lastModifiedBy, Long lastModifiedDate, String otpReference, String tenantId,
-                         Boolean isPrimaryOwner, Double ownerShipPercentage, String ownerType,
-                         String institutionId,List<Document> documents,RelationshipEnum relationship,
-                         Boolean userActive) {
-                super(id,uuid, userName, password, salutation, name, gender, mobileNumber, emailId, altContactNumber, pan, aadhaarNumber, permanentAddress, permanentCity, permanentPincode, correspondenceCity, correspondencePincode, correspondenceAddress, active, dob, pwdExpiryDate, locale, type, signature, accountLocked, roles, fatherOrHusbandName, bloodGroup, identificationMark, photo, createdBy, createdDate, lastModifiedBy, lastModifiedDate, otpReference, tenantId);
+                        String gender, String mobileNumber, String emailId, String altContactNumber,
+                        String pan, String aadhaarNumber, String permanentAddress, String permanentCity,
+                        String permanentPincode, String correspondenceCity, String correspondencePincode,
+                        String correspondenceAddress, Boolean active, Long dob, Long pwdExpiryDate,
+                        String locale, String type, String signature, Boolean accountLocked,
+                        List<Role> roles, String fatherOrHusbandName, String bloodGroup,
+                        String identificationMark, String photo, String createdBy, Long createdDate,
+                        String lastModifiedBy, Long lastModifiedDate, String otpReference, String tenantId,
+                        Boolean isPrimaryOwner, Double ownerShipPercentage, String ownerType,
+                        String institutionId, List<Document> documents, RelationshipEnum relationship,
+                        Boolean userActive) {
+                super(id, uuid, userName, password, salutation, name, gender, mobileNumber, emailId, altContactNumber,
+                                pan, aadhaarNumber, permanentAddress, permanentCity, permanentPincode,
+                                correspondenceCity, correspondencePincode, correspondenceAddress, active, dob,
+                                pwdExpiryDate, locale, type, signature, accountLocked, roles, fatherOrHusbandName,
+                                bloodGroup, identificationMark, photo, createdBy, createdDate, lastModifiedBy,
+                                lastModifiedDate, otpReference, tenantId);
                 this.isPrimaryOwner = isPrimaryOwner;
                 this.ownerShipPercentage = ownerShipPercentage;
                 this.ownerType = ownerType;
                 this.userActive = userActive;
-                this.relationship=relationship;
-                this.institutionId=institutionId;
-                this.documents=documents;
+                this.relationship = relationship;
+                this.institutionId = institutionId;
+                this.documents = documents;
         }
 
         public OwnerInfo addDocumentsItem(Document documentsItem) {
                 if (this.documents == null) {
                         this.documents = new ArrayList<>();
                 }
-                if(!this.documents.contains(documentsItem))
+                if (!this.documents.contains(documentsItem))
                         this.documents.add(documentsItem);
                 return this;
         }
 
         /**
          * Populates Owner fields from the given User object
+         * 
          * @param user User object obtained from user service
          */
-        public void addUserDetail(User user){
+        public void addUserDetail(User user) {
                 this.setId(user.getId());
                 this.setLastModifiedDate(user.getLastModifiedDate());
                 this.setLastModifiedBy(user.getLastModifiedBy());
@@ -153,7 +168,7 @@ public class OwnerInfo extends User  {
                 this.setTenantId(user.getTenantId());
         }
 
-        public OwnerInfo(org.egov.common.contract.request.User user){
+        public OwnerInfo(org.egov.common.contract.request.User user) {
                 this.setTenantId(user.getTenantId());
                 this.setUserName(user.getUserName());
                 this.setId(user.getId());
@@ -165,7 +180,7 @@ public class OwnerInfo extends User  {
                 this.setUuid(user.getUuid());
         }
 
-        public void addCitizenDetail(User user){
+        public void addCitizenDetail(User user) {
                 this.setTenantId(user.getTenantId());
                 this.setUserName(user.getUserName());
                 this.setId(user.getId());
@@ -177,7 +192,7 @@ public class OwnerInfo extends User  {
                 this.setUuid(user.getUuid());
         }
 
-        private List<Role> addRoles(List<org.egov.common.contract.request.Role> Roles){
+        private List<Role> addRoles(List<org.egov.common.contract.request.Role> Roles) {
                 LinkedList<Role> addroles = new LinkedList<>();
                 Roles.forEach(role -> {
                         Role addrole = new Role();
@@ -191,9 +206,10 @@ public class OwnerInfo extends User  {
 
         /**
          * Populates Owner fields from the given User object
+         * 
          * @param user User object obtained from user service
          */
-        public void addUserWithoutAuditDetail(OwnerInfo user){
+        public void addUserWithoutAuditDetail(OwnerInfo user) {
                 this.setUuid(user.getUuid());
                 this.setId(user.getId());
                 this.setUserName(user.getUserName());
@@ -226,18 +242,20 @@ public class OwnerInfo extends User  {
                 this.setTenantId(user.getTenantId());
         }
 
-
         @Override
         public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-                if (!super.equals(o)) return false;
+                if (this == o)
+                        return true;
+                if (o == null || getClass() != o.getClass())
+                        return false;
+                if (!super.equals(o))
+                        return false;
 
                 User user = (User) o;
 
                 return Objects.equals(this.getUuid(), user.getUuid()) &&
-                        Objects.equals(this.getName(), user.getName()) &&
-                        Objects.equals(this.getMobileNumber(), user.getMobileNumber());
+                                Objects.equals(this.getName(), user.getName()) &&
+                                Objects.equals(this.getMobileNumber(), user.getMobileNumber());
         }
 
         @Override
@@ -246,4 +264,3 @@ public class OwnerInfo extends User  {
                 return super.hashCode();
         }
 }
-

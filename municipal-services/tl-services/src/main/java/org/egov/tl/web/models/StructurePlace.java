@@ -43,11 +43,6 @@ public class StructurePlace {
 
     @Size(max = 64)
     @SafeHtml
-    @JsonProperty("structurePlaceSubType")
-    private String structurePlaceSubType = null;
-
-    @Size(max = 64)
-    @SafeHtml
     @JsonProperty("blockNo")
     private String blockNo = null;
 
@@ -63,17 +58,8 @@ public class StructurePlace {
 
     @Size(max = 64)
     @SafeHtml
-    @JsonProperty("zonalcode")
-    private String zonalcode = null;
-
-    @Size(max = 64)
-    @SafeHtml
-    @JsonProperty("wardcode")
-    private String wardcode = null;
-
-    @Range(min = 0, max = 100)
-    @JsonProperty("wardNo")
-    private Integer wardNo = 0;
+    @JsonProperty("partitionNo")
+    private String partitionNo = null;
 
     @Range(min = 0, max = 100000)
     @JsonProperty("doorNo")
@@ -103,5 +89,8 @@ public class StructurePlace {
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails = null;
+
+    @JsonProperty("isResurveyed")
+    private Boolean isResurveyed;
 
 }

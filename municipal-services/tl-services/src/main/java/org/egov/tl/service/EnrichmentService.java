@@ -127,14 +127,16 @@ public class EnrichmentService {
                     });
             });
 
-            if (tradeLicense.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional())) {
-                tradeLicense.getTradeLicenseDetail().getInstitution().setId(UUID.randomUUID().toString());
-                tradeLicense.getTradeLicenseDetail().getInstitution().setActive(true);
-                tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
-                tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
-                    owner.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitution().getId());
-                });
-            }
+            // if
+            // (tradeLicense.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional()))
+            // {
+            tradeLicense.getTradeLicenseDetail().getInstitution().setId(UUID.randomUUID().toString());
+            tradeLicense.getTradeLicenseDetail().getInstitution().setActive(true);
+            tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
+            tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
+                owner.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitution().getId());
+            });
+            // }
 
             if (requestInfo.getUserInfo().getType().equalsIgnoreCase("CITIZEN"))
                 tradeLicense.setAccountId(requestInfo.getUserInfo().getUuid());
@@ -148,7 +150,8 @@ public class EnrichmentService {
             businessService = businessService_TL;
         switch (businessService) {
             case businessService_TL:
-                boundaryService.getAreaType(tradeLicenseRequest, config.getHierarchyTypeCode());
+                // boundaryService.getAreaType(tradeLicenseRequest,
+                // config.getHierarchyTypeCode());
                 break;
         }
     }

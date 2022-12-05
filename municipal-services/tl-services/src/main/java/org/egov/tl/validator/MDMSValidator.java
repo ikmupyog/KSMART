@@ -62,10 +62,11 @@ public class MDMSValidator {
                 businessService = businessService_TL;
             switch (businessService) {
                 case businessService_TL:
-                    if (!masterData.get(TLConstants.OWNERSHIP_CATEGORY)
-                            .contains(license.getTradeLicenseDetail().getSubOwnerShipCategory()))
-                        errorMap.put("INVALID OWNERSHIPCATEGORY", "The SubOwnerShipCategory '"
-                                + license.getTradeLicenseDetail().getSubOwnerShipCategory() + "' does not exists");
+                    // if (!masterData.get(TLConstants.OWNERSHIP_CATEGORY)
+                    // .contains(license.getTradeLicenseDetail().getSubOwnerShipCategory()))
+                    // errorMap.put("INVALID OWNERSHIPCATEGORY", "The SubOwnerShipCategory '"
+                    // + license.getTradeLicenseDetail().getSubOwnerShipCategory() + "' does not
+                    // exists");
 
                     // System.out.println("Placekkk" + masterData.get(TLConstants.STRUCTURE_TYPE));
                     // if (!masterData.get(TLConstants.STRUCTURE_TYPE)
@@ -75,12 +76,13 @@ public class MDMSValidator {
                     // System.out.println("Place" + masterData.get(TLConstants.STRUCTURE_PLACE_TYPE)
                     // + license.getTradeLicenseDetail().getStructureType());
 
-                    if (!masterData.get(TLConstants.STRUCTURE_PLACE_TYPE)
-                            .contains(license
-                                    .getTradeLicenseDetail().getStructurePlace().get(0).getStructurePlaceSubType()))
-                        errorMap.put("INVALID STRUCTUREPLACETYPE", "The structurePlaceType '"
-                                + license.getTradeLicenseDetail().getStructurePlace().get(0).getStructurePlaceSubType()
-                                + "' does not exists");
+                    // if (!masterData.get(TLConstants.STRUCTURE_PLACE_TYPE)
+                    // .contains(license
+                    // .getTradeLicenseDetail().getStructurePlace().get(0).getStructurePlaceSubType()))
+                    // errorMap.put("INVALID STRUCTUREPLACETYPE", "The structurePlaceType '"
+                    // +
+                    // license.getTradeLicenseDetail().getStructurePlace().get(0).getStructurePlaceSubType()
+                    // + "' does not exists");
 
                     license.getTradeLicenseDetail().getTradeUnits().forEach(unit -> {
                         if (!tradeTypeUomMap.containsKey(unit.getTradeType()))

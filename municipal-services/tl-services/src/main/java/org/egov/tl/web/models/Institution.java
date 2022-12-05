@@ -16,64 +16,61 @@ import javax.validation.constraints.Size;
 
 public class Institution {
 
-  @Size(max=64)
+  @Size(max = 64)
   @SafeHtml
   @JsonProperty("id")
   private String id;
 
-  @Size(max=256)
+  @Size(max = 256)
   @SafeHtml
   @JsonProperty("tenantId")
   private String tenantId;
 
-  @Size(max=64)
+  @Size(max = 64)
   @SafeHtml
   @JsonProperty("name")
   private String name;
 
-  @Size(max=64)
+  @Size(max = 64)
   @SafeHtml
   @JsonProperty("type")
   private String type;
 
-  @Size(max=64)
+  @Size(max = 64)
   @SafeHtml
   @JsonProperty("designation")
   private String designation;
 
   @JsonProperty("active")
-  private Boolean active = null;
+  private Boolean active;
 
-  @Size(max=256)
+  @Size(max = 256)
   @SafeHtml
   @JsonProperty("instituionName")
   private String instituionName;
 
-  @Size(max=64)
+  @Size(max = 64)
   @SafeHtml
   @JsonProperty("contactNo")
   private String contactNo;
 
-
-  @Size(max=64)
+  @Size(max = 64)
   @SafeHtml
   @JsonProperty("organisationRegistrationNo")
   private String organisationRegistrationNo;
 
-  @Size(max=512)
+  @Size(max = 512)
   @SafeHtml
   @JsonProperty("address")
   private String address;
 
-  @Size(max=64)
+  @Size(max = 64)
   @SafeHtml
   @JsonProperty("natureOfInstitution")
   private String natureOfInstitution;
 
-  @Size(max=64)
+  @Size(max = 64)
   @SafeHtml
   @JsonProperty("email")
   private String email;
-
-
 }

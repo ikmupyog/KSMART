@@ -393,6 +393,8 @@ public class TLConstants {
 
         public static final String ACTION_STATUS_MANUAL_EXPIRED = "MANUALEXPIRE_MANUALEXPIRED";
 
+        public static final String NATURE_INSTITUTION = "NatureOfInstitution";
+
         public TLConstants() {
         }
 
