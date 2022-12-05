@@ -6,3 +6,5 @@ index.lock
 /.sonarlint
 .checkstyle
 .pmd
+.xml
+.properties
