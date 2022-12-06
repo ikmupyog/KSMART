@@ -132,6 +132,7 @@ public class TradeUtil {
         tlMasterDetails.add(MasterDetail.builder().name(ACCESSORIES_CATEGORY).build());
         tlMasterDetails.add(MasterDetail.builder().name(REMINDER_PERIODS).build());
         tlMasterDetails.add(MasterDetail.builder().name(STRUCTURE_PLACE_TYPE).filter(filterCode).build());
+        tlMasterDetails.add(MasterDetail.builder().name(NATURE_INSTITUTION).filter(filterCode).build());
 
         ModuleDetail tlModuleDtls = ModuleDetail.builder().masterDetails(tlMasterDetails)
                 .moduleName(TRADE_LICENSE_MODULE).build();
