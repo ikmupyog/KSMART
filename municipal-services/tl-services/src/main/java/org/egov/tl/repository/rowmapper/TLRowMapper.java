@@ -115,6 +115,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .street(rs.getString("street"))
                     .tenantId(tenantId)
                     .type(rs.getString("type"))
+
                     .build();
 
             Institution institution = null;
@@ -187,22 +188,22 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
             tradeLicense.getTradeLicenseDetail().addTradeUnitsItem(tradeUnit);
         }
 
-        if (rs.getString("tl_acc_id") != null && rs.getBoolean("tl_acc_active")) {
-            Integer count = rs.getInt("count");
-            if (rs.wasNull()) {
-                count = null;
-            }
-            Accessory accessory = Accessory.builder()
-                    .accessoryCategory(rs.getString("accessoryCategory"))
-                    .uom(rs.getString("tl_acc_uom"))
-                    .id(rs.getString("tl_acc_id"))
-                    .uomValue(rs.getString("tl_acc_uomvalue"))
-                    .tenantId(tenantId)
-                    .active(rs.getBoolean("tl_acc_active"))
-                    .count(count)
-                    .build();
-            tradeLicense.getTradeLicenseDetail().addAccessoriesItem(accessory);
-        }
+        // if (rs.getString("tl_acc_id") != null && rs.getBoolean("tl_acc_active")) {
+        // Integer count = rs.getInt("count");
+        // if (rs.wasNull()) {
+        // count = null;
+        // }
+        // Accessory accessory = Accessory.builder()
+        // .accessoryCategory(rs.getString("accessoryCategory"))
+        // .uom(rs.getString("tl_acc_uom"))
+        // .id(rs.getString("tl_acc_id"))
+        // .uomValue(rs.getString("tl_acc_uomvalue"))
+        // .tenantId(tenantId)
+        // .active(rs.getBoolean("tl_acc_active"))
+        // .count(count)
+        // .build();
+        // tradeLicense.getTradeLicenseDetail().addAccessoriesItem(accessory);
+        // }
 
         Document ownerDocument = Document.builder().id(rs.getString("ownerdocid"))
                 .documentType(rs.getString("ownerdocType"))
@@ -267,6 +268,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .blockNo(rs.getString("blockno"))
                     .surveyNo(rs.getString("surveyno"))
                     .subDivisionNo(rs.getString("subdivisionno"))
+                    .partitionNo(rs.getString("partitionno"))
                     .doorNo(rs.getInt("tlstructplace_doorno"))
                     .doorNoSub(rs.getString("doorsub"))
                     .vehicleNo(rs.getString("vehicleno"))

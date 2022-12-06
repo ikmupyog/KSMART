@@ -42,7 +42,7 @@ public class TLQueryBuilder {
     @Value("${renewal.pending.interval}")
     private long renewalPeriod;
 
-    private static final String QUERY = "SELECT tl.*,tld.*,tlunit.*,tlacc.*,tlowner.*," +
+    private static final String QUERY = "SELECT tl.*,tld.*,tlunit.*,tlowner.*," +
             "tladdress.*,tlapldoc.*,tlverdoc.*,tlownerdoc.*,tlinsti.*,tl.id as tl_id,tl.tenantid as tl_tenantId,tl.lastModifiedTime as "
             +
             "tl_lastModifiedTime,tl.createdBy as tl_createdBy,tl.lastModifiedBy as tl_lastModifiedBy,tl.createdTime as "
@@ -51,11 +51,11 @@ public class TLQueryBuilder {
             +
             "tlowner.id as tlowner_uuid,tlowner.active as useractive," +
             "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as " +
-            "tld_createdTime, tld.businesssector as businesssector, tld.capitalinvestment as capitalinvestment, tld.enterprisetype as enterprisetype, "
+            "tld_createdTime, "
             +
             "tlunit.id as tl_un_id,tlunit.tradeType as tl_un_tradeType,tlunit.uom as tl_un_uom,tlunit.active as tl_un_active,"
             +
-            "tlunit.uomvalue as tl_un_uomvalue,tlacc.id as tl_acc_id,tlacc.uom as tl_acc_uom,tlacc.uomvalue as tl_acc_uomvalue,tlacc.active as tl_acc_active,"
+            "tlunit.uomvalue as tl_un_uomvalue, "
             +
             "tlapldoc.id as tl_ap_doc_id,tlapldoc.documenttype as tl_ap_doc_documenttype,tlapldoc.filestoreid as tl_ap_doc_filestoreid,tlapldoc.active as tl_ap_doc_active,"
             +
@@ -69,11 +69,13 @@ public class TLQueryBuilder {
             +
             " tlinsti.instituionname as instiinstituionname, tlinsti.contactno as insticontactno, tlinsti.organisationregistrationno as instiorganisationregistrationno, tlinsti.address as instiaddress, "
             +
-            " tlstructplace.id as tlstructplace_id, tlstructplace.structureplacesubtype as structureplacesubtype, tlstructplace.blockno as blockno, tlstructplace.surveyno as surveyno, tlstructplace.subdivisionno as subdivisionno, "
+            " tlinsti.natureofinstitution as natureofinstitution, tlinsti.email as instiemail, "
             +
-            " tlstructplace.zonalcode as zonalcode, tlstructplace.wardcode as wardcode, tlstructplace.wardno as wardno, tlstructplace.doorno as tlstructplace_doorno, "
+            " tlstructplace.id as tlstructplace_id, tlstructplace.blockno as blockno, tlstructplace.surveyno as surveyno, tlstructplace.subdivisionno as subdivisionno, "
             +
-            " tlstructplace.doorsub as doorsub, tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active FROM eg_tl_tradelicense tl"
+            " tlstructplace.partitionno as partitionno, tlstructplace.doorno as tlstructplace_doorno, tlstructplace.doorsub as doorsub, "
+            +
+            " tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_tradelicensedetail tld ON tld.tradelicenseid = tl.id"
             + LEFT_OUTER_JOIN_STRING
@@ -82,8 +84,6 @@ public class TLQueryBuilder {
             + "eg_tl_owner tlowner ON tlowner.tradelicensedetailid = tld.id"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_tradeunit tlunit ON tlunit.tradelicensedetailid = tld.id"
-            + LEFT_OUTER_JOIN_STRING
-            + "eg_tl_accessory tlacc ON tlacc.tradelicensedetailid = tld.id"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_document_owner tlownerdoc ON tlownerdoc.userid = tlowner.id"
             + LEFT_OUTER_JOIN_STRING

@@ -423,15 +423,16 @@ public class EnrichmentService {
                         });
                 });
 
-                if (tradeLicense.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional())
-                        && tradeLicense.getTradeLicenseDetail().getInstitution().getId() == null) {
-                    tradeLicense.getTradeLicenseDetail().getInstitution().setId(UUID.randomUUID().toString());
-                    tradeLicense.getTradeLicenseDetail().getInstitution().setActive(true);
-                    tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
-                    tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
-                        owner.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitution().getId());
-                    });
-                }
+                // if
+                // (tradeLicense.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional())
+                // && tradeLicense.getTradeLicenseDetail().getInstitution().getId() == null) {
+                tradeLicense.getTradeLicenseDetail().getInstitution().setId(UUID.randomUUID().toString());
+                tradeLicense.getTradeLicenseDetail().getInstitution().setActive(true);
+                tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
+                tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
+                    owner.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitution().getId());
+                });
+                // }
 
                 if (!CollectionUtils.isEmpty(tradeLicense.getTradeLicenseDetail().getApplicationDocuments())) {
                     tradeLicense.getTradeLicenseDetail().getApplicationDocuments().forEach(document -> {
@@ -567,7 +568,7 @@ public class EnrichmentService {
         TradeLicenseSearchCriteria searchCriteria = enrichTLSearchCriteriaWithOwnerids(criteria, licenses);
         switch (businessService) {
             case businessService_TL:
-                enrichBoundary(new TradeLicenseRequest(requestInfo, licenses));
+                // enrichBoundary(new TradeLicenseRequest(requestInfo, licenses));
                 break;
         }
         UserDetailResponse userDetailResponse = userService.getUser(searchCriteria, requestInfo);
