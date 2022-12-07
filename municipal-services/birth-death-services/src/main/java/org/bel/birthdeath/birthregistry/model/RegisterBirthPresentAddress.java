@@ -1,22 +1,25 @@
-package org.bel.birthdeath.crbirth.model;
-
+package org.bel.birthdeath.birthregistry.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.bel.birthdeath.common.model.AuditDetails;
 
 import javax.validation.constraints.Size;
-
 @Getter
 @Setter
-@ToString
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BirthPresentAddress {
+@Builder
+
+public class RegisterBirthPresentAddress {
 
     @Size(max = 64)
     @JsonProperty("id")
     private String id;
+
+    @Size(max = 200)
+    @JsonProperty("resdnce_addr_type")
+    private String resdnceAddrType;
+
 
     @Size(max = 200)
     @JsonProperty("buildingno")
@@ -114,5 +117,7 @@ public class BirthPresentAddress {
     @JsonProperty("birthdtlid")
     private String birthDtlId;
 
+    @JsonProperty("auditDetails")
+    private AuditDetails auditDetails;
 
 }

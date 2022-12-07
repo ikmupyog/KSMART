@@ -171,7 +171,7 @@ public class BirthRepository {
 
 	public EgovPdfResp saveBirthCertPdf(BirthPdfApplicationRequest pdfApplicationRequest) {
 		EgovPdfResp result= new EgovPdfResp();
-		try {
+//		try {
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");	
 		pdfApplicationRequest.getBirthCertificate().forEach(cert-> {
 			String uiHost = config.getUiAppHost();
@@ -187,7 +187,9 @@ public class BirthRepository {
         });
 		log.info(new Gson().toJson(pdfApplicationRequest));
 
-			BirthPdfApplicationRequest req = BirthPdfApplicationRequest.builder().birthCertificate(pdfApplicationRequest.getBirthCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
+			BirthPdfApplicationRequest req = BirthPdfApplicationRequest.builder()
+					.birthCertificate(pdfApplicationRequest.getBirthCertificate())
+					.requestInfo(pdfApplicationRequest.getRequestInfo()).build();
 			pdfApplicationRequest.getBirthCertificate().forEach(cert-> {
 				String uiHost = config.getEgovPdfHost();
 				String birthCertPath = config.getEgovPdfBirthEndPoint();
@@ -201,10 +203,10 @@ public class BirthRepository {
 				}
 				result.setFilestoreIds(response.getFilestoreIds());
 			});
-		}catch(Exception e) {
-			e.printStackTrace();
-			throw new CustomException("PDF_ERROR","Error in generating PDF");
-		}
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			throw new CustomException("PDF_ERROR","Error in generating PDF");
+//		}
 		return result;
 	}
 

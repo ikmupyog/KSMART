@@ -77,20 +77,24 @@ public class BirthController {
 	@PostMapping(value = { "/_download"})
     public ResponseEntity<BirthCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
                                                        @Valid @ModelAttribute SearchCriteria criteria) {
+        System.out.println("down1");
 		if(liveCitizenTenantsList.contains(criteria.getTenantId()))
-		{
+		{System.out.println("down2");
 			return new ResponseEntity<>(new BirthCertResponse(), HttpStatus.OK);
 		}
         BirthCertificate birthCert = birthService.download(criteria,requestInfoWrapper.getRequestInfo());
         BirthCertResponse response ;
-        if(birthCert.getCounter()<=0)
-        	response = BirthCertResponse.builder().filestoreId(birthCert.getFilestoreid()).responseInfo(
-                responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
-                .build();
-        else
-        	response = BirthCertResponse.builder().consumerCode(birthCert.getBirthCertificateNo()).tenantId(birthCert.getTenantId())
-        			.responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+        if(birthCert.getCounter()<=0) {
+            System.out.println("down2");
+            response = BirthCertResponse.builder().filestoreId(birthCert.getFilestoreid()).responseInfo(
+                            responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
                     .build();
+        }
+        else {System.out.println("down3");
+            response = BirthCertResponse.builder().consumerCode(birthCert.getBirthCertificateNo()).tenantId(birthCert.getTenantId())
+                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                    .build();
+        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 	

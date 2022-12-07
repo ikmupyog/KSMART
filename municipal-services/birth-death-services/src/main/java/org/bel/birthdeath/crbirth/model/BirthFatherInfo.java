@@ -45,6 +45,10 @@ import javax.validation.constraints.Size;
         @JsonProperty("aadharno")
         private String aadharNo;
 
+        @Size(max = 64)
+        @JsonProperty("ot_passportno")
+        private String passportNo;
+
         @Size(max = 300)
         @JsonProperty("emailid")
         private String emailId;

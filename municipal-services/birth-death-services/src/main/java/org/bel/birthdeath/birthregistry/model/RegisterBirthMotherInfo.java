@@ -1,17 +1,16 @@
-package org.bel.birthdeath.crbirth.model;
-
+package org.bel.birthdeath.birthregistry.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.bel.birthdeath.common.model.AuditDetails;
 
 import javax.validation.constraints.Size;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BirthMotherInfo {
+
+public class RegisterBirthMotherInfo {
 
     @Size(max = 64)
     @JsonProperty("id")
@@ -45,9 +44,9 @@ public class BirthMotherInfo {
     @JsonProperty("aadharno")
     private String aadharNo;
 
-    @Size(max = 64)
+    @Size(max = 100)
     @JsonProperty("ot_passportno")
-    private String passportNo;
+    private String otPassportNo;
 
     @Size(max = 300)
     @JsonProperty("emailid")
@@ -60,5 +59,8 @@ public class BirthMotherInfo {
     @Size(max = 64)
     @JsonProperty("birthdtlid")
     private String birthDtlId;
+
+    @JsonProperty("auditDetails")
+    private AuditDetails auditDetails;
 
 }

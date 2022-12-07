@@ -87,7 +87,8 @@ public class BirthService {
 	}
 
 	public BirthCertificate download(SearchCriteria criteria, RequestInfo requestInfo) {
-		try {
+//		try {
+		System.out.println("down2q");
 		BirthCertificate birthCertificate = new BirthCertificate();
 		birthCertificate.setSource(criteria.getSource().toString());
 		birthCertificate.setBirthDtlId(criteria.getId());
@@ -105,6 +106,7 @@ public class BirthService {
 			String date = format.format(birtDtls.get(0).getDateofreport());
 			String datestr= date.split("-")[2];
 			birthCertificate.setYear(datestr);
+		System.out.println("down3");
 		if(birtDtls.size()>1) 
 			throw new CustomException("Invalid_Input","Error in processing data");
 		enrichmentService.enrichCreateRequest(birthCertRequest);
@@ -115,7 +117,7 @@ public class BirthService {
 			calculationService.addCalculation(birthCertRequest);
 			birthCertificate.setApplicationStatus(StatusEnum.ACTIVE);
 		}
-		else{
+		else{System.out.println("down23");
 			birtDtls.get(0).setBirthcertificateno(birthCertRequest.getBirthCertificate().getBirthCertificateNo());
 			BirthPdfApplicationRequest applicationRequest = BirthPdfApplicationRequest.builder().requestInfo(requestInfo).birthCertificate(birtDtls).build();
 			EgovPdfResp pdfResp = repository.saveBirthCertPdf(applicationRequest);
@@ -125,15 +127,15 @@ public class BirthService {
 			repository.updateCounter(birthCertificate.getBirthDtlId());
 			birthCertificate.setApplicationStatus(StatusEnum.FREE_DOWNLOAD);
 			
-		}
+		}System.out.println("down24");
 		birthCertificate.setCounter(birtDtls.get(0).getCounter());
 		repository.save(birthCertRequest);
 		return birthCertificate;
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			throw new CustomException("DOWNLOAD_ERROR","Error in Downloading Certificate");
-		}
+//		}
+//		catch(Exception e) {
+//			e.printStackTrace();
+//			throw new CustomException("DOWNLOAD_ERROR","Error in Downloading Certificate");
+//		}
 	}
 
 	public BirthCertificate getBirthCertReqByConsumerCode(SearchCriteria criteria, RequestInfo requestInfo) {

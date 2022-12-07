@@ -1,7 +1,8 @@
-package org.bel.birthdeath.crbirth.model;
+package org.bel.birthdeath.birthregistry.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.bel.birthdeath.common.model.AuditDetails;
 
 import javax.validation.constraints.Size;
 
@@ -10,7 +11,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BirthStatisticalInformation {
+public class RegisterBirthStatiticalInformation {
 
     @Size(max = 64)
     @JsonProperty("id")
@@ -18,9 +19,6 @@ public class BirthStatisticalInformation {
 
     @JsonProperty("weight_of_child")
     private Long weightOfChild;
-
-    @JsonProperty("height_of_child")
-    private Long heightOfChild;
 
     @JsonProperty("duration_of_pregnancy_in_week")
     private Integer durationOfPregnancyInWeek;
@@ -31,7 +29,7 @@ public class BirthStatisticalInformation {
 
     @Size(max = 64)
     @JsonProperty("way_of_pregnancy")
-    private String wayOfPregnancy;
+    private String way_of_pregnancy;
 
     @Size(max = 64)
     @JsonProperty("delivery_method")
@@ -79,16 +77,10 @@ public class BirthStatisticalInformation {
 
     @Size(max = 64)
     @JsonProperty("mother_nationalityid")
-    private String motherNationalityId;
-
-    @JsonProperty("mother_dateofmarriage")
-    private Long motherDateOfMarriage;
+    private String motherationalityId;
 
     @JsonProperty("mother_age_marriage")
     private Integer motherAgeMarriage;
-
-    @JsonProperty("mother_dateofbirth")
-    private Long motherDateOfBirth;
 
     @JsonProperty("mother_age_delivery")
     private Integer motherAgeDelivery;
@@ -96,8 +88,11 @@ public class BirthStatisticalInformation {
     @JsonProperty("mother_no_of_birth_given")
     private Integer motherNoOfBirthGiven;
 
-    @JsonProperty("mother_no_of_children_alive")
-    private Integer motherNoFfChildrenAlive;
+    @JsonProperty("mother_order_of_cur_delivery")
+    private Integer motherOrderOfCurDelivery;
+
+    @JsonProperty("mother_order_cur_child")
+    private Integer motherOrderCurChild;
 
     @Size(max = 64)
     @JsonProperty("mother_maritalstatusid")
@@ -108,6 +103,9 @@ public class BirthStatisticalInformation {
 
     @JsonProperty("mother_res_lbid")
     private Integer motherResLbId;
+
+    @JsonProperty("mother_res_no_of_years")
+    private Integer motherResNoOfYears;
 
     @JsonProperty("mother_res_lb_code")
     private Integer motherResLbCode;
@@ -167,4 +165,6 @@ public class BirthStatisticalInformation {
     @JsonProperty("birthdtlid")
     private String birthDtlId;
 
+    @JsonProperty("auditDetails")
+    private AuditDetails auditDetails;
 }

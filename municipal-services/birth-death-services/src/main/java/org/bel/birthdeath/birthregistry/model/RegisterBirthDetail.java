@@ -1,16 +1,15 @@
-package org.bel.birthdeath.crbirth.model;
-
+package org.bel.birthdeath.birthregistry.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.bel.birthdeath.common.model.AuditDetails;
-
 import javax.validation.constraints.Size;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BirthDetail {
+
+public class RegisterBirthDetail {
 
     @Size(max = 64)
     @JsonProperty("id")
@@ -80,7 +79,7 @@ public class BirthDetail {
     @JsonProperty("esign_user_desig_code")
     private String esignUserDesigCode;
 
-     @JsonProperty("is_adopted")
+    @JsonProperty("is_adopted")
     private Boolean isAdopted;
 
     @JsonProperty("is_abandoned")
@@ -100,76 +99,44 @@ public class BirthDetail {
 
     @Size(max = 64)
     @JsonProperty("multiplebirthdetid")
-    private String multipleBirthDeeailsIid;
+    private String multipleBirthDetId;
 
-    @JsonProperty("is_born_outside")
-    private Boolean isBornOutside;
-
-    @Size(max = 64)
+    @Size(max = 100)
     @JsonProperty("ot_passportno")
-    private String passportNo;
-
-    @JsonProperty("ot_dateofarrival")
-    private Long dateOfArrival;
-
-    @Size(max = 64)
-    @JsonProperty("applicationtype")
-    private String applicationType;
-
-    @Size(max = 64)
-    @JsonProperty("businessservice")
-    private String businessService;
-
-    @Size(max = 64)
-    @JsonProperty("workflowcode")
-    private String workFlowCode;
-
-    @Size(max = 64)
-    @JsonProperty("fm_fileno")
-    private String fmFileNo;
-
-    @JsonProperty("file_date")
-    private Long fileDate;
-
-    @Size(max = 64)
-    @JsonProperty("applicationno")
-    private String applicationNo;
+    private String otPassportNo;
 
     @Size(max = 64)
     @JsonProperty("registrationno")
     private String registrationNo;
 
+    @Size(max = 64)
+    @JsonProperty("registration_status")
+    private String registrationStatus;
+
     @JsonProperty("registration_date")
     private Long registrationDate;
 
-    @Size(max = 64)
-    @JsonProperty("action")
-    private String action;
+    @JsonProperty("registerBirthPlace")
+    private RegisterBirthPlace registerBirthPlace;
 
-    @Size(max = 64)
-    @JsonProperty("status")
-    private String status;
+    @JsonProperty("registerBirthFather")
+    private RegisterBirthFatherInfo registerBirthFather;
 
-    @JsonProperty("birthPlace")
-    private BirthPlace birthPlace;
+    @JsonProperty("registerBirthMother")
+    private RegisterBirthMotherInfo registerBirthMother;
 
-    @JsonProperty("birthFather")
-    private BirthFatherInfo birthFatherInfo;
+    @JsonProperty("registerBirthPermanent")
+    private RegisterBirthPermanentAddress registerBirthPermanent;
 
-    @JsonProperty("birthMother")
-    private BirthMotherInfo birthMotherInfo;
+    @JsonProperty("registerBirthPresent")
+    private RegisterBirthPresentAddress registerBirthPresent;
 
-    @JsonProperty("birthPermanent")
-    private BirthPermanentAddress birthPermanentAddress;
+    @JsonProperty("registerBirthStatitical")
+    private RegisterBirthStatiticalInformation registerBirthStatitical;
 
-    @JsonProperty("birthPresent")
-    private BirthPresentAddress birthPresentAddress;
-
-    @JsonProperty("birthStatistical")
-    private BirthStatisticalInformation birthStatisticalInformation;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
-}
 
+}

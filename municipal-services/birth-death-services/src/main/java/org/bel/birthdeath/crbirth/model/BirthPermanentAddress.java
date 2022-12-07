@@ -97,6 +97,14 @@ public class BirthPermanentAddress {
     @JsonProperty("pinno")
     private String pinNo;
 
+    @Size(max = 2500)
+    @JsonProperty("ot_state_region_province_en")
+    private String otStateRegionProvinceEn;
+
+    @Size(max = 2500)
+    @JsonProperty("ot_state_region_province_ml")
+    private String otStateRegionProvinceMl;
+
     @Size(max = 64)
     @JsonProperty("countryid")
     private String countryId;

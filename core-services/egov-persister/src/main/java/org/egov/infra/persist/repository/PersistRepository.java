@@ -51,16 +51,16 @@ public class PersistRepository {
 
         List<Object[]> rows = getRows(jsonMaps,jsonObj,baseJsonPath);
 
-        try {
+//        try {
             if( ! rows.isEmpty()) {
                 log.info("Executing query : "+ query);
                 jdbcTemplate.batchUpdate(query, rows);
                 log.info("Persisted {} row(s) to DB!", rows.size(), baseJsonPath);
             }
-        } catch (Exception ex) {
-            log.error("Failed to persist {} row(s) using query: {}", rows.size(), query, ex);
-            throw ex;
-        }
+//        } catch (Exception ex) {
+//            log.error("Failed to persist {} row(s) using query: {}", rows.size(), query, ex);
+//            throw ex;
+//        }
     }
 
 

@@ -32,6 +32,22 @@ public class BirthDeathConfiguration {
     @Value("${egov.idgen.birthapplnum.format}")
     private String birthApplNumberIdgenFormat;
 
+    @Value("${egov.idgen.birthapp.name}")
+    private String birthApplNumberIdName;
+
+    @Value("${egov.idgen.birthapp.format}")
+    private String birthApplNumberIdFormat;
+
+    @Value("${egov.idgen.birthfile.name}")
+    private String birthFileNumberName;
+
+    @Value("${egov.idgen.birthfile.name}")
+    private String birthFileNumberFormat;
+    @Value("${egov.idgen.birthreg.name}")
+    private String birthRegisNumberName;
+
+    @Value("${egov.idgen.birthreg.format}")
+    private String birthRegisNumberFormat;
 
     //Persister Config
     @Value("${persister.save.birth.topic}")
@@ -40,11 +56,17 @@ public class BirthDeathConfiguration {
     @Value("${persister.update.birth.topic}")
     private String updateBirthTopic;
 
-    @Value("${persister.save.details.birth.topic}")
-    private String saveBirthDetailsTopic;
+    @Value("${persister.save.birth.application.topic}")
+    private String saveBirthApplicationTopic;
 
-    @Value("${persister.update.details.birth.topic}")
-    private String updateBirthDetailsTopic;
+    @Value("${persister.update.birth.application.topic}")
+    private String updateBirthApplicationTopic;
+
+    @Value("${persister.save.birth.register.topic}")
+    private String saveBirthRegisterTopic;
+
+    @Value("${persister.update.birth.register.topic}")
+    private String updateBirthRegisterTopic;
 
     @Value("${egov.idgen.deathapplnum.name}")
     private String deathApplNumberIdgenName;
