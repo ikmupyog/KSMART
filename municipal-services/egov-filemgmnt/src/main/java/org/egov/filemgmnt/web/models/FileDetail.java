@@ -105,7 +105,6 @@ public class FileDetail {
 
     @Schema(type = "string", description = "Status of file")
     @Size(max = 64)
-    @NotNull
     @JsonProperty("fileStatus")
     private String fileStatus;
 
