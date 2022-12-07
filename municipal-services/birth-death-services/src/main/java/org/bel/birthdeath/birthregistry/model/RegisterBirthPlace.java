@@ -150,7 +150,7 @@ public class RegisterBirthPlace {
 
     @Size(max = 2000)
     @JsonProperty("oth_details_en")
-    private String oth_details_en;
+    private String othDetailsEn;
 
     @Size(max = 2000)
     @JsonProperty("oth_details_ml")

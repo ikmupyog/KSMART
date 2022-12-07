@@ -101,6 +101,9 @@ public class RegisterBirthDetail {
     @JsonProperty("multiplebirthdetid")
     private String multipleBirthDetId;
 
+    @JsonProperty("is_born_outside")
+    private Boolean isBornOutside;
+
     @Size(max = 100)
     @JsonProperty("ot_passportno")
     private String otPassportNo;

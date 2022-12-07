@@ -26,8 +26,8 @@ public class RegisterBirthService {
         return repository.updateRegisterBirthDetails(request);
     }
 
-//    public List<RegisterBirthDetail> searchRegisterBirthDetails(RegisterBirthSearchCriteria criteria) {
-//        return repository.searchBirthDetails(criteria);
-//    }
+    public List<RegisterBirthDetail> searchRegisterBirthDetails(RegisterBirthSearchCriteria criteria) {
+        return repository.searchRegisterBirthDetails(criteria);
+    }
 
 }

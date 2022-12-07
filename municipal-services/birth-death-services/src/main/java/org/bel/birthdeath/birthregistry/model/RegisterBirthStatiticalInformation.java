@@ -29,7 +29,7 @@ public class RegisterBirthStatiticalInformation {
 
     @Size(max = 64)
     @JsonProperty("way_of_pregnancy")
-    private String way_of_pregnancy;
+    private String wayOfPregnancy;
 
     @Size(max = 64)
     @JsonProperty("delivery_method")
@@ -77,7 +77,7 @@ public class RegisterBirthStatiticalInformation {
 
     @Size(max = 64)
     @JsonProperty("mother_nationalityid")
-    private String motherationalityId;
+    private String motherNationalityId;
 
     @JsonProperty("mother_age_marriage")
     private Integer motherAgeMarriage;

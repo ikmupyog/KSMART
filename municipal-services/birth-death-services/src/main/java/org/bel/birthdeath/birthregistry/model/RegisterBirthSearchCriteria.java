@@ -1,9 +1,15 @@
 package org.bel.birthdeath.birthregistry.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.validation.Valid;
-
+@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class RegisterBirthSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
@@ -13,21 +19,17 @@ public class RegisterBirthSearchCriteria {
 
     @JsonProperty("registrationNo")
     private String registrationNo;
-
-    @JsonProperty("fileCode")
-    private String fileCode;
-
     @JsonProperty("fromDate")
     private Long fromDate; // report date
 
     @JsonProperty("toDate")
     private Long toDate; // report date
 
-    @JsonProperty("fromDateFile")
-    private Long fromDateFile; // file date
+    @JsonProperty("fromDateReg")
+    private Long fromDateReg; // Registration date
 
-    @JsonProperty("toDateFile")
-    private Long toDateFile; // file date
+    @JsonProperty("toDateReg")
+    private Long toDateReg; // Registration date
 
     @JsonProperty("aadhaarNo")
     private String aadhaarNo;

@@ -44,16 +44,16 @@ public class RegistryController {
             return new ResponseEntity<>(registerBirthDetails, HttpStatus.OK);
         }
 
-//    @PostMapping(value = { "/_search"})
-//    public ResponseEntity<RegisterBirthResponse> listByHospitalId(@RequestBody RegisterBirthDetailsRequest request,
-//                                                                     @Valid @ModelAttribute RegisterBirthSearchCriteria criteria) {
-//        List<RegisterBirthDetail> registerBirthDetail = registerBirthService.searchBirthDetails(criteria);
-//        RegisterBirthResponse response = RegisterBirthResponse.builder()
-//                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-//                .registerDetails(registerBirthDetail)
-//                .build();
-//        return ResponseEntity.ok(response);
-//    }
+    @PostMapping(value = { "/_search"})
+    public ResponseEntity<RegisterBirthResponse> listByHospitalId(@RequestBody RegisterBirthDetailsRequest request,
+                                                                     @Valid @ModelAttribute RegisterBirthSearchCriteria criteria) {
+        List<RegisterBirthDetail> registerBirthDetail = registerBirthService.searchRegisterBirthDetails(criteria);
+        RegisterBirthResponse response = RegisterBirthResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                .registerDetails(registerBirthDetail)
+                .build();
+        return ResponseEntity.ok(response);
+    }
 
     }
 

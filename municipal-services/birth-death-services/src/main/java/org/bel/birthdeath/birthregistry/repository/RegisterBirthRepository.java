@@ -5,11 +5,11 @@ import org.bel.birthdeath.birthregistry.enrichment.RegisterBirthDetailsEnrichmen
 import org.bel.birthdeath.birthregistry.model.RegisterBirthDetail;
 import org.bel.birthdeath.birthregistry.model.RegisterBirthDetailsRequest;
 import org.bel.birthdeath.birthregistry.model.RegisterBirthSearchCriteria;
+import org.bel.birthdeath.birthregistry.repository.querybuilder.RegisterQueryBuilder;
+import org.bel.birthdeath.birthregistry.repository.rowmapper.BirthRegisterRowMapper;
 import org.bel.birthdeath.common.producer.BndProducer;
 import org.bel.birthdeath.config.BirthDeathConfiguration;
 import org.bel.birthdeath.crbirth.model.BirthDetail;
-import org.bel.birthdeath.crbirth.repository.querybuilder.BirthApplicationQueryBuilder;
-import org.bel.birthdeath.crbirth.repository.rowmapper.BirthApplicationRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -23,16 +23,19 @@ public class RegisterBirthRepository {
     private final BirthDeathConfiguration birthDeathConfiguration;
     private final JdbcTemplate jdbcTemplate;
     private final RegisterBirthDetailsEnrichment registerBirthDetailsEnrichment;
-//    private final BirthApplicationQueryBuilder birthQueryBuilder;
-//    private final BirthApplicationRowMapper birthApplicationRowMapper;
+    private final BirthRegisterRowMapper birthRegisterRowMapper;
+    private final RegisterQueryBuilder registerQueryBuilder;
 
     @Autowired
     RegisterBirthRepository(JdbcTemplate jdbcTemplate, RegisterBirthDetailsEnrichment registerBirthDetailsEnrichment,
-                      BirthDeathConfiguration birthDeathConfiguration, BndProducer producer) {
+                      BirthDeathConfiguration birthDeathConfiguration, BndProducer producer, RegisterQueryBuilder registerQueryBuilder,
+                      BirthRegisterRowMapper birthRegisterRowMapper ) {
         this.jdbcTemplate = jdbcTemplate;
         this.registerBirthDetailsEnrichment = registerBirthDetailsEnrichment;
         this.birthDeathConfiguration = birthDeathConfiguration;
         this.producer = producer;
+        this.registerQueryBuilder = registerQueryBuilder;
+        this.birthRegisterRowMapper = birthRegisterRowMapper;
     }
     public List<RegisterBirthDetail> saveRegisterBirthDetails(RegisterBirthDetailsRequest request) {
         registerBirthDetailsEnrichment.enrichCreate(request);
@@ -46,10 +49,10 @@ public class RegisterBirthRepository {
         return request.getRegisterBirthDetails();
     }
 
-//    public List<RegisterBirthDetail> searchRegisterBirthDetails(RegisterBirthSearchCriteria criteria) {
-//        List<Object> preparedStmtValues = new ArrayList<>();
-//        String query = birthQueryBuilder.getBirthApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-//        List<BirthDetail> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), birthApplicationRowMapper);
-//        return result;
-//    }
+    public List<RegisterBirthDetail> searchRegisterBirthDetails(RegisterBirthSearchCriteria criteria) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = registerQueryBuilder.getRegBirthApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<RegisterBirthDetail> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), birthRegisterRowMapper);
+        return result;
+    }
 }

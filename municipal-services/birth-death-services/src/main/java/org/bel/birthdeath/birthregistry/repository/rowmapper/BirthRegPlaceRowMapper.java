@@ -1,14 +1,14 @@
-package org.bel.birthdeath.crbirth.repository.rowmapper;
+package org.bel.birthdeath.birthregistry.repository.rowmapper;
 
-import org.bel.birthdeath.crbirth.model.BirthFatherInfo;
+import org.bel.birthdeath.birthregistry.model.RegisterBirthPlace;
 import org.bel.birthdeath.crbirth.model.BirthPlace;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface BirthPlaceRowMapper {
-    default BirthPlace getBirthPlace(ResultSet rs) throws SQLException {
-        return BirthPlace.builder()
+public interface BirthRegPlaceRowMapper {
+    default RegisterBirthPlace getRegBirthPlace(ResultSet rs) throws SQLException {
+        return RegisterBirthPlace.builder()
                 .id(rs.getString("id"))
                 .birthDtlId(rs.getString("birthdtlid"))
                 .placeOfBirthId(rs.getString("placeofbirthid"))

@@ -202,9 +202,4 @@ public class BirthPlace {
     @Size(max = 20)
     @JsonProperty("informants_aadhaar_no")
     private String informantsAadhaarNo;
-
-    @JsonProperty("is_born_outside")
-    private String isBornOutside;
-
-
 }

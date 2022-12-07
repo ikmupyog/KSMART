@@ -1,14 +1,21 @@
 package org.bel.birthdeath.birthregistry.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.bel.birthdeath.crbirth.model.BirthApplicationResponse;
 import org.bel.birthdeath.crbirth.model.BirthDetail;
 import org.egov.common.contract.response.ResponseInfo;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-
+@Validated
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class RegisterBirthResponse {
 
     @JsonProperty("ResponseInfo")
