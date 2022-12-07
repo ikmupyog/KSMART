@@ -2,6 +2,7 @@
 .apt_generated
 .settings
 .checkstyle
+.eclipse-pmd
 .classpath
 .factorypath
 /.pmd

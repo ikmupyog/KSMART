@@ -46,7 +46,7 @@ public class WorkflowIntegrator {
 	 *
 	 * and sets the resultant status from wf-response back to file details object
 	 *
-	 * @param applicantPersonalRequest(filedetailsRequest)
+	 * @param request the {@link ApplicantPersonalRequest}
 	 */
 	public void callWorkFlow(ApplicantPersonalRequest request) {
 
@@ -56,14 +56,14 @@ public class WorkflowIntegrator {
 				: currentFile.getFileDetail().getBusinessService();
 
 		if (businessServiceFromMDMS == null) {
-			businessServiceFromMDMS = FMConstants.businessService_FM;
+			businessServiceFromMDMS = FMConstants.BUSINESS_SERVICE_FM;
 		}
 
 		JSONArray array = new JSONArray();
 
 		for (ApplicantPersonal personal : request.getApplicantPersonals()) {
-			if ((businessServiceFromMDMS.equals(FMConstants.businessService_FM)) || (!request.getApplicantPersonals()
-					.get(0).getFileDetail().getAction().equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW))) {
+			if (businessServiceFromMDMS.equals(FMConstants.BUSINESS_SERVICE_FM) || !request.getApplicantPersonals()
+					.get(0).getFileDetail().getAction().equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW)) {
 
 				JSONObject obj = new JSONObject();
 				List<Map<String, String>> uuidmaps = new LinkedList<>();

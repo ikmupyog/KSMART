@@ -12,7 +12,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
-import org.egov.filemgmnt.repository.ApplicantPersonalRepository;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
@@ -33,19 +32,15 @@ import org.springframework.stereotype.Component;
  * Validate applicant personal search criteria
  * </p>
  * 
- * @see ApplicantPersonalRepository
  */
 @Component
 public class ApplicantPersonalValidator {
 
-    private final ApplicantPersonalRepository repository;
     private final FMConfiguration config;
     private final MdmsValidator mdmsValidator;
 
     @Autowired
-    public ApplicantPersonalValidator(ApplicantPersonalRepository repository, FMConfiguration config,
-                                      MdmsValidator mdmsValidator) {
-        this.repository = repository;
+    public ApplicantPersonalValidator(FMConfiguration config, MdmsValidator mdmsValidator) {
         this.config = config;
         this.mdmsValidator = mdmsValidator;
 
@@ -101,7 +96,7 @@ public class ApplicantPersonalValidator {
      * @param requestInfo the {@link RequestInfo}
      * @param criteria    the {@link ApplicantPersonalSearchCriteria}
      */
-    public void validateSearch(RequestInfo requestInfo, ApplicantPersonalSearchCriteria criteria) {
+    public void validateSearch(RequestInfo requestInfo, ApplicantPersonalSearchCriteria criteria) { // NOPMD
         if (StringUtils.isBlank(criteria.getTenantId())) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Tenant id is required.");
         }

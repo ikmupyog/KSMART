@@ -24,6 +24,7 @@ import { UserService } from "./services/elements/User";
 import { PTService } from "./services/elements/PT";
 import { WSService } from "./services/elements/WS";
 import { TLService } from "./services/elements/TL";
+import { DFMService } from "./services/elements/DFM";
 import { MCollectService } from "./services/elements/MCollect";
 import HrmsService from "./services/elements/HRMS";
 import { InboxGeneral } from "./services/elements/InboxService";
@@ -68,6 +69,7 @@ const initLibraries = () => {
   setupLibraries("FSMService", FSMService);
   setupLibraries("PTService", PTService);
   setupLibraries("TLService", TLService);
+  setupLibraries("DFMService", DFMService);
   setupLibraries("HRMSService", HrmsService);
   setupLibraries("ReceiptsService", ReceiptsService);
   setupLibraries("MCollectService", MCollectService);

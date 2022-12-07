@@ -3,7 +3,6 @@ package org.egov.filemgmnt.service;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.enrichment.ServiceDetailsEnrichment;
 import org.egov.filemgmnt.kafka.Producer;
@@ -52,9 +51,9 @@ public class ServiceDetailsService {
 
     public List<ServiceDetails> search(ServiceDetailsSearchCriteria criteria) {
 
-        if (CollectionUtils.isEmpty(criteria.getIds())) {
-
-        }
+//        if (CollectionUtils.isEmpty(criteria.getIds())) {
+//
+//        }
 
         return repository.getApplicantServices(criteria);
     }

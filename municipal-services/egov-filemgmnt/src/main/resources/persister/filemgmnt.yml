@@ -352,7 +352,6 @@ serviceMaps:
       
       - jsonPath: $.CommunicationFile.*.auditDetails.lastModifiedBy
 
-
       - jsonPath: $.CommunicationFile.*.auditDetails.lastModifiedTime   
       
   - version: 1.0

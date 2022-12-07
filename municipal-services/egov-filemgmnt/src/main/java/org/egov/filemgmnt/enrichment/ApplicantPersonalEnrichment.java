@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  * 
  * <p>
  * Enrich applicant personal by adding primary keys (uuid), audit details,
- * filcode using
+ * filecode using
  * {@link IdgenUtil#getIdList(RequestInfo, String, String, String, Integer)}.
  * while creating/updating applicant personal
  * </p>
@@ -44,7 +44,7 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
      * Enrich applicant personal create request.
      *
      * <p>
-     * Sets primary keys by generating uuids, {@link UUID#randomUUID()}
+     * Sets primary keys by generating uuid's, {@link UUID#randomUUID()}
      * </p>
      * <p>
      * Create and sets audit details

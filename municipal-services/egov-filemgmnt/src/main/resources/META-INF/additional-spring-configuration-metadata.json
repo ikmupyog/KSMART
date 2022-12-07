@@ -24,7 +24,7 @@
       "type": "java.lang.String",
       "description": "Communication file save topic"
     },
-        {
+    {
       "name": "persister.update.communicationfile.topic",
       "type": "java.lang.String",
       "description": "Communication file update topic"
@@ -98,11 +98,31 @@
     {
       "name": "workflow.context.path",
       "type": "java.lang.String"
-    },    
+    },
     {
       "name": "workflow.transition.path",
       "type": "java.lang.String"
-    },    
+    },
+    {
+      "name": "egov.user.host",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "egov.user.context.path",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "egov.user.create.path",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "egov.user.search.path",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "egov.user.update.path",
+      "type": "java.lang.String"
+    },
     {
       "name": "citizen.allowed.search.params",
       "type": "java.lang.String",
