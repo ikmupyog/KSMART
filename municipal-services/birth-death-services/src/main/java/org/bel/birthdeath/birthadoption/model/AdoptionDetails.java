@@ -1,19 +1,17 @@
-package org.bel.birthdeath.crbirth.model;
+package org.bel.birthdeath.birthadoption.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.bel.birthdeath.birthadoption.model.birth.*;
 import org.bel.birthdeath.common.model.AuditDetails;
 
 import javax.validation.constraints.Size;
-import java.util.List;
-import java.util.Map;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BirthDetail {
+public class AdoptionDetails {
     @Size(max = 64)
     @JsonProperty("id")
     private String id;
@@ -82,7 +80,7 @@ public class BirthDetail {
     @JsonProperty("esign_user_desig_code")
     private String esignUserDesigCode;
 
-     @JsonProperty("is_adopted")
+    @JsonProperty("is_adopted")
     private Boolean isAdopted;
 
     @JsonProperty("is_abandoned")
@@ -148,15 +146,6 @@ public class BirthDetail {
     @JsonProperty("action")
     private String action;
 
-    @JsonProperty("assignee")
-    private List<String> assignee;
-
-    private String comment;
-
-
-    @JsonProperty("WfDocuments")
-    private String WfDocuments;
-
     @Size(max = 64)
     @JsonProperty("status")
     private String status;
@@ -181,8 +170,4 @@ public class BirthDetail {
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
-
-
-
 }
-

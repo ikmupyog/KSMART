@@ -7,8 +7,6 @@ import org.bel.birthdeath.birthregistry.model.RegisterBirthDetailsRequest;
 import org.bel.birthdeath.birthregistry.model.RegisterBirthResponse;
 import org.bel.birthdeath.birthregistry.model.RegisterBirthSearchCriteria;
 import org.bel.birthdeath.birthregistry.service.RegisterBirthService;
-import org.bel.birthdeath.crbirth.model.BirthApplicationResponse;
-import org.bel.birthdeath.crbirth.model.BirthDetail;
 import org.bel.birthdeath.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,13 +18,13 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/cr/registry")
-public class RegistryController {
+public class RegistryBirthController {
 
     private final ResponseInfoFactory responseInfoFactory;
     private final RegisterBirthService registerBirthService;
 
     @Autowired
-    RegistryController(RegisterBirthService registerBirthService, ResponseInfoFactory responseInfoFactory) {
+    RegistryBirthController(RegisterBirthService registerBirthService, ResponseInfoFactory responseInfoFactory) {
         this.registerBirthService = registerBirthService;
         this.responseInfoFactory = responseInfoFactory;
     }
