@@ -26,6 +26,13 @@ public class BirthDeathConfiguration {
     @Value("${egov.idgen.path}")
     private String idGenPath;
 
+    @Value("${egov.workflow.host}")
+    private String WfHost;
+
+    @Value("${egov.workflow.path}")
+    private String WfTransitionPath;
+
+
     @Value("${egov.idgen.birthapplnum.name}")
     private String birthApplNumberIdgenName;
 
@@ -148,5 +155,7 @@ public class BirthDeathConfiguration {
 
     @Value("${egov.pdf.deathcert.createEndPoint}")
     private String	egovPdfDeathEndPoint;
+
+
 
 }

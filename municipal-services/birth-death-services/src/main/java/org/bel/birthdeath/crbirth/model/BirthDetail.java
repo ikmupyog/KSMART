@@ -5,6 +5,9 @@ import lombok.*;
 import org.bel.birthdeath.common.model.AuditDetails;
 
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Map;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -146,6 +149,15 @@ public class BirthDetail {
     @JsonProperty("action")
     private String action;
 
+    @JsonProperty("assignee")
+    private List<String> assignee;
+
+    private String comment;
+
+
+    @JsonProperty("WfDocuments")
+    private String WfDocuments;
+
     @Size(max = 64)
     @JsonProperty("status")
     private String status;
@@ -170,6 +182,8 @@ public class BirthDetail {
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
+
+
 
 }
 

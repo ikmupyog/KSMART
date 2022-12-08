@@ -7,6 +7,7 @@ import org.bel.birthdeath.crbirth.model.BirthDetailsRequest;
 import org.bel.birthdeath.crbirth.repository.CrBirthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.bel.birthdeath.workflow.WorkflowIntegrator;
 
 import java.util.List;
 
@@ -17,8 +18,13 @@ public class CrBirthService {
     @Autowired
     CrBirthRepository repository;
 
+    @Autowired
+    WorkflowIntegrator WorkflowIntegrator;
+
+
     public List<BirthDetail> saveBirthDetails(BirthDetailsRequest request) {
 
+        WorkflowIntegrator.callWorkFlow(request);
         return repository.saveBirthDetails(request);
     }
 
