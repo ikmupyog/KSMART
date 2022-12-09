@@ -4,7 +4,7 @@ import { Request } from "../atoms/Utils/Request";
 export const DFMService = {
   create: (details, tenantId) =>
     Request({
-      url: Urls.DFM.create,
+      url: Urls.dfm_Create,
       data: details,
       useCache: false,
       setTimeParam: false,
@@ -15,7 +15,7 @@ export const DFMService = {
     }),
   search: (details) =>
     Request({
-      url: Urls.DFM.search,
+      url: Urls.dfm.search,
       useCache: false,
       setTimeParam: false,
       userService: true,
@@ -23,44 +23,5 @@ export const DFMService = {
       params: details,
       auth: true,
     }),
-  search_bill: ({ tenantId, filters }) =>
-    Request({
-      url: filters.businesService !== "PT" ? Urls.mcollect.search_bill : Urls.mcollect.search_bill_pt,
-      useCache: false,
-      method: "POST",
-      data: { searchCriteria: { tenantId, ...filters } },
-      auth: true,
-      userService: false,
-      //params: { tenantId, ...filters },
-    }),
-  DFMsearch: ({ tenantId, filters }) =>
-     Request({
-      url: Urls.DFM.search,
-      useCache: false,
-      method: "POST",
-      auth: true,
-      userService: false,
-      params: { tenantId, ...filters },
-    }),
-  update: (details, tenantId) =>
-    Request({
-      url: Urls.DFM.update,
-      data: details,
-      useCache: false,
-      setTimeParam: false,
-      userService: true,
-      method: "POST",
-      params: {},
-      auth: true,
-    }),
-  billingslab: ({ tenantId, filters, auth }) =>
-    Request({
-      url: Urls.DFM.billingslab,
-      useCache: false,
-      setTimeParam: false,
-      userService: true,
-      method: "POST",
-      params: { tenantId },
-      auth: true,
-    }),
+  
 };
