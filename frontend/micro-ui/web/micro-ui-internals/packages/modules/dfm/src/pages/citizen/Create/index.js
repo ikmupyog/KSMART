@@ -475,7 +475,8 @@ const CreateTradeLicence = ({ parentRoute }) => {
         <TLAcknowledgement data={params} onSuccess={onSuccess} />
       </Route> */}
       <Route path={`${match.path}/acknowledgement`}>
-        <Acknowledgement res={submitResponse} />
+
+        <Acknowledgement res={submitResponse}  />
       </Route>
       {/* <Route path={`${match.path}/acknowledgement`}>
         <TLAcknowledgement data={params} onSuccess={onSuccess} />
