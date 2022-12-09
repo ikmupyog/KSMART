@@ -6,8 +6,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
   };
   const useCRHospital = () => {
-    console.log("Jetheesh1");
-    return useQuery("CR_HOSPITALMASTER", () => MdmsService.getCRHospitalMaster(tenantId, moduleCode), config);
+    return useQuery("CR_HOSPITALMASTER", () => MdmsService.getCRHospitalMaster(tenantId, moduleCode,), config);
   };
   const usePLaceOfDeath = () => {
     return useQuery("CR_PLACE_DEATH", () => MdmsService.getCRPlaceOfDeath(tenantId, moduleCode, type), config);
@@ -19,10 +18,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     return useQuery("CR_Nationality", () => MdmsService.getCRNationlity(tenantId, moduleCode, type), config);
   };
   const useCRTaluk = () => {
-    return useQuery("CR_Taluk", () => MdmsService.getCRTaluk(tenantId, moduleCode, type), config);
+    return useQuery("CR_TALUK", () => MdmsService.getCRTaluk(tenantId, moduleCode, type), config);
   };
   const useCRTitle = () => {
-    return useQuery("CR_Title", () => MdmsService.getCRTitle(tenantId, moduleCode, type), config);
+    return useQuery("CR_TITLE", () => MdmsService.getCRTitle(tenantId, moduleCode, type), config);
   };
   const useCRWard = () => {
     return useQuery("CR_WARD", () => MdmsService.getCRWard(tenantId, moduleCode, type), config);
@@ -40,6 +39,12 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
   const useCROtherPlace = () => {
     return useQuery("CR_OTHER_PLACE", () => MdmsService.getCROtherPlace(tenantId, moduleCode), config);
+  };
+  const useCRVillage = () => {
+    return useQuery("CR_VILLAGE", () => MdmsService.getCRVillage(tenantId, moduleCode, type), config);
+  };
+  const useCRDistrict = () => {
+    return useQuery("CR_DISTRICT", () => MdmsService.getCRDistrict(tenantId, moduleCode, type), config);
   };
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
@@ -177,6 +182,14 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRTaluk();
     case "Title":
       return useCRTitle();
+    // case "Title":
+    //   return useCRWard();
+    case "Religion":
+      return useCRReligion();
+    case "Village":
+      return useCRVillage();
+    case "District":
+      return useCRDistrict();  
     case "Title":
       return useCRWard();
     case "Religion":

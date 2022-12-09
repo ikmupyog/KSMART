@@ -747,6 +747,36 @@ const getCRReligionlist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRVillagelist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "Village",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRDistrictlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "District",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRTitleList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1622,10 +1652,8 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getCRPlaceMasterList(tenantId, moduleCode), moduleCode);
   },
   getCRHospitalMaster: (tenantId, moduleCode) => {
-    console.log("Jetheesh2" + tenantId + moduleCode);
     return MdmsService.getDataByCriteria(tenantId, getCRHospitalMasterList(tenantId, moduleCode), moduleCode);
   },
-
   getCRNationlity: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRNationalityList(tenantId, moduleCode), moduleCode);
   },
@@ -1650,6 +1678,11 @@ export const MdmsService = {
   getCRReligion: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRReligionlist(tenantId, moduleCode), moduleCode);
   },
+  getCRVillage: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRVillagelist(tenantId, moduleCode), moduleCode);
+  },
+  getCRDistrict: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRDistrictlist(tenantId, moduleCode), moduleCode);
   getCRInstitution: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRInstitutionList(tenantId, moduleCode), moduleCode);
   },
@@ -1872,3 +1905,4 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getFSMReceivedPaymentTypeCriteria(tenantId, moduleCode, type), moduleCode);
   }
 };
+
