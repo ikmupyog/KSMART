@@ -44,7 +44,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
         <header className="tittle">Statistical Information </header>
         
-        <div className="row">
+      <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Town or Village of Residence of The Deceased")}`}
@@ -56,9 +56,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
         <div className="col-md-12" > 
            <CardLabel>{t("Type of place of Deceased ")}</CardLabel>             
         </div>
-        </div>
+      </div>
 
-        <div className="row">
+      <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Religion")}`}
@@ -66,8 +66,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
             </h1>
         </div>
         </div>
-        <div className="row">
-        <div className="col-md-6" >
+      <div className="row">
+      <div className="col-md-6" >
             <CardLabel>{t("Religion")}</CardLabel>
             <Dropdown
                 t={t}
@@ -79,20 +79,50 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
             />
         </div>       
-    </div> 
+      </div> 
 
-        <div className="row">
+      <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Occupation of the Deceased")}`}
                 </span> 
             </h1>
         </div>
-        </div>
-
-
-
-
+      </div>
+      <div className="row">
+        <div className="col-md-12" >
+            <CardLabel>{t("Occupation of Deceased Not Available")}</CardLabel>
+            </div>       
+      </div> 
+      <div className="row">
+        <div className="col-md-6" >
+            <CardLabel>{t("Occupation main level")}</CardLabel>
+            <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={false}
+                option={cmbPlace}
+                selected={setPlaceofActivity}
+                select={selectPlaceofactivity}
+                disabled={isEdit}
+            />
+        </div>   
+        <div className="col-md-6" >
+            <CardLabel>{t("Occupation - Other (Malayalam)")}</CardLabel>
+            <TextInput       
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="TradeName"
+                value={TradeName}
+                onChange={setSelectTradeName}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+        </div>  
+      </div> 
+      
       </FormStep>
     </React.Fragment>
   );
