@@ -329,7 +329,7 @@ export const newConfig = [
         component: "StatisticalInformation",
         texts: {
           headerCaption: "",
-          header: "CR_Statistical_Information",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -750,13 +750,13 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "DeathDetails",
-        nextStep: "statistical-information",
+        nextStep: "birth-vehicle",
         type: "component",
         hideInEmployee: true,
       },
       {
-        route: "statistical-information",
-        component: "StatisticalInformation",
+        route: "birth-vehicle ",
+        component: "BirthVehicle",
         texts: {
           headerCaption: "",
           header: "",
