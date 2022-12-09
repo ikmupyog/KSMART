@@ -89,6 +89,7 @@ public class BirthService {
 	public BirthCertificate download(SearchCriteria criteria, RequestInfo requestInfo) {
 //		try {
 		System.out.println("down2q");
+		//try {
 		BirthCertificate birthCertificate = new BirthCertificate();
 		birthCertificate.setSource(criteria.getSource().toString());
 		birthCertificate.setBirthDtlId(criteria.getId());
@@ -136,6 +137,11 @@ public class BirthService {
 //			e.printStackTrace();
 //			throw new CustomException("DOWNLOAD_ERROR","Error in Downloading Certificate");
 //		}
+		//}
+		/*catch(Exception e) {
+			e.printStackTrace();
+			throw new CustomException("DOWNLOAD_ERROR","Error in Downloading Certificate");
+		}*/
 	}
 
 	public BirthCertificate getBirthCertReqByConsumerCode(SearchCriteria criteria, RequestInfo requestInfo) {

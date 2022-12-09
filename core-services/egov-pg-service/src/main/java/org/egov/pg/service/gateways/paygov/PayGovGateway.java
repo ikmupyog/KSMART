@@ -67,7 +67,7 @@ public class PayGovGateway implements Gateway {
     private final String MESSAGE_TYPE_KEY = "messageType";
     private final String MERCHANT_ID_KEY = "merchantId";
 
-    private final String SERVICE_ID_KEY = "serviceId";
+    private final String SERVICE_ID_KEY = "KSMARTLSG";
     private final String ORDER_ID_KEY = "orderId";
     private final String CUSTOMER_ID_KEY = "customerId";
     private final String TRANSACTION_AMOUNT_KEY = "transactionAmount";
@@ -231,7 +231,7 @@ public class PayGovGateway implements Gateway {
             if (transaction.getModule().equals("BPAREG")) {
                 moduleCode = "BPA001";
             } else {
-                moduleCode = transaction.getModule().concat("001").toUpperCase();
+                moduleCode = "KSMARTLSG"/*transaction.getModule().concat("001").toUpperCase()*/;
             }
         }
         return moduleCode;
@@ -251,7 +251,7 @@ public class PayGovGateway implements Gateway {
         HashMap<String, String> queryMap = new HashMap<>();
         queryMap.put(MESSAGE_TYPE_KEY, MESSAGE_TYPE);
         queryMap.put(MERCHANT_ID_KEY, PAYGOV_MERCHENT_ID);
-        queryMap.put(SERVICE_ID_KEY, getModuleCode(transaction));
+        queryMap.put(SERVICE_ID_KEY, /*getModuleCode(transaction)*/"KSMARTLSG");
         queryMap.put(ORDER_ID_KEY, transaction.getTxnId());
         queryMap.put(CUSTOMER_ID_KEY, transaction.getUser().getUuid());
         queryMap.put(TRANSACTION_AMOUNT_KEY, String.valueOf( transaction.getTxnAmount()));
