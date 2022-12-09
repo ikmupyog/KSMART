@@ -3,6 +3,7 @@ package org.egov.filemgmnt.web.controllers;
 import java.util.List;
 
 import org.egov.filemgmnt.service.ApplicantPersonalService;
+import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
@@ -51,8 +52,9 @@ public class FileManagementController implements FileManagementResource {
     @Override
     @PutMapping("/applicantpersonals/_update")
     public ResponseEntity<ApplicantPersonalResponse> update(@RequestBody ApplicantPersonalRequest request) {
-        log.info("request  " + request);
-        System.out.println("hai" + request);
+        if (log.isDebugEnabled()) {
+            log.debug("ApplicantPersonalRequest:  {}", FMUtils.toJson(request));
+        }
         List<ApplicantPersonal> personals = personalService.update(request);
 
         ApplicantPersonalResponse response = ApplicantPersonalResponse.builder()

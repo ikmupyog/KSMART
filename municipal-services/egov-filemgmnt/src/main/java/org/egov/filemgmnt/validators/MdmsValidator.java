@@ -9,12 +9,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
-import org.egov.filemgmnt.repository.ServiceRequestRepository;
 import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
 import org.egov.tracer.model.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jayway.jsonpath.JsonPath;
@@ -25,12 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MdmsValidator {
 
-    private final ServiceRequestRepository requestRepository;
-
-    @Autowired
-    public MdmsValidator(ServiceRequestRepository requestRepository) {
-        this.requestRepository = requestRepository;
-    }
+//    private final ServiceRequestRepository requestRepository;
+//
+//    @Autowired
+//    public MdmsValidator(ServiceRequestRepository requestRepository) {
+//        this.requestRepository = requestRepository;
+//    }
 
     public void validateMdmsData(ApplicantPersonalRequest request, Object mdmsData) {
 

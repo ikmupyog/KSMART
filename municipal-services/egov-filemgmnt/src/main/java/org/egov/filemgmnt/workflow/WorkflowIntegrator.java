@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
@@ -12,7 +13,7 @@ import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
+import org.springframework.util.Assert;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,7 +34,7 @@ public class WorkflowIntegrator {
     private final FMConfiguration fmConfig;
 
     @Autowired
-    public WorkflowIntegrator(RestTemplate restTemplate, FMConfiguration fmConfig) {
+    WorkflowIntegrator(RestTemplate restTemplate, FMConfiguration fmConfig) {
         this.restTemplate = restTemplate;
         this.fmConfig = fmConfig;
     }
@@ -46,36 +47,35 @@ public class WorkflowIntegrator {
      *
      * and sets the resultant status from wf-response back to file details object
      *
-     * @param applicantPersonalRequest(filedetailsRequest)
+     * @param request the {@link ApplicantPersonalRequest}
      */
     public void callWorkFlow(ApplicantPersonalRequest request) {
 
-        ApplicantPersonal currentFile = request.getApplicantPersonals()
-                                               .get(0);
-        String wfTenantId = currentFile.getTenantId();
-        String businessServiceFromMDMS = request.getApplicantPersonals()
-                                                .isEmpty() ? null
-                                                        : currentFile.getFileDetail()
-                                                                     .getBusinessService();
+        ApplicantPersonal applicantPersonal = request.getApplicantPersonals()
+                                                     .get(0);
+        Assert.notNull(applicantPersonal, "Applicant personal must not be null");
 
-        if (businessServiceFromMDMS == null) {
-            businessServiceFromMDMS = FMConstants.businessService_FM;
+        String tenantId = applicantPersonal.getTenantId();
+        String businessService = applicantPersonal.getFileDetail()
+                                                  .getBusinessService();
+        String fileAction = applicantPersonal.getFileDetail()
+                                             .getAction();
+
+        if (businessService == null) {
+            businessService = FMConstants.BUSINESS_SERVICE_FM;
         }
 
         JSONArray array = new JSONArray();
 
         for (ApplicantPersonal personal : request.getApplicantPersonals()) {
-            if ((businessServiceFromMDMS.equals(FMConstants.businessService_FM)) || (!request.getApplicantPersonals()
-                                                                                             .get(0)
-                                                                                             .getFileDetail()
-                                                                                             .getAction()
-                                                                                             .equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW))) {
+            if (businessService.equals(FMConstants.BUSINESS_SERVICE_FM)
+                    || !fileAction.equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW)) {
 
                 JSONObject obj = new JSONObject();
                 List<Map<String, String>> uuidmaps = new LinkedList<>();
 
-                if (!CollectionUtils.isEmpty(personal.getFileDetail()
-                                                     .getAssignees())) {
+                if (CollectionUtils.isNotEmpty(personal.getFileDetail()
+                                                       .getAssignees())) {
 
                     // Adding assignes to processInstance
 
@@ -93,10 +93,10 @@ public class WorkflowIntegrator {
                 obj.put(FMConstants.BUSINESSIDKEY,
                         personal.getFileDetail()
                                 .getFileCode());
-                obj.put(FMConstants.TENANTIDKEY, wfTenantId);
+                obj.put(FMConstants.TENANTIDKEY, tenantId);
                 obj.put(FMConstants.BUSINESSSERVICEKEY,
-                        currentFile.getFileDetail()
-                                   .getWorkflowCode());
+                        applicantPersonal.getFileDetail()
+                                         .getWorkflowCode());
                 obj.put(FMConstants.MODULENAMEKEY, FMConstants.FMMODULENAMEVALUE);
                 obj.put(FMConstants.ACTIONKEY,
                         personal.getFileDetail()
@@ -120,6 +120,8 @@ public class WorkflowIntegrator {
             workFlowRequest.put(FMConstants.REQUESTINFOKEY, request.getRequestInfo());
             workFlowRequest.put(FMConstants.WORKFLOWREQUESTARRAYKEY, array);
             String response = null;
+            System.out.println("workflow Check  :" + workFlowRequest);
+            log.info("workflow integrator request " + workFlowRequest);
 
             try {
                 response = restTemplate.postForObject(fmConfig.getWfHost()
@@ -146,11 +148,12 @@ public class WorkflowIntegrator {
                         " Exception occured while integrating with workflow : " + e.getMessage());
             }
 
-            /*
-             * on success result from work-flow read the data and set the status back to TL
-             * object
-             */
+            log.info("workflow integrator response " + response);
 
+            // on success result from work-flow read the data and set the status back to TL
+            // object
+
+            System.out.println("response Check  :" + response);
             DocumentContext responseContext = JsonPath.parse(response);
             List<Map<String, Object>> responseArray = responseContext.read(FMConstants.PROCESSINSTANCESJOSNKEY);
             Map<String, String> idStatusMap = new HashMap<>();
