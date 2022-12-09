@@ -11,15 +11,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Slf4j
-
 public class CommunicationFileSearchCriteria {
 
     @JsonProperty("tenantId")
@@ -32,14 +29,11 @@ public class CommunicationFileSearchCriteria {
     private String fileCode;
 
     public boolean isEmpty() {
-
-        return (StringUtils.isBlank(tenantId) && StringUtils.isEmpty(fileCode));
-
+        return StringUtils.isBlank(tenantId) && StringUtils.isBlank(fileCode);
     }
 
     public boolean tenantIdOnly() {
-
-        return (StringUtils.isNotBlank(tenantId) && StringUtils.isEmpty(fileCode));
+        return StringUtils.isNotBlank(tenantId) && StringUtils.isBlank(fileCode);
     }
 
 }

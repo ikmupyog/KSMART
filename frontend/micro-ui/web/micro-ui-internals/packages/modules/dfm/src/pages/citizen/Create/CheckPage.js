@@ -41,7 +41,7 @@ const getPath = (path, params) => {
 };
 
 const CheckPage = ({ onSubmit, value }) => {
-  // console.log('val',value);
+  console.log('val',value);
   // let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -62,19 +62,19 @@ const CheckPage = ({ onSubmit, value }) => {
   // }
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null} */}
       <Card>
-        <CardHeader>{t("CS_CHECK_CHECK_YOUR_ANSWERS")}</CardHeader>
+        {/* <CardHeader>{t("CS_CHECK_CHECK_YOUR_ANSWERS")}</CardHeader>
         <CardText>{t("CS_CHECK_CHECK_YOUR_ANSWERS_TEXT")}</CardText>
         {isEdit && <CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_RENEWAL_INFO_TEXT")} />}
-        <CardSubHeader>{t("TL_LOCALIZATION_TRADE_DETAILS")}</CardSubHeader>
+        <CardSubHeader>{t("TL_LOCALIZATION_TRADE_DETAILS")}</CardSubHeader> */}
         <StatusTable>
           {/* <Row
             label={t("TL_LOCALIZATION_TRADE_NAME")}
             text={t(TradeDetails?.TradeName)}
             actionButton={<ActionButton jumpTo={`${routeLink}/TradeName`} />}
           /> */}
-          <Row
+          {/* <Row
             label={t("ApplicationDetails")}
             text={t(TradeDetails?.TradeName)}
             actionButton={<ActionButton jumpTo={`${routeLink}/ApplicationDetails`} />}
@@ -93,7 +93,7 @@ const CheckPage = ({ onSubmit, value }) => {
             label={t("DocumentDetails")}
             text={t(TradeDetails?.TradeName)}
             actionButton={<ActionButton jumpTo={`${routeLink}/DocumentDetails`} />}
-          />
+          /> */}
 
           {/* <Row
             label={t("TL_STRUCTURE_TYPE")}
@@ -175,7 +175,7 @@ const CheckPage = ({ onSubmit, value }) => {
                 />
               </div>
             ))} */}
-          <CardSubHeader>{t("TL_NEW_TRADE_DETAILS_HEADER_TRADE_LOC_DETAILS")}</CardSubHeader>
+          {/* <CardSubHeader>{t("TL_NEW_TRADE_DETAILS_HEADER_TRADE_LOC_DETAILS")}</CardSubHeader> */}
           {/* {cpt && cpt.details && cpt.details.propertyId ? (
             <React.Fragment>
               <Row
@@ -209,7 +209,7 @@ const CheckPage = ({ onSubmit, value }) => {
               actionButton={<ActionButton jumpTo={`${routeLink}/map`} />}
             />
           )} */}
-          <CardSubHeader>{t("TL_NEW_OWNER_DETAILS_HEADER")}</CardSubHeader>
+          {/* <CardSubHeader>{t("TL_NEW_OWNER_DETAILS_HEADER")}</CardSubHeader> */}
           {/* {owners.owners &&
             owners.owners.map((owner, index) => (
               <div key={index}>
@@ -249,7 +249,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   text={t(owners?.permanentAddress)}
                   actionButton={<ActionButton jumpTo={`${routeLink}/owner-address`} />}
             /> */}
-          <CardSubHeader>{t("TL_COMMON_DOCS")}</CardSubHeader>
+          {/* <CardSubHeader>{t("TL_COMMON_DOCS")}</CardSubHeader> */}
           {/* <ActionButton jumpTo={`${routeLink}/proof-of-identity`} /> */}
           {/* <div>
             {owners?.documents["OwnerPhotoProof"] || owners?.documents["ProofOfIdentity"] || owners?.documents["ProofOfOwnership"] ? (

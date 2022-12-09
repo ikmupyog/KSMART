@@ -14,6 +14,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   let config = [];
+  const [submitResponse,updateSubmitResponse] = useState([])
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("DFM_CREATE_APPLICATION", {});
   const [submitResponse,updateSubmitResponse] = useState([])
   // console.log(params);
@@ -219,6 +220,135 @@ const redirect=()=>{
     history.push(`${match.path}/acknowledgement`);
   };
 
+
+  const handleSubmit = async ()=>{
+    console.log('loged');
+  let dfmPayload ={
+    "RequestInfo": {
+        "apiId": "apiId",
+        "ver": "1.0",
+        "ts": null,
+        "action": null,
+        "did": null,
+        "key": null,
+        "msgId": null,
+        "authToken": "e1da9783-0cc3-4723-a82a-3b5e302b08fa",
+        "correlationId": null,
+        "userInfo": {
+            "id": 4664,
+            "userName": "ANISHFM",
+            "name": null,
+            "type": null,
+            "mobileNumber": null,
+            "emailId": null,
+            "tenantId": "kl",
+            "roles": [
+                {
+                    "name": "CITIZEN",
+                    "code": "FM_CEMP",
+                    "tenantId": "kl"
+                }
+            ],
+            "uuid": "d75bfcda-bded-4c58-b3f9-38bf9dbbbf95"
+        }
+    },
+    "ApplicantPersonals": [
+        {
+            "id": 1,
+            "aadhaarNo": 62234567,
+            "email": null,
+            "firstName": "KP",
+            "lastName": "GG",
+            "title": null,
+            "mobileNo": 9446903827,
+            "tenantId": "kl",
+            "serviceDetails": {
+                "id": 1,
+                "applicantPersonalId": 23,
+                "serviceId": 16,
+                "serviceCode": "PN001.ALP",
+                "serviceSubType": 2,
+                "serviceMinorType": 5
+            },
+            "applicantAddress": {
+                "id": 1,
+                "applicantPersonalId": 23,
+                "houseNo": "45",
+                "houseName": "Smile",
+                "street": "Mannanthala",
+                "pincode": "695008",
+                "postOfficeName": "Ulloor"
+            },
+            "applicantServiceDocuments": {
+                "id": 1,
+                "applicantPersonalId": 23,
+                "documentTypeId": 2,
+                "fileStoreId": 537,
+                "serviceDetailsId": 34,
+                "active": "Yes",
+                "documentNumber": 12345,
+                "applicationdetails": "aaaa"
+            },
+            "applicantDocuments": {
+                "id": 1,
+                "applicantPersonalId": 23,
+                "documenttypeId": 2,
+                "documentNumber": 12345,
+                "docexpiryDate": 1234577
+            },
+            "fileDetail": {
+                "id": 1,
+                "applicantPersonalId": 23,
+                "tenantId": "kl",
+                "serviceDetailsId": 537,
+                "fileNumber": 1,
+                "fileCode": "KL-FM-2022-11-02-000043",
+                "fileName": "PensionAdalath",
+                "fileArisingMode": 1,
+                "fileArisingDate": null,
+                "financialYear": 2022,
+                "applicationDate": null,
+                "workflowCode": "NewDFM",
+                "action": "INITIATE",
+                "fileStatus": 1,
+                "businessService": 89,
+                "comment": "Test",
+                "assignee": [
+                   
+                ]
+            },
+            "auditDetails": {
+                "createdBy": null,
+                "lastModifiedBy": null,
+                "createdTime": null,
+                "lastModifiedTime": null
+            }
+        }
+    ]
+}
+   let pgrPayload= {"service":{"tenantId":"kl.cochin","serviceCode":"NoStreetlight","description":"test","additionalDetail":{},"source":"web","address":{"city":"Cochin Corporation","district":"Cochin Corporation","region":"Cochin Corporation","state":"Kerala","locality":{"code":"56","name":"Panampilli Nagar"},"geoLocation":{}}},"workflow":{"action":"APPLY"},"RequestInfo":{"apiId":"Rainmaker","authToken":"0b34c11a-b204-43ce-9ec5-e77ffa347fea","userInfo":{"id":104,"uuid":"d7b3a2f5-e6f0-4967-a4bb-257ff3c05e5f","userName":"9999999999","name":"sfsadf","mobileNumber":"9999999999","emailId":"ikm@kerala.gov.in","locale":null,"type":"CITIZEN","roles":[{"name":"Citizen","code":"CITIZEN","tenantId":"kl"}],"active":true,"tenantId":"kl","permanentCity":null},"msgId":"1669898299780|en_IN"}}
+    // const response = await Digit.PGRService.create(pgrPayload, "kl"); 
+    const response = await Digit.DFMService.create(dfmPayload, "kl");
+    if(response.responseInfo.status ==="successful"){
+      console.log('log');
+      updateSubmitResponse(response.ServiceWrappers) 
+    }
+    console.log(response);
+  }
+  useEffect(()=>{
+    redirect()
+  },[submitResponse?.length>0])
+  const redirect=()=>{
+    if(submitResponse?.length>0){
+      console.log('dasg',submitResponse);
+      history.push({
+        pathname: `${match.path}/acknowledgement`,
+        state: { detail: submitResponse }
+    });
+      // history.push(`${match.path}/acknowledgement`);
+    }
+  }
+
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     if(key === "isSkip" && data === true)
@@ -277,12 +407,20 @@ const redirect=()=>{
       {/* <Route path={`${match.path}/check`}>
         <CheckPage onSubmit={createProperty} value={params} />
       </Route> */}
+<<<<<<< HEAD
       {/* <Route path={`${match.path}/acknowledgement`}>
         <TLAcknowledgement data={params} onSuccess={onSuccess} />
       </Route> */}
       <Route path={`${match.path}/acknowledgement`}>
         <Acknowledgement res={submitResponse}  />
+=======
+      <Route path={`${match.path}/acknowledgement`}>
+        <DFMAcknowledgement res={submitResponse}  />
+>>>>>>> 780099849822b950b686f38a853f16c1189d56b8
       </Route>
+      {/* <Route path={`${match.path}/acknowledgement`}>
+        <TLAcknowledgement data={params} onSuccess={onSuccess} />
+      </Route> */}
       <Route>
         <Redirect to={`${match.path}/${config.indexRoute}`} />
       </Route>

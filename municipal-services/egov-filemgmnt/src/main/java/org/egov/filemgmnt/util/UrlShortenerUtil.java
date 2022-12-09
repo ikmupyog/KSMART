@@ -25,13 +25,6 @@ public class UrlShortenerUtil {
     private String urShortnerPath;
 
     public String getShortenedUrl(String url) {
-
-//        HashMap<String, String> body = new HashMap<>();
-//        body.put("url", url);
-//        StringBuilder builder = new StringBuilder(urlShortnerHost);
-//        builder.append(urShortnerPath);
-//        String response = restTemplate.postForObject(builder.toString(), body, String.class);
-
         Map<String, String> body = Collections.singletonMap("url", url);
 
         String response = restTemplate.postForObject(urlShortnerHost, body, String.class);
