@@ -662,7 +662,7 @@ export const newConfig = [
         route: "family-informationq",
         component: "FamilyInformationBirth",
         texts: {
-          headerCaption: "hjlkbb",
+          headerCaption: "",
           header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",

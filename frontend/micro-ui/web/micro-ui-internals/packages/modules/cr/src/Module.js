@@ -15,9 +15,8 @@ import HospitalDetails from "./pageComponents/birthComponents/HospitalDetails";
 import OtherCountry from "./pageComponents/birthComponents/OtherCountry";
 import InstitutionDetails from "./pageComponents/birthComponents/InstitutionDetails";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
-
+//@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
-import InformationDeath1 from "../src/pageComponents/deathComponents/InformationDeath1";
 import AddressOfDecesed from "./pageComponents/deathComponents/AddressOfDecesed";
 import OutSideIndia from "./pageComponents/deathComponents/OutSideIndia";
 import FamilyInformationBirth from "./pageComponents/deathComponents/FamilyInformationBIrth";
@@ -144,7 +143,6 @@ const componentsToRegister = {
   ChildDetails,
 
   InformationDeath,
-  InformationDeath1,
   AddressOfDecesed,
   OutSideIndia,
   FamilyInformationBirth,

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import AdressOutside from "./AdressOutside";
 import AdressInside from "./AdressInside" ;
 import OutSideIndia from "./OutSideIndia";
 

@@ -10,19 +10,30 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
+  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
 
   const [setTitle, setSelectedTitle] = useState(formData?.DeathDetails?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.DeathDetails?.setTitle);
-
   // const [setReligion, setSelectedReligion] = useState(formData?.TradeDetails?.setReligion);
   const [setCountry, setSelectedCountry] = useState(formData?.TradeDetails?.setCountry);
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.DeathDetails?.setPlaceofActivity);
+  const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
+
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
+  const [FirstName, setFirstName] = useState(null);
+  const [MiddleName, setMiddleName] = useState(null);
+  const [LastName, setLastName] = useState(null);
+
   const [CommencementDate, setCommencementDate] = useState();
+  const [DeathDate, setDeathDate] = useState();
+  const [FromDate, setFromDate] = useState();
+  const [ToDate, setToDate] = useState();
+
   let naturetypecmbvalue = null;
   let cmbPlace = [];
   place &&
@@ -42,13 +53,19 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     title["common-masters"].Title.map((ob) => {
       cmbTitle.push(ob);
     });
-//   let cmbreligion = [];
-//   console.log(religion);
-// //   religion &&
-// //     religion["common-masters"] &&
-// //     religion["common-masters"].religion.map((ob) => {
-// //       cmbreligion.push(ob);
-// //     });
+  let menu = [];
+  Menu &&
+    Menu.map((genderDetails) => {
+      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+    });
+
+  //   let cmbreligion = [];
+  //   console.log(religion);
+  // //   religion &&
+  // //     religion["common-masters"] &&
+  // //     religion["common-masters"].religion.map((ob) => {
+  // //       cmbreligion.push(ob);
+  // //     });
 
   const onSkip = () => onSelect();
 
@@ -68,17 +85,37 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedCountry(value);
   }
-
+  function setselectGender(value) {
+    selectGender(value);
+  }
   // function selectReligion(value) {
   //   naturetypecmbvalue = value.code.substring(0, 4);
   //   setSelectedReligion(value);
   // }
-
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
+  function setSelectFirstName(e) {
+    setFirstName(e.target.value);
+  }
+  function setSelectMiddleName(e) {
+    setMiddleName(e.target.value);
+  }
+  function setSelectLastName(e) {
+    setLastName(e.target.value);
+  }
+
   function selectCommencementDate(value) {
     setCommencementDate(value);
+  }
+  function selectDeathDate(value) {
+    setDeathDate(value);
+  }
+  function selectFromDate(value) {
+    setFromDate(value);
+  }
+  function selectToDate(value) {
+    setToDate(value);
   }
 
   const goNext = () => {
@@ -90,7 +127,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         {/* //    isDisabled={!CommencementDate} */}
-        {/* <header className="tittle">Information Deceased </header> */}
+        <header className="tittle">Information Deceased </header>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -98,12 +135,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             </h1>
           </div>
         </div>
-
         <div className="row">
           <div className="col-md-6">
             <CardLabel>{t("Date of Death")}</CardLabel>
             {/* date={CommencementDate} */}
-            <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} />
+            <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} />
           </div>
           <div className="col-md-2">
             <CardLabel>{t("Time of Death")}</CardLabel>
@@ -152,7 +188,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-3">
             <CardLabel>{t("From Date")}</CardLabel>
             {/* date={CommencementDate} */}
-            <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} />
+            <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
           </div>
           <div className="col-md-1">
             <CardLabel>{t("From Time")}</CardLabel>
@@ -199,7 +235,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-3">
             <CardLabel>{t("To Date")}</CardLabel>
             {/* date={CommencementDate} */}
-            <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} />
+            <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
           </div>
           <div className="col-md-1">
             <CardLabel>{t("To Time")}</CardLabel>
@@ -265,9 +301,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="FirstName"
+              value={FirstName}
+              onChange={setSelectFirstName}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -279,23 +315,23 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="MiddleName"
+              value={MiddleName}
+              onChange={setSelectMiddleName}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
           <div className="col-md-3">
-            <CardLabel>{`${t("Last Name (English)")}`}</CardLabel>
+            <CardLabel>{`${t("LastName (English)")}`}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="LastName"
+              value={LastName}
+              onChange={setSelectLastName}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -352,15 +388,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{t("Gender of Deceased")}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="code"
-              isMandatory={false}
-              option={cmbPlace}
-              selected={setPlaceofActivity}
-              select={selectPlaceofactivity}
-              disabled={isEdit}
-            />
+            <Dropdown t={t} optionKey="name" isMandatory={false} option={menu} selected={Gender} select={setselectGender} disabled={isEdit} />
+
           </div>
           <div className="col-md-4">
             <CardLabel>{`${t("Date of Birth of Deceased ")}`}</CardLabel>
