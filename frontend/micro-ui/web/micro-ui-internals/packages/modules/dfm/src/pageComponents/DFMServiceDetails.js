@@ -104,10 +104,10 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} 
+      {/* <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} 
       isDisabled={!serviceDetails.fileStoreId || error}
       >
-        {/* <CardLabelDesc style={{ fontWeight: "unset" }}>{t(`TL_UPLOAD_RESTRICTIONS_TYPES`)}</CardLabelDesc> */}
+        <CardLabelDesc style={{ fontWeight: "unset" }}>{t(`TL_UPLOAD_RESTRICTIONS_TYPES`)}</CardLabelDesc>
         <CardLabelDesc style={{ fontWeight: "unset" }}> {t(`TL_UPLOAD_RESTRICTIONS_SIZE`)}</CardLabelDesc>
         <FormInputGroup
           type="TextInput"
@@ -119,7 +119,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
           mystyle={mystyle}
         />
         <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
-        {/* <Dropdown
+        <Dropdown
         t={t}
         isMandatory={false}
         option={dropdownData}
@@ -127,7 +127,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
         optionKey="i18nKey"
         select={setTypeOfDropdownValue}
         //placeholder={t(`PT_MUTATION_SELECT_DOC_LABEL`)}
-      /> */}
+      />
         <UploadFile
           id={"dfm-doc"}
           extraStyleName={"propertyCreate"}
@@ -144,6 +144,62 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
         />
         {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
         <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
+      </FormStep> */}
+
+      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
+        {/* return ( */}
+        <div>
+          <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("SELECT TYPE OF SERVICE DETAILS")}*`}</span>
+                </h1>
+              </div>
+            </div>
+            <div className="row">
+              {/* {!isLoading ? ( */}
+              <div className="col-md-4">
+                {/* <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}*`}</CardLabel>
+                        <Dropdown t={t}  optionKey="i18nKey" name={`TradeCategory`} placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}*`} /> */}
+                <FormInputGroup
+                  type="TextInput"
+                  handleChange={handleChange}
+                  t={t}
+                  value={serviceDetails.details}
+                  name="details"
+                  label=" Details"
+                  mystyle={mystyle}
+                />
+              </div>
+              {/* ) : (
+                <Loader />
+              )} */}
+              <div className="col-md-4">
+                {/* <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}*`}</CardLabel>
+                        <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory}  placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}*`} /> */}
+                <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
+                <UploadFile
+                  id={"dfm-doc"}
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile}
+                  onDelete={() => {
+                    setUploadedFile(null);
+                    let tempData = { ...serviceDetails };
+                    tempData.fileStoreId = null;
+                    setServiceDetails(tempData);
+                  }}
+                  message={serviceDetails.fileStoreId ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  error={error}
+                />
+                {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
+                <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
+              </div>
+            </div>
+          </div>
+          {/* ); */}
+        </div>
       </FormStep>
     </React.Fragment>
   );

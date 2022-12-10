@@ -65,7 +65,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
-
+const getCRPlaceMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "PlaceMaster",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCriteria = (tenantId, moduleDetails) => {
   return {
     MdmsCriteria: {
@@ -475,6 +489,30 @@ const getTLStructureTypePlaceList = (tenantId, moduleCode, type) => ({
       {
         moduleName: "TradeLicense",
         masterDetails: [{ name: "TradeStructureSubtype" }],
+      },
+    ],
+  },
+});
+const getTLNatureOfInstitutionList = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: "TradeLicense",
+        masterDetails: [{ name: "NatureOfInstitution" }],
+      },
+    ],
+  },
+});
+const getTLTypeOfInstitutionList = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: "TradeLicense",
+        masterDetails: [{ name: "TypeOfUnit" }],
       },
     ],
   },
@@ -1118,6 +1156,14 @@ const TLGenderType = (MdmsRes) => {
     };
   });
 };
+const CRGenderType = (MdmsRes) => {
+  MdmsRes["common-masters"].GenderType.filter((GenderType) => GenderType.active).map((genders) => {
+    return {
+      ...genders,
+      i18nKey: `CR_GENDER_${genders.code}`,
+    };
+  });
+};
 
 const PTGenderType = (MdmsRes) => {
   MdmsRes["common-masters"].GenderType.filter((GenderType) => GenderType.active).map((formGender) => {
@@ -1296,6 +1342,8 @@ const transformResponse = (type, MdmsRes, moduleCode, tenantId) => {
       return getGenderType(MdmsRes);
     case "TLGendertype":
       return TLGenderType(MdmsRes);
+    case "CRGenderType":
+        return CRGenderType(MdmsRes);
     case "PTGenderType":
       return PTGenderType(MdmsRes);
     case "HRGenderType":
@@ -1420,6 +1468,9 @@ export const MdmsService = {
     PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
   },
+  getCRPlaceMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRPlaceMasterList(tenantId, moduleCode), moduleCode);
+  },
   getServiceDefs: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getModuleServiceDefsCriteria(tenantId, moduleCode), moduleCode);
   },
@@ -1510,6 +1561,12 @@ export const MdmsService = {
   getTLStructureTypePlace: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLStructureTypePlaceList(tenantId, moduleCode), moduleCode);
   },
+  getTLNatureOfInstitution: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLNatureOfInstitutionList(tenantId, moduleCode), moduleCode);
+  },
+  getTLTypeOfInstitution: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLTypeOfInstitutionList(tenantId, moduleCode), moduleCode);
+  },
   getTLNatureOfStructure: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLNatureOfStructureList(tenantId, moduleCode), moduleCode);
   },
@@ -1583,6 +1640,10 @@ export const MdmsService = {
   },
 
   TLGenderType: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getGenderTypeList(tenantId, moduleCode, type), moduleCode);
+  },
+
+  CRGenderType: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getGenderTypeList(tenantId, moduleCode, type), moduleCode);
   },
 

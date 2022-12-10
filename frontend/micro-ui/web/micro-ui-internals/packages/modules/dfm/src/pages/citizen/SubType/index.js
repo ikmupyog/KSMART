@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { BackButton, PrivateRoute, BreadCrumb, CommonDashboard ,FormInputGroup,SubmitBar} from "@egovernments/digit-ui-react-components";
+import { BackButton, PrivateRoute, BreadCrumb, CommonDashboard ,FormInputGroup,SubmitBar,CardLabelError} from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import CreateTradeLicence from '../Create'
 
@@ -14,6 +14,7 @@ const SubType = ({ path ,handleNext}) => {
     subtype:[],
     functionality:[],
   })
+  const [showError,setShowError] = useState(false)
 //   console.log(state);
   let modules = state.common.modules;
   let stateInfo = state.common.stateInfo;
@@ -73,7 +74,12 @@ const SubType = ({ path ,handleNext}) => {
   ];
   const onSubmit=()=>{
     // console.log('sub');
-    handleNext()
+    if(subtypeData.subtype?.value && subtypeData.functionality?.value){
+      handleNext()
+    }else{
+      setShowError(true)
+    }
+   
   }
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
@@ -95,6 +101,7 @@ const SubType = ({ path ,handleNext}) => {
             type="Dropdown" handleChange={handleChange}   t={t} value={subtypeData.subtype} name="functionality" label="Functionality"
             selectOptions={functionalityOptions} 
         />
+         {showError ? <CardLabelError>{t("Please Select SubType")}</CardLabelError> : null}
         <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} />
        </div>
         </div>
