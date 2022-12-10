@@ -10,7 +10,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
-  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  // const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
 
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
 
@@ -19,7 +19,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   // const [setReligion, setSelectedReligion] = useState(formData?.TradeDetails?.setReligion);
   const [setCountry, setSelectedCountry] = useState(formData?.TradeDetails?.setCountry);
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.DeathDetails?.setPlaceofActivity);
-  const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
+  // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
 
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
@@ -53,11 +53,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     title["common-masters"].Title.map((ob) => {
       cmbTitle.push(ob);
     });
-  let menu = [];
-  Menu &&
-    Menu.map((genderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
-    });
+  // let menu = [];
+  // Menu &&
+  //   Menu.map((genderDetails) => {
+  //     menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+  //   });
 
   //   let cmbreligion = [];
   //   console.log(religion);
@@ -388,7 +388,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{t("Gender of Deceased")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={menu} selected={Gender} select={setselectGender} disabled={isEdit} />
+            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
 
           </div>
           <div className="col-md-4">
