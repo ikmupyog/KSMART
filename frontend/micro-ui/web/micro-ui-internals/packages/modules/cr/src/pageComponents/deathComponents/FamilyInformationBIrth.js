@@ -99,11 +99,11 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-4">
-            <CardLabel>{`${t("Tittle")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TITLE_EN")}`}</CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitle} select={selectTitle} disabled={isEdit} />
           </div>
           <div className="col-md-4">
-            <CardLabel>{`${t("Name (English)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -117,7 +117,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             />
           </div>
           <div className="col-md-4">
-            <CardLabel>{`${t(" Name (Malayalam)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_NAME_ML")}`}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -133,7 +133,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <CardLabel>{t("Aadhar No")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -166,11 +166,11 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-4">
-            <CardLabel>{`${t("Tittle")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TITLE_EN")}`}</CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
           </div>
           <div className="col-md-4">
-            <CardLabel>{`${t("Name (English)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -184,7 +184,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             />
           </div>
           <div className="col-md-4">
-            <CardLabel>{`${t(" Name (Malayalam)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_NAME_ML")}`}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -200,7 +200,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <CardLabel>{t("Aadhar No")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
