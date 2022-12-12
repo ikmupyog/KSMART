@@ -70,7 +70,6 @@ public class WorkflowIntegrator {
             if (businessService.equals(FMConstants.BUSINESS_SERVICE_FM)
                     || !fileAction.equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW)) {
 
-                JSONObject obj = new JSONObject();
                 List<Map<String, String>> uuidmaps = new LinkedList<>();
 
                 if (CollectionUtils.isNotEmpty(personal.getFileDetail()
@@ -88,7 +87,8 @@ public class WorkflowIntegrator {
                                 uuidmaps.add(uuidMap);
                             });
                 }
-
+                // json Object for workflow transition start
+                JSONObject obj = new JSONObject();
                 obj.put(FMConstants.BUSINESSIDKEY,
                         personal.getFileDetail()
                                 .getFileCode());
@@ -110,11 +110,18 @@ public class WorkflowIntegrator {
                 obj.put(FMConstants.DOCUMENTSKEY,
                         personal.getFileDetail()
                                 .getWfDocuments());
+
+                // json object end
+
+                // create an array for Json-ProcessInstances ( workflow service's request part
+                // has two json values 1.RequestInfo,2.ProcessInstances)
                 array.add(obj);
             }
         }
 
         if (!CollectionUtils.isEmpty(array)) {
+
+            // Create WorkflowRequest Json
             JSONObject workFlowRequest = new JSONObject();
             workFlowRequest.put(FMConstants.REQUESTINFOKEY, request.getRequestInfo());
             workFlowRequest.put(FMConstants.WORKFLOWREQUESTARRAYKEY, array);
@@ -123,6 +130,7 @@ public class WorkflowIntegrator {
             log.info("workflow integrator request " + workFlowRequest);
 
             try {
+                // workflow service integration and get response from ws
                 response = restTemplate.postForObject(fmConfig.getWfHost()
                                                               .concat(fmConfig.getWfTransitionPath()),
                                                       workFlowRequest,
@@ -149,7 +157,8 @@ public class WorkflowIntegrator {
 
             log.info("workflow integrator response " + response);
 
-            // on success result from work-flow read the data and set the status back to TL
+            // on success result from work-flow read the data and set the status back to
+            // Filedetails (filestatus)
             // object
 
             System.out.println("response Check  :" + response);
@@ -162,7 +171,7 @@ public class WorkflowIntegrator {
                 idStatusMap.put(instanceContext.read(FMConstants.BUSINESSIDJOSNKEY),
                                 instanceContext.read(FMConstants.STATUSJSONKEY));
             });
-            // setting the status back to TL object from wf response
+            // setting the status back to FileDetails object from wf response
             request.getApplicantPersonals()
                    .forEach(fmObj -> fmObj.getFileDetail()
                                           .setFileStatus(idStatusMap.get(fmObj.getFileDetail()
