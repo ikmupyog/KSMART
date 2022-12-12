@@ -46,14 +46,14 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
         <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death Vechicle")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH_VECHICLE")}`}
                 </span> 
             </h1>
         </div>
     </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Driver Name(in English) ")}</CardLabel>
+            <CardLabel>{t("")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -68,7 +68,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
            
         </div>
         <div className="col-md-6" >
-            <CardLabel>{t("Driver Name(in Malayalam) ")}</CardLabel>
+            <CardLabel>{t("CR_DRIVER_NAME_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -85,7 +85,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
         <div className="col-md-4" >
-        <CardLabel>{t("Moble No")}</CardLabel>
+        <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -99,7 +99,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-4" >
-        <CardLabel>{t("Age")}</CardLabel>
+        <CardLabel>{t("CR_AGE")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -113,7 +113,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-4 " >
-            <CardLabel>{`${t("Aadhar No")}`}</CardLabel>
+            <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -130,7 +130,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
          
     <div className="row">    
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Vehicle Type")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -145,7 +145,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
         </div>
          
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Registration No")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_REGISTRATION_NO")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -162,7 +162,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
 
     <div className="row">    
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Vehicle From")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_FROM")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -176,7 +176,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Vehicle To")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_TO")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -193,7 +193,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   
     <div className="row">    
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Ward")}`}</CardLabel>
+        <CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
         <Dropdown
                 t={t}
                 optionKey="code"
@@ -205,7 +205,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Admitted Hospital")}`}</CardLabel>
+        <CardLabel>{`${t("CR_ADMITTED_HOSPITAL")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -221,7 +221,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
     </div>
     <div className="row">
          <div className="col-md-6" >
-          <CardLabel>{`${t("Other Details (in English)")}`}</CardLabel>
+          <CardLabel>{`${t("CR_OTHER_DETAILLS_EN")}`}</CardLabel>
             <TextArea       
             t={t}
             isMandatory={false}
@@ -235,7 +235,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             />
         </div>
          <div className="col-md-6" >
-         <CardLabel>{`${t("Other Details (in Malayalam)")}`}</CardLabel>
+         <CardLabel>{`${t("CR_OTHER_DETAILLS_ML")}`}</CardLabel>
             <TextArea       
             t={t}
             isMandatory={false}

@@ -70,7 +70,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
             <div className="col-md-12" >
                 <h1 className="headingh1" >
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Date of Death")}`}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DATE_OF_DEATH")}`}
                     </span> 
                 </h1>
             </div>
@@ -78,12 +78,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Date of Death")}</CardLabel>
+            <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
             {/* date={CommencementDate} */}
             <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate}  />
         </div>
         <div className="col-md-2" >
-            <CardLabel>{t("Time of Death")}</CardLabel>
+            <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -127,12 +127,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       </div>
       <div className="row">
         <div className="col-md-3" >
-            <CardLabel>{t("From Date")}</CardLabel>
+            <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
             {/* date={CommencementDate} */}
             <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate}  />
         </div>
         <div className="col-md-1" >
-            <CardLabel>{t("From Time")}</CardLabel>
+            <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -174,12 +174,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />            
         </div>
         <div className="col-md-3" >
-            <CardLabel>{t("To Date")}</CardLabel>
+            <CardLabel>{t("CR_TO_DATE")}</CardLabel>
             {/* date={CommencementDate} */}
             <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate}  />
         </div>
         <div className="col-md-1" >
-            <CardLabel>{t("To Time")}</CardLabel>
+            <CardLabel>{t("CR_TO_TIME")}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -225,7 +225,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Name of Deceased")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_DECEASED")}`}
                 </span> 
             </h1>
         </div>
@@ -233,7 +233,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
     <div className="row"> 
         <div className="col-md-3" > 
-            <CardLabel>{`${t("Tittle")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TITLE_EN")}`}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -245,7 +245,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
         </div>  
         <div className="col-md-3" > 
-            <CardLabel>{`${t("First Name (English)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -259,7 +259,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-3" >
-            <CardLabel>{`${t("Middle Name (English)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -273,7 +273,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-3" >
-            <CardLabel>{`${t("Last Name (English)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -289,7 +289,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     </div>
     <div className="row">  
         <div className="col-md-3" > 
-            <CardLabel>{`${t("Tittle")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TITLE_ML")}`}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -301,7 +301,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
         </div>    
         <div className="col-md-3" > 
-            <CardLabel>{`${t("First Name (Malayalam)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -315,7 +315,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-3" >
-            <CardLabel>{`${t("Middle Name (Malayalam)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_MIDDLE_NAME_ML)")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -329,7 +329,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-3">
-            <CardLabel>{`${t("Last Name (Malayalam)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -345,7 +345,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     </div>     
     <div className="row">    
         <div className="col-md-4" > 
-           <CardLabel>{t("Gender of Deceased")}</CardLabel>
+           <CardLabel>{t("CR_GENDER")}</CardLabel>
            <Dropdown
                t={t}
                optionKey="code"
@@ -357,12 +357,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-4" >
-            <CardLabel>{`${t("Date of Birth of Deceased ")}`}</CardLabel>
+            <CardLabel>{`${t("CR_DATE_OF_BIRTH_DECEASED")}`}</CardLabel>
              {/* date={CommencementDate} */}
             <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate}  />
         </div>
         <div className="col-md-4">
-            <CardLabel>{`${t("Age of Birth of Deceased")}`}</CardLabel>
+            <CardLabel>{`${t("CR_AGE_OF_BIRTH_DECEASED")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -380,7 +380,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Aadhar of Deceased")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADHAR_OF_DECEASED")}`}
                 </span> 
             </h1>
         </div>
@@ -388,7 +388,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     
     <div className="row">    
         <div className="col-md-12" > 
-           <CardLabel>{t("Aadhar No")}</CardLabel>
+           <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -405,7 +405,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Passport Details of Deceased")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PASSPORT_DETAILS")}`}
                 </span> 
             </h1>
         </div>
@@ -413,7 +413,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
  
     <div className="row">    
         <div className="col-md-4" > 
-           <CardLabel>{t("Passport No ")}</CardLabel>
+           <CardLabel>{t("CR_PASSPORT")}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -427,7 +427,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />  
         </div>
         <div className="col-md-4" > 
-           <CardLabel>{t("Nationality")}</CardLabel>
+           <CardLabel>{t("CR_NATIONALITY")}</CardLabel>
            <Dropdown
                t={t}
                optionKey="code"
@@ -439,7 +439,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-4" > 
-           <CardLabel>{t("Religion")}</CardLabel>
+           <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
            <Dropdown
                t={t}
                optionKey="code"

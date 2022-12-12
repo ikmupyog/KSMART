@@ -42,7 +42,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
-        <header className="tittle">Informent Address </header>
+        <header className="tittle">CR_INFORMENT_ADDRESS </header>
         <div className="row">    
         <div className="col-md-12 col-lg-12" > 
           <div className="col-md-4 " > 
@@ -50,7 +50,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-4 " > 
           <h1 className="headingh1" >
-              <span>Address</span>
+              <span>CR_ADDRESS</span>
           </h1>
           </div>
           <div className="col-md-4" > 
@@ -61,7 +61,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Building No")}</CardLabel>
+            <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -75,7 +75,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("House No")}</CardLabel>
+            <CardLabel>{t("CR_HOUSE_NO")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -91,7 +91,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Locality (English)")}</CardLabel>
+            <CardLabel>{t("CR_LOCALITY_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -105,7 +105,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("Locality (Malayalam)")}</CardLabel>
+            <CardLabel>{t("CR_LOCALITY_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -121,7 +121,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     </div>  
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("City (English)")}</CardLabel>
+            <CardLabel>{t("CR_CITY_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -135,7 +135,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("City (Malayalam)")}</CardLabel>
+            <CardLabel>{t("CR_CITY_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -151,7 +151,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     </div>  
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Village")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_VILLAGE")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -163,7 +163,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             />
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("Tenand")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_LB_NAME")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -177,7 +177,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     </div>       
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Taluk")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_TALUK")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -189,7 +189,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             />
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("District")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_DISTRICT")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -203,7 +203,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     </div>     
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Post Office")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_POST_OFFICE")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -215,7 +215,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             />
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("Pin Code")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_PIN_CODE")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}

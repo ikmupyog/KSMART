@@ -51,7 +51,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH")}`}
                 </span> 
             </h1>
         </div>
@@ -59,7 +59,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
  
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Death Place")}</CardLabel>
+            <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"

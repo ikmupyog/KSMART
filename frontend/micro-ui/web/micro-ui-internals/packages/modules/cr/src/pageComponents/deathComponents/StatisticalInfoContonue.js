@@ -46,7 +46,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     
       <div className="row">    
         <div className="col-md-6" > 
-           <CardLabel>{t("Type of medical attention received before death ")}</CardLabel>  
+           <CardLabel>{t("CR_MEDICAL_ATTENTION_DEATH")}</CardLabel>  
            <Dropdown
                 t={t}
                 optionKey="code"
@@ -58,7 +58,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
             />           
         </div>
         <div className="col-md-6" > 
-           <CardLabel>{t("Was the cause of death medically certified ?")}</CardLabel>  
+           <CardLabel>{t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED")}</CardLabel>  
            <Dropdown
                 t={t}
                 optionKey="code"
@@ -72,7 +72,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
       </div>
       <div className="row">    
         <div className="col-md-6" > 
-           <CardLabel>{t("Name of Illness / Actual cause of death (Main part) ")}</CardLabel>  
+           <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}</CardLabel>  
            <Dropdown
                 t={t}
                 optionKey="code"
@@ -84,7 +84,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
             />           
         </div>
         <div className="col-md-6" > 
-           <CardLabel>{t("Name of Illness / Actual cause of death (Sub part)")}</CardLabel>  
+           <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}</CardLabel>  
            <Dropdown
                 t={t}
                 optionKey="code"
@@ -95,13 +95,10 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
             />           
         </div>
-      </div>
-
-      
-      
+      </div>        
       <div className="row">    
         <div className="col-md-6" > 
-           <CardLabel>{t("Name of Illness / Actual cause of death (Other) (Malayalam) ")}</CardLabel>  
+           <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER_ML")}</CardLabel>  
            <TextInput       
                 t={t}
                 isMandatory={false}
@@ -115,7 +112,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
             />           
         </div>
         <div className="col-md-6" > 
-           <CardLabel>{t("In case this is a female death, did the death occur While pregnant, at the time of delivery or within 6 weeks after the end of pregnancy")}</CardLabel>  
+           <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>  
            <Dropdown
                 t={t}
                 optionKey="code"
@@ -129,7 +126,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
       </div>
       <div className="row">    
         <div className="col-md-6" > 
-           <CardLabel>{t("If used to habitually smoke for how many Years ?")}</CardLabel>  
+           <CardLabel>{t("CR_HABITUALLY_SMOKE")}</CardLabel>  
               <button onClick={""}>
               <NewRadioButton />
               </button> Yes  
@@ -138,7 +135,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               </button>  No    
         </div>
         <div className="col-md-6" > 
-           <CardLabel>{t("If used to habitually chew tobacco in any form for how many years ?")}</CardLabel>  
+           <CardLabel>{t("CR_HABITUALLY_CHEW_TOBACCO")}</CardLabel>  
            <button onClick={""}>
               <NewRadioButton />
               </button> Yes  
@@ -149,7 +146,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
       </div>
       <div className="row">    
         <div className="col-md-6" > 
-           <CardLabel>{t("If used to habitually chew arecanut in any form (including pan masala)-for how many years ?")}</CardLabel>  
+           <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>  
               <button onClick={""}>
               <NewRadioButton />
               </button> Yes  
@@ -158,7 +155,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               </button> No       
         </div>
         <div className="col-md-6" > 
-           <CardLabel>{t("If used to habitually drink alcohol for how many years ?")}</CardLabel>  
+           <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>  
            <button onClick={""}>
               <NewRadioButton />
               </button> Yes

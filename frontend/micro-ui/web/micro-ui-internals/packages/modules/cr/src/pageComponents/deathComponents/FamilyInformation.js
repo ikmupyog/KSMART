@@ -46,7 +46,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
     <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Details of Father or Husband")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DETAILS_OF_FATHER_OR_HUSBAND")}`}
                 </span> 
             </h1>
         </div>
@@ -54,7 +54,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
  
     <div className="row">    
         <div className="col-md-3" >
-            <CardLabel>{`${t("Father or Husband")}`}</CardLabel>
+            <CardLabel>{`${t("CR_FATHER_OR_HUSBAND")}`}</CardLabel>
             <Dropdown
                t={t}
                optionKey="code"
@@ -66,7 +66,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-3" >
-            <CardLabel>{`${t("Tittle")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TITLE_EN")}`}</CardLabel>
             <Dropdown
                t={t}
                optionKey="code"
@@ -78,7 +78,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-3" >
-            <CardLabel>{`${t("Name (English)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -92,7 +92,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-3" > 
-            <CardLabel>{`${t(" Name (Malayalam)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_NAME_ML")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -109,7 +109,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
 
     <div className="row">    
         <div className="col-md-12" > 
-           <CardLabel>{t("Aadhar No")}</CardLabel>
+           <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -127,7 +127,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
     <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Details of Mother")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DETAILS_OF_MOTHER")}`}
                 </span> 
             </h1>
         </div>
@@ -136,7 +136,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
  
     <div className="row">    
         <div className="col-md-4" >
-            <CardLabel>{`${t("Tittle")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TITLE_EN")}`}</CardLabel>
             <Dropdown
                t={t}
                optionKey="code"
@@ -148,7 +148,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-4" >
-            <CardLabel>{`${t("Name (English)")}`}</CardLabel>
+            <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -162,7 +162,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-4" > 
-            <CardLabel>{`${t(" Name (Malayalam)")}`}</CardLabel>
+            <CardLabel>{`${t(" CR_NAME_ML")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -178,7 +178,7 @@ const FamilyInformation = ({ config, onSelect, userType, formData }) => {
     </div>  
     <div className="row">    
         <div className="col-md-12" > 
-           <CardLabel>{t("Aadhar No")}</CardLabel>
+           <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
