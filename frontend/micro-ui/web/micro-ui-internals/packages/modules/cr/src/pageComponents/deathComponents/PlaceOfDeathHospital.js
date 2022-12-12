@@ -72,7 +72,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
     
       <div className="row">    
             <div className="col-md-6" >
-             <CardLabel>{`${t("Name of Hospital")}`}</CardLabel>
+             <CardLabel>{`${t("CR_HOSPITAL")}`}</CardLabel>
             <Dropdown
                  t={t}
                  optionKey="hospitalName"
@@ -83,7 +83,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
                 />
          </div> 
          <div className="col-md-6" >
-            <CardLabel>{`${t("Signed Officer")}`}</CardLabel>
+            <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="hospitalName"
@@ -96,7 +96,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
     </div>
     <div className="row">    
     <div className="col-md-4" >
-        <CardLabel>{`${t("Signed Officer Designation")}`}</CardLabel>
+        <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -108,7 +108,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
                 />
         </div>       
         <div className="col-md-4" >
-            <CardLabel>{`${t("Aadhaar No")}`}</CardLabel>
+            <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}
@@ -122,7 +122,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-4">
-            <CardLabel>{`${t("Mobile No")}`}</CardLabel>
+            <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
             <TextInput       
             t={t}
             isMandatory={false}

@@ -54,14 +54,14 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
     <div className="row">
       <div className="col-md-12" >
           <h1 className="headingh1" >
-            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death Other")}`}
+            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH_OTHER")}`}
             </span> 
           </h1>
       </div>
     </div>
     <div className="row">
          <div className="col-md-6" >
-            <CardLabel>{`${t("Other Place")}`}</CardLabel>
+            <CardLabel>{`${t("CR_OTHER_PLACE")}`}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="name"
@@ -73,7 +73,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             />
         </div>
          <div className="col-md-6" >
-            <CardLabel>{`${t("Ward")}`}</CardLabel>
+            <CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -87,7 +87,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
     </div>  
     <div className="row">
          <div className="col-md-6" >
-          <CardLabel>{`${t("Other Details (in English)")}`}</CardLabel>
+          <CardLabel>{`${t("CR_OTHER_DETAILLS_EN")}`}</CardLabel>
             <TextArea       
             t={t}
             isMandatory={false}
@@ -101,7 +101,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             />
         </div>
          <div className="col-md-6" >
-         <CardLabel>{`${t("Other Details (in Malayalam)")}`}</CardLabel>
+         <CardLabel>{`${t("CR_OTHER_DETAILS_ML")}`}</CardLabel>
             <TextArea       
             t={t}
             isMandatory={false}

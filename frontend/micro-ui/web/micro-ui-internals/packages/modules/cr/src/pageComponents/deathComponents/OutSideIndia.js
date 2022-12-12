@@ -42,7 +42,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
     {window.location.href.includes("/citizen") ? <Timeline /> : null}
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
-    <header className="card-header" style={{fontSize:"35px"}}>Address</header>
+    <header className="card-header" style={{fontSize:"35px"}}>CR_ADDRESS_TYPE_OUTSIDE_INDIA</header>
     <div className="row">    
         <div className="col-md-12 col-lg-12" > 
           <div className="col-md-4 " > 
@@ -50,7 +50,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-4 " > 
           <h1 className="headingh1" >
-              <span>Outside India</span>
+              <span>CR_ADDRESS_TYPE_OUTSIDE_INDIA</span>
           </h1>
           </div>
           <div className="col-md-4" > 
@@ -62,7 +62,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Address 1 (English)")}</CardLabel>
+            <CardLabel>{t("CR_ADDRESS_1_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -76,7 +76,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("Address 1 (Malayalam)")}</CardLabel>
+            <CardLabel>{t("CR_ADDRESS_1_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -92,7 +92,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Address 2 (English)")}</CardLabel>
+            <CardLabel>{t("CR_ADDRESS_2_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -106,7 +106,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("Address 2 (Malayalam)")}</CardLabel>
+            <CardLabel>{t("CR_ADDRESS_2_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -122,7 +122,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Locality (English)")}</CardLabel>
+            <CardLabel>{t("CR_LOCALITY_EN)")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -136,7 +136,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("Locality (Malayalam)")}</CardLabel>
+            <CardLabel>{t("CR_LOCALITY_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -152,7 +152,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     </div>  
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("State/Region/Province (English)")}</CardLabel>
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -166,7 +166,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("State/Region/Province (Malayalam)")}</CardLabel>
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -182,7 +182,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     </div>  
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Country")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_COUNTRY")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}

@@ -46,12 +46,12 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-        <header className="tittle">Place Of Death </header>
+        <header className="tittle">CR_PLACE_OF_DEATH </header>
 
         <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH")}`}
                 </span> 
             </h1>
         </div>
