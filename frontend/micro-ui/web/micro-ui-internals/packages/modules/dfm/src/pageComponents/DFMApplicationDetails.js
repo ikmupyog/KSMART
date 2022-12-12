@@ -211,7 +211,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.title}
                   name="title"
-                  label="title"
+                  label="Title"
                   selectOptions={titleOptions}
                 />
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
@@ -266,7 +266,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.fatherFirstName}
                   name="fatherFirstName"
-                  label="father First Name"
+                  label="Father First Name"
                   mystyle={mystyle}
                 />
                 {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
@@ -279,7 +279,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.fatherLastName}
                   name="fatherLastName"
-                  label="father Last Name"
+                  label="Father Last Name"
                   mystyle={mystyle}
                 />
               </div>
@@ -293,7 +293,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.motherFirstName}
                   name="motherFirstName"
-                  label="mother First Name"
+                  label="Mother First Name"
                   mystyle={mystyle}
                 />
 
@@ -307,7 +307,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.motherLastName}
                   name="motherLastName"
-                  label="mother Last Name"
+                  label="Mother Last Name"
                   mystyle={mystyle}
                 />
               </div>
