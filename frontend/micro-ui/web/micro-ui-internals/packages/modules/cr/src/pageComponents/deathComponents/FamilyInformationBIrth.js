@@ -13,6 +13,14 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setTitle, setSelectedTitle] = useState(formData?.DeathDetails?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.DeathDetails?.setTitle);
+  const [FirstName, setFirstName] = useState(null);
+  const [FirstNameB, setFirstNameB] = useState(null);
+  const [MLFirstNameB, setMLFirstNameB] = useState(null);
+
+  const [MLFirstName, setMLFirstName] = useState(null);
+  const [AdharNo, setAdharNo] = useState(null);
+  const [AdharNoB, setAdharNoB] = useState(null);
+
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
@@ -45,7 +53,18 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitleB(value);
   }
-
+  function setSelectFirstName(e) {
+    setFirstName(e.target.value);
+  }
+  function setSelectMLFirstName(e) {
+    setMLFirstName(e.target.value);
+  }
+  function setSelectAdharNo(e) {
+    setAdharNo(e.target.value);
+  }
+  function setSelectAdharNoB(e) {
+    setAdharNoB(e.target.value);
+  }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
@@ -78,19 +97,10 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
-
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{`${t("Tittle")}`}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              isMandatory={false}
-              option={cmbTitle}
-              selected={setTitle}
-              select={selectTitle}
-              disabled={isEdit}
-            />
+            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitle} select={selectTitle} disabled={isEdit} />
           </div>
           <div className="col-md-4">
             <CardLabel>{`${t("Name (English)")}`}</CardLabel>
@@ -121,7 +131,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         </div>
-
         <div className="row">
           <div className="col-md-12">
             <CardLabel>{t("Aadhar No")}</CardLabel>
@@ -130,9 +139,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="AdharNo"
+              value={AdharNo}
+              onChange={setSelectAdharNo}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -158,15 +167,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{`${t("Tittle")}`}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              isMandatory={false}
-              option={cmbTitle}
-              selected={setTitleB}
-              select={selectTitleB}
-              disabled={isEdit}
-            />
+            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
           </div>
           <div className="col-md-4">
             <CardLabel>{`${t("Name (English)")}`}</CardLabel>
@@ -175,9 +176,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="FirstName"
+              value={FirstName}
+              onChange={setSelectFirstName}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -189,9 +190,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="MLFirstName"
+              value={MLFirstName}
+              onChange={setSelectMLFirstName}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -205,9 +206,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="AdharNoB"
+              value={AdharNoB}
+              onChange={setSelectAdharNoB}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />

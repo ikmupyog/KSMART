@@ -10,24 +10,24 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
-  // const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
-
   const [setTitle, setSelectedTitle] = useState(formData?.DeathDetails?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.DeathDetails?.setTitle);
   // const [setReligion, setSelectedReligion] = useState(formData?.TradeDetails?.setReligion);
   const [setCountry, setSelectedCountry] = useState(formData?.TradeDetails?.setCountry);
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.DeathDetails?.setPlaceofActivity);
   // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
-
-  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
   const [FirstName, setFirstName] = useState(null);
   const [MiddleName, setMiddleName] = useState(null);
   const [LastName, setLastName] = useState(null);
+  const [MLFirstName, setMLFirstName] = useState(null);
+  const [MlMiddleName, setMlMiddleName] = useState(null);
+  const [MlLastName, setMlLastName] = useState(null);
+  const [Ageofbirth, setAgeofbirth] = useState(null);
+  const [AdharNo, setAdharNo] = useState(null);
+  const [PassportNo, setPassportNo] = useState(null);
 
   const [CommencementDate, setCommencementDate] = useState();
   const [DeathDate, setDeathDate] = useState();
@@ -53,12 +53,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     title["common-masters"].Title.map((ob) => {
       cmbTitle.push(ob);
     });
-  // let menu = [];
-  // Menu &&
-  //   Menu.map((genderDetails) => {
-  //     menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
-  //   });
-
   //   let cmbreligion = [];
   //   console.log(religion);
   // //   religion &&
@@ -66,9 +60,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   // //     religion["common-masters"].religion.map((ob) => {
   // //       cmbreligion.push(ob);
   // //     });
-
-  const onSkip = () => onSelect();
-
   function selectPlaceofactivity(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
@@ -92,8 +83,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   //   naturetypecmbvalue = value.code.substring(0, 4);
   //   setSelectedReligion(value);
   // }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
+  function setSelectMlLastName(e) {
+    setMlLastName(e.target.value);
+  }
+  function setSelectMlMiddleName(e) {
+    setMlMiddleName(e.target.value);
+  }
+  function setSelectMLFirstName(e) {
+    setMLFirstName(e.target.value);
   }
   function setSelectFirstName(e) {
     setFirstName(e.target.value);
@@ -103,6 +100,18 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectLastName(e) {
     setLastName(e.target.value);
+  }
+  function setSelectAgeofbirth(e) {
+    setAgeofbirth(e.target.value);
+  }
+  function setSelectAdharNo(e) {
+    setAdharNo(e.target.value);
+  }
+  function setSelectPassportNo(e) {
+    setPassportNo(e.target.value);
+  }
+  function setSelectTradeName(e) {
+    setTradeName(e.target.value);
   }
 
   function selectCommencementDate(value) {
@@ -117,7 +126,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectToDate(value) {
     setToDate(value);
   }
-
+  const onSkip = () => onSelect();
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, { setPlaceofActivity });
@@ -127,7 +136,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         {/* //    isDisabled={!CommencementDate} */}
-        <header className="tittle">Information Deceased </header>
+        <header className="tittle">Information Deceased</header>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -349,9 +358,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="MLFirstName"
+              value={MLFirstName}
+              onChange={setSelectMLFirstName}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -363,9 +372,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="MlMiddleName"
+              value={MlMiddleName}
+              onChange={setSelectMlMiddleName}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -377,9 +386,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="MlLastName"
+              value={MlLastName}
+              onChange={setSelectMlLastName}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -389,7 +398,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-4">
             <CardLabel>{t("Gender of Deceased")}</CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
-
           </div>
           <div className="col-md-4">
             <CardLabel>{`${t("Date of Birth of Deceased ")}`}</CardLabel>
@@ -403,9 +411,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="Ageofbirth"
+              value={Ageofbirth}
+              onChange={setSelectAgeofbirth}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -428,11 +436,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="AdharNo"
+              value={AdharNo}
+              onChange={setSelectAdharNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
         </div>
@@ -452,11 +460,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="PassportNo"
+              value={PassportNo}
+              onChange={setSelectPassportNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
           <div className="col-md-4">
