@@ -71,12 +71,12 @@ public class CrDeathService {
 
             /********************************************** */
               // validate request
-            validatorService.validateCreate(request,mdmsData);
+        validatorService.validateCreate(request,mdmsData);
 
-            mdmsValidator.validateMDMSData(request,mdmsData);
+ mdmsValidator.validateMDMSData(request,mdmsData);
 
          // enrich request
-        enrichmentService.enrichCreate(request);
+    enrichmentService.enrichCreate(request);
         //IDGen call
         enrichmentService.setIdgenIds(request);    
 
@@ -90,22 +90,22 @@ public class CrDeathService {
 		return repository.getDeathApplication(criteria);
 	}
   //UPDATE BEGIN Jasmine
-   public List<CrDeathDtl> update(CrDeathDtlRequest request) {
-    
-      Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
-         
-      String id = request.getDeathCertificateDtls().get(0).getId();
+    public List<CrDeathDtl> update(CrDeathDtlRequest request) {
+      
+        Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
+          
+        String id = request.getDeathCertificateDtls().get(0).getId();
 
-      List<CrDeathDtl> searchResult = repository.getDeathApplication(CrDeathSearchCriteria.builder().id(id).build());
+        List<CrDeathDtl> searchResult = repository.getDeathApplication(CrDeathSearchCriteria.builder().id(id).build());
 
-      validatorService.validateUpdate(request, searchResult);
+        validatorService.validateUpdate(request, searchResult);
 
-      //mdmsValidator.validateMDMSData(request,mdmsData);
+        mdmsValidator.validateMDMSData(request,mdmsData);
 
-      enrichmentService.enrichUpdate(request);
+        enrichmentService.enrichUpdate(request);
 
-      producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+        producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
 
-      return request.getDeathCertificateDtls();
-    }
+        return request.getDeathCertificateDtls();
+      }
 }

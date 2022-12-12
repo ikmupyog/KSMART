@@ -18,16 +18,18 @@ import org.springframework.stereotype.Component;
      */
     
 @Component
-public class CrDeathRowMapper implements ResultSetExtractor<List<CrDeathDtl>>, BaseRowMapper{
+public class CrDeathRowMapper implements ResultSetExtractor<List<CrDeathDtl>>, BaseRowMapper,CrDeathAddressRowMapper{
    //RAkhi S on 09.12.2022
     private final CrDeathStatisticalRowMapper rowMapper;
+    //private final CrDeathAddressRowMapper addressRowMapper;
 
     @Autowired
     CrDeathRowMapper(CrDeathStatisticalRowMapper rowMapper) {
         this.rowMapper = rowMapper;
+    
     }
 
-
+    
     @Override
     public List<CrDeathDtl> extractData(ResultSet rs) throws SQLException, DataAccessException { // NOPMD
 
@@ -113,6 +115,8 @@ public class CrDeathRowMapper implements ResultSetExtractor<List<CrDeathDtl>>, B
                                         .auditDetails(getAuditDetails(rs))
                                         //RAKHI S ON 09.12.2022
                                         .statisticalInfo(rowMapper.extractData(rs))
+                                        //Jasmine
+                                        .addressInfo(getCrDeathAddressInfo(rs))
                                         .build());
             
         }
