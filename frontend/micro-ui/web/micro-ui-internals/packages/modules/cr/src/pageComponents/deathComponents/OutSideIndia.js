@@ -11,6 +11,16 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
+  const [AdressEn, setAdressEn] = useState(null);
+  const [AdressMl, setAdressMl] = useState(null);
+  const [AdressEnB, setAdressEnB] = useState(null);
+  const [AdressMlB, setAdressMlB] = useState(null);
+  const [LocalityEn, setLocalityEn] = useState(null);
+  const [LocalityMl, setLocalityMl] = useState(null);
+  const [ProvinceEn, setProvinceEn] = useState(null);
+  const [ProvinceMl, setProvinceMl] = useState(null);
+  const [Country, setCountry] = useState(null);
+
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -26,14 +36,39 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
-
+  function setSelectAdressEn(e) {
+    setAdressEn(e.target.value);
+  }
+  function setSelectAdressEnB(e) {
+    setAdressEnB(e.target.value);
+  }
+  function setSelectAdressMlB(e) {
+    setAdressMlB(e.target.value);
+  }
+  function setSelectAdressMl(e) {
+    setAdressMl(e.target.value);
+  }
+  function setSelectLocalityEn(e) {
+    setLocalityEn(e.target.value);
+  }
+  function setSelectLocalityMl(e) {
+    setLocalityMl(e.target.value);
+  }
+  function setSelectProvinceEn(e) {
+    setProvinceEn(e.target.value);
+  }
+  function setSelectProvinceMl(e) {
+    setProvinceMl(e.target.value);
+  }
+  function setSelectCountry(e) {
+    setCountry(e.target.value);
+  }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
-
     const goNext = () => {
     sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, { setPlaceofActivity });
@@ -68,9 +103,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="AdressEn"
+                value={AdressEn}
+                onChange={setSelectAdressEn}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />    
@@ -82,9 +117,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="AdressMl"
+                value={AdressMl}
+                onChange={setSelectAdressMl}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />           
@@ -98,9 +133,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="AdressEnB"
+                value={AdressEnB}
+                onChange={setSelectAdressEnB}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />    
@@ -112,9 +147,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="AdressMlB"
+                value={AdressMlB}
+                onChange={setSelectAdressMlB}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />           
@@ -128,9 +163,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="LocalityEn"
+                value={LocalityEn}
+                onChange={setSelectLocalityEn}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />    
@@ -142,9 +177,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="LocalityMl"
+                value={LocalityMl}
+                onChange={setSelectLocalityMl}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />           
@@ -158,9 +193,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="ProvinceEn"
+                value={ProvinceEn}
+                onChange={setSelectProvinceEn}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />    
@@ -172,9 +207,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="ProvinceMl"
+                value={ProvinceMl}
+                onChange={setSelectProvinceMl}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />           
@@ -188,9 +223,9 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="Country"
+                value={Country}
+                onChange={setSelectCountry}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             /> 
