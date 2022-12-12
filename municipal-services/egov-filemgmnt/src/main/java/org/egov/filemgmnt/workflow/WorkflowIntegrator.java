@@ -30,7 +30,6 @@ import net.minidev.json.JSONObject;
 public class WorkflowIntegrator {
 
     private final RestTemplate restTemplate;
-
     private final FMConfiguration fmConfig;
 
     @Autowired
