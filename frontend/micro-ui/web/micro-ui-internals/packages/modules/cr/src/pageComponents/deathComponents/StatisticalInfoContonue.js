@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, NewRadi
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
+const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -42,35 +42,38 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
-        <header className="tittle">Statistical Information </header>
-        
-      <div className="row">
-        <div className="col-md-12" >
-            <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_TOWN_VILLAGE_DECEASED")}`}
-                </span> 
-            </h1>
+        <header className="tittle">Statistical Information(Contonue)</header>
+    
+      <div className="row">    
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_MEDICAL_ATTENTION_DEATH")}</CardLabel>  
+           <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={false}
+                option={cmbPlace}
+                selected={setPlaceofActivity}
+                select={selectPlaceofactivity}
+                disabled={isEdit}
+            />           
         </div>
-        </div> 
-        <div className="row">    
-        <div className="col-md-12" > 
-           <CardLabel>{t("CR_TOWN_VILLAGE_DECEASED-DETAILS")}</CardLabel>             
-              <button onClick={""}>
-              <NewRadioButton />
-              </button> Corporation 
-              <button onClick={""}>
-              <NewRadioButton />
-              </button>  Municipality   
-              <button onClick={""}>
-              <NewRadioButton />
-              </button>  Gramapanchayat   
-              
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED")}</CardLabel>  
+           <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={false}
+                option={cmbPlace}
+                selected={setPlaceofActivity}
+                select={selectPlaceofactivity}
+                disabled={isEdit}
+            />           
         </div>
       </div>
-      <div className="row">
-      <div className="col-md-6" >
-            <CardLabel>{t("District")}</CardLabel>
-            <Dropdown
+      <div className="row">    
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}</CardLabel>  
+           <Dropdown
                 t={t}
                 optionKey="code"
                 isMandatory={false}
@@ -78,11 +81,11 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 selected={setPlaceofActivity}
                 select={selectPlaceofactivity}
                 disabled={isEdit}
-            />
-        </div> 
-        <div className="col-md-6" >
-            <CardLabel>{t("Local Body")}</CardLabel>
-            <Dropdown
+            />           
+        </div>
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}</CardLabel>  
+           <Dropdown
                 t={t}
                 optionKey="code"
                 isMandatory={false}
@@ -90,73 +93,13 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 selected={setPlaceofActivity}
                 select={selectPlaceofactivity}
                 disabled={isEdit}
-            />
-        </div> 
-    </div>
-    <div className="row">    
-        <div className="col-md-12" > 
-           <CardLabel>{t("Is it a Town/ Village (Tick the appropriate entry below) ")}</CardLabel>             
-              <button onClick={" "}>
-              <NewRadioButton />
-              </button> Town 
-              <button onClick={""}>
-              <NewRadioButton />
-              </button>  Village   
-                            
+            />           
         </div>
-      </div>      
-      <div className="row">
-        <div className="col-md-12" >
-            <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CS_COMMON_RELIGION")}`}
-                </span> 
-            </h1>
-        </div>
-        </div>
-      <div className="row">
-      <div className="col-md-6" >
-            <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
-            <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={false}
-                option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
-                disabled={isEdit}
-            />
-        </div>       
-      </div> 
-
-      <div className="row">
-        <div className="col-md-12" >
-            <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OCCUPATION_DECEASED")}`}
-                </span> 
-            </h1>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12" >
-            <CardLabel>{t("CR_OCCUPATION_DECEASED_NO")}</CardLabel>
-            </div>       
-      </div> 
-      <div className="row">
-        <div className="col-md-6" >
-            <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
-            <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={false}
-                option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
-                disabled={isEdit}
-            />
-        </div>   
-        <div className="col-md-6" >
-            <CardLabel>{t("CR_OCCUPATION_OTHER_ML")}</CardLabel>
-            <TextInput       
+      </div>        
+      <div className="row">    
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER_ML")}</CardLabel>  
+           <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -166,12 +109,67 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectTradeName}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
-        </div>  
-      </div> 
+            />           
+        </div>
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>  
+           <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={false}
+                option={cmbPlace}
+                selected={setPlaceofActivity}
+                select={selectPlaceofactivity}
+                disabled={isEdit}
+            />           
+        </div>
+      </div>
+      <div className="row">    
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_HABITUALLY_SMOKE")}</CardLabel>  
+              <button onClick={""}>
+              <NewRadioButton />
+              </button> Yes  
+              <button onClick={""}>
+              <NewRadioButton />
+              </button>  No    
+        </div>
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_HABITUALLY_CHEW_TOBACCO")}</CardLabel>  
+           <button onClick={""}>
+              <NewRadioButton />
+              </button> Yes  
+              <button onClick={""}>
+              <NewRadioButton />
+              </button> No            
+        </div>
+      </div>
+      <div className="row">    
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>  
+              <button onClick={""}>
+              <NewRadioButton />
+              </button> Yes  
+              <button onClick={""}>
+              <NewRadioButton />
+              </button> No       
+        </div>
+        <div className="col-md-6" > 
+           <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>  
+           <button onClick={""}>
+              <NewRadioButton />
+              </button> Yes
+              <button onClick={""}>
+              <NewRadioButton />
+              </button> No           
+        </div>
+      </div>
+
+      
+      
       
       </FormStep>
     </React.Fragment>
   );
 };
-export default StatisticalInfo;
+export default StatisticalInfoContonue;

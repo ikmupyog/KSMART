@@ -26,6 +26,8 @@ import PlaceOfDeathHospital from "./pageComponents/deathComponents/PlaceOfDeathH
 import PlaceOfDeathInstitution from "./pageComponents/deathComponents/PlaceOfDeathInstitution";
 import PlaceOfDeathOther from "./pageComponents/deathComponents/PlaceOfDeathOther";
 import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVehicle";
+import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
+import StatisticalInfoContonue from "./pageComponents/deathComponents/StatisticalInfoContonue";
 
 
 // import TLSelectGeolocation from "../src/pageComponents/TLSelectGeolocation";
@@ -152,6 +154,9 @@ const componentsToRegister = {
   PlaceOfDeathInstitution,
   PlaceOfDeathOther,
   PlaceOfDeathVehicle,
+  StatisticalInfo,
+  StatisticalInfoContonue,
+
   
   // SelectLand,
   // SelectBuilding,
