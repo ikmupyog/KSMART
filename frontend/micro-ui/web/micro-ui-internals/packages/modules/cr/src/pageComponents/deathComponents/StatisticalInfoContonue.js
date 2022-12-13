@@ -11,6 +11,8 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
+  const [CauseOfDeath, setCauseOfDeath] = useState(null);
+
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -27,6 +29,9 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     setSelectedPlaceofActivity(value);
   }
 
+  function setSelectCauseOfDeath(e) {
+    setCauseOfDeath(e.target.value);
+  }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
@@ -104,9 +109,9 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="CauseOfDeath"
+                value={CauseOfDeath}
+                onChange={setSelectCauseOfDeath}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />           

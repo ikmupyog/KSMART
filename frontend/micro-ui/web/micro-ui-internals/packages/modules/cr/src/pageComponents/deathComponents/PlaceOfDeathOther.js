@@ -13,7 +13,9 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
-
+  const [ PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn] = useState(null);
+  const [ PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(null);
+ 
   let naturetypecmbvalue = null;
   let cmbPlace = [];
   place &&
@@ -38,6 +40,12 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
+  function setSelectPlaceOfDeathOtherDetailsEn(e) {
+    setPlaceOfDeathOtherDetailsEn(e.target.value);
+  }
+  function setSelectPlaceOfDeathOtherDetailsMl(e) {
+    setPlaceOfDeathOtherDetailsMl(e.target.value);
+  }  
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
@@ -93,9 +101,9 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             isMandatory={false}
             type={"text"}
             optionKey="i18nKey"
-            name="TradeName"
-            value={TradeName}
-            onChange={setSelectTradeName}
+            name="PlaceOfDeathOtherDetailsEn"
+            value={PlaceOfDeathOtherDetailsEn}
+            onChange={setSelectPlaceOfDeathOtherDetailsEn}
             disable={isEdit}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -107,9 +115,9 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             isMandatory={false}
             type={"text"}
             optionKey="i18nKey"
-            name="TradeName"
-            value={TradeName}
-            onChange={setSelectTradeName}
+            name="PlaceOfDeathOtherDetailsMl"
+            value={PlaceOfDeathOtherDetailsMl}
+            onChange={setSelectPlaceOfDeathOtherDetailsMl}
             disable={isEdit}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />

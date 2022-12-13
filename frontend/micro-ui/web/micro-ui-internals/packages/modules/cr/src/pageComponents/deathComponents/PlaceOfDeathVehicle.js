@@ -11,6 +11,18 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
+  const [DriverName, setDriverName] = useState(null);
+  const [DriverNameMl, setDriverNameMl] = useState(null);
+  const [DriverMobileNo, setDriverMobileNo] = useState(null);
+  const [DriverAge, setDriverAge] = useState(null);
+  const [DriverAadhar, setDriverAadhar] = useState(null);
+  const [VehicleType, setVehicleType] = useState(null);
+  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(null);
+  const [VehicleFrom, setVehicleFrom] = useState(null);
+  const [VehicleTo, setVehicleTo] = useState(null);
+  const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(null);  
+  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(null);  
+    
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -30,6 +42,40 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
+  function setSelectDriverName(e) {
+    setDriverName(e.target.value);
+  }
+  function setSelectDriverNameMl(e) {
+    setDriverNameMl(e.target.value);
+  }
+  function setSelectDriverMobileNo(e) {
+    setDriverMobileNo(e.target.value);
+  }
+  function setSelectDriverAge(e) {
+    setDriverAge(e.target.value);
+  }
+  function setSelectDriverAadhar(e) {
+    setDriverAadhar(e.target.value);
+  }
+  function setSelectVehicleType(e) {
+    setVehicleType(e.target.value);
+  }
+  function setSelectVehicleRegistrationNo(e) {
+    setVehicleRegistrationNo(e.target.value);
+  }
+  function setSelectVehicleFrom(e) {
+    setVehicleFrom(e.target.value);
+  }
+  function setSelectVehicleTo(e) {
+    setVehicleTo(e.target.value);
+  }
+  function setSelectVehicleOtherDetailsEn(e) {
+    setVehicleOtherDetailsEn(e.target.value);
+  }
+  function setSelectVehicleOtherDetailsMl(e) {
+    setVehicleOtherDetailsMl(e.target.value);
+  }
+
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
@@ -59,9 +105,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverName"
+                value={DriverName}
+                onChange={setSelectDriverName}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -74,9 +120,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverNameMl"
+                value={DriverNameMl}
+                onChange={setSelectDriverNameMl}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -91,9 +137,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverMobileNo"
+                value={DriverMobileNo}
+                onChange={setSelectDriverMobileNo}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -105,9 +151,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverAge"
+                value={DriverAge}
+                onChange={setSelectDriverAge}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -119,9 +165,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverAadhar"
+                value={DriverAadhar}
+                onChange={setSelectDriverAadhar}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -136,9 +182,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="VehicleType"
+                value={VehicleType}
+                onChange={setSelectVehicleType}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -151,9 +197,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="VehicleRegistrationNo"
+                value={VehicleRegistrationNo}
+                onChange={setSelectVehicleRegistrationNo}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -168,9 +214,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="VehicleFrom"
+                value={VehicleFrom}
+                onChange={setSelectVehicleFrom}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -182,9 +228,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="VehicleTo"
+                value={VehicleTo}
+                onChange={setSelectVehicleTo}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -206,16 +252,14 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="col-md-6" > 
         <CardLabel>{`${t("CR_ADMITTED_HOSPITAL")}`}</CardLabel>
-            <TextInput       
+        <Dropdown
                 t={t}
+                optionKey="code"
                 isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                option={cmbPlace}
+                selected={setPlaceofActivity}
+                select={selectPlaceofactivity}
+                disabled={isEdit}
             />
         </div>
     </div>
@@ -227,9 +271,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             isMandatory={false}
             type={"text"}
             optionKey="i18nKey"
-            name="TradeName"
-            value={TradeName}
-            onChange={setSelectTradeName}
+            name="VehicleOtherDetailsEn"
+            value={VehicleOtherDetailsEn}
+            onChange={setSelectVehicleOtherDetailsEn}
             disable={isEdit}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -241,9 +285,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             isMandatory={false}
             type={"text"}
             optionKey="i18nKey"
-            name="TradeName"
-            value={TradeName}
-            onChange={setSelectTradeName}
+            name="VehicleOtherDetailsMl"
+            value={VehicleOtherDetailsMl}
+            onChange={setSelectVehicleOtherDetailsMl}
             disable={isEdit}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />

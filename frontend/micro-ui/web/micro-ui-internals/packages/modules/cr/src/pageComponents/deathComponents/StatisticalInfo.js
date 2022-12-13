@@ -10,6 +10,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  
+  const [occupationOthers, setoccupationOthers] = useState(null);
   const [TradeName, setTradeName] = useState(null);
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -26,7 +28,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
-
+  function setSelectoccupationOthers(e) {
+    setoccupationOthers(e.target.value);
+  }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
@@ -161,9 +165,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="occupationOthers"
+                value={occupationOthers}
+                onChange={setSelectoccupationOthers}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />

@@ -15,6 +15,10 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
+  const [SiginedOfficer, setSiginedOfficer] = useState(null);
+  const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(null);
+  const [InstitutionMobilNo, setInstitutionMobilNo] = useState(null);
+  const [InstitutionAadhaar, setInstitutionAadhaar] = useState(null);
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -50,6 +54,18 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
+  }
+  function setSelectSiginedOfficer(e) {
+    setSiginedOfficer(e.target.value);
+  }
+  function  setSelectSiginedOfficerDesignation(e) {
+    setSiginedOfficerDesignation(e.target.value);
+  }
+  function  setSelectInstitutionMobilNo(e) {
+    setInstitutionMobilNo(e.target.value);
+  }
+  function  setSelectInstitutionAadhaar(e) {
+    setInstitutionAadhaar(e.target.value);
   }
   function selectCommencementDate(value) {
     setCommencementDate(value);
@@ -106,9 +122,9 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="SiginedOfficer"
+              value={SiginedOfficer}
+              onChange={setSelectSiginedOfficer}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -120,9 +136,9 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="SiginedOfficerDesignation"
+              value={SiginedOfficerDesignation}
+              onChange={setSelectSiginedOfficerDesignation}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -136,9 +152,9 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="InstitutionMobilNo"
+              value={InstitutionMobilNo}
+              onChange={setSelectInstitutionMobilNo}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -150,9 +166,9 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="InstitutionAadhaar"
+              value={InstitutionAadhaar}
+              onChange={setSelectInstitutionAadhaar}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
