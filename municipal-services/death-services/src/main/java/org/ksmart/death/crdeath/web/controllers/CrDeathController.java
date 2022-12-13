@@ -123,16 +123,17 @@ public class CrDeathController {
 
     //Update Begin Jasmine
 
-    @PutMapping("/crdeathdetails/_update")
-    public ResponseEntity<CrDeathDtlResponse> update(@RequestBody CrDeathDtlRequest request) {
+@PutMapping("/crdeathdetails/_update")
+
+public ResponseEntity<CrDeathDtlResponse> update(@RequestBody CrDeathDtlRequest request) {
  
-        List<CrDeathDtl> deathDetails = deathService.update(request);
+    List<CrDeathDtl> deathDetails = deathService.update(request);
  
-        CrDeathDtlResponse response = CrDeathDtlResponse.builder()
+    CrDeathDtlResponse response = CrDeathDtlResponse.builder()
                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
                                         .deathCertificateDtls(deathDetails)
                                         .build();
-        return ResponseEntity.ok(response);
-    }
+     return ResponseEntity.ok(response);
+}
 
 }

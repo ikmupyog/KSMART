@@ -334,18 +334,19 @@ public class CrDeathRegistryDtl {
 
     @JsonProperty("addressInfo")
     @Valid
-    private List<CrDeathRegistryAddressInfo>  addressInfo;
+    private CrDeathRegistryAddressInfo  addressInfo;
+    //private List<CrDeathRegistryAddressInfo>  addressInfo;
 
-    public CrDeathRegistryDtl addCrDeathDtl(CrDeathRegistryAddressInfo crDeathAddressInfo) {
-        if (addressInfo == null) {
-            addressInfo = new ArrayList<>();
-        }
-        addressInfo.add(crDeathAddressInfo);
+    // public CrDeathRegistryDtl addCrDeathDtl(CrDeathRegistryAddressInfo crDeathAddressInfo) {
+    //     if (addressInfo == null) {
+    //         addressInfo = new ArrayList<>();
+    //     }
+    //     addressInfo.add(crDeathAddressInfo);
 
-        return this;
-    }
+    //     return this;
+    // }
+
 
     
-
    
 }

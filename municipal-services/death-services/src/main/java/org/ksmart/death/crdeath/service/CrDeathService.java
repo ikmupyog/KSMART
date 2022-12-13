@@ -54,30 +54,30 @@ public class CrDeathService {
     public List<CrDeathDtl> create(CrDeathDtlRequest request) {
       
 
-       // validate mdms data
-        Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
-         
-         /********************************************* */
+        // validate mdms data
+    Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
+          
+          /********************************************* */
 
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            Object obj = mdmsData;
-            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-           System.out.println("mdmsData1 "+ mapper.writeValueAsString(obj));
-            }catch(Exception e) {
-               // log.error("Exception while fetching from searcher: ",e);
-            }
+          try {
+              ObjectMapper mapper = new ObjectMapper();
+              Object obj = mdmsData;
+              mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            System.out.println("mdmsData1 "+ mapper.writeValueAsString(obj));
+              }catch(Exception e) {
+                // log.error("Exception while fetching from searcher: ",e);
+              }
 
 
-            /********************************************** */
-              // validate request
+              /********************************************** */
+                // validate request
         validatorService.validateCreate(request,mdmsData);
 
- mdmsValidator.validateMDMSData(request,mdmsData);
+        mdmsValidator.validateMDMSData(request,mdmsData);
 
-         // enrich request
-    enrichmentService.enrichCreate(request);
-        //IDGen call
+          // enrich request
+        enrichmentService.enrichCreate(request);
+          //IDGen call
         enrichmentService.setIdgenIds(request);    
 
         producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
@@ -100,7 +100,7 @@ public class CrDeathService {
 
         validatorService.validateUpdate(request, searchResult);
 
-        mdmsValidator.validateMDMSData(request,mdmsData);
+       // mdmsValidator.validateMDMSData(request,mdmsData);
 
         enrichmentService.enrichUpdate(request);
 

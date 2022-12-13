@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.ksmart.death.common.contract.RequestInfoWrapper;
 import org.ksmart.death.crdeathregistry.service.CrDeathRegistryService;
 import org.ksmart.death.utils.ResponseInfoFactory;
-
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryCriteria;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryRequest;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryResponse;
@@ -14,7 +15,9 @@ import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,19 +51,20 @@ public class CrDeathRegistryController {
         this.deathService = deathService;
     }
     @PostMapping("/crdeathregistry/_create")
+
     public ResponseEntity<CrDeathRegistryResponse> create(@Valid @RequestBody CrDeathRegistryRequest request) {
 
-        System.out.println("hai");
-           /********************************************* */
+        // System.out.println("hai");
+        //    /********************************************* */
 
-        try {
-                ObjectMapper mapper = new ObjectMapper();
-                Object obj = request;
-                mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-               System.out.println("rakhiRegistry "+ mapper.writeValueAsString(obj));
-        }catch(Exception e) {
-            log.error("Exception while fetching from searcher: ",e);
-        }
+        // try {
+        //         ObjectMapper mapper = new ObjectMapper();
+        //         Object obj = request;
+        //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //        System.out.println("rakhiRegistry "+ mapper.writeValueAsString(obj));
+        // }catch(Exception e) {
+        //     log.error("Exception while fetching from searcher: ",e);
+        // }
 
  
         /********************************************** */
@@ -73,4 +77,35 @@ public class CrDeathRegistryController {
                                                                       .build();
         return ResponseEntity.ok(response);
     }
+
+//Update Begin Jasmine
+@PutMapping("/crdeathregistry/_update")
+
+public ResponseEntity<CrDeathRegistryResponse> update(@RequestBody CrDeathRegistryRequest request) {
+
+    List<CrDeathRegistryDtl> deathDetails = deathService.update(request);
+
+    CrDeathRegistryResponse response = CrDeathRegistryResponse.builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                        .deathCertificateDtls(deathDetails)
+                                        .build();
+    return ResponseEntity.ok(response);
+}
+//End
+//Search Begin Jasmine
+  @PostMapping("/crdeathregistry/_search")
+
+  public ResponseEntity<CrDeathRegistryResponse> search(@RequestBody RequestInfoWrapper request,
+                                                          @ModelAttribute CrDeathRegistryCriteria criteria) {
+
+      List<CrDeathRegistryDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
+
+      CrDeathRegistryResponse response = CrDeathRegistryResponse.builder()
+                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                            .deathCertificateDtls(deathDetails)
+                                            .build();
+      return ResponseEntity.ok(response);
+  }
+
+
 }

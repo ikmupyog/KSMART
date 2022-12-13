@@ -18,6 +18,9 @@ public class CrDeathRegistryConfiguration {
     @Value("${persister.save.crdeathregistry.topic}")
     private String saveDeathRegistryTopic;
 
+    @Value("${persister.update.crdeathregistry.topic}")
+    private String updateDeathRegistryTopic;
+
     
     //MDMS
     @Value("${egov.mdms.host}")

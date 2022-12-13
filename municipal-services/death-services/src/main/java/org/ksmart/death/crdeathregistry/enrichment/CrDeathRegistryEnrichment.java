@@ -9,6 +9,7 @@ import org.ksmart.death.common.repository.IdGenRepository;
 import org.ksmart.death.common.repository.ServiceRequestRepository;
 import org.ksmart.death.crdeathregistry.config.CrDeathRegistryConfiguration;
 import org.ksmart.death.crdeathregistry.web.models.AuditDetails;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryAddressInfo;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryRequest;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
@@ -40,28 +41,35 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
 
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
-
+        
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 
         request.getDeathCertificateDtls()
                .forEach(deathdtls -> {
                 deathdtls.setId(UUID.randomUUID().toString());
                 deathdtls.setAuditDetails(auditDetails);
-                deathdtls.getStatisticalInfo().setId(UUID.randomUUID().toString());               
-             
-                // String str = new SimpleDateFormat("dd/MM/yyyy").format(deathdtls.getDateOfDeath() * 1000);
-                // System.out.println("DOD Epoc"+str);
-
-                deathdtls.getAddressInfo().get(0).setParentdeathDtlId(deathdtls.getId());
-                deathdtls.getAddressInfo().get(0).setAuditDetails(auditDetails);
-                deathdtls.getAddressInfo().forEach(addressdtls -> {
-                      addressdtls.getPresentAddress().setId(UUID.randomUUID().toString());
-                      addressdtls.getPermanentAddress().setId(UUID.randomUUID().toString());
-                      addressdtls.getInformantAddress().setId(UUID.randomUUID().toString());
-                      addressdtls.getDeathplaceAddress().setId(UUID.randomUUID().toString());
-                      addressdtls.getBurialAddress().setId(UUID.randomUUID().toString());                       
-                     });
-               });
+                deathdtls.getStatisticalInfo().setId(UUID.randomUUID().toString());       
+                
+                
+                // deathdtls.getAddressInfo().get(0).setParentdeathDtlId(deathdtls.getId());
+                // deathdtls.getAddressInfo().get(0).setAuditDetails(auditDetails);
+                // deathdtls.getAddressInfo().forEach(addressdtls -> {
+                //       addressdtls.getPresentAddress().setId(UUID.randomUUID().toString());
+                //       addressdtls.getPermanentAddress().setId(UUID.randomUUID().toString());
+                //       addressdtls.getInformantAddress().setId(UUID.randomUUID().toString());
+                //       addressdtls.getDeathplaceAddress().setId(UUID.randomUUID().toString());
+                //       addressdtls.getBurialAddress().setId(UUID.randomUUID().toString());                       
+                //      });
+                CrDeathRegistryAddressInfo  addressInfo = deathdtls.getAddressInfo();
+                addressInfo.setParentdeathDtlId(deathdtls.getId());
+                addressInfo.setAuditDetails(auditDetails);
+                addressInfo.getPresentAddress().setId(UUID.randomUUID().toString());
+                addressInfo.getPermanentAddress().setId(UUID.randomUUID().toString());
+                addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
+                addressInfo.getDeathplaceAddress().setId(UUID.randomUUID().toString());
+                addressInfo.getBurialAddress().setId(UUID.randomUUID().toString());
+              
+            });
       
     }
 
@@ -86,6 +94,27 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
 
     //     String ackNo = getIdList(requestInfo, tenantId, config.getDeathAckName(), config.getDeathACKFormat(), 1).get(0);
     //     deathDtls.get(0).setDeathACKNo(ackNo);
-    // }    
-    
+    // }  
+
+        //UPDATE  BEGIN Jasmine
+        public void enrichUpdate(CrDeathRegistryRequest request) {
+
+            RequestInfo requestInfo = request.getRequestInfo();
+            User userInfo = requestInfo.getUserInfo();
+            AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        
+            request.getDeathCertificateDtls()
+                    .forEach(deathDtls -> {
+                    deathDtls.setAuditDetails(auditDetails);
+                    // deathDtls.getAddressInfo().forEach(addressdtls -> {
+                    //                            addressdtls.setParentdeathDtlId(deathDtls.getId());
+                    //                            addressdtls.setAuditDetails(auditDetails);
+                    //                         });
+                    CrDeathRegistryAddressInfo  addressInfo = deathDtls.getAddressInfo();
+                    addressInfo.setParentdeathDtlId(deathDtls.getId());
+                    addressInfo.setAuditDetails(auditDetails);
+                    
+                    } );
+        
+        }//UPDATE END
 }
