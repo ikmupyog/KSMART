@@ -115,7 +115,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
               {!isLoading ? (
                 <div className="col-md-4">
                   <FormInputGroup
-                    type="TextInput"
+                    type="TextInputNumber"
                     handleChange={handleChange}
                     t={t}
                     value={addressData.houseNo}
@@ -146,7 +146,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.street}
                   name="street"
-                  label="street"
+                  label="Street"
                   mystyle={mystyle}
                 />
               </div>
