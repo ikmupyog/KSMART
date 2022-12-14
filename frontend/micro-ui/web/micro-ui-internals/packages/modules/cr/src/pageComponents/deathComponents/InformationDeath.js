@@ -128,8 +128,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   }
   const onSkip = () => onSelect();
   const goNext = () => {
+    sessionStorage.setItem("DeathDate", DeathDate);
+
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    onSelect(config.key, { setPlaceofActivity,DeathDate });
   };
   return (
     <React.Fragment>
@@ -145,11 +147,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6" >
+          <div className="col-md-6">
             {/* <CheckBox label={t("Exact Date of death not available")} onChange={setDateOfDeathNotAvailable} value={isDateOfDeathNotAvailable} checked={isDateOfDeathNotAvailable} /> */}
             <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} />
           </div>
-          <div className="col-md-6" >
+          <div className="col-md-6">
             {/* <CheckBox label={t("Unclaimed dead body")} onChange={setUnclamedDeadBody} value={isUnclamedDeadBody} checked={isUnclamedDeadBody} /> */}
             <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} />
           </div>
