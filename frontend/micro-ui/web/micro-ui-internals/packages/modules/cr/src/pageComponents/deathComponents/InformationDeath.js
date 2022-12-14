@@ -11,28 +11,28 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
-  const [setTitle, setSelectedTitle] = useState(formData?.DeathDetails?.setTitle);
-  const [setTitleB, setSelectedTitleB] = useState(formData?.DeathDetails?.setTitle);
-  // const [setReligion, setSelectedReligion] = useState(formData?.TradeDetails?.setReligion);
-  const [setCountry, setSelectedCountry] = useState(formData?.TradeDetails?.setCountry);
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.DeathDetails?.setPlaceofActivity);
-  // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
+  const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
+  const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitle);
+  const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
+  const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
-  const [FirstName, setFirstName] = useState(null);
-  const [MiddleName, setMiddleName] = useState(null);
-  const [LastName, setLastName] = useState(null);
-  const [MLFirstName, setMLFirstName] = useState(null);
-  const [MlMiddleName, setMlMiddleName] = useState(null);
-  const [MlLastName, setMlLastName] = useState(null);
-  const [Ageofbirth, setAgeofbirth] = useState(null);
-  const [AdharNo, setAdharNo] = useState(null);
-  const [PassportNo, setPassportNo] = useState(null);
-
-  const [CommencementDate, setCommencementDate] = useState();
-  const [DeathDate, setDeathDate] = useState();
-  const [FromDate, setFromDate] = useState();
-  const [ToDate, setToDate] = useState();
+  const [TimeOfDeath, setTimeOfDeath] = useState(formData?.InformationDeath?.TimeOfDeath);
+  const [Minute, setSelectedMinute] = useState(formData?.InformationDeath?.Minute);
+  const [Seconds, setSelectedSeconds] = useState(formData?.InformationDeath?.Seconds);
+  // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
+  const [FirstName, setFirstName] = useState(formData?.InformationDeath?.FirstName);
+  const [MiddleName, setMiddleName] = useState(formData?.InformationDeath?.MiddleName);
+  const [LastName, setLastName] = useState(formData?.InformationDeath?.LastName);
+  const [MLFirstName, setMLFirstName] = useState(formData?.InformationDeath?.MLFirstName);
+  const [MlMiddleName, setMlMiddleName] = useState(formData?.InformationDeath?.MlMiddleName);
+  const [MlLastName, setMlLastName] = useState(formData?.InformationDeath?.MlLastName);
+  const [Ageofbirth, setAgeofbirth] = useState(formData?.InformationDeath?.Ageofbirth);
+  const [AdharNo, setAdharNo] = useState(formData?.InformationDeath?.AdharNo);
+  const [PassportNo, setPassportNo] = useState(formData?.InformationDeath?.PassportNo);
+  const [CommencementDate, setCommencementDate] = useState(formData?.InformationDeath?.CommencementDate);
+  const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
+  const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate);
+  const [ToDate, setToDate] = useState(formData?.InformationDeath?.ToDate);
 
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -60,9 +60,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   // //     religion["common-masters"].religion.map((ob) => {
   // //       cmbreligion.push(ob);
   // //     });
-  function selectPlaceofactivity(value) {
+  function selectReligion(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
+    setSelectedReligion(value);
   }
   function selectTitle(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
@@ -76,13 +76,19 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedCountry(value);
   }
-  function setselectGender(value) {
-    selectGender(value);
-  }
+  // function setselectGender(value) {
+  //   selectGender(value);
+  // }
   // function selectReligion(value) {
   //   naturetypecmbvalue = value.code.substring(0, 4);
   //   setSelectedReligion(value);
   // }
+  function setSelectMinute(e) {
+    setSelectedMinute(e.target.value);
+  }
+  function setSelectSeconds(e) {
+    setSelectedSeconds(e.target.value);
+  }
   function setSelectMlLastName(e) {
     setMlLastName(e.target.value);
   }
@@ -110,8 +116,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function setSelectPassportNo(e) {
     setPassportNo(e.target.value);
   }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
+  function setSelectTimeOfDeath(e) {
+    setTimeOfDeath(e.target.value);
   }
 
   function selectCommencementDate(value) {
@@ -129,9 +135,43 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate);
-
+    sessionStorage.setItem("FirstName", FirstName);
+    sessionStorage.setItem("MiddleName", MiddleName);
+    sessionStorage.setItem("LastName", LastName);
+    sessionStorage.setItem("MLFirstName", MLFirstName);
+    sessionStorage.setItem("Ageofbirth", Ageofbirth);
+    sessionStorage.setItem("AdharNo", AdharNo);
+    sessionStorage.setItem("PassportNo", PassportNo);
+    sessionStorage.setItem("FromDate", FromDate);
+    sessionStorage.setItem("ToDate", ToDate);
+    sessionStorage.setItem("setTitle", setTitle.code);
+    sessionStorage.setItem("setTitleB", setTitleB.code);
+    sessionStorage.setItem("setCountry", setCountry.code);
+    sessionStorage.setItem("setCountry", setReligion.code);
+    sessionStorage.setItem("TimeOfDeath", TimeOfDeath);
+    sessionStorage.setItem("Minute", Minute);
+    sessionStorage.setItem("Seconds", Seconds);
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity,DeathDate });
+    onSelect(config.key, {
+      setPlaceofActivity,
+      DeathDate,
+      FirstName,
+      MiddleName,
+      LastName,
+      MLFirstName,
+      Ageofbirth,
+      AdharNo,
+      PassportNo,
+      FromDate,
+      ToDate,
+      setTitle,
+      setTitleB,
+      setCountry,
+      setReligion,
+      TimeOfDeath,
+      Minute,
+      Seconds,
+    });
   };
   return (
     <React.Fragment>
@@ -170,9 +210,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="TimeOfDeath"
+              value={TimeOfDeath}
+              onChange={setSelectTimeOfDeath}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -184,9 +224,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="Minute"
+              value={Minute}
+              onChange={setSelectMinute}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -198,9 +238,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="Seconds"
+              value={Seconds}
+              onChange={setSelectSeconds}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -491,8 +531,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               optionKey="code"
               isMandatory={false}
               option={cmbTitle}
-              selected={setPlaceofActivity}
-              select={selectPlaceofactivity}
+              selected={setReligion}
+              select={selectReligion}
               disabled={isEdit}
             />
           </div>
@@ -500,5 +540,5 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       </FormStep>
     </React.Fragment>
   );
-};
+};  
 export default InformationDeath;
