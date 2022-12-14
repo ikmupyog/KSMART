@@ -46,7 +46,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-        <header className="tittle">CR_PLACE_OF_DEATH </header>
+        <header className="tittle">{t("CR_PLACE_OF_DEATH")} </header>
 
         <div className="row">
         <div className="col-md-12" >
@@ -59,7 +59,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
  
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Death Place")}</CardLabel>
+            <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
