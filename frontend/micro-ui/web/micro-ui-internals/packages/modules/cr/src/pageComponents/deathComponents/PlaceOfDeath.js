@@ -4,14 +4,11 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
-
- 
-  
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  const [setPlaceofDeath, setSelectedPlaceofDeath] = useState(formData?.TradeDetails?.setPlaceofDeath);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
   const [CommencementDate, setCommencementDate] = useState();
@@ -25,9 +22,9 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
 
   const onSkip = () => onSelect();
 
-  function selectPlaceofactivity(value) {
+  function selectPlaceofDeath(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
+    setSelectedPlaceofDeath(value);
   }
 
   function setSelectTradeName(e) {
@@ -38,13 +35,12 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
-    console.log("testtt ");
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    sessionStorage.setItem("setPlaceofDeath", setPlaceofDeath.code);
+    onSelect(config.key, { setPlaceofDeath });
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <header className="tittle">{t("CR_PLACE_OF_DEATH")} </header>
 
@@ -65,8 +61,8 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setPlaceofDeath}
+                select={selectPlaceofDeath}
                 disabled={isEdit}
             />
         </div>       

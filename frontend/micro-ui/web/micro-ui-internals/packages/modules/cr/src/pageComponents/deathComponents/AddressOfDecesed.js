@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import AdressInside from "./AdressInside" ;
+import AdressInside from "./AdressInside";
 import OutSideIndia from "./OutSideIndia";
-
 
 const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
   const [CommencementDate, setCommencementDate] = useState();
@@ -24,22 +23,18 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
 
   const onSkip = () => onSelect();
 
-  function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
-  }
-
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
-
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
   const goNext = () => {
     console.log("test");
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);   
+    //  sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
+
+    onSelect(config.key, {});
   };
 
   const [inside, setInside] = useState(true);
@@ -54,14 +49,14 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      {window.location.href.includes("/employee") ? <Timeline /> : null}
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <header className="tittle">AdressOfDeceased</header>
         <div className="maindeath">
           <div className="radios">
             <div className="inside">
-            <button onClick={insideHandler}>
-              <NewRadioButton />
+              <button onClick={insideHandler}>
+                <NewRadioButton />
               </button>
               <p>Inside Local Body</p>
             </div>
@@ -78,22 +73,16 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
               <p>Inside India</p>
             </div>
             <div className="inside">
-              <button  onClick={outsideHandler}> 
-              <NewRadioButton />
+              <button onClick={outsideHandler}>
+                <NewRadioButton />
               </button>
               <p>Outside India</p>
             </div>
           </div>
           <div>
-            {inside && (
-               <AdressInside />
-            )}
-            {outside && (
-                <OutSideIndia />
-            )}
-        </div>
-          
-          
+            {inside && <AdressInside />}
+            {outside && <OutSideIndia />}
+          </div>
         </div>
       </FormStep>
     </React.Fragment>

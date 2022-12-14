@@ -26,6 +26,7 @@ import PlaceOfDeathHospital from "./pageComponents/deathComponents/PlaceOfDeathH
 import PlaceOfDeathInstitution from "./pageComponents/deathComponents/PlaceOfDeathInstitution";
 import PlaceOfDeathOther from "./pageComponents/deathComponents/PlaceOfDeathOther";
 import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVehicle";
+import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 
@@ -143,7 +144,7 @@ const componentsToRegister = {
   OtherCountry,
   InstitutionDetails,
   ChildDetails,
-
+//////////////////
   InformationDeath,
   AddressOfDecesed,
   OutSideIndia,
@@ -154,6 +155,7 @@ const componentsToRegister = {
   PlaceOfDeathInstitution,
   PlaceOfDeathOther,
   PlaceOfDeathVehicle,
+  InformentAddress,
   StatisticalInfo,
   StatisticalInfoContinue,
 
