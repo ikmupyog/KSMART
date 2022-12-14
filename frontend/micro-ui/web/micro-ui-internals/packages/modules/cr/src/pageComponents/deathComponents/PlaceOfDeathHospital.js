@@ -14,6 +14,10 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const [HospitalAadhaar, setHospitalAadhaar] = useState(null);
+  const [HospitalMobile, setHospitalMobile] = useState(null);
+  
+  
   const [TradeName, setTradeName] = useState(null);
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -47,6 +51,14 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
+  function setSelectHospitalAadhaar(e) {
+    setHospitalAadhaar(e.target.value);
+  }
+  function setSelectHospitalMobile(e) {
+    setHospitalMobile(e.target.value);
+  }
+  
+  
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
@@ -114,9 +126,9 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
             isMandatory={false}
             type={"text"}
             optionKey="i18nKey"
-            name="TradeName"
-            value={TradeName}
-            onChange={setSelectTradeName}
+            name="HospitalAadhaar"
+            value={HospitalAadhaar}
+            onChange={setSelectHospitalAadhaar}
             disable={isEdit}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -128,9 +140,9 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
             isMandatory={false}
             type={"text"}
             optionKey="i18nKey"
-            name="TradeName"
-            value={TradeName}
-            onChange={setSelectTradeName}
+            name="HospitalMobile"
+            value={HospitalMobile}
+            onChange={setSelectHospitalMobile}
             disable={isEdit}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />  
