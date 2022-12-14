@@ -13,8 +13,20 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
 
   const [setVillage, setSelectedVillage] = useState(formData?.TradeDetails?.setVillage);
+  const [setLbName, setSelectedLbName] = useState(formData?.TradeDetails?.setVillage);
+  const [setPostOffice, setSelectedPostOffice] = useState(formData?.TradeDetails?.setPostOffice);
+  const [PinCode, setSelectedPinCode] = useState(formData?.TradeDetails?.HouseNo);
   const [setTaluk, setSelectedTaluk] = useState(formData?.TradeDetails?.setTaluk);
   const [setDistrict, setSelectedDistrict] = useState(formData?.TradeDetails?.setDistrict);
+  const [BuildingNo, setSelectedBuildingNo] = useState(formData?.TradeDetails?.BuildingNo);
+  const [HouseNo, setSelectedHouseNo] = useState(formData?.TradeDetails?.HouseNo);
+  const [Locality, setLocality] = useState(formData?.TradeDetails?.Locality);
+  const [LocalityML, setLocalityML] = useState(formData?.TradeDetails?.Locality);
+  const [CityEn, setCityEn] = useState(formData?.TradeDetails?.CityEn);
+  const [CityMl, setCityMl] = useState(formData?.TradeDetails?.CityMl);
+  
+
+
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -48,9 +60,39 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     });
   const onSkip = () => onSelect();
 
+  function setSelectBuildingNo(e) {
+    setSelectedBuildingNo(e.target.value);
+  }
+  function setSelectHouseNo(e) {
+    setSelectedHouseNo(e.target.value);
+  }
+  function setSelectPinCode(e) {
+    setSelectedPinCode(e.target.value);
+  }
+  function setSelectLocality(e) {
+    setLocality(e.target.value);
+  }
+  function setSelectLocalityML(e) {
+    setLocalityML(e.target.value);
+  }
+  function setSelectCityEn(e) {
+    setCityEn(e.target.value);
+  }
+  function setSelectCityMl(e) {
+    setCityMl(e.target.value);
+  }
   function selectVillage(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedVillage(value);
+  }
+  function selectPostOffice(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedPostOffice(value);
+  }
+
+  function selectLbName(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedLbName(value);
   }
   function selectTaluk(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
@@ -83,7 +125,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <header className="tittle">Place Of Death Home </header>
 
@@ -103,11 +145,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="BuildingNo"
+              value={BuildingNo}
+              onChange={setSelectBuildingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
           <div className="col-md-6">
@@ -117,11 +159,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="HouseNo"
+              value={HouseNo}
+              onChange={setSelectHouseNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
         </div>
@@ -133,9 +175,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="Locality"
+              value={Locality}
+              onChange={setSelectLocality}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -147,9 +189,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="LocalityML"
+              value={LocalityML}
+              onChange={setSelectLocalityML}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -163,9 +205,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="CityEn"
+              value={CityEn}
+              onChange={setSelectCityEn}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -177,9 +219,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="CityMl"
+              value={CityMl}
+              onChange={setSelectCityMl}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -197,8 +239,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               optionKey="code"
               isMandatory={false}
               option={cmbPlace}
-              selected={setPlaceofActivity}
-              select={selectPlaceofactivity}
+              selected={setLbName}
+              select={selectLbName}
               disabled={isEdit}
             />
           </div>
@@ -229,8 +271,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               optionKey="code"
               isMandatory={false}
               option={cmbPlace}
-              selected={setPlaceofActivity}
-              select={selectPlaceofactivity}
+              selected={setPostOffice}
+              select={selectPostOffice}
               disabled={isEdit}
             />
           </div>
@@ -241,11 +283,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="PinCode"
+              value={PinCode}
+              onChange={setSelectPinCode}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
         </div>

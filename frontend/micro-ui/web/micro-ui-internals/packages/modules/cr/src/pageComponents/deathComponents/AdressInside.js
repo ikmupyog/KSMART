@@ -224,7 +224,6 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
     sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
     sessionStorage.setItem("PresentPincode", PresentPincode.code);
-
     sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
     sessionStorage.setItem("PermanentHouseNo", PermanentHouseNo);
     sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);

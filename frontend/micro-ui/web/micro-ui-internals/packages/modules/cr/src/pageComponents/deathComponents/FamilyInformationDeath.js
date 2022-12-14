@@ -10,29 +10,28 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
 
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
-  const [setTitle, setSelectedTitle] = useState(formData?.DeathDetails?.setTitle);
-  const [setTitleB, setSelectedTitleB] = useState(formData?.DeathDetails?.setTitle);
-  const [FatherOrHusbandNameEN, setFatherOrHusbandNameEN] = useState(null);
-  const [FatherOrHusbandNameMl, setFatherOrHusbandNameMl] = useState(null);
-  const [MotherNameEn, setMotherNameEn] = useState(null);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  const [setTitle, setSelectedTitle] = useState(formData?.FamilyInformationDeath?.setTitle);
+  const [setTitleB, setSelectedTitleB] = useState(formData?.FamilyInformationDeath?.setTitleB);
+  const [FatherOrHusbandNameEN, setFatherOrHusbandNameEN] = useState(formData?.FamilyInformationDeath?.FatherOrHusbandNameEN);
+  const [FatherOrHusbandNameMl, setFatherOrHusbandNameMl] = useState(formData?.FamilyInformationDeath?.FatherOrHusbandNameMl);
+  const [MotherNameEn, setMotherNameEn] = useState(formData?.FamilyInformationDeath?.MotherNameEn);
   // const [FirstNameB, setFirstNameB] = useState(null);
-  const [MotherNameMl, setMotherNameMl] = useState(null);
+  const [MotherNameMl, setMotherNameMl] = useState(formData?.FamilyInformationDeath?.MotherNameMl);
   // const [MLFirstName, setMLFirstName] = useState(null);
-  const [FatherOrHusbandAdharNo, setFatherOrHusbandAdharNo] = useState(null);
-  const [MotherAdharNo, setMotherAdharNo] = useState(null);
-
+  const [FatherOrHusbandAdharNo, setFatherOrHusbandAdharNo] = useState(formData?.FamilyInformationDeath?.FatherOrHusbandAdharNo);
+  const [MotherAdharNo, setMotherAdharNo] = useState(formData?.MotherAdharNo?.MotherAdharNo);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
-  const [CommencementDate, setCommencementDate] = useState();
+  // const [TradeName, setTradeName] = useState(null);
+  // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
+  // let cmbPlace = [];
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
   let cmbTitle = [];
   title &&
     title["common-masters"] &&
@@ -42,10 +41,10 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
 
   const onSkip = () => onSelect();
 
-  function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
-  }
+  // function selectPlaceofactivity(value) {
+  //   naturetypecmbvalue = value.code.substring(0, 4);
+  //   setSelectedPlaceofActivity(value);
+  // }
   function selectTitle(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitle(value);
@@ -72,20 +71,37 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   function setSelectMotherAdharNo(e) {
     setMotherAdharNo(e.target.value);
   }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
 
   const goNext = () => {
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    sessionStorage.setItem("setTitle", setTitle.code);
+    sessionStorage.setItem("setTitleB", setTitleB.code);
+    sessionStorage.setItem("FatherOrHusbandNameEN", FatherOrHusbandNameEN);
+    sessionStorage.setItem("FatherOrHusbandNameMl", FatherOrHusbandNameMl);
+    sessionStorage.setItem("MotherNameEn", MotherNameEn);
+    sessionStorage.setItem("MotherNameMl", MotherNameMl);
+    sessionStorage.setItem("FatherOrHusbandAdharNo", FatherOrHusbandAdharNo);
+    sessionStorage.setItem("MotherAdharNo", MotherAdharNo);
+
+    onSelect(config.key, {
+      setTitle,
+      setTitleB,
+      FatherOrHusbandNameEN,
+      FatherOrHusbandNameMl,
+      MotherNameEn,
+      MotherAdharNo,
+      FatherOrHusbandAdharNo,
+      MotherNameMl,
+    });
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <header className="tittle">Family Details </header>
 

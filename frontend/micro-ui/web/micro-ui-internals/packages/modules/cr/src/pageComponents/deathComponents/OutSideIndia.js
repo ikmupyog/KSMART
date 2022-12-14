@@ -75,7 +75,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-    {window.location.href.includes("/citizen") ? <Timeline /> : null}
+    {window.location.href.includes("/employee") ? <Timeline /> : null}
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
     <header className="card-header" style={{fontSize:"35px"}}>CR_ADDRESS_TYPE_OUTSIDE_INDIA</header>
     <div className="row">    
