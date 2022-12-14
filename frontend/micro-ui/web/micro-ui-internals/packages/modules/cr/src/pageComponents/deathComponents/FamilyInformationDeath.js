@@ -14,13 +14,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const [setTitle, setSelectedTitle] = useState(formData?.DeathDetails?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.DeathDetails?.setTitle);
   const [FatherOrHusbandNameEN, setFatherOrHusbandNameEN] = useState(null);
-  const [FirstName, setFirstName] = useState(null);
-  const [FirstNameB, setFirstNameB] = useState(null);
-  const [MLFirstNameB, setMLFirstNameB] = useState(null);
-
-  const [MLFirstName, setMLFirstName] = useState(null);
-  const [AdharNo, setAdharNo] = useState(null);
-  const [AdharNoB, setAdharNoB] = useState(null);
+  const [FatherOrHusbandNameMl, setFatherOrHusbandNameMl] = useState(null);
+  const [MotherNameEn, setMotherNameEn] = useState(null);
+  // const [FirstNameB, setFirstNameB] = useState(null);
+  const [MotherNameMl, setMotherNameMl] = useState(null);
+  // const [MLFirstName, setMLFirstName] = useState(null);
+  const [FatherOrHusbandAdharNo, setFatherOrHusbandAdharNo] = useState(null);
+  const [MotherAdharNo, setMotherAdharNo] = useState(null);
 
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -57,17 +57,20 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   function setSelectFatherOrHusbandNameEN(e) {
     setFatherOrHusbandNameEN(e.target.value);
   }
-  function setSelectFirstName(e) {
-    setFirstName(e.target.value);
+  function setSelectFatherOrHusbandNameMl(e) {
+    setFatherOrHusbandNameMl(e.target.value);
   }
-  function setSelectMLFirstName(e) {
-    setMLFirstName(e.target.value);
+  function setSelectMotherNameEn(e) {
+    setMotherNameEn(e.target.value);
   }
-  function setSelectAdharNo(e) {
-    setAdharNo(e.target.value);
+  function setSelectMotherNameMl(e) {
+    setMotherNameMl(e.target.value);
   }
-  function setSelectAdharNoB(e) {
-    setAdharNoB(e.target.value);
+  function setSelectFatherOrHusbandAdharNo(e) {
+    setFatherOrHusbandAdharNo(e.target.value);
+  }
+  function setSelectMotherAdharNo(e) {
+    setMotherAdharNo(e.target.value);
   }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
@@ -106,7 +109,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               type={"text"}
               optionKey="i18nKey"
               name="FatherOrHusbandNameEN"
-              value={TradeFatherOrHusbandNameENName}
+              value={FatherOrHusbandNameEN}
               onChange={setSelectFatherOrHusbandNameEN}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
@@ -119,9 +122,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="FatherOrHusbandNameMl"
+              value={FatherOrHusbandNameMl}
+              onChange={setSelectFatherOrHusbandNameMl}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -135,9 +138,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="AdharNo"
-              value={AdharNo}
-              onChange={setSelectAdharNo}
+              name="FatherOrHusbandAdharNo"
+              value={FatherOrHusbandAdharNo}
+              onChange={setSelectFatherOrHusbandAdharNo}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -163,9 +166,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="FirstName"
-              value={FirstName}
-              onChange={setSelectFirstName}
+              name="MotherNameEn"
+              value={MotherNameEn}
+              onChange={setSelectMotherNameEn}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -177,9 +180,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="MLFirstName"
-              value={MLFirstName}
-              onChange={setSelectMLFirstName}
+              name="MotherNameMl"
+              value={MotherNameMl}
+              onChange={setSelectMotherNameMl}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -193,9 +196,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="AdharNoB"
-              value={AdharNoB}
-              onChange={setSelectAdharNoB}
+              name="MotherAdharNo"
+              value={MotherAdharNo}
+              onChange={setSelectMotherAdharNo}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
