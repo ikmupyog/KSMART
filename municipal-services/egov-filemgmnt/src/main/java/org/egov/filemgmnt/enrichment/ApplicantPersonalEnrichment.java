@@ -87,6 +87,10 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
                    personal.getFileDetail()
                            .setId(UUID.randomUUID()
                                       .toString());
+                   personal.getApplicantChild()
+                           .setId(UUID.randomUUID()
+                                      .toString());
+
                });
 
         setFileCodes(request);
