@@ -94,14 +94,18 @@ const SubType = ({ path ,handleNext}) => {
         <div className="moduleLinkHomePageModuleLinks">
        <div className="FileFlowWrapper">
        <FormInputGroup 
-            type="Dropdown" handleChange={handleChange}   t={t} value={subtypeData.subtype} name="subtype" label="Sub Type"
+            type="Dropdown" handleChange={handleChange}   t={t} value={subtypeData.subtype} name="subtype" 
+            label={`${t("DFM_SUB_TYPE")}`}
             selectOptions={subtypeOptions} 
+            hidePlaceholder={true}
         />
        <FormInputGroup 
-            type="Dropdown" handleChange={handleChange}   t={t} value={subtypeData.subtype} name="functionality" label="Functionality"
+            type="Dropdown" handleChange={handleChange}   t={t} value={subtypeData.subtype} name="functionality" 
+            label={`${t("DFM_FUNCTIONALITY")}`}
             selectOptions={functionalityOptions} 
+            hidePlaceholder={true}
         />
-         {showError ? <CardLabelError>{t("Please Select SubType")}</CardLabelError> : null}
+         {showError ? <CardLabelError>{t("DFM_SELECT_FIELDS")}</CardLabelError> : null}
         <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} />
        </div>
         </div>

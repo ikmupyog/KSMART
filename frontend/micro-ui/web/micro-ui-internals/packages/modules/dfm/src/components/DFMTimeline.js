@@ -9,17 +9,11 @@ const getAction = (flow) => {
     case "STAKEHOLDER": actions = []
       break;
     default: actions = [
-      'Applicant Basic Details',
-      'Address Details',
-      'Service Details',
-      'Document Details',
+      'DFM_APPLICATION_DETAILS_HEADER',
+      'DFM_ADDRESS_DETAILS_HEADER',
+      'DFM_SERVICE_DETAILS_HEADER',
+      'DFM_DOCUMENT_DETAILS_HEADER',
     ]
-    // default: actions = [
-    //   'TL_COMMON_TR_DETAILS',
-    //   'TL_LOCATION_AND_OWNER_DETAILS',
-    //   'TL_DOCUMENT_DETAIL',
-    //   'TL_COMMON_SUMMARY',
-    // ]
   }
 }
 const Timeline = ({ currentStep = 1, flow = "" }) => {

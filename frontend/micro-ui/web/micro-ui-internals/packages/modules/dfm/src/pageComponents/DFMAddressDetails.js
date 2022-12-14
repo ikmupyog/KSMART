@@ -106,7 +106,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("SELECT TYPE OF ADDRESS DETAILS")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_ADDRESS_DETAILS_TEXT")}*`}</span>
                 </h1>
               </div>
             </div>
@@ -120,7 +120,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                     t={t}
                     value={addressData.houseNo}
                     name="houseNo"
-                    label="House Number"
+                    label={`${t("DFM_HOUSE_NUMBER")}`}
                     mystyle={mystyle}
                     placeholder={`${t("House No")}*`}
                   />
@@ -135,7 +135,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.houseName}
                   name="houseName"
-                  label="House Name"
+                  label={`${t("DFM_HOUSE_NAME")}`}
                   mystyle={mystyle}
                 />
               </div>
@@ -146,7 +146,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.street}
                   name="street"
-                  label="Street"
+                  label={`${t("DFM_STREET")}`}
                   mystyle={mystyle}
                 />
               </div>
@@ -160,7 +160,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.postOffice}
                   name="postOffice"
-                  label="Post Office"
+                  label={`${t("DFM_POST_OFFICE")}`}
                   selectOptions={postOfficeOptions}
                 />
               </div>
@@ -171,7 +171,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.pincode}
                   name="pincode"
-                  label="Pincode"
+                  label={`${t("DFM_PINCODE")}`}
                   mystyle={mystyle}
                   valid="^\d{6}$"
                 />
@@ -183,7 +183,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.resAssociationNo}
                   name="resAssociationNo"
-                  label="ResAssociation Number"
+                  label={`${t("DFM_RESASSOCIATION_NUMBER")}`}
                   mystyle={mystyle}
                 />
               </div>
@@ -197,7 +197,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.localPlace}
                   name="localPlace"
-                  label="Local Place"
+                  label={`${t("DFM_LOCAL_PLACE")}`}
                   mystyle={mystyle}
                 />
               </div>
@@ -208,7 +208,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.mainPlace}
                   name="mainPlace"
-                  label="Main Place"
+                  label={`${t("DFM_MAIN_PLACE")}`}
                   mystyle={mystyle}
                 />
               </div>
@@ -219,7 +219,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   value={addressData.wardNo}
                   name="wardNo"
-                  label="Ward No"
+                  label={`${t("DFM_WARD_NO")}`}
                   selectOptions={wardOptions}
                   placeholder={`${t("Ward No")}*`}
                 />

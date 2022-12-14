@@ -10,7 +10,6 @@ import LanguageSelection from "./Home/LanguageSelection";
 import LocationSelection from "./Home/LocationSelection";
 import Login from "./Login";
 import UserProfile from "./Home/UserProfile";
-import Dashboard from "./Dashboard";
 // import PDF from "../../assets/";
 
 const getTenants = (codes, tenants) => {
@@ -55,21 +54,15 @@ const Home = ({
         <div className="moduleLinkHomePage">
           <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
           <BackButton className="moduleLinkHomePageBackButton" />
-          {code === "DFM"? <h1>{t("file management".toUpperCase())}</h1>
+          {/* {code === "DFM"? <h1>{t("file management".toUpperCase())}</h1>
           : <h1>{t("MODULE_" + code.toUpperCase())}</h1>
           }
-         
+          */}
+          <h1>{t("MODULE_" + code.toUpperCase())}</h1>
         </div>
         <div className="moduleLinkHomePageModuleLinks">
             <Links key={index} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
           </div>
-        {/* {code === "DFM" ? (
-          <Dashboard path={path} />
-        ) : (
-          <div className="moduleLinkHomePageModuleLinks">
-            <Links key={index} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
-          </div>
-        )} */}
       </Route>
     );
   });
