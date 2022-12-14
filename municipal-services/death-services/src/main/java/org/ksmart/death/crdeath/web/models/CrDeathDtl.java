@@ -10,10 +10,12 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.Document;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.ksmart.death.crdeath.constraints.Html;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
@@ -351,6 +353,38 @@ public class CrDeathDtl {
 
     //     return this;
     // }
+    
+   //@Schema(type = "string", description = "Workflow code")
+    @Size(max = 64)
+   // @NotNull
+    @JsonProperty("workflowCode")
+    private String workflowCode;
 
-  
+    //@Schema(type = "string", description = "Workflow action")
+    @Size(max = 64)
+    @JsonProperty("action")
+    private String action;
+
+    //@Schema(type = "string", description = "Status of file")
+    @Size(max = 64)
+    @JsonProperty("fileStatus")
+    private String fileStatus;
+
+   // @Schema(type = "string", description = "Business service")
+    @Size(max = 64)
+    @JsonProperty("businessService")
+    private String businessService;
+
+    @JsonProperty("assignees")
+    private List<String> assignees;
+
+    //@Schema(type = "string", description = "Comments")
+    @Size(max = 128)
+    @Html
+    private String comment;
+
+    @Valid
+    @JsonProperty("wfDocuments")
+    private List<Document> wfDocuments;
+
 }
