@@ -33,6 +33,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
   const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate);
   const [ToDate, setToDate] = useState(formData?.InformationDeath?.ToDate);
+  const [DeathTimeFrom, setDeathTimeFrom] = useState(null);
+  const [DeathTimeTo, setDeathTimeTo] = useState(null);
 
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -132,6 +134,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectToDate(value) {
     setToDate(value);
   }
+  function setSelectDeathTimeFrom(value) {
+    setDeathTimeFrom(value);
+  }
+  function setSelectDeathTimeTo(value) {
+    setDeathTimeFrom(value);
+  }
+  
+
   const onSkip = () => onSelect();
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate);
@@ -252,95 +262,41 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             {/* date={CommencementDate} */}
             <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
           </div>
-          <div className="col-md-1">
+          <div className="col-md-3">
             <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="DeathTimeFrom"
+              value={DeathTimeFrom}
+              onChange={setDeathTimeFrom}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
-          </div>
-          <div className="col-md-1">
-            <CardLabel>{t("m")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
-              disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
-          </div>
-          <div className="col-md-1">
-            <CardLabel>{t("s")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
-              disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
-          </div>
+          </div>          
+         
           <div className="col-md-3">
             <CardLabel>{t("CR_TO_DATE")}</CardLabel>
             {/* date={CommencementDate} */}
             <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
           </div>
-          <div className="col-md-1">
+          <div className="col-md-3">
             <CardLabel>{t("CR_TO_TIME")}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="DeathTimeTo"
+              value={DeathTimeTo}
+              onChange={setSelectDeathTimeTo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "DeathTimeFrom^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
-          <div className="col-md-1">
-            <CardLabel>{t("m")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
-              disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
-          </div>
-          <div className="col-md-1">
-            <CardLabel>{t("s")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
-              disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
-          </div>
+          
         </div>
 
         <div className="row">
