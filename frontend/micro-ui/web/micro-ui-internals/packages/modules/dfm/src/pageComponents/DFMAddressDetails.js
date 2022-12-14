@@ -18,8 +18,8 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   const [TradeName, setTradeName] = useState(formData.TradeDetails?.TradeName);
 
   const [addressData, setAddressData] = useState(
-    formData?.AddressDetails?.addressData
-      ? formData.AddressDetails.addressData
+    formData?.FileManagement?.addressData
+      ? formData.FileManagement.addressData
       : {
           houseNo: "",
           houseName: "",
