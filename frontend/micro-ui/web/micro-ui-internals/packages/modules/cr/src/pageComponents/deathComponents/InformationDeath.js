@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -140,10 +140,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Date of Death")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DATE_OF_DEATH")}`}</span>
             </h1>
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-6" >
+            {/* <CheckBox label={t("Exact Date of death not available")} onChange={setDateOfDeathNotAvailable} value={isDateOfDeathNotAvailable} checked={isDateOfDeathNotAvailable} /> */}
+            <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} />
+          </div>
+          <div className="col-md-6" >
+            {/* <CheckBox label={t("Unclaimed dead body")} onChange={setUnclamedDeadBody} value={isUnclamedDeadBody} checked={isUnclamedDeadBody} /> */}
+            <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} />
+          </div>
+        </div>
+
         <div className="row">
           <div className="col-md-6">
             <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
@@ -293,7 +304,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Name of Deceased")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_DECEASED")}`}</span>
             </h1>
           </div>
         </div>
@@ -423,7 +434,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Aadhar of Deceased")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_AADHAR_OF_DECEASED")}`}</span>
             </h1>
           </div>
         </div>
@@ -447,7 +458,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Passport Details of Deceased")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PASSPORT_DETAILS_OF_DECEASED")}`}</span>
             </h1>
           </div>
         </div>
@@ -468,7 +479,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
           </div>
           <div className="col-md-4">
-            <CardLabel>{t("CR_NANationalityTIONALITY")}</CardLabel>
+            <CardLabel>{t("CR_NATIONALITY")}</CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbNation} selected={setCountry} select={selectCountry} disabled={isEdit} />
           </div>
           <div className="col-md-4">

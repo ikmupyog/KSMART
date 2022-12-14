@@ -83,18 +83,10 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         <header className="tittle">Family Details </header>
 
         <div className="row">
-          <div className="col-md-12 col-lg-12">
-            <div className="col-md-5">
-              <hr className="aligncss"></hr>
-            </div>
-            <div className="col-md-2">
-              <h1 className="headingh1">
-                <span> Name of Father or Husband</span>
-              </h1>
-            </div>
-            <div className="col-md-5">
-              <hr className="aligncss"></hr>
-            </div>
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_FATHER_OR_HUSBAND")}`}</span>
+            </h1>
           </div>
         </div>
         <div className="row">
@@ -149,21 +141,12 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         </div>
 
         <div className="row">
-          <div className="col-md-12 col-lg-12">
-            <div className="col-md-5">
-              <hr className="aligncss"></hr>
-            </div>
-            <div className="col-md-2">
-              <h1 className="headingh1">
-                <span> Name of Mother</span>
-              </h1>
-            </div>
-            <div className="col-md-5">
-              <hr className="aligncss"></hr>
-            </div>
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_MOTHER")}`}</span>
+            </h1>
           </div>
         </div>
-
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_EN")}`}</CardLabel>

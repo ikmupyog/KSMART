@@ -457,7 +457,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
             <CheckBox
-              label={t("Permanent Address is Same as Present Address")}
+              label={t("CR_PERMANANT_ADDRESS_SAME_AS_PRESENT_ADDRESS")}
               onInputChange={setSameAsPresent}
               onChange={setSameAsPresent}
               value={isPrsentAddress}

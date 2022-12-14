@@ -656,10 +656,10 @@ export const newConfig = [
         key: "DeathDetails",
         withoutLabel: true,
         hideInEmployee: false,
-        nextStep:"family-informationq",        
+        nextStep:"family-information",        
       },
       {
-        route: "family-informationq",
+        route: "family-information",
         component: "FamilyInformationBirth",
         texts: {
           headerCaption: "",
