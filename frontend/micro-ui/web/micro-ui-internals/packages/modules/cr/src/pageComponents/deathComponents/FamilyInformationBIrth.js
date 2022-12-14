@@ -13,6 +13,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setTitle, setSelectedTitle] = useState(formData?.DeathDetails?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.DeathDetails?.setTitle);
+  const [FatherOrHusbandNameEN, setFatherOrHusbandNameEN] = useState(null);
   const [FirstName, setFirstName] = useState(null);
   const [FirstNameB, setFirstNameB] = useState(null);
   const [MLFirstNameB, setMLFirstNameB] = useState(null);
@@ -52,6 +53,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   function selectTitleB(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitleB(value);
+  }
+  function setSelectFatherOrHusbandNameEN(e) {
+    setFatherOrHusbandNameEN(e.target.value);
   }
   function setSelectFirstName(e) {
     setFirstName(e.target.value);
@@ -101,9 +105,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="FatherOrHusbandNameEN"
+              value={TradeFatherOrHusbandNameENName}
+              onChange={setSelectFatherOrHusbandNameEN}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
