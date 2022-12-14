@@ -266,7 +266,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}{" "}
+      {window.location.href.includes("/employee") ? <Timeline /> : null}{" "}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PresentBuldingNo}>
         <div className="row">
           <div className="col-md-12">
