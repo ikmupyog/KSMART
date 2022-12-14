@@ -9,9 +9,14 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  const [setMedicalAttentionDeath, setSelectedMedicalAttentionDeath] = useState(formData?.StatisticalInfoContinue?.setMedicalAttentionDeath);
+  const [setDeathMedicallyCertified, setSelectedDeathMedicallyCertified] = useState(formData?.StatisticalInfoContinue?.setDeathMedicallyCertified);
+  const [setCauseOfDeathMain, setSelectedCauseOfDeathMain] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeathMain);
+  const [setCauseOfDeathSub, setSelectedCauseOfDeathSub] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeathSub);
+  const [setFemaleDeathPregnant, setSelectedFemaleDeathPregnant] = useState(formData?.StatisticalInfoContinue?.setFemaleDeathPregnant);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
-  const [CauseOfDeath, setCauseOfDeath] = useState(null);
+  const [CauseOfDeath, setCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeath);
 
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -28,7 +33,26 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
-
+  function selectMedicalAttentionDeath(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedMedicalAttentionDeath(value);
+  }
+  function selectDeathMedicallyCertified(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedDeathMedicallyCertified(value);
+  }
+  function selectCauseOfDeathMain(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedCauseOfDeathMain(value);
+  }
+  function selectCauseOfDeathSub(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedCauseOfDeathSub(value);
+  }
+  function selectFemaleDeathPregnant(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedFemaleDeathPregnant(value);
+  } 
   function setSelectCauseOfDeath(e) {
     setCauseOfDeath(e.target.value);
   }
@@ -40,14 +64,30 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
+    sessionStorage.setItem("MedicalAttentionDeath", setMedicalAttentionDeath.code);
+    sessionStorage.setItem("DeathMedicallyCertified", setDeathMedicallyCertified.code);
+    sessionStorage.setItem("CauseOfDeathMain", setCauseOfDeathMain.code);
+    sessionStorage.setItem("CauseOfDeathSub", setCauseOfDeathSub.code);
+    sessionStorage.setItem("CauseOfDeath", setCauseOfDeath);
+    sessionStorage.setItem("FemaleDeathPregnant", setFemaleDeathPregnant.code);    
     sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    
+    CauseOfDeath
+    onSelect(config.key, {
+      setMedicalAttentionDeath,
+      setDeathMedicallyCertified,
+      setCauseOfDeathMain,
+      setCauseOfDeathSub,
+      setCauseOfDeath,
+      setFemaleDeathPregnant,
+
+      setPlaceofActivity });
   };
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
-        <header className="tittle">Statistical Information(Contonue)</header>
+        <header className="tittle">Statistical Information(Continue)</header>
     
       <div className="row">    
         <div className="col-md-6" > 
@@ -57,8 +97,8 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setMedicalAttentionDeath}
+                select={selectMedicalAttentionDeath}
                 disabled={isEdit}
             />           
         </div>
@@ -69,8 +109,8 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setDeathMedicallyCertified}
+                select={selectDeathMedicallyCertified}
                 disabled={isEdit}
             />           
         </div>
@@ -83,8 +123,8 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setCauseOfDeathMain}
+                select={selectCauseOfDeathMain}
                 disabled={isEdit}
             />           
         </div>
@@ -95,8 +135,8 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setCauseOfDeathSub}
+                select={selectCauseOfDeathSub}
                 disabled={isEdit}
             />           
         </div>
@@ -123,8 +163,8 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setFemaleDeathPregnant}
+                select={selectFemaleDeathPregnant}
                 disabled={isEdit}
             />           
         </div>

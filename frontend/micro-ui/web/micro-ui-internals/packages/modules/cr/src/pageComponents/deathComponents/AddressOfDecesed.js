@@ -66,12 +66,16 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
               <p>Inside Local Body</p>
             </div>
             <div className="inside">
+            <button onClick={insideHandler}>
               <NewRadioButton />
-              <p>Inside Local Body</p>
+              </button>
+              <p>Inside Kerala</p>
             </div>
             <div className="inside">
+            <button onClick={insideHandler}>
               <NewRadioButton />
-              <p>Inside Local Body</p>
+             </button>
+              <p>Inside India</p>
             </div>
             <div className="inside">
               <button  onClick={outsideHandler}> 
