@@ -14,6 +14,16 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   const [setVillage, setSelectedVillage] = useState(formData?.TradeDetails?.setVillage);
   const [setTaluk, setSelectedTaluk] = useState(formData?.TradeDetails?.setTaluk);
   const [setDistrict, setSelectedDistrict] = useState(formData?.TradeDetails?.setDistrict);
+  const [BuildingNo, setBuildingNo] = useState(formData?.TradeDetails?.setDistrict);
+  const [HouseNo, setHouseNo] = useState(formData?.TradeDetails?.setDistrict);
+  const [Locality, setLocality] = useState(formData?.TradeDetails?.setDistrict);
+  const [LocalityMl, setLocalityMl] = useState(formData?.TradeDetails?.setDistrict);
+  const [CityEn, setCityEn] = useState(formData?.TradeDetails?.setDistrict);
+  const [CityMl, setCityMl] = useState(formData?.TradeDetails?.setDistrict);
+  const [PinCode, setPinCode] = useState(null);
+
+  const [setPostOffice, setSelectedPostOffice] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  const [setLbName, setSelectedLbName] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
@@ -45,6 +55,27 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     });
 
   const onSkip = () => onSelect();
+  function setSelectBuildingNo(e) {
+    setBuildingNo(e.target.value);
+  }
+  function setSelectHouseNo(e) {
+    setHouseNo(e.target.value);
+  }
+  function setSelectLocality(e) {
+    setLocality(e.target.value);
+  }
+  function setSelectLocalityMl(e) {
+    setLocalityMl(e.target.value);
+  }
+  function setSelectCityEn(e) {
+    setCityEn(e.target.value);
+  }
+  function setSelectCityMl(e) {
+    setCityMl(e.target.value);
+  }
+  function setSelectPinCode(e) {
+    setPinCode(e.target.value);
+  }
 
   function selectVillage(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
@@ -57,6 +88,14 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   function selectDistrict(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDistrict(value);
+  }
+  function selectPostOffice(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedPostOffice(value);
+  }
+  function select(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedLbName(value);
   }
   function selectPlaceofactivity(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
@@ -86,20 +125,19 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             </h1>
           </div>
         </div>
-
         <div className="row">
           <div className="col-md-6">
             <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
-              type={"text"}
+              type={"number"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="BuildingNo"
+              value={BuildingNo}
+              onChange={setSelectBuildingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
           <div className="col-md-6">
@@ -109,9 +147,9 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="HouseNo"
+              value={HouseNo}
+              onChange={setSelectHouseNo}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -125,9 +163,9 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="Locality"
+              value={Locality}
+              onChange={setSelectLocality}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -139,9 +177,9 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="LocalityMl"
+              value={LocalityMl}
+              onChange={setSelectLocalityMl}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -155,9 +193,9 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="CityEn"
+              value={CityEn}
+              onChange={setSelectCityEn}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -169,9 +207,9 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="CityMl"
+              value={CityMl}
+              onChange={setSelectCityMl}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -189,8 +227,8 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               optionKey="code"
               isMandatory={false}
               option={cmbPlace}
-              selected={setPlaceofActivity}
-              select={selectPlaceofactivity}
+              selected={setLbName}
+              select={selectLbName}
               disabled={isEdit}
             />
           </div>
@@ -221,8 +259,8 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               optionKey="code"
               isMandatory={false}
               option={cmbPlace}
-              selected={setPlaceofActivity}
-              select={selectPlaceofactivity}
+              selected={setPostOffice}
+              select={selectPostOffice}
               disabled={isEdit}
             />
           </div>
@@ -233,9 +271,9 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="TradeName"
-              value={TradeName}
-              onChange={setSelectTradeName}
+              name="PinCode"
+              value={PinCode}
+              onChange={setSelectPinCode}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
