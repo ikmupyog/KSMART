@@ -67,7 +67,7 @@ const Home = () => {
         onClick: () => history.push("/citizen/death-citizen/home"),
       },
       {
-        name: t("File Management"),
+        name: t("MODULE_DFM"),
         Icon: <CaseIcon className="fill-path-primary-main" />,
         onClick: () => history.push("/digit-ui/citizen/dfm-home"),
       },

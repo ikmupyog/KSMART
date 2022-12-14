@@ -89,19 +89,15 @@ export const DFMLinks = ({ matchPath, userType }) => {
   const links = [
     {
       link: `${matchPath}/submenu`,
-      i18nKey: t("Apply for new Service"), 
+      i18nKey: t("DFM_CREATE_FILE"), 
     },
     {
-      link: `${matchPath}/my-application`,
-      i18nKey: t("My Application"),
+      link: `${matchPath}/my-applications`,
+      i18nKey: t("DFM_MY_APPLICATIONS"),
     },
-    // {
-    //   link: `${matchPath}/tradelicence/my-application`,
-    //   i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
-    // },
   ];
 
-  return <CitizenHomeCard header={t("Digital File Management")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
+  return <CitizenHomeCard header={t("MODULE_DFM")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
 }; 
 
 const componentsToRegister = {
@@ -112,55 +108,6 @@ const componentsToRegister = {
   DFMAddressDetails,
   DFMServiceDetails,
   DFMDocumentDetails,
-  // SelectLand,
-  // SelectBuilding,
-  // SelectBusinessCategory,
-  // SelectTradeAddress,
-  // SelectTLVechicle,
-  // SelectTLWater,
-  // TradeLicense,
-  // SelectTradeName,
-  
-  // SelectStructureType,
-  // SelectVehicleType,
-  // SelectBuildingType,
-  // SelectCommencementDate,
-  // SelectTradeUnits,
-  // SelectAccessories,
-  // SelectAccessoriesDetails,
-  // TLSelectGeolocation,
-  // TLSelectAddress,
-  // TLSelectPincode,
-  // Proof,
-  // SelectOwnerShipDetails,
-  // SelectOwnerDetails,
-  // SelectOwnerAddress,
-  // SelectProofIdentity,
-  // SelectOwnershipProof,
-  // TLCheckPage,
-  // TLDocument,
-  // TLAcknowledgement,
-  // TradeLicenseList,
-  // MyApplications,
-  // TLOwnerDetailsEmployee,
-  // TLTradeDetailsEmployee,
-  // TLTradeUnitsEmployee,
-  // TLAccessoriesEmployee,
-  // TLDocumentsEmployee,
-  // SearchApplication,
-  // SearchLicense,
-  // TL_INBOX_FILTER,
-  // TLInfoLabel,
-  // TLWFApplicationTimeline,
-  // TLApplicationDetails,
-  // TLCreateTradeLicence : CreateTradeLicence,
-  // TLEditTrade : EditTrade,
-  // TLList,
-  // TLRenewTrade : RenewTrade,
-  // TLSearchTradeComponent : SearchTradeComponent,
-  // TLNewApplication : NewApplication,
-  // TLReNewApplication : ReNewApplication,
-  // TLSearch : Search,
   TLResponse : Response,
 };
 

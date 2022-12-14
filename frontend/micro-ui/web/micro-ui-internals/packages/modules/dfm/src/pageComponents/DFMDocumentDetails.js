@@ -161,7 +161,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("SELECT TYPE OF DOCUMENTS DETAILS")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_DOCUMENT_DETAILS_TEXT")}*`}</span>
                 </h1>
               </div>
             </div>
@@ -174,7 +174,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                   t={t}
                   value={documentDetails.documentType}
                   name="documentType"
-                  label="Document Type"
+                  label={`${t("DFM_DOCUMENT_TYPE")}`}
                   isLoading
                   selectOptions={DocTypeOptions}
                 />
@@ -183,7 +183,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                 <Loader />
               )} */}
               <div className="col-md-4">
-                <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_ATTACH_DOCUMENT")}`}</CardLabel>
                 <UploadFile
                   id={"dfm-doc"}
                   extraStyleName={"propertyCreate"}
@@ -201,7 +201,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                   <div className="Common_terms_checkbox">
                     <div className="input-checkbox">
                       <input className="" type="checkbox" onClick={(e) => handleChange(e.target.checked, "checkbox")} />
-                      <label>I hereby declare that all the details are valid</label>
+                      <label>{`${t("DFM_DECLARE_LABEL")}`}</label>
                     </div>
                   </div>
                   {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}

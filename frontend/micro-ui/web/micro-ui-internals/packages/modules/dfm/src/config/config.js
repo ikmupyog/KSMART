@@ -240,7 +240,7 @@ export const newConfig = [
         component: "DFMApplicationDetails",
         texts: {
           headerCaption: "",
-          header: "Application Basic Details",
+          header: "DFM_APPLICATION_DETAILS_HEADER",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -257,8 +257,8 @@ export const newConfig = [
         isMandatory: true,
         component: "DFMAddressDetails",
         texts: {
-          headerCaption: "Address Details",
-          header: "",
+          headerCaption: "",
+          header: "DFM_ADDRESS_DETAILS_HEADER",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           // addMultipleText: "PT_COMMON_ADD_APPLICANT_LABEL",
@@ -275,7 +275,7 @@ export const newConfig = [
         component: "DFMServiceDetails",
         texts: {
           headerCaption: "",
-          header: "Service Details",
+          header: "DFM_SERVICE_DETAILS_HEADER",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
         },
@@ -291,7 +291,7 @@ export const newConfig = [
         component: "DFMDocumentDetails",
         texts: {
           headerCaption: "",
-          header: "Document Details",
+          header: "DFM_DOCUMENT_DETAILS_HEADER",
           cardText: "",
           submitBarLabel: "CS_COMMON_SUBMIT",
         },
