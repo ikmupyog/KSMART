@@ -16,8 +16,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [HospitalAadhaar, setHospitalAadhaar] = useState(null);
   const [HospitalMobile, setHospitalMobile] = useState(null);
-  
-  
+
   const [TradeName, setTradeName] = useState(null);
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -27,13 +26,12 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
     place["TradeLicense"].PlaceOfActivity.map((ob) => {
       cmbPlace.push(ob);
     });
-    let cmbhospital = [];
+  let cmbhospital = [];
   hospital &&
-  hospital["birth-death-service"] &&
-  hospital["birth-death-service"].hospitalList.map((ob) => {    
-    cmbhospital.push(ob);
-  });
-
+    hospital["birth-death-service"] &&
+    hospital["birth-death-service"].hospitalList.map((ob) => {
+      cmbhospital.push(ob);
+    });
 
   const onSkip = () => onSelect();
 
@@ -57,8 +55,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   function setSelectHospitalMobile(e) {
     setHospitalMobile(e.target.value);
   }
-  
-  
+
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
@@ -70,85 +67,82 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-      <header className="tittle">Place Of Death Hospital </header>
-
-    <div className="row">
-        <div className="col-md-12" >
-            <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death Hospital")}`}
-                </span> 
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+        <header className="tittle">Place Of Death Hospital </header>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death Hospital")}`}</span>
             </h1>
+          </div>
         </div>
-    </div>
-    
-      <div className="row">    
-            <div className="col-md-6" >
-             <CardLabel>{`${t("CR_HOSPITAL")}`}</CardLabel>
+
+        <div className="row">
+          <div className="col-md-6">
+            <CardLabel>{`${t("CR_HOSPITAL")}`}</CardLabel>
             <Dropdown
-                 t={t}
-                 optionKey="hospitalName"
-                 isMandatory={false}
-                 option={cmbhospital}
-                 selected={HospitalName}
-                 select={setselectHospitalName}
-                />
-         </div> 
-         <div className="col-md-6" >
+              t={t}
+              optionKey="hospitalName"
+              isMandatory={false}
+              option={cmbhospital}
+              selected={HospitalName}
+              select={setselectHospitalName}
+            />
+          </div>
+          <div className="col-md-6">
             <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}</CardLabel>
             <Dropdown
-                t={t}
-                optionKey="hospitalName"
-                isMandatory={false}
-                option={cmbhospital}
-                selected={SignedOfficerName}
-                select={setselectSignedOfficerName}
-                />
-         </div>        
-    </div>
-    <div className="row">    
-    <div className="col-md-4" >
-        <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}</CardLabel>
-            <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={false}
-                option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
-                disabled={isEdit}
-                />
-        </div>       
-        <div className="col-md-4" >
-            <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
-            <TextInput       
-            t={t}
-            isMandatory={false}
-            type={"text"}
-            optionKey="i18nKey"
-            name="HospitalAadhaar"
-            value={HospitalAadhaar}
-            onChange={setSelectHospitalAadhaar}
-            disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              t={t}
+              optionKey="hospitalName"
+              isMandatory={false}
+              option={cmbhospital}
+              selected={SignedOfficerName}
+              select={setselectSignedOfficerName}
             />
+          </div>
         </div>
-        <div className="col-md-4">
+        <div className="row">
+          <div className="col-md-4">
+            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}</CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="code"
+              isMandatory={false}
+              option={cmbPlace}
+              selected={setPlaceofActivity}
+              select={selectPlaceofactivity}
+              disabled={isEdit}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="HospitalAadhaar"
+              value={HospitalAadhaar}
+              onChange={setSelectHospitalAadhaar}
+              disable={isEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+          </div>
+          <div className="col-md-4">
             <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
-            <TextInput       
-            t={t}
-            isMandatory={false}
-            type={"text"}
-            optionKey="i18nKey"
-            name="HospitalMobile"
-            value={HospitalMobile}
-            onChange={setSelectHospitalMobile}
-            disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />  
-        </div> 
-  </div>
-    
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="HospitalMobile"
+              value={HospitalMobile}
+              onChange={setSelectHospitalMobile}
+              disable={isEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+          </div>
+        </div>
       </FormStep>
     </React.Fragment>
   );

@@ -12,21 +12,18 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
 
-  const [setVillage, setSelectedVillage] = useState(formData?.TradeDetails?.setVillage);
-  const [setLbName, setSelectedLbName] = useState(formData?.TradeDetails?.setVillage);
-  const [setPostOffice, setSelectedPostOffice] = useState(formData?.TradeDetails?.setPostOffice);
-  const [PinCode, setSelectedPinCode] = useState(formData?.TradeDetails?.HouseNo);
-  const [setTaluk, setSelectedTaluk] = useState(formData?.TradeDetails?.setTaluk);
-  const [setDistrict, setSelectedDistrict] = useState(formData?.TradeDetails?.setDistrict);
-  const [BuildingNo, setSelectedBuildingNo] = useState(formData?.TradeDetails?.BuildingNo);
-  const [HouseNo, setSelectedHouseNo] = useState(formData?.TradeDetails?.HouseNo);
-  const [Locality, setLocality] = useState(formData?.TradeDetails?.Locality);
-  const [LocalityML, setLocalityML] = useState(formData?.TradeDetails?.Locality);
-  const [CityEn, setCityEn] = useState(formData?.TradeDetails?.CityEn);
-  const [CityMl, setCityMl] = useState(formData?.TradeDetails?.CityMl);
-  
-
-
+  const [setVillage, setSelectedVillage] = useState(formData?.PlaceOfDeathHome?.setVillage);
+  const [setLbName, setSelectedLbName] = useState(formData?.PlaceOfDeathHome?.setVillage);
+  const [setPostOffice, setSelectedPostOffice] = useState(formData?.PlaceOfDeathHome?.setPostOffice);
+  const [PinCode, setSelectedPinCode] = useState(formData?.PlaceOfDeathHome?.HouseNo);
+  const [setTaluk, setSelectedTaluk] = useState(formData?.PlaceOfDeathHome?.setTaluk);
+  const [setDistrict, setSelectedDistrict] = useState(formData?.PlaceOfDeathHome?.setDistrict);
+  const [BuildingNo, setSelectedBuildingNo] = useState(formData?.PlaceOfDeathHome?.BuildingNo);
+  const [HouseNo, setSelectedHouseNo] = useState(formData?.PlaceOfDeathHome?.HouseNo);
+  const [Locality, setLocality] = useState(formData?.PlaceOfDeathHome?.Locality);
+  const [LocalityML, setLocalityML] = useState(formData?.PlaceOfDeathHome?.LocalityML);
+  const [CityEn, setCityEn] = useState(formData?.PlaceOfDeathHome?.CityEn);
+  const [CityMl, setCityMl] = useState(formData?.PlaceOfDeathHome?.CityMl);
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -120,8 +117,34 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
+    sessionStorage.setItem("setVillage", setVillage.code);
+    sessionStorage.setItem("setLbName", setLbName.code);
+    sessionStorage.setItem("setPostOffice", setPostOffice.code);
+    sessionStorage.setItem("PinCode", PinCode);
+    sessionStorage.setItem("setTaluk", setTaluk.code);
+    sessionStorage.setItem("setDistrict", setDistrict.code);
+    sessionStorage.setItem("BuildingNo", BuildingNo.code);
+    sessionStorage.setItem("HouseNo", HouseNo.code);
+    sessionStorage.setItem("Locality", Locality.code);
+    sessionStorage.setItem("LocalityML", LocalityML.code);
+    sessionStorage.setItem("CityEn", CityEn.code);
+    sessionStorage.setItem("CityMl", CityMl.code);
+
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    onSelect(config.key, {
+      setVillage,
+      setLbName,
+      setPostOffice,
+      PinCode,
+      setTaluk,
+      setDistrict,
+      BuildingNo,
+      HouseNo,
+      Locality,
+      LocalityML,
+      CityEn,
+      CityMl,
+    });
   };
   return (
     <React.Fragment>
@@ -234,15 +257,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_LB_NAME")}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="code"
-              isMandatory={false}
-              option={cmbPlace}
-              selected={setLbName}
-              select={selectLbName}
-              disabled={isEdit}
-            />
+            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbPlace} selected={setLbName} select={selectLbName} disabled={isEdit} />
           </div>
         </div>
         <div className="row">
