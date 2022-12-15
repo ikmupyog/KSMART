@@ -4,9 +4,9 @@ import Timeline from "../components/DFMTimeline";
 
 const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   const [documentDetails, setDocumentDetails] = useState(
-    formData?.documentDetails
-      ? formData.documentDetails
-      : {
+    formData?.FileManagement?.documentDetails
+    ? formData.FileManagement.documentDetails
+    :  {
           documentType: [],
           attachementFile: "",
           fileStoreId: "",
@@ -69,7 +69,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
     //   owners["documents"] = [];
     //   owners.documents["ProofOfIdentity"] = fileDetails;
     // }
-    onSelect(config.key, documentDetails);
+    onSelect(config.key, {documentDetails});
   };
   const onSkip = () => onSelect();
 

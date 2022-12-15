@@ -5,9 +5,9 @@ import Timeline from "../components/DFMTimeline";
 const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   // console.log(formData);
   const [serviceDetails, setServiceDetails] = useState(
-    formData?.ServiceDetails
-      ? formData.ServiceDetails
-      : {
+    formData?.FileManagement?.serviceDetails
+    ? formData.FileManagement.serviceDetails
+    : {
           details: "",
           attachmentFile: "",
           fileStoreId: "",
@@ -61,7 +61,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     //   owners.documents["ProofOfIdentity"] = fileDetails;
     // }
     // console.log("hclick", file, uploadedFile, serviceDetails);
-    onSelect(config.key, serviceDetails);
+    onSelect(config.key, {serviceDetails});
     // onSelect(config.key, fileDetails);
   };
   const onSkip = () => onSelect();
