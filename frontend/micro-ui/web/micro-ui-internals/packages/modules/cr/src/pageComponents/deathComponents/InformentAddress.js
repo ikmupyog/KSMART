@@ -11,23 +11,20 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const [setVillage, setSelectedVillage] = useState(formData?.TradeDetails?.setVillage);
-  const [setTaluk, setSelectedTaluk] = useState(formData?.TradeDetails?.setTaluk);
-  const [setDistrict, setSelectedDistrict] = useState(formData?.TradeDetails?.setDistrict);
-  const [BuildingNo, setBuildingNo] = useState(formData?.TradeDetails?.setDistrict);
-  const [HouseNo, setHouseNo] = useState(formData?.TradeDetails?.setDistrict);
-  const [Locality, setLocality] = useState(formData?.TradeDetails?.setDistrict);
-  const [LocalityMl, setLocalityMl] = useState(formData?.TradeDetails?.setDistrict);
-  const [CityEn, setCityEn] = useState(formData?.TradeDetails?.setDistrict);
-  const [CityMl, setCityMl] = useState(formData?.TradeDetails?.setDistrict);
-  const [PinCode, setPinCode] = useState(null);
+  const [setVillage, setSelectedVillage] = useState(formData?.InformentAddress?.setVillage);
+  const [setTaluk, setSelectedTaluk] = useState(formData?.InformentAddress?.setTaluk);
+  const [setDistrict, setSelectedDistrict] = useState(formData?.InformentAddress?.setDistrict);
+  const [BuildingNo, setBuildingNo] = useState(formData?.InformentAddress?.BuildingNo);
+  const [HouseNo, setHouseNo] = useState(formData?.InformentAddress?.HouseNo);
+  const [Locality, setLocality] = useState(formData?.InformentAddress?.Locality);
+  const [LocalityMl, setLocalityMl] = useState(formData?.InformentAddress?.LocalityMl);
+  const [CityEn, setCityEn] = useState(formData?.InformentAddress?.CityEn);
+  const [CityMl, setCityMl] = useState(formData?.InformentAddress?.CityMl);
+  const [PinCode, setPinCode] = useState(formData?.InformentAddress?.PinCode);
+  const [setPostOffice, setSelectedPostOffice] = useState(formData?.InformentAddress?.setPostOffice);
+  const [setLbName, setSelectedLbName] = useState(formData?.InformentAddress?.setLbName);
 
-  const [setPostOffice, setSelectedPostOffice] = useState(formData?.TradeDetails?.setPlaceofActivity);
-  const [setLbName, setSelectedLbName] = useState(formData?.TradeDetails?.setPlaceofActivity);
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
-  const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
   place &&
@@ -93,30 +90,44 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPostOffice(value);
   }
-  function select(value) {
+  function selectLbName(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedLbName(value);
   }
-  function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
-  }
-
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
 
   const goNext = () => {
-    sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    sessionStorage.setItem("setVillage", setVillage.code);
+    sessionStorage.setItem("setTaluk", setTaluk.code);
+    sessionStorage.setItem("setDistrict", setDistrict.code);
+    sessionStorage.setItem("BuildingNo", BuildingNo);
+    sessionStorage.setItem("HouseNo", HouseNo);
+    sessionStorage.setItem("Locality", Locality);
+    sessionStorage.setItem("LocalityMl", LocalityMl);
+    sessionStorage.setItem("CityEn", CityEn);
+    sessionStorage.setItem("CityMl", CityMl);
+    sessionStorage.setItem("PinCode", PinCode);
+    sessionStorage.setItem("setPostOffice", setPostOffice.code);
+    sessionStorage.setItem("setLbName", setLbName).code;
+
+    onSelect(config.key, {
+      setVillage,
+      setTaluk,
+      setDistrict,
+      BuildingNo,
+      HouseNo,
+      Locality,
+      LocalityMl,
+      CityEn,
+      CityMl,
+      PinCode,
+      setPostOffice,
+      setLbName,
+    });
   };
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <header className="tittle">Informent Address </header>
         <div className="row">
           <div className="col-md-12">
@@ -222,15 +233,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_LB_NAME")}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="code"
-              isMandatory={false}
-              option={cmbPlace}
-              selected={setLbName}
-              select={selectLbName}
-              disabled={isEdit}
-            />
+            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbPlace} selected={setLbName} select={selectLbName} disabled={isEdit} />
           </div>
         </div>
         <div className="row">

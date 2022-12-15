@@ -24,9 +24,6 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [LocalityML, setLocalityML] = useState(formData?.TradeDetails?.Locality);
   const [CityEn, setCityEn] = useState(formData?.TradeDetails?.CityEn);
   const [CityMl, setCityMl] = useState(formData?.TradeDetails?.CityMl);
-  
-
-
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");

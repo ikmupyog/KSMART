@@ -765,7 +765,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "StatisticalInfo",
+        key: "InformentAddress",
         nextStep: "statistical-info-continue",
         type: "component",
         hideInEmployee: true,
