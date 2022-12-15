@@ -13,10 +13,10 @@ import {
   Dropdown,
 } from "@egovernments/digit-ui-react-components";
 
-const FormInputGroup = ({ label, type, selectOptions, onChange, value, placeholder, fullWidth, mystyle, t, name, handleChange, isMandatory,valid }) => {
+const FormInputGroup = ({ label, type, selectOptions, onChange, value, placeholder, fullWidth, mystyle, t, name, handleChange, isMandatory,valid ,hidePlaceholder}) => {
   // let validation = {};
 
-  const inputTypeSelect = (type, selectOptions, onChange, value, placeholder, mystyle, t, name, handleChange, isMandatory,valid) => {
+  const inputTypeSelect = (type, selectOptions, onChange, value, placeholder, mystyle, t, name, handleChange, isMandatory,valid,hidePlaceholder) => {
     console.log("enter", valid);
     let validation = {};
     
@@ -80,7 +80,7 @@ const FormInputGroup = ({ label, type, selectOptions, onChange, value, placehold
             optionKey={"label"}
             select={(e) => handleChange(e, name)}
             freeze={true}
-            placeholder={name}
+            placeholder={hidePlaceholder?"":name}
             // customSelector={
             //   <label className="cp">
             //     {prop?.t(`TENANT_TENANTS_${stringReplaceAll(Digit.SessionStorage.get("Employee.tenantId"), ".", "_")?.toUpperCase()}`)}
@@ -109,7 +109,7 @@ const FormInputGroup = ({ label, type, selectOptions, onChange, value, placehold
       {/* <div className=""> */}
       {/* <div className="app-details-container"> */}
       <CardLabel>{label}*</CardLabel>
-      {inputTypeSelect(type, selectOptions, onChange, value, placeholder, mystyle, t, name, handleChange, isMandatory,valid)}
+      {inputTypeSelect(type, selectOptions, onChange, value, placeholder, mystyle, t, name, handleChange, isMandatory,valid,hidePlaceholder)}
       {/* <CardLabel>{`${t("Last Name")}`}</CardLabel> */}
       {/* <TextInput
               style={mystyle}

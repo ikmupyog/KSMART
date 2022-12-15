@@ -5,9 +5,9 @@ import Timeline from "../components/DFMTimeline";
 const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   // console.log(formData);
   const [serviceDetails, setServiceDetails] = useState(
-    formData?.ServiceDetails
-      ? formData.ServiceDetails
-      : {
+    formData?.FileManagement?.serviceDetails
+    ? formData.FileManagement.serviceDetails
+    : {
           details: "",
           attachmentFile: "",
           fileStoreId: "",
@@ -61,7 +61,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     //   owners.documents["ProofOfIdentity"] = fileDetails;
     // }
     // console.log("hclick", file, uploadedFile, serviceDetails);
-    onSelect(config.key, serviceDetails);
+    onSelect(config.key, {serviceDetails});
     // onSelect(config.key, fileDetails);
   };
   const onSkip = () => onSelect();
@@ -104,48 +104,6 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-      {/* <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} 
-      isDisabled={!serviceDetails.fileStoreId || error}
-      >
-        <CardLabelDesc style={{ fontWeight: "unset" }}>{t(`TL_UPLOAD_RESTRICTIONS_TYPES`)}</CardLabelDesc>
-        <CardLabelDesc style={{ fontWeight: "unset" }}> {t(`TL_UPLOAD_RESTRICTIONS_SIZE`)}</CardLabelDesc>
-        <FormInputGroup
-          type="TextInput"
-          handleChange={handleChange}
-          t={t}
-          value={serviceDetails.details}
-          name="details"
-          label=" Details"
-          mystyle={mystyle}
-        />
-        <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
-        <Dropdown
-        t={t}
-        isMandatory={false}
-        option={dropdownData}
-        selected={dropdownValue}
-        optionKey="i18nKey"
-        select={setTypeOfDropdownValue}
-        //placeholder={t(`PT_MUTATION_SELECT_DOC_LABEL`)}
-      />
-        <UploadFile
-          id={"dfm-doc"}
-          extraStyleName={"propertyCreate"}
-          accept=".jpg,.png,.pdf"
-          onUpload={selectfile}
-          onDelete={() => {
-            setUploadedFile(null);
-            let tempData = { ...serviceDetails };
-            tempData.fileStoreId = null;
-            setServiceDetails(tempData)
-          }}
-          message={serviceDetails.fileStoreId ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-          error={error}
-        />
-        {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
-        <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
-      </FormStep> */}
-
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
         {/* return ( */}
         <div>
@@ -153,7 +111,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("SELECT TYPE OF SERVICE DETAILS")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_SERVICE_DETAILS_TEXT")}*`}</span>
                 </h1>
               </div>
             </div>
@@ -168,7 +126,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                   t={t}
                   value={serviceDetails.details}
                   name="details"
-                  label=" Details"
+                  label={`${t("DFM_DETAILS")}`}
                   mystyle={mystyle}
                 />
               </div>
@@ -178,7 +136,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
               <div className="col-md-4">
                 {/* <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}*`}</CardLabel>
                         <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory}  placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}*`} /> */}
-                <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_ATTACHMENT_TYPE")}`}</CardLabel>
                 <UploadFile
                   id={"dfm-doc"}
                   extraStyleName={"propertyCreate"}

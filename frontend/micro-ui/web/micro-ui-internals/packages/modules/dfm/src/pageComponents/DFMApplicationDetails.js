@@ -153,7 +153,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("SELECT TYPE OF APPLICATION DETAILS")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}*`}</span>
                 </h1>
               </div>
             </div>
@@ -170,7 +170,8 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                     t={t}
                     value={applicationData.firstName}
                     name="firstName"
-                    label="First Name"
+                    label={`${t("DFM_FIRST_NAME")}`}
+                    // label="First Name"
                     mystyle={mystyle}
                   />
                 </div>
@@ -186,7 +187,8 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.lastName}
                   name="lastName"
-                  label="Last Name"
+                  label={`${t("DFM_LAST_NAME")}`}
+                  // label="Last Name"
                   mystyle={mystyle}
                 />
               </div>
@@ -197,7 +199,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.aadharNo}
                   name="aadharNo"
-                  label="Aadhar No"
+                  label={`${t("DFM_AADHAR_NO")}`}
                   mystyle={mystyle}
                   valid="^\d{12}$"
                 />
@@ -211,7 +213,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.title}
                   name="title"
-                  label="title"
+                  label={`${t("DFM_TITLE")}`}
                   selectOptions={titleOptions}
                 />
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
@@ -224,7 +226,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.email}
                   name="email"
-                  label="Email"
+                  label={`${t("DFM_EMAIL")}`}
                   mystyle={mystyle}
                 />
                 {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
@@ -237,7 +239,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.mobileNo}
                   name="mobileNo"
-                  label="Mobile No"
+                  label={`${t("DFM_MOBILE_NO")}`}
                   mystyle={mystyle}
                   valid="^(\+\d{1,3}[- ]?)?\d{10}$"
                 />
@@ -252,7 +254,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.dob}
                   name="dob"
-                  label="DOB"
+                  label={`${t("DFM_DOB")}`}
                   mystyle={mystyle}
                 />
 
@@ -266,7 +268,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.fatherFirstName}
                   name="fatherFirstName"
-                  label="father First Name"
+                  label={`${t("DFM_FATHER_FIRST_NAME")}`}
                   mystyle={mystyle}
                 />
                 {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
@@ -279,7 +281,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.fatherLastName}
                   name="fatherLastName"
-                  label="father Last Name"
+                  label={`${t("DFM_FATHER_LAST_NAME")}`}
                   mystyle={mystyle}
                 />
               </div>
@@ -293,7 +295,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.motherFirstName}
                   name="motherFirstName"
-                  label="mother First Name"
+                  label={`${t("DFM_MOTHER_FIRST_NAME")}`}
                   mystyle={mystyle}
                 />
 
@@ -307,7 +309,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.motherLastName}
                   name="motherLastName"
-                  label="mother Last Name"
+                  label={`${t("DFM_MOTHER_LAST_NAME")}`}
                   mystyle={mystyle}
                 />
               </div>
@@ -318,7 +320,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.category}
                   name="category"
-                  label="Category"
+                  label={`${t("DFM_CATRGORY")}`}
                   selectOptions={categoryOptions}
                 />
               </div>
@@ -332,7 +334,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.bankAccountNo}
                   name="bankAccountNo"
-                  label="Bank Account No"
+                  label={`${t("DFM_BANK_ACCOUNT_NO")}`}
                   mystyle={mystyle}
                 />
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
@@ -345,7 +347,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   value={applicationData.tenantID}
                   name="tenantID"
-                  label="Tenant ID"
+                  label={`${t("DFM_TENANT_ID")}`}
                   selectOptions={tenendIdOptions}
                 />
                 {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
