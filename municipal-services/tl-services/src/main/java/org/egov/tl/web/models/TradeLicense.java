@@ -213,5 +213,10 @@ public class  TradeLicense   {
         @JsonProperty("fileStoreId")
         private String fileStoreId = null;
 
+        @Size(max=400)
+        @SafeHtml
+        @JsonProperty("licenseUnitNameMal")
+        private String licenseUnitNameMal = null;
+
 }
 
