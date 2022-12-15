@@ -11,17 +11,20 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
-  const [DriverName, setDriverName] = useState(null);
-  const [DriverNameMl, setDriverNameMl] = useState(null);
-  const [DriverMobileNo, setDriverMobileNo] = useState(null);
-  const [DriverAge, setDriverAge] = useState(null);
-  const [DriverAadhar, setDriverAadhar] = useState(null);
-  const [VehicleType, setVehicleType] = useState(null);
-  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(null);
-  const [VehicleFrom, setVehicleFrom] = useState(null);
-  const [VehicleTo, setVehicleTo] = useState(null);
-  const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(null);  
-  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(null);  
+  const [DriverName, setDriverName] = useState(formData?.PlaceOfDeathVehicle?.DriverName);
+  const [DriverNameMl, setDriverNameMl] = useState(formData?.PlaceOfDeathVehicle?.DriverNameMl);
+  const [DriverMobileNo, setDriverMobileNo] = useState(formData?.PlaceOfDeathVehicle?.DriverMobileNo);
+  const [DriverAge, setDriverAge] = useState(formData?.PlaceOfDeathVehicle?.DriverAge);
+  const [DriverAadhar, setDriverAadhar] = useState(formData?.PlaceOfDeathVehicle?.DriverAadhar);
+  const [VehicleType, setVehicleType] = useState(formData?.PlaceOfDeathVehicle?.VehicleType);
+  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.PlaceOfDeathVehicle?.VehicleRegistrationNo);
+  const [VehicleFrom, setVehicleFrom] = useState(formData?.PlaceOfDeathVehicle?.VehicleFrom);
+  const [VehicleTo, setVehicleTo] = useState(formData?.PlaceOfDeathVehicle?.VehicleTo);
+  const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsEn);  
+  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsMl); 
+  const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.TradeDetails?.setDeathVehicleWard);
+  const [setAdmittedHospital, setSelectedAdmittedHospital] = useState(formData?.TradeDetails?.setAdmittedHospital);
+  
     
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -75,14 +78,54 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   function setSelectVehicleOtherDetailsMl(e) {
     setVehicleOtherDetailsMl(e.target.value);
   }
-
+  function selectDeathVehicleWard(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedDeathVehicleWard(value);
+  }
+  function selectAdmittedHospital(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedAdmittedHospital(value);
+  }
+  
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
 
   const goNext = () => {
+    
+    sessionStorage.setItem("DriverName", DriverName);
+    sessionStorage.setItem("DriverNameMl", DriverNameMl);
+    sessionStorage.setItem("DriverMobileNo", DriverMobileNo);
+    sessionStorage.setItem("DriverAge", DriverAge);
+    sessionStorage.setItem("DriverAadhar", DriverAadhar);
+    sessionStorage.setItem("VehicleType", VehicleType);
+    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);
+    sessionStorage.setItem("VehicleFrom", VehicleFrom);  
+    sessionStorage.setItem("VehicleTo", VehicleTo);
+    sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard.code);
+    sessionStorage.setItem("setAdmittedHospital", setAdmittedHospital.code);
+    sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn); 
+    sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsEn); 
+    
+    
+    
+    
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    onSelect(config.key, {
+      setPlaceofActivity,
+      DriverName,
+      DriverNameMl,
+      DriverMobileNo,
+      DriverAadhar,
+      VehicleType,
+      VehicleRegistrationNo,
+      VehicleFrom,
+      VehicleTo,
+      setDeathVehicleWard,
+      setAdmittedHospital,
+      VehicleOtherDetailsEn,
+      VehicleOtherDetailsMl,
+     });
   };
   return (
     <React.Fragment>
@@ -245,8 +288,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setDeathVehicleWard}
+                select={selectDeathVehicleWard}
                 disabled={isEdit}
             />
         </div>
@@ -257,8 +300,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setAdmittedHospital}
+                select={selectAdmittedHospital}
                 disabled={isEdit}
             />
         </div>

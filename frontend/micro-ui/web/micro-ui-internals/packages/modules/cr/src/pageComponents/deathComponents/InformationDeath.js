@@ -462,7 +462,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         </div>
 
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-12">
             <CardLabel>{t("CR_PASSPORT")}</CardLabel>
             <TextInput
               t={t}
@@ -476,11 +476,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[0-9-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
-          <div className="col-md-4">
+        </div>
+
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OTHER_DETAILS")}`}</span>
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
             <CardLabel>{t("CR_NATIONALITY")}</CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbNation} selected={setCountry} select={selectCountry} disabled={isEdit} />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
             <Dropdown
               t={t}

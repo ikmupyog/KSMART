@@ -11,10 +11,12 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  const [TradeName, setTradeName] = useState(null); 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
-  const [ PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn] = useState(null);
-  const [ PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(null);
+  const [setDeathOtherward, setSelectedDeathOtherward] = useState(formData?.PlaceOfDeathOther?.setDeathOtherward);
+  const [setDeathOtherPlace, setSelectedDeathOtherPlace] = useState(formData?.PlaceOfDeathOther?.setDeathOtherPlace);
+  const [ PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsEn);
+  const [ PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl);
  
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -36,7 +38,15 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
-
+  
+  function selectDeathOtherPlace(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedDeathOtherPlace(value);
+  }
+  function selectDeathOtherward(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedDeathOtherward(value);
+  }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
@@ -52,7 +62,17 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
 
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    sessionStorage.setItem("setDeathOtherPlace", setDeathOtherPlace.code);
+    sessionStorage.setItem("setDeathOtherward", setDeathOtherward.code);
+    sessionStorage.setItem("PlaceOfDeathOtherDetailsEn", PlaceOfDeathOtherDetailsEn);
+    sessionStorage.setItem("PlaceOfDeathOtherDetailsMl", PlaceOfDeathOtherDetailsMl);
+      
+    onSelect(config.key, {
+       setDeathOtherPlace,
+       setDeathOtherward,
+       PlaceOfDeathOtherDetailsEn,
+       PlaceOfDeathOtherDetailsMl,
+       setPlaceofActivity });
   };
   return (
     <React.Fragment>
@@ -75,8 +95,8 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
                 optionKey="name"
                 isMandatory={false}
                 option={cmbOtherplace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setDeathOtherPlace}
+                select={selectDeathOtherPlace}
                 disabled={isEdit}
             />
         </div>
@@ -87,8 +107,8 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setDeathOtherward}
+                select={selectDeathOtherward}
                 disabled={isEdit}
             />
         </div> 
