@@ -123,6 +123,11 @@ public class ApplicantPersonal {
 
     @Valid
     @NotNull
+    @JsonProperty("applicantChild")
+    private ApplicantChild applicantChild;
+
+    @Valid
+    @NotNull
     @JsonProperty("applicantServiceDocuments")
     private ApplicantServiceDocuments applicantServiceDocuments;
 

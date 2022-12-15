@@ -72,7 +72,26 @@ serviceMaps:
       
       - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime      
+      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime 
+      
+    - query: >
+        INSERT INTO eg_fm_applicantpersonal_child(id, applicantpersonalid, buildingnumber, relationofassessee, nameofoccupier,  relationofoccupier, durationofresidence) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      basePath: ApplicantPersonals.*.applicantChild
+      jsonMaps:
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.id
+
+      - jsonPath: $.ApplicantPersonals.*.id
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.buildingNumber 
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.relationOfAssessee   
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.nameOfOccupier    
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.relationOfOccupier 
+    
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.durationOfResidence     
  
       
     - query: >
