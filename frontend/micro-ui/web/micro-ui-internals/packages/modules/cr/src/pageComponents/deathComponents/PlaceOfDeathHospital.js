@@ -10,15 +10,14 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
-
   const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  const [setDesignation, setSelectedDesignation] = useState(formData?.HospitalDetails?.setDesignation);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [HospitalAadhaar, setHospitalAadhaar] = useState(null);
   const [HospitalMobile, setHospitalMobile] = useState(null);
 
-  const [TradeName, setTradeName] = useState(null);
-  const [CommencementDate, setCommencementDate] = useState();
+  // const [TradeName, setTradeName] = useState(null);
+  // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
   place &&
@@ -41,9 +40,9 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   function setselectSignedOfficerName(value) {
     selectSignedOfficerName(value);
   }
-  function selectPlaceofactivity(value) {
+  function selectDesignation(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
+    setSelectedDesignation(value);
   }
 
   function setSelectTradeName(e) {
@@ -61,8 +60,13 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    sessionStorage.setItem("SignedOfficerName", SignedOfficerName);
+    sessionStorage.setItem("HospitalName", HospitalName);
+    sessionStorage.setItem("setDesignation", setDesignation.code);
+    sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar);
+    sessionStorage.setItem("HospitalMobile", HospitalMobile);
+
+    onSelect(config.key, { SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile });
   };
   return (
     <React.Fragment>
@@ -109,8 +113,8 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
               optionKey="code"
               isMandatory={false}
               option={cmbPlace}
-              selected={setPlaceofActivity}
-              select={selectPlaceofactivity}
+              selected={setDesignation}
+              select={selectDesignation}
               disabled={isEdit}
             />
           </div>
