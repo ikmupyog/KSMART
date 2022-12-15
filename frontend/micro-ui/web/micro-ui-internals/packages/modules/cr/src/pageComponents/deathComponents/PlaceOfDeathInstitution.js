@@ -11,14 +11,16 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
   const { data: institutionid = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
 
-  const [setInstitution, setSelectedInstitution] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  const [setInstitution, setSelectedInstitution] = useState(formData?.PlaceOfDeathInstitution?.setInstitution);
+  const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.PlaceOfDeathInstitution?.setInstitutionId);
+  
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
-  const [SiginedOfficer, setSiginedOfficer] = useState(null);
-  const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(null);
-  const [InstitutionMobilNo, setInstitutionMobilNo] = useState(null);
-  const [InstitutionAadhaar, setInstitutionAadhaar] = useState(null);
+  const [SiginedOfficer, setSiginedOfficer] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficer);
+  const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficerDesignation);
+  const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.PlaceOfDeathInstitution?.InstitutionMobilNo);
+  const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.PlaceOfDeathInstitution?.InstitutionAadhaar);
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -48,6 +50,11 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedInstitution(value);
   }
+  function selectInstitutionId(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedInstitutionId(value);
+  }
+  
   function selectPlaceofactivity(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
@@ -73,7 +80,24 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
 
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    sessionStorage.setItem("setInstitution", setInstitution.code);
+    sessionStorage.setItem("setInstitutionId", setInstitutionId.code);
+    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer);
+    sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation);
+    sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
+    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);
+    
+    
+    SiginedOfficer
+    
+    onSelect(config.key, { 
+      setInstitution,
+      setInstitutionId,
+      SiginedOfficer,
+      SiginedOfficerDesignation,
+      InstitutionMobilNo,
+      InstitutionAadhaar,
+      setPlaceofActivity });
   };
   return (
     <React.Fragment>
@@ -108,8 +132,8 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               optionKey="name"
               isMandatory={false}
               option={cmbInstitutionId}
-              selected={setPlaceofActivity}
-              select={selectPlaceofactivity}
+              selected={setInstitutionId}
+              select={selectInstitutionId}
               disabled={isEdit}
             />
           </div>
