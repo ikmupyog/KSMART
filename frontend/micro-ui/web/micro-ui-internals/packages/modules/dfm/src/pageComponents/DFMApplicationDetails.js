@@ -1,23 +1,10 @@
-import {
-  CardLabel,
-  CitizenInfoLabel,
-  FormStep,
-  Loader,
-  TextInput,
-  Dropdown,
-  FormInputGroup,
-  TextArea,
-} from "@egovernments/digit-ui-react-components";
+import {CardLabel,CitizenInfoLabel, FormStep, Loader, TextInput, Dropdown, FormInputGroup,TextArea} from "@egovernments/digit-ui-react-components";
 import { first } from "lodash";
 import React, { useState, useEffect } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData }) => {
-  const titleOptions = [
-    { label: "title", value: "title" },
-    { label: "title1", value: "title1" },
-    { label: "title2", value: "title2" },
-  ];
+  
   const categoryOptions = [
     { label: "category1", value: "category1" },
     { label: "category2", value: "category2" },
@@ -31,7 +18,6 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   // console.log("form", formData, config);
   let validation = {};
   const onSkip = () => onSelect();
-  const [TradeName, setTradeName] = useState(formData.TradeDetails?.TradeName);
 
   const [applicationData, setApplicationData] = useState(
     formData?.FileManagement?.applicationData
@@ -56,13 +42,20 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
-
-  let mdmsFinancialYear = fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter((y) => y.module === "TL") : [];
-  let FY = mdmsFinancialYear && mdmsFinancialYear.length > 0 && mdmsFinancialYear.sort((x, y) => y.endingDate - x.endingDate)[0]?.code;
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
+  const { data: TitleList = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "Title");
+  // const { data: PostOffice = {} } = Digit.Hooks.dfm.useDFMMDMS(stateId, "common-masters", "PostOffice");
+  const { data: PostOffice = {},isLoading } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "PostOffice");
+      
+  let cmbTitle = [];
+  TitleList &&
+  TitleList["common-masters"] &&
+  TitleList["common-masters"].Title.map((ob) => {
+    cmbTitle.push(ob);
+        });
+        console.log(cmbTitle);  
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
   const mystyle = {
     marginBottom: "24px",
   };
@@ -211,10 +204,12 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   type="Dropdown"
                   handleChange={handleChange}
                   t={t}
-                  value={applicationData.title}
+                  value={cmbTitle}
                   name="title"
                   label={`${t("DFM_TITLE")}`}
-                  selectOptions={titleOptions}
+                  selectOptions={cmbTitle}
+                  optionKey="name"
+                  option={cmbTitle}
                 />
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
                         <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType"  placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} /> */}
@@ -340,7 +335,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
                         <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType"  placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} /> */}
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <FormInputGroup
                   type="Dropdown"
                   handleChange={handleChange}
@@ -349,16 +344,16 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="tenantID"
                   label={`${t("DFM_TENANT_ID")}`}
                   selectOptions={tenendIdOptions}
-                />
+                /> */}
                 {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
                         <TextArea t={t} type={"text"}  optionKey="i18nKey" placeHolder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} name="BusinessActivity" {...(validation = { isRequired: true, type: "text", title: t("TL_WRONG_UOM_VALUE_ERROR"),})} placeholder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} /> */}
-              </div>
+              {/* </div> */}
             </div>
           </div>
           {/* ); */}
         </div>
       </FormStep>
-      {<CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_LICENSE_ISSUE_YEAR_INFO_MSG") + FY} />}
+      {/* {<CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_LICENSE_ISSUE_YEAR_INFO_MSG") + FY} />} */}
     </React.Fragment>
   );
 };

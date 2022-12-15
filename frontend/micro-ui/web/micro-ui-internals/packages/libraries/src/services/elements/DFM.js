@@ -1,7 +1,7 @@
 import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
 
-export const CRService = {
+export const DFMService = {
   create: (details, tenantId) =>
     Request({
       url: Urls.dfm.create,

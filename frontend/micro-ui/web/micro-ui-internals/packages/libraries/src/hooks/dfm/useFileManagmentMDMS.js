@@ -1,7 +1,7 @@
 import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
-const useDFMMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
   
   const useCRPlaceMaster = () => {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
@@ -280,4 +280,4 @@ const useDFMMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
   }
 };
 
-export default useDFMMDMS;
+export default useFileManagmentMDMS;

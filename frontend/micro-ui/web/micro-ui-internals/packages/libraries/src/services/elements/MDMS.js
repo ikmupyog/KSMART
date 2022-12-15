@@ -1818,9 +1818,7 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getCRTalukList(tenantId, moduleCode), moduleCode);
   },
   getCRTitle: (tenantId, moduleCode) => {
-    return MdmsService.getDataByCriteria(tenantId, getCRTitleList(tenantId, moduleCode), moduleCode);
-  },
-  getCRTitle: (tenantId, moduleCode) => {
+    console.log("jetheesh22222222222222222");
     return MdmsService.getDataByCriteria(tenantId, getCRTitleList(tenantId, moduleCode), moduleCode);
   },
   getCRWard: (tenantId, moduleCode) => {

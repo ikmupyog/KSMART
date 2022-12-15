@@ -240,7 +240,7 @@ export const newConfig = [
         component: "DFMApplicationDetails",
         texts: {
           headerCaption: "",
-          header: "Application Basic Details",
+          header: "Applicant Basic Details",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
