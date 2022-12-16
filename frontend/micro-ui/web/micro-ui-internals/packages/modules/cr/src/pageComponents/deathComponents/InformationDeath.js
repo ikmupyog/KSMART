@@ -33,7 +33,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
   const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate);
   const [ToDate, setToDate] = useState(formData?.InformationDeath?.ToDate);
-  const [DeathTimeFrom, setDeathTimeFrom] = useState(null);
+  const [DeathTimeFrom, setDeathTimeFrom] = useState(data?.InformationDeath?.DeathTimeFrom);
   const [DeathTimeTo, setDeathTimeTo] = useState(null);
 
   let naturetypecmbvalue = null;

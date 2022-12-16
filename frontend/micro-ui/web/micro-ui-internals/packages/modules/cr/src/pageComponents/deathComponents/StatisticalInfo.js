@@ -148,7 +148,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 optionKey="i18nKey"
                 name="OccupationOthers"
                 value={OccupationOthers}
-                onChange={setSelectOccupationOthers}
+                onChange={setOccupationOthers}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
