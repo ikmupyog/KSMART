@@ -18,17 +18,20 @@ import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 
 import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 
+//@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
-import InformationDeath1 from "../src/pageComponents/deathComponents/InformationDeath1";
 import AddressOfDecesed from "./pageComponents/deathComponents/AddressOfDecesed";
 import OutSideIndia from "./pageComponents/deathComponents/OutSideIndia";
-import FamilyInformationBirth from "./pageComponents/deathComponents/FamilyInformationBIrth";
+import FamilyInformationDeath from "./pageComponents/deathComponents/FamilyInformationDeath";
 import PlaceOfDeath from "./pageComponents/deathComponents/PlaceOfDeath";
 import PlaceOfDeathHome from "./pageComponents/deathComponents/PlaceOfDeathHome";
 import PlaceOfDeathHospital from "./pageComponents/deathComponents/PlaceOfDeathHospital";
 import PlaceOfDeathInstitution from "./pageComponents/deathComponents/PlaceOfDeathInstitution";
 import PlaceOfDeathOther from "./pageComponents/deathComponents/PlaceOfDeathOther";
 import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVehicle";
+import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
+import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
+import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 
 import CustomTimePicker from "./components/CustomTimePicker";
 // import TLSelectGeolocation from "../src/pageComponents/TLSelectGeolocation";
@@ -148,17 +151,21 @@ const componentsToRegister = {
 
   SearchRegistry,
 
+//////////////////
   InformationDeath,
-  InformationDeath1,
   AddressOfDecesed,
   OutSideIndia,
-  FamilyInformationBirth,
+  FamilyInformationDeath,
   PlaceOfDeath,
   PlaceOfDeathHome,
   PlaceOfDeathHospital,
   PlaceOfDeathInstitution,
   PlaceOfDeathOther,
   PlaceOfDeathVehicle,
+  InformentAddress,
+  StatisticalInfo,
+  StatisticalInfoContinue,
+
   
   // SelectLand,
   // SelectBuilding,
