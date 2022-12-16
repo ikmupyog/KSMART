@@ -161,13 +161,13 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_DOCUMENT_DETAILS_TEXT")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_DOCUMENT_DETAILS_TEXT")}`}</span>
                 </h1>
               </div>
             </div>
             <div className="row">
               {/* {!isLoading ? ( */}
-              <div className="col-md-4">
+              <div className="col-md-6">
                 {/* <FormInputGroup
                   type="Dropdown"
                   handleChange={handleChange}
@@ -192,7 +192,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
               {/* ) : (
                 <Loader />
               )} */}
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <CardLabel>{`${t("DFM_ATTACH_DOCUMENT")}`}</CardLabel>
                 <UploadFile
                   id={"dfm-doc"}

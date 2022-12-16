@@ -159,7 +159,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
         onSelect={goNext}
         onSkip={onSkip}
         t={t}
-        isDisabled={!applicationData.title?.name || !applicationData.category?.name || !applicationData.tenantID?.name || !applicationData.dob}
+        isDisabled={!applicationData.title?.name || !applicationData.category?.name || !applicationData.dob}
       >
         {/* return ( */}
         <div>
@@ -167,7 +167,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}`}</span>
                 </h1>
               </div>
             </div>
@@ -188,7 +188,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                     // label="First Name"
                     mystyle={mystyle}
                   /> */}
-                  <CardLabel>{`${t("DFM_FIRST_NAME")}*`}</CardLabel>
+                  <CardLabel>{`${t("DFM_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -217,7 +217,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   // label="Last Name"
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_LAST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -241,7 +241,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   mystyle={mystyle}
                   valid="^\d{12}$"
                 /> */}
-                <CardLabel>{`${t("DFM_AADHAR_NO")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_AADHAR_NO")}*`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -259,7 +259,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
             </div>
             <div className="row">
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_TITLE")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_TITLE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -283,7 +283,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_EMAIL")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_EMAIL")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_EMAIL")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -309,7 +309,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   mystyle={mystyle}
                   valid="^(\+\d{1,3}[- ]?)?\d{10}$"
                 /> */}
-                <CardLabel>{`${t("DFM_MOBILE_NO")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -335,7 +335,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_DOB")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_DOB")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_DOB")}`}<span className="mandatorycss">*</span></CardLabel>
                 <DatePicker
                   date={applicationData.dob}
                   name="dob"
@@ -355,7 +355,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_FATHER_FIRST_NAME")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_FATHER_FIRST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_FATHER_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -380,7 +380,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_FATHER_LAST_NAME")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_FATHER_LAST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_FATHER_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -406,7 +406,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_MOTHER_FIRST_NAME")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_MOTHER_FIRST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_MOTHER_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -431,7 +431,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_MOTHER_LAST_NAME")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_MOTHER_LAST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_MOTHER_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -471,7 +471,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_BANK_ACCOUNT_NO")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_BANK_ACCOUNT_NO")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_BANK_ACCOUNT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -486,7 +486,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
                         <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType"  placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} /> */}
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
               <CardLabel>{`${t("DFM_TENANT_ID")}*`}</CardLabel>
               <Dropdown
                   t={t}
@@ -497,7 +497,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   select={(e) => handleChange(e, "tenantID")}
                   placeholder={`${t("DFM_TENANT_ID")}`}
                 />
-              </div>
+              </div> */}
               {/* <div className="col-md-6">
                 <FormInputGroup
                   type="Dropdown"

@@ -38,11 +38,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   const { data:  PostOffice  = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "PostOffice");
-  let mdmsFinancialYear = fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter((y) => y.module === "TL") : [];
-  let FY = mdmsFinancialYear && mdmsFinancialYear.length > 0 && mdmsFinancialYear.sort((x, y) => y.endingDate - x.endingDate)[0]?.code;
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
 
   console.log("add", PostOffice);
   let cmbPostOffice=[]
@@ -95,7 +90,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   };
 
   const goNext = () => {
-    sessionStorage.setItem("CurrentFinancialYear", FY);
+    // sessionStorage.setItem("CurrentFinancialYear", FY);
     onSelect(config.key, { addressData });
     // console.log("d", addressData);
   };
@@ -114,7 +109,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_ADDRESS_DETAILS_TEXT")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_ADDRESS_DETAILS_TEXT")}`}</span>
                 </h1>
               </div>
             </div>
@@ -132,7 +127,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                     mystyle={mystyle}
                     placeholder={`${t("House No")}*`}
                   /> */}
-                  <CardLabel>{`${t("DFM_HOUSE_NUMBER")}*`}</CardLabel>
+                  <CardLabel>{`${t("DFM_HOUSE_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -159,7 +154,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   label={`${t("DFM_HOUSE_NAME")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_HOUSE_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_HOUSE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -182,7 +177,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   label={`${t("DFM_STREET")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_STREET")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_STREET")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -208,7 +203,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   label={`${t("DFM_POST_OFFICE")}`}
                   selectOptions={postOfficeOptions}
                 /> */}
-                <CardLabel>{`${t("DFM_POST_OFFICE")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_POST_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -230,7 +225,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   mystyle={mystyle}
                   valid="^\d{6}$"
                 /> */}
-                <CardLabel>{`${t("DFM_PINCODE")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_PINCODE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -253,7 +248,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   label={`${t("DFM_RESASSOCIATION_NUMBER")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}`}</CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -264,8 +259,8 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   onChange={(e) => handleChange(e.target.value, "resAssociationNo")}
                   placeholder={`${t("DFM_RESASSOCIATION_NUMBER")}`}
                   {...(validation = {
-                    pattern: "^[0-9 ]*$",
-                    isRequired: true,
+                    pattern: "^[a-zA-Z-.0-9`' ]*$",
+                    isRequired: false,
                     type: "text",
                     title: t("DFM_INVALID_RESASSOCIATION_NUMBER"),
                   })}
@@ -284,7 +279,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   label={`${t("DFM_LOCAL_PLACE")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_LOCAL_PLACE")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_LOCAL_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -307,7 +302,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   label={`${t("DFM_MAIN_PLACE")}`}
                   mystyle={mystyle}
                 /> */}
-                <CardLabel>{`${t("DFM_MAIN_PLACE")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_MAIN_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -331,7 +326,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   selectOptions={wardOptions}
                   placeholder={`${t("Ward No")}*`}
                 /> */}
-                <CardLabel>{`${t("DFM_WARD_NO")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -347,7 +342,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
           {/* ); */}
         </div>
       </FormStep>
-      {<CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_LICENSE_ISSUE_YEAR_INFO_MSG") + FY} />}
+      {/* {<CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_LICENSE_ISSUE_YEAR_INFO_MSG") + FY} />} */}
     </React.Fragment>
   );
 };
