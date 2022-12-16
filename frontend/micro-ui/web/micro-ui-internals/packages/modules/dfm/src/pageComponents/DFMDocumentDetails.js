@@ -1,12 +1,12 @@
-import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
+import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup,Dropdown } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   const [documentDetails, setDocumentDetails] = useState(
-    formData?.documentDetails
-      ? formData.documentDetails
-      : {
+    formData?.FileManagement?.documentDetails
+    ? formData.FileManagement.documentDetails
+    :  {
           documentType: [],
           attachementFile: "",
           fileStoreId: "",
@@ -69,7 +69,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
     //   owners["documents"] = [];
     //   owners.documents["ProofOfIdentity"] = fileDetails;
     // }
-    onSelect(config.key, documentDetails);
+    onSelect(config.key, {documentDetails});
   };
   const onSkip = () => onSelect();
 
@@ -168,7 +168,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
             <div className="row">
               {/* {!isLoading ? ( */}
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="Dropdown"
                   handleChange={handleChange}
                   t={t}
@@ -177,6 +177,16 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                   label={`${t("DFM_DOCUMENT_TYPE")}`}
                   isLoading
                   selectOptions={DocTypeOptions}
+                /> */}
+                 <CardLabel>{`${t("DFM_DOCUMENT_TYPE")}`}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={config.isMandatory}
+                  // option={cmbPostOffice}
+                  selected={documentDetails.documentType}
+                  placeholder={`${t("DFM_DOCUMENT_TYPE")}`}
+                  select={(e) => handleChange(e, "documentType")}
                 />
               </div>
               {/* ) : (

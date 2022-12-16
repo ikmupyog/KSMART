@@ -1,13 +1,13 @@
-import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
+import { CardLabel,TextInput, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   // console.log(formData);
   const [serviceDetails, setServiceDetails] = useState(
-    formData?.ServiceDetails
-      ? formData.ServiceDetails
-      : {
+    formData?.FileManagement?.serviceDetails
+    ? formData.FileManagement.serviceDetails
+    : {
           details: "",
           attachmentFile: "",
           fileStoreId: "",
@@ -61,7 +61,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     //   owners.documents["ProofOfIdentity"] = fileDetails;
     // }
     // console.log("hclick", file, uploadedFile, serviceDetails);
-    onSelect(config.key, serviceDetails);
+    onSelect(config.key, {serviceDetails});
     // onSelect(config.key, fileDetails);
   };
   const onSkip = () => onSelect();
@@ -105,7 +105,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
-        {/* return ( */}
+      
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
             <div className="row">
@@ -116,26 +116,25 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
               </div>
             </div>
             <div className="row">
-              {/* {!isLoading ? ( */}
+  
               <div className="col-md-4">
-                {/* <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}*`}</CardLabel>
-                        <Dropdown t={t}  optionKey="i18nKey" name={`TradeCategory`} placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}*`} /> */}
-                <FormInputGroup
-                  type="TextInput"
-                  handleChange={handleChange}
+                 <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
+                <TextInput
                   t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="pincode"
                   value={serviceDetails.details}
-                  name="details"
-                  label={`${t("DFM_DETAILS")}`}
-                  mystyle={mystyle}
+                  onChange={(e) => handleChange(e.target.value, "details")}
+                  placeholder={`${t("DFM_DETAILS")}`}
+                 
                 />
               </div>
               {/* ) : (
                 <Loader />
               )} */}
               <div className="col-md-4">
-                {/* <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}*`}</CardLabel>
-                        <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory}  placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}*`} /> */}
                 <CardLabel>{`${t("DFM_ATTACHMENT_TYPE")}`}</CardLabel>
                 <UploadFile
                   id={"dfm-doc"}

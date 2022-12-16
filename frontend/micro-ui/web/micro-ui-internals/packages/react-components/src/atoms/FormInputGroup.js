@@ -11,6 +11,7 @@ import {
   RadioButtons,
   PitDimension,
   Dropdown,
+  RadioOrSelect,
 } from "@egovernments/digit-ui-react-components";
 
 const FormInputGroup = ({ label, type, selectOptions, onChange, value, placeholder, fullWidth, mystyle, t, name, handleChange, isMandatory,valid }) => {
@@ -77,10 +78,11 @@ const FormInputGroup = ({ label, type, selectOptions, onChange, value, placehold
           <Dropdown
             option={selectOptions}
             selected={selectOptions.find((sel) => sel.value === value?.value)}
-            optionKey={"label"}
+            optionKey="name" 
             select={(e) => handleChange(e, name)}
             freeze={true}
             placeholder={name}
+            t={t}
             // customSelector={
             //   <label className="cp">
             //     {prop?.t(`TENANT_TENANTS_${stringReplaceAll(Digit.SessionStorage.get("Employee.tenantId"), ".", "_")?.toUpperCase()}`)}
