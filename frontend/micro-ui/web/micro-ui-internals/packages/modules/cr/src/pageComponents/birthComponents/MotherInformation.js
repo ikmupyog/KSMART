@@ -189,7 +189,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
                                 isMandatory={false}
@@ -217,7 +217,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_LAST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
                                 isMandatory={false}
@@ -235,7 +235,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
                                 isMandatory={false}
@@ -263,7 +263,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_LAST_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
                                 isMandatory={false}
@@ -327,7 +327,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
                                 isMandatory={false}
@@ -341,7 +341,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_EDUCATION")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
@@ -353,7 +353,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="code"
@@ -369,7 +369,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row" >
                     <div className="col-md-12" >
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_PROFESSIONAL")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
@@ -381,7 +381,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_NATIONALITY")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_NATIONALITY")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="code"
@@ -393,7 +393,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_AGE_OF_DELIVERY")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_AGE_OF_DELIVERY")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
                                 isMandatory={false}
@@ -411,7 +411,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_NO_OF_BIRTH_GIVEN")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_NO_OF_BIRTH_GIVEN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
                                 isMandatory={false}
@@ -425,7 +425,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}</CardLabel>
+                            <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="code"
@@ -437,7 +437,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-4" >
-                            <CardLabel>{`${t("CS_COMMON_DISTRICT")}`}</CardLabel>
+                            <CardLabel>{`${t("CS_COMMON_DISTRICT")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
@@ -453,7 +453,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-6" >
-                            <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
+                            <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
@@ -465,7 +465,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-6" >
-                            <CardLabel>{`${t("CS_COMMON_LB_NAME")}`}</CardLabel>
+                            <CardLabel>{`${t("CS_COMMON_LB_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="code"
@@ -481,7 +481,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-6" >
-                            <CardLabel>{`${t("CS_COMMON_STATE")}`}</CardLabel>
+                            <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
@@ -493,7 +493,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             />
                         </div>
                         <div className="col-md-6" >
-                            <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}</CardLabel>
+                            <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"

@@ -30,7 +30,7 @@ import PlaceOfDeathInstitution from "./pageComponents/deathComponents/PlaceOfDea
 import PlaceOfDeathOther from "./pageComponents/deathComponents/PlaceOfDeathOther";
 import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVehicle";
 
-
+import CustomTimePicker from "./components/CustomTimePicker";
 // import TLSelectGeolocation from "../src/pageComponents/TLSelectGeolocation";
 // import TLSelectAddress from "./pageComponents/TLSelectAddress";
 // import TLSelectPincode from "./pageComponents/TLSelectPincode";
@@ -128,6 +128,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  CustomTimePicker,
   CRModule,
   CRLinks,
   CRCard,
