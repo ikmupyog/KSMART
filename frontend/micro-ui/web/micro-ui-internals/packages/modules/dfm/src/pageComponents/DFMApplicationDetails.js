@@ -3,21 +3,18 @@ import {
   CitizenInfoLabel,
   FormStep,
   Loader,
+  RadioOrSelect,
   TextInput,
   Dropdown,
   FormInputGroup,
   TextArea,
+  DatePicker,
 } from "@egovernments/digit-ui-react-components";
 import { first } from "lodash";
 import React, { useState, useEffect } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData }) => {
-  const titleOptions = [
-    { label: "title", value: "title" },
-    { label: "title1", value: "title1" },
-    { label: "title2", value: "title2" },
-  ];
   const categoryOptions = [
     { label: "category1", value: "category1" },
     { label: "category2", value: "category2" },
@@ -31,7 +28,6 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   // console.log("form", formData, config);
   let validation = {};
   const onSkip = () => onSelect();
-  const [TradeName, setTradeName] = useState(formData.TradeDetails?.TradeName);
 
   const [applicationData, setApplicationData] = useState(
     formData?.FileManagement?.applicationData
@@ -56,18 +52,35 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
+  const { data: TitleList = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "Title");
+  // const { data: PostOffice = {} } = Digit.Hooks.dfm.useDFMMDMS(stateId, "common-masters", "PostOffice");
+  const { data: PostOffice = {}, isLoading } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "PostOffice");
+  const { data: Category = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "category");
 
-  let mdmsFinancialYear = fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter((y) => y.module === "TL") : [];
-  let FY = mdmsFinancialYear && mdmsFinancialYear.length > 0 && mdmsFinancialYear.sort((x, y) => y.endingDate - x.endingDate)[0]?.code;
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
+  console.log("log", TitleList,Category,PostOffice);
+  let cmbTitle = [];
+  TitleList &&
+    TitleList["common-masters"] &&
+    TitleList["common-masters"].Title.map((ob) => {
+      cmbTitle.push(ob);
+    });
+    let cmbPostOffice=[]
+  PostOffice &&
+    PostOffice["common-masters"] &&
+    PostOffice["common-masters"].PostOffice.map((ob) => {
+      cmbPostOffice.push(ob);
+    });
+
+  console.log("c", cmbTitle);
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
   const mystyle = {
     marginBottom: "24px",
   };
 
   const handleChange = (text, type) => {
+    console.log(text,type);
     let tempdata = { ...applicationData };
     if (type === "firstName") {
       tempdata.firstName = text;
@@ -128,7 +141,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   };
 
   const goNext = () => {
-    sessionStorage.setItem("CurrentFinancialYear", FY);
+    // sessionStorage.setItem("CurrentFinancialYear", FY);
     onSelect(config.key, { applicationData });
     // console.log("d", applicationData);
   };
@@ -136,6 +149,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
     return <Loader></Loader>;
   }
   // console.log("log", applicationData);
+  let patternValid="^\d{12}$"
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
@@ -145,7 +159,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
         onSelect={goNext}
         onSkip={onSkip}
         t={t}
-        isDisabled={!applicationData.title?.value || !applicationData.category?.value || !applicationData.tenantID?.value || !applicationData.dob}
+        isDisabled={!applicationData.title?.name || !applicationData.category?.name || !applicationData.dob}
       >
         {/* return ( */}
         <div>
@@ -153,7 +167,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}`}</span>
                 </h1>
               </div>
             </div>
@@ -162,7 +176,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 <div className="col-md-4">
                   {/* <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}*`}</CardLabel>
                         <Dropdown t={t}  optionKey="i18nKey" name={`TradeCategory`} placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}*`} /> */}
-                  <FormInputGroup
+                  {/* <FormInputGroup
                     type="TextInput"
                     handleChange={handleChange}
                     optionKey="i18nKey"
@@ -173,6 +187,18 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                     label={`${t("DFM_FIRST_NAME")}`}
                     // label="First Name"
                     mystyle={mystyle}
+                  /> */}
+                  <CardLabel>{`${t("DFM_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="firstName"
+                    value={applicationData.firstName}
+                    onChange={(e) => handleChange(e.target.value, "firstName")}
+                    placeholder={`${t("DFM_FIRST_NAME")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_FIRST_NAME") })}
                   />
                 </div>
               ) : (
@@ -181,7 +207,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
               <div className="col-md-4">
                 {/* <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}*`}</CardLabel>
                         <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory}  placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}*`} /> */}
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInput"
                   handleChange={handleChange}
                   t={t}
@@ -190,10 +216,22 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_LAST_NAME")}`}
                   // label="Last Name"
                   mystyle={mystyle}
+                /> */}
+                <CardLabel>{`${t("DFM_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="lastName"
+                  placeholder={`${t("DFM_LAST_NAME")}`}
+                  value={applicationData.lastName}
+                  onChange={(e) => handleChange(e.target.value, "lastName")}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME") })}
                 />
               </div>
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInputNumber"
                   handleChange={handleChange}
                   t={t}
@@ -202,25 +240,41 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_AADHAR_NO")}`}
                   mystyle={mystyle}
                   valid="^\d{12}$"
+                /> */}
+                <CardLabel>{`${t("DFM_AADHAR_NO")}*`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="aadharNo"
+                  value={applicationData.aadharNo}
+                  onChange={(e) => handleChange(e.target.value, "aadharNo")}
+                  placeholder={`${t("DFM_AADHAR_NO")}`}
+                  // {...(validation = {  pattern: patternValid,
+                    {...(validation = { pattern:"^[0-9 ]*$", 
+                    isRequired: true, type: "text", title: t("TL_INVALID_AADHAR_NO") })}
                 />
               </div>
             </div>
             <div className="row">
               <div className="col-md-4">
-                <FormInputGroup
-                  type="Dropdown"
-                  handleChange={handleChange}
+                <CardLabel>{`${t("DFM_TITLE")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
                   t={t}
-                  value={applicationData.title}
-                  name="title"
-                  label={`${t("DFM_TITLE")}`}
-                  selectOptions={titleOptions}
+                  optionKey="name"
+                  isMandatory={config.isMandatory}
+                  option={cmbTitle}
+                  selected={applicationData.title}
+                  placeholder={`${t("DFM_TITLE")}`}
+                  select={(e) => handleChange(e, "title")}
                 />
+
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
                         <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType"  placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} /> */}
               </div>
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInput"
                   handleChange={handleChange}
                   t={t}
@@ -228,12 +282,24 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="email"
                   label={`${t("DFM_EMAIL")}`}
                   mystyle={mystyle}
+                /> */}
+                <CardLabel>{`${t("DFM_EMAIL")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="email"
+                  value={applicationData.email}
+                  onChange={(e) => handleChange(e.target.value, "email")}
+                  placeholder={`${t("DFM_EMAIL")}`}
+                  {...(validation = { pattern: "^(.+)@(.+)$", isRequired: true, type: "text", title: t("TL_INVALID_EMAIL") })}
                 />
                 {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
                         <TextArea t={t} type={"text"}  optionKey="i18nKey" placeHolder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} name="BusinessActivity" {...(validation = { isRequired: true, type: "text", title: t("TL_WRONG_UOM_VALUE_ERROR"),})} placeholder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} /> */}
               </div>
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInputNumber"
                   handleChange={handleChange}
                   t={t}
@@ -242,13 +308,25 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   label={`${t("DFM_MOBILE_NO")}`}
                   mystyle={mystyle}
                   valid="^(\+\d{1,3}[- ]?)?\d{10}$"
+                /> */}
+                <CardLabel>{`${t("DFM_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="mobileNo"
+                  value={applicationData.mobileNo}
+                  onChange={(e) => handleChange(e.target.value, "mobileNo")}
+                  placeholder={`${t("DFM_MOBILE_NO")}`}
+                  {...(validation = { pattern: "^(+d{1,3}[- ]?)?d{10}$", isRequired: true, type: "text", title: t("TL_INVALID_MOBILE_NO") })}
                 />
               </div>
             </div>
 
             <div className="row">
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="DatePicker"
                   handleChange={handleChange}
                   t={t}
@@ -256,13 +334,19 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="dob"
                   label={`${t("DFM_DOB")}`}
                   mystyle={mystyle}
+                /> */}
+                <CardLabel>{`${t("DFM_DOB")}`}<span className="mandatorycss">*</span></CardLabel>
+                <DatePicker
+                  date={applicationData.dob}
+                  name="dob"
+                  onChange={(e) => handleChange(e, "dob")}
+                  // disabled={isEdit}
                 />
-
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
                         <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType"  placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} /> */}
               </div>
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInput"
                   handleChange={handleChange}
                   t={t}
@@ -270,12 +354,24 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="fatherFirstName"
                   label={`${t("DFM_FATHER_FIRST_NAME")}`}
                   mystyle={mystyle}
+                /> */}
+                <CardLabel>{`${t("DFM_FATHER_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="fatherFirstName"
+                  value={applicationData.fatherFirstName}
+                  onChange={(e) => handleChange(e.target.value, "fatherFirstName")}
+                  placeholder={`${t("DFM_FATHER_FIRST_NAME")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_FATHER_FIRST_NAME") })}
                 />
                 {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
                         <TextArea t={t} type={"text"}  optionKey="i18nKey" placeHolder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} name="BusinessActivity" {...(validation = { isRequired: true, type: "text", title: t("TL_WRONG_UOM_VALUE_ERROR"),})} placeholder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} /> */}
               </div>
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInput"
                   handleChange={handleChange}
                   t={t}
@@ -283,13 +379,25 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="fatherLastName"
                   label={`${t("DFM_FATHER_LAST_NAME")}`}
                   mystyle={mystyle}
+                /> */}
+                <CardLabel>{`${t("DFM_FATHER_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="fatherLastName"
+                  value={applicationData.fatherLastName}
+                  onChange={(e) => handleChange(e.target.value, "fatherLastName")}
+                  placeholder={`${t("DFM_FATHER_LAST_NAME")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_FATHER_LAST_NAME") })}
                 />
               </div>
             </div>
 
             <div className="row">
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInput"
                   handleChange={handleChange}
                   t={t}
@@ -297,13 +405,24 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="motherFirstName"
                   label={`${t("DFM_MOTHER_FIRST_NAME")}`}
                   mystyle={mystyle}
+                /> */}
+                <CardLabel>{`${t("DFM_MOTHER_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="motherFirstName"
+                  value={applicationData.motherFirstName}
+                  placeholder={`${t("DFM_MOTHER_FIRST_NAME")}`}
+                  onChange={(e) => handleChange(e.target.value, "motherFirstName")}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_MOTHER_FIRST_NAME") })}
                 />
-
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
                         <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType"  placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} /> */}
               </div>
               <div className="col-md-4">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInput"
                   handleChange={handleChange}
                   t={t}
@@ -311,24 +430,39 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="motherLastName"
                   label={`${t("DFM_MOTHER_LAST_NAME")}`}
                   mystyle={mystyle}
+                /> */}
+                <CardLabel>{`${t("DFM_MOTHER_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="motherLastName"
+                  value={applicationData.motherLastName}
+                  onChange={(e) => handleChange(e.target.value, "motherLastName")}
+                  placeholder={`${t("DFM_MOTHER_LAST_NAME")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_MOTHER_LAST_NAME") })}
                 />
               </div>
               <div className="col-md-4">
-                <FormInputGroup
-                  type="Dropdown"
-                  handleChange={handleChange}
+                <CardLabel>{`${t("DFM_CATRGORY")}`}</CardLabel>
+                <Dropdown
                   t={t}
-                  value={applicationData.category}
-                  name="category"
-                  label={`${t("DFM_CATRGORY")}`}
-                  selectOptions={categoryOptions}
+                  optionKey="name"
+                  isMandatory={config.isMandatory}
+                  option={cmbPostOffice}
+                  selected={applicationData.category}
+                  select={(e) => handleChange(e, "category")}
+                  placeholder={`${t("DFM_CATRGORY")}`}
                 />
+                {/* <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={activities} selected={StructureType} select={selectStructuretype} disabled={isEdit}
+            /> */}
               </div>
             </div>
 
             <div className="row">
               <div className="col-md-6">
-                <FormInputGroup
+                {/* <FormInputGroup
                   type="TextInputNumber"
                   handleChange={handleChange}
                   t={t}
@@ -336,11 +470,35 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="bankAccountNo"
                   label={`${t("DFM_BANK_ACCOUNT_NO")}`}
                   mystyle={mystyle}
+                /> */}
+                <CardLabel>{`${t("DFM_BANK_ACCOUNT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="bankAccountNo"
+                  value={applicationData.bankAccountNo}
+                  onChange={(e) => handleChange(e.target.value, "bankAccountNo")}
+                  placeholder={`${t("DFM_BANK_ACCOUNT_NO")}`}
+                  {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("TL_INVALID_ACCOUNT_NO") })}
                 />
                 {/* <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
                         <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType"  placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} /> */}
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
+              <CardLabel>{`${t("DFM_TENANT_ID")}*`}</CardLabel>
+              <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={config.isMandatory}
+                  option={cmbPostOffice}
+                  selected={applicationData.tenantID}
+                  select={(e) => handleChange(e, "tenantID")}
+                  placeholder={`${t("DFM_TENANT_ID")}`}
+                />
+              </div> */}
+              {/* <div className="col-md-6">
                 <FormInputGroup
                   type="Dropdown"
                   handleChange={handleChange}
@@ -349,16 +507,16 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   name="tenantID"
                   label={`${t("DFM_TENANT_ID")}`}
                   selectOptions={tenendIdOptions}
-                />
-                {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
+                /> */}
+              {/* <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
                         <TextArea t={t} type={"text"}  optionKey="i18nKey" placeHolder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} name="BusinessActivity" {...(validation = { isRequired: true, type: "text", title: t("TL_WRONG_UOM_VALUE_ERROR"),})} placeholder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} /> */}
-              </div>
+              {/* </div> */}
             </div>
           </div>
           {/* ); */}
         </div>
       </FormStep>
-      {<CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_LICENSE_ISSUE_YEAR_INFO_MSG") + FY} />}
+      {/* {<CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_LICENSE_ISSUE_YEAR_INFO_MSG") + FY} />} */}
     </React.Fragment>
   );
 };

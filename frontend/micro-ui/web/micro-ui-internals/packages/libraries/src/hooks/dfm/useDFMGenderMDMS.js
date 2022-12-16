@@ -1,15 +1,15 @@
 import { useQuery } from "react-query";
 import { MdmsService } from "../../services/elements/MDMS";
 
-const useCRGenderMDMS = (tenantId, moduleCode, type, config = {}) => {
-  const useCRGenders = () => {
-    return useQuery("CR_GENDER_DETAILS", () => MdmsService.CRGenderType(tenantId, moduleCode ,type), config);
+const useDFMGenderMDMS = (tenantId, moduleCode, type, config = {}) => {
+  const useDFMGenders = () => {
+    return useQuery("DFM_GENDER_DETAILS", () => MdmsService.CRGenderType(tenantId, moduleCode ,type), config);
   };
   
 
   switch (type) {
     case "GenderType":
-      return useCRGenders();
+      return useDFMGenders();
     default:
       return null;
   }
@@ -17,4 +17,4 @@ const useCRGenderMDMS = (tenantId, moduleCode, type, config = {}) => {
 
 
 
-export default useCRGenderMDMS;
+export default useDFMGenderMDMS;

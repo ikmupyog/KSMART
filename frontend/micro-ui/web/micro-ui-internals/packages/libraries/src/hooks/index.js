@@ -135,12 +135,12 @@ import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
 
 import useTenantsDFM from "./dfm/useTenants";
-import useDFMMDMS from "./dfm/useDFMMDMS";
-import useDFMAPI from "./dfm/useDFMAPI";
+import useFileManagmentMDMS from "./dfm/useFileManagmentMDMS";
+import useFileManagmentAPI from "./dfm/useFileManagmentAPI";
 import useDFMApplicationDetail from "./dfm/useApplicationDetail";
 import useDFMApplicationActions from "./dfm/useApplicationActions";
 import useDFMGenderMDMS from "./dfm/useDFMGenderMDMS";
-import useDFFMMDMS from "./dfm/useMDMS";
+import useDFMMDMS from "./dfm/useMDMS";
 import useDFMSearch from "./dfm/useSearch";
 
 import useHRMSSearch from "./hrms/useHRMSsearch";
@@ -329,10 +329,10 @@ const cr = {
 };
 const dfm = {
   useTenants: useTenantsDFM,
-  useDFMMDMS,
-  useDFMAPI,
+  useFileManagmentMDMS,
+  useFileManagmentAPI,
   useDFMGenderMDMS,
-  useMDMS: useDFFMMDMS,
+  useMDMS: useDFMMDMS,
   useSearch: useDFMSearch,
   useApplicationDetail: useDFMApplicationDetail,
   useApplicationActions: useDFMApplicationActions,
@@ -448,6 +448,7 @@ const Hooks = {
   hrms,
   tl,
   cr,
+  dfm,
   receipts,
   obps,
   events,

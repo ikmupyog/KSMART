@@ -45,13 +45,13 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-6" >
-            <CardLabel>{t("CR_BIRTH_PLACE")}</CardLabel>
+            <CardLabel>{t("CR_BIRTH_PLACE")}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown t={t} optionKey="code" isMandatory={false} option={menu} selected={BirthPlace} select={setselectBirthPlace} disabled={isEdit} placeholder={`${t("CR_BIRTH_PLACE")}`} />
           </div>
         </div>
         <div className="row">
           <div className="col-md-6 " >
-            <CardLabel>{`${t("CR_DESCRIPTION")}`}</CardLabel>
+            <CardLabel>{`${t("CR_DESCRIPTION")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDescription" value={BirthPlaceDescription} onChange={setSelectBirthPlaceDeccription} disable={isEdit} placeholder={`${t("CR_DESCRIPTION")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })} />
           </div>
         </div>

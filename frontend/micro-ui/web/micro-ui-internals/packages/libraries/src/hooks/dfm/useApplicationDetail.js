@@ -1,4 +1,4 @@
-import { CRsearch } from "../../services/molecules/CR/Search";
+import { DFMsearch } from "../../services/molecules/DFM/Search";
 import { useQuery } from "react-query";
 
 const useApplicationDetail = (t, tenantId, applicationNumber, config = {}, userType) => {

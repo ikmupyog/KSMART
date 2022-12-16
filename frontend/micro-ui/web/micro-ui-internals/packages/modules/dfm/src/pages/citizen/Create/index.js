@@ -273,7 +273,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
   newConfig = newConfigTL;
   // newConfig = newConfig ? newConfig : newConfigTL;
   // newConfig = newConfig ? newConfig : newConfigTL;
-  newConfig = newConfigTL;
+  // newConfig = newConfigTL;
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
