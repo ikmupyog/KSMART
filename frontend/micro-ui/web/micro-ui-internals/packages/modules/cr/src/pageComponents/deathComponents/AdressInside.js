@@ -236,7 +236,6 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
     sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
     sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
-
     onSelect(config.key, {
       PresentBuldingNo,
       PresentHouseNo,
@@ -483,7 +482,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PermanentBuldingNo}
               onChange={setSelectPermanentBuldingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
           <div className="col-md-6">

@@ -158,7 +158,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               value={FatherOrHusbandAdharNo}
               onChange={setSelectFatherOrHusbandAdharNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
         </div>
