@@ -7,8 +7,9 @@ import Inbox from "./Inbox";
 // import Search from "./Search";
 // import Response from "../Response";
 import ApplicationDetails from "./ApplicationDetails";
-import CrFlow from "./route-item";
+import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
+
 //import ReNewApplication from "./ReNewApplication";
 
 const CRBreadCrumb = ({ location }) => {
@@ -27,6 +28,9 @@ const CRBreadCrumb = ({ location }) => {
   const isChildDetails = location?.pathname?.includes("child-details");
   const isDeathFlow = location?.pathname?.includes("death-flow");
   const isDeathDetails = location?.pathname?.includes("information-death");
+ 
+  const isSearchRegistry = location?.pathname?.includes("search-registry");
+  
   const [search, setSearch] = useState(false);
 
   const locationsForTLEmployee = window.location.href;
@@ -105,6 +109,7 @@ const CRBreadCrumb = ({ location }) => {
       content: t("Child Details"),
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails
     },
+   
     // {
     //   path: "/digit-ui/employee/cr/cr-flow/trade-lisense",
     //   // path: "/digit-ui/employee/dfm/trade-lisense",
@@ -197,6 +202,7 @@ const EmployeeApp = ({ path, url, userType }) => {
         </div>
         <PrivateRoute parentRoute={path} path={`${path}/cr-flow`} component={() => <CrFlow parentUrl={url} />} />
         <PrivateRoute parentRoute={path} path={`${path}/death-flow`} component={() => <DeathCrFlow parentUrl={url} />} />
+        <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} />
       </div>
     </React.Fragment>
   </Switch>

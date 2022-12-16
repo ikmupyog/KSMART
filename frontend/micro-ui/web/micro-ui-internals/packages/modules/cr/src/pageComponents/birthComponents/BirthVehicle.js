@@ -43,22 +43,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
     {window.location.href.includes("/citizen") ? <Timeline /> : null}
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
-    <header className="card-header" style={{fontSize:"35px"}}>Birth Vehicle</header>
-    <div className="row">    
-        <div className="col-md-12 col-lg-12" > 
-        <div className="col-md-5" > 
-            <hr className="aligncss"></hr>
-        </div>
-        <div className="col-md-2" > 
-        <h1 className="headingh1" >
-            <span>Birth Vehicle</span>
-        </h1>
-        </div>
-        <div className="col-md-5" > 
-            <hr className="aligncss"></hr>
-        </div>
-        </div>        
-    </div>
+    
+    <div className="row">
+                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BIRTH_VEHICLE")}`}</span> </h1>
+                    </div>
+                </div>
     <div className="row">
         <div className="col-md-4" >
             <CardLabel>{t("CR_DRIVER_NAME")}</CardLabel>
@@ -71,12 +60,12 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DRIVER_NAME") })}
             />
            
         </div>
         <div className="col-md-4" >
-        <CardLabel>{t("CR_MOBLE_NO")}</CardLabel>
+        <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -86,7 +75,7 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
             />
         </div>
         <div className="col-md-4 " >
@@ -100,7 +89,7 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
         </div>
     </div>
@@ -117,7 +106,7 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TYPE") })}
             />
         </div>
          
@@ -132,7 +121,7 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
             />
         </div>
     </div> 
@@ -149,11 +138,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
             />
         </div>
         <div className="col-md-6" > 
-        <CardLabel>{`${t("CR_VEHICLE_FROM")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_TO")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -163,7 +152,7 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
             />
         </div>
     </div>     
@@ -192,7 +181,7 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADMITTED_HOSPITAL") })}
             />
         </div>
     </div>

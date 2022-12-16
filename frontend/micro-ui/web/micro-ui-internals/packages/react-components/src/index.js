@@ -67,6 +67,7 @@ import CommonUploadFiles from './atoms/Common_Upload_files'
 import CommonRadioButtons from './atoms/Common_Radio_buttons'
 import CommonDashboard from './atoms/Common_Dashboard'
 import CommonSecondaryBackButton from './atoms/Common_SecondaryBackButton'
+import FormInputGroup from './atoms/FormInputGroup'
 import {
   AnnouncementIcon,
   ArrowDown,
@@ -277,6 +278,7 @@ export {
   CitizenHomeCard,
   EmployeeModuleCard,
   StandaloneSearchBar,
+  FormInputGroup,
   CommonInputWrapper,
   CommonUploadFiles,
   CommonRadioButtons,

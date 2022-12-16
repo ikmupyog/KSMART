@@ -205,17 +205,20 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
   }
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!StructureType}>
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!StructureType  }>
         <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_PLACE_HEADER_MSG")}*`}</span> </h1>
+          <div className="col-md-12" ><h1 className="headingh1" >
+            {/* <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_PLACE_HEADER_MSG")}*`}</span> */}
+             </h1>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_PLACE_ACTVITY")}`}</CardLabel>
-            <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={cmbPlace} selected={setPlaceofActivity} select={selectPlaceofactivity} disabled={isEdit} />
+          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_PLACE_ACTVITY")}`}<span className="mandatorycss">*</span></CardLabel>
+            <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPlace} selected={setPlaceofActivity} select={selectPlaceofactivity} disabled={isEdit} />
           </div>
-          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_NATURE_STRUCTURE")}`}</CardLabel>
+          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_NATURE_STRUCTURE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={activities} selected={StructureType} select={selectStructuretype} disabled={isEdit}
             />
           </div>
@@ -229,35 +232,35 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
             </div>
 
             {value3 === "YES" && (
-              <div> <div className="row"><div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_RESURVEY_LAN_DETAILS")}*`}</span>   </h1> </div>
+              <div> <div className="row"><div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_RESURVEY_LAN_DETAILS")}`}</span>   </h1> </div>
               </div>
                 <div className="row">
-                  <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}</CardLabel>
+                  <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo" value={BlockNo} onChange={setSelectBlockNo} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
                   </div>
-                  <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}</CardLabel>
+                  <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo" value={SurveyNo} onChange={setSelectSurveyNo} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}</CardLabel>
+                  <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo" value={SubDivNo} onChange={setSelectSubDivNo} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
                   </div>
-                  <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_PARTITION_NO")}`}</CardLabel>
+                  <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_PARTITION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PartitionNo" value={PartitionNo} onChange={setSelectPartitionNo} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_PARTITION_NO") })} />
                   </div>
                 </div>
               </div>)}
             {value3 === "NO" && (
               <div> <div className="row">
-                <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_RESURVEY_LAN_DETAILS")}*`}</span></h1> </div>
+                <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_RESURVEY_LAN_DETAILS")}`}</span></h1> </div>
               </div>
                 <div className="row">
-                  <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}</CardLabel>
+                  <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo" value={BlockNo} onChange={setSelectBlockNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
                   </div>
-                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}</CardLabel>
+                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo" value={SurveyNo} onChange={setSelectSurveyNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
                   </div>
-                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}</CardLabel>
+                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo" value={SubDivNo} onChange={setSelectSubDivNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
                   </div>
                 </div>
@@ -268,7 +271,7 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
         {value2 === "BUIL" && (
           <div>
             <div className="row">
-              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_BUILDING_HEADER")}*`}</span> </h1>
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_BUILDING_HEADER")}`}</span> </h1>
               </div>
             </div>
             <div className="row"> 
@@ -277,18 +280,18 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
               <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_WARD_NO")}`}</CardLabel>
                 <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={wards} selected={WardNoBuilding} select={setSelectWard} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$",isRequired: true, title: t("TL_INVALID_WARD_NO") })} />
               </div> */}
-              <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}</CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DoorNoBuild" value={DoorNoBuild} onChange={setSelectDoorNoBuild} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_DOOR_NO") })} />
+              <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DoorNoBuild" value={DoorNoBuild} onChange={setSelectDoorNoBuild} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
               </div>
               <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO_SUB")}`}</CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DoorSubBuild" value={DoorSubBuild} onChange={setSelectDoorSubBuild} disable={isEdit}       {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
+                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DoorSubBuild" value={DoorSubBuild} onChange={setSelectDoorSubBuild} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
               </div>
             </div>
           </div>)}
         {value2 === "VEHI" && (
           <div>
             <div className="row">
-              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_VECHICLE_HEADER")}*`}</span> </h1>
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_VECHICLE_HEADER")}`}</span> </h1>
               </div>
             </div>
             <div className="row">
@@ -298,12 +301,30 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
         {value2 === "WATE" && (
           <div>
             <div className="row">
-              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_VESSEL_HEADER")}*`}</span> </h1>
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_VESSEL_HEADER")}`}</span> </h1>
               </div>
             </div>
             <div className="row">
-              <div className="col-md-12" ><CardLabel>{`${t("TL_VESSEL_NO")}`}</CardLabel>
+              <div className="col-md-12" ><CardLabel>{`${t("TL_VESSEL_NO")}*`}</CardLabel>
                 <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="VesselNo" value={VesselNo} onChange={setSelectVesselNo} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_VESSEL_NO") })} /> </div>    </div>
+          </div>)}
+          {value2 === "DESI" && (
+          <div>
+            <div className="row">
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_VESSEL_HEADER")}`}</span> </h1>
+              </div>
+            </div>
+            <div className="row">
+                  <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}</CardLabel>
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo" value={BlockNo} onChange={setSelectBlockNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
+                  </div>
+                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}</CardLabel>
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo" value={SurveyNo} onChange={setSelectSurveyNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
+                  </div>
+                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}</CardLabel>
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo" value={SubDivNo} onChange={setSelectSubDivNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
+                  </div>
+                </div>
           </div>)}
 
       </FormStep>

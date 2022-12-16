@@ -2,6 +2,7 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+  
   const useCRPlaceMaster = () => {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
   };
@@ -45,6 +46,36 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
   const useCRDistrict = () => {
     return useQuery("CR_DISTRICT", () => MdmsService.getCRDistrict(tenantId, moduleCode, type), config);
+  };
+  const useCRPostOffice = () => {
+    return useQuery("CR_POST_OFFICE", () => MdmsService.getCRPostOffice(tenantId, moduleCode, type), config);
+  };
+  const useCRState = () => {
+    return useQuery("CR_STATE", () => MdmsService.getCRState(tenantId, moduleCode, type), config);
+  };
+  const useCROccupation = () => {
+    return useQuery("CR_OCCUPATION", () => MdmsService.getCROccupation(tenantId, moduleCode, type), config);
+  };
+  const useCRLBType = () => {
+    return useQuery("CR_LBTYPE", () => MdmsService.getCRLBType(tenantId, moduleCode, type), config);
+  };
+  const useCRQualification = () => {
+    return useQuery("CR_QUALIFICATION", () => MdmsService.getCRQualification(tenantId, moduleCode, type), config);
+  };
+  const useCRProfession = () => {
+    return useQuery("CR_PROFESSION", () => MdmsService.getCRProfession(tenantId, moduleCode, type), config);
+  };
+  const useCRCountry = () => {
+    return useQuery("CR_COUNTRY", () => MdmsService.getCRCountry(tenantId, moduleCode, type), config);
+  };
+  const useCRNatureofMedicalAttention = () => {
+    return useQuery("CR_NATURE_OF_MEDICAL_ATTENTION", () => MdmsService.getCRNatureofMedicalAttention(tenantId, moduleCode, type), config);
+  };
+  const useCRNatureofMedicalAttentionSub = () => {
+    return useQuery("CR_NATURE_OF_MEDICAL_ATTENTION_SUB", () => MdmsService.getCRNatureofMedicalAttentionSub(tenantId, moduleCode, type), config);
+  };
+  const useCRDeliveryMethod = () => {
+    return useQuery("CR_DELIVERY_METHOD", () => MdmsService.getCRDeliveryMethod(tenantId, moduleCode, type), config);
   };
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
@@ -190,6 +221,26 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRVillage();
     case "District":
       return useCRDistrict();  
+    case "PostOffice":
+      return useCRPostOffice(); 
+    case "mstate":
+      return useCRState();
+    case "LBType":
+      return useCRLBType(); 
+    case "Country":
+      return useCRCountry(); 
+    case "Occupation":
+      return useCROccupation(); 
+    case "Qualification":
+      return useCRQualification();
+      case "Profession":
+      return useCRProfession(); 
+    case "AttentionOfDelivery":
+      return useCRNatureofMedicalAttention();
+      case "MedicalAttentionType":
+      return useCRNatureofMedicalAttentionSub();
+    case "DeliveryMethod":
+      return useCRDeliveryMethod();   
     case "Title":
       return useCRWard();
     case "Religion":

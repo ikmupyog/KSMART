@@ -1,20 +1,23 @@
-import { Header, CitizenHomeCard, CaseIcon, HomeLink } from "@egovernments/digit-ui-react-components";
+// import { Header, CitizenHomeCard, CaseIcon, HomeLink } from "@egovernionments/digit-ui-react-components";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
-import StatisticalInformation from "./pageComponents/birthComponents/StatisticalInformation";
-import BirthVehicle from "./pageComponents/birthComponents/BirthVehicle";
-import PublicPlace from "./pageComponents/birthComponents/PublicPlace";
-import BirthPlace from "./pageComponents/birthComponents/BirthPlace";
-import Address from "./pageComponents/birthComponents/Address";
-import AddressOutsideIndia from "./pageComponents/birthComponents/AddressOutsideIndia";
+import StatisticalInformation from "../src/pageComponents/birthComponents/StatisticalInformation";
+import BirthVehicle from "../src/pageComponents/birthComponents/BirthVehicle";
+import PublicPlace from "../src/pageComponents/birthComponents/PublicPlace";
+import BirthPlace from "../src/pageComponents/birthComponents/BirthPlace";
+import Address from "../src/pageComponents/birthComponents/Address";
+import AddressOutsideIndia from "../src/pageComponents/birthComponents/AddressOutsideIndia";
 import FatherInformation from "../src/pageComponents/birthComponents/FatherInformation";
-import MotherInformation from "./pageComponents/birthComponents/MotherInformation";
-import PlaceofBirth from "./pageComponents/birthComponents/PlaceofBirth";
-import HospitalDetails from "./pageComponents/birthComponents/HospitalDetails";
-import OtherCountry from "./pageComponents/birthComponents/OtherCountry";
-import InstitutionDetails from "./pageComponents/birthComponents/InstitutionDetails";
+import MotherInformation from "../src/pageComponents/birthComponents/MotherInformation";
+import PlaceofBirth from "../src/pageComponents/birthComponents/PlaceofBirth";
+import HospitalDetails from "../src/pageComponents/birthComponents/HospitalDetails";
+import OtherCountry from "../src/pageComponents/birthComponents/OtherCountry";
+import InstitutionDetails from "../src/pageComponents/birthComponents/InstitutionDetails";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
+
+import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
+
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
 import AddressOfDecesed from "./pageComponents/deathComponents/AddressOfDecesed";
@@ -30,7 +33,7 @@ import InformentAddress from "./pageComponents/deathComponents/InformentAddress"
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 
-
+import CustomTimePicker from "./components/CustomTimePicker";
 // import TLSelectGeolocation from "../src/pageComponents/TLSelectGeolocation";
 // import TLSelectAddress from "./pageComponents/TLSelectAddress";
 // import TLSelectPincode from "./pageComponents/TLSelectPincode";
@@ -109,25 +112,26 @@ export const CRLinks = ({ matchPath, userType }) => {
     clearParams();
   }, []);
 
-  const links = [
-    {
-      link: `${matchPath}/tradelicence/new-application`,
-      i18nKey: t("TL_CREATE_TRADE"),
-    },
-    {
-      link: `${matchPath}/tradelicence/renewal-list`,
-      i18nKey: t("TL_RENEWAL_HEADER"),
-    },
-    {
-      link: `${matchPath}/tradelicence/my-application`,
-      i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
-    },
-  ];
+  // const links = [
+  //   {
+  //     link: `${matchPath}/tradelicence/new-application`,
+  //     i18nKey: t("TL_CREATE_TRADE"),
+  //   },
+  //   {
+  //     link: `${matchPath}/tradelicence/renewal-list`,
+  //     i18nKey: t("TL_RENEWAL_HEADER"),
+  //   },
+  //   {
+  //     link: `${matchPath}/tradelicence/my-application`,
+  //     i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
+  //   },
+  // ];
 
-  return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
+  // return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
 };
 
 const componentsToRegister = {
+  CustomTimePicker,
   CRModule,
   CRLinks,
   CRCard,
@@ -144,6 +148,9 @@ const componentsToRegister = {
   OtherCountry,
   InstitutionDetails,
   ChildDetails,
+
+  SearchRegistry,
+
 //////////////////
   InformationDeath,
   AddressOfDecesed,

@@ -103,10 +103,16 @@ const Urls = {
     billingslab: "/tl-calculator/billingslab/_search",
   },
   cr: {
-    create: "/cr-services/v1/_create",
-    search: "/cr-services/v1/_search",
+    create: "birth-services/cr/birth/_create",
+    search: "birth-services/cr/birth/_search",
     download_pdf: "/egov-pdf/download/CR/",
-    update: "/cr-services/v1/_update",
+    update: "birth-services/cr/birth/_update",
+  },
+  dfm: {
+    create: "filemgmnt/v1/applicantpersonals/_create",
+    search: "filemgmnt/v1/applicantpersonals/_search",
+    download_pdf: "/egov-pdf/download/dfm/",
+    update: "filemgmnt/v1/applicantpersonals/_update",
   },
   receipts: {
     receipt_download: "/egov-pdf/download/PAYMENT/consolidatedreceipt",

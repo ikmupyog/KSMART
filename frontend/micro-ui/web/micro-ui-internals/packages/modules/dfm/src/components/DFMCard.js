@@ -47,8 +47,17 @@ const DFMCard = () => {
         //     link: `/digit-ui/employee/tl/search/license`,
         //     role: "TL_CEMP"
         // }
+         {
+            count: isLoading ? "-" : inboxData?.totalCount,
+            label: t("ES_COMMON_INBOX"),
+            link: `/digit-ui/employee/tl/inbox`,
+        },
         {
-            label: t("File Flow"),
+            label: t("New Application"),
+            link: `/digit-ui/employee/dfm/file-flow`,
+        },
+        {
+            label: t("Search Application"),
             link: `/digit-ui/employee/dfm/file-flow`,
         },
     ]

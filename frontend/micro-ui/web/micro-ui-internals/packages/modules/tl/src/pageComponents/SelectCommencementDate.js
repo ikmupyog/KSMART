@@ -25,17 +25,21 @@ const SelectCommencementDate = ({ t, config, onSelect, userType, formData }) => 
   return (
     <React.Fragment>
     {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-    <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
+    {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+
+    <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate || !LicensePeriod}>
         <div className="row">    
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{background:"#fff",padding:"0 10px" }}>{`${t("TL_LICENSE_DECLARATION")}*`}</span></h1>
+          <div className="col-md-12" ><h1 className="headingh1" >
+            {/* <span style={{background:"#fff",padding:"0 10px" }}>{`${t("TL_LICENSE_DECLARATION")}*`}</span> */}
+            </h1>
           </div>        
         </div>
         <div className="row">
-          <div className="col-md-6" ><CardLabel>{t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL")}</CardLabel>
-            <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} disabled={isEdit} />
+          <div className="col-md-6" ><CardLabel>{t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL")}<span className="mandatorycss">*</span></CardLabel>
+            <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} disabled={isEdit} {...(validation = {  isRequired: true, title: t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL") })} />
           </div>
-          <div className="col-md-6" ><CardLabel>{`${t("TL_LICENSE_PERIOD")}`}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicensePeriod" value={LicensePeriod} onChange={setSelectLicensePeriod} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSE_PERIOD") })} />
+          <div className="col-md-6" ><CardLabel>{`${t("TL_LICENSE_PERIOD")}`}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicensePeriod" value={LicensePeriod} onChange={setSelectLicensePeriod} disable={isEdit} {...(validation = { pattern: "^[0-9]*$", isRequired: true, type: "number", title: t("TL_INVALID_LICENSE_PERIOD") })} />
           </div>
         </div>
         <div className="row">    

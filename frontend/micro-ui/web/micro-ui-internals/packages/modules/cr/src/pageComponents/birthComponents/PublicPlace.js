@@ -43,25 +43,14 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
     {window.location.href.includes("/citizen") ? <Timeline /> : null}
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
-    <header className="card-header" style={{fontSize:"35px"}}>Public Place</header>
-    <div className="row">    
-        <div className="col-md-12 col-lg-12" > 
-        <div className="col-md-5" > 
-            <hr className="aligncss"></hr>
-        </div>
-        <div className="col-md-2" > 
-        <h1 className="headingh1" >
-            <span>Public Place</span>
-        </h1>
-        </div>
-        <div className="col-md-5" > 
-            <hr className="aligncss"></hr>
-        </div>
-        </div>        
-    </div>
+    
+    <div className="row">
+                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
+                    </div>
+                </div>
     <div className="row">
          <div className="col-md-4" >
-            <CardLabel>{`${t("Type")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TYPE")}`}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
@@ -83,7 +72,7 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
             value={TradeName}
             onChange={setSelectTradeName}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
             />
         </div>
         <div className="col-md-4" >
@@ -112,7 +101,7 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
             value={TradeName}
             onChange={setSelectTradeName}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
         </div>
       
@@ -130,7 +119,7 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
             value={TradeName}
             onChange={setSelectTradeName}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
             />
         </div>    
     </div>

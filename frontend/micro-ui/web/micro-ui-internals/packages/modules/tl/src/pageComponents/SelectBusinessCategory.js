@@ -53,16 +53,19 @@ const SelectBusinessCategory = ({ t, config, onSelect, userType, formData, }) =>
   return (
     <React.Fragment>
     {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+    {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!setSector}>
         <div className="row">    
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{background:"#fff",padding:"0 10px" }}>{`${t("TL_BUISINESS_HEADER_MSG")}*`}</span> </h1>
+          <div className="col-md-12" ><h1 className="headingh1" >
+            {/* <span style={{background:"#fff",padding:"0 10px" }}>{`${t("TL_BUISINESS_HEADER_MSG")}*`}</span>  */}
+            </h1>
           </div>        
         </div>
         <div className="row">
-          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_SECTOR")}`}</CardLabel>
+          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_SECTOR")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={menu} selected={setSector} select={selectSector}  {...(validation = { isRequired: true, title: t("TL_INVALID_SECTOR_NAME") })} />
           </div>
-          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}</CardLabel>
+          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}<span className="mandatorycss">*</span></CardLabel>
           <TextInput t={t} isMandatory={false}  optionKey="i18nKey" name="CapitalAmount" value={CapitalAmount} onChange={selectedsetCapitalAmount} {...(validation = { pattern: "^([0-9])$", isRequired: true, type: "number", title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
           </div>
         </div>    

@@ -3,11 +3,25 @@ import { ArrowRightInbox } from "./svgindex";
 import { Link } from "react-router-dom";
 
 const EmployeeModuleCard = ({ Icon, moduleName, kpis = [], links = [], isCitizen = false, className, styles, FsmHideCount }) => {
- 
+const ClassList = 
+    {
+     'Complaints':  'complaint-links-container',
+     'Trade License':  'tl-links-container',
+     'Civil Registration':  'cr-links-container', 
+     'File Management':  'dfm-links-container', 
+     'HRMS':  'survey-links-container' ,     
+     'Documents':  'doc-links-container',
+     'Events':  'event-links-container', 
+     'Public Message Broadcast':  'public-links-container', 
+     'Survey':  'survey-links-container',     
+     
+    };
+  
+  
   return (
     <>
     <div className={className ? className : "employeeCard card-home customEmployeeCard"} style={styles ? styles : {}}>
-      <div className="complaint-links-container">
+      <div className={ClassList[moduleName]}>
         <div className="header" style={isCitizen ? { padding: "0px" } : {}}>
         <span className="logo removeBorderRadiusLogo">{Icon}</span>
           <span className="text removeHeight">{moduleName}</span>
@@ -20,7 +34,7 @@ const EmployeeModuleCard = ({ Icon, moduleName, kpis = [], links = [], isCitizen
                 <div className="card-count" key={index}>
                   <div>
                     <span style={{
-                      fontSize: "35px"
+                      fontSize: "21px"
                     }}>{count || "-"}</span>
                   </div>
                   <div>

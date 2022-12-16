@@ -151,8 +151,9 @@ const SelectTradeUnits = ({ t, config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline /> : null}
       {isLoading ? ( <Loader />) : (
-        <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!fields[0].tradecategory || !fields[0].tradetype || !fields[0].tradesubtype || !fields[0].unit || !fields[0].uom } >
+        <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!fields[0].tradecategory || !fields[0].tradetype || !fields[0].tradesubtype } >
           {fields.map((field, index) => {
             return (
               <div key={`${field}-${index}`}>                
@@ -163,29 +164,29 @@ const SelectTradeUnits = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row">
                       {!isLoading ? (
-                      <div className="col-md-4" ><CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}`}</CardLabel>
+                      <div className="col-md-4" ><CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
                         <Dropdown t={t} option={TradeCategoryMenu} optionKey="i18nKey" name={`TradeCategory-${index}`} value={field?.tradecategory} selected={field?.tradecategory} select={(e) => selectTradeCategory(index, e)} placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}`} />
                       </div>
                       ) : (
                         <Loader />
                       )}
                        <div className="col-md-4" >
-                       <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}</CardLabel>
+                       <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
                         <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={getTradeTypeMenu(field?.tradecategory)} selected={field?.tradetype} select={(e) => selectTradeType(index, e)} placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`} />
                        </div>
                        <div className="col-md-4" >                  
-                        <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardLabel>
+                        <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
                           <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getTradeSubTypeMenu(field?.tradetype), "i18nKey", t)} selected={field?.tradesubtype} select={(e) => selectTradeSubType(index, e)} placeholder={`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`} />
                       </div>
                     </div>
                     <div className="row">                      
                       <div className="col-md-6">
                         <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
-                        <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType" value={field?.unit} onChange={(e) => selectCustomType(index, e)} placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} />
+                        <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="CustomType" value={field?.unit} onChange={(e) => selectCustomType(index, e)} placeholder={`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`} {...(validation = { pattern: "^[a-zA-Z-.,0-9`' ]{50}*$", isRequired: false, type: "text", title: t("TL_INVALID_BUSINESS_ACTIVITY"),})} />
                       </div>
                       <div className="col-md-6">
                         <CardLabel>{`${t("TL_BUSINESS_ACTIVITY_LABEL")}`}</CardLabel> 
-                        <TextArea t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" placeHolder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} name="BusinessActivity" value={field?.uom} onChange={(e) => selectBusinessActivity(index, e)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_ACTIVITY"),})} placeholder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} />
+                        <TextArea t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" placeHolder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} name="BusinessActivity" value={field?.uom} onChange={(e) => selectBusinessActivity(index, e)} {...(validation = { pattern: "^[a-zA-Z-.,0-9`' ]{256}*$", isRequired: false, type: "text", title: t("TL_INVALID_BUSINESS_ACTIVITY"),})} placeholder={`${t("TL_BUSINESS_ACTIVITY_LABEL")}`} />
                       </div>
                     </div>
                 </div>

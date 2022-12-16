@@ -44,26 +44,13 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
     {window.location.href.includes("/citizen") ? <Timeline /> : null}
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
     <header className="card-header" style={{fontSize:"35px"}}>Address</header>
-    <div className="row">    
-        <div className="col-md-12 col-lg-12" > 
-          <div className="col-md-4 " > 
-              <hr className="aligncss"></hr>
-          </div>
-          <div className="col-md-4 " > 
-          <h1 className="headingh1" >
-              <span>Outside India</span>
-          </h1>
-          </div>
-          <div className="col-md-4" > 
-              <hr className="aligncss"></hr>
-          </div>
-          
-        </div>        
-    </div>
-    
+    <div className="row">
+                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span> </h1>
+                    </div>
+                </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("CR_ADDRESS_1")}</CardLabel>
+            <CardLabel>{t("CR_ADDRESS_1_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -73,11 +60,11 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS_1_EN") })}
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("CR_ADDRESS_1")}</CardLabel>
+            <CardLabel>{t("CR_ADDRESS_1_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -87,13 +74,13 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS_1_ML") })}
             />           
         </div>          
     </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("CR_ADDRESS_2")}</CardLabel>
+            <CardLabel>{t("CR_ADDRESS_2_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -103,11 +90,11 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS_2_EN") })}
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("CR_ADDRESS_1")}</CardLabel>
+            <CardLabel>{t("CR_ADDRESS_2_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -117,13 +104,13 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS_2_ML") })}
             />           
         </div>          
     </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("CR_LOCALITY")}</CardLabel>
+            <CardLabel>{t("CR_LOCALITY_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -133,11 +120,11 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("CR_LOCALITY")}</CardLabel>
+            <CardLabel>{t("CR_LOCALITY_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -147,13 +134,13 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />           
         </div>           
     </div>  
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("CR_STATE_REGION_PROVINCE")}</CardLabel>
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -163,11 +150,11 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />    
         </div> 
         <div className="col-md-6" >
-            <CardLabel>{t("CR_STATE_REGION_PROVINCE")}</CardLabel>
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -177,7 +164,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_STATE_REGION_PROVINCE_ML") })}
             />           
         </div>           
     </div>  
@@ -193,7 +180,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 value={TradeName}
                 onChange={setSelectTradeName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_COUNTRY") })}
             /> 
         </div>                  
     </div>       

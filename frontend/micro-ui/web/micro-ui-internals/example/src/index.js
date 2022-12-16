@@ -13,7 +13,7 @@ import { initHRMSComponents } from "@egovernments/digit-ui-module-hrms";
 import { initReceiptsComponents, ReceiptsModule } from "@egovernments/digit-ui-module-receipts";
 import { initMCollectComponents } from "@egovernments/digit-ui-module-mcollect";
 import { initTLComponents } from "@egovernments/digit-ui-module-tl";
-// import { initDFMComponents } from "@egovernments/digit-ui-module-dfm";
+import { initDFMComponents } from "@egovernments/digit-ui-module-dfm";
 import { PaymentModule, PaymentLinks, paymentConfigs } from "@egovernments/digit-ui-module-common";
 import { HRMSModule } from "@egovernments/digit-ui-module-hrms";
 import { initOBPSComponents } from "@egovernments/digit-ui-module-obps";
@@ -39,7 +39,7 @@ import { pgrCustomizations, pgrComponents } from "./pgr";
 
 var Digit = window.Digit || {};
 
-const enabledModules = ["PGR", "FSM", "Payment", "PT", "QuickPayLinks", "DSS", "MCollect", "HRMS", "TL", "Receipts", "OBPS", "Engagement", "NOC", "WS","CommonPT", "NDSS","CR"];
+const enabledModules = ["PGR", "FSM", "Payment", "PT", "QuickPayLinks", "DSS", "MCollect", "HRMS", "TL", "Receipts", "OBPS", "Engagement", "NOC", "WS","CommonPT", "NDSS","CR" ,"DFM"];
 
 const initTokens = (stateCode) => {
   const userType = window.sessionStorage.getItem("userType") || process.env.REACT_APP_USER_TYPE || "CITIZEN";
@@ -92,7 +92,7 @@ const initDigitUI = () => {
   initHRMSComponents();
   initTLComponents();
   initCRComponents();
-  // initDFMComponents();
+  initDFMComponents();
   initReceiptsComponents();
   initOBPSComponents();
   initEngagementComponents();

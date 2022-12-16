@@ -267,6 +267,157 @@ export const gettradeupdateaccessories = (data) => {
     });
   }
   return TLaccessories;
+}
+export const convertToCRChildDetails = (data = {}) => {
+  let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
+  const formdata = {
+      BirthDetails: [
+          {
+              dateofreport: null,
+              dateofbirth: Date.parse(data?.ChildDetails?.ChildDOB),
+              timeofbirth: null,
+              am_pm: null,
+              birthdtlid: null,
+              firstname_en: data?.ChildDetails?.ChildFirstNameEn,
+              firstname_ml: data?.ChildDetails?.ChildFirstNameMl,
+              middlename_en: data?.ChildDetails?.ChildMiddleNameEn,
+              middlename_ml: data?.ChildDetails?.ChildMiddleNameMl,
+              lastname_en: data?.ChildDetails?.ChildLastNameEn,
+              lastname_ml: data?.ChildDetails?.ChildLastNameMl,
+              tenantid: null,
+              gender: data?.ChildDetails?.Gender.code,
+              remarks_en: null,
+              remarks_ml: null,
+              applicationtype: null,
+              businessservice: null,
+              workflowcode: null,
+              aadharno: data?.ChildDetails?.ChildAadharNo,
+              action: null,
+              status: null,
+                 birthPlace:
+                  {
+                    placeofbirthid: null,
+                    hospitalid: null,
+                    auth_officer_id: null,
+                    auth_officer_desig_id: null,
+                    oth_auth_officer_name: data?.HospitalDetails?.SignedOfficerName.hospitalName,
+                    oth_auth_officer_desig: data?.HospitalDetails?.SignedOfficerDesignation.hospitalName,
+                    informantsname_en: null,
+                    informantsname_ml: null,
+                    informantsaddress_en: null,
+                    informantsaddress_ml: null,
+                    informants_mobileno: data?.HospitalDetails?.SignedOfficerMobileNo,
+                    informants_aadhaar_no: data?.HospitalDetails?.SignedOfficerAadharNo,
+                  },
+                  birthFather:
+                   {
+                      firstname_en: data?.FatherInformation?.FatherFirstNameEn,
+                      firstname_ml: data?.FatherInformation?.FatherFirstNameMl,
+                      middlename_en: data?.FatherInformation?.FatherMiddleNameEn,
+                      middlename_ml: data?.FatherInformation?.FatherMiddleNameMl,
+                      lastname_en: data?.FatherInformation?.FatherLastNameEn,
+                      lastname_ml: data?.FatherInformation?.FatherLastNameMl,
+                      aadharno: data?.FatherInformation?.FatherAadhar,
+                      emailid: data?.FatherInformation?.FatherEmail,
+                      mobileno: data?.FatherInformation?.FatherMobile,
+                  },
+                  birthMother:
+                   {
+                      firstname_en: data?.MotherInformation?.MotherFirstNameEn,
+                      firstname_ml: data?.MotherInformation?.MotherFirstNameMl,
+                      middlename_en: data?.MotherInformation?.MotherMiddleNameEn,
+                      middlename_ml: data?.MotherInformation?.MotherMiddleNameMl,
+                      lastname_en: data?.MotherInformation?.MotherFirstNameMl,
+                      lastname_ml: data?.MotherInformation?.MotherLastNameMl,
+                      aadharno: data?.MotherInformation?.MotherAadhar,
+                      emailid: data?.MotherInformation?.MotherEmail,
+                      mobileno: data?.MotherInformation?.MotherMobile,
+                  },
+                  birthPermanent: {
+                      buildingno: data?.Address?.PermanentBuldingNo,
+                      houseno: data?.Address?.PermanentHouseNo,
+                      res_asso_no: null,
+                      housename_en: null,
+                      housename_ml: null,
+                      locality_en: data?.Address?.PermanentLocalityNameEn,
+                      locality_ml: data?.Address?.PermanentLocalityNameMl,
+                      city_en: null,
+                      city_ml: null,
+                      villageid: null,
+                      tenantid: null,
+                      talukid: null,
+                      districtid: null,
+                      stateid: null,
+                      poid: null,
+                      pinno: data?.Address?.PermanentPincode,
+                      countryid: null,
+                      same_as_permanent: 0
+                  },
+                  birthPresent: {
+                      buildingno: data?.Address?.PresentBuldingNo,
+                      houseno: data?.Address?.PresentHouseNo,
+                      res_asso_no: null,
+                      housename_en: null,
+                      housename_ml: null,
+                      locality_en: data?.Address?.PresentLocalityNameEn,
+                      locality_ml: data?.Address?.PresentLocalityNameMl,
+                      city_en: null,
+                      city_ml: null,
+                      villageid: null,
+                      tenantid: null,
+                      talukid: null,
+                      districtid: null,
+                      stateid: null,
+                      poid: null,
+                      pinno: data?.Address?.PresentPincode,
+                      countryid: null,
+                      same_as_permanent: 0
+                  },
+                  birthStatistical:
+                  {
+                      weight_of_child: data?.StatisticalInformation?.BirthWeight,
+                      height_of_child: data?.StatisticalInformation?.BirthHeight,
+                      duration_of_pregnancy_in_week: data?.StatisticalInformation?.PregnancyDuration.code,
+                      nature_of_medical_attention: data?.StatisticalInformation?.MedicalAttension.code,
+                      delivery_method: data?.StatisticalInformation?.DeliveryMethod.code,
+                      deliverytypeothers_en: null,
+                      deliverytypeothers_ml: null,
+                      religionid: null,
+                      father_nationalityid: null,
+                      father_educationid: null,
+                      father_education_subid: null,
+                      father_proffessionid: null,
+                      mother_educationid: null,
+                      mother_education_subid: null,
+                      mother_proffessionid: null,
+                      mother_nationalityid: null,
+                      mother_age_marriage: null,
+                      mother_age_delivery: data?.MotherInformation?.MotherAgeDeleivery,
+                      mother_no_of_birth_given: data?.MotherInformation?.MotherNoOfBirths,
+                      mother_no_of_children_alive: null,
+                      mother_maritalstatusid: null,
+                      mother_res_lbid: null,
+                      mother_res_lb_code: null,
+                      mother_res_place_type_id: null,
+                      mother_res_lb_type_id: null,
+                      mother_res_district_id: null,
+                      mother_res_state_id: null,
+                      mother_res_country_id: null,
+                      mother_resdnce_addr_type: null,
+                      mother_resdnce_tenentid: null,
+                      mother_resdnce_placetype: null,
+                      mother_resdnce_place_en: null,
+                      mother_resdnce_place_ml: null,
+                      mother_resdnce_lbtype: null,
+                      mother_resdnce_districtid: null,
+                      mother_resdnce_stateid: null,
+                      mother_resdnce_countryid: null,
+                  }
+              }
+      ]   
+  }
+    
+  return formdata;
 };
 
 export const convertToTrade = (data = {}) => {

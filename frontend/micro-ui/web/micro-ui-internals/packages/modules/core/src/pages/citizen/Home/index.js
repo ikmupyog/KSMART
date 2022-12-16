@@ -1,5 +1,5 @@
 import {
-    Calender, CardBasedOptions, CaseIcon,DropIcon, ComplaintIcon, DocumentIcon, HomeIcon, Loader, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
+    Calender, CardBasedOptions, CaseIcon,DropIcon, ComplaintIcon, DocumentIcon, HomeIcon, Loader,EditIcon, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -68,7 +68,7 @@ const Home = () => {
       },
       {
         name: t("File Management"),
-        Icon: <CaseIcon className="fill-path-primary-main" />,
+        Icon: <EditIcon className="fill-path-primary-main" />,
         onClick: () => history.push("/digit-ui/citizen/dfm-home"),
       },
     ],

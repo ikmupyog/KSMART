@@ -26,9 +26,10 @@ const CrFlow = ({ path }) => {
       img: <FileProtected />, 
     },
     {
-      title: "Suspension",
+      title: "Adoption",
       subTitle: "Inbox",
       img: <FileProtected />,
+      link: `${path}/search-registry`,
     },
     {
       title: "Cancellation",
