@@ -1,12 +1,12 @@
-import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup,Dropdown } from "@egovernments/digit-ui-react-components";
+import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup, Dropdown } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   const [documentDetails, setDocumentDetails] = useState(
     formData?.FileManagement?.documentDetails
-    ? formData.FileManagement.documentDetails
-    :  {
+      ? formData.FileManagement.documentDetails
+      : {
           documentType: [],
           attachementFile: "",
           fileStoreId: "",
@@ -69,7 +69,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
     //   owners["documents"] = [];
     //   owners.documents["ProofOfIdentity"] = fileDetails;
     // }
-    onSelect(config.key, {documentDetails});
+    onSelect(config.key, { documentDetails });
   };
   const onSkip = () => onSelect();
 
@@ -117,42 +117,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   }, [file]);
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
-      {/* <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} 
-        isDisabled={!fileCheck|| error}> 
-        <CardLabelDesc style={{ fontWeight: "unset" }}>{t(`TL_UPLOAD_RESTRICTIONS_TYPES`)}</CardLabelDesc>
-        <CardLabelDesc style={{ fontWeight: "unset" }}> {t(`TL_UPLOAD_RESTRICTIONS_SIZE`)}</CardLabelDesc>
-        <FormInputGroup
-          type="Dropdown"
-          handleChange={handleChange}
-          t={t}
-          value={documentDetails.documentType}
-          name="documentType"
-          label="Document Type"
-          selectOptions={DocTypeOptions}
-        />
-        <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
-      
-        <UploadFile
-          id={"dfm-doc"}
-          extraStyleName={"propertyCreate"}
-          accept=".jpg,.png,.pdf"
-          onUpload={selectfile}
-          onDelete={() => {
-            setUploadedFile(null);
-          }}
-          message={documentDetails.fileStoreId ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-          error={error}
-        />
-        <div className="Common_terms_checkbox">
-          <div className="input-checkbox">
-            <input className="" type="checkbox" onClick={(e)=>handleChange(e.target.checked, "checkbox")} />
-            <label>I hereby declare that all the details are valid</label>
-          </div>
-        </div>
-        {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
-        <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
-      </FormStep> */}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
 
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!fileCheck || error}>
         {/* return ( */}
@@ -166,19 +131,8 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
               </div>
             </div>
             <div className="row">
-              {/* {!isLoading ? ( */}
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="Dropdown"
-                  handleChange={handleChange}
-                  t={t}
-                  value={documentDetails.documentType}
-                  name="documentType"
-                  label={`${t("DFM_DOCUMENT_TYPE")}`}
-                  isLoading
-                  selectOptions={DocTypeOptions}
-                /> */}
-                 <CardLabel>{`${t("DFM_DOCUMENT_TYPE")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_DOCUMENT_TYPE")}`}</CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -189,9 +143,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                   select={(e) => handleChange(e, "documentType")}
                 />
               </div>
-              {/* ) : (
-                <Loader />
-              )} */}
+
               <div className="col-md-4">
                 <CardLabel>{`${t("DFM_ATTACH_DOCUMENT")}`}</CardLabel>
                 <UploadFile
@@ -220,7 +172,6 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-          {/* ); */}
         </div>
       </FormStep>
     </React.Fragment>

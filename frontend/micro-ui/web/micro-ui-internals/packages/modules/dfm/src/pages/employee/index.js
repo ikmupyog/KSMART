@@ -17,13 +17,18 @@ const DFMBreadCrumb = ({ location }) => {
   const isInbox = location?.pathname?.includes("inbox");
   const isFileFlow = location?.pathname?.includes("file-flow");
   const isTradeLisense = location?.pathname?.includes("trade-lisense");
+  const isSubType = location?.pathname?.includes("sub-type");
+  const isApplicationDetails = location?.pathname?.includes("file-flow/create/ApplicationDetails");
+  const isAddressDetails = location?.pathname?.includes("file-flow/create/AddressDetails");
+  const isServiceDetails = location?.pathname?.includes("file-flow/create/ServiceDetails");
+  const isDocumentDetails = location?.pathname?.includes("file-flow/create/DocumentDetails");
   const isApplicationSearch = location?.pathname?.includes("search/application");
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
-  const isApplicationDetails = location?.pathname?.includes("tl/application-details");
-  const isNewApplication = location?.pathname?.includes("tl/new-application");
-  const isResponse = location?.pathname?.includes("tl/response");
+  // const isApplicationDetails = location?.pathname?.includes("tl/application-details");
+  // const isNewApplication = location?.pathname?.includes("tl/new-application");
+  // const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
 
   const [search, setSearch] = useState(false);
@@ -94,11 +99,46 @@ const DFMBreadCrumb = ({ location }) => {
       content: t("File Flow"),
       show: breadCrumbUrls.includes("file-flow") || isFileFlow
     },
+    // {
+    //   path: "/digit-ui/employee/dfm/file-flow",
+    //   content: t("File Flow"),
+    //   show: breadCrumbUrls.includes("file-flow") || isFileFlow
+    // },
     {
       path: "/digit-ui/employee/dfm/file-flow/trade-lisense",
       // path: "/digit-ui/employee/dfm/trade-lisense",
       content: t("Trade Lisense"),
       show: breadCrumbUrls.includes("file-flow/trade-lisense") || isTradeLisense
+    },
+    {
+      path: "/digit-ui/employee/dfm/file-flow/sub-type",
+      // path: "/digit-ui/employee/dfm/trade-lisense",
+      content: t("Sub Type"),
+      show: breadCrumbUrls.includes("file-flow/sub-type") || isSubType
+    },
+    {
+      path: "/digit-ui/employee/dfm/file-flow/create/ApplicationDetails",
+      // path: "/digit-ui/employee/dfm/trade-lisense",
+      content: t("Application details"),
+      show: breadCrumbUrls.includes("file-flow/create/ApplicationDetails") || isApplicationDetails
+    },
+    {
+      path: "/digit-ui/employee/dfm/file-flow/create/AddressDetails",
+      // path: "/digit-ui/employee/dfm/trade-lisense",
+      content: t("Address details"),
+      show: breadCrumbUrls.includes("file-flow/create/AddressDetails") || isAddressDetails
+    },
+    {
+      path: "/digit-ui/employee/dfm/file-flow/create/ServiceDetails",
+      // path: "/digit-ui/employee/dfm/trade-lisense",
+      content: t("Service details"),
+      show: breadCrumbUrls.includes("file-flow/create/ServiceDetails") || isServiceDetails
+    },
+    {
+      path: "/digit-ui/employee/dfm/file-flow/create/DocumentDetails",
+      // path: "/digit-ui/employee/dfm/trade-lisense",
+      content: t("Document details"),
+      show: breadCrumbUrls.includes("file-flow/create/DocumentDetails") || isDocumentDetails
     },
     // {
     //   path: "/digit-ui/employee/tl/inbox",

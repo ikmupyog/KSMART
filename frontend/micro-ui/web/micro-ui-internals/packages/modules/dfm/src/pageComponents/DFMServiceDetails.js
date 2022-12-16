@@ -1,4 +1,4 @@
-import { CardLabel,TextInput, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
@@ -6,8 +6,8 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   // console.log(formData);
   const [serviceDetails, setServiceDetails] = useState(
     formData?.FileManagement?.serviceDetails
-    ? formData.FileManagement.serviceDetails
-    : {
+      ? formData.FileManagement.serviceDetails
+      : {
           details: "",
           attachmentFile: "",
           fileStoreId: "",
@@ -61,7 +61,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     //   owners.documents["ProofOfIdentity"] = fileDetails;
     // }
     // console.log("hclick", file, uploadedFile, serviceDetails);
-    onSelect(config.key, {serviceDetails});
+    onSelect(config.key, { serviceDetails });
     // onSelect(config.key, fileDetails);
   };
   const onSkip = () => onSelect();
@@ -103,9 +103,8 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
-      
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
             <div className="row">
@@ -116,9 +115,8 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
               </div>
             </div>
             <div className="row">
-  
               <div className="col-md-4">
-                 <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -128,12 +126,9 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                   value={serviceDetails.details}
                   onChange={(e) => handleChange(e.target.value, "details")}
                   placeholder={`${t("DFM_DETAILS")}`}
-                 
                 />
               </div>
-              {/* ) : (
-                <Loader />
-              )} */}
+
               <div className="col-md-4">
                 <CardLabel>{`${t("DFM_ATTACHMENT_TYPE")}`}</CardLabel>
                 <UploadFile
@@ -155,7 +150,6 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-          {/* ); */}
         </div>
       </FormStep>
     </React.Fragment>
