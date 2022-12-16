@@ -95,7 +95,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   };
 
   const goNext = () => {
-    sessionStorage.setItem("CurrentFinancialYear", FY);
+    // sessionStorage.setItem("CurrentFinancialYear", FY);
     onSelect(config.key, { addressData });
     // console.log("d", addressData);
   };
@@ -113,7 +113,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_ADDRESS_DETAILS_TEXT")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_ADDRESS_DETAILS_TEXT")}`}</span>
                 </h1>
               </div>
             </div>
@@ -206,8 +206,8 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   onChange={(e) => handleChange(e.target.value, "resAssociationNo")}
                   placeholder={`${t("DFM_RESASSOCIATION_NUMBER")}`}
                   {...(validation = {
-                    pattern: "^[0-9 ]*$",
-                    isRequired: true,
+                    pattern: "^[a-zA-Z-.0-9`' ]*$",
+                    isRequired: false,
                     type: "text",
                     title: t("DFM_INVALID_RESASSOCIATION_NUMBER"),
                   })}
@@ -261,7 +261,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
           {/* ); */}
         </div>
       </FormStep>
-      {<CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_LICENSE_ISSUE_YEAR_INFO_MSG") + FY} />}
+      {/* {<CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_LICENSE_ISSUE_YEAR_INFO_MSG") + FY} />} */}
     </React.Fragment>
   );
 };

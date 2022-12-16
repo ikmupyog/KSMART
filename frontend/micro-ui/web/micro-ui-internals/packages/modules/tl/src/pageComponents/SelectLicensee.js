@@ -151,6 +151,7 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
       // sessionStorage.setItem("TL_COMMON_INDIVIDUAL", "TL_COMMON_INDIVIDUAL");
       sessionStorage.setItem("LicensingUnitType", LicensingUnitType.code);
       sessionStorage.setItem("LicenseeType", LicenseeType.code);
+      sessionStorage.setItem("NoOfEmployees", NoOfEmployees);
       sessionStorage.setItem("LicenseUnitID", LicenseUnitID);
       sessionStorage.setItem("LicenseUnitName", LicenseUnitName);
       sessionStorage.setItem("LicenseUnitNameMal", LicenseUnitNameMal);
@@ -160,10 +161,11 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
       sessionStorage.setItem("LandMark", LandMark);   
       sessionStorage.setItem("MobileNo", MobileNo);   
       sessionStorage.setItem("EmailID", EmailID); 
-      onSelect(config.key, { LicensingUnitType,LicenseeType,LicenseUnitID,LicenseUnitName,LicenseUnitNameMal,Zonal,WardNo,StreetName,LandMark,MobileNo,EmailID });  
+      onSelect(config.key, { LicensingUnitType,NoOfEmployees,LicenseeType,LicenseUnitID,LicenseUnitName,LicenseUnitNameMal,Zonal,WardNo,StreetName,LandMark,MobileNo,EmailID });  
     } else if(value2 === "INSTITUTION"){
       // sessionStorage.setItem("TL_COMMON_INSTITUTION", LicenseeType.code);
       sessionStorage.setItem("LicenseeType", LicenseeType.code);
+      sessionStorage.setItem("NoOfEmployees", '');
       sessionStorage.setItem("LicensingInstitutionType", LicensingInstitutionType.code);
       sessionStorage.setItem("LicensingInstitutionID", LicensingInstitutionID);
       sessionStorage.setItem("LicensingInstitutionName", LicensingInstitutionName);
@@ -180,7 +182,7 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
       sessionStorage.setItem("LandMark", LandMark);   
       sessionStorage.setItem("MobileNo", MobileNo);   
       sessionStorage.setItem("EmailID", EmailID);
-      onSelect(config.key, { LicenseeType,LicensingInstitutionType,LicensingInstitutionID,LicensingInstitutionName,LicensingInstitutionAddress,InstitutionMobileNo,InstitutionEmailID,LicensingUnitType,LicenseUnitID,LicenseUnitName,LicenseUnitNameMal,Zonal,WardNo,StreetName,LandMark,MobileNo,EmailID }); 
+      onSelect(config.key, { LicenseeType,NoOfEmployees,LicensingInstitutionType,LicensingInstitutionID,LicensingInstitutionName,LicensingInstitutionAddress,InstitutionMobileNo,InstitutionEmailID,LicensingUnitType,LicenseUnitID,LicenseUnitName,LicenseUnitNameMal,Zonal,WardNo,StreetName,LandMark,MobileNo,EmailID }); 
     }
       
   }
@@ -189,7 +191,7 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
     {window.location.href.includes("/citizen") ? <Timeline /> : null}
     {window.location.href.includes("/employee") ? <Timeline /> : null}
 
-    <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled={!LicensingUnitType}>        
+    <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled={!LicensingUnitType || !LicenseUnitName  || !LicenseUnitNameMal || !Zonal || !WardNo|| !StreetName || !LandMark }>        
           <LabelFieldPair style={{ display: "flex" }}><CardLabel style={{fontSize:"17px",width:"none !important"}}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
            <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} disabled={isEdit} style={{ marginTop:"-8px",paddingLeft:"5px" ,height:"25px"}} /> 
           </LabelFieldPair>
@@ -197,7 +199,7 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
       <div>
         <div className="row">    
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{background:"#fff",padding:"0 10px" }}>{`${t("TL_LICENSEE_UNIT_MSG")}`}</span></h1>
-          </div>        
+          </div>
         </div>
         <div className="row">
           <div className="col-md-6" ><CardLabel>{`${t("TL_LICENSING_UNIT_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -212,7 +214,7 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicenseUnitName" value={LicenseUnitName} onChange={setSelectLicenseUnitName} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
           </div>
           <div className="col-md-6" ><CardLabel>{`${t("TL_LICENSING_UNIT_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicenseUnitNameMal" value={LicenseUnitNameMal} onChange={setSelectLicenseUnitNameMal} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME")}`} {...(validation = {  isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicenseUnitNameMal" value={LicenseUnitNameMal} onChange={setSelectLicenseUnitNameMal} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME_ML")}`} {...(validation = {  isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
           </div>
         </div>
         <div className="row">

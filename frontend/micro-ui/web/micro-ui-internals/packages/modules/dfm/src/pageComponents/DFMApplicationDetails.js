@@ -159,14 +159,14 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
         onSelect={goNext}
         onSkip={onSkip}
         t={t}
-        isDisabled={!applicationData.title?.name || !applicationData.category?.name || !applicationData.tenantID?.name || !applicationData.dob}
+        isDisabled={!applicationData.title?.name || !applicationData.category?.name || !applicationData.dob}
       >
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "grid" }}>
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}`}</span>
                 </h1>
               </div>
             </div>
@@ -217,7 +217,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
             </div>
             <div className="row">
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_TITLE")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_TITLE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"

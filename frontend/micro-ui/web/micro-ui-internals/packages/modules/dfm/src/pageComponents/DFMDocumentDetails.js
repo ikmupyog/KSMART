@@ -126,7 +126,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_DOCUMENT_DETAILS_TEXT")}*`}</span>
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_DOCUMENT_DETAILS_TEXT")}`}</span>
                 </h1>
               </div>
             </div>

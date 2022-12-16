@@ -28,11 +28,11 @@ const CRCard = () => {
 
 
     let links = [
-        // {
-        //     count: isLoading ? "-" : inboxData?.totalCount,
-        //     label: t("ES_COMMON_INBOX"),
-        //     link: `/digit-ui/employee/tl/inbox`,
-        // },
+        {
+            count: isLoading ? "-" : inboxData?.totalCount,
+            label: t("ES_COMMON_INBOX"),
+            link: `/digit-ui/employee/tl/inbox`,
+        },
         // {
         //     label: t("TL_NEW_APPLICATION"),
         //     link: "/digit-ui/employee/tl/new-application",

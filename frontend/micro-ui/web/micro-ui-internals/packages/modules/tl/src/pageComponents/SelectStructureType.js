@@ -207,7 +207,7 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!StructureType}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!StructureType  }>
         <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" >
             {/* <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_PLACE_HEADER_MSG")}*`}</span> */}
@@ -307,6 +307,24 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12" ><CardLabel>{`${t("TL_VESSEL_NO")}*`}</CardLabel>
                 <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="VesselNo" value={VesselNo} onChange={setSelectVesselNo} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_VESSEL_NO") })} /> </div>    </div>
+          </div>)}
+          {value2 === "DESI" && (
+          <div>
+            <div className="row">
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_VESSEL_HEADER")}`}</span> </h1>
+              </div>
+            </div>
+            <div className="row">
+                  <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}</CardLabel>
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo" value={BlockNo} onChange={setSelectBlockNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
+                  </div>
+                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}</CardLabel>
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo" value={SurveyNo} onChange={setSelectSurveyNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
+                  </div>
+                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}</CardLabel>
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo" value={SubDivNo} onChange={setSelectSubDivNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
+                  </div>
+                </div>
           </div>)}
 
       </FormStep>
