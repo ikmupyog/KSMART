@@ -61,8 +61,8 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
   function setSelectProvinceMl(e) {
     setProvinceMl(e.target.value);
   }
-  function setSelectCountry(e) {
-    setCountry(e.target.value);
+  function selectCountry(e) {
+    setSelectedCountry(e.target.value);
   }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
@@ -84,7 +84,6 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
         <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
