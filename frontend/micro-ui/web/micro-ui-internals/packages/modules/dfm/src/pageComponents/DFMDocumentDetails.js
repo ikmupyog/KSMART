@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
+  console.log("DocumentType");
   const [documentDetails, setDocumentDetails] = useState(
     formData?.FileManagement?.documentDetails
     ? formData.FileManagement.documentDetails
@@ -28,9 +29,17 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   ];
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
-  const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
-  const docs = Documentsob?.PropertyTax?.Documents;
-  const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
+  // const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
+  // const docs = Documentsob?.PropertyTax?.Documents;
+  // const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
+  const { data:  DocumentType  = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "DocumentType");
+  let cmbDocumentType=[]
+  
+  DocumentType &&
+  DocumentType["common-masters"] &&
+    DocumentType["common-masters"].DocumentType.map((ob) => {
+      cmbDocumentType.push(ob);
+    });
   // if (proofOfIdentity.length > 0) {
   //   dropdownData = proofOfIdentity[0]?.dropdownData;
   //   dropdownData.forEach((data) => {
@@ -154,7 +163,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
         <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
       </FormStep> */}
 
-      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!fileCheck || error}>
+      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} >
         {/* return ( */}
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
@@ -180,10 +189,11 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                 /> */}
                  <CardLabel>{`${t("DFM_DOCUMENT_TYPE")}`}</CardLabel>
                 <Dropdown
+               
                   t={t}
-                  optionKey="name"
+                  optionKey="code"
                   isMandatory={config.isMandatory}
-                  // option={cmbPostOffice}
+                  option={cmbDocumentType}
                   selected={documentDetails.documentType}
                   placeholder={`${t("DFM_DOCUMENT_TYPE")}`}
                   select={(e) => handleChange(e, "documentType")}

@@ -141,13 +141,13 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION")}`}</CardLabel>
+                    <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
                         <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbQualification} selected={FatherEducation} select={setSelectFatherEducation} disabled={isEdit} />
                     </div>
-                    <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}</CardLabel>
+                    <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}<span className="mandatorycss">*</span></CardLabel>
                         <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbProfession} selected={FatherEducationSubject} select={setSelectFatherEducationSubject} disabled={isEdit} />
                     </div>
-                    <div className="col-md-4" ><CardLabel>{`${t("CR_PROFESSIONAL")}`}</CardLabel>
+                    <div className="col-md-4" ><CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
                         <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbProfession} selected={FatherProfession} select={setSelectFatherProfession} disabled={isEdit} />
                     </div>
                 </div>

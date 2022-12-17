@@ -37,6 +37,10 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherNationality, setMotherNationality] = useState(formData?.MotherInfoDetails?.MotherNationality);
     const [MotherCountry, setMotherCountry] = useState(formData?.MotherInfoDetails?.MotherCountry);
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+    const cmbUrbanRural = [
+        { i18nKey: "Urban", code: "URBAN" },
+        { i18nKey: "Rural", code: "RURAL" },
+      ];
     let cmbPlace = [];
     place &&
         place["TradeLicense"] &&
@@ -428,9 +432,9 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="code"
+                                optionKey="i18nKey"
                                 isMandatory={false}
-                                option={cmbPlace}
+                                option={cmbUrbanRural}
                                 selected={MotherPlaceType}
                                 select={setSelectMotherPlaceType}
                                 disabled={isEdit}

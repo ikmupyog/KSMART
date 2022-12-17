@@ -7,7 +7,6 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
-    const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
     const { data: ReligionList = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Religion");
     const { data: AttentionOfDelivery = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
     const { data: MedicalAttentionType = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MedicalAttentionType");
@@ -22,17 +21,26 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     const [DeliveryMethod, setDeliveryMethod] = useState(formData?.StatisticalInfoDetails?.DeliveryMethod);
     const [DeliveryMethodSub, setDeliveryMethodSub] = useState(formData?.TradeDetails?.DeliveryMethodSub);
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-    let cmbPlace = [];
     let cmbAttDelivery = [];
     let cmbAttDeliverySub = [];
     let cmbDeliveryMethod = [];
     let cmbReligion = [];
-    console.log(DeliveryMethodList);
-    place &&
-        place["TradeLicense"] &&
-        place["TradeLicense"].PlaceOfActivity.map((ob) => {
-            cmbPlace.push(ob);
-        });
+    const cmbPregWeek = [
+        { i18nKey: "30", code: "30" },
+        { i18nKey: "31", code: "31" },
+        { i18nKey: "32", code: "32" },
+        { i18nKey: "33", code: "33" },
+        { i18nKey: "34", code: "34" },
+        { i18nKey: "35", code: "35" },
+        { i18nKey: "36", code: "36" },
+        { i18nKey: "37", code: "37" },
+        { i18nKey: "38", code: "38" },
+        { i18nKey: "39", code: "39" },
+        { i18nKey: "40", code: "40" },
+        { i18nKey: "41", code: "41" },
+        { i18nKey: "42", code: "42" },
+      ];
+    console.log(ReligionList);
     // ReligionList &&
     // ReligionList["birth-death-service"] &&
     // ReligionList["birth-death-service"].Religion.map((ob) => {
@@ -102,24 +110,20 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                 </div>
                 <div className="row">
                     <div className="col-md-12" >
-                        <div className="col-md-6" ><CardLabel>{t("CR_BIRTH_WEIGHT")}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthWeight" value={BirthWeight} onChange={setSelectBirthWeight} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_WEIGHT") })} />
+                        <div className="col-md-3" ><CardLabel>{t("CR_BIRTH_WEIGHT")}<span className="mandatorycss">*</span></CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthWeight" value={BirthWeight} onChange={setSelectBirthWeight} disable={isEdit} {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_WEIGHT") })} />
                         </div>
-                        <div className="col-md-6" >
+                        <div className="col-md-3" >
                             <CardLabel>{t("CR_BIRTH_HEIGHT")}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthHeight" value={BirthHeight} onChange={setSelectBirthHeight} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_HEIGHT") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthHeight" value={BirthHeight} onChange={setSelectBirthHeight} disable={isEdit} {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_HEIGHT") })} />
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12" >
-                        <div className="col-md-6 " >
+                        <div className="col-md-3" >
                             <CardLabel>{`${t("CS_COMMON_RELIGION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbReligion} selected={Religion} select={setSelectReligion} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDelivery} selected={Religion} select={setSelectReligion} disabled={isEdit} />
                         </div>
-                        <div className="col-md-6 " >
+                        <div className="col-md-3" >
                             <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbReligion} selected={PregnancyDuration} select={setSelectPregnancyDuration} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="i18nKey" isMandatory={false} option={cmbPregWeek} selected={PregnancyDuration} select={setSelectPregnancyDuration} disabled={isEdit} />
                         </div>
                     </div>
                 </div>
@@ -131,7 +135,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                         <div className="col-md-6" >
                             <CardLabel>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbAttDeliverySub} selected={MedicalAttensionSub} select={setSelectMedicalAttensionSub} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDeliverySub} selected={MedicalAttensionSub} select={setSelectMedicalAttensionSub} disabled={isEdit} />
                         </div>
                     </div>
                 </div>
@@ -143,7 +147,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                         <div className="col-md-6" >
                             <CardLabel>{`${t("CR_DELIVERY_METHOD_SUB")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbReligion} selected={DeliveryMethodSub} select={setSelectDeliveryMethodSub} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethodSub} select={setSelectDeliveryMethodSub} disabled={isEdit} />
                         </div>
                     </div>
                 </div>
