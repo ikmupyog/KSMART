@@ -66,27 +66,21 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     setisPanMasala(value);
   }
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
   function selectMedicalAttentionDeath(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedMedicalAttentionDeath(value);
   }
   function selectDeathMedicallyCertified(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathMedicallyCertified(value);
   }
   function selectCauseOfDeathMain(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedCauseOfDeathMain(value);
   }
   function selectCauseOfDeathSub(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedCauseOfDeathSub(value);
   }
   function selectFemaleDeathPregnant(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedFemaleDeathPregnant(value);
   }
   function setSelectCauseOfDeath(e) {
@@ -126,6 +120,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
       isPregnent,
     });
   };
+  console.log(formData);
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}

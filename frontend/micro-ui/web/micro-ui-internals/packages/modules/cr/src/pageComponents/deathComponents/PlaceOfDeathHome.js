@@ -112,7 +112,6 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     setCommencementDate(value);
   }
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
 

@@ -26,15 +26,12 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
   function selectReligion(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedReligion(value);
   }
   function selectOccupationMain(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedOccupationMain(value);
   }  
   function setSelectOccupationOthers(e) {

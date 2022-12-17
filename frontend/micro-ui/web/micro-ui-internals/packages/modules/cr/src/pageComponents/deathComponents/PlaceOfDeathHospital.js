@@ -41,7 +41,6 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
     selectSignedOfficerName(value);
   }
   function selectDesignation(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDesignation(value);
   }
 

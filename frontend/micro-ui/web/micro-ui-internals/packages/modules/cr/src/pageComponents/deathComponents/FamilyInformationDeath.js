@@ -46,11 +46,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   //   setSelectedPlaceofActivity(value);
   // }
   function selectTitle(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitle(value);
   }
   function selectTitleB(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitleB(value);
   }
   function setSelectFatherOrHusbandNameEN(e) {
