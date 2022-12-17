@@ -49,13 +49,13 @@ const TLApplicationDetails = () => {
     tenantId: tenantId,
     applicationNumber: id,
   });
-  const { isLoading: PTLoading, isError: isPTError, data: PTData } = Digit.Hooks.pt.usePropertySearch(
-    {
-      tenantId,
-      filters: { propertyIds: application?.[0]?.tradeLicenseDetail?.additionalDetail?.propertyId },
-    },
-    { enabled: application?.[0]?.tradeLicenseDetail?.additionalDetail?.propertyId ? true : false }
-  );
+  // const { isLoading: PTLoading, isError: isPTError, data: PTData } = Digit.Hooks.pt.usePropertySearch(
+  //   {
+  //     tenantId,
+  //     filters: { propertyIds: application?.[0]?.tradeLicenseDetail?.additionalDetail?.propertyId },
+  //   },
+  //   { enabled: application?.[0]?.tradeLicenseDetail?.additionalDetail?.propertyId ? true : false }
+  // );
 
   useEffect(() => {
     setMutationHappened(false);
@@ -128,9 +128,9 @@ if(wfdata)
   };
 
   let propertyAddress = "";
-  if (PTData && PTData?.Properties?.length) {
-    propertyAddress=getAddress(PTData?.Properties[0]?.address,t);
-  }
+  // if (PTData && PTData?.Properties?.length) {
+  //   propertyAddress=getAddress(PTData?.Properties[0]?.address,t);
+  // }
 
   const dowloadOptions =
     paymentsHistory?.Payments?.length > 0
@@ -193,7 +193,7 @@ if(wfdata)
               />
               <CardSectionHeader>{t("TL_OWNERSHIP_DETAILS_HEADER")}</CardSectionHeader>
               {application?.tradeLicenseDetail.owners.map((ele, index) => {
-                return application?.tradeLicenseDetail?.subOwnerShipCategory.includes("INSTITUTIONAL") ? (
+                return application?.tradeLicenseDetail?.licenseeType?.includes("INSTITUTIONAL") ? (
                   <div key={index} style={multiBoxStyle}>
                     <CardSectionHeader style={multiHeaderStyle}>{`${t("TL_PAYMENT_PAID_BY_PLACEHOLDER")} - ` + (index + 1)}</CardSectionHeader>
                     <Row
@@ -203,7 +203,7 @@ if(wfdata)
                     />
                     <Row
                       label={`${t("TL_INSTITUTION_TYPE_LABEL")}`}
-                      text={t(`TL_${application?.tradeLicenseDetail?.subOwnerShipCategory}`)}
+                      text={t(`TL_${application?.tradeLicenseDetail?.licenseeType}`)}
                       textStyle={{ whiteSpace: "pre" }}
                     />
                     <Row label={`${t("TL_MOBILE_NUMBER_LABEL")}`} text={t(ele.mobileNumber)} textStyle={{ whiteSpace: "pre" }} />
@@ -257,10 +257,10 @@ if(wfdata)
                   </div>
                 );
               })}
-              {Array.isArray(application?.tradeLicenseDetail?.accessories) && application?.tradeLicenseDetail?.accessories.length > 0 && (
+              {/* {Array.isArray(application?.tradeLicenseDetail?.accessories) && application?.tradeLicenseDetail?.accessories.length > 0 && (
                 <CardSubHeader style={{ paddingTop: "7px" }}>{t("TL_NEW_TRADE_DETAILS_HEADER_ACC")}</CardSubHeader>
-              )}
-              {Array.isArray(application?.tradeLicenseDetail?.accessories) &&
+              )} */}
+              {/* {Array.isArray(application?.tradeLicenseDetail?.accessories) &&
                 application?.tradeLicenseDetail?.accessories.length > 0 &&
                 application?.tradeLicenseDetail?.accessories?.map((ele, index) => {
                   return (
@@ -279,8 +279,8 @@ if(wfdata)
                       <Row label={t("TL_NEW_TRADE_ACCESSORY_UOMVALUE_LABEL")} text={ele?.uomValue} textStyle={{ whiteSpace: "pre" }} />
                     </div>
                   );
-                })}
-              {PTData?.Properties && PTData?.Properties.length > 0 && (
+                })} */}
+              {/* {PTData?.Properties && PTData?.Properties.length > 0 && (
                 <div>
                   <CardSubHeader>{t("PT_DETAILS")}</CardSubHeader>
                   <Row label={t("TL_PROPERTY_ID")} text={PTData?.Properties?.[0]?.propertyId} textStyle={{ whiteSpace: "pre" }} />
@@ -296,9 +296,9 @@ if(wfdata)
                     }}
                   ></LinkButton>
                 </div>
-              )}
+              )} */}
               <Row label="" />
-             { !(PTData?.Properties && PTData?.Properties.length > 0 )&&<Row
+             {/* { !(PTData?.Properties && PTData?.Properties.length > 0 )&&<Row
                 style={{ border: "none" }}
                 label={t("TL_NEW_TRADE_ADDRESS_LABEL")}
                 text={`${
@@ -309,7 +309,7 @@ if(wfdata)
                   application?.tradeLicenseDetail?.address?.pincode?.trim() ? `,${application?.tradeLicenseDetail?.address?.pincode?.trim()}` : ""
                 }`}
                 textStyle={{ whiteSpace: "pre-wrap", width: "70%" }}
-              />}
+              />} */}
               <CardSubHeader>{t("TL_COMMON_DOCS")}</CardSubHeader>
               <div>
                 {application?.tradeLicenseDetail?.applicationDocuments?.length > 0 ? (
@@ -344,7 +344,7 @@ if(wfdata)
                 </Link>
               ) : null}
               {/* //TODO: change the actions to be fulfilled from workflow nextactions */}
-              {application?.status === "PENDINGPAYMENT" ? (
+              {/* {application?.status === "PENDINGPAYMENT" ? (
                 <Link
                   to={{
                     pathname: `/digit-ui/citizen/payment/collect/${application?.businessService}/${application?.applicationNumber}`,
@@ -353,7 +353,15 @@ if(wfdata)
                 >
                   <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
                 </Link>
-              ) : null}
+              ) : null} */}
+              <Link
+                  to={{
+                    pathname: `/digit-ui/citizen/payment/collect/${application?.businessService}/${application?.applicationNumber}`,
+                    state: { bill, tenantId: tenantId },
+                  }}
+                >
+                  <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
+                </Link>
             </div>
           );
         })}
