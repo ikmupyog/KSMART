@@ -3,6 +3,8 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton } 
 import { useTranslation } from "react-i18next";
 import AdressInside from "./AdressInside";
 import OutSideIndia from "./OutSideIndia";
+import Timeline from "../../components/CRTimeline";
+
 
 const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();

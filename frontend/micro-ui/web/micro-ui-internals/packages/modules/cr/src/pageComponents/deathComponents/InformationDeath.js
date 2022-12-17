@@ -33,8 +33,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
   const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate);
   const [ToDate, setToDate] = useState(formData?.InformationDeath?.ToDate);
-  const [DeathTimeFrom, setDeathTimeFrom] = useState(data?.InformationDeath?.DeathTimeFrom);
-  const [DeathTimeTo, setDeathTimeTo] = useState(null);
+  const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom);
+  const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo);
 
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -81,10 +81,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   // function setselectGender(value) {
   //   selectGender(value);
   // }
-  // function selectReligion(value) {
-  //   naturetypecmbvalue = value.code.substring(0, 4);
-  //   setSelectedReligion(value);
-  // }
+  function selectReligion(value) {
+    setSelectedReligion(value);
+  }
   function setSelectMinute(e) {
     setSelectedMinute(e.target.value);
   }
@@ -138,7 +137,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     setDeathTimeFrom(value);
   }
   function setSelectDeathTimeTo(value) {
-    setDeathTimeFrom(value);
+    setDeathTimeTo(value);
   }
   
 
@@ -161,9 +160,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("TimeOfDeath", TimeOfDeath);
     sessionStorage.setItem("Minute", Minute);
     sessionStorage.setItem("Seconds", Seconds);
+    sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
+    sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
+    
+    
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
-      setPlaceofActivity,
       DeathDate,
       FirstName,
       MiddleName,
@@ -181,6 +183,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       TimeOfDeath,
       Minute,
       Seconds,
+      DeathTimeFrom,
+      DeathTimeTo,
     });
   };
   return (
@@ -265,15 +269,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-3">
             <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
             <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="DeathTimeFrom"
-              value={DeathTimeFrom}
-              onChange={setDeathTimeFrom}
-              disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              // t={t}
+              // isMandatory={false}
+              // type={"text"}
+              // optionKey="i18nKey"
+              // name="DeathTimeFrom"
+              // value={DeathTimeFrom}
+              // onChange={setDeathTimeFrom}
+              // disable={isEdit}
+              // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>          
          
@@ -285,15 +289,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-3">
             <CardLabel>{t("CR_TO_TIME")}</CardLabel>
             <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="DeathTimeTo"
-              value={DeathTimeTo}
-              onChange={setSelectDeathTimeTo}
-              disable={isEdit}
-              {...(validation = { pattern: "DeathTimeFrom^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              // t={t}
+              // isMandatory={false}
+              // type={"text"}
+              // optionKey="i18nKey"
+              // name="DeathTimeTo"
+              // value={DeathTimeTo}
+              // onChange={setSelectDeathTimeTo}
+              // disable={isEdit}
+              // {...(validation = { pattern: "DeathTimeFrom^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
           
