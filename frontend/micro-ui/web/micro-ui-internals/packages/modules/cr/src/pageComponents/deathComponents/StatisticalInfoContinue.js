@@ -22,9 +22,11 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "YES", code: "YESSMOKE" },
     { i18nKey: "NO", code: "NOSMOKE" },
   ];
-  const [isSmoke, setisSmoke] = useState(formData?.TradeDetails?.isSmoke);
-  const [isTabacco, setisTabacco] = useState(formData?.TradeDetails?.isTabacco);
-
+  const [isSmoke, setisSmoke] = useState(formData?.StatisticalInfoContinue?.isSmoke);
+  const [isTabacco, setisTabacco] = useState(formData?.StatisticalInfoContinue?.isTabacco);
+  const [isPanMasala, setisPanMasala] = useState(formData?.StatisticalInfoContinue?.isPanMasala);
+  const [isalcohol, setisalcohol] = useState(formData?.StatisticalInfoContinue?.isalcohol);
+  const [isPregnent, setisPregnent] = useState(formData?.StatisticalInfoContinue?.isPregnent);
   const { t } = useTranslation();
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
@@ -53,6 +55,15 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   }
   function selectisTabacco(value) {
     setisTabacco(value);
+  }
+  function selectisalcohol(value) {
+    setisalcohol(value);
+  }
+  function selectisPregnent(value) {
+    setisPregnent(value);
+  }
+  function selectisPanMasala(value) {
+    setisPanMasala(value);
   }
   function selectPlaceofactivity(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
@@ -97,6 +108,10 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant.code);
     sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     sessionStorage.setItem("isSmoke", isSmoke.i18nKey);
+    sessionStorage.setItem("isPanMasala", isPanMasala.i18nKey);
+    sessionStorage.setItem("isalcohol", isalcohol.i18nKey);
+    sessionStorage.setItem("isPregnent", isPregnent.i18nKey);
+
     onSelect(config.key, {
       setMedicalAttentionDeath,
       setDeathMedicallyCertified,
@@ -106,6 +121,9 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
       setFemaleDeathPregnant,
       setPlaceofActivity,
       isSmoke,
+      isPanMasala,
+      isalcohol,
+      isPregnent,
     });
   };
   return (
@@ -182,14 +200,13 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-6">
             <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
-            <Dropdown
+            <RadioButtons
               t={t}
-              optionKey="code"
-              isMandatory={false}
-              option={cmbPlace}
-              selected={setFemaleDeathPregnant}
-              select={selectFemaleDeathPregnant}
-              disabled={isEdit}
+              optionsKey="i18nKey"
+              isMandatory={config.isMandatory}
+              options={menu}
+              selectedOption={isPregnent}
+              onSelect={selectisPregnent}
             />
           </div>
         </div>
@@ -226,7 +243,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               isMandatory={config.isMandatory}
               options={menu}
               selectedOption={isPanMasala}
-              onSelect={selectisPanmasal}
+              onSelect={selectisPanMasala}
             />
           </div>
           <div className="col-md-6">
@@ -236,8 +253,8 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               optionsKey="i18nKey"
               isMandatory={config.isMandatory}
               options={menu}
-              selectedOption={isSmoke}
-              onSelect={selectisSmoke}
+              selectedOption={isalcohol}
+              onSelect={selectisalcohol}
             />
           </div>
         </div>

@@ -23,7 +23,6 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofDeath(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofDeath(value);
   }
 

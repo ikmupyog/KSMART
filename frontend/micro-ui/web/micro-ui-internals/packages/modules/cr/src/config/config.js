@@ -491,7 +491,7 @@ export const newConfig = [
         component: "InformationDeath",
         texts: {
           // headerCaption: "TL_STRUCTURE_TYPE",
-          header: "TL_STRUCTURE_TYPE_HEADER",
+          header: "Information Deceased",
           // cardText: "TL_STRUCTURE_TYPE_TEXT",
           submitBarLabel: "CS_COMMON_NEXT",
         },
@@ -639,7 +639,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "InformentAddress",
-        nextStep: "statistical-info-continue",
+        nextStep: "statistical-info",
         type: "component",
         hideInEmployee: true,
       },
