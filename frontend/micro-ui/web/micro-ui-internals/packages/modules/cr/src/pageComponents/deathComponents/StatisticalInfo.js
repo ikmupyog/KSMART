@@ -9,9 +9,12 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
+  const [setReligion, setSelectedReligion] = useState(formData?.StatisticalInfo?.setReligion);
+  const [setOccupationMain, setSelectedOccupationMain] = useState(formData?.StatisticalInfo?.setOccupationMain);  
+  const [OccupationOthers, setOccupationOthers] = useState(formData?.StatisticalInfo?.OccupationOthers);
   const [CommencementDate, setCommencementDate] = useState();
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
   let cmbPlace = [];
   place &&
@@ -26,7 +29,17 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
-
+  function selectReligion(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedReligion(value);
+  }
+  function selectOccupationMain(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedOccupationMain(value);
+  }  
+  function setSelectOccupationOthers(e) {
+    setoccupationOthers(e.target.value);
+  }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
@@ -36,63 +49,112 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
 
   const goNext = () => {
     sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    sessionStorage.setItem("Religion", setReligion.code);
+    sessionStorage.setItem("OccupationMain", setOccupationMain.code);  
+    sessionStorage.setItem("OccupationOthers", OccupationOthers);  
+     
+    onSelect(config.key, { 
+    setReligion,
+    setOccupationMain,
+    OccupationOthers });
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
         <header className="tittle">Statistical Information </header>
         
-        <div className="row">
+      <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Town or Village of Residence of The Deceased")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_TOWN_VILLAGE_DECEASED")}`}
                 </span> 
             </h1>
         </div>
         </div> 
         <div className="row">    
         <div className="col-md-12" > 
-           <CardLabel>{t("Type of place of Deceased ")}</CardLabel>             
+           <CardLabel>{t("CR_TOWN_VILLAGE_DECEASED-DETAILS")}</CardLabel>             
+              <button onClick={""}>
+              <NewRadioButton />
+              </button> Inside Local Body 
+              <button onClick={""}>
+              <NewRadioButton />
+              </button> Inside Kerala
+              <button onClick={""}>
+              <NewRadioButton />
+              </button> Inside India
+               <button onClick={""}>                
+              <NewRadioButton />
+              </button>  Outside India
+              
         </div>
-        </div>
-
-        <div className="row">
+      </div>
+      <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Religion")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CS_COMMON_RELIGION")}`}
                 </span> 
             </h1>
         </div>
         </div>
-        <div className="row">
-        <div className="col-md-6" >
-            <CardLabel>{t("Religion")}</CardLabel>
+      <div className="row">
+      <div className="col-md-12" >
+            <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setReligion}
+                select={selectReligion}
                 disabled={isEdit}
             />
         </div>       
-    </div> 
+      </div> 
 
-        <div className="row">
+      <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Occupation of the Deceased")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OCCUPATION_DECEASED")}`}
                 </span> 
             </h1>
         </div>
-        </div>
-
-
-
-
+      </div>
+      <div className="row">
+        <div className="col-md-12" >
+            <CardLabel>{t("CR_OCCUPATION_DECEASED_NO")}</CardLabel>
+            </div>       
+      </div> 
+      <div className="row">
+        <div className="col-md-6" >
+            <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
+            <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={false}
+                option={cmbPlace}
+                selected={setOccupationMain}
+                select={selectOccupationMain}
+                disabled={isEdit}
+            />
+        </div>   
+        <div className="col-md-6" >
+            <CardLabel>{t("CR_OCCUPATION_OTHER_ML")}</CardLabel>
+            <TextInput       
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="OccupationOthers"
+                value={OccupationOthers}
+                onChange={setOccupationOthers}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+        </div>  
+      </div> 
+      
       </FormStep>
     </React.Fragment>
   );

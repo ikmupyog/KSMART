@@ -1,7 +1,6 @@
 import get from "lodash/get";
 import set from "lodash/set";
 
-
 /*   method to check not null  if not returns false*/
 export const checkForNotNull = (value = "") => {
   return value && value != null && value != undefined && value != "" ? true : false;
@@ -86,8 +85,8 @@ export const propertyCardBodyStyle = {
 
 export const getTransaltedLocality = (data) => {
   let localityVariable = data?.tenantId?.replaceAll(".", "_") || stringReplaceAll(data?.tenantId, ".", "_");
-  return (localityVariable.toUpperCase() + "_REVENUE_" + data?.locality?.code);
-}
+  return localityVariable.toUpperCase() + "_REVENUE_" + data?.locality?.code;
+};
 
 export const setAddressDetails = (data) => {
   let { address } = data;
@@ -109,9 +108,8 @@ export const setAddressDetails = (data) => {
   return data;
 };
 
-
 export const getownerarray = (data) => {
-  const ownersData = data?.owners?.owners
+  const ownersData = data?.owners?.owners;
   const res = ownersData?.map((ob) => ({
     mobileNumber: ob.mobilenumber,
     name: ob.name,
@@ -131,7 +129,14 @@ export const gettradeownerarray = (data) => {
   data.tradeLicenseDetail.owners.map((oldowner) => {
     data?.owners?.owners.map((newowner) => {
       if (oldowner.id === newowner.id) {
-        if ((oldowner.name !== newowner.name) || (oldowner.gender !== newowner?.gender?.code) || (oldowner.mobileNumber !== newowner.mobilenumber) || (oldowner.permanentAddress !== data?.owners?.permanentAddress) || (oldowner.relationship !== newowner.relationship?.code) || (oldowner.fatherOrHusbandName !== newowner.fatherOrHusbandName)) {
+        if (
+          oldowner.name !== newowner.name ||
+          oldowner.gender !== newowner?.gender?.code ||
+          oldowner.mobileNumber !== newowner.mobilenumber ||
+          oldowner.permanentAddress !== data?.owners?.permanentAddress ||
+          oldowner.relationship !== newowner.relationship?.code ||
+          oldowner.fatherOrHusbandName !== newowner.fatherOrHusbandName
+        ) {
           if (oldowner.name !== newowner.name) {
             oldowner.name = newowner.name;
           }
@@ -150,20 +155,21 @@ export const gettradeownerarray = (data) => {
           if (oldowner.fatherOrHusbandName !== newowner.fatherOrHusbandName) {
             oldowner.fatherOrHusbandName = newowner.fatherOrHusbandName;
           }
-          let found = tradeownerarray.length > 0 ? tradeownerarray.some(el => el.id === oldowner.id) : false;
+          let found = tradeownerarray.length > 0 ? tradeownerarray.some((el) => el.id === oldowner.id) : false;
           if (!found) tradeownerarray.push(oldowner);
-        }
-        else {
-          let found = tradeownerarray.length > 0 ? tradeownerarray.some(el => el.id === oldowner.id) : false;
+        } else {
+          let found = tradeownerarray.length > 0 ? tradeownerarray.some((el) => el.id === oldowner.id) : false;
           if (!found) tradeownerarray.push(oldowner);
         }
       }
-    })
-  })
-  !isEditRenew && !window.location.href.includes("edit-application") && data.tradeLicenseDetail.owners.map((oldowner) => {
-    let found = tradeownerarray.length > 0 ? tradeownerarray.some(el => el.id === oldowner.id) : false;
-    if (!found) tradeownerarray.push({ ...oldowner, active: false });
-  })
+    });
+  });
+  !isEditRenew &&
+    !window.location.href.includes("edit-application") &&
+    data.tradeLicenseDetail.owners.map((oldowner) => {
+      let found = tradeownerarray.length > 0 ? tradeownerarray.some((el) => el.id === oldowner.id) : false;
+      if (!found) tradeownerarray.push({ ...oldowner, active: false });
+    });
   data?.owners?.owners.map((ob) => {
     if (!ob.id) {
       tradeownerarray.push({
@@ -174,12 +180,12 @@ export const gettradeownerarray = (data) => {
         dob: null,
         gender: ob?.gender?.code || null,
         permanentAddress: data?.owners?.permanentAddress,
-        ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL")) && { uuid: data?.tradeLicenseDetail?.owners?.[0]?.uuid },
+        ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL") && { uuid: data?.tradeLicenseDetail?.owners?.[0]?.uuid }),
       });
     }
-  })
+  });
   return tradeownerarray;
-}
+};
 
 export const gettradeunits = (data) => {
   let tradeunits = [];
@@ -198,28 +204,26 @@ export const gettradeupdateunits = (data) => {
         if (oldunit.tradeType !== newunit.tradesubtype.code) {
           oldunit.tradeType = newunit.tradesubtype.code;
           TLunits.push(oldunit);
-        }
-        else {
-          let found = TLunits.length > 0 ? TLunits.some(el => el.id === oldunit.id) : false;
+        } else {
+          let found = TLunits.length > 0 ? TLunits.some((el) => el.id === oldunit.id) : false;
           if (!found) TLunits.push(oldunit);
         }
-
-      }
-      else {
+      } else {
         if (!isEditRenew) {
-          let found = TLunits.length > 0 ? TLunits.some(el => el.id === oldunit.id) : false;
+          let found = TLunits.length > 0 ? TLunits.some((el) => el.id === oldunit.id) : false;
           if (!found) TLunits.push({ ...oldunit, active: false });
         }
       }
-    })
-  })
+    });
+  });
   data.TradeDetails.units.map((ob) => {
     if (!ob.id) {
       TLunits.push({ tradeType: ob.tradesubtype.code, uom: ob.unit, uomValue: ob.uom });
     }
-  })
+  });
   return TLunits;
 };
+
 
 export const getaccessories = (data) => {
   let tradeaccessories = [];
@@ -419,7 +423,6 @@ export const convertToBirthRegistration = (data = {}) => {
   return formdata;
 };
 
-
 export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   const formdata = {
@@ -454,17 +457,20 @@ export const convertToTrade = (data = {}) => {
               mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
               instituionName: data?.owners?.owners?.[0]?.institutionName,
               name: data?.owners?.owners?.[0]?.name,
-            }
+            },
           }),
           // ...data?.owners.owners?.[0]?.designation && data?.owners.owners?.[0]?.designation !== "" ? { institution: {
           //   designation: data?.owners.owners?.[0]?.designation
           // }} : {},
-          structureType: data?.TradeDetails?.StructureType?.code !== "IMMOVABLE" ? data?.TradeDetails?.VehicleType?.code : data?.TradeDetails?.BuildingType?.code,
-          subOwnerShipCategory: data?.owners.owners?.[0]?.subOwnerShipCategory?.code ? data?.owners.owners?.[0]?.subOwnerShipCategory?.code : data?.ownershipCategory?.code,
+          structureType:
+            data?.TradeDetails?.StructureType?.code !== "IMMOVABLE" ? data?.TradeDetails?.VehicleType?.code : data?.TradeDetails?.BuildingType?.code,
+          subOwnerShipCategory: data?.owners.owners?.[0]?.subOwnerShipCategory?.code
+            ? data?.owners.owners?.[0]?.subOwnerShipCategory?.code
+            : data?.ownershipCategory?.code,
           tradeUnits: gettradeunits(data),
           additionalDetail: {
             propertyId: !data?.cpt ? "" : data?.cpt?.details?.propertyId,
-          }
+          },
         },
         tradeName: data?.TradeDetails?.TradeName,
         wfDocuments: [],
@@ -475,41 +481,305 @@ export const convertToTrade = (data = {}) => {
   };
   return formdata;
 };
+/////////////////////////////////@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+export const convertToDeath = (data = {}) => {
+  // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
+  const formdata = {
+    deathCertificateDtls: [
+      {
+        id: "id",
+        registrationUnit: "reg_unit",
+        tenantId: "kl.cochin",
+        correctDeathDateKnown: 1,
+        dateOfDeath: Date.parse(data?.InformationDeath?.DeathDate),
+        timeOfDeath: data?.InformationDeath?.TimeOfDeath,
+        timeOfDeathUnit: null,
+        dateOfDeath1: null,
+        timeOfDeath1: null,
+        timeOfDeathUnit1: null,
+        deceasedIdentified: 1,
+        deceasedTitle: data?.InformationDeath?.setTitle,
+        deceasedFirstNameEn: data?.InformationDeath?.FirstName,
+        deceasedFirstNameMl: data?.InformationDeath?.MLFirstName,
+        deceasedMiddleNameEn: data?.InformationDeath?.MiddleName,
+        deceasedMiddleNameMl: data?.InformationDeath?.MlMiddleName,
+        deceasedLastNameEn: data?.InformationDeath?.LastName,
+        deceasedLastNameMl: data?.InformationDeath?.MlLastName,
+        deceasedAadharSubmitted: 1,
+        deceasedAadharNumber: data?.InformationDeath?.AdharNo,
+        deceasedGender: data?.InformationDeath?.setGender,
+        age: data?.InformationDeath?.Ageofbirth,
+        ageUnit: null,
+        dateOfBirth: Date.parse(data?.InformationDeath?.DateOfBirth),
+        deathPlace: data?.PlaceOfDeath?.setPlaceofDeath,
+        deathPlaceType: "death_place_institution_type_master",
+        deathPlaceInstId: data?.PlaceOfDeathInstitution?.setInstitutionId,
+        deathPlaceOfficeName: data?.PlaceOfDeathInstitution?.SiginedOfficer,
+        deathPlaceOtherMl: data?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl,
+        deathPlaceOtherEn: data?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsEn,
+        informantTitle: "informant_title",
+        informantNameEn: "informant_name_en",
+        informantnameMl: "informant_name_ml",
+        informantAadharSubmitted: null,
+        informantAadharNo: "1111111111111",
+        informantMobileNo: "9999999999",
+        generalRemarks: "remarks",
+        applicationStatus: "appl_status",
+        submittedOn: null,
+        placeBurial: "place_bural",
+        placeBurialInstitutionType: "burial_inst_type",
+        placeBurialInstitutionName: "burial_inst_name",
+        registrationNo: "reg_no",
+        ipNo: "ipno",
+        opNo: "opno",
+        maleDependentType: "male_depentant_type",
+        maleDependentTitle: "male_depentant_title",
+        maleDependentNameEn: "male_depent_name_en",
+        maleDependentNameMl: "male_depent_name_ml",
+        maleDependentAadharNo: "11111111111",
+        maleDependentMobileNo: "999999999",
+        maleDependentMailId: "test@test.com",
+        femaleDependentType: "female_depent_type",
+        femaleDependentTitle: "female_depent_title",
+        femaleDependentNameEn: "female_depent_name_en",
+        femaleDependentNameMl: "female_depent_name_ml",
+        femaleDependentAadharNo: "111111111111",
+        femaleDependentMobileNo: "999999999",
+        femaleDependentMailId: "test@test.com",
+        applicationNumber: "applno",
+        fileNumber: "fileno",
+        ackNo: "",
+        deseasedPassportNo: "passportno",
+        deathSignedOfficerDesignation: data?.PlaceOfDeathInstitution?.SiginedOfficerDesignation,
+        deathSignedOfficerMob: "death_place_officer_mobile",
+        deathSignedOfficerAadhaar: "death_place_officer_aadhaar",
+        deathPlaceWardId: "death_place_ward_id",
+        isvehicle: "death_is_in_vehicle",
+        "vehicleHospitalMl ": "vehicle_hospital_ml",
+        vehicleHospitalEn: "vehicle_hospital_en",
+        "vehicleFromplaceMl ": "vehicle_fromplace_ml",
+        vehicleFromplaceEn: "vehicle_fromplace_en",
+        "vehicleToPlaceMl  ": "vehicle_toplace_ml",
+        vehicleToPlaceEn: "vehicle_fromplace_en",
+        vehicleNumber: "vehicle_number",
+        vehicleDriverLicenceNo: "vehicle_driver_licenceno",
+        informantAge: "informant_age",
+
+        statisticalInfo: {
+          id: "id",
+          deathDtlId: "death_dtlid",
+          tenantId: "tenant_id",
+          residenceLocalBody: "localbody",
+          residencePlaceType: "resid_plce",
+          residenceDistrict: "resi_district",
+          residenceState: "resi_state",
+          religion: data?.StatisticalInfo?.setReligion,
+          religionOther: "religion_oth",
+          occupation: data?.StatisticalInfo?.setOccupationMain,
+          occupationOther: data?.StatisticalInfo?.OccupationOthers,
+          medicalAttentionType: "mediattention_type",
+          deathMedicallyCertified: "medi_certified",
+          deathCauseMain: "death_causemain",
+          deathCauseSub: "deathcase_sub",
+          deathCauseOther: "deathcause_oth",
+          deathDuringDelivery: 1,
+          smokingNumYears: 111,
+          tobaccoNumYears: 111,
+          arecanutNumYears: 111,
+          alcoholNumYears: 111,
+        },
+        auditDetails: {
+          createdBy: null,
+          lastModifiedBy: null,
+          createdTime: null,
+          lastModifiedTime: null,
+        },
+        addressInfo: {
+          presentAddress: {
+            id: "id",
+            deathDtlId: "death_dtl_id",
+            tenantId: "tenantid",
+            addrTypeId: "P",
+            houseNo: "houseno",
+            residenceAsscno: "res_assc_no",
+            streetNameEn: "street_en",
+            streetNameMl: "street_ml",
+            localityEn: "locality_en",
+            localityMl: "locality_ml",
+            cityEn: "cityen",
+            cityMl: "cityml",
+            wardId: "ward_id",
+            talukId: "taluk_id",
+            villageId: "village_id",
+            postofficeId: "poid",
+            pincode: 695551,
+            districtId: "district_id",
+            stateId: "state_id",
+            countryId: "country_id",
+            talukNameEn: "taluk_en",
+            talukNameMl: "taluk_ml",
+            villageNameEn: "village_en",
+            villageNameMl: "village_en",
+            postofficeNameEn: "po_name_en",
+            postofficeNameMl: "po_name_en",
+          },
+          permanentAddress: {
+            id: "id",
+            deathDtlId: "death_dtl_id",
+            tenantId: "tenantid",
+            addrTypeId: "R",
+            houseNo: "houseno",
+            residenceAsscno: "res_assc_no",
+            streetNameEn: "street_en",
+            streetNameMl: "street_ml",
+            localityEn: "locality_en",
+            localityMl: "locality_ml",
+            cityEn: "cityen",
+            cityMl: "cityml",
+            wardId: "ward_id",
+            talukId: "taluk_id",
+            villageId: "village_id",
+            postofficeId: "poid",
+            pincode: 695551,
+            districtId: "district_id",
+            stateId: "state_id",
+            countryId: "country_id",
+            talukNameEn: "taluk_en",
+            talukNameMl: "taluk_ml",
+            villageNameEn: "village_en",
+            villageNameMl: "village_en",
+            postofficeNameEn: "po_name_en",
+            postofficeNameMl: "po_name_en",
+          },
+          informantAddress: {
+            id: "id",
+            deathDtlId: "death_dtl_id",
+            tenantId: "tenantid",
+            addrTypeId: "I",
+            houseNo: data?.InformentAddress?.HouseNo,
+            residenceAsscno: "res_assc_no",
+            streetNameEn: "street_en",
+            streetNameMl: "street_ml",
+            localityEn: "locality_en",
+            localityMl: "locality_ml",
+            cityEn: data?.InformentAddress?.CityEn,
+            cityMl: data?.InformentAddress?.CityMl,
+            wardId: null,
+            talukId: data?.InformentAddress?.setTaluk,
+            villageId: data?.InformentAddress?.setVillage,
+            postofficeId: data?.InformentAddress?.setPostOffice,
+            pincode: data?.InformentAddress?.PinCode,
+            districtId: data?.InformentAddress?.setDistrict,
+            stateId: "state_id",
+            countryId: "country_id",
+            talukNameEn: "taluk_en",
+            talukNameMl: "taluk_ml",
+            villageNameEn: "village_en",
+            villageNameMl: "village_en",
+            postofficeNameEn: data?.InformentAddress?.setPostOffice,
+            postofficeNameMl: "po_name_en",
+          },
+          deathplaceAddress: {
+            id: "id",
+            deathDtlId: "death_dtl_id",
+            tenantId: "tenantid",
+            addrTypeId: "D",
+            houseNo: data?.PlaceOfDeathHome?.HouseNo,
+            residenceAsscno: "res_assc_no",
+            streetNameEn: "street_en",
+            streetNameMl: "street_ml",
+            localityEn: data?.PlaceOfDeathHome?.Locality,
+            localityMl: data?.PlaceOfDeathHome?.LocalityML,
+            cityEn: data?.PlaceOfDeathHome?.CityEn,
+            cityMl: data?.PlaceOfDeathHome?.CityMl,
+            wardId: "ward_id",
+            talukId: "taluk_id",
+            villageId: "village_id",
+            postofficeId: "poid",
+            pincode: 695551,
+            districtId: data?.PlaceOfDeathHome?.setDistrict,
+            stateId: "state_id",
+            countryId: "country_id",
+            talukNameEn: data?.PlaceOfDeathHome?.setTaluk,
+            talukNameMl: "taluk_ml",
+            villageNameEn: data?.PlaceOfDeathHome?.setVillage,
+            villageNameMl: "village_en",
+            postofficeNameEn: data?.PlaceOfDeathHome?.setPostOffice,
+            postofficeNameMl: "po_name_en",
+          },
+          burialAddress: {
+            id: "id",
+            deathDtlId: "death_dtl_id",
+            tenantId: "tenantid",
+            addrTypeId: "B",
+            houseNo: "houseno",
+            residenceAsscno: "res_assc_no",
+            streetNameEn: "street_en",
+            streetNameMl: "street_ml",
+            localityEn: "locality_en",
+            localityMl: "locality_ml",
+            cityEn: "cityen",
+            cityMl: "cityml",
+            wardId: "ward_id",
+            talukId: "taluk_id",
+            villageId: "village_id",
+            postofficeId: "poid",
+            pincode: 695551,
+            districtId: "district_id",
+            stateId: "state_id",
+            countryId: "country_id",
+            talukNameEn: "taluk_en",
+            talukNameMl: "taluk_ml",
+            villageNameEn: "village_en",
+            villageNameMl: "village_en",
+            postofficeNameEn: "po_name_en",
+            postofficeNameMl: "po_name_en",
+          },
+        },
+      },
+    ],
+  };
+  return formdata;
+};
 
 export const getwfdocuments = (data) => {
   let wfdoc = [];
   let doc = data ? data.owners.documents : [];
-  doc["OwnerPhotoProof"] && wfdoc.push({
-    fileName: doc["OwnerPhotoProof"].name,
-    fileStoreId: doc["OwnerPhotoProof"].fileStoreId,
-    documentType: "OWNERPHOTO",
-    tenantId: data?.tenantId,
-  });
-  doc["ProofOfIdentity"] && wfdoc.push({
-    fileName: doc["ProofOfIdentity"].name,
-    fileStoreId: doc["ProofOfIdentity"].fileStoreId,
-    documentType: "OWNERIDPROOF",
-    tenantId: data?.tenantId,
-  });
-  doc["ProofOfOwnership"] && wfdoc.push({
-    fileName: doc["ProofOfOwnership"].name,
-    fileStoreId: doc["ProofOfOwnership"].fileStoreId,
-    documentType: "OWNERSHIPPROOF",
-    tenantId: data?.tenantId,
-  });
+  doc["OwnerPhotoProof"] &&
+    wfdoc.push({
+      fileName: doc["OwnerPhotoProof"].name,
+      fileStoreId: doc["OwnerPhotoProof"].fileStoreId,
+      documentType: "OWNERPHOTO",
+      tenantId: data?.tenantId,
+    });
+  doc["ProofOfIdentity"] &&
+    wfdoc.push({
+      fileName: doc["ProofOfIdentity"].name,
+      fileStoreId: doc["ProofOfIdentity"].fileStoreId,
+      documentType: "OWNERIDPROOF",
+      tenantId: data?.tenantId,
+    });
+  doc["ProofOfOwnership"] &&
+    wfdoc.push({
+      fileName: doc["ProofOfOwnership"].name,
+      fileStoreId: doc["ProofOfOwnership"].fileStoreId,
+      documentType: "OWNERSHIPPROOF",
+      tenantId: data?.tenantId,
+    });
   return wfdoc;
-}
+};
 
 export const getEditTradeDocumentUpdate = (data) => {
   let updateddocuments = [];
   let doc = data ? data.owners.documents : [];
   data?.tradeLicenseDetail?.applicationDocuments?.map((olddoc) => {
-    if (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId === data.owners.documents["OwnerPhotoProof"].fileStoreId ||
-      olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId == data.owners.documents["ProofOfOwnership"].fileStoreId ||
-      olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId === data.owners.documents["ProofOfIdentity"].fileStoreId) {
+    if (
+      (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId === data.owners.documents["OwnerPhotoProof"].fileStoreId) ||
+      (olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId == data.owners.documents["ProofOfOwnership"].fileStoreId) ||
+      (olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId === data.owners.documents["ProofOfIdentity"].fileStoreId)
+    ) {
       updateddocuments.push(olddoc);
-    }
-    else {
+    } else {
       if (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId !== data.owners.documents["OwnerPhotoProof"].fileStoreId) {
         updateddocuments.push({
           fileName: doc["OwnerPhotoProof"].name,
@@ -540,18 +810,19 @@ export const getEditTradeDocumentUpdate = (data) => {
     }
   });
   return updateddocuments;
-}
+};
 
 export const getEditRenewTradeDocumentUpdate = (data, datafromflow) => {
   let updateddocuments = [];
   let doc = datafromflow ? datafromflow.owners.documents : [];
   data.tradeLicenseDetail.applicationDocuments.map((olddoc) => {
-    if (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId === datafromflow.owners.documents["OwnerPhotoProof"].fileStoreId ||
-      olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId == datafromflow.owners.documents["ProofOfOwnership"].fileStoreId ||
-      olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId === datafromflow.owners.documents["ProofOfIdentity"].fileStoreId) {
+    if (
+      (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId === datafromflow.owners.documents["OwnerPhotoProof"].fileStoreId) ||
+      (olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId == datafromflow.owners.documents["ProofOfOwnership"].fileStoreId) ||
+      (olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId === datafromflow.owners.documents["ProofOfIdentity"].fileStoreId)
+    ) {
       updateddocuments.push(olddoc);
-    }
-    else {
+    } else {
       if (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId !== datafromflow.owners.documents["OwnerPhotoProof"].fileStoreId) {
         updateddocuments.push({
           fileName: doc["OwnerPhotoProof"].name,
@@ -582,67 +853,76 @@ export const getEditRenewTradeDocumentUpdate = (data, datafromflow) => {
     }
   });
   return updateddocuments;
-}
+};
 
 export const convertToUpdateTrade = (data = {}, datafromflow, tenantId) => {
   const isEdit = window.location.href.includes("renew-trade");
   let formdata1 = {
-    Licenses: [
-    ]
-  }
+    Licenses: [],
+  };
   formdata1.Licenses[0] = {
     ...data.Licenses[0],
-  }
+  };
   formdata1.Licenses[0].action = "APPLY";
   formdata1.Licenses[0].wfDocuments = formdata1.Licenses[0].wfDocuments ? formdata1.Licenses[0].wfDocuments : getwfdocuments(datafromflow);
-  formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments = !isEdit ? (formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments ? formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments : getwfdocuments(datafromflow)) : getEditRenewTradeDocumentUpdate(data?.Licenses[0], datafromflow);
+  formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments = !isEdit
+    ? formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments
+      ? formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments
+      : getwfdocuments(datafromflow)
+    : getEditRenewTradeDocumentUpdate(data?.Licenses[0], datafromflow);
   return formdata1;
-}
+};
 
 export const getvalidfromdate = (date, fy) => {
   let temp = parseInt(fy[0].id);
   let object;
-  fy && fy.map((ob) => {
-    if (parseInt(ob.id) > temp) {
-      object = ob;
-      temp = parseInt(ob.id);
-    }
-  })
+  fy &&
+    fy.map((ob) => {
+      if (parseInt(ob.id) > temp) {
+        object = ob;
+        temp = parseInt(ob.id);
+      }
+    });
   return object;
-}
+};
 
 export const getvalidTodate = (date, fy) => {
-
   let temp = parseInt(fy[0].id);
   let object;
-  fy && fy.map((ob) => {
-    if (parseInt(ob.id) > temp) {
-      object = ob;
-      temp = parseInt(ob.id);
-    }
-  })
+  fy &&
+    fy.map((ob) => {
+      if (parseInt(ob.id) > temp) {
+        object = ob;
+        temp = parseInt(ob.id);
+      }
+    });
   return object;
-}
+};
 
 export const stringToBoolean = (value) => {
-
   if (value) {
     switch (value.toLowerCase().trim()) {
-      case "true": case "yes": case "1": return true;
-      case "false": case "no": case "0": case null: return false;
-      default: return Boolean(value);
+      case "true":
+      case "yes":
+      case "1":
+        return true;
+      case "false":
+      case "no":
+      case "0":
+      case null:
+        return false;
+      default:
+        return Boolean(value);
     }
-  }
-  else {
+  } else {
     return Boolean(value);
   }
-}
-
+};
 
 //FinancialYear
 export const convertToEditTrade = (data, fy = []) => {
-  const currrentFYending = fy?.filter(item => item?.code === data?.financialYear)?.[0]?.endingDate;
-  const nextFinancialYearForRenewal = fy?.filter(item => item?.startingDate === currrentFYending)?.[0]?.code;
+  const currrentFYending = fy?.filter((item) => item?.code === data?.financialYear)?.[0]?.endingDate;
+  const nextFinancialYearForRenewal = fy?.filter((item) => item?.startingDate === currrentFYending)?.[0]?.code;
   let isDirectrenewal = stringToBoolean(sessionStorage.getItem("isDirectRenewal"));
   let formdata = {
     Licenses: [
@@ -670,8 +950,14 @@ export const convertToEditTrade = (data, fy = []) => {
           applicationDocuments: data.tradeLicenseDetail.applicationDocuments,
           accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
           owners: isDirectrenewal ? data.tradeLicenseDetail.owners : gettradeownerarray(data),
-          structureType: isDirectrenewal ? data.tradeLicenseDetail.structureType : (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
-          subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
+          structureType: isDirectrenewal
+            ? data.tradeLicenseDetail.structureType
+            : data?.TradeDetails?.VehicleType
+            ? data?.TradeDetails?.VehicleType.code
+            : data?.TradeDetails?.BuildingType.code,
+          subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
+            ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
+            : data?.ownershipCategory?.code,
           tradeUnits: gettradeupdateunits(data),
           additionalDetail: data.tradeLicenseDetail.additionalDetail,
           auditDetails: data.tradeLicenseDetail.auditDetails,
@@ -684,25 +970,20 @@ export const convertToEditTrade = (data, fy = []) => {
               mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
               instituionName: data?.owners?.owners?.[0]?.institutionName,
               name: data?.owners?.owners?.[0]?.name,
-            }
+            },
           }),
         },
         calculation: null,
         auditDetails: data?.auditDetails,
         accountId: data?.accountId,
-      }
-    ]
-  }
+      },
+    ],
+  };
   return formdata;
-}
-
-
-
-
+};
 
 //FinancialYear
 export const convertToResubmitTrade = (data) => {
-
   let formdata = {
     Licenses: [
       {
@@ -729,29 +1010,33 @@ export const convertToResubmitTrade = (data) => {
           applicationDocuments: getEditTradeDocumentUpdate(data),
           accessories: gettradeupdateaccessories(data),
           owners: gettradeownerarray(data),
-          structureType: (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
-          subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
+          structureType: data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code,
+          subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
+            ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
+            : data?.ownershipCategory?.code,
           tradeUnits: gettradeupdateunits(data),
           additionalDetail: data.tradeLicenseDetail.additionalDetail,
           auditDetails: data.tradeLicenseDetail.auditDetails,
           channel: data.tradeLicenseDetail.channel,
           id: data.tradeLicenseDetail.id,
-          institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? {
-            designation: data?.owners?.owners?.[0]?.designation,
-            ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-            mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-            instituionName: data?.owners?.owners?.[0]?.institutionName,
-            name: data?.owners?.owners?.[0]?.name,
-          } : null,
+          institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
+            ? {
+                designation: data?.owners?.owners?.[0]?.designation,
+                ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+                mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+                instituionName: data?.owners?.owners?.[0]?.institutionName,
+                name: data?.owners?.owners?.[0]?.name,
+              }
+            : null,
         },
         calculation: null,
         auditDetails: data?.auditDetails,
         accountId: data?.accountId,
-      }
-    ]
-  }
+      },
+    ],
+  };
   return formdata;
-}
+};
 
 /*   method to check value  if not returns NA*/
 
@@ -775,7 +1060,8 @@ export const checkForNA = (value = "") => {
 };
 
 export const getCommencementDataFormat = (date) => {
-  let newDate = new Date(date).getFullYear().toString() + "-" + (new Date(date).getMonth() + 1).toString() + "-" + new Date(date).getDate().toString()
+  let newDate =
+    new Date(date).getFullYear().toString() + "-" + (new Date(date).getMonth() + 1).toString() + "-" + new Date(date).getDate().toString();
   return newDate;
 };
 
@@ -844,7 +1130,7 @@ export const convertEpochToDate = (dateEpoch) => {
     let year = dateFromApi.getFullYear();
     month = (month > 9 ? "" : "0") + month;
     day = (day > 9 ? "" : "0") + day;
-    return `${year}-${month}-${day}`;//`${day}/${month}/${year}`;
+    return `${year}-${month}-${day}`; //`${day}/${month}/${year}`;
   } else {
     return null;
   }
@@ -892,22 +1178,13 @@ export const getUniqueItemsFromArray = (data, identifier) => {
 export const commonTransform = (object, path) => {
   let data = get(object, path);
   let transformedData = {};
-  data.map(a => {
+  data.map((a) => {
     const splitList = a.code.split(".");
     let ipath = "";
     for (let i = 0; i < splitList.length; i += 1) {
       if (i != splitList.length - 1) {
-        if (
-          !(
-            splitList[i] in
-            (ipath === "" ? transformedData : get(transformedData, ipath))
-          )
-        ) {
-          set(
-            transformedData,
-            ipath === "" ? splitList[i] : ipath + "." + splitList[i],
-            i < splitList.length - 2 ? {} : []
-          );
+        if (!(splitList[i] in (ipath === "" ? transformedData : get(transformedData, ipath)))) {
+          set(transformedData, ipath === "" ? splitList[i] : ipath + "." + splitList[i], i < splitList.length - 2 ? {} : []);
         }
       } else {
         get(transformedData, ipath).push(a);
@@ -938,14 +1215,14 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
 export const getQueryStringParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split("&").reduce((params, param) => {
-      let [key, value] = param.split("=");
-      params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
-      return params;
-    }, {})
+        let [key, value] = param.split("=");
+        params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
+        return params;
+      }, {})
     : {};
 };
 
-export const getPattern = type => {
+export const getPattern = (type) => {
   switch (type) {
     case "Name":
       return /^[^{0-9}^\$\"<>?\\\\~!@#$%^()+={}\[\]*,/_:;“”‘’]{1,50}$/i;
@@ -965,7 +1242,7 @@ export const getPattern = type => {
     case "PAN":
       return /^[A-Za-z]{5}\d{4}[A-Za-z]{1}$/i;
     case "TradeName":
-      return /^[-@.\/#&+\w\s]*$/
+      return /^[-@.\/#&+\w\s]*$/;
     //return /^[^\$\"'<>?\\\\~`!@#$%^()+={}\[\]*,.:;“”‘’]{1,100}$/i;
     case "Date":
       return /^[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/i;
@@ -1016,9 +1293,11 @@ export const getPattern = type => {
 export const checkForEmployee = (role) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const userInfo = Digit.UserService.getUser();
-  const rolearray = userInfo?.info?.roles.filter(item => { if (item.code == role && item.tenantId === tenantId) return true; });
+  const rolearray = userInfo?.info?.roles.filter((item) => {
+    if (item.code == role && item.tenantId === tenantId) return true;
+  });
   return rolearray?.length;
-}
+};
 
 export const convertEpochToDateDMY = (dateEpoch) => {
   if (dateEpoch == null || dateEpoch == undefined || dateEpoch == "") {

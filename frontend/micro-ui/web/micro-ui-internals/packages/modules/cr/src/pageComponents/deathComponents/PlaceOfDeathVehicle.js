@@ -11,6 +11,21 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
+  const [DriverName, setDriverName] = useState(formData?.PlaceOfDeathVehicle?.DriverName);
+  const [DriverNameMl, setDriverNameMl] = useState(formData?.PlaceOfDeathVehicle?.DriverNameMl);
+  const [DriverMobileNo, setDriverMobileNo] = useState(formData?.PlaceOfDeathVehicle?.DriverMobileNo);
+  const [DriverAge, setDriverAge] = useState(formData?.PlaceOfDeathVehicle?.DriverAge);
+  const [DriverAadhar, setDriverAadhar] = useState(formData?.PlaceOfDeathVehicle?.DriverAadhar);
+  const [VehicleType, setVehicleType] = useState(formData?.PlaceOfDeathVehicle?.VehicleType);
+  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.PlaceOfDeathVehicle?.VehicleRegistrationNo);
+  const [VehicleFrom, setVehicleFrom] = useState(formData?.PlaceOfDeathVehicle?.VehicleFrom);
+  const [VehicleTo, setVehicleTo] = useState(formData?.PlaceOfDeathVehicle?.VehicleTo);
+  const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsEn);  
+  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsMl); 
+  const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.TradeDetails?.setDeathVehicleWard);
+  const [setAdmittedHospital, setSelectedAdmittedHospital] = useState(formData?.TradeDetails?.setAdmittedHospital);
+  
+    
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -30,53 +45,127 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
+  function setSelectDriverName(e) {
+    setDriverName(e.target.value);
+  }
+  function setSelectDriverNameMl(e) {
+    setDriverNameMl(e.target.value);
+  }
+  function setSelectDriverMobileNo(e) {
+    setDriverMobileNo(e.target.value);
+  }
+  function setSelectDriverAge(e) {
+    setDriverAge(e.target.value);
+  }
+  function setSelectDriverAadhar(e) {
+    setDriverAadhar(e.target.value);
+  }
+  function setSelectVehicleType(e) {
+    setVehicleType(e.target.value);
+  }
+  function setSelectVehicleRegistrationNo(e) {
+    setVehicleRegistrationNo(e.target.value);
+  }
+  function setSelectVehicleFrom(e) {
+    setVehicleFrom(e.target.value);
+  }
+  function setSelectVehicleTo(e) {
+    setVehicleTo(e.target.value);
+  }
+  function setSelectVehicleOtherDetailsEn(e) {
+    setVehicleOtherDetailsEn(e.target.value);
+  }
+  function setSelectVehicleOtherDetailsMl(e) {
+    setVehicleOtherDetailsMl(e.target.value);
+  }
+  function selectDeathVehicleWard(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedDeathVehicleWard(value);
+  }
+  function selectAdmittedHospital(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedAdmittedHospital(value);
+  }
+  
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
 
   const goNext = () => {
+    
+    sessionStorage.setItem("DriverName", DriverName);
+    sessionStorage.setItem("DriverNameMl", DriverNameMl);
+    sessionStorage.setItem("DriverMobileNo", DriverMobileNo);
+    sessionStorage.setItem("DriverAge", DriverAge);
+    sessionStorage.setItem("DriverAadhar", DriverAadhar);
+    sessionStorage.setItem("VehicleType", VehicleType);
+    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);
+    sessionStorage.setItem("VehicleFrom", VehicleFrom);  
+    sessionStorage.setItem("VehicleTo", VehicleTo);
+    sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard.code);
+    sessionStorage.setItem("setAdmittedHospital", setAdmittedHospital.code);
+    sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn); 
+    sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsEn); 
+    
+    
+    
+    
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    onSelect(config.key, { setPlaceofActivity });
+    onSelect(config.key, {
+      setPlaceofActivity,
+      DriverName,
+      DriverNameMl,
+      DriverMobileNo,
+      DriverAadhar,
+      VehicleType,
+      VehicleRegistrationNo,
+      VehicleFrom,
+      VehicleTo,
+      setDeathVehicleWard,
+      setAdmittedHospital,
+      VehicleOtherDetailsEn,
+      VehicleOtherDetailsMl,
+     });
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <header className="tittle">Place Of Death Vechicle </header>
         <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death Vechicle")}`}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH_VECHICLE")}`}
                 </span> 
             </h1>
         </div>
     </div>
     <div className="row">
         <div className="col-md-6" >
-            <CardLabel>{t("Driver Name(in English) ")}</CardLabel>
+            <CardLabel>{t("CR_DRIVER_NAME_EN")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverName"
+                value={DriverName}
+                onChange={setSelectDriverName}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
            
         </div>
         <div className="col-md-6" >
-            <CardLabel>{t("Driver Name(in Malayalam) ")}</CardLabel>
+            <CardLabel>{t("CR_DRIVER_NAME_ML")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverNameMl"
+                value={DriverNameMl}
+                onChange={setSelectDriverNameMl}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -85,43 +174,43 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
         <div className="col-md-4" >
-        <CardLabel>{t("Moble No")}</CardLabel>
+        <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverMobileNo"
+                value={DriverMobileNo}
+                onChange={setSelectDriverMobileNo}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
         </div>
         <div className="col-md-4" >
-        <CardLabel>{t("Age")}</CardLabel>
+        <CardLabel>{t("CR_AGE")}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverAge"
+                value={DriverAge}
+                onChange={setSelectDriverAge}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
         </div>
         <div className="col-md-4 " >
-            <CardLabel>{`${t("Aadhar No")}`}</CardLabel>
+            <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="DriverAadhar"
+                value={DriverAadhar}
+                onChange={setSelectDriverAadhar}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -130,30 +219,30 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
          
     <div className="row">    
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Vehicle Type")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="VehicleType"
+                value={VehicleType}
+                onChange={setSelectVehicleType}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
         </div>
          
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Registration No")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_REGISTRATION_NO")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="VehicleRegistrationNo"
+                value={VehicleRegistrationNo}
+                onChange={setSelectVehicleRegistrationNo}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -162,29 +251,29 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
 
     <div className="row">    
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Vehicle From")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_FROM")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="VehicleFrom"
+                value={VehicleFrom}
+                onChange={setSelectVehicleFrom}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
         </div>
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Vehicle To")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_TO")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
+                name="VehicleTo"
+                value={VehicleTo}
+                onChange={setSelectVehicleTo}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
@@ -193,57 +282,55 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   
     <div className="row">    
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Ward")}`}</CardLabel>
+        <CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
         <Dropdown
                 t={t}
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofActivity}
-                select={selectPlaceofactivity}
+                selected={setDeathVehicleWard}
+                select={selectDeathVehicleWard}
                 disabled={isEdit}
             />
         </div>
         <div className="col-md-6" > 
-        <CardLabel>{`${t("Admitted Hospital")}`}</CardLabel>
-            <TextInput       
+        <CardLabel>{`${t("CR_ADMITTED_HOSPITAL")}`}</CardLabel>
+        <Dropdown
                 t={t}
+                optionKey="code"
                 isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="TradeName"
-                value={TradeName}
-                onChange={setSelectTradeName}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                option={cmbPlace}
+                selected={setAdmittedHospital}
+                select={selectAdmittedHospital}
+                disabled={isEdit}
             />
         </div>
     </div>
     <div className="row">
          <div className="col-md-6" >
-          <CardLabel>{`${t("Other Details (in English)")}`}</CardLabel>
+          <CardLabel>{`${t("CR_OTHER_DETAILLS_EN")}`}</CardLabel>
             <TextArea       
             t={t}
             isMandatory={false}
             type={"text"}
             optionKey="i18nKey"
-            name="TradeName"
-            value={TradeName}
-            onChange={setSelectTradeName}
+            name="VehicleOtherDetailsEn"
+            value={VehicleOtherDetailsEn}
+            onChange={setSelectVehicleOtherDetailsEn}
             disable={isEdit}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
         </div>
          <div className="col-md-6" >
-         <CardLabel>{`${t("Other Details (in Malayalam)")}`}</CardLabel>
+         <CardLabel>{`${t("CR_OTHER_DETAILLS_ML")}`}</CardLabel>
             <TextArea       
             t={t}
             isMandatory={false}
             type={"text"}
             optionKey="i18nKey"
-            name="TradeName"
-            value={TradeName}
-            onChange={setSelectTradeName}
+            name="VehicleOtherDetailsMl"
+            value={VehicleOtherDetailsMl}
+            onChange={setSelectVehicleOtherDetailsMl}
             disable={isEdit}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />

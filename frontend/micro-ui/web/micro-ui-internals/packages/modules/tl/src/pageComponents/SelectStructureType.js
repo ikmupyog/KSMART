@@ -207,7 +207,7 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!StructureType}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!StructureType  }>
         <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" >
             {/* <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_PLACE_HEADER_MSG")}*`}</span> */}

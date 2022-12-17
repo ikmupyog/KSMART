@@ -17,7 +17,8 @@ const FileFlow = ({ path }) => {
       title: "Trade License",
       subTitle: "Inbox",
       img: <FileProtected />,
-      link: `${path}/trade-lisense`,
+      link: `${path}/sub-type`,
+      // link: `${path}/trade-lisense`,
     },
     {
       title: "Trade License-1",

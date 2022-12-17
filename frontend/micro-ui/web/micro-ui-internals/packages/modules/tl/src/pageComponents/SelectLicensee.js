@@ -191,7 +191,7 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
     {window.location.href.includes("/citizen") ? <Timeline /> : null}
     {window.location.href.includes("/employee") ? <Timeline /> : null}
 
-    <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled={!LicensingUnitType}>        
+    <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled={!LicensingUnitType || !LicenseUnitName  || !LicenseUnitNameMal || !Zonal || !WardNo|| !StreetName || !LandMark }>        
           <LabelFieldPair style={{ display: "flex" }}><CardLabel style={{fontSize:"17px",width:"none !important"}}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
            <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} disabled={isEdit} style={{ marginTop:"-8px",paddingLeft:"5px" ,height:"25px"}} /> 
           </LabelFieldPair>
@@ -199,7 +199,7 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
       <div>
         <div className="row">    
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{background:"#fff",padding:"0 10px" }}>{`${t("TL_LICENSEE_UNIT_MSG")}`}</span></h1>
-          </div>        
+          </div>
         </div>
         <div className="row">
           <div className="col-md-6" ><CardLabel>{`${t("TL_LICENSING_UNIT_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
