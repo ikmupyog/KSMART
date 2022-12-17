@@ -23,6 +23,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
   const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentLBName);
   const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
+  const [PresentWard, setPresentWard] = useState(formData?.AddressDetails?.PresentWard);
   const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
   const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
   const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress);
@@ -36,6 +37,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
   const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
   const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
+  const [PermanentWard, setPermanentWard] = useState(formData?.AddressDetails?.PermanentTaluk);
   const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);
   const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
   let cmbPlace = [];
@@ -74,6 +76,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLBName(PresentLBName);
       setPermanentDistrict(PresentDistrict);
       setPermanentTaluk(PresentTaluk);
+      setPermanentWard(PresentWard);
       setPermanentPostOffice(PresentPostOffice);
       setPermanentPincode(PresentPincode);
     }
@@ -126,6 +129,12 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentTaluk(PresentTaluk);
     }
   }
+  function setSelectPresentWard(value) {
+    setPresentWard(value);
+    if (isPrsentAddress) {
+      setPermanentWard(PresentWard);
+    }
+  }
   function setSelectPresentDistrict(value) {
     setPresentDistrict(value);
     if (isPrsentAddress) {
@@ -172,6 +181,9 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   function setSelectPermanentTaluk(value) {
     setPermanentTaluk(value);
   }
+  function setSelectPermanentWard(value) {
+    setPermanentWard(value);
+  }
   function setSelectPermanentDistrict(value) {
     setPermanentDistrict(value);
   }
@@ -194,6 +206,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLBName(PresentLBName);
       setPermanentDistrict(PresentDistrict);
       setPermanentTaluk(PresentTaluk);
+      setPermanentWard(PresentWard);
       setPermanentPostOffice(PresentPostOffice);
       setPermanentPincode(PresentPincode);
     } else {
@@ -207,6 +220,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLBName("");
       setPermanentDistrict("");
       setPermanentTaluk("");
+      setPermanentWard("");
       setPermanentPostOffice("");
       setPermanentPincode("");
     }
@@ -222,6 +236,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PresentLBName", PresentLBName.code);
     sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
     sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
+    sessionStorage.setItem("PresentWaerd", PresentWard.code);
     sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
     sessionStorage.setItem("PresentPincode", PresentPincode.code);
     sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
@@ -234,6 +249,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentLBName", PermanentLBName.code);
     sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
     sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
+    sessionStorage.setItem("PermanentWard", PermanentTaluk.code);
     sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
     sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
     onSelect(config.key, {
@@ -247,6 +263,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       PresentLBName,
       PresentDistrict,
       PresentTaluk,
+      PresentWard,
       PresentPostOffice,
       PresentPincode,
       PermanentBuldingNo,
@@ -259,6 +276,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       PermanentLBName,
       PermanentDistrict,
       PermanentTaluk,
+      PermanentWard,
       PermanentPostOffice,
       PermanentPincode,
     });
@@ -385,6 +403,18 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               option={cmbTaluk}
               selected={PresentLBName}
               select={setSelectPresentLBName}
+              disabled={isEdit}
+            />
+          </div>
+          <div className="col-md-6">
+            <CardLabel>{t("CS_COMMON_WARD")}</CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbTaluk}
+              selected={PresentWard}
+              select={setSelectPresentWard}
               disabled={isEdit}
             />
           </div>
@@ -581,6 +611,18 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               option={cmbPlace}
               selected={PermanentLBName}
               select={setSelectPermanentLBName}
+              disabled={isEdit}
+            />
+          </div>
+          <div className="col-md-6">
+            <CardLabel>{t("CS_COMMON_TALUK")}</CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbTaluk}
+              selected={PermanentWard}
+              select={setSelectPermanentWard}
               disabled={isEdit}
             />
           </div>
