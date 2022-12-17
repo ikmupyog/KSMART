@@ -65,6 +65,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getCRModeOfPregnancyList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "ModeOfPregnancy",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRDocumentTypeList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1813,6 +1828,9 @@ export const MdmsService = {
     const cacheSetting = getCacheSetting(mdmsDetails.details.moduleDetails[0].moduleName);
     PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
+  },
+  getCRModeOfPregnancy: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRModeOfPregnancyList(tenantId, moduleCode), moduleCode);
   },
   getCRDocumentType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDocumentTypeList(tenantId, moduleCode), moduleCode);

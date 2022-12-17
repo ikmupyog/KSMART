@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -259,6 +259,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+      <BackButton >{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PresentHouseNo || !PresentLocalityNameEn || !PresentLocalityNameMl || !PresentDistrict || !PresentVillage || !PresentTaluk || !PresentPostOffice || !PresentPincode || !PermanentHouseNo || !PermanentLocalityNameEn || !PermanentLocalityNameMl || !PermanentDistrict || !PermanentVillage || !PermanentTaluk || !PermanentPostOffice || !PermanentPincode}>
 
         <div className="row">

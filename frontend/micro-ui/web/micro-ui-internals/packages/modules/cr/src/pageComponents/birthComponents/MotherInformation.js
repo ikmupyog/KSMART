@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -184,6 +184,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         <React.Fragment>
             {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
             {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+            <BackButton >{t("CS_COMMON_BACK")}</BackButton>
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!MotherFirstNameEn}>
 
                 <div className="row">

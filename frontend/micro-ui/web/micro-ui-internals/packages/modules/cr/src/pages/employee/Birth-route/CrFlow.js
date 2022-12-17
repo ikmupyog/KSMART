@@ -9,40 +9,47 @@ const CrFlow = ({ path }) => {
   const cardMenuData = [
     {
       title: "New Registration",
-      subTitle: "Inbox",
+      subTitle: "New Birth Registration",
       img: <BankIcon />,
       link: `${path}/child-details`,
     },
 
     {
       title: "Name Inclusion",
-      subTitle: "Inbox",
+      subTitle: "Include Name In Registered Birth",
       img: <FileProtected />,
-      link: `${path}/structure-type`,
+      // link: `${path}/structure-type`,
     },
     {
       title: "Correction",
-      subTitle: "Inbox",
+      subTitle: "Correction of Registered Birth",
       img: <FileProtected />, 
     },
     {
       title: "Adoption",
-      subTitle: "Inbox",
+      subTitle: "Child Adoption",
       img: <FileProtected />,
       link: `${path}/search-registry`,
     },
-    {
-      title: "Cancellation",
-      subTitle: "Inbox",
-      img: <FileProtected />,
-    },
-    {
-      title: "Revoke",
-      subTitle: "Inbox",
-      img: <FileProtected />,
-    },
+    // {
+    //   title: "Cancellation",
+    //   subTitle: "Inbox",
+    //   img: <FileProtected />,
+    // },
+    // {
+    //   title: "Revoke",
+    //   subTitle: "Inbox",
+    //   img: <FileProtected />,
+    // },
     
   ];
+  const ClassList = 
+    {
+     'New Registration':  'crfile',
+     'Name Inclusion':  'crfilename',
+     'Correction':  'crfilecorrection', 
+     'Adoption':  'crfileadoption', 
+    };
   return (
     <div>
       <div className="fileText">
@@ -55,7 +62,7 @@ const CrFlow = ({ path }) => {
            item.link?(
             <Link to={item.link}>
             {/* <Link to='trade-lisense'> */}
-            <div className="crfile">
+            <div className={ClassList[item.title]}>
               <div className="contentMenu">
                 <div className="contentImg">{item.img}</div>
                 <div className="contentText">

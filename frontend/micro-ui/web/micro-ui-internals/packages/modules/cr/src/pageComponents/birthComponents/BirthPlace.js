@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
-import { HospitalDetails } from "../../pageComponents/birthComponents/HospitalDetails";
+import  HospitalDetails  from "../../pageComponents/birthComponents/HospitalDetails";
+import  PublicPlace  from "../../pageComponents/birthComponents/PublicPlace";
 
 const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -38,6 +39,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+      <BackButton >{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!BirthPlace || !BirthPlaceDescription}>
         <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BIRTH_PLACE")}`}</span> </h1>
@@ -58,7 +60,13 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         {/* {value === "HOSPITAL" && (
                     <div>
                    <HospitalDetails />
-          </div>)} */}
+          </div>)
+          }
+          {value === "HOME" && (
+                    <div>
+                   <PublicPlace />
+          </div>)
+          } */}
       </FormStep>
     </React.Fragment>
   );
