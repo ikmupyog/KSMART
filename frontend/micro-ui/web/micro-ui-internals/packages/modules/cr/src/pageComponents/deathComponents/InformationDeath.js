@@ -187,7 +187,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         {/* //    isDisabled={!CommencementDate} */}
-        <header className="tittle">Information Deceased</header>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -267,7 +266,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
             <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
 
-            <TextInput
+            {/* <TextInput
             // t={t}
             // isMandatory={false}
             // type={"text"}
@@ -277,7 +276,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             // onChange={setDeathTimeFrom}
             // disable={isEdit}
             // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
+            /> */}
           </div>
 
           <div className="col-md-3">
@@ -287,7 +286,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-3">
             <CardLabel>{t("CR_TO_TIME")}</CardLabel>
-            <TextInput
+            <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
+
+            {/* <TextInput
             // t={t}
             // isMandatory={false}
             // type={"text"}
@@ -297,7 +298,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             // onChange={setSelectDeathTimeTo}
             // disable={isEdit}
             // {...(validation = { pattern: "DeathTimeFrom^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
+            /> */}
           </div>
         </div>
 
