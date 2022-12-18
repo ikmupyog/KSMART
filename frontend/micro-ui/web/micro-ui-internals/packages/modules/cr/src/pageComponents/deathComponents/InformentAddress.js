@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea,CheckBox } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -8,6 +8,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+  const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
@@ -23,7 +24,15 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   const [PinCode, setPinCode] = useState(formData?.InformentAddress?.PinCode);
   const [setPostOffice, setSelectedPostOffice] = useState(formData?.InformentAddress?.setPostOffice);
   const [setLbName, setSelectedLbName] = useState(formData?.InformentAddress?.setLbName);
-
+  const [InformentNameEn, setInformentNameEn] = useState(formData?.InformentAddress?.InformentNameEn);
+  const [InformentNameMl, setInformentNameMl] = useState(formData?.InformentAddress?.InformentNameMl);
+  const [setTitle, setSelectedTitle] = useState(formData?.InformentAddress?.setTitle);
+  const [isNoAadhaar, setIsNoAadhaar] = useState(formData?.InformentAddress?.isNoAadhaar);
+  const [AadhaarNo, setAadhaarNo] = useState(formData?.InformentAddress?.AadhaarNo);
+  const [setDeclaration, setSelectedDeclaration] = useState(formData?.InformentAddress?.setDeclaration);
+  const [InformentMobileNo, setInformentMobileNo] = useState(formData?.InformentAddress?.InformentMobileNo);
+  const [InformentOfAge, setInformentOfAge] = useState(formData?.InformentAddress?.InformentOfAge);
+  
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
   let cmbPlace = [];
@@ -50,6 +59,13 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
+    
+  let cmbTitle = [];
+  title &&
+    title["common-masters"] &&
+    title["common-masters"].Title.map((ob) => {
+      cmbTitle.push(ob);
+    });
 
   const onSkip = () => onSelect();
   function setSelectBuildingNo(e) {
@@ -73,6 +89,26 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   function setSelectPinCode(e) {
     setPinCode(e.target.value);
   }
+  function setSelectInformentNameEn(e) {
+    setInformentNameEn(e.target.value);
+  }
+  function setSelectInformentNameMl(e) {
+    setInformentNameMl(e.target.value);
+  }
+  function setSelectAadhaarNo(e) {
+    setAadhaarNo(e.target.value);
+  }
+  function setSelectInformentMobileNo(e) {
+    setInformentMobileNo(e.target.value);
+  }
+  function setSelectInformentOfAge(e) {
+    setInformentOfAge(e.target.value);
+  }
+    
+  function selectTitle(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedTitle(value);
+  }
 
   function selectVillage(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
@@ -94,6 +130,18 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedLbName(value);
   }
+  function selectDeclaration(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedDeclaration(value);
+  }
+  
+  function setNoAadhaar(e) {
+    if (e.target.checked == true) {
+      setIsNoAadhaar(true);
+    } else {
+      setIsNoAadhaar(false);
+    }
+  }
 
   const goNext = () => {
     sessionStorage.setItem("setVillage", setVillage.code);
@@ -108,6 +156,15 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PinCode", PinCode);
     sessionStorage.setItem("setPostOffice", setPostOffice.code);
     sessionStorage.setItem("setLbName", setLbName).code;
+    sessionStorage.setItem("InformentNameEn", InformentNameEn);
+    sessionStorage.setItem("InformentNameMl", InformentNameMl);
+    sessionStorage.setItem("setTitle", setTitle.code);
+    sessionStorage.setItem("isNoAadhaar", isNoAadhaar);
+    sessionStorage.setItem("AadhaarNo", AadhaarNo);
+    sessionStorage.setItem("setDeclaration", setDeclaration.code);
+    sessionStorage.setItem("InformentMobileNo", InformentMobileNo);  
+    sessionStorage.setItem("InformentOfAge", InformentOfAge); 
+    
 
     onSelect(config.key, {
       setVillage,
@@ -122,6 +179,14 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
       PinCode,
       setPostOffice,
       setLbName,
+      InformentNameEn,
+      InformentNameMl,
+      setTitle,
+      isNoAadhaar,
+      AadhaarNo,
+      setDeclaration,
+      InformentMobileNo,
+      InformentOfAge,
     });
   };
   return (
@@ -129,6 +194,115 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <header className="tittle">Informent Address </header>
+        
+        <div className="row">
+        <div className="col-md-4">
+            <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
+            <Dropdown t={t} 
+            optionKey="name" 
+            isMandatory={false} 
+            option={cmbTitle} 
+            selected={setTitle} 
+            select={selectTitle} 
+            disabled={isEdit} />
+            
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CR_INFORMENT_NAME_EN")}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="InformentNameEn"
+              value={InformentNameEn}
+              onChange={setSelectInformentNameEn}
+              disable={isEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CR_INFORMENT_NAME_Ml")}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="InformentNameMl"
+              value={InformentNameMl}
+              onChange={setSelectInformentNameMl}
+              disable={isEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+          </div>
+        </div>
+        
+        <div className="row">
+            <div className="col-md-12">
+              <CheckBox label={t("No Aadhaar Number")} 
+              onChange={setNoAadhaar} 
+              value={isNoAadhaar} 
+              checked={isNoAadhaar} />
+            </div>
+        </div>
+        <div className="row">
+            <div className="col-md-3">
+            <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"number"}
+              optionKey="i18nKey"
+              name="AadhaarNo"
+              value={AadhaarNo}
+              onChange={setSelectAadhaarNo}
+              disable={isEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+          </div>
+        
+          <div className="col-md-3">
+            {/* <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
+            <Dropdown t={t} 
+            optionKey="name" 
+            isMandatory={false} 
+            option={cmbDeclaration} 
+            selected={setDeclaration} 
+            select={selectDeclaration} 
+            disabled={isEdit} 
+            />             */}
+          </div>
+          <div className="col-md-3">
+            <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"number"}
+              optionKey="i18nKey"
+              name="InformentMobileNo"
+              value={InformentMobileNo}
+              onChange={setSelectInformentMobileNo}
+              disable={isEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+          </div>
+          <div className="col-md-3">
+            <CardLabel>{t("CR_AGE")}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="InformentOfAge"
+              value={InformentOfAge}
+              onChange={setSelectInformentOfAge}
+              disable={isEdit}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+          </div>
+        </div>
+
+
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">

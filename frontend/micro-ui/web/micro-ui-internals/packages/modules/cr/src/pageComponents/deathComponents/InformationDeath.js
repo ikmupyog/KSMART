@@ -313,7 +313,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-3">
-            <CardLabel>{`${t("CR_TITLE_EN")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitle} select={selectTitle} disabled={isEdit} />
           </div>
           <div className="col-md-3">
@@ -361,7 +361,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-3">
-            <CardLabel>{`${t("CR_TITLE_ML")}`}</CardLabel>
+            <CardLabel>{`${t("CR_TITLE_NAME_ML")}`}</CardLabel>
             <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
           </div>
           <div className="col-md-3">
