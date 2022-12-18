@@ -47,16 +47,13 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectInstitution(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedInstitution(value);
   }
   function selectInstitutionId(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedInstitutionId(value);
   }
   
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
   function setSelectTradeName(e) {

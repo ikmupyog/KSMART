@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
+import CustomTimePicker from "../../components/CustomTimePicker";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -63,19 +64,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   // //       cmbreligion.push(ob);
   // //     });
   function selectReligion(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedReligion(value);
   }
   function selectTitle(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitle(value);
   }
   function selectTitleB(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitleB(value);
   }
   function selectCountry(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedCountry(value);
   }
   // function setselectGender(value) {
@@ -139,7 +136,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function setSelectDeathTimeTo(value) {
     setDeathTimeTo(value);
   }
-  
 
   const onSkip = () => onSelect();
   const goNext = () => {
@@ -162,8 +158,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("Seconds", Seconds);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
-    
-    
+
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
       DeathDate,
@@ -192,7 +187,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         {/* //    isDisabled={!CommencementDate} */}
-        <header className="tittle">Information Deceased</header>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -219,7 +213,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-2">
             <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-            <TextInput
+            <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
+            {/* <TextInput
               t={t}
               isMandatory={false}
               type={"text"}
@@ -229,10 +224,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectTimeOfDeath}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
+            /> */}
           </div>
           <div className="col-md-2">
-            <CardLabel>{t("m")}</CardLabel>
+            {/* <CardLabel>{t("m")}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -243,10 +238,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectMinute}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
+            /> */}
           </div>
+
           <div className="col-md-2">
-            <CardLabel>{t("s")}</CardLabel>
+            {/* <CardLabel>{t("s")}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -257,7 +253,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectSeconds}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
+            /> */}
           </div>
         </div>
         <div className="row">
@@ -268,19 +264,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-3">
             <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
-            <TextInput
-              // t={t}
-              // isMandatory={false}
-              // type={"text"}
-              // optionKey="i18nKey"
-              // name="DeathTimeFrom"
-              // value={DeathTimeFrom}
-              // onChange={setDeathTimeFrom}
-              // disable={isEdit}
-              // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
-          </div>          
-         
+            <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
+
+            {/* <TextInput
+            // t={t}
+            // isMandatory={false}
+            // type={"text"}
+            // optionKey="i18nKey"
+            // name="DeathTimeFrom"
+            // value={DeathTimeFrom}
+            // onChange={setDeathTimeFrom}
+            // disable={isEdit}
+            // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            /> */}
+          </div>
+
           <div className="col-md-3">
             <CardLabel>{t("CR_TO_DATE")}</CardLabel>
             {/* date={CommencementDate} */}
@@ -288,19 +286,20 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-3">
             <CardLabel>{t("CR_TO_TIME")}</CardLabel>
-            <TextInput
-              // t={t}
-              // isMandatory={false}
-              // type={"text"}
-              // optionKey="i18nKey"
-              // name="DeathTimeTo"
-              // value={DeathTimeTo}
-              // onChange={setSelectDeathTimeTo}
-              // disable={isEdit}
-              // {...(validation = { pattern: "DeathTimeFrom^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            />
+            <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
+
+            {/* <TextInput
+            // t={t}
+            // isMandatory={false}
+            // type={"text"}
+            // optionKey="i18nKey"
+            // name="DeathTimeTo"
+            // value={DeathTimeTo}
+            // onChange={setSelectDeathTimeTo}
+            // disable={isEdit}
+            // {...(validation = { pattern: "DeathTimeFrom^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            /> */}
           </div>
-          
         </div>
 
         <div className="row">
@@ -496,19 +495,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="code"
-              isMandatory={false}
-              option={cmbTitle}
-              selected={setReligion}
-              select={selectReligion}
-              disabled={isEdit}
-            />
+            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbTitle} selected={setReligion} select={selectReligion} disabled={isEdit} />
           </div>
         </div>
       </FormStep>
     </React.Fragment>
   );
-};  
+};
 export default InformationDeath;

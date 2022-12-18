@@ -38,7 +38,6 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
 
@@ -79,11 +78,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
     setVehicleOtherDetailsMl(e.target.value);
   }
   function selectDeathVehicleWard(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathVehicleWard(value);
   }
   function selectAdmittedHospital(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedAdmittedHospital(value);
   }
   

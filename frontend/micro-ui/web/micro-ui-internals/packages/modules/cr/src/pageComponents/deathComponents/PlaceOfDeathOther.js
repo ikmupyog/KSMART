@@ -35,16 +35,13 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
   
   function selectDeathOtherPlace(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathOtherPlace(value);
   }
   function selectDeathOtherward(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathOtherward(value);
   }
   function setSelectTradeName(e) {

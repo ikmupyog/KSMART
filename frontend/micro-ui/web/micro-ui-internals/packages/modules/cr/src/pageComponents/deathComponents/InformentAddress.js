@@ -111,23 +111,18 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   }
 
   function selectVillage(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedVillage(value);
   }
   function selectTaluk(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTaluk(value);
   }
   function selectDistrict(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDistrict(value);
   }
   function selectPostOffice(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPostOffice(value);
   }
   function selectLbName(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedLbName(value);
   }
   function selectDeclaration(value) {
