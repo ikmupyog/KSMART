@@ -115,12 +115,12 @@
   background-color: #ffff;
   .leftdiv{
     padding: 15px 40px 15px 40px;
-    background-color: #fe7a51;
+    background-color: #6e80e5;
     height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    width: 35%;
+    width: 50%;
   }
   .leftflex{
     color: #fff;
@@ -128,6 +128,22 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+  }
+  .rightdiv{
+    padding: 15px 40px;
+    background-color:white;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 50%;
+  }
+  .rightflex{
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center !important;
   }
   .logostyle{
     font-size: 24px;

@@ -20,7 +20,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     const [MedicalAttensionSub, setMedicalAttensionSub] = useState(formData?.StatisticalInfoDetails?.MedicalAttensionSub);
     const [ModeOfPregnancy, setModeOfPregnancy] = useState(formData?.StatisticalInfoDetails?.ModeOfPregnancy);
     const [DeliveryMethod, setDeliveryMethod] = useState(formData?.StatisticalInfoDetails?.DeliveryMethod);
-    const [DeliveryMethodSub, setDeliveryMethodSub] = useState(formData?.TradeDetails?.DeliveryMethodSub);
+    const [DeliveryMethodSub, setDeliveryMethodSub] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub);
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     let cmbAttDelivery = [];
     let cmbAttDeliverySub = [];

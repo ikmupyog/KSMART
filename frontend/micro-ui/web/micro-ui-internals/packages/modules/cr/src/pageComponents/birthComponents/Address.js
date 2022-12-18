@@ -108,6 +108,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectPresentVillage(value) {
     setPresentVillage(value);
+    console.log("Village" + cmbVillage);
     if (isPrsentAddress) {
       setPermanentVillage(PresentVillage);
     }
@@ -120,16 +121,17 @@ const Address = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectPresentTaluk(value) {
     setPresentTaluk(value);
+    console.log("Taluk" + cmbTaluk);
     if (isPrsentAddress) {
       setPermanentTaluk(PresentTaluk);
     }
   }
   function setSelectPresentDistrict(value) {
-
+    setIsInitialRender(true); 
     setPresentDistrict(value);
-    console.log("value" + PresentDistrict);
+    setPresentLBName(null) ;
+    setLbs(null); 
     districtid = value.districtid
-    setIsInitialRender(true);
     if (isPrsentAddress) {
       setPermanentDistrict(PresentDistrict);
     }
@@ -217,9 +219,10 @@ const Address = ({ config, onSelect, userType, formData }) => {
   useEffect(() => {
     if (isInitialRender) {
       console.log("PresentDistrict" + districtid);
-      if (districtid) {
+      console.log(localbodies);
+      if (PresentDistrict) {
         setIsInitialRender(false);
-        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === districtid));
+        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
       }
     }
   }, [lbs, isInitialRender]);
@@ -299,13 +302,13 @@ const Address = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12" >
             <div className="col-md-4" ><CardLabel>{t("CS_COMMON_DISTRICT")}<span className="mandatorycss">*</span></CardLabel>
-              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDistrict} selected={PresentDistrict} select={setSelectPresentDistrict} disabled={isEdit} placeholder={`${t("CS_COMMON_DISTRICT")}`} />
+              <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbDistrict} selected={PresentDistrict} select={setSelectPresentDistrict} disabled={isEdit} placeholder={`${t("CS_COMMON_DISTRICT")}`} />
             </div>
             <div className="col-md-4" ><CardLabel>{t("CS_COMMON_LB_NAME")}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown t={t} optionKey="name" isMandatory={false} option={lbs} selected={PresentLBName} select={setSelectPresentLBName} disabled={isEdit} placeholder={`${t("CS_COMMON_LB_NAME")}`} />
             </div>
             <div className="col-md-4" ><CardLabel>{t("CS_COMMON_VILLAGE")}<span className="mandatorycss">*</span></CardLabel>
-              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbVillage} selected={PresentVillage} select={setSelectPresentVillage} disabled={isEdit} placeholder={`${t("CS_COMMON_VILLAGE")}`} />
+              <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbVillage} selected={PresentVillage} select={setSelectPresentVillage} disabled={isEdit} placeholder={`${t("CS_COMMON_VILLAGE")}`} />
             </div>
           </div>
         </div>

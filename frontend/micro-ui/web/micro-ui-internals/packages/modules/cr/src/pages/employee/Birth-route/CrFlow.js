@@ -1,11 +1,12 @@
 import React from "react";
 import { Switch, useLocation, Link } from "react-router-dom";
-import { PrivateRoute, BreadCrumb } from "@egovernments/digit-ui-react-components";
+import { PrivateRoute, BreadCrumb,DocumentIcon,CardLabel } from "@egovernments/digit-ui-react-components";
 import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
+import { useTranslation } from "react-i18next";
 
 const CrFlow = ({ path }) => {
-  console.log(path);
+  const { t } = useTranslation();
   const cardMenuData = [
     {
       title: "New Registration",
@@ -54,7 +55,8 @@ const CrFlow = ({ path }) => {
     <div>
       <div className="fileText">
         {" "}
-        <h3>Select Functional Modules</h3>
+        <CardLabel style={{fontSize: "15px",fontWeight: "400",marginBottom: "-18px"}}>{t("Select Functional Modules")}</CardLabel>
+        {/* <h3>Select Functional Modules</h3> */}
       </div>
       <div className="FileFlowWrapper">
         <div className="cardWrapper">
@@ -73,7 +75,7 @@ const CrFlow = ({ path }) => {
             </div>{" "}
           </Link>
            ):
-          ( <div className="crfile">
+          ( <div className={ClassList[item.title]}>
              <div className="contentMenu">
                <div className="contentImg">{item.img}</div>
                <div className="contentText">

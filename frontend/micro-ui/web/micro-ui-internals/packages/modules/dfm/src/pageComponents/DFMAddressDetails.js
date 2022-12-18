@@ -121,7 +121,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
             <div className="row">
               {!isLoading ? (
                 <div className="col-md-4">
-                  <CardLabel>{`${t("DFM_HOUSE_NUMBER")}*`}</CardLabel>
+                  <CardLabel>{`${t("DFM_HOUSE_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -138,7 +138,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 <Loader />
               )}
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_HOUSE_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_HOUSE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -152,7 +152,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_STREET")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_STREET")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -169,7 +169,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
 
             <div className="row">
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_POST_OFFICE")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_POST_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -181,7 +181,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_PINCODE")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_PINCODE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -195,7 +195,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -217,7 +217,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
 
             <div className="row">
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_LOCAL_PLACE")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_LOCAL_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -231,7 +231,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_MAIN_PLACE")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_MAIN_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -245,7 +245,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_WARD_NO")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"

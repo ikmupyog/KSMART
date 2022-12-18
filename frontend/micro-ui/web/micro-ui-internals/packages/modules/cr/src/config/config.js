@@ -313,7 +313,7 @@ export const newConfig = [
         component: "MotherInformation",
         texts: {
           headerCaption: "",
-          header: "CR_MOTHERS_DETAILS",
+          header: "CR_MOTHER_INFORMATION",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",

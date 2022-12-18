@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -9,12 +9,16 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     let validation = {};
     const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
     const { data: Qualification = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
+    const { data: QualificationSub = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
     const { data: Profession = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
     const { data: State = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mstate");
     const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
     const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
     const { data: Country = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-    const [MotherFirstNameEn, setMotherFirstNameEn] = useState(formData?.MotherInfoDetails?.setMotherFirstNameEn);
+    const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
+    const [isInitialRender, setIsInitialRender] = useState(true);
+    const [lbs, setLbs] = useState(0);
+    const [MotherFirstNameEn, setMotherFirstNameEn] = useState(formData?.MotherInfoDetails?.MotherFirstNameEn);
     const [MotherMiddleNameEn, setMotherMiddleNameEn] = useState(formData?.MotherInfoDetails?.MotherMiddleNameEn);
     const [MotherLastNameEn, setMotherLastNameEn] = useState(formData?.MotherInfoDetails?.MotherLastNameEn);
     const [MotherFirstNameMl, setMotherFirstNameMl] = useState(formData?.MotherInfoDetails?.MotherFirstNameMl);
@@ -53,6 +57,12 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         Qualification["birth-death-service"].Qualification.map((ob) => {
             cmbQualification.push(ob);
         });
+        let cmbQualificationSub = [];
+        QualificationSub &&
+            QualificationSub["birth-death-service"] &&
+            QualificationSub["birth-death-service"].QualificationSub.map((ob) => {
+                cmbQualificationSub.push(ob);
+            });
     let cmbProfession = [];
     Profession &&
         Profession["birth-death-service"] &&
@@ -143,8 +153,19 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         setMotherNationality(value);
     }
     function setSelectMotherDistrict(value) {
+        setIsInitialRender(true);
         setMotherDistrict(value);
-    }
+        setMotherLBName(null);
+        setLbs(null);
+        }
+        useEffect(() => {
+            if (isInitialRender) {
+              if (MotherDistrict) {
+                setIsInitialRender(false);
+                setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === MotherDistrict.districtid));
+              }
+            }
+          }, [lbs, isInitialRender]);
     function setSelectMotherLBName(value) {
         setMotherLBName(value);
     }
@@ -361,9 +382,9 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="code"
+                                optionKey="name"
                                 isMandatory={false}
-                                option={cmbQualification}
+                                option={cmbQualificationSub}
                                 selected={MotherEducationSubject}
                                 select={setSelectMotherEducationSubject}
                                 disabled={isEdit}
@@ -473,9 +494,9 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <CardLabel>{`${t("CS_COMMON_LB_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
                                 t={t}
-                                optionKey="code"
+                                optionKey="name"
                                 isMandatory={false}
-                                option={cmbState}
+                                option={lbs}
                                 selected={MotherLBName}
                                 select={setSelectMotherLBName}
                                 disabled={isEdit}

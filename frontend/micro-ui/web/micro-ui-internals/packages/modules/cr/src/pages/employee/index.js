@@ -95,9 +95,9 @@ const CRBreadCrumb = ({ location }) => {
       show: breadCrumbUrls.includes("cr-flow") || isCrFlow
     },
     {
-      path: "/digit-ui/employee/cr/cr-flow/child-details",
+      path: "/digit-ui/employee/child-details",
       content: t("Child Details"),
-      show: breadCrumbUrls.includes("cr-flow/child-details") || isChildDetails
+      show: breadCrumbUrls.includes("child-details") || isChildDetails
     },
     {
       path: "/digit-ui/employee/cr/death-flow",

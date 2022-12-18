@@ -1,6 +1,6 @@
 import {
   Card,
-  CardHeader,
+  CardLabel ,
   CardSubHeader,
   CardText,
   CitizenInfoLabel,
@@ -8,6 +8,7 @@ import {
   Row,
   StatusTable,
   SubmitBar,
+  
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -45,7 +46,7 @@ const CheckPage = ({ onSubmit, value }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { TradeDetails, address, owners, propertyType, subtype, pitType, pitDetail, isEditProperty, cpt } = value;
+  const { ChildDetails, BirthPlace, HospitalDetails, FatherInfoDetails, MotherInfoDetails, AddressDetails, StatisticalInfoDetails, isEditProperty, cpt } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -65,18 +66,27 @@ const CheckPage = ({ onSubmit, value }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
-        <CardHeader>{t("CS_CHECK_CHECK_YOUR_ANSWERS")}</CardHeader>
-        <CardText>{t("CS_CHECK_CHECK_YOUR_ANSWERS_TEXT")}</CardText>
-        {isEdit && <CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_RENEWAL_INFO_TEXT")} />}
-        <CardSubHeader>{t("TL_LOCALIZATION_TRADE_DETAILS")}</CardSubHeader>
-       <StatusTable>
-          <Row
-            label={t("TL_LOCALjetheeshIZATION_TRADE_NAME")}
-            
-            // text={t(TradeDetails?.TradeName)}
-            actionButton={<ActionButton jumpTo={`${routeLink}/TradeName`} />}
-          />
-          
+      <label style={{ fontSize: "17px", fontWeight: "bold" }} >{t("CR_REG_SUMMARY_HEADING")}</label>
+        <div className="row">
+          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span></h1>
+          </div>
+        </div>
+        <StatusTable >
+          <div className="row">
+             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.ChildDOB)}</CardText>
+            </div>
+           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.Gender.value)}</CardText>
+            </div>
+             {/*<div className="col-md-4" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(TradeDetails[0].tradetype?.i18nKey)}</CardText>
+            </div> */}
+          </div>
+          <div className="row">
+          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
+          </div>
+        </div> 
         </StatusTable>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>

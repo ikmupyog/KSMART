@@ -7,7 +7,7 @@ export const loginConfig = [
     },
     inputs: [
       {
-        label: "CORE_LOGIN_USERNAME",
+        label: "Username",
         type: "text",
         name: "username",
         error: "ERR_HRMS_INVALID_USER_ID",

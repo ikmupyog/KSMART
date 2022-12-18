@@ -172,7 +172,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
             </div>
             <div className="row">
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_FIRST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -187,7 +187,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
               </div>
 
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_LAST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -201,7 +201,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_AADHAR_NO")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -229,7 +229,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_EMAIL")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_EMAIL")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -243,7 +243,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_MOBILE_NO")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -260,7 +260,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
 
             <div className="row">
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_DOB")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_DOB")}`}<span className="mandatorycss">*</span></CardLabel>
                 <DatePicker
                   date={applicationData.dob}
                   name="dob"
@@ -269,7 +269,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_FATHER_FIRST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_FATHER_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -283,7 +283,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_FATHER_LAST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_FATHER_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -300,7 +300,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
 
             <div className="row">
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_MOTHER_FIRST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_MOTHER_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -314,7 +314,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_MOTHER_LAST_NAME")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_MOTHER_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -343,7 +343,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
 
             <div className="row">
               <div className="col-md-6">
-                <CardLabel>{`${t("DFM_BANK_ACCOUNT_NO")}*`}</CardLabel>
+                <CardLabel>{`${t("DFM_BANK_ACCOUNT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -356,7 +356,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_ACCOUNT_NO") })}
                 />
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <CardLabel>{`${t("DFM_TENANT_ID")}*`}</CardLabel>
                 <Dropdown
                   t={t}
@@ -367,7 +367,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   select={(e) => handleChange(e, "tenantID")}
                   placeholder={`${t("DFM_TENANT_ID")}`}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
           {/* ); */}
