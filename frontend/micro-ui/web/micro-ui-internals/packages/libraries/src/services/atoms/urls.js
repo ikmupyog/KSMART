@@ -109,10 +109,10 @@ const Urls = {
     update: "birth-services/cr/birth/_update",
   },
   dfm: {
-    create: "filemgmnt/v1/applicantpersonals/_create",
-    search: "filemgmnt/v1/applicantpersonals/_search",
+    create: "/filemgmnt/v1/applicantpersonals/_create",
+    search: "/filemgmnt/v1/applicantpersonals/_search",
     download_pdf: "/egov-pdf/download/dfm/",
-    update: "filemgmnt/v1/applicantpersonals/_update",
+    update: "/filemgmnt/v1/applicantpersonals/_update",
   },
   receipts: {
     receipt_download: "/egov-pdf/download/PAYMENT/consolidatedreceipt",

@@ -118,6 +118,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
 
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
   const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
+  console.log("match.path"+match.path);
   return (
     <Switch>
       {config.map((routeObj, index) => {

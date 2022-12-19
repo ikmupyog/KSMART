@@ -60,7 +60,7 @@ const CheckPage = ({ onSubmit, value }) => {
   //   routeLink = `${getPath(match.path, match.params)}`;
   //   routeLink = routeLink.replace("/check", "");
   // }
-  console.log(value);
+  console.log("value" + match);
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}

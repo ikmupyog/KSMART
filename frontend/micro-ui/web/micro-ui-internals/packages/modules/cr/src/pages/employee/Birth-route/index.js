@@ -105,6 +105,7 @@ const CrFlowApp = ({ parentUrl }) => {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
+  console.log("match.path" + match.path);
   const createProperty = async () => {
     history.push(`${match.path}/acknowledgement`);
   };

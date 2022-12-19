@@ -127,10 +127,10 @@ const Address = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectPresentDistrict(value) {
-    setIsInitialRender(true); 
+    setIsInitialRender(true);
     setPresentDistrict(value);
-    setPresentLBName(null) ;
-    setLbs(null); 
+    setPresentLBName(null);
+    setLbs(null);
     districtid = value.districtid
     if (isPrsentAddress) {
       setPermanentDistrict(PresentDistrict);
@@ -299,6 +299,34 @@ const Address = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
+        {/* <div className="row">
+          <div className="col-md-12" >
+            <div className="col-md-6" >
+              <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbState}
+                selected={StateName}
+                select={setSelectStateName}
+                disabled={isEdit}
+              />
+            </div>
+            <div className="col-md-6" >
+              <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbCountry}
+                selected={MotherCountry}
+                select={setSelectMotherCountry}
+                disabled={isEdit}
+              />
+            </div>
+          </div>
+        </div> */}
         <div className="row">
           <div className="col-md-12" >
             <div className="col-md-4" ><CardLabel>{t("CS_COMMON_DISTRICT")}<span className="mandatorycss">*</span></CardLabel>
