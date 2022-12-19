@@ -1,4 +1,4 @@
-import { CardLabel, CitizenInfoLabel, FormStep, Loader, TextInput, FormInputGroup,Dropdown } from "@egovernments/digit-ui-react-components";
+import { CardLabel, CitizenInfoLabel, FormStep, Loader, TextInput, FormInputGroup, Dropdown } from "@egovernments/digit-ui-react-components";
 import React, { useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
@@ -20,7 +20,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   const [addressData, setAddressData] = useState(
     formData?.FileManagement?.addressData
       ? formData.FileManagement.addressData
-      :  {
+      : {
           houseNo: "",
           houseName: "",
           street: "",
@@ -37,10 +37,15 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   const stateId = Digit.ULBService.getStateId();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
-  const { data:  PostOffice  = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "PostOffice");
+  const { data: PostOffice = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "PostOffice");
+  let mdmsFinancialYear = fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter((y) => y.module === "TL") : [];
+  let FY = mdmsFinancialYear && mdmsFinancialYear.length > 0 && mdmsFinancialYear.sort((x, y) => y.endingDate - x.endingDate)[0]?.code;
+  function setSelectTradeName(e) {
+    setTradeName(e.target.value);
+  }
 
   console.log("add", PostOffice);
-  let cmbPostOffice=[]
+  let cmbPostOffice = [];
   PostOffice &&
     PostOffice["common-masters"] &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
@@ -100,10 +105,9 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 
       <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!addressData.postOffice?.name || !addressData.wardNo?.name}>
-        {/* return ( */}
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
             <div className="row">
@@ -117,16 +121,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
             <div className="row">
               {!isLoading ? (
                 <div className="col-md-4">
-                  {/* <FormInputGroup
-                    type="TextInputNumber"
-                    handleChange={handleChange}
-                    t={t}
-                    value={addressData.houseNo}
-                    name="houseNo"
-                    label={`${t("DFM_HOUSE_NUMBER")}`}
-                    mystyle={mystyle}
-                    placeholder={`${t("House No")}*`}
-                  /> */}
                   <CardLabel>{`${t("DFM_HOUSE_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
@@ -137,23 +131,13 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                     value={addressData.houseNo}
                     onChange={(e) => handleChange(e.target.value, "houseNo")}
                     placeholder={`${t("DFM_HOUSE_NUMBER")}`}
-                    {...(validation = { pattern: "^[0-9 ]*$",
-                     isRequired: true, type: "text", title: t("DFM_INVALID_HOUSE_NUMBER") })}
+                    {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_HOUSE_NUMBER") })}
                   />
                 </div>
               ) : (
                 <Loader />
               )}
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="TextInput"
-                  handleChange={handleChange}
-                  t={t}
-                  value={addressData.houseName}
-                  name="houseName"
-                  label={`${t("DFM_HOUSE_NAME")}`}
-                  mystyle={mystyle}
-                /> */}
                 <CardLabel>{`${t("DFM_HOUSE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
@@ -168,15 +152,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="TextInput"
-                  handleChange={handleChange}
-                  t={t}
-                  value={addressData.street}
-                  name="street"
-                  label={`${t("DFM_STREET")}`}
-                  mystyle={mystyle}
-                /> */}
                 <CardLabel>{`${t("DFM_STREET")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
@@ -194,15 +169,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
 
             <div className="row">
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="Dropdown"
-                  handleChange={handleChange}
-                  t={t}
-                  value={addressData.postOffice}
-                  name="postOffice"
-                  label={`${t("DFM_POST_OFFICE")}`}
-                  selectOptions={postOfficeOptions}
-                /> */}
                 <CardLabel>{`${t("DFM_POST_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
@@ -215,16 +181,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="TextInputNumber"
-                  handleChange={handleChange}
-                  t={t}
-                  value={addressData.pincode}
-                  name="pincode"
-                  label={`${t("DFM_PINCODE")}`}
-                  mystyle={mystyle}
-                  valid="^\d{6}$"
-                /> */}
                 <CardLabel>{`${t("DFM_PINCODE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
@@ -235,20 +191,11 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   value={addressData.pincode}
                   onChange={(e) => handleChange(e.target.value, "pincode")}
                   placeholder={`${t("DFM_PINCODE")}`}
-                  {...(validation = { pattern:"^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_PINCODE") })}
+                  {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_PINCODE") })}
                 />
               </div>
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="TextInputNumber"
-                  handleChange={handleChange}
-                  t={t}
-                  value={addressData.resAssociationNo}
-                  name="resAssociationNo"
-                  label={`${t("DFM_RESASSOCIATION_NUMBER")}`}
-                  mystyle={mystyle}
-                /> */}
-                <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}`}</CardLabel>
+                <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -270,15 +217,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
 
             <div className="row">
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="TextInput"
-                  handleChange={handleChange}
-                  t={t}
-                  value={addressData.localPlace}
-                  name="localPlace"
-                  label={`${t("DFM_LOCAL_PLACE")}`}
-                  mystyle={mystyle}
-                /> */}
                 <CardLabel>{`${t("DFM_LOCAL_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
@@ -293,15 +231,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="TextInput"
-                  handleChange={handleChange}
-                  t={t}
-                  value={addressData.mainPlace}
-                  name="mainPlace"
-                  label={`${t("DFM_MAIN_PLACE")}`}
-                  mystyle={mystyle}
-                /> */}
                 <CardLabel>{`${t("DFM_MAIN_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
@@ -316,16 +245,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                 />
               </div>
               <div className="col-md-4">
-                {/* <FormInputGroup
-                  type="Dropdown"
-                  handleChange={handleChange}
-                  t={t}
-                  value={addressData.wardNo}
-                  name="wardNo"
-                  label={`${t("DFM_WARD_NO")}`}
-                  selectOptions={wardOptions}
-                  placeholder={`${t("Ward No")}*`}
-                /> */}
                 <CardLabel>{`${t("DFM_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}

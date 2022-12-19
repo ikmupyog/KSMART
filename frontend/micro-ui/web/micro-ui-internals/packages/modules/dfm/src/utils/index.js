@@ -289,6 +289,80 @@ export const gettradeupdateaccessories = (data) => {
 }
   return TLaccessories;
 }
+export const convertToFileSubmission = (data = {}) => {
+  let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
+  const formdata = {
+    ApplicantPersonals: [
+      {
+          aadhaarNo: 62234567,
+          email: null,
+          firstName: "KP",
+          lastName: "GG",
+          title: null,
+          mobileNo: 9446903827,
+          tenantId: "kl",
+          serviceDetails: {
+              applicantPersonalId: 23,
+              serviceId: 16,
+              serviceCode: "PN001.ALP",
+              serviceSubType: 2,
+              serviceMinorType: 5
+          },
+          applicantAddress: {
+              applicantPersonalId: 23,
+              houseNo: 45,
+              houseName: Smile,
+              street: Mannanthala,
+              pincode: 695008,
+              postOfficeName: Ulloor,
+              wardNo: 100
+          },
+          applicantServiceDocuments: {
+              applicantPersonalId: 23,
+              documentTypeId: 2,
+              fileStoreId: 537,
+              serviceDetailsId: 34,
+              active: Yes,
+              documentNumber: 12345,
+              applicationdetails: "aaaa"
+          },
+          applicantDocuments: {
+              applicantPersonalId: 23,
+              documenttypeId: 2,
+              documentNumber: 12345,
+              docexpiryDate: 1234577
+          },
+          fileDetail: {
+              applicantPersonalId: 23,
+              tenantId: "kl",
+              serviceDetailsId: 537,
+              fileNumber: 1,
+              fileCode: "KL-FM-2022-11-02-000043",
+              fileName: "PensionAdalath",
+              fileArisingMode: 1,
+              fileArisingDate: null,
+              financialYear: 2022,
+              applicationDate: null,
+              workflowCode: "NewDFM",
+              action: "INITIATE",
+              fileStatus: 1,
+              businessService: 89,
+              comment: "Test",
+              assignee: [
+                 
+              ]
+          },
+          auditDetails: {
+              createdBy: null,
+              lastModifiedBy: null,
+              createdTime: null,
+              lastModifiedTime: null
+          }
+      }
+  ]
+  };
+  return formdata;
+};
 
 export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");

@@ -65,6 +65,51 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getCRQualificationSubList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "QualificationSub",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRModeOfPregnancyList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "ModeOfPregnancy",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRDocumentTypeList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DocumentType",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRPlaceMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1798,6 +1843,15 @@ export const MdmsService = {
     const cacheSetting = getCacheSetting(mdmsDetails.details.moduleDetails[0].moduleName);
     PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
+  },
+  getCRQualificationSub: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRQualificationSubList(tenantId, moduleCode), moduleCode);
+  },
+  getCRModeOfPregnancy: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRModeOfPregnancyList(tenantId, moduleCode), moduleCode);
+  },
+  getCRDocumentType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRDocumentTypeList(tenantId, moduleCode), moduleCode);
   },
   getCRPlaceMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRPlaceMasterList(tenantId, moduleCode), moduleCode);

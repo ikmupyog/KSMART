@@ -3,6 +3,9 @@ import { useQuery } from "react-query";
 
 const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
   
+  const useCRDocumentType = () => {
+    return useQuery("CR_DOCUMENT_TYPE", () => MdmsService.getCRDocumentType(tenantId, moduleCode), config);
+  };
   const useCRPlaceMaster = () => {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
   };
@@ -199,6 +202,8 @@ const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) =
   };
 
   switch (type) {
+    case "DocumentType":
+      return useCRDocumentType();
     case "PlaceMaster":
       return useCRPlaceMaster();
     case "hospitalList":

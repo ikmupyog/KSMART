@@ -1,53 +1,62 @@
 import React from "react";
 import { Switch, useLocation, Link } from "react-router-dom";
-import { PrivateRoute, BreadCrumb } from "@egovernments/digit-ui-react-components";
+import { PrivateRoute, BreadCrumb,DocumentIcon,CardLabel } from "@egovernments/digit-ui-react-components";
 import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
+import { useTranslation } from "react-i18next";
 
 const CrFlow = ({ path }) => {
-  console.log(path);
+  const { t } = useTranslation();
   const cardMenuData = [
     {
       title: "New Registration",
-      subTitle: "Inbox",
+      subTitle: "New Birth Registration",
       img: <BankIcon />,
       link: `${path}/child-details`,
     },
 
     {
       title: "Name Inclusion",
-      subTitle: "Inbox",
+      subTitle: "Include Name In Registered Birth",
       img: <FileProtected />,
-      link: `${path}/structure-type`,
+      // link: `${path}/structure-type`,
     },
     {
       title: "Correction",
-      subTitle: "Inbox",
+      subTitle: "Correction of Registered Birth",
       img: <FileProtected />, 
     },
     {
       title: "Adoption",
-      subTitle: "Inbox",
+      subTitle: "Child Adoption",
       img: <FileProtected />,
       link: `${path}/search-registry`,
     },
-    {
-      title: "Cancellation",
-      subTitle: "Inbox",
-      img: <FileProtected />,
-    },
-    {
-      title: "Revoke",
-      subTitle: "Inbox",
-      img: <FileProtected />,
-    },
+    // {
+    //   title: "Cancellation",
+    //   subTitle: "Inbox",
+    //   img: <FileProtected />,
+    // },
+    // {
+    //   title: "Revoke",
+    //   subTitle: "Inbox",
+    //   img: <FileProtected />,
+    // },
     
   ];
+  const ClassList = 
+    {
+     'New Registration':  'crfile',
+     'Name Inclusion':  'crfilename',
+     'Correction':  'crfilecorrection', 
+     'Adoption':  'crfileadoption', 
+    };
   return (
     <div>
       <div className="fileText">
         {" "}
-        <h3>Select Functional Modules</h3>
+        <CardLabel style={{fontSize: "15px",fontWeight: "400",marginBottom: "-18px"}}>{t("Select Functional Modules")}</CardLabel>
+        {/* <h3>Select Functional Modules</h3> */}
       </div>
       <div className="FileFlowWrapper">
         <div className="cardWrapper">
@@ -55,7 +64,7 @@ const CrFlow = ({ path }) => {
            item.link?(
             <Link to={item.link}>
             {/* <Link to='trade-lisense'> */}
-            <div className="crfile">
+            <div className={ClassList[item.title]}>
               <div className="contentMenu">
                 <div className="contentImg">{item.img}</div>
                 <div className="contentText">
@@ -66,7 +75,7 @@ const CrFlow = ({ path }) => {
             </div>{" "}
           </Link>
            ):
-          ( <div className="crfile">
+          ( <div className={ClassList[item.title]}>
              <div className="contentMenu">
                <div className="contentImg">{item.img}</div>
                <div className="contentText">

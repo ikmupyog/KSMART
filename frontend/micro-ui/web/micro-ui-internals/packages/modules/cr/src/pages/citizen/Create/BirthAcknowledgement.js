@@ -1,8 +1,8 @@
 import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernments/digit-ui-react-components";
-import React, { useEffect } from "react";
+import React, { useEffect,useState  } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
+import { convertToBirthRegistration,convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -32,21 +32,21 @@ const BannerPicker = (props) => {
   );
 };
 
-const TLAcknowledgement = ({ data, onSuccess }) => {
+const BirthAcknowledgement = ({ data, onSuccess }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.tl.useTradeLicenseAPI(
+  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
-  const mutation1 = Digit.Hooks.tl.useTradeLicenseAPI(
+  const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     false
   );
-  const mutation2 = Digit.Hooks.tl.useTradeLicenseAPI(
+  const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     false
   );
@@ -56,18 +56,21 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
   const stateId = Digit.ULBService.getStateId();
   const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
-
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
+    if (isInitialRender) {
+      console.log("Enter");
     const onSuccessedit = () => {
       setMutationHappened(true);
     };
-    try {
+    // try {
+      setIsInitialRender(false);
       let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
       data.tenantId = tenantId1;
       if (!resubmit) {
-        let formdata = !isEdit ? convertToTrade(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "TL") : []);
-        formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
+        let formdata = !isEdit ? convertToBirthRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
+        // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
           mutation.mutate(formdata, {
@@ -97,15 +100,16 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
         //   onSuccess,
         // }));
       } else {
-        let formdata = convertToResubmitTrade(data);
-        formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
-        !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
-          onSuccessedit,
-        })
+        // let formdata = convertToResubmitTrade(data);
+        // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
+        // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
+        //   onSuccessedit,
+        // })
 
       }
-    } catch (err) {
-    }
+    // } catch (err) {
+    // }
+  }
   }, [fydata]);
 
   useEffect(() => {
@@ -129,7 +133,6 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
-
   let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
   if(enableLoader)
   {return (<Loader />)}
@@ -182,4 +185,4 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
   );
 };
 
-export default TLAcknowledgement;
+export default BirthAcknowledgement;

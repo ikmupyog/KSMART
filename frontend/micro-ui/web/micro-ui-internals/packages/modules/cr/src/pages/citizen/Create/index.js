@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { newConfig as newConfigTL } from "../../../config/config";
+import { newConfig as newConfigCR } from "../../../config/config";
 // import CheckPage from "./CheckPage";
 // import TLAcknowledgement from "./TLAcknowledgement";
 
@@ -104,10 +104,10 @@ const CreateTradeLicence = ({ parentRoute }) => {
     queryClient.invalidateQueries("TL_CREATE_TRADE");
   };
 
-  newConfig = newConfigTL;
+  newConfig = newConfigCR;
   // newConfig = newConfig ? newConfig : newConfigTL;
   // newConfig = newConfig ? newConfig : newConfigTL;
-  newConfig = newConfigTL;
+  // newConfig = newConfigTL;
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
@@ -116,8 +116,8 @@ const CreateTradeLicence = ({ parentRoute }) => {
   sessionStorage.setItem("skipenabled",skipenabled);
   config.indexRoute = "TradeName";
 
-  const CheckPage = Digit?.ComponentRegistryService?.getComponent("TLCheckPage");
-  const TLAcknowledgement = Digit?.ComponentRegistryService?.getComponent("TLAcknowledgement");
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
+  const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
   return (
     <Switch>
       {config.map((routeObj, index) => {
@@ -141,7 +141,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <TLAcknowledgement data={params} onSuccess={onSuccess} />
+        <BirthAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
       <Route>
         <Redirect to={`${match.path}/${config.indexRoute}`} />

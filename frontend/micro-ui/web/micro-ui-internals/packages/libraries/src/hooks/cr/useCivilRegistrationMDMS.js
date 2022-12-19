@@ -3,6 +3,12 @@ import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
   
+  const useCRQualificationSub = () => {
+    return useQuery("CR_QUALIFICATION_SUB", () => MdmsService.getCRQualificationSub(tenantId, moduleCode), config);
+  };
+  const useCRModeOfPregnancy = () => {
+    return useQuery("CR_MODE_PREGNANCY", () => MdmsService.getCRModeOfPregnancy(tenantId, moduleCode), config);
+  };
   const useCRPlaceMaster = () => {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
   };
@@ -199,6 +205,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "QualificationSub":
+      return useCRQualificationSub();
+    case "ModeOfPregnancy":
+      return useCRModeOfPregnancy();
     case "PlaceMaster":
       return useCRPlaceMaster();
     case "hospitalList":

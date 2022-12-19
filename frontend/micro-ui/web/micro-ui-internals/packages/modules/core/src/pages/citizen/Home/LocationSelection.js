@@ -1,24 +1,24 @@
-import React, { Fragment, useMemo, useState,setValue,useEffect } from "react";
-import { PageBasedInput, CardHeader, BackButton, SearchOnRadioButtons, CardLabelError, RadioOrSelect, CardLabel } from "@egovernments/digit-ui-react-components";
+import React, { Fragment, useMemo, useState, setValue, useEffect } from "react";
+import { PageBasedInput, CardHeader, BackButton, Dropdown, CardLabelError, RadioOrSelect, CardLabel } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 
 
 const LocationSelection = () => {
- 
-  
+
+
   /////////////////////////////////////////////////////////////////////////////////
   const { t } = useTranslation();
-  const history = useHistory(); 
-  const { data: { districts } = {}, isLoad } = Digit.Hooks.useStore.getInitData(); 
+  const history = useHistory();
+  const { data: { districts } = {}, isLoad } = Digit.Hooks.useStore.getInitData();
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
   const [lbs, setLbs] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [selectedCity, setSelectedCity] = useState(() => ({ code: Digit.ULBService.getCitizenCurrentTenant(true) }));
-  const [selectedDistrict, setSelectedDistrict] = useState(); 
+  const [selectedDistrict, setSelectedDistrict] = useState();
   const [showError, setShowError] = useState(false);
-  let districtid=null;
+  let districtid = null;
   const texts = useMemo(
     () => ({
       header: t("CS_COMMON_CHOOSE_LOCATION"),
@@ -27,35 +27,36 @@ const LocationSelection = () => {
     [t]
   );
 
-  
-  
+
+
   function selectCity(city) {
     setSelectedCity(city);
     setShowError(false);
   }
-  
- function selectDistrict(district) {
+
+  function selectDistrict(district) {
     setIsInitialRender(true);
     setSelectedDistrict(district);
     setSelectedCity(null);
     setLbs(null);
-    districtid=district.districtid
+    districtid = district.districtid
     setShowError(false);
     // if(districtid){
     // }
-   
+
   }
   useEffect(() => {
     if (isInitialRender) {
-      
-      if(selectedDistrict){
+
+      if (selectedDistrict) {
+        console.log(selectedDistrict.districtid);
         setIsInitialRender(false);
-        setLbs(localbodies.filter( (localbodies) => localbodies.city.districtid===selectedDistrict.districtid));
+        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === selectedDistrict.districtid));
       }
     }
-  }, [lbs,isInitialRender]);
+  }, [lbs, isInitialRender]);
 
- 
+
   // const RadioButtonProps = useMemo(() => {
   //   return {
   //     options: cities,
@@ -73,39 +74,56 @@ const LocationSelection = () => {
       if (selectedCity) {
         Digit.SessionStorage.set("CITIZEN.COMMON.HOME.CITY", selectedCity);
         history.push("/digit-ui/citizen");
-      } 
+      }
       else {
         setShowError(true);
       }
     } else {
       setShowError(true);
     }
-    
+
   }
-  
-  return isLoading ,isLoad? (
+
+  return isLoading, isLoad ? (
     <loader />
   ) : (
     <>
       <BackButton />
       <PageBasedInput texts={texts} onSubmit={onSubmit}>
-        <CardHeader>
-          {/* Choose Your Local Body */}
-          {t("CS_COMMON_CHOOSE_LOCATION")}
-        </CardHeader>
+        <CardHeader>{t("CS_COMMON_CHOOSE_LOCATION")}</CardHeader>
         <CardLabel>{t("CS_COMMON_DISTRICT")}</CardLabel>
-        <RadioOrSelect 
+        <Dropdown
+          t={t}
+          optionKey="name"
+          isMandatory={true}
+          option={districts}
+          selected={selectedDistrict}
+          select={selectDistrict}
+          placeholder={`${t("CS_COMMON_DISTRICT")}`}
+        />
+        {/* <RadioOrSelect 
           options={districts}
           selectedOption={selectedDistrict}
           optionKey="name"
           onSelect={selectDistrict}
           t={t}
           labelKey=""
+          placeholder={`${t("CS_COMMON_DISTRICT")}`} 
           // onChange={(e) => onChangeLB(e.target.value)}
         //  disabled={isEdit}
-        />
+        /> */}
         <CardLabel>{t("CS_COMMON_LB")}</CardLabel>
-        <RadioOrSelect 
+        <Dropdown
+          t={t}
+          optionKey="name"
+          isMandatory={true}
+          option={lbs}
+          selected={selectedCity}
+          select={selectCity}
+          placeholder={`${t("CS_COMMON_LB")}`}
+        />
+
+        {/* <Dropdown 
          options={lbs}
          selectedOption={selectedCity}
          optionKey="name"
@@ -113,7 +131,7 @@ const LocationSelection = () => {
          t={t}
          labelKey=""
         //  disabled={isEdit}
-        />
+        /> */}
 
         {/* <SearchOnRadioButtons {...RadioButtonProps} placeholder={t("COMMON_TABLE_SEARCH")} /> */}
         {showError ? <CardLabelError>{t("CS_COMMON_LOCATION_SELECTION_ERROR")}</CardLabelError> : null}

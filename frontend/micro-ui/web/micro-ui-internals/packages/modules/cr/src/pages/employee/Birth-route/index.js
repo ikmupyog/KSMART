@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
 import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
-import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import CrFlow from "./CrFlow";
 import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
@@ -107,10 +105,18 @@ const CrFlowApp = ({ parentUrl }) => {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
-
+  const createProperty = async () => {
+    history.push(`${match.path}/acknowledgement`);
+  };
+  
+  const onSuccess = () => {
+    sessionStorage.removeItem("CurrentFinancialYear");
+    queryClient.invalidateQueries("TL_CREATE_TRADE");
+  };
   const handleSkip = () => {};
   const handleMultiple = () => {};
-  
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
+  const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
   return (
     
     <React.Fragment>
@@ -133,7 +139,12 @@ const CrFlowApp = ({ parentUrl }) => {
           
         );
       })}
-      
+       <Route path={`${match.path}/check`}>
+        <CheckPage onSubmit={createProperty} value={params} />
+      </Route>
+      <Route path={`${match.path}/acknowledgement`}>
+        <BirthAcknowledgement data={params} onSuccess={onSuccess} />
+      </Route>
       <Route path={`${path}`} exact>
               <CrFlow  path={path}/>
              </Route>

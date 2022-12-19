@@ -1,4 +1,4 @@
-import { BackButton, Dropdown, FormComposer, Loader, Toast } from "@egovernments/digit-ui-react-components";
+import { BackButton, Dropdown, FormComposer, Loader, Toast,CardLabel } from "@egovernments/digit-ui-react-components";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -144,23 +144,36 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
      <div className="leftdiv">
         <div className="leftflex" >
           <h1 className="logostyle">
+            
+             <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{maxWidth:"450px"}} />
+
             <a href="" src={stateInfo?.logoUrl}>
               {/* <img className="bannerLogo" src={stateInfo?.logoUrl} alt="Digit" /> */}
-              KSMART
+              {/* KSMART */}
             </a>
           </h1>
-          <div style={{ color: "#fff", width:"75%", fontSize:"19px" }}>
-            <h2 style={{fontSize:"28px",marginBottom:"18px", fontWeight:"bold"}}>KSMART</h2>
-            <p>Kerala Solution For Administrative Reformation And Transformation</p>
+          <div style={{textAlign:"center",margin:"0 auto"}}>
+              <div>
+                  <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" style={{maxWidth:"450px"}} />
+                    <label style={{fontSize:"35px"}}>Exploring K-Smart</label><br></br>
+                    <label style={{fontSize:"17px"}}>Kerala - Solution For Administrative Reformation And Transformation.</label>
+              </div>
           </div>
-          <div> 2022&copy; Ksmart</div>
+          <div style={{justifyContent: "space-between !important"}} > 
+           
+            <span style={{marginRight:"70%"}} >2022&copy;K-Smart</span>&nbsp;
+            <span  >
+              <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
+              <a className="text-white text-link" href="#">Privacy</a>
+            </span>
+            
+          </div>
         </div>
       </div>
-      <div className="employeeBackbuttonAlign">
-        <BackButton variant="white" style={{ borderBottom: "none" }} />
-      </div>
 
-      <FormComposer
+      <div className="rightdiv">
+        <div className="rightflex" >
+        <FormComposer
         onSubmit={onLogin}
         isDisabled={isDisabled || disable}
         noBoxShadow
@@ -170,26 +183,24 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
         label={propsConfig.texts.submitButtonLabel}
         secondaryActionLabel={propsConfig.texts.secondaryButtonLabel}
         onSecondayActionClick={onForgotPassword}
-        heading={propsConfig.texts.header}
-        headingStyle={{ textAlign: "center" }}
+        heading={"Sign In"}
+        // heading={propsConfig.texts.header}
+        headingStyle={{ textAlign: "left" }}
+        
         cardStyle={{ margin: "auto", minWidth: "408px" }}
         className="loginFormStyleEmployee"
         buttonStyle={{ maxWidth: "100%", width: "100%" }}
       >
-        {/* <Header /> */}
       </FormComposer>
       {showToast && <Toast error={true} label={t(showToast)} onClose={closeToast} />}
-      {/* <div style={{ width: '100%', position: 'fixed', bottom: 0 }}>
-        <div style={{ display: 'flex', justifyContent: 'center', color:"white" }}>
-          <img style={{ cursor: "pointer", display: "inline-flex", height: '1.4em' }} alt={"Powered by DIGIT"} src={`${sourceUrl}/digit-footer-bw.png`} onError={"this.src='./../digit-footer.png'"} onClick={() => {
-            window.open('https://www.digit.org/', '_blank').focus();
-          }}></img>
-          <span style={{ margin: "0 10px" }}>|</span>
-          <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open('https://niua.in/', '_blank').focus();}} >Copyright © 2022 National Institute of Urban Affairs</span>
-          <span style={{ margin: "0 10px" }}>|</span>
-          <a style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} href={pdfUrl} target='_blank'>UPYOG License</a>
+      
         </div>
-      </div> */}
+      </div>
+      <div className="employeeBackbuttonAlign">
+        <BackButton variant="white" style={{ borderBottom: "none" }} />
+      </div>
+
+      
     </Background>
   );
 };

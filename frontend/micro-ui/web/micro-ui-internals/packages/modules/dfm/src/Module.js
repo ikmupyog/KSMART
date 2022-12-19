@@ -6,6 +6,9 @@ import DFMApplicationDetails from "../src/pageComponents/DFMApplicationDetails";
 import DFMAddressDetails from "../src/pageComponents/DFMAddressDetails";
 import DFMServiceDetails from "../src/pageComponents/DFMServiceDetails";
 import DFMDocumentDetails from "../src/pageComponents/DFMDocumentDetails";
+import DFMCheckPage from "./pages/citizen/Create/CheckPage";
+// import TLDocument from "./pageComponents/TLDocumets";
+import DFMAcknowledgement from "./pages/citizen/Create/DFMAcknowlegement";
 // import TradeLicense from "../src/pageComponents/TradeLicense";
 // import TLSelectGeolocation from "../src/pageComponents/TLSelectGeolocation";
 // import TLSelectAddress from "./pageComponents/TLSelectAddress";
@@ -112,6 +115,8 @@ const componentsToRegister = {
   DFMAddressDetails,
   DFMServiceDetails,
   DFMDocumentDetails,
+  DFMAcknowledgement,
+  DFMCheckPage,
   // SelectLand,
   // SelectBuilding,
   // SelectBusinessCategory,
