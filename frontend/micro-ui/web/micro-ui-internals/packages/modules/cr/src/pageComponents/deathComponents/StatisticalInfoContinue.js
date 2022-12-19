@@ -38,7 +38,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   const [setFemaleDeathPregnant, setSelectedFemaleDeathPregnant] = useState(formData?.StatisticalInfoContinue?.setFemaleDeathPregnant);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
-  const [CauseOfDeath, setCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeath);
+  const [CauseOfDeath, setCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.CauseOfDeath);
 
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;

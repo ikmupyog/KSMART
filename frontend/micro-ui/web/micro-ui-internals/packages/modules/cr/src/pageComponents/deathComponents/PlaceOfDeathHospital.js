@@ -13,8 +13,8 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   const [setDesignation, setSelectedDesignation] = useState(formData?.HospitalDetails?.setDesignation);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [HospitalAadhaar, setHospitalAadhaar] = useState(null);
-  const [HospitalMobile, setHospitalMobile] = useState(null);
+  const [HospitalAadhaar, setHospitalAadhaar] = useState(formData?.HospitalDetails?.HospitalAadhaar);
+  const [HospitalMobile, setHospitalMobile] = useState(formData?.HospitalDetails?.HospitalMobile);
 
   // const [TradeName, setTradeName] = useState(null);
   // const [CommencementDate, setCommencementDate] = useState();

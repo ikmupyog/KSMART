@@ -24,6 +24,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [LocalityML, setLocalityML] = useState(formData?.PlaceOfDeathHome?.LocalityML);
   const [CityEn, setCityEn] = useState(formData?.PlaceOfDeathHome?.CityEn);
   const [CityMl, setCityMl] = useState(formData?.PlaceOfDeathHome?.CityMl);
+  const [setWard, setSelectedWard] = useState(formData?.PlaceOfDeathHome?.setWard);
+  
+  
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -104,7 +107,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDistrict(value);
   }
-
+  function selectWard(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedWard(value);
+  }
+  
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
@@ -122,12 +129,14 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PinCode", PinCode);
     sessionStorage.setItem("setTaluk", setTaluk.code);
     sessionStorage.setItem("setDistrict", setDistrict.code);
-    sessionStorage.setItem("BuildingNo", BuildingNo.code);
-    sessionStorage.setItem("HouseNo", HouseNo.code);
-    sessionStorage.setItem("Locality", Locality.code);
-    sessionStorage.setItem("LocalityML", LocalityML.code);
-    sessionStorage.setItem("CityEn", CityEn.code);
-    sessionStorage.setItem("CityMl", CityMl.code);
+    sessionStorage.setItem("BuildingNo", BuildingNo);
+    sessionStorage.setItem("HouseNo", HouseNo);
+    sessionStorage.setItem("Locality", Locality);
+    sessionStorage.setItem("LocalityML", LocalityML);
+    sessionStorage.setItem("CityEn", CityEn);
+    sessionStorage.setItem("CityMl", CityMl);
+    sessionStorage.setItem("setWard", setWard.code);
+    
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
@@ -143,6 +152,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
       LocalityML,
       CityEn,
       CityMl,
+      setWard,
     });
   };
   return (
@@ -190,7 +200,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_LOCALITY_EN")}</CardLabel>
             <TextInput
               t={t}
@@ -204,7 +214,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_LOCALITY_ML")}</CardLabel>
             <TextInput
               t={t}
@@ -216,6 +226,18 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectLocalityML}
               disable={isEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CS_COMMON_WARD")}</CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbTaluk}
+              selected={setWard}
+              select={selectWard}
+              disabled={isEdit}
             />
           </div>
         </div>

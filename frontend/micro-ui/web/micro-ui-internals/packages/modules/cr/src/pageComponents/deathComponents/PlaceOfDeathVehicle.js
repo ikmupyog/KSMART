@@ -22,8 +22,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const [VehicleTo, setVehicleTo] = useState(formData?.PlaceOfDeathVehicle?.VehicleTo);
   const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsEn);  
   const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsMl); 
-  const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.TradeDetails?.setDeathVehicleWard);
-  const [setAdmittedHospital, setSelectedAdmittedHospital] = useState(formData?.TradeDetails?.setAdmittedHospital);
+  const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.PlaceOfDeathVehicle?.setDeathVehicleWard);
+  const [setAdmittedHospital, setSelectedAdmittedHospital] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospital);
   
     
   const [CommencementDate, setCommencementDate] = useState();

@@ -21,7 +21,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PresentCityNameMl, setPresentCityNameMl] = useState(formData?.AddressDetails?.PresentCityNameMl);
   const [PresentVillage, setPresentVillage] = useState(formData?.AddressDetails?.PresentVillage);
   const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
-  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentLBName);
+  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
   const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
   const [PresentWard, setPresentWard] = useState(formData?.AddressDetails?.PresentWard);
   const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
@@ -37,7 +37,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
   const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
   const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
-  const [PermanentWard, setPermanentWard] = useState(formData?.AddressDetails?.PermanentTaluk);
+  const [PermanentWard, setPermanentWard] = useState(formData?.AddressDetails?.PermanentWard);
   const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);
   const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
   let cmbPlace = [];
