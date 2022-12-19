@@ -29,16 +29,26 @@ const LanguageSelection = () => {
       <div className="leftdiv">
         <div className="leftflex" >
           <h1 className="logostyle">
-            <a href="" src={stateInfo?.logoUrl}>
-              {/* <img className="bannerLogo" src={stateInfo?.logoUrl} alt="Digit" /> */}
-              KSMART
-            </a>
+            <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{ maxWidth: "450px" }} />
+
+            
           </h1>
-          <div style={{ color: "#fff", width:"75%", fontSize:"19px" }}>
-            <h2 style={{fontSize:"28px",marginBottom:"18px", fontWeight:"bold"}}>KSMART</h2>
-            <p>Kerala Solution For Administrative Reformation And Transformation</p>
+          <div style={{ textAlign: "center", margin: "0 auto" }}>
+            <div>
+              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" style={{ maxWidth: "450px" }} />
+              <label style={{ fontSize: "32px" }}>Exploring K-Smart</label><br></br>
+              <label style={{ fontSize: "17px" }}>Kerala - Solution For Administrative Reformation And Transformation.</label>
+            </div>
           </div>
-          <div> 2022&copy; Ksmart</div>
+          <div style={{ justifyContent: "space-between !important" }} >
+
+            <span style={{ marginRight: "70%" }} >2022&copy;K-Smart</span>&nbsp;
+            <span  >
+              <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
+              <a className="text-white text-link" href="#">Privacy</a>
+            </span>
+
+          </div>
         </div>
       </div>
       <Card className="bannerCard removeBottomMargin" style={{margin:"0 auto"}}>

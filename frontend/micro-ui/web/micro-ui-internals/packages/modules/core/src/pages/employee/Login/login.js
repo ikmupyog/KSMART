@@ -1,4 +1,4 @@
-import { BackButton, Dropdown, FormComposer, Loader, Toast,CardLabel } from "@egovernments/digit-ui-react-components";
+import { BackButton, Dropdown, FormComposer, Loader, Toast, CardLabel } from "@egovernments/digit-ui-react-components";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -29,9 +29,9 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
 
   const history = useHistory();
   // const getUserType = () => "EMPLOYEE" || Digit.UserService.getType();
-  let   sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
+  let sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
   const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+and+Copyright+License_v1.pdf";
-  
+
   useEffect(() => {
     if (!user) {
       return;
@@ -91,7 +91,19 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
   const onForgotPassword = () => {
     history.push("/digit-ui/employee/user/forgot-password");
   };
-
+  const mystyle = {
+    background: "#bc5bfc",
+    backgroundImage: "-webkit-linear-gradient(top, #bc5bfc, #2980b9)",
+    backgroundImage: "-moz-linear-gradient(top, #bc5bfc, #2980b9)",
+    backgroundImage: "-ms-linear-gradient(top, #bc5bfc, #2980b9)",
+    backgroundImage: "-o-linear-gradient(top, #bc5bfc, #2980b9)",
+    backgroundImage: "linear-gradient(to bottom, #bc5bfc, #2980b9)",
+    borderRadius: "9px",
+    Color: "#ffffff",
+    fontSize: "20px",
+    padding: "10px 20px 10px 20px",
+    textDecoration: "none",
+  };
   const [userId, password, city] = propsConfig.inputs;
   const config = [
     {
@@ -141,66 +153,66 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
     <Loader />
   ) : (
     <Background >
-     <div className="leftdiv">
+      <div className="leftdiv">
         <div className="leftflex" >
           <h1 className="logostyle">
-            
-             <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{maxWidth:"450px"}} />
+
+            <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{ maxWidth: "450px" }} />
 
             <a href="" src={stateInfo?.logoUrl}>
               {/* <img className="bannerLogo" src={stateInfo?.logoUrl} alt="Digit" /> */}
               {/* KSMART */}
             </a>
           </h1>
-          <div style={{textAlign:"center",margin:"0 auto"}}>
-              <div>
-                  <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" style={{maxWidth:"450px"}} />
-                    <label style={{fontSize:"35px"}}>Exploring K-Smart</label><br></br>
-                    <label style={{fontSize:"17px"}}>Kerala - Solution For Administrative Reformation And Transformation.</label>
-              </div>
+          <div style={{ textAlign: "center", margin: "0 auto" }}>
+            <div>
+              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" style={{ maxWidth: "450px" }} />
+              <label style={{ fontSize: "32px" }}>Exploring K-Smart</label><br></br>
+              <label style={{ fontSize: "17px" }}>Kerala - Solution For Administrative Reformation And Transformation.</label>
+            </div>
           </div>
-          <div style={{justifyContent: "space-between !important"}} > 
-           
-            <span style={{marginRight:"70%"}} >2022&copy;K-Smart</span>&nbsp;
+          <div style={{ justifyContent: "space-between !important" }} >
+
+            <span style={{ marginRight: "70%" }} >2022&copy;K-Smart</span>&nbsp;
             <span  >
               <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
               <a className="text-white text-link" href="#">Privacy</a>
             </span>
-            
+
           </div>
         </div>
       </div>
 
       <div className="rightdiv">
         <div className="rightflex" >
-        <FormComposer
-        onSubmit={onLogin}
-        isDisabled={isDisabled || disable}
-        noBoxShadow
-        inline
-        submitInForm
-        config={config}
-        label={propsConfig.texts.submitButtonLabel}
-        secondaryActionLabel={propsConfig.texts.secondaryButtonLabel}
-        onSecondayActionClick={onForgotPassword}
-        heading={"Sign In"}
-        // heading={propsConfig.texts.header}
-        headingStyle={{ textAlign: "left" }}
-        
-        cardStyle={{ margin: "auto", minWidth: "408px" }}
-        className="loginFormStyleEmployee"
-        buttonStyle={{ maxWidth: "100%", width: "100%" }}
-      >
-      </FormComposer>
-      {showToast && <Toast error={true} label={t(showToast)} onClose={closeToast} />}
-      
+          <FormComposer
+            onSubmit={onLogin}
+            isDisabled={isDisabled || disable}
+            noBoxShadow
+            inline
+            submitInForm
+            config={config}
+            label={propsConfig.texts.submitButtonLabel}
+            secondaryActionLabel={propsConfig.texts.secondaryButtonLabel}
+            onSecondayActionClick={onForgotPassword}
+            heading={"Sign In"}
+            // heading={propsConfig.texts.header}
+            headingStyle={{ textAlign: "left" }}
+
+            cardStyle={{ margin: "auto", minWidth: "408px" }}
+            className="loginFormStyleEmployee"
+            buttonStyle={mystyle}
+          >
+          </FormComposer>
+          {showToast && <Toast error={true} label={t(showToast)} onClose={closeToast} />}
+
         </div>
       </div>
       <div className="employeeBackbuttonAlign">
         <BackButton variant="white" style={{ borderBottom: "none" }} />
       </div>
 
-      
+
     </Background>
   );
 };
