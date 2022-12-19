@@ -71,11 +71,10 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">Place Of Death Hospital </header>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death Hospital")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH_HOSPITAL")}`}</span>
             </h1>
           </div>
         </div>
@@ -128,7 +127,8 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
               value={HospitalAadhaar}
               onChange={setSelectHospitalAadhaar}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} 
+             
             />
           </div>
           <div className="col-md-4">
@@ -142,7 +142,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
               value={HospitalMobile}
               onChange={setSelectHospitalMobile}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
         </div>

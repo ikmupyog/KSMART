@@ -58,9 +58,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
-        <header className="tittle">Statistical Information </header>
-        
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>   
       <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
@@ -147,7 +145,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 value={OccupationOthers}
                 onChange={setOccupationOthers}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
             />
         </div>  
       </div> 

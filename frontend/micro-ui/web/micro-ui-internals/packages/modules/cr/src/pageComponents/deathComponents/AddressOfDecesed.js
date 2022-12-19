@@ -53,7 +53,6 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">AdressOfDeceased</header>
         <div className="maindeath">
           <div className="radios">
             <div className="inside">

@@ -188,8 +188,6 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">Informent Address </header>
-        
         <div className="row">
         <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
@@ -213,7 +211,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={InformentNameEn}
               onChange={setSelectInformentNameEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -227,7 +225,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={InformentNameMl}
               onChange={setSelectInformentNameMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
             />
           </div>
         </div>
@@ -246,19 +244,19 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             <TextInput
               t={t}
               isMandatory={false}
-              type={"number"}
+              type={"text"}
               optionKey="i18nKey"
               name="AadhaarNo"
               value={AadhaarNo}
               onChange={setSelectAadhaarNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false ,title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
         
           <div className="col-md-3">
-            {/* <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
-            <Dropdown t={t} 
+            <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
+            {/* <Dropdown t={t} 
             optionKey="name" 
             isMandatory={false} 
             option={cmbDeclaration} 
@@ -272,13 +270,13 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             <TextInput
               t={t}
               isMandatory={false}
-              type={"number"}
+              type={"text"}
               optionKey="i18nKey"
               name="InformentMobileNo"
               value={InformentMobileNo}
               onChange={setSelectInformentMobileNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
           <div className="col-md-3">
@@ -292,7 +290,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={InformentOfAge}
               onChange={setSelectInformentOfAge}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = {pattern: "^([0-9]){3}$", isRequired: true,type: "text", title: t("CS_COMMON_INVALID_AGE"),  })}
             />
           </div>
         </div>
@@ -311,13 +309,13 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             <TextInput
               t={t}
               isMandatory={false}
-              type={"number"}
+              type={"text"}
               optionKey="i18nKey"
               name="BuildingNo"
               value={BuildingNo}
               onChange={setSelectBuildingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
             />
           </div>
           <div className="col-md-6">
@@ -331,7 +329,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={HouseNo}
               onChange={setSelectHouseNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
             />
           </div>
         </div>
@@ -347,7 +345,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={Locality}
               onChange={setSelectLocality}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -361,7 +359,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={LocalityMl}
               onChange={setSelectLocalityMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />
           </div>
         </div>
@@ -377,7 +375,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={CityEn}
               onChange={setSelectCityEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -391,7 +389,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={CityMl}
               onChange={setSelectCityMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
             />
           </div>
         </div>
@@ -447,7 +445,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={PinCode}
               onChange={setSelectPinCode}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = {pattern: "^([0-9]){6}$", isRequired: true,type: "text", title: t("CS_COMMON_INVALID_PIN_CODE"), })}
             />
           </div>
         </div>

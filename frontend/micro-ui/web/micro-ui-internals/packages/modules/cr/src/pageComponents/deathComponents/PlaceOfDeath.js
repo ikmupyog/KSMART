@@ -40,9 +40,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-        <header className="tittle">{t("CR_PLACE_OF_DEATH")} </header>
-
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >     
         <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >

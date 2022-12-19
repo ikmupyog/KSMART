@@ -490,9 +490,9 @@ export const newConfig = [
         isMandatory: true,
         component: "InformationDeath",
         texts: {
-          // headerCaption: "TL_STRUCTURE_TYPE",
-          header: "Information Deceased",
-          // cardText: "TL_STRUCTURE_TYPE_TEXT",
+          headerCaption: "",
+          header: "CR_LEAGAL_INFORMATION",
+          cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
         },
         key: "InformationDeath",
@@ -505,7 +505,7 @@ export const newConfig = [
         component: "AddressOfDecesed",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_ADDRESS_DECESED",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -520,7 +520,7 @@ export const newConfig = [
         component: "FamilyInformationDeath",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_FAMILY_INFO",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -536,7 +536,7 @@ export const newConfig = [
         component: "PlaceOfDeath",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_PLACE_OF_DEATH",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -552,7 +552,7 @@ export const newConfig = [
         component: "PlaceOfDeathHome",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_PLACE_OF_DEATH_HOME",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -568,7 +568,7 @@ export const newConfig = [
         component: "PlaceOfDeathHospital",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_PLACE_OF_DEATH_HOSPITAL",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -584,7 +584,7 @@ export const newConfig = [
         component: "PlaceOfDeathInstitution",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_PLACE_OF_DEATH_INSTITUTION",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -600,7 +600,7 @@ export const newConfig = [
         component: "PlaceOfDeathOther",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_PLACE_OF_DEATH_OTHER",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -616,7 +616,7 @@ export const newConfig = [
         component: "PlaceOfDeathVehicle",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_PLACE_OF_DEATH_VECHICLE",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -632,7 +632,7 @@ export const newConfig = [
         component: "InformentAddress",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_INFORMANT_ADDRESS",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -648,7 +648,7 @@ export const newConfig = [
         component: "StatisticalInfo",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_STATISTICAL_INFORMATION",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -664,7 +664,7 @@ export const newConfig = [
         component: "StatisticalInfoContinue",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "CR_STATISTICAL_INFORMATION_CONTINUE",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",

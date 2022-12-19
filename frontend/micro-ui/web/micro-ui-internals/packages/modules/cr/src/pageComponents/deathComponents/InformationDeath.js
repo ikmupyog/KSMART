@@ -326,7 +326,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={FirstName}
               onChange={setSelectFirstName}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -340,7 +340,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={MiddleName}
               onChange={setSelectMiddleName}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -354,7 +354,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={LastName}
               onChange={setSelectLastName}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
             />
           </div>
         </div>
@@ -374,7 +374,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={MLFirstName}
               onChange={setSelectMLFirstName}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
             />
           </div>
           <div className="col-md-3">
@@ -388,7 +388,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={MlMiddleName}
               onChange={setSelectMlMiddleName}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
             />
           </div>
           <div className="col-md-3">
@@ -402,7 +402,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={MlLastName}
               onChange={setSelectMlLastName}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
             />
           </div>
         </div>
@@ -427,7 +427,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={Ageofbirth}
               onChange={setSelectAgeofbirth}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = {pattern: "^([0-9]){3}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_AGE"),  })}
+             
             />
           </div>
         </div>
@@ -452,7 +453,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={AdharNo}
               onChange={setSelectAdharNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[0-9-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false,title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
         </div>
@@ -476,7 +477,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={PassportNo}
               onChange={setSelectPassportNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[0-9-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "Text", title: t("CR_INVALID_PASSPORT_NO") })}
             />
           </div>
         </div>
