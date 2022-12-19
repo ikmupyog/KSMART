@@ -10,6 +10,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+  const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -44,6 +45,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   let cmbTaluk = [];
   let cmbVillage = [];
   let cmbDistrict = [];
+  let cmbPostOffice = [];
 
   Taluk &&
     Taluk["common-masters"] &&
@@ -59,6 +61,11 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     District["common-masters"] &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
+    });
+    PostOffice &&
+    PostOffice["common-masters"] &&
+    PostOffice["common-masters"].PostOffice.map((ob) => {
+      cmbPostOffice.push(ob);
     });
 
   const onSkip = () => onSelect();
@@ -452,7 +459,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionKey="name"
               isMandatory={false}
-              option={cmbDistrict}
+              option={cmbPostOffice}
               selected={PresentPostOffice}
               select={setSelectPresentPostOffice}
               disabled={isEdit}
@@ -654,7 +661,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionKey="name"
               isMandatory={false}
-              option={cmbDistrict}
+              option={cmbPostOffice}
               selected={PermanentPostOffice}
               select={setSelectPermanentPostOffice}
               disabled={isEdit}

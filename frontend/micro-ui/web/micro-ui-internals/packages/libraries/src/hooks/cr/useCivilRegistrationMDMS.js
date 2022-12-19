@@ -2,12 +2,11 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
-  
   const useCRPlaceMaster = () => {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
   };
   const useCRHospital = () => {
-    return useQuery("CR_HOSPITALMASTER", () => MdmsService.getCRHospitalMaster(tenantId, moduleCode,), config);
+    return useQuery("CR_HOSPITALMASTER", () => MdmsService.getCRHospitalMaster(tenantId, moduleCode), config);
   };
   const usePLaceOfDeath = () => {
     return useQuery("CR_PLACE_DEATH", () => MdmsService.getCRPlaceOfDeath(tenantId, moduleCode, type), config);
@@ -30,6 +29,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useCRReligion = () => {
     return useQuery("CR_RELIGION", () => MdmsService.getCRReligion(tenantId, moduleCode), config);
   };
+  
   //////institution-type
   const useCRInstitution = () => {
     return useQuery("CR_INSTITUTION", () => MdmsService.getCRInstitution(tenantId, moduleCode), config);
@@ -220,27 +220,27 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     case "Village":
       return useCRVillage();
     case "District":
-      return useCRDistrict();  
+      return useCRDistrict();
     case "PostOffice":
-      return useCRPostOffice(); 
+      return useCRPostOffice();
     case "mstate":
       return useCRState();
     case "LBType":
-      return useCRLBType(); 
+      return useCRLBType();
     case "Country":
-      return useCRCountry(); 
+      return useCRCountry();
     case "Occupation":
-      return useCROccupation(); 
+      return useCROccupation();
     case "Qualification":
       return useCRQualification();
-      case "Profession":
-      return useCRProfession(); 
+    case "Profession":
+      return useCRProfession();
     case "AttentionOfDelivery":
       return useCRNatureofMedicalAttention();
-      case "MedicalAttentionType":
+    case "MedicalAttentionType":
       return useCRNatureofMedicalAttentionSub();
     case "DeliveryMethod":
-      return useCRDeliveryMethod();   
+      return useCRDeliveryMethod();
     case "Title":
       return useCRWard();
     case "Religion":

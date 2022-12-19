@@ -14,8 +14,16 @@ const navStyle = {
   left: "70px",
   bottom: "20px",
 };
+const navStyleCR = {
+  width: "300px",
+  display: "block",
+  listStyle: "none",
+  position: "relative",
+  left: "70px",
+  bottom: "0px",
+};
 const navLi = {
- marginBottom:"5px"
+  marginBottom: "5px",
 };
 const ToolTipWrapper = ({ child, label, t }) => (
   <span className="tooltip">
@@ -149,7 +157,6 @@ const EmployeeSideBar = () => {
             </div>
           ) : null}
         </Link>
-
         <Link
           onClick={() => {
             setClick(click);
@@ -160,7 +167,7 @@ const EmployeeSideBar = () => {
             className="actions active"
             onClick={() => {
               if (first === "") {
-                setfirst("Home2");
+                setfirst("Home9");
               } else {
                 setfirst("");
               }
@@ -169,43 +176,48 @@ const EmployeeSideBar = () => {
             <div style={mystyle}>
               <ToolTipWrapper
                 child={
-                  <svg id="ic_reports" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <rect id="Rectangle_4" data-name="Rectangle 4" width="24" height="24" fill="none" />
-                    <g id="Group_9" data-name="Group 9">
-                      <path id="Path_15" data-name="Path 15" d="M0,0H24V24H0Z" fill="none" />
-                      <path
-                        id="Path_16"
-                        data-name="Path 16"
-                        d="M21,8V20.993A1,1,0,0,1,20.007,22H3.993A.993.993,0,0,1,3,21.008V2.992A1,1,0,0,1,4,2H15ZM19,9H14V4H5V20H19ZM8,7h3V9H8Zm0,4h8v2H8Zm0,4h8v2H8Z"
-                        fill="#696b74"
-                      />
-                    </g>
+                  <svg id="ic_trade_license" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <rect id="Rectangle_10" data-name="Rectangle 10" width="24" height="24" fill="none" />
+                    <path id="Path_7" data-name="Path 7" d="M0,0H24V24H0Z" fill="none" />
+                    <path
+                      id="Path_8"
+                      data-name="Path 8"
+                      d="M15,3a1,1,0,0,1,1,1V6h5a1,1,0,0,1,1,1V20a1,1,0,0,1-1,1H3a1,1,0,0,1-1-1V7A1,1,0,0,1,3,6H8V4A1,1,0,0,1,9,3Zm1,5H8V19h8ZM4,8V19H6V8ZM14,5H10V6h4Zm4,3V19h2V8Z"
+                      fill="#696b74"
+                    />
                   </svg>
                 }
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>Reports</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>Trade Licence</span> : null}
             </div>
           </div>
-          {first === "Home2" ? (
+          {first === "Home9" ? (
             <div style={navStyle} className="nav_drop">
-              <li>Collection Register</li>
+              <li style={navLi}>
+                <Link to="/digit-ui/employee/tl/inbox">Trade License</Link>
+              </li>
+              <li style={navLi}>
+                <Link to="/digit-ui/employee/tl/search/application">Search</Link>
+              </li>
+              <li style={navLi}>
+                <Link to="/digit-ui/employee//tl/new-application">Apply TL</Link>
+              </li>
+              <li style={navLi}>Apply for TL</li>
             </div>
           ) : null}
         </Link>
-
         <Link
           onClick={() => {
             setClick(click);
           }}
-          to="/digit-ui/employee/"
         >
           <div
             className="actions active"
             onClick={() => {
               if (first === "") {
-                setfirst("Home3");
+                setfirst("Home11");
               } else {
                 setfirst("");
               }
@@ -214,15 +226,14 @@ const EmployeeSideBar = () => {
             <div style={mystyle}>
               <ToolTipWrapper
                 child={
-                  <svg id="ic_fire_noc" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <rect id="Rectangle_5" data-name="Rectangle 5" width="24" height="24" fill="none" />
-                    <g id="Group_12" data-name="Group 12" transform="translate(-356 -376)">
-                      <path id="Path_21" data-name="Path 21" d="M0,0H24V24H0Z" transform="translate(356 376)" fill="none" />
+                  <svg id="ic_bpa" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <rect id="Rectangle_8" data-name="Rectangle 8" width="24" height="24" fill="none" />
+                    <g id="Group_14" data-name="Group 14">
+                      <path id="Path_25" data-name="Path 25" d="M0,0H24V24H0Z" fill="none" />
                       <path
-                        id="Union_2"
-                        data-name="Union 2"
-                        d="M1,20a1,1,0,0,1-1-1V1A1,1,0,0,1,1,0H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1Zm1-2H16V2H2Zm3.327-4.461A3.821,3.821,0,0,1,6.2,9.212c.05-.047.216-.2.506-.453l.025-.023c.289-.259.516-.48.736-.715A6.811,6.811,0,0,0,9.142,5.111L9.172,5h.171l.042.035a4.068,4.068,0,0,1,1.74,2.786A6.65,6.65,0,0,1,9.92,11.407a1.184,1.184,0,0,0,1.028,1.77A2.819,2.819,0,0,0,12.29,12.8l.3-.164-.088.334A3.822,3.822,0,0,1,9.118,15.8c-.1.007-.2.012-.3.012A3.818,3.818,0,0,1,5.327,13.539Z"
-                        transform="translate(359 378)"
+                        id="Path_26"
+                        data-name="Path 26"
+                        d="M20,22H4a1,1,0,0,1-1-1V3A1,1,0,0,1,4,2H20a1,1,0,0,1,1,1V21A1,1,0,0,1,20,22Zm-1-2V4H5V20ZM7,6h4v4H7Zm0,6H17v2H7Zm0,4H17v2H7Zm6-9h4V9H13Z"
                         fill="#696b74"
                       />
                     </g>
@@ -231,16 +242,17 @@ const EmployeeSideBar = () => {
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>Fire Noc</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>File Management</span> : null}
             </div>
           </div>
-          {first === "Home3" ? (
-            <div style={navStyle} className="nav_drop">
-              <li>Reports</li>
+          {first === "Home11" ? (
+            <div style={navStyleCR} className="nav_drop">
+              <li style={navLi}>
+                <Link to="/digit-ui/employee/cr/death-flow">New Registration</Link>
+              </li>
             </div>
           ) : null}
         </Link>
-
         <Link
           onClick={() => {
             setClick(click);
@@ -276,13 +288,70 @@ const EmployeeSideBar = () => {
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>Citizen Engagement</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>Citizen Registration</span> : null}
             </div>
+            {first === "Home4" ? (
+              <div style={navStyleCR} className="nav_drop">
+                <li style={navLi}>
+                  <Link to="/digit-ui/employee/cr/cr-flow">Birth Registration</Link>
+                </li>
+                <li style={navLi}>
+                  <Link to="/digit-ui/employee/cr/death-flow">Death Registration</Link>
+                </li>
+              </div>
+            ) : null}
           </div>
           {first === "Home4" ? <div style={navStyle} className="nav_drop"></div> : null}
         </Link>
-
         <Link
+          onClick={() => {
+            setClick(click);
+          }}
+        >
+          <div
+            className="actions active"
+            onClick={() => {
+              if (first === "") {
+                setfirst("Home7");
+              } else {
+                setfirst("");
+              }
+            }}
+          >
+            <div style={mystyle}>
+              <ToolTipWrapper
+                child={
+                  <svg id="ic_dashboard" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <rect id="Rectangle_7" data-name="Rectangle 7" width="24" height="24" fill="none" />
+                    <g id="Group_10" data-name="Group 10">
+                      <path id="Path_17" data-name="Path 17" d="M0,0H24V24H0Z" fill="none" />
+                      <path
+                        id="Path_18"
+                        data-name="Path 18"
+                        d="M13,21V11h8V21ZM3,13V3h8V13Zm6-2V5H5v6ZM3,21V15h8v6Zm2-2H9V17H5Zm10,0h4V13H15ZM13,3h8V9H13Zm2,2V7h4V5Z"
+                        fill="#696b74"
+                      />
+                    </g>
+                  </svg>
+                }
+                t={t}
+                label={"ACTION_TEST_HOME"}
+              />
+              {click ? <span style={{ display: "inline-block" }}>Dashboard</span> : null}
+            </div>
+          </div>
+          {first === "Home7" ? (
+            <div style={navStyle} className="nav_drop">
+              <li style={navLi}>
+                {" "}
+                <Link to="/digit-ui/employee/integration/dss/home">Sure Dashboard</Link>
+              </li>
+              <li style={navLi}>Property Tax</li>
+              <li style={navLi}>Trade Liscense</li>
+            </div>
+          ) : null}
+        </Link>
+        {/* <Link
           onClick={() => {
             setClick(click);
           }}
@@ -292,7 +361,7 @@ const EmployeeSideBar = () => {
             className="actions active"
             onClick={() => {
               if (first === "") {
-                setfirst("Home11");
+                setfirst("Home8");
               } else {
                 setfirst("");
               }
@@ -301,14 +370,14 @@ const EmployeeSideBar = () => {
             <div style={mystyle}>
               <ToolTipWrapper
                 child={
-                  <svg id="ic_bpa" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <rect id="Rectangle_8" data-name="Rectangle 8" width="24" height="24" fill="none" />
-                    <g id="Group_14" data-name="Group 14">
-                      <path id="Path_25" data-name="Path 25" d="M0,0H24V24H0Z" fill="none" />
+                  <svg id="ic_mcollect" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <rect id="Rectangle_11" data-name="Rectangle 11" width="24" height="24" fill="none" />
+                    <g id="Group_13" data-name="Group 13">
+                      <path id="Path_23" data-name="Path 23" d="M0,0H24V24H0Z" fill="none" />
                       <path
-                        id="Path_26"
-                        data-name="Path 26"
-                        d="M20,22H4a1,1,0,0,1-1-1V3A1,1,0,0,1,4,2H20a1,1,0,0,1,1,1V21A1,1,0,0,1,20,22Zm-1-2V4H5V20ZM7,6h4v4H7Zm0,6H17v2H7Zm0,4H17v2H7Zm6-9h4V9H13Z"
+                        id="Path_24"
+                        data-name="Path 24"
+                        d="M21,19h2v2H1V19H3V4A1,1,0,0,1,4,3H14a1,1,0,0,1,1,1V19h4V11H17V9h3a1,1,0,0,1,1,1ZM5,5V19h8V5Zm2,6h4v2H7ZM7,7h4V9H7Z"
                         fill="#696b74"
                       />
                     </g>
@@ -317,17 +386,104 @@ const EmployeeSideBar = () => {
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>Bpa Stakeholder</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>mCollect</span> : null}
             </div>
           </div>
-          {first === "Home11" ? (
+          {first === "Home8" ? <div style={navStyle} className="nav_drop"></div> : null}
+        </Link> */}
+
+        {/* <Link
+          onClick={() => {
+            setClick(click);
+          }}
+          to="/digit-ui/employee/"
+        >
+          {/* <div
+            className="actions active"
+            onClick={() => {
+              if (first === "") {
+                setfirst("Home2");
+              } else {
+                setfirst("");
+              }
+            }}
+          > */}
+        {/* <div style={mystyle}>
+              <ToolTipWrapper
+                child={
+                  <svg id="ic_reports" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <rect id="Rectangle_4" data-name="Rectangle 4" width="24" height="24" fill="none" />
+                    <g id="Group_9" data-name="Group 9">
+                      <path id="Path_15" data-name="Path 15" d="M0,0H24V24H0Z" fill="none" />
+                      <path
+                        id="Path_16"
+                        data-name="Path 16"
+                        d="M21,8V20.993A1,1,0,0,1,20.007,22H3.993A.993.993,0,0,1,3,21.008V2.992A1,1,0,0,1,4,2H15ZM19,9H14V4H5V20H19ZM8,7h3V9H8Zm0,4h8v2H8Zm0,4h8v2H8Z"
+                        fill="#696b74"
+                      />
+                    </g>
+                  </svg>
+                }
+                t={t}
+                label={"ACTION_TEST_HOME"}
+              />
+              {click ? <span style={{ display: "inline-block" }}>Reports</span> : null}
+            </div> */}
+        {/* </div> */}
+        {/* {first === "Home2" ? (
             <div style={navStyle} className="nav_drop">
-              <li>Search</li>
+              <li>Collection Register</li>
             </div>
           ) : null}
-        </Link>
+        </Link> */}
 
-        <Link
+        {/* <Link
+          onClick={() => {
+            setClick(click);
+          }}
+          to="/digit-ui/employee/"
+        >
+          <div
+            className="actions active"
+            onClick={() => {
+              if (first === "") {
+                setfirst("Home3");
+              } else {
+                setfirst("");
+              }
+            }}
+          >
+            {/* <div style={mystyle}>
+              <ToolTipWrapper
+                child={
+                  <svg id="ic_fire_noc" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <rect id="Rectangle_5" data-name="Rectangle 5" width="24" height="24" fill="none" />
+                    <g id="Group_12" data-name="Group 12" transform="translate(-356 -376)">
+                      <path id="Path_21" data-name="Path 21" d="M0,0H24V24H0Z" transform="translate(356 376)" fill="none" />
+                      <path
+                        id="Union_2"
+                        data-name="Union 2"
+                        d="M1,20a1,1,0,0,1-1-1V1A1,1,0,0,1,1,0H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1Zm1-2H16V2H2Zm3.327-4.461A3.821,3.821,0,0,1,6.2,9.212c.05-.047.216-.2.506-.453l.025-.023c.289-.259.516-.48.736-.715A6.811,6.811,0,0,0,9.142,5.111L9.172,5h.171l.042.035a4.068,4.068,0,0,1,1.74,2.786A6.65,6.65,0,0,1,9.92,11.407a1.184,1.184,0,0,0,1.028,1.77A2.819,2.819,0,0,0,12.29,12.8l.3-.164-.088.334A3.822,3.822,0,0,1,9.118,15.8c-.1.007-.2.012-.3.012A3.818,3.818,0,0,1,5.327,13.539Z"
+                        transform="translate(359 378)"
+                        fill="#696b74"
+                      />
+                    </g>
+                  </svg>
+                }
+                t={t}
+                label={"ACTION_TEST_HOME"}
+              />
+              {click ? <span style={{ display: "inline-block" }}>Fire Noc</span> : null}
+            </div> */}
+        {/* </div>
+          {first === "Home3" ? (
+            <div style={navStyle} className="nav_drop">
+              <li>Reports</li>
+            </div>
+          ) : null}
+        </Link> */}
+
+        {/* <Link
           onClick={() => {
             setClick(click);
           }}
@@ -371,146 +527,7 @@ const EmployeeSideBar = () => {
               <li style={navLi}>Pt Massters</li>
             </div>
           ) : null}
-        </Link>
-
-        <Link
-          onClick={() => {
-            setClick(click);
-          }}
-          to="/digit-ui/employee/"
-        >
-          <div
-            className="actions active"
-            onClick={() => {
-              if (first === "") {
-                setfirst("Home7");
-              } else {
-                setfirst("");
-              }
-            }}
-          >
-            <div style={mystyle}>
-              <ToolTipWrapper
-                child={
-                  <svg id="ic_dashboard" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <rect id="Rectangle_7" data-name="Rectangle 7" width="24" height="24" fill="none" />
-                    <g id="Group_10" data-name="Group 10">
-                      <path id="Path_17" data-name="Path 17" d="M0,0H24V24H0Z" fill="none" />
-                      <path
-                        id="Path_18"
-                        data-name="Path 18"
-                        d="M13,21V11h8V21ZM3,13V3h8V13Zm6-2V5H5v6ZM3,21V15h8v6Zm2-2H9V17H5Zm10,0h4V13H15ZM13,3h8V9H13Zm2,2V7h4V5Z"
-                        fill="#696b74"
-                      />
-                    </g>
-                  </svg>
-                }
-                t={t}
-                label={"ACTION_TEST_HOME"}
-              />
-              {click ? <span style={{ display: "inline-block" }}>Dashboard</span> : null}
-            </div>
-          </div>
-          {first === "Home7" ? (
-            <div style={navStyle} className="nav_drop">
-              <li style={navLi}>Sure Dashboard</li>
-              <li style={navLi}>Property Tax</li>
-              <li style={navLi}>Trade Liscense</li>
-            </div>
-          ) : null}
-        </Link>
-        <Link
-          onClick={() => {
-            setClick(click);
-          }}
-          to="/digit-ui/employee/"
-        >
-          <div
-            className="actions active"
-            onClick={() => {
-              if (first === "") {
-                setfirst("Home8");
-              } else {
-                setfirst("");
-              }
-            }}
-          >
-            <div style={mystyle}>
-              <ToolTipWrapper
-                child={
-                  <svg id="ic_mcollect" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <rect id="Rectangle_11" data-name="Rectangle 11" width="24" height="24" fill="none" />
-                    <g id="Group_13" data-name="Group 13">
-                      <path id="Path_23" data-name="Path 23" d="M0,0H24V24H0Z" fill="none" />
-                      <path
-                        id="Path_24"
-                        data-name="Path 24"
-                        d="M21,19h2v2H1V19H3V4A1,1,0,0,1,4,3H14a1,1,0,0,1,1,1V19h4V11H17V9h3a1,1,0,0,1,1,1ZM5,5V19h8V5Zm2,6h4v2H7ZM7,7h4V9H7Z"
-                        fill="#696b74"
-                      />
-                    </g>
-                  </svg>
-                }
-                t={t}
-                label={"ACTION_TEST_HOME"}
-              />
-              {click ? <span style={{ display: "inline-block" }}>mCollect</span> : null}
-            </div>
-          </div>
-          {first === "Home8" ? (
-            <div style={navStyle} className="nav_drop">
-             
-            </div>
-          ) : null}
-        </Link>
-
-        <Link
-          onClick={() => {
-            setClick(click);
-          }}
-          to="/digit-ui/employee/"
-        >
-          <div
-            className="actions active"
-            onClick={() => {
-              if (first === "") {
-                setfirst("Home9");
-              } else {
-                setfirst("");
-              }
-            }}
-          >
-            <div style={mystyle}>
-              <ToolTipWrapper
-                child={
-                  <svg id="ic_trade_license" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <rect id="Rectangle_10" data-name="Rectangle 10" width="24" height="24" fill="none" />
-                    <path id="Path_7" data-name="Path 7" d="M0,0H24V24H0Z" fill="none" />
-                    <path
-                      id="Path_8"
-                      data-name="Path 8"
-                      d="M15,3a1,1,0,0,1,1,1V6h5a1,1,0,0,1,1,1V20a1,1,0,0,1-1,1H3a1,1,0,0,1-1-1V7A1,1,0,0,1,3,6H8V4A1,1,0,0,1,9,3Zm1,5H8V19h8ZM4,8V19H6V8ZM14,5H10V6h4Zm4,3V19h2V8Z"
-                      fill="#696b74"
-                    />
-                  </svg>
-                }
-                t={t}
-                label={"ACTION_TEST_HOME"}
-              />
-              {click ? <span style={{ display: "inline-block" }}>Trade Licenceeeee</span> : null}
-            </div>
-          </div>
-          {first === "Home9" ? (
-            <div style={navStyle} className="nav_drop">
-              <li style={navLi}>
-                <Link to="/digit-ui/employee/tl/inbox">Trade Licenseeeee</Link>
-              </li>
-              <li style={navLi}><Link to="/digit-ui/employee/tl/search/application">Search</Link></li>
-              <li style={navLi}><Link to="/digit-ui/employee//tl/new-application">Apply TL</Link></li>
-              <li style={navLi}>Apply for TL</li>
-            </div>
-          ) : null}
-        </Link>
+        </Link> */}
 
         {/* <Link to="/digit-ui/employee/tl/search/application">
           <div className="actions active">

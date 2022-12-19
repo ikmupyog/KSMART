@@ -4,12 +4,25 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
+const [inside, setInside] = useState(true);
+const [outside, setOutside] = useState(false);
+const insideHandler = () => {
+  setInside(true);
+  setOutside(false);
+};
+const outsideHandler = () => {
+  setInside(false);
+  setOutside(true);
+};
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const [Gender, selectGender] = useState(formData?.ChildDetails?.Gender);
+  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
@@ -44,6 +57,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
   //     cmbPlace.push(ob);
   //   });
+
+  let menu = [];
+  Menu &&
+    Menu.map((genderDetails) => {
+      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+    });
   let cmbNation = [];
   Nation &&
     Nation["common-masters"] &&
@@ -75,9 +94,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectCountry(value) {
     setSelectedCountry(value);
   }
-  // function setselectGender(value) {
-  //   selectGender(value);
-  // }
+  function setselectGender(value) {
+    selectGender(value);
+  }
   function selectReligion(value) {
     setSelectedReligion(value);
   }
@@ -158,6 +177,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("Seconds", Seconds);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
+    sessionStorage.setItem("Gender", Gender.code);
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
@@ -197,109 +217,53 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-6">
             {/* <CheckBox label={t("Exact Date of death not available")} onChange={setDateOfDeathNotAvailable} value={isDateOfDeathNotAvailable} checked={isDateOfDeathNotAvailable} /> */}
-            <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} />
+            <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onClick={insideHandler} />
           </div>
           <div className="col-md-6">
             {/* <CheckBox label={t("Unclaimed dead body")} onChange={setUnclamedDeadBody} value={isUnclamedDeadBody} checked={isUnclamedDeadBody} /> */}
-            <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} />
+            <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} onClick={outsideHandler} />
           </div>
         </div>
-
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
-            {/* date={CommencementDate} */}
-            <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} />
-          </div>
-          <div className="col-md-2">
-            <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-            <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
-            {/* <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="TimeOfDeath"
-              value={TimeOfDeath}
-              onChange={setSelectTimeOfDeath}
-              disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            /> */}
-          </div>
-          <div className="col-md-2">
-            {/* <CardLabel>{t("m")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="Minute"
-              value={Minute}
-              onChange={setSelectMinute}
-              disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            /> */}
-          </div>
-
-          <div className="col-md-2">
-            {/* <CardLabel>{t("s")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="Seconds"
-              value={Seconds}
-              onChange={setSelectSeconds}
-              disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            /> */}
-          </div>
+        <div>
+          {outside && (
+            <div className="row">
+              <div className="col-md-6">
+                <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
+                {/* date={CommencementDate} */}
+                <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} />
+              </div>
+              <div className="col-md-2">
+                <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
+                <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
+              </div>
+            </div>
+          )}
         </div>
-        <div className="row">
-          <div className="col-md-3">
-            <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
-            {/* date={CommencementDate} */}
-            <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
-            <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
 
-            {/* <TextInput
-            // t={t}
-            // isMandatory={false}
-            // type={"text"}
-            // optionKey="i18nKey"
-            // name="DeathTimeFrom"
-            // value={DeathTimeFrom}
-            // onChange={setDeathTimeFrom}
-            // disable={isEdit}
-            // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            /> */}
-          </div>
+        <div>
+          {inside && (
+            <div className="row">
+              <div className="col-md-3">
+                <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
+                {/* date={CommencementDate} */}
+                <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
+                <CustomTimePicker name="DeathTimeFrom" value={DeathTimeFrom} onChange={setDeathTimeFrom} />
+              </div>
 
-          <div className="col-md-3">
-            <CardLabel>{t("CR_TO_DATE")}</CardLabel>
-            {/* date={CommencementDate} */}
-            <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>{t("CR_TO_TIME")}</CardLabel>
-            <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
-
-            {/* <TextInput
-            // t={t}
-            // isMandatory={false}
-            // type={"text"}
-            // optionKey="i18nKey"
-            // name="DeathTimeTo"
-            // value={DeathTimeTo}
-            // onChange={setSelectDeathTimeTo}
-            // disable={isEdit}
-            // {...(validation = { pattern: "DeathTimeFrom^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
-            /> */}
-          </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_TO_DATE")}</CardLabel>
+                {/* date={CommencementDate} */}
+                <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_TO_TIME")}</CardLabel>
+                <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="row">
@@ -409,7 +373,17 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{t("CR_GENDER")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
+            <Dropdown
+              t={t}
+              optionKey="code"
+              isMandatory={true}
+              option={menu}
+              selected={Gender}
+              select={setselectGender}
+              disabled={isEdit}
+              placeholder={`${t("CR_GENDER")}`}
+              {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+            />
           </div>
           <div className="col-md-4">
             <CardLabel>{`${t("CR_DATE_OF_BIRTH_DECEASED")}`}</CardLabel>
