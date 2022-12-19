@@ -10,6 +10,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const [Gender, selectGender] = useState(formData?.ChildDetails?.Gender);
+  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
@@ -44,6 +47,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
   //     cmbPlace.push(ob);
   //   });
+
+  let menu = [];
+  Menu &&
+    Menu.map((genderDetails) => {
+      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+    });
   let cmbNation = [];
   Nation &&
     Nation["common-masters"] &&
@@ -75,9 +84,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectCountry(value) {
     setSelectedCountry(value);
   }
-  // function setselectGender(value) {
-  //   selectGender(value);
-  // }
+  function setselectGender(value) {
+    selectGender(value);
+  }
   function selectReligion(value) {
     setSelectedReligion(value);
   }
@@ -158,6 +167,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("Seconds", Seconds);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
+    sessionStorage.setItem("Gender", Gender.code);
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
@@ -264,7 +274,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-3">
             <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
-            <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
+            <CustomTimePicker name="DeathTimeFrom" value={DeathTimeFrom} onChange={setDeathTimeFrom} />
 
             {/* <TextInput
             // t={t}
@@ -409,7 +419,17 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{t("CR_GENDER")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
+            <Dropdown
+              t={t}
+              optionKey="code"
+              isMandatory={true}
+              option={menu}
+              selected={Gender}
+              select={setselectGender}
+              disabled={isEdit}
+              placeholder={`${t("CR_GENDER")}`}
+              {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+            />
           </div>
           <div className="col-md-4">
             <CardLabel>{`${t("CR_DATE_OF_BIRTH_DECEASED")}`}</CardLabel>
