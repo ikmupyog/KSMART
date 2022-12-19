@@ -4,16 +4,16 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
-const [inside, setInside] = useState(true);
-const [outside, setOutside] = useState(false);
-const insideHandler = () => {
-  setInside(true);
-  setOutside(false);
-};
-const outsideHandler = () => {
-  setInside(false);
-  setOutside(true);
-};
+// const [inside, setInside] = useState(true);
+// const [outside, setOutside] = useState(false);
+// const insideHandler = () => {
+//   setInside(true);
+//   setOutside(false);
+// };
+// const outsideHandler = () => {
+//   setInside(false);
+//   setOutside(true);
+// };
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -217,15 +217,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-6">
             {/* <CheckBox label={t("Exact Date of death not available")} onChange={setDateOfDeathNotAvailable} value={isDateOfDeathNotAvailable} checked={isDateOfDeathNotAvailable} /> */}
-            <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onClick={insideHandler} />
+            <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}  />
           </div>
           <div className="col-md-6">
             {/* <CheckBox label={t("Unclaimed dead body")} onChange={setUnclamedDeadBody} value={isUnclamedDeadBody} checked={isUnclamedDeadBody} /> */}
-            <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} onClick={outsideHandler} />
+            <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")}  />
           </div>
         </div>
         <div>
-          {outside && (
+          {/* {outside && ( */}
             <div className="row">
               <div className="col-md-6">
                 <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
@@ -237,11 +237,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
               </div>
             </div>
-          )}
+          {/* )} */}
         </div>
 
         <div>
-          {inside && (
+          {/* {inside && ( */}
             <div className="row">
               <div className="col-md-3">
                 <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
@@ -263,7 +263,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
               </div>
             </div>
-          )}
+          {/* )} */}
         </div>
 
         <div className="row">
