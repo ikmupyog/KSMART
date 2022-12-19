@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/v1")
 @Validated
-public class CrDeathController {
+public class CrDeathController implements CrDeathResource  {
 
     @Autowired
     private ResponseInfoFactory responseInfoFactory;
@@ -51,7 +51,7 @@ public class CrDeathController {
 
         this.deathService = deathService;
     }
-
+    @Override
     @PostMapping("/crdeathdetails/_create")
     public ResponseEntity<CrDeathDtlResponse> create(@Valid @RequestBody CrDeathDtlRequest request) {
 
@@ -80,60 +80,44 @@ public class CrDeathController {
     }
 
     //RAkhi S on 05.12.2022
-  //  @Override
+    @Override
     @PostMapping("/crdeathdetails/_search")
     public ResponseEntity<CrDeathDtlResponse> search(@RequestBody RequestInfoWrapper request,
                                                             @ModelAttribute CrDeathSearchCriteria criteria) {
 
      /********************************************* */
 
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            Object obj = request;
-            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-           System.out.println("rakhiSearchRequest "+ mapper.writeValueAsString(obj));
-         }catch(Exception e) {
-        log.error("Exception while fetching from searcher: ",e);
-    }
+    //     try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("rakhiSearchRequest "+ mapper.writeValueAsString(obj));
+    //      }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
 
+    List<CrDeathDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
 
-    /********************************************** */
-     /********************************************* */
-
-     try {
-        ObjectMapper mapper = new ObjectMapper();
-        Object obj = criteria;
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-       System.out.println("rakhiSearchcriteria "+ mapper.writeValueAsString(obj));
-     }catch(Exception e) {
-    log.error("Exception while fetching from searcher: ",e);
-}
-
-
-/********************************************** */
-
-        List<CrDeathDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
-
-        CrDeathDtlResponse response = CrDeathDtlResponse.builder()
+    CrDeathDtlResponse response = CrDeathDtlResponse.builder()
                              .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
                                                                       .deathCertificateDtls(deathDetails)
                                                                       .build();
-        return ResponseEntity.ok(response);
+    return ResponseEntity.ok(response);
     }
 
     //Update Begin Jasmine
+    @Override
+    @PutMapping("/crdeathdetails/_update")
 
-@PutMapping("/crdeathdetails/_update")
-
-public ResponseEntity<CrDeathDtlResponse> update(@RequestBody CrDeathDtlRequest request) {
+    public ResponseEntity<CrDeathDtlResponse> update(@RequestBody CrDeathDtlRequest request) {
  
-    List<CrDeathDtl> deathDetails = deathService.update(request);
- 
-    CrDeathDtlResponse response = CrDeathDtlResponse.builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-                                        .deathCertificateDtls(deathDetails)
-                                        .build();
-     return ResponseEntity.ok(response);
+        List<CrDeathDtl> deathDetails = deathService.update(request);
+    
+        CrDeathDtlResponse response = CrDeathDtlResponse.builder()
+                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                            .deathCertificateDtls(deathDetails)
+                                            .build();
+        return ResponseEntity.ok(response);
 }
 
 }

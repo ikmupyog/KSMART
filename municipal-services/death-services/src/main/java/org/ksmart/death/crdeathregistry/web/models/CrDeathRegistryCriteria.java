@@ -36,5 +36,5 @@ public class CrDeathRegistryCriteria {
     private Long toDate;
 
     @JsonProperty("registration_no")
-    private Long registrationNo;
+    private String registrationNo;
 }

@@ -6,6 +6,7 @@ import org.ksmart.death.crdeath.config.CrDeathConfiguration;
 import org.ksmart.death.crdeath.enrichment.CrDeathEnrichment;
 import org.ksmart.death.crdeath.kafka.producer.CrDeathProducer;
 import org.ksmart.death.crdeath.repository.CrDeathRepository;
+import org.ksmart.death.crdeath.util.CrDeathConstants;
 import org.ksmart.death.crdeath.util.CrDeathMdmsUtil;
 import org.ksmart.death.crdeath.validators.CrDeathValidator;
 import org.ksmart.death.crdeath.validators.MDMSValidator;
@@ -101,6 +102,14 @@ public class CrDeathService {
         validatorService.validateUpdate(request, searchResult);
 
        // mdmsValidator.validateMDMSData(request,mdmsData);
+
+        // String action=request.getDeathCertificateDtls().get(0).getAction();
+
+        // if (action==CrDeathConstants.WORKFLOW_ACTION_APPROVE){
+
+
+        // }
+        // else{
 
         enrichmentService.enrichUpdate(request);
 

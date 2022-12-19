@@ -36,4 +36,7 @@ public class CrDeathSearchCriteria {
 
     @JsonProperty("toDate")
     private Long toDate;
+
+    @JsonProperty("registrationNo")
+    private Long registrationNo;
 }

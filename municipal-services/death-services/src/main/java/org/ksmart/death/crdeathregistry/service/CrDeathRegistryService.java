@@ -58,7 +58,7 @@ public class CrDeathRegistryService {
        // validatorService.validateCreate(request);
 
        // validate mdms data       
-       // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
+        Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
          
          /********************************************* */
 
@@ -73,14 +73,15 @@ public class CrDeathRegistryService {
 
 
             /********************************************** */
-         //   mdmsValidator.validateMDMSData(request,mdmsData);
+       // mdmsValidator.validateMDMSData(request,mdmsData);
 
          // enrich request
-          enrichmentService.enrichCreate(request);
+        enrichmentService.enrichCreate(request);
         //IDGen call
-      //  enrichmentService.setIdgenIds(request);    
+        //enrichmentService.setIdgenIds(request);    
+        enrichmentService.setRegistrationNumberDetails(request); 
 
-            producer.push(deathConfig.getSaveDeathRegistryTopic(), request);
+        producer.push(deathConfig.getSaveDeathRegistryTopic(), request);
 
         return request.getDeathCertificateDtls();
     }

@@ -74,7 +74,7 @@ public class CrDeathRowMapper implements ResultSetExtractor<List<CrDeathDtl>>, B
                                         .informantAadharNo(rs.getString("informant_aadhar_no"))
                                         .informantMobileNo(rs.getString("informant_mobile_no"))
                                         .generalRemarks(rs.getString("general_remarks"))
-                                        .applicationStatus(rs.getString("application_status"))
+                                        .applicationStatus(rs.getString("status"))
                                         .placeBurial(rs.getString("place_burial"))
                                         .placeBurialInstitutionType(rs.getString("place_burial_institution_type"))
                                         .placePurialInstitutionName(rs.getString("place_burial_institution_name"))

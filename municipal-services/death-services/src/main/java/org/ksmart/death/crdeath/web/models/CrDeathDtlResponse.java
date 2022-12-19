@@ -39,11 +39,11 @@ public class CrDeathDtlResponse {
     @JsonProperty("Count")
     private int count;
 
-    public CrDeathDtlResponse addCrDeathDtl(CrDeathDtl crDeathDtl) {
+    public CrDeathDtlResponse addCrDeathDtl(CrDeathDtl crDeathDtls) {
         if (deathCertificateDtls == null) {
             deathCertificateDtls = new ArrayList<>();
         }
-        deathCertificateDtls.add(crDeathDtl);
+        deathCertificateDtls.add(crDeathDtls);
 
         return this;
     }

@@ -1,5 +1,7 @@
 package org.ksmart.death.crdeath.web.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,13 +22,14 @@ import org.ksmart.death.crdeath.constraints.Html;
 import org.springframework.validation.annotation.Validated;
 
 /**
-     * Creates main model class 
-     * Rakhi S IKM
+     * Creates main model class  Rakhi S IKM
+     * Updated by Jasmine
      * 
      */
     // @Schema(description = "Applicantion details")
-    @Validated
-    
+@Schema(name = "CrDeath Registration Request", description = "An Object holds the  data for death registration ")
+@Validated
+
 @Getter
 @Setter
 @ToString
@@ -34,102 +37,126 @@ import org.springframework.validation.annotation.Validated;
 @NoArgsConstructor
 @Builder
 public class CrDeathDtl {
-    
+    @Schema(type = "string", format = "uuid", description = "death registration request id")
     @Size(max = 64)
     @JsonProperty("id")
     private String id;
 
+    @Schema(type = "string", description = "Home / Hospital kiosk/ front office")
     @Size(max = 64)
     @JsonProperty("registrationUnit")
     private String registrationUnit;
 
+    @Schema(type = "string", description = "Tenant identification number")
     @Size(max = 64)
     @JsonProperty("tenantId")
     private String tenantId ;
 
+    @Schema(type = "integer", description="1 for Yes /0 for No")
     @JsonProperty("correctDeathDateKnown")
     private Integer correctDeathDateKnown ;
 
+    @Schema(type = "Long",description = "Death date (If death date is not known enter the from date)")
     @JsonProperty("dateOfDeath")
     private Long dateOfDeath ;
 
+    @Schema(type = "string", description= "time of death" )
     @JsonProperty("timeOfDeath")
     private Integer  timeOfDeath ;
 
+    @Schema(type = "string", description= "am/pm" )
     @Size(max = 64)
     @JsonProperty("timeOfDeathUnit")
     private String timeOfDeathUnit ;
 
+    @Schema(type = "long",description = "If death date is not known enter the todate" )
     @JsonProperty("dateOfDeath1")
     private Long dateOfDeath1;
 
+    @Schema(type = "string", description= "time of death" )
     @JsonProperty("timeOfDeath1")
     private Integer timeOfDeath1 ;
 
+    @Schema(type = "string", description= "am/pm" )
     @Size(max = 64)
     @JsonProperty("timeOfDeathUnit1")
     private String timeOfDeathUnit1 ;
 
+    @Schema(type = "integer" ,description = "If it is unidentified enter 0 else 1" )
     @JsonProperty("deceasedIdentified")
     private Integer deceasedIdentified ;
 
+    @Schema(type = "String" ,description = "Mr/Mrs/Adv etc" )
     @Size(max = 64)
     @JsonProperty("deceasedTitle")
     private String deceasedTitle ;
 
+    @Schema(type = "String" ,description = "First Name in English" )
     @Size(max = 64)
     @JsonProperty("deceasedFirstNameEn")
     private String deceasedFirstNameEn ;
 
+    @Schema(type = "String" ,description = "First Name in Local Language" )
     @Size(max = 64)
     @JsonProperty("deceasedFirstNameMl")
     private String deceasedFirstNameMl ;
 
+    @Schema(type = "String" ,description = "Middle Name in English" )
     @Size(max = 64)
     @JsonProperty("deceasedMiddleNameEn")
     private String deceasedMiddleNameEn ;
 
+    @Schema(type = "String" ,description = "Middle Name in Local Language" )
     @Size(max = 64)
     @JsonProperty("deceasedMiddleNameMl")
     private String deceasedMiddleNameMl ;
 
+    @Schema(type = "String" ,description = "Last Name in English" )
     @Size(max = 64)
     @JsonProperty("deceasedLastNameEn")
     private String deceasedLastNameEn ;
 
+    @Schema(type = "String" ,description = "Last Name in Local Language" )
     @Size(max = 64)
     @JsonProperty("deceasedLastNameMl")
     private String deceasedLastNameMl ;
 
     // @JsonProperty("deceasedAadharSubmitted")
     // private Integer deceasedAadharSubmitted ;
-
+    @Schema(type = "String" ,description = "Aadhar Number" )
     @Size(max = 12)
     @JsonProperty("deceasedAadharNumber")
     private String deceasedAadharNumber ;
 
+    @Schema(type = "String" ,description = "Gender")
     @Size(max = 64)
     @JsonProperty("deceasedGender")
     private String deceasedGender ;
 
+    @Schema(type = "String" ,description = "Age")
     @JsonProperty("age")
     private Integer age ;
 
+    @Schema(type = "String" ,description = "Age unit (hrs/days/years")
     @Size(max = 64)
     @JsonProperty("ageUnit")
     private String ageUnit ;
 
+    @Schema(type = "Long" ,description = "Date of birth")
     @JsonProperty("dateOfBirth")
     private Long dateOfBirth ;
 
+    @Schema(type = "Long" ,description = "Place of death from mdms data home/hospital/vehicle etc")
     @Size(max = 64)
     @JsonProperty("deathPlace")
     private String deathPlace ;
 
+    @Schema(type = "Long" ,description = "Place of death from mdms data oldagehome/orphanage etc")
     @Size(max = 64)
     @JsonProperty("deathPlaceType")
     private String deathPlaceType ;
 
+    @Schema(type = "Long" ,description = "Place of death from mdms data hospitalname/orphanageName etc")
     @Size(max = 64)
     @JsonProperty("deathPlaceInstId")
     private String deathPlaceInstId ;
@@ -146,25 +173,32 @@ public class CrDeathDtl {
     @JsonProperty("deathPlaceOtherEn")
     private String deathPlaceOtherEn ;
 
+    @Schema(type = "String" ,description = "Title of Informant")
     @Size(max = 64)
     @JsonProperty("informantTitle")
     private String  informantTitle ;
 
+    @Schema(type = "String" ,description = "Informant name in English")
     @Size(max = 64)
     @JsonProperty("informantNameEn")
     private String  informantNameEn ;
 
+    @Schema(type = "String" ,description = "Informant name in Local Language")
     @Size(max = 64)
     @JsonProperty("informantNameMl")
     private String  informantNameMl ;
 
+    @Schema(type = "Integer" ,description = "Informant aadhar submitted(0/1)")
     @JsonProperty("informantAadharSubmitted")
     private Integer  informantAadharSubmitted ;
 
+    @Schema(type = "Integer" ,description = "Informant aadhar ")
     @Size(max = 12)
     @JsonProperty("informantAadharNo")
     private String  informantAadharNo ;
 
+    
+    @Schema(type = "Integer" ,description = "Informant Mobile Number")
     @Size(max = 15)
     @JsonProperty("informantMobileNo")
     private String  informantMobileNo ;
@@ -173,6 +207,7 @@ public class CrDeathDtl {
     @JsonProperty("generalRemarks")
     private String   generalRemarks ;
 
+    @Schema(type = "String" ,description = "applicationStatus-workflow")
     @Size(max = 64)
     @JsonProperty("applicationStatus")
     private String   applicationStatus ;
@@ -353,6 +388,11 @@ public class CrDeathDtl {
 
     //     return this;
     // }
+    @JsonProperty("registrationDate")
+    private Long registrationDate ;
+
+    @JsonProperty("registrationNoId")
+    private Long registrationNoId ;
     
    //@Schema(type = "string", description = "Workflow code")
     @Size(max = 64)
@@ -366,9 +406,9 @@ public class CrDeathDtl {
     private String action;
 
     //@Schema(type = "string", description = "Status of file")
-    @Size(max = 64)
-    @JsonProperty("fileStatus")
-    private String fileStatus;
+    // @Size(max = 64)
+    // @JsonProperty("fileStatus")
+    // private String fileStatus;
 
    // @Schema(type = "string", description = "Business service")
     @Size(max = 64)

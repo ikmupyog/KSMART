@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -326,6 +327,14 @@ public class CrDeathRegistryDtl {
     @JsonProperty("fileNo")
     private String  fileNo ;
 
+    //Jasmine on 15/12/2022
+    @JsonProperty("registrationDate")
+    private Long registrationDate ;
+
+    @JsonProperty("registrationNoId")
+    private Long registrationNoId ;
+    
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;    
 
@@ -335,6 +344,8 @@ public class CrDeathRegistryDtl {
     @JsonProperty("addressInfo")
     @Valid
     private CrDeathRegistryAddressInfo  addressInfo;
+
+
     //private List<CrDeathRegistryAddressInfo>  addressInfo;
 
     // public CrDeathRegistryDtl addCrDeathDtl(CrDeathRegistryAddressInfo crDeathAddressInfo) {

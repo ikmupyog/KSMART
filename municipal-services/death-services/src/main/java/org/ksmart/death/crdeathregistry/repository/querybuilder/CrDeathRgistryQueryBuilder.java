@@ -204,8 +204,22 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
          addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
          addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
          addFilter("dt.deceased_aadhar_number", criteria.getAadhaarNo(), query, preparedStmtValues);   
-        // addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);                                                  
+         addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);    
+         System.out.println("JasmineSearchRenantId"+criteria.getTenantId());    
+         System.out.println("JasmineSearchQuery"+query);                                              
          return query.toString();
-       }                                                  
-    
-}
+       }   
+       
+     private static final String REGNOQUERY = new StringBuilder()
+                                             .append("Select A.regNo , A.regYear , A.tenantId from ")
+                                             .append("(SELECT MAX(COALESCE(registration_no_id,0))+1 as regNo,EXTRACT(year from to_timestamp( registration_date/1000)::date ) AS regYear ")
+                                             .append(",tenantId FROM eg_death_dtls_registry dt group by regYear,tenantId )A ") 
+                                             .toString();
+
+     public String getDeathRegNoIdQuery(@NotNull String tenantId ,int Year ,@NotNull List<Object> preparedStmtValues) {
+          StringBuilder query = new StringBuilder(REGNOQUERY);
+          addFilter("A.tenantId",tenantId , query, preparedStmtValues);
+          addFilter("A.regYear", Year, query, preparedStmtValues);                                          
+          return query.toString();
+        }  
+     }

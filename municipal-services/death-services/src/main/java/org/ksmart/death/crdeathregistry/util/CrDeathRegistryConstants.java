@@ -34,6 +34,9 @@ public class CrDeathRegistryConstants {
     public static final String INVALID_TENANT_ID_MDMS_KEY = "INVALID TENANTID";
     public static final String INVALID_TENANT_ID_MDMS_MSG = "No data found for this tenantID";
 
+    //RegistrationNumber
+    public static final String REGISTRATION_NUMBER_FIRST = "1";
+
 
 
 }
