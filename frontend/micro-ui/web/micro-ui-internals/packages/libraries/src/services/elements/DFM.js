@@ -1,9 +1,14 @@
 import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
+import axios from "axios";
 
 export const DFMService = {
   create: (details, tenantId) =>
+<<<<<<< Updated upstream
     Request({
+=======
+    Request1({
+>>>>>>> Stashed changes
       url: Urls.dfm.create,
       data: details,
       useCache: false,
@@ -13,6 +18,7 @@ export const DFMService = {
       params: {},
       auth: true,
     }),
+<<<<<<< Updated upstream
   search: (details) =>
     Request({
       url: Urls.dfm.search,
@@ -63,4 +69,22 @@ export const DFMService = {
   //     params: { tenantId },
   //     auth: true,
   //   }),
+=======
+    // axios.post(Urls.dfm.create, details) 
+    // .then((response) => {
+    //   console.log(response);
+    // }, (error) => {
+    //   console.log(error);
+    // })
+>>>>>>> Stashed changes
 };
+export const Request1 = async ({
+url,
+data,
+
+})=>{
+  console.log('logged');
+  axios.post(url,data).then((response) => {
+   console.log(response);
+  });
+}

@@ -280,12 +280,12 @@ const CreateTradeLicence = ({ parentRoute }) => {
   let skipenanbledOb = newConfig?.filter((obj) => obj?.body?.some((com) => com.component === "CPTCreateProperty"))?.[0];
   let skipenabled = skipenanbledOb?.body?.filter((ob) => ob?.component === "CPTCreateProperty")?.[0]?.isSkipEnabled;
   sessionStorage.setItem("skipenabled", skipenabled);
-  config.indexRoute = "ApplicationDetails";
+  config.indexRoute = "applicationDetails";
   // config.indexRoute = "TradeName";
 
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("TLCheckPage");
   const TLAcknowledgement = Digit?.ComponentRegistryService?.getComponent("TLAcknowledgement");
-  // console.log(config);
+  console.log('config',config);
   return (
     <Switch>
       {config.map((routeObj, index) => {

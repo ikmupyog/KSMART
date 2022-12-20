@@ -1,15 +1,4 @@
-import {
-  CardLabel,
-  CitizenInfoLabel,
-  FormStep,
-  Loader,
-  RadioOrSelect,
-  TextInput,
-  Dropdown,
-  FormInputGroup,
-  TextArea,
-  DatePicker,
-} from "@egovernments/digit-ui-react-components";
+import { CardLabel, CitizenInfoLabel, FormStep, Loader, TextInput, Dropdown,FormInputGroup, typeOf } from "@egovernments/digit-ui-react-components";
 import { first } from "lodash";
 import React, { useState, useEffect } from "react";
 import Timeline from "../components/DFMTimeline";
@@ -32,22 +21,23 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   const [applicationData, setApplicationData] = useState(
     formData?.FileManagement?.applicationData
       ? formData.FileManagement.applicationData
-      : {
-          firstName: "",
-          lastName: "",
-          AadharNo: "",
-          title: [],
-          email: "",
-          mobileNo: "",
-          dob: "",
-          fatherFirstName: "",
-          fatherLastName: "",
-          motherFirstName: "",
-          motherFirstName: "",
-          category: [],
-          bankAccountNo: "",
-          tenantID: [],
-        }
+      :
+     {
+        firstName: "",
+        lastName: "",
+        AadharNo: "",
+        title: "",
+        email: "",
+        mobileNo: "",
+        dob: "",
+        fatherFirstName: "",
+        fatherLastName: "",
+        motherFirstName: "",
+        motherFirstName: "",
+        category: "",
+        bankAccountNo: "",
+        tenantID: '',
+      }
   );
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
@@ -86,55 +76,55 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
       tempdata.firstName = text;
       setApplicationData(tempdata);
     }
-    if (type === "lastName") {
+    else if (type === "lastName") {
       tempdata.lastName = text;
       setApplicationData(tempdata);
     }
-    if (type === "aadharNo") {
+    else if (type === "aadharNo") {
       tempdata.aadharNo = text;
       setApplicationData(tempdata);
     }
-    if (type === "title") {
+    else if (type === "title") {
       tempdata.title = text;
       setApplicationData(tempdata);
     }
-    if (type === "email") {
+    else if (type === "email") {
       tempdata.email = text;
       setApplicationData(tempdata);
     }
-    if (type === "mobileNo") {
+    else if (type === "mobileNo") {
       tempdata.mobileNo = text;
       setApplicationData(tempdata);
     }
-    if (type === "dob") {
+    else if (type === "dob") {
       tempdata.dob = text;
       setApplicationData(tempdata);
     }
-    if (type === "fatherFirstName") {
+    else if (type === "fatherFirstName") {
       tempdata.fatherFirstName = text;
       setApplicationData(tempdata);
     }
-    if (type === "fatherLastName") {
+    else if (type === "fatherLastName") {
       tempdata.fatherLastName = text;
       setApplicationData(tempdata);
     }
-    if (type === "motherFirstName") {
+    else if (type === "motherFirstName") {
       tempdata.motherFirstName = text;
       setApplicationData(tempdata);
     }
-    if (type === "motherLastName") {
+    else if (type === "motherLastName") {
       tempdata.motherLastName = text;
       setApplicationData(tempdata);
     }
-    if (type === "category") {
+    else if (type === "category") {
       tempdata.category = text;
       setApplicationData(tempdata);
     }
-    if (type === "bankAccountNo") {
+    else if (type === "bankAccountNo") {
       tempdata.bankAccountNo = text;
       setApplicationData(tempdata);
     }
-    if (type === "tenantID") {
+    else if (type === "tenantID") {
       tempdata.tenantID = text;
       setApplicationData(tempdata);
     }

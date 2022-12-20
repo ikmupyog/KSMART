@@ -7,6 +7,10 @@ import DFMAddressDetails from "../src/pageComponents/DFMAddressDetails";
 import DFMServiceDetails from "../src/pageComponents/DFMServiceDetails";
 import DFMDocumentDetails from "../src/pageComponents/DFMDocumentDetails";
 import DFMCheckPage from "./pages/citizen/Create/CheckPage";
+import DFMEmployeeApplicationDetails from "../src/pageComponents/DFMEmployeeApplicationDetails";
+import DFMEmployeeAddressDetails from "../src/pageComponents/DFMEmployeeAddressDetails";
+import DFMEmployeeServiceDetails from "../src/pageComponents/DFMEmployeeServiceDetails";
+import DFMEmployeeDocumentDetails from "../src/pageComponents/DFMEmployeeDocumentDetails";
 // import TLDocument from "./pageComponents/TLDocumets";
 import DFMAcknowledgement from "./pages/citizen/Create/DFMAcknowlegement";
 // import TradeLicense from "../src/pageComponents/TradeLicense";
@@ -115,6 +119,10 @@ const componentsToRegister = {
   DFMAddressDetails,
   DFMServiceDetails,
   DFMDocumentDetails,
+  DFMEmployeeApplicationDetails,
+  DFMEmployeeAddressDetails,
+  DFMEmployeeServiceDetails,
+  DFMEmployeeDocumentDetails,
   DFMAcknowledgement,
   DFMCheckPage,
   // SelectLand,

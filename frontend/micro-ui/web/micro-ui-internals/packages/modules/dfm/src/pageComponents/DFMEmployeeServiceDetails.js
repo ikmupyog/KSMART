@@ -2,7 +2,7 @@ import { CardLabel, TextInput, CardLabelDesc, FormStep, UploadFile, FormInputGro
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
-const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
+const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   // console.log(formData);
   const [serviceDetails, setServiceDetails] = useState(
     formData?.FileManagement?.serviceDetails
@@ -50,7 +50,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     let fileStoreId = uploadedFile;
     let fileDetails = file;
     let tempData = { ...serviceDetails };
-    // tempData.fileStoreId = file;
+    tempData.fileStoreId = file;
     // if (fileDetails) fileDetails.documentType = "OWNERIDPROOF";
     // if (fileDetails) fileDetails.fileStoreId = fileStoreId ? fileStoreId : null;
     // let owners = formData?.owners;
@@ -99,10 +99,11 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
         }
       }
     })();
-  }, [file]);
-console.log('s',serviceDetails);
+  }, [serviceDetails.fileStoreId]);
+
   return (
     <React.Fragment>
+      <h2>em3</h2>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
         <div>
@@ -156,4 +157,4 @@ console.log('s',serviceDetails);
   );
 };
 
-export default DFMServiceDetails;
+export default DFMEmployeeServiceDetails;

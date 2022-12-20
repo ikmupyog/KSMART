@@ -18,7 +18,7 @@ const SelectTradeUnits = ({ t, config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
 
   function handleAdd() {
-    const values = [...fields];
+    const values = [...fields]; 
     values.push({ tradecategory: "", tradetype: "", tradesubtype: "", unit: null, uom: null });
     setFeilds(values);
   }

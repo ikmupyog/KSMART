@@ -35,7 +35,7 @@ const FormInputGroup = ({ label, type, selectOptions, onChange, value, placehold
             onChange={(e) => handleChange(e.target.value, name)}
             placeholder={name}
             // disable={isEdit}
-            {...(validation = { pattern: name==="email"?"^(.+)@(.+)$":"^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t(`Invalid ${name}`) })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t(`Invalid ${name}`) })}
           />
         );
 
