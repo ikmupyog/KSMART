@@ -131,13 +131,16 @@ public class MDMSValidator {
                             }
                         });
                     }
+                    if (licenseRequest.getLicenses().get(0).getTradeLicenseDetail()
+                            .getLicenseeType().equals("INSTITUTION")) {
+                        if (!masterData.get(TLConstants.NATURE_INSTITUTION)
+                                .contains(license
+                                        .getTradeLicenseDetail().getInstitution().getNatureOfInstitution()))
+                            errorMap.put("INVALID NATURE OF INSTITUTION", "The nature of institution '"
+                                    + license.getTradeLicenseDetail().getInstitution().getNatureOfInstitution()
+                                    + "' does not exists");
+                    }
 
-                    if (!masterData.get(TLConstants.NATURE_INSTITUTION)
-                            .contains(license
-                                    .getTradeLicenseDetail().getInstitution().getNatureOfInstitution()))
-                        errorMap.put("INVALID NATURE OF INSTITUTION", "The nature of institution '"
-                                + license.getTradeLicenseDetail().getInstitution().getNatureOfInstitution()
-                                + "' does not exists");
                     break;
 
                 case businessService_BPA:
