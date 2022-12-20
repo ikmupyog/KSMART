@@ -116,10 +116,11 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .street(rs.getString("street"))
                     .tenantId(tenantId)
                     .type(rs.getString("type"))
-                    .zonalId(Long.parseLong(rs.getString("zonalid")))
-                    .wardId(Long.parseLong(rs.getString("wardid")))
-                    .wardNo(Integer.parseInt(rs.getString("wardno")))
-                    .circleDivisionId(Long.parseLong(rs.getString("circledivisionid")))
+                    .zonalId(rs.getString("zonalid") == null ? null : Long.parseLong(rs.getString("zonalid")))
+                    .wardId(rs.getString("wardid") == null ? null : Long.parseLong(rs.getString("wardid")))
+                    .wardNo(rs.getString("wardno") == null ? null : Integer.parseInt(rs.getString("wardno")))
+                    // .circleDivisionId(rs.getString("circledivisionid") == null ? null
+                    // : Long.parseLong(rs.getString("circledivisionid")))
                     .contactNo(rs.getString("contactno"))
                     .email(rs.getString("email"))
                     .build();
@@ -243,8 +244,11 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .permanentAddress(rs.getString("address"))
                     .emailId(rs.getString("email"))
                     .consentAgreementPlace(rs.getString("consentagreementplace"))
-                    .consentAgreementDate(Long.parseLong(rs.getString("consentagreementdate")))
-                    .consentAgreementEndDate(Long.parseLong(rs.getString("consentagreementenddate")))
+                    // .consentAgreementDate(rs.getString("consentagreementdate") == null ? null
+                    // : Long.parseLong(rs.getString("consentagreementdate")))
+                    // .consentAgreementEndDate(rs.getString("consentagreementenddate") == null ?
+                    // null
+                    // : Long.parseLong(rs.getString("consentagreementenddate")))
                     .build();
             tradeLicense.getTradeLicenseDetail().addOwnersItem(owner);
         }
