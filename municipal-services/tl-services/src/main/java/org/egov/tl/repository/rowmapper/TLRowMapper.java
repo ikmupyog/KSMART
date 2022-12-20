@@ -72,6 +72,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .oldPropertyId(rs.getString("oldpropertyid"))
                         .businessService(rs.getString("businessservice"))
                         .fileStoreId(rs.getString("tl_fileStoreId"))
+                        .licenseUnitNameMal(rs.getString("licenseunitnamemal"))
                         .id(id)
                         .build();
 
@@ -115,7 +116,12 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .street(rs.getString("street"))
                     .tenantId(tenantId)
                     .type(rs.getString("type"))
-
+                    .zonalId(Long.parseLong(rs.getString("zonalid")))
+                    .wardId(Long.parseLong(rs.getString("wardid")))
+                    .wardNo(Integer.parseInt(rs.getString("wardno")))
+                    .circleDivisionId(Long.parseLong(rs.getString("circledivisionid")))
+                    .contactNo(rs.getString("contactno"))
+                    .email(rs.getString("email"))
                     .build();
 
             Institution institution = null;
@@ -131,6 +137,8 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .instituionName(rs.getString("instiinstituionname"))
                         .organisationRegistrationNo(rs.getString("instiorganisationregistrationno"))
                         .address(rs.getString("address"))
+                        .natureOfInstitution(rs.getString("natureofinstitution"))
+                        .email(rs.getString("email"))
                         .build();
             }
 
@@ -163,6 +171,12 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .businessSector(rs.getString("businesssector"))
                         .capitalInvestment(rs.getDouble("capitalinvestment"))
                         .enterpriseType(rs.getString("enterprisetype"))
+                        .licenseUnitType(rs.getString("licenseunittype"))
+                        .licenseUnitId(rs.getString("licenseunitid"))
+                        .structurePlaceSubtype(rs.getString("structureplacesubtype"))
+                        .customDetailType(rs.getString("customdetailtype"))
+                        .businessActivityDesc(rs.getString("businessactivitydesc"))
+                        .licenseeType(rs.getString("licenseetype"))
                         .build();
 
                 if (pgObj != null) {
@@ -224,6 +238,13 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .relationship(OwnerInfo.RelationshipEnum.fromValue(rs.getString("relationship")))
                     .userActive(rs.getBoolean("useractive"))
                     .institutionId(rs.getString("institutionid"))
+                    .name(rs.getString("ownername"))
+                    .aadhaarNumber(rs.getString("aadharno"))
+                    .permanentAddress(rs.getString("address"))
+                    .emailId(rs.getString("email"))
+                    .consentAgreementPlace(rs.getString("consentagreementplace"))
+                    .consentAgreementDate(Long.parseLong(rs.getString("consentagreementdate")))
+                    .consentAgreementEndDate(Long.parseLong(rs.getString("consentagreementenddate")))
                     .build();
             tradeLicense.getTradeLicenseDetail().addOwnersItem(owner);
         }
@@ -274,6 +295,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .vehicleNo(rs.getString("vehicleno"))
                     .vesselNo(rs.getString("vesselno"))
                     .active(rs.getBoolean("tlstructplace_active"))
+                    .isResurveyed(rs.getBoolean("isresurveyed"))
                     .build();
             tradeLicense.getTradeLicenseDetail().addStructurePlaceItem(structurePlace);
         }

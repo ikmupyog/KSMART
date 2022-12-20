@@ -102,7 +102,8 @@ public class OwnerInfo extends User {
                         String lastModifiedBy, Long lastModifiedDate, String otpReference, String tenantId,
                         Boolean isPrimaryOwner, Double ownerShipPercentage, String ownerType,
                         String institutionId, List<Document> documents, RelationshipEnum relationship,
-                        Boolean userActive) {
+                        Boolean userActive, String consentAgreementPlace, Long consentAgreementDate,
+                        Long consentAgreementEndDate) {
                 super(id, uuid, userName, password, salutation, name, gender, mobileNumber, emailId, altContactNumber,
                                 pan, aadhaarNumber, permanentAddress, permanentCity, permanentPincode,
                                 correspondenceCity, correspondencePincode, correspondenceAddress, active, dob,
@@ -116,6 +117,9 @@ public class OwnerInfo extends User {
                 this.relationship = relationship;
                 this.institutionId = institutionId;
                 this.documents = documents;
+                this.consentAgreementPlace = consentAgreementPlace;
+                this.consentAgreementDate = consentAgreementDate;
+                this.consentAgreementEndDate = consentAgreementEndDate;
         }
 
         public OwnerInfo addDocumentsItem(Document documentsItem) {
