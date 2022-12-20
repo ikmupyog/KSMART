@@ -30,10 +30,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
   const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TimeOfDeath, setTimeOfDeath] = useState(formData?.InformationDeath?.TimeOfDeath);
-  const [Minute, setSelectedMinute] = useState(formData?.InformationDeath?.Minute);
-  const [Seconds, setSelectedSeconds] = useState(formData?.InformationDeath?.Seconds);
-  // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
+   // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
   const [FirstName, setFirstName] = useState(formData?.InformationDeath?.FirstName);
   const [MiddleName, setMiddleName] = useState(formData?.InformationDeath?.MiddleName);
   const [LastName, setLastName] = useState(formData?.InformationDeath?.LastName);
@@ -50,6 +47,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom);
   const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo);
   const [tripStartTime, setTripStartTime] = useState(formData?.InformationDeath?.tripStartTime);
+  
   let naturetypecmbvalue = null;
   // let cmbPlace = [];
   // place &&
@@ -75,13 +73,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     title["common-masters"].Title.map((ob) => {
       cmbTitle.push(ob);
     });
-  //   let cmbreligion = [];
-  //   console.log(religion);
-  // //   religion &&
-  // //     religion["common-masters"] &&
-  // //     religion["common-masters"].religion.map((ob) => {
-  // //       cmbreligion.push(ob);
-  // //     });
+    let cmbReligion = [];
+      religion &&
+      religion["common-masters"] &&
+      religion["common-masters"].Religion.map((ob) => {
+        cmbReligion.push(ob);
+      });
   function selectReligion(value) {
     setSelectedReligion(value);
   }
@@ -99,12 +96,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   }
   function selectReligion(value) {
     setSelectedReligion(value);
-  }
-  function setSelectMinute(e) {
-    setSelectedMinute(e.target.value);
-  }
-  function setSelectSeconds(e) {
-    setSelectedSeconds(e.target.value);
   }
   function setSelectMlLastName(e) {
     setMlLastName(e.target.value);
@@ -133,10 +124,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function setSelectPassportNo(e) {
     setPassportNo(e.target.value);
   }
-  function setSelectTimeOfDeath(e) {
-    setTimeOfDeath(e.target.value);
-  }
-
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
@@ -149,17 +136,26 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectToDate(value) {
     setToDate(value);
   }
-  function setSelectDeathTimeFrom(value) {
-    setDeathTimeFrom(value);
-  }
-  function setSelectDeathTimeTo(value) {
-    setDeathTimeTo(value);
-  }
+  
   const handleTimeChange = (value, cb) => {
     if (typeof value === 'string') {
       cb(value);
     }
   }
+  const handleFromTimeChange = (value, cb) => {
+    if (typeof value === 'string') {
+      cb(value);
+    }
+  }
+  const handleToTimeChange = (value, cb) => {
+    if (typeof value === 'string') {
+      cb(value);
+    }
+  }
+
+
+
+  
   const onSkip = () => onSelect();
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate);
@@ -177,11 +173,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setTitleB", setTitleB.code);
     sessionStorage.setItem("setCountry", setCountry.code);
     sessionStorage.setItem("setCountry", setReligion.code);
-    // sessionStorage.setItem("TimeOfDeath", TimeOfDeath);
-    // sessionStorage.setItem("Minute", Minute);
-    // sessionStorage.setItem("Seconds", Seconds);
-    // sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
-    // sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
+    sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
+    sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
     sessionStorage.setItem("Gender", Gender.code);
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
@@ -204,7 +197,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       TimeOfDeath,
       Minute,
       Seconds,
-      DeathTimeFrom,
+      DeathTimeFrom,      
       DeathTimeTo,
     });
   };
@@ -221,12 +214,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
-            {/* <CheckBox label={t("Exact Date of death not available")} onChange={setDateOfDeathNotAvailable} value={isDateOfDeathNotAvailable} checked={isDateOfDeathNotAvailable} /> */}
+          <div className="col-md-6">            
             <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}  />
           </div>
-          <div className="col-md-6">
-            {/* <CheckBox label={t("Unclaimed dead body")} onChange={setUnclamedDeadBody} value={isUnclamedDeadBody} checked={isUnclamedDeadBody} /> */}
+          <div className="col-md-6">            
             <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")}  />
           </div>
         </div>
@@ -240,8 +231,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               </div>
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-                {/* <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} /> */}
-            <CustomTimePicker name="tripStartTime" onChange={val => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
+                <CustomTimePicker name="tripStartTime" onChange={val => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
 
               </div>
             </div>
@@ -253,25 +243,23 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-3">
                 <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
-                {/* date={CommencementDate} */}
                 <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
               </div>
               <div className="col-md-3">
-                <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
-                <CustomTimePicker name="DeathTimeFrom" value={DeathTimeFrom} onChange={setDeathTimeFrom} />
+                <CardLabel>{t("CR_FROM_TIME")}</CardLabel>                
+                <CustomTimePicker name="DeathTimeFrom" onChange={val => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
               </div>
 
               <div className="col-md-3">
                 <CardLabel>{t("CR_TO_DATE")}</CardLabel>
-                {/* date={CommencementDate} */}
                 <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
               </div>
               <div className="col-md-3">
-                <CardLabel>{t("CR_TO_TIME")}</CardLabel>
-                <CustomTimePicker name="Minute" value={Minute} onChange={setSelectMinute} />
+                <CardLabel>{t("CR_TO_TIME")}</CardLabel>               
+                <CustomTimePicker name="DeathTimeTo" onChange={val => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} />
               </div>
             </div>
-          {/* )} */}
+          
         </div>
 
         <div className="row">
@@ -333,7 +321,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-3">
             <CardLabel>{`${t("CR_TITLE_NAME_ML")}`}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
+            <Dropdown t={t} optionKey="namelocal" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
           </div>
           <div className="col-md-3">
             <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
@@ -409,7 +397,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={Ageofbirth}
               onChange={setSelectAgeofbirth}
               disable={isEdit}
-              {...(validation = {pattern: "^([0-9]){3}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_AGE"),  })}
+              {...(validation = {pattern: "^([0-9]){}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_AGE"),  })}
              
             />
           </div>
@@ -478,7 +466,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
-            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbTitle} selected={setReligion} select={selectReligion} disabled={isEdit} />
+            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbReligion} selected={setReligion} select={selectReligion} disabled={isEdit} />
           </div>
         </div>
       </FormStep>
