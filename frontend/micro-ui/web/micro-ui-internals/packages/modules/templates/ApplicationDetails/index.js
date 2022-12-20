@@ -22,7 +22,7 @@ const ApplicationDetails = (props) => {
   const [selectedAction, setSelectedAction] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [isEnableLoader, setIsEnableLoader] = useState(false);
-  const [isWarningPop, setWarningPopUp ] = useState(false);
+  const [isWarningPop, setWarningPopUp] = useState(false);
 
   const {
     applicationDetails,
@@ -43,7 +43,7 @@ const ApplicationDetails = (props) => {
     ActionBarStyle,
     MenuStyle,
     paymentsList,
-    showTimeLine=true,
+    showTimeLine = true,
   } = props;
   useEffect(() => {
     if (showToast) {
@@ -53,10 +53,9 @@ const ApplicationDetails = (props) => {
 
   function onActionSelect(action) {
     if (action) {
-      if(action?.isWarningPopUp){
+      if (action?.isWarningPopUp) {
         setWarningPopUp(true);
-      }
-      else if (action?.redirectionUrll) {
+      } else if (action?.redirectionUrll) {
         window.location.assign(`${window.location.origin}/digit-ui/employee/payment/collect/${action?.redirectionUrll?.pathname}`);
       } else if (!action?.redirectionUrl) {
         setShowModal(true);
@@ -66,7 +65,7 @@ const ApplicationDetails = (props) => {
           state: { ...action.redirectionUrl?.state },
         });
       }
-    } 
+    }
     setSelectedAction(action);
     setDisplayMenu(false);
   }
@@ -80,7 +79,7 @@ const ApplicationDetails = (props) => {
 
   const closeWarningPopup = () => {
     setWarningPopUp(false);
-  }
+  };
 
   const submitAction = async (data, nocData = false, isOBPS = {}) => {
     setIsEnableLoader(true);
@@ -88,21 +87,23 @@ const ApplicationDetails = (props) => {
       data?.customFunctionToExecute({ ...data });
     }
     if (nocData !== false && nocMutation) {
-      const nocPrmomises = nocData?.map(noc => {
-        return nocMutation?.mutateAsync(noc)
-      })
+      const nocPrmomises = nocData?.map((noc) => {
+        return nocMutation?.mutateAsync(noc);
+      });
       try {
         setIsEnableLoader(true);
         const values = await Promise.all(nocPrmomises);
-        values && values.map((ob) => {
-          Digit.SessionStorage.del(ob?.Noc?.[0]?.nocType);
-        })
-      }
-      catch (err) {
+        values &&
+          values.map((ob) => {
+            Digit.SessionStorage.del(ob?.Noc?.[0]?.nocType);
+          });
+      } catch (err) {
         setIsEnableLoader(false);
-        let errorValue = err?.response?.data?.Errors?.[0]?.code ? t(err?.response?.data?.Errors?.[0]?.code) : err?.response?.data?.Errors?.[0]?.message || err;
+        let errorValue = err?.response?.data?.Errors?.[0]?.code
+          ? t(err?.response?.data?.Errors?.[0]?.code)
+          : err?.response?.data?.Errors?.[0]?.message || err;
         closeModal();
-        setShowToast({ key: "error", error: {message: errorValue}});
+        setShowToast({ key: "error", error: { message: errorValue } });
         setTimeout(closeToast, 5000);
         return;
       }
@@ -144,6 +145,7 @@ const ApplicationDetails = (props) => {
   }
 
   return (
+
     <React.Fragment>
       {!isLoading ? (
         <React.Fragment>
@@ -176,12 +178,12 @@ const ApplicationDetails = (props) => {
             />
           ) : null}
           {isWarningPop ? (
-            <ApplicationDetailsWarningPopup 
-            action={selectedAction}
-            workflowDetails={workflowDetails}
-            businessService={businessService}
-            isWarningPop={isWarningPop}
-            closeWarningPopup={closeWarningPopup}
+            <ApplicationDetailsWarningPopup
+              action={selectedAction}
+              workflowDetails={workflowDetails}
+              businessService={businessService}
+              isWarningPop={isWarningPop}
+              closeWarningPopup={closeWarningPopup}
             />
           ) : null}
           <ApplicationDetailsToast t={t} showToast={showToast} closeToast={closeToast} businessService={businessService} />

@@ -670,7 +670,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "StatisticalInfoContinue",
-        nextStep: "structure-type",
+        nextStep: null,
         type: "component",
         hideInEmployee: true,
       },

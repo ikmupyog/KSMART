@@ -82,11 +82,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setSiginedOfficer", SiginedOfficer);
     sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation);
     sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
-    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);
-    
-    
-    SiginedOfficer
-    
+    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);    
     onSelect(config.key, { 
       setInstitution,
       setInstitutionId,

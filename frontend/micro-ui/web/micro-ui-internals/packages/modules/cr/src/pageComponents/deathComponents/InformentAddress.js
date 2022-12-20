@@ -256,6 +256,8 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
         
           <div className="col-md-3">
             <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
+            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbPlace} selected={setLbName} select={selectLbName} disabled={isEdit} />
+
             {/* <Dropdown t={t} 
             optionKey="name" 
             isMandatory={false} 
