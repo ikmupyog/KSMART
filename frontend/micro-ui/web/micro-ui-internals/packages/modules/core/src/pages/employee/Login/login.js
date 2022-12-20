@@ -91,19 +91,7 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
   const onForgotPassword = () => {
     history.push("/digit-ui/employee/user/forgot-password");
   };
-  const mystyle = {
-    background: "#bc5bfc",
-    backgroundImage: "-webkit-linear-gradient(top, #bc5bfc, #2980b9)",
-    backgroundImage: "-moz-linear-gradient(top, #bc5bfc, #2980b9)",
-    backgroundImage: "-ms-linear-gradient(top, #bc5bfc, #2980b9)",
-    backgroundImage: "-o-linear-gradient(top, #bc5bfc, #2980b9)",
-    backgroundImage: "linear-gradient(to bottom, #bc5bfc, #2980b9)",
-    borderRadius: "9px",
-    Color: "#ffffff",
-    fontSize: "20px",
-    padding: "10px 20px 10px 20px",
-    textDecoration: "none",
-  };
+  
   const [userId, password, city] = propsConfig.inputs;
   const config = [
     {
@@ -201,7 +189,7 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
 
             cardStyle={{ margin: "auto", minWidth: "408px" }}
             className="loginFormStyleEmployee"
-            buttonStyle={mystyle}
+            buttonStyle={{className:"btnksmart"}}
           >
           </FormComposer>
           {showToast && <Toast error={true} label={t(showToast)} onClose={closeToast} />}

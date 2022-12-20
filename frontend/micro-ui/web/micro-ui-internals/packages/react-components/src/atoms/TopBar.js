@@ -11,8 +11,8 @@ const TopBar = ({ img, isMobile, logoUrl, onLogout, toggleSidebar, ulb, userDeta
         <img
           className="city"
           id="topbar-logo" 
-          src={img || "https://cdn.jsdelivr.net/npm/@egovernments/digit-ui-css@1.0.7/img/m_seva_white_logo.png"}
-          alt="mSeva"
+          src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png"
+          alt="K-SMART"
         />
         <h3>{cityOfCitizenShownBesideLogo}</h3>
         <div className="RightMostTopBarOptions">
