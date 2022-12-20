@@ -100,7 +100,7 @@ export const CRModule = ({ stateCode, userType, tenants }) => {
 
   if (userType === "employee") {
     return <EmployeeApp path={path} url={url} userType={userType} />;
-  } 
+  }
   // else return <CitizenApp />;
 };
 
@@ -151,7 +151,7 @@ const componentsToRegister = {
 
   SearchRegistry,
 
-//////////////////
+  //////////////////
   InformationDeath,
   AddressOfDecesed,
   OutSideIndia,
@@ -166,7 +166,7 @@ const componentsToRegister = {
   StatisticalInfo,
   StatisticalInfoContinue,
 
-  
+
   // SelectLand,
   // SelectBuilding,
   // SelectBusinessCategory,
@@ -215,7 +215,7 @@ const componentsToRegister = {
   // TLNewApplication : NewApplication,
   // TLReNewApplication : ReNewApplication,
   // TLSearch : Search,
-  TLResponse : Response,
+  TLResponse: Response,
 };
 
 export const initCRComponents = () => {

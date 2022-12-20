@@ -61,8 +61,8 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
   function setSelectProvinceMl(e) {
     setProvinceMl(e.target.value);
   }
-  function setSelectCountry(e) {
-    setCountry(e.target.value);
+  function selectCountry(e) {
+    setSelectedCountry(e.target.value);
   }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
@@ -84,7 +84,6 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
         <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
@@ -117,7 +116,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               value={AdressEn}
               onChange={setSelectAdressEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
           <div className="col-md-6">
@@ -131,7 +130,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               value={AdressMl}
               onChange={setSelectAdressMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
         </div>
@@ -147,7 +146,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               value={AdressEnB}
               onChange={setSelectAdressEnB}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
           <div className="col-md-6">
@@ -161,13 +160,13 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               value={AdressMlB}
               onChange={setSelectAdressMlB}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <CardLabel>{t("CR_LOCALITY_EN)")}</CardLabel>
+            <CardLabel>{t("CR_LOCALITY_EN")}</CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -177,7 +176,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               value={LocalityEn}
               onChange={setSelectLocalityEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -191,7 +190,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               value={LocalityMl}
               onChange={setSelectLocalityMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />
           </div>
         </div>
@@ -207,7 +206,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               value={ProvinceEn}
               onChange={setSelectProvinceEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -221,14 +220,20 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               value={ProvinceMl}
               onChange={setSelectProvinceMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_COUNTRY")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbNation} selected={setCountry} select={selectCountry} disabled={isEdit} />
+            <Dropdown t={t} 
+            optionKey="name" 
+            isMandatory={false} 
+            option={cmbNation} 
+            selected={setCountry} 
+            select={selectCountry} 
+            disabled={isEdit} />
           </div>
         </div>
       </FormStep>

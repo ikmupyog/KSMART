@@ -13,8 +13,8 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   const [setDesignation, setSelectedDesignation] = useState(formData?.HospitalDetails?.setDesignation);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [HospitalAadhaar, setHospitalAadhaar] = useState(null);
-  const [HospitalMobile, setHospitalMobile] = useState(null);
+  const [HospitalAadhaar, setHospitalAadhaar] = useState(formData?.HospitalDetails?.HospitalAadhaar);
+  const [HospitalMobile, setHospitalMobile] = useState(formData?.HospitalDetails?.HospitalMobile);
 
   // const [TradeName, setTradeName] = useState(null);
   // const [CommencementDate, setCommencementDate] = useState();
@@ -41,7 +41,6 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
     selectSignedOfficerName(value);
   }
   function selectDesignation(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDesignation(value);
   }
 
@@ -72,11 +71,10 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">Place Of Death Hospital </header>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death Hospital")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH_HOSPITAL")}`}</span>
             </h1>
           </div>
         </div>
@@ -129,7 +127,8 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
               value={HospitalAadhaar}
               onChange={setSelectHospitalAadhaar}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} 
+             
             />
           </div>
           <div className="col-md-4">
@@ -143,7 +142,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
               value={HospitalMobile}
               onChange={setSelectHospitalMobile}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
         </div>

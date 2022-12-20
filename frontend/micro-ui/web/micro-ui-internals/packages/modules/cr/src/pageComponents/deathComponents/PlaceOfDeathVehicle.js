@@ -22,8 +22,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const [VehicleTo, setVehicleTo] = useState(formData?.PlaceOfDeathVehicle?.VehicleTo);
   const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsEn);  
   const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsMl); 
-  const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.TradeDetails?.setDeathVehicleWard);
-  const [setAdmittedHospital, setSelectedAdmittedHospital] = useState(formData?.TradeDetails?.setAdmittedHospital);
+  const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.PlaceOfDeathVehicle?.setDeathVehicleWard);
+  const [setAdmittedHospital, setSelectedAdmittedHospital] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospital);
   
     
   const [CommencementDate, setCommencementDate] = useState();
@@ -38,7 +38,6 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
 
@@ -79,11 +78,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
     setVehicleOtherDetailsMl(e.target.value);
   }
   function selectDeathVehicleWard(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathVehicleWard(value);
   }
   function selectAdmittedHospital(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedAdmittedHospital(value);
   }
   
@@ -131,7 +128,6 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">Place Of Death Vechicle </header>
         <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
@@ -152,7 +148,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={DriverName}
                 onChange={setSelectDriverName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
             />
            
         </div>
@@ -167,7 +163,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={DriverNameMl}
                 onChange={setSelectDriverNameMl}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
             />
            
         </div>
@@ -184,7 +180,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={DriverMobileNo}
                 onChange={setSelectDriverMobileNo}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
         </div>
         <div className="col-md-4" >
@@ -198,7 +194,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={DriverAge}
                 onChange={setSelectDriverAge}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = {pattern: "^([0-9]){3}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_AGE"),  })}
             />
         </div>
         <div className="col-md-4 " >
@@ -212,7 +208,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={DriverAadhar}
                 onChange={setSelectDriverAadhar}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false ,title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
         </div>
     </div>
@@ -229,7 +225,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={VehicleType}
                 onChange={setSelectVehicleType}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TYPE") })}
             />
         </div>
          
@@ -244,7 +240,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={VehicleRegistrationNo}
                 onChange={setSelectVehicleRegistrationNo}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
             />
         </div>
     </div> 
@@ -261,7 +257,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={VehicleFrom}
                 onChange={setSelectVehicleFrom}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
             />
         </div>
         <div className="col-md-6" > 
@@ -275,7 +271,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={VehicleTo}
                 onChange={setSelectVehicleTo}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
             />
         </div>
     </div>     
@@ -318,7 +314,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             value={VehicleOtherDetailsEn}
             onChange={setSelectVehicleOtherDetailsEn}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
             />
         </div>
          <div className="col-md-6" >
@@ -332,7 +328,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             value={VehicleOtherDetailsMl}
             onChange={setSelectVehicleOtherDetailsMl}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
             />
         </div> 
     </div>    

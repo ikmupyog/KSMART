@@ -46,11 +46,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   //   setSelectedPlaceofActivity(value);
   // }
   function selectTitle(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitle(value);
   }
   function selectTitleB(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitleB(value);
   }
   function setSelectFatherOrHusbandNameEN(e) {
@@ -103,8 +101,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">Family Details </header>
-
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -128,7 +124,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               value={FatherOrHusbandNameEN}
               onChange={setSelectFatherOrHusbandNameEN}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -142,7 +138,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               value={FatherOrHusbandNameMl}
               onChange={setSelectFatherOrHusbandNameMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_ML") })}
             />
           </div>
         </div>
@@ -158,7 +154,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               value={FatherOrHusbandAdharNo}
               onChange={setSelectFatherOrHusbandAdharNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false,title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
         </div>
@@ -186,7 +182,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               value={MotherNameEn}
               onChange={setSelectMotherNameEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -200,7 +196,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               value={MotherNameMl}
               onChange={setSelectMotherNameMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_ML") })}
             />
           </div>
         </div>
@@ -216,7 +212,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               value={MotherAdharNo}
               onChange={setSelectMotherAdharNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
         </div>

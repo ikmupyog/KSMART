@@ -47,16 +47,13 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectInstitution(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedInstitution(value);
   }
   function selectInstitutionId(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedInstitutionId(value);
   }
   
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
   function setSelectTradeName(e) {
@@ -102,9 +99,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">Place Of Death Institution </header>
-
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>     
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -150,7 +145,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               value={SiginedOfficer}
               onChange={setSelectSiginedOfficer}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
             />
           </div>
           <div className="col-md-6">
@@ -164,7 +159,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               value={SiginedOfficerDesignation}
               onChange={setSelectSiginedOfficerDesignation}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
             />
           </div>
         </div>
@@ -180,7 +175,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               value={InstitutionMobilNo}
               onChange={setSelectInstitutionMobilNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
           <div className="col-md-6">
@@ -194,7 +189,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               value={InstitutionAadhaar}
               onChange={setSelectInstitutionAadhaar}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false ,title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
         </div>

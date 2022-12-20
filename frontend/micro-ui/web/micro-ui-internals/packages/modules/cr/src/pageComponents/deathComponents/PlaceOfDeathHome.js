@@ -24,6 +24,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [LocalityML, setLocalityML] = useState(formData?.PlaceOfDeathHome?.LocalityML);
   const [CityEn, setCityEn] = useState(formData?.PlaceOfDeathHome?.CityEn);
   const [CityMl, setCityMl] = useState(formData?.PlaceOfDeathHome?.CityMl);
+  const [setWard, setSelectedWard] = useState(formData?.PlaceOfDeathHome?.setWard);
+  
+  
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -104,7 +107,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDistrict(value);
   }
-
+  function selectWard(value) {
+    naturetypecmbvalue = value.code.substring(0, 4);
+    setSelectedWard(value);
+  }
+  
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
   }
@@ -112,7 +119,6 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     setCommencementDate(value);
   }
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
 
@@ -123,12 +129,14 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PinCode", PinCode);
     sessionStorage.setItem("setTaluk", setTaluk.code);
     sessionStorage.setItem("setDistrict", setDistrict.code);
-    sessionStorage.setItem("BuildingNo", BuildingNo.code);
-    sessionStorage.setItem("HouseNo", HouseNo.code);
-    sessionStorage.setItem("Locality", Locality.code);
-    sessionStorage.setItem("LocalityML", LocalityML.code);
-    sessionStorage.setItem("CityEn", CityEn.code);
-    sessionStorage.setItem("CityMl", CityMl.code);
+    sessionStorage.setItem("BuildingNo", BuildingNo);
+    sessionStorage.setItem("HouseNo", HouseNo);
+    sessionStorage.setItem("Locality", Locality);
+    sessionStorage.setItem("LocalityML", LocalityML);
+    sessionStorage.setItem("CityEn", CityEn);
+    sessionStorage.setItem("CityMl", CityMl);
+    sessionStorage.setItem("setWard", setWard.code);
+    
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
@@ -144,18 +152,17 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
       LocalityML,
       CityEn,
       CityMl,
+      setWard,
     });
   };
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">Place Of Death Home </header>
-
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Place Of Death Home")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH_HOME")}`}</span>
             </h1>
           </div>
         </div>
@@ -172,7 +179,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={BuildingNo}
               onChange={setSelectBuildingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
             />
           </div>
           <div className="col-md-6">
@@ -186,12 +193,12 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={HouseNo}
               onChange={setSelectHouseNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
             />
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_LOCALITY_EN")}</CardLabel>
             <TextInput
               t={t}
@@ -202,10 +209,10 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={Locality}
               onChange={setSelectLocality}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_LOCALITY_ML")}</CardLabel>
             <TextInput
               t={t}
@@ -216,7 +223,19 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={LocalityML}
               onChange={setSelectLocalityML}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}            
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CS_COMMON_WARD")}</CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbTaluk}
+              selected={setWard}
+              select={selectWard}
+              disabled={isEdit}
             />
           </div>
         </div>
@@ -232,7 +251,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={CityEn}
               onChange={setSelectCityEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -246,7 +265,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={CityMl}
               onChange={setSelectCityMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
             />
           </div>
         </div>
@@ -302,7 +321,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={PinCode}
               onChange={setSelectPinCode}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = {pattern: "^([0-9]){12}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_PIN_CODE"),})}
             />
           </div>
         </div>

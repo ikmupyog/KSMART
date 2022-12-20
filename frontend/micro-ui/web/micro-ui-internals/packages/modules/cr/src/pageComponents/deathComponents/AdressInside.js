@@ -10,6 +10,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+  const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -21,8 +22,9 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PresentCityNameMl, setPresentCityNameMl] = useState(formData?.AddressDetails?.PresentCityNameMl);
   const [PresentVillage, setPresentVillage] = useState(formData?.AddressDetails?.PresentVillage);
   const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
-  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentLBName);
+  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
   const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
+  const [PresentWard, setPresentWard] = useState(formData?.AddressDetails?.PresentWard);
   const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
   const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
   const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress);
@@ -36,12 +38,14 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
   const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
   const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
+  const [PermanentWard, setPermanentWard] = useState(formData?.AddressDetails?.PermanentWard);
   const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);
   const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
   let cmbPlace = [];
   let cmbTaluk = [];
   let cmbVillage = [];
   let cmbDistrict = [];
+  let cmbPostOffice = [];
 
   Taluk &&
     Taluk["common-masters"] &&
@@ -57,6 +61,11 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     District["common-masters"] &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
+    });
+    PostOffice &&
+    PostOffice["common-masters"] &&
+    PostOffice["common-masters"].PostOffice.map((ob) => {
+      cmbPostOffice.push(ob);
     });
 
   const onSkip = () => onSelect();
@@ -74,6 +83,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLBName(PresentLBName);
       setPermanentDistrict(PresentDistrict);
       setPermanentTaluk(PresentTaluk);
+      setPermanentWard(PresentWard);
       setPermanentPostOffice(PresentPostOffice);
       setPermanentPincode(PresentPincode);
     }
@@ -126,6 +136,12 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentTaluk(PresentTaluk);
     }
   }
+  function setSelectPresentWard(value) {
+    setPresentWard(value);
+    if (isPrsentAddress) {
+      setPermanentWard(PresentWard);
+    }
+  }
   function setSelectPresentDistrict(value) {
     setPresentDistrict(value);
     if (isPrsentAddress) {
@@ -172,6 +188,9 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   function setSelectPermanentTaluk(value) {
     setPermanentTaluk(value);
   }
+  function setSelectPermanentWard(value) {
+    setPermanentWard(value);
+  }
   function setSelectPermanentDistrict(value) {
     setPermanentDistrict(value);
   }
@@ -194,6 +213,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLBName(PresentLBName);
       setPermanentDistrict(PresentDistrict);
       setPermanentTaluk(PresentTaluk);
+      setPermanentWard(PresentWard);
       setPermanentPostOffice(PresentPostOffice);
       setPermanentPincode(PresentPincode);
     } else {
@@ -207,6 +227,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLBName("");
       setPermanentDistrict("");
       setPermanentTaluk("");
+      setPermanentWard("");
       setPermanentPostOffice("");
       setPermanentPincode("");
     }
@@ -222,6 +243,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PresentLBName", PresentLBName.code);
     sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
     sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
+    sessionStorage.setItem("PresentWaerd", PresentWard.code);
     sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
     sessionStorage.setItem("PresentPincode", PresentPincode.code);
     sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
@@ -234,9 +256,9 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentLBName", PermanentLBName.code);
     sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
     sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
+    sessionStorage.setItem("PermanentWard", PermanentTaluk.code);
     sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
     sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
-
     onSelect(config.key, {
       PresentBuldingNo,
       PresentHouseNo,
@@ -248,6 +270,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       PresentLBName,
       PresentDistrict,
       PresentTaluk,
+      PresentWard,
       PresentPostOffice,
       PresentPincode,
       PermanentBuldingNo,
@@ -260,13 +283,13 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       PermanentLBName,
       PermanentDistrict,
       PermanentTaluk,
+      PermanentWard,
       PermanentPostOffice,
       PermanentPincode,
     });
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}{" "}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PresentBuldingNo}>
         <div className="row">
           <div className="col-md-12">
@@ -287,7 +310,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PresentBuldingNo}
               onChange={setSelectPresentBuldingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
             />
           </div>
           <div className="col-md-6">
@@ -301,7 +324,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PresentHouseNo}
               onChange={setSelectPresentHouseNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
             />
           </div>
         </div>
@@ -317,7 +340,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PresentLocalityNameEn}
               onChange={setSelectPresentLocalityNameEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -331,7 +354,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PresentLocalityNameMl}
               onChange={setSelectPresentLocalityNameMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />
           </div>
         </div>
@@ -347,7 +370,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PresentCityNameEn}
               onChange={setSelectPresentCityNameEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -390,6 +413,18 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               disabled={isEdit}
             />
           </div>
+          <div className="col-md-6">
+            <CardLabel>{t("CS_COMMON_WARD")}</CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbTaluk}
+              selected={PresentWard}
+              select={setSelectPresentWard}
+              disabled={isEdit}
+            />
+          </div>
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -424,7 +459,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionKey="name"
               isMandatory={false}
-              option={cmbDistrict}
+              option={cmbPostOffice}
               selected={PresentPostOffice}
               select={setSelectPresentPostOffice}
               disabled={isEdit}
@@ -442,13 +477,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectPresentPincode}
               disable={isEdit}
               {...(validation = {
-                pattern: "^[a-zA-Z-.`' ]*$",
-                isRequired: true,
-                type: "number",
-                maxLength: 6,
-                minLength: 6,
-                title: t("TL_INVALID_TRADE_NAME"),
-              })}
+                pattern: "^([0-9]){12}$",  isRequired: true, type: "text", title: t("CS_COMMON_INVALID_PIN_CODE"),  })}
             />
           </div>
         </div>
@@ -483,7 +512,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PermanentBuldingNo}
               onChange={setSelectPermanentBuldingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
             />
           </div>
           <div className="col-md-6">
@@ -497,7 +526,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PermanentHouseNo}
               onChange={setSelectPermanentHouseNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
             />
           </div>
         </div>
@@ -513,7 +542,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PermanentLocalityNameEn}
               onChange={setSelectPermanentLocalityNameEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -527,7 +556,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PermanentLocalityNameMl}
               onChange={setSelectPermanentLocalityNameMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />
           </div>
         </div>
@@ -543,7 +572,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PermanentCityNameEn}
               onChange={setSelectPermanentCityNameEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -557,7 +586,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PermanentCityNameMl}
               onChange={setSelectPermanentCityNameMl}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
             />
           </div>
         </div>
@@ -583,6 +612,18 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               option={cmbPlace}
               selected={PermanentLBName}
               select={setSelectPermanentLBName}
+              disabled={isEdit}
+            />
+          </div>
+          <div className="col-md-6">
+            <CardLabel>{t("CS_COMMON_TALUK")}</CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbTaluk}
+              selected={PermanentWard}
+              select={setSelectPermanentWard}
               disabled={isEdit}
             />
           </div>
@@ -620,7 +661,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionKey="name"
               isMandatory={false}
-              option={cmbDistrict}
+              option={cmbPostOffice}
               selected={PermanentPostOffice}
               select={setSelectPermanentPostOffice}
               disabled={isEdit}
@@ -637,18 +678,10 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               value={PermanentPincode}
               onChange={setSelectPermanentPincode}
               disable={isEdit}
-              {...(validation = {
-                pattern: "^[a-zA-Z-.`' ]*$",
-                isRequired: true,
-                type: "number",
-                maxLength: 6,
-                minLength: 6,
-                title: t("TL_INVALID_TRADE_NAME"),
-              })}
+              {...(validation = {pattern: "^([0-9]){12}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_PIN_CODE"),          })}
             />
           </div>
-        </div>
-      </FormStep>
+        </div>     </FormStep>
     </React.Fragment>
   );
 };

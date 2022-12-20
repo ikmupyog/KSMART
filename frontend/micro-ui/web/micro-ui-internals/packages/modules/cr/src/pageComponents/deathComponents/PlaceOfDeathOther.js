@@ -35,16 +35,13 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
   
   function selectDeathOtherPlace(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathOtherPlace(value);
   }
   function selectDeathOtherward(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathOtherward(value);
   }
   function setSelectTradeName(e) {
@@ -78,8 +75,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-        <header className="tittle">Place Of Death Other </header>
-    <div className="row">
+      <div className="row">
       <div className="col-md-12" >
           <h1 className="headingh1" >
             <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH_OTHER")}`}
@@ -125,7 +121,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             value={PlaceOfDeathOtherDetailsEn}
             onChange={setSelectPlaceOfDeathOtherDetailsEn}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
             />
         </div>
          <div className="col-md-6" >
@@ -139,7 +135,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             value={PlaceOfDeathOtherDetailsMl}
             onChange={setSelectPlaceOfDeathOtherDetailsMl}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
             />
         </div> 
     </div>    
