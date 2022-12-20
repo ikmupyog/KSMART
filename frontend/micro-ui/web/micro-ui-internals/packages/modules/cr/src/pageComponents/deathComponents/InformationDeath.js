@@ -30,7 +30,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
   const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-   // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
+  // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
   const [FirstName, setFirstName] = useState(formData?.InformationDeath?.FirstName);
   const [MiddleName, setMiddleName] = useState(formData?.InformationDeath?.MiddleName);
   const [LastName, setLastName] = useState(formData?.InformationDeath?.LastName);
@@ -47,7 +47,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom);
   const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo);
   const [tripStartTime, setTripStartTime] = useState(formData?.InformationDeath?.tripStartTime);
-  
+  const [checked, setChecked] = useState(false);
   let naturetypecmbvalue = null;
   // let cmbPlace = [];
   // place &&
@@ -73,12 +73,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     title["common-masters"].Title.map((ob) => {
       cmbTitle.push(ob);
     });
-    let cmbReligion = [];
-      religion &&
-      religion["common-masters"] &&
-      religion["common-masters"].Religion.map((ob) => {
-        cmbReligion.push(ob);
-      });
+  let cmbReligion = [];
+  religion &&
+    religion["common-masters"] &&
+    religion["common-masters"].Religion.map((ob) => {
+      cmbReligion.push(ob);
+    });
   function selectReligion(value) {
     setSelectedReligion(value);
   }
@@ -136,26 +136,23 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectToDate(value) {
     setToDate(value);
   }
-  
+
   const handleTimeChange = (value, cb) => {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       cb(value);
     }
-  }
+  };
   const handleFromTimeChange = (value, cb) => {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       cb(value);
     }
-  }
+  };
   const handleToTimeChange = (value, cb) => {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       cb(value);
     }
-  }
+  };
 
-
-
-  
   const onSkip = () => onSelect();
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate);
@@ -197,7 +194,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       TimeOfDeath,
       Minute,
       Seconds,
-      DeathTimeFrom,      
+      DeathTimeFrom,
       DeathTimeTo,
     });
   };
@@ -214,15 +211,42 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">            
-            <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}  />
+          <div className="col-md-6">
+            <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} />
           </div>
-          <div className="col-md-6">            
+          <div className="col-md-6">
             <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")}  />
           </div>
         </div>
         <div>
           {/* {outside && ( */}
+
+          {/* )} */}
+        </div>
+
+        <div>
+          {/* {inside && ( */}
+          {checked ? (
+            <div className="row">
+              <div className="col-md-3">
+                <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
+                <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
+                <CustomTimePicker name="DeathTimeFrom" onChange={(val) => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
+              </div>
+
+              <div className="col-md-3">
+                <CardLabel>{t("CR_TO_DATE")}</CardLabel>
+                <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_TO_TIME")}</CardLabel>
+                <CustomTimePicker name="DeathTimeTo" onChange={(val) => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} />
+              </div>
+            </div>
+          ) : (
             <div className="row">
               <div className="col-md-6">
                 <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
@@ -231,35 +255,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               </div>
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-                <CustomTimePicker name="tripStartTime" onChange={val => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
-
+                <CustomTimePicker name="tripStartTime" onChange={(val) => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
               </div>
             </div>
-          {/* )} */}
-        </div>
-
-        <div>
-          {/* {inside && ( */}
-            <div className="row">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
-                <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_FROM_TIME")}</CardLabel>                
-                <CustomTimePicker name="DeathTimeFrom" onChange={val => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
-              </div>
-
-              <div className="col-md-3">
-                <CardLabel>{t("CR_TO_DATE")}</CardLabel>
-                <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_TO_TIME")}</CardLabel>               
-                <CustomTimePicker name="DeathTimeTo" onChange={val => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} />
-              </div>
-            </div>
-          
+          )}
         </div>
 
         <div className="row">
@@ -321,7 +320,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-3">
             <CardLabel>{`${t("CR_TITLE_NAME_ML")}`}</CardLabel>
-            <Dropdown t={t} optionKey="namelocal" isMandatory={false} option={cmbTitle} selected={setTitleB} select={selectTitleB} disabled={isEdit} />
+            <Dropdown
+              t={t}
+              optionKey="namelocal"
+              isMandatory={false}
+              option={cmbTitle}
+              selected={setTitleB}
+              select={selectTitleB}
+              disabled={isEdit}
+            />
           </div>
           <div className="col-md-3">
             <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
@@ -397,8 +404,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={Ageofbirth}
               onChange={setSelectAgeofbirth}
               disable={isEdit}
-              {...(validation = {pattern: "^([0-9]){}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_AGE"),  })}
-             
+              {...(validation = { pattern: "^([0-9]){}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
             />
           </div>
         </div>
@@ -423,7 +429,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={AdharNo}
               onChange={setSelectAdharNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false,title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
         </div>
@@ -466,7 +472,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbReligion} selected={setReligion} select={selectReligion} disabled={isEdit} />
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbReligion}
+              selected={setReligion}
+              select={selectReligion}
+              disabled={isEdit}
+            />
           </div>
         </div>
       </FormStep>
