@@ -55,7 +55,7 @@ public class CrDeathService {
     public List<CrDeathDtl> create(CrDeathDtlRequest request) {
       
 
-        // validate mdms data
+        // Rakhi S IKM validate mdms data
     Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
           
           /********************************************* */

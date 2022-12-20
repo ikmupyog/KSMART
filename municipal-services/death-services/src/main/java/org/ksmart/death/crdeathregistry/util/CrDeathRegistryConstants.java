@@ -14,7 +14,8 @@ public class CrDeathRegistryConstants {
     public static final String GENDER_MODULE_NAME = "common-masters";
 
     public static final String BND_MODULE_NAME = "birth-death-service";
-    public static final String HOSPITAL_LIST = "hospitalList";
+    //Modified  by Rakhi S on 20.12.2022
+    public static final String HOSPITAL_LIST = "HospitalMaster";
     public static final String DEATH_PLACE = "PlaceMaster";    
     //Rakhi S on 07.12.2022
     public static final String DEATH_CAUSE_MAIN = "DeathCause";

@@ -129,8 +129,9 @@ public class CrDeathMdmsUtil {
         // master details for crDeath module
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
-        // filter to only get code field from master data    
-        final String filterCode = "$.[?(@.active==true)].hospitalName";
+        // filter to only get code field from master data 
+         //Modified by Rakhi S on 20.12.2022      
+        final String filterCode = "$.[?(@.active==true)].code";
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(CrDeathConstants.HOSPITAL_LIST).filter(filterCode).build());
 

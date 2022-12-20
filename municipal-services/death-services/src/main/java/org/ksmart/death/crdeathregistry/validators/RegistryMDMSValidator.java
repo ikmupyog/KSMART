@@ -16,8 +16,8 @@ import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
     
     /**
-     * Creates MDMSValidator 
-
+     * Creates RegistryMDMSValidator 
+    Rakhi S IKM 
      */
 @Component
 @Slf4j
@@ -31,11 +31,6 @@ public class RegistryMDMSValidator {
         String[] masterArray = {CrDeathRegistryConstants.TENANTS,CrDeathRegistryConstants.GENDERTYPE
                             ,CrDeathRegistryConstants.HOSPITAL_LIST,CrDeathRegistryConstants.DEATH_PLACE};
         validateIfMasterPresent(masterArray,masterData);
-
-         System.out.println("JasmineMDMSValidation"+masterData.get(CrDeathRegistryConstants.TENANTS));
-         System.out.println("JSONHospitalList"+request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName());
-         System.out.println("MDMSHospitalList:"+masterData.get(CrDeathRegistryConstants.HOSPITAL_LIST));
-         
 
         if(!masterData.get(CrDeathRegistryConstants.TENANTS)
                 .contains(request.getDeathCertificateDtls().get(0).getTenantId()))
