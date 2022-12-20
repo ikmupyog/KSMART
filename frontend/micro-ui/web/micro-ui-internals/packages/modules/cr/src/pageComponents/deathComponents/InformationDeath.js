@@ -215,7 +215,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} />
           </div>
           <div className="col-md-6">
-            <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")}  />
+            <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")}   />
           </div>
         </div>
         <div>
