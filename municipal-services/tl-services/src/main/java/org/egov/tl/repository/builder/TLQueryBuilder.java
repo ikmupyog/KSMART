@@ -75,7 +75,7 @@ public class TLQueryBuilder {
             +
             " tlstructplace.partitionno as partitionno, tlstructplace.doorno as tlstructplace_doorno, tlstructplace.doorsub as doorsub, "
             +
-            " tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active FROM eg_tl_tradelicense tl"
+            " tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active, tlstructplace.isresurveyed AS isresurveyed FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_tradelicensedetail tld ON tld.tradelicenseid = tl.id"
             + LEFT_OUTER_JOIN_STRING
