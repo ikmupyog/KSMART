@@ -250,8 +250,8 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("MotherPlaceNameEn ", MotherPlaceNameEn);
         sessionStorage.setItem("MotherPlaceNameMl ", MotherPlaceNameMl);
         sessionStorage.setItem("MotherPlaceType", MotherPlaceType.code);
-        sessionStorage.setItem("MotherLBName", null);//MotherLBName.code
-        sessionStorage.setItem("LBTypeName", LBTypeName.code);
+        sessionStorage.setItem("MotherLBName", MotherLBName.code);//MotherLBName.code
+        // sessionStorage.setItem("LBTypeName", LBTypeName.code);
         sessionStorage.setItem("MotherDistrict", MotherDistrict.code);
         sessionStorage.setItem("MotherTaluk", MotherTaluk.code);
         sessionStorage.setItem("StateName", StateName.code);
@@ -259,7 +259,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         onSelect(config.key, {
             MotherFirstNameEn, MotherMiddleNameEn, MotherLastNameEn,
             MotherFirstNameMl, MotherMiddleNameMl, MotherLastNameMl, MotherAadhar, MotherPassportNo, MotherEmail, MotherMobile, MotherEducation, MotherEducationSubject, MotherProfession,
-            MotherNationality, MotherAgeDeleivery, MotherDOB, MotherNoOfBirths, OrderofDelivery, MotherPlaceType, MotherLBName, LBTypeName, MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl
+            MotherNationality, MotherAgeDeleivery, MotherDOB, MotherNoOfBirths, OrderofDelivery, MotherPlaceType, MotherLBName,  MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl
         });
     }
     return (
