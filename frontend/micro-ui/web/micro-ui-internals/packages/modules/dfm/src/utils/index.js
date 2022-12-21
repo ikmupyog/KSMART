@@ -280,52 +280,56 @@ export const convertToFileSubmission = (data = {}) => {
         title: data?.FileManagement?.applicationData?.title.code,
         mobileNo: data?.FileManagement?.applicationData?.mobileNo,
         tenantId: "kl",
+        applicantChild: {
+          buildingNumber: "9",
+          durationOfResidence: "2 year"
+        },
         serviceDetails: {
-          applicantPersonalId: 23,
-          serviceId: 16,
+          applicantPersonalId: '23',
+          serviceId: '16',
           serviceCode: "PN001.ALP",
-          serviceSubType: 2,
-          serviceMinorType: 5
+          serviceSubType: '2',
+          serviceMinorType: '5'
         },
         applicantAddress: {
-          applicantPersonalId: 23,
+          applicantPersonalId: '23',
           houseNo: data?.FileManagement?.addressData?.houseNo,
           houseName: data?.FileManagement?.addressData?.houseName,
           street: data?.FileManagement?.addressData?.street,
           pincode: data?.FileManagement?.addressData?.pincode,
           postOfficeName: data?.FileManagement?.addressData?.postOffice.code,
-          wardNo: data?.FileManagement?.addressData?.wardNo.code,
+          wardNo: "5",
         },
         applicantServiceDocuments: {
-          applicantPersonalId: 23,
-          documentTypeId: 2,
-          fileStoreId: 537,
-          serviceDetailsId: 34,
+          applicantPersonalId: '23',
+          documentTypeId: '2',
+          fileStoreId: '537',
+          serviceDetailsId: '34',
           active: Yes,
-          documentNumber: 12345,
+          documentNumber: '12345',
           applicationdetails: "aaaa"
         },
         applicantDocuments: {
-          applicantPersonalId: 23,
-          documenttypeId: 2,
-          documentNumber: 12345,
-          docexpiryDate: 1234577
+          applicantPersonalId: '23',
+          documenttypeId: '2',
+          documentNumber: '12345',
+          docexpiryDate: '1234577'
         },
         fileDetail: {
-          applicantPersonalId: 23,
+          applicantPersonalId: '23',
           tenantId: "kl",
-          serviceDetailsId: 537,
-          fileNumber: 1,
+          serviceDetailsId: '537',
+          fileNumber: '1',
           fileCode: "KL-FM-2022-11-02-000043",
           fileName: "PensionAdalath",
-          fileArisingMode: 1,
+          fileArisingMode: '1',
           fileArisingDate: null,
-          financialYear: 2022,
+          financialYear: '2022',
           applicationDate: null,
           workflowCode: "NewDFM",
           action: "INITIATE",
-          fileStatus: 1,
-          businessService: 89,
+          fileStatus: '1',
+          businessService: '89',
           comment: "Test",
           assignee: [
 
