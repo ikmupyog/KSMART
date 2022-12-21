@@ -58,7 +58,7 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
     }
     if (type === "checkbox") {
       setTermsCheck(text);
-      if (documentDetails.fileStoreId && documentDetails.documentType?.value) {
+      if (documentDetails.fileStoreId && documentDetails.documentType?.code) {
         setFileCheck(true);
       }
       if (!text) {
@@ -124,6 +124,7 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
       }
     })();
   }, [file]);
+  console.log(fileCheck);
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}

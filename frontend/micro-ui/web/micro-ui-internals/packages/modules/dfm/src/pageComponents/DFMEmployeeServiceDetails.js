@@ -1,8 +1,9 @@
-import { CardLabel, TextInput, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput,TextArea, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) => {
+  let validation = {};
   // console.log(formData);
   const [serviceDetails, setServiceDetails] = useState(
     formData?.FileManagement?.serviceDetails
@@ -11,6 +12,12 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
           details: "",
           attachmentFile: "",
           fileStoreId: "",
+          buldingNo:'',
+          relationOfAssessee:'',
+          nameOfOccupier:'',
+          relationOfOccupier:'',
+          durationOfresidence:'',
+
         }
   );
   const [uploadedFile, setUploadedFile] = useState(formData?.owners?.documents?.ProofOfIdentity?.fileStoreId || null);
@@ -42,6 +49,26 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
       tempData.details = text;
       setServiceDetails(tempData);
     }
+    else if (type === "buldingNo"){
+      tempData.buldingNo = text;
+      setServiceDetails(tempData);
+    }
+    else if (type === "relationOfAssessee"){
+      tempData.relationOfAssessee = text;
+      setServiceDetails(tempData);
+    }
+    else if (type === "nameOfOccupier"){
+      tempData.nameOfOccupier = text;
+      setServiceDetails(tempData);
+    }
+    else if (type === "relationOfOccupier"){
+      tempData.relationOfOccupier = text;
+      setServiceDetails(tempData);
+    }
+    else if (type === "durationOfresidence"){
+      tempData.durationOfresidence = text;
+      setServiceDetails(tempData);
+    }
   };
   const mystyle = {
     marginBottom: "24px",
@@ -50,7 +77,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
     let fileStoreId = uploadedFile;
     let fileDetails = file;
     let tempData = { ...serviceDetails };
-    tempData.fileStoreId = file;
+    // tempData.fileStoreId = file;
     // if (fileDetails) fileDetails.documentType = "OWNERIDPROOF";
     // if (fileDetails) fileDetails.fileStoreId = fileStoreId ? fileStoreId : null;
     // let owners = formData?.owners;
@@ -104,7 +131,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
+      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.details || !serviceDetails.buldingNo ||error}>
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
             <div className="row">
@@ -114,10 +141,37 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                 </h1>
               </div>
             </div>
+            
             <div className="row">
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
-                <TextInput
+          <div className="col-md-12" >
+            <div className="col-md-4" ><CardLabel>{t("Building No")}</CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="buldingNo" value={serviceDetails.buldingNo} onChange={(e) => handleChange(e.target.value, "buldingNo")}  placeholder={`${t("DFM_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_BUILDING_NO") })} />
+            </div>
+            <div className="col-md-4" ><CardLabel>{t("Relation of Assessee")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="relationOfAssessee" value={serviceDetails.relationOfAssessee} onChange={(e) => handleChange(e.target.value, "relationOfAssessee")}  placeholder={`${t("DFM_RELATION_OF_ASSESSEE")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_RELATION_OF_ASSESSEE") })} />
+            </div>
+            <div className="col-md-4" ><CardLabel>{t("Name of Occupier")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="nameOfOccupier" value={serviceDetails.nameOfOccupier} onChange={(e) => handleChange(e.target.value, "nameOfOccupier")}  placeholder={`${t("DFM_NAME_OCCUPIER")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER") })} />
+            </div>
+           
+          </div>
+        </div>
+        <div className="row">
+        <div className="col-md-12" >
+           
+            <div className="col-md-6" ><CardLabel>{t("Relation of Occupier")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="relationOfOccupier" value={serviceDetails.relationOfOccupier}   onChange={(e) => handleChange(e.target.value, "relationOfOccupier")} placeholder={`${t("DFM_RELATION_OCCUPIER")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_RELATION_OCCUPIER") })} />
+            </div>
+            <div className="col-md-6" ><CardLabel>{t("Duration of residence")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="durationOfresidence" value={serviceDetails.durationOfresidence}  onChange={(e) => handleChange(e.target.value, "durationOfresidence")} placeholder={`${t("DFM_DURATION_RESIDENCE")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_DURATION_RESIDENCE") })} />
+            </div>
+          </div>
+        </div>
+            <div className="row">
+              <div className="col-md-12">
+              <div className="col-md-6" >
+              <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
+                <TextArea
                   t={t}
                   isMandatory={false}
                   type={"text"}
@@ -128,8 +182,10 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                   placeholder={`${t("DFM_DETAILS")}`}
                 />
               </div>
+               
+              </div>
 
-              <div className="col-md-4">
+              {/* <div className="col-md-4">
                 <CardLabel>{`${t("DFM_ATTACHMENT_TYPE")}`}</CardLabel>
                 <UploadFile
                   id={"dfm-doc"}
@@ -147,7 +203,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                 />
                 {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
                 <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
