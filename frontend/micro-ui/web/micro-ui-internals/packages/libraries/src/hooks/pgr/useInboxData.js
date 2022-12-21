@@ -8,6 +8,7 @@ const useInboxData = (searchParams) => {
 
 
   const fetchInboxData = async () => {
+    console.log("jetheesh");
     const tenantId = Digit.ULBService.getCurrentTenantId();
     let serviceIds = [];
     let commonFilters = { start: 1, end: 10 };
@@ -17,6 +18,7 @@ const useInboxData = (searchParams) => {
     let complaintDetailsResponse = null;
     let combinedRes = [];
     complaintDetailsResponse = await Digit.PGRService.search(tenantId, appFilters);
+    
     complaintDetailsResponse.ServiceWrappers.forEach((service) => serviceIds.push(service.service.serviceRequestId));
     const serviceIdParams = serviceIds.join();
     const workflowInstances = await Digit.WorkflowService.getByBusinessId(tenantId, serviceIdParams, wfFilters, false);
@@ -26,6 +28,7 @@ const useInboxData = (searchParams) => {
         sla: Math.round(data.sla / (24 * 60 * 60 * 1000)),
       }));
     }
+    console.log(combinedRes);
     return combinedRes;
   };
 

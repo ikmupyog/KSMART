@@ -178,7 +178,7 @@ const getCRDocumentTypeList = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "DocumentType",
+            name: "IdProof",
           },
         ],
       },

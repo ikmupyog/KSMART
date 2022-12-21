@@ -70,7 +70,7 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
       data.tenantId = tenantId1;
       if (!resubmit) {
         let formdata = !isEdit ? convertToFileSubmission(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "TL") : []);
-        formdata.ApplicantPersonals[0].tenantId = formdata?.ApplicantPersonals[0]?.tenantId || tenantId1;
+        // formdata.ApplicantPersonals[0].tenantId = formdata?.ApplicantPersonals[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
           mutation.mutate(formdata, {
