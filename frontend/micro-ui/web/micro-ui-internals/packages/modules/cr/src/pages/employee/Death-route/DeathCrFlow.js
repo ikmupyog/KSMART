@@ -1,15 +1,16 @@
 import React from "react";
 import { Switch, useLocation, Link } from "react-router-dom";
-import { PrivateRoute, BreadCrumb } from "@egovernments/digit-ui-react-components";
+import { PrivateRoute, BreadCrumb,CardLabel } from "@egovernments/digit-ui-react-components";
 // import { ReactComponent as BankIcon } from "../../Img/BankIcon.svg";
 // import { ReactComponent as FileProtected } from "../../Img/FileProtected.svg";
+import { useTranslation } from "react-i18next";
 
 const DeathCrFlow = ({ path }) => {
-  console.log(path);
+  const { t } = useTranslation();
   const cardMenuData = [
     {
       title: "New Registration",
-      subTitle: "Inbox",
+      subTitle: "New Death Registration",
       // img: <BankIcon />,
       link: `${path}/information-death`,
     },
@@ -21,7 +22,7 @@ const DeathCrFlow = ({ path }) => {
     // },
     {
       title: "Correction",
-      subTitle: "Inbox",
+      subTitle: "Correction of Registered Death",
       // img: <FileProtected />, 
     },
     // {
@@ -31,7 +32,7 @@ const DeathCrFlow = ({ path }) => {
     // },
     {
       title: "Cancellation",
-      subTitle: "Inbox",
+      subTitle: "Cancellation of Registered Death",
       // img: <FileProtected />,
     },
     // {
@@ -72,7 +73,7 @@ const DeathCrFlow = ({ path }) => {
             </div>{" "}
           </Link>
            ):
-          ( <div className="crfile">
+          ( <div className={ClassList[item.title]}>
              <div className="contentMenu">
                <div className="contentImg">{item.img}</div>
                <div className="contentText">

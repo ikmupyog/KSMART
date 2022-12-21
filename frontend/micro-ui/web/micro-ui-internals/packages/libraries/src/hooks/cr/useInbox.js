@@ -10,7 +10,7 @@ const useTLInbox = ({ tenantId, filters, config }) => {
         tenantId,
 		processSearchCriteria: {
             moduleName: "cr-services",
-			businessService: ["NewTL", "DIRECTRENEWAL","EDITRENEWAL"],
+			businessService: ["bnd21days"],
             ...(applicationStatus?.length > 0 ? {status: applicationStatus} : {}),
             ...(uuid && Object.keys(uuid).length > 0 ? {assignee: uuid.code === "ASSIGNED_TO_ME" ? USER_UUID : ""} : {}),
         },
