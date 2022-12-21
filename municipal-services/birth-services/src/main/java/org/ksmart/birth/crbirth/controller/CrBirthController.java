@@ -31,9 +31,12 @@ public class CrBirthController {
     }
 
     @PostMapping(value = { "/_create"})
-    public ResponseEntity<?> saveBirthDetails(@RequestBody BirthDetailsRequest request) {
+    public ResponseEntity<BirthResponse> saveBirthDetails(@RequestBody BirthDetailsRequest request) {
         List<BirthDetail> birthDetails = crBirthService.saveBirthDetails(request);
-        return new ResponseEntity<>(birthDetails, HttpStatus.OK);
+        BirthResponse response = BirthResponse.builder().birthDetails(birthDetails).responseInfo(
+                        responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(value = { "/_update"})
