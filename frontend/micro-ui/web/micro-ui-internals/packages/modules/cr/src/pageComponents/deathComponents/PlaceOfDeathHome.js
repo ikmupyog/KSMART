@@ -14,6 +14,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
   const [lbs, setLbs] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
+
   const [setVillage, setSelectedVillage] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setLbName, setSelectedLbName] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setPostOffice, setSelectedPostOffice] = useState(formData?.PlaceOfDeathHome?.setPostOffice);

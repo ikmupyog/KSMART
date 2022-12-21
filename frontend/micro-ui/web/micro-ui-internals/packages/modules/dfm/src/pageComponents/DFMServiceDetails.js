@@ -12,6 +12,12 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
           details: "",
           attachmentFile: "",
           fileStoreId: "",
+          buldingNo:'',
+          relationOfAssessee:'',
+          nameOfOccupier:'',
+          relationOfOccupier:'',
+          durationOfresidence:'',
+
         }
   );
   const [uploadedFile, setUploadedFile] = useState(formData?.owners?.documents?.ProofOfIdentity?.fileStoreId || null);
@@ -47,6 +53,26 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
       tempData.details = text;
       setServiceDetails(tempData);
     }
+    else if (type === "buldingNo"){
+      tempData.buldingNo = text;
+      setServiceDetails(tempData);
+    }
+    else if (type === "relationOfAssessee"){
+      tempData.relationOfAssessee = text;
+      setServiceDetails(tempData);
+    }
+    else if (type === "nameOfOccupier"){
+      tempData.nameOfOccupier = text;
+      setServiceDetails(tempData);
+    }
+    else if (type === "relationOfOccupier"){
+      tempData.relationOfOccupier = text;
+      setServiceDetails(tempData);
+    }
+    else if (type === "durationOfresidence"){
+      tempData.durationOfresidence = text;
+      setServiceDetails(tempData);
+    }
   };
   const mystyle = {
     marginBottom: "24px",
@@ -55,7 +81,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     let fileStoreId = uploadedFile;
     let fileDetails = file;
     let tempData = { ...serviceDetails };
-    tempData.fileStoreId = file;
+    // tempData.fileStoreId = file;
     // if (fileDetails) fileDetails.documentType = "OWNERIDPROOF";
     // if (fileDetails) fileDetails.fileStoreId = fileStoreId ? fileStoreId : null;
     // let owners = formData?.owners;
@@ -115,7 +141,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
+      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.details || error}>
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
             <div className="row">
@@ -125,30 +151,36 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                 </h1>
               </div>
             </div>
+            
             <div className="row">
           <div className="col-md-12" >
-            <div className="col-md-6" ><CardLabel>{t("Building No")}</CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuldingNo" value={BuldingNo} onChange={setSelectBuldingNo} placeholder={`${t("CR_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
+            <div className="col-md-4" ><CardLabel>{t("Building No")}</CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="buldingNo" value={serviceDetails.buldingNo} onChange={(e) => handleChange(e.target.value, "buldingNo")}  placeholder={`${t("DFM_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_BUILDING_NO") })} />
+            </div>
+            <div className="col-md-4" ><CardLabel>{t("Relation of Assessee")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="relationOfAssessee" value={serviceDetails.relationOfAssessee} onChange={(e) => handleChange(e.target.value, "relationOfAssessee")}  placeholder={`${t("DFM_RELATION_OF_ASSESSEE")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_RELATION_OF_ASSESSEE") })} />
+            </div>
+            <div className="col-md-4" ><CardLabel>{t("Name of Occupier")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="nameOfOccupier" value={serviceDetails.nameOfOccupier} onChange={(e) => handleChange(e.target.value, "nameOfOccupier")}  placeholder={`${t("DFM_NAME_OCCUPIER")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER") })} />
+            </div>
+           
+          </div>
+        </div>
+        <div className="row">
+        <div className="col-md-12" >
+           
+            <div className="col-md-6" ><CardLabel>{t("Relation of Occupier")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="relationOfOccupier" value={serviceDetails.relationOfOccupier}   onChange={(e) => handleChange(e.target.value, "relationOfOccupier")} placeholder={`${t("DFM_RELATION_OCCUPIER")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_RELATION_OCCUPIER") })} />
             </div>
             <div className="col-md-6" ><CardLabel>{t("Duration of residence")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="residenceNo" value={residenceNo} onChange={setSelectresidenceNo} placeholder={`${t("CR_HOUSE_NO")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })} />
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="durationOfresidence" value={serviceDetails.durationOfresidence}  onChange={(e) => handleChange(e.target.value, "durationOfresidence")} placeholder={`${t("DFM_DURATION_RESIDENCE")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_DURATION_RESIDENCE") })} />
             </div>
-            {/* <div className="col-md-6" ><CardLabel>{t("Relation of Assessee")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentHouseNo" value={PresentHouseNo} onChange={setSelectPresentHouseNo} placeholder={`${t("CR_HOUSE_NO")}`} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })} />
-            </div> */}
           </div>
-          {/* <div className="col-md-12" >
-            <div className="col-md-6" ><CardLabel>{t("Name of Occupier")}</CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentBuldingNo" value={PresentBuldingNo} onChange={setSelectPresentBuldingNo} placeholder={`${t("CR_BUILDING_NO")}`} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
-            </div>
-            <div className="col-md-6" ><CardLabel>{t("Relation of Occupier")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentHouseNo" value={PresentHouseNo} onChange={setSelectPresentHouseNo} placeholder={`${t("CR_HOUSE_NO")}`} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })} />
-            </div>
-          </div> */}
         </div>
             <div className="row">
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
+              <div className="col-md-12">
+              <div className="col-md-6" >
+              <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
                 <TextArea
                   t={t}
                   isMandatory={false}
@@ -159,6 +191,8 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                   onChange={(e) => handleChange(e.target.value, "details")}
                   placeholder={`${t("DFM_DETAILS")}`}
                 />
+              </div>
+               
               </div>
 
               {/* <div className="col-md-4">

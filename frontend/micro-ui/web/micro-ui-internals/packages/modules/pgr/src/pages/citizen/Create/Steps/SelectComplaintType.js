@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { TypeSelectCard } from "@egovernments/digit-ui-react-components";
+import { TypeSelectCard,CardLabel } from "@egovernments/digit-ui-react-components";
 
 const SelectComplaintType = ({ t, config, onSelect, value }) => {
   const [complaintType, setComplaintType] = useState(() => {
@@ -21,7 +21,9 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
     // SessionStorage.set("complaintType", value);
   }
   return (
-    <TypeSelectCard
+    <div>
+   
+    <TypeSelectCard style={{display:"flow-root"}}
       {...textParams}
       {...{ menu: menu }}
       {...{ optionsKey: "name" }}
@@ -31,6 +33,7 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
       {...{ t }}
       disabled={Object.keys(complaintType).length === 0 || complaintType === null ? true : false}
     />
+    </div>
   );
 };
 

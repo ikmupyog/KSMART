@@ -33,7 +33,7 @@ const BannerPicker = (props) => {
   );
 };
 
-const BirthAcknowledgement = ({ data, onSuccess,userType }) => {
+const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
@@ -206,4 +206,4 @@ const BirthAcknowledgement = ({ data, onSuccess,userType }) => {
   );
 };
 
-export default BirthAcknowledgement;
+export default DeathAcknowledgement;
