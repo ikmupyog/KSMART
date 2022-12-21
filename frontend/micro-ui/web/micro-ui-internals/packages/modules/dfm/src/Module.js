@@ -7,6 +7,10 @@ import DFMAddressDetails from "../src/pageComponents/DFMAddressDetails";
 import DFMServiceDetails from "../src/pageComponents/DFMServiceDetails";
 import DFMDocumentDetails from "../src/pageComponents/DFMDocumentDetails";
 import DFMCheckPage from "./pages/citizen/Create/CheckPage";
+import DFMEmployeeApplicationDetails from "./pageComponents/DFMEApplicationDetails";
+import DFMEmployeeAddressDetails from "../src/pageComponents/DFMEmployeeAddressDetails";
+import DFMEmployeeServiceDetails from "../src/pageComponents/DFMEmployeeServiceDetails";
+import DFMEmployeeDocumentDetails from "../src/pageComponents/DFMEmployeeDocumentDetails";
 // import TLDocument from "./pageComponents/TLDocumets";
 import DFMAcknowledgement from "./pages/citizen/Create/DFMAcknowlegement";
 // import TradeLicense from "../src/pageComponents/TradeLicense";
@@ -91,7 +95,7 @@ export const DFMLinks = ({ matchPath, userType }) => {
 
   const links = [
     {
-      link: `${matchPath}/submenu`,
+      link: `${matchPath}/sub-type`,
       i18nKey: t("Apply for new Service"), 
     },
     {
@@ -104,7 +108,7 @@ export const DFMLinks = ({ matchPath, userType }) => {
     // },
   ];
 
-  return <CitizenHomeCard header={t("Digital File Management")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
+  return <CitizenHomeCard header={t("MODULE_DFM")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
 }; 
 
 const componentsToRegister = {
@@ -115,6 +119,10 @@ const componentsToRegister = {
   DFMAddressDetails,
   DFMServiceDetails,
   DFMDocumentDetails,
+  DFMEmployeeApplicationDetails,
+  DFMEmployeeAddressDetails,
+  DFMEmployeeServiceDetails,
+  DFMEmployeeDocumentDetails,
   DFMAcknowledgement,
   DFMCheckPage,
   // SelectLand,

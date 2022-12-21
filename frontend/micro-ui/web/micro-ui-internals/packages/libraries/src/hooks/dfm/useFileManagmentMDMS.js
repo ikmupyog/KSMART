@@ -3,6 +3,21 @@ import { useQuery } from "react-query";
 
 const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
   
+  const useDFMajorFunction = () => {
+    return useQuery("DFM_MAJOR_FUNCTION", () => MdmsService.getDFMajorFunction(tenantId, moduleCode), config);
+  };
+  const useDFMSubFunction = () => {
+    return useQuery("DFM_SUB_FUNCTION", () => MdmsService.getDFMSubFunction(tenantId, moduleCode), config);
+  };
+  const useDFMFunction = () => {
+    return useQuery("DFM_FUNCTION", () => MdmsService.getDFMFunction(tenantId, moduleCode), config);
+  };
+  const useDFMinorFunction = () => {
+    return useQuery("DFM_MINOR_FUNCTION", () => MdmsService.getDFMinorFunction(tenantId, moduleCode), config);
+  };
+  const useCommonApplicantCategory = () => {
+    return useQuery("COMMON_APPLICANT_CATEGORY", () => MdmsService.getCommonApplicantCategory(tenantId, moduleCode), config);
+  };
   const useCRDocumentType = () => {
     return useQuery("CR_DOCUMENT_TYPE", () => MdmsService.getCRDocumentType(tenantId, moduleCode), config);
   };
@@ -202,6 +217,16 @@ const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) =
   };
 
   switch (type) {
+    case "MajorFunction":
+      return useDFMajorFunction();
+      case "SubFunction":
+      return useDFMSubFunction();
+      case "Function":
+        return useDFMFunction();
+        case "MinorFunction":
+          return useDFMinorFunction();
+    case "ApplicantCategory":
+      return useCommonApplicantCategory();
     case "DocumentType":
       return useCRDocumentType();
     case "PlaceMaster":

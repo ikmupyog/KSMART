@@ -14,13 +14,14 @@ const onNext=()=>{
   // console.log('next',path);
   history.push(`${path}/create`);
 }
+console.log(path);
   return (
     <React.Fragment>
       <Switch>
         <Route path={`${path}`} exact>
-          <Submenu path={path} />
+          <SubType parentUrl={path} handleNext={onNext}/>
         </Route>
-        <PrivateRoute parentRoute={path} path={`${path}/sub-type`} component={() => <SubType parentUrl={path} handleNext={onNext}/>} />
+        {/* <PrivateRoute parentRoute={path} path={`${path}/sub-type`} component={() => <SubType parentUrl={path} handleNext={onNext}/>} /> */}
         <PrivateRoute parentRoute={path} path={`${path}/form-ui`} component={() => <FormsUi parentUrl={path} />} />
         <React.Fragment>
         <BackButton>Back</BackButton>

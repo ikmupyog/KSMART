@@ -101,7 +101,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("TL_CREATE_TRADE");
+    queryClient.invalidateQueries("CR_CREATE_BIRTH");
   };
 
   newConfig = newConfigCR;

@@ -112,7 +112,7 @@ const CrFlowApp = ({ parentUrl }) => {
   
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("TL_CREATE_TRADE");
+    queryClient.invalidateQueries("CR_CREATE_BIRTH");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
