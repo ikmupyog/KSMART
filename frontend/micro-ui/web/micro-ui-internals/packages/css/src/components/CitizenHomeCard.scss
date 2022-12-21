@@ -31,6 +31,8 @@
         min-width: 40%;
         margin-left: 0;
         @apply inline-block mr-lg p-lg align-top;
+        display: flow-root !important;
+        border-radius:8px !important;
         .header{
             @apply pb-lg text-heading-l-dt;
             svg{

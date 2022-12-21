@@ -55,7 +55,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   const { data: TitleList = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "Title");
   // const { data: PostOffice = {} } = Digit.Hooks.dfm.useDFMMDMS(stateId, "common-masters", "PostOffice");
   const { data: PostOffice = {}, isLoading } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Category = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "category");
+  const { data: Category = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "ApplicantCategory");
 
   // console.log("log", TitleList, Category, PostOffice);
   let cmbTitle = [];
@@ -69,6 +69,12 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
     PostOffice["common-masters"] &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
+    });
+    let cmbCategory = [];
+    Category &&
+    Category["FileManagement"] &&
+    Category["FileManagement"].ApplicantCategory.map((ob) => {
+      cmbCategory.push(ob);
     });
 
   console.log("c", cmbTitle);
@@ -333,7 +339,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   t={t}
                   optionKey="name"
                   isMandatory={config.isMandatory}
-                  option={cmbPostOffice}
+                  option={cmbCategory}
                   selected={applicationData.category}
                   select={(e) => handleChange(e, "category")}
                   placeholder={`${t("DFM_CATRGORY")}`}

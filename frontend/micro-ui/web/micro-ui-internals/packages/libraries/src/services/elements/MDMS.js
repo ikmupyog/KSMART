@@ -95,6 +95,21 @@ const getCRModeOfPregnancyList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCommonApplicantCategoryList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "ApplicantCategory",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRDocumentTypeList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1849,6 +1864,9 @@ export const MdmsService = {
   },
   getCRModeOfPregnancy: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRModeOfPregnancyList(tenantId, moduleCode), moduleCode);
+  },
+  getCommonApplicantCategory: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCommonApplicantCategoryList(tenantId, moduleCode), moduleCode);
   },
   getCRDocumentType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDocumentTypeList(tenantId, moduleCode), moduleCode);

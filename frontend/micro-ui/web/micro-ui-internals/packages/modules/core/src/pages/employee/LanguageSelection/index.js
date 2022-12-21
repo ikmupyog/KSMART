@@ -31,7 +31,7 @@ const LanguageSelection = () => {
           <h1 className="logostyle">
             <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{ maxWidth: "450px" }} />
 
-            
+
           </h1>
           <div style={{ textAlign: "center", margin: "0 auto" }}>
             <div>
@@ -51,22 +51,29 @@ const LanguageSelection = () => {
           </div>
         </div>
       </div>
-      <Card className="bannerCard removeBottomMargin" style={{margin:"0 auto"}}>
+      <Card className="bannerCard removeBottomMargin" style={{ margin: "0 auto" }}>
         <div className="bannerHeader">
           <p>{t(`TENANT_TENANTS_${stateInfo?.code.toUpperCase()}`)}</p>
         </div>
         <div className="language-selector" style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%" }}>
           {languages.map((language, index) => (
             <div className="language-button-container" key={index}>
-              <CustomButton
+              {/* <CustomButton
                 selected={language.value === selected}
                 text={language.label}
                 onClick={() => handleChangeLanguage(language)}
-              ></CustomButton>
+              ></CustomButton> */}
+              <SubmitBar className="btnksmart"
+              style={{ fontSize: "17px !mportant",fontWeight:"400" }} 
+                selected={language.value === selected}
+                label={language.label}
+
+                onClick={() => handleChangeLanguage(language)}
+              ></SubmitBar>
             </div>
           ))}
         </div>
-        <SubmitBar style={{ width: "35%", borderRadius: ".25rem", fontSize: "14px" }} label={t(`CORE_COMMON_CONTINUE`)} onSubmit={handleSubmit} />
+        <SubmitBar className="btnksmart" style={{ width: "35%", borderRadius: ".25rem", fontSize: "14px" }} label={t(`CORE_COMMON_CONTINUE`)} onSubmit={handleSubmit} />
       </Card>
       {/* <div style={{ width: '100%',  position: "absolute", bottom: 0 }}>
         <div style={{ display: 'flex', justifyContent: 'center', color:"white" }}>

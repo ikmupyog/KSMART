@@ -136,7 +136,23 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
       ],
     },
   ];
-
+  const mystyle = {
+  background: "#bc5bfc",
+  backgroundImage: "-webkit-linear-gradient(top, #bc5bfc, #2980b9)",
+  backgroundImage: "-moz-linear-gradient(top, #bc5bfc, #2980b9)",
+  backgroundImage: "-ms-linear-gradient(top, #bc5bfc, #2980b9)",
+  backgroundImage: "-o-linear-gradient(top, #bc5bfc, #2980b9)",
+  backgroundImage: "linear-gradient(to bottom, #bc5bfc, #2980b9)",
+  webkitBorderRadius: "5",
+  mozBorderRadius:"5",
+  borderRadius: "5px",
+  color: "#ffffff",
+  fontSize: "17px !important",
+  fontWeight: "400 !important",
+  textDecoration: "none",
+  lineHeight: "0 !important",
+  fontFamily: "system-ui !important",    
+  };
   return isLoading || isStoreLoading ? (
     <Loader />
   ) : (
@@ -189,7 +205,7 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
 
             cardStyle={{ margin: "auto", minWidth: "408px" }}
             className="loginFormStyleEmployee"
-            buttonStyle={{className:"btnksmart"}}
+            buttonStyle={mystyle}
           >
           </FormComposer>
           {showToast && <Toast error={true} label={t(showToast)} onClose={closeToast} />}

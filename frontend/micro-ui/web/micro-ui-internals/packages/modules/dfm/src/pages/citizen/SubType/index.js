@@ -1,15 +1,16 @@
 import React,{useState} from "react";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { BackButton, PrivateRoute, BreadCrumb, CommonDashboard ,FormInputGroup,SubmitBar,CardLabel,Dropdown } from "@egovernments/digit-ui-react-components";
+import { BackButton, PrivateRoute, BreadCrumb, FormStep ,FormInputGroup,SubmitBar,CardLabel,Dropdown } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import CreateTradeLicence from '../Create'
 
-const SubType = ({ path ,handleNext,formData }) => {
+const SubType = ({ path ,handleNext,formData,config ,onSelect  }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const history = useHistory();
   const state = useSelector((state) => state);
+  const { data: TitleList = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "Title");
   const { data: Qualification = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
   const { data: QualificationSub = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
   const { data: Profession = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
@@ -88,13 +89,19 @@ const SubType = ({ path ,handleNext,formData }) => {
     }
    
   }
-        sessionStorage.setItem("FatherEducation", FatherEducation.code);
-        sessionStorage.setItem("FatherEducationSubject", FatherEducationSubject.code);
-        sessionStorage.setItem("FatherProfession", FatherProfession.code);
-        onSelect(config.key, {
-            FatherFirstNameEn, FatherMiddleNameEn, FatherLastNameEn,
-            FatherFirstNameMl, FatherMiddleNameMl, FatherLastNameMl, FatherAadhar, FatherEmail, FatherMobile, FatherEducation, FatherEducationSubject, FatherProfession
-        });
+        // sessionStorage.setItem("FatherEducation", FatherEducation.code);
+        // sessionStorage.setItem("FatherEducationSubject", FatherEducationSubject.code);
+        // sessionStorage.setItem("FatherProfession", FatherProfession.code);
+        // onSelect(config.key, {
+        //     FatherFirstNameEn, FatherMiddleNameEn, FatherLastNameEn,
+        //     FatherFirstNameMl, FatherMiddleNameMl, FatherLastNameMl, FatherAadhar, FatherEmail, FatherMobile, FatherEducation, FatherEducationSubject, FatherProfession
+        // });
+        let cmbTitle = [];
+  TitleList &&
+    TitleList["common-masters"] &&
+    TitleList["common-masters"].Title.map((ob) => {
+      cmbTitle.push(ob);
+    });
   let cmbQualification = [];
   Qualification &&
       Qualification["birth-death-service"] &&
@@ -124,9 +131,19 @@ const SubType = ({ path ,handleNext,formData }) => {
   function setSelectFatherProfession(value) {
       setFatherProfession(value);
   }
+  const goNext = () => {
+    // if(subtypeData.subtype?.value && subtypeData.functionality?.value){
+      handleNext();
+    // }else{
+    //   setShowError(true)
+    // }
+    // sessionStorage.setItem("CurrentFinancialYear", FY);
+    // onSelect(config.key, { applicationData });
+    // console.log("d", applicationData);
+  };
     return code === "DFM" ? (
       <React.Fragment>
-         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!FatherFirstNameEn}>
+         <FormStep t={t} config={config} onSelect={goNext}  >
         <div className="moduleLinkHomePage">
           <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
           <BackButton className="moduleLinkHomePageBackButton" />
@@ -148,18 +165,18 @@ const SubType = ({ path ,handleNext,formData }) => {
         <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} /> */}
         
                         <div><CardLabel>{`${t("Major Function")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualification} selected={FatherEducation} select={setSelectFatherEducation}  />
+                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbTitle} selected={FatherEducation} select={setSelectFatherEducation}  />
                         </div>
                         <div ><CardLabel>{`${t("Sub Function")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualificationSub} selected={FatherEducationSubject} select={setSelectFatherEducationSubject} />
+                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbTitle} selected={FatherEducationSubject} select={setSelectFatherEducationSubject} />
                         </div>
                         <div ><CardLabel>{`${t("Function")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbProfession} selected={FatherProfession} select={setSelectFatherProfession}  />
+                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbTitle} selected={FatherProfession} select={setSelectFatherProfession}  />
                         </div>
                         <div ><CardLabel>{`${t("Minor Function")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbProfession} selected={FatherProfession} select={setSelectFatherProfession}  />
+                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbTitle} selected={FatherProfession} select={setSelectFatherProfession}  />
                         </div>
-                      <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} /> 
+                      <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={goNext} /> 
                     </div>
                 </div>
                 </FormStep>
