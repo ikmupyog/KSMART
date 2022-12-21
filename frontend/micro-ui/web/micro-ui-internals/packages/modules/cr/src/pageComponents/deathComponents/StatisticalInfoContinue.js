@@ -47,7 +47,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   const [setDeathMedicallyCertified, setSelectedDeathMedicallyCertified] = useState(formData?.StatisticalInfoContinue?.setDeathMedicallyCertified);
   const [setCauseOfDeathMain, setSelectedCauseOfDeathMain] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeathMain);
   const [setCauseOfDeathSub, setSelectedCauseOfDeathSub] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeathSub);
-  const [setFemaleDeathPregnant, setSelectedFemaleDeathPregnant] = useState(formData?.StatisticalInfoContinue?.setFemaleDeathPregnant);
+  // const [setFemaleDeathPregnant, setSelectedFemaleDeathPregnant] = useState(formData?.StatisticalInfoContinue?.setFemaleDeathPregnant);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
   const [CauseOfDeath, setSelectedCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.CauseOfDeath);
@@ -92,11 +92,11 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   function selectCauseOfDeathSub(value) {
     setSelectedCauseOfDeathSub(value);
   }
-  function selectFemaleDeathPregnant(value) {
-    setSelectedFemaleDeathPregnant(value);
-  }
+  // function selectFemaleDeathPregnant(value) {
+  //   setSelectedFemaleDeathPregnant(value);
+  // }
   function setSelectCauseOfDeath(e) {
-    setCauseOfDeath(e.target.value);
+    setSelectedCauseOfDeath(e.target.value);
   }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
@@ -111,7 +111,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setCauseOfDeathMain", setCauseOfDeathMain?setCauseOfDeathMain.code:null);
     sessionStorage.setItem("setCauseOfDeathSub", setCauseOfDeathSub?setCauseOfDeathSub.code:null);
     sessionStorage.setItem("setCauseOfDeath", CauseOfDeath);
-    sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant?setFemaleDeathPregnant.code:null);
+    // sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant?setFemaleDeathPregnant.code:null);
     sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity?setPlaceofActivity.code:null);
     sessionStorage.setItem("isSmoke", isSmoke.i18nKey);
     sessionStorage.setItem("isPanMasala", isPanMasala.i18nKey);
@@ -124,7 +124,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
       setCauseOfDeathMain,
       setCauseOfDeathSub,
       CauseOfDeath,
-      setFemaleDeathPregnant,
+      // setFemaleDeathPregnant,
       setPlaceofActivity,
       isSmoke,
       isPanMasala,
