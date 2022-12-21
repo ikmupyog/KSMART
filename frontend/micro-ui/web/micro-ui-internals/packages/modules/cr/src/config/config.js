@@ -558,7 +558,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "PlaceOfDeathHome",
-        nextStep: "hospital-details-death",
+        nextStep: "Informent-details",
         type: "component",
         hideInEmployee: true,
       },

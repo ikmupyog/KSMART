@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea,CheckBox } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const InformentAddress = ({ config, onSelect, userType, formData }) => {
@@ -139,9 +139,9 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
-    sessionStorage.setItem("setVillage", setVillage.code);
-    sessionStorage.setItem("setTaluk", setTaluk.code);
-    sessionStorage.setItem("setDistrict", setDistrict.code);
+    sessionStorage.setItem("setVillage", setVillage?setVillage.code:null);
+    sessionStorage.setItem("setTaluk", setTaluk?setTaluk.code:null);
+    sessionStorage.setItem("setDistrict", setDistrict?setDistrict.code:null);
     sessionStorage.setItem("BuildingNo", BuildingNo);
     sessionStorage.setItem("HouseNo", HouseNo);
     sessionStorage.setItem("Locality", Locality);
@@ -149,14 +149,14 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("CityEn", CityEn);
     sessionStorage.setItem("CityMl", CityMl);
     sessionStorage.setItem("PinCode", PinCode);
-    sessionStorage.setItem("setPostOffice", setPostOffice.code);
-    sessionStorage.setItem("setLbName", setLbName).code;
+    sessionStorage.setItem("setPostOffice", setPostOffice?setPostOffice.code:null);
+    sessionStorage.setItem("setLbName", setLbName?setLbName.code:null);
     sessionStorage.setItem("InformentNameEn", InformentNameEn);
     sessionStorage.setItem("InformentNameMl", InformentNameMl);
-    sessionStorage.setItem("setTitle", setTitle.code);
+    sessionStorage.setItem("setTitle", setTitle?setTitle.code:null);
     sessionStorage.setItem("isNoAadhaar", isNoAadhaar);
     sessionStorage.setItem("AadhaarNo", AadhaarNo);
-    sessionStorage.setItem("setDeclaration", setDeclaration.code);
+    sessionStorage.setItem("setDeclaration", setDeclaration?setDeclaration.code:null);
     sessionStorage.setItem("InformentMobileNo", InformentMobileNo);  
     sessionStorage.setItem("InformentOfAge", InformentOfAge); 
     
@@ -186,7 +186,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
         <div className="col-md-4">

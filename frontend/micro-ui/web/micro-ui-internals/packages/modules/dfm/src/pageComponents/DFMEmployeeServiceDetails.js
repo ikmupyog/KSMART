@@ -1,9 +1,8 @@
-import { CardLabel, TextInput,TextArea, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
-const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
-  let validation = {};
+const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   // console.log(formData);
   const [serviceDetails, setServiceDetails] = useState(
     formData?.FileManagement?.serviceDetails
@@ -27,10 +26,6 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
   const docs = Documentsob?.PropertyTax?.Documents;
   const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
-  const [BuldingNo, setBuldingNo] = useState(formData?.AddressDetails?.BuldingNo);
-  const [residenceNo, setresidenceNo] = useState(formData?.AddressDetails?.residenceNo);
-  const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
-  const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressDetails?.PresentLocalityNameMl);
   // if (proofOfIdentity.length > 0) {
   //   dropdownData = proofOfIdentity[0]?.dropdownData;
   //   dropdownData.forEach((data) => {
@@ -106,14 +101,9 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     })();
   }, [serviceDetails.fileStoreId]);
 
-  function setSelectBuldingNo(e) {
-    setBuldingNo(e.target.value);
-  }
-  function setSelectresidenceNo(e) {
-    setresidenceNo(e.target.value);
-  }
   return (
     <React.Fragment>
+      <h2>em3</h2>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
         <div>
@@ -126,30 +116,9 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
               </div>
             </div>
             <div className="row">
-          <div className="col-md-12" >
-            <div className="col-md-6" ><CardLabel>{t("Building No")}</CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuldingNo" value={BuldingNo} onChange={setSelectBuldingNo} placeholder={`${t("CR_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
-            </div>
-            <div className="col-md-6" ><CardLabel>{t("Duration of residence")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="residenceNo" value={residenceNo} onChange={setSelectresidenceNo} placeholder={`${t("CR_HOUSE_NO")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })} />
-            </div>
-            {/* <div className="col-md-6" ><CardLabel>{t("Relation of Assessee")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentHouseNo" value={PresentHouseNo} onChange={setSelectPresentHouseNo} placeholder={`${t("CR_HOUSE_NO")}`} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })} />
-            </div> */}
-          </div>
-          {/* <div className="col-md-12" >
-            <div className="col-md-6" ><CardLabel>{t("Name of Occupier")}</CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentBuldingNo" value={PresentBuldingNo} onChange={setSelectPresentBuldingNo} placeholder={`${t("CR_BUILDING_NO")}`} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
-            </div>
-            <div className="col-md-6" ><CardLabel>{t("Relation of Occupier")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentHouseNo" value={PresentHouseNo} onChange={setSelectPresentHouseNo} placeholder={`${t("CR_HOUSE_NO")}`} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })} />
-            </div>
-          </div> */}
-        </div>
-            <div className="row">
               <div className="col-md-4">
                 <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
-                <TextArea
+                <TextInput
                   t={t}
                   isMandatory={false}
                   type={"text"}
@@ -161,7 +130,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                 />
               </div>
 
-              {/* <div className="col-md-4">
+              <div className="col-md-4">
                 <CardLabel>{`${t("DFM_ATTACHMENT_TYPE")}`}</CardLabel>
                 <UploadFile
                   id={"dfm-doc"}
@@ -179,7 +148,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                 />
                 {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
                 <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -188,4 +157,4 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   );
 };
 
-export default DFMServiceDetails;
+export default DFMEmployeeServiceDetails;

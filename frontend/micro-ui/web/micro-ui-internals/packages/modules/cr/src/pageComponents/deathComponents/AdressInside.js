@@ -1,286 +1,266 @@
-import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
-// import Timeline from "../../components/CRTimeline";
-import { useTranslation } from "react-i18next";
-
-const AddressInside = ({ config, onSelect, userType, formData }) => {
-  const stateId = Digit.ULBService.getStateId();
-  const { t } = useTranslation();
-  let validation = {};
-  const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
-  const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [lbs, setLbs] = useState(0);
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressDetails?.PresentBuldingNo);
-  const [PresentHouseNo, setPresentHouseNo] = useState(formData?.AddressDetails?.PresentHouseNo);
-  const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
-  const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressDetails?.PresentLocalityNameMl);
-  const [PresentCityNameEn, setPresentCityNameEn] = useState(formData?.AddressDetails?.PresentCityNameEn);
-  const [PresentCityNameMl, setPresentCityNameMl] = useState(formData?.AddressDetails?.PresentCityNameMl);
-  const [PresentVillage, setPresentVillage] = useState(formData?.AddressDetails?.PresentVillage);
-  const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
-  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
-  const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
-  const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
-  const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
-  const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress);
-  const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressDetails?.PermanentBuldingNo);
-  const [PermanentHouseNo, setPermanentHouseNo] = useState(formData?.AddressDetails?.PermanentHouseNo);
-  const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressDetails?.PermanentLocalityNameEn);
-  const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressDetails?.PermanentLocalityNameMl);
-  const [PermanentCityNameEn, setPermanentCityNameEn] = useState(formData?.AddressDetails?.PermanentCityNameEn);
-  const [PermanentCityNameMl, setPermanentCityNameMl] = useState(formData?.AddressDetails?.PermanentCityNameMl);
-  const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressDetails?.PermanentVillage);
-  const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
-  const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
-  const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
-  const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);
-  const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
-  let cmbPlace = [];
-  let cmbTaluk = [];
-  let cmbVillage = [];
-  let cmbDistrict = [];
-  let cmbPostOffice = [];
-  let districtid = null;
-  console.log("Taluk" + Taluk);
-  Taluk &&
-    Taluk["common-masters"] &&
-    Taluk["common-masters"].mtaluk.map((ob) => {
-      cmbTaluk.push(ob);
-    });
-  Village &&
-    Village["common-masters"] &&
-    Village["common-masters"].Village.map((ob) => {
-      cmbVillage.push(ob);
-    });
-  PostOffice &&
-    District["common-masters"] &&
-    District["common-masters"].District.map((ob) => {
-      cmbDistrict.push(ob);
-    });
-  PostOffice &&
-    PostOffice["common-masters"] &&
-    PostOffice["common-masters"].PostOffice.map((ob) => {
-      cmbPostOffice.push(ob);
-    });
-
-  const onSkip = () => onSelect();
-
-  function setSelectPresentBuldingNo(e) {
-    setPresentBuldingNo(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentBuldingNo(PresentBuldingNo);
-    }
-  }
-  function setSelectPresentHouseNo(e) {
-    setPresentHouseNo(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentHouseNo(PresentHouseNo);
-    }
-  }
-  function setSelectPresentLocalityNameEn(e) {
-    setPresentLocalityNameEn(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentLocalityNameEn(PresentLocalityNameEn);
-    }
-  }
-  function setSelectPresentLocalityNameMl(e) {
-    setPresentLocalityNameMl(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentLocalityNameMl(PresentLocalityNameMl);
-    }
-  }
-  function setSelectPresentCityNameEn(e) {
-    setPresentCityNameEn(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentCityNameEn(PresentCityNameEn);
-    }
-  }
-  function setSelectPresentCityNameMl(e) {
-    setPresentCityNameMl(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentCityNameMl(PresentCityNameMl);
-    }
-  }
-  function setSelectPresentVillage(value) {
-    setPresentVillage(value);
-    console.log("Village" + cmbVillage);
-    if (isPrsentAddress) {
-      setPermanentVillage(PresentVillage);
-    }
-  }
-  function setSelectPresentLBName(value) {
-    setPresentLBName(value);
-    if (isPrsentAddress) {
-      setPermanentLBName(PresentLBName);
-    }
-  }
-  function setSelectPresentTaluk(value) {
-    setPresentTaluk(value);
-    console.log("Taluk" + cmbTaluk);
-    if (isPrsentAddress) {
-      setPermanentTaluk(PresentTaluk);
-    }
-  }
-  function setSelectPresentDistrict(value) {
-    setIsInitialRender(true);
-    setPresentDistrict(value);
-    setPresentLBName(null);
-    setLbs(null);
-    districtid = value.districtid;
-    if (isPrsentAddress) {
-      setPermanentDistrict(PresentDistrict);
-    }
-  }
-  function setSelectPresentPostOffice(value) {
-    setPresentPostOffice(value);
-    if (isPrsentAddress) {
-      setPermanentPostOffice(PresentPostOffice);
-    }
-  }
-  function setSelectPresentPincode(e) {
-    setPresentPincode(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentPincode(PresentPincode);
-    }
-  }
-  //Permanent Address Function
-  function setSelectPermanentBuldingNo(e) {
-    setPermanentBuldingNo(e.target.value);
-  }
-  function setSelectPermanentHouseNo(e) {
-    setPermanentHouseNo(e.target.value);
-  }
-  function setSelectPermanentLocalityNameEn(e) {
-    setPermanentLocalityNameEn(e.target.value);
-  }
-  function setSelectPermanentLocalityNameMl(e) {
-    setPermanentLocalityNameMl(e.target.value);
-  }
-  function setSelectPermanentCityNameEn(e) {
-    setPermanentCityNameEn(e.target.value);
-  }
-  function setSelectPermanentCityNameMl(e) {
-    setPermanentCityNameMl(e.target.value);
-  }
-  function setSelectPermanentVillage(value) {
-    setPermanentVillage(value);
-  }
-  function setSelectPermanentLBName(value) {
-    setPermanentLBName(value);
-  }
-  function setSelectPermanentTaluk(value) {
-    setPermanentTaluk(value);
-  }
-  function setSelectPermanentDistrict(value) {
-    setPermanentDistrict(value);
-    districtid = value.districtid;
-  }
-  function setSelectPermanentPostOffice(value) {
-    setPermanentPostOffice(value);
-  }
-  function setSelectPermanentPincode(e) {
-    setPermanentPincode(e.target.value);
-  }
-  function setSameAsPresent(e) {
-    setIsPrsentAddress(e.target.checked);
-    if (e.target.checked == true) {
-      setPermanentBuldingNo(PresentBuldingNo);
-      setPermanentHouseNo(PresentHouseNo);
-      setPermanentLocalityNameEn(PresentLocalityNameEn);
-      setPermanentLocalityNameMl(PresentLocalityNameMl);
-      setPermanentCityNameEn(PresentCityNameEn);
-      setPermanentCityNameMl(PresentCityNameMl);
-      setPermanentVillage(PresentVillage);
-      setPermanentLBName(PresentLBName);
-      setPermanentDistrict(PresentDistrict);
-      setPermanentTaluk(PresentTaluk);
-      setPermanentPostOffice(PresentPostOffice);
-      setPermanentPincode(PresentPincode);
-    } else {
-      setPermanentBuldingNo("");
-      setPermanentHouseNo("");
-      setPermanentLocalityNameEn("");
-      setPermanentLocalityNameMl("");
-      setPermanentCityNameEn("");
-      setPermanentCityNameMl("");
-      setPermanentVillage("");
-      setPermanentLBName("");
-      setPermanentDistrict("");
-      setPermanentTaluk("");
-      setPermanentPostOffice("");
-      setPermanentPincode("");
-    }
-  }
-  useEffect(() => {
-    if (isInitialRender) {
-      console.log("PresentDistrict" + districtid);
-      console.log(localbodies);
-      if (PresentDistrict) {
-        setIsInitialRender(false);
-        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
+  import React, { useState, useEffect } from "react";
+  import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
+  // import Timeline from "../../components/CRTimeline";
+  import { useTranslation } from "react-i18next";
+  
+  const AddressInside = ({ config, onSelect, userType, formData }) => {
+    const stateId = Digit.ULBService.getStateId();
+    const { t } = useTranslation();
+    let validation = {};
+    const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+    const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
+    const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+    const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+    const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
+    const [isInitialRender, setIsInitialRender] = useState(true);
+    const [lbs, setLbs] = useState(0);
+    const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+    const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressDetails?.PresentBuldingNo);
+    const [PresentHouseNo, setPresentHouseNo] = useState(formData?.AddressDetails?.PresentHouseNo);
+    const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
+    const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressDetails?.PresentLocalityNameMl);
+    const [PresentCityNameEn, setPresentCityNameEn] = useState(formData?.AddressDetails?.PresentCityNameEn);
+    const [PresentCityNameMl, setPresentCityNameMl] = useState(formData?.AddressDetails?.PresentCityNameMl);
+    const [PresentVillage, setPresentVillage] = useState(formData?.AddressDetails?.PresentVillage);
+    const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
+    const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
+    const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
+    const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
+    const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
+    const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress);
+    const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressDetails?.PermanentBuldingNo);
+    const [PermanentHouseNo, setPermanentHouseNo] = useState(formData?.AddressDetails?.PermanentHouseNo);
+    const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressDetails?.PermanentLocalityNameEn);
+    const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressDetails?.PermanentLocalityNameMl);
+    const [PermanentCityNameEn, setPermanentCityNameEn] = useState(formData?.AddressDetails?.PermanentCityNameEn);
+    const [PermanentCityNameMl, setPermanentCityNameMl] = useState(formData?.AddressDetails?.PermanentCityNameMl);
+    const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressDetails?.PermanentVillage);
+    const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
+    const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
+    const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
+    const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);
+    const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
+    let cmbPlace = [];
+    let cmbTaluk = [];
+    let cmbVillage = [];
+    let cmbDistrict = [];
+    let cmbPostOffice = [];
+    let districtid = null;
+    console.log("Taluk" + Taluk);
+    Taluk &&
+      Taluk["common-masters"] &&
+      Taluk["common-masters"].mtaluk.map((ob) => {
+        cmbTaluk.push(ob);
+      });
+    Village &&
+      Village["common-masters"] &&
+      Village["common-masters"].Village.map((ob) => {
+        cmbVillage.push(ob);
+      });
+    PostOffice &&
+      District["common-masters"] &&
+      District["common-masters"].District.map((ob) => {
+        cmbDistrict.push(ob);
+      });
+    PostOffice &&
+      PostOffice["common-masters"] &&
+      PostOffice["common-masters"].PostOffice.map((ob) => {
+        cmbPostOffice.push(ob);
+      });
+  
+    const onSkip = () => onSelect();
+  
+    function setSelectPresentBuldingNo(e) {
+      setPresentBuldingNo(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentBuldingNo(PresentBuldingNo);
       }
     }
-  }, [lbs, isInitialRender]);
-  const goNext = () => {
-    sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo);
-    sessionStorage.setItem("PresentHouseNo", PresentHouseNo);
-    sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn);
-    sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl);
-    sessionStorage.setItem("PresentCityNameEn", PresentCityNameEn);
-    sessionStorage.setItem("PresentCityNameMl", PresentCityNameMl);
-    sessionStorage.setItem("PresentVillage", PresentVillage.code);
-    sessionStorage.setItem("PresentLBName", null);
-    sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
-    sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
-    sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
-    sessionStorage.setItem("PresentPincode", PresentPincode.code);
-    sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
-    sessionStorage.setItem("PermanentHouseNo", PermanentHouseNo);
-    sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);
-    sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl);
-    sessionStorage.setItem("PermanentCityNameEn", PermanentCityNameEn);
-    sessionStorage.setItem("PermanentCityNameMl", PermanentCityNameMl);
-    sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
-    sessionStorage.setItem("PermanentLBName", null);
-    sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
-    sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
-    sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
-    sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
-    onSelect(config.key, {
-      PresentBuldingNo,
-      PresentHouseNo,
-      PresentLocalityNameEn,
-      PresentLocalityNameMl,
-      PresentCityNameEn,
-      PresentCityNameMl,
-      PresentVillage,
-      PresentLBName,
-      PresentDistrict,
-      PresentTaluk,
-      PresentPostOffice,
-      PresentPincode,
-      PermanentBuldingNo,
-      PermanentHouseNo,
-      PermanentLocalityNameEn,
-      PermanentLocalityNameMl,
-      PermanentCityNameEn,
-      PermanentCityNameMl,
-      PermanentVillage,
-      PermanentLBName,
-      PermanentDistrict,
-      PermanentTaluk,
-      PermanentPostOffice,
-      PermanentPincode,
-    });
-  };
-  return (
-    <React.Fragment>
-      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+    function setSelectPresentHouseNo(e) {
+      setPresentHouseNo(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentHouseNo(PresentHouseNo);
+      }
+    }
+    function setSelectPresentLocalityNameEn(e) {
+      setPresentLocalityNameEn(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentLocalityNameEn(PresentLocalityNameEn);
+      }
+    }
+    function setSelectPresentLocalityNameMl(e) {
+      setPresentLocalityNameMl(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentLocalityNameMl(PresentLocalityNameMl);
+      }
+    }
+    function setSelectPresentCityNameEn(e) {
+      setPresentCityNameEn(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentCityNameEn(PresentCityNameEn);
+      }
+    }
+    function setSelectPresentCityNameMl(e) {
+      setPresentCityNameMl(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentCityNameMl(PresentCityNameMl);
+      }
+    }
+    function setSelectPresentVillage(value) {
+      setPresentVillage(value);
+      console.log("Village" + cmbVillage);
+      if (isPrsentAddress) {
+        setPermanentVillage(PresentVillage);
+      }
+    }
+    function setSelectPresentLBName(value) {
+      setPresentLBName(value);
+      if (isPrsentAddress) {
+        setPermanentLBName(PresentLBName);
+      }
+    }
+    function setSelectPresentTaluk(value) {
+      setPresentTaluk(value);
+      console.log("Taluk" + cmbTaluk);
+      if (isPrsentAddress) {
+        setPermanentTaluk(PresentTaluk);
+      }
+    }
+    function setSelectPresentDistrict(value) {
+      setIsInitialRender(true);
+      setPresentDistrict(value);
+      setPresentLBName(null);
+      setLbs(null);
+      districtid = value.districtid
+      if (isPrsentAddress) {
+        setPermanentDistrict(PresentDistrict);
+      }
+    }
+    function setSelectPresentPostOffice(value) {
+      setPresentPostOffice(value);
+      if (isPrsentAddress) {
+        setPermanentPostOffice(PresentPostOffice);
+      }
+    }
+    function setSelectPresentPincode(e) {
+      setPresentPincode(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentPincode(PresentPincode);
+      }
+    }
+    //Permanent Address Function
+    function setSelectPermanentBuldingNo(e) {
+      setPermanentBuldingNo(e.target.value);
+    }
+    function setSelectPermanentHouseNo(e) {
+      setPermanentHouseNo(e.target.value);
+    }
+    function setSelectPermanentLocalityNameEn(e) {
+      setPermanentLocalityNameEn(e.target.value);
+    }
+    function setSelectPermanentLocalityNameMl(e) {
+      setPermanentLocalityNameMl(e.target.value);
+    }
+    function setSelectPermanentCityNameEn(e) {
+      setPermanentCityNameEn(e.target.value);
+    }
+    function setSelectPermanentCityNameMl(e) {
+      setPermanentCityNameMl(e.target.value);
+    }
+    function setSelectPermanentVillage(value) {
+      setPermanentVillage(value);
+    }
+    function setSelectPermanentLBName(value) {
+      setPermanentLBName(value);
+    }
+    function setSelectPermanentTaluk(value) {
+      setPermanentTaluk(value);
+    }
+    function setSelectPermanentDistrict(value) {
+      setPermanentDistrict(value);
+      districtid = value.districtid
+    }
+    function setSelectPermanentPostOffice(value) {
+      setPermanentPostOffice(value);
+    }
+    function setSelectPermanentPincode(e) {
+      setPermanentPincode(e.target.value);
+    }
+    function setSameAsPresent(e) {
+      setIsPrsentAddress(e.target.checked);
+      if (e.target.checked == true) {
+        setPermanentBuldingNo(PresentBuldingNo);
+        setPermanentHouseNo(PresentHouseNo);
+        setPermanentLocalityNameEn(PresentLocalityNameEn);
+        setPermanentLocalityNameMl(PresentLocalityNameMl);
+        setPermanentCityNameEn(PresentCityNameEn);
+        setPermanentCityNameMl(PresentCityNameMl);
+        setPermanentVillage(PresentVillage);
+        setPermanentLBName(PresentLBName);
+        setPermanentDistrict(PresentDistrict);
+        setPermanentTaluk(PresentTaluk);
+        setPermanentPostOffice(PresentPostOffice);
+        setPermanentPincode(PresentPincode);
+      } else {
+        setPermanentBuldingNo('');
+        setPermanentHouseNo('');
+        setPermanentLocalityNameEn('');
+        setPermanentLocalityNameMl('');
+        setPermanentCityNameEn('');
+        setPermanentCityNameMl('');
+        setPermanentVillage('');
+        setPermanentLBName('');
+        setPermanentDistrict('');
+        setPermanentTaluk('');
+        setPermanentPostOffice('');
+        setPermanentPincode('');
+      }
+    }
+    useEffect(() => {
+      if (isInitialRender) {
+        console.log("PresentDistrict" + districtid);
+        console.log(localbodies);
+        if (PresentDistrict) {
+          setIsInitialRender(false);
+          setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
+        }
+      }
+    }, [lbs, isInitialRender]);
+    const goNext = () => {
+      sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo);
+      sessionStorage.setItem("PresentHouseNo", PresentHouseNo);
+      sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn);
+      sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl);
+      sessionStorage.setItem("PresentCityNameEn", PresentCityNameEn);
+      sessionStorage.setItem("PresentCityNameMl", PresentCityNameMl);
+      sessionStorage.setItem("PresentVillage", PresentVillage.code);
+      sessionStorage.setItem("PresentLBName", null);
+      sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
+      sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
+      sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
+      sessionStorage.setItem("PresentPincode", PresentPincode.code);
+      sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
+      sessionStorage.setItem("PermanentHouseNo", PermanentHouseNo);
+      sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);
+      sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl);
+      sessionStorage.setItem("PermanentCityNameEn", PermanentCityNameEn);
+      sessionStorage.setItem("PermanentCityNameMl", PermanentCityNameMl);
+      sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
+      sessionStorage.setItem("PermanentLBName", null);
+      sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
+      sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
+      sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
+      sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
+      onSelect(config.key, {
+        PresentBuldingNo, PresentHouseNo, PresentLocalityNameEn,
+        PresentLocalityNameMl, PresentCityNameEn, PresentCityNameMl, PresentVillage, PresentLBName, PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
+        PermanentBuldingNo, PermanentHouseNo, PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentCityNameEn, PermanentCityNameMl, PermanentVillage, PermanentLBName,
+        PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode
+      });
+    }
+    return (
+      <React.Fragment>
+        {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep

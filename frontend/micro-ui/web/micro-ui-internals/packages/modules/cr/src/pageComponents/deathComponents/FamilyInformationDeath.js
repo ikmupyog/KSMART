@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
@@ -75,8 +75,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   // }
 
   const goNext = () => {
-    sessionStorage.setItem("setTitle", setTitle.code);
-    sessionStorage.setItem("setTitleB", setTitleB.code);
+    sessionStorage.setItem("setTitle", setTitle?setTitle.code:null);
+    sessionStorage.setItem("setTitleB", setTitleB?setTitleB.code:null);
     sessionStorage.setItem("FatherOrHusbandNameEN", FatherOrHusbandNameEN);
     sessionStorage.setItem("FatherOrHusbandNameMl", FatherOrHusbandNameMl);
     sessionStorage.setItem("MotherNameEn", MotherNameEn);
@@ -97,7 +97,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
