@@ -36,7 +36,7 @@ console.log('dfm',path);
       <Switch>
         {/* <AppContainer> */}
          
-          <PrivateRoute path={`${path}/submenu`} component={() => < SubDashboard/>}/>  
+          <PrivateRoute path={`${path}/sub-type`} component={() => < SubDashboard/>}/>  
           {/* <PrivateRoute path={`${path}/form-ui`} component={() => <GenericForms/>} /> */}
         {/* </AppContainer> */} 
       </Switch>
