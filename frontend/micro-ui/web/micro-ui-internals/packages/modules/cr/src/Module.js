@@ -53,8 +53,10 @@ import CustomTimePicker from "./components/CustomTimePicker";
 // import SelectAccessories from "./pageComponents/SelectAccessories";
 // import SelectAccessoriesDetails from "./pageComponents/SelectAccessoriesDetails";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
+import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
 // import TLDocument from "./pageComponents/TLDocumets";
 import BirthAcknowledgement from "./pages/citizen/Create/BirthAcknowledgement";
+import DeathAcknowledgement from "./pages/citizen/Create/DeathAcknowledgement";
 // import MyApplications from "./pages/citizen/Applications/Application";
 // import TradeLicenseList  from "./pages/citizen/Renewal/TradeLicenseList";
 // import TLWFApplicationTimeline from "./pageComponents/TLWFApplicationTimeline";
@@ -194,8 +196,10 @@ const componentsToRegister = {
   // SelectProofIdentity,
   // SelectOwnershipProof,
   BirthCheckPage,
+  DeathCheckPage,
   // TLDocument,
   BirthAcknowledgement,
+  DeathAcknowledgement,
   // TradeLicenseList,
   // MyApplications,
   // TLOwnerDetailsEmployee,
