@@ -233,24 +233,24 @@
       sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl);
       sessionStorage.setItem("PresentCityNameEn", PresentCityNameEn);
       sessionStorage.setItem("PresentCityNameMl", PresentCityNameMl);
-      sessionStorage.setItem("PresentVillage", PresentVillage.code);
+      sessionStorage.setItem("PresentVillage", PresentVillage?PresentVillage.code:null);
       sessionStorage.setItem("PresentLBName", null);
-      sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
-      sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
-      sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
-      sessionStorage.setItem("PresentPincode", PresentPincode.code);
+      sessionStorage.setItem("PresentDistrict", PresentDistrict?PresentDistrict.code:null);
+      sessionStorage.setItem("PresentTaluk", PresentTaluk?PresentTaluk.code:null);
+      sessionStorage.setItem("PresentPostOffice", PresentPostOffice?PresentPostOffice.code:null);
+      sessionStorage.setItem("PresentPincode", PresentPincode?PresentPincode.code:null);
       sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
       sessionStorage.setItem("PermanentHouseNo", PermanentHouseNo);
       sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);
       sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl);
       sessionStorage.setItem("PermanentCityNameEn", PermanentCityNameEn);
       sessionStorage.setItem("PermanentCityNameMl", PermanentCityNameMl);
-      sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
+      sessionStorage.setItem("PermanentVillage", PermanentVillage?PermanentVillage.code:null);
       sessionStorage.setItem("PermanentLBName", null);
-      sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
-      sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
-      sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
-      sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
+      sessionStorage.setItem("PermanentDistrict", PermanentDistrict?PermanentDistrict.code:null);
+      sessionStorage.setItem("PermanentTaluk", PermanentTaluk?PermanentTaluk.code:null);
+      sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice?PermanentPostOffice.code:null);
+      sessionStorage.setItem("PermanentPincode", PermanentPincode?PermanentPincode.code:null);
       onSelect(config.key, {
         PresentBuldingNo, PresentHouseNo, PresentLocalityNameEn,
         PresentLocalityNameMl, PresentCityNameEn, PresentCityNameMl, PresentVillage, PresentLBName, PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,

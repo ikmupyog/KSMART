@@ -34,7 +34,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
-    sessionStorage.setItem("setPlaceofDeath", setPlaceofDeath.code);
+    sessionStorage.setItem("setPlaceofDeath", setPlaceofDeath?setPlaceofDeath.code:null);
     onSelect(config.key, { setPlaceofDeath });
   };
   return (

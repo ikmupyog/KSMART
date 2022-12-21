@@ -56,13 +56,9 @@ const Home = ({
           <BackButton className="moduleLinkHomePageBackButton" />
           <h1>{t("MODULE_" + code.toUpperCase())}</h1>
         </div>
-        {code === "DFM" ? (
-          <Dashboard path={path} />
-        ) : (
           <div className="moduleLinkHomePageModuleLinks">
             <Links key={index} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
           </div>
-        )}
       </Route>
     );
   });
