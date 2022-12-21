@@ -18,6 +18,14 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "YES", code: "YESSMOKE" },
     { i18nKey: "NO", code: "NOSMOKE" },
   ];
+  const menua = [
+    { i18nKey: "YES", code: "YES" },
+    { i18nKey: "NO", code: "NO" },
+  ];
+  const menub = [
+    { i18nKey: "YES", code: "YES" },
+    { i18nKey: "NO", code: "NO" },
+  ];
   const tab = [
     { i18nKey: "YES", code: "YESSMOKE" },
     { i18nKey: "NO", code: "NOSMOKE" },
@@ -29,6 +37,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   const [isPregnent, setisPregnent] = useState(formData?.StatisticalInfoContinue?.isPregnent);
   const { t } = useTranslation();
   let validation = {};
+  const { data: causeOfDeathMain = {}, iscauseOfDeathMainLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCause");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setMedicalAttentionDeath, setSelectedMedicalAttentionDeath] = useState(formData?.StatisticalInfoContinue?.setMedicalAttentionDeath);
@@ -48,6 +57,15 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     place["TradeLicense"].PlaceOfActivity.map((ob) => {
       cmbPlace.push(ob);
     });
+    let cmbCauseOfDeathMain= [];
+    causeOfDeathMain &&
+    causeOfDeathMain["birth-death-service"] &&
+    causeOfDeathMain["birth-death-service"].DeathCause.map((ob) => {
+      cmbCauseOfDeathMain.push(ob);
+      });
+
+
+
 
   const onSkip = () => onSelect();
   function selectisSmoke(value) {
@@ -84,7 +102,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     setSelectedFemaleDeathPregnant(value);
   }
   function setSelectCauseOfDeath(e) {
-    setCauseOfDeath(e.target.value);
+    setSelectedCauseOfDeathMain(e.target.value);
   }
   function setSelectTradeName(e) {
     setTradeName(e.target.value);
@@ -132,7 +150,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionKey="code"
               isMandatory={false}
-              option={cmbPlace}
+              option={menub}
               selected={setMedicalAttentionDeath}
               select={selectMedicalAttentionDeath}
               disabled={isEdit}
@@ -144,7 +162,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionKey="code"
               isMandatory={false}
-              option={cmbPlace}
+              option={menua}
               selected={setDeathMedicallyCertified}
               select={selectDeathMedicallyCertified}
               disabled={isEdit}
@@ -156,9 +174,9 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}</CardLabel>
             <Dropdown
               t={t}
-              optionKey="code"
+              optionKey="name"
               isMandatory={false}
-              option={cmbPlace}
+              option={cmbCauseOfDeathMain}
               selected={setCauseOfDeathMain}
               select={selectCauseOfDeathMain}
               disabled={isEdit}

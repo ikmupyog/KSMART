@@ -867,6 +867,21 @@ const getCRReligionlist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRcauseOfDeathMainlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DeathCause",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRVillagelist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1970,6 +1985,9 @@ export const MdmsService = {
   },
   getCRReligion: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRReligionlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRcauseOfDeathMain: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRcauseOfDeathMainlist(tenantId, moduleCode), moduleCode);
   },
   getCRVillage: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRVillagelist(tenantId, moduleCode), moduleCode);

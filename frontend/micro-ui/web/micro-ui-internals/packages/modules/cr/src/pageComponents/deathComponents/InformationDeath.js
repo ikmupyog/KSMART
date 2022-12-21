@@ -226,33 +226,33 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           {checked ? (
             <div className="row">
               <div className="col-md-3">
-                <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
-                <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
+                <CardLabel>{t("CR_FROM_DATE")} <span className="mandatorycss">*</span></CardLabel>
+                <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} isMandatory={true} />
               </div>
               <div className="col-md-3">
-                <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
-                <CustomTimePicker name="DeathTimeFrom" onChange={(val) => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
+                <CardLabel>{t("CR_FROM_TIME")}<span className="mandatorycss">*</span></CardLabel>
+                <CustomTimePicker name="DeathTimeFrom" onChange={(val) => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} isRequired={true}/>
               </div>
 
               <div className="col-md-3">
-                <CardLabel>{t("CR_TO_DATE")}</CardLabel>
-                <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
+                <CardLabel>{t("CR_TO_DATE")}<span className="mandatorycss">*</span></CardLabel>
+                <DatePicker date={ToDate} name="ToDate" onChange={selectToDate}  isMandatory={true}  />
               </div>
               <div className="col-md-3">
-                <CardLabel>{t("CR_TO_TIME")}</CardLabel>
-                <CustomTimePicker name="DeathTimeTo" onChange={(val) => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} />
+                <CardLabel>{t("CR_TO_TIME")}<span className="mandatorycss">*</span></CardLabel>
+                <CustomTimePicker name="DeathTimeTo" onChange={(val) => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} isRequired={true} />
               </div>
             </div>
           ) : (
             <div className="row">
               <div className="col-md-6">
-                <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
+                <CardLabel>{t("CR_DATE_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
                 {/* date={CommencementDate} */}
-                <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} />
+                <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate}  isMandatory={true}  />
               </div>
               <div className="col-md-2">
-                <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-                <CustomTimePicker name="tripStartTime" onChange={(val) => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
+                <CardLabel>{t("CR_TIME_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
+                <CustomTimePicker name="tripStartTime" onChange={(val) => handleTimeChange(val, setTripStartTime)} value={tripStartTime} isRequired={true} />
               </div>
             </div>
           )}
@@ -310,7 +310,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={LastName}
               onChange={setSelectLastName}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
             />
           </div>
         </div>
@@ -372,7 +372,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-4">
-            <CardLabel>{t("CR_GENDER")}</CardLabel>
+            <CardLabel>{t("CR_GENDER")}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
               optionKey="code"
@@ -391,7 +391,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} />
           </div>
           <div className="col-md-4">
-            <CardLabel>{`${t("CR_AGE_OF_BIRTH_DECEASED")}`}</CardLabel>
+            <CardLabel>{`${t("CR_AGE_OF_BIRTH_DECEASED")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
