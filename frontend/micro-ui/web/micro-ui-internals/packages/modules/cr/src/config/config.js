@@ -558,7 +558,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "PlaceOfDeathHome",
-        nextStep: "Informent-details",
+        nextStep: "Informant-Details",
         type: "component",
         hideInEmployee: true,
       },
@@ -627,7 +627,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "Informant-details",
+        route: "Informant-Details",
         component: "InformentAddress",
         texts: {
           headerCaption: "",
