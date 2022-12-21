@@ -16,9 +16,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const [FatherOrHusbandNameEN, setFatherOrHusbandNameEN] = useState(formData?.FamilyInformationDeath?.FatherOrHusbandNameEN);
   const [FatherOrHusbandNameMl, setFatherOrHusbandNameMl] = useState(formData?.FamilyInformationDeath?.FatherOrHusbandNameMl);
   const [MotherNameEn, setMotherNameEn] = useState(formData?.FamilyInformationDeath?.MotherNameEn);
-  // const [FirstNameB, setFirstNameB] = useState(null);
   const [MotherNameMl, setMotherNameMl] = useState(formData?.FamilyInformationDeath?.MotherNameMl);
-  // const [MLFirstName, setMLFirstName] = useState(null);
   const [FatherOrHusbandAdharNo, setFatherOrHusbandAdharNo] = useState(formData?.FamilyInformationDeath?.FatherOrHusbandAdharNo);
   const [MotherAdharNo, setMotherAdharNo] = useState(formData?.MotherAdharNo?.MotherAdharNo);
 

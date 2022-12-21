@@ -55,7 +55,7 @@ const CRCard = () => {
             label: t("Death Registration"),
             link: `/digit-ui/employee/cr/death-flow`,
         },
-        {
+            {
             label: t("TL_SEARCH_APPLICATIONS"),
             link: `/digit-ui/employee/cr/search/application`
         },

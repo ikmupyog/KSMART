@@ -109,6 +109,13 @@ const CRBreadCrumb = ({ location }) => {
       content: t("Child Details"),
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails
     },
+    {
+      path: "/digit-ui/employee/cr/death-flow/search/application",
+      content: t("ES_COMMON_SEARCH_APPLICATION"),
+      show: isApplicationSearch ||
+      breadCrumbUrls.includes("home/search") || 
+      breadCrumbUrls.includes("inbox/search")
+    },
    
     // {
     //   path: "/digit-ui/employee/cr/cr-flow/trade-lisense",
@@ -121,13 +128,7 @@ const CRBreadCrumb = ({ location }) => {
     //   content: t("ES_TITLE_INBOX"),
     //   show: breadCrumbUrls.includes("inbox") || isInbox
     // },
-    // {
-    //   path: "/digit-ui/employee/tl/search/application",
-    //   content: t("ES_COMMON_SEARCH_APPLICATION"),
-    //   show: isApplicationSearch ||
-    //   breadCrumbUrls.includes("home/search") || 
-    //   breadCrumbUrls.includes("inbox/search")
-    // },
+ 
     // {
     //   path: "/digit-ui/employee/tl/search/license",
     //   content: t("TL_SEARCH_TRADE_HEADER"),

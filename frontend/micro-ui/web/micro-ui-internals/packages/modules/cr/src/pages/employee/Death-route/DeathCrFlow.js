@@ -40,6 +40,7 @@ const DeathCrFlow = ({ path }) => {
       // img: <FileProtected />,
     },
     
+    
   ];
   return (
     <div>
