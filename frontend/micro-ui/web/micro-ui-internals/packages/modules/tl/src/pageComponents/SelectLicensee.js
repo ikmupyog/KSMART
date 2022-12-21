@@ -193,7 +193,7 @@ const SelectLicensee = ({ t, config, onSelect, userType, formData }) => {
 
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled={!LicensingUnitType || !LicenseUnitName  || !LicenseUnitNameMal || !Zonal || !WardNo|| !StreetName || !LandMark }>        
           <LabelFieldPair style={{ display: "flex" }}><CardLabel style={{fontSize:"17px",width:"none !important"}}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
-           <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} disabled={isEdit} style={{ marginTop:"-8px",paddingLeft:"5px" ,height:"25px"}} /> 
+           <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} disabled={isEdit} style={{ marginTop:"-8px",paddingLeft:"5px" ,height:"25px",display: "flex"}} /> 
           </LabelFieldPair>
       {value2 === "INDIVIDUAL" && (
       <div>

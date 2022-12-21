@@ -269,20 +269,27 @@ export const gettradeupdateaccessories = (data) => {
   return TLaccessories;
 }
 export const convertToFileSubmission = (data = {}) => {
+  console.log("data" + data?.citizen?.FileManagement?.applicationData?.aadharNo);
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   const formdata = {
     ApplicantPersonals: [
       {
-        aadhaarNo: data?.FileManagement?.applicationData?.aadharNo, 
-        email: data?.FileManagement?.applicationData?.email,
-        firstName: data?.FileManagement?.applicationData?.firstName,
-        lastName: data?.FileManagement?.applicationData?.lastName,
-        title: data?.FileManagement?.applicationData?.title.code,
-        mobileNo: data?.FileManagement?.applicationData?.mobileNo,
+        aadhaarNo: "123456789111",
+        // data?.FileManagement?.applicationData?.aadharNo, 
+        email: "test@gmail.com",
+        //data?.FileManagement?.applicationData?.email,
+        firstName: "Anil",
+        //data?.FileManagement?.applicationData?.firstName,
+        lastName: "Kumar",
+        //data?.FileManagement?.applicationData?.lastName,
+        title: "Mr",
+        //data?.FileManagement?.applicationData?.title.code,
+        mobileNo: "9895257787",
+        // data?.FileManagement?.applicationData?.mobileNo,
         tenantId: "kl",
         applicantChild: {
-          buildingNumber: "9",
-          durationOfResidence: "2 year"
+          buildingNumber: data?.FileManagement?.serviceDetails?.buldingNo,
+          durationOfResidence: data?.FileManagement?.serviceDetails?.durationOfresidence,
         },
         serviceDetails: {
           applicantPersonalId: '23',
@@ -293,11 +300,15 @@ export const convertToFileSubmission = (data = {}) => {
         },
         applicantAddress: {
           applicantPersonalId: '23',
-          houseNo: data?.FileManagement?.addressData?.houseNo,
-          houseName: data?.FileManagement?.addressData?.houseName,
-          street: data?.FileManagement?.addressData?.street,
-          pincode: data?.FileManagement?.addressData?.pincode,
-          postOfficeName: data?.FileManagement?.addressData?.postOffice.code,
+          houseNo: "56",
+          //data?.FileManagement?.addressData?.houseNo,
+          houseName: "test Data",
+          street: "Ettumanoor",
+          //data?.FileManagement?.addressData?.street,
+          pincode: "686631",
+          //data?.FileManagement?.addressData?.pincode,
+          postOfficeName: "Ettumanoor",
+          //data?.FileManagement?.addressData?.postOffice.code,
           wardNo: "5",
         },
         applicantServiceDocuments: {
@@ -305,7 +316,7 @@ export const convertToFileSubmission = (data = {}) => {
           documentTypeId: '2',
           fileStoreId: '537',
           serviceDetailsId: '34',
-          active: Yes,
+          active: "Yes",
           documentNumber: '12345',
           applicationdetails: "aaaa"
         },

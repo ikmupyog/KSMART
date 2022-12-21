@@ -1,14 +1,5 @@
-import {
-  Card,
-  CardHeader,
-  CardSubHeader,
-  CardText,
-  CitizenInfoLabel,
-  LinkButton,
-  Row,
-  StatusTable,
-  SubmitBar,
-} from "@egovernments/digit-ui-react-components";
+import {  Card,  CardHeader,  CardSubHeader,  CardText,  CardLabel ,  CitizenInfoLabel,
+  LinkButton,  Row,  StatusTable,  SubmitBar,} from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -45,7 +36,7 @@ const CheckPage = ({ onSubmit, value }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { TradeDetails, address, owners, propertyType, subtype, pitType, pitDetail, isEditProperty, cpt } = value;
+  const { applicationData, address, owners, propertyType, subtype, pitType, pitDetail, isEditProperty, cpt } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -59,24 +50,46 @@ const CheckPage = ({ onSubmit, value }) => {
   //   routeLink = `${getPath(match.path, match.params)}`;
   //   routeLink = routeLink.replace("/check", "");
   // }
-  console.log(value);
+  console.log("value" + value?.FileManagement?.applicationData?.aadharNo);
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
-        <CardHeader>{t("CS_CHECK_CHECK_YOUR_ANSWERS")}</CardHeader>
-        <CardText>{t("CS_CHECK_CHECK_YOUR_ANSWERS_TEXT")}</CardText>
-        {isEdit && <CitizenInfoLabel info={t("CS_FILE_APPLICATION_INFO_LABEL")} text={t("TL_RENEWAL_INFO_TEXT")} />}
-        <CardSubHeader>{t("TL_LOCALIZATION_TRADE_DETAILS")}</CardSubHeader>
+      <label style={{ fontSize: "17px", fontWeight: "bold" }} >{t("Summary Details")}</label>
+        <div className="row">
+          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Application Details")}`}</span></h1>
+          </div>
+        </div>
        <StatusTable>
-          <Row
-            label={t("TL_LOCALjetheeshIZATION_TRADE_NAME")}
-            
-            // text={t(TradeDetails?.TradeName)}
-            actionButton={<ActionButton jumpTo={`${routeLink}/TradeName`} />}
-          />
-          
+          <div className="row">
+             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Applicant Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.firstName)}&nbsp;{t(value?.FileManagement?.applicationData?.lastName)}</CardText>
+            </div>
+           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Aadhar No")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.aadharNo)}</CardText>
+            </div>
+          </div>
+          <div className="row">
+             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("email")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.email)}</CardText>
+            </div>
+           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mobile No")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.mobileNo)}</CardText>
+            </div>
+          </div>
+          <div className="row">
+             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Date Of Birth")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.dob)}</CardText>
+            </div>
+           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.category.name)}</CardText>
+            </div>
+          </div>
+          <div className="row">
+          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
+          </div>
+        </div>
         </StatusTable>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>
