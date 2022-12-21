@@ -108,9 +108,19 @@ const DeathCrFlowApp = ({ parentUrl }) => {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
-
+  console.log("match.path" + match.path);
+  const createProperty = async () => {
+    history.push(`${match.path}/acknowledgement`);
+  };
+  
+  const onSuccess = () => {
+    sessionStorage.removeItem("CurrentFinancialYear");
+    queryClient.invalidateQueries("CR_CREATE_BIRTH");
+  };
   const handleSkip = () => {};
   const handleMultiple = () => {};
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
+  const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
   
   return (
     
@@ -134,14 +144,17 @@ const DeathCrFlowApp = ({ parentUrl }) => {
           
         );
       })}
-      
+      <Route path={`${match.path}/check`}>
+        <CheckPage onSubmit={createProperty} value={params} />
+      </Route>
+      <Route path={`${match.path}/acknowledgement`}>
+        <BirthAcknowledgement data={params} onSuccess={onSuccess} />
+      </Route>
       <Route path={`${path}`} exact>
               <DeathCrFlow  path={path}/>
              </Route>
              <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
-             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <ApplicationDetails parentUrl={path} />} />
-
-         
+                     
       </Switch>
     </React.Fragment>
   );

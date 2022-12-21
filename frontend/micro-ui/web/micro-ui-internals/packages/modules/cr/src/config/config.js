@@ -622,12 +622,12 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "PlaceOfDeathVehicle",
-        nextStep: "Informent-Details",
+        nextStep: "Informant-Details",
         type: "component",
         hideInEmployee: true,
       },
       {
-        route: "Informent-details",
+        route: "Informant-details",
         component: "InformentAddress",
         texts: {
           headerCaption: "",

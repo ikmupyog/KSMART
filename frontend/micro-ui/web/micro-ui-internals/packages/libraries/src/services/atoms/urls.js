@@ -103,10 +103,10 @@ const Urls = {
     billingslab: "/tl-calculator/billingslab/_search",
   },
   cr: {
-    create: "/birth-services/cr/birth/_create",
-    search: "/birth-services/cr/birth/_search",
+    create: "/death-services/v1/crdeathdetails/_create",
+    search: "/death-services/v1/crdeathdetails/_search",
     download_pdf: "/egov-pdf/download/CR/",
-    update: "/birth-services/cr/birth/_update",
+    update: "/death-services/v1/crdeathdetails/_update",
   },
   dfm: {
     create: "/filemgmnt/v1/applicantpersonals/_create",
