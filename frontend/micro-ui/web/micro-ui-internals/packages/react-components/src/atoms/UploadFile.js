@@ -31,7 +31,7 @@ const getCitizenStyles = (value) => {
       },
       buttonStyles: {
         height: "auto",
-        minHeight: "2rem",
+        minHeight: "30px",
         width: "40%",
         maxHeight: "3rem"
       },
@@ -107,9 +107,9 @@ const getCitizenStyles = (value) => {
       },
       buttonStyles: {
         height: "auto",
-        minHeight: "40px",
+        minHeight: "30px",
         width: "43%",
-        maxHeight: "40px",
+        maxHeight: "40px", 
         margin: "5px",
         padding: "0px"
       },
@@ -117,7 +117,7 @@ const getCitizenStyles = (value) => {
         width : "20px"
       },
       uploadFile: {
-        minHeight: "50px"
+        minHeight: "40px"
       }
     };
   }

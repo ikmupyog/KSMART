@@ -127,9 +127,9 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-<h2>em3</h2>
-      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} >
-        {/* return ( */}
+
+      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t}  isDisabled={!fileCheck|| error}> 
+       
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
             <div className="row">

@@ -7,7 +7,7 @@ import DFMAddressDetails from "../src/pageComponents/DFMAddressDetails";
 import DFMServiceDetails from "../src/pageComponents/DFMServiceDetails";
 import DFMDocumentDetails from "../src/pageComponents/DFMDocumentDetails";
 import DFMCheckPage from "./pages/citizen/Create/CheckPage";
-import DFMEmployeeApplicationDetails from "../src/pageComponents/DFMEmployeeApplicationDetails";
+import DFMEmployeeApplicationDetails from "./pageComponents/DFMEmployeeApplicationDetails";
 import DFMEmployeeAddressDetails from "../src/pageComponents/DFMEmployeeAddressDetails";
 import DFMEmployeeServiceDetails from "../src/pageComponents/DFMEmployeeServiceDetails";
 import DFMEmployeeDocumentDetails from "../src/pageComponents/DFMEmployeeDocumentDetails";
