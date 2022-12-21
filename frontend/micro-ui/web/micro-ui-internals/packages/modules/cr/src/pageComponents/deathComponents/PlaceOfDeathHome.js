@@ -123,19 +123,19 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
-    sessionStorage.setItem("setVillage", setVillage.code);
-    sessionStorage.setItem("setLbName", setLbName.code);
-    sessionStorage.setItem("setPostOffice", setPostOffice.code);
+    sessionStorage.setItem("setVillage", setVillage?setVillage.code:null);
+    sessionStorage.setItem("setLbName", setLbName?setLbName.code:null);
+    sessionStorage.setItem("setPostOffice", setPostOffice?setPostOffice.code:null);
     sessionStorage.setItem("PinCode", PinCode);
-    sessionStorage.setItem("setTaluk", setTaluk.code);
-    sessionStorage.setItem("setDistrict", setDistrict.code);
+    sessionStorage.setItem("setTaluk", setTaluk?setTaluk.code:null);
+    sessionStorage.setItem("setDistrict", setDistrict?setDistrict.code:null);
     sessionStorage.setItem("BuildingNo", BuildingNo);
     sessionStorage.setItem("HouseNo", HouseNo);
     sessionStorage.setItem("Locality", Locality);
     sessionStorage.setItem("LocalityML", LocalityML);
     sessionStorage.setItem("CityEn", CityEn);
     sessionStorage.setItem("CityMl", CityMl);
-    sessionStorage.setItem("setWard", setWard.code);
+    sessionStorage.setItem("setWard", setWard?setWard.code:null);
     
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
@@ -321,7 +321,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={PinCode}
               onChange={setSelectPinCode}
               disable={isEdit}
-              {...(validation = {pattern: "^([0-9]){12}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_PIN_CODE"),})}
+              {...(validation = {pattern: "^([0-9]){6}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_PIN_CODE"),})}
             />
           </div>
         </div>

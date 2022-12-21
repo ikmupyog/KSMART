@@ -75,8 +75,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   // }
 
   const goNext = () => {
-    sessionStorage.setItem("setTitle", setTitle.code);
-    sessionStorage.setItem("setTitleB", setTitleB.code);
+    sessionStorage.setItem("setTitle", setTitle?setTitle.code:null);
+    sessionStorage.setItem("setTitleB", setTitleB?setTitleB.code:null);
     sessionStorage.setItem("FatherOrHusbandNameEN", FatherOrHusbandNameEN);
     sessionStorage.setItem("FatherOrHusbandNameMl", FatherOrHusbandNameMl);
     sessionStorage.setItem("MotherNameEn", MotherNameEn);

@@ -26,7 +26,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
-  const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitle);
+  const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
   const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
   const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -166,13 +166,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PassportNo", PassportNo);
     sessionStorage.setItem("FromDate", FromDate);
     sessionStorage.setItem("ToDate", ToDate);
-    sessionStorage.setItem("setTitle", setTitle.code);
-    sessionStorage.setItem("setTitleB", setTitleB.code);
-    sessionStorage.setItem("setCountry", setCountry.code);
-    sessionStorage.setItem("setCountry", setReligion.code);
+    sessionStorage.setItem("setTitle", setTitle?setTitle.code:null);
+    sessionStorage.setItem("setTitleB", setTitleB?setTitleB.code:null);
+    sessionStorage.setItem("setCountry", setCountry?setCountry.code:null);
+    sessionStorage.setItem("setCountry", setReligion?setReligion.code:null);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
-    sessionStorage.setItem("Gender", Gender.code);
+    sessionStorage.setItem("Gender", Gender?Gender.code:null);
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
@@ -191,9 +191,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       setTitleB,
       setCountry,
       setReligion,
-      TimeOfDeath,
-      Minute,
-      Seconds,
       DeathTimeFrom,
       DeathTimeTo,
     });
@@ -404,7 +401,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               value={Ageofbirth}
               onChange={setSelectAgeofbirth}
               disable={isEdit}
-              {...(validation = { pattern: "^([0-9]){}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
+              {...(validation = { pattern: "^([0-9]){2}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
             />
           </div>
         </div>
