@@ -9,7 +9,7 @@ import {
   NewRadioButton,
   RadioButtons,
 } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
@@ -18,7 +18,19 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "YES", code: "YESSMOKE" },
     { i18nKey: "NO", code: "NOSMOKE" },
   ];
+  const smoke = [
+    { i18nKey: "YES", code: "YESSMOKE" },
+    { i18nKey: "NO", code: "NOSMOKE" },
+  ];
   const tab = [
+    { i18nKey: "YES", code: "YESSMOKE" },
+    { i18nKey: "NO", code: "NOSMOKE" },
+  ];
+  const pan = [
+    { i18nKey: "YES", code: "YESSMOKE" },
+    { i18nKey: "NO", code: "NOSMOKE" },
+  ];
+  const alcohol = [
     { i18nKey: "YES", code: "YESSMOKE" },
     { i18nKey: "NO", code: "NOSMOKE" },
   ];
@@ -94,13 +106,13 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
-    sessionStorage.setItem("setMedicalAttentionDeath", setMedicalAttentionDeath.code);
-    sessionStorage.setItem("setDeathMedicallyCertified", setDeathMedicallyCertified.code);
-    sessionStorage.setItem("setCauseOfDeathMain", setCauseOfDeathMain.code);
-    sessionStorage.setItem("setCauseOfDeathSub", setCauseOfDeathSub.code);
+    sessionStorage.setItem("setMedicalAttentionDeath", setMedicalAttentionDeath?setMedicalAttentionDeath.code:null);
+    sessionStorage.setItem("setDeathMedicallyCertified", setDeathMedicallyCertified?setDeathMedicallyCertified.code:null);
+    sessionStorage.setItem("setCauseOfDeathMain", setCauseOfDeathMain?setCauseOfDeathMain.code:null);
+    sessionStorage.setItem("setCauseOfDeathSub", setCauseOfDeathSub?setCauseOfDeathSub.code:null);
     sessionStorage.setItem("setCauseOfDeath", CauseOfDeath);
-    sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant.code);
-    sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
+    sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant?setFemaleDeathPregnant.code:null);
+    sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity?setPlaceofActivity.code:null);
     sessionStorage.setItem("isSmoke", isSmoke.i18nKey);
     sessionStorage.setItem("isPanMasala", isPanMasala.i18nKey);
     sessionStorage.setItem("isalcohol", isalcohol.i18nKey);
@@ -123,8 +135,8 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">
           <div className="col-md-6">
             <CardLabel>{t("CR_MEDICAL_ATTENTION_DEATH")}</CardLabel>
@@ -211,7 +223,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionsKey="i18nKey"
               isMandatory={config.isMandatory}
-              options={menu}
+              options={smoke}
               selectedOption={isSmoke}
               onSelect={selectisSmoke}
             />
@@ -235,7 +247,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionsKey="i18nKey"
               isMandatory={config.isMandatory}
-              options={menu}
+              options={pan}
               selectedOption={isPanMasala}
               onSelect={selectisPanMasala}
             />
@@ -246,7 +258,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionsKey="i18nKey"
               isMandatory={config.isMandatory}
-              options={menu}
+              options={alcohol}
               selectedOption={isalcohol}
               onSelect={selectisalcohol}
             />
