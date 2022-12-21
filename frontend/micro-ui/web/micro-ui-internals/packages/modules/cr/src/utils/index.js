@@ -224,7 +224,6 @@ export const gettradeupdateunits = (data) => {
   return TLunits;
 };
 
-
 export const getaccessories = (data) => {
   let tradeaccessories = [];
   data?.TradeDetails?.accessories.map((ob) => {
@@ -237,53 +236,49 @@ export const gettradeupdateaccessories = (data) => {
   let TLaccessories = [];
   const isEditRenew = window.location.href.includes("renew-trade");
   if (data?.TradeDetails?.isAccessories?.i18nKey.includes("NO")) {
-    data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
-      TLaccessories.push({ ...oldunit, active: false });
-    })
-  }
-  else {
-    data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
-      data.TradeDetails.accessories.map((newunit) => {
-        if (oldunit.id === newunit.id) {
-          if (oldunit.accessoryCategory !== newunit.accessory.code) {
-            oldunit.accessoryCategory = newunit.accessory.code;
-            TLaccessories.push(oldunit);
+    data?.tradeLicenseDetail?.accessories &&
+      data.tradeLicenseDetail.accessories.map((oldunit) => {
+        TLaccessories.push({ ...oldunit, active: false });
+      });
+  } else {
+    data?.tradeLicenseDetail?.accessories &&
+      data.tradeLicenseDetail.accessories.map((oldunit) => {
+        data.TradeDetails.accessories.map((newunit) => {
+          if (oldunit.id === newunit.id) {
+            if (oldunit.accessoryCategory !== newunit.accessory.code) {
+              oldunit.accessoryCategory = newunit.accessory.code;
+              TLaccessories.push(oldunit);
+            } else {
+              let found = TLaccessories.length > 0 ? TLaccessories.some((el) => el.id === oldunit.id) : false;
+              if (!found) TLaccessories.push(oldunit);
+            }
+          } else {
+            if (!isEditRenew) {
+              let found = TLaccessories.length > 0 ? TLaccessories.some((el) => el.id === oldunit.id) : false;
+              if (!found) TLaccessories.push({ ...oldunit, active: false });
+            }
           }
-          else {
-            let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id) : false;
-            if (!found) TLaccessories.push(oldunit);
-          }
-
-        }
-        else {
-          if (!isEditRenew) {
-            let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id) : false;
-            if (!found) TLaccessories.push({ ...oldunit, active: false });
-          }
-
-        }
-      })
-    })
+        });
+      });
     data.TradeDetails.accessories.map((ob) => {
       if (!ob.id) {
         TLaccessories.push({ uom: ob.unit, accessoryCategory: ob.accessory.code, uomValue: ob.uom ? ob.uom : null, count: ob.accessorycount });
       }
-    })
+    });
   }
   return TLaccessories;
-}
+};
 export const convertToBirthRegistration = (data = {}) => {
-
   const formdata = {
     BirthDetails: [
       {
-        applicationno:"APP1",
-        dateofreport: null,//Not needed
+        applicationno: "APP1",
+        dateofreport: null, //Not needed
         dateofbirth: Date.parse(data?.ChildDetails?.ChildDOB),
         timeofbirth: 1515,
         // Long.parse(data?.ChildDetails?.tripStartTime),
         am_pm: "am",
-        birthdtlid: null,//Not needed
+        birthdtlid: null, //Not needed
         firstname_en: data?.ChildDetails?.ChildFirstNameEn,
         firstname_ml: data?.ChildDetails?.ChildFirstNameMl,
         middlename_en: data?.ChildDetails?.ChildMiddleNameEn,
@@ -293,8 +288,8 @@ export const convertToBirthRegistration = (data = {}) => {
         tenantid: "kl.cochin",
         gender: 1,
         //data?.ChildDetails?.Gender.code,
-        remarks_en: null,//Stastical Info Description
-        remarks_ml: null,//Not needed
+        remarks_en: null, //Stastical Info Description
+        remarks_ml: null, //Not needed
         applicationtype: "NEW",
         businessservice: "birth-services",
         workflowcode: "bnd21days",
@@ -315,8 +310,7 @@ export const convertToBirthRegistration = (data = {}) => {
           informants_mobileno: data?.HospitalDetails?.SignedOfficerMobileNo,
           informants_aadhaar_no: data?.HospitalDetails?.SignedOfficerAadharNo,
         },
-        birthFather:
-        {
+        birthFather: {
           firstname_en: data?.FatherInfoDetails?.FatherFirstNameEn,
           firstname_ml: data?.FatherInfoDetails?.FatherFirstNameMl,
           middlename_en: data?.FatherInfoDetails?.FatherMiddleNameEn,
@@ -327,8 +321,7 @@ export const convertToBirthRegistration = (data = {}) => {
           emailid: data?.FatherInfoDetails?.FatherEmail,
           mobileno: data?.FatherInfoDetails?.FatherMobile,
         },
-        birthMother:
-        {
+        birthMother: {
           firstname_en: data?.MotherInfoDetails?.MotherFirstNameEn,
           firstname_ml: data?.MotherInfoDetails?.MotherFirstNameMl,
           middlename_en: data?.MotherInfoDetails?.MotherMiddleNameEn,
@@ -357,7 +350,7 @@ export const convertToBirthRegistration = (data = {}) => {
           poid: data?.AddressDetails?.PermanentPostOffice.code,
           pinno: data?.AddressDetails?.PermanentPincode,
           countryid: null,
-          same_as_permanent: 1
+          same_as_permanent: 1,
         },
         birthPresent: {
           buildingno: data?.AddressDetails?.PresentBuldingNo,
@@ -377,10 +370,9 @@ export const convertToBirthRegistration = (data = {}) => {
           poid: data?.AddressDetails?.PresentPostOffice.code,
           pinno: data?.Address?.PresentPincode,
           countryid: null,
-          same_as_permanent: 1
+          same_as_permanent: 1,
         },
-        birthStatistical:
-        {
+        birthStatistical: {
           weight_of_child: 3.5,
           // data?.StatisticalInfoDetails?.BirthWeight,
           height_of_child: 2.5,
@@ -420,10 +412,10 @@ export const convertToBirthRegistration = (data = {}) => {
           mother_resdnce_districtid: null,
           mother_resdnce_stateid: null,
           mother_resdnce_countryid: null,
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  };
 
   return formdata;
 };
@@ -503,7 +495,7 @@ export const convertToDeathRegistration = (data = {}) => {
         timeOfDeath1: null,
         timeOfDeathUnit1: null,
         deceasedIdentified: 1,
-        deceasedTitle: data?.InformationDeath?.setTitle.code,
+        deceasedTitle: data?.InformationDeath?.setTitle?.data?.InformationDeath?.setTitle.code,
         deceasedFirstNameEn: data?.InformationDeath?.FirstName,
         deceasedFirstNameMl: data?.InformationDeath?.MLFirstName,
         deceasedMiddleNameEn: data?.InformationDeath?.MiddleName,
@@ -512,17 +504,17 @@ export const convertToDeathRegistration = (data = {}) => {
         deceasedLastNameMl: data?.InformationDeath?.MlLastName,
         deceasedAadharSubmitted: 1,
         deceasedAadharNumber: data?.InformationDeath?.AdharNo,
-        deceasedGender: data?.InformationDeath?.setGender.code,
+        deceasedGender: data?.InformationDeath?.setGender?.data?.InformationDeath?.setGender.code,
         age: data?.InformationDeath?.Ageofbirth,
         ageUnit: null,
         dateOfBirth: Date.parse(data?.InformationDeath?.DateOfBirth),
-        deathPlace: data?.PlaceOfDeath?.setPlaceofDeath,
-        deathPlaceType: data?.PlaceOfDeathInstitution?.setInstitution.code,
-        deathPlaceInstId: data?.PlaceOfDeathInstitution?.setInstitutionId.code,
+        deathPlace: data?.PlaceOfDeath?.setPlaceofDeath?.data?.PlaceOfDeath?.setPlaceofDeath.code,
+        deathPlaceType: data?.PlaceOfDeathInstitution?.setInstitution?.data?.PlaceOfDeathInstitution?.setInstitution.code,
+        deathPlaceInstId: data?.PlaceOfDeathInstitution?.setInstitutionId?.data?.PlaceOfDeathInstitution?.setInstitutionId.code,
         deathPlaceOfficeName: data?.PlaceOfDeathInstitution?.SiginedOfficer,
         deathPlaceOtherMl: data?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl,
         deathPlaceOtherEn: data?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsEn,
-        informantTitle: data?.InformentAddress?.setTitle.code,
+        informantTitle: data?.InformentAddress?.setTitle?.data?.InformentAddress?.setTitle.code,
         informantNameEn: data?.InformentAddress?.InformentNameEn,
         informantnameMl: data?.InformentAddress?.InformentNameMl,
         informantAadharSubmitted: null,
@@ -555,20 +547,20 @@ export const convertToDeathRegistration = (data = {}) => {
         fileNumber: null,
         ackNo: null,
         deseasedPassportNo: data?.InformationDeath?.PassportNo,
-        deathSignedOfficerDesignation: null,//data?.HospitalDetails?.setDesignation,master not available
-        deathSignedOfficerMob: data?.InformentAddress?.InformentMobileNo,
-        deathSignedOfficerAadhaar: data?.HospitalDetails?.HospitalAadhaar,
+        deathSignedOfficerDesignation: null, //data?.HospitalDetails?.setDesignation,master not available
+        deathSignedOfficerMob: null,
+        deathSignedOfficerAadhaar: null,
         deathPlaceWardId: "death_place_ward_id",
-        isvehicle: "death_is_in_vehicle",
-        vehicleHospitalMl :data?.PlaceOfDeathVehicle?.setAdmittedHospital.code,
+        isvehicle: null,
+        vehicleHospitalMl: data?.PlaceOfDeathVehicle?.setAdmittedHospital,
         vehicleHospitalEn: "vehicle_hospital_en",
-        vehicleFromplaceMl : "vehicle_fromplace_ml",
+        vehicleFromplaceMl: "vehicle_fromplace_ml",
         vehicleFromplaceEn: "vehicle_fromplace_en",
-        vehicleToPlaceMl  : "vehicle_toplace_ml",
+        vehicleToPlaceMl: "vehicle_toplace_ml",
         vehicleToPlaceEn: "vehicle_fromplace_en",
         vehicleNumber: "vehicle_number",
         vehicleDriverLicenceNo: "vehicle_driver_licenceno",
-        informantAge: "informant_age",
+        informantAge: null,
 
         statisticalInfo: {
           id: "id",
@@ -578,16 +570,16 @@ export const convertToDeathRegistration = (data = {}) => {
           residencePlaceType: "resid_plce",
           residenceDistrict: "resi_district",
           residenceState: "resi_state",
-          religion: data?.StatisticalInfo?.setReligion,
-          religionOther:null,
-          occupation: data?.StatisticalInfo?.setOccupationMain.code,
+          religion: data?.StatisticalInfo?.setReligion?.data?.StatisticalInfo?.setReligion.code,
+          religionOther: null,
+          occupation: data?.StatisticalInfo?.setOccupationMain?.data?.StatisticalInfo?.setOccupationMain.code,
           occupationOther: data?.StatisticalInfo?.OccupationOthers,
-          medicalAttentionType: data?.StatisticalInfoContinue?.setMedicalAttentionDeath.code,
-          deathMedicallyCertified: data?.StatisticalInfoContinue?.DeathMedicallyCertified,
-          deathCauseMain: data?.StatisticalInfoContinue?.setCauseOfDeathMain.code,
-          deathCauseSub: data?.StatisticalInfoContinue?.setCauseOfDeathSub.code,
-          deathCauseOther:data?.StatisticalInfoContinue?.CauseOfDeath,
-          deathDuringDelivery: data?.StatisticalInfoContinue?.isPregnent.code,
+          medicalAttentionType: data?.StatisticalInfoContinue?.setMedicalAttentionDeath?.data?.StatisticalInfoContinue?.setMedicalAttentionDeath.code,
+          deathMedicallyCertified: null,
+          deathCauseMain: data?.StatisticalInfoContinue?.setCauseOfDeathMain?.data?.StatisticalInfoContinue?.setCauseOfDeathMain.code,
+          deathCauseSub: data?.StatisticalInfoContinue?.setCauseOfDeathSub?.data?.StatisticalInfoContinue?.setCauseOfDeathSub.code,
+          deathCauseOther: data?.StatisticalInfoContinue?.CauseOfDeath,
+          deathDuringDelivery: null,
           smokingNumYears: 111,
           tobaccoNumYears: 111,
           arecanutNumYears: 111,
@@ -613,19 +605,20 @@ export const convertToDeathRegistration = (data = {}) => {
             localityMl: data?.AddressDetails?.PresentLocalityNameMl,
             cityEn: data?.AddressDetails?.PresentCityNameEn,
             cityMl: data?.AddressDetails?.PresentCityNameMl,
-            wardId: data?.AddressDetails?.PresentWard.code,
-            talukId: data?.AddressDetails?.PresentTaluk.code,
-            villageId: data?.AddressDetails?.PresentVillage.code,
-            postofficeId: data?.AddressDetails?.PresentPostOffice.code,
+            wardId: data?.AddressDetails?.PresentWard?.data?.AddressDetails?.PresentWard.code,
+            talukId: data?.AddressDetails?.PresentTaluk?.data?.AddressDetails?.PresentTaluk.code,
+            villageId: data?.AddressDetails?.PresentVillage?.data?.AddressDetails?.PresentVillage.code,
+            postofficeId: data?.AddressDetails?.PresentPostOffice?.data?.AddressDetails?.PresentPostOffice.code,
             pincode: data?.AddressDetails?.PermanentPincode,
-            districtId: data?.AddressDetails?.PresentDistrict.code, 
+            districtId: data?.AddressDetails?.PresentDistrict?.data?.AddressDetails?.PresentDistrict.code,
             stateId: "state_id",
             countryId: "country_id",
-            talukNameEn: data?.AddressDetails?.PresentTaluk.code,
+            talukNameEn: data?.AddressDetails?.PresentTaluk?.data?.AddressDetails?.PresentTaluk.code,
             talukNameMl: null,
-            villageNameEn: data?.AddressDetails?.PresentVillage.code,
+            villageNameEn: data?.AddressDetails?.PresentVillage?.data?.AddressDetails?.PresentVillage.code,
             villageNameMl: null,
-            postofficeNameEn: data?.AddressDetails?.PresentPostOffice.code,
+            postofficeNameEn:
+              data?.AddressDetails?.PresentPostOffice?.PresentPostOffice?.data?.AddressDetails?.PresentPostOffice?.PresentPostOffice.code,
             postofficeNameMl: null,
           },
           permanentAddress: {
@@ -641,19 +634,19 @@ export const convertToDeathRegistration = (data = {}) => {
             localityMl: data?.AddressDetails?.PermanentLocalityNameMl,
             cityEn: data?.AddressDetails?.PermanentCityNameEn,
             cityMl: data?.AddressDetails?.PermanentCityNameMl,
-            wardId: data?.AddressDetails?.PermanentWard.code,
-            talukId: data?.AddressDetails?.PermanentTaluk.code,
-            villageId: data?.AddressDetails?.PermanentVillage.code,
-            postofficeId: data?.AddressDetails?.PermanentPostOffice.code,
+            wardId: data?.AddressDetails?.PermanentWard?.data?.AddressDetails?.PermanentWard.code,
+            talukId: data?.AddressDetails?.PermanentTaluk?.data?.AddressDetails?.PermanentTaluk.code,
+            villageId: data?.AddressDetails?.PermanentVillage?.data?.AddressDetails?.PermanentVillage.code,
+            postofficeId: data?.AddressDetails?.PermanentPostOffice?.data?.AddressDetails?.PermanentPostOffice.code,
             pincode: data?.AddressDetails?.PermanentPincode,
-            districtId: data?.AddressDetails?.PermanentDistrict.code,
+            districtId: data?.AddressDetails?.PermanentDistrict?.data?.AddressDetails?.PermanentDistrict.code,
             stateId: "state_id",
             countryId: "country_id",
-            talukNameEn: data?.AddressDetails?.PermanentTaluk,
+            talukNameEn: data?.AddressDetails?.PermanentTaluk?.data?.AddressDetails?.PermanentTaluk.code,
             talukNameMl: null,
-            villageNameEn: data?.AddressDetails?.PermanentVillage,
+            villageNameEn: data?.AddressDetails?.PermanentVillage?.data?.AddressDetails?.PermanentVillage.code,
             villageNameMl: null,
-            postofficeNameEn: data?.AddressDetails?.PermanentPostOffice,
+            postofficeNameEn: data?.AddressDetails?.PermanentPostOffice?.data?.AddressDetails?.PermanentPostOffice.code,
             postofficeNameMl: null,
           },
           informantAddress: {
@@ -670,11 +663,11 @@ export const convertToDeathRegistration = (data = {}) => {
             cityEn: data?.InformentAddress?.CityEn,
             cityMl: data?.InformentAddress?.CityMl,
             wardId: null,
-            talukId: data?.InformentAddress?.setTaluk.code,
-            villageId: data?.InformentAddress?.setVillage.code,
-            postofficeId: data?.InformentAddress?.setPostOffice.code,
+            talukId: data?.InformentAddress?.setTaluk?.data?.InformentAddress?.setTaluk.code,
+            villageId: data?.InformentAddress?.setVillage.code?.data?.InformentAddress?.setVillage.code,
+            postofficeId: data?.InformentAddress?.setPostOffice.code?.data?.InformentAddress?.setPostOffice.code,
             pincode: data?.InformentAddress?.PinCode,
-            districtId: data?.InformentAddress?.setDistrict.code,
+            districtId: data?.InformentAddress?.setDistrict.code?.data?.InformentAddress?.setDistrict.code,
             stateId: "state_id",
             countryId: "country_id",
             talukNameEn: data?.InformentAddress?.setTaluk.name,
@@ -698,18 +691,18 @@ export const convertToDeathRegistration = (data = {}) => {
             cityEn: data?.PlaceOfDeathHome?.CityEn,
             cityMl: data?.PlaceOfDeathHome?.CityMl,
             wardId: "ward_id",
-            talukId: data?.PlaceOfDeathHome?.setTaluk.code,
-            villageId: data?.PlaceOfDeathHome?.setVillage.code,
-            postofficeId: data?.PlaceOfDeathHome?.setPostOffice.code,
+            talukId: data?.PlaceOfDeathHome?.setTaluk?.data?.PlaceOfDeathHome?.setTaluk.code,
+            villageId: data?.PlaceOfDeathHome?.setVillage?.data?.PlaceOfDeathHome?.setVillage.code,
+            postofficeId: data?.PlaceOfDeathHome?.setPostOffice?.data?.PlaceOfDeathHome?.setPostOffice.code,
             pincode: 695551,
-            districtId: data?.PlaceOfDeathHome?.setDistrict.code,
+            districtId: data?.PlaceOfDeathHome?.setDistrict?.data?.PlaceOfDeathHome?.setDistrict,
             stateId: "state_id",
             countryId: "country_id",
-            talukNameEn: data?.PlaceOfDeathHome?.setTaluk,
+            talukNameEn: data?.PlaceOfDeathHome?.setTaluk?.data?.PlaceOfDeathHome?.setTaluk.code,
             talukNameMl: "taluk_ml",
-            villageNameEn: data?.PlaceOfDeathHome?.setVillage,
+            villageNameEn: data?.PlaceOfDeathHome?.setVillage.data?.PlaceOfDeathHome?.setVillage.code,
             villageNameMl: "village_en",
-            postofficeNameEn: data?.PlaceOfDeathHome?.setPostOffice,
+            postofficeNameEn: data?.PlaceOfDeathHome?.setPostOffice.data?.PlaceOfDeathHome?.setPostOffice.code,
             postofficeNameMl: "po_name_en",
           },
           burialAddress: {

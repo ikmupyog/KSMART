@@ -7,6 +7,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  const { data: Occupation = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [TradeName, setTradeName] = useState(null);
@@ -43,6 +44,12 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   function selectCommencementDate(value) {
     setCommencementDate(value);
   }
+  let cmbOccupationMain = [];
+  Occupation &&
+  Occupation["common-masters"] &&
+  Occupation["common-masters"].Occupation.map((ob) => {
+    cmbOccupationMain.push(ob);
+    });
 
   const goNext = () => {
     sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
@@ -89,19 +96,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
             Outside India
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CS_COMMON_RELIGION")}`}</span>
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
-            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbPlace} selected={setReligion} select={selectReligion} disabled={isEdit} />
-          </div>
-        </div>
+    
 
         <div className="row">
           <div className="col-md-12">
@@ -119,13 +114,13 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-6">
             <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
             <Dropdown
-              t={t}
-              optionKey="code"
-              isMandatory={false}
-              option={cmbPlace}
-              selected={setOccupationMain}
-              select={selectOccupationMain}
-              disabled={isEdit}
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbOccupationMain}
+                selected={setOccupationMain}
+                select={selectOccupationMain}
+                disabled={isEdit}
             />
           </div>
           <div className="col-md-6">

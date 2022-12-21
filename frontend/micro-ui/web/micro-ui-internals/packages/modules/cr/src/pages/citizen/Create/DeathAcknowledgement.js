@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect,useState  } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToFileSubmission,convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
+import { convertToBirthRegistration,convertToDeathRegistration,convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -22,31 +22,32 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
+  console.log(props);
   return (
     <Banner
       message={GetActionMessage(props)}
       applicationNumber={props.data?.Licenses[0]?.applicationNumber}
-      info={props.isSuccess ? props.t("BR/APLN/20/2022-0/000662") : ""}
+      info={props.isSuccess ? props.t("DR/APLN/20/2022-0/000662") : ""}
       successful={props.isSuccess}
     />
   );
 };
 
-const DFMAcknowlegement = ({ data, onSuccess }) => {
+const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.dfm.useFileManagmentAPI(
+  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
-  const mutation1 = Digit.Hooks.dfm.useFileManagmentAPI(
+  const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     false
   );
-  const mutation2 = Digit.Hooks.dfm.useFileManagmentAPI(
+  const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     false
   );
@@ -60,19 +61,20 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
 
   useEffect(() => {
     if (isInitialRender) {
-      console.log("Enter" + tenantId);
+      console.log("Enter");
     const onSuccessedit = () => {
       setMutationHappened(true);
     };
     // try {
       setIsInitialRender(false);
-      console.log("Enter" + tenantId);
-      let tenantId1 =  tenantId;
-      console.log("Enterrrrrrrrrrrr" + tenantId1);
-      // data.tenantId = "kl";
+      let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
+      data.tenantId = tenantId1;
       if (!resubmit) {
-        let formdata = !isEdit ? convertToFileSubmission(data) : [];
-        // formdata.ApplicantPersonals[0].tenantId = formdata?.ApplicantPersonals[0]?.tenantId || tenantId1;
+        // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
+
+        let formdata = !isEdit ? convertToBirthRegistration(data):[] ;
+        console.log(formdata);
+        // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
           mutation.mutate(formdata, {
@@ -135,7 +137,6 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
- console.log("Jetheesh");
   let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
   // if(enableLoader)
   // {return (<Loader />)}
@@ -205,4 +206,4 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
   );
 };
 
-export default DFMAcknowlegement;
+export default DeathAcknowledgement;

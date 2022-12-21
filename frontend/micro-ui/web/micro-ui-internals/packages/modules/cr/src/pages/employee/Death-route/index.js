@@ -119,8 +119,8 @@ const DeathCrFlowApp = ({ parentUrl }) => {
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
-  const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
-  const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
+  const DeathCheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
+  const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
   
   return (
     
@@ -145,10 +145,10 @@ const DeathCrFlowApp = ({ parentUrl }) => {
         );
       })}
       <Route path={`${match.path}/check`}>
-        <CheckPage onSubmit={createProperty} value={params} />
+        <DeathCheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <BirthAcknowledgement data={params} onSuccess={onSuccess} />
+        <DeathAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
       <Route path={`${path}`} exact>
               <DeathCrFlow  path={path}/>

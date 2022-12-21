@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -12,13 +12,15 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
+  const [lbs, setLbs] = useState(0);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   const [setVillage, setSelectedVillage] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setLbName, setSelectedLbName] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setPostOffice, setSelectedPostOffice] = useState(formData?.PlaceOfDeathHome?.setPostOffice);
   const [PinCode, setSelectedPinCode] = useState(formData?.PlaceOfDeathHome?.HouseNo);
   const [setTaluk, setSelectedTaluk] = useState(formData?.PlaceOfDeathHome?.setTaluk);
-  const [setDistrict, setSelectedDistrict] = useState(formData?.PlaceOfDeathHome?.setDistrict);
+  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
   const [BuildingNo, setSelectedBuildingNo] = useState(formData?.PlaceOfDeathHome?.BuildingNo);
   const [HouseNo, setSelectedHouseNo] = useState(formData?.PlaceOfDeathHome?.HouseNo);
   const [Locality, setLocality] = useState(formData?.PlaceOfDeathHome?.Locality);
@@ -26,7 +28,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [CityEn, setCityEn] = useState(formData?.PlaceOfDeathHome?.CityEn);
   const [CityMl, setCityMl] = useState(formData?.PlaceOfDeathHome?.CityMl);
   const [setWard, setSelectedWard] = useState(formData?.PlaceOfDeathHome?.setWard);
-  
+  const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
+
   
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
@@ -38,6 +41,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   let cmbVillage = [];
   let cmbTaluk = [];
   let cmbDistrict = [];
+  let districtid = null;
 
   place &&
     place["TradeLicense"] &&
@@ -60,7 +64,18 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
       cmbDistrict.push(ob);
     });
   const onSkip = () => onSelect();
+  function setSelectPresentDistrict(value) {
+    setIsInitialRender(true);
+    setPresentDistrict(value);
+    setPresentLBName(null);
+    setLbs(null);
+    districtid = value.districtid
+   
+  }
+  function setSelectPresentLBName(value) {
+    setPresentLBName(value);
 
+  }
   function setSelectBuildingNo(e) {
     setSelectedBuildingNo(e.target.value);
   }
@@ -99,15 +114,14 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTaluk(value);
   }
-  function selectDistrict(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
-  }
-
-  function selectDistrict(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedDistrict(value);
-  }
+  // function selectDistrict(value) {
+  //   naturetypecmbvalue = value.code.substring(0, 4);
+  //   setSelectedPlaceofActivity(value);
+  // }
+  // function selectDistrict(value) {
+  //   naturetypecmbvalue = value.code.substring(0, 4);
+  //   setSelectedDistrict(value);
+  // }
   function selectWard(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedWard(value);
@@ -122,14 +136,23 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   function selectPlaceofactivity(value) {
     setSelectedPlaceofActivity(value);
   }
-
+  useEffect(() => {
+    if (isInitialRender) {
+      console.log("PresentDistrict" + districtid);
+      console.log(localbodies);
+      if (PresentDistrict) {
+        setIsInitialRender(false);
+        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
+      }
+    }
+  }, [lbs, isInitialRender]);
   const goNext = () => {
     sessionStorage.setItem("setVillage", setVillage?setVillage.code:null);
-    sessionStorage.setItem("setLbName", setLbName?setLbName.code:null);
+    sessionStorage.setItem("PresentLBName", null);
     sessionStorage.setItem("setPostOffice", setPostOffice?setPostOffice.code:null);
     sessionStorage.setItem("PinCode", PinCode);
     sessionStorage.setItem("setTaluk", setTaluk?setTaluk.code:null);
-    sessionStorage.setItem("setDistrict", setDistrict?setDistrict.code:null);
+    sessionStorage.setItem("PresentDistrict", PresentDistrict?PresentDistrict.code:null);
     sessionStorage.setItem("BuildingNo", BuildingNo);
     sessionStorage.setItem("HouseNo", HouseNo);
     sessionStorage.setItem("Locality", Locality);
@@ -142,11 +165,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
       setVillage,
-      setLbName,
+      PresentLBName,
       setPostOffice,
       PinCode,
       setTaluk,
-      setDistrict,
+      PresentDistrict,
       BuildingNo,
       HouseNo,
       Locality,
@@ -277,7 +300,14 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_LB_NAME")}</CardLabel>
-            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbPlace} selected={setLbName} select={selectLbName} disabled={isEdit} />
+            <Dropdown  t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={lbs}
+                selected={PresentLBName}
+                select={setSelectPresentLBName}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_LB_NAME")}`} />
           </div>
         </div>
         <div className="row">
@@ -292,8 +322,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               optionKey="name"
               isMandatory={false}
               option={cmbDistrict}
-              selected={setDistrict}
-              select={selectDistrict}
+              selected={PresentDistrict}
+              select={setSelectPresentDistrict}
               disabled={isEdit}
             />
           </div>

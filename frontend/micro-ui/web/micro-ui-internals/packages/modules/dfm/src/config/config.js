@@ -226,7 +226,7 @@ export const newConfig = [
     ]
   },
   {
-    head: "ES_NEW_APPLICATION_PROPERTY_ASSESSMENT",
+    head: "Employee Routing",
     body: [
       {
         route: "info",
@@ -304,7 +304,7 @@ export const newConfig = [
     ],
   },
   {
-    head: "ES_NEW_APPLICATION_PROPERTY_ASSESSMENT",
+    head: "Citizen Routing",
     body: [
       {
         route: "info",

@@ -227,7 +227,7 @@ const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) =
           return useDFMinorFunction();
     case "ApplicantCategory":
       return useCommonApplicantCategory();
-    case "DocumentType":
+    case "IdProof":
       return useCRDocumentType();
     case "PlaceMaster":
       return useCRPlaceMaster();

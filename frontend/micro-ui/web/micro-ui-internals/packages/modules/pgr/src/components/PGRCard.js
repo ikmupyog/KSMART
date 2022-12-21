@@ -6,12 +6,18 @@ import { EmployeeModuleCard } from "@egovernments/digit-ui-react-components";
 
 const PGRCard = () => {
   const { t } = useTranslation();
-
+  const tenantId = Digit.ULBService.getCurrentTenantId();
+  const inboxSearchParams = { limit: 10, offset: 0 }
   const allLinks = [
     { text: t("ES_PGR_INBOX"), link: "/digit-ui/employee/pgr/inbox" },
     { text: t("ES_PGR_NEW_COMPLAINT"), link: "/digit-ui/employee/pgr/complaint/create", accessTo: ["CSR"] },
   ];
-
+  const { isLoading, data: inboxData } = Digit.Hooks.pgr.useInboxData({
+    tenantId,
+    filters: { ...inboxSearchParams },
+    config: {}
+});
+console.log(inboxData);
   if (!Digit.Utils.pgrAccess()) {
     return null;
   }
@@ -36,6 +42,7 @@ const PGRCard = () => {
     moduleName: t("ES_PGR_HEADER_COMPLAINT"),
     kpis: [
         {
+          count: isLoading ? "-" : inboxData?.length,
             label: t("TOTAL_PGR"),
             link: `/digit-ui/employee/pgr/inbox`
         },

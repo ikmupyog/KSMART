@@ -269,63 +269,78 @@ export const gettradeupdateaccessories = (data) => {
   return TLaccessories;
 }
 export const convertToFileSubmission = (data = {}) => {
+  console.log("data" + data?.citizen?.FileManagement?.applicationData?.aadharNo);
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   const formdata = {
     ApplicantPersonals: [
       {
-        aadhaarNo: data?.FileManagement?.applicationData?.aadharNo, 
-        email: data?.FileManagement?.applicationData?.email,
-        firstName: data?.FileManagement?.applicationData?.firstName,
-        lastName: data?.FileManagement?.applicationData?.lastName,
-        title: data?.FileManagement?.applicationData?.title.code,
-        mobileNo: data?.FileManagement?.applicationData?.mobileNo,
+        aadhaarNo: "123456789111",
+        // data?.FileManagement?.applicationData?.aadharNo, 
+        email: "test@gmail.com",
+        //data?.FileManagement?.applicationData?.email,
+        firstName: "Anil",
+        //data?.FileManagement?.applicationData?.firstName,
+        lastName: "Kumar",
+        //data?.FileManagement?.applicationData?.lastName,
+        title: "Mr",
+        //data?.FileManagement?.applicationData?.title.code,
+        mobileNo: "9895257787",
+        // data?.FileManagement?.applicationData?.mobileNo,
         tenantId: "kl",
+        applicantChild: {
+          buildingNumber: data?.FileManagement?.serviceDetails?.buldingNo,
+          durationOfResidence: data?.FileManagement?.serviceDetails?.durationOfresidence,
+        },
         serviceDetails: {
-          applicantPersonalId: 23,
-          serviceId: 16,
+          applicantPersonalId: '23',
+          serviceId: '16',
           serviceCode: "PN001.ALP",
-          serviceSubType: 2,
-          serviceMinorType: 5
+          serviceSubType: '2',
+          serviceMinorType: '5'
         },
         applicantAddress: {
-          applicantPersonalId: 23,
-          houseNo: data?.FileManagement?.addressData?.houseNo,
-          houseName: data?.FileManagement?.addressData?.houseName,
-          street: data?.FileManagement?.addressData?.street,
-          pincode: data?.FileManagement?.addressData?.pincode,
-          postOfficeName: data?.FileManagement?.addressData?.postOffice.code,
-          wardNo: data?.FileManagement?.addressData?.wardNo.code,
+          applicantPersonalId: '23',
+          houseNo: "56",
+          //data?.FileManagement?.addressData?.houseNo,
+          houseName: "test Data",
+          street: "Ettumanoor",
+          //data?.FileManagement?.addressData?.street,
+          pincode: "686631",
+          //data?.FileManagement?.addressData?.pincode,
+          postOfficeName: "Ettumanoor",
+          //data?.FileManagement?.addressData?.postOffice.code,
+          wardNo: "5",
         },
         applicantServiceDocuments: {
-          applicantPersonalId: 23,
-          documentTypeId: 2,
-          fileStoreId: 537,
-          serviceDetailsId: 34,
-          active: Yes,
-          documentNumber: 12345,
+          applicantPersonalId: '23',
+          documentTypeId: '2',
+          fileStoreId: '537',
+          serviceDetailsId: '34',
+          active: "Yes",
+          documentNumber: '12345',
           applicationdetails: "aaaa"
         },
         applicantDocuments: {
-          applicantPersonalId: 23,
-          documenttypeId: 2,
-          documentNumber: 12345,
-          docexpiryDate: 1234577
+          applicantPersonalId: '23',
+          documenttypeId: '2',
+          documentNumber: '12345',
+          docexpiryDate: '1234577'
         },
         fileDetail: {
-          applicantPersonalId: 23,
+          applicantPersonalId: '23',
           tenantId: "kl",
-          serviceDetailsId: 537,
-          fileNumber: 1,
+          serviceDetailsId: '537',
+          fileNumber: '1',
           fileCode: "KL-FM-2022-11-02-000043",
           fileName: "PensionAdalath",
-          fileArisingMode: 1,
+          fileArisingMode: '1',
           fileArisingDate: null,
-          financialYear: 2022,
+          financialYear: '2022',
           applicationDate: null,
           workflowCode: "NewDFM",
           action: "INITIATE",
-          fileStatus: 1,
-          businessService: 89,
+          fileStatus: '1',
+          businessService: '89',
           comment: "Test",
           assignee: [
 

@@ -178,7 +178,7 @@ const getCRDocumentTypeList = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "DocumentType",
+            name: "IdProof",
           },
         ],
       },
@@ -861,6 +861,21 @@ const getCRReligionlist = (tenantId, moduleCode) => ({
         masterDetails: [
           {
             name: "Religion",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRcauseOfDeathMainlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DeathCause",
           },
         ],
       },
@@ -1970,6 +1985,9 @@ export const MdmsService = {
   },
   getCRReligion: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRReligionlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRcauseOfDeathMain: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRcauseOfDeathMainlist(tenantId, moduleCode), moduleCode);
   },
   getCRVillage: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRVillagelist(tenantId, moduleCode), moduleCode);
