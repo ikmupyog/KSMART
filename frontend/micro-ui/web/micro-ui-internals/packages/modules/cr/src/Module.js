@@ -32,6 +32,7 @@ import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVe
 import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
+import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 
 import CustomTimePicker from "./components/CustomTimePicker";
 // import TLSelectGeolocation from "../src/pageComponents/TLSelectGeolocation";
@@ -165,6 +166,7 @@ const componentsToRegister = {
   InformentAddress,
   StatisticalInfo,
   StatisticalInfoContinue,
+  GeneralRemarks,
 
 
   // SelectLand,
