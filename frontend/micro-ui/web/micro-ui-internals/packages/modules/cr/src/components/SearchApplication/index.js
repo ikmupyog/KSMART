@@ -77,7 +77,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/cr/application-details/${row.original["applicationNumber"]}`}>
+                  <Link to={`/digit-ui/employee/tl/application-details/${row.original["applicationNumber"]}`}>
                     {row.original["applicationNumber"]}
                   </Link>
                 </span>
