@@ -37,7 +37,7 @@ const LanguageSelection = () => {
             <div>
               <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" style={{ maxWidth: "450px" }} />
               <label style={{ fontSize: "32px" }}>Exploring K-Smart</label><br></br>
-              <label style={{ fontSize: "17px" }}>Kerala - Solution For Administrative Reformation And Transformation.</label>
+              <label style={{ fontSize: "17px" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
             </div>
           </div>
           <div style={{ justifyContent: "space-between !important" }} >
