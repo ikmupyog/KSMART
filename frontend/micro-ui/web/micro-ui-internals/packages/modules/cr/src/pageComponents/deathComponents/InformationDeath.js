@@ -20,7 +20,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const [Gender, selectGender] = useState(formData?.ChildDetails?.Gender);
+  const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
 
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
