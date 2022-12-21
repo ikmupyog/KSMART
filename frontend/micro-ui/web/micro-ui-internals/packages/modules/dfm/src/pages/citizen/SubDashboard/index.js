@@ -14,7 +14,6 @@ const onNext=()=>{
   // console.log('next',path);
   history.push(`${path}/create`);
 }
-console.log(path);
   return (
     <React.Fragment>
       <Switch>

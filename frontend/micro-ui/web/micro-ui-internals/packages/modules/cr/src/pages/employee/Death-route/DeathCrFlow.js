@@ -1,8 +1,6 @@
 import React from "react";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
 import { Switch, useLocation, Link } from "react-router-dom";
-import { PrivateRoute, BreadCrumb,CardLabel } from "@egovernments/digit-ui-react-components";
-// import { ReactComponent as BankIcon } from "../../Img/BankIcon.svg";
-// import { ReactComponent as FileProtected } from "../../Img/FileProtected.svg";
 import { useTranslation } from "react-i18next";
 
 const DeathCrFlow = ({ path }) => {

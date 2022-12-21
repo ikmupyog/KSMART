@@ -11,6 +11,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
 
   const [setVillage, setSelectedVillage] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setLbName, setSelectedLbName] = useState(formData?.PlaceOfDeathHome?.setVillage);

@@ -52,32 +52,98 @@ const HospitalDetails = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-      <BackButton >{t("CS_COMMON_BACK")}</BackButton>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!HospitalName}>
-
         <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSPITAL_DETAILES")}`}</span> </h1>
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
+            </h1>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4" ><CardLabel>{`${t("CR_HOSPITAL")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown t={t} optionKey="hospitalName" isMandatory={false} option={cmbhospital} selected={HospitalName} select={setselectHospitalName} placeholder={`${t("CR_HOSPITAL")}`} />
+          <div className="col-md-4">
+            <CardLabel>
+              {`${t("CR_HOSPITAL")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="hospitalName"
+              isMandatory={false}
+              option={cmbhospital}
+              selected={HospitalName}
+              select={setselectHospitalName}
+              placeholder={`${t("CR_HOSPITAL")}`}
+            />
           </div>
           <div className="col-md-4">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown t={t} optionKey="hospitalName" isMandatory={false} option={cmbhospital} selected={SignedOfficerName} select={setselectSignedOfficerName} placeholder={`${t("CR_SIGNED_OFFICER")}`} />
+            <CardLabel>
+              {`${t("CR_SIGNED_OFFICER")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="hospitalName"
+              isMandatory={false}
+              option={cmbhospital}
+              selected={SignedOfficerName}
+              select={setselectSignedOfficerName}
+              placeholder={`${t("CR_SIGNED_OFFICER")}`}
+            />
           </div>
           <div className="col-md-4">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown t={t} optionKey="hospitalName" isMandatory={false} option={cmbhospital} selected={SignedOfficerDesignation} select={setselectSignedOfficerDesignation} placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`} />
+            <CardLabel>
+              {`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="hospitalName"
+              isMandatory={false}
+              option={cmbhospital}
+              selected={SignedOfficerDesignation}
+              select={setselectSignedOfficerDesignation}
+              placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
+            />
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6" > <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SignedOfficerAadharNo" value={SignedOfficerAadharNo} onChange={setSelectSignedOfficerAadharNo} placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
+          <div className="col-md-6">
+            {" "}
+            <CardLabel>
+              {`${t("CS_COMMON_AADHAAR")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="SignedOfficerAadharNo"
+              value={SignedOfficerAadharNo}
+              onChange={setSelectSignedOfficerAadharNo}
+              placeholder={`${t("CS_COMMON_AADHAAR")}`}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+            />
           </div>
-          <div className="col-md-6"> <CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SignedOfficerMobileNo" value={SignedOfficerMobileNo} onChange={setSelectSignedOfficerMobileNo} placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
+          <div className="col-md-6">
+            {" "}
+            <CardLabel>
+              {`${t("CR_MOBILE_NO")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="SignedOfficerMobileNo"
+              value={SignedOfficerMobileNo}
+              onChange={setSelectSignedOfficerMobileNo}
+              placeholder={`${t("CR_MOBILE_NO")}`}
+              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+            />
           </div>
         </div>
       </FormStep>

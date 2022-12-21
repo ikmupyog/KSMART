@@ -233,24 +233,24 @@
       sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl);
       sessionStorage.setItem("PresentCityNameEn", PresentCityNameEn);
       sessionStorage.setItem("PresentCityNameMl", PresentCityNameMl);
-      sessionStorage.setItem("PresentVillage", PresentVillage?PresentVillage.code:null);
+      sessionStorage.setItem("PresentVillage", PresentVillage.code);
       sessionStorage.setItem("PresentLBName", null);
-      sessionStorage.setItem("PresentDistrict", PresentDistrict?PresentDistrict.code:null);
-      sessionStorage.setItem("PresentTaluk", PresentTaluk?PresentTaluk.code:null);
-      sessionStorage.setItem("PresentPostOffice", PresentPostOffice?PresentPostOffice.code:null);
-      sessionStorage.setItem("PresentPincode", PresentPincode?PresentPincode.code:null);
+      sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
+      sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
+      sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
+      sessionStorage.setItem("PresentPincode", PresentPincode.code);
       sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
       sessionStorage.setItem("PermanentHouseNo", PermanentHouseNo);
       sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);
       sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl);
       sessionStorage.setItem("PermanentCityNameEn", PermanentCityNameEn);
       sessionStorage.setItem("PermanentCityNameMl", PermanentCityNameMl);
-      sessionStorage.setItem("PermanentVillage", PermanentVillage?PermanentVillage.code:null);
+      sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
       sessionStorage.setItem("PermanentLBName", null);
-      sessionStorage.setItem("PermanentDistrict", PermanentDistrict?PermanentDistrict.code:null);
-      sessionStorage.setItem("PermanentTaluk", PermanentTaluk?PermanentTaluk.code:null);
-      sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice?PermanentPostOffice.code:null);
-      sessionStorage.setItem("PermanentPincode", PermanentPincode?PermanentPincode.code:null);
+      sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
+      sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
+      sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
+      sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
       onSelect(config.key, {
         PresentBuldingNo, PresentHouseNo, PresentLocalityNameEn,
         PresentLocalityNameMl, PresentCityNameEn, PresentCityNameMl, PresentVillage, PresentLBName, PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
@@ -262,44 +262,150 @@
       <React.Fragment>
         {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
-        <BackButton >{t("CS_COMMON_BACK")}</BackButton>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PresentHouseNo || !PresentLocalityNameEn || !PresentLocalityNameMl || !PresentDistrict || !PresentVillage || !PresentTaluk || !PresentPostOffice || !PresentPincode || !PermanentHouseNo || !PermanentLocalityNameEn || !PermanentLocalityNameMl || !PermanentDistrict || !PermanentVillage || !PermanentTaluk || !PermanentPostOffice || !PermanentPincode}>
-  
-          <div className="row">
-            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span> </h1>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <FormStep
+        t={t}
+        config={config}
+        onSelect={goNext}
+        onSkip={onSkip}
+        isDisabled={
+          !PresentHouseNo ||
+          !PresentLocalityNameEn ||
+          !PresentLocalityNameMl ||
+          !PresentDistrict ||
+          !PresentVillage ||
+          !PresentTaluk ||
+          !PresentPostOffice ||
+          !PresentPincode ||
+          !PermanentHouseNo ||
+          !PermanentLocalityNameEn ||
+          !PermanentLocalityNameMl ||
+          !PermanentDistrict ||
+          !PermanentVillage ||
+          !PermanentTaluk ||
+          !PermanentPostOffice ||
+          !PermanentPincode
+        }
+      >
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentBuldingNo"
+                value={PresentBuldingNo}
+                onChange={setSelectPresentBuldingNo}
+                placeholder={`${t("CR_BUILDING_NO")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_HOUSE_NO")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentHouseNo"
+                value={PresentHouseNo}
+                onChange={setSelectPresentHouseNo}
+                placeholder={`${t("CR_HOUSE_NO")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
+              />
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12" >
-              <div className="col-md-6" ><CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentBuldingNo" value={PresentBuldingNo} onChange={setSelectPresentBuldingNo} placeholder={`${t("CR_BUILDING_NO")}`} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
-              </div>
-              <div className="col-md-6" ><CardLabel>{t("CR_HOUSE_NO")}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentHouseNo" value={PresentHouseNo} onChange={setSelectPresentHouseNo} placeholder={`${t("CR_HOUSE_NO")}`} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })} />
-              </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_LOCALITY_EN")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentLocalityNameEn"
+                value={PresentLocalityNameEn}
+                onChange={setSelectPresentLocalityNameEn}
+                placeholder={`${t("CR_LOCALITY_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_LOCALITY_ML")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentLocalityNameMl"
+                value={PresentLocalityNameMl}
+                onChange={setSelectPresentLocalityNameMl}
+                placeholder={`${t("CR_LOCALITY_ML")}`}
+                disable={isEdit}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+              />
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12" >
-              <div className="col-md-6" ><CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentLocalityNameEn" value={PresentLocalityNameEn} onChange={setSelectPresentLocalityNameEn} placeholder={`${t("CR_LOCALITY_EN")}`} disable={isEdit}    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })} />
-              </div>
-              <div className="col-md-6" ><CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentLocalityNameMl" value={PresentLocalityNameMl} onChange={setSelectPresentLocalityNameMl} placeholder={`${t("CR_LOCALITY_ML")}`} disable={isEdit}    {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
-              </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_CITY_EN")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentCityNameEn"
+                value={PresentCityNameEn}
+                onChange={setSelectPresentCityNameEn}
+                placeholder={`${t("CR_CITY_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_CITY_ML")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentCityNameMl"
+                value={PresentCityNameMl}
+                onChange={setSelectPresentCityNameMl}
+                placeholder={`${t("CR_CITY_ML")}`}
+                disable={isEdit}
+                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+              />
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12" >
-              <div className="col-md-6" ><CardLabel>{t("CR_CITY_EN")}</CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentCityNameEn" value={PresentCityNameEn} onChange={setSelectPresentCityNameEn} placeholder={`${t("CR_CITY_EN")}`} disable={isEdit}    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })} />
-              </div>
-              <div className="col-md-6" ><CardLabel>{t("CR_CITY_ML")}</CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentCityNameMl" value={PresentCityNameMl} onChange={setSelectPresentCityNameMl} placeholder={`${t("CR_CITY_ML")}`} disable={isEdit}    {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })} />
-              </div>
-            </div>
-          </div>
-          {/* <div className="row">
+        </div>
+        {/* <div className="row">
             <div className="col-md-12" >
               <div className="col-md-6" >
                 <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -327,106 +433,374 @@
               </div>
             </div>
           </div> */}
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_DISTRICT")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={true}
+                option={cmbDistrict}
+                selected={PresentDistrict}
+                select={setSelectPresentDistrict}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_DISTRICT")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_LB_NAME")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={lbs}
+                selected={PresentLBName}
+                select={setSelectPresentLBName}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_LB_NAME")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_VILLAGE")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={true}
+                option={cmbVillage}
+                selected={PresentVillage}
+                select={setSelectPresentVillage}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_VILLAGE")}`}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_TALUK")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbTaluk}
+                selected={PresentTaluk}
+                select={setSelectPresentTaluk}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_TALUK")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_POST_OFFICE")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbPostOffice}
+                selected={PresentPostOffice}
+                select={setSelectPresentPostOffice}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_PIN_CODE")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentPincode"
+                value={PresentPincode}
+                onChange={setSelectPresentPincode}
+                disable={isEdit}
+                placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+                {...(validation = {
+                  pattern: "^[a-zA-Z-.`' ]*$",
+                  isRequired: true,
+                  type: "number",
+                  maxLength: 6,
+                  minLength: 6,
+                  title: t("CS_COMMON_INVALID_PIN_CODE"),
+                })}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div>
           <div className="row">
-            <div className="col-md-12" >
-              <div className="col-md-4" ><CardLabel>{t("CS_COMMON_DISTRICT")}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbDistrict} selected={PresentDistrict} select={setSelectPresentDistrict} disabled={isEdit} placeholder={`${t("CS_COMMON_DISTRICT")}`} />
-              </div>
-              <div className="col-md-4" ><CardLabel>{t("CS_COMMON_LB_NAME")}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown t={t} optionKey="name" isMandatory={false} option={lbs} selected={PresentLBName} select={setSelectPresentLBName} disabled={isEdit} placeholder={`${t("CS_COMMON_LB_NAME")}`} />
-              </div>
-              <div className="col-md-4" ><CardLabel>{t("CS_COMMON_VILLAGE")}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbVillage} selected={PresentVillage} select={setSelectPresentVillage} disabled={isEdit} placeholder={`${t("CS_COMMON_VILLAGE")}`} />
+            <div className="col-md-12">
+              <div className="col-md-12">
+                {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
+                <CheckBox
+                  label={t("CR_PERMANANT_ADDRESS_SAME_AS_PRESENT_ADDRESS")}
+                  onChange={setSameAsPresent}
+                  value={isPrsentAddress}
+                  checked={isPrsentAddress}
+                />
               </div>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12" >
-              <div className="col-md-4" ><CardLabel>{t("CS_COMMON_TALUK")}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={PresentTaluk} select={setSelectPresentTaluk} disabled={isEdit} placeholder={`${t("CS_COMMON_TALUK")}`} />
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+              </h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentBuldingNo"
+                  value={PermanentBuldingNo}
+                  onChange={setSelectPermanentBuldingNo}
+                  disable={isEdit}
+                  placeholder={`${t("CR_BUILDING_NO")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
+                />
               </div>
-              <div className="col-md-4" ><CardLabel>{t("CS_COMMON_POST_OFFICE")}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPostOffice} selected={PresentPostOffice} select={setSelectPresentPostOffice} disabled={isEdit} placeholder={`${t("CS_COMMON_POST_OFFICE")}`} />
-              </div>
-              <div className="col-md-4" ><CardLabel>{t("CS_COMMON_PIN_CODE")}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentPincode" value={PresentPincode} onChange={setSelectPresentPincode} disable={isEdit} placeholder={`${t("CS_COMMON_PIN_CODE")}`}  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", maxLength: 6, minLength: 6, title: t("CS_COMMON_INVALID_PIN_CODE") })} />
+              <div className="col-md-6">
+                <CardLabel>
+                  {t("CR_HOUSE_NO")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentHouseNo"
+                  value={PermanentHouseNo}
+                  onChange={setSelectPermanentHouseNo}
+                  disable={isEdit}
+                  placeholder={`${t("CR_HOUSE_NO")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
+                />
               </div>
             </div>
           </div>
-  
-          <div>
-            <div className="row">
-              <div className="col-md-12" >
-                <div className="col-md-12" >
-                  {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
-                  <CheckBox label={t("CR_PERMANANT_ADDRESS_SAME_AS_PRESENT_ADDRESS")} onChange={setSameAsPresent} value={isPrsentAddress} checked={isPrsentAddress} />
-                </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>
+                  {t("CR_LOCALITY_EN")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentLocalityNameEn"
+                  value={PermanentLocalityNameEn}
+                  onChange={setSelectPermanentLocalityNameEn}
+                  disable={isEdit}
+                  placeholder={`${t("CR_LOCALITY_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                />
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span> </h1>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12" >
-                <div className="col-md-6" ><CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
-                  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentBuldingNo" value={PermanentBuldingNo} onChange={setSelectPermanentBuldingNo} disable={isEdit} placeholder={`${t("CR_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
-                </div>
-                <div className="col-md-6" ><CardLabel>{t("CR_HOUSE_NO")}<span className="mandatorycss">*</span></CardLabel>
-                  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentHouseNo" value={PermanentHouseNo} onChange={setSelectPermanentHouseNo} disable={isEdit} placeholder={`${t("CR_HOUSE_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })} />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12" >
-                <div className="col-md-6" ><CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
-                  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentLocalityNameEn" value={PermanentLocalityNameEn} onChange={setSelectPermanentLocalityNameEn} disable={isEdit} placeholder={`${t("CR_LOCALITY_EN")}`}   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })} />
-                </div>
-                <div className="col-md-6" ><CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
-                  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentLocalityNameMl" value={PermanentLocalityNameMl} onChange={setSelectPermanentLocalityNameMl} disable={isEdit} placeholder={`${t("CR_LOCALITY_ML")}`}   {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12" >
-                <div className="col-md-6" ><CardLabel>{t("CR_CITY_EN")}<span className="mandatorycss">*</span></CardLabel>
-                  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentCityNameEn" value={PermanentCityNameEn} onChange={setSelectPermanentCityNameEn} disable={isEdit} placeholder={`${t("CR_CITY_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })} />
-                </div>
-                <div className="col-md-6" ><CardLabel>{t("CR_CITY_ML")}<span className="mandatorycss">*</span></CardLabel>
-                  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentCityNameMl" value={PermanentCityNameMl} onChange={setSelectPermanentCityNameMl} disable={isEdit} placeholder={`${t("CR_CITY_ML")}`} {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })} />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12" >
-                <div className="col-md-4" ><CardLabel>{t("CS_COMMON_DISTRICT")}<span className="mandatorycss">*</span></CardLabel>
-                  <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDistrict} selected={PermanentDistrict} select={setSelectPermanentDistrict} disabled={isEdit} placeholder={`${t("CS_COMMON_DISTRICT")}`} />
-                </div>
-                <div className="col-md-4" ><CardLabel>{t("CS_COMMON_LB_NAME")}<span className="mandatorycss">*</span></CardLabel>
-                  <Dropdown t={t} optionKey="name" isMandatory={false} option={lbs} selected={PermanentLBName} select={setSelectPermanentLBName} disabled={isEdit} placeholder={`${t("CS_COMMON_LB_NAME")}`} />
-                </div>
-                <div className="col-md-4" ><CardLabel>{t("CS_COMMON_VILLAGE")}<span className="mandatorycss">*</span></CardLabel>
-                  <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbVillage} selected={PermanentVillage} select={setSelectPermanentVillage} disabled={isEdit} placeholder={`${t("CS_COMMON_VILLAGE")}`} />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12" >
-                <div className="col-md-4" ><CardLabel>{t("CS_COMMON_TALUK")}<span className="mandatorycss">*</span></CardLabel>
-                  <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={PermanentTaluk} select={setSelectPermanentTaluk} disabled={isEdit} placeholder={`${t("CS_COMMON_TALUK")}`} />
-                </div>
-                <div className="col-md-4" ><CardLabel>{t("CS_COMMON_POST_OFFICE")}<span className="mandatorycss">*</span></CardLabel>
-                  <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPostOffice} selected={PermanentPostOffice} select={setSelectPermanentPostOffice} disabled={isEdit} placeholder={`${t("CS_COMMON_POST_OFFICE")}`} />
-                </div>
-                <div className="col-md-4" ><CardLabel>{t("CS_COMMON_PIN_CODE")}<span className="mandatorycss">*</span></CardLabel>
-                  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentPincode" value={PermanentPincode} onChange={setSelectPermanentPincode} disable={isEdit} placeholder={`${t("CS_COMMON_PIN_CODE")}`}  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "number", maxLength: 6, minLength: 6, title: t("CS_COMMON_INVALID_PIN_CODE") })} />
-                </div>
+              <div className="col-md-6">
+                <CardLabel>
+                  {t("CR_LOCALITY_ML")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentLocalityNameMl"
+                  value={PermanentLocalityNameMl}
+                  onChange={setSelectPermanentLocalityNameMl}
+                  disable={isEdit}
+                  placeholder={`${t("CR_LOCALITY_ML")}`}
+                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+                />
               </div>
             </div>
           </div>
-  
-        </FormStep>
-      </React.Fragment>
-    );
-  };
-  export default AddressInside;
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>
+                  {t("CR_CITY_EN")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentCityNameEn"
+                  value={PermanentCityNameEn}
+                  onChange={setSelectPermanentCityNameEn}
+                  disable={isEdit}
+                  placeholder={`${t("CR_CITY_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })}
+                />
+              </div>
+              <div className="col-md-6">
+                <CardLabel>
+                  {t("CR_CITY_ML")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentCityNameMl"
+                  value={PermanentCityNameMl}
+                  onChange={setSelectPermanentCityNameMl}
+                  disable={isEdit}
+                  placeholder={`${t("CR_CITY_ML")}`}
+                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CS_COMMON_DISTRICT")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDistrict}
+                  selected={PermanentDistrict}
+                  select={setSelectPermanentDistrict}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_DISTRICT")}`}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CS_COMMON_LB_NAME")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={lbs}
+                  selected={PermanentLBName}
+                  select={setSelectPermanentLBName}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_LB_NAME")}`}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CS_COMMON_VILLAGE")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbVillage}
+                  selected={PermanentVillage}
+                  select={setSelectPermanentVillage}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_VILLAGE")}`}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CS_COMMON_TALUK")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbTaluk}
+                  selected={PermanentTaluk}
+                  select={setSelectPermanentTaluk}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_TALUK")}`}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CS_COMMON_POST_OFFICE")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbPostOffice}
+                  selected={PermanentPostOffice}
+                  select={setSelectPermanentPostOffice}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CS_COMMON_PIN_CODE")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentPincode"
+                  value={PermanentPincode}
+                  onChange={setSelectPermanentPincode}
+                  disable={isEdit}
+                  placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+                  {...(validation = {
+                    pattern: "^[a-zA-Z-.`' ]*$",
+                    isRequired: true,
+                    type: "number",
+                    maxLength: 6,
+                    minLength: 6,
+                    title: t("CS_COMMON_INVALID_PIN_CODE"),
+                  })}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </FormStep>
+    </React.Fragment>
+  );
+};
+export default AddressInside;

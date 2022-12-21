@@ -2,7 +2,7 @@ import { CardLabel, CitizenInfoLabel, FormStep, Loader, TextInput, FormInputGrou
 import React, { useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
-const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) => {
+const DFMEmployeeAddressDetails = ({ t, config, onSelect, value, userType, formData }) => {
   let validation = {};
   const postOfficeOptions = [
     { label: "postOffice1", value: "postOffice1" },
@@ -106,7 +106,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-      <h2>Employee2</h2>
+
       <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!addressData.postOffice?.name || !addressData.wardNo?.name}>
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
@@ -266,4 +266,4 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   );
 };
 
-export default DFMAddressDetails;
+export default DFMEmployeeAddressDetails;
