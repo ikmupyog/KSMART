@@ -103,7 +103,6 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
 
   return (
     <React.Fragment>
-      <h2>em3</h2>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
         <div>

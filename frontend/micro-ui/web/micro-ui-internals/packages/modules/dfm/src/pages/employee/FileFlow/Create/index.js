@@ -5,7 +5,7 @@ import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from 
 import { newConfig as newConfigTL } from "../../../../config/config";
 // import CheckPage from "./CheckPage";
 // import TLAcknowledgement from "./TLAcknowledgement";
-// import Acknowledgement from "./DFMAcknowlegement";
+import DFMAcknowledgement from "./DFMAcknowlegementOLD";
 
 const CreateTradeLicence = ({ parentRoute }) => {
   const queryClient = useQueryClient();
@@ -15,7 +15,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
   const history = useHistory();
   let config = [];
   const [submitResponse, updateSubmitResponse] = useState([]);
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("DFM_CREATE_APPLICATION", {});
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("DFM_CREATE_APPLICATION_EMPLOYEE", {});
   // console.log(params);
   let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/");
 
@@ -132,12 +132,12 @@ const CreateTradeLicence = ({ parentRoute }) => {
   let skipenanbledOb = newConfig?.filter((obj) => obj?.body?.some((com) => com.component === "CPTCreateProperty"))?.[0];
   let skipenabled = skipenanbledOb?.body?.filter((ob) => ob?.component === "CPTCreateProperty")?.[0]?.isSkipEnabled;
   sessionStorage.setItem("skipenabled", skipenabled);
-  config.indexRoute = "ApplicationDetails";
+  config.indexRoute = "application-Details";
   // config.indexRoute = "TradeName";
 
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("TLCheckPage");
   const TLAcknowledgement = Digit?.ComponentRegistryService?.getComponent("TLAcknowledgement");
-  // console.log(config);
+  // console.log('config',config);
   return (
     <Switch>
       {config.map((routeObj, index) => {

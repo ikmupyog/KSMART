@@ -152,7 +152,7 @@ import {
     let patternValid = "^d{12}$";
     return (
       <React.Fragment>
-         <h2>Employee</h2>
+       
         {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline /> : null}
         <FormStep
           config={config}

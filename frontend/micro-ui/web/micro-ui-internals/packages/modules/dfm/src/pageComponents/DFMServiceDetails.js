@@ -55,7 +55,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     let fileStoreId = uploadedFile;
     let fileDetails = file;
     let tempData = { ...serviceDetails };
-    tempData.fileStoreId = file;
+    // tempData.fileStoreId = file;
     // if (fileDetails) fileDetails.documentType = "OWNERIDPROOF";
     // if (fileDetails) fileDetails.fileStoreId = fileStoreId ? fileStoreId : null;
     // let owners = formData?.owners;
