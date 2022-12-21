@@ -58,7 +58,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
     }
     if (type === "checkbox") {
       setTermsCheck(text);
-      if (documentDetails.fileStoreId && documentDetails.documentType?.value) {
+      if (documentDetails.fileStoreId && documentDetails.documentType?.code) {
         setFileCheck(true);
       }
       if (!text) {
