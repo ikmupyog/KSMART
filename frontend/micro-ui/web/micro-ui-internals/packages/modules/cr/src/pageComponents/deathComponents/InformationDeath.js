@@ -229,8 +229,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-3">
-                  <CardLabel>{t("CR_FROM_DATE")}</CardLabel>
-                  <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} />
+                  <CardLabel>{t("CR_FROM_DATE")}<span className="mandatorycss">*</span></CardLabel>
+                  <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate}/>
                 </div>
                 <div className="col-md-3">
                   <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
@@ -238,7 +238,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 </div>
 
                 <div className="col-md-3">
-                  <CardLabel>{t("CR_TO_DATE")}</CardLabel>
+                  <CardLabel>{t("CR_TO_DATE")}<span className="mandatorycss">*</span></CardLabel>
                   <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
                 </div>
                 <div className="col-md-3">
@@ -251,7 +251,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-6">
-                  <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
+                  <CardLabel>{t("CR_DATE_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
                   {/* date={CommencementDate} */}
                   <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} />
                 </div>
@@ -275,14 +275,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-3">
-              <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
-              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitle} select={selectTitle} disabled={isEdit} />
+              <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitle} select={selectTitle} disabled={isEdit} placeholder={`${t("CR_TITLE_NAME_EN")}`} />
             </div>
             <div className="col-md-3">
               <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="FirstName"
@@ -317,7 +317,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={LastName}
                 onChange={setSelectLastName}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$",isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
               />
             </div>
           </div>
@@ -337,10 +337,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
+              <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="MLFirstName"
@@ -375,7 +375,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={MlLastName}
                 onChange={setSelectMlLastName}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
+                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
               />
             </div>
           </div>
@@ -383,7 +383,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-4">
-              <CardLabel>{t("CR_GENDER")}</CardLabel>
+              <CardLabel>{t("CR_GENDER")} <span className="mandatorycss">*</span> </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="code"
@@ -393,7 +393,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 select={setselectGender}
                 disabled={isEdit}
                 placeholder={`${t("CR_GENDER")}`}
-                {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+                {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
               />
             </div>
             <div className="col-md-4">
@@ -412,7 +412,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={Ageofbirth}
                 onChange={setSelectAgeofbirth}
                 disable={isEdit}
-                {...(validation = { pattern: "^([0-9]){2}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
+                {...(validation = { pattern: "^([0-9]){2}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
               />
             </div>
           </div>
@@ -453,7 +453,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={PassportNo}
                 onChange={setSelectPassportNo}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "Text", title: t("CR_INVALID_PASSPORT_NO") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_PASSPORT_NO") })}
               />
             </div>
           </div>

@@ -51,6 +51,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
         </div>    
  
     <div className="row">
+    <div className="col-md-12" >
         <div className="col-md-6" >
             <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
             <Dropdown
@@ -61,8 +62,10 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                 selected={setPlaceofDeath}
                 select={selectPlaceofDeath}
                 disabled={isEdit}
+                placeholder={`${t("CR_PLACE_OF_DEATH")}`}
             />
-        </div>       
+        </div> 
+        </div>      
     </div> 
       </FormStep>
     </React.Fragment>

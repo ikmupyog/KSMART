@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
@@ -42,6 +43,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   let cmbTaluk = [];
   let cmbDistrict = [];
   let districtid = null;
+  let cmbPostOffice = [];
 
   place &&
     place["TradeLicense"] &&
@@ -72,6 +74,13 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     districtid = value.districtid
    
   }
+
+  PostOffice &&
+      PostOffice["common-masters"] &&
+      PostOffice["common-masters"].PostOffice.map((ob) => {
+        cmbPostOffice.push(ob);
+      });
+
   function setSelectPresentLBName(value) {
     setPresentLBName(value);
 
@@ -181,7 +190,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -203,7 +212,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={BuildingNo}
               onChange={setSelectBuildingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
+              placeholder={`${t("CR_BUILDING_NO")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
             />
           </div>
           <div className="col-md-6">
@@ -217,6 +227,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={HouseNo}
               onChange={setSelectHouseNo}
               disable={isEdit}
+              placeholder={`${t("CR_HOUSE_NO")}`}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
             />
           </div>
@@ -233,6 +244,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={Locality}
               onChange={setSelectLocality}
               disable={isEdit}
+              placeholder={`${t("CR_LOCALITY_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
@@ -247,6 +259,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={LocalityML}
               onChange={setSelectLocalityML}
               disable={isEdit}
+              placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}            
             />
           </div>
@@ -260,6 +273,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               selected={setWard}
               select={selectWard}
               disabled={isEdit}
+              placeholder={`${t("CS_COMMON_WARD")}`}
             />
           </div>
         </div>
@@ -275,6 +289,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={CityEn}
               onChange={setSelectCityEn}
               disable={isEdit}
+              placeholder={`${t("CR_CITY_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })}
             />
           </div>
@@ -289,15 +304,26 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={CityMl}
               onChange={setSelectCityMl}
               disable={isEdit}
+              placeholder={`${t("CR_CITY_ML")}`}
               {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
             />
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_VILLAGE")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbVillage} selected={setVillage} select={selectVillage} disabled={isEdit} />
-          </div>
+        <div className="col-md-12">
+        <div className="col-md-6">
+            <CardLabel>{t("CS_COMMON_DISTRICT")}</CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbDistrict}
+              selected={PresentDistrict}
+              select={setSelectPresentDistrict}
+              disabled={isEdit}
+              placeholder={`${t("CS_COMMON_DISTRICT")}`}
+            />
+          </div>          
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_LB_NAME")}</CardLabel>
             <Dropdown  t={t}
@@ -309,36 +335,33 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
                 placeholder={`${t("CS_COMMON_LB_NAME")}`} />
           </div>
+          </div>
         </div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_TALUK")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={setTaluk} select={selectTaluk} disabled={isEdit} />
+            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={setTaluk} select={selectTaluk} disabled={isEdit}  placeholder={`${t("CS_COMMON_TALUK")}`}/>
           </div>
           <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_DISTRICT")}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              isMandatory={false}
-              option={cmbDistrict}
-              selected={PresentDistrict}
-              select={setSelectPresentDistrict}
-              disabled={isEdit}
-            />
+            <CardLabel>{t("CS_COMMON_VILLAGE")}</CardLabel>
+            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbVillage} selected={setVillage} select={selectVillage} disabled={isEdit}  placeholder={`${t("CS_COMMON_VILLAGE")}`}/>
+          </div>
           </div>
         </div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CS_COMMON_POST_OFFICE")}</CardLabel>
             <Dropdown
               t={t}
-              optionKey="code"
+              optionKey="name"
               isMandatory={false}
-              option={cmbPlace}
+              option={cmbPostOffice}
               selected={setPostOffice}
               select={selectPostOffice}
               disabled={isEdit}
+              placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
             />
           </div>
           <div className="col-md-6">
@@ -352,8 +375,10 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
               value={PinCode}
               onChange={setSelectPinCode}
               disable={isEdit}
+              placeholder={`${t("CS_COMMON_PIN_CODE")}`}
               {...(validation = {pattern: "^([0-9]){6}$", isRequired: true,type: "text",title: t("CS_COMMON_INVALID_PIN_CODE"),})}
             />
+          </div>
           </div>
         </div>
       </FormStep>

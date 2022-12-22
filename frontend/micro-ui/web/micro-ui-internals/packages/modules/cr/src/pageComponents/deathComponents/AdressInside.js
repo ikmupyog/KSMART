@@ -314,7 +314,7 @@
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_HOUSE_NO")}
-                <span className="mandatorycss">*</span>
+                {/* <span className="mandatorycss">*</span> */}
               </CardLabel>
               <TextInput
                 t={t}
@@ -326,7 +326,7 @@
                 onChange={setSelectPresentHouseNo}
                 placeholder={`${t("CR_HOUSE_NO")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
               />
             </div>
           </div>
@@ -340,7 +340,7 @@
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="PresentLocalityNameEn"
@@ -358,7 +358,7 @@
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="PresentLocalityNameMl"
@@ -459,7 +459,7 @@
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={lbs}
                 selected={PresentLBName}
                 select={setSelectPresentLBName}
@@ -495,7 +495,7 @@
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbTaluk}
                 selected={PresentTaluk}
                 select={setSelectPresentTaluk}
@@ -511,7 +511,7 @@
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbPostOffice}
                 selected={PresentPostOffice}
                 select={setSelectPresentPostOffice}
@@ -522,7 +522,7 @@
             <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
-                <span className="mandatorycss">*</span>
+                {/* <span className="mandatorycss">*</span> */}
               </CardLabel>
               <TextInput
                 t={t}
@@ -588,7 +588,7 @@
               <div className="col-md-6">
                 <CardLabel>
                   {t("CR_HOUSE_NO")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
@@ -600,7 +600,7 @@
                   onChange={setSelectPermanentHouseNo}
                   disable={isEdit}
                   placeholder={`${t("CR_HOUSE_NO")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
                 />
               </div>
             </div>
@@ -614,7 +614,7 @@
                 </CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
+                  isMandatory={true}
                   type={"text"}
                   optionKey="i18nKey"
                   name="PermanentLocalityNameEn"
@@ -632,7 +632,7 @@
                 </CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
+                  isMandatory={true}
                   type={"text"}
                   optionKey="i18nKey"
                   name="PermanentLocalityNameMl"
@@ -650,7 +650,7 @@
               <div className="col-md-6">
                 <CardLabel>
                   {t("CR_CITY_EN")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
@@ -662,13 +662,13 @@
                   onChange={setSelectPermanentCityNameEn}
                   disable={isEdit}
                   placeholder={`${t("CR_CITY_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
                 />
               </div>
               <div className="col-md-6">
                 <CardLabel>
                   {t("CR_CITY_ML")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
@@ -680,7 +680,7 @@
                   onChange={setSelectPermanentCityNameMl}
                   disable={isEdit}
                   placeholder={`${t("CR_CITY_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                  {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
                 />
               </div>
             </div>
@@ -695,7 +695,7 @@
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={false}
+                  isMandatory={true}
                   option={cmbDistrict}
                   selected={PermanentDistrict}
                   select={setSelectPermanentDistrict}
@@ -711,7 +711,7 @@
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={false}
+                  isMandatory={true}
                   option={lbs}
                   selected={PermanentLBName}
                   select={setSelectPermanentLBName}
@@ -727,7 +727,7 @@
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={false}
+                  isMandatory={true}
                   option={cmbVillage}
                   selected={PermanentVillage}
                   select={setSelectPermanentVillage}
@@ -747,7 +747,7 @@
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={false}
+                  isMandatory={true}
                   option={cmbTaluk}
                   selected={PermanentTaluk}
                   select={setSelectPermanentTaluk}
@@ -763,7 +763,7 @@
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={false}
+                  isMandatory={true}
                   option={cmbPostOffice}
                   selected={PermanentPostOffice}
                   select={setSelectPermanentPostOffice}
@@ -774,7 +774,7 @@
               <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_PIN_CODE")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
