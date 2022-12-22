@@ -1048,6 +1048,21 @@ const getCRNatureofMedicalAttentionSublist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRNatureofMedicalAttentionSubAlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DeathCauseSub",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRDeliveryMethodlist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2033,6 +2048,9 @@ export const MdmsService = {
   },
   getCRNatureofMedicalAttentionSub: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRNatureofMedicalAttentionSublist(tenantId, moduleCode), moduleCode);
+  },
+  getCRNatureofMedicalAttentionSubA: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRNatureofMedicalAttentionSubAlist(tenantId, moduleCode), moduleCode);
   },
   /////////crmdms
   getServiceDefs: (tenantId, moduleCode) => {

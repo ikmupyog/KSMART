@@ -171,12 +171,12 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
          {showError ? <CardLabelError>{t("Please Select SubType")}</CardLabelError> : null}
         <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} /> */}
 
-              <div><CardLabel>{`${t("Major Function")}`}<span className="mandatorycss">*</span></CardLabel>
+              {/* <div><CardLabel>{`${t("Major Function")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMajorFunction} selected={MajorFunctionDet} select={setSelectMajorFunctionDet} />
               </div>
               <div ><CardLabel>{`${t("Sub Function")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbSubFunction} selected={SubFunctionDet} select={setSelectSubFunctionDet} />
-              </div>
+              </div> */}
               <div ><CardLabel>{`${t("Function")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbFunction} selected={FunctionDet} select={setSelectFunctionDet} />
               </div>
