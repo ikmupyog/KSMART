@@ -289,6 +289,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={FirstName}
                 onChange={setSelectFirstName}
                 disable={isEdit}
+                placeholder={`${t("CR_FIRST_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
               />
             </div>
@@ -303,6 +304,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={MiddleName}
                 onChange={setSelectMiddleName}
                 disable={isEdit}
+                placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
               />
             </div>
@@ -317,6 +319,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={LastName}
                 onChange={setSelectLastName}
                 disable={isEdit}
+                placeholder={`${t("CR_LAST_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$",isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
               />
             </div>
@@ -334,6 +337,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 selected={setTitleB}
                 select={selectTitleB}
                 disabled={isEdit}
+                placeholder={`${t("CR_GENDERCR_TITLE_NAME_ML")}`}
               />
             </div>
             <div className="col-md-3">
@@ -347,6 +351,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={MLFirstName}
                 onChange={setSelectMLFirstName}
                 disable={isEdit}
+                placeholder={`${t("CR_FIRST_NAME_ML")}`}
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
               />
             </div>
@@ -361,6 +366,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={MlMiddleName}
                 onChange={setSelectMlMiddleName}
                 disable={isEdit}
+                placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                 {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
               />
             </div>
@@ -375,6 +381,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={MlLastName}
                 onChange={setSelectMlLastName}
                 disable={isEdit}
+                placeholder={`${t("CR_LAST_NAME_ML")}`}
                 {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
               />
             </div>
@@ -399,7 +406,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-4">
               <CardLabel>{`${t("CR_DATE_OF_BIRTH_DECEASED")}`}</CardLabel>
               {/* date={CommencementDate} */}
-              <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} />
+              <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`} />
             </div>
             <div className="col-md-4">
               <CardLabel>{`${t("CR_AGE_OF_BIRTH_DECEASED")}`}</CardLabel>
@@ -412,6 +419,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={Ageofbirth}
                 onChange={setSelectAgeofbirth}
                 disable={isEdit}
+                placeholder={`${t("CR_AGE_OF_BIRTH_DECEASED")}`}
                 {...(validation = { pattern: "^([0-9]){2}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
               />
             </div>
@@ -439,6 +447,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={AdharNo}
                 onChange={setSelectAdharNo}
                 disable={isEdit}
+                placeholder={`${t("CR_AADHAR_OF_DECEASED")}`}
                 {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
             </div>
@@ -453,6 +462,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={PassportNo}
                 onChange={setSelectPassportNo}
                 disable={isEdit}
+                placeholder={`${t("CR_PASSPORT_DETAILS_OF_DECEASED")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_PASSPORT_NO") })}
               />
             </div>
@@ -485,6 +495,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 selected={setCountry}
                 select={selectCountry}
                 disabled={isEdit}
+                placeholder={`${t("CR_NATIONALITY")}`}
               />
             </div>
             <div className="col-md-6">
@@ -497,6 +508,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 selected={setReligion}
                 select={selectReligion}
                 disabled={isEdit}
+                placeholder={`${t("CS_COMMON_RELIGION")}`}
               />
             </div>
           </div>
