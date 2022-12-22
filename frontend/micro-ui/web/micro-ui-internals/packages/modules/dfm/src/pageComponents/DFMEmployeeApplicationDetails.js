@@ -171,6 +171,18 @@ import {
                 </div>
               </div>
               <div className="row">
+              <div className="col-md-4">
+                  <CardLabel>{`${t("DFM_TITLE")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={config.isMandatory}
+                    option={cmbTitle}
+                    selected={applicationData.title}
+                    placeholder={`${t("DFM_TITLE")}`}
+                    select={(e) => handleChange(e, "title")}
+                  />
+                </div>
                 <div className="col-md-4">
                   <CardLabel>{`${t("DFM_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
@@ -200,7 +212,10 @@ import {
                     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME") })}
                   />
                 </div>
-                <div className="col-md-4">
+              
+              </div>
+              <div className="row">
+              <div className="col-md-4">
                   <CardLabel>{`${t("DFM_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
@@ -212,20 +227,6 @@ import {
                     onChange={(e) => handleChange(e.target.value, "aadharNo")}
                     placeholder={`${t("DFM_AADHAR_NO")}`}
                     {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_AADHAR_NO") })}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-4">
-                  <CardLabel>{`${t("DFM_TITLE")}`}<span className="mandatorycss">*</span></CardLabel>
-                  <Dropdown
-                    t={t}
-                    optionKey="name"
-                    isMandatory={config.isMandatory}
-                    option={cmbTitle}
-                    selected={applicationData.title}
-                    placeholder={`${t("DFM_TITLE")}`}
-                    select={(e) => handleChange(e, "title")}
                   />
                 </div>
                 <div className="col-md-4">

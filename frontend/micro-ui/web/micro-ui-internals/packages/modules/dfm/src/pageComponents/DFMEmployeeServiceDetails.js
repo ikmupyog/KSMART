@@ -147,26 +147,28 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
             <div className="col-md-4" ><CardLabel>{t("DFM_BUILDING_NO")}</CardLabel>
               <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="buldingNo" value={serviceDetails.buldingNo} onChange={(e) => handleChange(e.target.value, "buldingNo")}  placeholder={`${t("DFM_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_BUILDING_NO") })} />
             </div>
-            <div className="col-md-4" ><CardLabel>{t("DFM_RELATION_OF_ASSESSEE")}<span className="mandatorycss">*</span></CardLabel>
+            {/* <div className="col-md-4" ><CardLabel>{t("DFM_RELATION_OF_ASSESSEE")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="relationOfAssessee" value={serviceDetails.relationOfAssessee} onChange={(e) => handleChange(e.target.value, "relationOfAssessee")}  placeholder={`${t("DFM_RELATION_OF_ASSESSEE")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_RELATION_OF_ASSESSEE") })} />
-            </div>
+            </div> */}
             <div className="col-md-4" ><CardLabel>{t("DFM_NAME_OCCUPIER")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="nameOfOccupier" value={serviceDetails.nameOfOccupier} onChange={(e) => handleChange(e.target.value, "nameOfOccupier")}  placeholder={`${t("DFM_NAME_OCCUPIER")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER") })} />
             </div>
-           
-          </div>
-        </div>
-        <div className="row">
-        <div className="col-md-12" >
-           
-            <div className="col-md-6" ><CardLabel>{t("DFM_RELATION_OCCUPIER")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="relationOfOccupier" value={serviceDetails.relationOfOccupier}   onChange={(e) => handleChange(e.target.value, "relationOfOccupier")} placeholder={`${t("DFM_RELATION_OCCUPIER")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_RELATION_OCCUPIER") })} />
-            </div>
-            <div className="col-md-6" ><CardLabel>{t("DFM_DURATION_RESIDENCE")}<span className="mandatorycss">*</span></CardLabel>
+            <div className="col-md-4" ><CardLabel>{t("DFM_DURATION_RESIDENCE")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="durationOfresidence" value={serviceDetails.durationOfresidence}  onChange={(e) => handleChange(e.target.value, "durationOfresidence")} placeholder={`${t("DFM_DURATION_RESIDENCE")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_DURATION_RESIDENCE") })} />
             </div>
           </div>
         </div>
+        {/* <div className="row">
+        <div className="col-md-12" >
+           
+             <div className="col-md-6" ><CardLabel>{t("DFM_RELATION_OCCUPIER")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="relationOfOccupier" value={serviceDetails.relationOfOccupier}   onChange={(e) => handleChange(e.target.value, "relationOfOccupier")} placeholder={`${t("DFM_RELATION_OCCUPIER")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_RELATION_OCCUPIER") })} />
+            </div> 
+            <div className="col-md-6" ><CardLabel>{t("DFM_DURATION_RESIDENCE")}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="durationOfresidence" value={serviceDetails.durationOfresidence}  onChange={(e) => handleChange(e.target.value, "durationOfresidence")} placeholder={`${t("DFM_DURATION_RESIDENCE")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_DURATION_RESIDENCE") })} />
+            </div> 
+          </div>
+        </div> */}
             <div className="row">
               <div className="col-md-12">
               <div className="col-md-6" >

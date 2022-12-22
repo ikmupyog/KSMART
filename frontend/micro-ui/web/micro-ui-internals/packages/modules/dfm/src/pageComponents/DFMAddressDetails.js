@@ -119,7 +119,18 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
             </div>
 
             <div className="row">
-              {!isLoading ? (
+                <div className="col-md-4">
+                  <CardLabel>{`${t("DFM_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={config.isMandatory}
+                    option={cmbPostOffice}
+                    selected={addressData.wardNo}
+                    placeholder={`${t("DFM_WARD_NO")}`}
+                    select={(e) => handleChange(e, "wardNo")}
+                  />
+                </div>
                 <div className="col-md-4">
                   <CardLabel>{`${t("DFM_HOUSE_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
@@ -134,9 +145,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                     {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_HOUSE_NUMBER") })}
                   />
                 </div>
-              ) : (
-                <Loader />
-              )}
               <div className="col-md-4">
                 <CardLabel>{`${t("DFM_HOUSE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
@@ -150,8 +158,10 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   placeholder={`${t("DFM_HOUSE_NAME")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_HOUSE_NAME") })}
                 />
-              </div>
-              <div className="col-md-4">
+              </div>         
+            </div>
+            <div className="row">
+            <div className="col-md-4">
                 <CardLabel>{`${t("DFM_STREET")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
@@ -165,9 +175,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_DFM_STREET") })}
                 />
               </div>
-            </div>
-
-            <div className="row">
               <div className="col-md-4">
                 <CardLabel>{`${t("DFM_POST_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
@@ -194,7 +201,11 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_PINCODE") })}
                 />
               </div>
-              <div className="col-md-4">
+              
+            </div>
+
+            <div className="row">
+            <div className="col-md-4">
                 <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
@@ -213,9 +224,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   })}
                 />
               </div>
-            </div>
-
-            <div className="row">
               <div className="col-md-4">
                 <CardLabel>{`${t("DFM_LOCAL_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
@@ -242,18 +250,6 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   onChange={(e) => handleChange(e.target.value, "mainPlace")}
                   placeholder={`${t("DFM_MAIN_PLACE")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_MAIN_PLACE") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={config.isMandatory}
-                  option={cmbPostOffice}
-                  selected={addressData.wardNo}
-                  placeholder={`${t("DFM_WARD_NO")}`}
-                  select={(e) => handleChange(e, "wardNo")}
                 />
               </div>
             </div>
