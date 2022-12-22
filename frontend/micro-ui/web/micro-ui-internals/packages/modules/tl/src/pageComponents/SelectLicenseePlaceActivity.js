@@ -75,7 +75,7 @@ const SelectLicenseePlaceActivity = ({ t, config, onSelect, userType, formData }
     {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  >
     <LabelFieldPair style={{ display: "flex" }}><CardLabel>{`${t("TL_PLACE_MSG")}`}</CardLabel>
-      <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={OwnProperty} onSelect={setSelectOwnProperty} style={{ marginTop:"-8px",paddingLeft:"5px" ,height:"25px"}} /> 
+      <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={OwnProperty} onSelect={setSelectOwnProperty} style={{ marginTop:"-8px",paddingLeft:"5px" ,height:"25px",display: "flex"}} /> 
     </LabelFieldPair>
       {value2 === "NO" && (
       <div>

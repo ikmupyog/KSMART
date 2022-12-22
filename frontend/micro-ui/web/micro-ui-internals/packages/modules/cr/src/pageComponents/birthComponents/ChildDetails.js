@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox,BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -141,7 +141,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ChildDOB || !tripStartTime || !Gender}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ChildDOB || !Gender}>
 
         <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span> </h1>
@@ -152,14 +152,14 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             <DatePicker date={ChildDOB} name="ChildDOB" onChange={setselectChildDOB} placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} />
 
           </div>
-          <div className="col-md-2"  ><CardLabel>{t("Time of Birth")}<span className="mandatorycss">*</span></CardLabel>
+          <div className="col-md-2"  ><CardLabel>{t("Time of Birth")}</CardLabel>
             <CustomTimePicker name="tripStartTime" onChange={val => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
           </div>
           <div className="col-md-4" > <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown t={t} optionKey="code" isMandatory={true} option={menu} selected={Gender} select={setselectGender} disabled={isEdit} placeholder={`${t("CR_GENDER")}`} {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })} />
           </div>
-          <div className="col-md-4"> <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildAadharNo" value={ChildAadharNo} onChange={setSelectChildAadharNo} disable={isEdit} placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
+          <div className="col-md-4"> <CardLabel>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildAadharNo" value={ChildAadharNo} onChange={setSelectChildAadharNo} disable={isEdit} placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
           </div>
         </div>
         <div className="row">
@@ -228,8 +228,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>)}
-          {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
-          
+        {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
+
       </FormStep>
     </React.Fragment>
   );

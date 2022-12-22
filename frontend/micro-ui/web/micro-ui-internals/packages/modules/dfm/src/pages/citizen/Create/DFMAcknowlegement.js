@@ -8,7 +8,7 @@ import getPDFData from "../../../utils/getTLAcknowledgementData";
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
   if (props.isSuccess) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_SUCCESS");
+    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("Application Submitted Successfully") : t("CS_TRADE_UPDATE_APPLICATION_SUCCESS");
   } else if (props.isLoading) {
     return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
@@ -26,7 +26,7 @@ const BannerPicker = (props) => {
     <Banner
       message={GetActionMessage(props)}
       applicationNumber={props.data?.Licenses[0]?.applicationNumber}
-      info={props.isSuccess ? props.t("TL_REF_NO_LABEL") : ""}
+      info={props.isSuccess ? props.t("KL-FM-2022-11-23-000139") : ""}
       successful={props.isSuccess}
     />
   );
@@ -38,15 +38,15 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
+  const mutation = Digit.Hooks.dfm.useFileManagmentAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
-  const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
+  const mutation1 = Digit.Hooks.dfm.useFileManagmentAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     false
   );
-  const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
+  const mutation2 = Digit.Hooks.dfm.useFileManagmentAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     false
   );
@@ -60,16 +60,18 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
 
   useEffect(() => {
     if (isInitialRender) {
-      console.log("Enter");
+      console.log("Enter" + tenantId);
     const onSuccessedit = () => {
       setMutationHappened(true);
     };
     // try {
       setIsInitialRender(false);
-      let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
-      data.tenantId = tenantId1;
+      console.log("Enter" + tenantId);
+      let tenantId1 =  tenantId;
+      console.log("Enterrrrrrrrrrrr" + tenantId1);
+      // data.tenantId = "kl";
       if (!resubmit) {
-        let formdata = !isEdit ? convertToFileSubmission(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "TL") : []);
+        let formdata = !isEdit ? convertToFileSubmission(data) : [];
         // formdata.ApplicantPersonals[0].tenantId = formdata?.ApplicantPersonals[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
@@ -135,26 +137,43 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
   };
  console.log("Jetheesh");
   let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
-  if(enableLoader)
-  {return (<Loader />)}
-  else if( ((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false )) && !isDirectRenewal && !resubmit)
-  {
-    return (
-    <Card>
-      <BannerPicker t={t} data={mutation.data || mutation1.data} isSuccess={mutation.isSuccess || mutation1.isSuccess} isLoading={(mutation?.isLoading || mutation1?.isLoading)} />
-      {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
-      <Link to={`/digit-ui/citizen`}>
-        <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-      </Link>
-    </Card>)
-  }
-  else if(mutation2.isLoading || mutation2.isIdle ){
-    return (<Loader />)
-  }
-  else
+  // if(enableLoader)
+  // {return (<Loader />)}
+  // else if( ((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false )) && !isDirectRenewal && !resubmit)
+  // {
+  //   return (
+  //   <Card>
+  //     <BannerPicker t={t} data={mutation.data || mutation1.data} isSuccess={mutation.isSuccess || mutation1.isSuccess} isLoading={(mutation?.isLoading || mutation1?.isLoading)} />
+  //     {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
+  //     <Link to={`/digit-ui/citizen`}>
+  //       <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+  //     </Link>
+  //   </Card>)
+  // }
+  // else if(mutation2.isLoading || mutation2.isIdle ){
+  //   return (<Loader />)
+  // }
+  // else
   return(
     <Card>
-      <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
+      <BannerPicker t={t} data={mutation2.data} isSuccess={"success"} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
+       <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
+    
+        <LinkButton
+          label={
+            <div className="response-download-button">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+              </span>
+              <span className="download-button">{t("Acknowledgment")}</span>
+            </div>
+          }
+          //style={{ width: "100px" }}
+          onClick={handleDownloadPdf}
+        />
+      {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
       {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
       {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
       {!isEdit && mutation2.isSuccess && <SubmitBar label={t("TL_DOWNLOAD_ACK_FORM")} onSubmit={handleDownloadPdf} />}
@@ -181,7 +200,7 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
       </Link>}
       <Link to={`/digit-ui/citizen`}>
         <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-      </Link>
+      </Link> */}
     </Card>
   );
 };

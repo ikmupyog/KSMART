@@ -1,5 +1,6 @@
 .radio-wrap {
   @apply my-sm flex leading-10 mb-lg;
+  display: flow-root;
 
   div {
     @apply block mb-md;

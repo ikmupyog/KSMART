@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown } from "@egovernments/digit-ui-react-components";
-import { FormStep, RadioOrSelect, RadioButtons, LabelFieldPair } from "@egovernments/digit-ui-react-components";
+import { FormStep,CardLabel, TextInput, Dropdown,TextArea ,RadioButtons,LabelFieldPair } from "@egovernments/digit-ui-react-components";
 import Timeline from "../components/TLTimeline";
-import SelectLand from "./SelectLand";
 
 const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -30,6 +28,7 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
   const [ResurveyedLand, setResurveyedLand] = useState(formData?.TradeDetails?.ResurveyedLand);
   const [VechicleNo, setVechicleNo] = useState(formData.TradeDetails?.VechicleNo);
   const [VesselNo, setVesselNo] = useState(formData.TradeDetails?.VesselNo);
+  const [DetailsSpecify, setDetailsSpecify] = useState(formData.TradeDetails?.DetailsSpecify);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let validation = {};
   let naturetype = null;
@@ -124,6 +123,9 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
   function setSelectVesselNo(e) {
     setVesselNo(e.target.value);
   }
+  function setSelectDetailsSpecify(e) {
+    setDetailsSpecify(e.target.value);
+  }
 
   React.useEffect(() => {
     if (isInitialRender) {
@@ -155,7 +157,9 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DoorSubBuild", '');
       sessionStorage.setItem("VechicleNo", '');
       sessionStorage.setItem("VesselNo", '');
-      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, PartitionNo, ZonalBuilding, WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo });
+      sessionStorage.setItem("DetailsSpecify", '');
+      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, PartitionNo, ZonalBuilding,
+         WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo,DetailsSpecify });
 
     } else if (value2 === "BUIL") {
       sessionStorage.setItem("ResurveyedLand", false);
@@ -169,7 +173,9 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DoorSubBuild", DoorSubBuild);
       sessionStorage.setItem("VechicleNo", '');
       sessionStorage.setItem("VesselNo", '');
-      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, PartitionNo, ZonalBuilding, WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo });
+      sessionStorage.setItem("DetailsSpecify", '');
+      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, PartitionNo, ZonalBuilding,
+         WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo,DetailsSpecify });
 
     } else if (value2 === "VEHI") {
       sessionStorage.setItem("ResurveyedLand", false);
@@ -183,7 +189,9 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DoorSubBuild", '');
       sessionStorage.setItem("VechicleNo", VechicleNo);
       sessionStorage.setItem("VesselNo", '');
-      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, PartitionNo, ZonalBuilding, WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo });
+      sessionStorage.setItem("DetailsSpecify", '');
+      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, PartitionNo, 
+        ZonalBuilding, WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo,DetailsSpecify });
 
     } else if (value2 === "WATE") {
       sessionStorage.setItem("ResurveyedLand", false);
@@ -197,7 +205,26 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DoorSubBuild", '');
       sessionStorage.setItem("VechicleNo", '');
       sessionStorage.setItem("VesselNo", VesselNo);
-      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, PartitionNo, ZonalBuilding, WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo });
+      sessionStorage.setItem("DetailsSpecify", '');
+      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, 
+        PartitionNo, ZonalBuilding, WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo,DetailsSpecify });
+
+    }
+    else if (value2 === "DESI") {
+      sessionStorage.setItem("ResurveyedLand", false);
+      sessionStorage.setItem("BlockNo", '');
+      sessionStorage.setItem("SurveyNo", '');
+      sessionStorage.setItem("SubDivNo", '');
+      sessionStorage.setItem("PartitionNo", '');
+      // sessionStorage.setItem("ZonalBuilding", null);
+      // sessionStorage.setItem("WardNoBuilding", null);
+      sessionStorage.setItem("DoorNoBuild", '');
+      sessionStorage.setItem("DoorSubBuild", '');
+      sessionStorage.setItem("VechicleNo", '');
+      sessionStorage.setItem("VesselNo", '');
+      sessionStorage.setItem("DetailsSpecify", DetailsSpecify);
+      onSelect(config.key, { StructureType, setPlaceofActivity, ResurveyedLand, BlockNo, SurveyNo, SubDivNo, 
+        PartitionNo, ZonalBuilding, WardNoBuilding, DoorNoBuild, DoorSubBuild, VechicleNo, VesselNo,DetailsSpecify });
 
     }
 
@@ -227,7 +254,7 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
           <div>
             <div className="row"><div className="col-md-12" >
               <LabelFieldPair style={{ display: "flex" }}><CardLabel>{`${t("TL_RESURVEY_LAND")}`}</CardLabel>
-                <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={ResurveyedLand} onSelect={selectResurveyedLand} disabled={isEdit} style={{ marginTop: "-8px", paddingLeft: "5px", height: "25px" }} />
+                <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={ResurveyedLand} onSelect={selectResurveyedLand} disabled={isEdit} style={{ marginTop: "-8px", paddingLeft: "5px", height: "25px",display: "flex" }} />
               </LabelFieldPair></div>
             </div>
 
@@ -311,18 +338,12 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
           {value2 === "DESI" && (
           <div>
             <div className="row">
-              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_VESSEL_HEADER")}`}</span> </h1>
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Details")}`}</span> </h1>
               </div>
             </div>
             <div className="row">
-                  <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}</CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo" value={BlockNo} onChange={setSelectBlockNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
-                  </div>
-                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}</CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo" value={SurveyNo} onChange={setSelectSurveyNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
-                  </div>
-                  <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}</CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo" value={SubDivNo} onChange={setSelectSubDivNo} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
+                  <div className="col-md-12" ><CardLabel>{`${t("Details Specify")}`}</CardLabel>
+                    <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DetailsSpecify" value={DetailsSpecify} onChange={setSelectDetailsSpecify} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("Invalid Details Specified") })} />
                   </div>
                 </div>
           </div>)}
