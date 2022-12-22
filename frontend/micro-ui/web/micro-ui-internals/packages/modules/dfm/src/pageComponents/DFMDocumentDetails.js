@@ -158,7 +158,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                 />
               </div>
 
-              {/* <div className="col-md-4">
+              <div className="col-md-6">
                 <CardLabel>{`${t("DFM_ATTACH_DOCUMENT")}`}</CardLabel>
                 <UploadFile
                   id={"dfm-doc"}
@@ -171,9 +171,9 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                   message={documentDetails.fileStoreId ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                   error={error}
                 />
-              </div> */}
+              </div>
               <div className="row">
-                <div className="col-md-12">
+                <div className="col-md-6">
                   <div className="Common_terms_checkbox">
                     <div className="input-checkbox">
                       <input className="" type="checkbox" onClick={(e) => handleChange(e.target.checked, "checkbox")} />
