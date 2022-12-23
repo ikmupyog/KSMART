@@ -275,11 +275,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-3">
-              <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
               <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitle} select={selectTitle} disabled={isEdit} placeholder={`${t("CR_TITLE_NAME_EN")}`} />
             </div>
             <div className="col-md-3">
-              <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
+              <CardLabel>{`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
