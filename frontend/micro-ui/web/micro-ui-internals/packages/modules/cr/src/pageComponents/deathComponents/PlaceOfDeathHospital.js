@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
@@ -69,7 +69,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -81,39 +81,42 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-6">
-            <CardLabel>{`${t("CR_HOSPITAL")}`}</CardLabel>
+            <CardLabel>{`${t("CR_HOSPITAL")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
               optionKey="hospitalName"
-              isMandatory={false}
+              isMandatory={true}
               option={cmbhospital}
               selected={HospitalName}
               select={setselectHospitalName}
+              placeholder={`${t("CR_HOSPITAL")}`}
             />
           </div>
           <div className="col-md-6">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}</CardLabel>
+            <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
               optionKey="hospitalName"
-              isMandatory={false}
+              isMandatory={true}
               option={cmbhospital}
               selected={SignedOfficerName}
               select={setselectSignedOfficerName}
+              placeholder={`${t("CR_SIGNED_OFFICER")}`}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-md-4">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}</CardLabel>
+            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
               optionKey="code"
-              isMandatory={false}
+              isMandatory={true}
               option={cmbPlace}
               selected={setDesignation}
               select={selectDesignation}
               disabled={isEdit}
+              placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
             />
           </div>
           <div className="col-md-4">
@@ -127,7 +130,8 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
               value={HospitalAadhaar}
               onChange={setSelectHospitalAadhaar}
               disable={isEdit}
-              {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} 
+              placeholder={`${t("CS_COMMON_AADHAAR")}`}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} 
              
             />
           </div>
@@ -142,6 +146,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
               value={HospitalMobile}
               onChange={setSelectHospitalMobile}
               disable={isEdit}
+              placeholder={`${t("CR_MOBILE_NO")}`}
               {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>

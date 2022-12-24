@@ -121,6 +121,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 selected={setOccupationMain}
                 select={selectOccupationMain}
                 disabled={isEdit}
+                placeholder={`${t("CCR_OCCUPATION_MAIN_LEVEL")}`}
             />
           </div>
           <div className="col-md-6">
@@ -134,6 +135,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
               value={OccupationOthers}
               onChange={SelectOccupationOthers}
               disable={isEdit}
+              placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
             />
           </div>

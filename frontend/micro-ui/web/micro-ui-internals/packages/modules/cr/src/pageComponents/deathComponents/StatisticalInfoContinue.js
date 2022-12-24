@@ -174,6 +174,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               selected={setMedicalAttentionDeath}
               select={selectMedicalAttentionDeath}
               disabled={isEdit}
+              placeholder={`${t("CR_MEDICAL_ATTENTION_DEATH")}`}
             />
           </div>
           <div className="col-md-6">
@@ -186,6 +187,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               selected={setDeathMedicallyCertified}
               select={selectDeathMedicallyCertified}
               disabled={isEdit}
+              placeholder={`${t(" ")}`}
             />
           </div>
         </div>
@@ -200,6 +202,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               selected={setCauseOfDeathMain}
               select={selectCauseOfDeathMain}
               disabled={isEdit}
+              placeholder={`${t(" ")}`}
             />
           </div>
           <div className="col-md-6">
@@ -212,6 +215,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               selected={setCauseOfDeathSub}
               select={selectCauseOfDeathSub}
               disabled={isEdit}
+              placeholder={`${t(" ")}`}
             />
           </div>
         </div>
@@ -227,6 +231,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               value={CauseOfDeath}
               onChange={setSelectCauseOfDeath}
               disable={isEdit}
+              placeholder={`${t(" ")}`}
               {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
             />
           </div>
@@ -239,6 +244,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               options={menu}
               selectedOption={isPregnent}
               onSelect={selectisPregnent}
+              
             />
           </div>
         </div>
