@@ -48,7 +48,6 @@ public class ApplicantPersonal {
     @Schema(type = "string", description = "First name")
     @Size(max = 64)
     @NotNull
-
     @JsonProperty("firstName")
     private String firstName;
 

@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UserDetailResponse {
 
-	@JsonProperty("responseInfo")
-	ResponseInfo responseInfo;
+    @JsonProperty("responseInfo")
+    private ResponseInfo responseInfo;
 
-	@JsonProperty("user")
-	List<ApplicantPersonal> user;
+    @JsonProperty("user")
+    private List<ApplicantPersonal> user;
 }

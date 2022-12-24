@@ -1,15 +1,18 @@
 package org.egov.filemgmnt.workflow;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
+import org.egov.filemgmnt.web.models.FileDetail;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +57,6 @@ public class WorkflowIntegrator {
                                                      .get(0);
         Assert.notNull(applicantPersonal, "Applicant personal must not be null");
 
-        String tenantId = applicantPersonal.getTenantId();
         String businessService = applicantPersonal.getFileDetail()
                                                   .getBusinessService();
         String fileAction = applicantPersonal.getFileDetail()
@@ -64,121 +66,117 @@ public class WorkflowIntegrator {
             businessService = FMConstants.BUSINESS_SERVICE_FM;
         }
 
-        JSONArray array = new JSONArray();
-
+        JSONArray jsonArray = new JSONArray();
         for (ApplicantPersonal personal : request.getApplicantPersonals()) {
             if (businessService.equals(FMConstants.BUSINESS_SERVICE_FM)
                     || !fileAction.equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW)) {
 
-                List<Map<String, String>> uuidmaps = new LinkedList<>();
-
-                if (CollectionUtils.isNotEmpty(personal.getFileDetail()
-                                                       .getAssignees())) {
-
-                    // Adding assignes to processInstance
-
-                    personal.getFileDetail()
-                            .getAssignees()
-                            .forEach(assignee -> {
-
-                                Map<String, String> uuidMap = new HashMap<>();
-
-                                uuidMap.put(FMConstants.UUIDKEY, assignee);
-                                uuidmaps.add(uuidMap);
-                            });
-                }
                 // json Object for workflow transition start
-                JSONObject obj = new JSONObject();
-                obj.put(FMConstants.BUSINESSIDKEY,
-                        personal.getFileDetail()
-                                .getFileCode());
-                obj.put(FMConstants.TENANTIDKEY, tenantId);
-                obj.put(FMConstants.BUSINESSSERVICEKEY,
-                        applicantPersonal.getFileDetail()
-                                         .getWorkflowCode());
-                obj.put(FMConstants.MODULENAMEKEY, FMConstants.FMMODULENAMEVALUE);
-                obj.put(FMConstants.ACTIONKEY,
-                        personal.getFileDetail()
-                                .getAction());
-                obj.put(FMConstants.COMMENTKEY,
-                        personal.getFileDetail()
-                                .getComment());
-                if (!CollectionUtils.isEmpty(personal.getFileDetail()
-                                                     .getAssignees())) {
-                    obj.put(FMConstants.ASSIGNEEKEY, uuidmaps);
-                }
-                obj.put(FMConstants.DOCUMENTSKEY,
-                        personal.getFileDetail()
-                                .getWfDocuments());
-
-                // json object end
+                JSONObject jsonObj = buildJsonObjectForWorkflow(personal);
 
                 // create an array for Json-ProcessInstances ( workflow service's request part
                 // has two json values 1.RequestInfo,2.ProcessInstances)
-                array.add(obj);
+                jsonArray.add(jsonObj);
             }
         }
 
-        if (!CollectionUtils.isEmpty(array)) {
+        if (CollectionUtils.isNotEmpty(jsonArray)) {
+            Map<String, String> idStatusMap = workflowRequest(request.getRequestInfo(), jsonArray);
 
-            // Create WorkflowRequest Json
-            JSONObject workFlowRequest = new JSONObject();
-            workFlowRequest.put(FMConstants.REQUESTINFOKEY, request.getRequestInfo());
-            workFlowRequest.put(FMConstants.WORKFLOWREQUESTARRAYKEY, array);
-            String response = null;
-            System.out.println("workflow Check  :" + workFlowRequest);
-            log.info("workflow integrator request " + workFlowRequest);
-
-            try {
-                // workflow service integration and get response from ws
-                response = restTemplate.postForObject(fmConfig.getWfHost()
-                                                              .concat(fmConfig.getWfTransitionPath()),
-                                                      workFlowRequest,
-                                                      String.class);
-            } catch (HttpClientErrorException e) {
-                /*
-                 * extracting message from client error exception
-                 */
-                DocumentContext responseContext = JsonPath.parse(e.getResponseBodyAsString());
-                List<Object> errros = null;
-                try {
-                    errros = responseContext.read("$.Errors");
-                } catch (PathNotFoundException pnfe) {
-                    log.error("EG_FM_WF_ERROR_KEY_NOT_FOUND",
-                              " Unable to read the json path in error object : " + pnfe.getMessage());
-                    throw new CustomException("EG_FM_WF_ERROR_KEY_NOT_FOUND",
-                            " Unable to read the json path in error object : " + pnfe.getMessage());
-                }
-                throw new CustomException("EG_WF_ERROR", errros.toString());
-            } catch (Exception e) {
-                throw new CustomException("EG_WF_ERROR",
-                        " Exception occured while integrating with workflow : " + e.getMessage());
-            }
-
-            log.info("workflow integrator response " + response);
-
-            // on success result from work-flow read the data and set the status back to
-            // Filedetails (filestatus)
-            // object
-
-            System.out.println("response Check  :" + response);
-            DocumentContext responseContext = JsonPath.parse(response);
-            List<Map<String, Object>> responseArray = responseContext.read(FMConstants.PROCESSINSTANCESJOSNKEY);
-            Map<String, String> idStatusMap = new HashMap<>();
-            responseArray.forEach(object -> {
-
-                DocumentContext instanceContext = JsonPath.parse(object);
-                idStatusMap.put(instanceContext.read(FMConstants.BUSINESSIDJOSNKEY),
-                                instanceContext.read(FMConstants.STATUSJSONKEY));
-            });
             // setting the status back to FileDetails object from wf response
             request.getApplicantPersonals()
-                   .forEach(fmObj -> fmObj.getFileDetail()
-                                          .setFileStatus(idStatusMap.get(fmObj.getFileDetail()
-                                                                              .getFileCode())));
-
+                   .forEach(personal -> personal.getFileDetail()
+                                                .setFileStatus(idStatusMap.get(personal.getFileDetail()
+                                                                                       .getFileCode())));
         }
 
+    }
+
+    private Map<String, String> workflowRequest(RequestInfo requestInfo, JSONArray wfRequestArray) {
+        // Create WorkflowRequest Json
+        JSONObject request = new JSONObject();
+        request.put(FMConstants.REQUESTINFOKEY, requestInfo);
+        request.put(FMConstants.WORKFLOWREQUESTARRAYKEY, wfRequestArray);
+
+        log.info("workflow integrator request: {}", request);
+
+        String response;
+        try {
+            // workflow service integration and get response from ws
+            response = restTemplate.postForObject(fmConfig.getWfHost()
+                                                          .concat(fmConfig.getWfTransitionPath()),
+                                                  request,
+                                                  String.class);
+        } catch (HttpClientErrorException e) {
+            // extracting message from client error exception
+            DocumentContext responseContext = JsonPath.parse(e.getResponseBodyAsString());
+            List<Object> errros;
+            try {
+                errros = responseContext.read("$.Errors");
+            } catch (PathNotFoundException pe) {
+                log.error("EG_FM_WF_ERROR_KEY_NOT_FOUND",
+                          " Unable to read the json path in error object : " + pe.getMessage());
+                throw new CustomException("EG_FM_WF_ERROR_KEY_NOT_FOUND",
+                        " Unable to read the json path in error object : " + pe.getMessage());
+            }
+            throw new CustomException("EG_WF_ERROR", errros.toString());
+        } catch (Exception e) {
+            throw new CustomException("EG_WF_ERROR",
+                    " Exception occured while integrating with workflow : " + e.getMessage());
+        }
+
+        log.info("workflow integrator response: {}", response);
+
+        // on success result from work-flow read the data and set the status back to
+        // Filedetails (filestatus)
+        // object
+        DocumentContext responseContext = JsonPath.parse(response);
+        List<Map<String, Object>> responseArray = responseContext.read(FMConstants.PROCESSINSTANCESJOSNKEY);
+
+        Map<String, String> idStatusMap = new HashMap<>();
+        responseArray.forEach(status -> {
+            DocumentContext instanceContext = JsonPath.parse(status);
+            idStatusMap.put(instanceContext.read(FMConstants.BUSINESSIDJOSNKEY),
+                            instanceContext.read(FMConstants.STATUSJSONKEY));
+        });
+
+        return idStatusMap;
+    }
+
+    private JSONObject buildJsonObjectForWorkflow(ApplicantPersonal personal) {
+        FileDetail fileDetail = personal.getFileDetail();
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put(FMConstants.BUSINESSIDKEY, fileDetail.getFileCode());
+        jsonObj.put(FMConstants.TENANTIDKEY, personal.getTenantId());
+        jsonObj.put(FMConstants.BUSINESSSERVICEKEY, fileDetail.getWorkflowCode());
+        jsonObj.put(FMConstants.MODULENAMEKEY, FMConstants.FMMODULENAMEVALUE);
+        jsonObj.put(FMConstants.ACTIONKEY, fileDetail.getAction());
+        jsonObj.put(FMConstants.COMMENTKEY, fileDetail.getComment());
+        jsonObj.put(FMConstants.DOCUMENTSKEY, fileDetail.getWfDocuments());
+
+        // Adding assignes to processInstance
+        List<Map<String, String>> uuidMaps = buildUUIDList(fileDetail.getAssignees());
+        if (CollectionUtils.isNotEmpty(uuidMaps)) {
+            jsonObj.put(FMConstants.ASSIGNEEKEY, uuidMaps);
+        }
+
+        return jsonObj;
+    }
+
+    private List<Map<String, String>> buildUUIDList(List<String> assignees) {
+        List<Map<String, String>> result = new LinkedList<>();
+
+        if (CollectionUtils.isNotEmpty(assignees)) {
+//            assignees.forEach(assignee -> {
+//                Map<String, String> uuidMap = new HashMap<>();
+//                uuidMap.put(FMConstants.UUIDKEY, assignee);
+//                  result.add(uuidMap);
+//            });
+            assignees.forEach(assignee -> result.add(Collections.singletonMap(FMConstants.UUIDKEY, assignee)));
+        }
+
+        return result;
     }
 
 }

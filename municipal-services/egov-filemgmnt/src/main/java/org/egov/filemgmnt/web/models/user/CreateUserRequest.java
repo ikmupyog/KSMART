@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateUserRequest {
 
-	@JsonProperty("requestInfo")
-	private RequestInfo requestInfo;
+    @JsonProperty("requestInfo")
+    private RequestInfo requestInfo;
 
-	@JsonProperty("user")
-	private ApplicantPersonal user;
+    @JsonProperty("user")
+    private ApplicantPersonal user;
 
 }

@@ -2,6 +2,7 @@ package org.egov.filemgmnt.service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
@@ -54,10 +55,14 @@ public class CommunicationFileManagementService {
 
     public List<CommunicationFile> update(CommunicationFileRequest request) {
 
-        List<String> ids = new LinkedList<>();
+//        List<String> ids = new LinkedList<>();
+//        request.getCommunicationFiles()
+//               .forEach(file -> ids.add(file.getId()));
 
-        request.getCommunicationFiles()
-               .forEach(file -> ids.add(file.getId()));
+        List<String> ids = request.getCommunicationFiles()
+                                  .stream()
+                                  .map(CommunicationFile::getId)
+                                  .collect(Collectors.toCollection(LinkedList::new));
 
         // search database
         List<CommunicationFile> searchResult = repository.getCommunicationfiles(CommunicationFileSearchCriteria.builder()
@@ -74,12 +79,13 @@ public class CommunicationFileManagementService {
     }
 
     public List<CommunicationFile> search(CommunicationFileSearchCriteria criteria, RequestInfo requestInfo) {
+        validator.validateSearch(requestInfo, criteria);
 
         List<CommunicationFile> result = null;
-        validator.validateSearch(requestInfo, criteria);
-        if (!CollectionUtils.isEmpty(criteria.getIds())) {
+        if (CollectionUtils.isNotEmpty(criteria.getIds())) {
             result = repository.getCommunicationfiles(criteria);
         }
+
         return result;
     }
 
