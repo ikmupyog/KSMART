@@ -58,15 +58,16 @@ public class CrDeathRegistryMdmsUtil {
         // moduleDetails.add(DeathPlaceRequest);
 
 
-        // MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
-        //         .build();
-        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(requestInfo.getUserInfo().getTenantId())
-        .build();
+        // MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(requestInfo.getUserInfo().getTenantId())
+        // .build();
+        //modified by Rakhi S ikm on 24.12.2022
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
 
         MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
                 .requestInfo(requestInfo).build();
 
-        System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
         return mdmsCriteriaReq;
     }
 

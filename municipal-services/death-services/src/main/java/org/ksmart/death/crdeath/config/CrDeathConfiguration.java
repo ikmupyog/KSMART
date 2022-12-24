@@ -53,6 +53,8 @@ public class CrDeathConfiguration {
     @Value("${persister.update.crdeath.topic}")
     private String updateDeathDetailsTopic;
 
-
+    //Rakhi S on 24.12.2022 
+    @Value("${egov.state.level.tenant.id}")
+    private String egovStateLevelTenant;    
 
 }
