@@ -93,7 +93,7 @@ public class CrDeathService {
   //UPDATE BEGIN Jasmine
     public List<CrDeathDtl> update(CrDeathDtlRequest request) {
       
-        Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
+        // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
           
         String id = request.getDeathCertificateDtls().get(0).getId();
 
