@@ -4,7 +4,6 @@ import { PrivateRoute, BreadCrumb,CommonDashboard } from "@egovernments/digit-ui
 
 
 const Dashboard = ({ path }) => {
-  console.log(path);
   const cardMenuData = [
     {
       title: "Finance",

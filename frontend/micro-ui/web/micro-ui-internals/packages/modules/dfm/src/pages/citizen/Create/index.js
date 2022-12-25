@@ -17,7 +17,6 @@ const CreateTradeLicence = ({ parentRoute }) => {
   const [submitResponse,updateSubmitResponse] = useState([])
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("DFM_CREATE_APPLICATION_CITIZEN", {});
   const [userParams, setUserParams, clearUserParams] = Digit.Hooks.useSessionStorage("User", {});
-  console.log('citizen',params);
   let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/")
 
   const stateId = Digit.ULBService.getStateId();

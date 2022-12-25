@@ -6,7 +6,6 @@ import SubDashboard from './SubDashboard'
 
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
-  console.log(path);
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
 
@@ -29,7 +28,6 @@ const App = () => {
   }
   return goBacktoFromProperty;
   }
-console.log('dfm',path);
 {/* <BackButton  isCommonPTPropertyScreen={isCommonPTPropertyScreen} isSuccessScreen={isSuccessScreen} getBackPageNumber={getBackPageNumber}>Back</BackButton> */}
   return (
     <span className={"tl-citizen"}>
