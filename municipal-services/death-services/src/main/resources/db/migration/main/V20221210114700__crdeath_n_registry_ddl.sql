@@ -1,9 +1,3 @@
-V20221210114700__crdeath_n_registry_ddl.sql
-
-
-
-
-
 -- Table Migration Script for Death-Service [10.12.2022 by Rakhi S IKM]
 
 -- Table public.eg_death_dtls
