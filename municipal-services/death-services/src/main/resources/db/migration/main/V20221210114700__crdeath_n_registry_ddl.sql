@@ -1,167 +1,21 @@
-DROP TABLE IF EXISTS public.eg_death_address_dtls ;
-
-CREATE TABLE public.eg_death_address_dtls (
-    id character varying(64) NOT NULL,
-    death_dtl_id character varying(64),
-    tenantid character varying(50) NOT NULL,
-    addr_typeid character varying(50),
-    house_no character varying(100),
-    residence_assc_no character varying(100),
-    streetname_en character varying(200),
-    streetname_ml character varying(200),
-    locality_en character varying(200),
-    locality_ml character varying(200),
-    city_en character varying(200),
-    city_ml character varying(200),
-    ward_id character varying(100),
-    taluk_id character varying(100),
-    village_id character varying(200),
-    postoffice_id character varying(200),
-    pincode bigint,
-    district_id character varying(100),
-    state_id character varying(100),
-    country_id character varying(100),
-    taluk_name_en character varying(200),
-    taluk_name_ml character varying(200),
-    village_name_en character varying(200),
-    village_name_ml character varying(200),
-    postoffice_name_en character varying(200),
-    postoffice_name_ml character varying(200),
-    createdby character varying(64),
-    createdtime bigint,
-    lastmodifiedby character varying(64),
-    lastmodifiedtime bigint,
-    location_type character varying(64),
-    houename_ml character varying(200),
-    houename_en character varying(200)
-);
-
-
-DROP TABLE IF EXISTS public.eg_death_address_dtls_log ;
-
-CREATE TABLE public.eg_death_address_dtls_log (
-    id character varying(64) NOT NULL,
-    death_dtl_id character varying(64),
-    tenantid character varying(50) NOT NULL,
-    addr_typeid character varying(50),
-    house_no character varying(100),
-    residence_assc_no character varying(100),
-    streetname_en character varying(200),
-    streetname_ml character varying(200),
-    locality_en character varying(200),
-    locality_ml character varying(200),
-    city_en character varying(200),
-    city_ml character varying(200),
-    ward_id character varying(100),
-    taluk_id character varying(100),
-    village_id character varying(200),
-    postoffice_id character varying(200),
-    pincode bigint,
-    district_id character varying(100),
-    state_id character varying(100),
-    country_id character varying(100),
-    taluk_name_en character varying(200),
-    taluk_name_ml character varying(200),
-    village_name_en character varying(200),
-    village_name_ml character varying(200),
-    postoffice_name_en character varying(200),
-    postoffice_name_ml character varying(200),
-    createdby character varying(64),
-    createdtime bigint,
-    lastmodifiedby character varying(64),
-    lastmodifiedtime bigint,
-    location_type character varying(64),
-    houename_ml character varying(200),
-    houename_en character varying(200)
-);
-
-
-DROP TABLE IF EXISTS public.eg_death_address_registry ;
-
-CREATE TABLE public.eg_death_address_registry (
-    id character varying(64) NOT NULL,
-    death_dtl_id character varying(64),
-    tenantid character varying(50) NOT NULL,
-    addr_typeid character varying(50),
-    house_no character varying(100),
-    residence_assc_no character varying(100),
-    streetname_en character varying(200),
-    streetname_ml character varying(200),
-    locality_en character varying(200),
-    locality_ml character varying(200),
-    city_en character varying(200),
-    city_ml character varying(200),
-    ward_id character varying(100),
-    taluk_id character varying(100),
-    village_id character varying(200),
-    postoffice_id character varying(200),
-    pincode bigint,
-    district_id character varying(100),
-    state_id character varying(100),
-    country_id character varying(100),
-    taluk_name_en character varying(200),
-    taluk_name_ml character varying(200),
-    village_name_en character varying(200),
-    village_name_ml character varying(200),
-    postoffice_name_en character varying(200),
-    postoffice_name_ml character varying(200),
-    createdby character varying(64),
-    createdtime bigint,
-    lastmodifiedby character varying(64),
-    lastmodifiedtime bigint,
-    location_type character varying(150),
-    houename_ml character varying(200),
-    houename_en character varying(200)
-);
+V20221210114700__crdeath_n_registry_ddl.sql
 
 
 
-DROP TABLE IF EXISTS public.eg_death_address_registry_log ;
-
-CREATE TABLE public.eg_death_address_registry_log (
-    id character varying(64) NOT NULL,
-    death_dtl_id character varying(64),
-    tenantid character varying(50) NOT NULL,
-    addr_typeid character varying(50),
-    house_no character varying(100),
-    residence_assc_no character varying(100),
-    streetname_en character varying(200),
-    streetname_ml character varying(200),
-    locality_en character varying(200),
-    locality_ml character varying(200),
-    city_en character varying(200),
-    city_ml character varying(200),
-    ward_id character varying(100),
-    taluk_id character varying(100),
-    village_id character varying(200),
-    postoffice_id character varying(200),
-    pincode bigint,
-    district_id character varying(100),
-    state_id character varying(100),
-    country_id character varying(100),
-    taluk_name_en character varying(200),
-    taluk_name_ml character varying(200),
-    village_name_en character varying(200),
-    village_name_ml character varying(200),
-    postoffice_name_en character varying(200),
-    postoffice_name_ml character varying(200),
-    createdby character varying(64),
-    createdtime bigint,
-    lastmodifiedby character varying(64),
-    lastmodifiedtime bigint,
-    location_type character varying(150),
-    houename_ml character varying(200),
-    houename_en character varying(200)
-);
 
 
+-- Table Migration Script for Death-Service [10.12.2022 by Rakhi S IKM]
 
-DROP TABLE IF EXISTS public.eg_death_dtls ;
+-- Table public.eg_death_dtls
+ALTER TABLE eg_death_dtls RENAME TO eg_death_dtls_old;
 
-CREATE TABLE public.eg_death_dtls (
-    id character varying(64) NOT NULL,
-    registrationunit character varying(64),
-    tenantid character varying(50) NOT NULL,
+DROP TABLE IF EXISTS public.eg_death_dtls;
+
+CREATE TABLE IF NOT EXISTS public.eg_death_dtls
+(
+    id character varying(64)  NOT NULL,
+    registrationunit character varying(64) ,
+    tenantid character varying(50)  NOT NULL,
     correct_death_date_known smallint,
     dateofdeath bigint,
     time_of_death integer,
@@ -170,9 +24,9 @@ CREATE TABLE public.eg_death_dtls (
     time_of_death_to integer,
     timeofdeath_unit_to character varying(50),
     deceased_identified smallint,
-    deceased_title character varying(64),
+    deceased_title character varying(64) ,
     deceased_firstname_en character varying(64),
-    deceased_firstname_ml character varying(64),
+    deceased_firstname_ml character varying(64) ,
     deceased_middlename_en character varying(64),
     deceased_middlename_ml character varying(64),
     deceased_lastname_en character varying(64),
@@ -195,7 +49,7 @@ CREATE TABLE public.eg_death_dtls (
     informant_aadhar_no character varying(64),
     informant_mobile_no character varying(64),
     general_remarks character varying(500),
-    status character varying(64),
+    application_status character varying(64),
     submitted_on bigint,
     created_by character varying(64),
     createdtime bigint,
@@ -239,23 +93,100 @@ CREATE TABLE public.eg_death_dtls (
     application_no character varying(64),
     file_no character varying(64),
     ack_no character varying(64),
-    workflowcode character varying(64),
-    businessservice character varying(64),
-    action character varying(64),
-    comment character varying(64),
-    assignee character varying(64),
-    registration_date bigint,
-    registration_no_id bigint
+	dateofreport bigint,
+	CONSTRAINT eg_death_dtls_pkey1 PRIMARY KEY (id)
 );
 
+-- Table: public.eg_death_statistical_dtls
 
+DROP TABLE IF EXISTS public.eg_death_statistical_dtls;
 
-DROP TABLE IF EXISTS public.eg_death_dtls_log ;
-
-CREATE TABLE public.eg_death_dtls_log (
+CREATE TABLE IF NOT EXISTS public.eg_death_statistical_dtls
+(
     id character varying(64) NOT NULL,
-    registrationunit character varying(64),
+    death_dtl_id character varying(64),
     tenantid character varying(50) NOT NULL,
+    residencelocalbody character varying(75),
+    residence_place_type character varying(200),
+    residencedistrict character varying(250),
+    residencestate character varying(100),
+    religion character varying(200),
+    religion_other character varying(100),
+    occupation character varying(100),
+    occupation_other character varying(500),
+    medical_attention_type character varying(500),
+    death_medically_certified smallint,
+    death_cause_main character varying(200),
+    death_cause_sub character varying(200),
+    death_cause_other character varying(200),
+    death_during_delivery integer,
+    smoking_num_years integer,
+    tobacco_num_years integer,
+    arecanut_num_years integer,
+    alcohol_num_years integer,
+    createdby character varying(64),
+    createdtime bigint,
+    lastmodifiedby character varying(64),
+    lastmodifiedtime bigint,
+    nationality character varying(200),
+	CONSTRAINT eg_death_statistical_dtls_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_eg_death_dtls FOREIGN KEY (death_dtl_id)
+        REFERENCES public.eg_death_dtls (id)
+);
+
+-- Table: public.eg_death_address_dtls
+
+DROP TABLE IF EXISTS public.eg_death_address_dtls;
+
+CREATE TABLE IF NOT EXISTS public.eg_death_address_dtls
+(
+    id character varying(64) NOT NULL,
+    death_dtl_id character varying(64),
+    tenantid character varying(50) NOT NULL,
+    addr_typeid character varying(50),
+    house_no character varying(100),
+    residence_assc_no character varying(100),
+    streetname_en character varying(200),
+    streetname_ml character varying(200),
+    locality_en character varying(200),
+    locality_ml character varying(200),
+    city_en character varying(200),
+    city_ml character varying(200),
+    ward_id character varying(100),
+    taluk_id character varying(100),
+    village_id character varying(200),
+    postoffice_id character varying(200),
+    pincode bigint,
+    district_id character varying(100),
+    state_id character varying(100),
+    country_id character varying(100),
+    taluk_name_en character varying(200),
+    taluk_name_ml character varying(200),
+    village_name_en character varying(200),
+    village_name_ml character varying(200),
+    postoffice_name_en character varying(200),
+    postoffice_name_ml character varying(200),
+    createdby character varying(64),
+    createdtime bigint,
+    lastmodifiedby character varying(64),
+    lastmodifiedtime bigint,
+    location_type character varying(150),
+    houename_ml character varying(200),
+    houename_en character varying(200),
+	CONSTRAINT eg_death_address_dtls_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_eg_death_dtls FOREIGN KEY (death_dtl_id)
+        REFERENCES public.eg_death_dtls (id)
+);
+
+-- Table public.eg_death_dtls_registry
+
+DROP TABLE IF EXISTS public.eg_death_dtls_registry;
+
+CREATE TABLE IF NOT EXISTS public.eg_death_dtls_registry
+(
+    id character varying(64)  NOT NULL,
+    registrationunit character varying(64) ,
+    tenantid character varying(50)  NOT NULL,
     correct_death_date_known smallint,
     dateofdeath bigint,
     time_of_death integer,
@@ -264,9 +195,9 @@ CREATE TABLE public.eg_death_dtls_log (
     time_of_death_to integer,
     timeofdeath_unit_to character varying(50),
     deceased_identified smallint,
-    deceased_title character varying(64),
+    deceased_title character varying(64) ,
     deceased_firstname_en character varying(64),
-    deceased_firstname_ml character varying(64),
+    deceased_firstname_ml character varying(64) ,
     deceased_middlename_en character varying(64),
     deceased_middlename_ml character varying(64),
     deceased_lastname_en character varying(64),
@@ -289,7 +220,7 @@ CREATE TABLE public.eg_death_dtls_log (
     informant_aadhar_no character varying(64),
     informant_mobile_no character varying(64),
     general_remarks character varying(500),
-    status character varying(64),
+    application_status character varying(64),
     submitted_on bigint,
     created_by character varying(64),
     createdtime bigint,
@@ -333,202 +264,18 @@ CREATE TABLE public.eg_death_dtls_log (
     application_no character varying(64),
     file_no character varying(64),
     ack_no character varying(64),
-    workflowcode character varying(64),
-    businessservice character varying(64),
-    action character varying(64),
-    comment character varying(64),
-    assignee character varying(64),
-    registration_date bigint,
-    registration_no_id bigint
+	dateofreport bigint,
+	CONSTRAINT eg_death_dtls_registry_pkey PRIMARY KEY (id)
 );
 
+-- Table: public.eg_death_statistical_registry
 
+DROP TABLE IF EXISTS public.eg_death_statistical_registry;
 
-DROP TABLE IF EXISTS public.eg_death_dtls_registry ;
-
-CREATE TABLE public.eg_death_dtls_registry (
+CREATE TABLE IF NOT EXISTS public.eg_death_statistical_registry
+(
     id character varying(64) NOT NULL,
-    registrationunit character varying(64),
-    tenantid character varying(50) NOT NULL,
-    correct_death_date_known smallint,
-    dateofdeath bigint,
-    time_of_death integer,
-    timeofdeath_unit character varying(50),
-    date_of_death_to bigint,
-    time_of_death_to integer,
-    timeofdeath_unit_to character varying(50),
-    deceased_identified smallint,
-    deceased_title character varying(50),
-    deceased_firstname_en character varying(200),
-    deceased_firstname_ml character varying(200),
-    deceased_middlename_en character varying(200),
-    deceased_middlename_ml character varying(200),
-    deceased_lastname_en character varying(200),
-    deceased_lastname_ml character varying(200),
-    deceased_aadhar_number character varying(150),
-    deceased_gender character varying(50),
-    age integer,
-    age_unit character varying(64),
-    dateofbirth bigint,
-    death_place character varying(200),
-    death_place_inst_type character varying(200),
-    death_place_inst_id character varying(200),
-    death_place_office_name character varying(200),
-    death_place_other_ml character varying(200),
-    death_place_other_en character varying(200),
-    informant_title character varying(200),
-    informant_name_en character varying(200),
-    informant_name_ml character varying(200),
-    informant_aadhar_submitted smallint,
-    informant_aadhar_no character varying(150),
-    informant_mobile_no character varying(150),
-    general_remarks character varying(500),
-    application_status character varying(150),
-    submitted_on bigint,
-    created_by character varying(64),
-    createdtime bigint,
-    lastmodifiedby character varying(64),
-    lastmodifiedtime bigint,
-    place_burial character varying(1000),
-    place_burial_institution_type character varying(150),
-    place_burial_institution_name character varying(1000),
-    registration_no character varying(200),
-    ip_no character varying(200),
-    op_no character varying(200),
-    male_dependent_type character varying(200),
-    male_dependent_title character varying(200),
-    male_dependent_name_en character varying(200),
-    male_dependent_name_ml character varying(200),
-    male_dependent_aadharno character varying(150),
-    male_dependent_mobileno character varying(150),
-    male_dependent_mailid character varying(150),
-    female_dependent_type character varying(200),
-    female_dependent_title character varying(200),
-    female_dependent_name_en character varying(200),
-    female_dependent_name_ml character varying(200),
-    female_dependent_aadharno character varying(150),
-    female_dependent_mobileno character varying(150),
-    female_dependent_mailid character varying(150),
-    isvehicle smallint,
-    vehicle_hospital_ml character varying(500),
-    vehicle_hospital_en character varying(500),
-    vehicle_fromplace_ml character varying(500),
-    vehicle_fromplace_en character varying(500),
-    vehicle_toplace_ml character varying(500),
-    vehicle_toplace_en character varying(500),
-    vehicle_number character varying(500),
-    death_place_ward_id character varying(500),
-    informant_age character varying(500),
-    vehicle_driver_licenceno character varying(500),
-    death_signed_officer_designation character varying(500),
-    death_place_officer_mobile character varying(500),
-    death_place_officer_aadhaar character varying(500),
-    deseased_passportno character varying(500),
-    application_no character varying(500),
-    file_no character varying(500),
-    ack_no character varying(500),
-    dateofreport bigint,
-    registration_date bigint,
-    registration_no_id bigint
-);
-
-
-
-DROP TABLE IF EXISTS public.eg_death_dtls_registry_log ;
-
-CREATE TABLE public.eg_death_dtls_registry_log (
-    id character varying(64) NOT NULL,
-    registrationunit character varying(64),
-    tenantid character varying(50) NOT NULL,
-    correct_death_date_known smallint,
-    dateofdeath bigint,
-    time_of_death integer,
-    timeofdeath_unit character varying(50),
-    date_of_death_to bigint,
-    time_of_death_to integer,
-    timeofdeath_unit_to character varying(50),
-    deceased_identified smallint,
-    deceased_title character varying(50),
-    deceased_firstname_en character varying(200),
-    deceased_firstname_ml character varying(200),
-    deceased_middlename_en character varying(200),
-    deceased_middlename_ml character varying(200),
-    deceased_lastname_en character varying(200),
-    deceased_lastname_ml character varying(200),
-    deceased_aadhar_number character varying(150),
-    deceased_gender character varying(50),
-    age integer,
-    age_unit character varying(64),
-    dateofbirth bigint,
-    death_place character varying(200),
-    death_place_inst_type character varying(200),
-    death_place_inst_id character varying(200),
-    death_place_office_name character varying(200),
-    death_place_other_ml character varying(200),
-    death_place_other_en character varying(200),
-    informant_title character varying(200),
-    informant_name_en character varying(200),
-    informant_name_ml character varying(200),
-    informant_aadhar_submitted smallint,
-    informant_aadhar_no character varying(150),
-    informant_mobile_no character varying(150),
-    general_remarks character varying(500),
-    application_status character varying(150),
-    submitted_on bigint,
-    created_by character varying(64),
-    createdtime bigint,
-    lastmodifiedby character varying(64),
-    lastmodifiedtime bigint,
-    place_burial character varying(1000),
-    place_burial_institution_type character varying(150),
-    place_burial_institution_name character varying(1000),
-    registration_no character varying(200),
-    ip_no character varying(200),
-    op_no character varying(200),
-    male_dependent_type character varying(200),
-    male_dependent_title character varying(200),
-    male_dependent_name_en character varying(200),
-    male_dependent_name_ml character varying(200),
-    male_dependent_aadharno character varying(150),
-    male_dependent_mobileno character varying(150),
-    male_dependent_mailid character varying(150),
-    female_dependent_type character varying(200),
-    female_dependent_title character varying(200),
-    female_dependent_name_en character varying(200),
-    female_dependent_name_ml character varying(200),
-    female_dependent_aadharno character varying(150),
-    female_dependent_mobileno character varying(150),
-    female_dependent_mailid character varying(150),
-    isvehicle smallint,
-    vehicle_hospital_ml character varying(500),
-    vehicle_hospital_en character varying(500),
-    vehicle_fromplace_ml character varying(500),
-    vehicle_fromplace_en character varying(500),
-    vehicle_toplace_ml character varying(500),
-    vehicle_toplace_en character varying(500),
-    vehicle_number character varying(500),
-    death_place_ward_id character varying(500),
-    informant_age character varying(500),
-    vehicle_driver_licenceno character varying(500),
-    death_signed_officer_designation character varying(500),
-    death_place_officer_mobile character varying(500),
-    death_place_officer_aadhaar character varying(500),
-    deseased_passportno character varying(500),
-    application_no character varying(500),
-    file_no character varying(500),
-    ack_no character varying(500),
-    dateofreport bigint,
-    registration_date bigint,
-    registration_no_id bigint
-);
-
-
-
-DROP TABLE IF EXISTS public.eg_death_statistical_dtls ;
-
-CREATE TABLE public.eg_death_statistical_dtls (
-    id character varying(64) NOT NULL,
-    death_dtl_id character varying(64) NOT NULL,
+    death_dtl_id character varying(64),
     tenantid character varying(50) NOT NULL,
     residencelocalbody character varying(75),
     residence_place_type character varying(200),
@@ -552,149 +299,52 @@ CREATE TABLE public.eg_death_statistical_dtls (
     createdtime bigint,
     lastmodifiedby character varying(64),
     lastmodifiedtime bigint,
-    nationality character varying(200)
+    nationality character varying(200),
+	CONSTRAINT eg_death_statistical_registry_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_eg_death_dtls_registry FOREIGN KEY (death_dtl_id)
+        REFERENCES public.eg_death_dtls_registry (id)
 );
 
+-- Table: public.eg_death_address_registry
 
+DROP TABLE IF EXISTS public.eg_death_address_registry;
 
-DROP TABLE IF EXISTS public.eg_death_statistical_dtls_log ;
-
-CREATE TABLE public.eg_death_statistical_dtls_log (
-    id character varying(64) NOT NULL,
-    death_dtl_id character varying(64) NOT NULL,
-    tenantid character varying(50) NOT NULL,
-    residencelocalbody character varying(75),
-    residence_place_type character varying(200),
-    residencedistrict character varying(250),
-    residencestate character varying(100),
-    religion character varying(200),
-    religion_other character varying(100),
-    occupation character varying(100),
-    occupation_other character varying(500),
-    medical_attention_type character varying(500),
-    death_medically_certified smallint,
-    death_cause_main character varying(200),
-    death_cause_sub character varying(200),
-    death_cause_other character varying(200),
-    death_during_delivery integer,
-    smoking_num_years integer,
-    tobacco_num_years integer,
-    arecanut_num_years integer,
-    alcohol_num_years integer,
-    createdby character varying(64),
-    createdtime bigint,
-    lastmodifiedby character varying(64),
-    lastmodifiedtime bigint,
-    nationality character varying(200)
-);
-
-
-
-DROP TABLE IF EXISTS public.eg_death_statistical_registry ;
-
-CREATE TABLE public.eg_death_statistical_registry (
+CREATE TABLE IF NOT EXISTS public.eg_death_address_registry
+(
     id character varying(64) NOT NULL,
     death_dtl_id character varying(64),
     tenantid character varying(50) NOT NULL,
-    residencelocalbody character varying(100),
-    residence_place_type character varying(200),
-    residencedistrict character varying(250),
-    residencestate character varying(200),
-    religion character varying(200),
-    religion_other character varying(200),
-    occupation character varying(200),
-    occupation_other character varying(200),
-    medical_attention_type character varying(500),
-    death_medically_certified smallint,
-    death_cause_main character varying(200),
-    death_cause_sub character varying(200),
-    death_cause_other character varying(200),
-    death_during_delivery integer,
-    smoking_num_years integer,
-    tobacco_num_years integer,
-    arecanut_num_years integer,
-    alcohol_num_years integer,
+    addr_typeid character varying(50),
+    house_no character varying(100),
+    residence_assc_no character varying(100),
+    streetname_en character varying(200),
+    streetname_ml character varying(200),
+    locality_en character varying(200),
+    locality_ml character varying(200),
+    city_en character varying(200),
+    city_ml character varying(200),
+    ward_id character varying(100),
+    taluk_id character varying(100),
+    village_id character varying(200),
+    postoffice_id character varying(200),
+    pincode bigint,
+    district_id character varying(100),
+    state_id character varying(100),
+    country_id character varying(100),
+    taluk_name_en character varying(200),
+    taluk_name_ml character varying(200),
+    village_name_en character varying(200),
+    village_name_ml character varying(200),
+    postoffice_name_en character varying(200),
+    postoffice_name_ml character varying(200),
     createdby character varying(64),
     createdtime bigint,
     lastmodifiedby character varying(64),
     lastmodifiedtime bigint,
-    nationality character varying(200)
+    location_type character varying(150),
+    houename_ml character varying(200),
+    houename_en character varying(200),
+	CONSTRAINT eg_death_address_registry_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_eg_death_address_registry FOREIGN KEY (death_dtl_id)
+        REFERENCES public.eg_death_dtls_registry (id)
 );
-
-
-
-DROP TABLE IF EXISTS public.eg_death_statistical_registry_log ;
-
-CREATE TABLE public.eg_death_statistical_registry_log (
-    id character varying(64) NOT NULL,
-    death_dtl_id character varying(64),
-    tenantid character varying(50) NOT NULL,
-    residencelocalbody character varying(100),
-    residence_place_type character varying(200),
-    residencedistrict character varying(250),
-    residencestate character varying(200),
-    religion character varying(200),
-    religion_other character varying(200),
-    occupation character varying(200),
-    occupation_other character varying(200),
-    medical_attention_type character varying(500),
-    death_medically_certified smallint,
-    death_cause_main character varying(200),
-    death_cause_sub character varying(200),
-    death_cause_other character varying(200),
-    death_during_delivery integer,
-    smoking_num_years integer,
-    tobacco_num_years integer,
-    arecanut_num_years integer,
-    alcohol_num_years integer,
-    createdby character varying(64),
-    createdtime bigint,
-    lastmodifiedby character varying(64),
-    lastmodifiedtime bigint,
-    nationality character varying(200)
-);
-
-
-
-
---
--- TOC entry 3210 (class 2606 OID 17154)
--- Name: eg_death_address_dtls eg_death_address_dtls_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.eg_death_address_dtls
-    ADD CONSTRAINT eg_death_address_dtls_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 3208 (class 2606 OID 17147)
--- Name: eg_death_dtls eg_death_dtls_pkey1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.eg_death_dtls
-    ADD CONSTRAINT eg_death_dtls_pkey1 PRIMARY KEY (id);
-
-
---
--- TOC entry 3212 (class 2606 OID 17161)
--- Name: eg_death_statistical_dtls eg_death_statistical_dtls_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.eg_death_statistical_dtls
-    ADD CONSTRAINT eg_death_statistical_dtls_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 3213 (class 2606 OID 17162)
--- Name: eg_death_statistical_dtls fk_eg_death_dtls; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.eg_death_statistical_dtls
-    ADD CONSTRAINT fk_eg_death_dtls FOREIGN KEY (death_dtl_id) REFERENCES public.eg_death_dtls(id);
-
-
-
-
---
--- PostgreSQL database dump complete
---
