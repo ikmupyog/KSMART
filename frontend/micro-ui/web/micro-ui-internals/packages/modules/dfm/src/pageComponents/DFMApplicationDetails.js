@@ -1,4 +1,5 @@
-import { CardLabel, CitizenInfoLabel, FormStep, Loader, TextInput, Dropdown,FormInputGroup, DatePicker } from "@egovernments/digit-ui-react-components";
+import { CardLabel, CitizenInfoLabel, FormStep, Loader, TextInput, Dropdown,FormInputGroup, DatePicker,
+  SearchIconSvg } from "@egovernments/digit-ui-react-components";
 import { first } from "lodash";
 import React, { useState, useEffect } from "react";
 import Timeline from "../components/DFMTimeline";
@@ -125,6 +126,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
             </div>
             <div className="row">
             <div className="col-md-4">
+                {/* <SearchIconSvg className="signature-img" /> */}
                 <CardLabel>{`${t("DFM_TITLE")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
@@ -133,7 +135,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   option={cmbTitle}
                   selected={Title}
                   placeholder={`${t("DFM_TITLE")}`}
-                  select={setselectTitle}
+                  select={setselectTitle}                      
                 />
               </div>
               <div className="col-md-4">

@@ -89,13 +89,10 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
       <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!WardNo}>
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}></span>
-                </h1>
-              </div>
-            </div>
+          <div className="row">    
+          <div className="col-md-12" ><h1 className="headingh1" > </h1>
+          </div>  
+          </div>
 
             <div className="row">
               <div className="col-md-4">
