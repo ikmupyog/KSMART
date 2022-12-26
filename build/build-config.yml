@@ -608,6 +608,13 @@ config:
         dockerfile: "build/maven/Dockerfile"
       - work-dir: "municipal-services/birth-death-services/src/main/resources/db"
         image-name: "birth-death-services-db"
+  - name: "builds/upyog/municipal-services/death-services"
+    build:
+      - work-dir: "municipal-services/death-services"
+        image-name: "death-services"
+        dockerfile: "build/maven/Dockerfile"
+      - work-dir: "municipal-services/death-services/src/main/resources/db"
+        image-name: "death-services-db"
         
  # Utilities
  
