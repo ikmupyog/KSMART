@@ -50,7 +50,7 @@ public class CrDeathUtil {
         MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
                 .requestInfo(requestInfo).build();
 
-        System.out.println("mdmsreq1"+mdmsCriteriaReq);
+        // System.out.println("mdmsreq1"+mdmsCriteriaReq);
         return mdmsCriteriaReq;
     }
 

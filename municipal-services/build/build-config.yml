@@ -15,6 +15,14 @@ config:
         dockerfile: "build/maven/Dockerfile"
       - work-dir: "egov-user-event/src/main/resources/db"
         image-name: "egov-user-event-db"
+        
+   - name: "builds/municipal-services/death-services"
+    build:
+      - work-dir: "death-services"
+        image-name: "death-services"
+        dockerfile: "build/maven/Dockerfile"
+      - work-dir: "death-services/src/main/resources/db"
+        image-name: "death-services-db"
 
   - name: "builds/municipal-services/pt-calculator-v2"
     build:

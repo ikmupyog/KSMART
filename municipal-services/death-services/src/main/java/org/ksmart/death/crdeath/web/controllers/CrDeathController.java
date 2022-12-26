@@ -55,17 +55,17 @@ public class CrDeathController implements CrDeathResource  {
     @PostMapping("/crdeathdetails/_create")
     public ResponseEntity<CrDeathDtlResponse> create(@Valid @RequestBody CrDeathDtlRequest request) {
 
-        System.out.println("hai");
+        // System.out.println("hai");
            /********************************************* */
 
-        try {
-                ObjectMapper mapper = new ObjectMapper();
-                Object obj = request;
-                mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-               System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
-        }catch(Exception e) {
-            log.error("Exception while fetching from searcher: ",e);
-        }
+        // try {
+        //         ObjectMapper mapper = new ObjectMapper();
+        //         Object obj = request;
+        //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //        System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
+        // }catch(Exception e) {
+        //     log.error("Exception while fetching from searcher: ",e);
+        // }
 
  
         /********************************************** */

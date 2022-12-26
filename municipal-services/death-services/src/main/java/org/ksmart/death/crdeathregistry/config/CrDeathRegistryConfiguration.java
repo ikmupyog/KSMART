@@ -51,11 +51,9 @@ public class CrDeathRegistryConfiguration {
     @Value("${egov.idgen.deathackno.format}")
     private String deathACKFormat;
 
-    // @Value("${egov.crdeath.regNo.name}")
-    // private String deathRegNoName;
-
-    // @Value("${egov.crdeath.regNo.format}")
-    // private String deathRegNoFormat;
+    //Rakhi S on 24.12.2022 
+    @Value("${egov.state.level.tenant.id}")
+    private String egovStateLevelTenant;
 
 
 

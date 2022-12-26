@@ -33,10 +33,10 @@ public class MDMSValidator {
                             ,CrDeathConstants.HOSPITAL_LIST,CrDeathConstants.DEATH_PLACE};
         validateIfMasterPresent(masterArray,masterData);
 
-        System.out.println("hairakhi4"+masterData.get(CrDeathConstants.TENANTS));
-        System.out.println("rakhi1"+request.getDeathCertificateDtls().get(0).getTenantId());
-        System.out.println("resultcompare:"+masterData.get(CrDeathConstants.TENANTS)
-        .contains(request.getDeathCertificateDtls().get(0).getTenantId()));
+        // System.out.println("hairakhi4"+masterData.get(CrDeathConstants.TENANTS));
+        // System.out.println("rakhi1"+request.getDeathCertificateDtls().get(0).getTenantId());
+        // System.out.println("resultcompare:"+masterData.get(CrDeathConstants.TENANTS)
+        // .contains(request.getDeathCertificateDtls().get(0).getTenantId()));
 
         if(!masterData.get(CrDeathConstants.TENANTS)
                 .contains(request.getDeathCertificateDtls().get(0).getTenantId()))
@@ -73,14 +73,14 @@ public class MDMSValidator {
 
         if(!masterData.get(CrDeathConstants.MALE_DEPENDENT_TYPE)
                                 .contains(request.getDeathCertificateDtls().get(0).getMaleDependentType()))
-                    errorMap.put("MALE DEPENDENT INVALID", "The deceased father/husband/son details " +
+                    errorMap.put("MALE DEPENDENT INVALID", "The deceased father/husband details " +
                                     request.getDeathCertificateDtls().get(0).getMaleDependentType()+ " is invalid");
 
 
         // if(request.getDeathCertificateDtls().get(0).getFemaleDependentType() != null) {
             if(!masterData.get(CrDeathConstants.FEMALE_DEPENDENT_TYPE)
                                     .contains(request.getDeathCertificateDtls().get(0).getFemaleDependentType()))
-                        errorMap.put("FEMALE DEPENDENT INVALID", "The deceased mother/wife/daughter details " +
+                        errorMap.put("FEMALE DEPENDENT INVALID", "The deceased mother details " +
                                         request.getDeathCertificateDtls().get(0).getFemaleDependentType()+ " is invalid");
 
         // }
@@ -125,15 +125,15 @@ public class MDMSValidator {
             }
            
         });
-        System.out.println("mdmsResMap"+mdmsResMap);
+        // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
     }
     private void validateIfMasterPresent(String[] masterNames, Map<String, List<String>> codes){
-        System.out.println("codescheck"+codes);
+        // System.out.println("codescheck"+codes);
         Map<String,String> errorMap = new HashMap<>();
         for(String masterName : masterNames){
-            System.out.println("masterName"+masterName);
-            System.out.println("codesfound1"+codes.containsKey(masterName));
+            // System.out.println("masterName"+masterName);
+            // System.out.println("codesfound1"+codes.containsKey(masterName));
             // if(CollectionUtils.isEmpty(codes.get(masterName))){
                 if(!codes.containsKey(masterName)){
                 errorMap.put("MDMS DATA ERROR ","Unable to fetch "+ masterName + " codes from MDMS ");
