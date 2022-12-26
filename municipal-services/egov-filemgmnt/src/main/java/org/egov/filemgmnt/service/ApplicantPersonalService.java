@@ -70,7 +70,7 @@ public class ApplicantPersonalService {
 
         producer.push(fmConfig.getSaveApplicantPersonalTopic(), request);
 
-        wfIntegrator.callWorkFlow(request);
+        // wfIntegrator.callWorkFlow(request);
 
         return request.getApplicantPersonals();
 
