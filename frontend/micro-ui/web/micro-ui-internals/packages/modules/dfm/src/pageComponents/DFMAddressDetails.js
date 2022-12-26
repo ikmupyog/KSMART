@@ -20,7 +20,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
   const [ResAssociationNo, setResAssociationNo] = useState(formData?.AddressDet?.ResAssociationNo);
   const [LocalPlace, setLocalPlace] = useState(formData?.AddressDet?.LocalPlace);
   const [MainPlace, setMainPlace] = useState(formData?.AddressDet?.MainPlace);
-
+  console.log(formData);
   let cmbPostOffice = [];
   PostOffice &&
     PostOffice["common-masters"] &&

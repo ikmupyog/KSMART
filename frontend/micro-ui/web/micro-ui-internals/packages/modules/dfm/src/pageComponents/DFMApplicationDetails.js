@@ -26,7 +26,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   const [MotherLastName, setMotherLastName] = useState(formData?.ApplicantDetails?.MotherLastName);
   const [CategoryList, setCategoryList] = useState(formData?.ApplicantDetails?.CategoryList);
   const [AccountNo, setAccountNo] = useState(formData?.ApplicantDetails?.AccountNo);
-
+  console.log(formData);
   let cmbTitle = [];
   TitleList &&
     TitleList["common-masters"] &&
@@ -202,7 +202,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   value={MobileNo}
                   onChange={setSelectMobileNo}
                   placeholder={`${t("DFM_MOBILE_NO")}`}
-                  {...(validation = { pattern: "^(+d{1,3}[- ]?)?d{10}$", isRequired: true, type: "text", title: t("DFM_INVALID_MOBILE_NO") })}
+                  {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "text", title: t("DFM_INVALID_MOBILE_NO") })}
                 />
               </div>
             </div>

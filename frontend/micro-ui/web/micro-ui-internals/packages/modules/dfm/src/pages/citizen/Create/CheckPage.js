@@ -1,5 +1,7 @@
-import {  Card,  CardHeader,  CardSubHeader,  CardText,  CardLabel ,  CitizenInfoLabel,
-  LinkButton,  Row,  StatusTable,  SubmitBar,} from "@egovernments/digit-ui-react-components";
+import {
+  Card, CardHeader, CardSubHeader, CardText, CardLabel, CitizenInfoLabel,
+  LinkButton, Row, StatusTable, SubmitBar,
+} from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -36,12 +38,11 @@ const CheckPage = ({ onSubmit, value }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { applicationData, address, owners, propertyType, subtype, pitType, pitDetail, isEditProperty, cpt } = value;
+  const { ApplicantDetails, AddressDet, ServiceDet, DocumentDet } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${
-      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-    }`;
+    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+      }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = '';
@@ -50,46 +51,86 @@ const CheckPage = ({ onSubmit, value }) => {
   //   routeLink = `${getPath(match.path, match.params)}`;
   //   routeLink = routeLink.replace("/check", "");
   // }
-  console.log("value" + value?.FileManagement?.applicationData?.aadharNo);
+  console.log("value" + ApplicantDetails?.FirstName);
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
-      <label style={{ fontSize: "17px", fontWeight: "bold" }} >{t("Summary Details")}</label>
+        <label style={{ fontSize: "17px", fontWeight: "bold" }} >{t("Summary Details")}</label>
         <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Application Details")}`}</span></h1>
           </div>
         </div>
-       <StatusTable>
-          <div className="row">
-             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Applicant Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.firstName)}&nbsp;{t(value?.FileManagement?.applicationData?.lastName)}</CardText>
+        <StatusTable>
+          <div className="content">
+            <div className="row">
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Applicant Name")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FirstName)}&nbsp;{t(ApplicantDetails?.LastName)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Date of Birth")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.DateofBirth)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Aadhar No")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.AadharNo)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList.name)}</CardText>
+              </div>
             </div>
-           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Aadhar No")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.aadharNo)}</CardText>
+            <div className="row">
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FatherFirstName)}&nbsp;{t(ApplicantDetails?.FatherLastName)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MotherFirstName)}&nbsp;{t(ApplicantDetails?.MotherLastName)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Email")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.Email)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mobile No")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MobileNo)}</CardText>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
+              </div>
             </div>
           </div>
-          <div className="row">
-             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("email")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.email)}</CardText>
+          <div className="content">
+            <div className="row">
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Applicant Name")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FirstName)}&nbsp;{t(ApplicantDetails?.LastName)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Date of Birth")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.DateofBirth)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Aadhar No")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.AadharNo)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList.name)}</CardText>
+              </div>
             </div>
-           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mobile No")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.mobileNo)}</CardText>
+            <div className="row">
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FatherFirstName)}&nbsp;{t(ApplicantDetails?.FatherLastName)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MotherFirstName)}&nbsp;{t(ApplicantDetails?.MotherLastName)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Email")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.Email)}</CardText>
+              </div>
+              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mobile No")}`}</CardLabel>
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MobileNo)}</CardText>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
+              </div>
             </div>
           </div>
-          <div className="row">
-             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Date Of Birth")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.dob)}</CardText>
-            </div>
-           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(value?.FileManagement?.applicationData?.category.name)}</CardText>
-            </div>
-          </div>
-          <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
-          </div>
-        </div>
         </StatusTable>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>

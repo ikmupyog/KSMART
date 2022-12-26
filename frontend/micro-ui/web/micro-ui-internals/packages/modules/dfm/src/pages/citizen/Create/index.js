@@ -90,7 +90,6 @@ const CreateTradeLicence = ({ parentRoute }) => {
 
   
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
-    console.log('h',data);
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     if(key === "isSkip" && data === true)
     {

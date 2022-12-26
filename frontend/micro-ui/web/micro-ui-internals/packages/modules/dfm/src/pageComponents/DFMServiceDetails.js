@@ -37,7 +37,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   const [NameOccupier, setNameOccupier] = useState(formData?.ServiceDet?.NameOccupier);
   const [ResidenceDuration, setResidenceDuration] = useState(formData?.ServiceDet?.ResidenceDuration);
   const [ServiceDetailsTxt, setServiceDetailsTxt] = useState(formData?.ServiceDet?.ServiceDetailsTxt);
-
+  console.log(formData);
   function setSelectedBuldingNo(e) {
     setBuldingNo(e.target.value);
   }

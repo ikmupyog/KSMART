@@ -3,19 +3,7 @@ import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
-  console.log("DocumentType");
-  const [documentDetails, setDocumentDetails] = useState(
-    formData?.FileManagement?.documentDetails
-      ? formData.FileManagement.documentDetails
-      : {
-        documentType: [],
-        attachementFile: "",
-        fileStoreId: "",
-      }
-  );
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [file, setFile] = useState();
-  const [error, setError] = useState(null);
+
   const [termsCheck, setTermsCheck] = useState(false);
   const [fileCheck, setFileCheck] = useState(false);
   const cityDetails = Digit.ULBService.getCurrentUlb();
@@ -25,7 +13,10 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { data: DocumentType = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "IdProof");
   const [DocumentTypeList, setDocumentTypeList] = useState(formData?.DocumentDet?.DocumentTypeList);
-
+  const [uploadedFile, setUploadedFile] = useState(formData?.DocumentDet?.fileStoreId || null);
+  const [file, setFile] = useState(formData?.DocumentDet?.OwnerPhotoProof);
+  const [error, setError] = useState(null);
+  console.log(formData);
   let cmbDocumentType = [];
   DocumentType &&
     DocumentType["common-masters"] &&
@@ -52,9 +43,24 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
       }
     }
   };
+  const handleSubmit = () => {
+    let fileStoreId = uploadedFile;
+    let fileDetails = file;
+    // if (fileDetails) fileDetails.documentType = "OWNERPHOTO";
+    // if (fileDetails) fileDetails.fileStoreId = fileStoreId ? fileStoreId : null;
+    // let owners = formData?.owners;
+    // if (owners && owners.documents) {
+    //   owners.documents["OwnerPhotoProof"] = fileDetails;
+    // } else {
+    //   owners["documents"] = [];
+    //   owners.documents["OwnerPhotoProof"] = fileDetails;
+    // }
+    onSelect(config.key, owners);
+    // onSelect(config.key, { specialProofIdentity: fileDetails }, "", index);
+  };
   const goNext = () => {
     sessionStorage.setItem("DocumentTypeList", DocumentTypeList ? DocumentTypeList.code : null);
-    onSelect(config.key, { documentDetails, DocumentTypeList });
+    onSelect(config.key, { file, DocumentTypeList });
 
   }
   const onSkip = () => onSelect();
@@ -62,32 +68,28 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   function selectfile(e) {
     setUploadedFile(null);
     setFile(e.target.files[0]);
-    let tempData = { ...documentDetails };
-    tempData.attachementFile = e.target.files[0];
-    tempData.fileStoreId = null;
-    setDocumentDetails(tempData);
   }
 
   useEffect(() => {
     (async () => {
       setError(null);
-      let tempData = { ...documentDetails };
-      if (file && file?.type) {
-        if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
+      if (file&& file?.type) {
+        if(!(acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)))
+        {
           setError(t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"));
-        } else if (file.size >= 2000000) {
+        }
+        else if (file.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
-              tempData.fileStoreId = response?.data?.files[0]?.fileStoreId;
-              setDocumentDetails(tempData);
             } else {
               setError(t("PT_FILE_UPLOAD_ERROR"));
             }
-          } catch (err) { }
+          } catch (err) {
+          }
         }
       }
     })();
@@ -124,16 +126,18 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
             <div className="col-md-4">
               <CardLabel>{`${t("DFM_ATTACH_DOCUMENT")}`}</CardLabel>
               <UploadFile
-                id={"dfm-doc"}
+                id={"tl-doc"}
                 extraStyleName={"propertyCreate"}
                 accept=".jpg,.png,.pdf"
                 onUpload={selectfile}
                 onDelete={() => {
                   setUploadedFile(null);
                 }}
-                message={documentDetails.fileStoreId ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                 error={error}
               />
+              {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
+              <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
             </div>
           </div>
         </div>
