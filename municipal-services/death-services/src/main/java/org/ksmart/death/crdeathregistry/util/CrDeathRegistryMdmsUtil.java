@@ -178,26 +178,55 @@ public class CrDeathRegistryMdmsUtil {
     }
 
     
-    /**
-     * Creates request to search Gender Type in mdms
+    //RAkhi S ikm on 23.12.2022
+    public Object mDMSCallCertificate(RequestInfo requestInfo, String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificate(requestInfo, tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+
+    //RAkhi S ikm on 23.12.2022
+    private MdmsCriteriaReq getMDMSRequestCertificate(RequestInfo requestInfo, String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        ModuleDetail GenderTypeRequest = getGenderTypeRequest();
+        // List<ModuleDetail> BNDListRequest = getBNDListRequest();
+
+        
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);
+        moduleDetails.add(GenderTypeRequest);
+        // moduleDetails.addAll(BNDListRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+        System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+
+     /**
+     * Creates request to search tenantID in mdms
      * 
-     * @return MDMS request for DeathPlace master
+     * @return MDMS request for tenantID
      */
-    // private ModuleDetail getDeathPlaceRequest() {
+    //RAkhi S ikm on 23.12.2022
+    private ModuleDetail getTenantIdCertificate(String tenantId) {
 
-    //     // master details for crDeath module
-    //     List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+        // master details for crDeath module
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
-    //     // filter to only get code field from master data    
-    //     final String filterCode = "$.[?(@.active==true)].code";
-    //     crDeathMasterDetails
-    //             .add(MasterDetail.builder().name(CrDeathConstants.DEATH_PLACE).filter(filterCode).build());
+        // filter to only get code field from master data    
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.TENANTS).filter(filterCode).build());       
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(CrDeathRegistryConstants.TENANT_MODULE_NAME).build();
+
        
-
-    //     ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
-    //             .moduleName(CrDeathConstants.DEATH_PLACE_MODULE_NAME).build();
-
-       
-    //     return crDeathModuleDtls;
-    // }
+        return crDeathModuleDtls;
+    }
 }

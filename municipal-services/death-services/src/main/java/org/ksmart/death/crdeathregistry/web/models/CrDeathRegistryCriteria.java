@@ -37,4 +37,42 @@ public class CrDeathRegistryCriteria {
 
     @JsonProperty("registration_no")
     private String registrationNo;
+
+    //Rakhi S on 15.12.2022
+    public enum SourceEnum {
+    	sms("sms"),
+        
+        email("email"),
+        
+        ivr("ivr"),
+        
+        mobileapp("mobileapp"),
+        
+        whatsapp("whatsapp"),
+        
+        csc("csc"),
+        
+        web("web");
+
+        private String value;
+
+        SourceEnum(String value) {
+          this.value = value;
+        }
+
+        @Override
+        public String toString() {
+          return String.valueOf(value);
+        }
+
+        public static SourceEnum fromValue(String text) {
+          for (SourceEnum b : SourceEnum.values()) {
+            if (String.valueOf(b.value).equals(text)) {
+              return b;
+            }
+          }
+          return null;
+        }
+      }
+    private SourceEnum source;
 }

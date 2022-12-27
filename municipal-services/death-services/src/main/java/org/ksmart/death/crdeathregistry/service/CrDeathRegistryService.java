@@ -1,8 +1,10 @@
 package org.ksmart.death.crdeathregistry.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.egov.common.contract.request.RequestInfo;
+import org.egov.tracer.model.CustomException;
 import org.ksmart.death.crdeath.kafka.producer.CrDeathProducer;
 import org.ksmart.death.crdeath.validators.CrDeathValidator;
 import org.ksmart.death.crdeath.validators.MDMSValidator;
@@ -15,6 +17,10 @@ import org.ksmart.death.crdeathregistry.enrichment.CrDeathRegistryEnrichment;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryCriteria;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryRequest;
+import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathCertRequest;
+import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathCertificate;
+import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathPdfApplicationRequest;
+import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathPdfResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -108,5 +114,35 @@ public class CrDeathRegistryService {
      public List<CrDeathRegistryDtl> search(CrDeathRegistryCriteria criteria, RequestInfo requestInfo) {
 	    // validatorService.validateSearch(requestInfo, criteria);
 		return repository.getDeathApplication(criteria);
+     }
+     
+     //Certificate download Rakhi S IKM on 15.12.2022
+     public DeathCertificate download(CrDeathRegistryCriteria criteria, RequestInfo requestInfo) {
+      try{
+          DeathCertificate deathCertificate = new DeathCertificate();
+          deathCertificate.setSource(criteria.getSource().toString());
+          deathCertificate.setDeathDtlId(criteria.getId());
+          deathCertificate.setTenantId(criteria.getTenantId());
+          DeathCertRequest deathCertRequest = DeathCertRequest.builder().deathCertificate(deathCertificate).requestInfo(requestInfo).build();
+          List<CrDeathRegistryDtl> deathDtls = repository.getDeathApplication(criteria);     
+
+        DeathPdfApplicationRequest applicationRequest = DeathPdfApplicationRequest.builder().requestInfo(requestInfo).deathCertificate(deathDtls).build();
+        DeathPdfResp pdfResp = repository.saveDeathCertPdf(applicationRequest);
+        //Rakhi S on 19.12.2022
+        deathCertificate.setEmbeddedUrl(applicationRequest.getDeathCertificate().get(0).getEmbeddedUrl());
+        deathCertificate.setDateofissue(applicationRequest.getDeathCertificate().get(0).getDateofissue());
+        deathCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
+        deathCertificate.setApplicationStatus(DeathCertificate.StatusEnum.FREE_DOWNLOAD);
+        //Rakhi S on 21.12.2022
+        deathCertificate.setId(UUID.randomUUID().toString());
+        deathCertificate.setDeathcertificateno(applicationRequest.getDeathCertificate().get(0).getDeathACKNo());
+        deathCertificate.setAuditDetails(applicationRequest.getDeathCertificate().get(0).getAuditDetails());
+        repository.save(deathCertRequest);
+        return deathCertificate;
+      }
+		  catch(Exception e) {
+          e.printStackTrace();
+          throw new CustomException("DOWNLOAD_ERROR","Error in Downloading Certificate");
+		}
      }
 }

@@ -199,14 +199,10 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
          
          StringBuilder query = new StringBuilder(QUERY);
     
-        // System.out.println("RAkhiPreparedStmt"+preparedStmtValues);
-        // System.out.println("idCheck"+criteria.getId());
          addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
          addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
          addFilter("dt.deceased_aadhar_number", criteria.getAadhaarNo(), query, preparedStmtValues);   
-         addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);    
-         System.out.println("JasmineSearchRenantId"+criteria.getTenantId());    
-         System.out.println("JasmineSearchQuery"+query);                                              
+         addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);                                               
          return query.toString();
        }   
        

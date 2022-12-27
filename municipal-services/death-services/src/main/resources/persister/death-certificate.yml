@@ -1,0 +1,72 @@
+serviceMaps:
+  serviceName: death-services
+  mappings:
+    - version: 1.0
+      description: Persists deathCertificate details in eg_death_cert_request  table
+      fromTopic: save-deathcertificate-topic
+      isTransaction: true
+      queryMaps:
+        - query: INSERT INTO public.eg_death_cert_request(
+                 id, deathcertificateno, createdby, createdtime, deathdtlid, filestoreid, lastmodifiedtime, lastmodifiedby, status, 
+                 embeddedurl, dateofissue)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+          basePath: deathCertificate
+          jsonMaps:
+            - jsonPath: $.deathCertificate.id
+
+            - jsonPath: $.deathCertificate.deathcertificateno
+
+            - jsonPath: $.deathCertificate.auditDetails.createdBy
+
+            - jsonPath: $.deathCertificate.auditDetails.createdTime
+
+            - jsonPath: $.deathCertificate.deathDtlId
+
+            - jsonPath: $.deathCertificate.filestoreid
+
+            - jsonPath: $.deathCertificate.auditDetails.lastModifiedTime
+
+            - jsonPath: $.deathCertificate.auditDetails.lastModifiedBy
+
+            - jsonPath: $.deathCertificate.applicationStatus
+
+            # - jsonPath: $.deathCertificate.additionaldetail
+
+            - jsonPath: $.deathCertificate.embeddedUrl
+
+            - jsonPath: $.deathCertificate.dateofissue
+
+        - query: INSERT INTO eg_death_cert_request_audit SELECT * FROM eg_death_cert_request WHERE id = ?;
+          basePath: deathCertificate
+          jsonMaps:
+
+              - jsonPath: $.deathCertificate.id
+        - query: UPDATE public.eg_death_cert_request
+                SET  deathcertificateno=?, createdby=?, createdtime=?, deathdtlid=?, filestoreid=?, lastmodifiedtime=?, lastmodifiedby=?, 
+                status=?, embeddedurl=?, dateofissue=?
+                 WHERE id=?;
+          basePath: deathCertificate
+          jsonMaps:
+            - jsonPath: $.deathCertificate.deathcertificateno
+
+            - jsonPath: $.deathCertificate.auditDetails.createdBy
+
+            - jsonPath: $.deathCertificate.auditDetails.createdTime
+
+            - jsonPath: $.deathCertificate.deathDtlId
+
+            - jsonPath: $.deathCertificate.filestoreid
+
+            - jsonPath: $.deathCertificate.auditDetails.lastModifiedTime
+
+            - jsonPath: $.deathCertificate.auditDetails.lastModifiedBy
+
+            - jsonPath: $.deathCertificate.applicationStatus
+
+            # - jsonPath: $.deathCertificate.additionaldetail
+
+            - jsonPath: $.deathCertificate.embeddedUrl
+
+            - jsonPath: $.deathCertificate.dateofissue
+
+            - jsonPath: $.deathCertificate.id

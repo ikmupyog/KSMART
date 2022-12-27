@@ -357,7 +357,32 @@ public class CrDeathRegistryDtl {
     //     return this;
     // }
 
+    //RAkhi S on 16.12.2022
+    private String embeddedUrl;   
 
+    private String fullName;
+
+    private String motherName;
+
+    private String maledependentname;
+
+    private String gender;
+
+    private String presentAddressFullMl;
+
+    private String presentAddressFullEn;
+
+    private String permanentAddressFullMl;
+
+    private String permanentAddressFullEn;
+
+    private Long registrationdate;
+
+    //RAkhi S on 19.12.2022
+
+    private String localBodyName;
+
+    private Long dateofissue;
     
    
 }

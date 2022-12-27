@@ -11,7 +11,8 @@ import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryCriteria;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryRequest;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryResponse;
-
+import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathCertResponse;
+import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathCertificate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -106,6 +107,17 @@ public ResponseEntity<CrDeathRegistryResponse> update(@RequestBody CrDeathRegist
                                             .build();
       return ResponseEntity.ok(response);
   }
-
+    //Certificate Download by Rakhi S on 15.12.2022
+    @PostMapping("/crdeathregistry/_download")
+    public ResponseEntity<DeathCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
+                                                    @Valid @ModelAttribute CrDeathRegistryCriteria criteria){
+    DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
+    
+    DeathCertResponse response = DeathCertResponse.builder().filestoreId(deathCert.getFilestoreid()).responseInfo(
+       responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+       .build();
+       return ResponseEntity.ok(response);
+ }
+ 
 
 }

@@ -51,9 +51,32 @@ public class CrDeathRegistryConfiguration {
     @Value("${egov.idgen.deathackno.format}")
     private String deathACKFormat;
 
+     //Rakhi S on 16.12.2022
+     @Value("${egov.ui.app.host}")
+     private String uiAppHost;
+ 
+     @Value("${egov.bnd.deathcert.link}")
+     private String deathCertLink;
+ 
+     @Value("${egov.url.shortner.host}")
+     private String urlShortnerHost;
+ 
+     @Value("${egov.url.shortner.endpoint}")
+     private String urlShortnerEndpoint;
+ 
+     @Value("${egov.pdfservice.host}")
+     private String	egovPdfHost;
+ 
+     @Value("${egov.pdf.deathcert.createEndPoint}")
+     private String	egovPdfDeathEndPoint;    
+
     //Rakhi S on 24.12.2022 
     @Value("${egov.state.level.tenant.id}")
     private String egovStateLevelTenant;
+
+    //Rakhi S on 27.12.2022 
+    @Value("${persister.save.deathcertificate.topic}")
+    private String saveDeathTopic;
 
 
 
