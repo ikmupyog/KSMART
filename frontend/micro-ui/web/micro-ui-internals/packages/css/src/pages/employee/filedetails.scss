@@ -6,3 +6,19 @@
 .border-active{
     border-bottom: 1px solid #edf2f9;
 }
+.wrapper-app{
+    background: white;
+    padding: 20px 0px 20px 40px;
+    border-radius: 20px;
+    width: 65%;
+}
+.timeline-wrapper{
+    background: white;
+    padding: 20px 0px 20px 40px;
+    border-radius: 20px;
+    width: 25%;
+}
+.file-main{
+    display: flex;
+    justify-content: space-evenly;
+}

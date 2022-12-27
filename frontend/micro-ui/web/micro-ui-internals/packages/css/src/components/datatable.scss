@@ -35,6 +35,7 @@
 .employee-data-table {
   .row {
     @apply flex pb-sm mb-sm;
+    border-bottom: 1px solid #edf2f9;
 
     span {
       width: 70%;
@@ -43,12 +44,14 @@
 
     h2 {
       width: 30%;
-      @apply font-bold text-heading-s;
+      font-weight: 400;
+      padding: 15px;
     }
 
     .value {
       width: 50%;
       @apply text-heading-s;
+      font-weight: 700;
     }
 
     .caption {
