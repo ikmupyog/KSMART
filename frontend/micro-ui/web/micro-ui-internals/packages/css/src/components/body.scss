@@ -818,23 +818,28 @@ h2.span {
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
-.collapsible {
-  background-color: #eee;
-  color: #444;
+.accordion {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.accordion-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
+  background-color: #21aeca;
 }
-.active, .collapsible:hover {
-  background-color: #ccc;
+
+.accordion-title:hover {
+  background-color: #3ab4cc;
 }
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
+
+.accordion-title,
+.accordion-content {
+  padding: 1rem;
+}
+
+.accordion-content {
+  background-color: #39b9d2;
 }
