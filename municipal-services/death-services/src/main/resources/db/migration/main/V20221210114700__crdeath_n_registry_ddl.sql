@@ -1,6 +1,6 @@
-ALTER TABLE eg_death_dtls RENAME TO eg_death_dtls_old;
+--ALTER TABLE eg_death_dtls RENAME TO eg_death_dtls_old;
 
-DROP TABLE IF EXISTS public.eg_death_dtls;
+--DROP TABLE IF EXISTS public.eg_death_dtls;
 
 CREATE TABLE IF NOT EXISTS public.eg_death_dtls
 (
@@ -95,9 +95,9 @@ CREATE TABLE IF NOT EXISTS public.eg_death_dtls
 );
 
 -- Table: public.eg_death_statistical_dtls
-ALTER TABLE eg_death_dtls RENAME TO eg_death_statistical_dtls_old;
 
-DROP TABLE IF EXISTS public.eg_death_statistical_dtls;
+
+--DROP TABLE IF EXISTS public.eg_death_statistical_dtls;
 
 CREATE TABLE IF NOT EXISTS public.eg_death_statistical_dtls
 (
@@ -133,9 +133,9 @@ CREATE TABLE IF NOT EXISTS public.eg_death_statistical_dtls
 );
 
 -- Table: public.eg_death_address_dtls
-ALTER TABLE eg_death_dtls RENAME TO eg_death_address_dtls_old;
 
-DROP TABLE IF EXISTS public.eg_death_address_dtls;
+
+--DROP TABLE IF EXISTS public.eg_death_address_dtls;
 
 CREATE TABLE IF NOT EXISTS public.eg_death_address_dtls
 (
@@ -179,9 +179,9 @@ CREATE TABLE IF NOT EXISTS public.eg_death_address_dtls
 
 -- Table public.eg_death_dtls_registry
 
-ALTER TABLE eg_death_dtls RENAME TO eg_death_dtls_registry_old;
 
-DROP TABLE IF EXISTS public.eg_death_dtls_registry;
+
+--DROP TABLE IF EXISTS public.eg_death_dtls_registry;
 
 CREATE TABLE IF NOT EXISTS public.eg_death_dtls_registry
 (
@@ -272,9 +272,9 @@ CREATE TABLE IF NOT EXISTS public.eg_death_dtls_registry
 );
 
 -- Table: public.eg_death_statistical_registry
-ALTER TABLE eg_death_dtls RENAME TO eg_death_statistical_registry_old;
 
-DROP TABLE IF EXISTS public.eg_death_statistical_registry;
+
+--DROP TABLE IF EXISTS public.eg_death_statistical_registry;
 
 CREATE TABLE IF NOT EXISTS public.eg_death_statistical_registry
 (
@@ -310,9 +310,9 @@ CREATE TABLE IF NOT EXISTS public.eg_death_statistical_registry
 );
 
 -- Table: public.eg_death_address_registry
-ALTER TABLE eg_death_dtls RENAME TO eg_death_address_registry_old;
 
-DROP TABLE IF EXISTS public.eg_death_address_registry;
+
+--DROP TABLE IF EXISTS public.eg_death_address_registry;
 
 CREATE TABLE IF NOT EXISTS public.eg_death_address_registry
 (
@@ -354,7 +354,7 @@ CREATE TABLE IF NOT EXISTS public.eg_death_address_registry
         REFERENCES public.eg_death_dtls_registry (id)
 );
 
-DROP TABLE IF EXISTS public.eg_death_address_dtls_log ;
+--DROP TABLE IF EXISTS public.eg_death_address_dtls_log ;
 
 CREATE TABLE public.eg_death_address_dtls_log (
     id character varying(64) NOT NULL,
@@ -392,7 +392,7 @@ CREATE TABLE public.eg_death_address_dtls_log (
     houename_en character varying(200)
 );
 
-DROP TABLE IF EXISTS public.eg_death_address_registry_log ;
+--DROP TABLE IF EXISTS public.eg_death_address_registry_log ;
 
 CREATE TABLE public.eg_death_address_registry_log (
     id character varying(64) NOT NULL,
@@ -429,7 +429,7 @@ CREATE TABLE public.eg_death_address_registry_log (
     houename_ml character varying(200),
     houename_en character varying(200)
 );
-DROP TABLE IF EXISTS public.eg_death_dtls_log ;
+--DROP TABLE IF EXISTS public.eg_death_dtls_log ;
 
 CREATE TABLE public.eg_death_dtls_log (
     id character varying(64) NOT NULL,
@@ -523,7 +523,7 @@ CREATE TABLE public.eg_death_dtls_log (
 
 
 
-DROP TABLE IF EXISTS public.eg_death_dtls_registry_log ;
+--DROP TABLE IF EXISTS public.eg_death_dtls_registry_log ;
 
 CREATE TABLE public.eg_death_dtls_registry_log (
     id character varying(64) NOT NULL,
@@ -612,7 +612,7 @@ CREATE TABLE public.eg_death_dtls_registry_log (
 );
 
 
-DROP TABLE IF EXISTS public.eg_death_statistical_dtls_log ;
+--DROP TABLE IF EXISTS public.eg_death_statistical_dtls_log ;
 
 CREATE TABLE public.eg_death_statistical_dtls_log (
     id character varying(64) NOT NULL,
@@ -644,7 +644,7 @@ CREATE TABLE public.eg_death_statistical_dtls_log (
 );
 
 
-DROP TABLE IF EXISTS public.eg_death_statistical_registry_log ;
+--DROP TABLE IF EXISTS public.eg_death_statistical_registry_log ;
 
 CREATE TABLE public.eg_death_statistical_registry_log (
     id character varying(64) NOT NULL,
