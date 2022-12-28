@@ -115,11 +115,11 @@ export const CRLinks = ({ matchPath, userType }) => {
     clearParams();
   }, []);
 
-  // const links = [
-  //   {
-  //     link: `${matchPath}/tradelicence/new-application`,
-  //     i18nKey: t("TL_CREATE_TRADE"),
-  //   },
+  const links = [
+    {
+      link: `${matchPath}/tradelicence/new-application`,
+      i18nKey: t("CR_CREATE_TRADE"),
+    },
   //   {
   //     link: `${matchPath}/tradelicence/renewal-list`,
   //     i18nKey: t("TL_RENEWAL_HEADER"),
@@ -128,7 +128,7 @@ export const CRLinks = ({ matchPath, userType }) => {
   //     link: `${matchPath}/tradelicence/my-application`,
   //     i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
   //   },
-  // ];
+  ];
 
   // return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
 };
