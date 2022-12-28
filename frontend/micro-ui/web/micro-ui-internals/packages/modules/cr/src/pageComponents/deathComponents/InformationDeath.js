@@ -22,9 +22,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
+  const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
   const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
@@ -48,6 +48,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo);
   const [tripStartTime, setTripStartTime] = useState(formData?.InformationDeath?.tripStartTime);
   const [checked, setChecked] = useState(false);
+  const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit);
+  
   let naturetypecmbvalue = null;
   // let cmbPlace = [];
   // place &&
@@ -79,6 +81,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     religion["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
+    let cmbAgeUnit = [];
+    AgeUnit &&
+    AgeUnit["birth-death-service"] &&
+    AgeUnit["birth-death-service"].AgeUnit.map((ob) => {
+        cmbAgeUnit.push(ob);
+      });
+
   function selectReligion(value) {
     setSelectedReligion(value);
   }
@@ -136,6 +145,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectToDate(value) {
     setToDate(value);
   }
+  function selectAgeUnit(value) {
+    setSelectedAgeUnit(value);
+  }
 
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
@@ -173,6 +185,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
+    sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
+
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
@@ -193,6 +207,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       setReligion,
       DeathTimeFrom,
       DeathTimeTo,
+      setAgeUnit,
     });
   };
   return (
@@ -408,19 +423,33 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               {/* date={CommencementDate} */}
               <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`} />
             </div>
-            <div className="col-md-4">
-              <CardLabel>{`${t("CR_AGE_OF_BIRTH_DECEASED")}`}</CardLabel>
+            <div className="col-md-2">
+              <CardLabel>{`${t("CR_AGE_OF_BIRTH")}`}<span className="mandatorycss">*</span> </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="Ageofbirth"
                 value={Ageofbirth}
                 onChange={setSelectAgeofbirth}
                 disable={isEdit}
-                placeholder={`${t("CR_AGE_OF_BIRTH_DECEASED")}`}
-                {...(validation = { pattern: "^([0-9]){2}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
+                placeholder={`${t("CR_AGE_OF_BIRTH")}`}
+                {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
+                // {...(validation = { pattern: "^([0-9]){2}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
+              />
+              </div>
+              <div className="col-md-2">
+              <CardLabel>{`${t("CR_AGE_UNIT")}`}<span className="mandatorycss">*</span> </CardLabel>
+               <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbAgeUnit}
+                selected={setAgeUnit}
+                select={selectAgeUnit}
+                disabled={isEdit}
+                placeholder={`${t("CR_AGE_UNIT")}`}
               />
             </div>
           </div>

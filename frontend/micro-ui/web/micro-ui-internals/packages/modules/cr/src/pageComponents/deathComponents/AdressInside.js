@@ -15,6 +15,8 @@
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [lbs, setLbs] = useState(0);
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+    const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressDetails?.PresentHouseNameMl);
+    const [PresentHouseNameEn, sePresentHouseNameEn] = useState(formData?.AddressDetails?.PresentHouseNameEn);
     const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressDetails?.PresentBuldingNo);
     const [PresentHouseNo, setPresentHouseNo] = useState(formData?.AddressDetails?.PresentHouseNo);
     const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
@@ -28,6 +30,8 @@
     const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
     const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
     const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress);
+    const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressDetails?.PermanentHouseNameEn);
+    const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressDetails?.PermanentHouseNameMl);
     const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressDetails?.PermanentBuldingNo);
     const [PermanentHouseNo, setPermanentHouseNo] = useState(formData?.AddressDetails?.PermanentHouseNo);
     const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressDetails?.PermanentLocalityNameEn);
@@ -38,8 +42,9 @@
     const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
     const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
     const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
-    const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);
+    const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);   
     const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
+   
     let cmbPlace = [];
     let cmbTaluk = [];
     let cmbVillage = [];
@@ -69,7 +74,19 @@
       });
   
     const onSkip = () => onSelect();
-  
+
+    function setSelectPresentHouseNameMl(e) {
+      setPresentHouseNameMl(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentHouseNameMl(PresentHouseNameMl);
+      }
+    }
+    function setSelectPresentHouseNameEn(e) {
+      setPresentHouseNameEn(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentHouseNameEn(PresentHouseNameEn);
+      }
+    }
     function setSelectPresentBuldingNo(e) {
       setPresentBuldingNo(e.target.value);
       if (isPrsentAddress) {
@@ -148,7 +165,14 @@
         setPermanentPincode(PresentPincode);
       }
     }
+
     //Permanent Address Function
+    function setSelectPermanentHouseNameMl(e) {
+      setPermanentHouseNameMl(e.target.value);
+    }
+    function setSelectPermanentHouseNameEn(e) {
+      setPermanentHouseNameEn(e.target.value);
+    }
     function setSelectPermanentBuldingNo(e) {
       setPermanentBuldingNo(e.target.value);
     }
@@ -186,9 +210,13 @@
     function setSelectPermanentPincode(e) {
       setPermanentPincode(e.target.value);
     }
+    
+    
     function setSameAsPresent(e) {
       setIsPrsentAddress(e.target.checked);
       if (e.target.checked == true) {
+        setPermanentHouseNameMl(PresentHouseNameMl);
+        setPermanentHouseNameEn(PresentHouseNameEn); 
         setPermanentBuldingNo(PresentBuldingNo);
         setPermanentHouseNo(PresentHouseNo);
         setPermanentLocalityNameEn(PresentLocalityNameEn);
@@ -201,7 +229,11 @@
         setPermanentTaluk(PresentTaluk);
         setPermanentPostOffice(PresentPostOffice);
         setPermanentPincode(PresentPincode);
+              
+        
       } else {
+        setPermanentHouseNameMl('');
+        setPermanentHouseNameEn('');
         setPermanentBuldingNo('');
         setPermanentHouseNo('');
         setPermanentLocalityNameEn('');
@@ -214,6 +246,7 @@
         setPermanentTaluk('');
         setPermanentPostOffice('');
         setPermanentPincode('');
+       
       }
     }
     useEffect(() => {
@@ -227,6 +260,8 @@
       }
     }, [lbs, isInitialRender]);
     const goNext = () => {
+      sessionStorage.setItem("PresentHouseNameMl", PresentHouseNameMl.code);
+      sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn.code); 
       sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo);
       sessionStorage.setItem("PresentHouseNo", PresentHouseNo);
       sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn);
@@ -238,7 +273,9 @@
       sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
       sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
       sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
-      sessionStorage.setItem("PresentPincode", PresentPincode.code);
+      sessionStorage.setItem("PresentPincode", PresentPincode.code);     
+      sessionStorage.setItem("PermanentHouseNameMl", PresentHouseNameMl.code);
+      sessionStorage.setItem("PermanentHouseNameEn", PresentHouseNameEn.code);      
       sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
       sessionStorage.setItem("PermanentHouseNo", PermanentHouseNo);
       sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);
@@ -251,11 +288,12 @@
       sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
       sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
       sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
+      
       onSelect(config.key, {
-        PresentBuldingNo, PresentHouseNo, PresentLocalityNameEn,
+        PresentHouseNameMl,PresentHouseNameEn,PresentBuldingNo, PresentHouseNo, PresentLocalityNameEn,
         PresentLocalityNameMl, PresentCityNameEn, PresentCityNameMl, PresentVillage, PresentLBName, PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
-        PermanentBuldingNo, PermanentHouseNo, PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentCityNameEn, PermanentCityNameMl, PermanentVillage, PermanentLBName,
-        PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode
+        PresentHouseNameEn, PermanentHouseNameMl,PermanentBuldingNo, PermanentHouseNo, PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentCityNameEn, PermanentCityNameMl, PermanentVillage, PermanentLBName,
+        PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode, 
       });
     }
     return (
@@ -269,6 +307,8 @@
         onSelect={goNext}
         onSkip={onSkip}
         isDisabled={
+          !PresentHouseNameMl ||
+          !PresentHouseNameEn ||
           !PresentHouseNo ||
           !PresentLocalityNameEn ||
           !PresentLocalityNameMl ||
@@ -276,7 +316,9 @@
           !PresentVillage ||
           !PresentTaluk ||
           !PresentPostOffice ||
-          !PresentPincode ||
+          !PresentPincode ||   
+          !PermanentHouseNameMl ||
+          !PermanentHouseNameEn ||                 
           !PermanentHouseNo ||
           !PermanentLocalityNameEn ||
           !PermanentLocalityNameMl ||
@@ -284,7 +326,8 @@
           !PermanentVillage ||
           !PermanentTaluk ||
           !PermanentPostOffice ||
-          !PermanentPincode
+          !PermanentPincode 
+          
         }
       >
         <div className="row">
@@ -294,6 +337,7 @@
             </h1>
           </div>
         </div>
+        
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -331,6 +375,40 @@
             </div>
           </div>
         </div>
+        <div className="row">
+            <div className="col-md-12" >
+            <div className="col-md-6" >
+                 <CardLabel>{`${t("CR_HOUSE_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput
+                  t={t}
+                  isMandatory={true}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PresentHouseNameEn"
+                  value={PresentHouseNameEn}
+                  onChange={setSelectPresentHouseNameEn}
+                  disable={isEdit}
+                  placeholder={`${t("CR_HOUSE_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                  />
+            </div>
+            <div className="col-md-6" >
+                  <CardLabel>{`${t("CR_HOUSE_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput
+                  t={t}
+                  isMandatory={true}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PresentHouseNameMl"
+                  value={PresentHouseNameMl}
+                  onChange={setSelectPresentHouseNameMl}
+                  disable={isEdit}
+                  placeholder={`${t("CR_HOUSE_NAME_ML")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                   />
+            </div>
+            </div>
+        </div>        
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -568,6 +646,7 @@
               </h1>
             </div>
           </div>
+           
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
@@ -604,7 +683,38 @@
                 />
               </div>
             </div>
-          </div>
+          </div><div className="row">
+            <div className="col-md-12" >
+            <div className="col-md-6" >
+                 <CardLabel>{`${t("CR_HOUSE_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput
+                  t={t}
+                  isMandatory={true}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentHouseNameEn"
+                  value={PermanentHouseNameEn}
+                  onChange={setSelectPermanentHouseNameEn}
+                  disable={isEdit}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                  />
+            </div>
+            <div className="col-md-6" >
+                  <CardLabel>{`${t("CR_HOUSE_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput
+                  t={t}
+                  isMandatory={true}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentHouseNameMl"
+                  value={PermanentHouseNameMl}
+                  onChange={setSelectPermanentHouseNameMl}
+                  disable={isEdit}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                   />
+            </div>
+            </div>
+        </div>    
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">

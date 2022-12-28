@@ -1078,6 +1078,21 @@ const getCRDeliveryMethodlist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRAgeUnitlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "AgeUnit",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRTitleList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2051,6 +2066,9 @@ export const MdmsService = {
   },
   getCRNatureofMedicalAttentionSubA: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRNatureofMedicalAttentionSubAlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRAgeUnit: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRAgeUnitlist(tenantId, moduleCode), moduleCode);
   },
   /////////crmdms
   getServiceDefs: (tenantId, moduleCode) => {
