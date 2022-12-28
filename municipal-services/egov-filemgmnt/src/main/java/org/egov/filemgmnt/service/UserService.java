@@ -5,7 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.Role;
 import org.egov.filemgmnt.config.FMConfiguration;
@@ -21,122 +24,139 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 class UserService {
 
-	private final ServiceRequestRepository restRepo;
-	private final FMConfiguration fmConfig;
-	private final ObjectMapper mapper;
+    private final ServiceRequestRepository restRepo;
+    private final FMConfiguration fmConfig;
+    private final ObjectMapper mapper;
 
-	@Autowired
-	UserService(ServiceRequestRepository restRepo, FMConfiguration fmConfig, ObjectMapper mapper) {
-		this.restRepo = restRepo;
-		this.fmConfig = fmConfig;
-		this.mapper = mapper;
+    @Autowired
+    UserService(ServiceRequestRepository restRepo, FMConfiguration fmConfig, ObjectMapper mapper) {
+        this.restRepo = restRepo;
+        this.fmConfig = fmConfig;
+        this.mapper = mapper;
 
-	}
+    }
 
-	public void createUser(ApplicantPersonalRequest request) {
+    public void createUser(ApplicantPersonalRequest request) {
 
-		List<ApplicantPersonal> applicant = request.getApplicantPersonals();
-		RequestInfo requestInfo = request.getRequestInfo();
-		Role role = getCitizenRole(applicant.get(0).getTenantId());
+        List<ApplicantPersonal> applicant = request.getApplicantPersonals();
+        RequestInfo requestInfo = request.getRequestInfo();
+        Role role = getCitizenRole(applicant.get(0)
+                                            .getTenantId());
 
-		final String serviceCode = FMConstants.BUSINESS_SERVICE_FM;
-		applicant.forEach(personal -> {
+        final String serviceCode = FMConstants.BUSINESS_SERVICE_FM;
+        applicant.forEach(personal -> {
 
-			String businessService = personal.getFileDetail().getBusinessService();
-		});
+            String businessService = personal.getFileDetail()
+                                             .getBusinessService();
+        });
 
-	}
+    }
 
-	/**
-	 * Creates citizen role
-	 * 
-	 * @return Role object for citizen
-	 */
-	private Role getCitizenRole(String tenantId) {
-		Role role = new Role();
-		role.setCode("CITIZEN");
-		role.setName("Citizen");
-		role.setTenantId(getStateLevelTenant(tenantId));
-		return role;
-	}
+    /**
+     * Creates citizen role
+     * 
+     * @return Role object for citizen
+     */
+    private Role getCitizenRole(String tenantId) {
+        return Role.builder()
+                   .code("CITIZEN")
+                   .name("Citizen")
+                   .tenantId(getStateLevelTenant(tenantId))
+                   .build();
+    }
 
-	private String getStateLevelTenant(String tenantId) {
-		return tenantId.split("\\.")[0];
-	}
+    private String getStateLevelTenant(String tenantId) {
+        return tenantId.split("\\.")[0];
+    }
 
-	private UserDetailResponse searchByUserName(String userName, String tenantId) {
-		UserSearchRequest userSearchRequest = new UserSearchRequest();
-		userSearchRequest.setUserType("CITIZEN");
-		userSearchRequest.setUserName(userName);
-		userSearchRequest.setTenantId(tenantId);
-		StringBuilder uri = new StringBuilder(fmConfig.getUserHost()).append(fmConfig.getUserSearchEndpoint());
-		return userCall(userSearchRequest, uri);
+    private UserDetailResponse searchByUserName(String userName, String tenantId) {
+        StringBuilder uri = new StringBuilder(fmConfig.getUserHost()).append(fmConfig.getUserSearchEndpoint());
 
-	}
+        UserSearchRequest request = UserSearchRequest.builder()
+                                                     .userType("CITIZEN")
+                                                     .userName(userName)
+                                                     .tenantId(tenantId)
+                                                     .build();
+        return userCall(request, uri);
 
-	/**
-	 * Returns UserDetailResponse by calling user service with given uri and object
-	 * 
-	 * @param userRequest Request object for user service
-	 * @param uri         The address of the endpoint
-	 * @return Response from user service as parsed as userDetailResponse
-	 */
-	private UserDetailResponse userCall(Object userRequest, StringBuilder uri) {
-		String dobFormat = null;
-		if (uri.toString().contains(fmConfig.getUserSearchEndpoint())
-				|| uri.toString().contains(fmConfig.getUserUpdateEndpoint()))
-			dobFormat = "yyyy-MM-dd";
-		else if (uri.toString().contains(fmConfig.getUserCreateEndpoint()))
-			dobFormat = "dd/MM/yyyy";
-		try {
-			LinkedHashMap responseMap = (LinkedHashMap) restRepo.fetchResult(uri, userRequest);
-			parseResponse(responseMap, dobFormat);
-			UserDetailResponse userDetailResponse = mapper.convertValue(responseMap, UserDetailResponse.class);
-			return userDetailResponse;
-		} catch (IllegalArgumentException e) {
-			throw new CustomException("IllegalArgumentException", "ObjectMapper not able to convertValue in userCall");
-		}
-	}
+    }
 
-	/**
-	 * Converts date to long
-	 * 
-	 * @param date   date to be parsed
-	 * @param format Format of the date
-	 * @return Long value of date
-	 */
-	private Long dateTolong(String date, String format) {
-		SimpleDateFormat f = new SimpleDateFormat(format);
-		Date d = null;
-		try {
-			d = f.parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return d.getTime();
-	}
+    /**
+     * Returns UserDetailResponse by calling user service with given uri and object
+     * 
+     * @param userRequest Request object for user service
+     * @param uri         The address of the endpoint
+     * @return Response from user service as parsed as userDetailResponse
+     */
+    private UserDetailResponse userCall(Object userRequest, StringBuilder uri) {
+        String dobFormat = getDobDateFormat(uri.toString());
 
-	/**
-	 * Parses date formats to long for all users in responseMap
-	 * 
-	 * @param responeMap LinkedHashMap got from user api response
-	 */
-	private void parseResponse(LinkedHashMap responeMap, String dobFormat) {
-		List<LinkedHashMap> users = (List<LinkedHashMap>) responeMap.get("user");
-		String format1 = "dd-MM-yyyy HH:mm:ss";
-		if (users != null) {
-			users.forEach(map -> {
-				map.put("createdDate", dateTolong((String) map.get("createdDate"), format1));
-				if ((String) map.get("lastModifiedDate") != null)
-					map.put("lastModifiedDate", dateTolong((String) map.get("lastModifiedDate"), format1));
-				if ((String) map.get("dob") != null)
-					map.put("dob", dateTolong((String) map.get("dob"), dobFormat));
-				if ((String) map.get("pwdExpiryDate") != null)
-					map.put("pwdExpiryDate", dateTolong((String) map.get("pwdExpiryDate"), format1));
-			});
-		}
-	}
+        try {
+            Map<?, ?> responseMap = (LinkedHashMap<?, ?>) restRepo.fetchResult(uri, userRequest);
+            parseResponse(responseMap, dobFormat);
+
+            UserDetailResponse userDetailResponse = mapper.convertValue(responseMap, UserDetailResponse.class);
+            return userDetailResponse; // NOPMD
+        } catch (IllegalArgumentException e) {
+            throw new CustomException("IllegalArgumentException", "ObjectMapper not able to convertValue in userCall");
+        }
+    }
+
+    private String getDobDateFormat(String uri) {
+        String result = StringUtils.EMPTY;
+        if (uri.contains(fmConfig.getUserSearchEndpoint()) || uri.contains(fmConfig.getUserUpdateEndpoint())) {
+            result = "yyyy-MM-dd";
+        } else if (uri.contains(fmConfig.getUserCreateEndpoint())) {
+            result = "dd/MM/yyyy";
+        }
+        return result;
+    }
+
+    private Long dateTolong(final Map<Object, Object> map, final String key, final String format) {
+        final SimpleDateFormat sdf = new SimpleDateFormat(format); // NOPMD
+
+        String value = String.valueOf(map.get(key));
+
+        Long result = Long.valueOf(0L);
+        try {
+            Date dt = sdf.parse(value);
+            result = Long.valueOf(dt.getTime());
+        } catch (ParseException e) {
+            log.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    /**
+     * Parses date formats to long for all users in responseMap
+     * 
+     * @param responeMap LinkedHashMap got from user api response
+     */
+    @SuppressWarnings("unchecked")
+    private void parseResponse(final Map<?, ?> responeMap, final String dobFormat) {
+        List<Map<Object, Object>> users = (List<Map<Object, Object>>) responeMap.get("user");
+
+        String defaultFormat = "dd-MM-yyyy HH:mm:ss";
+        if (CollectionUtils.isNotEmpty(users)) {
+            users.forEach(map -> {
+                map.put("createdDate", dateTolong(map, "createdDate", defaultFormat));
+
+                if (map.get("lastModifiedDate") != null) {
+                    map.put("lastModifiedDate", dateTolong(map, "lastModifiedDate", defaultFormat));
+                }
+                if (map.get("dob") != null) {
+                    map.put("dob", dateTolong(map, "dob", dobFormat));
+                }
+                if (map.get("pwdExpiryDate") != null) {
+                    map.put("pwdExpiryDate", dateTolong(map, "pwdExpiryDate", defaultFormat));
+                }
+            });
+        }
+    }
 }

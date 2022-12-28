@@ -1,21 +1,21 @@
 ### STS ###
 .apt_generated
 .settings
-.checkstyle
-.eclipse-pmd
 .classpath
 .factorypath
-/.pmd
 .project
-/.sonarlint
-/.ucdetector_reports
+.checkstyle
+.eclipse-pmd
+.pmd
 
 ### maven ###
 target/
 reports/
+
+### docker ###
 docker_data/
 
-### local only files ###
+### other files ###
 spy.log
 SearchQueries.sql
 smsgwsmsgovin-sep22.cer

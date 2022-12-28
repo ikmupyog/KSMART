@@ -36,7 +36,7 @@ public class CommunicationFileManagementRepository {
 
         List<CommunicationFile> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
 
-        return result;
+        return result; // NOPMD
 
     }
 }

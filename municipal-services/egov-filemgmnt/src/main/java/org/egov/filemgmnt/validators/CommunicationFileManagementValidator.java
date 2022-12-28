@@ -24,14 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 public class CommunicationFileManagementValidator {
 
     private final CommunicationFileManagementRepository commRepository;
-    private final FMConfiguration config;
+    private final FMConfiguration fmConfig;
     private final MdmsValidator mdmsValidator;
 
     public CommunicationFileManagementValidator(CommunicationFileManagementRepository commRepository,
-                                                FMConfiguration config, MdmsValidator mdmsValidator) {
+                                                FMConfiguration fmConfig, MdmsValidator mdmsValidator) {
 
         this.commRepository = commRepository;
-        this.config = config;
+        this.fmConfig = fmConfig;
         this.mdmsValidator = mdmsValidator;
     }
 
