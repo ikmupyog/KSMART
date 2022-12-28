@@ -81,8 +81,9 @@ public class FileDetail {
     private Long fileArisingDate;
 
     @Schema(type = "string", description = "Financial year")
-    @Size(min = 4, max = 4, message = "Invalid financial year")
-    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid financial year")
+//    @Size(min = 4, max = 4, message = "Invalid financial year")
+//    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid financial year")
+    @Size(max = 10)
     @NotNull(message = "Financial year is required")
     @JsonProperty("financialYear")
     private String financialYear;
