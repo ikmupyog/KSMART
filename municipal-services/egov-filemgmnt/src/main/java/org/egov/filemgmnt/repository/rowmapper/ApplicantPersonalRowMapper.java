@@ -20,6 +20,7 @@ public class ApplicantPersonalRowMapper implements ResultSetExtractor<List<Appli
 	@Override
 	public List<ApplicantPersonal> extractData(ResultSet rs) throws SQLException, DataAccessException { // NOPMD
 
+
 		List<ApplicantPersonal> result = new ArrayList<>();
 		while (rs.next()) {
 			FileDetail file = FileDetail.builder().fileCode(rs.getString("filecode")).build();
@@ -35,6 +36,7 @@ public class ApplicantPersonalRowMapper implements ResultSetExtractor<List<Appli
 					.tenantId(rs.getString("tenantid")).auditDetails(getAuditDetails(rs)).fileDetail(file)
 					.applicantChild(child).applicantAddress(address).serviceDetails(service).build());
 		}
+
 
 		return result;
 	}
