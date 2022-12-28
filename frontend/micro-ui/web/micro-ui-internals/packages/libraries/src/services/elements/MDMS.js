@@ -845,7 +845,7 @@ const getCRTalukList = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "mtaluk",
+            name: "Taluk",
           },
         ],
       },
@@ -951,7 +951,7 @@ const getCRStatelist = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "mstate",
+            name: "State",
           },
         ],
       },
@@ -2007,7 +2007,6 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getCRTalukList(tenantId, moduleCode), moduleCode);
   },
   getCRTitle: (tenantId, moduleCode) => {
-    console.log("jetheesh22222222222222222");
     return MdmsService.getDataByCriteria(tenantId, getCRTitleList(tenantId, moduleCode), moduleCode);
   },
   getCRWard: (tenantId, moduleCode) => {
