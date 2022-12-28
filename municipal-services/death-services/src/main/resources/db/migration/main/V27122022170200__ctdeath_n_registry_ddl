@@ -1,4 +1,4 @@
-- ALTER TABLE eg_death_cert_request RENAME TO eg_death_cert_request_old;
+-- ALTER TABLE eg_death_cert_request RENAME TO eg_death_cert_request_old;
 
 -- Table: public.eg_death_cert_request
 
