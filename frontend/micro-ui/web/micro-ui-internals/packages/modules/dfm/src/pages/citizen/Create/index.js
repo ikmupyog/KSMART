@@ -15,7 +15,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
   const history = useHistory();
   let config = [];
   const [submitResponse,updateSubmitResponse] = useState([])
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("DFM_CREATE_APPLICATION_CITIZEN", {});
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
   const [userParams, setUserParams, clearUserParams] = Digit.Hooks.useSessionStorage("User", {});
   let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/")
 
@@ -146,7 +146,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <DFMAcknowledgement res={submitResponse}  />
+        <DFMAcknowledgement data={params} onSuccess={onSuccess}  />
       </Route>
       {/* <Route path={`${match.path}/acknowledgement`}>
         <TLAcknowledgement data={params} onSuccess={onSuccess} />

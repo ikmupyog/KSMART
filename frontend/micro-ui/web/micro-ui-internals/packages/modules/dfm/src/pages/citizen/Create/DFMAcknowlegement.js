@@ -33,6 +33,7 @@ const BannerPicker = (props) => {
 };
 
 const DFMAcknowlegement = ({ data, onSuccess }) => {
+  console.log("dataaaa" + data);
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
@@ -60,17 +61,18 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
 
   useEffect(() => {
     if (isInitialRender) {
-      console.log("Enter" + tenantId);
+      // console.log("Enter" + tenantId);
     const onSuccessedit = () => {
       setMutationHappened(true);
     };
     // try {
       setIsInitialRender(false);
-      console.log("Enter" + tenantId);
+      // console.log("Enter" + tenantId);
       let tenantId1 =  tenantId;
-      console.log("Enterrrrrrrrrrrr" + tenantId1);
+      // console.log("Enterrrrrrrrrrrr" + tenantId1);
       // data.tenantId = "kl";
       if (!resubmit) {
+        
         let formdata = !isEdit ? convertToFileSubmission(data) : [];
         // formdata.ApplicantPersonals[0].tenantId = formdata?.ApplicantPersonals[0]?.tenantId || tenantId1;
         if(!isEdit)

@@ -28,20 +28,20 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
     setDocumentTypeList(value);
   }
   const handleChange = (text, type) => {
-    let tempData = { ...documentDetails };
-    if (type === "documentType") {
-      tempData.documentType = text;
-      setDocumentDetails(tempData);
-    }
-    if (type === "checkbox") {
-      setTermsCheck(text);
-      if (documentDetails.fileStoreId && documentDetails.documentType?.code) {
-        setFileCheck(true);
-      }
-      if (!text) {
-        setFileCheck(false);
-      }
-    }
+    // let tempData = { ...documentDetails };
+    // if (type === "documentType") {
+    //   tempData.documentType = text;
+    //   setDocumentDetails(tempData);
+    // }
+    // if (type === "checkbox") {
+    //   setTermsCheck(text);
+    //   if (documentDetails.fileStoreId && documentDetails.documentType?.code) {
+    //     setFileCheck(true);
+    //   }
+    //   if (!text) {
+    //     setFileCheck(false);
+    //   }
+    // }
   };
   const handleSubmit = () => {
     let fileStoreId = uploadedFile;
