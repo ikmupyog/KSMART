@@ -395,6 +395,40 @@ serviceMaps:
       - jsonPath: $.CommunicationFile.*.id          
 
       - jsonPath: $.CommunicationFile.*.auditDetails.lastModifiedTime    
+      
+  -  version: 1.0
+     description: Persists certificate details  in egov_filemgmnt database, eg_fm_certificatedetail table
+     fromTopic: save-fm-certificates
+     isTransaction: true
+     queryMaps:
+     - query: >
+        INSERT INTO eg_fm_certificatedetail(id, tenantid, businessservice, certificateno, certificatestatus, applicantpersonalid,filestoreid,dateofissue, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+       basePath: CertificateDetails.*
+       jsonMaps:
+       - jsonPath: $.CertificateDetails.*.id
+
+       - jsonPath: $.CertificateDetails.*.tenantId 
+      
+       - jsonPath: $.CertificateDetails.*.bussinessService 
+      
+       - jsonPath: $.CertificateDetails.*.certificateNo 
+      
+       - jsonPath: $.CertificateDetails.*.certificateStatus 
+      
+       - jsonPath: $.CertificateDetails.*.applicantPersonalId 
+       
+       - jsonPath: $.CertificateDetails.*.filestoreId 
+       
+       - jsonPath: $.CertificateDetails.*.dateofIssue 
+      
+       - jsonPath: $.CertificateDetails.*.auditDetails.createdBy
+
+       - jsonPath: $.CertificateDetails.*.auditDetails.createdTime
+      
+       - jsonPath: $.CertificateDetails.*.auditDetails.lastModifiedBy
+
+       - jsonPath: $.CertificateDetails.*.auditDetails.lastModifiedTime   
 
    
 
