@@ -132,17 +132,18 @@
       "name": "employee.allowed.search.params",
       "type": "java.lang.String",
       "description": "A description for 'employee.allowed.search.params'"
+    },
+    {
+      "name": "persister.save.certificate.topic",
+      "type": "java.lang.String",
+      "description": "A description for 'persister.save.certificate.topic'"
     }
   ],
-  "hints": [
-    {
-      "name": "app.timezone",
-      "values": [
-        {
-          "value": "UTC",
-          "description": "Coordinated Universal Time, (IST, India Standard Time, Asia/Kolkata = UTC+05:30)."
-        }
-      ]
-    }
-  ]
+  "hints": [{
+    "name": "app.timezone",
+    "values": [{
+      "value": "UTC",
+      "description": "Coordinated Universal Time, (IST, India Standard Time, Asia/Kolkata = UTC+05:30)."
+    }]
+  }]
 }
