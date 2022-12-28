@@ -183,7 +183,7 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
               <div ><CardLabel>{`${t("Minor Function")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMinorFunction} selected={MinorFunctionDet} select={setSelectMinorFunctionDet} />
               </div>
-              <BackButton className="btnksmart"/>
+              {/* <BackButton className="btnksmart"/> */}
               <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={goNext} />
             </div>
           </div>

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React,{useEffect, useState} from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { newConfig as newConfigTL } from "../../../../config/config";
+import { newConfig as newConfigCR } from "../../../../config/config";
 // import CheckPage from "./CheckPage";
 // import TLAcknowledgement from "./TLAcknowledgement";
-import DFMAcknowledgement from "./DFMAcknowlegementOLD";
+import DFMAcknowledgement from "./response";
 
 const CreateTradeLicence = ({ parentRoute }) => {
   const queryClient = useQueryClient();
@@ -14,10 +14,10 @@ const CreateTradeLicence = ({ parentRoute }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   let config = [];
-  const [submitResponse, updateSubmitResponse] = useState([]);
+  const [submitResponse,updateSubmitResponse] = useState([])
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("DFM_CREATE_APPLICATION_EMPLOYEE", {});
-  // console.log(params);
-  let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/");
+  const [userParams, setUserParams, clearUserParams] = Digit.Hooks.useSessionStorage("User", {});
+  let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/")
 
   const stateId = Digit.ULBService.getStateId();
   let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
@@ -26,20 +26,17 @@ const CreateTradeLicence = ({ parentRoute }) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
-    let { isCreateEnabled: enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
+    let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
     if (typeof nextStep == "object" && nextStep != null) {
-      if (
-        (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId)) &&
-        nextStep[sessionStorage.getItem("isAccessories")] &&
-        nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property"
-      ) {
+      if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
+      {
         nextStep = "property-details";
       }
       if (
         nextStep[sessionStorage.getItem("isAccessories")] &&
         (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
           nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
-          nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" ||
+          nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
           nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
       ) {
         nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
@@ -55,17 +52,17 @@ const CreateTradeLicence = ({ parentRoute }) => {
         (nextStep[sessionStorage.getItem("KnowProperty")] === "search-property" ||
           nextStep[sessionStorage.getItem("KnowProperty")] === "create-property")
       ) {
-        if (nextStep[sessionStorage.getItem("KnowProperty")] === "create-property" && !enableCreate) {
-          nextStep = `map`;
-        } else {
-          nextStep = `${nextStep[sessionStorage.getItem("KnowProperty")]}`;
-        }
+          if(nextStep[sessionStorage.getItem("KnowProperty")] === "create-property" && !enableCreate)
+          {
+            nextStep = `map`;
+          }
+          else{
+         nextStep = `${nextStep[sessionStorage.getItem("KnowProperty")]}`;
+          }
       }
     }
-    if (
-      (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId)) &&
-      nextStep === "know-your-property"
-    ) {
+    if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
+    { 
       nextStep = "property-details";
     }
     let redirectWithHistory = history.push;
@@ -76,40 +73,30 @@ const CreateTradeLicence = ({ parentRoute }) => {
       nextStep = key;
     }
     if (nextStep === null) {
-      // return redirectWithHistory(`${match.path}/check`);
-      return handleSubmit();
+      return redirectWithHistory(`${match.path}/check`);
     }
-    if (isPTCreateSkip && nextStep === "acknowledge-create-property") {
+    if(isPTCreateSkip && nextStep === "acknowledge-create-property")
+    {
       nextStep = "map";
     }
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
   };
 
- 
-  useEffect(() => {
-    redirect();
-  }, [submitResponse?.length > 0]);
-  const redirect = () => {
-    if (submitResponse?.length > 0) {
-      console.log("dasg", submitResponse);
-      history.push({
-        pathname: `${match.path}/acknowledgement`,
-        state: { detail: submitResponse },
-      });
-      // history.push(`${match.path}/acknowledgement`);
-    }
-  };
-
   const createProperty = async () => {
     history.push(`${match.path}/acknowledgement`);
   };
 
+
+  
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
-    if (key === "isSkip" && data === true) {
+    if(key === "isSkip" && data === true)
+    {
       goNext(skipStep, index, isAddMultiple, key, true);
-    } else {
+    }
+    else
+    {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
@@ -122,22 +109,20 @@ const CreateTradeLicence = ({ parentRoute }) => {
     queryClient.invalidateQueries("TL_CREATE_TRADE");
   };
 
-  newConfig = newConfigTL;
+  newConfig = newConfigCR;
   // newConfig = newConfig ? newConfig : newConfigTL;
   // newConfig = newConfig ? newConfig : newConfigTL;
-  newConfig = newConfigTL;
+  // newConfig = newConfigTL;
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
-  let skipenanbledOb = newConfig?.filter((obj) => obj?.body?.some((com) => com.component === "CPTCreateProperty"))?.[0];
+  let skipenanbledOb = newConfig?.filter(obj => obj?.body?.some(com => com.component === "CPTCreateProperty"))?.[0];
   let skipenabled = skipenanbledOb?.body?.filter((ob) => ob?.component === "CPTCreateProperty")?.[0]?.isSkipEnabled;
-  sessionStorage.setItem("skipenabled", skipenabled);
-  config.indexRoute = "application-Details";
-  // config.indexRoute = "TradeName";
+  sessionStorage.setItem("skipenabled",skipenabled);
+  config.indexRoute = "ApplicationDetails";
 
-  const CheckPage = Digit?.ComponentRegistryService?.getComponent("TLCheckPage");
-  const TLAcknowledgement = Digit?.ComponentRegistryService?.getComponent("TLAcknowledgement");
-  // console.log('config',config);
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("DFMCheckPage");
+  const DFMAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DFMAcknowledgement");
   return (
     <Switch>
       {config.map((routeObj, index) => {
@@ -157,15 +142,15 @@ const CreateTradeLicence = ({ parentRoute }) => {
           </Route>
         );
       })}
-     <Route path={`${match.path}/check`}>
+      <Route path={`${match.path}/check`}>
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <DFMAcknowledgement data={params} onSuccess={onSuccess} />
+        <DFMAcknowledgement res={submitResponse}  />
       </Route>
-      <Route>
-        <Redirect to={`${match.path}/${config.indexRoute}`} />
-      </Route>
+      {/* <Route path={`${match.path}/acknowledgement`}>
+        <TLAcknowledgement data={params} onSuccess={onSuccess} />
+      </Route> */}
       <Route>
         <Redirect to={`${match.path}/${config.indexRoute}`} />
       </Route>
