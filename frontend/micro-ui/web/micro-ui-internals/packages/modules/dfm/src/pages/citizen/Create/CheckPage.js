@@ -63,74 +63,40 @@ const CheckPage = ({ onSubmit, value }) => {
           </div>
         </div>
         <StatusTable>
-          <div className="content">
-            <div className="row">
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Applicant Name")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FirstName)}&nbsp;{t(ApplicantDetails?.LastName)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Date of Birth")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.DateofBirth)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Aadhar No")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.AadharNo)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList.name)}</CardText>
-              </div>
+          <div>
+          <div className="row">
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Applicant Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FirstName)}&nbsp;{t(ApplicantDetails?.LastName)}</CardText>
             </div>
-            <div className="row">
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FatherFirstName)}&nbsp;{t(ApplicantDetails?.FatherLastName)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MotherFirstName)}&nbsp;{t(ApplicantDetails?.MotherLastName)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Email")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.Email)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mobile No")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MobileNo)}</CardText>
-              </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Date of Birth")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.DateofBirth)}</CardText>
             </div>
-            <div className="row">
-              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
-              </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Aadhar No")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.AadharNo)}</CardText>
+            </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList.name)}</CardText>
             </div>
           </div>
-          <div className="content">
-            <div className="row">
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Applicant Name")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FirstName)}&nbsp;{t(ApplicantDetails?.LastName)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Date of Birth")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.DateofBirth)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Aadhar No")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.AadharNo)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList.name)}</CardText>
-              </div>
+          <div className="row">
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FatherFirstName)}&nbsp;{t(ApplicantDetails?.FatherLastName)}</CardText>
             </div>
-            <div className="row">
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.FatherFirstName)}&nbsp;{t(ApplicantDetails?.FatherLastName)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MotherFirstName)}&nbsp;{t(ApplicantDetails?.MotherLastName)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Email")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.Email)}</CardText>
-              </div>
-              <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mobile No")}`}</CardLabel>
-                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MobileNo)}</CardText>
-              </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MotherFirstName)}&nbsp;{t(ApplicantDetails?.MotherLastName)}</CardText>
             </div>
-            <div className="row">
-              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
-              </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Email")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.Email)}</CardText>
+            </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mobile No")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MobileNo)}</CardText>
             </div>
           </div>
+          <div className="row">
+            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
+            </div>
+          </div>
+        </div>
         </StatusTable>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>

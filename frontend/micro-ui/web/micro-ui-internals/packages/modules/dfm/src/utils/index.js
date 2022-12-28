@@ -269,27 +269,21 @@ export const gettradeupdateaccessories = (data) => {
   return TLaccessories;
 }
 export const convertToFileSubmission = (data = {}) => {
-  console.log("data" + data?.citizen?.FileManagement?.applicationData?.aadharNo);
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
+  console.log(data);
   const formdata = {
     ApplicantPersonals: [
       {
-        aadhaarNo: "123456789111",
-        // data?.FileManagement?.applicationData?.aadharNo, 
-        email: "test@gmail.com",
-        //data?.FileManagement?.applicationData?.email,
-        firstName: "Anil",
-        //data?.FileManagement?.applicationData?.firstName,
-        lastName: "Kumar",
-        //data?.FileManagement?.applicationData?.lastName,
-        title: "Mr",
-        //data?.FileManagement?.applicationData?.title.code,
-        mobileNo: "9895257787",
-        // data?.FileManagement?.applicationData?.mobileNo,
+        aadhaarNo: data?.ApplicantDetails?.AadharNo, 
+        email:  data?.ApplicantDetails?.Email, 
+        firstName:  data?.ApplicantDetails?.FirstName,     
+        lastName:  data?.ApplicantDetails?.LastName,
+        title:  data?.ApplicantDetails?.Title.code, 
+        mobileNo:  data?.ApplicantDetails?.MobileNo, 
         tenantId: "kl",
         applicantChild: {
-          buildingNumber: data?.FileManagement?.serviceDetails?.buldingNo,
-          durationOfResidence: data?.FileManagement?.serviceDetails?.durationOfresidence,
+          buildingNumber: data?.ServiceDet?.BuldingNo, 
+          durationOfResidence: data?.ServiceDet?.ResidenceDuration, 
         },
         serviceDetails: {
           applicantPersonalId: '23',
@@ -300,16 +294,12 @@ export const convertToFileSubmission = (data = {}) => {
         },
         applicantAddress: {
           applicantPersonalId: '23',
-          houseNo: "56",
-          //data?.FileManagement?.addressData?.houseNo,
-          houseName: "test Data",
-          street: "Ettumanoor",
-          //data?.FileManagement?.addressData?.street,
-          pincode: "686631",
-          //data?.FileManagement?.addressData?.pincode,
-          postOfficeName: "Ettumanoor",
-          //data?.FileManagement?.addressData?.postOffice.code,
-          wardNo: "5",
+          houseNo:data?.AddressDet?.HouseNo, 
+          houseName:data?.AddressDet?.HouseName, 
+          street:data?.AddressDet?.StreetName, 
+          pincode:data?.AddressDet?.Pincode, 
+          postOfficeName:data?.AddressDet?.PostOfficeList.code, 
+          wardNo: data?.AddressDet?.WardNo.code, 
         },
         applicantServiceDocuments: {
           applicantPersonalId: '23',
@@ -335,7 +325,7 @@ export const convertToFileSubmission = (data = {}) => {
           fileName: "PensionAdalath",
           fileArisingMode: '1',
           fileArisingDate: null,
-          financialYear: '2022',
+          financialYear: Financialyear ? Financialyear : "2022-23",
           applicationDate: null,
           workflowCode: "NewDFM",
           action: "INITIATE",
