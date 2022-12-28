@@ -76,7 +76,7 @@ public class ApplicantPersonalRepository {
 
 		resCertPath = resCertPath.replace("$id", searchResult.get(0).getId());
 		resCertPath = resCertPath.replace("$tenantId", searchResult.get(0).getTenantId());
-		resCertPath = resCertPath.replace("$fileCode", searchResult.get(0).getFileDetail().getFileCode());
+//		resCertPath = resCertPath.replace("$fileCode", searchResult.get(0).getFileDetail().getFileCode());
 
 		String finalPath = uiHostCert + resCertPath;
 
@@ -108,8 +108,9 @@ public class ApplicantPersonalRepository {
 		certificate.setFilestoreId(result.getFilestoreIds().get(0));
 		certificate.setCertificateStatus(StatusEnum.FREE_DOWNLOAD);
 		list.add(certificate);
+
 		CertificateRequest certReq = CertificateRequest.builder().certificateDet(list).requestInfo(requestInfo).build();
-//		enrichmentService.enrichCertificateCreate(certReq);
+		enrichmentService.enrichCertificateCreate(certReq);
 
 		return certReq;
 
@@ -118,7 +119,8 @@ public class ApplicantPersonalRepository {
 	public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl) {
 		JSONArray array = new JSONArray();
 		JSONObject obj = new JSONObject();
-		obj.put("embeddedUrl", embeddedUrl);
+
+//		obj.put("embeddedUrl", embeddedUrl);
 		obj.put(FMConstants.ID, searchResult.get(0).getId());
 		obj.put(FMConstants.BUILDINGNO, searchResult.get(0).getApplicantChild().getBuildingNumber());
 		obj.put(FMConstants.FINANCIALYEAR, searchResult.get(0).getApplicantChild().getDurationOfResidence());
@@ -136,7 +138,9 @@ public class ApplicantPersonalRepository {
 				+ searchResult.get(0).getApplicantAddress().getMainplace();
 
 		obj.put(FMConstants.ADDRESS, address);
+
 		array.add(obj);
+
 		return array;
 	}
 
