@@ -151,7 +151,7 @@ public class ApplicantPersonalRepository {
         obj.put(FMConstants.WARDNO,
                 searchResult.get(0)
                             .getApplicantAddress()
-                            .getWardno());
+                            .getWardNo());
         obj.put(FMConstants.TENANT,
                 searchResult.get(0)
                             .getTenantId());
@@ -172,10 +172,10 @@ public class ApplicantPersonalRepository {
                                     .getHouseName()
                 + '/' + searchResult.get(0)
                                     .getApplicantAddress()
-                                    .getLocalplace()
+                                    .getLocalPlace()
                 + '/' + searchResult.get(0)
                                     .getApplicantAddress()
-                                    .getMainplace();
+                                    .getMainPlace();
 
         obj.put(FMConstants.ADDRESS, address);
 

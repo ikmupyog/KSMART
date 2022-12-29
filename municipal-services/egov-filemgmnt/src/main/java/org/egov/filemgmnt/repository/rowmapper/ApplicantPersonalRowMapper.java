@@ -29,11 +29,11 @@ public class ApplicantPersonalRowMapper implements ResultSetExtractor<List<Appli
                                                  .buildingNumber(rs.getString("buildingnumber"))
                                                  .build();
             ApplicantAddress address = ApplicantAddress.builder()
-                                                       .wardno(rs.getString("wardno"))
+                                                       .wardNo(rs.getString("wardno"))
                                                        .houseNo(rs.getString("houseno"))
                                                        .houseName(rs.getString("housename"))
-                                                       .localplace(rs.getString("localplace"))
-                                                       .mainplace(rs.getString("mainplace"))
+                                                       .localPlace(rs.getString("localplace"))
+                                                       .mainPlace(rs.getString("mainplace"))
                                                        .build();
             ServiceDetails service = ServiceDetails.builder()
                                                    .serviceMinorType(rs.getString("serviceminortype"))

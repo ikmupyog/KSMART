@@ -62,24 +62,24 @@ public class ApplicantAddress {
     @Schema(type = "string", description = "Residence association no")
     @Size(max = 64)
     @JsonProperty("residenceAssociationNo")
-    private String residenceassociationno;
+    private String residenceAssociationNo;
 
     @Schema(type = "string", description = "Local place")
     @Size(max = 64)
     @JsonProperty("localPlace")
-    private String localplace;
+    private String localPlace;
 
     @Schema(type = "string", description = "Main place")
     @Size(max = 64)
     @JsonProperty("mainPlace")
-    private String mainplace;
+    private String mainPlace;
 
     @Schema(type = "string", description = "Ward no")
     @Size(max = 64)
     @NotNull
     @NotBlank(message = "Ward number is required")
     @JsonProperty("wardNo")
-    private String wardno;
+    private String wardNo;
 
     @Schema(type = "string", format = "uuid", description = "Applicant id")
     @Size(max = 64)

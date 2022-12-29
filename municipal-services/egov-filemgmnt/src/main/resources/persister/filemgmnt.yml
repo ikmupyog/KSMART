@@ -138,11 +138,11 @@ serviceMaps:
       
       - jsonPath: $.ApplicantPersonals.*.id
       
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.documenttypeId
+      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.documentTypeId
 
       - jsonPath: $.ApplicantPersonals.*.applicantDocuments.documentNumber
      
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.docexpiryDate              
+      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.docExpiryDate              
        
       - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
 
