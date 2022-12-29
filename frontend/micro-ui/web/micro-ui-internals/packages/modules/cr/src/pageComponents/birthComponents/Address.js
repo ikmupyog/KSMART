@@ -8,7 +8,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
+  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
@@ -46,10 +46,9 @@ const Address = ({ config, onSelect, userType, formData }) => {
   let cmbDistrict = [];
   let cmbPostOffice = [];
   let districtid = null;
-  console.log("Taluk" + Taluk);
   Taluk &&
     Taluk["common-masters"] &&
-    Taluk["common-masters"].mtaluk.map((ob) => {
+    Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
@@ -218,8 +217,6 @@ const Address = ({ config, onSelect, userType, formData }) => {
   }
   useEffect(() => {
     if (isInitialRender) {
-      console.log("PresentDistrict" + districtid);
-      console.log(localbodies);
       if (PresentDistrict) {
         setIsInitialRender(false);
         setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));

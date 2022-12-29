@@ -25,7 +25,7 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.Licenses[0]?.applicationNumber}
+      applicationNumber={props.data?.ApplicantPersonals[0]?.fileDetail.fileCode}
       info={props.isSuccess ? props.t("KL-FM-2022-11-23-000139") : ""}
       successful={props.isSuccess}
     />
@@ -70,10 +70,11 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
       // console.log("Enter" + tenantId);
       let tenantId1 =  tenantId;
       // console.log("Enterrrrrrrrrrrr" + tenantId1);
-      // data.tenantId = "kl";
+      data.tenantId = tenantId1;
       if (!resubmit) {
         
         let formdata = !isEdit ? convertToFileSubmission(data) : [];
+        console.log(formdata);
         // formdata.ApplicantPersonals[0].tenantId = formdata?.ApplicantPersonals[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
@@ -116,18 +117,18 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
   }
   }, [fydata]);
 
-  useEffect(() => {
-    if (mutation.isSuccess || (mutation1.isSuccess && isEdit && !isDirectRenewal)) {
-      try {
-        let Licenses = !isEdit ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
-        mutation2.mutate(Licenses, {
-          onSuccess,
-        });
-      }
-      catch (er) {
-      }
-    }
-  }, [mutation.isSuccess, mutation1.isSuccess]);
+  // useEffect(() => {
+  //   if (mutation.isSuccess || (mutation1.isSuccess && isEdit && !isDirectRenewal)) {
+  //     try {
+  //       let Licenses = !isEdit ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
+  //       mutation2.mutate(Licenses, {
+  //         onSuccess,
+  //       });
+  //     }
+  //     catch (er) {
+  //     }
+  //   }
+  // }, [mutation.isSuccess, mutation1.isSuccess]);
 
   const handleDownloadPdf = async () => {
     const { Licenses = [] } = mutation.data || mutation1.data || mutation2.data;
@@ -137,7 +138,6 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
- console.log("Jetheesh");
   let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
   // if(enableLoader)
   // {return (<Loader />)}

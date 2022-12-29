@@ -45,7 +45,45 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
     Category["FileManagement"].ApplicantCategory.map((ob) => {
       cmbCategory.push(ob);
     });
-  
+    function setselectTitle(value) {
+      selectTitle(value);
+    }
+    function setSelectFirstNameEn(e) {
+      setFirstNameEn(e.target.value);
+    }
+    function setSelectLastName(e) {
+      setLastName(e.target.value);
+    }
+    function setSelectAadharNo(e) {
+      setAadharNo(e.target.value);
+    }
+    function setSelectEmail(e) {
+      setEmail(e.target.value);
+    }
+    function setSelectMobileNo(e) {
+      setMobileNo(e.target.value);
+    }
+    function setSelectDateofBirth(value) {
+      setDateofBirth(value);
+    }
+    function setSelectFatherFirstName(e) {
+      setFatherFirstName(e.target.value);
+    }
+    function setSelectFatherLastName(e) {
+      setFatherLastName(e.target.value);
+    }
+    function setSelectMotherFirstName(e) {
+      setMotherFirstName(e.target.value);
+    }
+    function setSelectMotherLastName(e) {
+      setMotherLastName(e.target.value);
+    }
+    function setselectCategoryList(value) {
+      setCategoryList(value);
+    }
+    function setSelectAccountNo(e) {
+      setAccountNo(e.target.value);
+    }
 
   const goNext = () => {
     sessionStorage.setItem("Title", Title?Title.code:null);
@@ -70,45 +108,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
   }
   let patternValid = "^d{12}$";
 
-  function setselectTitle(value) {
-    selectTitle(value);
-  }
-  function setSelectFirstNameEn(e) {
-    setFirstNameEn(e.target.value);
-  }
-  function setSelectLastName(e) {
-    setLastName(e.target.value);
-  }
-  function setSelectAadharNo(e) {
-    setAadharNo(e.target.value);
-  }
-  function setSelectEmail(e) {
-    setEmail(e.target.value);
-  }
-  function setSelectMobileNo(e) {
-    setMobileNo(e.target.value);
-  }
-  function setSelectDateofBirth(value) {
-    setDateofBirth(value);
-  }
-  function setSelectFatherFirstName(e) {
-    setFatherFirstName(e.target.value);
-  }
-  function setSelectFatherLastName(e) {
-    setFatherLastName(e.target.value);
-  }
-  function setSelectMotherFirstName(e) {
-    setMotherFirstName(e.target.value);
-  }
-  function setSelectMotherLastName(e) {
-    setMotherLastName(e.target.value);
-  }
-  function setselectCategoryList(value) {
-    setCategoryList(value);
-  }
-  function setSelectAccountNo(e) {
-    setAccountNo(e.target.value);
-  }
+  
 
   return (
     <React.Fragment>

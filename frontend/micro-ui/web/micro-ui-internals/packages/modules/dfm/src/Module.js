@@ -7,12 +7,14 @@ import DFMAddressDetails from "../src/pageComponents/DFMAddressDetails";
 import DFMServiceDetails from "../src/pageComponents/DFMServiceDetails";
 import DFMDocumentDetails from "../src/pageComponents/DFMDocumentDetails";
 import DFMCheckPage from "./pages/citizen/Create/CheckPage";
+import DFMEmployeeCheckPage from "./pages/employee/FileFlow/Create/EmployeeCheckPage";
 import DFMEmployeeApplicationDetails from "./pageComponents/DFMEmployeeApplicationDetails";
 import DFMEmployeeAddressDetails from "../src/pageComponents/DFMEmployeeAddressDetails";
 import DFMEmployeeServiceDetails from "../src/pageComponents/DFMEmployeeServiceDetails";
 import DFMEmployeeDocumentDetails from "../src/pageComponents/DFMEmployeeDocumentDetails";
 // import TLDocument from "./pageComponents/TLDocumets";
 import DFMAcknowledgement from "./pages/citizen/Create/DFMAcknowlegement";
+import DFMEmployeeAcknowledgement from "./pages/employee/FileFlow/Create/DFMEmployeeAcknowlegement";
 // import Proof from "./pageComponents/Proof";
 import DFMCard from "./components/DFMCard";
 import Response from "./pages/Response";
@@ -75,7 +77,9 @@ const componentsToRegister = {
   DFMEmployeeServiceDetails,
   DFMEmployeeDocumentDetails,
   DFMAcknowledgement,
+  DFMEmployeeAcknowledgement,
   DFMCheckPage,
+  DFMEmployeeCheckPage,
   TLResponse : Response,
 };
 

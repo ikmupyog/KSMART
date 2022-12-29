@@ -286,7 +286,7 @@ export const convertToBirthRegistration = (data = {}) => {
         lastname_en: data?.ChildDetails?.ChildLastNameEn,
         lastname_ml: data?.ChildDetails?.ChildLastNameMl,
         tenantid: "kl.cochin",
-        gender: 1,
+        gender: data?.ChildDetails?.Gender.code,
         //data?.ChildDetails?.Gender.code,
         remarks_en: null, //Stastical Info Description
         remarks_ml: null, //Not needed
@@ -384,9 +384,9 @@ export const convertToBirthRegistration = (data = {}) => {
           deliverytypeothers_ml: null,
           religionid: data?.StatisticalInfoDetails?.Religion.code,
           father_nationalityid: null,
-          father_educationid: data?.MotherInformation?.FatherEducation.code,
-          father_education_subid: data?.MotherInformation?.FatherEducationSubject.code,
-          father_proffessionid: data?.MotherInformation?.FatherProfession.code,
+          father_educationid: data?.FatherInfoDetails?.FatherEducation.code,
+          father_education_subid: data?.FatherInfoDetails?.FatherEducationSubject.code,
+          father_proffessionid: data?.FatherInfoDetails?.FatherProfession.code,
           mother_educationid: data?.MotherInformation?.MotherEducation.code,
           mother_education_subid: data?.MotherInformation?.MotherEducationSubject.code,
           mother_proffessionid: data?.MotherInformation?.MotherProfession.code,
