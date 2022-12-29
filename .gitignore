@@ -7,4 +7,4 @@ index.lock
 .checkstyle
 .pmd
 .xml
-municipal-services/tl-services/src/main/resources/.properties
+*.properties
