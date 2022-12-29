@@ -41,6 +41,8 @@ module.exports = function (app) {
     "/tl-services/v1/_search",
     "/birth-services/cr/birth/_create",
     "/birth-services/cr/birth/_search",
+    "/death-services/v1/crdeathdetails/_create",
+    "/death-services/v1/crdeathdetails/_search", 
     "/filemgmnt/v1/applicantpersonals/_create",
     "/filemgmnt/v1/applicantpersonals/_update",
     "/egov-url-shortening/shortener",

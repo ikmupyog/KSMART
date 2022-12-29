@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect,useState  } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBirthRegistration,convertToDeathRegistration,convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
+import { convertToDeathRegistration,convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -39,15 +39,15 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
+  const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
-  const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
+  const mutation1 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     false
   );
-  const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
+  const mutation2 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     false
   );
@@ -72,7 +72,7 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
       if (!resubmit) {
         // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-        let formdata = !isEdit ? convertToBirthRegistration(data):[] ;
+        let formdata = !isEdit ? convertToDeathRegistration(data):[] ;
         console.log(formdata);
         // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
         if(!isEdit)

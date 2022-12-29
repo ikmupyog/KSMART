@@ -72,26 +72,26 @@ const DeathCheckPage = ({ onSubmit, value,userType }) => {
              <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.DeathDate)}</CardText>
             </div>
-           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
+           {/* <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.Gender.value)}</CardText>
-            </div>
+            </div> */}
           </div>
-          <div className="row">
+          {/* <div className="row">
              <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(PlaceOfDeath.setPlaceofDeath.value)}</CardText>
             </div>
            <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(PlaceOfDeathHome.PresentDistrict.value)}</CardText>
             </div>
-          </div>
-          <div className="row">
+          </div> */}
+          {/* <div className="row">
              <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FamilyInformationDeath.FatherOrHusbandNameEN)}</CardText>
             </div>
            <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FamilyInformationDeath.MotherNameEn)}</CardText>
             </div>
-          </div>
+          </div> */}
           <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
           </div>
