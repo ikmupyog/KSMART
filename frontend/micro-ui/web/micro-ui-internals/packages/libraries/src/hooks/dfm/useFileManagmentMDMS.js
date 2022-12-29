@@ -239,7 +239,7 @@ const useFileManagmentMDMS = (tenantId, moduleCode, type, filter, config = {}) =
       return useCRGender();
     case "Country":
       return useCRNationality();
-    case "mtaluk":
+    case "Taluk":
       return useCRTaluk();
     case "Title":
       return useCRTitle();

@@ -1,4 +1,4 @@
-  import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
   import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
   // import Timeline from "../../components/CRTimeline";
   import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@
     const { t } = useTranslation();
     let validation = {};
     const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-    const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
+    const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
     const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
@@ -16,7 +16,7 @@
     const [lbs, setLbs] = useState(0);
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressDetails?.PresentHouseNameMl);
-    const [PresentHouseNameEn, sePresentHouseNameEn] = useState(formData?.AddressDetails?.PresentHouseNameEn);
+    const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressDetails?.PresentHouseNameEn);
     const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressDetails?.PresentBuldingNo);
     const [PresentHouseNo, setPresentHouseNo] = useState(formData?.AddressDetails?.PresentHouseNo);
     const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
@@ -54,7 +54,7 @@
     console.log("Taluk" + Taluk);
     Taluk &&
       Taluk["common-masters"] &&
-      Taluk["common-masters"].mtaluk.map((ob) => {
+      Taluk["common-masters"].Taluk.map((ob) => {
         cmbTaluk.push(ob);
       });
     Village &&
