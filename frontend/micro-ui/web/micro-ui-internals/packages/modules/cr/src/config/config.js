@@ -490,7 +490,7 @@ export const newConfig = [
         component: "InformationDeath",
         texts: {
           headerCaption: "",
-          header: "CR_LEAGAL_INFORMATION",
+          header: "CR_LEGAL_INFORMATION",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
         },
