@@ -5,7 +5,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.ksmart.death.common.Idgen.IdResponse;
+import org.ksmart.death.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.death.common.repository.IdGenRepository;
 import org.ksmart.death.common.repository.ServiceRequestRepository;
 import org.ksmart.death.crdeath.config.CrDeathConfiguration;
@@ -38,6 +40,9 @@ public class CrDeathEnrichment implements BaseEnrichment{
     @Autowired
 	CrDeathConfiguration config;
 
+    @Autowired
+    EncryptionDecryptionUtil encryptionDecryptionUtil;
+
 
     public void enrichCreate(CrDeathDtlRequest request) {
 
@@ -45,24 +50,20 @@ public class CrDeathEnrichment implements BaseEnrichment{
         User userInfo = requestInfo.getUserInfo();
 
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-
+    //     List<CrDeathDtl> deathDtls = request.getDeathCertificateDtls();
+    //     String deathDtlsNew = StringUtils.join(deathDtls, " and ");
+    //     CrDeathDtl deathDtlEnc1 = encryptionDecryptionUtil.encryptObject(deathDtlsNew, "BndDetail", CrDeathDtl.class);
+    //    System.out.println("EncryptionDetailsNew"+deathDtlEnc1);
         request.getDeathCertificateDtls()
                .forEach(deathdtls -> {
                 deathdtls.setId(UUID.randomUUID().toString());
                 deathdtls.setAuditDetails(auditDetails);
                 deathdtls.getStatisticalInfo().setId(UUID.randomUUID().toString());               
-
-                // String str = new SimpleDateFormat("dd/MM/yyyy").format(deathdtls.getDateOfDeath() * 1000);
-            // System.out.println("DOD Epoc"+str);
-                // deathdtls.getAddressInfo().get(0).setParentdeathDtlId(deathdtls.getId());
-                // deathdtls.getAddressInfo().get(0).setAuditDetails(auditDetails);
-                // deathdtls.getAddressInfo().forEach(addressdtls -> {
-                //       addressdtls.getPresentAddress().setId(UUID.randomUUID().toString());
-                //       addressdtls.getPermanentAddress().setId(UUID.randomUUID().toString());
-                //       addressdtls.getInformantAddress().setId(UUID.randomUUID().toString());
-                //       addressdtls.getDeathplaceAddress().setId(UUID.randomUUID().toString());
-                //       addressdtls.getBurialAddress().setId(UUID.randomUUID().toString());                       
-                //      });
+                CrDeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathDtl.class);
+                deathdtls.setDeceasedAadharNumber(deathDtlEnc.getDeceasedAadharNumber());
+                deathdtls.setInformantAadharNo(deathDtlEnc.getInformantAadharNo());
+                deathdtls.setMaleDependentAadharNo(deathDtlEnc.getMaleDependentAadharNo());
+                deathdtls.setFemaleDependentAadharNo(deathDtlEnc.getFemaleDependentAadharNo());
                 CrDeathAddressInfo  addressInfo = deathdtls.getAddressInfo();
                 addressInfo.setParentdeathDtlId(deathdtls.getId());
                 addressInfo.setAuditDetails(auditDetails);
@@ -98,8 +99,6 @@ public class CrDeathEnrichment implements BaseEnrichment{
         deathDtls.get(0).setDeathACKNo(ackNo);
     }    
 
-    
-
     //UPDATE  BEGIN Jasmine
     public void enrichUpdate(CrDeathDtlRequest request) {
 
@@ -110,10 +109,6 @@ public class CrDeathEnrichment implements BaseEnrichment{
         request.getDeathCertificateDtls()
                 .forEach(deathDtls -> {
                 deathDtls.setAuditDetails(auditDetails);
-                // deathDtls.getAddressInfo().forEach(addressdtls -> {
-                //                            addressdtls.setParentdeathDtlId(deathDtls.getId());
-                //                            addressdtls.setAuditDetails(auditDetails);
-                //                         });
                 CrDeathAddressInfo  addressInfo = deathDtls.getAddressInfo();
                 addressInfo.setParentdeathDtlId(deathDtls.getId());
                 addressInfo.setAuditDetails(auditDetails);
