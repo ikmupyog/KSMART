@@ -106,7 +106,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("TL_CREATE_TRADE");
+    queryClient.invalidateQueries("DFM_CREATE_TRADE");
   };
 
   newConfig = newConfigCR;
@@ -146,7 +146,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <DFMAcknowledgement res={submitResponse}  />
+        <DFMAcknowledgement data={params} onSuccess={onSuccess}  />
       </Route>
       {/* <Route path={`${match.path}/acknowledgement`}>
         <TLAcknowledgement data={params} onSuccess={onSuccess} />

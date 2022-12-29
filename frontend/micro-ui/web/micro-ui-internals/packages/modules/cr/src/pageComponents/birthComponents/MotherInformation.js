@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton,Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -7,17 +7,16 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
-    const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-    const { data: Qualification = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
-    const { data: QualificationSub = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
-    const { data: Profession = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
-    const { data: State = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mstate");
-    const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-    const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-    const { data: Country = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-    const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
+    const { data: Qualification = {},isQualificationLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
+    const { data: QualificationSub = {},isQualificationSubLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
+    const { data: Profession = {},isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
+    const { data: State = {},isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+    const { data: District = {},isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+    const { data: LBType = {},isLBTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
+    const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+    const { data: Taluk = {},isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-    const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
+    const { data: localbodies={}, isLoading } = Digit.Hooks.useTenants();
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [lbs, setLbs] = useState(0);
     const [MotherFirstNameEn, setMotherFirstNameEn] = useState(formData?.MotherInfoDetails?.MotherFirstNameEn);
@@ -60,12 +59,6 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         { i18nKey: "Single", code: "SINGLE" },
         { i18nKey: "Married", code: "MARRIED" },
     ];
-    let cmbPlace = [];
-    place &&
-        place["TradeLicense"] &&
-        place["TradeLicense"].PlaceOfActivity.map((ob) => {
-            cmbPlace.push(ob);
-        });
     let cmbQualification = [];
     Qualification &&
         Qualification["birth-death-service"] &&
@@ -87,7 +80,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     let cmbState = [];
     State &&
         State["common-masters"] &&
-        State["common-masters"].mstate.map((ob) => {
+        State["common-masters"].State.map((ob) => {
             cmbState.push(ob);
         });
     let cmbDistrict = [];
@@ -118,7 +111,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     console.log("Taluk" + Taluk);
     Taluk &&
         Taluk["common-masters"] &&
-        Taluk["common-masters"].mtaluk.map((ob) => {
+        Taluk["common-masters"].Taluk.map((ob) => {
             cmbTaluk.push(ob);
         });
     const onSkip = () => onSelect();
@@ -214,6 +207,8 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     useEffect(() => {
         if (isInitialRender) {
             if (MotherDistrict) {
+                console.log(MotherDistrict);
+                console.log(localbodies);
                 setIsInitialRender(false);
                 setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === MotherDistrict.districtid));
             }
@@ -262,6 +257,9 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             MotherNationality, MotherAgeDeleivery, MotherDOB, MotherNoOfBirths, OrderofDelivery, MotherPlaceType, MotherLBName,  MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl
         });
     }
+    if (isLoading || isQualificationLoading || isQualificationSubLoading || isProfessionLoading || isStateLoading || isDistrictLoading || isLBTypeLoading || isCountryLoading || isTalukLoading || isNationLoad) {
+        return <Loader></Loader>;
+      }
     return (
         <React.Fragment>
             {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}

@@ -225,7 +225,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRGender();
     case "Country":
       return useCRNationality();
-    case "mtaluk":
+    case "Taluk":
       return useCRTaluk();
     case "Title":
       return useCRTitle();
@@ -241,7 +241,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRDistrict();
     case "PostOffice":
       return useCRPostOffice();
-    case "mstate":
+    case "State":
       return useCRState();
     case "LBType":
       return useCRLBType();
