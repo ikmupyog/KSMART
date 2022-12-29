@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
-
-@Import({TracerConfiguration.class})
+@Import({ TracerConfiguration.class })
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,7 +21,6 @@ import java.util.TimeZone;
 @Builder
 @Component
 public class TLConfiguration {
-
 
     @Value("${app.timezone}")
     private String timeZone;
@@ -59,8 +57,7 @@ public class TLConfiguration {
     @Value("${egov.user.username.prefix}")
     private String usernamePrefix;
 
-
-    //Idgen Config
+    // Idgen Config
     @Value("${egov.idgen.host}")
     private String idGenHost;
 
@@ -91,12 +88,15 @@ public class TLConfiguration {
     @Value("${egov.idgen.bpareg.licensenumber.format}")
     private String licenseNumberIdgenFormatBPA;
 
-    //Persister Config
+    // Persister Config
     @Value("${persister.save.tradelicense.topic}")
     private String saveTopic;
 
     @Value("${persister.update.tradelicense.topic}")
     private String updateTopic;
+
+    @Value("${persister.savepde.tradelicense.topic}")
+    private String savePdeTopic;
 
     @Value("${persister.update.tradelicense.workflow.topic}")
     private String updateWorkflowTopic;
@@ -104,8 +104,7 @@ public class TLConfiguration {
     @Value("${persister.update.tradelicense.adhoc.topic}")
     private String updateAdhocTopic;
 
-
-    //Location Config
+    // Location Config
     @Value("${egov.location.host}")
     private String locationHost;
 
@@ -126,8 +125,6 @@ public class TLConfiguration {
 
     @Value("${egov.tl.max.limit}")
     private Integer maxSearchLimit;
-
-
 
     // tradelicense Calculator
     @Value("${egov.tl.calculator.host}")
@@ -151,19 +148,17 @@ public class TLConfiguration {
     @Value("${egov.bill.gen.endpoint}")
     private String fetchBillEndpoint;
 
-    //Institutional key word
+    // Institutional key word
     @Value("${egov.ownershipcategory.institutional}")
     private String institutional;
-
 
     @Value("${egov.receipt.businessserviceTL}")
     private String businessServiceTL;
 
-
     @Value("${egov.receipt.businessserviceBPA}")
     private String businessServiceBPA;
 
-    //Property Service
+    // Property Service
     @Value("${egov.property.service.host}")
     private String propertyHost;
 
@@ -173,8 +168,7 @@ public class TLConfiguration {
     @Value("${egov.property.endpoint}")
     private String propertySearchEndpoint;
 
-
-    //SMS
+    // SMS
     @Value("${kafka.topics.notification.sms}")
     private String smsNotifTopic;
 
@@ -187,7 +181,7 @@ public class TLConfiguration {
     @Value("${notification.sms.enabled.forTLRENEWAL}")
     private Boolean isTLRENEWALSMSEnabled;
 
-    //Localization
+    // Localization
     @Value("${egov.localization.host}")
     private String localizationHost;
 
@@ -200,31 +194,25 @@ public class TLConfiguration {
     @Value("${egov.localization.statelevel}")
     private Boolean isLocalizationStateLevel;
 
-
-
-    //MDMS
+    // MDMS
     @Value("${egov.mdms.host}")
     private String mdmsHost;
 
     @Value("${egov.mdms.search.endpoint}")
     private String mdmsEndPoint;
 
-
-    //Allowed Search Parameters
+    // Allowed Search Parameters
     @Value("${citizen.allowed.search.params}")
     private String allowedCitizenSearchParameters;
 
     @Value("${employee.allowed.search.params}")
     private String allowedEmployeeSearchParameters;
 
-
-
     @Value("${egov.tl.previous.allowed}")
     private Boolean isPreviousTLAllowed;
 
     @Value("${egov.tl.min.period}")
     private Long minPeriod;
-
 
     // Workflow
     @Value("${create.tl.workflow.name}")
@@ -239,31 +227,30 @@ public class TLConfiguration {
     @Value("${workflow.businessservice.search.path}")
     private String wfBusinessServiceSearchPath;
 
-
     @Value("${is.external.workflow.enabled}")
     private Boolean isExternalWorkFlowEnabled;
-    
+
     @Value("${egov.tl.businessservices}")
     private String tlBusinessServices;
 
-    //USER EVENTS
-	@Value("${egov.ui.app.host}")
-	private String uiAppHost;
-    
-	@Value("${egov.usr.events.create.topic}")
-	private String saveUserEventsTopic;
-		
-	@Value("${egov.usr.events.pay.link}")
-	private String payLink;
+    // USER EVENTS
+    @Value("${egov.ui.app.host}")
+    private String uiAppHost;
+
+    @Value("${egov.usr.events.create.topic}")
+    private String saveUserEventsTopic;
+
+    @Value("${egov.usr.events.pay.link}")
+    private String payLink;
 
     @Value("${egov.msg.pay.link}")
     private String payLinkSMS;
-	
-	@Value("${egov.usr.events.pay.code}")
-	private String payCode;
-	
-	@Value("${egov.user.event.notification.enabledForTL}")
-	private Boolean isUserEventsNotificationEnabledForTL;
+
+    @Value("${egov.usr.events.pay.code}")
+    private String payCode;
+
+    @Value("${egov.user.event.notification.enabledForTL}")
+    private Boolean isUserEventsNotificationEnabledForTL;
 
     @Value("${egov.user.event.notification.enabledForTLRenewal}")
     private Boolean isUserEventsNotificationEnabledForTLRenewal;
@@ -271,10 +258,10 @@ public class TLConfiguration {
     @Value("${egov.user.event.notification.enabledForBPA}")
     private Boolean isUserEventsNotificationEnabledForBPA;
 
-	@Value("${egov.usr.events.pay.triggers}")
-	private String payTriggers;
+    @Value("${egov.usr.events.pay.triggers}")
+    private String payTriggers;
 
-    //Email
+    // Email
     @Value("${kafka.topics.notification.email}")
     private String emailNotifTopic;
 
@@ -284,8 +271,7 @@ public class TLConfiguration {
     @Value("${notification.email.enabled.forBPA}")
     private Boolean isEmailNotificationEnabledForBPA;
 
-
-	//Reminder
+    // Reminder
     @Value("${egov.tl.reminder.period}")
     private Long reminderPeriod;
 
@@ -300,8 +286,6 @@ public class TLConfiguration {
 
     @Value("${egov.tl.batch.expire.error.topic}")
     private String expiryErrorTopic;
-
-
 
     // url shortner
 
@@ -323,13 +307,11 @@ public class TLConfiguration {
     @Value("${id.timezone}")
     private String egovAppTimeZone;
 
-    //receipt
+    // receipt
     @Value("${notification.url}")
     private String notificationUrl;
 
     @Value("${egov.download.receipt.link}")
     private String receiptDownloadLink;
-
-
 
 }
