@@ -10,7 +10,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
+  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const [setVillage, setSelectedVillage] = useState(formData?.InformentAddress?.setVillage);
   const [setTaluk, setSelectedTaluk] = useState(formData?.InformentAddress?.setTaluk);
@@ -51,7 +51,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     });
   Taluk &&
     Taluk["common-masters"] &&
-    Taluk["common-masters"].mtaluk.map((ob) => {
+    Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   District &&
