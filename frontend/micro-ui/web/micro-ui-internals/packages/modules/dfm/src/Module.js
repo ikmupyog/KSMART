@@ -1,4 +1,4 @@
-import { Header, CitizenHomeCard, CaseIcon, HomeLink } from "@egovernments/digit-ui-react-components";
+import { Header, CitizenHomeCard, EditPencilIcon, HomeLink } from "@egovernments/digit-ui-react-components";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
@@ -61,7 +61,7 @@ export const DFMLinks = ({ matchPath, userType }) => {
     // },
   ];
 
-  return <CitizenHomeCard header={t("MODULE_DFM")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
+  return <CitizenHomeCard header={t("MODULE_DFM")} links={links} Icon={() => <EditPencilIcon className="fill-path-primary-main" />} />;
 }; 
 
 const componentsToRegister = {
