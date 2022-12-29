@@ -96,7 +96,9 @@ public class TradeLicenseDetail {
 
     CITIZEN("CITIZEN"),
 
-    DATAENTRY("DATAENTRY");
+    DATAENTRY("DATAENTRY"),
+
+    PDE("PDE");
 
     private String value;
 
@@ -202,6 +204,10 @@ public class TradeLicenseDetail {
 
   @JsonProperty("auditDetails")
   private AuditDetails auditDetails = null;
+
+  @JsonProperty("ownersPde")
+  @Valid
+  private List<OwnerPde> ownersPde = new ArrayList<>();
 
   public TradeLicenseDetail addOwnersItem(OwnerInfo ownersItem) {
     if (this.owners == null)
