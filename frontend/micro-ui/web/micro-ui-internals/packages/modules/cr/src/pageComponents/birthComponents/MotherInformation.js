@@ -16,7 +16,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: Taluk = {},isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-    const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
+    const { data: localbodies={}, isLoading } = Digit.Hooks.useTenants();
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [lbs, setLbs] = useState(0);
     const [MotherFirstNameEn, setMotherFirstNameEn] = useState(formData?.MotherInfoDetails?.MotherFirstNameEn);

@@ -296,8 +296,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-3">
               <CardLabel>{`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
-                t={t}
-                isMandatory={true}
+                t={t}               
                 type={"text"}
                 optionKey="i18nKey"
                 name="FirstName"
