@@ -38,12 +38,12 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   function SelectOccupationOthers(e) {
     setoccupationOthers(e.target.value);
   }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
   let cmbOccupationMain = [];
   Occupation &&
   Occupation["common-masters"] &&

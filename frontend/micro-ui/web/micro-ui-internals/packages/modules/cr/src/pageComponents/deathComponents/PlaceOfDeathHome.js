@@ -10,11 +10,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-<<<<<<< HEAD
-  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "taluk");
-=======
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
->>>>>>> f884ac624ae579560e8fae8af32f5367b3382fa5
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
   const [lbs, setLbs] = useState(0);
@@ -61,11 +57,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     });
   Taluk &&
     Taluk["common-masters"] &&
-<<<<<<< HEAD
-    Taluk["common-masters"].taluk.map((ob) => {
-=======
     Taluk["common-masters"].Taluk.map((ob) => {
->>>>>>> f884ac624ae579560e8fae8af32f5367b3382fa5
       cmbTaluk.push(ob);
     });
   District &&
@@ -245,7 +237,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="Locality"
@@ -260,7 +252,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="LocalityML"

@@ -206,7 +206,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_INFORMENT_NAME_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="InformentNameEn"
@@ -221,7 +221,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_INFORMENT_NAME_Ml")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="InformentNameMl"
@@ -349,7 +349,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="Locality"
@@ -364,7 +364,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="LocalityMl"
