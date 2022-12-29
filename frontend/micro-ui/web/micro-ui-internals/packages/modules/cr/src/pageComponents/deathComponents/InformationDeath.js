@@ -296,7 +296,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-3">
               <CardLabel>{`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
-                t={t}               
+                t={t}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="FirstName"
@@ -351,14 +352,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 selected={setTitleB}
                 select={selectTitleB}
                 disabled={isEdit}
-                placeholder={`${t("CR_GENDERCR_TITLE_NAME_ML")}`}
+                placeholder={`${t("CR_TITLE_NAME_ML")}`}
               />
             </div>
             <div className="col-md-3">
               <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="MLFirstName"
@@ -408,7 +409,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="code"
-                isMandatory={true}
+                isMandatory={false}
                 option={menu}
                 selected={Gender}
                 select={setselectGender}
@@ -426,7 +427,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <CardLabel>{`${t("CR_AGE_OF_BIRTH")}`}<span className="mandatorycss">*</span> </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="Ageofbirth"

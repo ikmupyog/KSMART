@@ -237,7 +237,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="Locality"
@@ -252,7 +252,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="LocalityML"

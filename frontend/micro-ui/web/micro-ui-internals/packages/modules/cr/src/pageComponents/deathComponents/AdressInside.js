@@ -1,4 +1,4 @@
-  import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
   import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
   // import Timeline from "../../components/CRTimeline";
   import { useTranslation } from "react-i18next";
@@ -381,7 +381,7 @@
                  <CardLabel>{`${t("CR_HOUSE_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                   t={t}
-                  isMandatory={true}
+                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="PresentHouseNameEn"
@@ -396,7 +396,7 @@
                   <CardLabel>{`${t("CR_HOUSE_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                   t={t}
-                  isMandatory={true}
+                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="PresentHouseNameMl"
@@ -418,7 +418,7 @@
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="PresentLocalityNameEn"
@@ -436,7 +436,7 @@
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="PresentLocalityNameMl"
@@ -689,7 +689,7 @@
                  <CardLabel>{`${t("CR_HOUSE_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                   t={t}
-                  isMandatory={true}
+                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="PermanentHouseNameEn"
@@ -703,7 +703,7 @@
                   <CardLabel>{`${t("CR_HOUSE_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                   t={t}
-                  isMandatory={true}
+                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="PermanentHouseNameMl"
@@ -724,7 +724,7 @@
                 </CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={true}
+                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="PermanentLocalityNameEn"
@@ -742,7 +742,7 @@
                 </CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={true}
+                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="PermanentLocalityNameMl"

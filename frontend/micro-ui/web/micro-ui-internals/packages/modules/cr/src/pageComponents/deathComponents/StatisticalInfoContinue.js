@@ -164,6 +164,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CR_MEDICAL_ATTENTION_DEATH")}</CardLabel>
             <Dropdown
@@ -190,8 +191,10 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
               placeholder={`${t(" ")}`}
             />
           </div>
+          </div>
         </div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}</CardLabel>
             <Dropdown
@@ -219,7 +222,9 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         </div>
+        </div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER_ML")}</CardLabel>
             <TextInput
@@ -248,7 +253,9 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         </div>
+        </div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CR_HABITUALLY_SMOKE")}</CardLabel>
             <RadioButtons
@@ -272,6 +279,7 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         </div>
+       </div> 
         <div className="row">
           <div className="col-md-6">
             <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>
