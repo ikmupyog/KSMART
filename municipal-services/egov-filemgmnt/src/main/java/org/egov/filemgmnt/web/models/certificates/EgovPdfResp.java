@@ -9,5 +9,5 @@ import lombok.Setter;
 @Setter
 public class EgovPdfResp {
 
-	List<String> filestoreIds;
+    List<String> filestoreIds;
 }

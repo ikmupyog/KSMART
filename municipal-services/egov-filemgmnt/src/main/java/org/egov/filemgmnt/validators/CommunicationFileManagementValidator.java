@@ -1,8 +1,8 @@
 package org.egov.filemgmnt.validators;
 
-import static org.egov.filemgmnt.web.enums.ErrorCodes.COMUNICATION_FILE_INVALID_UPDATE;
-import static org.egov.filemgmnt.web.enums.ErrorCodes.COMUNICATION_FILE_REQUIRED;
 import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_SEARCH;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_UPDATE;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.REQUIRED;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class CommunicationFileManagementValidator {
     public void validateCreate(CommunicationFileRequest request, Object mdmsData) {
 
         if (CollectionUtils.isEmpty(request.getCommunicationFiles())) {
-            throw new CustomException(COMUNICATION_FILE_REQUIRED.getCode(), "Atleast one file is required");
+            throw new CustomException(REQUIRED.getCode(), "Atleast one file is required");
 
         }
     }
@@ -87,16 +87,15 @@ public class CommunicationFileManagementValidator {
         List<CommunicationFile> files = request.getCommunicationFiles();
 
         if (CollectionUtils.isEmpty(files)) {
-            throw new CustomException(COMUNICATION_FILE_REQUIRED.getCode(), "Communication file is required.");
+            throw new CustomException(REQUIRED.getCode(), "Communication file is required.");
         }
         if (files.size() > 1) { // NOPMD
-            throw new CustomException(COMUNICATION_FILE_INVALID_UPDATE.getCode(),
+            throw new CustomException(INVALID_UPDATE.getCode(),
                     "Supports only single communication file update requset.");
 
         }
         if (files.size() != searchResult.size()) {
-            throw new CustomException(COMUNICATION_FILE_INVALID_UPDATE.getCode(),
-                    "Communication file(s) not found in database.");
+            throw new CustomException(INVALID_UPDATE.getCode(), "Communication file(s) not found in database.");
 
         }
     }

@@ -1,5 +1,9 @@
 package org.egov.filemgmnt.workflow;
 
+import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_FILE_ACTION;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.WORKFLOW_ERROR;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.WORKFLOW_ERROR_KEY_NOT_FOUND;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -66,6 +70,9 @@ public class WorkflowIntegrator {
             businessService = FMConstants.BUSINESS_SERVICE_FM;
         }
 
+        if (fileAction == null) {
+            throw new CustomException(INVALID_FILE_ACTION.getCode(), " File action is required.");
+        }
         JSONArray jsonArray = new JSONArray();
         for (ApplicantPersonal personal : request.getApplicantPersonals()) {
             if (businessService.equals(FMConstants.BUSINESS_SERVICE_FM)
@@ -98,7 +105,7 @@ public class WorkflowIntegrator {
         request.put(FMConstants.REQUESTINFOKEY, requestInfo);
         request.put(FMConstants.WORKFLOWREQUESTARRAYKEY, wfRequestArray);
 
-        log.info("workflow integrator request: {}", request);
+        log.debug("workflow integrator request: {}", request);
 
         String response;
         try {
@@ -114,14 +121,14 @@ public class WorkflowIntegrator {
             try {
                 errros = responseContext.read("$.Errors");
             } catch (PathNotFoundException pe) {
-                log.error("EG_FM_WF_ERROR_KEY_NOT_FOUND",
+                log.error(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
                           " Unable to read the json path in error object : " + pe.getMessage());
-                throw new CustomException("EG_FM_WF_ERROR_KEY_NOT_FOUND",
+                throw new CustomException(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
                         " Unable to read the json path in error object : " + pe.getMessage());
             }
-            throw new CustomException("EG_WF_ERROR", errros.toString());
+            throw new CustomException(WORKFLOW_ERROR.getCode(), errros.toString());
         } catch (Exception e) {
-            throw new CustomException("EG_WF_ERROR",
+            throw new CustomException(WORKFLOW_ERROR.getCode(),
                     " Exception occured while integrating with workflow : " + e.getMessage());
         }
 

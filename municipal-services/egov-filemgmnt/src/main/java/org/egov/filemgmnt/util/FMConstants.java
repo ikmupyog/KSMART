@@ -5,87 +5,87 @@ import org.springframework.stereotype.Component;
 @Component
 public class FMConstants {
 
-	// MDMS
-	public static final String FILEMANAGEMENT_MODULE = "FileManagement";
+    // MDMS
+    public static final String FILEMANAGEMENT_MODULE = "FileManagement";
 
-	public static final String FILEMANAGEMENT_MODULE_CODE = "FM";
+    public static final String FILEMANAGEMENT_MODULE_CODE = "FM";
 
-	// mdms master names
-	public static final String COMMON_MASTERS_MODULE = "common-masters";
+    // mdms master names
+    public static final String COMMON_MASTERS_MODULE = "common-masters";
 
-	// error constants
-	public static final String FILE_CATEGORY = "FileCategory";
+    // error constants
+    public static final String FILE_CATEGORY = "FileCategory";
 
-	public static final String FILE_ARISING_MODE = "FileArisingmode";
+    public static final String FILE_ARISING_MODE = "FileArisingmode";
 
-	// mdms path codes
-	public static final String FM_MDMS_JSONPATH = "$.MdmsRes.FileManagement";
+    // mdms path codes
+    public static final String FM_MDMS_JSONPATH = "$.MdmsRes.FileManagement";
 
-	public static final String COMMON_MASTER_JSONPATH_CODE = "$.MdmsRes.common-masters";
+    public static final String COMMON_MASTER_JSONPATH_CODE = "$.MdmsRes.common-masters";
 
-	// mdms master names
-	public static final String FM_MDMS_FILE_SERVICE_SUBTYPE = "FileServiceSubtype";
+    // mdms master names
+    public static final String FM_MDMS_FILE_SERVICE_SUBTYPE = "FileServiceSubtype";
 
-	public static final String FM_MDMS_FILE_SERVICE_SUBTYPE_CODE_JSONPATH = "$.MdmsRes.FileManagement.FileServiceSubtype[*].code";
+    public static final String FM_MDMS_FILE_SERVICE_SUBTYPE_CODE_JSONPATH = "$.MdmsRes.FileManagement.FileServiceSubtype[*].code";
 
-	// error constants
-	public static final String INVALID_TENANT_ID_MDMS_KEY = "INVALID TENANTID";
+    // error constants
+    public static final String INVALID_TENANT_ID_MDMS_KEY = "INVALID TENANTID";
 
-	public static final String INVALID_TENANT_ID_MDMS_MSG = "No data found for this tenentID";
+    public static final String INVALID_TENANT_ID_MDMS_MSG = "No data found for this tenentID";
 
-	// workflow integrator
-	public static final String BUSINESS_SERVICE_FM = "NewDFM";
+    // workflow integrator
+    public static final String BUSINESS_SERVICE_FM = "NewDFM";
 
-	public static final String TENANTIDKEY = "tenantId";
+    public static final String TENANTIDKEY = "tenantId";
 
-	public static final String BUSINESSSERVICEKEY = "businessService";
+    public static final String BUSINESSSERVICEKEY = "businessService";
 
-	public static final String ACTIONKEY = "action";
+    public static final String ACTIONKEY = "action";
 
-	public static final String COMMENTKEY = "comment";
+    public static final String COMMENTKEY = "comment";
 
-	public static final String MODULENAMEKEY = "moduleName";
+    public static final String MODULENAMEKEY = "moduleName";
 
-	public static final String BUSINESSIDKEY = "businessId";
+    public static final String BUSINESSIDKEY = "businessId";
 
-	public static final String DOCUMENTSKEY = "documents";
+    public static final String DOCUMENTSKEY = "documents";
 
-	public static final String ASSIGNEEKEY = "assignes";
+    public static final String ASSIGNEEKEY = "assignes";
 
-	public static final String UUIDKEY = "uuid";
+    public static final String UUIDKEY = "uuid";
 
-	public static final String FMMODULENAMEVALUE = "FM";
+    public static final String FMMODULENAMEVALUE = "FM";
 
-	public static final String WORKFLOWREQUESTARRAYKEY = "ProcessInstances";
+    public static final String WORKFLOWREQUESTARRAYKEY = "ProcessInstances";
 
-	public static final String REQUESTINFOKEY = "RequestInfo";
+    public static final String REQUESTINFOKEY = "RequestInfo";
 
-	public static final String PROCESSINSTANCESJOSNKEY = "$.ProcessInstances";
+    public static final String PROCESSINSTANCESJOSNKEY = "$.ProcessInstances";
 
-	public static final String BUSINESSIDJOSNKEY = "$.businessId";
+    public static final String BUSINESSIDJOSNKEY = "$.businessId";
 
-	public static final String STATUSJSONKEY = "$.state.applicationStatus";
+    public static final String STATUSJSONKEY = "$.state.applicationStatus";
 
-	public static final String TRIGGER_NOWORKFLOW = "NOWORKFLOW";
+    public static final String TRIGGER_NOWORKFLOW = "NOWORKFLOW";
 
-	// PDF
+    // PDF
 
-	public static final String ID = "id";
+    public static final String ID = "id";
 
-	public static final String TENANT = "tenantId";
+    public static final String TENANT = "tenantId";
 
-	public static final String BUILDINGNO = "buildingNo";
+    public static final String BUILDINGNO = "buildingNo";
 
-	public static final String FILECODE = "fileCode";
+    public static final String FILECODE = "fileCode";
 
-	public static final String WARDNO = "wardNo";
+    public static final String WARDNO = "wardNo";
 
-	public static final String FINANCIALYEAR = "financialYear";
+    public static final String FINANCIALYEAR = "financialYear";
 
-	public static final String NAME = "name";
+    public static final String NAME = "name";
 
-	public static final String ADDRESS = "address";
+    public static final String ADDRESS = "address";
 
-	public static final String PDFREQUESTARRAYKEY = "ResidetialCertificate";
+    public static final String PDFREQUESTARRAYKEY = "ResidetialCertificate";
 
 }

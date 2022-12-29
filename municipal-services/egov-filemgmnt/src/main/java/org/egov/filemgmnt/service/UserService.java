@@ -1,5 +1,7 @@
 package org.egov.filemgmnt.service;
 
+import static org.egov.filemgmnt.web.enums.ErrorCodes.ILLEGAL_ARGUMENT;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,6 +45,8 @@ class UserService {
     }
 
     public void createUser(ApplicantPersonalRequest request) {
+        // 1. check user exists or not - using aadharNo
+        // 2.
 
         List<ApplicantPersonal> applicant = request.getApplicantPersonals();
         RequestInfo requestInfo = request.getRequestInfo();
@@ -54,6 +58,13 @@ class UserService {
 
             String businessService = personal.getFileDetail()
                                              .getBusinessService();
+            if (personal.getId() == null) {
+
+                // addUserDefaultFields(applicant.getTenantId(), role, personal,
+                // businessService);
+                // UserDetailResponse userDetailResponse = userExists(owner,requestInfo);
+
+            }
         });
 
     }
@@ -104,7 +115,7 @@ class UserService {
             UserDetailResponse userDetailResponse = mapper.convertValue(responseMap, UserDetailResponse.class);
             return userDetailResponse; // NOPMD
         } catch (IllegalArgumentException e) {
-            throw new CustomException("IllegalArgumentException", "ObjectMapper not able to convertValue in userCall");
+            throw new CustomException(ILLEGAL_ARGUMENT.getCode(), "ObjectMapper not able to convertValue in userCall");
         }
     }
 

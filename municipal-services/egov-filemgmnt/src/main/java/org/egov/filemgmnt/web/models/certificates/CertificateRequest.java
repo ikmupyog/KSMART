@@ -22,19 +22,19 @@ import lombok.Setter;
 @Builder
 public class CertificateRequest {
 
-	@JsonProperty("RequestInfo")
-	private RequestInfo requestInfo = null;
+    @JsonProperty("RequestInfo")
+    private RequestInfo requestInfo = null;
 
-	@JsonProperty("CertificateDetails")
-	private List<CertificateDetails> certificateDet;
+    @JsonProperty("CertificateDetails")
+    private List<CertificateDetails> certificateDet;
 
-	public CertificateRequest addCertificateDetails(CertificateDetails certDet) {
-		if (certificateDet == null) {
-			certificateDet = new ArrayList<>();
-		}
-		certificateDet.add(certDet);
+    public CertificateRequest addCertificateDetails(CertificateDetails certDet) {
+        if (certificateDet == null) {
+            certificateDet = new ArrayList<>();
+        }
+        certificateDet.add(certDet);
 
-		return this;
-	}
+        return this;
+    }
 
 }

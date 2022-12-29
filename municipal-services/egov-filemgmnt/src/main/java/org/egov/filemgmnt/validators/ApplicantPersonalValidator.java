@@ -1,9 +1,9 @@
 package org.egov.filemgmnt.validators;
 
-import static org.egov.filemgmnt.web.enums.ErrorCodes.APPLICANT_PERSONAL_INVALID_CREATE;
-import static org.egov.filemgmnt.web.enums.ErrorCodes.APPLICANT_PERSONAL_INVALID_UPDATE;
-import static org.egov.filemgmnt.web.enums.ErrorCodes.APPLICANT_PERSONAL_REQUIRED;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_CREATE;
 import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_SEARCH;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_UPDATE;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.REQUIRED;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,11 +55,11 @@ public class ApplicantPersonalValidator {
         List<ApplicantPersonal> applicantPersonals = request.getApplicantPersonals();
 
         if (CollectionUtils.isEmpty(applicantPersonals)) {
-            throw new CustomException(APPLICANT_PERSONAL_REQUIRED.getCode(), "Applicant personal is required.");
+            throw new CustomException(REQUIRED.getCode(), "Applicant personal is required.");
         }
 
         if (applicantPersonals.size() > 1) { // NOPMD
-            throw new CustomException(APPLICANT_PERSONAL_INVALID_CREATE.getCode(),
+            throw new CustomException(INVALID_CREATE.getCode(),
                     "Supports only single Applicant personal create request.");
         }
 
@@ -76,17 +76,16 @@ public class ApplicantPersonalValidator {
         List<ApplicantPersonal> applicantPersonals = request.getApplicantPersonals();
 
         if (CollectionUtils.isEmpty(applicantPersonals)) {
-            throw new CustomException(APPLICANT_PERSONAL_REQUIRED.getCode(), "Applicant personal is required.");
+            throw new CustomException(REQUIRED.getCode(), "Applicant personal is required.");
         }
 
         if (applicantPersonals.size() > 1) { // NOPMD
-            throw new CustomException(APPLICANT_PERSONAL_INVALID_UPDATE.getCode(),
+            throw new CustomException(INVALID_UPDATE.getCode(),
                     "Supports only single Applicant personal update request.");
         }
 
         if (applicantPersonals.size() != searchResult.size()) {
-            throw new CustomException(APPLICANT_PERSONAL_INVALID_UPDATE.getCode(),
-                    "Applicant Personal(s) not found in database.");
+            throw new CustomException(INVALID_UPDATE.getCode(), "Applicant Personal(s) not found in database.");
         }
     }
 
