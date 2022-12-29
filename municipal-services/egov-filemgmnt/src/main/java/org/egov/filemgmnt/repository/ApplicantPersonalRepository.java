@@ -71,16 +71,23 @@ public class ApplicantPersonalRepository {
 		List<ApplicantPersonal> searchResult = getApplicantPersonals(
 				ApplicantPersonalSearchCriteria.builder().id(id).build());
 
+		// Embededd URL for QR-CODE START
+
 		String uiHostCert = fmConfig.getUiAppHost();
 		String resCertPath = fmConfig.getResidentialCertLink();
 
 		resCertPath = resCertPath.replace("$id", searchResult.get(0).getId());
 		resCertPath = resCertPath.replace("$tenantId", searchResult.get(0).getTenantId());
-//		resCertPath = resCertPath.replace("$fileCode", searchResult.get(0).getFileDetail().getFileCode());
+		// resCertPath = resCertPath.replace("$fileCode",
+		// searchResult.get(0).getFileDetail().getFileCode());
 
 		String finalPath = uiHostCert + resCertPath;
 
 		String embeddedUrl = getShortenedUrl(finalPath);
+
+		// END
+
+		// PDF Service call start
 
 		String uiHost = fmConfig.getEgovPdfHost();
 		String residentialCertPath = fmConfig.getEgovPdfResidentialEndPoint();
@@ -94,8 +101,12 @@ public class ApplicantPersonalRepository {
 
 		pdfRequest.put(FMConstants.REQUESTINFOKEY, requestInfo);
 		pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY, getPdfCertArray(searchResult, embeddedUrl));
-
+		System.out.println("req  :" + pdfRequest);
 		EgovPdfResp res = restTemplate.postForObject(pdfFinalPath, pdfRequest, EgovPdfResp.class);
+
+		// PDF Response END
+
+		// certificate details model START
 		CertificateDetails certificate = new CertificateDetails();
 		List<CertificateDetails> list = new ArrayList<>();
 		EgovPdfResp result = new EgovPdfResp();
@@ -112,10 +123,14 @@ public class ApplicantPersonalRepository {
 		CertificateRequest certReq = CertificateRequest.builder().certificateDet(list).requestInfo(requestInfo).build();
 		enrichmentService.enrichCertificateCreate(certReq);
 
+		// Certificate details topic values return to service
 		return certReq;
 
 	}
 
+	// PDF service input json creation for certificate details
+	// inputs : search result of id
+	// output : json array Certificate details
 	public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl) {
 		JSONArray array = new JSONArray();
 		JSONObject obj = new JSONObject();
