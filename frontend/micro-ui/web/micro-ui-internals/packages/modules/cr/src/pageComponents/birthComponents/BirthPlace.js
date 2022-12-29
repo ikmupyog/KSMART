@@ -9,15 +9,15 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: Menu = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  const { data: Menu = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
   const [BirthPlaceDescription, setBirthPlaceDeccription] = useState(formData?.BirthPlace?.BirthPlaceDescription);
   const [value, setValue] = useState();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let menu = [];
   Menu &&
-    Menu["birth-death-service"] &&
-    Menu["birth-death-service"].PlaceMaster.map((ob) => {
+    Menu["death-services"] &&
+    Menu["death-services"].PlaceMaster.map((ob) => {
       menu.push(ob);
     });
   console.log(menu);
