@@ -21,7 +21,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [setPostOffice, setSelectedPostOffice] = useState(formData?.PlaceOfDeathHome?.setPostOffice);
   const [PinCode, setSelectedPinCode] = useState(formData?.PlaceOfDeathHome?.HouseNo);
   const [setTaluk, setSelectedTaluk] = useState(formData?.PlaceOfDeathHome?.setTaluk);
-  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
+  const [PresentDistrict, setPresentDistrict] = useState(formData?.PlaceOfDeathHome?.PresentDistrict);
   const [BuildingNo, setSelectedBuildingNo] = useState(formData?.PlaceOfDeathHome?.BuildingNo);
   const [HouseNo, setSelectedHouseNo] = useState(formData?.PlaceOfDeathHome?.HouseNo);
   const [Locality, setLocality] = useState(formData?.PlaceOfDeathHome?.Locality);

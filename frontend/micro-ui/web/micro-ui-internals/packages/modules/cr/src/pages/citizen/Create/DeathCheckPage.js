@@ -36,7 +36,7 @@ const DeathCheckPage = ({ onSubmit, value,userType }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { ChildDetails, BirthPlace, HospitalDetails, FatherInfoDetails, MotherInfoDetails, AddressDetails, StatisticalInfoDetails, isEditProperty, cpt } = value;
+  const { InformationDeath, FamilyInformationDeath, PlaceOfDeathHome, PlaceOfDeath, } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -70,26 +70,26 @@ const DeathCheckPage = ({ onSubmit, value,userType }) => {
         <StatusTable >
           <div className="row">
              <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.ChildDOB)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.DeathDate)}</CardText>
             </div>
            <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.Gender.value)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.Gender.value)}</CardText>
             </div>
           </div>
           <div className="row">
              <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.BirthPlace.name)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(PlaceOfDeath.setPlaceofDeath.value)}</CardText>
             </div>
            <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(HospitalDetails.HospitalName.hospitalName)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(PlaceOfDeathHome.PresentDistrict.value)}</CardText>
             </div>
           </div>
           <div className="row">
              <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FatherInfoDetails.FatherFirstNameEn)}&nbsp;{t(FatherInfoDetails.FatherLastNameEn)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FamilyInformationDeath.FatherOrHusbandNameEN)}</CardText>
             </div>
            <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(MotherInfoDetails.MotherFirstNameEn)}&nbsp;{t(MotherInfoDetails.MotherLastNameEn)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FamilyInformationDeath.MotherNameEn)}</CardText>
             </div>
           </div>
           <div className="row">
