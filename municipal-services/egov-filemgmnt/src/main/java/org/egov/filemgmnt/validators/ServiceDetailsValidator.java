@@ -1,7 +1,7 @@
 package org.egov.filemgmnt.validators;
 
-import static org.egov.filemgmnt.web.enums.ErrorCodes.APPLICANT_SERVICE_INVALID_UPDATE;
-import static org.egov.filemgmnt.web.enums.ErrorCodes.APPLICANT_SERVICE_REQUIRED;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_UPDATE;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.REQUIRED;
 
 import java.util.List;
 
@@ -21,8 +21,7 @@ public class ServiceDetailsValidator {
      */
     public void validateCreate(ServiceDetailsRequest request) {
         if (CollectionUtils.isEmpty(request.getServiceDetails())) {
-            throw new CustomException(APPLICANT_SERVICE_REQUIRED.getCode(),
-                    "Atleast one applicant service is required.");
+            throw new CustomException(REQUIRED.getCode(), "Atleast one applicant service is required.");
         }
     }
 
@@ -36,13 +35,11 @@ public class ServiceDetailsValidator {
         List<ServiceDetails> applicantServices = request.getServiceDetails();
 
         if (CollectionUtils.isEmpty(applicantServices)) {
-            throw new CustomException(APPLICANT_SERVICE_REQUIRED.getCode(),
-                    "Atleast one applicant service is required.");
+            throw new CustomException(REQUIRED.getCode(), "Atleast one applicant service is required.");
         }
 
         if (applicantServices.size() != searchResult.size()) {
-            throw new CustomException(APPLICANT_SERVICE_INVALID_UPDATE.getCode(),
-                    "Applicant Service(s) not found in database.");
+            throw new CustomException(INVALID_UPDATE.getCode(), "Applicant Service(s) not found in database.");
         }
     }
 

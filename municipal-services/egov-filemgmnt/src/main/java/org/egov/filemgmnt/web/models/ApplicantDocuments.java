@@ -38,8 +38,8 @@ public class ApplicantDocuments {
     @Schema(type = "string", description = "Document type id")
     @Size(max = 64)
     @NotNull
-    @JsonProperty("documenttypeId")
-    private String documenttypeId;
+    @JsonProperty("documentTypeId")
+    private String documentTypeId;
 
     @Schema(type = "string", description = "Document number")
     @Size(max = 64)
@@ -49,8 +49,8 @@ public class ApplicantDocuments {
 
     @Schema(type = "long", description = "Document expiry date")
     @NotNull
-    @JsonProperty("docexpiryDate")
-    private Long docexpiryDate;
+    @JsonProperty("docExpiryDate")
+    private Long docExpiryDate;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;

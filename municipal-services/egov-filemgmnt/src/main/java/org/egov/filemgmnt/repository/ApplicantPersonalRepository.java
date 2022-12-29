@@ -32,58 +32,69 @@ import net.minidev.json.JSONObject;
 @Repository
 public class ApplicantPersonalRepository {
 
-	private final JdbcTemplate jdbcTemplate;
-	private final ApplicantPersonalQueryBuilder queryBuilder;
-	private final ApplicantPersonalRowMapper rowMapper;
-	private final FMConfiguration fmConfig;
-	private final RestTemplate restTemplate;
-	private final ApplicantPersonalEnrichment enrichmentService;
+    private final JdbcTemplate jdbcTemplate;
+    private final ApplicantPersonalQueryBuilder queryBuilder;
+    private final ApplicantPersonalRowMapper rowMapper;
+    private final FMConfiguration fmConfig;
+    private final RestTemplate restTemplate;
+    private final ApplicantPersonalEnrichment enrichmentService;
 
-	@Autowired
-	ApplicantPersonalRepository(JdbcTemplate jdbcTemplate, ApplicantPersonalQueryBuilder queryBuilder,
-			ApplicantPersonalRowMapper rowMapper, FMConfiguration fmConfig, RestTemplate restTemplate,
-			ApplicantPersonalEnrichment enrichmentService) {
-		this.jdbcTemplate = jdbcTemplate;
-		this.queryBuilder = queryBuilder;
-		this.rowMapper = rowMapper;
-		this.fmConfig = fmConfig;
-		this.restTemplate = restTemplate;
-		this.enrichmentService = enrichmentService;
-	}
+    @Autowired
+    ApplicantPersonalRepository(JdbcTemplate jdbcTemplate, ApplicantPersonalQueryBuilder queryBuilder,
+                                ApplicantPersonalRowMapper rowMapper, FMConfiguration fmConfig,
+                                RestTemplate restTemplate, ApplicantPersonalEnrichment enrichmentService) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.queryBuilder = queryBuilder;
+        this.rowMapper = rowMapper;
+        this.fmConfig = fmConfig;
+        this.restTemplate = restTemplate;
+        this.enrichmentService = enrichmentService;
+    }
 
-	public List<ApplicantPersonal> getApplicantPersonals(ApplicantPersonalSearchCriteria criteria) {
-		List<Object> preparedStmtValues = new ArrayList<>();
-		String query = queryBuilder.getApplicantPersonalSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+    public List<ApplicantPersonal> getApplicantPersonals(ApplicantPersonalSearchCriteria criteria) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = queryBuilder.getApplicantPersonalSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
 
-		List<ApplicantPersonal> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
+        List<ApplicantPersonal> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
 
-		return result; // NOPMD
-	}
+        return result; // NOPMD
+    }
 
-	@SuppressWarnings("unchecked")
-	public CertificateRequest getResidentialCertificate(ApplicantPersonalSearchCriteria criteria,
-			RequestInfo requestInfo) {
-		String response = null;
-		String id = criteria.getId();
+    @SuppressWarnings("unchecked")
+    public CertificateRequest getResidentialCertificate(ApplicantPersonalSearchCriteria criteria,
+                                                        RequestInfo requestInfo) {
+        String response = null;
+        String id = criteria.getId();
 
-		// search database
+        // search database
 
-		List<ApplicantPersonal> searchResult = getApplicantPersonals(
-				ApplicantPersonalSearchCriteria.builder().id(id).build());
+        List<ApplicantPersonal> searchResult = getApplicantPersonals(ApplicantPersonalSearchCriteria.builder()
+                                                                                                    .id(id)
+                                                                                                    .build());
+
 
 		// Embededd URL for QR-CODE START
 
-		String uiHostCert = fmConfig.getUiAppHost();
-		String resCertPath = fmConfig.getResidentialCertLink();
 
-		resCertPath = resCertPath.replace("$id", searchResult.get(0).getId());
-		resCertPath = resCertPath.replace("$tenantId", searchResult.get(0).getTenantId());
-		// resCertPath = resCertPath.replace("$fileCode",
-		// searchResult.get(0).getFileDetail().getFileCode());
+        String uiHostCert = fmConfig.getUiAppHost();
+        String resCertPath = fmConfig.getResidentialCertLink();
 
-		String finalPath = uiHostCert + resCertPath;
+        resCertPath = resCertPath.replace("$id",
+                                          searchResult.get(0)
+                                                      .getId());
+        resCertPath = resCertPath.replace("$tenantId",
+                                          searchResult.get(0)
+                                                      .getTenantId());
+//        resCertPath = resCertPath.replace("$fileCode",
+//                                          searchResult.get(0)
+//                                                      .getFileDetail()
+//                                                      .getFileCode());
 
-		String embeddedUrl = getShortenedUrl(finalPath);
+
+        String finalPath = uiHostCert + resCertPath;
+
+        String embeddedUrl = getShortenedUrl(finalPath);
+
 
 		// END
 
@@ -92,82 +103,122 @@ public class ApplicantPersonalRepository {
 		String uiHost = fmConfig.getEgovPdfHost();
 		String residentialCertPath = fmConfig.getEgovPdfResidentialEndPoint();
 
-		String tenantId = searchResult.get(0).getTenantId();
-		residentialCertPath = residentialCertPath.replace("$tenantId", tenantId);
-		String pdfFinalPath = uiHost + residentialCertPath;
 
-		// Create PDFRequest Json
-		JSONObject pdfRequest = new JSONObject();
+        String tenantId = searchResult.get(0)
+                                      .getTenantId();
+        residentialCertPath = residentialCertPath.replace("$tenantId", tenantId);
+        String pdfFinalPath = uiHost + residentialCertPath;
 
-		pdfRequest.put(FMConstants.REQUESTINFOKEY, requestInfo);
-		pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY, getPdfCertArray(searchResult, embeddedUrl));
-		System.out.println("req  :" + pdfRequest);
-		EgovPdfResp res = restTemplate.postForObject(pdfFinalPath, pdfRequest, EgovPdfResp.class);
+        // Create PDFRequest Json
+        JSONObject pdfRequest = new JSONObject();
+
+
 
 		// PDF Response END
 
 		// certificate details model START
-		CertificateDetails certificate = new CertificateDetails();
-		List<CertificateDetails> list = new ArrayList<>();
-		EgovPdfResp result = new EgovPdfResp();
 
-		certificate.setApplicantPersonalId(id);
-		certificate.setTenantId(tenantId);
-		certificate.setBussinessService(searchResult.get(0).getServiceDetails().getServiceMinorType());
-		certificate.setAuditDetails(searchResult.get(0).getAuditDetails());
-		result.setFilestoreIds(res.getFilestoreIds());
-		certificate.setFilestoreId(result.getFilestoreIds().get(0));
-		certificate.setCertificateStatus(StatusEnum.FREE_DOWNLOAD);
-		list.add(certificate);
+        pdfRequest.put(FMConstants.REQUESTINFOKEY, requestInfo);
+        pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY, getPdfCertArray(searchResult, embeddedUrl));
 
-		CertificateRequest certReq = CertificateRequest.builder().certificateDet(list).requestInfo(requestInfo).build();
-		enrichmentService.enrichCertificateCreate(certReq);
+        EgovPdfResp res = restTemplate.postForObject(pdfFinalPath, pdfRequest, EgovPdfResp.class);
+        CertificateDetails certificate = new CertificateDetails();
+        List<CertificateDetails> list = new ArrayList<>();
+        EgovPdfResp result = new EgovPdfResp();
+
+
+        certificate.setApplicantPersonalId(id);
+        certificate.setTenantId(tenantId);
+        certificate.setBussinessService(searchResult.get(0)
+                                                    .getServiceDetails()
+                                                    .getServiceMinorType());
+        certificate.setAuditDetails(searchResult.get(0)
+                                                .getAuditDetails());
+        result.setFilestoreIds(res.getFilestoreIds());
+        certificate.setFilestoreId(result.getFilestoreIds()
+                                         .get(0));
+        certificate.setCertificateStatus(StatusEnum.FREE_DOWNLOAD);
+        list.add(certificate);
+
+        CertificateRequest certReq = CertificateRequest.builder()
+                                                       .certificateDet(list)
+                                                       .requestInfo(requestInfo)
+                                                       .build();
+        enrichmentService.enrichCertificateCreate(certReq);
+
 
 		// Certificate details topic values return to service
 		return certReq;
 
-	}
+    }
+
 
 	// PDF service input json creation for certificate details
 	// inputs : search result of id
 	// output : json array Certificate details
-	public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl) {
-		JSONArray array = new JSONArray();
-		JSONObject obj = new JSONObject();
 
-//		obj.put("embeddedUrl", embeddedUrl);
-		obj.put(FMConstants.ID, searchResult.get(0).getId());
-		obj.put(FMConstants.BUILDINGNO, searchResult.get(0).getApplicantChild().getBuildingNumber());
-		obj.put(FMConstants.FINANCIALYEAR, searchResult.get(0).getApplicantChild().getDurationOfResidence());
-		obj.put(FMConstants.WARDNO, searchResult.get(0).getApplicantAddress().getWardno());
-		obj.put(FMConstants.TENANT, searchResult.get(0).getTenantId());
-		obj.put("lbName", null);
-		obj.put("lbAddressWithPinCode", null);
+    public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl) {
+        JSONArray array = new JSONArray();
+        JSONObject obj = new JSONObject();
 
-		String name = searchResult.get(0).getFirstName() + searchResult.get(0).getLastName();
-		obj.put(FMConstants.NAME, name);
 
-		String address = searchResult.get(0).getApplicantAddress().getHouseNo() + '/'
-				+ searchResult.get(0).getApplicantAddress().getHouseName() + '/'
-				+ searchResult.get(0).getApplicantAddress().getLocalplace() + '/'
-				+ searchResult.get(0).getApplicantAddress().getMainplace();
+//        obj.put("embeddedUrl", embeddedUrl);
+        obj.put(FMConstants.ID,
+                searchResult.get(0)
+                            .getId());
+        obj.put(FMConstants.BUILDINGNO,
+                searchResult.get(0)
+                            .getApplicantChild()
+                            .getBuildingNumber());
+        obj.put(FMConstants.FINANCIALYEAR,
+                searchResult.get(0)
+                            .getApplicantChild()
+                            .getDurationOfResidence());
+        obj.put(FMConstants.WARDNO,
+                searchResult.get(0)
+                            .getApplicantAddress()
+                            .getWardNo());
+        obj.put(FMConstants.TENANT,
+                searchResult.get(0)
+                            .getTenantId());
+        obj.put("lbName", null);
+        obj.put("lbAddressWithPinCode", null);
 
-		obj.put(FMConstants.ADDRESS, address);
+        String name = searchResult.get(0)
+                                  .getFirstName()
+                + searchResult.get(0)
+                              .getLastName();
+        obj.put(FMConstants.NAME, name);
 
-		array.add(obj);
+        String address = searchResult.get(0)
+                                     .getApplicantAddress()
+                                     .getHouseNo()
+                + '/' + searchResult.get(0)
+                                    .getApplicantAddress()
+                                    .getHouseName()
+                + '/' + searchResult.get(0)
+                                    .getApplicantAddress()
+                                    .getLocalPlace()
+                + '/' + searchResult.get(0)
+                                    .getApplicantAddress()
+                                    .getMainPlace();
 
-		return array;
-	}
+        obj.put(FMConstants.ADDRESS, address);
 
-	public String getShortenedUrl(String url) {
-		HashMap<String, String> body = new HashMap<>();
-		body.put("url", url);
-		StringBuilder builder = new StringBuilder(fmConfig.getUrlShortnerHost());
-		builder.append(fmConfig.getUrlShortnerEndpoint());
-		String res = restTemplate.postForObject(builder.toString(), body, String.class);
-		if (StringUtils.isEmpty(res)) {
-			return url;
-		} else
-			return res;
-	}
+        array.add(obj);
+
+        return array;
+    }
+
+    public String getShortenedUrl(String url) {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("url", url);
+        StringBuilder builder = new StringBuilder(fmConfig.getUrlShortnerHost());
+        builder.append(fmConfig.getUrlShortnerEndpoint());
+        String res = restTemplate.postForObject(builder.toString(), body, String.class);
+        if (StringUtils.isEmpty(res)) {
+            return url;
+        } else
+            return res;
+    }
 }

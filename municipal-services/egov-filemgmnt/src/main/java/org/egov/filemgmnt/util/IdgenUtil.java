@@ -1,5 +1,7 @@
 package org.egov.filemgmnt.util;
 
+import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +57,7 @@ public class IdgenUtil {
         List<IdResponse> idResponses = response.getIdResponses();
 
         if (CollectionUtils.isEmpty(idResponses)) {
-            throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+            throw new CustomException(IDGEN_ERROR.getCode(), "No ids returned from idgen Service");
         }
 
         return idResponses.stream()
