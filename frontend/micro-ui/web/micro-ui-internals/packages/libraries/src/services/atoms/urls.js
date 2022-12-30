@@ -101,6 +101,7 @@ const Urls = {
     download_pdf: "/egov-pdf/download/TL/",
     update: "/tl-services/v1/_update",
     billingslab: "/tl-calculator/billingslab/_search",
+    createpde:"/tl-services/pde/_create",
   },
   cr: {
     create: "/birth-services/cr/birth/_create",
