@@ -36,7 +36,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     setSelectedOccupationMain(value);
   }
   function SelectOccupationOthers(e) {
-    setoccupationOthers(e.target.value);
+    setOccupationOthers(e.target.value);
   }
   // function setSelectTradeName(e) {
   //   setTradeName(e.target.value);

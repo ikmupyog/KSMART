@@ -63,4 +63,15 @@ export const TLService = {
       params: { tenantId },
       auth: true,
     }),
+  createpde: (details, tenantId) =>
+    Request({
+      url: Urls.tl.createpde,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
 };

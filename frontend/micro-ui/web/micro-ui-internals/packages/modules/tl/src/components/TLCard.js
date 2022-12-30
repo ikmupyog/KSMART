@@ -46,6 +46,11 @@ const TLCard = () => {
             label: t("TL_SEARCH_LICENSE"),
             link: `/digit-ui/employee/tl/search/license`,
             role: "TL_CEMP"
+        },
+        {
+            label: t("PDE"),
+            link: `/digit-ui/employee/tl/pde-application`,
+            role: "TL_CEMP"
         }
     ]
 

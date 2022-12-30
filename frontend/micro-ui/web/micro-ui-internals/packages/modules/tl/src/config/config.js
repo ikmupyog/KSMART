@@ -280,7 +280,7 @@ export const newConfig = [
       {
         isMandatory: true,
         type: "component",
-        route: "units-details",
+       route: "units-details",
         key: "TradeDetails",
         component: "SelectTradeUnits",
         texts: {
@@ -832,4 +832,26 @@ export const newConfig = [
       },
     ],
   },
+  {
+    head: "ES_NEW_APPLICATION_PROPERTY_ASSESSMENT",
+    body: [
+      {
+        isMandatory: true,
+        type: "component",
+        route: "pde-details",
+      //  route: "test-details",
+        key: "PDETradeDetails",
+        component: "TLPdeEntry",
+        texts: {
+          headerCaption: "",
+          header: "LICENSE PDE",
+          cardText: "",
+          submitBarLabel: "Save",
+        },
+        withoutLabel: true,
+        hideInEmployee: true,
+      },
+    ]
+  }
+  
 ];
