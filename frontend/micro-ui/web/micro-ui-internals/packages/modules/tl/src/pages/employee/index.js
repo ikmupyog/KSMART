@@ -157,6 +157,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const ReNewApplication = Digit?.ComponentRegistryService?.getComponent('TLReNewApplication');
   const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
+  const PdeApplication = Digit?.ComponentRegistryService?.getComponent('TLCreatePdeApplication');
 
   return (
     <Switch>
@@ -195,7 +196,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/edit-application-details/:id`} component={(props) => <ReNewApplication {...props} header={t("TL_ACTION_RESUBMIT")} parentRoute={path} />} />
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
-          
+          <PrivateRoute path={`${path}/pde-application`} component={() => <PdeApplication parentUrl={url} />} />
         </div>
       </React.Fragment>
     </Switch>
