@@ -24,6 +24,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
+  const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "DocumentType");
+
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
@@ -49,6 +51,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [tripStartTime, setTripStartTime] = useState(formData?.InformationDeath?.tripStartTime);
   const [checked, setChecked] = useState(false);
   const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit);
+  const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setAgeUnit);
+
   
   let naturetypecmbvalue = null;
   // let cmbPlace = [];
@@ -81,6 +85,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     religion["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
+    let cmbDocumentType = [];
+    documentType &&
+    documentType["common-masters"] &&
+    documentType["common-masters"].DocumentType.map((ob) => {
+      cmbDocumentType.push(ob);
+      });
     let cmbAgeUnit = [];
     AgeUnit &&
     AgeUnit["birth-death-service"] &&
@@ -148,6 +158,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
   }
+  function selectIdCombo(value) {
+    setSelectedIdCombo(value);
+  }
 
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
@@ -186,7 +199,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
-
+    sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
 
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
@@ -208,6 +221,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathTimeFrom,
       DeathTimeTo,
       setAgeUnit,
+      setIdCombo,
     });
   };
   return (
@@ -465,7 +479,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>{t("CR_AADHAR_OF_DECEASED")}</CardLabel>
               <TextInput
                 t={t}
@@ -480,8 +494,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
             </div>
-            <div className="col-md-6">
-              <CardLabel>{t("CR_PASSPORT_DETAILS_OF_DECEASED")}</CardLabel>
+            <div className="col-md-4">
+              <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -491,8 +505,22 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={PassportNo}
                 onChange={setSelectPassportNo}
                 disable={isEdit}
-                placeholder={`${t("CR_PASSPORT_DETAILS_OF_DECEASED")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_PASSPORT_NO") })}
+                placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_NO") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={false}
+                option={cmbDocumentType}
+                selected={setIdCombo}
+                select={selectIdCombo}
+                disabled={isEdit}
+                placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
               />
             </div>
           </div>

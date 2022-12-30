@@ -1093,6 +1093,21 @@ const getCRAgeUnitlist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRDocumentTypeBlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DocumentType",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRTitleList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2068,6 +2083,9 @@ export const MdmsService = {
   },
   getCRAgeUnit: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRAgeUnitlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRDocumentTypeB: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRDocumentTypeBlist(tenantId, moduleCode), moduleCode);
   },
   /////////crmdms
   getServiceDefs: (tenantId, moduleCode) => {
