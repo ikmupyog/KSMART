@@ -3,7 +3,6 @@ import { Route, Switch, useRouteMatch,useHistory } from "react-router-dom";
 import { PrivateRoute, BreadCrumb, BackButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import Submenu from "./Submenu";
-import FormsUi from "./FormsUi";
 import SubType from "../SubType";
 import CreateTradeLicence from "../Create";
 
@@ -18,10 +17,9 @@ const onNext=()=>{
     <React.Fragment>
       <Switch>
         <Route path={`${path}`} exact>
-          <Submenu path={path} />
+          <SubType parentUrl={path} handleNext={onNext}/>
         </Route>
-        <PrivateRoute parentRoute={path} path={`${path}/sub-type`} component={() => <SubType parentUrl={path} handleNext={onNext}/>} />
-        <PrivateRoute parentRoute={path} path={`${path}/form-ui`} component={() => <FormsUi parentUrl={path} />} />
+        {/* <PrivateRoute parentRoute={path} path={`${path}/sub-type`} component={() => <SubType parentUrl={path} handleNext={onNext}/>} /> */}
         <React.Fragment>
         <BackButton>Back</BackButton>
          <PrivateRoute parentRoute={path} path={`${path}/create`} component={() => <CreateTradeLicence parentUrl={path} />} />

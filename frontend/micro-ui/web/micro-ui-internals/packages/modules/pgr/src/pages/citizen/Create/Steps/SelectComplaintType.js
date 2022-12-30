@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { TypeSelectCard } from "@egovernments/digit-ui-react-components";
+import { TypeSelectCard,CardLabel } from "@egovernments/digit-ui-react-components";
 
 const SelectComplaintType = ({ t, config, onSelect, value }) => {
   const [complaintType, setComplaintType] = useState(() => {
@@ -13,7 +13,14 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
   };
 
   const textParams = config.texts;
-
+  let style = "";
+  const mystyle = {
+    marginTop: "8px",
+    display: "flow-root",
+    lineHeight: "2.5rem",
+    marginBottom: "24px",
+    flexWrap: "nowrap"
+  }
   const menu = Digit.Hooks.pgr.useComplaintTypes({ stateCode: Digit.ULBService.getCurrentTenantId() });
 
   function selectedValue(value) {
@@ -21,7 +28,9 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
     // SessionStorage.set("complaintType", value);
   }
   return (
-    <TypeSelectCard
+    
+    <TypeSelectCard 
+      {...mystyle}
       {...textParams}
       {...{ menu: menu }}
       {...{ optionsKey: "name" }}
@@ -31,6 +40,7 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
       {...{ t }}
       disabled={Object.keys(complaintType).length === 0 || complaintType === null ? true : false}
     />
+    
   );
 };
 

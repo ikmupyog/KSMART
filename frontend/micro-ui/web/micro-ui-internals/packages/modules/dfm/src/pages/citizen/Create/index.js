@@ -1,10 +1,11 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { newConfig as newConfigCR } from "../../../config/config";
 // import CheckPage from "./CheckPage";
 // import TLAcknowledgement from "./TLAcknowledgement";
+import DFMAcknowledgement from "./response";
 
 const CreateTradeLicence = ({ parentRoute }) => {
   const queryClient = useQueryClient();
@@ -13,7 +14,9 @@ const CreateTradeLicence = ({ parentRoute }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   let config = [];
+  const [submitResponse,updateSubmitResponse] = useState([])
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
+  const [userParams, setUserParams, clearUserParams] = Digit.Hooks.useSessionStorage("User", {});
   let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/")
 
   const stateId = Digit.ULBService.getStateId();
@@ -84,6 +87,8 @@ const CreateTradeLicence = ({ parentRoute }) => {
     history.push(`${match.path}/acknowledgement`);
   };
 
+
+  
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     if(key === "isSkip" && data === true)
@@ -101,7 +106,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("TL_CREATE_TRADE");
+    queryClient.invalidateQueries("DFM_CREATE_TRADE");
   };
 
   newConfig = newConfigCR;
@@ -141,8 +146,11 @@ const CreateTradeLicence = ({ parentRoute }) => {
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <DFMAcknowledgement data={params} onSuccess={onSuccess} />
+        <DFMAcknowledgement data={params} onSuccess={onSuccess}  />
       </Route>
+      {/* <Route path={`${match.path}/acknowledgement`}>
+        <TLAcknowledgement data={params} onSuccess={onSuccess} />
+      </Route> */}
       <Route>
         <Redirect to={`${match.path}/${config.indexRoute}`} />
       </Route>

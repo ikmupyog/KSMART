@@ -6,6 +6,7 @@ import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import DeathCrFlow from "./DeathCrFlow";
 import InformationDeath from "../../../pageComponents/deathComponents/InformationDeath";
+import ApplicationDetails from "../../../../../templates/ApplicationDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
 const DeathCrFlowApp = ({ parentUrl }) => {
@@ -107,9 +108,19 @@ const DeathCrFlowApp = ({ parentUrl }) => {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
-
+  console.log("match.path" + match.path);
+  const createProperty = async () => {
+    history.push(`${match.path}/acknowledgement`);
+  };
+  
+  const onSuccess = () => {
+    sessionStorage.removeItem("CurrentFinancialYear");
+    queryClient.invalidateQueries("CR_CREATE_BIRTH");
+  };
   const handleSkip = () => {};
   const handleMultiple = () => {};
+  const DeathCheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
+  const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
   
   return (
     
@@ -133,12 +144,17 @@ const DeathCrFlowApp = ({ parentUrl }) => {
           
         );
       })}
-      
+      <Route path={`${match.path}/check`}>
+        <DeathCheckPage onSubmit={createProperty} value={params} />
+      </Route>
+      <Route path={`${match.path}/acknowledgement`}>
+        <DeathAcknowledgement data={params} onSuccess={onSuccess} />
+      </Route>
       <Route path={`${path}`} exact>
               <DeathCrFlow  path={path}/>
              </Route>
              <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
-         
+                     
       </Switch>
     </React.Fragment>
   );

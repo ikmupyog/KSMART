@@ -1,0 +1,37 @@
+.flow-wrapper{
+    background: #fff;
+    padding: 20px;
+    border-radius: 25px;
+}
+.border-active{
+    border-bottom: 1px solid #edf2f9;
+}
+.wrapper-app{
+    background: white;
+    padding: 20px 0px 20px 40px;
+    border-radius: 20px;
+    width: 65%;
+    @media (max-width: 1050px){
+     margin-bottom: 20px;    
+     width: 90%;   
+    }
+}
+.timeline-wrapper{
+    background: white;
+    padding: 20px 0px 20px 40px;
+    border-radius: 20px;
+    width: 25%;
+    height: 100% ;
+    @media (max-width: 1050px){
+        width: 90%;
+       
+    }
+}
+.file-main{
+    display: flex;
+    justify-content: space-evenly;
+    @media (max-width: 1050px){
+        flex-direction: column;
+        align-items: center;
+    }
+}

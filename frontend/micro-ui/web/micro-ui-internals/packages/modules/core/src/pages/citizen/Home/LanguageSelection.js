@@ -47,9 +47,10 @@ const LanguageSelection = () => {
                     </h1>
                     <div style={{ textAlign: "center", margin: "0 auto" }}>
                         <div>
-                            <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" style={{ maxWidth: "450px" }} />
+                            <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" 
+                            style={{ maxWidth: "450px",marginLeft: "80px",marginRight: "80px" }} />
                             <label style={{ fontSize: "32px",marginBottom: "20px !important" }}>Exploring K-Smart</label><br></br>
-                            <label style={{ fontSize: "17px",marginTop: "20px !important" }}>Kerala - Solution For Administrative Reformation And Transformation.</label>
+                            <label style={{ fontSize: "17px",marginTop: "20px !important" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
                         </div>
                     </div>
                     <div style={{ justifyContent: "space-between !important" }} >
@@ -70,15 +71,18 @@ const LanguageSelection = () => {
                 <div className="language-selector" style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%" }}>
                     {languages.map((language, index) => (
                         <div className="language-button-container" key={index}>
-                            <CustomButton className="btnksmart"
+                            <SubmitBar className="btnksmart"
+                                style={{}}
                                 selected={language.value === selected}
-                                text={language.label}
+                                label={language.label}
+                                labelStyle={{fontF:"system-ui !important",fontWeight: "400 !important",fontSize: "17px !important"}}
+                                
                                 onClick={() => handleChangeLanguage(language)}
-                            ></CustomButton>
+                            ></SubmitBar>
                         </div>
                     ))}
                 </div>
-                <SubmitBar className="btnksmart" style={{ width: "35%",fonntF:"system-ui !important",fontWeight: "400 !important",fontSize: "17px !important" }} 
+                <SubmitBar className="btnksmart" style={{ width: "35%",fontF:"system-ui !important",fontWeight: "400 !important",fontSize: "17px !important" }} 
                 label={t(`CORE_COMMON_CONTINUE`)} onSubmit={handleSubmit} />
             </Card>
             {/* <CardHeader>{t("CS_COMMON_CHOOSE_LANGUAGE")}</CardHeader>

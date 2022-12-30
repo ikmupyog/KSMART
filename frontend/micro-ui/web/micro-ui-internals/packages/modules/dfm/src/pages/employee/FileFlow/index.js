@@ -22,11 +22,12 @@ const FileFlowApp = ({ parentUrl }) => {
     <React.Fragment>
       <Switch>
         <Route path={`${path}`} exact>
-          <FileFlow path={path} />
+          {/* <FileFlow path={path} /> */}
+          <SubType parentUrl={path} handleNext={onNext}/>
         </Route>
         
-        <PrivateRoute parentRoute={path} path={`${path}/trade-lisense`} component={() => <TradeLisense parentUrl={path} />} />
-        <PrivateRoute parentRoute={path} path={`${path}/sub-type`} component={() => <SubType parentUrl={path} handleNext={onNext} />} />
+        {/* <PrivateRoute parentRoute={path} path={`${path}/trade-lisense`} component={() => <TradeLisense parentUrl={path} />} />
+        <PrivateRoute parentRoute={path} path={`${path}/sub-type`} component={() => <SubType parentUrl={path} handleNext={onNext} />} /> */}
         <React.Fragment>
         <BackButton>Back</BackButton>
         <PrivateRoute parentRoute={path} path={`${path}/create`} component={() => <CreateApplication parentUrl={path} />} />

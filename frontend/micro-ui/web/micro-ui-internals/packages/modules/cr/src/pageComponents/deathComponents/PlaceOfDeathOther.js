@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
@@ -35,16 +35,13 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
   
   function selectDeathOtherPlace(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathOtherPlace(value);
   }
   function selectDeathOtherward(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeathOtherward(value);
   }
   function setSelectTradeName(e) {
@@ -76,10 +73,9 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
+     {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-        <header className="tittle">Place Of Death Other </header>
-    <div className="row">
+      <div className="row">
       <div className="col-md-12" >
           <h1 className="headingh1" >
             <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_DEATH_OTHER")}`}
@@ -89,15 +85,16 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
     </div>
     <div className="row">
          <div className="col-md-6" >
-            <CardLabel>{`${t("CR_OTHER_PLACE")}`}</CardLabel>
+            <CardLabel>{`${t("CR_OTHER_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbOtherplace}
                 selected={setDeathOtherPlace}
                 select={selectDeathOtherPlace}
                 disabled={isEdit}
+                placeholder={`${t("CR_OTHER_PLACE")}`}
             />
         </div>
          <div className="col-md-6" >
@@ -110,6 +107,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
                 selected={setDeathOtherward}
                 select={selectDeathOtherward}
                 disabled={isEdit}
+                placeholder={`${t("CS_COMMON_WARD")}`}
             />
         </div> 
     </div>  
@@ -125,7 +123,8 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             value={PlaceOfDeathOtherDetailsEn}
             onChange={setSelectPlaceOfDeathOtherDetailsEn}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            placeholder={`${t("CR_OTHER_DETAILLS_EN")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
             />
         </div>
          <div className="col-md-6" >
@@ -139,7 +138,8 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             value={PlaceOfDeathOtherDetailsMl}
             onChange={setSelectPlaceOfDeathOtherDetailsMl}
             disable={isEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            placeholder={`${t("CR_OTHER_DETAILS_ML")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
             />
         </div> 
     </div>    

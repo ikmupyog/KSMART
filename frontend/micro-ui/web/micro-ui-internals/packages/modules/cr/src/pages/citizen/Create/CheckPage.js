@@ -1,19 +1,9 @@
-import {
-  Card,
-  CardLabel ,
-  CardSubHeader,
-  CardText,
-  CitizenInfoLabel,
-  LinkButton,
-  Row,
-  StatusTable,
-  SubmitBar,
-  
+import {Card,CardLabel ,CardSubHeader,  CardText,CitizenInfoLabel,LinkButton,  Row, StatusTable, SubmitBar,  
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import TLDocument from "../../../pageComponents/TLDocumets";
+//import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/CRTimeline";
 
 const ActionButton = ({ jumpTo }) => {
@@ -41,7 +31,7 @@ const getPath = (path, params) => {
   return path;
 };
 
-const CheckPage = ({ onSubmit, value }) => {
+const CheckPage = ({ onSubmit, value,userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -60,7 +50,13 @@ const CheckPage = ({ onSubmit, value }) => {
   //   routeLink = `${getPath(match.path, match.params)}`;
   //   routeLink = routeLink.replace("/check", "");
   // }
-  console.log("value" + match);
+  
+  if(window.location.href.includes("/citizen")=="citizen"){
+    userType="citizen";
+  } else{
+    userType="employee";
+  }
+  console.log(value);
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
@@ -79,9 +75,22 @@ const CheckPage = ({ onSubmit, value }) => {
            <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.Gender.value)}</CardText>
             </div>
-             {/*<div className="col-md-4" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(TradeDetails[0].tradetype?.i18nKey)}</CardText>
-            </div> */}
+          </div>
+          <div className="row">
+             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.BirthPlace.name)}</CardText>
+            </div>
+           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(HospitalDetails.HospitalName.hospitalName)}</CardText>
+            </div>
+          </div>
+          <div className="row">
+             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FatherInfoDetails.FatherFirstNameEn)}&nbsp;{t(FatherInfoDetails.FatherLastNameEn)}</CardText>
+            </div>
+           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(MotherInfoDetails.MotherFirstNameEn)}&nbsp;{t(MotherInfoDetails.MotherLastNameEn)}</CardText>
+            </div>
           </div>
           <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>

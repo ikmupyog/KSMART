@@ -2,7 +2,6 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
-  
   const useCRQualificationSub = () => {
     return useQuery("CR_QUALIFICATION_SUB", () => MdmsService.getCRQualificationSub(tenantId, moduleCode), config);
   };
@@ -13,7 +12,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
   };
   const useCRHospital = () => {
-    return useQuery("CR_HOSPITALMASTER", () => MdmsService.getCRHospitalMaster(tenantId, moduleCode,), config);
+    return useQuery("CR_HOSPITALMASTER", () => MdmsService.getCRHospitalMaster(tenantId, moduleCode), config);
   };
   const usePLaceOfDeath = () => {
     return useQuery("CR_PLACE_DEATH", () => MdmsService.getCRPlaceOfDeath(tenantId, moduleCode, type), config);
@@ -35,6 +34,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
   const useCRReligion = () => {
     return useQuery("CR_RELIGION", () => MdmsService.getCRReligion(tenantId, moduleCode), config);
+  };
+  const useCRcauseOfDeathMain = () => {
+    return useQuery("CR_RELIGION", () => MdmsService.getCRcauseOfDeathMain(tenantId, moduleCode), config);
   };
   //////institution-type
   const useCRInstitution = () => {
@@ -80,8 +82,14 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useCRNatureofMedicalAttentionSub = () => {
     return useQuery("CR_NATURE_OF_MEDICAL_ATTENTION_SUB", () => MdmsService.getCRNatureofMedicalAttentionSub(tenantId, moduleCode, type), config);
   };
+  const useCRNatureofMedicalAttentionSubA = () => {
+    return useQuery("CR_NATURE_OF_MEDICAL_ATTENTION_SUB", () => MdmsService.getCRNatureofMedicalAttentionSubA(tenantId, moduleCode, type), config);
+  };
   const useCRDeliveryMethod = () => {
     return useQuery("CR_DELIVERY_METHOD", () => MdmsService.getCRDeliveryMethod(tenantId, moduleCode, type), config);
+  };
+  const useCRAgeUnit = () => {
+    return useQuery("CR_Age_unit", () => MdmsService.getCRAgeUnit(tenantId, moduleCode, type), config);
   };
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
@@ -134,9 +142,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
               ?.filter((e) => e.code.split(".").length <= 2)
               ?.map((ownerShipDetails) => ({
                 ...ownerShipDetails,
-                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${
-                  ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
-                }`,
+                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+                  }`,
               }));
             const finalArr = arr.filter((data) => data.code.includes("INDIVIDUAL") || data.code.includes("OTHER"));
 
@@ -145,23 +152,22 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
 
           const res = ownerShipdropDown?.length
             ? ownerShipdropDown
-                ?.map((ownerShipDetails) => ({
-                  ...ownerShipDetails,
-                  i18nKey: `PT_OWNERSHIP_${
-                    ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+              ?.map((ownerShipDetails) => ({
+                ...ownerShipDetails,
+                i18nKey: `PT_OWNERSHIP_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
                   }`,
-                }))
-                .reduce((acc, ownerShipDetails) => {
-                  if (ownerShipDetails.code.includes("INDIVIDUAL")) {
-                    return [...acc, ownerShipDetails];
-                  } else if (ownerShipDetails.code.includes("OTHER")) {
-                    const { code, value, ...everythingElse } = ownerShipDetails;
-                    const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse };
-                    return [...acc, mutatedOwnershipDetails];
-                  } else {
-                    return acc;
-                  }
-                }, [])
+              }))
+              .reduce((acc, ownerShipDetails) => {
+                if (ownerShipDetails.code.includes("INDIVIDUAL")) {
+                  return [...acc, ownerShipDetails];
+                } else if (ownerShipDetails.code.includes("OTHER")) {
+                  const { code, value, ...everythingElse } = ownerShipDetails;
+                  const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse };
+                  return [...acc, mutatedOwnershipDetails];
+                } else {
+                  return acc;
+                }
+              }, [])
             : null;
 
           return res;
@@ -178,8 +184,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
 
         categoryData.length > 0
           ? categoryData?.map((category) => {
-              OwnerShipCategory[category.code] = category;
-            })
+            OwnerShipCategory[category.code] = category;
+          })
           : null;
 
         if (OwnerShipCategory) {
@@ -219,7 +225,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRGender();
     case "Country":
       return useCRNationality();
-    case "mtaluk":
+    case "Taluk":
       return useCRTaluk();
     case "Title":
       return useCRTitle();
@@ -227,32 +233,38 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     //   return useCRWard();
     case "Religion":
       return useCRReligion();
+    case "DeathCause":
+      return useCRcauseOfDeathMain();
     case "Village":
       return useCRVillage();
     case "District":
-      return useCRDistrict();  
+      return useCRDistrict();
     case "PostOffice":
-      return useCRPostOffice(); 
-    case "mstate":
+      return useCRPostOffice();
+    case "State":
       return useCRState();
     case "LBType":
-      return useCRLBType(); 
+      return useCRLBType();
     case "Country":
-      return useCRCountry(); 
+      return useCRCountry();
     case "Occupation":
-      return useCROccupation(); 
+      return useCROccupation();
     case "Qualification":
       return useCRQualification();
-      case "Profession":
-      return useCRProfession(); 
+    case "Profession":
+      return useCRProfession();
     case "AttentionOfDelivery":
       return useCRNatureofMedicalAttention();
-      case "MedicalAttentionType":
+    case "MedicalAttentionType":
       return useCRNatureofMedicalAttentionSub();
+    case "DeathCauseSub":
+      return useCRNatureofMedicalAttentionSubA();
     case "DeliveryMethod":
-      return useCRDeliveryMethod();   
+      return useCRDeliveryMethod();
     case "Title":
       return useCRWard();
+    case "AgeUnit":
+      return  useCRAgeUnit();
     case "Religion":
       return useCRReligion();
     case "InstitutionType":

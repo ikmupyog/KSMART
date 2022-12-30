@@ -136,7 +136,23 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
       ],
     },
   ];
-
+  const mystyle = {
+  background: "#bc5bfc",
+  backgroundImage: "-webkit-linear-gradient(top, #bc5bfc, #2980b9)",
+  backgroundImage: "-moz-linear-gradient(top, #bc5bfc, #2980b9)",
+  backgroundImage: "-ms-linear-gradient(top, #bc5bfc, #2980b9)",
+  backgroundImage: "-o-linear-gradient(top, #bc5bfc, #2980b9)",
+  backgroundImage: "linear-gradient(to bottom, #bc5bfc, #2980b9)",
+  webkitBorderRadius: "5",
+  mozBorderRadius:"5",
+  borderRadius: "5px",
+  color: "#ffffff",
+  fontSize: "17px !important",
+  fontWeight: "400 !important",
+  textDecoration: "none",
+  lineHeight: "0 !important",
+  fontFamily: "system-ui !important",    
+  };
   return isLoading || isStoreLoading ? (
     <Loader />
   ) : (
@@ -154,9 +170,10 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
           </h1>
           <div style={{ textAlign: "center", margin: "0 auto" }}>
             <div>
-              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" style={{ maxWidth: "450px" }} />
+              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" 
+              style={{ maxWidth: "450px",marginLeft: "80px",marginRight: "80px" }} />
               <label style={{ fontSize: "32px" }}>Exploring K-Smart</label><br></br>
-              <label style={{ fontSize: "17px" }}>Kerala - Solution For Administrative Reformation And Transformation.</label>
+              <label style={{ fontSize: "17px" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
             </div>
           </div>
           <div style={{ justifyContent: "space-between !important" }} >
@@ -189,7 +206,7 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
 
             cardStyle={{ margin: "auto", minWidth: "408px" }}
             className="loginFormStyleEmployee"
-            buttonStyle={{className:"btnksmart"}}
+            buttonStyle={mystyle}
           >
           </FormComposer>
           {showToast && <Toast error={true} label={t(showToast)} onClose={closeToast} />}

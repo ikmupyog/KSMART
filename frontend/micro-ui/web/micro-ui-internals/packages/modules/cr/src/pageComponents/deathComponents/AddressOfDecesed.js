@@ -3,6 +3,8 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton } 
 import { useTranslation } from "react-i18next";
 import AdressInside from "./AdressInside";
 import OutSideIndia from "./OutSideIndia";
+import Timeline from "../../components/DRTimeline";
+
 
 const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -49,9 +51,8 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <header className="tittle">AdressOfDeceased</header>
         <div className="maindeath">
           <div className="radios">
             <div className="inside">

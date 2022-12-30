@@ -1,8 +1,8 @@
 import React, { Fragment, useMemo, useState, setValue, useEffect } from "react";
-import { PageBasedInput, CardHeader, BackButton, Dropdown, CardLabelError, RadioOrSelect, CardLabel } from "@egovernments/digit-ui-react-components";
+import { PageBasedInput, CardHeader, BackButton, Dropdown, CardLabelError, RadioOrSelect, CardLabel,SubmitBar,Card } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-
+import Background from "../../../components/Background";
 
 
 const LocationSelection = () => {
@@ -85,58 +85,80 @@ const LocationSelection = () => {
   }
 
   return isLoading, isLoad ? (
+
     <loader />
   ) : (
-    <>
-      <BackButton />
-      <PageBasedInput texts={texts} onSubmit={onSubmit}>
-        <CardHeader>{t("CS_COMMON_CHOOSE_LOCATION")}</CardHeader>
-        <CardLabel>{t("CS_COMMON_DISTRICT")}</CardLabel>
-        <Dropdown
-          t={t}
-          optionKey="name"
-          isMandatory={true}
-          option={districts}
-          selected={selectedDistrict}
-          select={selectDistrict}
-          placeholder={`${t("CS_COMMON_DISTRICT")}`}
-        />
-        {/* <RadioOrSelect 
-          options={districts}
-          selectedOption={selectedDistrict}
-          optionKey="name"
-          onSelect={selectDistrict}
-          t={t}
-          labelKey=""
-          placeholder={`${t("CS_COMMON_DISTRICT")}`} 
-          // onChange={(e) => onChangeLB(e.target.value)}
-        //  disabled={isEdit}
-        /> */}
-        <CardLabel>{t("CS_COMMON_LB")}</CardLabel>
-        <Dropdown
-          t={t}
-          optionKey="name"
-          isMandatory={true}
-          option={lbs}
-          selected={selectedCity}
-          select={selectCity}
-          placeholder={`${t("CS_COMMON_LB")}`}
-        />
+    <Background>
+      <>
 
-        {/* <Dropdown 
-         options={lbs}
-         selectedOption={selectedCity}
-         optionKey="name"
-         onSelect={selectCity}
-         t={t}
-         labelKey=""
-        //  disabled={isEdit}
-        /> */}
+        {/* <PageBasedInput texts={texts} onSubmit={onSubmit}> */}
+        <div className="leftdiv">
+          <div className="leftflex" >
+            <h1 className="logostyle">
+              {/* <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{ maxWidth: "450px" }} /> */}
 
-        {/* <SearchOnRadioButtons {...RadioButtonProps} placeholder={t("COMMON_TABLE_SEARCH")} /> */}
-        {showError ? <CardLabelError>{t("CS_COMMON_LOCATION_SELECTION_ERROR")}</CardLabelError> : null}
-      </PageBasedInput>
-    </>
+            </h1>
+            <div style={{ textAlign: "center", margin: "0 auto" }}>
+              <div>
+                <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" 
+                style={{ maxWidth: "450px",marginLeft: "80px",marginRight: "80px" }} />
+                <label style={{ fontSize: "32px", marginBottom: "20px !important" }}>Exploring K-Smart</label><br></br>
+                <label style={{ fontSize: "17px", marginTop: "20px !important" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
+              </div>
+            </div>
+            <div style={{ justifyContent: "space-between !important" }} >
+
+              <span style={{ marginRight: "60%" }} >2022&copy;K-Smart</span>&nbsp;
+              <span  >
+                <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
+                <a className="text-white text-link" href="#">Privacy</a>
+              </span>
+
+            </div>
+          </div>
+        </div>
+        {/* <BackButton /> */}
+        <Card className="bannerCard removeBottomMargin" style={{ margin: "0 auto" }}>
+        <div  style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%" , width:"100%"}}>
+            {/* <PageBasedInput texts={texts} onSubmit={onSubmit}> */}
+               {/* <div className="row">
+          <div className="col-md-6" > */}
+          <div className="language-button-container"  >
+              <CardHeader>{t("CS_COMMON_CHOOSE_LOCATION")}</CardHeader>
+              <CardLabel>{t("CS_COMMON_DISTRICT")}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={true}
+                option={districts}
+                selected={selectedDistrict}
+                select={selectDistrict}
+                placeholder={`${t("CS_COMMON_DISTRICT")}`}
+              />
+            {/* </div> */}
+            {/* <div className="col-md-6" > */}
+              <CardLabel>{t("CS_COMMON_LB")}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={true}
+                option={lbs}
+                selected={selectedCity}
+                select={selectCity}
+                placeholder={`${t("CS_COMMON_LB")}`}
+              />
+              <SubmitBar className="btnksmart" style={{ width: "35%",fonntF:"system-ui !important",fontWeight: "400 !important",fontSize: "17px !important" }} 
+                label={t(`CORE_COMMON_CONTINUE`)} onSubmit={onSubmit} />
+              {showError ? <CardLabelError>{t("CS_COMMON_LOCATION_SELECTION_ERROR")}</CardLabelError> : null}
+              {/* </div> */}
+        {/* </div> */}
+        </div>
+        </div>
+        </Card>
+            {/* </PageBasedInput> */}
+          
+      </>
+    </Background>
   );
 };
 

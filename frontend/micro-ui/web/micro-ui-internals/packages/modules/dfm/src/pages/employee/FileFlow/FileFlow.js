@@ -5,7 +5,6 @@ import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 
 const FileFlow = ({ path }) => {
-  console.log(path);
   const cardMenuData = [
     {
       title: "Finance",

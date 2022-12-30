@@ -95,6 +95,81 @@ const getCRModeOfPregnancyList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getDFMajorFunctionList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "MajorFunction",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getDFMSubFunctionList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "SubFunction",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getDFMFunctionList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "Function",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getDFMinorFunctionList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "MinorFunction",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCommonApplicantCategoryList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "ApplicantCategory",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRDocumentTypeList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -103,7 +178,7 @@ const getCRDocumentTypeList = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "DocumentType",
+            name: "IdProof",
           },
         ],
       },
@@ -770,7 +845,7 @@ const getCRTalukList = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "mtaluk",
+            name: "Taluk",
           },
         ],
       },
@@ -786,6 +861,21 @@ const getCRReligionlist = (tenantId, moduleCode) => ({
         masterDetails: [
           {
             name: "Religion",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRcauseOfDeathMainlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DeathCause",
           },
         ],
       },
@@ -861,7 +951,7 @@ const getCRStatelist = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "mstate",
+            name: "State",
           },
         ],
       },
@@ -958,6 +1048,21 @@ const getCRNatureofMedicalAttentionSublist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRNatureofMedicalAttentionSubAlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "DeathCauseSub",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRDeliveryMethodlist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -967,6 +1072,21 @@ const getCRDeliveryMethodlist = (tenantId, moduleCode) => ({
         masterDetails: [
           {
             name: "DeliveryMethod",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRAgeUnitlist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "AgeUnit",
           },
         ],
       },
@@ -1850,6 +1970,21 @@ export const MdmsService = {
   getCRModeOfPregnancy: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRModeOfPregnancyList(tenantId, moduleCode), moduleCode);
   },
+  getDFMajorFunction: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDFMajorFunctionList(tenantId, moduleCode), moduleCode);
+  },
+  getDFMSubFunction: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDFMSubFunctionList(tenantId, moduleCode), moduleCode);
+  },
+  getDFMFunction: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDFMFunctionList(tenantId, moduleCode), moduleCode);
+  },
+  getDFMinorFunction: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDFMinorFunctionList(tenantId, moduleCode), moduleCode);
+  },
+  getCommonApplicantCategory: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCommonApplicantCategoryList(tenantId, moduleCode), moduleCode);
+  },
   getCRDocumentType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDocumentTypeList(tenantId, moduleCode), moduleCode);
   },
@@ -1872,7 +2007,6 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getCRTalukList(tenantId, moduleCode), moduleCode);
   },
   getCRTitle: (tenantId, moduleCode) => {
-    console.log("jetheesh22222222222222222");
     return MdmsService.getDataByCriteria(tenantId, getCRTitleList(tenantId, moduleCode), moduleCode);
   },
   getCRWard: (tenantId, moduleCode) => {
@@ -1880,6 +2014,9 @@ export const MdmsService = {
   },
   getCRReligion: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRReligionlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRcauseOfDeathMain: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRcauseOfDeathMainlist(tenantId, moduleCode), moduleCode);
   },
   getCRVillage: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRVillagelist(tenantId, moduleCode), moduleCode);
@@ -1925,6 +2062,12 @@ export const MdmsService = {
   },
   getCRNatureofMedicalAttentionSub: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRNatureofMedicalAttentionSublist(tenantId, moduleCode), moduleCode);
+  },
+  getCRNatureofMedicalAttentionSubA: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRNatureofMedicalAttentionSubAlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRAgeUnit: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRAgeUnitlist(tenantId, moduleCode), moduleCode);
   },
   /////////crmdms
   getServiceDefs: (tenantId, moduleCode) => {

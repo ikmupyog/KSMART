@@ -1,4 +1,4 @@
-import { CaseIcon, EmployeeModuleCard } from "@egovernments/digit-ui-react-components";
+import { DropIcon, EmployeeModuleCard } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { checkForEmployee } from "../utils";
@@ -55,12 +55,16 @@ const CRCard = () => {
             label: t("Death Registration"),
             link: `/digit-ui/employee/cr/death-flow`,
         },
+            {
+            label: t("TL_SEARCH_APPLICATIONS"),
+            link: `/digit-ui/employee/tl/search/application`
+        },
     ]
 
     links = links.filter(link => link.role ? checkForEmployee(link.role) : true);
 
     const propsForModuleCard = {
-        Icon: <CaseIcon />,
+        Icon: <DropIcon />,
         moduleName: t("Civil Registration"),
         // TL_COMMON_TL
         kpis: [

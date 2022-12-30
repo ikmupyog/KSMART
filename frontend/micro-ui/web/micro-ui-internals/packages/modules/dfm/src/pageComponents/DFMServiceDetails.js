@@ -1,8 +1,9 @@
-import { CardLabel, TextInput, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput,TextArea, CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
 const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
+  let validation = {};
   // console.log(formData);
   const [serviceDetails, setServiceDetails] = useState(
     formData?.FileManagement?.serviceDetails
@@ -11,6 +12,12 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
           details: "",
           attachmentFile: "",
           fileStoreId: "",
+          buldingNo:'',
+          relationOfAssessee:'',
+          nameOfOccupier:'',
+          relationOfOccupier:'',
+          durationOfresidence:'',
+
         }
   );
   const [uploadedFile, setUploadedFile] = useState(formData?.owners?.documents?.ProofOfIdentity?.fileStoreId || null);
@@ -26,133 +33,91 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
   const docs = Documentsob?.PropertyTax?.Documents;
   const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
-  // if (proofOfIdentity.length > 0) {
-  //   dropdownData = proofOfIdentity[0]?.dropdownData;
-  //   dropdownData.forEach((data) => {
-  //     data.i18nKey = stringReplaceAll(data.code, ".", "_");
-  //   });
-  // }
-
-  // function setTypeOfDropdownValue(dropdownValue) {
-  //   setDropdownValue(dropdownValue);
-  // }
-  const handleChange = (text, type) => {
-    let tempData = { ...serviceDetails };
-    if (type === "details") {
-      tempData.details = text;
-      setServiceDetails(tempData);
-    }
-  };
-  const mystyle = {
-    marginBottom: "24px",
-  };
-  const handleSubmit = () => {
-    let fileStoreId = uploadedFile;
-    let fileDetails = file;
-    let tempData = { ...serviceDetails };
-    tempData.fileStoreId = file;
-    // if (fileDetails) fileDetails.documentType = "OWNERIDPROOF";
-    // if (fileDetails) fileDetails.fileStoreId = fileStoreId ? fileStoreId : null;
-    // let owners = formData?.owners;
-    // if (owners && owners.documents) {
-    //   owners.documents["ProofOfIdentity"] = fileDetails;
-    // } else {
-    //   owners["documents"] = [];
-    //   owners.documents["ProofOfIdentity"] = fileDetails;
-    // }
-    // console.log("hclick", file, uploadedFile, serviceDetails);
-    onSelect(config.key, { serviceDetails });
-    // onSelect(config.key, fileDetails);
-  };
-  const onSkip = () => onSelect();
-
-  function selectfile(e) {
-    // console.log("file", e.target.files[0]);
-    setUploadedFile(null);
-    setFile(e.target.files[0]);
-    let tempData = { ...serviceDetails };
-    tempData.fileStoreId = null;
-    tempData.attachmentFile = e.target.files[0];
-    setServiceDetails(tempData);
+  const [BuldingNo, setBuldingNo] = useState(formData?.ServiceDet?.BuldingNo);
+  const [NameOccupier, setNameOccupier] = useState(formData?.ServiceDet?.NameOccupier);
+  const [ResidenceDuration, setResidenceDuration] = useState(formData?.ServiceDet?.ResidenceDuration);
+  const [ServiceDetailsTxt, setServiceDetailsTxt] = useState(formData?.ServiceDet?.ServiceDetailsTxt);
+  console.log(formData);
+  function setSelectedBuldingNo(e) {
+    setBuldingNo(e.target.value);
+  }
+  function setSelectedNameOccupier(e) {
+    setNameOccupier(e.target.value);
+  }
+  function setSelectedResidenceDuration(e) {
+    setAadharNo(e.target.value);
+  }
+  function setSelectedResidenceDuration(e) {
+    setResidenceDuration(e.target.value);
+  }
+  function setSelectedServiceDetailsTxt(e) {
+    setServiceDetailsTxt(e.target.value);
   }
 
-  useEffect(() => {
-    (async () => {
-      setError(null);
-      let tempData = { ...serviceDetails };
-      if (file && file?.type) {
-        if (!acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)) {
-          setError(t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"));
-        } else if (file.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
-        } else {
-          try {
-            const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
-            if (response?.data?.files?.length > 0) {
-              setUploadedFile(response?.data?.files[0]?.fileStoreId);
-              tempData.fileStoreId = response?.data?.files[0]?.fileStoreId;
-              setServiceDetails(tempData);
-            } else {
-              setError(t("PT_FILE_UPLOAD_ERROR"));
-            }
-          } catch (err) {}
-        }
-      }
-    })();
-  }, [serviceDetails.fileStoreId]);
+  const onSkip = () => onSelect();
+  const goNext = () => {
+    sessionStorage.setItem("BuldingNo", BuldingNo);
+    sessionStorage.setItem("NameOccupier", NameOccupier);
+    sessionStorage.setItem("ResidenceDuration", ResidenceDuration);
+    sessionStorage.setItem("ServiceDetailsTxt", ServiceDetailsTxt);
+    onSelect(config.key, {
+      BuldingNo, NameOccupier, ResidenceDuration, ServiceDetailsTxt });
+  };
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-      <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={!serviceDetails.fileStoreId || error}>
-        <div>
-          <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_SERVICE_DETAILS_TEXT")}`}</span>
-                </h1>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="pincode"
-                  value={serviceDetails.details}
-                  onChange={(e) => handleChange(e.target.value, "details")}
-                  placeholder={`${t("DFM_DETAILS")}`}
-                />
-              </div>
-
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_ATTACHMENT_TYPE")}`}</CardLabel>
-                <UploadFile
-                  id={"dfm-doc"}
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile}
-                  onDelete={() => {
-                    setUploadedFile(null);
-                    let tempData = { ...serviceDetails };
-                    tempData.fileStoreId = null;
-                    setServiceDetails(tempData);
-                  }}
-                  message={serviceDetails.fileStoreId ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                  error={error}
-                />
-                {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
-                <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
-              </div>
+    {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+    <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!BuldingNo}>
+      <div>
+        <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                {/* <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_SERVICE_DETAILS_TEXT")}`}</span> */}
+              </h1>
             </div>
           </div>
+          
+          <div className="row">
+        <div className="col-md-12" >
+          <div className="col-md-4" ><CardLabel>{t("DFM_BUILDING_NO")}</CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuldingNo"
+             value={BuldingNo} 
+             onChange={setSelectedBuldingNo}  placeholder={`${t("DFM_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_BUILDING_NO") })} />
+          </div>
+          <div className="col-md-4" ><CardLabel>{t("DFM_NAME_OCCUPIER")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="NameOccupier"
+             value={NameOccupier} onChange={setSelectedNameOccupier}  placeholder={`${t("DFM_NAME_OCCUPIER")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER") })} />
+          </div>
+          <div className="col-md-4" ><CardLabel>{t("DFM_DURATION_RESIDENCE")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ResidenceDuration" 
+            value={ResidenceDuration}  onChange={setSelectedResidenceDuration} placeholder={`${t("DFM_DURATION_RESIDENCE")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_DURATION_RESIDENCE") })} />
+          </div>
         </div>
-      </FormStep>
-    </React.Fragment>
+      </div>
+          <div className="row">
+            <div className="col-md-12">
+            <div className="col-md-6" >
+            <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="ServiceDetailsTxt"
+                value={ServiceDetailsTxt}
+                onChange={setSelectedServiceDetailsTxt}
+                placeholder={`${t("DFM_DETAILS")}`}
+              />
+            </div>
+             
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </FormStep>
+  </React.Fragment>
   );
 };
 

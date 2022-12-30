@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, NewRadioButton,  } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, NewRadioButton } from "@egovernments/digit-ui-react-components";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  const { data: Occupation = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [TradeName, setTradeName] = useState(null);
   const [setReligion, setSelectedReligion] = useState(formData?.StatisticalInfo?.setReligion);
-  const [setOccupationMain, setSelectedOccupationMain] = useState(formData?.StatisticalInfo?.setOccupationMain);  
+  const [setOccupationMain, setSelectedOccupationMain] = useState(formData?.StatisticalInfo?.setOccupationMain);
   const [OccupationOthers, setOccupationOthers] = useState(formData?.StatisticalInfo?.OccupationOthers);
   const [CommencementDate, setCommencementDate] = useState();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -26,135 +27,119 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedPlaceofActivity(value);
   }
   function selectReligion(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedReligion(value);
   }
   function selectOccupationMain(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedOccupationMain(value);
-  }  
-  function setSelectOccupationOthers(e) {
+  }
+  function SelectOccupationOthers(e) {
     setoccupationOthers(e.target.value);
   }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
+  let cmbOccupationMain = [];
+  Occupation &&
+  Occupation["common-masters"] &&
+  Occupation["common-masters"].Occupation.map((ob) => {
+    cmbOccupationMain.push(ob);
+    });
 
   const goNext = () => {
-    sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    sessionStorage.setItem("Religion", setReligion.code);
-    sessionStorage.setItem("OccupationMain", setOccupationMain.code);  
-    sessionStorage.setItem("OccupationOthers", OccupationOthers);  
-     
-    onSelect(config.key, { 
-    setReligion,
-    setOccupationMain,
-    OccupationOthers });
+    sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
+    sessionStorage.setItem("Religion", setReligion ? setReligion.code : null);
+    sessionStorage.setItem("OccupationMain", setOccupationMain ? setOccupationMain.code : null);
+    sessionStorage.setItem("OccupationOthers", OccupationOthers);
+
+    onSelect(config.key, {
+      setPlaceofActivity,
+      setReligion,
+      setOccupationMain,
+      OccupationOthers,
+    });
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
-        <header className="tittle">Statistical Information </header>
-        
-      <div className="row">
-        <div className="col-md-12" >
-            <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_TOWN_VILLAGE_DECEASED")}`}
-                </span> 
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_TOWN_VILLAGE_DECEASED")}`}</span>
             </h1>
+          </div>
         </div>
-        </div> 
-        <div className="row">    
-        <div className="col-md-12" > 
-           <CardLabel>{t("CR_TOWN_VILLAGE_DECEASED-DETAILS")}</CardLabel>             
-              <button onClick={""}>
+        <div className="row">
+          <div className="col-md-12">
+            <CardLabel>{t("CR_TOWN_VILLAGE_DECEASED-DETAILS")}</CardLabel>
+            <button onClick={""}>
               <NewRadioButton />
-              </button> Inside Local Body 
-              <button onClick={""}>
+            </button>{" "}
+            Inside Local Body
+            <button onClick={""}>
               <NewRadioButton />
-              </button> Inside Kerala
-              <button onClick={""}>
+            </button>{" "}
+            Inside Kerala
+            <button onClick={""}>
               <NewRadioButton />
-              </button> Inside India
-               <button onClick={""}>                
+            </button>{" "}
+            Inside India
+            <button onClick={""}>
               <NewRadioButton />
-              </button>  Outside India
-              
+            </button>{" "}
+            Outside India
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12" >
-            <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CS_COMMON_RELIGION")}`}
-                </span> 
-            </h1>
-        </div>
-        </div>
-      <div className="row">
-      <div className="col-md-12" >
-            <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
-            <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={false}
-                option={cmbPlace}
-                selected={setReligion}
-                select={selectReligion}
-                disabled={isEdit}
-            />
-        </div>       
-      </div> 
+    
 
-      <div className="row">
-        <div className="col-md-12" >
-            <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OCCUPATION_DECEASED")}`}
-                </span> 
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OCCUPATION_DECEASED")}`}</span>
             </h1>
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12" >
+        <div className="row">
+          <div className="col-md-12">
             <CardLabel>{t("CR_OCCUPATION_DECEASED_NO")}</CardLabel>
-            </div>       
-      </div> 
-      <div className="row">
-        <div className="col-md-6" >
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
             <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
             <Dropdown
                 t={t}
-                optionKey="code"
+                optionKey="name"
                 isMandatory={false}
-                option={cmbPlace}
+                option={cmbOccupationMain}
                 selected={setOccupationMain}
                 select={selectOccupationMain}
                 disabled={isEdit}
+                placeholder={`${t("CCR_OCCUPATION_MAIN_LEVEL")}`}
             />
-        </div>   
-        <div className="col-md-6" >
+          </div>
+          <div className="col-md-6">
             <CardLabel>{t("CR_OCCUPATION_OTHER_ML")}</CardLabel>
-            <TextInput       
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="OccupationOthers"
-                value={OccupationOthers}
-                onChange={setOccupationOthers}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_TRADE_NAME") })}
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="OccupationOthers"
+              value={OccupationOthers}
+              onChange={SelectOccupationOthers}
+              disable={isEdit}
+              placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
             />
-        </div>  
-      </div> 
-      
+          </div>
+        </div>
       </FormStep>
     </React.Fragment>
   );
