@@ -17,7 +17,6 @@ const ClassList =
      
     };
   
-  console.log(Icon);
   return (
     <>
     <div className={className ? className : "employeeCard card-home customEmployeeCard"} style={styles ? styles : {}}>
