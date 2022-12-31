@@ -28,7 +28,6 @@ const useInboxData = (searchParams) => {
         sla: Math.round(data.sla / (24 * 60 * 60 * 1000)),
       }));
     }
-    console.log(combinedRes);
     return combinedRes;
   };
 

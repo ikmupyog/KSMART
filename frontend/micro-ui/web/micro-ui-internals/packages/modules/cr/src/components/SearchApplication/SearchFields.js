@@ -9,7 +9,7 @@ const mystyle = {
 
 
 const SearchFields = ({register, control, reset, tenantId, t }) => {
-    const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.tl.useMDMS.applicationTypes(tenantId)
+    const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
 
     const applicationType = useWatch({ control, name: "applicationType" });
 
