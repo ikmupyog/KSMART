@@ -17,6 +17,14 @@ import InstitutionDetails from "../src/pageComponents/birthComponents/Institutio
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 
 import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
+import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
+import AdoptionFatherInformation from "../src/pageComponents/adoptionComponents/AdoptionFatherInformation";
+import AdoptionDetails from "../src/pageComponents/adoptionComponents/AdoptionDetails";
+import BirthMotherInformation from "../src/pageComponents/adoptionComponents/BirthMotherInformation";
+import BirthFatherInformation from "../src/pageComponents/adoptionComponents/BirthFatherInformation";
+import BirthMotherAddress from "../src/pageComponents/adoptionComponents/BirthMotherAddress";
+import BirthFatherAddress from "../src/pageComponents/adoptionComponents/BirthFatherAddress";
+import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
 
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
@@ -153,6 +161,15 @@ const componentsToRegister = {
   ChildDetails,
 
   SearchRegistry,
+  AdoptionDetails,
+  AdoptionMotherInformation,
+  AdoptionFatherInformation,
+  BirthMotherInformation,
+  BirthFatherInformation,
+  BirthMotherAddress,
+  BirthFatherAddress,
+  AdoptionStatisticalInformation,
+
 
   //////////////////
   InformationDeath,
