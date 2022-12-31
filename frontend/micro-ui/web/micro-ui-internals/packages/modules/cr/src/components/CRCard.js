@@ -50,12 +50,12 @@ const CRCard = () => {
         {
             label: t("Birth Registration"),
             link: `/digit-ui/employee/cr/cr-flow`,
-            role: "bnd-cemp"
+            role: "BND_CEMP"
         },
         {
             label: t("Death Registration"),
             link: `/digit-ui/employee/cr/death-flow`,
-            role: "bnd-cemp"
+            role: "BND_CEMP"
         },
             {
             label: t("TL_SEARCH_APPLICATIONS"),
