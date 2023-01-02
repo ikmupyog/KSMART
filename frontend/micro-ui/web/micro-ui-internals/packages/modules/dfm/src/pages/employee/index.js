@@ -26,7 +26,7 @@ const DFMBreadCrumb = ({ location }) => {
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
-  // const isApplicationDetails = location?.pathname?.includes("tl/application-details");
+  const isApplicationDetailsPage = location?.pathname?.includes("dfm/searchDetails");
   // const isNewApplication = location?.pathname?.includes("tl/new-application");
   // const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -144,8 +144,13 @@ const DFMBreadCrumb = ({ location }) => {
       path: "/digit-ui/employee/dfm/search/application",
       content: t("ES_COMMON_SEARCH_APPLICATION"),
       show: isApplicationSearch ||
-      breadCrumbUrls.includes("home/search") || 
-      breadCrumbUrls.includes("inbox/search")
+      breadCrumbUrls.includes("home/search") 
+    },
+    {
+      path: "/digit-ui/employee/dfm/searchDetails",
+      content: t("TL_DETAILS_HEADER_LABEL"),
+      show: isApplicationDetailsPage ||
+      breadCrumbUrls.includes("home/search/Details") 
     },
     // {
     //   path: "/digit-ui/employee/tl/inbox",
@@ -223,6 +228,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   // const ReNewApplication = Digit?.ComponentRegistryService?.getComponent('TLReNewApplication');
   // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   const Search = Digit?.ComponentRegistryService?.getComponent('DFMEmployeeSearch');
+  const EmployeeDetails = Digit?.ComponentRegistryService?.getComponent('EmployeeDetails')
 
   return (
     <Switch>
@@ -233,6 +239,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           </div>
           <PrivateRoute parentRoute={path} path={`${path}/file-flow`} component={() => <FileFlow parentUrl={url} />} />
           <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
+          <PrivateRoute path={`${path}/searchDetails/:id`} component={() => <EmployeeDetails parentRoute={path} />} />
         </div>
       </React.Fragment>
     </Switch>
