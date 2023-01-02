@@ -58,7 +58,7 @@ const DFMCard = () => {
         },
         {
             label: t("Search Application"),
-            link: `/digit-ui/employee/dfm/file-flow`,
+            link: `/digit-ui/employee/dfm/search/application`,
         },
     ]
 
@@ -66,7 +66,7 @@ const DFMCard = () => {
 
     const propsForModuleCard = {
         Icon: <DocumentIconSolid />,
-        moduleName: t("File Management"),
+        moduleName: t("MODULE_DFM"),
         kpis: [
             {
                 count: isLoading ? "-" : inboxData?.totalCount,

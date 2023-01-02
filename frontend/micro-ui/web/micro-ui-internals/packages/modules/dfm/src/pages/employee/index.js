@@ -140,6 +140,13 @@ const DFMBreadCrumb = ({ location }) => {
       content: t("Document details"),
       show: breadCrumbUrls.includes("file-flow/create/DocumentDetails") || isDocumentDetails
     },
+    {
+      path: "/digit-ui/employee/dfm/search/application",
+      content: t("ES_COMMON_SEARCH_APPLICATION"),
+      show: isApplicationSearch ||
+      breadCrumbUrls.includes("home/search") || 
+      breadCrumbUrls.includes("inbox/search")
+    },
     // {
     //   path: "/digit-ui/employee/tl/inbox",
     //   content: t("ES_TITLE_INBOX"),
@@ -215,7 +222,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   // const NewApplication = Digit?.ComponentRegistryService?.getComponent('TLNewApplication');
   // const ReNewApplication = Digit?.ComponentRegistryService?.getComponent('TLReNewApplication');
   // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
-  // const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
+  const Search = Digit?.ComponentRegistryService?.getComponent('DFMEmployeeSearch');
 
   return (
     <Switch>
@@ -225,6 +232,7 @@ const EmployeeApp = ({ path, url, userType }) => {
             <DFMBreadCrumb location={location} />
           </div>
           <PrivateRoute parentRoute={path} path={`${path}/file-flow`} component={() => <FileFlow parentUrl={url} />} />
+          <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
         </div>
       </React.Fragment>
     </Switch>
