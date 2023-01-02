@@ -10,7 +10,7 @@ const Search = ({path}) => {
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [payload, setPayload] = useState({})
 
-    const Search = Digit.ComponentRegistryService.getComponent( variant === "license" ? "SearchLicense" : "SearchApplication" )
+    const Search = Digit.ComponentRegistryService.getComponent( variant ===  "SearchApplication" )
 
     function onSubmit (_data) {
         var fromDate = new Date(_data?.fromDate)
@@ -30,7 +30,7 @@ const Search = ({path}) => {
         enabled: !!( payload && Object.keys(payload).length > 0 )
     }
 
-    const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } = Digit.Hooks.tl.useSearch({tenantId, filters: payload, config})
+    const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } = Digit.Hooks.cr.useSearch({tenantId, filters: payload, config})
 
     return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={ !isLoading && isSuccess ? (searchReult?.length>0? searchReult : { display: "ES_COMMON_NO_DATA" }) : "" } count={count} /> 
 
