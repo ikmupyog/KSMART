@@ -80,6 +80,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
         </div>
 
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{`${t("CR_HOSPITAL")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
@@ -105,14 +106,16 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         </div>
+        </div>
         <div className="row">
+        <div className="col-md-12"> 
           <div className="col-md-4">
             <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
               optionKey="code"
               isMandatory={true}
-              option={cmbPlace}
+              option={cmbhospital}
               selected={setDesignation}
               select={selectDesignation}
               disabled={isEdit}
@@ -150,6 +153,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
+        </div> 
         </div>
       </FormStep>
     </React.Fragment>
