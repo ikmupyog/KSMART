@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton,BackButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import AdressInside from "./AdressInside";
 import OutSideIndia from "./OutSideIndia";
@@ -52,6 +52,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="maindeath">
           <div className="radios">
