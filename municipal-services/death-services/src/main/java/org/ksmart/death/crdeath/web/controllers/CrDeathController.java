@@ -67,7 +67,7 @@ public class CrDeathController implements CrDeathResource  {
         //     log.error("Exception while fetching from searcher: ",e);
         // }
 
- 
+        
         /********************************************** */
         
         List<CrDeathDtl> deathDetails = deathService.create(request);
@@ -84,17 +84,6 @@ public class CrDeathController implements CrDeathResource  {
     @PostMapping("/crdeathdetails/_search")
     public ResponseEntity<CrDeathDtlResponse> search(@RequestBody RequestInfoWrapper request,
                                                             @ModelAttribute CrDeathSearchCriteria criteria) {
-
-     /********************************************* */
-
-    //     try {
-    //         ObjectMapper mapper = new ObjectMapper();
-    //         Object obj = request;
-    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    //        System.out.println("rakhiSearchRequest "+ mapper.writeValueAsString(obj));
-    //      }catch(Exception e) {
-    //     log.error("Exception while fetching from searcher: ",e);
-    // }
 
     List<CrDeathDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
 
@@ -118,6 +107,20 @@ public class CrDeathController implements CrDeathResource  {
                                             .deathCertificateDtls(deathDetails)
                                             .build();
         return ResponseEntity.ok(response);
-}
+    }
+
+    // @Override
+    // @PutMapping("/crdeathdetails/_create")
+
+    // public ResponseEntity<CrDeathDtlResponse> create(@RequestBody CrDeathDtlRequest request) {
+ 
+    //     List<CrDeathDtl> deathDetails = deathService.update(request);
+    
+    //     CrDeathDtlResponse response = CrDeathDtlResponse.builder()
+    //                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+    //                                         .deathCertificateDtls(deathDetails)
+    //                                         .build();
+    //     return ResponseEntity.ok(response);
+    // }
 
 }

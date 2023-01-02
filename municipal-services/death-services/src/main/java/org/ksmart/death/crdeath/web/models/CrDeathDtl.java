@@ -427,4 +427,13 @@ public class CrDeathDtl {
     @JsonProperty("wfDocuments")
     private List<Document> wfDocuments;
 
+    //02/01/2023 
+    
+    @Size(max = 64)
+    @JsonProperty("applicationType")
+    private String applicationType ;
+
+    @JsonProperty("applicantDetails")
+    private CrDeathApplicantDetails applicantDetails;
+
 }

@@ -13,6 +13,7 @@ import org.ksmart.death.common.repository.ServiceRequestRepository;
 import org.ksmart.death.crdeath.config.CrDeathConfiguration;
 import org.ksmart.death.crdeath.web.models.AuditDetails;
 import org.ksmart.death.crdeath.web.models.CrDeathAddressInfo;
+import org.ksmart.death.crdeath.web.models.CrDeathApplicantDetails;
 import org.ksmart.death.crdeath.web.models.CrDeathDtl;
 import org.ksmart.death.crdeath.web.models.CrDeathDtlRequest;
 import org.egov.common.contract.request.RequestInfo;
@@ -60,6 +61,7 @@ public class CrDeathEnrichment implements BaseEnrichment{
                 deathdtls.setAuditDetails(auditDetails);
                 deathdtls.getStatisticalInfo().setId(UUID.randomUUID().toString());               
                 CrDeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathDtl.class);
+                System.out.println();
                 deathdtls.setDeceasedAadharNumber(deathDtlEnc.getDeceasedAadharNumber());
                 deathdtls.setInformantAadharNo(deathDtlEnc.getInformantAadharNo());
                 deathdtls.setMaleDependentAadharNo(deathDtlEnc.getMaleDependentAadharNo());
@@ -71,7 +73,10 @@ public class CrDeathEnrichment implements BaseEnrichment{
                 addressInfo.getPermanentAddress().setId(UUID.randomUUID().toString());
                 addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
                 addressInfo.getDeathplaceAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getBurialAddress().setId(UUID.randomUUID().toString());
+                //addressInfo.getBurialAddress().setId(UUID.randomUUID().toString());
+                addressInfo.getApplicantAddress().setId(UUID.randomUUID().toString());
+                CrDeathApplicantDetails  applicantDetails = deathdtls.getApplicantDetails();
+                applicantDetails.setId(UUID.randomUUID().toString());
                });
       
     }
@@ -79,11 +84,8 @@ public class CrDeathEnrichment implements BaseEnrichment{
     private List<String> getIdList(RequestInfo requestInfo, String tenantId, String idKey,
                                    String idformat, int count) {
         List<IdResponse> idResponses = idGenRepository.getId(requestInfo, tenantId, idKey, idformat, count).getIdResponses();
-        
-        System.out.println("idResponse"+idResponses);
         if (CollectionUtils.isEmpty(idResponses))
             throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
-
         return idResponses.stream()
                 .map(IdResponse::getId).collect(Collectors.toList());
     }
