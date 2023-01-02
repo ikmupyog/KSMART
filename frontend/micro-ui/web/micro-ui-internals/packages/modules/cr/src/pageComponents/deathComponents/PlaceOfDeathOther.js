@@ -84,6 +84,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
       </div>
     </div>
     <div className="row">
+    <div className="col-md-12" >
          <div className="col-md-6" >
             <CardLabel>{`${t("CR_OTHER_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
@@ -103,15 +104,17 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="code"
                 isMandatory={false}
-                option={cmbPlace}
+                option={cmbOtherplace}
                 selected={setDeathOtherward}
                 select={selectDeathOtherward}
                 disabled={isEdit}
                 placeholder={`${t("CS_COMMON_WARD")}`}
             />
-        </div> 
+        </div>
+      </div> 
     </div>  
     <div className="row">
+         <div className="col-md-12" >
          <div className="col-md-6" >
           <CardLabel>{`${t("CR_OTHER_DETAILLS_EN")}`}</CardLabel>
             <TextArea       
@@ -141,7 +144,8 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             placeholder={`${t("CR_OTHER_DETAILS_ML")}`}
             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
             />
-        </div> 
+        </div>
+      </div>  
     </div>    
       </FormStep>
     </React.Fragment>

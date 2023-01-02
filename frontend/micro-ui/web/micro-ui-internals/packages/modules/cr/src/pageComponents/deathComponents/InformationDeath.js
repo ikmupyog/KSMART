@@ -260,7 +260,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <div className="col-md-12">
                 <div className="col-md-3">
                   <CardLabel>{t("CR_FROM_DATE")}<span className="mandatorycss">*</span></CardLabel>
-                  <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}/>
+                  <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })}/>
                 </div>
                 <div className="col-md-3">
                   <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
@@ -269,7 +269,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
                 <div className="col-md-3">
                   <CardLabel>{t("CR_TO_DATE")}<span className="mandatorycss">*</span></CardLabel>
-                  <DatePicker date={ToDate} name="ToDate" onChange={selectToDate}{...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+                  <DatePicker date={ToDate} name="ToDate" onChange={selectToDate}{...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })} />
                 </div>
                 <div className="col-md-3">
                   <CardLabel>{t("CR_TO_TIME")}</CardLabel>
@@ -283,7 +283,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 <div className="col-md-6">
                   <CardLabel>{t("CR_DATE_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
                   {/* date={CommencementDate} */}
-                  <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}/>
+                  <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })}/>
                 </div>
                 <div className="col-md-2">
                   <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
@@ -513,11 +513,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 select={selectIdCombo}
                 disabled={isEdit}
                 placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
+                // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
+              <CardLabel>{t("CR_ID_NO")}</CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -527,11 +527,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={IdNo}
                 onChange={setSelectIdNo}
                 disable={isEdit}
-                placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_NO") })}
+                placeholder={`${t("CR_ID_NO")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
               />
-            </div>
-            
+            </div>            
           </div>
         </div>
         {/* <div className="row">
