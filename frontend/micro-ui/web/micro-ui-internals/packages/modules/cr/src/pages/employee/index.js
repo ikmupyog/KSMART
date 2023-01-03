@@ -4,12 +4,12 @@ import { PrivateRoute, BreadCrumb } from "@egovernments/digit-ui-react-component
 import { useTranslation } from "react-i18next";
 import Inbox from "./Inbox";
 // import NewApplication from "./NewApplication";
-// import Search from "./Search";
+import Search from "./Search";
 // import Response from "../Response";
 import ApplicationDetails from "./ApplicationDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
-
+import DeathCrFlow from "./";
 //import ReNewApplication from "./ReNewApplication";
 
 const CRBreadCrumb = ({ location }) => {

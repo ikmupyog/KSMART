@@ -66,7 +66,7 @@ const DFMCard = () => {
 
     const propsForModuleCard = {
         Icon: <DocumentIconSolid />,
-        moduleName: t("MODULE_DFM"),
+        moduleName: t("File Management"),
         kpis: [
             {
                 count: isLoading ? "-" : inboxData?.totalCount,
