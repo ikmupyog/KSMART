@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox,BackButton} from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -41,7 +41,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [MlLastName, setMlLastName] = useState(formData?.InformationDeath?.MlLastName);
   const [Ageofbirth, setAgeofbirth] = useState(formData?.InformationDeath?.Ageofbirth);
   const [AdharNo, setAdharNo] = useState(formData?.InformationDeath?.AdharNo);
-  const [PassportNo, setPassportNo] = useState(formData?.InformationDeath?.PassportNo);
+  const [IdNo, setIdNo] = useState(formData?.InformationDeath?.IdNoNo);
   const [CommencementDate, setCommencementDate] = useState(formData?.InformationDeath?.CommencementDate);
   const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
   const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate);
@@ -140,8 +140,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function setSelectAdharNo(e) {
     setAdharNo(e.target.value);
   }
-  function setSelectPassportNo(e) {
-    setPassportNo(e.target.value);
+  function setSelectIdNo(e) {
+    setIdNo(e.target.value);
   }
   function selectCommencementDate(value) {
     setCommencementDate(value);
@@ -188,7 +188,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MLFirstName", MLFirstName);
     sessionStorage.setItem("Ageofbirth", Ageofbirth);
     sessionStorage.setItem("AdharNo", AdharNo);
-    sessionStorage.setItem("PassportNo", PassportNo);
+    sessionStorage.setItem("IdNo", IdNo);
     sessionStorage.setItem("FromDate", FromDate);
     sessionStorage.setItem("ToDate", ToDate);
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
@@ -211,7 +211,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       MLFirstName,
       Ageofbirth,
       AdharNo,
-      PassportNo,
+      IdNo,
       FromDate,
       ToDate,
       setTitle,
@@ -227,6 +227,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         {/* //    isDisabled={!CommencementDate} */}
         <div className="row">
@@ -259,7 +260,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <div className="col-md-12">
                 <div className="col-md-3">
                   <CardLabel>{t("CR_FROM_DATE")}<span className="mandatorycss">*</span></CardLabel>
-                  <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate}/>
+                  <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })}/>
                 </div>
                 <div className="col-md-3">
                   <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
@@ -268,7 +269,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
                 <div className="col-md-3">
                   <CardLabel>{t("CR_TO_DATE")}<span className="mandatorycss">*</span></CardLabel>
-                  <DatePicker date={ToDate} name="ToDate" onChange={selectToDate} />
+                  <DatePicker date={ToDate} name="ToDate" onChange={selectToDate}{...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })} />
                 </div>
                 <div className="col-md-3">
                   <CardLabel>{t("CR_TO_TIME")}</CardLabel>
@@ -282,7 +283,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 <div className="col-md-6">
                   <CardLabel>{t("CR_DATE_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
                   {/* date={CommencementDate} */}
-                  <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} />
+                  <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })}/>
                 </div>
                 <div className="col-md-2">
                   <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
@@ -418,6 +419,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OTHER_DETAILS")}`}</span>
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>{t("CR_GENDER")} <span className="mandatorycss">*</span> </CardLabel>
               <Dropdown
@@ -496,21 +504,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="col-md-4">
               <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="PassportNo"
-                value={PassportNo}
-                onChange={setSelectPassportNo}
-                disable={isEdit}
-                placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_NO") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
               <Dropdown
                 t={t}
                 optionKey="code"
@@ -520,9 +513,24 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 select={selectIdCombo}
                 disabled={isEdit}
                 placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
+                // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
               />
             </div>
+            <div className="col-md-4">
+              <CardLabel>{t("CR_ID_NO")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="IdNo"
+                value={IdNo}
+                onChange={setSelectIdNo}
+                disable={isEdit}
+                placeholder={`${t("CR_ID_NO")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
+              />
+            </div>            
           </div>
         </div>
         {/* <div className="row">
@@ -533,13 +541,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
         </div> */}
 
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OTHER_DETAILS")}`}</span>
-            </h1>
-          </div>
-        </div>
+        
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">

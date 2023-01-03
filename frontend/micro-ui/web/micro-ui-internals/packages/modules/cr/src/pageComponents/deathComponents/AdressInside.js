@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
+    const { data: Country = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
     const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
@@ -25,11 +26,13 @@ import React, { useState, useEffect } from "react";
     const [PresentHouseNo, setPresentHouseNo] = useState(formData?.AddressDetails?.PresentHouseNo);
     const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
     const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressDetails?.PresentLocalityNameMl);
-    const [PresentCityNameEn, setPresentCityNameEn] = useState(formData?.AddressDetails?.PresentCityNameEn);
-    const [PresentCityNameMl, setPresentCityNameMl] = useState(formData?.AddressDetails?.PresentCityNameMl);
+    const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressDetails?.PresentMainPlaceEn);
+    const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressDetails?.PresentMainPlaceMl);
     const [PresentVillage, setPresentVillage] = useState(formData?.AddressDetails?.PresentVillage);
     const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
-    const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
+    const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);    
+    const [PresentMotherCountry, setPresentMotherCountry] = useState(formData?.AddressDetails?.PresentMotherCountry);
+    const [PresentStateName, setPresentStateName] = useState(formData?.AddressDetails?.PresentStateName);
     const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
     const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
     const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
@@ -44,21 +47,25 @@ import React, { useState, useEffect } from "react";
     const [PermanentHouseNo, setPermanentHouseNo] = useState(formData?.AddressDetails?.PermanentHouseNo);
     const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressDetails?.PermanentLocalityNameEn);
     const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressDetails?.PermanentLocalityNameMl);
-    const [PermanentCityNameEn, setPermanentCityNameEn] = useState(formData?.AddressDetails?.PermanentCityNameEn);
-    const [PermanentCityNameMl, setPermanentCityNameMl] = useState(formData?.AddressDetails?.PermanentCityNameMl);
+    const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressDetails?.PermanentMainPlaceEn);
+    const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressDetails?.PermanentMainPlaceMl);
     const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressDetails?.PermanentVillage);
     const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
+    const [PermanentMotherCountry, setPermanentMotherCountry] = useState(formData?.AddressDetails?.PermanentMotherCountry);
+    const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressDetails?.PermanentStateName);
     const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
     const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
     const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);   
     const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
    
     let cmbPlace = [];
+    let cmbCountry = [];
     let cmbTaluk = [];
     let cmbVillage = [];
     let cmbDistrict = [];
     let cmbPostOffice = [];
     let districtid = null;
+    
     console.log("Taluk" + Taluk);
     Taluk &&
       Taluk["common-masters"] &&
@@ -80,7 +87,13 @@ import React, { useState, useEffect } from "react";
       PostOffice["common-masters"].PostOffice.map((ob) => {
         cmbPostOffice.push(ob);
       });
-  
+      Country &&
+      Country["common-masters"] &&
+      Country["common-masters"].Country.map((ob) => {
+        cmbCountry.push(ob);
+      });
+
+
     const onSkip = () => onSelect();
 
     function setSelectPresentHouseNameMl(e) {
@@ -145,18 +158,31 @@ import React, { useState, useEffect } from "react";
         setPermanentLocalityNameMl(PresentLocalityNameMl);
       }
     }
-    function setSelectPresentCityNameEn(e) {
-      setPresentCityNameEn(e.target.value);
+    function setSelectPresentMainPlaceEn(e) {
+      setPresentMainPlaceEn(e.target.value);
       if (isPrsentAddress) {
-        setPermanentCityNameEn(PresentCityNameEn);
+        setPermanentMainPlaceEn(PresentMainPlaceEn);
       }
     }
-    function setSelectPresentCityNameMl(e) {
-      setPresentCityNameMl(e.target.value);
+    function setSelectPresentMainPlaceMl(e) {
+      setPresentMainPlaceMl(e.target.value);
       if (isPrsentAddress) {
-        setPermanentCityNameMl(PresentCityNameMl);
+        setPermanentMainPlaceMl(PresentMainPlaceMl);
       }
     }
+    function setSelectPresentMotherCountry(value) {
+      setPresentMotherCountry(value);
+      if (isPrsentAddress) {
+        setPresentMotherCountry(PresentMotherCountry);
+      }
+    }
+    function setSelectPresentStateName(value) {
+      setPresentStateName(value);
+      if (isPrsentAddress) {
+        setPresentStateName(PresentStateName);
+      }
+    }
+    
     function setSelectPresentVillage(value) {
       setPresentVillage(value);
       console.log("Village" + cmbVillage);
@@ -177,6 +203,7 @@ import React, { useState, useEffect } from "react";
         setPermanentTaluk(PresentTaluk);
       }
     }
+
     function setSelectPresentDistrict(value) {
       setIsInitialRender(true);
       setPresentDistrict(value);
@@ -233,11 +260,11 @@ import React, { useState, useEffect } from "react";
     function setSelectPermanentLocalityNameMl(e) {
       setPermanentLocalityNameMl(e.target.value);
     }
-    function setSelectPermanentCityNameEn(e) {
-      setPermanentCityNameEn(e.target.value);
+    function setSelectPermanentMainPlaceEn(e) {
+      setPermanentMainPlaceEn(e.target.value);
     }
-    function setSelectPermanentCityNameMl(e) {
-      setPermanentCityNameMl(e.target.value);
+    function setSelectPermanentMainPlaceMl(e) {
+      setPermanentMainPlaceMl(e.target.value);
     }
     function setSelectPermanentVillage(value) {
       setPermanentVillage(value);
@@ -247,6 +274,14 @@ import React, { useState, useEffect } from "react";
     }
     function setSelectPermanentTaluk(value) {
       setPermanentTaluk(value);
+    }
+    function setSelectPermanentMotherCountry(value) {
+      setPermanentMotherCountry(value);
+      districtid = value.districtid
+    }
+    function setSelectPermanentStateName(value) {
+      setPermanentStateName(value);
+      districtid = value.districtid
     }
     function setSelectPermanentDistrict(value) {
       setPermanentDistrict(value);
@@ -273,10 +308,12 @@ import React, { useState, useEffect } from "react";
         setPermanentHouseNo(PresentHouseNo);
         setPermanentLocalityNameEn(PresentLocalityNameEn);
         setPermanentLocalityNameMl(PresentLocalityNameMl);
-        setPermanentCityNameEn(PresentCityNameEn);
-        setPermanentCityNameMl(PresentCityNameMl);
+        setPermanentMainPlaceEn(PresentMainPlaceEn);
+        setPermanentMainPlaceMl(PresentMainPlaceMl);
         setPermanentVillage(PresentVillage);
         setPermanentLBName(PresentLBName);
+        setPermanentMotherCountry(PresentMotherCountry);  
+        setPermanentStateName(PresentStateName);  
         setPermanentDistrict(PresentDistrict);
         setPermanentTaluk(PresentTaluk);
         setPermanentPostOffice(PresentPostOffice);
@@ -288,16 +325,18 @@ import React, { useState, useEffect } from "react";
         setPermanentHouseNameEn('');
         setPermanentBuldingNo('');
         setPermanentHouseNo('');
-        setPermanentPresentStreetMl('');
-        setPermanentPresentStreetEn('');
-        setPermanentPresentViaMl('');
-        setPermanentPresentViaEn(''); 
+        setPermanentStreetMl('');
+        setPermanentStreetEn('');
+        setPermanentViaMl('');
+        setPermanentViaEn(''); 
         setPermanentLocalityNameEn('');
         setPermanentLocalityNameMl('');
-        setPermanentCityNameEn('');
-        setPermanentCityNameMl('');
+        setPermanentMainPlaceEn('');
+        setPermanentMainPlaceMl('');
         setPermanentVillage('');
-        setPermanentLBName('');
+        setPermanentLBName('');        
+        setPermanentStateName('');
+        setPermanentMotherCountry('');
         setPermanentDistrict('');
         setPermanentTaluk('');
         setPermanentPostOffice('');
@@ -326,10 +365,12 @@ import React, { useState, useEffect } from "react";
       sessionStorage.setItem("PresentViaMl", PresentViaMl);
       sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn);
       sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl);
-      sessionStorage.setItem("PresentCityNameEn", PresentCityNameEn);
-      sessionStorage.setItem("PresentCityNameMl", PresentCityNameMl);
+      sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn);
+      sessionStorage.setItem("PresentMainPlaceMl", PresentMainPlaceMl);
       sessionStorage.setItem("PresentVillage", PresentVillage.code);
       sessionStorage.setItem("PresentLBName", null);
+      sessionStorage.setItem("PresentMotherCountry", PresentMotherCountry.code);  
+      sessionStorage.setItem("PresentStateName", PresentStateName.code);         
       sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
       sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
       sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
@@ -345,10 +386,12 @@ import React, { useState, useEffect } from "react";
       sessionStorage.setItem("PermanentHouseNo", PermanentHouseNo);
       sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);
       sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl);
-      sessionStorage.setItem("PermanentCityNameEn", PermanentCityNameEn);
-      sessionStorage.setItem("PermanentCityNameMl", PermanentCityNameMl);
+      sessionStorage.setItem("PermanentMainPlaceEn", PermanentMainPlaceEn);
+      sessionStorage.setItem("PermanentMainPlaceMl", PermanentMainPlaceMl);
       sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
       sessionStorage.setItem("PermanentLBName", null);
+      sessionStorage.setItem("PermanentMotherCountry", PermanentMotherCountry.code);  
+      sessionStorage.setItem("PermanentStateName", PermanentStateName.code);  
       sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
       sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
       sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
@@ -356,16 +399,16 @@ import React, { useState, useEffect } from "react";
       
       onSelect(config.key, {
         PresentHouseNameMl,PresentHouseNameEn,PresentBuldingNo, PresentHouseNo, PresentStreetEn,PresentStreetMl,PresentViaEn,PresentViaMl,PresentLocalityNameEn,
-        PresentLocalityNameMl, PresentCityNameEn, PresentCityNameMl, PresentVillage, PresentLBName, PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
-        PresentHouseNameEn, PermanentHouseNameMl,PermanentBuldingNo, PermanentHouseNo,PermanentViaMl,PermanentViaEn, PermanentStreetMl,PermanentStreetEn,PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentCityNameEn, PermanentCityNameMl, PermanentVillage, PermanentLBName,
-        PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode, 
+        PresentLocalityNameMl, PresentMainPlaceEn, PresentMainPlaceMl, PresentVillage, PresentLBName,PresentMotherCountry, PresentStateName,PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
+        PresentHouseNameEn, PermanentHouseNameMl,PermanentBuldingNo, PermanentHouseNo,PermanentViaMl,PermanentViaEn, PermanentStreetMl,PermanentStreetEn,PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentMainPlaceEn, PermanentMainPlaceMl, PermanentVillage, PermanentLBName,
+        PermanentMotherCountry, PermanentStateName,PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode, 
       });
     }
     return (
       <React.Fragment>
         {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep
         t={t}
         config={config}
@@ -379,8 +422,12 @@ import React, { useState, useEffect } from "react";
           !PresentStreetMl ||
           !PresentLocalityNameEn ||
           !PresentLocalityNameMl || 
+          !PresentMainPlaceEn ||
+          !PresentMainPlaceMl || 
           !PresentViaEn ||
-          !PresentViaMl ||         
+          !PresentViaMl || 
+          !PresentMotherCountry || 
+          !PresentStateName ||                 
           !PresentDistrict ||
           !PresentVillage ||
           !PresentTaluk ||
@@ -391,10 +438,14 @@ import React, { useState, useEffect } from "react";
           !PermanentHouseNo ||
           !PermanentStreetEn ||
           !PermanentStreetMl ||
+          !PermanentMainPlaceEn ||
+          !PermanentMainPlaceMl || 
           !PermanentLocalityNameEn ||
           !PermanentLocalityNameMl ||
           !PermanentViaEn ||
-          !PermanentviaMl ||
+          !PermanentViaMl ||
+          !PermanentMotherCountry || 
+          !PermanentStateName || 
           !PermanentDistrict ||
           !PermanentVillage ||
           !PermanentTaluk ||
@@ -501,7 +552,7 @@ import React, { useState, useEffect } from "react";
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
-                {t("CR_STREET_EN")}
+                {t("CR_STREET_NAME_EN")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -512,14 +563,14 @@ import React, { useState, useEffect } from "react";
                 name="PresentStreetEn"
                 value={PresentStreetEn}
                 onChange={setSelectPresentStreetEn}
-                placeholder={`${t("CR_STREET_EN")}`}
+                placeholder={`${t("CR_STREET_NAME_EN")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
             </div>
             <div className="col-md-6">
               <CardLabel>
-                {t("CR_STREET_ML")}
+                {t("CR_STREET_NAME_ML")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -530,9 +581,9 @@ import React, { useState, useEffect } from "react";
                 name="PresentStreetMl"
                 value={PresentStreetMl}
                 onChange={setSelectPresentStreetMl}
-                placeholder={`${t("CR_STREET_ML")}`}
+                placeholder={`${t("CR_STREET_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_STREET_ML") })}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
               />
             </div>
           </div>
@@ -586,9 +637,9 @@ import React, { useState, useEffect } from "react";
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="PresentCityNameEn"
-                value={PresentCityNameEn}
-                onChange={setSelectPresentCityNameEn}
+                name="PresentMainPlaceEn"
+                value={PresentMainPlaceEn}
+                onChange={setSelectPresentMainPlaceEn}
                 placeholder={`${t("CR_MAIN_PLACE_EN")}`}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
@@ -601,9 +652,9 @@ import React, { useState, useEffect } from "react";
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="PresentCityNameMl"
-                value={PresentCityNameMl}
-                onChange={setSelectPresentCityNameMl}
+                name="PresentMainPlaceMl"
+                value={PresentMainPlaceMl}
+                onChange={setSelectPresentMainPlaceMl}
                 placeholder={`${t("CR_MAIN_PLACE_ML")}`}
                 disable={isEdit}
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
@@ -645,37 +696,35 @@ import React, { useState, useEffect } from "react";
             </div>
           </div>
         </div>
-        {/* <div className="row">
+        <div className="row">
             <div className="col-md-12" >
-              <div className="col-md-6" >
-                <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={false}
-                  option={cmbState}
-                  selected={StateName}
-                  select={setSelectStateName}
-                  disabled={isEdit}
-                />
-              </div>
-              <div className="col-md-6" >
+            <div className="col-md-4" >
                 <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
                   isMandatory={false}
                   option={cmbCountry}
-                  selected={MotherCountry}
-                  select={setSelectMotherCountry}
+                  // option={cmbDistrict}
+                  selected={PresentMotherCountry}
+                  select={setSelectPresentMotherCountry}
                   disabled={isEdit}
                 />
               </div>
-            </div>
-          </div> */}
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
+              <div className="col-md-4" >
+                <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  // option={cmbState}
+                  option={cmbDistrict}
+                  selected={PresentStateName}
+                  select={setSelectPresentStateName}
+                  disabled={isEdit}
+                />
+              </div>
+              <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_DISTRICT")}
                 <span className="mandatorycss">*</span>
@@ -691,6 +740,11 @@ import React, { useState, useEffect } from "react";
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
             </div>
+            </div>
+          </div>
+        <div className="row">
+          <div className="col-md-12">
+           
             <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_LB_NAME")}
@@ -723,11 +777,7 @@ import React, { useState, useEffect } from "react";
                 placeholder={`${t("CS_COMMON_WARD")}`}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-          <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_VILLAGE")}
                 <span className="mandatorycss">*</span>
@@ -743,7 +793,12 @@ import React, { useState, useEffect } from "react";
                 placeholder={`${t("CS_COMMON_VILLAGE")}`}
               />
             </div>
-            <div className="col-md-3">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+          
+            <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_TALUK")}
                 <span className="mandatorycss">*</span>
@@ -759,7 +814,7 @@ import React, { useState, useEffect } from "react";
                 placeholder={`${t("CS_COMMON_TALUK")}`}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -775,7 +830,7 @@ import React, { useState, useEffect } from "react";
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
                 {/* <span className="mandatorycss">*</span> */}
@@ -913,7 +968,7 @@ import React, { useState, useEffect } from "react";
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
-                {t("CR_STREET_EN")}
+                {t("CR_STREET_NAME_EN")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -924,14 +979,14 @@ import React, { useState, useEffect } from "react";
                 name="PermanentStreetEn"
                 value={PermanentStreetEn}
                 onChange={setSelectPermanentStreetEn}
-                placeholder={`${t("CR_STREET_EN")}`}
+                placeholder={`${t("CR_STREET_NAME_EN")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
             </div>
             <div className="col-md-6">
               <CardLabel>
-                {t("CR_STREET_ML")}
+                {t("CR_STREET_NAME_ML")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -942,9 +997,9 @@ import React, { useState, useEffect } from "react";
                 name="PermanentStreetMl"
                 value={PermanentStreetMl}
                 onChange={setSelectPermanentStreetMl}
-                placeholder={`${t("CR_STREET_ML")}`}
+                placeholder={`${t("CR_STREET_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_STREET_ML") })}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
               />
             </div>
           </div>
@@ -1001,9 +1056,9 @@ import React, { useState, useEffect } from "react";
                   isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
-                  name="PermanentCityNameEn"
-                  value={PermanentCityNameEn}
-                  onChange={setSelectPermanentCityNameEn}
+                  name="PermanentMainPlaceEn"
+                  value={PermanentMainPlaceEn}
+                  onChange={setSelectPermanentMainPlaceEn}
                   disable={isEdit}
                   placeholder={`${t("CR_MAIN_PLACE_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
@@ -1019,9 +1074,9 @@ import React, { useState, useEffect } from "react";
                   isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
-                  name="PermanentCityNameMl"
-                  value={PermanentCityNameMl}
-                  onChange={setSelectPermanentCityNameMl}
+                  name="PermanentMainPlaceMl"
+                  value={PermanentMainPlaceMl}
+                  onChange={setSelectPermanentMainPlaceMl}
                   disable={isEdit}
                   placeholder={`${t("CR_MAIN_PLACE_ML")}`}
                   {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
@@ -1063,8 +1118,34 @@ import React, { useState, useEffect } from "react";
             </div>
           </div>
         </div>
-          <div className="row">
-            <div className="col-md-12">
+        <div className="row">
+            <div className="col-md-12" >
+            <div className="col-md-4" >
+                <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbCountry}
+                  // option={cmbDistrict}
+                  selected={PermanentMotherCountry}
+                  select={setSelectPermanentMotherCountry}
+                  disabled={isEdit}
+                />
+              </div>
+              <div className="col-md-4" >
+                <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  // option={cmbState}
+                  option={cmbDistrict}
+                  selected={PermanentStateName}
+                  select={setSelectPermanentStateName}
+                  disabled={isEdit}
+                />
+              </div>
               <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_DISTRICT")}
@@ -1081,6 +1162,11 @@ import React, { useState, useEffect } from "react";
                   placeholder={`${t("CS_COMMON_DISTRICT")}`}
                 />
               </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+            
               <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_LB_NAME")}
@@ -1113,11 +1199,7 @@ import React, { useState, useEffect } from "react";
                   placeholder={`${t("CS_COMMON_WARD")}`}
                 />
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-            <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_VILLAGE")}
                   <span className="mandatorycss">*</span>
@@ -1133,7 +1215,11 @@ import React, { useState, useEffect } from "react";
                   placeholder={`${t("CS_COMMON_VILLAGE")}`}
                 />
               </div>
-              <div className="col-md-3">
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">            
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_TALUK")}
                   <span className="mandatorycss">*</span>
@@ -1149,7 +1235,7 @@ import React, { useState, useEffect } from "react";
                   placeholder={`${t("CS_COMMON_TALUK")}`}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_POST_OFFICE")}
                   <span className="mandatorycss">*</span>
@@ -1165,7 +1251,7 @@ import React, { useState, useEffect } from "react";
                   placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_PIN_CODE")}
                   {/* <span className="mandatorycss">*</span> */}

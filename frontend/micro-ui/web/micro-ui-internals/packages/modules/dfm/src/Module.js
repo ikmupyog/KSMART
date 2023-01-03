@@ -15,6 +15,9 @@ import DFMEmployeeDocumentDetails from "../src/pageComponents/DFMEmployeeDocumen
 // import TLDocument from "./pageComponents/TLDocumets";
 import DFMAcknowledgement from "./pages/citizen/Create/DFMAcknowlegement";
 import DFMEmployeeAcknowledgement from "./pages/employee/FileFlow/Create/DFMEmployeeAcknowlegement";
+import EmployeeDetails from './pages/employee/EmployeeDetails'
+import SearchDfmApplication from "./components/SearchApplication"
+import DFMEmployeeSearch from './pages/employee/Search'
 // import Proof from "./pageComponents/Proof";
 import DFMCard from "./components/DFMCard";
 import Response from "./pages/Response";
@@ -81,6 +84,9 @@ const componentsToRegister = {
   DFMCheckPage,
   DFMEmployeeCheckPage,
   TLResponse : Response,
+  SearchDfmApplication,
+  DFMEmployeeSearch,
+  EmployeeDetails,
 };
 
 export const initDFMComponents = () => {

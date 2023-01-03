@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,CheckBox } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -131,6 +131,17 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             </h1>
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-3">
+              <CheckBox label={t("CR_FATHER")}/>
+            </div>
+            <div className="col-md-3">
+              <CheckBox label={t("CR_HUSBAND")}/>
+            </div>
+          </div>
+        </div>
+        <div></div>
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>

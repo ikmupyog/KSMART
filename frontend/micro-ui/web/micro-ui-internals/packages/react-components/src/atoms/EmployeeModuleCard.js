@@ -8,7 +8,7 @@ const ClassList =
      'Complaints':  'complaint-links-container',
      'Trade License':  'tl-links-container',
      'Civil Registration':  'cr-links-container', 
-     'File Management':  'dfm-links-container', 
+     'Digital File Management':  'dfm-links-container', 
      'HRMS':  'survey-links-container' ,     
      'Documents':  'doc-links-container',
      'Events':  'event-links-container', 

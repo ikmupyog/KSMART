@@ -11,7 +11,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [TradeName, setTradeName] = useState(null);
-  const [setReligion, setSelectedReligion] = useState(formData?.StatisticalInfo?.setReligion);
+  // const [setReligion, setSelectedReligion] = useState(formData?.StatisticalInfo?.setReligion);
   const [setOccupationMain, setSelectedOccupationMain] = useState(formData?.StatisticalInfo?.setOccupationMain);
   const [OccupationOthers, setOccupationOthers] = useState(formData?.StatisticalInfo?.OccupationOthers);
   const [CommencementDate, setCommencementDate] = useState();
@@ -29,9 +29,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   function selectPlaceofactivity(value) {
     setSelectedPlaceofActivity(value);
   }
-  function selectReligion(value) {
-    setSelectedReligion(value);
-  }
+  // function selectReligion(value) {
+  //   setSelectedReligion(value);
+  // }
   function selectOccupationMain(value) {
     setSelectedOccupationMain(value);
   }
@@ -53,13 +53,13 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
 
   const goNext = () => {
     sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
-    sessionStorage.setItem("Religion", setReligion ? setReligion.code : null);
+    // sessionStorage.setItem("Religion", setReligion ? setReligion.code : null);
     sessionStorage.setItem("OccupationMain", setOccupationMain ? setOccupationMain.code : null);
     sessionStorage.setItem("OccupationOthers", OccupationOthers);
 
     onSelect(config.key, {
       setPlaceofActivity,
-      setReligion,
+      // setReligion,
       setOccupationMain,
       OccupationOthers,
     });
@@ -68,7 +68,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_TOWN_VILLAGE_DECEASED")}`}</span>
@@ -96,7 +96,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
             Outside India
           </div>
         </div>
-    
+     */}
 
         <div className="row">
           <div className="col-md-12">
@@ -121,7 +121,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 selected={setOccupationMain}
                 select={selectOccupationMain}
                 disabled={isEdit}
-                placeholder={`${t("CCR_OCCUPATION_MAIN_LEVEL")}`}
+                placeholder={`${t("CR_OCCUPATION_MAIN_LEVEL")}`}
             />
           </div>
           <div className="col-md-6">
