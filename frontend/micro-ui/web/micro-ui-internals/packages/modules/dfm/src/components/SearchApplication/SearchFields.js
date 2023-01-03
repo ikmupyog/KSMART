@@ -58,7 +58,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                     />
         </SearchField>}
         <SearchField>
-            <label  style={mystyle}>{t("TL_TRADE_LICENCE_FROM_DATE")}</label>
+            <label  style={mystyle}>{t("DFM_FROM_DATE")}</label>
             <Controller
            
                 render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}

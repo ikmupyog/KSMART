@@ -33,8 +33,8 @@ import InformentAddress from "./pageComponents/deathComponents/InformentAddress"
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
-import SearchApplication from "./components/SearchApplication";
-import Search from './pages/employee/Search';
+import CRSearch from './pages/employee/Search';
+import SearchCrApplication from "./components/SearchApplication"
 import CRApplicationDetails from './pages/employee/ApplicationDetails'
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
@@ -107,8 +107,8 @@ const componentsToRegister = {
   InstitutionDetails,
   ChildDetails,
   CRApplicationDetails,
-  CRSearch : Search,
-  SearchApplication,
+  CRSearch,
+  SearchCrApplication,
   SearchRegistry,
 
   //////////////////
