@@ -20,7 +20,7 @@ const CRBreadCrumb = ({ location }) => {
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
-  const isApplicationDetails = location?.pathname?.includes("tl/application-details");
+  const isApplicationDetails = location?.pathname?.includes("cr/application-details");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -110,11 +110,20 @@ const CRBreadCrumb = ({ location }) => {
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails
     },
     {
-      path: "/digit-ui/employee/cr/death-flow/search/application",
+      path: "/digit-ui/employee/cr/search/application",
       content: t("ES_COMMON_SEARCH_APPLICATION"),
       show: isApplicationSearch ||
-      breadCrumbUrls.includes("home/search") || 
-      breadCrumbUrls.includes("inbox/search")
+      breadCrumbUrls.includes("home/search") 
+    },
+    {
+      path: sessionStorage.getItem("applicationNumber") ? `/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}` : "",
+      content: t("TL_DETAILS_HEADER_LABEL"),
+      show: isApplicationDetails ||
+      breadCrumbUrls.includes("inbox/appDetails") || 
+      breadCrumbUrls.includes("home/license/appDetails") || 
+      breadCrumbUrls.includes("inbox/license/appDetails") || 
+      breadCrumbUrls.includes("home/search/appDetails") || 
+      breadCrumbUrls.includes("inbox/search/appDetails")
     },
    
     // {
@@ -136,16 +145,7 @@ const CRBreadCrumb = ({ location }) => {
     //   breadCrumbUrls.includes("home/license") || 
     //   breadCrumbUrls.includes("inbox/license")
     // },
-    // {
-    //   path: sessionStorage.getItem("applicationNumber") ? `/digit-ui/employee/tl/application-details/${sessionStorage.getItem("applicationNumber")}` : "",
-    //   content: t("TL_DETAILS_HEADER_LABEL"),
-    //   show: isApplicationDetails ||
-    //   breadCrumbUrls.includes("inbox/appDetails") || 
-    //   breadCrumbUrls.includes("home/license/appDetails") || 
-    //   breadCrumbUrls.includes("inbox/license/appDetails") || 
-    //   breadCrumbUrls.includes("home/search/appDetails") || 
-    //   breadCrumbUrls.includes("inbox/search/appDetails")
-    // },
+    
     // {
     //   path: "/digit-ui/employee/tl/new-application",
     //   content: t("TL_HOME_SEARCH_RESULTS_NEW_APP_BUTTON"),
@@ -187,12 +187,13 @@ const EmployeeApp = ({ path, url, userType }) => {
   const location = useLocation();
   const mobileView = innerWidth <= 640;
 
-  const locationCheck = window.location.href.includes("employee/tl/new-application") || window.location.href.includes("employee/tl/response") || window.location.href.includes("employee/tl/edit-application-details") || window.location.href.includes("employee/tl/renew-application-details");
+  const locationCheck = window.location.href.includes("employee/cr/new-application") || window.location.href.includes("employee/cr/response") || window.location.href.includes("employee/cr/edit-application-details") || window.location.href.includes("employee/cr/renew-application-details");
 
   // const NewApplication = Digit?.ComponentRegistryService?.getComponent('TLNewApplication');
   // const ReNewApplication = Digit?.ComponentRegistryService?.getComponent('TLReNewApplication');
   // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   // const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
+  const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
 
   return (
     <Switch>
@@ -204,6 +205,9 @@ const EmployeeApp = ({ path, url, userType }) => {
         <PrivateRoute parentRoute={path} path={`${path}/cr-flow`} component={() => <CrFlow parentUrl={url} />} />
         <PrivateRoute parentRoute={path} path={`${path}/death-flow`} component={() => <DeathCrFlow parentUrl={url} />} />
         <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} />
+        <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
+        <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
+
       </div>
     </React.Fragment>
   </Switch>
