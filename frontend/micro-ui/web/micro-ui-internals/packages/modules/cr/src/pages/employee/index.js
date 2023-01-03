@@ -9,7 +9,7 @@ import Search from "./Search";
 import ApplicationDetails from "./ApplicationDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
-import DeathCrFlow from "./";
+
 //import ReNewApplication from "./ReNewApplication";
 
 const CRBreadCrumb = ({ location }) => {
