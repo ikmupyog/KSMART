@@ -13,15 +13,15 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
-  const [CommencementDate, setCommencementDate] = useState();
-  let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
+  // const [TradeName, setTradeName] = useState(null);
+  // const [CommencementDate, setCommencementDate] = useState();
+  // let naturetypecmbvalue = null;
+  // let cmbPlace = [];
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
 
   const onSkip = () => onSelect();
 
