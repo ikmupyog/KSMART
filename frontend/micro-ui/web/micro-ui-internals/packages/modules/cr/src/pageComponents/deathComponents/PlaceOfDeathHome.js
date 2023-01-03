@@ -19,7 +19,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [setVillage, setSelectedVillage] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setLbName, setSelectedLbName] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setPostOffice, setSelectedPostOffice] = useState(formData?.PlaceOfDeathHome?.setPostOffice);
-  const [PinCode, setSelectedPinCode] = useState(formData?.PlaceOfDeathHome?.HouseNo);
+  const [PinCode, setSelectedPinCode] = useState(formData?.PlaceOfDeathHome?.PinCode);
   const [setTaluk, setSelectedTaluk] = useState(formData?.PlaceOfDeathHome?.setTaluk);
   const [PresentDistrict, setPresentDistrict] = useState(formData?.PlaceOfDeathHome?.PresentDistrict);
   const [BuildingNo, setSelectedBuildingNo] = useState(formData?.PlaceOfDeathHome?.BuildingNo);
@@ -31,9 +31,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [setWard, setSelectedWard] = useState(formData?.PlaceOfDeathHome?.setWard);
   const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
 
-  
-
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
   const [CommencementDate, setCommencementDate] = useState();
