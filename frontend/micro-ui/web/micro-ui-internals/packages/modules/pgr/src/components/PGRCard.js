@@ -17,7 +17,6 @@ const PGRCard = () => {
     filters: { ...inboxSearchParams },
     config: {}
 });
-console.log(inboxData);
   if (!Digit.Utils.pgrAccess()) {
     return null;
   }
