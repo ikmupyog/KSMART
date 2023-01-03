@@ -19,7 +19,7 @@ const ApplicationDetails = () => {
   sessionStorage.setItem("applicationNumber", applicationNumber)
   const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.tl.useApplicationDetail(t, tenantId, applicationNumber);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
   
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
@@ -38,7 +38,7 @@ const ApplicationDetails = () => {
     tenantId: applicationDetails?.tenantId || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: businessService,
-    role: "TL_CEMP",
+    role: "BND_CEMP",
     config:{EditRenewalApplastModifiedTime:EditRenewalApplastModifiedTime},
   });
 
@@ -185,7 +185,7 @@ const ApplicationDetails = () => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="TL"
+        moduleCode="CR"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
