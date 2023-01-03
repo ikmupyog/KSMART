@@ -33,6 +33,7 @@ import InformentAddress from "./pageComponents/deathComponents/InformentAddress"
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
+import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
 
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
@@ -122,6 +123,7 @@ const componentsToRegister = {
   InformentAddress,
   StatisticalInfo,
   StatisticalInfoContinue,
+  ApplicantDetails,
   GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,
