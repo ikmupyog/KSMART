@@ -51,7 +51,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [tripStartTime, setTripStartTime] = useState(formData?.InformationDeath?.tripStartTime);
   const [checked, setChecked] = useState(false);
   const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit);
-  const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setAgeUnit);
+  const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo);
 
   
   let naturetypecmbvalue = null;

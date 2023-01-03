@@ -1,29 +1,20 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, NewRadioButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, TextArea, NewRadioButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
+  const [checked, setChecked] = useState(false);  
   const { t } = useTranslation();
   let validation = {};
   const { data: Occupation = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
-  const [TradeName, setTradeName] = useState(null);
   // const [setReligion, setSelectedReligion] = useState(formData?.StatisticalInfo?.setReligion);
   const [setOccupationMain, setSelectedOccupationMain] = useState(formData?.StatisticalInfo?.setOccupationMain);
   const [OccupationOthers, setOccupationOthers] = useState(formData?.StatisticalInfo?.OccupationOthers);
-  const [CommencementDate, setCommencementDate] = useState();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
-
   const onSkip = () => onSelect();
 
   function selectPlaceofactivity(value) {
@@ -107,12 +98,14 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <CardLabel>{t("CR_OCCUPATION_DECEASED_NO")}</CardLabel>
+          <CheckBox label={t("CR_OCCUPATION_DECEASED_NO")} onChange={() => setChecked((checked) => !checked)} value={checked} />
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
-            <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
+        {checked ? null :( 
+          <div>
+            <div className="col-md-6">
+           <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
             <Dropdown
                 t={t}
                 optionKey="name"
@@ -139,6 +132,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
             />
           </div>
+          </div>
+           )}
+         
         </div>
       </FormStep>
     </React.Fragment>

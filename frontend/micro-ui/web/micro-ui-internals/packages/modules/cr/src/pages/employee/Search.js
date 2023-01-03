@@ -9,8 +9,9 @@ const Search = ({path}) => {
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [payload, setPayload] = useState({})
+    // const Search = Digit.ComponentRegistryService.getComponent( variant === "license" ? "SearchLicense" : "SearchCrApplication" )
 
-    const Search = Digit.ComponentRegistryService.getComponent( variant ===  "SearchApplication" )
+    const Search = Digit.ComponentRegistryService.getComponent('SearchCrApplication')
 
     function onSubmit (_data) {
         var fromDate = new Date(_data?.fromDate)

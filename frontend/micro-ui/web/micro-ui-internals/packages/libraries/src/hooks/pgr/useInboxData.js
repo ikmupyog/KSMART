@@ -8,7 +8,6 @@ const useInboxData = (searchParams) => {
 
 
   const fetchInboxData = async () => {
-    console.log("jetheesh");
     const tenantId = Digit.ULBService.getCurrentTenantId();
     let serviceIds = [];
     let commonFilters = { start: 1, end: 10 };

@@ -81,7 +81,7 @@ export const ApplicationCard = ({
       <DetailsCard
         data={data}
         serviceRequestIdKey={serviceRequestIdKey}
-        linkPrefix={linkPrefix ? linkPrefix :"/digit-ui/employee/tl/application-details/"}
+        linkPrefix={linkPrefix ? linkPrefix :"/digit-ui/employee/cr/application-details/"}
       />
     );
   }
