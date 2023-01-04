@@ -13,6 +13,7 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
     const [Gender, selectGender] = useState(formData?.SearchRegistry?.Gender);
     const [ChildAadharNo, setChildAadharNo] = useState(formData?.SearchRegistry?.ChildAadharNo);
     const [MotherNameEn, setMotherNameEn] = useState(formData?.SearchRegistry?.MotherNameEn);
+    const [FatherNameEn, setFatherNameEn] = useState(formData?.SearchRegistry?.FatherNameEn);   
     const [ChildFirstNameEn, setChildFirstNameEn] = useState(formData?.SearchRegistry?.ChildFirstNameEn);
     const [ChildMiddleNameEn, setChildMiddleNameEn] = useState(formData?.SearchRegistry?.ChildMiddleNameEn);
     const [ChildLastNameEn, setChildLastNameEn] = useState(formData?.SearchRegistry?.ChildLastNameEn);
@@ -21,8 +22,10 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
     const [ChildLastNameMl, setChildLastNameMl] = useState(formData?.SearchRegistry?.ChildLastNameMl);
     const [isAdopted, setIsAdopted] = useState(formData?.SearchRegistry?.isAdopted);
     const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.SearchRegistry?.isMultipleBirth);
+    const [isFatherMotherInfo, setIsFatherMotherInfo] = useState(formData?.SearchRegistry?.isFatherMotherInfo);
     const [isFatherInfo, setIsFatherInfo] = useState(formData?.SearchRegistry?.isFatherInfo);
     const [isMotherInfo, setIsMotherInfo] = useState(formData?.SearchRegistry?.isMotherInfo);
+    const [isGuardianInfo, setIsGuardianInfo] = useState(formData?.SearchRegistry?.isGuardianInfo);
     const [isBornOutSide, setIsBornOutSide] = useState(formData?.SearchRegistry?.isBornOutSide);
     const [ChildPassportNo, setChildPassportNo] = useState(formData?.SearchRegistry?.ChildPassportNo);
     const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.SearchRegistry?.ChildArrivalDate);
@@ -49,6 +52,10 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
     function setSelectMotherNameEn(e) {
         setMotherNameEn(e.target.value);
     }
+    function setSelectFatherNameEn(e) {
+        setFatherNameEn(e.target.value);
+    }
+    
     function setSelectChildFirstNameEn(e) {
         setChildFirstNameEn(e.target.value);
     }
@@ -81,6 +88,13 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
             setIsMultipleBirth(false);
         }
     }
+    function setFatherMotherInfo(e) {
+        if (e.target.checked == true) {
+            setIsFatherMotherInfo(true);
+        } else {
+            setIsFatherMotherInfo(false);
+        }
+    }
     function setFatherInfo(e) {
         if (e.target.checked == true) {
             setIsFatherInfo(true);
@@ -88,11 +102,19 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
             setIsFatherInfo(false);
         }
     }
+    
     function setMotherInfo(e) {
         if (e.target.checked == true) {
             setIsMotherInfo(true);
         } else {
             setIsMotherInfo(false);
+        }
+    }
+    function setGuardianInfo(e) {
+        if (e.target.checked == true) {
+            setIsGuardianInfo(true);
+        } else {
+            setIsGuardianInfo(false);
         }
     }
     function setBornOutSide(e) {
@@ -120,6 +142,7 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("ChildAadharNo", ChildAadharNo);
         sessionStorage.setItem("ChildFirstNameEn", ChildFirstNameEn);
         sessionStorage.setItem("MotherNameEn", MotherNameEn);
+        sessionStorage.setItem("FatherNameEn", FatherNameEn);        
         sessionStorage.setItem("ChildMiddleNameEn", ChildMiddleNameEn);
         sessionStorage.setItem("ChildLastNameEn", ChildLastNameEn);
         sessionStorage.setItem("ChildFirstNameMl", ChildFirstNameMl);
@@ -127,12 +150,15 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("ChildLastNameMl", ChildLastNameMl);
         sessionStorage.setItem("isAdopted", isAdopted);
         sessionStorage.setItem("isMultipleBirth", isMultipleBirth);
+        sessionStorage.setItem("isFatherMotherInfo", isFatherMotherInfo);
         sessionStorage.setItem("isFatherInfo", isFatherInfo);
+        sessionStorage.setItem("isMotherInfo", isMotherInfo);
+        sessionStorage.setItem("isGuardianInfo", isGuardianInfo);
         sessionStorage.setItem("isMotherInfo", isMotherInfo);
         sessionStorage.setItem("isBornOutSide", isBornOutSide);
         sessionStorage.setItem("ChildPassportNo", ChildPassportNo);
         sessionStorage.setItem("ChildArrivalDate", ChildArrivalDate);
-        onSelect(config.key, { ChildDOB, Gender, ChildAadharNo,MotherNameEn, ChildFirstNameEn, ChildMiddleNameEn, ChildLastNameEn, ChildFirstNameMl, ChildMiddleNameMl, ChildLastNameMl, isAdopted, isMultipleBirth, isFatherInfo, isMotherInfo, isBornOutSide, ChildPassportNo, ChildArrivalDate });
+        onSelect(config.key, { ChildDOB, Gender, ChildAadharNo,MotherNameEn,FatherNameEn, ChildFirstNameEn, ChildMiddleNameEn, ChildLastNameEn, ChildFirstNameMl, ChildMiddleNameMl, ChildLastNameMl, isAdopted, isMultipleBirth, isFatherMotherInfo, isMotherInfo, isGuardianInfo, isBornOutSide, ChildPassportNo, ChildArrivalDate });
     }
     return (
         <React.Fragment>
@@ -163,7 +189,7 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
                         <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="MotherNameEn" value={MotherNameEn} onChange={setSelectMotherNameEn} disable={isEdit} placeholder={`${t("CR_NAME_OF_MOTHER")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_OF_MOTHER") })} />
                     </div>
                     <div className="col-md-6" > <CardLabel>{`${t("CR_NAME_OF_FATHER")}`}</CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildMiddleNameEn" value={ChildMiddleNameEn} onChange={setSelectChildMiddleNameEn} disable={isEdit} placeholder={`${t("CR_NAME_OF_FATHER")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CR_NAME_OF_FATHER") })} />
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherNameEn" value={FatherNameEn} onChange={setSelectFatherNameEn} disable={isEdit} placeholder={`${t("CR_NAME_OF_FATHER")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CR_NAME_OF_FATHER") })} />
                     </div>
                 </div>
                 <div className="row">
@@ -191,7 +217,7 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-6" >
                         {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
-                        <CheckBox label={t("CR_FATHER_AND_MOTHER_INFORMATION_MISSING")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
+                        <CheckBox label={t("CR_FATHER_AND_MOTHER_INFORMATION_MISSING")} onChange={setFatherMotherInfo} value={isFatherMotherInfo} checked={isFatherMotherInfo} />
                     </div>
                     </div>
                 <div className="row">
@@ -223,7 +249,7 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-6" >
                         {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
-                        <CheckBox label={t("CR_INFORMATION_MISSING")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
+                        <CheckBox label={t("CR_INFORMATION_MISSING")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
                     </div>
                     </div>
                     <div className="row">
@@ -245,7 +271,7 @@ const SearchRegistry = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-6" >
                         {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
-                        <CheckBox label={t("CR_INFORMATION_MISSING")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
+                        <CheckBox label={t("CR_INFORMATION_MISSING")} onChange={setGuardianInfo} value={isGuardianInfo} checked={isGuardianInfo} />
                     </div>
                     </div>
                     <div className="row">

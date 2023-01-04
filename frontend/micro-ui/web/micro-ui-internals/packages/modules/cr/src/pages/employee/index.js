@@ -9,6 +9,7 @@ import Search from "./Search";
 import ApplicationDetails from "./ApplicationDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
+import SearchFlow from "./Search-route/SearchFlow";
 //import ReNewApplication from "./ReNewApplication";
 
 const CRBreadCrumb = ({ location }) => {
@@ -23,6 +24,7 @@ const CRBreadCrumb = ({ location }) => {
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
+  const isSearchFlow = location?.pathname?.includes("search-flow");
   const isCrFlow = location?.pathname?.includes("cr-flow");
   const isChildDetails = location?.pathname?.includes("child-details");
   const isDeathFlow = location?.pathname?.includes("death-flow");
@@ -89,6 +91,11 @@ const CRBreadCrumb = ({ location }) => {
       show: true
     },
     {
+      path: "/digit-ui/employee/cr/search-flow",
+      content: t("Search Registration"),
+      show: breadCrumbUrls.includes("search-flow") || isSearchFlow
+    },
+    {
       path: "/digit-ui/employee/cr/cr-flow",
       content: t("Birth Registration"),
       show: breadCrumbUrls.includes("cr-flow") || isCrFlow
@@ -109,10 +116,10 @@ const CRBreadCrumb = ({ location }) => {
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails
     },
     {
-      path: "/digit-ui/employee/cr/search/application",
+      path: "/digit-ui/employee/cr/search-flow/search/application",
       content: t("ES_COMMON_SEARCH_APPLICATION"),
       show: isApplicationSearch ||
-      breadCrumbUrls.includes("home/search") 
+      breadCrumbUrls.includes("home/search-flow") 
     },
     {
       path: sessionStorage.getItem("applicationNumber") ? `/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}` : "",
@@ -137,13 +144,13 @@ const CRBreadCrumb = ({ location }) => {
     //   show: breadCrumbUrls.includes("inbox") || isInbox
     // },
  
-    // {
-    //   path: "/digit-ui/employee/tl/search/license",
-    //   content: t("TL_SEARCH_TRADE_HEADER"),
-    //   show: isLicenceSearch || 
-    //   breadCrumbUrls.includes("home/license") || 
-    //   breadCrumbUrls.includes("inbox/license")
-    // },
+    {
+      path: "/digit-ui/employee/cr/search/death-correction",
+      content: t("TL_SEARCH_TRADE_HEADER"),
+      show: isLicenceSearch || 
+      breadCrumbUrls.includes("home/death-correction") || 
+      breadCrumbUrls.includes("inbox/death-correction")
+    },
     
     // {
     //   path: "/digit-ui/employee/tl/new-application",
@@ -201,6 +208,7 @@ const EmployeeApp = ({ path, url, userType }) => {
         <div style={locationCheck ? {marginLeft: "15px"} : {}}>
           <CRBreadCrumb location={location} />
         </div>
+        <PrivateRoute parentRoute={path} path={`${path}/search-flow`} component={() => <SearchFlow parentUrl={url} />} />
         <PrivateRoute parentRoute={path} path={`${path}/cr-flow`} component={() => <CrFlow parentUrl={url} />} />
         <PrivateRoute parentRoute={path} path={`${path}/death-flow`} component={() => <DeathCrFlow parentUrl={url} />} />
         {/* <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} /> */}

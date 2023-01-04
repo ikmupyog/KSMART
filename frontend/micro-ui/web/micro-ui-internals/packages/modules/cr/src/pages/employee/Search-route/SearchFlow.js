@@ -5,51 +5,29 @@ import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import { useTranslation } from "react-i18next";
 
-const CrFlow = ({ path }) => {
+const SearchFlow = ({ path }) => {
   const { t } = useTranslation();
   const cardMenuData = [
     {
-      title: "New Registration",
-      subTitle: "New Birth Registration",
+      title: "Birth Search",
+      subTitle: "Birth Applications Search",
       img: <BankIcon />,
-      link: `${path}/child-details`,
+      link: `${path}/search/application`,
     },
 
     {
-      title: "Name Inclusion",
-      subTitle: "Include Name In Registered Birth",
+      title: "Death Search",
+      subTitle: "Death Applications Search",
       img: <FileProtected />,
-      // link: `${path}/structure-type`,
+      link: `${path}/search/application`,
     },
-    {
-      title: "Correction",
-      subTitle: "Correction of Registered Birth",
-      img: <FileProtected />, 
-    },
-    {
-      title: "Adoption",
-      subTitle: "Registered/New Adoption",
-      img: <FileProtected />,
-      link: `${path}/adoption-details`,
-    },
-    // {
-    //   title: "Cancellation",
-    //   subTitle: "Inbox",
-    //   img: <FileProtected />,
-    // },
-    // {
-    //   title: "Revoke",
-    //   subTitle: "Inbox",
-    //   img: <FileProtected />,
-    // },
+   
     
   ];
   const ClassList = 
     {
-     'New Registration':  'crfile',
-     'Name Inclusion':  'crfilename',
-     'Correction':  'crfilecorrection', 
-     'Adoption':  'crfileadoption', 
+     'Birth Search':  'crfile',
+     'Death Search':  'crfileadoption',
     };
   return (
     <div>
@@ -91,4 +69,4 @@ const CrFlow = ({ path }) => {
   );
 };
 
-export default CrFlow;
+export default SearchFlow;
