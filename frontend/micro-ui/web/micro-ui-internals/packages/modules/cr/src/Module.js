@@ -15,8 +15,23 @@ import HospitalDetails from "../src/pageComponents/birthComponents/HospitalDetai
 import OtherCountry from "../src/pageComponents/birthComponents/OtherCountry";
 import InstitutionDetails from "../src/pageComponents/birthComponents/InstitutionDetails";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
+import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
+import AddressPresent from "../src/pageComponents/birthComponents/AddressPresent";
+import AddressSameAsAbove  from "../src/pageComponents/birthComponents/AddressSameAsAbove";
+import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 
-import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
+
+// import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
+import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
+import AdoptionFatherInformation from "../src/pageComponents/adoptionComponents/AdoptionFatherInformation";
+import AdoptionDetails from "../src/pageComponents/adoptionComponents/AdoptionDetails";
+import BirthMotherInformation from "../src/pageComponents/adoptionComponents/BirthMotherInformation";
+import BirthFatherInformation from "../src/pageComponents/adoptionComponents/BirthFatherInformation";
+import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthParentsAddress";
+import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
+import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
+
+
 
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
@@ -33,11 +48,12 @@ import InformentAddress from "./pageComponents/deathComponents/InformentAddress"
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
-import CRSearch from './pages/employee/Search';
-import SearchCrApplication from "./components/SearchApplication"
-import CRApplicationDetails from './pages/employee/ApplicationDetails'
+import CRSearch from "./pages/employee/Search";
+import SearchCrApplication from "./components/SearchApplication";
+import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
-
+import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
+import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
 import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
@@ -110,10 +126,32 @@ const componentsToRegister = {
   ChildDetails,
   CRApplicationDetails,
   CRSearch,
-  SearchCrApplication,
-  SearchRegistry,
+  SearchCrApplication, 
+  ChildDetails,
+  AddressOne,
+  AddressPresent,
+  AddressSameAsAbove,
+  AddressPermanent,
+
+
+
+  
+ //////////////////
+  // SearchRegistry,
+  AdoptionDetails,
+  AdoptionMotherInformation,
+  AdoptionFatherInformation,
+  BirthMotherInformation,
+  BirthFatherInformation,
+  BirthParentsAddress,  
+  AdoptionStatisticalInformation,  
+ AdoptionParentsAddress,
+
+
 
   //////////////////
+  CRDeathcorrection,
+  CRSearchdeathcorrection,
   InformationDeath,
   AddressOfDecesed,
   OutSideIndia,

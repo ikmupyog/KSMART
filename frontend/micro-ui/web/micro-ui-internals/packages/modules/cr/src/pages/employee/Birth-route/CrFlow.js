@@ -30,7 +30,7 @@ const CrFlow = ({ path }) => {
       title: "Adoption",
       subTitle: "Registered/New Adoption",
       img: <FileProtected />,
-      link: `${path}/search-registry`,
+      link: `${path}/adoption-details`,
     },
     // {
     //   title: "Cancellation",

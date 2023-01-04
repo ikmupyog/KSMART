@@ -4,12 +4,13 @@ import { useForm, Controller } from "react-hook-form";
 import { useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next";
 
-const Search = ({path}) => {
+const SearchCorrection = ({path}) => {
+    console.log("Jeteee");
     const { variant } = useParams();
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [payload, setPayload] = useState({})
-    const Search = Digit.ComponentRegistryService.getComponent( variant === "death-correction" ? "DeathCorrection" : "SearchCrApplication" )
+    const Search = Digit.ComponentRegistryService.getComponent('CRDeathcorrection')
 
     // const Search = Digit.ComponentRegistryService.getComponent('SearchCrApplication')
 
@@ -37,4 +38,4 @@ const Search = ({path}) => {
 
 }
 
-export default Search
+export default SearchCorrection
