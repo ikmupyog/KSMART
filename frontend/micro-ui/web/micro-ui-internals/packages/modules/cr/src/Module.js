@@ -46,18 +46,21 @@ import InformentAddress from "./pageComponents/deathComponents/InformentAddress"
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
+import CRSearch from './pages/employee/Search';
+import SearchCrApplication from "./components/SearchApplication"
+import CRApplicationDetails from './pages/employee/ApplicationDetails'
+import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
 
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
 import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
-// import TLDocument from "./pageComponents/TLDocumets";
 import BirthAcknowledgement from "./pages/citizen/Create/BirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/Create/DeathAcknowledgement";
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
 
-
+/////////deathcorrection
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -66,7 +69,7 @@ export const CRModule = ({ stateCode, userType, tenants }) => {
   const { isLoading, data: store } = Digit.Services.useStore({ stateCode, moduleCode, language });
 
   //addComponentsToRegistry();
-  Digit.SessionStorage.set("TL_TENANTS", tenants);
+  Digit.SessionStorage.set("CR_TENANTS", tenants);
 
   if (userType === "employee") {
     return <EmployeeApp path={path} url={url} userType={userType} />;
@@ -82,11 +85,11 @@ export const CRLinks = ({ matchPath, userType }) => {
     clearParams();
   }, []);
 
-  const links = [
-    {
-      link: `${matchPath}/tradelicence/new-application`,
-      i18nKey: t("CR_CREATE_TRADE"),
-    },
+  // const links = [
+  //   {
+  //     link: `${matchPath}/tradelicence/new-application`,
+  //     i18nKey: t("CR_CREATE_TRADE"),
+  //   },
   //   {
   //     link: `${matchPath}/tradelicence/renewal-list`,
   //     i18nKey: t("TL_RENEWAL_HEADER"),
@@ -95,7 +98,7 @@ export const CRLinks = ({ matchPath, userType }) => {
   //     link: `${matchPath}/tradelicence/my-application`,
   //     i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
   //   },
-  ];
+  // ];
 
   // return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
 };
@@ -118,21 +121,8 @@ const componentsToRegister = {
   OtherCountry,
   InstitutionDetails,
   ChildDetails,
-  AddressOne,
-  AddressPresent,
-  AddressSameAsAbove,
-  AddressPermanent,
 
- //////////////////
-  // SearchRegistry,
-  AdoptionDetails,
-  AdoptionMotherInformation,
-  AdoptionFatherInformation,
-  BirthMotherInformation,
-  BirthFatherInformation,
-  BirthParentsAddress,  
-  AdoptionStatisticalInformation,  
- AdoptionParentsAddress,
+  SearchRegistry,
 
   //////////////////
   InformationDeath,
@@ -148,6 +138,7 @@ const componentsToRegister = {
   InformentAddress,
   StatisticalInfo,
   StatisticalInfoContinue,
+  ApplicantDetails,
   GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,

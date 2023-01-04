@@ -139,7 +139,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="SiginedOfficer"
@@ -154,7 +154,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="SiginedOfficerDesignation"

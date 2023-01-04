@@ -1,59 +1,40 @@
 import React from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
 import { Switch, useLocation, Link } from "react-router-dom";
+import { PrivateRoute, BreadCrumb,DocumentIcon,CardLabel } from "@egovernments/digit-ui-react-components";
+import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
+import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import { useTranslation } from "react-i18next";
 
-const DeathCrFlow = ({ path }) => {
+const SearchFlow = ({ path }) => {
   const { t } = useTranslation();
   const cardMenuData = [
     {
-      title: "New Registration",
-      subTitle: "New Death Registration",
-      // img: <BankIcon />,
-      link: `${path}/information-death`,
+      title: "Birth Search",
+      subTitle: "Birth Applications Search",
+      img: <BankIcon />,
+      link: `${path}/search/application`,
     },
-    // {
-    //   title: "Name Inclusion",
-    //   subTitle: "Inbox",
-    //   // img: <FileProtected />,
-    //   link: `${path}/structure-type`,
-    // },
+
     {
-      title: "Correction",
-      subTitle: "Correction of Registered Death",
-      link: `${path}/correction-search`,
-      // img: <FileProtected />, 
+      title: "Death Search",
+      subTitle: "Death Applications Search",
+      img: <FileProtected />,
+      link: `${path}/search/application`,
     },
-    // {
-    //   title: "Suspension",
-    //   subTitle: "Inbox",
-    //   // img: <FileProtected />,
-    // },
-    {
-      title: "Cancellation",
-      subTitle: "Cancellation of Registered Death",
-      // img: <FileProtected />,
-    },
-    // {
-    //   title: "Revoke",
-    //   subTitle: "Inbox",
-    //   // img: <FileProtected />,
-    // },
-    
+   
     
   ];
   const ClassList = 
-  {
-   'New Registration':  'crfile',
-   'Correction':  'crfilecorrection', 
-   'Cancellation':  'crfileadoption', 
-  };
+    {
+     'Birth Search':  'crfile',
+     'Death Search':  'crfileadoption',
+    };
   return (
     <div>
       <div className="fileText">
         {" "}
-        {/* <h3>Select Functional Modules</h3> */}
         <CardLabel style={{fontSize: "15px",fontWeight: "400",marginBottom: "-18px"}}>{t("Select Functional Modules")}</CardLabel>
+        {/* <h3>Select Functional Modules</h3> */}
       </div>
       <div className="FileFlowWrapper">
         <div className="cardWrapper">
@@ -88,4 +69,4 @@ const DeathCrFlow = ({ path }) => {
   );
 };
 
-export default DeathCrFlow;
+export default SearchFlow;

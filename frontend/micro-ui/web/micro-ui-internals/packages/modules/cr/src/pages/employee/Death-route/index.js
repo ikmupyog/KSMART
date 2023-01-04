@@ -6,6 +6,7 @@ import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import DeathCrFlow from "./DeathCrFlow";
 import InformationDeath from "../../../pageComponents/deathComponents/InformationDeath";
+import DeathCorrection from "../DeathCorrection/index"
 import ApplicationDetails from "../../../../../templates/ApplicationDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
@@ -154,7 +155,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
               <DeathCrFlow  path={path}/>
              </Route>
              <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
-                     
+             <PrivateRoute  parentRoute={path} path={`${path}/correction-search`} component={() => <DeathCorrection parentUrl={path} />} />
       </Switch>
     </React.Fragment>
   );

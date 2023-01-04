@@ -91,8 +91,11 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useCRAgeUnit = () => {
     return useQuery("CR_Age_unit", () => MdmsService.getCRAgeUnit(tenantId, moduleCode, type), config);
   };
-  const useDocumentTypeB = () =>{
+  const useDocumentTypeB = () => {
     return useQuery("CR_Document_Type", () => MdmsService.getCRDocumentTypeB(tenantId, moduleCode, type), config);
+  };
+  const useMaleDependent = () => {
+    return useQuery("CR_Document_Type", () => MdmsService.getCRMaleDependent(tenantId, moduleCode, type), config);
   };
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
@@ -145,8 +148,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
               ?.filter((e) => e.code.split(".").length <= 2)
               ?.map((ownerShipDetails) => ({
                 ...ownerShipDetails,
-                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
-                  }`,
+                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${
+                  ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+                }`,
               }));
             const finalArr = arr.filter((data) => data.code.includes("INDIVIDUAL") || data.code.includes("OTHER"));
 
@@ -155,22 +159,23 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
 
           const res = ownerShipdropDown?.length
             ? ownerShipdropDown
-              ?.map((ownerShipDetails) => ({
-                ...ownerShipDetails,
-                i18nKey: `PT_OWNERSHIP_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+                ?.map((ownerShipDetails) => ({
+                  ...ownerShipDetails,
+                  i18nKey: `PT_OWNERSHIP_${
+                    ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
                   }`,
-              }))
-              .reduce((acc, ownerShipDetails) => {
-                if (ownerShipDetails.code.includes("INDIVIDUAL")) {
-                  return [...acc, ownerShipDetails];
-                } else if (ownerShipDetails.code.includes("OTHER")) {
-                  const { code, value, ...everythingElse } = ownerShipDetails;
-                  const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse };
-                  return [...acc, mutatedOwnershipDetails];
-                } else {
-                  return acc;
-                }
-              }, [])
+                }))
+                .reduce((acc, ownerShipDetails) => {
+                  if (ownerShipDetails.code.includes("INDIVIDUAL")) {
+                    return [...acc, ownerShipDetails];
+                  } else if (ownerShipDetails.code.includes("OTHER")) {
+                    const { code, value, ...everythingElse } = ownerShipDetails;
+                    const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse };
+                    return [...acc, mutatedOwnershipDetails];
+                  } else {
+                    return acc;
+                  }
+                }, [])
             : null;
 
           return res;
@@ -187,8 +192,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
 
         categoryData.length > 0
           ? categoryData?.map((category) => {
-            OwnerShipCategory[category.code] = category;
-          })
+              OwnerShipCategory[category.code] = category;
+            })
           : null;
 
         if (OwnerShipCategory) {
@@ -234,6 +239,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRTitle();
     case "DocumentType":
       return useDocumentTypeB();
+    case "MaleDependentType":
+      return useMaleDependent();
     case "Religion":
       return useCRReligion();
     case "DeathCause":
@@ -267,7 +274,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     case "Title":
       return useCRWard();
     case "AgeUnit":
-      return  useCRAgeUnit();
+      return useCRAgeUnit();
     case "Religion":
       return useCRReligion();
     case "InstitutionType":

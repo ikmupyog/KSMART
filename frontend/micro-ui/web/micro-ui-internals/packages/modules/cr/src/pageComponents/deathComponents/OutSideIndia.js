@@ -89,18 +89,10 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header>
         <div className="row">
-          <div className="col-md-12 col-lg-12">
-            <div className="col-md-4 ">
-              <hr className="aligncss"></hr>
-            </div>
-            <div className="col-md-4 ">
-              <h1 className="headingh1">
-                <span>{t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}</span>
-              </h1>
-            </div>
-            <div className="col-md-4">
-              <hr className="aligncss"></hr>
-            </div>
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
+            </h1>
           </div>
         </div>
 
@@ -109,7 +101,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_ADDRESS_1_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="AdressEn"
@@ -124,7 +116,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_ADDRESS_1_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="AdressMl"
@@ -173,7 +165,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="LocalityEn"
@@ -188,7 +180,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="LocalityMl"
@@ -205,7 +197,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={true}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="ProvinceEn"
@@ -220,7 +212,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={TextTrackCueList}
+              isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
               name="ProvinceMl"
@@ -234,10 +226,10 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_COUNTRY")}</CardLabel>
+            <CardLabel>{t("CS_COMMON_COUNTRY")}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown t={t} 
             optionKey="name" 
-            isMandatory={false} 
+            isMandatory={true} 
             option={cmbNation} 
             selected={setCountry} 
             select={selectCountry} 

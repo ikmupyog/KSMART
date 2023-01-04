@@ -8,7 +8,6 @@ const useInboxData = (searchParams) => {
 
 
   const fetchInboxData = async () => {
-    console.log("jetheesh");
     const tenantId = Digit.ULBService.getCurrentTenantId();
     let serviceIds = [];
     let commonFilters = { start: 1, end: 10 };
@@ -28,7 +27,6 @@ const useInboxData = (searchParams) => {
         sla: Math.round(data.sla / (24 * 60 * 60 * 1000)),
       }));
     }
-    console.log(combinedRes);
     return combinedRes;
   };
 

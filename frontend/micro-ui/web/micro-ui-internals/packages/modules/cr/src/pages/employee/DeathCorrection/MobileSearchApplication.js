@@ -11,9 +11,12 @@ import {
   Toast,
 } from "@egovernments/digit-ui-react-components";
 import SearchFormFields from "./SearchFields";
-import { convertEpochToDateDMY } from "../../utils";
+import { convertEpochToDateDMY, stringReplaceAll } from "../../../utils";
+import { useTranslation } from "react-i18next";
 
-const MobileSearchApplication = ({ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit}) => {
+
+const MobileSearchApplication = ({ Controller, register, control, reset, previousPage, handleSubmit, tenantId, data, onSubmit}) => {
+  const { t } = useTranslation();
 
   function activateModal(state, action) {
     switch (action.type) {
@@ -22,7 +25,8 @@ const MobileSearchApplication = ({ Controller, register, control, t, reset, prev
       case "remove":
         return false;
       default:
-        break;    }
+        break;
+          }
   }
 
   const [currentlyActiveMobileModal, setActiveMobileModal] = useReducer(activateModal, false);
@@ -77,16 +81,13 @@ const MobileSearchApplication = ({ Controller, register, control, t, reset, prev
       return [];
       }
       return data?.map((data) => ({
+        [t("TL_TRADE_LICENSE_LABEL")]: data.licenseNumber,
         [t("TL_COMMON_TABLE_COL_APP_NO")]: data.applicationNumber,
-        [t("TL_COMMON_TABLE_COL_APP_DATE")]: convertEpochToDateDMY(data.auditDetails?.createdTime) || "",
-        [t("TL_APPLICATION_TYPE_LABEL")]: data.applicationType
-          ? t(`TL_LOCALIZATION_APPLICATIONTYPE_${data.applicationType}`)
-          : "-",
-        [t("TL_LICENSE_NUMBERL_LABEL")]: data?.licenseNumber || "-",
-        [t("TL_LICENSE_YEAR_LABEL")]: data.financialYear || "",
-        [t("TL_COMMON_TABLE_COL_TRD_NAME")]: data.tradeName || "",
-        [t("TL_LOCALIZATION_TRADE_OWNER_NAME")]: data?.tradeLicenseDetail?.owners?.map( o => o.name ). join(",") || "" ,
-        [t("TL_COMMON_TABLE_COL_STATUS")]: data.workflowCode && data.state ? t(`WF_${data.workflowCode}_${data.state}`) : "NA",
+        [t("TL_LOCALIZATION_TRADE_NAME")]: data.tradeName || "",
+        [t("ES_APPLICATION_SEARCH_ISSUED_DATE")]: data.issuedDate ? convertEpochToDateDMY(data.issuedDate) : "",
+        [t("ES_APPLICATION_SEARCH_VALID_TO")]: data?.validTo ? convertEpochToDateDMY(data?.validTo) : "-",
+        [t("TL_HOME_SEARCH_RESULTS__LOCALITY")]: t(`${stringReplaceAll(data.tenantId?.toUpperCase(), ".", "_")}_REVENUE_${data.tradeLicenseDetail.address.locality.code}`) || "",
+        [t("TL_COMMON_TABLE_COL_STATUS")]: t( data?.workflowCode&&data?.status&&`WF_${data?.workflowCode?.toUpperCase()}_${data.status}`|| "NA")
       }))
     },
     [data]
@@ -131,8 +132,8 @@ const MobileSearchApplication = ({ Controller, register, control, t, reset, prev
         <DetailsCard
           {...{
             data: propsMobileInboxCards,
-            linkPrefix: `/digit-ui/employee/cr/application-details/`,
-            serviceRequestIdKey: t("TL_COMMON_TABLE_COL_APP_NO"),
+            linkPrefix: `/digit-ui/employee/tl/application-details/`,
+            serviceRequestIdKey: t("TL_COMMON_TABLE_COL_APP_NO")
           }}
         />
       )}

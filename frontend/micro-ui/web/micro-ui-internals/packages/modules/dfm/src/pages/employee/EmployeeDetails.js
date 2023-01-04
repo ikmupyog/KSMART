@@ -7,7 +7,7 @@ import { Header } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
-const ApplicationDetails = () => {
+const EmployeeDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber } = useParams();
@@ -19,8 +19,8 @@ const ApplicationDetails = () => {
   sessionStorage.setItem("applicationNumber", applicationNumber)
   const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
-  
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.tl.useApplicationDetail(t, tenantId, applicationNumber);
+
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
 
@@ -38,7 +38,7 @@ const ApplicationDetails = () => {
     tenantId: applicationDetails?.tenantId || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: businessService,
-    role: "BND_CEMP",
+    role: "TL_CEMP",
     config:{EditRenewalApplastModifiedTime:EditRenewalApplastModifiedTime},
   });
 
@@ -48,7 +48,7 @@ const ApplicationDetails = () => {
 
   useEffect(() => {
     if (applicationDetails?.numOfApplications?.length > 0) {
-      let financialYear = cloneDeep(applicationDetails?.applicationData?.financialYear);
+       let financialYear = cloneDeep(applicationDetails?.applicationData?.financialYear);
       const financialYearDate = financialYear?.split('-')[1];
       const finalFinancialYear = `20${Number(financialYearDate)}-${Number(financialYearDate)+1}`
       const isAllowedToNextYear = applicationDetails?.numOfApplications?.filter(data => (data.financialYear == finalFinancialYear && data?.status !== "REJECTED"));
@@ -86,7 +86,7 @@ const ApplicationDetails = () => {
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter(item => {
-  if ((item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
+  if ((item.code == "TL_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
 
   const rolecheck = rolearray.length > 0 ? true : false;
   const validTo = applicationDetails?.applicationData?.validTo;
@@ -185,7 +185,7 @@ const ApplicationDetails = () => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="CR"
+        moduleCode="TL"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
@@ -195,4 +195,4 @@ const ApplicationDetails = () => {
   );
 };
 
-export default ApplicationDetails;
+export default EmployeeDetails;

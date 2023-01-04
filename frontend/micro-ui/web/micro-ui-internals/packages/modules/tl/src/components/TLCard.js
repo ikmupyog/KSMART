@@ -48,7 +48,7 @@ const TLCard = () => {
             role: "TL_CEMP"
         },
         {
-            label: t("PDE"),
+            label: t("Past Data Entry - PDE"),
             link: `/digit-ui/employee/tl/pde-application`,
             role: "TL_CEMP"
         }
