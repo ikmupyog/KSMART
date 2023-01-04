@@ -36,6 +36,8 @@ import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from './pages/employee/Search';
 import SearchCrApplication from "./components/SearchApplication"
 import CRApplicationDetails from './pages/employee/ApplicationDetails'
+import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
+
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
 import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
@@ -125,6 +127,7 @@ const componentsToRegister = {
   InformentAddress,
   StatisticalInfo,
   StatisticalInfoContinue,
+  ApplicantDetails,
   GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,
