@@ -101,12 +101,19 @@ const Urls = {
     download_pdf: "/egov-pdf/download/TL/",
     update: "/tl-services/v1/_update",
     billingslab: "/tl-calculator/billingslab/_search",
+    createpde:"/tl-services/pde/_create",
   },
   cr: {
     create: "/birth-services/cr/birth/_create",
     search: "/birth-services/cr/birth/_search",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/birth-services/cr/birth/_update",    
+  },
+  crdeath: {
+    create: "/death-services/v1/crdeathdetails/_create",
+    search: "/death-services/v1/crdeathdetails/_search",
+    download_pdf: "/egov-pdf/download/CR/",
+    update: "/death-services/v1/crdeathdetails/_update",    
   },
   dfm: {
     create: "/filemgmnt/v1/applicantpersonals/_create",

@@ -3,7 +3,6 @@ import { Switch, useLocation, Link } from "react-router-dom";
 // import { PrivateRoute, BreadCrumb } from "@egovernments/digit-ui-react-components";
 
 const CommonDashboard = ({ path,data,title }) => {
-  console.log(path);
 
   return (
     <div>

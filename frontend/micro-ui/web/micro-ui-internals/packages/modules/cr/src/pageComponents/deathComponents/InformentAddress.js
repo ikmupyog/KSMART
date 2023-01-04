@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea,CheckBox } from "@egovernments/digit-ui-react-components";
+import React, { useState, useEffect } from "react";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, CheckBox } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -10,11 +10,15 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "mtaluk");
+  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
+  const [lbs, setLbs] = useState(0);
+  const [isInitialRender, setIsInitialRender] = useState(true);
+
   const [setVillage, setSelectedVillage] = useState(formData?.InformentAddress?.setVillage);
   const [setTaluk, setSelectedTaluk] = useState(formData?.InformentAddress?.setTaluk);
-  const [setDistrict, setSelectedDistrict] = useState(formData?.InformentAddress?.setDistrict);
+  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
   const [BuildingNo, setBuildingNo] = useState(formData?.InformentAddress?.BuildingNo);
   const [HouseNo, setHouseNo] = useState(formData?.InformentAddress?.HouseNo);
   const [Locality, setLocality] = useState(formData?.InformentAddress?.Locality);
@@ -23,7 +27,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   const [CityMl, setCityMl] = useState(formData?.InformentAddress?.CityMl);
   const [PinCode, setPinCode] = useState(formData?.InformentAddress?.PinCode);
   const [setPostOffice, setSelectedPostOffice] = useState(formData?.InformentAddress?.setPostOffice);
-  const [setLbName, setSelectedLbName] = useState(formData?.InformentAddress?.setLbName);
+  const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
   const [InformentNameEn, setInformentNameEn] = useState(formData?.InformentAddress?.InformentNameEn);
   const [InformentNameMl, setInformentNameMl] = useState(formData?.InformentAddress?.InformentNameMl);
   const [setTitle, setSelectedTitle] = useState(formData?.InformentAddress?.setTitle);
@@ -32,10 +36,11 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   const [setDeclaration, setSelectedDeclaration] = useState(formData?.InformentAddress?.setDeclaration);
   const [InformentMobileNo, setInformentMobileNo] = useState(formData?.InformentAddress?.InformentMobileNo);
   const [InformentOfAge, setInformentOfAge] = useState(formData?.InformentAddress?.InformentOfAge);
-  
+
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
   let cmbPlace = [];
+  let districtid = null;
   place &&
     place["TradeLicense"] &&
     place["TradeLicense"].PlaceOfActivity.map((ob) => {
@@ -51,7 +56,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     });
   Taluk &&
     Taluk["common-masters"] &&
-    Taluk["common-masters"].mtaluk.map((ob) => {
+    Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   District &&
@@ -59,7 +64,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
-    
+
   let cmbTitle = [];
   title &&
     title["common-masters"] &&
@@ -68,6 +73,17 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     });
 
   const onSkip = () => onSelect();
+
+  function setSelectPresentDistrict(value) {
+    setIsInitialRender(true);
+    setPresentDistrict(value);
+    setPresentLBName(null);
+    setLbs(null);
+    districtid = value.districtid;
+  }
+  function setSelectPresentLBName(value) {
+    setPresentLBName(value);
+  }
   function setSelectBuildingNo(e) {
     setBuildingNo(e.target.value);
   }
@@ -104,7 +120,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   function setSelectInformentOfAge(e) {
     setInformentOfAge(e.target.value);
   }
-    
+
   function selectTitle(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedTitle(value);
@@ -129,7 +145,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     naturetypecmbvalue = value.code.substring(0, 4);
     setSelectedDeclaration(value);
   }
-  
+
   function setNoAadhaar(e) {
     if (e.target.checked == true) {
       setIsNoAadhaar(true);
@@ -137,11 +153,20 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
       setIsNoAadhaar(false);
     }
   }
-
+  useEffect(() => {
+    if (isInitialRender) {
+      console.log("PresentDistrict" + districtid);
+      console.log(localbodies);
+      if (PresentDistrict) {
+        setIsInitialRender(false);
+        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
+      }
+    }
+  }, [lbs, isInitialRender]);
   const goNext = () => {
-    sessionStorage.setItem("setVillage", setVillage?setVillage.code:null);
-    sessionStorage.setItem("setTaluk", setTaluk?setTaluk.code:null);
-    sessionStorage.setItem("setDistrict", setDistrict?setDistrict.code:null);
+    sessionStorage.setItem("setVillage", setVillage ? setVillage.code : null);
+    sessionStorage.setItem("setTaluk", setTaluk ? setTaluk.code : null);
+    sessionStorage.setItem("PresentDistrict", PresentDistrict ? PresentDistrict.code : null);
     sessionStorage.setItem("BuildingNo", BuildingNo);
     sessionStorage.setItem("HouseNo", HouseNo);
     sessionStorage.setItem("Locality", Locality);
@@ -149,22 +174,21 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("CityEn", CityEn);
     sessionStorage.setItem("CityMl", CityMl);
     sessionStorage.setItem("PinCode", PinCode);
-    sessionStorage.setItem("setPostOffice", setPostOffice?setPostOffice.code:null);
-    sessionStorage.setItem("setLbName", setLbName?setLbName.code:null);
+    sessionStorage.setItem("setPostOffice", setPostOffice ? setPostOffice.code : null);
+    sessionStorage.setItem("PresentLBName", null);
     sessionStorage.setItem("InformentNameEn", InformentNameEn);
     sessionStorage.setItem("InformentNameMl", InformentNameMl);
-    sessionStorage.setItem("setTitle", setTitle?setTitle.code:null);
+    sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("isNoAadhaar", isNoAadhaar);
     sessionStorage.setItem("AadhaarNo", AadhaarNo);
-    sessionStorage.setItem("setDeclaration", setDeclaration?setDeclaration.code:null);
-    sessionStorage.setItem("InformentMobileNo", InformentMobileNo);  
-    sessionStorage.setItem("InformentOfAge", InformentOfAge); 
-    
+    sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
+    sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
+    sessionStorage.setItem("InformentOfAge", InformentOfAge);
 
     onSelect(config.key, {
       setVillage,
       setTaluk,
-      setDistrict,
+      PresentDistrict,
       BuildingNo,
       HouseNo,
       Locality,
@@ -173,7 +197,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
       CityMl,
       PinCode,
       setPostOffice,
-      setLbName,
+      PresentLBName,
       InformentNameEn,
       InformentNameMl,
       setTitle,
@@ -189,19 +213,24 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
-        <div className="col-md-4">
+          <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
-            <Dropdown t={t} 
-            optionKey="name" 
-            isMandatory={false} 
-            option={cmbTitle} 
-            selected={setTitle} 
-            select={selectTitle} 
-            disabled={isEdit} />
-            
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbTitle}
+              selected={setTitle}
+              select={selectTitle}
+              disabled={isEdit}
+              placeholder={`${t("CR_TITLE_NAME_EN")}`}
+            />
           </div>
           <div className="col-md-4">
-            <CardLabel>{t("CR_INFORMENT_NAME_EN")}</CardLabel>
+            <CardLabel>
+              {t("CR_INFORMENT_NAME_EN")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -211,11 +240,15 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={InformentNameEn}
               onChange={setSelectInformentNameEn}
               disable={isEdit}
+              placeholder={`${t("CR_INFORMENT_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
             />
           </div>
           <div className="col-md-4">
-            <CardLabel>{t("CR_INFORMENT_NAME_Ml")}</CardLabel>
+            <CardLabel>
+              {t("CR_INFORMENT_NAME_Ml")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -225,21 +258,19 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={InformentNameMl}
               onChange={setSelectInformentNameMl}
               disable={isEdit}
+              placeholder={`${t("CR_INFORMENT_NAME_Ml")}`}
               {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
             />
           </div>
         </div>
-        
+
         <div className="row">
-            <div className="col-md-12">
-              <CheckBox label={t("No Aadhaar Number")} 
-              onChange={setNoAadhaar} 
-              value={isNoAadhaar} 
-              checked={isNoAadhaar} />
-            </div>
+          <div className="col-md-12">
+            <CheckBox label={t("No Aadhaar Number")} onChange={setNoAadhaar} value={isNoAadhaar} checked={isNoAadhaar} />
+          </div>
         </div>
         <div className="row">
-            <div className="col-md-3">
+          <div className="col-md-3">
             <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput
               t={t}
@@ -250,13 +281,23 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={AadhaarNo}
               onChange={setSelectAadhaarNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false ,title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              placeholder={`${t("CS_COMMON_AADHAAR")}`}
+              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
-        
+
           <div className="col-md-3">
             <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
-            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbPlace} selected={setLbName} select={selectLbName} disabled={isEdit} />
+            <Dropdown
+              t={t}
+              optionKey="code"
+              isMandatory={false}
+              option={cmbPlace}
+              selected={PresentLBName}
+              select={setSelectPresentLBName}
+              disabled={isEdit}
+              placeholder={`${t("CR_DECLARATION")}`}
+            />
 
             {/* <Dropdown t={t} 
             optionKey="name" 
@@ -278,7 +319,8 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={InformentMobileNo}
               onChange={setSelectInformentMobileNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
+              placeholder={`${t("CR_MOBILE_NO")}`}
+              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
           <div className="col-md-3">
@@ -292,11 +334,11 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={InformentOfAge}
               onChange={setSelectInformentOfAge}
               disable={isEdit}
-              {...(validation = {pattern: "^([0-9]){3}$", isRequired: true,type: "text", title: t("CS_COMMON_INVALID_AGE"),  })}
+              placeholder={`${t("CR_AGE")}`}
+              {...(validation = { pattern: "^([0-9]){3}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
             />
           </div>
         </div>
-
 
         <div className="row">
           <div className="col-md-12">
@@ -317,7 +359,8 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={BuildingNo}
               onChange={setSelectBuildingNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
+              placeholder={`${t("CR_BUILDING_NO")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
             />
           </div>
           <div className="col-md-6">
@@ -331,13 +374,17 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={HouseNo}
               onChange={setSelectHouseNo}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
+              placeholder={`${t("CR_HOUSE_NO")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NO") })}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <CardLabel>{t("CR_LOCALITY_EN")}</CardLabel>
+            <CardLabel>
+              {t("CR_LOCALITY_EN")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -347,11 +394,15 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={Locality}
               onChange={setSelectLocality}
               disable={isEdit}
+              placeholder={`${t("CR_LOCALITY_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-6">
-            <CardLabel>{t("CR_LOCALITY_ML")}</CardLabel>
+            <CardLabel>
+              {t("CR_LOCALITY_ML")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
@@ -361,6 +412,7 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={LocalityMl}
               onChange={setSelectLocalityMl}
               disable={isEdit}
+              placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />
           </div>
@@ -377,7 +429,8 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={CityEn}
               onChange={setSelectCityEn}
               disable={isEdit}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_EN") })}
+              placeholder={`${t("CR_CITY_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -391,49 +444,95 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={CityMl}
               onChange={setSelectCityMl}
               disable={isEdit}
-              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
+              placeholder={`${t("CR_CITY_ML")}`}
+              {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_VILLAGE")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbVillage} selected={setVillage} select={selectVillage} disabled={isEdit} />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_LB_NAME")}</CardLabel>
-            <Dropdown t={t} optionKey="code" isMandatory={false} option={cmbPlace} selected={setLbName} select={selectLbName} disabled={isEdit} />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_TALUK")}</CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={setTaluk} select={selectTaluk} disabled={isEdit} />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_DISTRICT")}</CardLabel>
+            <CardLabel>
+              {t("CS_COMMON_VILLAGE")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
             <Dropdown
               t={t}
               optionKey="name"
-              isMandatory={false}
-              option={cmbDistrict}
-              selected={setDistrict}
-              select={selectDistrict}
+              isMandatory={true}
+              option={cmbVillage}
+              selected={setVillage}
+              select={selectVillage}
               disabled={isEdit}
+              placeholder={`${t("CS_COMMON_VILLAGE")}`}
+            />
+          </div>
+          <div className="col-md-6">
+            <CardLabel>
+              {t("CS_COMMON_TALUK")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={true}
+              option={cmbTaluk}
+              selected={setTaluk}
+              select={selectTaluk}
+              disabled={isEdit}
+              placeholder={`${t("CS_COMMON_TALUK")}`}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_POST_OFFICE")}</CardLabel>
+            <CardLabel>
+              {t("CS_COMMON_DISTRICT")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={true}
+              option={cmbDistrict}
+              selected={PresentDistrict}
+              select={setSelectPresentDistrict}
+              disabled={isEdit}
+              placeholder={`${t("CS_COMMON_DISTRICT")}`}
+            />
+          </div>
+          <div className="col-md-6">
+            <CardLabel>
+              {t("CS_COMMON_LB_NAME")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
             <Dropdown
               t={t}
               optionKey="code"
-              isMandatory={false}
+              CS_COMMON_LB_NAME
+              isMandatory={true}
+              option={lbs}
+              selected={PresentLBName}
+              select={setSelectPresentLBName}
+              disabled={isEdit}
+              placeholder={`${t("CS_COMMON_LB_NAME")}`}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <CardLabel>
+              {t("CS_COMMON_POST_OFFICE")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="code"
+              isMandatory={true}
               option={cmbPlace}
               selected={setPostOffice}
               select={selectPostOffice}
               disabled={isEdit}
+              placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
             />
           </div>
           <div className="col-md-6">
@@ -447,7 +546,8 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
               value={PinCode}
               onChange={setSelectPinCode}
               disable={isEdit}
-              {...(validation = {pattern: "^([0-9]){6}$", isRequired: true,type: "text", title: t("CS_COMMON_INVALID_PIN_CODE"), })}
+              placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+              {...(validation = { pattern: "^([0-9]){6}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_PIN_CODE") })}
             />
           </div>
         </div>

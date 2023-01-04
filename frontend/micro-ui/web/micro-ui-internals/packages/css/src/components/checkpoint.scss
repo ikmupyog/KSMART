@@ -46,7 +46,7 @@
 .checkpoint-connect {
   margin-left: 12px;
   margin-top: 22px;
-  @apply absolute top-0 left-0 h-full border-l border-solid border-border;
+  @apply absolute top-0 left-0 h-full border-l border-dashed border-border;
 }
 
 .checkpoint-comments-wrap {

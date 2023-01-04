@@ -114,6 +114,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const handleTimeChange = (value, cb) => {
     if (typeof value === 'string') {
       cb(value);
+      setTripStartTime(value);
     }
   }
   const goNext = () => {

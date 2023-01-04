@@ -110,7 +110,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("FatherMiddleNameMl", FatherMiddleNameMl);
         sessionStorage.setItem("FatherLastNameMl", FatherLastNameMl);
         sessionStorage.setItem("FatherAadhar", FatherAadhar);
-        sessionStorage.setItem("FatherPassportNo", FatherPassportNo.code);
+        sessionStorage.setItem("FatherPassportNo", FatherPassportNo);
         sessionStorage.setItem("FatherEmail", FatherEmail);
         sessionStorage.setItem("FatherMobile", FatherMobile);
         sessionStorage.setItem("FatherEducation", FatherEducation.code);

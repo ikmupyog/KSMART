@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
@@ -94,7 +94,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>     
         <div className="row">
           <div className="col-md-12">
@@ -104,62 +104,71 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
-            <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}</CardLabel>
+            <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
               optionKey="name"
-              isMandatory={false}
+              isMandatory={true}
               option={cmbInstitution}
               selected={setInstitution}
               select={selectInstitution}
               disabled={isEdit}
+              placeholder={`${t("CR_INSTITUTION_TYPE")}`}
             />
           </div>
           <div className="col-md-6">
-            <CardLabel>{`${t("CR_INSTITUTION_ID")}`}</CardLabel>
+            <CardLabel>{`${t("CR_INSTITUTION_ID")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
               optionKey="name"
-              isMandatory={false}
+              isMandatory={true}
               option={cmbInstitutionId}
               selected={setInstitutionId}
               select={selectInstitutionId}
               disabled={isEdit}
+              placeholder={`${t("CR_INSTITUTION_ID")}`}
             />
           </div>
         </div>
+        </div>
         <div className="row">
+          <div className="col-md-12">
           <div className="col-md-6">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}</CardLabel>
+            <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={false}
+              isMandatory={true}
               type={"text"}
               optionKey="i18nKey"
               name="SiginedOfficer"
               value={SiginedOfficer}
               onChange={setSelectSiginedOfficer}
               disable={isEdit}
+              placeholder={`${t("CR_SIGNED_OFFICER")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
             />
           </div>
           <div className="col-md-6">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}</CardLabel>
+            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
-              isMandatory={false}
+              isMandatory={true}
               type={"text"}
               optionKey="i18nKey"
               name="SiginedOfficerDesignation"
               value={SiginedOfficerDesignation}
               onChange={setSelectSiginedOfficerDesignation}
               disable={isEdit}
+              placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
             />
           </div>
         </div>
+        </div>
         <div className="row">
+          <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
             <TextInput
@@ -171,6 +180,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               value={InstitutionMobilNo}
               onChange={setSelectInstitutionMobilNo}
               disable={isEdit}
+              placeholder={`${t("CR_MOBILE_NO")}`}
               {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
@@ -185,9 +195,11 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
               value={InstitutionAadhaar}
               onChange={setSelectInstitutionAadhaar}
               disable={isEdit}
+              placeholder={`${t("CS_COMMON_AADHAAR")}`}
               {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false ,title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
+        </div>
         </div>
       </FormStep>
     </React.Fragment>

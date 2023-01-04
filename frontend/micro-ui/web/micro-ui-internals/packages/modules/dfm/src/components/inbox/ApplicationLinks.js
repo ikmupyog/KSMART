@@ -1,4 +1,4 @@
-import { Card, EditIcon } from "@egovernments/digit-ui-react-components";
+import { Card, EditPencilIcon } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ const InboxLinks = ({ parentRoute, businessService, allLinks, headerText, classN
   const GetLogo = () => (
     <div className="header">
       <span className="logo">
-        <EditIcon />
+        <EditPencilIcon />
       </span>{" "}
       <span className="text">{t(headerText)}</span>
     </div>

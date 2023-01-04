@@ -170,7 +170,8 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
           </h1>
           <div style={{ textAlign: "center", margin: "0 auto" }}>
             <div>
-              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" style={{ maxWidth: "450px" }} />
+              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" 
+              style={{ maxWidth: "450px",marginLeft: "80px",marginRight: "80px" }} />
               <label style={{ fontSize: "32px" }}>Exploring K-Smart</label><br></br>
               <label style={{ fontSize: "17px" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
             </div>

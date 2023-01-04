@@ -109,6 +109,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("ModeOfPregnancy", ModeOfPregnancy.code);
         onSelect(config.key, { BirthWeight, BirthHeight, Religion, PregnancyDuration, MedicalAttension, MedicalAttensionSub, DeliveryMethod, DeliveryMethodSub });
     }
+    console.log(formData);
     return (
         <React.Fragment>
             {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}

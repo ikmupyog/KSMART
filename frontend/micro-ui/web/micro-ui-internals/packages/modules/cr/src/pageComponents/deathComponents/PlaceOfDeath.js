@@ -7,16 +7,16 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
-  const [setPlaceofDeath, setSelectedPlaceofDeath] = useState(formData?.TradeDetails?.setPlaceofDeath);
+  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
+  const [setPlaceofDeath, setSelectedPlaceofDeath] = useState(formData?.PlaceOfDeath?.setPlaceofDeath);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [TradeName, setTradeName] = useState(null);
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
   place &&
-    place["birth-death-service"] &&
-    place["birth-death-service"].PlaceMaster.map((ob) => {
+    place["death-services"] &&
+    place["death-services"].PlaceMaster.map((ob) => {
       cmbPlace.push(ob);
     });
 
@@ -51,6 +51,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
         </div>    
  
     <div className="row">
+    <div className="col-md-12" >
         <div className="col-md-6" >
             <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
             <Dropdown
@@ -61,8 +62,10 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                 selected={setPlaceofDeath}
                 select={selectPlaceofDeath}
                 disabled={isEdit}
+                placeholder={`${t("CR_PLACE_OF_DEATH")}`}
             />
-        </div>       
+        </div> 
+        </div>      
     </div> 
       </FormStep>
     </React.Fragment>

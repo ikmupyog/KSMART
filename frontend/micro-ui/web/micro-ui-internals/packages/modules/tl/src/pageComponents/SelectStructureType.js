@@ -254,7 +254,7 @@ const SelectStructureType = ({ t, config, onSelect, userType, formData }) => {
           <div>
             <div className="row"><div className="col-md-12" >
               <LabelFieldPair style={{ display: "flex" }}><CardLabel>{`${t("TL_RESURVEY_LAND")}`}</CardLabel>
-                <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={ResurveyedLand} onSelect={selectResurveyedLand} disabled={isEdit} style={{ marginTop: "-8px", paddingLeft: "5px", height: "25px" }} />
+                <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={ResurveyedLand} onSelect={selectResurveyedLand} disabled={isEdit} style={{ marginTop: "-8px", paddingLeft: "5px", height: "25px",display: "flex" }} />
               </LabelFieldPair></div>
             </div>
 

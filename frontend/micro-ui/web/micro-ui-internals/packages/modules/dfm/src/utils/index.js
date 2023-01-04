@@ -269,27 +269,33 @@ export const gettradeupdateaccessories = (data) => {
   return TLaccessories;
 }
 export const convertToFileSubmission = (data = {}) => {
-  console.log("data" + data?.citizen?.FileManagement?.applicationData?.aadharNo);
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
+  console.log(data);
   const formdata = {
     ApplicantPersonals: [
       {
-        aadhaarNo: "123456789111",
-        // data?.FileManagement?.applicationData?.aadharNo, 
-        email: "test@gmail.com",
-        //data?.FileManagement?.applicationData?.email,
-        firstName: "Anil",
-        //data?.FileManagement?.applicationData?.firstName,
-        lastName: "Kumar",
-        //data?.FileManagement?.applicationData?.lastName,
-        title: "Mr",
-        //data?.FileManagement?.applicationData?.title.code,
-        mobileNo: "9895257787",
-        // data?.FileManagement?.applicationData?.mobileNo,
+        id:1,
+        aadhaarNo: data?.ApplicantDetails?.AadharNo, 
+        email:  data?.ApplicantDetails?.Email, 
+        firstName:  data?.ApplicantDetails?.FirstName,     
+        lastName:  data?.ApplicantDetails?.LastName,
+        title:  data?.ApplicantDetails?.Title.code, 
+        mobileNo:  data?.ApplicantDetails?.MobileNo, 
         tenantId: "kl",
-        applicantChild: {
-          buildingNumber: data?.FileManagement?.serviceDetails?.buldingNo,
-          durationOfResidence: data?.FileManagement?.serviceDetails?.durationOfresidence,
+        fatherFirstName:data?.ApplicantDetails?.FatherFirstName,
+        fatherLastName:data?.ApplicantDetails?.FatherLastName,
+        motherFirstName:data?.ApplicantDetails?.MotherFirstName,
+        motherLastName:data?.ApplicantDetails?.MotherLastName,
+        applicantCategory:data?.ApplicantDetails?.CategoryList.id,
+        dateOfBirth:Date.parse(data?.ApplicantDetails?.DateofBirth),
+        bankAccountNo:data?.ApplicantDetails?.AccountNo,
+
+        applicantChild: { 
+          applicantPersonalId:23,
+          buildingNumber: data?.ServiceDet?.BuldingNo, 
+          relationOfAssessee : null,
+          nameOfOccupier : data?.ServiceDet?.NameOccupier,
+          durationOfResidence: data?.ServiceDet?.ResidenceDuration, 
         },
         serviceDetails: {
           applicantPersonalId: '23',
@@ -300,51 +306,50 @@ export const convertToFileSubmission = (data = {}) => {
         },
         applicantAddress: {
           applicantPersonalId: '23',
-          houseNo: "56",
-          //data?.FileManagement?.addressData?.houseNo,
-          houseName: "test Data",
-          street: "Ettumanoor",
-          //data?.FileManagement?.addressData?.street,
-          pincode: "686631",
-          //data?.FileManagement?.addressData?.pincode,
-          postOfficeName: "Ettumanoor",
-          //data?.FileManagement?.addressData?.postOffice.code,
-          wardNo: "5",
+          houseNo:data?.AddressDet?.HouseNo, 
+          houseName:data?.AddressDet?.HouseName, 
+          street:data?.AddressDet?.StreetName, 
+          pincode:data?.AddressDet?.Pincode, 
+          postOfficeName:data?.AddressDet?.PostOfficeList.code, 
+          residenceAssociationNo:data?.AddressDet?.ResAssociationNo, 
+          localPlace:data?.AddressDet?.LocalPlace, 
+          mainPlace:data?.AddressDet?.MainPlace, 
+          wardNo: data?.AddressDet?.WardNo.code, 
         },
         applicantServiceDocuments: {
           applicantPersonalId: '23',
           documentTypeId: '2',
           fileStoreId: '537',
           serviceDetailsId: '34',
+          businessService:5,
           active: "Yes",
           documentNumber: '12345',
-          applicationdetails: "aaaa"
         },
         applicantDocuments: {
           applicantPersonalId: '23',
-          documenttypeId: '2',
+          documentTypeId: '2',
           documentNumber: '12345',
-          docexpiryDate: '1234577'
+          docExpiryDate: '1234577'
         },
         fileDetail: {
-          applicantPersonalId: '23',
+          applicantPersonalId : 23,
+          documenttypeId :9,
           tenantId: "kl",
-          serviceDetailsId: '537',
-          fileNumber: '1',
-          fileCode: "KL-FM-2022-11-02-000043",
-          fileName: "PensionAdalath",
-          fileArisingMode: '1',
-          fileArisingDate: null,
-          financialYear: '2022',
-          applicationDate: null,
-          workflowCode: "NewDFM",
-          action: "INITIATE",
-          fileStatus: '1',
-          businessService: '89',
-          comment: "Test",
-          assignee: [
-
-          ]
+          serviceDetailsId :537,
+          fileNumber :1,
+          fileCode :"KL-05-T",
+          fileName :"PensionAdalath",
+          fileArisingMode :1,
+          fileArisingDate : null,
+          financialYear : Financialyear ? Financialyear : 2022-23,
+          applicationDate : null,
+          workflowCode :10,
+          action :null,
+          fileStatus :1,
+          active : "Yes",
+          documentNumber :12345,
+          docexpiryDate : 2225,
+          businessService : 89
         },
         auditDetails: {
           createdBy: null,

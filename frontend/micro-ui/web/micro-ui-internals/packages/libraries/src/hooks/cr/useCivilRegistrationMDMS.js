@@ -2,7 +2,6 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
-
   const useCRQualificationSub = () => {
     return useQuery("CR_QUALIFICATION_SUB", () => MdmsService.getCRQualificationSub(tenantId, moduleCode), config);
   };
@@ -13,7 +12,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
   };
   const useCRHospital = () => {
-    return useQuery("CR_HOSPITALMASTER", () => MdmsService.getCRHospitalMaster(tenantId, moduleCode,), config);
+    return useQuery("CR_HOSPITALMASTER", () => MdmsService.getCRHospitalMaster(tenantId, moduleCode), config);
   };
   const usePLaceOfDeath = () => {
     return useQuery("CR_PLACE_DEATH", () => MdmsService.getCRPlaceOfDeath(tenantId, moduleCode, type), config);
@@ -83,8 +82,17 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useCRNatureofMedicalAttentionSub = () => {
     return useQuery("CR_NATURE_OF_MEDICAL_ATTENTION_SUB", () => MdmsService.getCRNatureofMedicalAttentionSub(tenantId, moduleCode, type), config);
   };
+  const useCRNatureofMedicalAttentionSubA = () => {
+    return useQuery("CR_NATURE_OF_MEDICAL_ATTENTION_SUB", () => MdmsService.getCRNatureofMedicalAttentionSubA(tenantId, moduleCode, type), config);
+  };
   const useCRDeliveryMethod = () => {
     return useQuery("CR_DELIVERY_METHOD", () => MdmsService.getCRDeliveryMethod(tenantId, moduleCode, type), config);
+  };
+  const useCRAgeUnit = () => {
+    return useQuery("CR_Age_unit", () => MdmsService.getCRAgeUnit(tenantId, moduleCode, type), config);
+  };
+  const useDocumentTypeB = () =>{
+    return useQuery("CR_Document_Type", () => MdmsService.getCRDocumentTypeB(tenantId, moduleCode, type), config);
   };
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
@@ -220,12 +228,12 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRGender();
     case "Country":
       return useCRNationality();
-    case "mtaluk":
+    case "Taluk":
       return useCRTaluk();
     case "Title":
       return useCRTitle();
-    // case "Title":
-    //   return useCRWard();
+    case "DocumentType":
+      return useDocumentTypeB();
     case "Religion":
       return useCRReligion();
     case "DeathCause":
@@ -236,7 +244,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRDistrict();
     case "PostOffice":
       return useCRPostOffice();
-    case "mstate":
+    case "State":
       return useCRState();
     case "LBType":
       return useCRLBType();
@@ -252,10 +260,14 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRNatureofMedicalAttention();
     case "MedicalAttentionType":
       return useCRNatureofMedicalAttentionSub();
+    case "DeathCauseSub":
+      return useCRNatureofMedicalAttentionSubA();
     case "DeliveryMethod":
       return useCRDeliveryMethod();
     case "Title":
       return useCRWard();
+    case "AgeUnit":
+      return  useCRAgeUnit();
     case "Religion":
       return useCRReligion();
     case "InstitutionType":

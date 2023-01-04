@@ -1,5 +1,5 @@
 import {
-    Calender, CardBasedOptions, CaseIcon,DropIcon, ComplaintIcon, DocumentIcon, HomeIcon, Loader,EditIcon, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
+    Calender, CardBasedOptions, CaseIcon,DropIcon, ComplaintIcon,InboxIcon, DocumentIcon, HomeIcon, Loader,EditIcon, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -112,7 +112,44 @@ const Home = () => {
     ],
     styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
   };
-
+  const allInfoMyProfileProps = {
+    header: t("My Space"),
+    sideOption: {
+      name: t("DASHBOARD_VIEW_ALL_LABEL"),
+      onClick: () => {},
+    },
+    options: [
+      {
+        name: t("My Profile"),
+        Icon: <HomeIcon />,
+      },
+      {
+        name: t("My DashBoard"),
+        Icon: <InboxIcon />,
+        // onClick: () => history.push("/digit-ui/citizen/engagement/events"),
+      },
+      {
+        name: t("My Family"),
+        Icon: <HomeIcon />,
+        // onClick: () => history.push("/digit-ui/citizen/engagement/docs"),
+      },
+      {
+        name: t("My Certificates"),
+        Icon: <DocumentIcon />,
+        // onClick: () => history.push("/digit-ui/citizen/engagement/surveys/list"),
+      },
+      // {
+      //   name: t("CS_COMMON_INBOX_BPA"),
+      //   Icon: <OBPSIcon />,
+      //   onClick: () => history.push("/digit-ui/citizen/obps-home"),
+      // },
+      // // {
+      // //     name: t("CS_COMMON_HELP"),
+      // //     Icon: <HelpIcon/>
+      // // }
+    ],
+    styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+  };
   return isLoading ? (
     <Loader />
   ) : (
@@ -127,6 +164,7 @@ const Home = () => {
       <div className="ServicesSection">
         <CardBasedOptions {...allCitizenServicesProps} />
         <CardBasedOptions {...allInfoAndUpdatesProps} />
+        <CardBasedOptions {...allInfoMyProfileProps} />
       </div>
 
       {conditionsToDisableNotificationCountTrigger() ? (

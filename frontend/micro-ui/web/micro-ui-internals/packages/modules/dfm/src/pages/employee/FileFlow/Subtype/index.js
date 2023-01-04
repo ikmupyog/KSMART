@@ -14,10 +14,20 @@ import {
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const SubType = ({ path, handleNext }) => {
+const SubType = ({ path, handleNext, formData, config, onSelect }) => {
+  const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const history = useHistory();
   const state = useSelector((state) => state);
+  const { data: MajorFunction = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "MajorFunction");
+  const { data: SubFunction = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "SubFunction");
+  const { data: Function = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "Function");
+  const { data: MinorFunction = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "FileManagement", "MinorFunction");
+  const [MajorFunctionDet, setMajorFunctionDet] = useState(formData?.FatherInfoDetails?.MajorFunctionDet);
+  const [SubFunctionDet, setSubFunctionDet] = useState(formData?.FatherInfoDetails?.SubFunctionDet);
+  const [FunctionDet, setFunctionDet] = useState(formData?.FatherInfoDetails?.FunctionDet);
+  const [MinorFunctionDet, setMinorFunctionDet] = useState(formData?.FatherInfoDetails?.MinorFunctionDet);
+
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("DFM_SUB_TYPES", {});
   const [subtypeData, setSubtypeData] = useState({
     subtype: [],
@@ -47,50 +57,67 @@ const SubType = ({ path, handleNext }) => {
       setSubtypeData(tempdata);
     }
   };
-  const cardMenuData = [
-    {
-      title: "Finance",
-      subTitle: "Inbox",
-    },
-
-    {
-      title: "Create",
-      subTitle: "Inbox",
-      link: `${path}/sub-type`,
-      // link: `${path}/create`,
-      // link: `${path}/form-ui`,
-    },
-    {
-      title: "BPA",
-      subTitle: "Inbox",
-    },
-    {
-      title: "PGR",
-      subTitle: "Inbox",
-    },
-    {
-      title: "Pension",
-      subTitle: "Inbox",
-    },
-    {
-      title: "License-1",
-      subTitle: "Inbox",
-    },
-    {
-      title: " License-2",
-      subTitle: "Inbox",
-    },
-  ];
+  
   const onSubmit = () => {
     // console.log('sub');
-    if (subtypeData.subtype?.value && subtypeData.functionality?.value) {
+    if (FunctionDet?.name && MinorFunctionDet?.name) {
       handleNext();
     } else {
       setShowError(true);
     }
   };
+
+  let cmbSubFunction = [];
+  SubFunction &&
+    SubFunction["FileManagement"] &&
+    SubFunction["FileManagement"].SubFunction.map((ob) => {
+      cmbSubFunction.push(ob);
+    });
+  let cmbMajorFunction = [];
+  MajorFunction &&
+    MajorFunction["FileManagement"] &&
+    MajorFunction["FileManagement"].MajorFunction.map((ob) => {
+      cmbMajorFunction.push(ob);
+    });
+  let cmbFunction = [];
+  Function &&
+    Function["FileManagement"] &&
+    Function["FileManagement"].Function.map((ob) => {
+      cmbFunction.push(ob);
+    });
+  let cmbMinorFunction = [];
+  MinorFunction &&
+    MinorFunction["FileManagement"] &&
+    MinorFunction["FileManagement"].MinorFunction.map((ob) => {
+      cmbMinorFunction.push(ob);
+    });
+
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
+    function setSelectMajorFunctionDet(value) {
+      setMajorFunctionDet(value);
+    }
+    function setSelectSubFunctionDet(value) {
+      setSubFunctionDet(value);
+    }
+    function setSelectFunctionDet(value) {
+      setFunctionDet(value);
+    }
+    function setSelectMinorFunctionDet(value) {
+      setMinorFunctionDet(value);
+    }
+
+    const goNext = () => {
+      // if(subtypeData.subtype?.value && subtypeData.functionality?.value){
+      handleNext();
+      // }else{
+      //   setShowError(true)
+      // }
+      // sessionStorage.setItem("CurrentFinancialYear", FY);
+      // onSelect(config.key, { applicationData });
+      // console.log("d", applicationData);
+    };
+   
     return code === "DFM" ? (
       <React.Fragment>
         {/* <div className="moduleLinkHomePage">
@@ -99,43 +126,37 @@ const SubType = ({ path, handleNext }) => {
           <h1>{t("Sub Type" .toUpperCase())}</h1>
         </div> */}
         <div className="moduleLinkHomePageModuleLinks">
-          <div className="fileText">
+          {/* <div className="fileText">
             <h3>Choose file type</h3>
-          </div>
+          </div> */}
           <div className="FileFlowWrapper">
-            <CardLabel>{`${t("DFM_SUB_TYPE")}`}</CardLabel>
-            <Dropdown
-              // t={t}
-              optionKey="name"
-              // isMandatory={config.isMandatory}
-              option={subtypeOptions}
-              selected={subtypeData.subtype}
-              placeholder={`${t("DFM_SUB_TYPE")}`}
-              select={(e) => handleChange(e, "subtype")}
-            />
-            <CardLabel>{`${t("DFM_FUNCTIONALITY")}`}</CardLabel>
-            <Dropdown
-              // t={t}
-              optionKey="name"
-              // isMandatory={config.isMandatory}
-              option={subtypeOptions}
-              selected={subtypeData.functionality}
-              placeholder={`${t("DFM_FUNCTIONALITY")}`}
-              select={(e) => handleChange(e, "functionality")}
-            />
-            {/* <FormInputGroup
-              type="Dropdown"
-              handleChange={handleChange}
-              t={t}
-              value={subtypeData.subtype}
-              name="functionality"
-              label={`${t("DFM_FUNCTIONALITY")}`}
-              selectOptions={functionalityOptions}
-              hidePlaceholder={true}
-            /> */}
-            {showError ? <CardLabelError>{t("DFM_SELECT_FIELDS")}</CardLabelError> : null}
-            <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} />
-          </div>
+
+{/* <FormInputGroup 
+type="Dropdown" handleChange={handleChange}   t={t} value={subtypeData.subtype} name="subtype" label="Sub Type"
+selectOptions={subtypeOptions} 
+/>
+<FormInputGroup 
+type="Dropdown" handleChange={handleChange}   t={t} value={subtypeData.subtype} name="functionality" label="Functionality"
+selectOptions={functionalityOptions} 
+/>
+{showError ? <CardLabelError>{t("Please Select SubType")}</CardLabelError> : null}
+<SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} /> */}
+
+{/* <div><CardLabel>{`${t("Major Function")}`}<span className="mandatorycss">*</span></CardLabel>
+  <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMajorFunction} selected={MajorFunctionDet} select={setSelectMajorFunctionDet} />
+</div>
+<div ><CardLabel>{`${t("Sub Function")}`}<span className="mandatorycss">*</span></CardLabel>
+  <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbSubFunction} selected={SubFunctionDet} select={setSelectSubFunctionDet} />
+</div> */}
+<div ><CardLabel>{`${t("Function")}`}<span className="mandatorycss">*</span></CardLabel>
+  <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbFunction} selected={FunctionDet} select={setSelectFunctionDet} />
+</div>
+<div ><CardLabel>{`${t("Minor Function")}`}<span className="mandatorycss">*</span></CardLabel>
+  <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMinorFunction} selected={MinorFunctionDet} select={setSelectMinorFunctionDet} />
+</div>
+{showError ? <CardLabelError>{t("DFM_SELECT_FIELDS")}</CardLabelError> : null}
+<SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} />
+</div>
         </div>
       </React.Fragment>
     ) : (
@@ -145,12 +166,6 @@ const SubType = ({ path, handleNext }) => {
   return (
     <React.Fragment>
       {ModuleLevelLinkHomePages}
-      {/* <CommonDashboard title="Choose Submenu" data={cardMenuData} path={path}/> */}
-
-      {/* <Switch>
-      
-        // <PrivateRoute parentRoute={path} path={`${path}/create`} component={() => <CreateTradeLicence parentUrl={path} />} />
-      </Switch> */}
     </React.Fragment>
   );
 };

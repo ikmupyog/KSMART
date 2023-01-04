@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { newConfig as newConfigCR } from "../../../config/config";
-// import CheckPage from "./CheckPage";
-// import TLAcknowledgement from "./TLAcknowledgement";
 
 const CreateTradeLicence = ({ parentRoute }) => {
   const queryClient = useQueryClient();
@@ -70,8 +68,12 @@ const CreateTradeLicence = ({ parentRoute }) => {
       nextStep = key;
     }
     if (nextStep === null) {
-      return redirectWithHistory(`${match.path}/check`);
-    }
+      if(window.location.href.includes("/cr-flow")=="cr-flow"){
+        return redirectWithHistory(`${match.path}/check`);
+      } else if(window.location.href.includes("/death-flow")=="death-flow"){
+        return redirectWithHistory(`${match.path}/deathcheck`);
+      }
+    } 
     if(isPTCreateSkip && nextStep === "acknowledge-create-property")
     {
       nextStep = "map";
@@ -79,10 +81,16 @@ const CreateTradeLicence = ({ parentRoute }) => {
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
   };
-
-  const createProperty = async () => {
-    history.push(`${match.path}/acknowledgement`);
-  };
+  if(window.location.href.includes("/cr-flow")=="cr-flow"){
+    const createProperty = async () => {
+      history.push(`${match.path}/acknowledgement`);
+    };
+  } else if(window.location.href.includes("/death-flow")=="death-flow"){
+    const createProperty = async () => {
+      history.push(`${match.path}/deathacknowledgement`);
+    };
+  }
+ 
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
@@ -106,8 +114,6 @@ const CreateTradeLicence = ({ parentRoute }) => {
 
   newConfig = newConfigCR;
   // newConfig = newConfig ? newConfig : newConfigTL;
-  // newConfig = newConfig ? newConfig : newConfigTL;
-  // newConfig = newConfigTL;
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
@@ -118,7 +124,8 @@ const CreateTradeLicence = ({ parentRoute }) => {
 
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
   const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
-  console.log("match.path"+match.path);
+  const DeathCheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
+  const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
   return (
     <Switch>
       {config.map((routeObj, index) => {
@@ -138,12 +145,21 @@ const CreateTradeLicence = ({ parentRoute }) => {
           </Route>
         );
       })}
+
       <Route path={`${match.path}/check`}>
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
         <BirthAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
+
+      <Route path={`${match.path}/deathcheck`}>
+        <DeathCheckPage onSubmit={createProperty} value={params} />
+      </Route>
+      <Route path={`${match.path}/deathacknowledgement`}>
+        <DeathAcknowledgement data={params} onSuccess={onSuccess} />
+      </Route>
+
       <Route>
         <Redirect to={`${match.path}/${config.indexRoute}`} />
       </Route>

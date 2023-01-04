@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/ADTimeline";
 import { useTranslation } from "react-i18next";
 
 const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => {
@@ -20,23 +20,23 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
-  const [AdoptionMotherFirstNameEn, setAdoptionMotherFirstNameEn] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherFirstNameEn);
-  const [AdoptionMotherMiddleNameEn, setAdoptionMotherMiddleNameEn] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherMiddleNameEn);
-  const [AdoptionMotherLastNameEn, setAdoptionMotherLastNameEn] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherLastNameEn);
-  const [AdoptionMotherFirstNameMl, setAdoptionMotherFirstNameMl] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherFirstNameMl);
-  const [AdoptionMotherMiddleNameMl, setAdoptionMotherMiddleNameMl] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherMiddleNameMl);
-  const [AdoptionMotherLastNameMl, setAdoptionMotherLastNameMl] = useState(formData?.AdoptionMotherInfoDetails?.MotherLotherPlaceNameastNameMl);
-  const [AdoptionMotherAadhar, setAdoptionMotherAadhar] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherAadhar);
-  const [AdoptionMotherPassportNo, setAdoptionMotherPassportNo] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherPassportNo);
-  const [AdoptionMotherEmail, setAdoptionMotherEmail] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherEmail);
-  const [AdoptionMotherMobile, setAdoptionMotherMobile] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherMobile);
-  const [AdoptionMotherEducation, setAdoptionMotherEducation] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherEducation);
-  const [AdoptionMotherEducationSubject, setAdoptionMotherEducationSubject] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherEducationSubject);
-  const [AdoptionMotherProfession, setAdoptionMotherProfession] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherProfession);
+  const [MotherFirstNameEn, setMotherFirstNameEn] = useState(formData?.AdoptionMotherInfoDetails?.MotherFirstNameEn);
+  const [MotherMiddleNameEn, setMotherMiddleNameEn] = useState(formData?.AdoptionMotherInfoDetails?.MotherMiddleNameEn);
+  const [MotherLastNameEn, setMotherLastNameEn] = useState(formData?.AdoptionMotherInfoDetails?.MotherLastNameEn);
+  const [MotherFirstNameMl, setMotherFirstNameMl] = useState(formData?.AdoptionMotherInfoDetails?.MotherFirstNameMl);
+  const [MotherMiddleNameMl, setMotherMiddleNameMl] = useState(formData?.AdoptionMotherInfoDetails?.MotherMiddleNameMl);
+  const [MotherLastNameMl, setMotherLastNameMl] = useState(formData?.AdoptionMotherInfoDetails?.MotherLotherPlaceNameastNameMl);
+  const [MotherAadhar, setMotherAadhar] = useState(formData?.AdoptionMotherInfoDetails?.MotherAadhar);
+  const [MotherPassportNo, setMotherPassportNo] = useState(formData?.AdoptionMotherInfoDetails?.MotherPassportNo);
+  const [MotherEmail, setMotherEmail] = useState(formData?.AdoptionMotherInfoDetails?.MotherEmail);
+  const [MotherMobile, setMotherMobile] = useState(formData?.AdoptionMotherInfoDetails?.MotherMobile);
+  const [MotherEducation, setMotherEducation] = useState(formData?.AdoptionMotherInfoDetails?.MotherEducation);
+  // const [MotherEducationSubject, setMotherEducationSubject] = useState(formData?.AdoptionMotherInfoDetails?.MotherEducationSubject);
+  const [MotherProfession, setMotherProfession] = useState(formData?.AdoptionMotherInfoDetails?.MotherProfession);
   const [LBTypeName, setLBTypeName] = useState(formData?.AdoptionMotherInfoDetails?.LBTypeName);
   const [StateName, setStateName] = useState(formData?.AdoptionMotherInfoDetails?.StateName);
   const [MotherDistrict, setMotherDistrict] = useState(formData?.AdoptionMotherInfoDetails?.MotherDistrict);   
-  const [AdoptionMotherNationality, setAdoptionMotherNationality] = useState(formData?.AdoptionMotherInfoDetails?.AdoptionMotherNationality);  
+  const [MotherNationality, setMotherNationality] = useState(formData?.AdoptionMotherInfoDetails?.MotherNationality);  
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const cmbUrbanRural = [
     { i18nKey: "Urban", code: "URBAN" },
@@ -86,91 +86,89 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
  
   const onSkip = () => onSelect();
 
-  function setSelectAdoptionMotherFirstNameEn(e) {
-    setAdoptionMotherFirstNameEn(e.target.value);
+  function setSelectMotherFirstNameEn(e) {
+    setMotherFirstNameEn(e.target.value);
   }
-  function setSelectAdoptionMotherMiddleNameEn(e) {
-    setAdoptionMotherMiddleNameEn(e.target.value);
+  function setSelectMotherMiddleNameEn(e) {
+    setMotherMiddleNameEn(e.target.value);
   }
-  function setSelectAdoptionMotherLastNameEn(e) {
-    setAdoptionMotherLastNameEn(e.target.value);
+  function setSelectMotherLastNameEn(e) {
+    setMotherLastNameEn(e.target.value);
   }
-  function setSelectAdoptionMotherFirstNameMl(e) {
-    setAdoptionMotherFirstNameMl(e.target.value);
+  function setSelectMotherFirstNameMl(e) {
+    setMotherFirstNameMl(e.target.value);
   }
-  function setSelectAdoptionMotherMiddleNameMl(e) {
-    setAdoptionMotherMiddleNameMl(e.target.value);
+  function setSelectMotherMiddleNameMl(e) {
+    setMotherMiddleNameMl(e.target.value);
   }
-  function setSelectAdoptionMotherLastNameMl(e) {
-    setAdoptionMotherLastNameMl(e.target.value);
+  function setSelectMotherLastNameMl(e) {
+    setMotherLastNameMl(e.target.value);
   }
-  function setSelectAdoptionMotherAadhar(e) {
-    setAdoptionMotherAadhar(e.target.value);
+  function setSelectMotherAadhar(e) {
+    setMotherAadhar(e.target.value);
   }
-  function setSelectAdoptionMotherEmail(e) {
-    setAdoptionMotherEmail(e.target.value);
+  function setSelectMotherEmail(e) {
+    setMotherEmail(e.target.value);
   }
-  function setSelectAdoptionMotherMobile(e) {
-    setAdoptionMotherMobile(e.target.value);
+  function setSelectMotherMobile(e) {
+    setMotherMobile(e.target.value);
   }
-  function setSelectAdoptionMotherPassportNo(e) {
-    setAdoptionMotherPassportNo(e.target.value);
+  function setSelectMotherPassportNo(e) {
+    setMotherPassportNo(e.target.value);
   }
-  function setSelectAdoptionMotherEducation(value) {
-    setAdoptionMotherEducation(value);
+  function setSelectMotherEducation(value) {
+    setMotherEducation(value);
   }
-  function setSelectAdoptionMotherEducationSubject(value) {
-    setAdoptionMotherEducationSubject(value);
+  // function setSelectMotherEducationSubject(value) {
+  //   setMotherEducationSubject(value);
+  // }
+  function setSelectMotherProfession(value) {
+    setMotherProfession(value);
   }
-  function setSelectAdoptionMotherProfession(value) {
-    setAdoptionMotherProfession(value);
-  }
-  function setSelectAdoptionMotherNationality(value) {
-    setAdoptionMotherNationality(value);
+  function setSelectMotherNationality(value) {
+    setMotherNationality(value);
   }  
   
   
-  function setSelectMotherCountry(value) {
-    setMotherCountry(value);
-  }
+ 
   const goNext = () => {
-    sessionStorage.setItem("AdoptionMotherFirstNameEn", AdoptionMotherFirstNameEn);
-    sessionStorage.setItem("AdoptionMotherMiddleNameEn", AdoptionMotherMiddleNameEn);
-    sessionStorage.setItem("AdoptionMotherLastNameEn", AdoptionMotherLastNameEn);
-    sessionStorage.setItem("AdoptionMotherFirstNameMl", AdoptionMotherFirstNameMl);
-    sessionStorage.setItem("AdoptionMotherMiddleNameMl", AdoptionMotherMiddleNameMl);
-    sessionStorage.setItem("AdoptionMotherLastNameMl", AdoptionMotherLastNameMl);
-    sessionStorage.setItem("AdoptionMotherAadhar", AdoptionMotherAadhar);
-    sessionStorage.setItem("AdoptionMotherPassportNo", AdoptionMotherPassportNo);
-    sessionStorage.setItem("AdoptionMotherEmail", AdoptionMotherEmail);
-    sessionStorage.setItem("AdoptionMotherMobile", AdoptionMotherMobile);
-    sessionStorage.setItem("AdoptionMotherEducation", AdoptionMotherEducation.code);
-    sessionStorage.setItem("AdoptionMotherEducationSubject", AdoptionMotherEducationSubject.code);
-    sessionStorage.setItem("AdoptionMotherProfession", AdoptionMotherProfession.code);
-    sessionStorage.setItem("AdoptionMotherNationality", AdoptionMotherNationality.code);    
+    sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn);
+    sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn);
+    sessionStorage.setItem("MotherLastNameEn", MotherLastNameEn);
+    sessionStorage.setItem("MotherFirstNameMl", MotherFirstNameMl);
+    sessionStorage.setItem("MotherMiddleNameMl", MotherMiddleNameMl);
+    sessionStorage.setItem("MotherLastNameMl", MotherLastNameMl);
+    sessionStorage.setItem("MotherAadhar", MotherAadhar);
+    sessionStorage.setItem("MotherPassportNo", MotherPassportNo);
+    sessionStorage.setItem("MotherEmail", MotherEmail);
+    sessionStorage.setItem("MotherMobile", MotherMobile);
+    sessionStorage.setItem("MotherEducation", MotherEducation.code);
+    // sessionStorage.setItem("MotherEducationSubject", MotherEducationSubject.code);
+    sessionStorage.setItem("MotherProfession", MotherProfession.code);
+    sessionStorage.setItem("MotherNationality", MotherNationality.code);    
     onSelect(config.key, {
-      AdoptionMotherFirstNameEn,
-      AdoptionMotherMiddleNameEn,
-      AdoptionMotherLastNameEn,
-      AdoptionMotherFirstNameMl,
-      AdoptionMotherMiddleNameMl,
-      AdoptionMotherLastNameMl,
-      AdoptionMotherAadhar,
-      AdoptionMotherPassportNo,
-      AdoptionMotherEmail,
-      AdoptionMotherMobile,
-      AdoptionMotherEducation,
-      AdoptionMotherEducationSubject,
-      AdoptionMotherProfession,
-      AdoptionMotherNationality,     
+      MotherFirstNameEn,
+      MotherMiddleNameEn,
+      MotherLastNameEn,
+      MotherFirstNameMl,
+      MotherMiddleNameMl,
+      MotherLastNameMl,
+      MotherAadhar,
+      MotherPassportNo,
+      MotherEmail,
+      MotherMobile,
+      MotherEducation,
+      // MotherEducationSubject,
+      MotherProfession,
+      MotherNationality,     
     });
   };
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdoptionMotherFirstNameEn}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!MotherFirstNameEn}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -190,9 +188,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherFirstNameEn"
-                value={AdoptionMotherFirstNameEn}
-                onChange={setSelectAdoptionMotherFirstNameEn}
+                name="MotherFirstNameEn"
+                value={MotherFirstNameEn}
+                onChange={setSelectMotherFirstNameEn}
                 disable={isEdit}
                 placeholder={`${t("CR_FIRST_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -205,9 +203,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherMiddleNameEn"
-                value={AdoptionMotherMiddleNameEn}
-                onChange={setSelectAdoptionMotherMiddleNameEn}
+                name="MotherMiddleNameEn"
+                value={MotherMiddleNameEn}
+                onChange={setSelectMotherMiddleNameEn}
                 disable={isEdit}
                 placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
@@ -223,9 +221,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherLastNameEn"
-                value={AdoptionMotherLastNameEn}
-                onChange={setSelectAdoptionMotherLastNameEn}
+                name="MotherLastNameEn"
+                value={MotherLastNameEn}
+                onChange={setSelectMotherLastNameEn}
                 disable={isEdit}
                 placeholder={`${t("CR_LAST_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
@@ -245,9 +243,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherFirstNameMl"
-                value={AdoptionMotherFirstNameMl}
-                onChange={setSelectAdoptionMotherFirstNameMl}
+                name="MotherFirstNameMl"
+                value={MotherFirstNameMl}
+                onChange={setSelectMotherFirstNameMl}
                 disable={isEdit}
                 placeholder={`${t("CR_FIRST_NAME_ML")}`}
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
@@ -260,9 +258,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherMiddleNameMl"
-                value={AdoptionMotherMiddleNameMl}
-                onChange={setSelectAdoptionMotherMiddleNameMl}
+                name="MotherMiddleNameMl"
+                value={MotherMiddleNameMl}
+                onChange={setSelectMotherMiddleNameMl}
                 disable={isEdit}
                 placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                 {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
@@ -278,9 +276,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherLastNameMl"
-                value={AdoptionMotherLastNameMl}
-                onChange={setSelectAdoptionMotherLastNameMl}
+                name="MotherLastNameMl"
+                value={MotherLastNameMl}
+                onChange={setSelectMotherLastNameMl}
                 disable={isEdit}
                 placeholder={`${t("CR_LAST_NAME_ML")}`}
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
@@ -297,9 +295,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherAadhar"
-                value={AdoptionMotherAadhar}
-                onChange={setSelectAdoptionMotherAadhar}
+                name="MotherAadhar"
+                value={MotherAadhar}
+                onChange={setSelectMotherAadhar}
                 disable={isEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
@@ -312,9 +310,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherPassportNo"
-                value={AdoptionMotherPassportNo}
-                onChange={setSelectAdoptionMotherPassportNo}
+                name="MotherPassportNo"
+                value={MotherPassportNo}
+                onChange={setSelectMotherPassportNo}
                 disable={isEdit}
                 placeholder={`${t("CR_PASSPORT_NO")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
@@ -327,9 +325,9 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type="email"
                 optionKey="i18nKey"
-                name="AdoptionMotherEmail"
-                value={AdoptionMotherEmail}
-                onChange={setSelectAdoptionMotherEmail}
+                name="MotherEmail"
+                value={MotherEmail}
+                onChange={setSelectMotherEmail}
                 disable={isEdit}
                 placeholder={`${t("CR_EMAIL")}`}
                 {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
@@ -339,7 +337,7 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-6">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -349,15 +347,15 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdoptionMotherMobile"
-                value={AdoptionMotherMobile}
-                onChange={setSelectAdoptionMotherMobile}
+                name="MotherMobile"
+                value={MotherMobile}
+                onChange={setSelectMotherMobile}
                 disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <CardLabel>
                 {`${t("CR_EDUCATION")}`}
                 <span className="mandatorycss">*</span>
@@ -367,13 +365,13 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 optionKey="name"
                 isMandatory={false}
                 option={cmbQualification}
-                selected={AdoptionMotherEducation}
-                select={setSelectAdoptionMotherEducation}
+                selected={MotherEducation}
+                select={setSelectMotherEducation}
                 disabled={isEdit}
                 placeholder={`${t("CR_EDUCATION")}`}
               />
             </div>
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_EDUCATION_SUBJECT")}`}
                 <span className="mandatorycss">*</span>
@@ -383,12 +381,12 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 optionKey="name"
                 isMandatory={false}
                 option={cmbQualificationSub}
-                selected={AdoptionMotherEducationSubject}
-                select={setSelectAdoptionMotherEducationSubject}
+                selected={MotherEducationSubject}
+                select={setSelectMotherEducationSubject}
                 disabled={isEdit}
                 placeholder={`${t("CR_EDUCATION_SUBJECT")}`}
               />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="row">
@@ -403,8 +401,8 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 optionKey="name"
                 isMandatory={false}
                 option={cmbProfession}
-                selected={AdoptionMotherProfession}
-                select={setSelectAdoptionMotherProfession}
+                selected={MotherProfession}
+                select={setSelectMotherProfession}
                 disabled={isEdit}
                 placeholder={`${t("CR_PROFESSIONAL")}`}
               />
@@ -419,8 +417,8 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
                 optionKey="nationalityname"
                 isMandatory={false}
                 option={cmbNation}
-                selected={AdoptionMotherNationality}
-                select={setSelectAdoptionMotherNationality}
+                selected={MotherNationality}
+                select={setSelectMotherNationality}
                 disabled={isEdit}
                 placeholder={`${t("CR_NATIONALITY")}`}
               />

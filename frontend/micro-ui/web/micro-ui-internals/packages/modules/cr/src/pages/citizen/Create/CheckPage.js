@@ -1,19 +1,9 @@
-import {
-  Card,
-  CardLabel ,
-  CardSubHeader,
-  CardText,
-  CitizenInfoLabel,
-  LinkButton,
-  Row,
-  StatusTable,
-  SubmitBar,
-  
+import {Card,CardLabel ,CardSubHeader,  CardText,CitizenInfoLabel,LinkButton,  Row, StatusTable, SubmitBar,  
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import TLDocument from "../../../pageComponents/TLDocumets";
+//import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/CRTimeline";
 
 const ActionButton = ({ jumpTo }) => {

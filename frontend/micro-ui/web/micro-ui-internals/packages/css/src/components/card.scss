@@ -160,6 +160,10 @@
 
   header {
     @apply font-rc font-medium text-legend text-white leading-10;
+    font-family: system-ui !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+  
   }
 }
 
@@ -358,6 +362,7 @@
 .employeeCard-override {
   margin-left: 0px !important;
 }
+
 
 .BPAemployeeCard {
   margin-left: 0px !important;
