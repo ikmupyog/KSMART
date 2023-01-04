@@ -36,8 +36,8 @@ public class CrDeathRegistryAddressInfo {
     @JsonProperty("deathplaceAddress")
     private CrDeathRegistryAddress deathplaceAddress;
 
-    @JsonProperty("burialAddress")
-    private CrDeathRegistryAddress burialAddress;
+    // @JsonProperty("burialAddress")
+    // private CrDeathRegistryAddress burialAddress;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;   

@@ -590,8 +590,8 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.addressInfo.applicantAddress.houeNameEn
 
 
-    - query: INSERT INTO public.eg_death_applicant_dtls(id, death_dtl_id,tenantid, applicant_name, applicant_aadhar)
-           VALUES (?, ?, ?, ?, ?);
+    - query: INSERT INTO public.eg_death_applicant_dtls(id, death_dtl_id,tenantid, applicant_name, applicant_aadhar, applicant_mobile_no)
+           VALUES (?, ?, ?, ?, ? ,?);
       basePath: deathCertificateDtls.*.applicantDetails
       jsonMaps:
       - jsonPath: $.deathCertificateDtls.*.applicantDetails.id
@@ -602,7 +602,9 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.applicantDetails.applicantName
       
-      - jsonPath: $.deathCertificateDtls.*.applicantDetails.applicantAadhar      
+      - jsonPath: $.deathCertificateDtls.*.applicantDetails.applicantAadhar  
+
+      - jsonPath: $.deathCertificateDtls.*.applicantDetails.applicantMobileNo    
       
 
   # UPDATE 

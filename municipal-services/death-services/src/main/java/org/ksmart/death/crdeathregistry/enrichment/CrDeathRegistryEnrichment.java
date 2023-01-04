@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.ksmart.death.common.Idgen.IdResponse;
+import org.ksmart.death.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.death.common.repository.IdGenRepository;
 import org.ksmart.death.common.repository.ServiceRequestRepository;
 import org.ksmart.death.crdeathregistry.config.CrDeathRegistryConfiguration;
@@ -52,6 +53,9 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
     @Autowired
     CrDeathRegistryRepository repository;
 
+    @Autowired
+    EncryptionDecryptionUtil encryptionDecryptionUtil;
+
 
     public void enrichCreate(CrDeathRegistryRequest request) {
 
@@ -65,7 +69,11 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
                 deathdtls.setId(UUID.randomUUID().toString());
                 deathdtls.setAuditDetails(auditDetails);
                 deathdtls.getStatisticalInfo().setId(UUID.randomUUID().toString());     
-                
+                CrDeathRegistryDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathRegistryDtl.class);
+                deathdtls.setDeceasedAadharNumber(deathDtlEnc.getDeceasedAadharNumber());
+                deathdtls.setInformantAadharNo(deathDtlEnc.getInformantAadharNo());
+                deathdtls.setMaleDependentAadharNo(deathDtlEnc.getMaleDependentAadharNo());
+                deathdtls.setFemaleDependentAadharNo(deathDtlEnc.getFemaleDependentAadharNo());
                 
                 // deathdtls.getAddressInfo().get(0).setParentdeathDtlId(deathdtls.getId());
                 // deathdtls.getAddressInfo().get(0).setAuditDetails(auditDetails);
@@ -83,7 +91,7 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
                 addressInfo.getPermanentAddress().setId(UUID.randomUUID().toString());
                 addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
                 addressInfo.getDeathplaceAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getBurialAddress().setId(UUID.randomUUID().toString());
+               //addressInfo.getBurialAddress().setId(UUID.randomUUID().toString());
 
             });
     }

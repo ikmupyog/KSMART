@@ -46,7 +46,7 @@ interface CrDeathRegistryAddressRowMapper {
                                     .permanentAddress((buildAddress(rs, "R_")))
                                     .informantAddress(buildAddress(rs, "I_"))
                                     .deathplaceAddress(buildAddress(rs, "D_"))
-                                    .burialAddress(buildAddress(rs, "B_"))
+                                   // .burialAddress(buildAddress(rs, "B_"))
                                     .build();
         } 
         
