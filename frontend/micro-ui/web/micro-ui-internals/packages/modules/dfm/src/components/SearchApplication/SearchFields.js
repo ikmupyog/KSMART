@@ -37,7 +37,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     return <>
         <SearchField>
             <label>{t("TL_HOME_SEARCH_RESULTS_APP_NO_LABEL")}</label>
-            <TextInput name="applicationNumber" inputRef={register({})} />
+            <TextInput name="fileCode" inputRef={register({})} />
         </SearchField>
         {applicationTypesLoading ? <Loader/> : <SearchField>
             <label>{t("TL_LOCALIZATION_APPLICATION_TYPE")}</label>
