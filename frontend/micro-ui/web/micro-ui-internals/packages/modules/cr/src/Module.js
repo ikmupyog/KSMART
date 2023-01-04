@@ -31,6 +31,8 @@ import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthP
 import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
 import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
 
+
+
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
 import AddressOfDecesed from "./pageComponents/deathComponents/AddressOfDecesed";
@@ -60,7 +62,7 @@ import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
 
-/////////deathcorrection
+
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -121,8 +123,30 @@ const componentsToRegister = {
   OtherCountry,
   InstitutionDetails,
   ChildDetails,
+  CRApplicationDetails,
+  CRSearch,
+  SearchCrApplication, 
+  ChildDetails,
+  AddressOne,
+  AddressPresent,
+  AddressSameAsAbove,
+  AddressPermanent,
 
-  SearchRegistry,
+
+
+  
+ //////////////////
+  // SearchRegistry,
+  AdoptionDetails,
+  AdoptionMotherInformation,
+  AdoptionFatherInformation,
+  BirthMotherInformation,
+  BirthFatherInformation,
+  BirthParentsAddress,  
+  AdoptionStatisticalInformation,  
+ AdoptionParentsAddress,
+
+
 
   //////////////////
   InformationDeath,
