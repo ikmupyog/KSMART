@@ -71,15 +71,15 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     
     const columns = useMemo( () => ([
         {
-          Header: t("TL_COMMON_TABLE_COL_APP_NO"),
+          Header: t("File Number"),
           accessor: 'fileCode',
           disableSortBy: true,
           Cell: ({ row }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/dfm/searchDetails/${row.original["fileCode"]}`}>
-                    {row.original["fileCode"]}
+                  <Link to={`/digit-ui/employee/dfm/searchDetails/${row.original?.fileDetail["fileCode"]}`}>
+                    {row.original?.fileDetail["fileCode"]}
                   </Link>
                 </span>
               </div>
