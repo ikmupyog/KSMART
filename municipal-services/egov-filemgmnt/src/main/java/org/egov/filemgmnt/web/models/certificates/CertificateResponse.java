@@ -23,7 +23,7 @@ import lombok.Setter;
 public class CertificateResponse {
 
     @JsonProperty("ResponseInfo")
-    private ResponseInfo responseInfo = null;
+    private ResponseInfo responseInfo;
 
     @JsonProperty("CertificateDetails")
     private List<CertificateDetails> certificateDet;

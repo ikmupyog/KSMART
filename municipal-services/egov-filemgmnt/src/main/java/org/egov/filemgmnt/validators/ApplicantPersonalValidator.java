@@ -19,7 +19,6 @@ import org.egov.filemgmnt.web.models.ApplicantPersonalSearchCriteria;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,7 +38,7 @@ public class ApplicantPersonalValidator {
     private final FMConfiguration config;
     private final MdmsValidator mdmsValidator;
 
-    @Autowired
+    // @Autowired
     public ApplicantPersonalValidator(FMConfiguration config, MdmsValidator mdmsValidator) {
         this.config = config;
         this.mdmsValidator = mdmsValidator;

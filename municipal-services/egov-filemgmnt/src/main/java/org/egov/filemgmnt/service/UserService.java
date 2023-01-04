@@ -46,7 +46,8 @@ class UserService {
 
     public void createUser(ApplicantPersonalRequest request) {
         // 1. check user exists or not - using aadharNo
-        // 2.
+        // 2. if exists update
+        // 3. else insert applicant data in to user service
 
         List<ApplicantPersonal> applicant = request.getApplicantPersonals();
         RequestInfo requestInfo = request.getRequestInfo();

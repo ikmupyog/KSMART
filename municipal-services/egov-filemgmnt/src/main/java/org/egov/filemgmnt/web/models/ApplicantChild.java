@@ -60,4 +60,7 @@ public class ApplicantChild {
     @JsonProperty("durationOfResidence ")
     private String durationOfResidence;
 
+    @JsonProperty("auditDetails")
+    private AuditDetails auditDetails;
+
 }
