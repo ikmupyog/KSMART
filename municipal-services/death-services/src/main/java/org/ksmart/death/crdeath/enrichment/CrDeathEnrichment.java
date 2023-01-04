@@ -61,7 +61,7 @@ public class CrDeathEnrichment implements BaseEnrichment{
                 deathdtls.setAuditDetails(auditDetails);
                 deathdtls.getStatisticalInfo().setId(UUID.randomUUID().toString());               
                 CrDeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathDtl.class);
-                System.out.println();
+               // System.out.println("Jasmine"+deathDtlEnc);
                 deathdtls.setDeceasedAadharNumber(deathDtlEnc.getDeceasedAadharNumber());
                 deathdtls.setInformantAadharNo(deathDtlEnc.getInformantAadharNo());
                 deathdtls.setMaleDependentAadharNo(deathDtlEnc.getMaleDependentAadharNo());
@@ -75,8 +75,10 @@ public class CrDeathEnrichment implements BaseEnrichment{
                 addressInfo.getDeathplaceAddress().setId(UUID.randomUUID().toString());
                 //addressInfo.getBurialAddress().setId(UUID.randomUUID().toString());
                 addressInfo.getApplicantAddress().setId(UUID.randomUUID().toString());
+               // CrDeathApplicantDetails applicantDetailsEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathApplicantDetails.class);
                 CrDeathApplicantDetails  applicantDetails = deathdtls.getApplicantDetails();
                 applicantDetails.setId(UUID.randomUUID().toString());
+                applicantDetails.setApplicantAadhar(deathDtlEnc.getApplicantDetails().getApplicantAadhar());
                });
       
     }
