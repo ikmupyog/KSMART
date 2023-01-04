@@ -27,6 +27,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jayway.jsonpath.JsonPath;
 
@@ -198,7 +199,19 @@ public class CrDeathRegistryRepository {
             // log.info(new Gson().toJson(pdfApplicationRequest));
 
             DeathPdfApplicationRequest req = DeathPdfApplicationRequest.builder().deathCertificate(pdfApplicationRequest.getDeathCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
-                
+                 /********************************************* */
+
+        //   try {
+        //       ObjectMapper mapper = new ObjectMapper();
+        //       Object obj = req;
+        //       mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //     System.out.println("pdfrequest: "+ mapper.writeValueAsString(obj));
+        //       }catch(Exception e) {
+        //         // log.error("Exception while fetching from searcher: ",e);
+        //       }
+
+
+              /********************************************** */
             pdfApplicationRequest.getDeathCertificate().forEach(cert-> {
             String uiHost = config.getEgovPdfHost();
             String deathCertPath = config.getEgovPdfDeathEndPoint();
