@@ -6,9 +6,11 @@ import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import DeathCrFlow from "./DeathCrFlow";
 import InformationDeath from "../../../pageComponents/deathComponents/InformationDeath";
-import DeathCorrection from "../DeathCorrection/index"
+// import DeathCorrection from "../DeathCorrection/index";
 import ApplicationDetails from "../../../../../templates/ApplicationDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
+// import Search from "../Search";
+import SearchCorrection from "../../employee/SearchCorrection";
 
 const DeathCrFlowApp = ({ parentUrl }) => {
   const { t } = useTranslation();
@@ -155,7 +157,9 @@ const DeathCrFlowApp = ({ parentUrl }) => {
               <DeathCrFlow  path={path}/>
              </Route>
              <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
-             <PrivateRoute  parentRoute={path} path={`${path}/correction-search`} component={() => <DeathCorrection parentUrl={path} />} />
+             {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
+
+             {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
       </Switch>
     </React.Fragment>
   );

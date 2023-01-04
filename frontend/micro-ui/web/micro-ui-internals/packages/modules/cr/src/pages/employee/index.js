@@ -17,6 +17,7 @@ const CRBreadCrumb = ({ location }) => {
   const isSearch = location?.pathname?.includes("search");
   const isInbox = location?.pathname?.includes("inbox");
   const isApplicationSearch = location?.pathname?.includes("search/application");
+  const isDeathCorrectSearch = location?.pathname?.includes("search-correction/application");
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
@@ -131,6 +132,12 @@ const CRBreadCrumb = ({ location }) => {
       breadCrumbUrls.includes("home/search/appDetails") || 
       breadCrumbUrls.includes("inbox/search/appDetails")
     },
+    {
+      path: "/digit-ui/employee/cr/death-flow/search-correction/application",
+      content: t("ES_COMMON_SEARCH_APPLICATION"),
+      show: isDeathCorrectSearch ||
+      breadCrumbUrls.includes("home/death-flow") 
+    },
    
     // {
     //   path: "/digit-ui/employee/cr/cr-flow/trade-lisense",
@@ -200,7 +207,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   // const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
   const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
-
+const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
   return (
     <Switch>
     <React.Fragment>
@@ -213,6 +220,8 @@ const EmployeeApp = ({ path, url, userType }) => {
         <PrivateRoute parentRoute={path} path={`${path}/death-flow`} component={() => <DeathCrFlow parentUrl={url} />} />
         {/* <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} /> */}
         <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
+        <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
+
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
 
       </div>
