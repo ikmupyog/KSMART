@@ -1,7 +1,7 @@
 import React from "react"
 import useInbox from "../useInbox"
 
-const useTLInbox = ({ tenantId, filters, config }) => {
+const useCRInbox = ({ tenantId, filters, config }) => {
 
     const {applicationStatus, mobileNumber, applicationNumber, sortBy, sortOrder, locality, uuid, limit, offset } = filters
     const USER_UUID = Digit.UserService.getUser()?.info?.uuid;
@@ -9,7 +9,7 @@ const useTLInbox = ({ tenantId, filters, config }) => {
     const _filters = {
         tenantId,
 		processSearchCriteria: {
-            moduleName: "cr-services",
+            moduleName: "birth-services",
 			businessService: ["bnd21days"],
             ...(applicationStatus?.length > 0 ? {status: applicationStatus} : {}),
             ...(uuid && Object.keys(uuid).length > 0 ? {assignee: uuid.code === "ASSIGNED_TO_ME" ? USER_UUID : ""} : {}),
@@ -43,4 +43,4 @@ const useTLInbox = ({ tenantId, filters, config }) => {
     }})
 }
 
-export default useTLInbox
+export default useCRInbox

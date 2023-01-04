@@ -127,11 +127,8 @@ import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTLPaymentHistory from "./tl/userPaymentHistory";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
 import useCRApplicationActions from "./cr/useApplicationActions";
-// import useTLFetchBill from "./tl/useFetchBill";
-
 import useCRGenderMDMS from "./cr/useCRGenderMDMS";
-// import useTLInbox from "./tl/useInbox";
-// import useTradeLicenseBillingslab from "./tl/useTradeLicenseBillingslab";
+import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
 
@@ -325,6 +322,7 @@ const cr = {
   useCivilRegistrationAPI,
   useCivilRegistrationDeathAPI,
   useCRGenderMDMS,
+  useInbox: useCRInbox,
   useMDMS: useCRMDMS,
   useSearch: useCRSearch,
   useApplicationDetail: useCRApplicationDetail,
@@ -443,6 +441,7 @@ const Hooks = {
   useDocumentSearch,
   useTenants,
   useInbox: useTLInbox,
+  useInboxBirth: useCRInbox,
   pgr,
   fsm,
   pt,
