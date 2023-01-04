@@ -33,7 +33,7 @@ export const DFMModule = ({ stateCode, userType, tenants }) => {
   const { isLoading, data: store } = Digit.Services.useStore({ stateCode, moduleCode, language });
 
   //addComponentsToRegistry();
-  Digit.SessionStorage.set("TL_TENANTS", tenants);
+  Digit.SessionStorage.set("DFM_TENANTS", tenants);
 
   if (userType === "employee") {
     return <EmployeeApp path={path} url={url} userType={userType} />;
