@@ -4,7 +4,7 @@ import { PrivateRoute, BreadCrumb, BackButton } from "@egovernments/digit-ui-rea
 import { useTranslation } from "react-i18next";
 import SearchFlow from "./SearchFlow";
 
-const FileFlowApp = ({ parentUrl }) => {
+const SearchRoute = ({ parentUrl }) => {
   const { path } = useRouteMatch();
   const history = useHistory();
   const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
@@ -28,4 +28,4 @@ const FileFlowApp = ({ parentUrl }) => {
   );
 };
 
-export default FileFlowApp;
+export default SearchRoute;
