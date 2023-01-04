@@ -19,17 +19,17 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
-  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");  
+  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "DocumentType");
-
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
-  const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
+  const [setNationality, setSelectedNationality] = useState(formData?.InformationDeath?.setNationality);
   const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
@@ -107,16 +107,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectTitleB(value) {
     setSelectedTitleB(value);
   }
-  function selectCountry(value) {
-    setSelectedCountry(value);
+  function selectNationality(value) {
+    setSelectedNationality(value);
   }
   function setselectGender(value) {
     selectGender(value);
   }
-  function selectReligion(value) {
-    setSelectedReligion(value);
-  }
-  function setSelectMlLastName(e) {
+   function setSelectMlLastName(e) {
     setMlLastName(e.target.value);
   }
   function setSelectMlMiddleName(e) {
@@ -193,8 +190,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("ToDate", ToDate);
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
-    sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
-    sessionStorage.setItem("setCountry", setReligion ? setReligion.code : null);
+    sessionStorage.setItem("setNationality", setNationality ? setNationality.code : null);
+    sessionStorage.setItem("setReligion", setReligion ? setReligion.code : null);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
@@ -216,7 +213,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       ToDate,
       setTitle,
       setTitleB,
-      setCountry,
+      setNationality,
       setReligion,
       DeathTimeFrom,
       DeathTimeTo,
@@ -551,8 +548,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 optionKey="name"
                 isMandatory={false}
                 option={cmbNation}
-                selected={setCountry}
-                select={selectCountry}
+                selected={setNationality}
+                select={selectNationality}
                 disabled={isEdit}
                 placeholder={`${t("CR_NATIONALITY")}`}
               />

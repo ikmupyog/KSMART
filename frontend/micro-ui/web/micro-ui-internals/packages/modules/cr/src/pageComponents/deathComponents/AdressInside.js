@@ -77,7 +77,7 @@ import React, { useState, useEffect } from "react";
       Village["common-masters"].Village.map((ob) => {
         cmbVillage.push(ob);
       });
-    PostOffice &&
+      District &&
       District["common-masters"] &&
       District["common-masters"].District.map((ob) => {
         cmbDistrict.push(ob);

@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const Address = ({ config, onSelect, userType, formData }) => {
+const AddressPresent = ({ config, onSelect, userType, formData }) => {
  const stateId = Digit.ULBService.getStateId();
  const { t } = useTranslation();
  let validation = {};
@@ -19,45 +19,45 @@ const Address = ({ config, onSelect, userType, formData }) => {
  const [isInitialRender, setIsInitialRender] = useState(true);
  const [lbs, setLbs] = useState(0);
  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
- const [PresentCountry, setPresentCountry] = useState(formData?.AddressDetails?.PresentCountry);
- const [PresentStateName, setPresentStateName] = useState(formData?.AddressDetails?.PresentStateName);
- const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
- const [PresentLBTypeName, setPresentLBTypeName] = useState(formData?.AddressDetails?.PresentLBTypeName);
- const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
- const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
- const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
- const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
- const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressDetails?.PresentHouseNameEn);
- const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressDetails?.PresentHouseNameMl);
- const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressDetails?.PresentBuldingNo);
- const [PresentDoorNo, setPresentDoorNo] = useState(formData?.AddressDetails?.PresentDoorNo);
- const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressDetails?.PresentMainPlaceEn);
- const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressDetails?.PresentMainPlaceMl);
- const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
- const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressDetails?.PresentLocalityNameMl);
- const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressDetails?.PresentStreetNameEn);
- const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressDetails?.PresentStreetNameMl);
- const [PresentVillage, setPresentVillage] = useState(formData?.AddressDetails?.PresentVillage); 
- const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress);
- const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressDetails?.PermanentCountry);
- const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressDetails?.PermanentStateName);
- const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
- const [PermanentLBTypeName, setPermanentLBTypeName] = useState(formData?.AddressDetails?.PermanentLBTypeName);
- const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
- const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressDetails?.PermanentVillage);
- const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
- const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);
- const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
- const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressDetails?.PermanentBuldingNo);
- const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressDetails?.PermanentDoorNo);
- const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressDetails?.PermanentHouseNameEn);
- const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressDetails?.PermanentHouseNameMl);
- const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressDetails?.PermanentMainPlaceEn);
- const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressDetails?.PermanentMainPlaceMl);
- const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressDetails?.PermanentLocalityNameEn);
- const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressDetails?.PermanentLocalityNameMl);
- const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressDetails?.PermanentStreetNameEn);
- const [PermanentStreetNameMl, setPermanentStreetNameMl] = useState(formData?.AddressDetails?.PermanentStreetNameMl);
+ const [PresentCountry, setPresentCountry] = useState(formData?.AddressPresentDetails?.PresentCountry);
+ const [PresentStateName, setPresentStateName] = useState(formData?.AddressPresentDetails?.PresentStateName);
+ const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressPresentDetails?.PresentDistrict);
+ const [PresentLBTypeName, setPresentLBTypeName] = useState(formData?.AddressPresentDetails?.PresentLBTypeName);
+ const [PresentLBName, setPresentLBName] = useState(formData?.AddressPresentDetails?.PresentLBName);
+ const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressPresentDetails?.PresentTaluk);
+ const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressPresentDetails?.PresentPostOffice);
+ const [PresentPincode, setPresentPincode] = useState(formData?.AddressPresentDetails?.PresentPincode);
+ const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressPresentDetails?.PresentHouseNameEn);
+ const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressPresentDetails?.PresentHouseNameMl);
+ const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressPresentDetails?.PresentBuldingNo);
+ const [PresentDoorNo, setPresentDoorNo] = useState(formData?.AddressPresentDetails?.PresentDoorNo);
+ const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressPresentDetails?.PresentMainPlaceEn);
+ const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressPresentDetails?.PresentMainPlaceMl);
+ const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressPresentDetails?.PresentLocalityNameEn);
+ const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressPresentDetails?.PresentLocalityNameMl);
+ const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressPresentDetails?.PresentStreetNameEn);
+ const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressPresentDetails?.PresentStreetNameMl);
+ const [PresentVillage, setPresentVillage] = useState(formData?.AddressPresentDetails?.PresentVillage); 
+ const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressPresentDetails?.isPrsentAddress);
+ const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressPresentDetails?.PermanentCountry);
+ const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressPresentDetails?.PermanentStateName);
+ const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressPresentDetails?.PermanentDistrict);
+ const [PermanentLBTypeName, setPermanentLBTypeName] = useState(formData?.AddressPresentDetails?.PermanentLBTypeName);
+ const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressPresentDetails?.PermanentLBName);
+ const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressPresentDetails?.PermanentVillage);
+ const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressPresentDetails?.PermanentTaluk);
+ const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressPresentDetails?.PermanentPostOffice);
+ const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressPresentDetails?.PermanentPincode);
+ const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressPresentDetails?.PermanentBuldingNo);
+ const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressPresentDetails?.PermanentDoorNo);
+ const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressPresentDetails?.PermanentHouseNameEn);
+ const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressPresentDetails?.PermanentHouseNameMl);
+ const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressPresentDetails?.PermanentMainPlaceEn);
+ const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressPresentDetails?.PermanentMainPlaceMl);
+ const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressPresentDetails?.PermanentLocalityNameEn);
+ const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressPresentDetails?.PermanentLocalityNameMl);
+ const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressPresentDetails?.PermanentStreetNameEn);
+ const [PermanentStreetNameMl, setPermanentStreetNameMl] = useState(formData?.AddressPresentDetails?.PermanentStreetNameMl);
  
  
  let cmbPlace = [];
@@ -65,8 +65,6 @@ const Address = ({ config, onSelect, userType, formData }) => {
  let cmbVillage = [];
  let cmbDistrict = [];
  let cmbPostOffice = [];
- let cmbCountry = [];
- let cmbState = [];
  let districtid = null;
  let cmbLBType = [];
  
@@ -90,19 +88,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
  PostOffice["common-masters"] &&
  PostOffice["common-masters"].PostOffice.map((ob) => {
  cmbPostOffice.push(ob);
- });
- 
- Country &&
- Country["common-masters"] &&
- Country["common-masters"].Country.map((ob) => {
- cmbCountry.push(ob);
- });
- 
- State &&
- State["common-masters"] &&
- State["common-masters"].State.map((ob) => {
- cmbState.push(ob);
- });
+ }); 
 
  LBType &&
  LBType["common-masters"] &&
@@ -112,20 +98,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
  const onSkip = () => onSelect();
 
- function setSelectPresentCountry(value) {
-  setPresentCountry(value);
-  console.log("Country" + cmbCountry);
-  if (isPrsentAddress) {
-  setPermanentCountry(PresentCountry);
-  }
-  }
-  function setSelectPresentStateName(value) {
-  setPresentStateName(value);
-  console.log("StateName" + cmbState);
-  if (isPrsentAddress) {
-  setPermanentStateName(PresentStateName);
-  }
-  }
+ 
   function setSelectPresentDistrict(value) {
     setIsInitialRender(true);
     setPresentDistrict(value);
@@ -238,12 +211,7 @@ function setSelectPresentPincode(e) {
  } 
  
  //Permanent Address Function
- function setSelectPermanentCountry(value) {
-  setPermanentCountry(value);
-  }
-  function setSelectPermanentStateName(value) {
-  setPermanentStateName(value);
-  }
+ 
   function setSelectPermanentDistrict(value) {
   setPermanentDistrict(value);
   districtid = value.districtid
@@ -301,9 +269,7 @@ function setSelectPresentPincode(e) {
 
  function setSameAsPresent(e) {
  setIsPrsentAddress(e.target.checked);
- if (e.target.checked == true) {
- setPermanentCountry(PresentCountry);
- setPermanentStateName(PresentStateName);
+ if (e.target.checked == true) { 
  setPermanentLBTypeName(PresentLBTypeName);
  setPermanentBuldingNo(PresentBuldingNo);
  setPermanentDoorNo(PresentDoorNo);
@@ -322,8 +288,7 @@ function setSelectPresentPincode(e) {
  setPermanentPostOffice(PresentPostOffice);
  setPermanentPincode(PresentPincode);
  } else {
- setPermanentCountry('');
- setPermanentStateName('');
+ 
  setPermanentLBTypeName(' ');
  setPermanentBuldingNo('');
  setPermanentDoorNo('');
@@ -354,8 +319,7 @@ function setSelectPresentPincode(e) {
  }
  }, [lbs, isInitialRender]);
  const goNext = () => {
- sessionStorage.setItem("PresentCountry", PresentCountry.code);
- sessionStorage.setItem("PresentStateName", PresentStateName.code);
+
  sessionStorage.setItem("PresentLBTypeName", PresentLBTypeName.code);
  sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo);
  sessionStorage.setItem("PresentDoorNo", PresentDoorNo);
@@ -373,8 +337,6 @@ function setSelectPresentPincode(e) {
  sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
  sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
  sessionStorage.setItem("PresentPincode", PresentPincode.code);
- sessionStorage.setItem("PermanentCountry", PermanentCountry.code);
- sessionStorage.setItem("PermanentStateName", PermanentStateName.code);
  sessionStorage.setItem("PermanentLBTypeName", PermanentLBTypeName.code);
  sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
  sessionStorage.setItem("PermanentDoorNo", PermanentDoorNo);
@@ -393,10 +355,10 @@ function setSelectPresentPincode(e) {
  sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
  sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
  onSelect(config.key, {
- PresentBuldingNo, PresentDoorNo, PresentHouseNameEn, PresentHouseNameMl, PresentLocalityNameEn, PresentLBTypeName, PresentCountry, PresentStateName, 
+ PresentBuldingNo, PresentDoorNo, PresentHouseNameEn, PresentHouseNameMl, PresentLocalityNameEn, PresentLBTypeName, 
  PresentMainPlaceEn,PresentMainPlaceMl,PresentLocalityNameMl, PresentStreetNameEn, PresentStreetNameMl, PresentVillage, PresentLBName, PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
  PermanentBuldingNo, PermanentDoorNo,PermanentHouseNameEn, PermanentHouseNameMl,PermanentMainPlaceMl,PermanentMainPlaceEn, PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentStreetNameEn, PermanentStreetNameMl, PermanentVillage, PermanentLBName,
- PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode, PermanentCountry, PermanentStateName, PermanentLBTypeName
+ PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode,  PermanentLBTypeName
  });
  }
  return (
@@ -411,35 +373,7 @@ function setSelectPresentPincode(e) {
  </div>
  </div>
 
- <div className="row">
- <div className="col-md-12" >
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbCountry}
- selected={PresentCountry}
- select={setSelectPresentCountry}
- disabled={isEdit}
- />
- </div>
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbState}
- selected={PresentStateName}
- select={setSelectPresentStateName}
- disabled={isEdit}
- />
- </div>
- </div>
- </div>
-
+ 
  <div className="row">
  <div className="col-md-12" >
  <div className="col-md-6" ><CardLabel>{t("CS_COMMON_DISTRICT")}<span className="mandatorycss">*</span></CardLabel>
@@ -538,34 +472,7 @@ function setSelectPresentPincode(e) {
  </div>
  </div>
  
- {/* <div className="row">
- <div className="col-md-12" >
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbState}
- selected={StateName}
- select={setSelectStateName}
- disabled={isEdit}
- />
- </div>
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbCountry}
- selected={MotherCountry}
- select={setSelectMotherCountry}
- disabled={isEdit}
- />
- </div>
- </div>
- </div> */}
+
  
  <div>
  <div className="row">
@@ -580,35 +487,7 @@ function setSelectPresentPincode(e) {
  <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span> </h1>
  </div>
  </div>
- <div className="row">
- <div className="col-md-12" >
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbCountry}
- selected={PermanentCountry}
- select={setSelectPermanentCountry}
- disabled={isEdit}
- />
- </div>
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbState}
- selected={PermanentStateName}
- select={setSelectPermanentStateName}
- disabled={isEdit}
- />
- </div>
- </div>
- </div>
-
+ 
  <div className="row">
  <div className="col-md-12" >
  <div className="col-md-6" ><CardLabel>{t("CS_COMMON_DISTRICT")}<span className="mandatorycss">*</span></CardLabel>
@@ -711,4 +590,4 @@ function setSelectPresentPincode(e) {
  </React.Fragment>
  );
 };
-export default Address;
+export default AddressPresent;
