@@ -96,7 +96,9 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 
-      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!BuildingNo}>
+      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} 
+      // isDisabled={!BuildingNo}
+      >
         <div>
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
           <div className="row">    
@@ -139,7 +141,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   type={"text"}
                   optionKey="i18nKey"
                   name="SubNo"
-                  value={SubNo}
+                  value={BuildingNo}
                   onChange={setSelectedBuildingNo}
                   placeholder={`${t("DFM_BUILDING_NUMBER")}`}
                   {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_BUILDING_NUMBER") })}
@@ -170,7 +172,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   value={HouseName}
                   onChange={setSelectedHouseName}
                   placeholder={`${t("DFM_HOUSE_NAME")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_HOUSE_NAME") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_HOUSE_NAME") })}
                 />
               </div>
             </div>
@@ -186,7 +188,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   value={StreetName}
                   onChange={setSelectedStreetName}
                   placeholder={`${t("DFM_STREET")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_DFM_STREET") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_DFM_STREET") })}
                 />
               </div>
               <div className="col-md-4">

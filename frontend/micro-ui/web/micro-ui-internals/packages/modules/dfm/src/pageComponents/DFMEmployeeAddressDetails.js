@@ -84,156 +84,186 @@ const DFMEmployeeAddressDetails = ({ t, config, onSelect, value, userType, formD
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+    {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 
-      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!WardNo}>
-        <div>
-          <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
-          <div className="row">    
-          <div className="col-md-12" ><h1 className="headingh1" > </h1>
-          </div>  
-          </div>
-
-            <div className="row">
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={config.isMandatory}
-                  option={cmbPostOffice}
-                  selected={WardNo}
-                  placeholder={`${t("DFM_WARD_NO")}`}
-                  select={setSelectedWardNo}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_HOUSE_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="HouseNo"
-                  value={HouseNo}
-                  onChange={setSelectedHouseNo}
-                  placeholder={`${t("DFM_HOUSE_NUMBER")}`}
-                  {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_HOUSE_NUMBER") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_HOUSE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="HouseName"
-                  value={HouseName}
-                  onChange={setSelectedHouseName}
-                  placeholder={`${t("DFM_HOUSE_NAME")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_HOUSE_NAME") })}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_STREET")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="StreetName"
-                  value={StreetName}
-                  onChange={setSelectedStreetName}
-                  placeholder={`${t("DFM_STREET")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_DFM_STREET") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_POST_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={config.isMandatory}
-                  option={cmbPostOffice}
-                  selected={PostOfficeList}
-                  placeholder={`${t("DFM_POST_OFFICE")}`}
-                  select={setSelectedPostOfficeList}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_PINCODE")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="Pincode"
-                  value={Pincode}
-                  onChange={setSelectedPincode}
-                  placeholder={`${t("DFM_PINCODE")}`}
-                  {...(validation = { pattern: "^([0-9]){6}$", isRequired: true, type: "text", title: t("DFM_INVALID_PINCODE") })}
-                />
-              </div>
-
-            </div>
-
-            <div className="row">
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="ResAssociationNo"
-                  value={ResAssociationNo}
-                  onChange={setSelectedResAssociationNo}
-                  placeholder={`${t("DFM_RESASSOCIATION_NUMBER")}`}
-                  {...(validation = {
-                    pattern: "^[a-zA-Z-.0-9`' ]*$",
-                    isRequired: false,
-                    type: "text",
-                    title: t("DFM_INVALID_RESASSOCIATION_NUMBER"),
-                  })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_LOCAL_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="LocalPlace"
-                  value={LocalPlace}
-                  onChange={setSelectedLocalPlace}
-                  placeholder={`${t("DFM_LOCAL_PLACE")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_LOCAL_PLACE") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_MAIN_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="MainPlace"
-                  value={MainPlace}
-                  onChange={setSelectedMainPlace}
-                  placeholder={`${t("DFM_MAIN_PLACE")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_MAIN_PLACE") })}
-                />
-              </div>
-            </div>
-          </div>
-          {/* ); */}
+    <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} 
+    // isDisabled={!BuildingNo}
+    >
+      <div>
+        <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
+        <div className="row">    
+        <div className="col-md-12" ><h1 className="headingh1" > </h1>
+        </div>  
         </div>
-      </FormStep>
-    </React.Fragment>
+
+          <div className="row">
+            {/* <div className="col-md-4">
+              <CardLabel>{`${t("DFM_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={config.isMandatory}
+                option={cmbPostOffice}
+                selected={WardNo}
+                placeholder={`${t("DFM_WARD_NO")}`}
+                select={setSelectedWardNo}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_HOUSE_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="HouseNo"
+                value={HouseNo}
+                onChange={setSelectedHouseNo}
+                placeholder={`${t("DFM_HOUSE_NUMBER")}`}
+                {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_HOUSE_NUMBER") })}
+              />
+            </div> */}
+                <div className="col-md-4">
+              <CardLabel>{`${t("DFM_BUILDING_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="SubNo"
+                value={BuildingNo}
+                onChange={setSelectedBuildingNo}
+                placeholder={`${t("DFM_BUILDING_NUMBER")}`}
+                {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_BUILDING_NUMBER") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_SUB_NUMBER")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="HouseNo"
+                value={SubNo}
+                onChange={setSelectedSubNo}
+                placeholder={`${t("DFM_SUB_NUMBER")}`}
+                {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_SUB_NUMBER") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_HOUSE_NAME")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="HouseName"
+                value={HouseName}
+                onChange={setSelectedHouseName}
+                placeholder={`${t("DFM_HOUSE_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_HOUSE_NAME") })}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_STREET")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="StreetName"
+                value={StreetName}
+                onChange={setSelectedStreetName}
+                placeholder={`${t("DFM_STREET")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_DFM_STREET") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_POST_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={config.isMandatory}
+                option={cmbPostOffice}
+                selected={PostOfficeList}
+                placeholder={`${t("DFM_POST_OFFICE")}`}
+                select={setSelectedPostOfficeList}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_PINCODE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="Pincode"
+                value={Pincode}
+                onChange={setSelectedPincode}
+                placeholder={`${t("DFM_PINCODE")}`}
+                {...(validation = { pattern: "^([0-9]){6}$", isRequired: true, type: "text", title: t("DFM_INVALID_PINCODE") })}
+              />
+            </div>
+
+          </div>
+
+          <div className="row">
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_RESASSOCIATION_NUMBER")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="ResAssociationNo"
+                value={ResAssociationNo}
+                onChange={setSelectedResAssociationNo}
+                placeholder={`${t("DFM_RESASSOCIATION_NUMBER")}`}
+                {...(validation = {
+                  pattern: "^[a-zA-Z-.0-9`' ]*$",
+                  isRequired: false,
+                  type: "text",
+                  title: t("DFM_INVALID_RESASSOCIATION_NUMBER"),
+                })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_LOCAL_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="LocalPlace"
+                value={LocalPlace}
+                onChange={setSelectedLocalPlace}
+                placeholder={`${t("DFM_LOCAL_PLACE")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_LOCAL_PLACE") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_MAIN_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="MainPlace"
+                value={MainPlace}
+                onChange={setSelectedMainPlace}
+                placeholder={`${t("DFM_MAIN_PLACE")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_MAIN_PLACE") })}
+              />
+            </div>
+          </div>
+        </div>
+        {/* ); */}
+      </div>
+    </FormStep>
+  </React.Fragment>
   );
 };
 
