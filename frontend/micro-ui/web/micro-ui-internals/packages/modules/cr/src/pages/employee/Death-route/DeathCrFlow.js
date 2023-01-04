@@ -21,6 +21,7 @@ const DeathCrFlow = ({ path }) => {
     {
       title: "Correction",
       subTitle: "Correction of Registered Death",
+      link: `${path}/correction-search`,
       // img: <FileProtected />, 
     },
     // {

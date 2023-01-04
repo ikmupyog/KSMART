@@ -137,13 +137,13 @@ const CRBreadCrumb = ({ location }) => {
     //   show: breadCrumbUrls.includes("inbox") || isInbox
     // },
  
-    // {
-    //   path: "/digit-ui/employee/tl/search/license",
-    //   content: t("TL_SEARCH_TRADE_HEADER"),
-    //   show: isLicenceSearch || 
-    //   breadCrumbUrls.includes("home/license") || 
-    //   breadCrumbUrls.includes("inbox/license")
-    // },
+    {
+      path: "/digit-ui/employee/cr/search/death-correction",
+      content: t("TL_SEARCH_TRADE_HEADER"),
+      show: isLicenceSearch || 
+      breadCrumbUrls.includes("home/death-correction") || 
+      breadCrumbUrls.includes("inbox/death-correction")
+    },
     
     // {
     //   path: "/digit-ui/employee/tl/new-application",
