@@ -23,16 +23,16 @@ import lombok.Setter;
 public class CertificateRequest {
 
     @JsonProperty("RequestInfo")
-    private RequestInfo requestInfo = null;
+    private RequestInfo requestInfo;
 
     @JsonProperty("CertificateDetails")
-    private List<CertificateDetails> certificateDet;
+    private List<CertificateDetails> certificateDetails;
 
-    public CertificateRequest addCertificateDetails(CertificateDetails certDet) {
-        if (certificateDet == null) {
-            certificateDet = new ArrayList<>();
+    public CertificateRequest addCertificateDetails(CertificateDetails certificateDetail) {
+        if (certificateDetails == null) {
+            certificateDetails = new ArrayList<>();
         }
-        certificateDet.add(certDet);
+        certificateDetails.add(certificateDetail);
 
         return this;
     }

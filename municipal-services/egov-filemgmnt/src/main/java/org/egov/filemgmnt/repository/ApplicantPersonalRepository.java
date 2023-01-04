@@ -16,7 +16,6 @@ import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificates.CertificateDetails.StatusEnum;
 import org.egov.filemgmnt.web.models.certificates.CertificateRequest;
 import org.egov.filemgmnt.web.models.certificates.EgovPdfResp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -39,7 +38,7 @@ public class ApplicantPersonalRepository {
     private final RestTemplate restTemplate;
     private final ApplicantPersonalEnrichment enrichmentService;
 
-    @Autowired
+    // @Autowired
     ApplicantPersonalRepository(JdbcTemplate jdbcTemplate, ApplicantPersonalQueryBuilder queryBuilder,
                                 ApplicantPersonalRowMapper rowMapper, FMConfiguration fmConfig,
                                 RestTemplate restTemplate, ApplicantPersonalEnrichment enrichmentService) {
@@ -123,7 +122,7 @@ public class ApplicantPersonalRepository {
         list.add(certificate);
 
         CertificateRequest certReq = CertificateRequest.builder()
-                                                       .certificateDet(list)
+                                                       .certificateDetails(list)
                                                        .requestInfo(requestInfo)
                                                        .build();
         enrichmentService.enrichCertificateCreate(certReq);

@@ -20,7 +20,7 @@ class JsonMapperConfiguration {
 
     private final FMConfiguration filemgmntConfig;
 
-    @Autowired
+    // @Autowired
     JsonMapperConfiguration(FMConfiguration filemgmntConfig) {
         this.filemgmntConfig = filemgmntConfig;
     }

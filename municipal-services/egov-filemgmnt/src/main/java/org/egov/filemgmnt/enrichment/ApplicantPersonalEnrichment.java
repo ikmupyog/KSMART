@@ -23,7 +23,6 @@ import org.egov.filemgmnt.web.models.ServiceDetails;
 import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificates.CertificateRequest;
 import org.egov.tracer.model.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,7 +41,7 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
     private final FMConfiguration fmConfig;
     private final IdgenUtil idgenUtil;
 
-    @Autowired
+    // @Autowired
     ApplicantPersonalEnrichment(FMConfiguration fmConfig, IdgenUtil idgenUtil) {
         this.fmConfig = fmConfig;
         this.idgenUtil = idgenUtil;
@@ -199,7 +198,7 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
 
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 
-        request.getCertificateDet()
+        request.getCertificateDetails()
                .forEach(cert -> {
                    cert.setId(UUID.randomUUID()
                                   .toString());
@@ -211,7 +210,7 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
 
     private void setCertificateNumber(CertificateRequest request) {
         RequestInfo requestInfo = request.getRequestInfo();
-        List<CertificateDetails> certDetails = request.getCertificateDet();
+        List<CertificateDetails> certDetails = request.getCertificateDetails();
 
         String tenantId = certDetails.get(0)
                                      .getTenantId();
@@ -224,7 +223,7 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
 
         ListIterator<String> itr = certNumbers.listIterator();
 
-        request.getCertificateDet()
+        request.getCertificateDetails()
                .forEach(cert -> {
                    cert.setCertificateNo(itr.next());
                });

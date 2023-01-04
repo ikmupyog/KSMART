@@ -47,7 +47,7 @@ public class ApplicantPersonalService {
     private RestTemplate restTemplate;
 //    private final CertificatePdfApplicationRequest certReq;
 
-    @Autowired
+    // @Autowired
     ApplicantPersonalService(ApplicantPersonalValidator validatorService, ApplicantPersonalEnrichment enrichmentService,
                              ApplicantPersonalRepository repository, Producer producer, MdmsUtil mdmsUtil,
                              FMConfiguration fmConfig, WorkflowIntegrator wfIntegrator
@@ -70,11 +70,12 @@ public class ApplicantPersonalService {
      * @return the list of {@link ApplicantPersonal}
      */
     public List<ApplicantPersonal> create(ApplicantPersonalRequest request) {
-        String tenantId = request.getApplicantPersonals()
-                                 .get(0)
-                                 .getTenantId();
+//        String tenantId = request.getApplicantPersonals()
+//                                 .get(0)
+//                                 .getTenantId();
 
         // validate mdms data
+        String tenantId = "kl";
         Object mdmsData = mdmsUtil.mdmsCall(request.getRequestInfo(), tenantId);
 
         // validate request
@@ -130,6 +131,7 @@ public class ApplicantPersonalService {
     public List<ApplicantPersonal> search(ApplicantPersonalSearchCriteria criteria, RequestInfo requestInfo) {
         validatorService.validateSearch(requestInfo, criteria);
         return repository.getApplicantPersonals(criteria);
+
     }
 
     /**
@@ -143,10 +145,10 @@ public class ApplicantPersonalService {
     public List<CertificateDetails> download(@Valid ApplicantPersonalSearchCriteria criteria, RequestInfo requestInfo) {
         CertificateRequest request;
         request = repository.getResidentialCertificate(criteria, requestInfo);
-        log.info("pdf response " + request.getCertificateDet());
+        log.info("pdf response " + request.getCertificateDetails());
         producer.push(fmConfig.getSaveCertificateTopic(), request);
 
-        return request.getCertificateDet();
+        return request.getCertificateDetails();
 
     }
 }

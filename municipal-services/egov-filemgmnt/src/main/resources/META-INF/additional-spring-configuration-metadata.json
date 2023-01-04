@@ -1,149 +1,179 @@
 {
-  "properties": [
-    {
-      "name": "app.timezone",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "persister.save.applicantpersonal.topic",
-      "type": "java.lang.String",
-      "description": "Applicant personal save topic"
-    },
-    {
-      "name": "persister.update.applicantpersonal.topic",
-      "type": "java.lang.String",
-      "description": "Applicant personal update topic"
-    },
-    {
-      "name": "persister.save.servicedetails.topic",
-      "type": "java.lang.String",
-      "description": "Service details save topic"
-    },
-    {
-      "name": "persister.save.communicationfile.topic",
-      "type": "java.lang.String",
-      "description": "Communication file save topic"
-    },
-    {
-      "name": "persister.update.communicationfile.topic",
-      "type": "java.lang.String",
-      "description": "Communication file update topic"
-    },
-    {
-      "name": "server.context-path",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "kafka.config.bootstrap_server_config",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "kafka.producer.config.retries_config",
-      "type": "java.lang.Long"
-    },
-    {
-      "name": "kafka.producer.config.batch_size_config",
-      "type": "java.lang.Long"
-    },
-    {
-      "name": "kafka.producer.config.linger_ms_config",
-      "type": "java.lang.Long"
-    },
-    {
-      "name": "kafka.producer.config.buffer_memory_config",
-      "type": "java.lang.Long"
-    },
-    {
-      "name": "egov.idgen.host",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.idgen.path",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.idgen.fm.file-code.name",
-      "type": "java.lang.String",
-      "description": "A description for 'egov.idgen.fm.fileCode.name'"
-    },
-    {
-      "name": "egov.idgen.fm.file-code.format",
-      "type": "java.lang.String",
-      "description": "A description for 'egov.idgen.fm.fileCode.format'"
-    },
-    {
-      "name": "egov.mdms.host",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.mdms.search.endpoint",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.mdms.master.name",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.mdms.module.name",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.url.shortner.host",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.url.shortner.endpoint",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "workflow.context.path",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "workflow.transition.path",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.user.host",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.user.context.path",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.user.create.path",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.user.search.path",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "egov.user.update.path",
-      "type": "java.lang.String"
-    },
-    {
-      "name": "citizen.allowed.search.params",
-      "type": "java.lang.String",
-      "description": "A description for 'citizen.allowed.search.params'"
-    },
-    {
-      "name": "employee.allowed.search.params",
-      "type": "java.lang.String",
-      "description": "A description for 'employee.allowed.search.params'"
-    },
-    {
-      "name": "persister.save.certificate.topic",
-      "type": "java.lang.String",
-      "description": "A description for 'persister.save.certificate.topic'"
-    }
-  ],
-  "hints": [{
-    "name": "app.timezone",
-    "values": [{
-      "value": "UTC",
-      "description": "Coordinated Universal Time, (IST, India Standard Time, Asia/Kolkata = UTC+05:30)."
-    }]
-  }]
+    "properties": [
+        {
+            "name": "app.timezone",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "persister.save.applicantpersonal.topic",
+            "type": "java.lang.String",
+            "description": "Applicant personal save topic"
+        },
+        {
+            "name": "persister.update.applicantpersonal.topic",
+            "type": "java.lang.String",
+            "description": "Applicant personal update topic"
+        },
+        {
+            "name": "persister.save.servicedetails.topic",
+            "type": "java.lang.String",
+            "description": "Service details save topic"
+        },
+        {
+            "name": "persister.save.communicationfile.topic",
+            "type": "java.lang.String",
+            "description": "Communication file save topic"
+        },
+        {
+            "name": "persister.update.communicationfile.topic",
+            "type": "java.lang.String",
+            "description": "Communication file update topic"
+        },
+        {
+            "name": "persister.save.certificate.topic",
+            "type": "java.lang.String",
+            "description": "A description for 'persister.save.certificate.topic'"
+        },
+        {
+            "name": "server.context-path",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "kafka.config.bootstrap_server_config",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "kafka.producer.config.retries_config",
+            "type": "java.lang.Long"
+        },
+        {
+            "name": "kafka.producer.config.batch_size_config",
+            "type": "java.lang.Long"
+        },
+        {
+            "name": "kafka.producer.config.linger_ms_config",
+            "type": "java.lang.Long"
+        },
+        {
+            "name": "kafka.producer.config.buffer_memory_config",
+            "type": "java.lang.Long"
+        },
+        {
+            "name": "egov.idgen.host",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.idgen.path",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.idgen.fm.file-code.name",
+            "type": "java.lang.String",
+            "description": "A description for 'egov.idgen.fm.fileCode.name'"
+        },
+        {
+            "name": "egov.idgen.fm.file-code.format",
+            "type": "java.lang.String",
+            "description": "A description for 'egov.idgen.fm.fileCode.format'"
+        },
+        {
+            "name": "egov.idgen.fm.cerificatenumber.name",
+            "type": "java.lang.String",
+            "description": "A description for 'egov.idgen.fm.cerificatenumber.name'"
+        },
+        {
+            "name": "egov.idgen.fm.cerificatenumber.format",
+            "type": "java.lang.String",
+            "description": "A description for 'egov.idgen.fm.cerificatenumber.format'"
+        },
+        {
+            "name": "egov.mdms.host",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.mdms.search.endpoint",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.mdms.master.name",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.mdms.module.name",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.url.shortner.host",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.url.shortner.endpoint",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "workflow.context.path",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "workflow.transition.path",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.user.host",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.user.context.path",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.user.create.path",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.user.search.path",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.user.update.path",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.pdfservice.host",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.pdf.residentialcert.create-end-point",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.ui.app.host",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "egov.fm.residentialcert.link",
+            "type": "java.lang.String"
+        },
+        {
+            "name": "citizen.allowed.search.params",
+            "type": "java.lang.String",
+            "description": "A description for 'citizen.allowed.search.params'"
+        },
+        {
+            "name": "employee.allowed.search.params",
+            "type": "java.lang.String",
+            "description": "A description for 'employee.allowed.search.params'"
+        }
+    ],
+    "hints": [
+        {
+            "name": "app.timezone",
+            "values": [
+                {
+                    "value": "UTC",
+                    "description": "Coordinated Universal Time, (IST, India Standard Time, Asia/Kolkata = UTC+05:30)."
+                }
+            ]
+        }
+    ]
 }
