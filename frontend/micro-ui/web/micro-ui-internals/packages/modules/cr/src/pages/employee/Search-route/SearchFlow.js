@@ -33,7 +33,7 @@ const SearchFlow = ({ path }) => {
     <div>
       <div className="fileText">
         {" "}
-        <CardLabel style={{fontSize: "15px",fontWeight: "400",marginBottom: "-18px"}}>{t("Select Functional Modules")}</CardLabel>
+        <CardLabel style={{fontSize: "15px",fontWeight: "400",marginBottom: "-18px"}}>{t("Select Application Type")}</CardLabel>
         {/* <h3>Select Functional Modules</h3> */}
       </div>
       <div className="FileFlowWrapper">

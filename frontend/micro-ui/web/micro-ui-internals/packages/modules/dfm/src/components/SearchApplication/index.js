@@ -68,10 +68,11 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
 
     //need to get from workflow
     const GetCell = (value) => <span className="cell-text">{value}</span>;
+    
     const columns = useMemo( () => ([
         {
           Header: t("TL_COMMON_TABLE_COL_APP_NO"),
-          accessor: "applicationNo",
+          accessor: 'fileCode',
           disableSortBy: true,
           Cell: ({ row }) => {
             return (
@@ -90,38 +91,48 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
             disableSortBy: true,
             accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
         },
+        // {
+        //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+        //     disableSortBy: true,
+        //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+        // },
+        // {
+        //     Header: t("TL_LICENSE_NUMBERL_LABEL"),
+        //     disableSortBy: true,
+        //     accessor: (row) => GetCell(row.licenseNumber || "-"),
+        // },
+        // {
+        //   Header: t("TL_LICENSE_YEAR_LABEL"),
+        //   disableSortBy: true,
+        //   accessor: (row) => GetCell(row.financialYear),
+        // },
         {
-            Header: t("TL_APPLICATION_TYPE_LABEL"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
-        },
-        {
-            Header: t("TL_LICENSE_NUMBERL_LABEL"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.licenseNumber || "-"),
-        },
-        {
-          Header: t("TL_LICENSE_YEAR_LABEL"),
+          Header: t("Applicant Name"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.financialYear),
+          accessor: (row) => GetCell(row.firstName + row.lastName|| ""),
         },
         {
-          Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+          Header: t("House Name"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.tradeName || ""),
+          accessor: (row) => GetCell(row.applicantAddress.houseName || ""),
         },
         {
-          Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
-          accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+          Header: t("Mobile No"),
           disableSortBy: true,
+          accessor: (row) => GetCell(row.mobileNo || ""),
         },
-        {
-          Header: t("TL_COMMON_TABLE_COL_STATUS"),
-          accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
-          disableSortBy: true,
-        }
+        // {
+        //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+        //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+        //   disableSortBy: true,
+        // },
+        // {
+        //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+        //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+        //   disableSortBy: true,
+        // }
       ]), [] )
-
+      console.log("Jetheesh" + data?.display);
     return <React.Fragment>
                 
                 <div style={mystyle}>
