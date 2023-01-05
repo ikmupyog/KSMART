@@ -26,6 +26,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   const [OwnerMobileNo, setOwnerMobileNo] = useState(formData?.ServiceDet?.OwnerMobileNo);
   const [BuldingNo, setBuldingNo] = useState(formData?.ServiceDet?.BuldingNo);
   const [NameOccupier, setNameOccupier] = useState(formData?.ServiceDet?.NameOccupier);
+  const [NameOccupierMal, setNameOccupierMal] = useState(formData?.ServiceDet?.NameOccupierMal);
   const [ResidenceDurationYr, setResidenceDurationYr] = useState(formData?.ServiceDet?.ResidenceDurationYr);
   const [ResidenceDurationMon, setResidenceDurationMon] = useState(formData?.ServiceDet?.ResidenceDurationMon);
   // const [ResidenceDuration, setResidenceDuration] = useState(formData?.ServiceDet?.ResidenceDuration);
@@ -55,6 +56,9 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   function setSelectedNameOccupier(e) {
     setNameOccupier(e.target.value);
   }
+  function setSelectedNameOccupierMal(e) {
+    setNameOccupierMal(e.target.value);
+  }
   function setSelectedResidenceDuration(e) {
     setAadharNo(e.target.value);
   }
@@ -81,10 +85,11 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     sessionStorage.setItem("OwnerMobileNo", OwnerMobileNo);
     sessionStorage.setItem("BuldingNo", BuldingNo);
     sessionStorage.setItem("NameOccupier", NameOccupier);
+    sessionStorage.setItem("NameOccupierMal", NameOccupierMal);
     sessionStorage.setItem("ResidenceDuration", ResidenceDuration);
     sessionStorage.setItem("ServiceDetailsTxt", ServiceDetailsTxt);
     onSelect(config.key, {
-      BuldingNo,WardNo,OwnerName,OwnerNameMal,OwnerAddress,OwnerNameMal,OwnerMobileNo, NameOccupier, ResidenceDuration, ServiceDetailsTxt });
+      BuldingNo,WardNo,OwnerName,OwnerNameMal,OwnerAddress,OwnerNameMal,OwnerMobileNo, NameOccupier,NameOccupierMal, ResidenceDuration, ServiceDetailsTxt });
   };
 
   return (
@@ -191,7 +196,15 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="NameOccupier"
              value={NameOccupier} onChange={setSelectedNameOccupier}  placeholder={`${t("DFM_NAME_OCCUPIER")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER") })} />
           </div>
-          <div className="col-md-4" ><CardLabel>{t("DFM_DURATION_RESIDENCE")}<span className="mandatorycss">*</span></CardLabel>
+          <div className="col-md-4" ><CardLabel>{t("DFM_NAME_OCCUPIER_MAL")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="NameOccupierMal"
+             value={NameOccupierMal} onChange={setSelectedNameOccupierMal}  placeholder={`${t("DFM_NAME_OCCUPIER_MAL")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER_MAL") })} />
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12">
+        <div className="col-md-4" ><CardLabel>{t("DFM_DURATION_RESIDENCE")}<span className="mandatorycss">*</span></CardLabel>
          <div className="residenceDurationWraper">
          <label>Years</label>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ResidenceDurationYr" 
@@ -201,9 +214,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
             value={ResidenceDurationMon}  onChange={setSelectedResidenceDurationMon} placeholder={`${t("MONTH")}`}  {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_DURATION_RESIDENCE_MONTH") })} />
          </div>
           </div>
-         
-          
-        </div>
+        </div> 
       </div>
   
         </div>
