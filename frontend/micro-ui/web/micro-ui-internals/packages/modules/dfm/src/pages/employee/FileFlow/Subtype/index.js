@@ -154,6 +154,13 @@ selectOptions={functionalityOptions}
 <div ><CardLabel>{`${t("Minor Function")}`}<span className="mandatorycss">*</span></CardLabel>
   <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMinorFunction} selected={MinorFunctionDet} select={setSelectMinorFunctionDet} />
 </div>
+<div>
+  <CardLabel>{`${t("Major Function")}`}<span className="mandatorycss">*</span></CardLabel>
+    <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMajorFunction} selected={MajorFunctionDet} select={setSelectMajorFunctionDet} />
+</div>
+ <div ><CardLabel>{`${t("Sub Function")}`}<span className="mandatorycss">*</span></CardLabel>
+  <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbSubFunction} selected={SubFunctionDet} select={setSelectSubFunctionDet} />
+  </div>
 {showError ? <CardLabelError>{t("DFM_SELECT_FIELDS")}</CardLabelError> : null}
 <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} />
 </div>
