@@ -1153,6 +1153,21 @@ const getCROtherPlaceList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRIdProofList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "IdProof",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRInstitutionIdList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1861,6 +1876,8 @@ const transformResponse = (type, MdmsRes, moduleCode, tenantId) => {
       return HRGenderType(MdmsRes);
     case "DocumentTypes":
       return GetDocumentsTypes(MdmsRes);
+      case "IdProof":
+      return GetIdProof(MdmsRes);
     case "CheckList":
       return GetChecklist(MdmsRes);
     case "FSMGenderType":
@@ -2003,6 +2020,9 @@ export const MdmsService = {
   getCRDocumentType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDocumentTypeList(tenantId, moduleCode), moduleCode);
   },
+  getCRDocumentType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRDocumentTypeList(tenantId, moduleCode), moduleCode);
+  },
   getCRPlaceMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRPlaceMasterList(tenantId, moduleCode), moduleCode);
   },
@@ -2086,6 +2106,9 @@ export const MdmsService = {
   },
   getCRDocumentTypeB: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDocumentTypeBlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRIdProof: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRIdProofList(tenantId, moduleCode), moduleCode);
   },
   getCRMaleDependent: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRMaleDependentlist(tenantId, moduleCode), moduleCode);

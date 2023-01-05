@@ -108,7 +108,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
 
 
   const goNext = () => {
-    sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
+    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
     // sessionStorage.setItem("Religion", setReligion ? setReligion.code : null);
     sessionStorage.setItem("Country", setCountry ? setCountry.code : null);    
     sessionStorage.setItem("StateName", setStateName ? setStateName.code : null);
@@ -123,7 +123,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     
 
     onSelect(config.key, {
-      setPlaceofActivity,
+      // setPlaceofActivity,
       // setReligion,
       setOccupationMain,
       OccupationOthers,
@@ -328,7 +328,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
               onChange={SelectOccupationOthers}
               disable={isEdit}
               placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
             />
           </div>
           </div>
