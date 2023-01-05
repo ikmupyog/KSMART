@@ -132,7 +132,6 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         //   disableSortBy: true,
         // }
       ]), [] )
-      console.log("Jetheesh" + data?.display);
     return <React.Fragment>
                 
                 <div style={mystyle}>
