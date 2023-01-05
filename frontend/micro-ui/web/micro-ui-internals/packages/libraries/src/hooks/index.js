@@ -131,7 +131,7 @@ import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
-
+import useSearchDeath  from "./cr/useSearchDeath";
 import useTenantsDFM from "./dfm/useTenants";
 import useFileManagmentMDMS from "./dfm/useFileManagmentMDMS";
 import useFileManagmentAPI from "./dfm/useFileManagmentAPI";
@@ -325,6 +325,7 @@ const cr = {
   useInbox: useCRInbox,
   useMDMS: useCRMDMS,
   useSearch: useCRSearch,
+  useSearchDeath ,
   useApplicationDetail: useCRApplicationDetail,
   useApplicationActions: useCRApplicationActions,
 };
