@@ -36,11 +36,11 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
 
     return <>
         <SearchField>
-            <label>{t("TL_HOME_SEARCH_RESULTS_APP_NO_LABEL")}</label>
+            <label>{t("File No")}</label>
             <TextInput name="fileCode" inputRef={register({})} />
         </SearchField>
         {applicationTypesLoading ? <Loader/> : <SearchField>
-            <label>{t("TL_LOCALIZATION_APPLICATION_TYPE")}</label>
+            <label>{t("File Type")}</label>
             <Controller
            
                     control={control}
@@ -67,7 +67,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                 />
         </SearchField>
         <SearchField>
-            <label style={mystyle}>{t("TL_TRADE_LICENCE_TO_DATE")}</label>
+            <label style={mystyle}>{t("DFM_TO_DATE")}</label>
             <Controller
                 render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
                 name="toDate"
@@ -75,11 +75,15 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                 />
         </SearchField>
         <SearchField>
-            <label>{t("TL_TRADE_LICENSE_LABEL")}</label>
-            <TextInput  name="licenseNumbers" inputRef={register({})}/>
+            <label>{t("Service Name")}</label>
+            <TextInput  name="serviceName" inputRef={register({})}/>
+        </SearchField>
+        <SearchField>
+            <label>{t("Application Name")}</label>
+            <TextInput  name="applicationName" inputRef={register({})}/>
         </SearchField>
         { isLoading ? <Loader/> : <SearchField>
-            <label>{t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL")}</label>
+            <label>{t("Status")}</label>
             <Controller
                     control={control}
                     name="status"
@@ -95,10 +99,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                     )}
             />
         </SearchField>}
-        <SearchField>
-            <label>{t("TL_LOCALIZATION_TRADE_NAME")}</label>
-            <TextInput  name="tradeName" inputRef={register({})}/>
-        </SearchField>
+        
         <SearchField className="submit">
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
             <p onClick={() => {
