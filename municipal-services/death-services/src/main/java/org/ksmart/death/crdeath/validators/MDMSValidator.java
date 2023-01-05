@@ -78,10 +78,10 @@ public class MDMSValidator {
 
 
         // if(request.getDeathCertificateDtls().get(0).getFemaleDependentType() != null) {
-            if(!masterData.get(CrDeathConstants.FEMALE_DEPENDENT_TYPE)
-                                    .contains(request.getDeathCertificateDtls().get(0).getFemaleDependentType()))
-                        errorMap.put("FEMALE DEPENDENT INVALID", "The deceased mother details " +
-                                        request.getDeathCertificateDtls().get(0).getFemaleDependentType()+ " is invalid");
+            // if(!masterData.get(CrDeathConstants.FEMALE_DEPENDENT_TYPE)
+            //                         .contains(request.getDeathCertificateDtls().get(0).getFemaleDependentType()))
+            //             errorMap.put("FEMALE DEPENDENT INVALID", "The deceased mother details " +
+            //                             request.getDeathCertificateDtls().get(0).getFemaleDependentType()+ " is invalid");
 
         // }
 

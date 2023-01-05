@@ -67,15 +67,15 @@ public class RegistryMDMSValidator {
 
         if(!masterData.get(CrDeathRegistryConstants.MALE_DEPENDENT_TYPE)
                                 .contains(request.getDeathCertificateDtls().get(0).getMaleDependentType()))
-                    errorMap.put("MALE DEPENDENT INVALID", "The deceased father/husband/son details " +
+                    errorMap.put("MALE DEPENDENT INVALID", "The deceased father/husband details " +
                                     request.getDeathCertificateDtls().get(0).getMaleDependentType()+ " is invalid");
 
 
         // if(request.getDeathCertificateDtls().get(0).getFemaleDependentType() != null) {
-            if(!masterData.get(CrDeathRegistryConstants.FEMALE_DEPENDENT_TYPE)
-                                    .contains(request.getDeathCertificateDtls().get(0).getFemaleDependentType()))
-                        errorMap.put("FEMALE DEPENDENT INVALID", "The deceased mother/wife/daughter details " +
-                                        request.getDeathCertificateDtls().get(0).getFemaleDependentType()+ " is invalid");
+            // if(!masterData.get(CrDeathRegistryConstants.FEMALE_DEPENDENT_TYPE)
+            //                         .contains(request.getDeathCertificateDtls().get(0).getFemaleDependentType()))
+            //             errorMap.put("FEMALE DEPENDENT INVALID", "The deceased mother/wife/daughter details " +
+            //                             request.getDeathCertificateDtls().get(0).getFemaleDependentType()+ " is invalid");
 
         // }
 

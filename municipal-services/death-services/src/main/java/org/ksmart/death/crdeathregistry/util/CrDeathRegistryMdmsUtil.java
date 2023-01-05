@@ -154,9 +154,9 @@ public class CrDeathRegistryMdmsUtil {
                                           .add(MasterDetail.builder().name(CrDeathRegistryConstants.MALE_DEPENDENT_TYPE).filter(filterCodeMaleDependentType).build());
        
 
-        final String filterCodeFemaleDependentType = "$.[?(@.active==true)].code";
-                                          crDeathMasterDetails
-                                                     .add(MasterDetail.builder().name(CrDeathRegistryConstants.FEMALE_DEPENDENT_TYPE).filter(filterCodeFemaleDependentType).build());
+        // final String filterCodeFemaleDependentType = "$.[?(@.active==true)].code";
+        //                                   crDeathMasterDetails
+        //                                              .add(MasterDetail.builder().name(CrDeathRegistryConstants.FEMALE_DEPENDENT_TYPE).filter(filterCodeFemaleDependentType).build());
 
         final String filterCodeAgeUnit = "$.[?(@.active==true)].code";
                                           crDeathMasterDetails
