@@ -33,11 +33,6 @@ public class MDMSValidator {
                             ,CrDeathConstants.HOSPITAL_LIST,CrDeathConstants.DEATH_PLACE};
         validateIfMasterPresent(masterArray,masterData);
 
-        // System.out.println("hairakhi4"+masterData.get(CrDeathConstants.TENANTS));
-        // System.out.println("rakhi1"+request.getDeathCertificateDtls().get(0).getTenantId());
-        // System.out.println("resultcompare:"+masterData.get(CrDeathConstants.TENANTS)
-        // .contains(request.getDeathCertificateDtls().get(0).getTenantId()));
-
         if(!masterData.get(CrDeathConstants.TENANTS)
                 .contains(request.getDeathCertificateDtls().get(0).getTenantId()))
         errorMap.put("INVALID TENAND ID", "The tenand id  "+ request.getDeathCertificateDtls().get(0).getTenantId() +

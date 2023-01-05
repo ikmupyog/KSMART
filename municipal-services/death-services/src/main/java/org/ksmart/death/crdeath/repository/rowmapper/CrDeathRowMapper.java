@@ -109,7 +109,9 @@ public class CrDeathRowMapper implements ResultSetExtractor<List<CrDeathDtl>>, B
                                         .deathSignedOfficerDesignation(rs.getString("death_signed_officer_designation"))
                                         .deathSignedOfficerMob(rs.getString("death_place_officer_mobile"))
                                         .deathSignedOfficerAadhaar(rs.getString("death_place_officer_aadhaar"))
-                                        .deseasedPassportNo(rs.getString("deseased_passportno"))
+                                        //.deseasedPassportNo(rs.getString("deseased_passportno"))
+                                        .deceasedIdproofNo(rs.getString("deceased_idproofno"))
+                                        .deceasedIdproofType(rs.getString("deceased_idprooftype"))
                                         .deathApplicationNo(rs.getString("application_no"))
                                         .deathACKNo(rs.getString("ack_no"))   
                                         .auditDetails(getAuditDetails(rs))
@@ -117,6 +119,7 @@ public class CrDeathRowMapper implements ResultSetExtractor<List<CrDeathDtl>>, B
                                         .statisticalInfo(rowMapper.extractData(rs))
                                         //Jasmine
                                         .addressInfo(getCrDeathAddressInfo(rs))
+             
                                         .build());
             
         }
