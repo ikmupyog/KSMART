@@ -111,205 +111,289 @@ const DFMEmployeeApplicationDetails = ({ t, config, onSelect, value, userType, f
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline /> : null}
+    {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline /> : null}
 
-      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!Title} >
-        <div>
-          <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "grid" }}>
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}`}</span>
-                </h1>
-              </div>
-            </div>
-            <div className="row">
-            <div className="col-md-4">
-                {/* <SearchIconSvg className="signature-img" /> */}
-                <CardLabel>{`${t("DFM_TITLE")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={config.isMandatory}
-                  option={cmbTitle}
-                  selected={Title}
-                  placeholder={`${t("DFM_TITLE")}`}
-                  select={setselectTitle}                      
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="FirstName"
-                  value={FirstName}
-                  onChange={setSelectFirstNameEn}
-                  placeholder={`${t("DFM_FIRST_NAME")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_FIRST_NAME") })}
-                />
-              </div>
-
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t}  isMandatory={false} type={"text"} optionKey="i18nKey" name="LastName" placeholder={`${t("DFM_LAST_NAME")}`}
-                  value={LastName}
-                  onChange={setSelectLastName}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME") })}
-                />
-              </div>
-            </div>
-            <div className="row">
-            <div className="col-md-4">
-                <CardLabel>{`${t("DFM_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="AadharNo"
-                  value={AadharNo}
-                  onChange={setSelectAadharNo}
-                  placeholder={`${t("DFM_AADHAR_NO")}`}
-                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("DFM_INVALID_AADHAR_NO") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_EMAIL")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"email"}
-                  optionKey="i18nKey"
-                  name="Email"
-                  value={Email}
-                  onChange={setSelectEmail}
-                  placeholder={`${t("DFM_EMAIL")}`}
-                  {...(validation = { pattern: "^(.+)@(.+)$", isRequired: true, type: "email", title: t("DFM_INVALID_EMAIL") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="MobileNo"
-                  value={MobileNo}
-                  onChange={setSelectMobileNo}
-                  placeholder={`${t("DFM_MOBILE_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "text", title: t("DFM_INVALID_MOBILE_NO") })}
-                />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_DOB")}`}<span className="mandatorycss">*</span></CardLabel>
-                <DatePicker
-                  date={DateofBirth}
-                  name="DateofBirth"
-                  onChange={setSelectDateofBirth}
-                  // disabled={isEdit}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_FATHER_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="FatherFirstName"
-                  value={FatherFirstName}
-                  onChange={setSelectFatherFirstName}
-                  placeholder={`${t("DFM_FATHER_FIRST_NAME")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_FATHER_FIRST_NAME") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_FATHER_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="FatherLastName"
-                  value={FatherLastName}
-                  onChange={setSelectFatherLastName}
-                  placeholder={`${t("DFM_FATHER_LAST_NAME")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_FATHER_LAST_NAME") })}
-                />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_MOTHER_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="MotherFirstName"
-                  value={MotherFirstName}
-                  placeholder={`${t("DFM_MOTHER_FIRST_NAME")}`}
-                  onChange={setSelectMotherFirstName}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_MOTHER_FIRST_NAME") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_MOTHER_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="MotherLastName"
-                  value={MotherLastName}
-                  onChange={setSelectMotherLastName}
-                  placeholder={`${t("DFM_MOTHER_LAST_NAME")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_MOTHER_LAST_NAME") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("DFM_CATRGORY")}`}</CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={config.isMandatory}
-                  option={cmbCategory}
-                  selected={CategoryList}
-                  select={setselectCategoryList}
-                  placeholder={`${t("DFM_CATRGORY")}`}
-                />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-6">
-                <CardLabel>{`${t("DFM_BANK_ACCOUNT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="AccountNo"
-                  value={AccountNo}
-                  onChange={setSelectAccountNo}
-                  placeholder={`${t("DFM_BANK_ACCOUNT_NO")}`}
-                  {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_ACCOUNT_NO") })}
-                />
-              </div>
+    <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} 
+    // isDisabled={!Title} 
+    >
+      <div>
+        <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "grid" }}>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("DFM_APPLICATION_DETAILS_TEXT")}`}</span>
+              </h1>
             </div>
           </div>
-          {/* ); */}
+          <div className="row">
+          <div className="col-md-4">
+              <CardLabel>{`${t("DFM_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="AadharNo"
+                value={AadharNo}
+                onChange={setSelectAadharNo}
+                placeholder={`${t("DFM_AADHAR_NO")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("DFM_INVALID_AADHAR_NO") })}
+              />
+          </div>
+          <div className="col-md-4">
+              {/* <SearchIconSvg className="signature-img" /> */}
+              <CardLabel>{`${t("DFM_TITLE")}`}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={config.isMandatory}
+                option={cmbTitle}
+                selected={Title}
+                placeholder={`${t("DFM_TITLE")}`}
+                select={setselectTitle}                      
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_FIRST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="FirstName"
+                value={FirstName}
+                onChange={setSelectFirstNameEn}
+                placeholder={`${t("DFM_FIRST_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_FIRST_NAME") })}
+              />
+            </div>
+          </div>
+          <div className="row">
+          <div className="col-md-4">
+              <CardLabel>{`${t("DFM_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t}  isMandatory={false} type={"text"} optionKey="i18nKey" name="LastNameMal" placeholder={`${t("DFM_LAST_NAME")}`}
+                value={LastNameMal}
+                onChange={setSelectLastNameMal}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_FIRST_NAME_MALAYALAM")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="FirstNameMal"
+                value={FirstNameMal}
+                onChange={setSelectFirstNameMal}
+                placeholder={`${t("DFM_FIRST_NAME_MALAYALAM")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_FIRST_NAME_MALAYALAM") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_LAST_NAME_MALAYALAM")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t}  isMandatory={false} type={"text"} optionKey="i18nKey" name="LastNameMal" placeholder={`${t("DFM_LAST_NAME_MALAYALAM")}`}
+                value={LastName}
+                onChange={setSelectLastName}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME_MALAYALAM") })}
+              />
+            </div>
+          </div>
+
+          <div className="row">
+          <div className="col-md-4">
+              <CardLabel>{`${t("DFM_EMAIL")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"email"}
+                optionKey="i18nKey"
+                name="Email"
+                value={Email}
+                onChange={setSelectEmail}
+                placeholder={`${t("DFM_EMAIL")}`}
+                {...(validation = { pattern: "^(.+)@(.+)$", isRequired: false, type: "email", title: t("DFM_INVALID_EMAIL") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="MobileNo"
+                value={MobileNo}
+                onChange={setSelectMobileNo}
+                placeholder={`${t("DFM_MOBILE_NO")}`}
+                {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "text", title: t("DFM_INVALID_MOBILE_NO") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_DOB")}`}</CardLabel>
+              <DatePicker
+                date={DateofBirth}
+                name="DateofBirth"
+                onChange={setSelectDateofBirth}
+                // disabled={isEdit}
+              />
+            </div>
+          
+          </div>
+
+          <div className="row">
+          <div className="col-md-4">
+              <CardLabel>{`${t("DFM_FATHER_FIRST_NAME")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="FatherFirstName"
+                value={FatherFirstName}
+                onChange={setSelectFatherFirstName}
+                placeholder={`${t("DFM_FATHER_FIRST_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_FATHER_FIRST_NAME") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_FATHER_LAST_NAME")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="FatherLastName"
+                value={FatherLastName}
+                onChange={setSelectFatherLastName}
+                placeholder={`${t("DFM_FATHER_LAST_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_FATHER_LAST_NAME") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_FATHER_FIRST_NAME_MALAYALAM")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="FatherFirstNameMal"
+                value={FatherFirstNameMal}
+                onChange={setSelectFatherFirstNameMal}
+                placeholder={`${t("DFM_FATHER_FIRST_NAME_MALAYALAM")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_FATHER_FIRST_NAME_MALAYALAM") })}
+              />
+            </div>
+          </div>
+          <div className="row">
+          <div className="col-md-4">
+              <CardLabel>{`${t("DFM_FATHER_LAST_NAME_MALAYALAM")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="FatherLastNameMal"
+                value={FatherLastNameMal}
+                onChange={setSelectFatherLastNameMal}
+                placeholder={`${t("DFM_FATHER_LAST_NAME_MALAYALAM")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_FATHER_LAST_NAME_MALAYALAM") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_MOTHER_FIRST_NAME")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="MotherFirstName"
+                value={MotherFirstName}
+                placeholder={`${t("DFM_MOTHER_FIRST_NAME")}`}
+                onChange={setSelectMotherFirstName}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_MOTHER_FIRST_NAME") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_MOTHER_LAST_NAME")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="MotherLastName"
+                value={MotherLastName}
+                onChange={setSelectMotherLastName}
+                placeholder={`${t("DFM_MOTHER_LAST_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_MOTHER_LAST_NAME") })}
+              />
+            </div>
+          </div>
+          <div className="row">
+          <div className="col-md-4">
+              <CardLabel>{`${t("DFM_MOTHER_FIRST_NAME_MALAYALAM")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="MotherFirstNameMal"
+                value={MotherFirstNameMal}
+                placeholder={`${t("DFM_MOTHER_FIRST_NAME_MALAYALAM")}`}
+                onChange={setSelectMotherFirstNameMal}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_MOTHER_FIRST_NAME_MALAYALAM") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_MOTHER_LAST_NAME_MALAYALAN")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="MotherLastNameMal"
+                value={MotherLastNameMal}
+                onChange={setSelectMotherLastNameMal}
+                placeholder={`${t("DFM_MOTHER_LAST_NAME_MALAYALAN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_MOTHER_LAST_NAME_MALAYALAM") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_CATRGORY")}`}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={config.isMandatory}
+                option={cmbCategory}
+                selected={CategoryList}
+                select={setselectCategoryList}
+                placeholder={`${t("DFM_CATRGORY")}`}
+              />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-4">
+              <CardLabel>{`${t("DFM_BANK_ACCOUNT_NO")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="AccountNo"
+                value={AccountNo}
+                onChange={setSelectAccountNo}
+                placeholder={`${t("DFM_BANK_ACCOUNT_NO")}`}
+                {...(validation = { pattern: "^[0-9 ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_ACCOUNT_NO") })}
+              />
+            </div>
+          </div>
         </div>
-      </FormStep>
-    </React.Fragment>
+        {/* ); */}
+      </div>
+    </FormStep>
+  </React.Fragment>
   );
 };
 

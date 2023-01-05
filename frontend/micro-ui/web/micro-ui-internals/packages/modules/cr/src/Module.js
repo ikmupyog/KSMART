@@ -48,11 +48,12 @@ import InformentAddress from "./pageComponents/deathComponents/InformentAddress"
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
-import CRSearch from './pages/employee/Search';
-import SearchCrApplication from "./components/SearchApplication"
-import CRApplicationDetails from './pages/employee/ApplicationDetails'
+import CRSearch from "./pages/employee/Search";
+import SearchCrApplication from "./components/SearchApplication";
+import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
-
+import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
+import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
 import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
@@ -149,6 +150,8 @@ const componentsToRegister = {
 
 
   //////////////////
+  CRDeathcorrection,
+  CRSearchdeathcorrection,
   InformationDeath,
   AddressOfDecesed,
   OutSideIndia,

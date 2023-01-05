@@ -9,10 +9,10 @@ const SearchFields = ({register, control, reset, tenantId }) => {
 
     return <>
         <SearchField>
-            <label>{t("TL_TRADE_LICENSE_LABEL")}</label>
-            <TextInput name="licenseNumbers" inputRef={register({})} />
+            <label>{t("CR_REG_NO")}</label>
+            <TextInput name="registrationNumbers" inputRef={register({})} />
         </SearchField>
-        <SearchField>
+        {/* <SearchField>
             <label>{t("TL_TRADE_OWNER_S_NUMBER_LABEL")}</label>
             <TextInput name="mobileNumber" inputRef={register({})} 
             type="mobileNumber"
@@ -23,9 +23,9 @@ const SearchFields = ({register, control, reset, tenantId }) => {
                 type: "tel",
                 title: t("CORE_COMMON_APPLICANT_MOBILE_NUMBER_INVALID"),
             })}/>
-        </SearchField>
+        </SearchField> */}
         <SearchField>
-            <label>{t("TL_SEARCH_TRADE_LICENSE_ISSUED_FROM")}</label>
+            <label>{t("CR_SEARCH_APPLICATION_ISSUED_FROM")}</label>
             <Controller
                 render={(props) => <DatePicker date={props.value} onChange={props.onChange} />}
                 name="fromDate"
@@ -33,7 +33,7 @@ const SearchFields = ({register, control, reset, tenantId }) => {
             />
         </SearchField>
         <SearchField>
-            <label>{t("TL_SEARCH_TRADE_LICENSE_ISSUED_TO")}</label>
+            <label>{t("CR_SEARCH_APPLICATION_ISSUED_TO")}</label>
             <Controller
                 render={(props) => <DatePicker date={props.value} onChange={props.onChange} />}
                 name="toDate"
@@ -41,7 +41,7 @@ const SearchFields = ({register, control, reset, tenantId }) => {
                 />
         </SearchField>
         <SearchField>
-            <label>{t("TL_LOCALIZATION_TRADE_NAME")}</label>
+            <label>{t("CR_LOCALIZATION_NAME")}</label>
             <TextInput name="tradeName" inputRef={register({})}/>
         </SearchField>
         <SearchField className="submit">
@@ -49,8 +49,7 @@ const SearchFields = ({register, control, reset, tenantId }) => {
             <p onClick={() => 
                 {
                 reset({ 
-                    licenseNumbers: "", 
-                    mobileNumber: "", 
+                    registrationNumbers: "", 
                     fromDate: "",
                     toDate: "",
                     offset: 0,

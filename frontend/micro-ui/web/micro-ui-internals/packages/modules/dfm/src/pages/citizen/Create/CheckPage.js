@@ -34,6 +34,7 @@ const getPath = (path, params) => {
 };
 
 const CheckPage = ({ onSubmit, value }) => {
+  console.log(value);
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -75,7 +76,7 @@ const CheckPage = ({ onSubmit, value }) => {
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.AadharNo)}</CardText>
             </div>
             <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList.name)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList?.name)}</CardText>
             </div>
           </div>
           <div className="row">

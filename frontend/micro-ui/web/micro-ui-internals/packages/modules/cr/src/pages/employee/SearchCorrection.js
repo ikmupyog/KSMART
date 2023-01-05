@@ -4,13 +4,15 @@ import { useForm, Controller } from "react-hook-form";
 import { useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next";
 
-const Search = ({path}) => {
+const SearchCorrection = ({path}) => {
+    console.log("Jeteee");
     const { variant } = useParams();
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [payload, setPayload] = useState({})
+    const Search = Digit.ComponentRegistryService.getComponent('CRDeathcorrection')
 
-    const Search = Digit.ComponentRegistryService.getComponent( variant === "license" ? "SearchLicense" : "SearchDfmApplication" )
+    // const Search = Digit.ComponentRegistryService.getComponent('SearchCrApplication')
 
     function onSubmit (_data) {
         var fromDate = new Date(_data?.fromDate)
@@ -30,10 +32,10 @@ const Search = ({path}) => {
         enabled: !!( payload && Object.keys(payload).length > 0 )
     }
 
-    const {data: {ApplicantPersonals: searchReult, Count: count} = {}, isLoading , isSuccess } = Digit.Hooks.dfm.useSearch({tenantId, filters: payload, config})
-   console.log("data" + searchReult);
+    const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } = Digit.Hooks.cr.useSearch({tenantId, filters: payload, config})
+
     return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={ !isLoading && isSuccess ? (searchReult?.length>0? searchReult : { display: "ES_COMMON_NO_DATA" }) : "" } count={count} /> 
 
 }
 
-export default Search
+export default SearchCorrection

@@ -9,14 +9,16 @@ import Search from "./Search";
 import ApplicationDetails from "./ApplicationDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
-import SearchFlow from "./Search-route/SearchFlow";
+import SearchFlow from "./Search-route";
 //import ReNewApplication from "./ReNewApplication";
 
 const CRBreadCrumb = ({ location }) => {
+  console.log("search-flow");
   const { t } = useTranslation();
   const isSearch = location?.pathname?.includes("search");
   const isInbox = location?.pathname?.includes("inbox");
   const isApplicationSearch = location?.pathname?.includes("search/application");
+  const isDeathCorrectSearch = location?.pathname?.includes("search-correction/application");
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
@@ -116,7 +118,7 @@ const CRBreadCrumb = ({ location }) => {
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails
     },
     {
-      path: "/digit-ui/employee/cr/search-flow/search/application",
+      path: "/digit-ui/employee/cr/search/application",
       content: t("ES_COMMON_SEARCH_APPLICATION"),
       show: isApplicationSearch ||
       breadCrumbUrls.includes("home/search-flow") 
@@ -130,6 +132,12 @@ const CRBreadCrumb = ({ location }) => {
       breadCrumbUrls.includes("inbox/license/appDetails") || 
       breadCrumbUrls.includes("home/search/appDetails") || 
       breadCrumbUrls.includes("inbox/search/appDetails")
+    },
+    {
+      path: "/digit-ui/employee/cr/death-flow/search-correction/application",
+      content: t("ES_COMMON_SEARCH_APPLICATION"),
+      show: isDeathCorrectSearch ||
+      breadCrumbUrls.includes("home/death-flow") 
     },
    
     // {
@@ -200,7 +208,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   // const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
   const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
-
+const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
   return (
     <Switch>
     <React.Fragment>
@@ -212,8 +220,10 @@ const EmployeeApp = ({ path, url, userType }) => {
         <PrivateRoute parentRoute={path} path={`${path}/cr-flow`} component={() => <CrFlow parentUrl={url} />} />
         <PrivateRoute parentRoute={path} path={`${path}/death-flow`} component={() => <DeathCrFlow parentUrl={url} />} />
         {/* <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} /> */}
-        <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
-        <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
+        {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} /> */}
+        {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
+
+        <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> */}
 
       </div>
     </React.Fragment>

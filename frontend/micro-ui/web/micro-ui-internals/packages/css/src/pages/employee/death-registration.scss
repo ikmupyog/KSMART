@@ -63,3 +63,16 @@ button{
 }
 
 }
+.search-wrapper{
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+    margin-bottom: 24px;
+    padding: 1.5rem;
+    border-radius: 1.6rem;
+}
+.search-header{
+  font-size: 20px;
+  font-weight: 500;
+  color: rgb(43, 47, 62);
+  margin-bottom: 0.5rem;
+}
+
