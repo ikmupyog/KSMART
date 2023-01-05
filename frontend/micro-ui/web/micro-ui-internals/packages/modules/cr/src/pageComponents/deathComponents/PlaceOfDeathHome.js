@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -8,14 +8,13 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
   const [lbs, setLbs] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
-
   const [setVillage, setSelectedVillage] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setLbName, setSelectedLbName] = useState(formData?.PlaceOfDeathHome?.setVillage);
   const [setPostOffice, setSelectedPostOffice] = useState(formData?.PlaceOfDeathHome?.setPostOffice);
@@ -33,8 +32,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
 
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
-  const [CommencementDate, setCommencementDate] = useState();
+  // const [TradeName, setTradeName] = useState(null);
+  // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
   let cmbVillage = [];
@@ -43,11 +42,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   let districtid = null;
   let cmbPostOffice = [];
 
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
   Village &&
     Village["common-masters"] &&
     Village["common-masters"].Village.map((ob) => {
@@ -63,6 +62,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
+    PostOffice &&
+    PostOffice["common-masters"] &&
+    PostOffice["common-masters"].PostOffice.map((ob) => {
+      cmbPostOffice.push(ob);
+    });
   const onSkip = () => onSelect();
   function setSelectPresentDistrict(value) {
     setIsInitialRender(true);
@@ -72,16 +76,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     districtid = value.districtid
    
   }
-
-  PostOffice &&
-      PostOffice["common-masters"] &&
-      PostOffice["common-masters"].PostOffice.map((ob) => {
-        cmbPostOffice.push(ob);
-      });
-
   function setSelectPresentLBName(value) {
     setPresentLBName(value);
-
   }
   function setSelectBuildingNo(e) {
     setSelectedBuildingNo(e.target.value);
@@ -167,9 +163,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("CityEn", CityEn);
     sessionStorage.setItem("CityMl", CityMl);
     sessionStorage.setItem("setWard", setWard?setWard.code:null);
-    
-
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
+   
     onSelect(config.key, {
       setVillage,
       PresentLBName,
@@ -189,7 +183,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!Locality}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">

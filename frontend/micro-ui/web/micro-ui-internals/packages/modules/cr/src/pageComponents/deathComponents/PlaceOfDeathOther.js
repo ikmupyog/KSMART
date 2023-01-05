@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea ,BackButton} from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -7,11 +7,11 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
 
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
-  const [TradeName, setTradeName] = useState(null); 
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [TradeName, setTradeName] = useState(null); 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [setDeathOtherward, setSelectedDeathOtherward] = useState(formData?.PlaceOfDeathOther?.setDeathOtherward);
   const [setDeathOtherPlace, setSelectedDeathOtherPlace] = useState(formData?.PlaceOfDeathOther?.setDeathOtherPlace);
@@ -19,12 +19,12 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   const [ PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl);
  
   let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
+  // let cmbPlace = [];
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
     let cmbOtherplace = [];
     otherplace &&
     otherplace["birth-death-service"] &&
@@ -34,9 +34,9 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
 
   const onSkip = () => onSelect();
 
-  function selectPlaceofactivity(value) {
-    setSelectedPlaceofActivity(value);
-  }
+  // function selectPlaceofactivity(value) {
+  //   setSelectedPlaceofActivity(value);
+  // }
   
   function selectDeathOtherPlace(value) {
     setSelectedDeathOtherPlace(value);
@@ -44,18 +44,18 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   function selectDeathOtherward(value) {
     setSelectedDeathOtherward(value);
   }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
   function setSelectPlaceOfDeathOtherDetailsEn(e) {
     setPlaceOfDeathOtherDetailsEn(e.target.value);
   }
   function setSelectPlaceOfDeathOtherDetailsMl(e) {
     setPlaceOfDeathOtherDetailsMl(e.target.value);
   }  
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
 
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
@@ -69,12 +69,14 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
        setDeathOtherward,
        PlaceOfDeathOtherDetailsEn,
        PlaceOfDeathOtherDetailsMl,
-       setPlaceofActivity });
+      //  setPlaceofActivity 
+      });
   };
   return (
     <React.Fragment>
      {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+     <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!setDeathOtherPlace}>
       <div className="row">
       <div className="col-md-12" >
           <h1 className="headingh1" >

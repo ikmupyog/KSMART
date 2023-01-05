@@ -185,7 +185,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
     }
   }, [lbs, isInitialRender]);
   const goNext = () => {
-    sessionStorage.setItem("StateName", StateName ? StateName.code : null);
+    sessionStorage.setItem("setStateName", setStateName ? setStateName.code : null);
     sessionStorage.setItem("setVillage", setVillage ? setVillage.code : null);
     sessionStorage.setItem("setTaluk", setTaluk ? setTaluk.code : null);
     sessionStorage.setItem("PresentDistrict", PresentDistrict ? PresentDistrict.code : null);
@@ -242,7 +242,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled = {!ApplicantNameEn}>
         <div className="row">
           <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>

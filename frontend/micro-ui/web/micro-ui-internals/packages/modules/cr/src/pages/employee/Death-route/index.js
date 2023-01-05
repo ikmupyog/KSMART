@@ -124,7 +124,8 @@ const DeathCrFlowApp = ({ parentUrl }) => {
   const handleMultiple = () => {};
   const DeathCheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
   const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
-  
+  const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
+
   return (
     
     <React.Fragment>
@@ -158,6 +159,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
              </Route>
              <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
              {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
+             <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
 
              {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
       </Switch>

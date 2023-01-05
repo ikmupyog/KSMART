@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton} from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -7,28 +7,27 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
   const { data: institutionid = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
-
   const [setInstitution, setSelectedInstitution] = useState(formData?.PlaceOfDeathInstitution?.setInstitution);
   const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.PlaceOfDeathInstitution?.setInstitutionId);
   
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
+  // const [TradeName, setTradeName] = useState(null);
   const [SiginedOfficer, setSiginedOfficer] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficer);
   const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficerDesignation);
   const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.PlaceOfDeathInstitution?.InstitutionMobilNo);
   const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.PlaceOfDeathInstitution?.InstitutionAadhaar);
-  const [CommencementDate, setCommencementDate] = useState();
+  // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
+  // let cmbPlace = [];
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
     ///institution-type
   let cmbInstitution = [];
   institution &&
@@ -53,12 +52,12 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
     setSelectedInstitutionId(value);
   }
   
-  function selectPlaceofactivity(value) {
-    setSelectedPlaceofActivity(value);
-  }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
+  // function selectPlaceofactivity(value) {
+  //   setSelectedPlaceofActivity(value);
+  // }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
   function setSelectSiginedOfficer(e) {
     setSiginedOfficer(e.target.value);
   }
@@ -71,9 +70,9 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   function  setSelectInstitutionAadhaar(e) {
     setInstitutionAadhaar(e.target.value);
   }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
 
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
@@ -90,12 +89,14 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
       SiginedOfficerDesignation,
       InstitutionMobilNo,
       InstitutionAadhaar,
-      setPlaceofActivity });
+      // setPlaceofActivity 
+    });
   };
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>     
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!SiginedOfficer}>     
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">

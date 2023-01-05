@@ -406,54 +406,10 @@ import React, { useState, useEffect } from "react";
     }
     return (
       <React.Fragment>
-        {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+        {/*
         {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
         {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep
-        t={t}
-        config={config}
-        onSelect={goNext}
-        onSkip={onSkip}
-        isDisabled={
-          !PresentHouseNameMl ||
-          !PresentHouseNameEn ||
-          !PresentHouseNo ||
-          !PresentStreetEn ||
-          !PresentStreetMl ||
-          !PresentLocalityNameEn ||
-          !PresentLocalityNameMl || 
-          !PresentMainPlaceEn ||
-          !PresentMainPlaceMl || 
-          !PresentViaEn ||
-          !PresentViaMl || 
-          !PresentMotherCountry || 
-          !PresentStateName ||                 
-          !PresentDistrict ||
-          !PresentVillage ||
-          !PresentTaluk ||
-          !PresentPostOffice ||
-          !PresentPincode ||   
-          !PermanentHouseNameMl ||
-          !PermanentHouseNameEn ||                 
-          !PermanentHouseNo ||
-          !PermanentStreetEn ||
-          !PermanentStreetMl ||
-          !PermanentMainPlaceEn ||
-          !PermanentMainPlaceMl || 
-          !PermanentLocalityNameEn ||
-          !PermanentLocalityNameMl ||
-          !PermanentViaEn ||
-          !PermanentViaMl ||
-          !PermanentMotherCountry || 
-          !PermanentStateName || 
-          !PermanentDistrict ||
-          !PermanentVillage ||
-          !PermanentTaluk ||
-          !PermanentPostOffice ||
-          !PermanentPincode 
-          
-        }
-      >
+      <FormStep  t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PresentHouseNameMl } >
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
