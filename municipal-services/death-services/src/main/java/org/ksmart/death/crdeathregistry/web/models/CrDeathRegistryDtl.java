@@ -318,9 +318,9 @@ public class CrDeathRegistryDtl {
     @JsonProperty("deathSignedOfficerAadhaar")
     private String  deathSignedOfficerAadhaar ;
 
-    @Size(max = 64)
-    @JsonProperty("deseasedPassportNo")
-    private String  deseasedPassportNo ;
+    // @Size(max = 64)
+    // @JsonProperty("deseasedPassportNo")
+    // private String  deseasedPassportNo ;
 
     //Rakhi S on 08.12.2022
     @Size(max = 64)
@@ -358,6 +358,7 @@ public class CrDeathRegistryDtl {
     // }
 
     //RAkhi S on 16.12.2022
+
     private String embeddedUrl;   
 
     private String fullName;
@@ -383,6 +384,24 @@ public class CrDeathRegistryDtl {
     private String localBodyName;
 
     private Long dateofissue;
+
+    //Jasmine on 04/12/2023
+    @Size(max = 64)
+    @JsonProperty("deceasedIdproofNo")
+    private String  deceasedIdproofNo ;
+    
+    @Size(max = 64)
+    @JsonProperty("deceasedIdproofType")
+    private String  deceasedIdproofType ;
+
+    //Jasmine need confirmation
+     // @Size(max = 64)
+    // @JsonProperty("familyContactMobileNumber")
+    // private String familyContactMobileNumber ;
+
+    // @Size(max = 64)
+    // @JsonProperty("familyContactEmailId")
+    // private String familyContactEmailId ;
     
    
 }

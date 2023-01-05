@@ -60,6 +60,15 @@ class BaseQueryBuilder {
         }
     }
 
+    void addFilter(String column, Long value, StringBuilder query, List<Object> paramValues) {
+        if (value>0) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                 .append("=? ");
+            paramValues.add(value);
+        }
+    }
+
     void addWhereClause(List<Object> values, StringBuilder query) {
         if (CollectionUtils.isEmpty(values)) {
             query.append(" WHERE ");

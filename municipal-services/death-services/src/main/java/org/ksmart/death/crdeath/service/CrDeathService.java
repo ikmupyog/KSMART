@@ -73,6 +73,9 @@ public class CrDeathService {
               /********************************************** */
                 // validate request
         // validatorService.validateCreate(request,mdmsData);
+        //Jasmine on 04/01/2023
+        Object mdmsData = util.mDMSCall(request.getRequestInfo(),CrDeathConstants.MDMS_TENANTID);
+
        // mdmsValidator.validateMDMSData(request,mdmsData);
 
           // enrich request
@@ -86,7 +89,7 @@ public class CrDeathService {
     }
     //Rakhi S on 05.12.2022
     public List<CrDeathDtl> search(CrDeathSearchCriteria criteria, RequestInfo requestInfo) {
-		// validatorService.validateSearch(requestInfo, criteria);
+		//validatorService.validateSearch(requestInfo, criteria);
 		return repository.getDeathApplication(criteria);
 	}
   //UPDATE BEGIN Jasmine

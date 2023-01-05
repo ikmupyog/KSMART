@@ -39,5 +39,7 @@ public class CrDeathConstants {
 
     public static final String WORKFLOW_ACTION_APPROVE = "Approve";
 
+    //mdms tenantId
+    public static final String MDMS_TENANTID = "kl";
 
 }

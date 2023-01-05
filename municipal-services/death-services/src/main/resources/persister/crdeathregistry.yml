@@ -37,12 +37,12 @@ serviceMaps:
             vehicle_toplace_ml, vehicle_toplace_en, vehicle_number,
             death_place_ward_id, informant_age, vehicle_driver_licenceno,
             death_signed_officer_designation, death_place_officer_mobile,
-            death_place_officer_aadhaar, deseased_passportno, application_no,
-            file_no, ack_no,registration_date, registration_no_id) VALUES (?, ?,
+            death_place_officer_aadhaar, application_no,
+            file_no, ack_no,registration_date, registration_no_id, deceased_idproofno, deceased_idprooftype) VALUES (?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: deathCertificateDtls.*
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.id
@@ -121,12 +121,15 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.deathSignedOfficerDesignation
             - jsonPath: $.deathCertificateDtls.*.deathSignedOfficerMob
             - jsonPath: $.deathCertificateDtls.*.deathSignedOfficerAadhaar
-            - jsonPath: $.deathCertificateDtls.*.deseasedPassportNo
+        #   - jsonPath: $.deathCertificateDtls.*.deseasedPassportNo
             - jsonPath: $.deathCertificateDtls.*.deathApplicationNo
             - jsonPath: $.deathCertificateDtls.*.fileNo
             - jsonPath: $.deathCertificateDtls.*.deathACKNo
             - jsonPath: $.deathCertificateDtls.*.registrationDate
             - jsonPath: $.deathCertificateDtls.*.registrationNoId
+            - jsonPath: $.deathCertificateDtls.*.deceasedIdproofNo
+            - jsonPath: $.deathCertificateDtls.*.deceasedIdproofType
+
         - query: >-
             INSERT INTO public.eg_death_statistical_registry(id, death_dtl_id,
             tenantid, residencelocalbody, residence_place_type,
@@ -494,7 +497,7 @@ serviceMaps:
             death_place_ward_id = ?, informant_age = ?, vehicle_driver_licenceno
             = ?, death_signed_officer_designation = ?,
             death_place_officer_mobile = ?, death_place_officer_aadhaar = ?,
-            deseased_passportno = ?, ack_no = ?  where id = ?
+            ack_no = ?,deceased_idproofno = ?, deceased_idprooftype = ?  where id = ?
           basePath: deathCertificateDtls.*
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.registrationUnit
@@ -572,9 +575,12 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.deathSignedOfficerDesignation
             - jsonPath: $.deathCertificateDtls.*.deathSignedOfficerMob
             - jsonPath: $.deathCertificateDtls.*.deathSignedOfficerAadhaar
-            - jsonPath: $.deathCertificateDtls.*.deseasedPassportNo
+           # - jsonPath: $.deathCertificateDtls.*.deseasedPassportNo
             - jsonPath: $.deathCertificateDtls.*.deathACKNo
+            - jsonPath: $.deathCertificateDtls.*.deceasedIdproofNo
+            - jsonPath: $.deathCertificateDtls.*.deceasedIdproofType
             - jsonPath: $.deathCertificateDtls.*.id
+
         - query: >-
             INSERT INTO public.eg_death_statistical_registry_log SELECT * FROM 
             public.eg_death_statistical_registry WHERE death_dtl_id = ?;
