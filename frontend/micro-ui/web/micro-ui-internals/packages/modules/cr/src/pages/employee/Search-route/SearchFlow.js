@@ -12,14 +12,14 @@ const SearchFlow = ({ path }) => {
       title: "Birth Search",
       subTitle: "Birth Applications Search",
       img: <BankIcon />,
-      link: `${path}/search/application`,
+      link: `${path}/birthsearch/application`,
     },
 
     {
       title: "Death Search",
       subTitle: "Death Applications Search",
       img: <FileProtected />,
-      link: `${path}/search/application`,
+      link: `${path}/deathsearch/application`,
     },
    
     
