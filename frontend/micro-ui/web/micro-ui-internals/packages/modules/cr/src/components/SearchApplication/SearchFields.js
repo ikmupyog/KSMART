@@ -37,7 +37,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     return <>
         <SearchField>
             <label>{t("CR_SEARCH_APP_NO_LABEL")}</label>
-            <TextInput name="applicationNumber" inputRef={register({})} />
+            <TextInput name="applicationNo" inputRef={register({})} />
         </SearchField>
         {applicationTypesLoading ? <Loader/> : <SearchField>
             <label>{t("CR_SEARCH_APPLICATION_TYPE")}</label>
