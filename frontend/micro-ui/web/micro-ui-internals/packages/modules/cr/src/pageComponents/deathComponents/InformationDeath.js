@@ -20,13 +20,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");  
-  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
+  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");  
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
-  const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "DocumentType");
+  const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
+  const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
   const [setNationality, setSelectedNationality] = useState(formData?.InformationDeath?.setNationality);
@@ -54,13 +54,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo);
 
   
-  let naturetypecmbvalue = null;
-  // let cmbPlace = [];
-  // place &&
-  //   place["TradeLicense"] &&
-  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
-  //     cmbPlace.push(ob);
-  //   });
+  let naturetypecmbvalue = null; 
 
   let menu = [];
   Menu &&
@@ -88,7 +82,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     let cmbDocumentType = [];
     documentType &&
     documentType["common-masters"] &&
-    documentType["common-masters"].DocumentType.map((ob) => {
+    documentType["common-masters"].IdProof.map((ob) => {
       cmbDocumentType.push(ob);
       });
     let cmbAgeUnit = [];
@@ -197,8 +191,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
-
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
       DeathDate,
       tripStartTime,
@@ -225,7 +217,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!Gender}>
         {/* //    isDisabled={!CommencementDate} */}
         <div className="row">
           <div className="col-md-12">
@@ -445,6 +437,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-2">
               <CardLabel>{`${t("CR_AGE_OF_BIRTH")}`}<span className="mandatorycss">*</span> </CardLabel>
               <TextInput
+              
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -503,7 +496,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
               <Dropdown
                 t={t}
-                optionKey="code"
+                optionKey="name"
                 isMandatory={false}
                 option={cmbDocumentType}
                 selected={setIdCombo}

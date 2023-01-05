@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -40,7 +40,8 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >     
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  >     
         <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >

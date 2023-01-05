@@ -120,7 +120,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const goNext = () => {
     sessionStorage.setItem("ChildDOB", ChildDOB);
     sessionStorage.setItem("tripStartTime", tripStartTime);
-    sessionStorage.setItem("Gender", Gender.code);
+    sessionStorage.setItem("Gender",Gender?Gender.code:null);
     sessionStorage.setItem("ChildAadharNo", ChildAadharNo);
     sessionStorage.setItem("ChildFirstNameEn", ChildFirstNameEn);
     sessionStorage.setItem("ChildMiddleNameEn", ChildMiddleNameEn);

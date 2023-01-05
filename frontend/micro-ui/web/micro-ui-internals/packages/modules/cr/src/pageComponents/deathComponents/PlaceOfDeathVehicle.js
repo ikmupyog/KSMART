@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -7,10 +7,12 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+  const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
+  // const [TradeName, setTradeName] = useState(null);
+
   // const [DriverName, setDriverName] = useState(formData?.PlaceOfDeathVehicle?.DriverName);
   // const [DriverNameMl, setDriverNameMl] = useState(formData?.PlaceOfDeathVehicle?.DriverNameMl);
   // const [DriverMobileNo, setDriverMobileNo] = useState(formData?.PlaceOfDeathVehicle?.DriverMobileNo);
@@ -29,24 +31,34 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalEn);
   const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalMl);
     
-  const [CommencementDate, setCommencementDate] = useState();
+  // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
+  // let cmbPlace = [];
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
 
+    let cmbhospital = [];
+    hospital &&
+      hospital["birth-death-service"] &&
+      hospital["birth-death-service"].hospitalList.map((ob) => {
+        cmbhospital.push(ob);
+      });
+
+    
   const onSkip = () => onSelect();
 
-  function selectPlaceofactivity(value) {
-    setSelectedPlaceofActivity(value);
-  }
+  // function selectPlaceofactivity(value) {
+  //   setSelectedPlaceofActivity(value);
+  // }
 
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
+
+
   // function setSelectDriverName(e) {
   //   setDriverName(e.target.value);
   // }
@@ -100,9 +112,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
     setSelectedAdmittedHospitalMl(value);
   }
   
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
 
   const goNext = () => {
     
@@ -151,7 +163,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">
         <div className="col-md-12" >
             <h1 className="headingh1" >
@@ -369,7 +382,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="code"
                 isMandatory={false}
-                option={cmbPlace}
+                option={cmbhospital}
                 selected={setDeathVehicleWard}
                 select={selectDeathVehicleWard}
                 disabled={isEdit}
@@ -383,7 +396,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="code"
                 isMandatory={false}
-                option={cmbPlace}
+                option={cmbhospital}
                 selected={setAdmittedHospitalEn}
                 select={selectAdmittedHospitalEn}
                 disabled={isEdit}
@@ -396,7 +409,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="code"
                 isMandatory={false}
-                option={cmbPlace}
+                option={cmbhospital}
                 selected={setAdmittedHospitalMl}
                 select={selectAdmittedHospitalMl}
                 disabled={isEdit}

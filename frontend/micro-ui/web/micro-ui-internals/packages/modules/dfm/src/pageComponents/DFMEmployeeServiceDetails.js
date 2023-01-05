@@ -67,7 +67,9 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
   return (
     <React.Fragment>
     {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-    <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!BuldingNo}>
+    <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} 
+    // isDisabled={!BuldingNo}
+    >
       <div>
         <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root" }}>
           <div className="row">
@@ -87,7 +89,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
           </div>
           <div className="col-md-4" ><CardLabel>{t("DFM_NAME_OCCUPIER")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="NameOccupier"
-             value={NameOccupier} onChange={setSelectedNameOccupier}  placeholder={`${t("DFM_NAME_OCCUPIER")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER") })} />
+             value={NameOccupier} onChange={setSelectedNameOccupier}  placeholder={`${t("DFM_NAME_OCCUPIER")}`}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER") })} />
           </div>
           <div className="col-md-4" ><CardLabel>{t("DFM_DURATION_RESIDENCE")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ResidenceDuration" 
@@ -98,7 +100,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
           <div className="row">
             <div className="col-md-12">
             <div className="col-md-6" >
-            <CardLabel>{`${t("DFM_DETAILS")}*`}</CardLabel>
+            <CardLabel>{`${t("DFM_DETAILS")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextArea
                 t={t}
                 isMandatory={false}

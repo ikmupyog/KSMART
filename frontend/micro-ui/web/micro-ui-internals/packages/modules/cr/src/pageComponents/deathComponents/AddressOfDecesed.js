@@ -53,7 +53,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="maindeath">
           <div className="radios">
             <div className="inside">

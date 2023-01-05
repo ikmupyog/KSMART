@@ -89,13 +89,16 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     return useQuery("CR_DELIVERY_METHOD", () => MdmsService.getCRDeliveryMethod(tenantId, moduleCode, type), config);
   };
   const useCRAgeUnit = () => {
-    return useQuery("CR_Age_unit", () => MdmsService.getCRAgeUnit(tenantId, moduleCode, type), config);
+    return useQuery("CR_AGE_UNIT", () => MdmsService.getCRAgeUnit(tenantId, moduleCode, type), config);
   };
-  const useDocumentTypeB = () => {
-    return useQuery("CR_Document_Type", () => MdmsService.getCRDocumentTypeB(tenantId, moduleCode, type), config);
+  // const useDocumentTypeB = () => {
+  //   return useQuery("CR_Document_Type", () => MdmsService.getCRDocumentTypeB(tenantId, moduleCode, type), config);
+  // };
+  const useIdProof = () => {
+    return useQuery("CR_ID_DETAILS_OF_DECEASED", () => MdmsService.getCRIdProof(tenantId, moduleCode, type), config);
   };
   const useMaleDependent = () => {
-    return useQuery("CR_Document_Type", () => MdmsService.getCRMaleDependent(tenantId, moduleCode, type), config);
+    return useQuery("CR_MALE_DEPENDENT", () => MdmsService.getCRMaleDependent(tenantId, moduleCode, type), config);
   };
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
@@ -239,6 +242,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRTitle();
     case "DocumentType":
       return useDocumentTypeB();
+      case "IdProof":
+        return useIdProof();
     case "MaleDependentType":
       return useMaleDependent();
     case "Religion":
