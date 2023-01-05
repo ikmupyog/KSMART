@@ -244,6 +244,7 @@ export const newConfig = [
         hideInEmployee: false,
         nextStep: "birth-place",
       },
+      
       {
         route: "birth-place",
         component: "BirthPlace",
@@ -517,7 +518,39 @@ export const newConfig = [
         nextStep: "father-informations",
         type: "component",
         hideInEmployee: false,
-      },      
+      },  
+      {
+        route: "multiple-birth",
+        component: "MultipleBirth",
+        texts: {
+          headerCaption: "",
+          header: "CR_MULTIPLE_BIRTH",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "MultipleBirthDetails",
+        nextStep: "hospital-details",
+        type: "component",
+        hideInEmployee: false,
+      },    
+      {
+        route: "born-outside-india",
+        component: "BornOutsideIndia",
+        texts: {
+          headerCaption: "",
+          header: "CR_BORN_OUTSIDE_INDIA",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BornOutsideIndia",
+        nextStep: "hospital-details",
+        type: "component",
+        hideInEmployee: false,
+      },    
     ],
   },
 
