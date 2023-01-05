@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton} from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -9,8 +9,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   const { data: maleDependent = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MaleDependentType");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
-
-  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setTitle, setSelectedTitle] = useState(formData?.FamilyInformationDeath?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.FamilyInformationDeath?.setTitleB);
   const [setmaleDependent, setSelectedmaleDependent] = useState(formData?.FamilyInformationDeath?.setmaleDependent);
@@ -25,16 +23,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const [MotherMobile, setMotherMobile] = useState(formData?.FamilyInformationDeath?.MotherMobile);
   const [FatherMobile, setFatherMobile] = useState(formData?.FamilyInformationDeath?.FatherMobile);
 
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  // const [TradeName, setTradeName] = useState(null);
-  // const [CommencementDate, setCommencementDate] = useState();
-  let naturetypecmbvalue = null;
-  // let cmbPlace = [];
-  // place &&
-  //   place["TradeLicense"] &&
-  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
-  //     cmbPlace.push(ob);
-  //   });
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade"); 
+  let naturetypecmbvalue = null;  
   let cmbTitle = [];
   title &&
     title["common-masters"] &&
@@ -51,10 +41,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
 
   const onSkip = () => onSelect();
 
-  // function selectPlaceofactivity(value) {
-  //   naturetypecmbvalue = value.code.substring(0, 4);
-  //   setSelectedPlaceofActivity(value);
-  // }
   function selectTitle(value) {
     setSelectedTitle(value);
   }
@@ -94,14 +80,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   function setSelectMotherMobile(e) {
     setMotherMobile(e.target.value);
   }
-  // function setSelectTradeName(e) {
-  //   setTradeName(e.target.value);
-  // }
-  // function selectCommencementDate(value) {
-  //   setCommencementDate(value);
-  // }
-
-  const goNext = () => {
+   const goNext = () => {
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
     sessionStorage.setItem("setmaleDependent", setmaleDependent ? setmaleDependent.code : null);
@@ -134,7 +113,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled = {!FatherOrHusbandNameEN}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -143,8 +123,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-4">
-            <CardLabel>{`${t("CR_MaleDependent")}`}</CardLabel>
+            <CardLabel>{`${t("CR_MALE_DEPENDENT")}`}</CardLabel>
             <Dropdown
               t={t}
               optionKey="name"
@@ -153,12 +134,14 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               selected={setmaleDependent}
               select={selectmaleDependent}
               disabled={isEdit}
-              placeholder={`${t("CR_TITLE_NAME_EN")}`}
+              placeholder={`${t("CR_MALE_DEPENDENT")}`}
             />
+          </div>
           </div>
         </div>
         <div></div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
             <Dropdown
@@ -206,6 +189,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_ML") })}
             />
           </div>
+        </div>
         </div>
         <div className="row">
           <div className="col-md-12">
