@@ -108,7 +108,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const [selectedValue, setSelectedValue] = React.useState(null);
 
   const goNext = () => {
-    sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
+    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
     // sessionStorage.setItem("Religion", setReligion ? setReligion.code : null);
     sessionStorage.setItem("Country", setCountry ? setCountry.code : null);
     sessionStorage.setItem("StateName", setStateName ? setStateName.code : null);
@@ -122,7 +122,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("LocalityMl", LocalityMl);
 
     onSelect(config.key, {
-      setPlaceofActivity,
+      // setPlaceofActivity,
       // setReligion,
       setOccupationMain,
       OccupationOthers,

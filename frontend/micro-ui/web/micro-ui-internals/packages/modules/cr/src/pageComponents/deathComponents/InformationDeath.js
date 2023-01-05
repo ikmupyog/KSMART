@@ -20,13 +20,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");  
-  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
+  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");  
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
-  const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "DocumentType");
+  const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
+  const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
   const [setNationality, setSelectedNationality] = useState(formData?.InformationDeath?.setNationality);
@@ -82,7 +82,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     let cmbDocumentType = [];
     documentType &&
     documentType["common-masters"] &&
-    documentType["common-masters"].DocumentType.map((ob) => {
+    documentType["common-masters"].IdProof.map((ob) => {
       cmbDocumentType.push(ob);
       });
     let cmbAgeUnit = [];
@@ -496,7 +496,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
               <Dropdown
                 t={t}
-                optionKey="code"
+                optionKey="name"
                 isMandatory={false}
                 option={cmbDocumentType}
                 selected={setIdCombo}
