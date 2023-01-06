@@ -1,6 +1,5 @@
 package org.egov.tl.web.controllers;
 
-
 import org.egov.tl.service.PaymentUpdateService;
 import org.egov.tl.service.TradeLicenseService;
 import org.egov.tl.service.notification.PaymentNotificationService;
@@ -26,24 +25,26 @@ import javax.servlet.http.HttpServletRequest;
 import static org.egov.tl.util.TLConstants.businessService_TL;
 
 @RestController
-    @RequestMapping("/v1")
-    public class TradeLicenseController {
+@RequestMapping("/v1")
+public class TradeLicenseController {
 
-        private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-        private final HttpServletRequest request;
+    private final HttpServletRequest request;
 
-        private final TradeLicenseService tradeLicenseService;
+    private final TradeLicenseService tradeLicenseService;
 
-        private final ResponseInfoFactory responseInfoFactory;
+    private final ResponseInfoFactory responseInfoFactory;
 
-        private final PaymentNotificationService paymentNotificationService;
+    private final PaymentNotificationService paymentNotificationService;
 
-        private final TLNotificationService tlNotificationService;
+    private final TLNotificationService tlNotificationService;
 
     @Autowired
-    public TradeLicenseController(ObjectMapper objectMapper, HttpServletRequest request, TradeLicenseService tradeLicenseService,
-                                  ResponseInfoFactory responseInfoFactory, PaymentNotificationService paymentNotificationService, TLNotificationService tlNotificationService) {
+    public TradeLicenseController(ObjectMapper objectMapper, HttpServletRequest request,
+            TradeLicenseService tradeLicenseService,
+            ResponseInfoFactory responseInfoFactory, PaymentNotificationService paymentNotificationService,
+            TLNotificationService tlNotificationService) {
         this.objectMapper = objectMapper;
         this.request = request;
         this.tradeLicenseService = tradeLicenseService;
@@ -52,12 +53,9 @@ import static org.egov.tl.util.TLConstants.businessService_TL;
         this.tlNotificationService = tlNotificationService;
     }
 
-
-
-
-    @PostMapping({"/{servicename}/_create", "/_create"})
+    @PostMapping({ "/{servicename}/_create", "/_create" })
     public ResponseEntity<TradeLicenseResponse> create(@Valid @RequestBody TradeLicenseRequest tradeLicenseRequest,
-                                                       @PathVariable(required = false) String servicename) {
+            @PathVariable(required = false) String servicename) {
         List<TradeLicense> licenses = tradeLicenseService.create(tradeLicenseRequest, servicename);
         TradeLicenseResponse response = TradeLicenseResponse.builder().licenses(licenses).responseInfo(
                 responseInfoFactory.createResponseInfoFromRequestInfo(tradeLicenseRequest.getRequestInfo(), true))
@@ -65,24 +63,26 @@ import static org.egov.tl.util.TLConstants.businessService_TL;
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/{servicename}/_search", "/_search"}, method = RequestMethod.POST)
+    @RequestMapping(value = { "/{servicename}/_search", "/_search" }, method = RequestMethod.POST)
     public ResponseEntity<TradeLicenseResponse> search(@Valid @RequestBody RequestInfoWrapper requestInfoWrapper,
-                                                       @Valid @ModelAttribute TradeLicenseSearchCriteria criteria,
-                                                       @PathVariable(required = false) String servicename
-            , @RequestHeader HttpHeaders headers) {
-        List<TradeLicense> licenses = tradeLicenseService.search(criteria, requestInfoWrapper.getRequestInfo(), servicename, headers);
-        
-        int count = tradeLicenseService.countLicenses(criteria, requestInfoWrapper.getRequestInfo(), servicename, headers);
+            @Valid @ModelAttribute TradeLicenseSearchCriteria criteria,
+            @PathVariable(required = false) String servicename, @RequestHeader HttpHeaders headers) {
+        List<TradeLicense> licenses = tradeLicenseService.search(criteria, requestInfoWrapper.getRequestInfo(),
+                servicename, headers);
+
+        int count = tradeLicenseService.countLicenses(criteria, requestInfoWrapper.getRequestInfo(), servicename,
+                headers);
 
         TradeLicenseResponse response = TradeLicenseResponse.builder().licenses(licenses).responseInfo(
-                responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true)).count(count)
+                responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                .count(count)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/{servicename}/_update", "/_update"}, method = RequestMethod.POST)
+    @RequestMapping(value = { "/{servicename}/_update", "/_update" }, method = RequestMethod.POST)
     public ResponseEntity<TradeLicenseResponse> update(@Valid @RequestBody TradeLicenseRequest tradeLicenseRequest,
-                                                       @PathVariable(required = false) String servicename) {
+            @PathVariable(required = false) String servicename) {
         List<TradeLicense> licenses = tradeLicenseService.update(tradeLicenseRequest, servicename);
 
         TradeLicenseResponse response = TradeLicenseResponse.builder().licenses(licenses).responseInfo(
@@ -91,21 +91,21 @@ import static org.egov.tl.util.TLConstants.businessService_TL;
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/{servicename}/{jobname}/_batch", "/_batch"}, method = RequestMethod.POST)
+    @RequestMapping(value = { "/{servicename}/{jobname}/_batch", "/_batch" }, method = RequestMethod.POST)
     public ResponseEntity sendReminderSMS(@Valid @RequestBody RequestInfoWrapper requestInfoWrapper,
-                                          @PathVariable(required = false) String servicename,
-                                          @PathVariable(required = true) String jobname) {
+            @PathVariable(required = false) String servicename,
+            @PathVariable(required = true) String jobname) {
 
         tradeLicenseService.runJob(servicename, jobname, requestInfoWrapper.getRequestInfo());
 
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value="/_plainsearch", method = RequestMethod.POST)
+    @RequestMapping(value = "/_plainsearch", method = RequestMethod.POST)
     public ResponseEntity<TradeLicenseResponse> plainsearch(@Valid @RequestBody RequestInfoWrapper requestInfoWrapper,
-                                                            @Valid @ModelAttribute TradeLicenseSearchCriteria criteria){
+            @Valid @ModelAttribute TradeLicenseSearchCriteria criteria) {
 
-        List<TradeLicense> licenses = tradeLicenseService.plainSearch(criteria,requestInfoWrapper.getRequestInfo());
+        List<TradeLicense> licenses = tradeLicenseService.plainSearch(criteria, requestInfoWrapper.getRequestInfo());
 
         TradeLicenseResponse response = TradeLicenseResponse.builder().licenses(licenses).responseInfo(
                 responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
@@ -114,16 +114,15 @@ import static org.egov.tl.util.TLConstants.businessService_TL;
     }
 
     @PostMapping("/_test")
-    public ResponseEntity test(@Valid @RequestBody HashMap<String, Object> record){
+    public ResponseEntity test(@Valid @RequestBody HashMap<String, Object> record) {
         paymentNotificationService.processBusinessService(record, businessService_TL);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/_test1")
-    public ResponseEntity test1(@Valid @RequestBody TradeLicenseRequest tradeLicenseRequest){
+    public ResponseEntity test1(@Valid @RequestBody TradeLicenseRequest tradeLicenseRequest) {
         tlNotificationService.process(tradeLicenseRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
-
 
 }
