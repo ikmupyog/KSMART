@@ -19,6 +19,9 @@ import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
 import AddressPresent from "../src/pageComponents/birthComponents/AddressPresent";
 import AddressSameAsAbove  from "../src/pageComponents/birthComponents/AddressSameAsAbove";
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
+import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
+import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
+
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -132,7 +135,8 @@ const componentsToRegister = {
   AddressPresent,
   AddressSameAsAbove,
   AddressPermanent,
-
+  MultipleBirth,
+  BornOutsideIndia,
 
 
   

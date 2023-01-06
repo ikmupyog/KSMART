@@ -1458,6 +1458,7 @@ const GetEgovLocations = (MdmsRes) => {
   }));
 };
 
+
 const GetServiceDefs = (MdmsRes, moduleCode) => MdmsRes[`RAINMAKER-${moduleCode}`].ServiceDefs.filter((def) => def.active);
 
 const GetSanitationType = (MdmsRes) => MdmsRes["FSM"].SanitationType.filter((type) => type.active);
@@ -1626,6 +1627,7 @@ const getTLFinancialYear = (MdmsRes) =>
       //i18nKey: `TRADELICENSE_ACCESSORIESCATEGORY_${stringReplaceAll(TLAccessoryTypeList.code, ".", "_")}`,
     };
   });
+  
 const getFloorList = (MdmsRes) =>
   MdmsRes["PropertyTax"].Floor.filter((PTFloor) => PTFloor.active).map((PTFloorlist) => {
     return {
@@ -1776,7 +1778,23 @@ const GetReceivedPaymentType = (MdmsRes) => {
       };
     });
 }
-
+const getFinancialPeriod = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "FinancialPeriod",
+            filter: null,
+          },
+        ],
+      },
+    ],
+  },
+});
 const getDssDashboard = (MdmsRes) => MdmsRes["dss-dashboard"]["dashboard-config"];
 
 const GetRoleStatusMapping = (MdmsRes) => MdmsRes["DIGIT-UI"].RoleStatusMapping;
@@ -2324,6 +2342,9 @@ export const MdmsService = {
 
   getFSMReceivedPaymentType: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getFSMReceivedPaymentTypeCriteria(tenantId, moduleCode, type), moduleCode);
+  },  
+  getTLFinancePeriod: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getFinancialPeriod(tenantId, moduleCode), moduleCode);
   }
 };
 

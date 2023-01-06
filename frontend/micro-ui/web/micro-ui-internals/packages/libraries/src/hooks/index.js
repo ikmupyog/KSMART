@@ -205,6 +205,7 @@ import usewsTenants from "./ws/useTenants";
 import useWaterSearch from "./ws/useWaterSearch";
 import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
+import useSearchPde from "./tl/useSearchPde";
 const pgr = {
   useComplaintDetails,
   useComplaintsList,
@@ -315,6 +316,7 @@ const tl = {
   useFetchBill: useTLFetchBill,
   useTLApplicationDetails,
   useTradeLicensePdeAPI,
+  useSearchPde
 };
 const cr = {
   useTenants: useTenantsCR,

@@ -102,6 +102,7 @@ const Urls = {
     update: "/tl-services/v1/_update",
     billingslab: "/tl-calculator/billingslab/_search",
     createpde:"/tl-services/pde/_create",
+    searchpde:"/tl-services/pde/_search",
   },
   cr: {
     create: "/birth-services/cr/birth/_create",

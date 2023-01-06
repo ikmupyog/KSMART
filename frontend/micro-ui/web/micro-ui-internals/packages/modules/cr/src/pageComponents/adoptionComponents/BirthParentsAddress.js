@@ -15,7 +15,10 @@ const BirthParentsAddress = ({ config, onSelect, userType, formData }) => {
  const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District"); 
  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-//  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
+ const { data: boundaryList = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "cochin/egov-location", "boundary-data");
+ const [Zonal, setZonal] = useState(formData.BirthMotherAddressDetails?.Zonal);
+  const [WardNo, setWardNo] = useState(formData.BirthMotherAddressDetails?.WardNo);
+  const [wards, setFilterWard] = useState(0);
  const [isInitialRender, setIsInitialRender] = useState(true);
  const [lbs, setLbs] = useState(0);
  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -87,6 +90,12 @@ const BirthParentsAddress = ({ config, onSelect, userType, formData }) => {
  LBType["common-masters"].LBType.map((ob) => {
  cmbLBType.push(ob);
  });
+ let cmbZonal = [];
+  boundaryList &&
+  boundaryList["egov-location"] &&
+  boundaryList["egov-location"].TenantBoundary.map((ob) => {    
+    cmbZonal.push(ob.boundary.children);
+  });
 
  const onSkip = () => onSelect();
 
@@ -154,8 +163,25 @@ function setSelectBirthMotherPincode(e) {
  function setSelectBirthMotherStreetNameEn(e) {
  setBirthMotherStreetNameEn(e.target.value); 
  }
+ function setSelectZonalOffice(e) {
+  setIsInitialRender(true);
+  setZonal(e);
+  setWardNo(null);
+  setFilterWard(null);
+}
+function setSelectWard(e) {
+  setWardNo(e);
+}
 
-
+useEffect(() => {
+    
+  if (isInitialRender) {
+    if(Zonal){
+      setIsInitialRender(false);
+      setFilterWard(Zonal.children)
+    }
+  }
+}, [wards,isInitialRender]);
 
  useEffect(() => {
  if (isInitialRender) {
@@ -184,6 +210,8 @@ function setSelectBirthMotherPincode(e) {
  sessionStorage.setItem("BirthMotherPostOffice", BirthMotherPostOffice.code);
  sessionStorage.setItem("BirthMotherPincode", BirthMotherPincode.code);
  sessionStorage.setItem("PermanentCountry", PermanentCountry.code);
+ sessionStorage.setItem("ZonalDet", Zonal.name);
+ sessionStorage.setItem("WardDet", WardNo.name);
 
  onSelect(config.key, {
  BirthMotherBuldingNo, BirthMotherDoorNo, BirthMotherHouseNameEn, BirthMotherLocalityNameEn, BirthMotherLBTypeName, BirthMotherCountry, BirthMotherStateName, 
@@ -309,34 +337,15 @@ function setSelectBirthMotherPincode(e) {
  </div>
  </div>
  
- {/* <div className="row">
- <div className="col-md-12" >
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbState}
- selected={StateName}
- select={setSelectStateName}
- disabled={isEdit}
- />
- </div>
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbCountry}
- selected={MotherCountry}
- select={setSelectMotherCountry}
- disabled={isEdit}
- />
- </div>
- </div>
- </div> */}
+ <div className="row">
+          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+            <Dropdown t={t} optionKey="name" isRequired="true" isMandatory={config.isMandatory} option={cmbZonal[0]} selected={Zonal} select={setSelectZonalOffice} disabled={isEdit} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} {...(validation = { isRequired: true, title: t("TL_INVALID_ZONAL_NAME") })} />
+          </div>
+          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+            <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={wards} selected={WardNo} select={setSelectWard} disabled={isEdit} placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`} {...(validation = { isRequired: true, title: t("TL_INVALID_WARD_NO") })} />
+          </div>
+          
+        </div>
  
 
  </FormStep>
