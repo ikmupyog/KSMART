@@ -209,6 +209,20 @@ public class TradeLicenseDetail {
   @Valid
   private List<OwnerPde> ownersPde = new ArrayList<>();
 
+  @JsonProperty("taxPde")
+  @Valid
+  private List<TaxPde> taxPde = new ArrayList<>();
+
+  List<TaxPde> taxPdefinal = new ArrayList<>();
+
+  @JsonProperty("institutionMaster")
+  private InstitutionMaster institutionMaster;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("institutionId")
+  private String institutionId = null;
+
   public TradeLicenseDetail addOwnersItem(OwnerInfo ownersItem) {
     if (this.owners == null)
       this.owners = new ArrayList<>();
@@ -257,6 +271,22 @@ public class TradeLicenseDetail {
       this.structurePlace = new ArrayList<>();
     if (!this.structurePlace.contains(structureplaceItem))
       this.structurePlace.add(structureplaceItem);
+    return this;
+  }
+
+  public TradeLicenseDetail addTaxPdeItem(TaxPde taxPdeItem) {
+    if (this.taxPde == null)
+      this.taxPde = new ArrayList<>();
+    if (!this.taxPde.contains(taxPdeItem))
+      this.taxPde.add(taxPdeItem);
+    return this;
+  }
+
+  public TradeLicenseDetail addOwnersPdeItem(OwnerPde ownerPdeItem) {
+    if (this.ownersPde == null)
+      this.ownersPde = new ArrayList<>();
+    if (!this.ownersPde.contains(ownerPdeItem))
+      this.ownersPde.add(ownerPdeItem);
     return this;
   }
 
