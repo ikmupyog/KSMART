@@ -1,6 +1,6 @@
 ALTER TABLE eg_tl_address
-ADD COLUMN buildingcode character varying(20),
-ADD COLUMN buildingname character varying(150),
+ADD COLUMN lbbuildingcode character varying(20),
+ADD COLUMN lbbuildingname character varying(150),
 ADD COLUMN buildingtype character varying(15);
 
 ALTER TABLE eg_tl_tradelicensedetail
