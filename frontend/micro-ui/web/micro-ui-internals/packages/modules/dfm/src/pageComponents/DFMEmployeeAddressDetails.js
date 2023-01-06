@@ -10,6 +10,8 @@ const DFMEmployeeAddressDetails = ({ t, config, onSelect, value, userType, formD
   console.log(tenantId);
   const stateId = Digit.ULBService.getStateId();
   const { data: PostOffice = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "PostOffice");
+  const { data: VillageList = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "Village");
+  const { data: TalukList = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "Taluk");
   const { data: boundaryList = {}, isLoading } = Digit.Hooks.dfm.useFileManagmentMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [WardNo, setWardNo] = useState(formData?.AddressDet?.WardNo);
   const [HouseNo, setHouseNo] = useState(formData?.AddressDet?.HouseNo);
@@ -28,7 +30,7 @@ const DFMEmployeeAddressDetails = ({ t, config, onSelect, value, userType, formD
   const [MainPlaceMal, setMainPlaceMal] = useState(formData?.AddressDet?.MainPlaceMal);
   const [Village, setVillage] = useState(formData?.AddressDet?.Village);
   const [Taluk, setTaluk] = useState(formData?.AddressDet?.Taluk);
-  console.log(formData);
+  // console.log(formData,VillageList,TalukList);
   let cmbPostOffice = [];
   PostOffice &&
     PostOffice["common-masters"] &&
@@ -42,6 +44,20 @@ const DFMEmployeeAddressDetails = ({ t, config, onSelect, value, userType, formD
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
       console.log(ob.boundary.children);
       cmbWard.push(ob.boundary.children);
+    });
+  let cmbVillage = [];
+
+  VillageList &&
+    VillageList["common-masters"] &&
+    VillageList["common-masters"].Village.map((ob) => {
+      cmbVillage.push(ob);
+    });
+  let cmbTaluk = [];
+
+  TalukList &&
+    TalukList["common-masters"] &&
+    TalukList["common-masters"].Taluk.map((ob) => {
+      cmbTaluk.push(ob);
     });
 
   function setSelectedWardNo(value) {
@@ -408,7 +424,7 @@ const DFMEmployeeAddressDetails = ({ t, config, onSelect, value, userType, formD
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbPostOffice}
+                  option={cmbVillage}
                   selected={Village}
                   placeholder={`${t("DFM_VILLAGE")}`}
                   select={setSelectedVillage}
@@ -420,7 +436,7 @@ const DFMEmployeeAddressDetails = ({ t, config, onSelect, value, userType, formD
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbPostOffice}
+                  option={cmbTaluk}
                   selected={Taluk}
                   placeholder={`${t("DFM_TALUK")}`}
                   select={setSelectedTaluk}
