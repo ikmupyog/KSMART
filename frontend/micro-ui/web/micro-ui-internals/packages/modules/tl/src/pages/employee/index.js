@@ -158,6 +158,8 @@ const EmployeeApp = ({ path, url, userType }) => {
   const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
   const PdeApplication = Digit?.ComponentRegistryService?.getComponent('TLCreatePdeApplication');
+  const SearchPde = Digit?.ComponentRegistryService?.getComponent('TLSearchPde');
+  
 
   return (
     <Switch>
@@ -197,6 +199,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/pde-application`} component={() => <PdeApplication parentUrl={url} />} />
+          <PrivateRoute path={`${path}/pde-search`} component={() => <SearchPde parentUrl={url} />} />
         </div>
       </React.Fragment>
     </Switch>
