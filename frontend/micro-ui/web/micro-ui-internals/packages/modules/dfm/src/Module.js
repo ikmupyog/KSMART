@@ -15,6 +15,9 @@ import DFMEmployeeDocumentDetails from "../src/pageComponents/DFMEmployeeDocumen
 // import TLDocument from "./pageComponents/TLDocumets";
 import DFMAcknowledgement from "./pages/citizen/Create/DFMAcknowlegement";
 import DFMEmployeeAcknowledgement from "./pages/employee/FileFlow/Create/DFMEmployeeAcknowlegement";
+import EmployeeDetails from './pages/employee/EmployeeDetails'
+import SearchDfmApplication from "./components/SearchApplication"
+import DFMEmployeeSearch from './pages/employee/Search'
 // import Proof from "./pageComponents/Proof";
 import DFMCard from "./components/DFMCard";
 import Response from "./pages/Response";
@@ -30,7 +33,7 @@ export const DFMModule = ({ stateCode, userType, tenants }) => {
   const { isLoading, data: store } = Digit.Services.useStore({ stateCode, moduleCode, language });
 
   //addComponentsToRegistry();
-  Digit.SessionStorage.set("TL_TENANTS", tenants);
+  Digit.SessionStorage.set("DFM_TENANTS", tenants);
 
   if (userType === "employee") {
     return <EmployeeApp path={path} url={url} userType={userType} />;
@@ -81,6 +84,9 @@ const componentsToRegister = {
   DFMCheckPage,
   DFMEmployeeCheckPage,
   TLResponse : Response,
+  SearchDfmApplication,
+  DFMEmployeeSearch,
+  EmployeeDetails,
 };
 
 export const initDFMComponents = () => {

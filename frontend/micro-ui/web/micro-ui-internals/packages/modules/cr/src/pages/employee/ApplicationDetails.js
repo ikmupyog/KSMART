@@ -19,7 +19,7 @@ const ApplicationDetails = () => {
   sessionStorage.setItem("applicationNumber", applicationNumber)
   const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.tl.useApplicationDetail(t, tenantId, applicationNumber);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
   
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
@@ -38,7 +38,7 @@ const ApplicationDetails = () => {
     tenantId: applicationDetails?.tenantId || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: businessService,
-    role: "TL_CEMP",
+    role: "BND_CEMP",
     config:{EditRenewalApplastModifiedTime:EditRenewalApplastModifiedTime},
   });
 
@@ -86,7 +86,7 @@ const ApplicationDetails = () => {
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter(item => {
-  if ((item.code == "TL_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
+  if ((item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
 
   const rolecheck = rolearray.length > 0 ? true : false;
   const validTo = applicationDetails?.applicationData?.validTo;
@@ -185,7 +185,7 @@ const ApplicationDetails = () => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="TL"
+        moduleCode="CR"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}

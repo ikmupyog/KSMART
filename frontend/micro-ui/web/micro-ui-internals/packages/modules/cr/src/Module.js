@@ -15,8 +15,26 @@ import HospitalDetails from "../src/pageComponents/birthComponents/HospitalDetai
 import OtherCountry from "../src/pageComponents/birthComponents/OtherCountry";
 import InstitutionDetails from "../src/pageComponents/birthComponents/InstitutionDetails";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
+import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
+import AddressPresent from "../src/pageComponents/birthComponents/AddressPresent";
+import AddressSameAsAbove  from "../src/pageComponents/birthComponents/AddressSameAsAbove";
+import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
+import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
+import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
 
-import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
+
+
+// import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
+import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
+import AdoptionFatherInformation from "../src/pageComponents/adoptionComponents/AdoptionFatherInformation";
+import AdoptionDetails from "../src/pageComponents/adoptionComponents/AdoptionDetails";
+import BirthMotherInformation from "../src/pageComponents/adoptionComponents/BirthMotherInformation";
+import BirthFatherInformation from "../src/pageComponents/adoptionComponents/BirthFatherInformation";
+import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthParentsAddress";
+import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
+import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
+
+
 
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
@@ -33,11 +51,15 @@ import InformentAddress from "./pageComponents/deathComponents/InformentAddress"
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
-
+import CRSearch from "./pages/employee/Search";
+import SearchCrApplication from "./components/SearchApplication";
+import CRApplicationDetails from "./pages/employee/ApplicationDetails";
+import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
+import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
+import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
 import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
-// import TLDocument from "./pageComponents/TLDocumets";
 import BirthAcknowledgement from "./pages/citizen/Create/BirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/Create/DeathAcknowledgement";
 import CRCard from "./components/CRCard";
@@ -53,7 +75,7 @@ export const CRModule = ({ stateCode, userType, tenants }) => {
   const { isLoading, data: store } = Digit.Services.useStore({ stateCode, moduleCode, language });
 
   //addComponentsToRegistry();
-  Digit.SessionStorage.set("TL_TENANTS", tenants);
+  Digit.SessionStorage.set("CR_TENANTS", tenants);
 
   if (userType === "employee") {
     return <EmployeeApp path={path} url={url} userType={userType} />;
@@ -69,11 +91,11 @@ export const CRLinks = ({ matchPath, userType }) => {
     clearParams();
   }, []);
 
-  const links = [
-    {
-      link: `${matchPath}/tradelicence/new-application`,
-      i18nKey: t("CR_CREATE_TRADE"),
-    },
+  // const links = [
+  //   {
+  //     link: `${matchPath}/tradelicence/new-application`,
+  //     i18nKey: t("CR_CREATE_TRADE"),
+  //   },
   //   {
   //     link: `${matchPath}/tradelicence/renewal-list`,
   //     i18nKey: t("TL_RENEWAL_HEADER"),
@@ -82,7 +104,7 @@ export const CRLinks = ({ matchPath, userType }) => {
   //     link: `${matchPath}/tradelicence/my-application`,
   //     i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
   //   },
-  ];
+  // ];
 
   // return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
 };
@@ -105,10 +127,35 @@ const componentsToRegister = {
   OtherCountry,
   InstitutionDetails,
   ChildDetails,
+  CRApplicationDetails,
+  CRSearch,
+  SearchCrApplication, 
+  ChildDetails,
+  AddressOne,
+  AddressPresent,
+  AddressSameAsAbove,
+  AddressPermanent,
+  MultipleBirth,
+  BornOutsideIndia,
 
-  SearchRegistry,
+
+  
+ //////////////////
+  // SearchRegistry,
+  AdoptionDetails,
+  AdoptionMotherInformation,
+  AdoptionFatherInformation,
+  BirthMotherInformation,
+  BirthFatherInformation,
+  BirthParentsAddress,  
+  AdoptionStatisticalInformation,  
+ AdoptionParentsAddress,
+
+
 
   //////////////////
+  CRDeathcorrection,
+  CRSearchdeathcorrection,
   InformationDeath,
   AddressOfDecesed,
   OutSideIndia,
@@ -122,6 +169,7 @@ const componentsToRegister = {
   InformentAddress,
   StatisticalInfo,
   StatisticalInfoContinue,
+  ApplicantDetails,
   GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,

@@ -3,7 +3,8 @@ import { ArrowRightInbox } from "./svgindex";
 import { Link } from "react-router-dom";
 
 const EmployeeModuleCard = ({ Icon, moduleName, kpis = [], links = [], isCitizen = false, className, styles, FsmHideCount }) => {
-const ClassList = 
+console.log(moduleName);
+  const ClassList = 
     {
      'Complaints':  'complaint-links-container',
      'Trade License':  'tl-links-container',
@@ -17,7 +18,6 @@ const ClassList =
      
     };
   
-  console.log(Icon);
   return (
     <>
     <div className={className ? className : "employeeCard card-home customEmployeeCard"} style={styles ? styles : {}}>

@@ -7,7 +7,6 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
-    const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
     const { data: Qualification = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
     const { data: QualificationSub = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
     const { data: Profession = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
@@ -28,12 +27,6 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     const [FatherProfession, setFatherProfession] = useState(formData?.FatherInfoDetails?.FatherProfession);
     const [FatherNationality, setFatherNationality] = useState(formData?.FatherInfoDetails?.FatherNationality);
 
-    let cmbPlace = [];
-    place &&
-        place["TradeLicense"] &&
-        place["TradeLicense"].PlaceOfActivity.map((ob) => {
-            cmbPlace.push(ob);
-        });
     let cmbQualification = [];
     Qualification &&
         Qualification["birth-death-service"] &&

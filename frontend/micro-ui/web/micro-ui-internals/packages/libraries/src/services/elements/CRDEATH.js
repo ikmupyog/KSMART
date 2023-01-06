@@ -23,7 +23,7 @@ export const CRDeathService = {
       params: details,
       auth: true,
     }),
-  CRsearch: ({ tenantId, filters }) =>
+  CRDeathsearch: ({ tenantId, filters }) =>
      Request({
       url: Urls.crdeath.search,
       useCache: false,

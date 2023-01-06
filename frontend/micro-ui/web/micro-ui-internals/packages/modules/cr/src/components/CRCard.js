@@ -11,7 +11,7 @@ const CRCard = () => {
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const inboxSearchParams = { limit: 10, offset: 0 }
-    const { isLoading, data: inboxData } = Digit.Hooks.tl.useInbox({
+    const { isLoading, data: inboxData } = Digit.Hooks.cr.useInbox({
         tenantId,
         filters: { ...inboxSearchParams },
         config: {}
@@ -50,14 +50,17 @@ const CRCard = () => {
         {
             label: t("Birth Registration"),
             link: `/digit-ui/employee/cr/cr-flow`,
+            role: "BND_CEMP"
         },
         {
             label: t("Death Registration"),
             link: `/digit-ui/employee/cr/death-flow`,
+            role: "BND_CEMP"
         },
             {
             label: t("TL_SEARCH_APPLICATIONS"),
-            link: `/digit-ui/employee/tl/search/application`
+            link: `/digit-ui/employee/cr/search-flow`
+            // link: `/digit-ui/employee/cr/search/application`
         },
     ]
 
@@ -71,11 +74,11 @@ const CRCard = () => {
             {
                 count: isLoading ? "-" : inboxData?.totalCount,
                 label: t("TOTAL_TL"),
-                link: `/digit-ui/employee/tl/inbox`
+                link: `/digit-ui/employee/cr/inbox`
             },
             {
                 label: t("TOTAL_NEARING_SLA"),
-                link: `/digit-ui/employee/tl/inbox`
+                link: `/digit-ui/employee/cr/inbox`
             }
         ],
         links: links

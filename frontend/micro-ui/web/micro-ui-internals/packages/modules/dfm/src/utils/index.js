@@ -274,6 +274,7 @@ export const convertToFileSubmission = (data = {}) => {
   const formdata = {
     ApplicantPersonals: [
       {
+        id:1,
         aadhaarNo: data?.ApplicantDetails?.AadharNo, 
         email:  data?.ApplicantDetails?.Email, 
         firstName:  data?.ApplicantDetails?.FirstName,     
@@ -285,15 +286,16 @@ export const convertToFileSubmission = (data = {}) => {
         fatherLastName:data?.ApplicantDetails?.FatherLastName,
         motherFirstName:data?.ApplicantDetails?.MotherFirstName,
         motherLastName:data?.ApplicantDetails?.MotherLastName,
+        applicantCategory:data?.ApplicantDetails?.CategoryList.id,
         dateOfBirth:Date.parse(data?.ApplicantDetails?.DateofBirth),
         bankAccountNo:data?.ApplicantDetails?.AccountNo,
-        applicantChild: {
+
+        applicantChild: { 
           applicantPersonalId:23,
           buildingNumber: data?.ServiceDet?.BuldingNo, 
-          durationOfResidence: data?.ServiceDet?.ResidenceDuration, 
           relationOfAssessee : null,
           nameOfOccupier : data?.ServiceDet?.NameOccupier,
-          relationOfOccupier : null,
+          durationOfResidence: data?.ServiceDet?.ResidenceDuration, 
         },
         serviceDetails: {
           applicantPersonalId: '23',
@@ -319,35 +321,35 @@ export const convertToFileSubmission = (data = {}) => {
           documentTypeId: '2',
           fileStoreId: '537',
           serviceDetailsId: '34',
+          businessService:5,
           active: "Yes",
           documentNumber: '12345',
-          applicationdetails: "aaaa"
         },
         applicantDocuments: {
           applicantPersonalId: '23',
-          documenttypeId: '2',
+          documentTypeId: '2',
           documentNumber: '12345',
-          docexpiryDate: '1234577'
+          docExpiryDate: '1234577'
         },
         fileDetail: {
-          applicantPersonalId: '23',
+          applicantPersonalId : 23,
+          documenttypeId :9,
           tenantId: "kl",
-          serviceDetailsId: '537',
-          fileNumber: '1',
-          fileCode: "KL-FM-2022-11-02-000043",
-          fileName: "PensionAdalath",
-          fileArisingMode: '1',
-          fileArisingDate: null,
-          financialYear: Financialyear ? Financialyear : "2022-23",
-          applicationDate: null,
-          workflowCode: "NewDFM",
-          action: "INITIATE",
-          fileStatus: '1',
-          businessService: '89',
-          comment: "Test",
-          assignee: [
-
-          ]
+          serviceDetailsId :537,
+          fileNumber :1,
+          fileCode :"KL-05-T",
+          fileName :"PensionAdalath",
+          fileArisingMode :1,
+          fileArisingDate : null,
+          financialYear : Financialyear ? Financialyear : 2022-23,
+          applicationDate : null,
+          workflowCode :10,
+          action :null,
+          fileStatus :1,
+          active : "Yes",
+          documentNumber :12345,
+          docexpiryDate : 2225,
+          businessService : 89
         },
         auditDetails: {
           createdBy: null,

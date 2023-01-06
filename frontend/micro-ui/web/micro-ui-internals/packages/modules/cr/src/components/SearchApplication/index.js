@@ -71,14 +71,14 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     const columns = useMemo( () => ([
         {
           Header: t("TL_COMMON_TABLE_COL_APP_NO"),
-          accessor: "applicationNo",
+          accessor: "applicationno",
           disableSortBy: true,
           Cell: ({ row }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/tl/application-details/${row.original["applicationNumber"]}`}>
-                    {row.original["applicationNumber"]}
+                  <Link to={`/digit-ui/employee/cr/application-details/${row.original?.BirthDetails["applicationNo"]}`}>
+                    {row.original?.BirthDetails["applicationNo"]}
                   </Link>
                 </span>
               </div>
@@ -90,36 +90,36 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
             disableSortBy: true,
             accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
         },
+        // {
+        //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+        //     disableSortBy: true,
+        //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+        // },
         {
-            Header: t("TL_APPLICATION_TYPE_LABEL"),
+            Header: t("Father Name"),
             disableSortBy: true,
-            accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+            accessor: (row) => GetCell(row.birthFather.firstname_en + row.birthFather.middlename_en + row.birthFather.lastname_en  || "-"),
         },
         {
-            Header: t("TL_LICENSE_NUMBERL_LABEL"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.licenseNumber || "-"),
-        },
-        {
-          Header: t("TL_LICENSE_YEAR_LABEL"),
+          Header: t("Mother Name"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.financialYear),
+          accessor: (row) => GetCell(row.birthMother.firstname_en + row.birthMother.middlename_en + row.birthMother.lastname_en  || "-"),
         },
-        {
-          Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.tradeName || ""),
-        },
-        {
-          Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
-          accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
-          disableSortBy: true,
-        },
-        {
-          Header: t("TL_COMMON_TABLE_COL_STATUS"),
-          accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
-          disableSortBy: true,
-        }
+        // {
+        //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+        //   disableSortBy: true,
+        //   accessor: (row) => GetCell(row.tradeName || ""),
+        // },
+        // {
+        //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+        //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+        //   disableSortBy: true,
+        // },
+        // {
+        //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+        //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+        //   disableSortBy: true,
+        // }
       ]), [] )
 
     return <React.Fragment>

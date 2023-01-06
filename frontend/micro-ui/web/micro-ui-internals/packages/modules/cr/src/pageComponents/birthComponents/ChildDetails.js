@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton,Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -9,7 +9,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  const { data: Menu,isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const [ChildDOB, setChildDOB] = useState(formData?.ChildDetails?.ChildDOB);
   const [Gender, selectGender] = useState(formData?.ChildDetails?.Gender);
   const [ChildAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.ChildAadharNo);
@@ -120,7 +120,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const goNext = () => {
     sessionStorage.setItem("ChildDOB", ChildDOB);
     sessionStorage.setItem("tripStartTime", tripStartTime);
-    sessionStorage.setItem("Gender", Gender.code);
+    sessionStorage.setItem("Gender",Gender?Gender.code:null);
     sessionStorage.setItem("ChildAadharNo", ChildAadharNo);
     sessionStorage.setItem("ChildFirstNameEn", ChildFirstNameEn);
     sessionStorage.setItem("ChildMiddleNameEn", ChildMiddleNameEn);
@@ -136,6 +136,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("ChildPassportNo", ChildPassportNo);
     sessionStorage.setItem("ChildArrivalDate", ChildArrivalDate);
     onSelect(config.key, { ChildDOB, tripStartTime, Gender, ChildAadharNo, ChildFirstNameEn, ChildMiddleNameEn, ChildLastNameEn, ChildFirstNameMl, ChildMiddleNameMl, ChildLastNameMl, isAdopted, isMultipleBirth, isFatherInfo, isMotherInfo, isBornOutSide, ChildPassportNo, ChildArrivalDate });
+  }
+  if (isLoading ){
+    return <Loader></Loader>;
   }
   return (
     <React.Fragment>

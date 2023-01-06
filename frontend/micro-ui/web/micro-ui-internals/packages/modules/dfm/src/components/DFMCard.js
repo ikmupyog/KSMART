@@ -58,7 +58,7 @@ const DFMCard = () => {
         },
         {
             label: t("Search Application"),
-            link: `/digit-ui/employee/dfm/file-flow`,
+            link: `/digit-ui/employee/dfm/search/application`,
         },
     ]
 

@@ -4,26 +4,29 @@ import { PrivateRoute, BreadCrumb } from "@egovernments/digit-ui-react-component
 import { useTranslation } from "react-i18next";
 import Inbox from "./Inbox";
 // import NewApplication from "./NewApplication";
-// import Search from "./Search";
+import Search from "./Search";
 // import Response from "../Response";
 import ApplicationDetails from "./ApplicationDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
-
+import SearchFlow from "./Search-route";
 //import ReNewApplication from "./ReNewApplication";
 
 const CRBreadCrumb = ({ location }) => {
+  console.log("search-flow");
   const { t } = useTranslation();
   const isSearch = location?.pathname?.includes("search");
   const isInbox = location?.pathname?.includes("inbox");
   const isApplicationSearch = location?.pathname?.includes("search/application");
+  const isDeathCorrectSearch = location?.pathname?.includes("search-correction/application");
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
-  const isApplicationDetails = location?.pathname?.includes("tl/application-details");
+  const isApplicationDetails = location?.pathname?.includes("cr/application-details");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
+  const isSearchFlow = location?.pathname?.includes("search-flow");
   const isCrFlow = location?.pathname?.includes("cr-flow");
   const isChildDetails = location?.pathname?.includes("child-details");
   const isDeathFlow = location?.pathname?.includes("death-flow");
@@ -90,6 +93,11 @@ const CRBreadCrumb = ({ location }) => {
       show: true
     },
     {
+      path: "/digit-ui/employee/cr/search-flow",
+      content: t("Search Registration"),
+      show: breadCrumbUrls.includes("search-flow") || isSearchFlow
+    },
+    {
       path: "/digit-ui/employee/cr/cr-flow",
       content: t("Birth Registration"),
       show: breadCrumbUrls.includes("cr-flow") || isCrFlow
@@ -110,11 +118,26 @@ const CRBreadCrumb = ({ location }) => {
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails
     },
     {
-      path: "/digit-ui/employee/cr/death-flow/search/application",
+      path: "/digit-ui/employee/cr/search/application",
       content: t("ES_COMMON_SEARCH_APPLICATION"),
       show: isApplicationSearch ||
-      breadCrumbUrls.includes("home/search") || 
-      breadCrumbUrls.includes("inbox/search")
+      breadCrumbUrls.includes("home/search-flow") 
+    },
+    {
+      path: sessionStorage.getItem("applicationNumber") ? `/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}` : "",
+      content: t("TL_DETAILS_HEADER_LABEL"),
+      show: isApplicationDetails ||
+      breadCrumbUrls.includes("inbox/appDetails") || 
+      breadCrumbUrls.includes("home/license/appDetails") || 
+      breadCrumbUrls.includes("inbox/license/appDetails") || 
+      breadCrumbUrls.includes("home/search/appDetails") || 
+      breadCrumbUrls.includes("inbox/search/appDetails")
+    },
+    {
+      path: "/digit-ui/employee/cr/death-flow/search-correction/application",
+      content: t("ES_COMMON_SEARCH_APPLICATION"),
+      show: isDeathCorrectSearch ||
+      breadCrumbUrls.includes("home/death-flow") 
     },
    
     // {
@@ -129,23 +152,14 @@ const CRBreadCrumb = ({ location }) => {
     //   show: breadCrumbUrls.includes("inbox") || isInbox
     // },
  
-    // {
-    //   path: "/digit-ui/employee/tl/search/license",
-    //   content: t("TL_SEARCH_TRADE_HEADER"),
-    //   show: isLicenceSearch || 
-    //   breadCrumbUrls.includes("home/license") || 
-    //   breadCrumbUrls.includes("inbox/license")
-    // },
-    // {
-    //   path: sessionStorage.getItem("applicationNumber") ? `/digit-ui/employee/tl/application-details/${sessionStorage.getItem("applicationNumber")}` : "",
-    //   content: t("TL_DETAILS_HEADER_LABEL"),
-    //   show: isApplicationDetails ||
-    //   breadCrumbUrls.includes("inbox/appDetails") || 
-    //   breadCrumbUrls.includes("home/license/appDetails") || 
-    //   breadCrumbUrls.includes("inbox/license/appDetails") || 
-    //   breadCrumbUrls.includes("home/search/appDetails") || 
-    //   breadCrumbUrls.includes("inbox/search/appDetails")
-    // },
+    {
+      path: "/digit-ui/employee/cr/search/death-correction",
+      content: t("TL_SEARCH_TRADE_HEADER"),
+      show: isLicenceSearch || 
+      breadCrumbUrls.includes("home/death-correction") || 
+      breadCrumbUrls.includes("inbox/death-correction")
+    },
+    
     // {
     //   path: "/digit-ui/employee/tl/new-application",
     //   content: t("TL_HOME_SEARCH_RESULTS_NEW_APP_BUTTON"),
@@ -187,13 +201,14 @@ const EmployeeApp = ({ path, url, userType }) => {
   const location = useLocation();
   const mobileView = innerWidth <= 640;
 
-  const locationCheck = window.location.href.includes("employee/tl/new-application") || window.location.href.includes("employee/tl/response") || window.location.href.includes("employee/tl/edit-application-details") || window.location.href.includes("employee/tl/renew-application-details");
+  const locationCheck = window.location.href.includes("employee/cr/new-application") || window.location.href.includes("employee/cr/response") || window.location.href.includes("employee/cr/edit-application-details") || window.location.href.includes("employee/cr/renew-application-details");
 
   // const NewApplication = Digit?.ComponentRegistryService?.getComponent('TLNewApplication');
   // const ReNewApplication = Digit?.ComponentRegistryService?.getComponent('TLReNewApplication');
   // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   // const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
-
+  const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
+const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
   return (
     <Switch>
     <React.Fragment>
@@ -201,9 +216,15 @@ const EmployeeApp = ({ path, url, userType }) => {
         <div style={locationCheck ? {marginLeft: "15px"} : {}}>
           <CRBreadCrumb location={location} />
         </div>
+        <PrivateRoute parentRoute={path} path={`${path}/search-flow`} component={() => <SearchFlow parentUrl={url} />} />
         <PrivateRoute parentRoute={path} path={`${path}/cr-flow`} component={() => <CrFlow parentUrl={url} />} />
         <PrivateRoute parentRoute={path} path={`${path}/death-flow`} component={() => <DeathCrFlow parentUrl={url} />} />
-        <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} />
+        {/* <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} /> */}
+        {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} /> */}
+        {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
+
+        <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> */}
+
       </div>
     </React.Fragment>
   </Switch>
@@ -211,4 +232,4 @@ const EmployeeApp = ({ path, url, userType }) => {
   );
 };
 
-export default EmployeeApp;
+export default EmployeeApp;  

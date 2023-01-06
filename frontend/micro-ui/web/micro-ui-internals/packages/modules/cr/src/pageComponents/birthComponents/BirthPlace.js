@@ -3,7 +3,10 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea } from "
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import HospitalDetails from "../../pageComponents/birthComponents/HospitalDetails";
+import InstitutionDetails from "../../pageComponents/birthComponents/InstitutionDetails";
+import BirthVehicle from "../../pageComponents/birthComponents/BirthVehicle";
 import PublicPlace from "../../pageComponents/birthComponents/PublicPlace";
+import OtherCountry from "../../pageComponents/birthComponents/OtherCountry";
 
 const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -59,16 +62,38 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDescription" value={BirthPlaceDescription} onChange={setSelectBirthPlaceDeccription} disable={isEdit} placeholder={`${t("CR_DESCRIPTION")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })} />
           </div>
         </div> */}
-        {/* {value === "HOSPITAL" && (
+        {value === "HOSPITAL" && (
                     <div>
                    <HospitalDetails />
+          </div>)
+          }
+          {value === "INSTITUTION" && (
+                    <div>
+                   <InstitutionDetails />
           </div>)
           }
           {value === "HOME" && (
                     <div>
                    <PublicPlace />
           </div>)
-          } */}
+          }
+          {value === "VEHICLE" && (
+                    <div>
+                   <BirthVehicle />
+          </div>)
+          }
+          {value === "PUBLIC_PLACES" && (
+                    <div>
+                   <PublicPlace />
+          </div>)
+          }
+          {value === "OTHERS_COUNTRY" && (
+                    <div>
+                   <OtherCountry />
+          </div>)
+          }
+           
+          
       </FormStep>
     </React.Fragment>
   );

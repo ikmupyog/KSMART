@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
+    const { data: Country = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
     const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
@@ -17,40 +18,54 @@ import React, { useState, useEffect } from "react";
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressDetails?.PresentHouseNameMl);
     const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressDetails?.PresentHouseNameEn);
+    const [PresentStreetEn, setPresentStreetEn] = useState(formData?.AddressDetails?.PresentStreetEn);
+    const [PresentStreetMl, setPresentStreetMl] = useState(formData?.AddressDetails?.PresentStreetMl); 
+    const [PresentViaEn, setPresentViaEn] = useState(formData?.AddressDetails?.PresentViaEn);
+    const [PresentViaMl, setPresentViaMl] = useState(formData?.AddressDetails?.PresentViaMl); 
     const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressDetails?.PresentBuldingNo);
     const [PresentHouseNo, setPresentHouseNo] = useState(formData?.AddressDetails?.PresentHouseNo);
     const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
     const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressDetails?.PresentLocalityNameMl);
-    const [PresentCityNameEn, setPresentCityNameEn] = useState(formData?.AddressDetails?.PresentCityNameEn);
-    const [PresentCityNameMl, setPresentCityNameMl] = useState(formData?.AddressDetails?.PresentCityNameMl);
+    const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressDetails?.PresentMainPlaceEn);
+    const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressDetails?.PresentMainPlaceMl);
     const [PresentVillage, setPresentVillage] = useState(formData?.AddressDetails?.PresentVillage);
     const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
-    const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
+    const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);    
+    const [PresentMotherCountry, setPresentMotherCountry] = useState(formData?.AddressDetails?.PresentMotherCountry);
+    const [PresentStateName, setPresentStateName] = useState(formData?.AddressDetails?.PresentStateName);
     const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
     const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
     const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
     const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress);
     const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressDetails?.PermanentHouseNameEn);
     const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressDetails?.PermanentHouseNameMl);
+    const [PermanentStreetEn, setPermanentStreetEn] = useState(formData?.AddressDetails?.PermanentStreetEn);
+    const [PermanentStreetMl, setPermanentStreetMl] = useState(formData?.AddressDetails?.PermanentStreetMl);
+    const [PermanentViaEn, setPermanentViaEn] = useState(formData?.AddressDetails?.PermanentViaEn);
+    const [PermanentViaMl, setPermanentViaMl] = useState(formData?.AddressDetails?.PermanentViaMl);
     const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressDetails?.PermanentBuldingNo);
     const [PermanentHouseNo, setPermanentHouseNo] = useState(formData?.AddressDetails?.PermanentHouseNo);
     const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressDetails?.PermanentLocalityNameEn);
     const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressDetails?.PermanentLocalityNameMl);
-    const [PermanentCityNameEn, setPermanentCityNameEn] = useState(formData?.AddressDetails?.PermanentCityNameEn);
-    const [PermanentCityNameMl, setPermanentCityNameMl] = useState(formData?.AddressDetails?.PermanentCityNameMl);
+    const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressDetails?.PermanentMainPlaceEn);
+    const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressDetails?.PermanentMainPlaceMl);
     const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressDetails?.PermanentVillage);
     const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
+    const [PermanentMotherCountry, setPermanentMotherCountry] = useState(formData?.AddressDetails?.PermanentMotherCountry);
+    const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressDetails?.PermanentStateName);
     const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
     const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
     const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);   
     const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
    
     let cmbPlace = [];
+    let cmbCountry = [];
     let cmbTaluk = [];
     let cmbVillage = [];
     let cmbDistrict = [];
     let cmbPostOffice = [];
     let districtid = null;
+    
     console.log("Taluk" + Taluk);
     Taluk &&
       Taluk["common-masters"] &&
@@ -62,7 +77,7 @@ import React, { useState, useEffect } from "react";
       Village["common-masters"].Village.map((ob) => {
         cmbVillage.push(ob);
       });
-    PostOffice &&
+      District &&
       District["common-masters"] &&
       District["common-masters"].District.map((ob) => {
         cmbDistrict.push(ob);
@@ -72,7 +87,13 @@ import React, { useState, useEffect } from "react";
       PostOffice["common-masters"].PostOffice.map((ob) => {
         cmbPostOffice.push(ob);
       });
-  
+      Country &&
+      Country["common-masters"] &&
+      Country["common-masters"].Country.map((ob) => {
+        cmbCountry.push(ob);
+      });
+
+
     const onSkip = () => onSelect();
 
     function setSelectPresentHouseNameMl(e) {
@@ -87,6 +108,32 @@ import React, { useState, useEffect } from "react";
         setPermanentHouseNameEn(PresentHouseNameEn);
       }
     }
+    function setSelectPresentStreetMl(e) {
+      setPresentStreetMl(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentStreetMl(PresentStreetMl);
+      }
+    }
+    function setSelectPresentStreetEn(e) {
+      setPresentStreetEn(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentStreetEn(PresentStreetEn);
+      }
+    }
+
+    function setSelectPresentViaMl(e) {
+      setPresentViaMl(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentViaMl(PresentViaMl);
+      }
+    }
+    function setSelectPresentViaEn(e) {
+      setPresentViaEn(e.target.value);
+      if (isPrsentAddress) {
+        setPermanentViaEn(PresentViaEn);
+      }
+    }
+
     function setSelectPresentBuldingNo(e) {
       setPresentBuldingNo(e.target.value);
       if (isPrsentAddress) {
@@ -111,18 +158,31 @@ import React, { useState, useEffect } from "react";
         setPermanentLocalityNameMl(PresentLocalityNameMl);
       }
     }
-    function setSelectPresentCityNameEn(e) {
-      setPresentCityNameEn(e.target.value);
+    function setSelectPresentMainPlaceEn(e) {
+      setPresentMainPlaceEn(e.target.value);
       if (isPrsentAddress) {
-        setPermanentCityNameEn(PresentCityNameEn);
+        setPermanentMainPlaceEn(PresentMainPlaceEn);
       }
     }
-    function setSelectPresentCityNameMl(e) {
-      setPresentCityNameMl(e.target.value);
+    function setSelectPresentMainPlaceMl(e) {
+      setPresentMainPlaceMl(e.target.value);
       if (isPrsentAddress) {
-        setPermanentCityNameMl(PresentCityNameMl);
+        setPermanentMainPlaceMl(PresentMainPlaceMl);
       }
     }
+    function setSelectPresentMotherCountry(value) {
+      setPresentMotherCountry(value);
+      if (isPrsentAddress) {
+        setPresentMotherCountry(PresentMotherCountry);
+      }
+    }
+    function setSelectPresentStateName(value) {
+      setPresentStateName(value);
+      if (isPrsentAddress) {
+        setPresentStateName(PresentStateName);
+      }
+    }
+    
     function setSelectPresentVillage(value) {
       setPresentVillage(value);
       console.log("Village" + cmbVillage);
@@ -143,6 +203,7 @@ import React, { useState, useEffect } from "react";
         setPermanentTaluk(PresentTaluk);
       }
     }
+
     function setSelectPresentDistrict(value) {
       setIsInitialRender(true);
       setPresentDistrict(value);
@@ -173,6 +234,20 @@ import React, { useState, useEffect } from "react";
     function setSelectPermanentHouseNameEn(e) {
       setPermanentHouseNameEn(e.target.value);
     }
+    function setSelectPermanentStreetMl(e) {
+      setPermanentStreetMl(e.target.value);
+    }
+    function setSelectPermanentStreetEn(e) {
+      setPermanentStreetEn(e.target.value);
+    }  
+    
+    function setSelectPermanentViaMl(e) {
+      setPermanentViaMl(e.target.value);
+    }
+    function setSelectPermanentViaEn(e) {
+      setPermanentViaEn(e.target.value);
+    }  
+
     function setSelectPermanentBuldingNo(e) {
       setPermanentBuldingNo(e.target.value);
     }
@@ -185,11 +260,11 @@ import React, { useState, useEffect } from "react";
     function setSelectPermanentLocalityNameMl(e) {
       setPermanentLocalityNameMl(e.target.value);
     }
-    function setSelectPermanentCityNameEn(e) {
-      setPermanentCityNameEn(e.target.value);
+    function setSelectPermanentMainPlaceEn(e) {
+      setPermanentMainPlaceEn(e.target.value);
     }
-    function setSelectPermanentCityNameMl(e) {
-      setPermanentCityNameMl(e.target.value);
+    function setSelectPermanentMainPlaceMl(e) {
+      setPermanentMainPlaceMl(e.target.value);
     }
     function setSelectPermanentVillage(value) {
       setPermanentVillage(value);
@@ -199,6 +274,14 @@ import React, { useState, useEffect } from "react";
     }
     function setSelectPermanentTaluk(value) {
       setPermanentTaluk(value);
+    }
+    function setSelectPermanentMotherCountry(value) {
+      setPermanentMotherCountry(value);
+      districtid = value.districtid
+    }
+    function setSelectPermanentStateName(value) {
+      setPermanentStateName(value);
+      districtid = value.districtid
     }
     function setSelectPermanentDistrict(value) {
       setPermanentDistrict(value);
@@ -217,14 +300,20 @@ import React, { useState, useEffect } from "react";
       if (e.target.checked == true) {
         setPermanentHouseNameMl(PresentHouseNameMl);
         setPermanentHouseNameEn(PresentHouseNameEn); 
+        setPermanentStreetEn(PresentStreetEn);
+        setPermanentStreetMl(PresentStreetMl); 
+        setPermanentViaEn(PresentViaEn);
+        setPermanentViaMl(PresentViaMl);       
         setPermanentBuldingNo(PresentBuldingNo);
         setPermanentHouseNo(PresentHouseNo);
         setPermanentLocalityNameEn(PresentLocalityNameEn);
         setPermanentLocalityNameMl(PresentLocalityNameMl);
-        setPermanentCityNameEn(PresentCityNameEn);
-        setPermanentCityNameMl(PresentCityNameMl);
+        setPermanentMainPlaceEn(PresentMainPlaceEn);
+        setPermanentMainPlaceMl(PresentMainPlaceMl);
         setPermanentVillage(PresentVillage);
         setPermanentLBName(PresentLBName);
+        setPermanentMotherCountry(PresentMotherCountry);  
+        setPermanentStateName(PresentStateName);  
         setPermanentDistrict(PresentDistrict);
         setPermanentTaluk(PresentTaluk);
         setPermanentPostOffice(PresentPostOffice);
@@ -236,12 +325,18 @@ import React, { useState, useEffect } from "react";
         setPermanentHouseNameEn('');
         setPermanentBuldingNo('');
         setPermanentHouseNo('');
+        setPermanentStreetMl('');
+        setPermanentStreetEn('');
+        setPermanentViaMl('');
+        setPermanentViaEn(''); 
         setPermanentLocalityNameEn('');
         setPermanentLocalityNameMl('');
-        setPermanentCityNameEn('');
-        setPermanentCityNameMl('');
+        setPermanentMainPlaceEn('');
+        setPermanentMainPlaceMl('');
         setPermanentVillage('');
-        setPermanentLBName('');
+        setPermanentLBName('');        
+        setPermanentStateName('');
+        setPermanentMotherCountry('');
         setPermanentDistrict('');
         setPermanentTaluk('');
         setPermanentPostOffice('');
@@ -264,72 +359,57 @@ import React, { useState, useEffect } from "react";
       sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn.code); 
       sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo);
       sessionStorage.setItem("PresentHouseNo", PresentHouseNo);
+      sessionStorage.setItem("PresentStreetEn", PresentStreetEn); 
+      sessionStorage.setItem("PresentStreetMl", PresentStreetMl);
+      sessionStorage.setItem("PresentViaEn", PresentViatEn); 
+      sessionStorage.setItem("PresentViaMl", PresentViaMl);
       sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn);
       sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl);
-      sessionStorage.setItem("PresentCityNameEn", PresentCityNameEn);
-      sessionStorage.setItem("PresentCityNameMl", PresentCityNameMl);
+      sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn);
+      sessionStorage.setItem("PresentMainPlaceMl", PresentMainPlaceMl);
       sessionStorage.setItem("PresentVillage", PresentVillage.code);
       sessionStorage.setItem("PresentLBName", null);
+      sessionStorage.setItem("PresentMotherCountry", PresentMotherCountry.code);  
+      sessionStorage.setItem("PresentStateName", PresentStateName.code);         
       sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
       sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
       sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
       sessionStorage.setItem("PresentPincode", PresentPincode.code);     
-      sessionStorage.setItem("PermanentHouseNameMl", PresentHouseNameMl.code);
-      sessionStorage.setItem("PermanentHouseNameEn", PresentHouseNameEn.code);      
-      sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
+      sessionStorage.setItem("PermanentHouseNameMl", PresentHouseNameMl);
+      sessionStorage.setItem("PermanentHouseNameEn", PresentHouseNameEn);
+      sessionStorage.setItem("PermanentHouseNameEn", PresentHouseNameEn); 
+      sessionStorage.setItem("PermanentStreetEn", PermanentStreetEn);   
+      sessionStorage.setItem("PermanentStreetMl", PermanentStreetMl);  
+      sessionStorage.setItem("PermanentViaEn", PermanentViaEn);   
+      sessionStorage.setItem("PermanentViaMl", PermanentViaMl);
+      sessionStorage.setItem("PresentBuldingNo", PermanentBuldingNo);
       sessionStorage.setItem("PermanentHouseNo", PermanentHouseNo);
       sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);
       sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl);
-      sessionStorage.setItem("PermanentCityNameEn", PermanentCityNameEn);
-      sessionStorage.setItem("PermanentCityNameMl", PermanentCityNameMl);
+      sessionStorage.setItem("PermanentMainPlaceEn", PermanentMainPlaceEn);
+      sessionStorage.setItem("PermanentMainPlaceMl", PermanentMainPlaceMl);
       sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
       sessionStorage.setItem("PermanentLBName", null);
+      sessionStorage.setItem("PermanentMotherCountry", PermanentMotherCountry.code);  
+      sessionStorage.setItem("PermanentStateName", PermanentStateName.code);  
       sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
       sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
       sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
       sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
       
       onSelect(config.key, {
-        PresentHouseNameMl,PresentHouseNameEn,PresentBuldingNo, PresentHouseNo, PresentLocalityNameEn,
-        PresentLocalityNameMl, PresentCityNameEn, PresentCityNameMl, PresentVillage, PresentLBName, PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
-        PresentHouseNameEn, PermanentHouseNameMl,PermanentBuldingNo, PermanentHouseNo, PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentCityNameEn, PermanentCityNameMl, PermanentVillage, PermanentLBName,
-        PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode, 
+        PresentHouseNameMl,PresentHouseNameEn,PresentBuldingNo, PresentHouseNo, PresentStreetEn,PresentStreetMl,PresentViaEn,PresentViaMl,PresentLocalityNameEn,
+        PresentLocalityNameMl, PresentMainPlaceEn, PresentMainPlaceMl, PresentVillage, PresentLBName,PresentMotherCountry, PresentStateName,PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
+        PresentHouseNameEn, PermanentHouseNameMl,PermanentBuldingNo, PermanentHouseNo,PermanentViaMl,PermanentViaEn, PermanentStreetMl,PermanentStreetEn,PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentMainPlaceEn, PermanentMainPlaceMl, PermanentVillage, PermanentLBName,
+        PermanentMotherCountry, PermanentStateName,PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode, 
       });
     }
     return (
       <React.Fragment>
-        {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+        {/*
         {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep
-        t={t}
-        config={config}
-        onSelect={goNext}
-        onSkip={onSkip}
-        isDisabled={
-          !PresentHouseNameMl ||
-          !PresentHouseNameEn ||
-          !PresentHouseNo ||
-          !PresentLocalityNameEn ||
-          !PresentLocalityNameMl ||
-          !PresentDistrict ||
-          !PresentVillage ||
-          !PresentTaluk ||
-          !PresentPostOffice ||
-          !PresentPincode ||   
-          !PermanentHouseNameMl ||
-          !PermanentHouseNameEn ||                 
-          !PermanentHouseNo ||
-          !PermanentLocalityNameEn ||
-          !PermanentLocalityNameMl ||
-          !PermanentDistrict ||
-          !PermanentVillage ||
-          !PermanentTaluk ||
-          !PermanentPostOffice ||
-          !PermanentPincode 
-          
-        }
-      >
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
+      <FormStep  t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PresentHouseNameMl } >
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -340,7 +420,7 @@ import React, { useState, useEffect } from "react";
         
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
               <TextInput
                 t={t}
@@ -354,7 +434,22 @@ import React, { useState, useEffect } from "react";
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
               />
-            </div>
+            </div> */}
+            <div className="col-md-6">
+              <CardLabel>{t("CR_DOOR_NO")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentBuldingNo"
+                value={PresentBuldingNo}
+                onChange={setSelectPresentBuldingNo}
+                placeholder={`${t("CR_DOOR_NO")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
+              />
+            </div>            
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_HOUSE_NO")}
@@ -408,7 +503,47 @@ import React, { useState, useEffect } from "react";
                    />
             </div>
             </div>
-        </div>        
+        </div>  
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_STREET_NAME_EN")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentStreetEn"
+                value={PresentStreetEn}
+                onChange={setSelectPresentStreetEn}
+                placeholder={`${t("CR_STREET_NAME_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_STREET_NAME_ML")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentStreetMl"
+                value={PresentStreetMl}
+                onChange={setSelectPresentStreetMl}
+                placeholder={`${t("CR_STREET_NAME_ML")}`}
+                disable={isEdit}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
+              />
+            </div>
+          </div>
+        </div>      
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -452,68 +587,100 @@ import React, { useState, useEffect } from "react";
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_CITY_EN")}</CardLabel>
+              <CardLabel>{t("CR_MAIN_PLACE_EN")}<span className="mandatorycss">*</span> </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="PresentCityNameEn"
-                value={PresentCityNameEn}
-                onChange={setSelectPresentCityNameEn}
-                placeholder={`${t("CR_CITY_EN")}`}
+                name="PresentMainPlaceEn"
+                value={PresentMainPlaceEn}
+                onChange={setSelectPresentMainPlaceEn}
+                placeholder={`${t("CR_MAIN_PLACE_EN")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_CITY_ML")}</CardLabel>
+              <CardLabel>{t("CR_MAIN_PLACE_ML")}<span className="mandatorycss">*</span> </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="PresentCityNameMl"
-                value={PresentCityNameMl}
-                onChange={setSelectPresentCityNameMl}
-                placeholder={`${t("CR_CITY_ML")}`}
+                name="PresentMainPlaceMl"
+                value={PresentMainPlaceMl}
+                onChange={setSelectPresentMainPlaceMl}
+                placeholder={`${t("CR_MAIN_PLACE_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
               />
             </div>
           </div>
         </div>
-        {/* <div className="row">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_VIA_EN")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentViaEn"
+                value={PresentViaEn}
+                onChange={setSelectPresentViaEn}
+                placeholder={`${t("CR_VIA_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VIA_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_VIA_ML")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentViaMl"
+                value={PresentViaMl}
+                onChange={setSelectPresentViaMl}
+                placeholder={`${t("CR_VIA_ML")}`}
+                disable={isEdit}
+                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_VIA_ML") })}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
             <div className="col-md-12" >
-              <div className="col-md-6" >
-                <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={false}
-                  option={cmbState}
-                  selected={StateName}
-                  select={setSelectStateName}
-                  disabled={isEdit}
-                />
-              </div>
-              <div className="col-md-6" >
+            <div className="col-md-4" >
                 <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
                   isMandatory={false}
                   option={cmbCountry}
-                  selected={MotherCountry}
-                  select={setSelectMotherCountry}
+                  // option={cmbDistrict}
+                  selected={PresentMotherCountry}
+                  select={setSelectPresentMotherCountry}
                   disabled={isEdit}
                 />
               </div>
-            </div>
-          </div> */}
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
+              <div className="col-md-4" >
+                <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  // option={cmbState}
+                  option={cmbDistrict}
+                  selected={PresentStateName}
+                  select={setSelectPresentStateName}
+                  disabled={isEdit}
+                />
+              </div>
+              <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_DISTRICT")}
                 <span className="mandatorycss">*</span>
@@ -529,6 +696,11 @@ import React, { useState, useEffect } from "react";
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
             </div>
+            </div>
+          </div>
+        <div className="row">
+          <div className="col-md-12">
+           
             <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_LB_NAME")}
@@ -543,6 +715,22 @@ import React, { useState, useEffect } from "react";
                 select={setSelectPresentLBName}
                 disabled={isEdit}
                 placeholder={`${t("CS_COMMON_LB_NAME")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_WARD")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={true}
+                option={cmbVillage}
+                selected={PresentVillage}
+                select={setSelectPresentVillage}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_WARD")}`}
               />
             </div>
             <div className="col-md-4">
@@ -565,6 +753,7 @@ import React, { useState, useEffect } from "react";
         </div>
         <div className="row">
           <div className="col-md-12">
+          
             <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_TALUK")}
@@ -649,7 +838,7 @@ import React, { useState, useEffect } from "react";
            
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
                 <TextInput
                   t={t}
@@ -663,7 +852,23 @@ import React, { useState, useEffect } from "react";
                   placeholder={`${t("CR_BUILDING_NO")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
                 />
+              </div> */}
+              <div className="col-md-6">
+                <CardLabel>{t("CR_DOOR_NO")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentBuldingNo"
+                  value={PermanentBuldingNo}
+                  onChange={setSelectPermanentBuldingNo}
+                  disable={isEdit}
+                  placeholder={`${t("CR_DOOR_NO")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
+                />
               </div>
+              
               <div className="col-md-6">
                 <CardLabel>
                   {t("CR_HOUSE_NO")}
@@ -714,7 +919,47 @@ import React, { useState, useEffect } from "react";
                    />
             </div>
             </div>
-        </div>    
+        </div>  
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_STREET_NAME_EN")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PermanentStreetEn"
+                value={PermanentStreetEn}
+                onChange={setSelectPermanentStreetEn}
+                placeholder={`${t("CR_STREET_NAME_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_STREET_NAME_ML")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PermanentStreetMl"
+                value={PermanentStreetMl}
+                onChange={setSelectPermanentStreetMl}
+                placeholder={`${t("CR_STREET_NAME_ML")}`}
+                disable={isEdit}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
+              />
+            </div>
+          </div>
+        </div>       
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
@@ -759,44 +1004,104 @@ import React, { useState, useEffect } from "react";
             <div className="col-md-12">
               <div className="col-md-6">
                 <CardLabel>
-                  {t("CR_CITY_EN")}
-                  {/* <span className="mandatorycss">*</span> */}
+                  {t("CR_MAIN_PLACE_EN")}
+                  <span className="mandatorycss">*</span> 
                 </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
-                  name="PermanentCityNameEn"
-                  value={PermanentCityNameEn}
-                  onChange={setSelectPermanentCityNameEn}
+                  name="PermanentMainPlaceEn"
+                  value={PermanentMainPlaceEn}
+                  onChange={setSelectPermanentMainPlaceEn}
                   disable={isEdit}
-                  placeholder={`${t("CR_CITY_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
+                  placeholder={`${t("CR_MAIN_PLACE_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
                 />
               </div>
               <div className="col-md-6">
                 <CardLabel>
-                  {t("CR_CITY_ML")}
-                  {/* <span className="mandatorycss">*</span> */}
+                  {t("CR_MAIN_PLACE_ML")}
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
-                  name="PermanentCityNameMl"
-                  value={PermanentCityNameMl}
-                  onChange={setSelectPermanentCityNameMl}
+                  name="PermanentMainPlaceMl"
+                  value={PermanentMainPlaceMl}
+                  onChange={setSelectPermanentMainPlaceMl}
                   disable={isEdit}
-                  placeholder={`${t("CR_CITY_ML")}`}
-                  {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                  placeholder={`${t("CR_MAIN_PLACE_ML")}`}
+                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
                 />
               </div>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_VIA_EN")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PermanentViaEn"
+                value={PermanentViaEn}
+                onChange={setSelectPermanentViaEn}
+                placeholder={`${t("CR_VIA_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VIA_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_VIA_ML")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PermanentViaMl"
+                value={PermanentViaMl}
+                onChange={setSelectPermanentViaMl}
+                placeholder={`${t("CR_VIA_ML")}`}
+                disable={isEdit}
+                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_VIA_ML") })}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+            <div className="col-md-12" >
+            <div className="col-md-4" >
+                <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbCountry}
+                  // option={cmbDistrict}
+                  selected={PermanentMotherCountry}
+                  select={setSelectPermanentMotherCountry}
+                  disabled={isEdit}
+                />
+              </div>
+              <div className="col-md-4" >
+                <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  // option={cmbState}
+                  option={cmbDistrict}
+                  selected={PermanentStateName}
+                  select={setSelectPermanentStateName}
+                  disabled={isEdit}
+                />
+              </div>
               <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_DISTRICT")}
@@ -813,6 +1118,11 @@ import React, { useState, useEffect } from "react";
                   placeholder={`${t("CS_COMMON_DISTRICT")}`}
                 />
               </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+            
               <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_LB_NAME")}
@@ -827,6 +1137,22 @@ import React, { useState, useEffect } from "react";
                   select={setSelectPermanentLBName}
                   disabled={isEdit}
                   placeholder={`${t("CS_COMMON_LB_NAME")}`}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CS_COMMON_WARD")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={true}
+                  option={cmbVillage}
+                  selected={PermanentVillage}
+                  select={setSelectPermanentVillage}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_WARD")}`}
                 />
               </div>
               <div className="col-md-4">
@@ -848,7 +1174,7 @@ import React, { useState, useEffect } from "react";
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-12">            
               <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_TALUK")}
