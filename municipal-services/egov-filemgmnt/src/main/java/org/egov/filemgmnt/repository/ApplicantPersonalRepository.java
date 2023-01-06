@@ -71,9 +71,7 @@ public class ApplicantPersonalRepository {
                                                                                                     .id(id)
                                                                                                     .build());
 
-
-		// Embededd URL for QR-CODE START
-
+        // Embededd URL for QR-CODE START
 
         String uiHostCert = fmConfig.getUiAppHost();
         String resCertPath = fmConfig.getResidentialCertLink();
@@ -89,19 +87,16 @@ public class ApplicantPersonalRepository {
 //                                                      .getFileDetail()
 //                                                      .getFileCode());
 
-
         String finalPath = uiHostCert + resCertPath;
 
         String embeddedUrl = getShortenedUrl(finalPath);
 
+        // END
 
-		// END
+        // PDF Service call start
 
-		// PDF Service call start
-
-		String uiHost = fmConfig.getEgovPdfHost();
-		String residentialCertPath = fmConfig.getEgovPdfResidentialEndPoint();
-
+        String uiHost = fmConfig.getEgovPdfHost();
+        String residentialCertPath = fmConfig.getEgovPdfResidentialEndPoint();
 
         String tenantId = searchResult.get(0)
                                       .getTenantId();
@@ -111,11 +106,9 @@ public class ApplicantPersonalRepository {
         // Create PDFRequest Json
         JSONObject pdfRequest = new JSONObject();
 
+        // PDF Response END
 
-
-		// PDF Response END
-
-		// certificate details model START
+        // certificate details model START
 
         pdfRequest.put(FMConstants.REQUESTINFOKEY, requestInfo);
         pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY, getPdfCertArray(searchResult, embeddedUrl));
@@ -124,7 +117,6 @@ public class ApplicantPersonalRepository {
         CertificateDetails certificate = new CertificateDetails();
         List<CertificateDetails> list = new ArrayList<>();
         EgovPdfResp result = new EgovPdfResp();
-
 
         certificate.setApplicantPersonalId(id);
         certificate.setTenantId(tenantId);
@@ -145,21 +137,18 @@ public class ApplicantPersonalRepository {
                                                        .build();
         enrichmentService.enrichCertificateCreate(certReq);
 
-
-		// Certificate details topic values return to service
-		return certReq;
+        // Certificate details topic values return to service
+        return certReq;
 
     }
 
-
-	// PDF service input json creation for certificate details
-	// inputs : search result of id
-	// output : json array Certificate details
+    // PDF service input json creation for certificate details
+    // inputs : search result of id
+    // output : json array Certificate details
 
     public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl) {
         JSONArray array = new JSONArray();
         JSONObject obj = new JSONObject();
-
 
 //        obj.put("embeddedUrl", embeddedUrl);
         obj.put(FMConstants.ID,
@@ -172,7 +161,7 @@ public class ApplicantPersonalRepository {
         obj.put(FMConstants.FINANCIALYEAR,
                 searchResult.get(0)
                             .getApplicantChild()
-                            .getDurationOfResidence());
+                            .getDurationOfResidenceInYears());
         obj.put(FMConstants.WARDNO,
                 searchResult.get(0)
                             .getApplicantAddress()
@@ -191,7 +180,7 @@ public class ApplicantPersonalRepository {
 
         String address = searchResult.get(0)
                                      .getApplicantAddress()
-                                     .getHouseNo()
+                                     .getBuildingNo()
                 + '/' + searchResult.get(0)
                                     .getApplicantAddress()
                                     .getHouseName()

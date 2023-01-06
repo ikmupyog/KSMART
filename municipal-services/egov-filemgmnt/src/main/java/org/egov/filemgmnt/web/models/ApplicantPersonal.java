@@ -51,11 +51,23 @@ public class ApplicantPersonal {
     @JsonProperty("firstName")
     private String firstName;
 
+    @Schema(type = "string", description = "First name malayalam")
+    @Size(max = 64)
+    @NotNull
+    @JsonProperty("firstNameMal")
+    private String firstNameMal;
+
     @Schema(type = "string", description = "Last name")
     @Size(max = 64)
     @NotNull
     @JsonProperty("lastName")
     private String lastName;
+
+    @Schema(type = "string", description = "Last name malayalam")
+    @Size(max = 64)
+    @NotNull
+    @JsonProperty("lastNameMal")
+    private String lastNameMal;
 
     @Schema(type = "string", description = "Title")
     @Size(max = 64)
@@ -80,20 +92,40 @@ public class ApplicantPersonal {
     @JsonProperty("fatherFirstName")
     private String fatherFirstName;
 
+    @Schema(type = "string", description = "Father first name malayalam")
+    @Size(max = 64)
+    @JsonProperty("fatherFirstNameMal")
+    private String fatherFirstNameMal;
+
     @Schema(type = "string", description = "Father last name")
     @Size(max = 64)
     @JsonProperty("fatherLastName")
     private String fatherLastName;
+
+    @Schema(type = "string", description = "Father last name malayalam")
+    @Size(max = 64)
+    @JsonProperty("fatherLastNameMal")
+    private String fatherLastNameMal;
 
     @Schema(type = "string", description = "Mother first name")
     @Size(max = 64)
     @JsonProperty("motherFirstName")
     private String motherFirstName;
 
+    @Schema(type = "string", description = "Mother first name malayalam")
+    @Size(max = 64)
+    @JsonProperty("motherFirstNameMal")
+    private String motherFirstNameMal;
+
     @Schema(type = "string", description = "Mother last name")
     @Size(max = 64)
     @JsonProperty("motherLastName")
     private String motherLastName;
+
+    @Schema(type = "string", description = "Mother last name malayalam")
+    @Size(max = 64)
+    @JsonProperty("motherLastNameMal")
+    private String motherLastNameMal;
 
     @Schema(type = "string", description = "Applicant category")
     @Size(max = 64)
