@@ -36,9 +36,9 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
      //                                                  .toString();
      //Jasmine
       private static final String QUERY = new StringBuilder()
-                                                  .append("SELECT dt.id, dt.registrationunit, dt.tenantid, dt.correct_death_date_known, dt.dateofdeath, dt.time_of_death, dt.timeofdeath_unit, dt.date_of_death_to, dt.time_of_death_to, dt.timeofdeath_unit_to, dt.deceased_identified") 
+                                                  .append("SELECT dt.id, dt.registrationunit, dt.tenantid, dt.death_date_unavailable, dt.dateofdeath, dt.time_of_death, dt.timeofdeath_unit, dt.date_of_death_to, dt.time_of_death_to, dt.timeofdeath_unit_to, dt.deceased_unidentified") 
                                                   .append("      , dt.deceased_title, dt.deceased_firstname_en, dt.deceased_firstname_ml, dt.deceased_middlename_en, dt.deceased_middlename_ml, dt.deceased_lastname_en, dt.deceased_lastname_ml, dt.deceased_aadhar_number, dt.deceased_gender, dt.age, dt.age_unit, dt.dateofbirth")   
-                                                  .append("      , dt.death_place, dt.death_place_inst_type, dt.death_place_inst_id, dt.death_place_office_name, dt.death_place_other_ml, dt.death_place_other_en")        
+                                                  .append("      , dt.death_place, dt.death_place_inst_type, dt.death_place_inst_id, dt.death_place_officer_name, dt.death_place_other_ml, dt.death_place_other_en")        
                                                   .append("      , dt.informant_title, dt.informant_name_en, dt.informant_name_ml, dt.informant_aadhar_submitted, dt.informant_aadhar_no, dt.informant_mobile_no, dt.general_remarks")
                                                   .append("      , dt.application_status, dt.submitted_on, dt.created_by, dt.createdtime, dt.lastmodifiedby, dt.lastmodifiedtime")
                                                   .append("      , dt.place_burial, dt.place_burial_institution_type, dt.place_burial_institution_name, dt.registration_no, dt.ip_no, dt.op_no")

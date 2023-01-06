@@ -42,4 +42,12 @@ public class CrDeathSearchCriteria {
 
     @JsonProperty("deathApplicationNo")
     private String deathApplicationNo;
+
+    @JsonProperty("deathACKNo")
+    private String deathACKNo;
+
+    @JsonProperty("deceasedFirstNameEn")
+    private String deceasedFirstNameEn;
+
+    
 }
