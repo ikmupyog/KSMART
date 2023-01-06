@@ -138,4 +138,20 @@ public class Address {
         @SafeHtml
         @JsonProperty("email")
         private String email = null;
+
+        @Size(max = 20)
+        @SafeHtml
+        @JsonProperty("lbBuildingCode")
+        private String lbBuildingCode = null;
+
+        @Size(max = 150)
+        @SafeHtml
+        @JsonProperty("lbBuildingName")
+        private String lbBuildingName = null;
+
+        @Size(max = 15)
+        @SafeHtml
+        @JsonProperty("buildingType")
+        private String buildingType = null;
+
 }

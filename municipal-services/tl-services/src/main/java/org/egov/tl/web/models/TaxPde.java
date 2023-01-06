@@ -29,7 +29,7 @@ import org.egov.tl.web.models.TradeLicenseDetail;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class StructurePlace {
+public class TaxPde {
 
     @Size(max = 64)
     @SafeHtml
@@ -43,64 +43,50 @@ public class StructurePlace {
 
     @Size(max = 64)
     @SafeHtml
-    @JsonProperty("blockNo")
-    private String blockNo = null;
+    @JsonProperty("service")
+    private String service = null;
 
-    @Size(max = 64)
+    @Size(max = 15)
     @SafeHtml
-    @JsonProperty("surveyNo")
-    private String surveyNo = null;
+    @JsonProperty("fromYear")
+    private String fromYear = null;
 
-    @Size(max = 64)
+    @Size(max = 15)
     @SafeHtml
-    @JsonProperty("subDivisionNo")
-    private String subDivisionNo = null;
+    @JsonProperty("fromPeriod")
+    private String fromPeriod = null;
 
-    @Size(max = 64)
+    @Size(max = 15)
     @SafeHtml
-    @JsonProperty("partitionNo")
-    private String partitionNo = null;
+    @JsonProperty("toYear")
+    private String toYear = null;
 
-    @Range(min = 0, max = 100000)
-    @JsonProperty("doorNo")
-    private Integer doorNo = 0;
-
-    @Size(max = 64)
+    @Size(max = 15)
     @SafeHtml
-    @JsonProperty("doorNoSub")
-    private String doorNoSub = null;
+    @JsonProperty("toPeriod")
+    private String toPeriod = null;
 
-    // @Size(max = 64)
-    @JsonProperty("buildingId")
-    private Long buildingId = null;
-
-    @Size(max = 64)
+    @Size(max = 15)
     @SafeHtml
-    @JsonProperty("vehicleNo")
-    private String vehicleNo = null;
+    @JsonProperty("headCode")
+    private String headCode = null;
 
-    @Size(max = 64)
-    @SafeHtml
-    @JsonProperty("vesselNo")
-    private String vesselNo = null;
+    @JsonProperty("arrear")
+    private Double arrear = null;
+
+    @JsonProperty("current")
+    private Double current = null;
+
+    @JsonProperty("penal")
+    private Double penal = null;
+
+    @JsonProperty("amount")
+    private Double amount = null;
 
     @JsonProperty("active")
     private Boolean active;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails = null;
-
-    @JsonProperty("isResurveyed")
-    private Boolean isResurveyed;
-
-    // @Size(max = 256)
-    // @SafeHtml
-    // @JsonProperty("waterPlatform")
-    // private String waterPlatform = null;
-
-    @Size(max = 150)
-    @SafeHtml
-    @JsonProperty("stallNo")
-    private String stallNo = null;
 
 }

@@ -6,6 +6,7 @@ import org.egov.tl.config.TLConfiguration;
 import org.egov.tl.producer.Producer;
 import org.egov.tl.repository.builder.TLQueryBuilder;
 import org.egov.tl.repository.rowmapper.TLRowMapper;
+import org.egov.tl.repository.rowmapper.TLRowMapperPde;
 import org.egov.tl.web.models.*;
 import org.egov.tl.workflow.WorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class TLRepository {
 
     private TLRowMapper rowMapper;
 
+    private TLRowMapperPde rowMapperPde;
+
     private Producer producer;
 
     private TLConfiguration config;
@@ -36,13 +39,14 @@ public class TLRepository {
 
     @Autowired
     public TLRepository(JdbcTemplate jdbcTemplate, TLQueryBuilder queryBuilder, TLRowMapper rowMapper,
-            Producer producer, TLConfiguration config, WorkflowService workflowService) {
+            Producer producer, TLConfiguration config, WorkflowService workflowService, TLRowMapperPde rowMapperPde) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
         this.producer = producer;
         this.config = config;
         this.workflowService = workflowService;
+        this.rowMapperPde = rowMapperPde;
     }
 
     /**
@@ -172,6 +176,20 @@ public class TLRepository {
         return jdbcTemplate.query(queryBuilder.TENANTIDQUERY, preparedStmtList.toArray(),
                 new SingleColumnRowMapper<>(String.class));
 
+    }
+
+    /**
+     * Searhces license in databse
+     *
+     * @param criteria The tradeLicense Search criteria
+     * @return List of Pde License Application from seach
+     */
+    public List<TradeLicense> getLicensesPde(TradeLicenseSearchCriteria criteria) {
+        List<Object> preparedStmtList = new ArrayList<>();
+        String query = queryBuilder.getTLSearchQueryPde(criteria, preparedStmtList, false);
+        List<TradeLicense> licenses = jdbcTemplate.query(query, preparedStmtList.toArray(), rowMapperPde);
+        // sortChildObjectsById(licenses);
+        return licenses;
     }
 
 }

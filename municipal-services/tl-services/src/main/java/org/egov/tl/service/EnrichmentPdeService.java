@@ -88,12 +88,17 @@ public class EnrichmentPdeService {
             }
             tradeLicense.getTradeLicenseDetail().getAddress().setTenantId(tradeLicense.getTenantId());
             tradeLicense.getTradeLicenseDetail().getAddress().setId(UUID.randomUUID().toString());
-            // tradeLicense.getTradeLicenseDetail().getTradeUnits().forEach(tradeUnit -> {
-            // tradeUnit.setTenantId(tradeLicense.getTenantId());
-            // tradeUnit.setId(UUID.randomUUID().toString());
-            // tradeUnit.setActive(true);
-            // });
-            // tradeLicense.getTradeLicenseDetail().getStructurePlace().get(0).st
+            InstitutionMaster ins = new InstitutionMaster();
+            ins.setTenantId(tradeLicense.getTenantId());
+            ins.setId(UUID.randomUUID().toString());
+            ins.setInstitutionName(tradeLicense.getTradeName());
+            ins.setActive(true);
+            // tradeLicense.getTradeLicenseDetail().getInstitutionMaster().setTenantId(tradeLicense.getTenantId());
+            tradeLicense.getTradeLicenseDetail().setInstitutionMaster(ins);
+            // tradeLicense.getTradeLicenseDetail().getInstitutionMaster().setId(UUID.randomUUID().toString());
+            // tradeLicense.getTradeLicenseDetail().getInstitutionMaster().setInstitutionName(tradeLicense.getTradeName());
+            // tradeLicense.getTradeLicenseDetail().getInstitutionMaster().setActive(true);
+
             tradeLicense.getTradeLicenseDetail().getStructurePlace().forEach(structurePlace -> {
                 structurePlace.setTenantId(tradeLicense.getTenantId());
                 structurePlace.setId(UUID.randomUUID().toString());
@@ -105,7 +110,54 @@ public class EnrichmentPdeService {
                 owner.setTenantId(tradeLicense.getTenantId());
                 owner.setActive(true);
             });
+            List<TaxPde> taxPdelist = new ArrayList<>();
+            tradeLicense.getTradeLicenseDetail().getTaxPde().forEach(taxPde -> {
+                if (taxPde.getArrear() > 0) {
+                    try {
+                        taxPdelist.add(
+                                TaxPde.builder().id(UUID.randomUUID().toString()).tenantId(tradeLicense.getTenantId())
+                                        .service(taxPde.getService()).fromYear(taxPde.getFromYear())
+                                        .fromPeriod(taxPde.getFromPeriod()).toYear(taxPde.getToYear())
+                                        .toPeriod(taxPde.getToPeriod()).active(true).amount(taxPde.getArrear())
+                                        .headCode(TLConstants.class
+                                                .getDeclaredField(
+                                                        taxPde.getService().toString().replace(".", "_") + "_ARR")
+                                                .get(null)
+                                                .toString())
+                                        .build());
+                    } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
+                            | SecurityException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
 
+                }
+
+                if (taxPde.getCurrent() > 0) {
+
+                    try {
+                        taxPdelist.add(
+                                TaxPde.builder().id(UUID.randomUUID().toString()).tenantId(tradeLicense.getTenantId())
+                                        .service(taxPde.getService()).fromYear(taxPde.getFromYear())
+                                        .fromPeriod(taxPde.getFromPeriod()).toYear(taxPde.getToYear())
+                                        .toPeriod(taxPde.getToPeriod()).active(true).amount(taxPde.getCurrent())
+                                        .headCode(TLConstants.class
+                                                .getDeclaredField(
+                                                        taxPde.getService().toString().replace(".", "_") + "_CUR")
+                                                .get(null)
+                                                .toString())
+                                        .build());
+                    } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
+                            | SecurityException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+
+                }
+
+            });
+            if (taxPdelist.size() > 0)
+                tradeLicense.getTradeLicenseDetail().setTaxPdefinal(taxPdelist);
             // if (tradeLicense.getAction().equalsIgnoreCase(ACTION_APPLY)) {
             // tradeLicense.getTradeLicenseDetail().getApplicationDocuments().forEach(document
             // -> {
@@ -154,7 +206,7 @@ public class EnrichmentPdeService {
                 tradeLicense.setAccountId(requestInfo.getUserInfo().getUuid());
 
         });
-        setIdgenIds(tradeLicenseRequest);
+        // setIdgenIds(tradeLicenseRequest);
         setStatusForCreate(tradeLicenseRequest);
         String businessService = tradeLicenseRequest.getLicenses().isEmpty() ? null
                 : tradeLicenseRequest.getLicenses().get(0).getBusinessService();

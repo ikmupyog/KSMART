@@ -105,6 +105,35 @@ public class TLQueryBuilder {
 
     public static final String TENANTIDQUERY = "select distinct(tenantid) from eg_tl_tradelicense";
 
+    private static final String QUERYPDE = "SELECT tl.*,tld.*,tlowner.*," +
+            "tladdress.*,tl.id as tl_id,tl.tenantid as tl_tenantId,tl.lastModifiedTime as "
+            +
+            "tl_lastModifiedTime,tl.createdBy as tl_createdBy,tl.lastModifiedBy as tl_lastModifiedBy,tl.createdTime as "
+            +
+            "tl_createdTime,tld.id as tld_id,tladdress.id as tl_ad_id,tld.createdBy as tld_createdBy,"
+            +
+            "tlowner.id as tlowner_id,tlowner.active as useractive,"
+            +
+            "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as tld_createdTime, "
+            +
+            " tlstructplace.id as tlstructplace_id, tlstructplace.doorno as tlstructplace_doorno, tlstructplace.doorsub as doorsub,"
+            +
+            " tlstructplace.vehicleno as stallno, tlstructplace.active as tlstructplace_active, tltax.id as tltax_id, tltax.active as tltax_active, "
+            +
+            " tltax.service, tltax.fromyear, tltax.fromperiod, tltax.toyear, tltax.toperiod, tltax.headcode, tltax.amount "
+            +
+            " FROM eg_tl_tradelicense tl"
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_tradelicensedetail tld ON tld.tradelicenseid = tl.id"
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_address tladdress ON tladdress.tradelicensedetailid = tld.id"
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_owner_pde tlowner ON tlowner.tradelicensedetailid = tld.id"
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_structureplacedetail tlstructplace ON tlstructplace.tradelicensedetailid = tld.id "
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_taxdetails_pde tltax ON tltax.tradelicensedetailid = tld.id";
+
     public String getTLSearchQuery(TradeLicenseSearchCriteria criteria, List<Object> preparedStmtList,
             boolean isCount) {
 
@@ -392,6 +421,43 @@ public class TLQueryBuilder {
 
         return addPaginationWrapper(builder.toString(), preparedStmtList, criteria);
 
+    }
+
+    public String getTLSearchQueryPde(TradeLicenseSearchCriteria criteria, List<Object> preparedStmtList,
+            boolean isCount) {
+
+        StringBuilder builder = new StringBuilder(QUERYPDE);
+        addClauseIfRequired(preparedStmtList, builder);
+        builder.append("  tl.workflowcode = ? ");
+        preparedStmtList.add("PdeTL");
+
+        if (criteria.getTenantId() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" tl.tenantid=? ");
+            preparedStmtList.add(criteria.getTenantId());
+        }
+        List<String> ids = criteria.getIds();
+        if (!CollectionUtils.isEmpty(ids)) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" tl.id IN (").append(createQuery(ids)).append(")");
+            addToPreparedStatement(preparedStmtList, ids);
+        }
+
+        if (criteria.getTradeName() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  LOWER(tl.tradename) = LOWER(?) ");
+            preparedStmtList.add(criteria.getTradeName());
+        }
+
+        // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);
+
+        if (!isCount) {
+            return addPaginationWrapper(builder.toString(), preparedStmtList, criteria);
+        }
+
+        else {
+            return addCountWrapper(builder.toString());
+        }
     }
 
 }

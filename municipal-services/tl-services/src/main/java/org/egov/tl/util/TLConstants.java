@@ -395,6 +395,20 @@ public class TLConstants {
 
         public static final String NATURE_INSTITUTION = "NatureOfInstitution";
 
+        public static final String TL_ARR = "431300202";
+
+        public static final String TL_CUR = "431300201";
+
+        public static final String PROFTAX_ARR = "431190102";
+
+        public static final String PROFTAX_CUR = "431190101";
+
+        public static final String RT_Municipal_Shops_Rent_ARR = "431400102";
+
+        public static final String RT_Municipal_Shops_Rent_CUR = "431400101";
+
+        public static final String PENAL = "140200200";
+
         public TLConstants() {
         }
 

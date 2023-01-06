@@ -180,55 +180,16 @@ public class TradeLicensePdeService {
      * @param requestInfo The search request's requestInfo
      * @return List of tradeLicense for the given criteria
      */
-    /*
-     * public List<TradeLicense> search(TradeLicenseSearchCriteria criteria,
-     * RequestInfo requestInfo,
-     * String serviceFromPath, HttpHeaders headers) {
-     * List<TradeLicense> licenses;
-     * // allow mobileNumber based search by citizen if interserviceCall
-     * boolean isInterServiceCall = isInterServiceCall(headers);
-     * tlValidator.validateSearch(requestInfo, criteria, serviceFromPath,
-     * isInterServiceCall);
-     * criteria.setBusinessService(serviceFromPath);
-     * enrichmentService.enrichSearchCriteriaWithAccountId(requestInfo, criteria);
-     * if (criteria.getRenewalPending() != null && criteria.getRenewalPending() ==
-     * true) {
-     * 
-     * String currentFinancialYear = "";
-     * 
-     * Object mdmsData = util.mDMSCall(requestInfo, criteria.getTenantId());
-     * String jsonPath = TLConstants.MDMS_CURRENT_FINANCIAL_YEAR.replace("{}",
-     * businessService_TL);
-     * List<Map<String, Object>> jsonOutput = JsonPath.read(mdmsData, jsonPath);
-     * 
-     * for (int i = 0; i < jsonOutput.size(); i++) {
-     * Object startingDate = jsonOutput.get(i).get(TLConstants.MDMS_STARTDATE);
-     * Object endingDate = jsonOutput.get(i).get(TLConstants.MDMS_ENDDATE);
-     * Long startTime = (Long) startingDate;
-     * Long endTime = (Long) endingDate;
-     * 
-     * if (System.currentTimeMillis() >= startTime && System.currentTimeMillis() <=
-     * endTime) {
-     * currentFinancialYear =
-     * jsonOutput.get(i).get(TLConstants.MDMS_FIN_YEAR_RANGE).toString();
-     * break;
-     * }
-     * 
-     * }
-     * 
-     * criteria.setFinancialYear(currentFinancialYear);
-     * 
-     * }
-     * 
-     * if (criteria.getMobileNumber() != null || criteria.getOwnerName() != null) {
-     * licenses = getLicensesFromMobileNumber(criteria, requestInfo);
-     * } else {
-     * licenses = getLicensesWithOwnerInfo(criteria, requestInfo);
-     * }
-     * 
-     * return licenses;
-     * }
-     */
+
+    public List<TradeLicense> search(TradeLicenseSearchCriteria criteria, RequestInfo requestInfo,
+            String serviceFromPath, HttpHeaders headers) {
+        List<TradeLicense> licenses;
+        // allow mobileNumber based search by citizen if interserviceCall
+        boolean isInterServiceCall = isInterServiceCall(headers);
+        criteria.setBusinessService(serviceFromPath);
+        licenses = repository.getLicensesPde(criteria);
+        return licenses;
+    }
 
     /*
      * private void getLatestRejectedApplication(RequestInfo requestInfo,
