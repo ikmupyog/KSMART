@@ -76,8 +76,8 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/tl/application-details/${row.original["applicationNumber"]}`}>
-                    {row.original["applicationNumber"]}
+                  <Link to={`/digit-ui/employee/tl/pde-editapplication`}>
+                    Edit
                   </Link>
                 </span>
               </div>
@@ -85,40 +85,27 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
           },
         },
         {
-            Header: t("TL_COMMON_TABLE_COL_APP_DATE"),
+            Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+            accessor: (row) => GetCell(row.tradeName),
         },
         {
-            Header: t("TL_APPLICATION_TYPE_LABEL"),
+            Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+            accessor: (row) => GetCell(row.ownersPde),
         },
         {
-            Header: t("TL_LICENSE_NUMBERL_LABEL"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.licenseNumber || "-"),
-        },
-        {
-          Header: t("TL_LICENSE_YEAR_LABEL"),
+          Header: t("TL_LOCALIZATION_SECTOR"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.financialYear),
+          accessor: (row) => GetCell(row.tradeLicenseDetail.businessSector),
         },
         {
-          Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+          Header: t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.tradeName || ""),
+          accessor: (row) => GetCell(row.status),
         },
-        {
-          Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
-          accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
-          disableSortBy: true,
-        },
-        {
-          Header: t("TL_COMMON_TABLE_COL_STATUS"),
-          accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
-          disableSortBy: true,
-        }
+        
+
       ]), [] )
 
     return <React.Fragment>

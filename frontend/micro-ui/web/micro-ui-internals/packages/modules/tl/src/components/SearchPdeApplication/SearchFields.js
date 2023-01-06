@@ -59,7 +59,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
 
     return <>
         <SearchField>
-            <label>Trade Name</label>
+            <label>{`${t("TL_COMMON_TABLE_COL_TRD_NAME")}`}</label>
             <TextInput name="tradeName" inputRef={register({})} />
         </SearchField>
         <SearchField>
@@ -80,7 +80,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                     />
         </SearchField>
         <SearchField>
-            <label>Owner Name</label>
+            <label>{`${t("TL_LOCALIZATION_TRADE_OWNER_NAME")}`}</label>
             <TextInput  name="ownerName" inputRef={register({})}/>
         </SearchField>
         <SearchField>

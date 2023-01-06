@@ -77,16 +77,14 @@ const MobileSearchApplication = ({ Controller, register, control, t, reset, prev
       return [];
       }
       return data?.map((data) => ({
-        [t("TL_COMMON_TABLE_COL_APP_NO")]: data.applicationNumber,
-        [t("TL_COMMON_TABLE_COL_APP_DATE")]: convertEpochToDateDMY(data.auditDetails?.createdTime) || "",
-        [t("TL_APPLICATION_TYPE_LABEL")]: data.applicationType
-          ? t(`TL_LOCALIZATION_APPLICATIONTYPE_${data.applicationType}`)
-          : "-",
-        [t("TL_LICENSE_NUMBERL_LABEL")]: data?.licenseNumber || "-",
-        [t("TL_LICENSE_YEAR_LABEL")]: data.financialYear || "",
-        [t("TL_COMMON_TABLE_COL_TRD_NAME")]: data.tradeName || "",
-        [t("TL_LOCALIZATION_TRADE_OWNER_NAME")]: data?.tradeLicenseDetail?.owners?.map( o => o.name ). join(",") || "" ,
-        [t("TL_COMMON_TABLE_COL_STATUS")]: data.workflowCode && data.state ? t(`WF_${data.workflowCode}_${data.state}`) : "NA",
+        ["Appln No"]: "-",
+        ["Trade Name"]: data?.tradeName || "-",
+        // ["Business Type"]: data?.businessSector|| "-",
+        // [t("TL_LICENSE_NUMBERL_LABEL")]: data?.licenseNumber || "-",
+        // [t("TL_LICENSE_YEAR_LABEL")]: data.financialYear || "",
+        // [t("TL_COMMON_TABLE_COL_TRD_NAME")]: data.tradeName || "",
+        // [t("TL_LOCALIZATION_TRADE_OWNER_NAME")]: data?.tradeLicenseDetail?.owners?.map( o => o.name ). join(",") || "" ,
+        // [t("TL_COMMON_TABLE_COL_STATUS")]: data.workflowCode && data.state ? t(`WF_${data.workflowCode}_${data.state}`) : "NA",
       }))
     },
     [data]

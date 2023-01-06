@@ -200,6 +200,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/pde-application`} component={() => <PdeApplication parentUrl={url} />} />
           <PrivateRoute path={`${path}/pde-search`} component={() => <SearchPde parentUrl={url} />} />
+          <PrivateRoute path={`${path}/pde-editapplication`} component={() => <PdeApplication parentUrl={url} />} />
         </div>
       </React.Fragment>
     </Switch>

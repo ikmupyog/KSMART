@@ -747,28 +747,28 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
                     </div> */}
 
               <div className="row">
-                <div className="col-md-12" >Trade License Fee (Previous Data)
-                  {/* {`${t("TL_LICENSE_PDE_DATA")}`} */}
+                <div className="col-md-12" >
+                  {`${t("TL_LICENSE_PDE_DATA")}`}
                 </div>
                 {/* <div className="col-md-12" >Profession Tax (Previous Data)
                       </div> */}
               </div>
               <div style={{ border: "solid", borderRadius: "25px", padding: "25px", paddingTop: "25px", marginTop: "25px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-7">
                 <div className="row">
-                  <div className="col-md-3" ><CardLabel>From Year</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
                     <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPayYear} selected={licFromYear} select={selectLicFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>To Year</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
                     <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPayYear} selected={licToYear} select={selectLicToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>Arrear</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="licArrear" value={licArrear} onChange={selectedsetLicArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>Current</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="licCurrent" value={licCurrent} onChange={selectedsetLicCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
                   </div>
                 </div>
@@ -785,80 +785,77 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
               </div>
 
               <div className="row">
-                <div className="col-md-12" >Profession Tax (Previous Data)
-                  {/* {`${t("TL_LICENSE_PDE_PROF_DATA")}`} */}
+                <div className="col-md-12" >
+                  {`${t("TL_LICENSE_PDE_PROF_DATA")}`}
                 </div>
                 {/* <div className="col-md-12" >Profession Tax (Previous Data)
                       </div> */}
               </div>
               <div style={{ border: "solid", borderRadius: "25px", padding: "25px", paddingTop: "25px", marginTop: "25px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-7">
                 <div className="row">
-                  <div className="col-md-3" ><CardLabel>From Year</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
                     <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPayYear} selected={profFromYear} select={selectProfFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>From Priod</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_FROM_PERIOD")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_FROM_PERIOD")}`}</CardLabel>
                     <Dropdown t={t} optionKey="description" isMandatory={config.isMandatory} option={cmbptperiod} selected={profFromPeriod} select={selectProfFromPeriod}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_PERIOD") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>To Year</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
                     <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPayYear} selected={profToYear} select={selectProfToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>To Period</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_TO_PERIOD")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_TO_PERIOD")}`}</CardLabel>
                     <Dropdown t={t} optionKey="description" isMandatory={config.isMandatory} option={cmbptperiod} selected={profToPeriod} select={selectProfToPeriod}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_PERIOD") })} />
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-4" ><CardLabel>Arrear</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel> */}
+                  <div className="col-md-4" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} optionKey="i18nKey" name="profArrear" value={profArrear} onChange={selectedsetProfArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
                   </div>
-                  <div className="col-md-4" ><CardLabel>Current(Ist Half)</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel> */}
+                  <div className="col-md-4" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} optionKey="i18nKey" name="profCurrent" value={profCurrent} onChange={selectedsetProfCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
                   </div>
-                  <div className="col-md-4" ><CardLabel>Current(IInd Half)</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_PENAL")}`}</CardLabel> */}
+                  <div className="col-md-4" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_PENAL")}`}</CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} optionKey="i18nKey" name="profPenal" value={profPenal} onChange={selectedsetProfPenal} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_PENAL") })} />
                   </div>
                 </div>
               </div>
               <div className="row">
-                {/* <div className="col-md-12" >{`${t("TL_LICENSE_PDE_RENT_DATA")}`} 
-                      </div>*/}
-                <div className="col-md-12" >Rent (Previous Data)
+                <div className="col-md-12" > <CardLabel>{`${t("TL_LICENSE_PDE_RENT_DATA")}`}</CardLabel> 
                 </div>
-
               </div>
 
               <div style={{ border: "solid", borderRadius: "25px", padding: "25px", paddingTop: "25px", marginTop: "25px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-7">
                 <div className="row">
-                  <div className="col-md-3" ><CardLabel>From Year</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
                     <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPayYear} selected={rentFromYear} select={selectRentFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>From Month</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_FROM_MONTH")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_FROM_MONTH")}`}</CardLabel>
                     <Dropdown t={t} optionKey="description" isMandatory={config.isMandatory} option={cmbrentperiod} selected={rentFromMonth} select={selectRentFromMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_MONTH") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>To Year</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
                     <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPayYear} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
                   </div>
-                  <div className="col-md-3" ><CardLabel>To Month</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel> */}
+                  <div className="col-md-3" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>
                     <Dropdown t={t} optionKey="description" isMandatory={config.isMandatory} option={cmbrentperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-4" ><CardLabel>Arrear</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel> */}
+                  <div className="col-md-4" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} optionKey="i18nKey" name="rentArrear" value={rentArrear} onChange={selectedsetrentArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
                   </div>
-                  <div className="col-md-4" ><CardLabel>Current</CardLabel>
-                    {/* <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel> */}
+                  <div className="col-md-4" >
+                    <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} optionKey="i18nKey" name="rentCurrent" value={rentCurrent} onChange={selectedsetrentCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
                   </div>
                   {/* <div className="col-md-4" ><CardLabel>Penal Interest</CardLabel> */}
