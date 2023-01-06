@@ -638,7 +638,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
               t={t}
               optionKey="code"
               isMandatory={true}
-              option={cmbPlace}
+              option={cmbVillage}
               selected={setPostOffice}
               select={selectPostOffice}
               disabled={isEdit}
