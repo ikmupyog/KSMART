@@ -31,6 +31,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
  const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressDetails?.PresentHouseNameMl);
  const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressDetails?.PresentBuldingNo);
  const [PresentDoorNo, setPresentDoorNo] = useState(formData?.AddressDetails?.PresentDoorNo);
+ const [PresentResNo, setPresentResNo] = useState(formData?.AddressDetails?.PresentResNo);
  const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressDetails?.PresentMainPlaceEn);
  const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressDetails?.PresentMainPlaceMl);
  const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressDetails?.PresentLocalityNameEn);
@@ -50,6 +51,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
  const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode);
  const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressDetails?.PermanentBuldingNo);
  const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressDetails?.PermanentDoorNo);
+ const [PermanentResNo, setPermanentResNo] = useState(formData?.AddressDetails?.PermanentResNo);
  const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressDetails?.PermanentHouseNameEn);
  const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressDetails?.PermanentHouseNameMl);
  const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressDetails?.PermanentMainPlaceEn);
@@ -187,6 +189,13 @@ function setSelectPresentPincode(e) {
  setPermanentDoorNo(PresentDoorNo);
  }
  }
+ function setSelectPresentResNo(e) {
+  setPresentResNo(e.target.value);
+  if (isPrsentAddress) {
+  setPermanentResNo(PresentResNo);
+  }
+  }
+ 
  function setSelectPresentHouseNameEn(e) {
  setPresentHouseNameEn(e.target.value);
  if (isPrsentAddress) {
@@ -274,6 +283,10 @@ function setSelectPresentPincode(e) {
  function setSelectPermanentDoorNo(e) {
  setPermanentDoorNo(e.target.value);
  }
+ function setSelectPermanentResNo(e) {
+  setPermanentResNo(e.target.value);
+  }
+ 
  function setSelectPermanentHouseNameEn(e) {
  setPermanentHouseNameEn(e.target.value);
  }
@@ -307,6 +320,7 @@ function setSelectPresentPincode(e) {
  setPermanentLBTypeName(PresentLBTypeName);
  setPermanentBuldingNo(PresentBuldingNo);
  setPermanentDoorNo(PresentDoorNo);
+ setPermanentResNo(PresentResNo); 
  setPermanentHouseNameEn(PresentHouseNameEn);
  setPermanentHouseNameMl(PresentHouseNameMl); 
  setPermanentMainPlaceEn(PresentMainPlaceEn);
@@ -327,6 +341,7 @@ function setSelectPresentPincode(e) {
  setPermanentLBTypeName(' ');
  setPermanentBuldingNo('');
  setPermanentDoorNo('');
+ setPermanentResNo(''); 
  setPermanentHouseNameEn('');
  setPermanentHouseNameMl('');
  setPermanentMainPlaceEn('');
@@ -359,6 +374,7 @@ function setSelectPresentPincode(e) {
  sessionStorage.setItem("PresentLBTypeName", PresentLBTypeName.code);
  sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo);
  sessionStorage.setItem("PresentDoorNo", PresentDoorNo);
+ sessionStorage.setItem("PresentResNo", PresentResNo); 
  sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn);
  sessionStorage.setItem("PresentHouseNameMl", PresentHouseNameMl);
  sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn);
@@ -378,6 +394,7 @@ function setSelectPresentPincode(e) {
  sessionStorage.setItem("PermanentLBTypeName", PermanentLBTypeName.code);
  sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
  sessionStorage.setItem("PermanentDoorNo", PermanentDoorNo);
+ sessionStorage.setItem("PermanentResNo", PermanentResNo); 
  sessionStorage.setItem("PermanentHouseNameEn", PermanentHouseNameEn);
  sessionStorage.setItem("PermanentHouseNameMl", PermanentHouseNameMl);
  sessionStorage.setItem("PermanentMainPlaceEn", PermanentMainPlaceEn);
@@ -393,16 +410,16 @@ function setSelectPresentPincode(e) {
  sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
  sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
  onSelect(config.key, {
- PresentBuldingNo, PresentDoorNo, PresentHouseNameEn, PresentHouseNameMl, PresentLocalityNameEn, PresentLBTypeName, PresentCountry, PresentStateName, 
+ PresentBuldingNo, PresentDoorNo, PresentResNo, PresentHouseNameEn, PresentHouseNameMl, PresentLocalityNameEn, PresentLBTypeName, PresentCountry, PresentStateName, 
  PresentMainPlaceEn,PresentMainPlaceMl,PresentLocalityNameMl, PresentStreetNameEn, PresentStreetNameMl, PresentVillage, PresentLBName, PresentDistrict, PresentTaluk, PresentPostOffice, PresentPincode,
- PermanentBuldingNo, PermanentDoorNo,PermanentHouseNameEn, PermanentHouseNameMl,PermanentMainPlaceMl,PermanentMainPlaceEn, PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentStreetNameEn, PermanentStreetNameMl, PermanentVillage, PermanentLBName,
+ PermanentBuldingNo, PermanentDoorNo, PermanentResNo, PermanentHouseNameEn, PermanentHouseNameMl,PermanentMainPlaceMl,PermanentMainPlaceEn, PermanentLocalityNameEn, PermanentLocalityNameMl, PermanentStreetNameEn, PermanentStreetNameMl, PermanentVillage, PermanentLBName,
  PermanentDistrict, PermanentTaluk, PermanentPostOffice, PermanentPincode, PermanentCountry, PermanentStateName, PermanentLBTypeName
  });
  }
  return (
  <React.Fragment>
- {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
- {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+ {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+ {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
  <BackButton >{t("CS_COMMON_BACK")}</BackButton>
  <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PresentDoorNo || !PresentLocalityNameEn || !PresentLocalityNameMl || !PresentDistrict || !PresentVillage || !PresentTaluk || !PresentPostOffice || !PresentPincode || !PermanentDoorNo || !PermanentLocalityNameEn || !PermanentLocalityNameMl || !PermanentDistrict || !PermanentVillage || !PermanentTaluk || !PermanentPostOffice || !PermanentPincode}>
 
@@ -529,11 +546,14 @@ function setSelectPresentPincode(e) {
  </div>
  <div className="row">
  <div className="col-md-12" >
- <div className="col-md-6" ><CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
+ <div className="col-md-4" ><CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentBuldingNo" value={PresentBuldingNo} onChange={setSelectPresentBuldingNo} placeholder={`${t("CR_BUILDING_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
  </div>
- <div className="col-md-6" ><CardLabel>{t("CR_DOOR_NO")}<span className="mandatorycss">*</span></CardLabel>
+ <div className="col-md-4" ><CardLabel>{t("CR_DOOR_NO")}<span className="mandatorycss">*</span></CardLabel>
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentDoorNo" value={PresentDoorNo} onChange={setSelectPresentDoorNo} placeholder={`${t("CR_DOOR_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })} />
+ </div>
+ <div className="col-md-4" ><CardLabel>{t("CR_RES_ASSOCIATION_NO")}</CardLabel>
+ <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PresentResNo" value={PresentResNo} onChange={setSelectPresentResNo} placeholder={`${t("CR_RES_ASSOCIATION_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO") })} />
  </div>
  </div>
  </div>
@@ -695,11 +715,14 @@ function setSelectPresentPincode(e) {
  
  <div className="row">
  <div className="col-md-12" >
- <div className="col-md-6" ><CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
+ <div className="col-md-4" ><CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentBuldingNo" value={PermanentBuldingNo} onChange={setSelectPermanentBuldingNo} disable={isEdit} placeholder={`${t("CR_BUILDING_NO")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
  </div>
- <div className="col-md-6" ><CardLabel>{t("CR_DOOR_NO")}<span className="mandatorycss">*</span></CardLabel>
+ <div className="col-md-4" ><CardLabel>{t("CR_DOOR_NO")}<span className="mandatorycss">*</span></CardLabel>
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentDoorNo" value={PermanentDoorNo} onChange={setSelectPermanentDoorNo} disable={isEdit} placeholder={`${t("CR_DOOR_NO")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })} />
+ </div>
+ <div className="col-md-4" ><CardLabel>{t("CR_RES_ASSOCIATION_NO")}</CardLabel>
+ <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PermanentResNo" value={PermanentResNo} onChange={setSelectPermanentResNo} placeholder={`${t("CR_RES_ASSOCIATION_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO") })} />
  </div>
  </div>
  </div>

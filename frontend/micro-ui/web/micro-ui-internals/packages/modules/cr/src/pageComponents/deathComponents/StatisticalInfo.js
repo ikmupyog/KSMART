@@ -208,7 +208,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
           {selectedValue === "1" && (
             <div id="div-1">
               <div className="col-md-12">
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -221,7 +221,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     disabled={isEdit}
                   />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -233,13 +233,27 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     disabled={isEdit}
                   />
                 </div>
+                <div className="col-md-4">
+                  <CardLabel>
+                  {t("CS_COMMON_LB_NAME")}<span className="mandatorycss">*</span> </CardLabel>
+                 <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbLBType}
+                  selected={setLBName}
+                  select={setSelectedLBName}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_LB_NAME")}`}
+                  />
+                </div>
               </div>
             </div>
           )}
           {selectedValue === "2" && (
             <div id="div-2">
               <div className="col-md-12">
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <CardLabel>
                     {t("CS_COMMON_DISTRICT")}
                     <span className="mandatorycss">*</span>
@@ -255,7 +269,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CS_COMMON_DISTRICT")}`}
                   />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -268,7 +282,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     disabled={isEdit}
                   />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -278,6 +292,20 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     selected={setLBType}
                     select={setSelectedLBType}
                     disabled={isEdit}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>
+                  {t("CS_COMMON_LB_NAME")}<span className="mandatorycss">*</span> </CardLabel>
+                 <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbLBType}
+                  selected={setLBName}
+                  select={setSelectedLBName}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_LB_NAME")}`}
                   />
                 </div>
               </div>
@@ -318,7 +346,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CS_COMMON_DISTRICT")}`}
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                   <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -331,7 +359,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     disabled={isEdit}
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                   <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -341,6 +369,20 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     selected={setLBType}
                     select={setSelectedLBType}
                     disabled={isEdit}
+                  />
+                </div>
+                <div className="col-md-2">
+                  <CardLabel>
+                  {t("CS_COMMON_LB_NAME")}<span className="mandatorycss">*</span> </CardLabel>
+                 <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbLBType}
+                  selected={setLBName}
+                  select={setSelectedLBName}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_LB_NAME")}`}
                   />
                 </div>
               </div>

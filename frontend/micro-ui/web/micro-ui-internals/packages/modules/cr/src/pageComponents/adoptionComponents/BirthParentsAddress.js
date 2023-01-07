@@ -209,9 +209,8 @@ useEffect(() => {
  sessionStorage.setItem("BirthMotherTaluk", BirthMotherTaluk.code);
  sessionStorage.setItem("BirthMotherPostOffice", BirthMotherPostOffice.code);
  sessionStorage.setItem("BirthMotherPincode", BirthMotherPincode.code);
- sessionStorage.setItem("PermanentCountry", PermanentCountry.code);
- sessionStorage.setItem("ZonalDet", Zonal.name);
- sessionStorage.setItem("WardDet", WardNo.name);
+
+
 
  onSelect(config.key, {
  BirthMotherBuldingNo, BirthMotherDoorNo, BirthMotherHouseNameEn, BirthMotherLocalityNameEn, BirthMotherLBTypeName, BirthMotherCountry, BirthMotherStateName, 
@@ -337,15 +336,7 @@ useEffect(() => {
  </div>
  </div>
  
- <div className="row">
-          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown t={t} optionKey="name" isRequired="true" isMandatory={config.isMandatory} option={cmbZonal[0]} selected={Zonal} select={setSelectZonalOffice} disabled={isEdit} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} {...(validation = { isRequired: true, title: t("TL_INVALID_ZONAL_NAME") })} />
-          </div>
-          <div className="col-md-6" ><CardLabel>{`${t("TL_LOCALIZATION_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={wards} selected={WardNo} select={setSelectWard} disabled={isEdit} placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`} {...(validation = { isRequired: true, title: t("TL_INVALID_WARD_NO") })} />
-          </div>
-          
-        </div>
+ 
  
 
  </FormStep>

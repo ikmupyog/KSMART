@@ -11,8 +11,8 @@ const getAction = (flow) => {
     default: actions = [
       'Child Details',
       'Birth Place Details',
-      'Address Details',
       'Father & Mother Information',
+      'Address Details',      
       'Statistical Information',
       'Summary',
     ]
