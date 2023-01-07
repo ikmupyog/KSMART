@@ -71,7 +71,6 @@ public class ApplicantPersonalRepository {
         String id = criteria.getId();
 
         // search database
-
         List<ApplicantPersonal> searchResult = getApplicantPersonals(ApplicantPersonalSearchCriteria.builder()
                                                                                                     .id(id)
                                                                                                     .build());
@@ -102,38 +101,43 @@ public class ApplicantPersonalRepository {
 
         // END
 
-        // PDF Service call start
-
-        // END
-
         // LB name and Address fetch from tanantId
         Object mdmsData = mdmsUtil.mdmsCallCertificateOfficeAddress(requestInfo, tenantId);
-        System.out.println("master mdmsData :" + mdmsData);
+
         Map<String, List<String>> masterData = mdmsUtil.getAttributeValues(mdmsData);
 
-        String lbName = masterData.get(FMConstants.TENANTS)
+		String lbAddressWithPinCode = masterData.get(FMConstants.TENANTS)
                                   .toString();
 
-        System.out.println("master name :" + lbName);
+		System.out.println("master name :" + lbAddressWithPinCode);
 
-        // PDF Service call start
 
-        String uiHost = fmConfig.getEgovPdfHost();
-        String residentialCertPath = fmConfig.getEgovPdfResidentialEndPoint();
+		lbAddressWithPinCode = lbAddressWithPinCode.replaceAll("[^a-zA-Z0-9]", " ");
 
-        residentialCertPath = residentialCertPath.replace("$tenantId", tenantId);
+		// PDF Service call start
+
+		String uiHost = fmConfig.getEgovPdfHost();
+		String residentialCertPath = fmConfig.getEgovPdfResidentialEndPoint();
+
+		String tenantIdPath = tenantId.split("\\.")[0];
+
+		residentialCertPath = residentialCertPath.replace("$tenantId", tenantIdPath);
+
         String pdfFinalPath = uiHost + residentialCertPath;
 
         // Create PDFRequest Json
         JSONObject pdfRequest = new JSONObject();
 
-        // PDF Response END
 
         // certificate details model START
 
         pdfRequest.put(FMConstants.REQUESTINFOKEY, requestInfo);
-        pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY, getPdfCertArray(searchResult, embeddedUrl, lbName));
 
+		pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY,
+				getPdfCertArray(searchResult, embeddedUrl, lbAddressWithPinCode, criteria.getTenantId()));
+
+
+		System.out.println("request Param " + pdfRequest);
         EgovPdfResp res = restTemplate.postForObject(pdfFinalPath, pdfRequest, EgovPdfResp.class);
         CertificateDetails certificate = new CertificateDetails();
         List<CertificateDetails> list = new ArrayList<>();
@@ -167,7 +171,10 @@ public class ApplicantPersonalRepository {
     // inputs : search result of id
     // output : json array Certificate details
 
-    public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl, String lbName) {
+	public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl,
+			String lbAddressWithPinCode,
+			String tenant) {
+
         JSONArray array = new JSONArray();
         JSONObject obj = new JSONObject();
 
@@ -179,19 +186,18 @@ public class ApplicantPersonalRepository {
                 searchResult.get(0)
                             .getApplicantChild()
                             .getBuildingNumber());
-        obj.put(FMConstants.FINANCIALYEAR,
-                searchResult.get(0)
-                            .getApplicantChild()
-                            .getDurationOfResidenceInYears());
+		String durationYr = searchResult.get(0).getApplicantChild().getDurationOfResidenceInYears();
+
+		String durationMnth = searchResult.get(0).getApplicantChild().getDurationOfResidenceInMonths();
+		obj.put(FMConstants.DURATIONYR, durationYr);
+		obj.put(FMConstants.DURATIONMNTH, durationMnth);
         obj.put(FMConstants.WARDNO,
                 searchResult.get(0)
                             .getApplicantAddress()
                             .getWardNo());
-        obj.put(FMConstants.TENANT,
-                searchResult.get(0)
-                            .getTenantId());
+		obj.put(FMConstants.TENANT, tenant);
         obj.put("lbName", null);
-        obj.put("lbAddressWithPinCode", lbName);
+		obj.put("lbAddressWithPinCode", lbAddressWithPinCode);
 
         String name = searchResult.get(0)
                                   .getFirstName()
@@ -199,9 +205,16 @@ public class ApplicantPersonalRepository {
                               .getLastName();
         obj.put(FMConstants.NAME, name);
 
+		obj.put(FMConstants.OWNERNAME, searchResult.get(0).getApplicantChild().getOwnerNameMal());
+
+		obj.put(FMConstants.OWNERADDRESS, searchResult.get(0).getApplicantChild().getOwnerAddressMal());
+
+		String subNo = searchResult.get(0).getApplicantAddress().getSubNo();
+
         String address = searchResult.get(0)
                                      .getApplicantAddress()
                                      .getBuildingNo()
+				+ (StringUtils.isEmpty(subNo))
                 + '/' + searchResult.get(0)
                                     .getApplicantAddress()
                                     .getHouseName()
