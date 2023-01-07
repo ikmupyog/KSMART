@@ -92,6 +92,8 @@ public class FMConstants {
 
     public static final String FINANCIALYEAR = "financialYear";
 
+	public static final String DURATION = "duration";
+
     public static final String NAME = "name";
 
     public static final String ADDRESS = "address";

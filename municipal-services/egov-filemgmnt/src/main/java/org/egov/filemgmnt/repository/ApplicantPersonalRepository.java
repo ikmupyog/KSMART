@@ -105,23 +105,24 @@ public class ApplicantPersonalRepository {
 
 		// LB name and Address fetch from tanantId
 		Object mdmsData = mdmsUtil.mdmsCallCertificateOfficeAddress(requestInfo, tenantId);
-		System.out.println("master mdmsData :" + mdmsData);
+
 		Map<String, List<String>> masterData = mdmsUtil.getAttributeValues(mdmsData);
 
 
 		String lbName = masterData.get(FMConstants.TENANTS).toString();
 
 
-		System.out.println("master name :" + lbName);
+		lbName = lbName.replaceAll("[^a-zA-Z0-9]", " ");
+		System.out.println("  lbName  " + lbName);
 
 		// PDF Service call start
 
 		String uiHost = fmConfig.getEgovPdfHost();
 		String residentialCertPath = fmConfig.getEgovPdfResidentialEndPoint();
 
+		String tenantIdPath = tenantId.split("\\.")[0];
 
-
-        residentialCertPath = residentialCertPath.replace("$tenantId", tenantId);
+		residentialCertPath = residentialCertPath.replace("$tenantId", tenantIdPath);
         String pdfFinalPath = uiHost + residentialCertPath;
 
         // Create PDFRequest Json
@@ -134,7 +135,11 @@ public class ApplicantPersonalRepository {
 		// certificate details model START
 
         pdfRequest.put(FMConstants.REQUESTINFOKEY, requestInfo);
-		pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY, getPdfCertArray(searchResult, embeddedUrl, lbName));
+		pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY,
+				getPdfCertArray(searchResult, embeddedUrl, lbName, criteria.getTenantId()));
+		System.out.println("pdf req  " + pdfRequest);
+
+		System.out.println("pdfFinalPath  " + pdfFinalPath);
 
         EgovPdfResp res = restTemplate.postForObject(pdfFinalPath, pdfRequest, EgovPdfResp.class);
         CertificateDetails certificate = new CertificateDetails();
@@ -172,7 +177,8 @@ public class ApplicantPersonalRepository {
 	// inputs : search result of id
 	// output : json array Certificate details
 
-	public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl, String lbName) {
+	public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl, String lbName,
+			String tenant) {
         JSONArray array = new JSONArray();
         JSONObject obj = new JSONObject();
 
@@ -185,7 +191,7 @@ public class ApplicantPersonalRepository {
                 searchResult.get(0)
                             .getApplicantChild()
                             .getBuildingNumber());
-        obj.put(FMConstants.FINANCIALYEAR,
+		obj.put(FMConstants.DURATION,
                 searchResult.get(0)
                             .getApplicantChild()
                             .getDurationOfResidence());
@@ -193,9 +199,7 @@ public class ApplicantPersonalRepository {
                 searchResult.get(0)
                             .getApplicantAddress()
                             .getWardNo());
-        obj.put(FMConstants.TENANT,
-                searchResult.get(0)
-                            .getTenantId());
+		obj.put(FMConstants.TENANT, tenant);
         obj.put("lbName", null);
 		obj.put("lbAddressWithPinCode", lbName);
 
