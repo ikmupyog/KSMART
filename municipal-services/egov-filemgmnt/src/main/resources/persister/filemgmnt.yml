@@ -7,8 +7,8 @@ serviceMaps:
     isTransaction: true
     queryMaps:
     - query: >
-        INSERT INTO eg_fm_applicantpersonal(id, aadhaarno, email, firstname, lastname, title, mobileno, tenantid, fatherfirstname, fatherlastname, motherfirstname, motherlastname, applicantcategory, dateofbirth, bankaccountno, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO eg_fm_applicantpersonal(id, aadhaarno, email, firstname, firstnamemal, lastname, lastnamemal, title, mobileno, tenantid, fatherfirstname, fatherfirstnamemal, fatherlastname, fatherlastnamemal, motherfirstname, motherfirstnamemal, motherlastname, motherlastnamemal, applicantcategory, dateofbirth, bankaccountno, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       basePath: ApplicantPersonals.*
       jsonMaps:
       - jsonPath: $.ApplicantPersonals.*.id
@@ -19,7 +19,11 @@ serviceMaps:
       
       - jsonPath: $.ApplicantPersonals.*.firstName 
       
-      - jsonPath: $.ApplicantPersonals.*.lastName 
+      - jsonPath: $.ApplicantPersonals.*.firstNameMal 
+      
+      - jsonPath: $.ApplicantPersonals.*.lastName
+      
+      - jsonPath: $.ApplicantPersonals.*.lastNameMal 
       
       - jsonPath: $.ApplicantPersonals.*.title 
       
@@ -29,11 +33,19 @@ serviceMaps:
       
       - jsonPath: $.ApplicantPersonals.*.fatherFirstName
       
+      - jsonPath: $.ApplicantPersonals.*.fatherFirstNameMal
+      
       - jsonPath: $.ApplicantPersonals.*.fatherLastName
+      
+      - jsonPath: $.ApplicantPersonals.*.fatherLastNameMal
       
       - jsonPath: $.ApplicantPersonals.*.motherFirstName
       
+      - jsonPath: $.ApplicantPersonals.*.motherFirstNameMal
+      
       - jsonPath: $.ApplicantPersonals.*.motherLastName
+      
+      - jsonPath: $.ApplicantPersonals.*.motherLastNameMal
       
       - jsonPath: $.ApplicantPersonals.*.applicantCategory
       
@@ -75,8 +87,8 @@ serviceMaps:
       - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime 
       
     - query: >
-        INSERT INTO eg_fm_applicantpersonal_child(id, applicantpersonalid, buildingnumber, relationofassessee, nameofoccupier,  relationofoccupier, durationofresidence) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO eg_fm_applicantpersonal_child(id, applicantpersonalid, buildingnumber, relationofassessee, nameofoccupier,  relationofoccupier, durationofresidenceinyears, ownername, ownernamemal, owneraddress, owneraddressmal, ownermobileno, nameofoccupiermal, durationofresidenceinmonths, createdby, createddate, lastmodifiedby, lastmodifieddate) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?)
       basePath: ApplicantPersonals.*.applicantChild
       jsonMaps:
       - jsonPath: $.ApplicantPersonals.*.applicantChild.id
@@ -91,21 +103,54 @@ serviceMaps:
       
       - jsonPath: $.ApplicantPersonals.*.applicantChild.relationOfOccupier 
     
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.durationOfResidence     
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.durationOfResidenceInYears  
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerName 
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerNameMal 
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerAddress 
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerAddressMal 
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerMobileNo 
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.nameOfOccupierMal 
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantChild.durationOfResidenceInMonths 
+      
+      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
+
+      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdTime
+      
+      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime     
+ 
  
       
     - query: >
-        INSERT INTO eg_fm_applicantaddress(id, houseno, housename, street, pincode, postofficename, residenceassociationno, localplace, mainplace, wardno, createdby, createddate, lastmodifiedby, lastmodifieddate,applicantpersonalid)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+        INSERT INTO eg_fm_applicantaddress(id, buildingno, subno, housename, housenamemal, village, taluk, street, streetmal, pincode, postofficename, residenceassociationno, localplace, localplacemal, mainplace, mainplacemal, wardno, createdby, createddate, lastmodifiedby, lastmodifieddate,applicantpersonalid)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       basePath: ApplicantPersonals.*.applicantAddress
       jsonMaps:    
       - jsonPath: $.ApplicantPersonals.*.applicantAddress.id
 
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.houseNo
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.buildingNo
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.subNo
      
       - jsonPath: $.ApplicantPersonals.*.applicantAddress.houseName
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.houseNameMal
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.village
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.taluk
      
       - jsonPath: $.ApplicantPersonals.*.applicantAddress.street
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.streetmal
      
       - jsonPath: $.ApplicantPersonals.*.applicantAddress.pincode
      
@@ -115,7 +160,11 @@ serviceMaps:
       
       - jsonPath: $.ApplicantPersonals.*.applicantAddress.localPlace
       
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.localPlaceMal
+      
       - jsonPath: $.ApplicantPersonals.*.applicantAddress.mainPlace
+      
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.mainPlaceMal
       
       - jsonPath: $.ApplicantPersonals.*.applicantAddress.wardNo
      

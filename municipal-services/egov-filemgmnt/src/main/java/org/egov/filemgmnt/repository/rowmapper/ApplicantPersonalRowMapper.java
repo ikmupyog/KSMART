@@ -30,7 +30,7 @@ public class ApplicantPersonalRowMapper implements ResultSetExtractor<List<Appli
                                                  .build();
             ApplicantAddress address = ApplicantAddress.builder()
                                                        .wardNo(rs.getString("wardno"))
-                                                       .houseNo(rs.getString("houseno"))
+                                                       .buildingNo(rs.getString("houseno"))
                                                        .houseName(rs.getString("housename"))
                                                        .localPlace(rs.getString("localplace"))
                                                        .mainPlace(rs.getString("mainplace"))

@@ -30,11 +30,17 @@ public class ApplicantAddress {
     @JsonProperty("id")
     private String id;
 
-    @Schema(type = "string", description = "House number")
+    @Schema(type = "string", description = "Building number")
     @Size(max = 64)
-    @NotBlank(message = "House number is required")
-    @JsonProperty("houseNo")
-    private String houseNo;
+    @NotBlank(message = "Building number is required")
+    @JsonProperty("buildingNo")
+    private String buildingNo;
+
+    @Schema(type = "string", description = "Sub number")
+    @Size(max = 64)
+    @NotBlank(message = "Sub number is required")
+    @JsonProperty("subNo")
+    private String subNo;
 
     @Schema(type = "string", description = "House name")
     @Size(max = 64)
@@ -42,10 +48,21 @@ public class ApplicantAddress {
     @JsonProperty("houseName")
     private String houseName;
 
+    @Schema(type = "string", description = "House name malayalam")
+    @Size(max = 64)
+    @NotBlank(message = "House name malayalam is required")
+    @JsonProperty("houseNameMal")
+    private String houseNameMal;
+
     @Schema(type = "string", description = "Street name")
     @Size(max = 64)
     @JsonProperty("street")
     private String street;
+
+    @Schema(type = "string", description = "Street name malayalam")
+    @Size(max = 64)
+    @JsonProperty("streetmal")
+    private String streetmal;
 
     @Schema(type = "string", description = "Pincode")
     @Size(max = 64)
@@ -69,10 +86,20 @@ public class ApplicantAddress {
     @JsonProperty("localPlace")
     private String localPlace;
 
+    @Schema(type = "string", description = "Local place malayalam")
+    @Size(max = 64)
+    @JsonProperty("localPlaceMal")
+    private String localPlaceMal;
+
     @Schema(type = "string", description = "Main place")
     @Size(max = 64)
     @JsonProperty("mainPlace")
     private String mainPlace;
+
+    @Schema(type = "string", description = "Main place malayalam")
+    @Size(max = 64)
+    @JsonProperty("mainPlaceMal")
+    private String mainPlaceMal;
 
     @Schema(type = "string", description = "Ward no")
     @Size(max = 64)
@@ -80,6 +107,20 @@ public class ApplicantAddress {
     @NotBlank(message = "Ward number is required")
     @JsonProperty("wardNo")
     private String wardNo;
+
+    @Schema(type = "string", description = "Village no")
+    @Size(max = 64)
+    @NotNull
+    @NotBlank(message = "Village is required")
+    @JsonProperty("village")
+    private String village;
+
+    @Schema(type = "string", description = "Taluk no")
+    @Size(max = 64)
+    @NotNull
+    @NotBlank(message = "Taluk is required")
+    @JsonProperty("taluk")
+    private String taluk;
 
     @Schema(type = "string", format = "uuid", description = "Applicant id")
     @Size(max = 64)

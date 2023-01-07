@@ -50,15 +50,50 @@ public class ApplicantChild {
     @JsonProperty("nameOfOccupier")
     private String nameOfOccupier;
 
+    @Schema(type = "string", description = "Name of occupier mal")
+    @Size(max = 64)
+    @JsonProperty("nameOfOccupierMal")
+    private String nameOfOccupierMal;
+
     @Schema(type = "string", description = "Relation of occupier")
     @Size(max = 64)
     @JsonProperty("relationOfOccupier")
     private String relationOfOccupier;
 
-    @Schema(type = "string", description = "Duration of residence")
+    @Schema(type = "string", description = "Duration of residence in years")
     @Size(max = 64)
-    @JsonProperty("durationOfResidence ")
-    private String durationOfResidence;
+    @JsonProperty("durationOfResidenceInYears ")
+    private String durationOfResidenceInYears;
+
+    @Schema(type = "string", description = "Duration of residence in months")
+    @Size(max = 64)
+    @JsonProperty("durationOfResidenceInMonths ")
+    private String durationOfResidenceInMonths;
+
+    @Schema(type = "string", description = "Owner name")
+    @Size(max = 64)
+    @JsonProperty("ownerName ")
+    private String ownerName;
+
+    @Schema(type = "string", description = "Owner name malayalam")
+    @Size(max = 64)
+    @JsonProperty("ownerNameMal")
+    private String ownerNameMal;
+
+    @Schema(type = "string", description = "Owner address")
+    @Size(max = 64)
+    @JsonProperty("ownerAddress")
+    private String ownerAddress;
+
+    @Schema(type = "string", description = "Owner address malayalam")
+    @Size(max = 64)
+    @JsonProperty("ownerAddressMal")
+    private String ownerAddressMal;
+
+    @Schema(type = "string", description = "Owner mobile number")
+    @Size(max = 64)
+    @JsonProperty("ownerMobileNo")
+    private String ownerMobileNo;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
