@@ -25,9 +25,17 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
 
     public List<TradeLicense> extractData(ResultSet rs) throws SQLException, DataAccessException {
         Map<String, TradeLicense> tradeLicenseMap = new LinkedHashMap<>();
-
+        Map<String, Object> taxpdetemp = new HashMap<>();
+        Map<String, Object> tempid = new HashMap<>();
+        tempid.put("tradedetailid", "0");
+        tempid.put("prevlicenseid", "0");
+        tempid.put("taxhead", "0");
+        tempid.put("licenceid", "0");
         while (rs.next()) {
+
+            tempid.put("prevlicenseid", tempid.get("licenceid"));
             String id = rs.getString("tl_id");
+            tempid.put("licenceid", id);
             TradeLicense currentTradeLicense = tradeLicenseMap.get(id);
             String tenantId = rs.getString("tl_tenantId");
 
@@ -65,21 +73,35 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
 
                 tradeLicenseMap.put(id, currentTradeLicense);
             }
-            addChildrenToProperty(rs, currentTradeLicense);
+            TradeLicense prevTradeLicense = tradeLicenseMap.get(String.valueOf(tempid.get("prevlicenseid")));
+            addChildrenToProperty(rs, currentTradeLicense, taxpdetemp, tempid, prevTradeLicense);
 
         }
-
+        TradeLicense currentTradeLicense = tradeLicenseMap.get(String.valueOf(tempid.get("licenceid")));
+        if (taxpdetemp.size() > 0) {
+            TaxPde taxPde = TaxPde.builder()
+                    .id(String.valueOf(taxpdetemp.get("tltax_id")))
+                    .tenantId(currentTradeLicense.getTenantId())
+                    .service(String.valueOf(taxpdetemp.get("service")))
+                    .fromYear(String.valueOf(taxpdetemp.get("fromyear")))
+                    .arrear(Double.parseDouble(String
+                            .valueOf(taxpdetemp.get("arrearamnt") == null ? 0
+                                    : taxpdetemp.get("arrearamnt"))))
+                    .current(Double.parseDouble(String.valueOf(
+                            taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
+                    .active(true) // (Boolean) taxpdetemp.get("tltax_active")
+                    .build();
+            currentTradeLicense.getTradeLicenseDetail().addTaxPdeItem(taxPde);
+        }
         return new ArrayList<>(tradeLicenseMap.values());
 
     }
 
-    private void addChildrenToProperty(ResultSet rs, TradeLicense tradeLicense) throws SQLException {
-
+    private void addChildrenToProperty(ResultSet rs, TradeLicense tradeLicense, Map<String, Object> taxpdetemp,
+            Map<String, Object> tempid, TradeLicense prevTradeLicense) throws SQLException {
         String tenantId = tradeLicense.getTenantId();
         String tradeLicenseDetailId = rs.getString("tld_id");
-
         if (tradeLicense.getTradeLicenseDetail() == null) {
-
             Address address = Address.builder().addressId(rs.getString("addressId"))
                     .pincode(rs.getString("pincode"))
                     .doorNo(rs.getString("doorno"))
@@ -142,19 +164,116 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
         }
 
         if (rs.getString("tltax_id") != null && rs.getBoolean("tltax_active")) {
-            TaxPde taxPde = TaxPde.builder()
-                    .id(rs.getString("tltax_id"))
-                    .tenantId(tenantId)
-                    .service(rs.getString("service"))
-                    .fromYear(rs.getString("fromyear"))
-                    .fromPeriod(rs.getString("fromperiod"))
-                    .toYear(rs.getString("toyear"))
-                    .toPeriod(rs.getString("toperiod"))
-                    .headCode(rs.getString("headcode"))
-                    .amount(rs.getDouble("amount"))
-                    .active(rs.getBoolean("tltax_active"))
-                    .build();
-            tradeLicense.getTradeLicenseDetail().addTaxPdeItem(taxPde);
+            if (!tradeLicenseDetailId.equals(String.valueOf(tempid.get("tradedetailid")))) {
+                if (taxpdetemp.size() > 0) {
+                    TaxPde taxPde = TaxPde.builder()
+                            .id(String.valueOf(taxpdetemp.get("tltax_id")))
+                            .tenantId(tenantId)
+                            .service(String.valueOf(taxpdetemp.get("service")))
+                            .fromYear(String.valueOf(taxpdetemp.get("fromyear")))
+                            .fromPeriod(String.valueOf(taxpdetemp.get("fromperiod")))
+                            .toYear(String.valueOf(taxpdetemp.get("toyear")))
+                            .toPeriod(String.valueOf(taxpdetemp.get("toperiod")))
+                            .headCode(String.valueOf(taxpdetemp.get("headcode")))
+                            .arrear(Double.parseDouble(String
+                                    .valueOf(taxpdetemp.get("arrearamnt") == null ? 0 : taxpdetemp.get("arrearamnt"))))
+                            .current(Double.parseDouble(String.valueOf(
+                                    taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
+                            .active(true) // (Boolean) taxpdetemp.get("tltax_active")
+                            .build();
+                    if (prevTradeLicense != null)
+                        prevTradeLicense.getTradeLicenseDetail().addTaxPdeItem(taxPde);
+                }
+                taxpdetemp.clear();
+                taxpdetemp.put("tltax_id", rs.getString("tltax_id"));
+                taxpdetemp.put("service", rs.getString("service"));
+                taxpdetemp.put("fromyear", rs.getString("fromyear"));
+                taxpdetemp.put("fromperiod", rs.getString("fromperiod"));
+                taxpdetemp.put("toyear", rs.getString("toyear"));
+                taxpdetemp.put("toperiod", rs.getString("toperiod"));
+                taxpdetemp.put("headcode", rs.getString("headcode"));
+                if ("431190101".equals(rs.getString("headcode")) || "431300201".equals(rs.getString("headcode"))
+                        || "431400101".equals(rs.getString("headcode"))) {
+                    taxpdetemp.put("currentamnt", rs.getString("amount"));
+                } else {
+                    taxpdetemp.put("arrearamnt", rs.getString("amount"));
+                }
+
+                taxpdetemp.put("tltax_active", rs.getString("tltax_active"));
+            } else {
+                if (!String.valueOf(tempid.get("taxhead")).equals(rs.getString("service"))) {
+                    if (taxpdetemp.size() > 0) {
+                        TaxPde taxPde = TaxPde.builder()
+                                .id(String.valueOf(taxpdetemp.get("tltax_id")))
+                                .tenantId(tenantId)
+                                .service(String.valueOf(taxpdetemp.get("service")))
+                                .fromYear(String.valueOf(taxpdetemp.get("fromyear")))
+                                .arrear(Double.parseDouble(String
+                                        .valueOf(taxpdetemp.get("arrearamnt") == null ? 0
+                                                : taxpdetemp.get("arrearamnt"))))
+                                .current(Double.parseDouble(String.valueOf(
+                                        taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
+                                .active(true) // (Boolean) taxpdetemp.get("tltax_active")
+                                .build();
+                        tradeLicense.getTradeLicenseDetail().addTaxPdeItem(taxPde);
+                    }
+                    taxpdetemp.clear();
+                    taxpdetemp.put("tltax_id", rs.getString("tltax_id"));
+                    taxpdetemp.put("service", rs.getString("service"));
+                    taxpdetemp.put("fromyear", rs.getString("fromyear"));
+                    taxpdetemp.put("fromperiod", rs.getString("fromperiod"));
+                    taxpdetemp.put("toyear", rs.getString("toyear"));
+                    taxpdetemp.put("toperiod", rs.getString("toperiod"));
+                    taxpdetemp.put("headcode", rs.getString("headcode"));
+                    if ("431190101".equals(rs.getString("headcode")) || "431300201".equals(rs.getString("headcode"))
+                            || "431400101".equals(rs.getString("headcode"))) {
+                        taxpdetemp.put("currentamnt", rs.getString("amount"));
+                    } else {
+                        taxpdetemp.put("arrearamnt", rs.getString("amount"));
+                    }
+                    taxpdetemp.put("tltax_active", rs.getString("tltax_active"));
+                } else {
+                    if (taxpdetemp.containsKey(rs.getString("service"))) {
+                        if ("431190101".equals(rs.getString("headcode")) || "431300201".equals(rs.getString("headcode"))
+                                || "431400101".equals(rs.getString("headcode"))) {
+                            taxpdetemp.put("currentamnt", rs.getString("amount"));
+                        } else {
+                            taxpdetemp.put("arrearamnt", rs.getString("amount"));
+                        }
+                    } else {
+                        taxpdetemp.put("tltax_id", rs.getString("tltax_id"));
+                        taxpdetemp.put("service", rs.getString("service"));
+                        taxpdetemp.put("fromyear", rs.getString("fromyear"));
+                        taxpdetemp.put("fromperiod", rs.getString("fromperiod"));
+                        taxpdetemp.put("toyear", rs.getString("toyear"));
+                        taxpdetemp.put("toperiod", rs.getString("toperiod"));
+                        taxpdetemp.put("headcode", rs.getString("headcode"));
+                        if ("431190101".equals(rs.getString("headcode")) || "431300201".equals(rs.getString("headcode"))
+                                || "431400101".equals(rs.getString("headcode"))) {
+                            taxpdetemp.put("currentamnt", rs.getString("amount"));
+                        } else {
+                            taxpdetemp.put("arrearamnt", rs.getString("amount"));
+                        }
+                        taxpdetemp.put("tltax_active", rs.getString("tltax_active"));
+                    }
+
+                }
+            }
+            tempid.put("tradedetailid", tradeLicenseDetailId);
+            tempid.put("taxhead", rs.getString("service"));
+            // TaxPde taxPde = TaxPde.builder()
+            // .id(rs.getString("tltax_id"))
+            // .tenantId(tenantId)
+            // .service(rs.getString("service"))
+            // .fromYear(rs.getString("fromyear"))
+            // .fromPeriod(rs.getString("fromperiod"))
+            // .toYear(rs.getString("toyear"))
+            // .toPeriod(rs.getString("toperiod"))
+            // .headCode(rs.getString("headcode"))
+            // .amount(rs.getDouble("amount"))
+            // .active(rs.getBoolean("tltax_active"))
+            // .build();
+            // tradeLicense.getTradeLicenseDetail().addTaxPdeItem(taxPde);
         }
     }
 
