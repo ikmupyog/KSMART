@@ -29,6 +29,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [CityMl, setCityMl] = useState(formData?.PlaceOfDeathHome?.CityMl);
   const [setWard, setSelectedWard] = useState(formData?.PlaceOfDeathHome?.setWard);
   const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
+  const [InformentName, setSelectedInformentName] = useState(formData?.PlaceOfDeathHome?.InformentName);
+  
 
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -75,6 +77,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     setLbs(null);
     districtid = value.districtid
    
+  }
+  function setSelectInformentName(e) {
+    setSelectedInformentName(e.target.value);
   }
   function setSelectPresentLBName(value) {
     setPresentLBName(value);
@@ -150,6 +155,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     }
   }, [lbs, isInitialRender]);
   const goNext = () => {
+    sessionStorage.setItem("InformentName", InformentName);
     sessionStorage.setItem("setVillage", setVillage?setVillage.code:null);
     sessionStorage.setItem("PresentLBName", null);
     sessionStorage.setItem("setPostOffice", setPostOffice?setPostOffice.code:null);
@@ -165,6 +171,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setWard", setWard?setWard.code:null);
    
     onSelect(config.key, {
+      InformentName,
       setVillage,
       PresentLBName,
       setPostOffice,
@@ -182,8 +189,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!Locality}>
         <div className="row">
           <div className="col-md-12">
@@ -192,7 +199,25 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
             </h1>
           </div>
         </div>
-
+        <div className="row">
+        <div className="col-md-12">
+          <div className="col-md-6">
+            <CardLabel>{t("CR_INFORMANT_NAME")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="Informent_Name"
+              value={InformentName}
+              onChange={setSelectInformentName}
+              disable={isEdit}
+              placeholder={`${t("CR_INFORMANT_NAME")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
+            />
+          </div>
+          </div>
+        </div> 
         <div className="row">
           <div className="col-md-6">
             <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>

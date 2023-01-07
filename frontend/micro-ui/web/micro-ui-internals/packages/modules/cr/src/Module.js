@@ -50,6 +50,7 @@ import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVe
 import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
+import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
@@ -170,6 +171,7 @@ const componentsToRegister = {
   StatisticalInfo,
   StatisticalInfoContinue,
   ApplicantDetails,
+  DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,
