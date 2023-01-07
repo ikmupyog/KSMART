@@ -137,7 +137,7 @@ public class ApplicantPersonalRepository {
 				getPdfCertArray(searchResult, embeddedUrl, lbAddressWithPinCode, criteria.getTenantId()));
 
 
-
+		System.out.println("request Param " + pdfRequest);
         EgovPdfResp res = restTemplate.postForObject(pdfFinalPath, pdfRequest, EgovPdfResp.class);
         CertificateDetails certificate = new CertificateDetails();
         List<CertificateDetails> list = new ArrayList<>();
@@ -186,10 +186,11 @@ public class ApplicantPersonalRepository {
                 searchResult.get(0)
                             .getApplicantChild()
                             .getBuildingNumber());
-		obj.put(FMConstants.DURATION,
-                searchResult.get(0)
-                            .getApplicantChild()
-                            .getDurationOfResidenceInYears());
+		String durationYr = searchResult.get(0).getApplicantChild().getDurationOfResidenceInYears();
+
+		String durationMnth = searchResult.get(0).getApplicantChild().getDurationOfResidenceInMonths();
+		obj.put(FMConstants.DURATIONYR, durationYr);
+		obj.put(FMConstants.DURATIONMNTH, durationMnth);
         obj.put(FMConstants.WARDNO,
                 searchResult.get(0)
                             .getApplicantAddress()
@@ -204,9 +205,16 @@ public class ApplicantPersonalRepository {
                               .getLastName();
         obj.put(FMConstants.NAME, name);
 
+		obj.put(FMConstants.OWNERNAME, searchResult.get(0).getApplicantChild().getOwnerNameMal());
+
+		obj.put(FMConstants.OWNERADDRESS, searchResult.get(0).getApplicantChild().getOwnerAddressMal());
+
+		String subNo = searchResult.get(0).getApplicantAddress().getSubNo();
+
         String address = searchResult.get(0)
                                      .getApplicantAddress()
                                      .getBuildingNo()
+				+ (StringUtils.isEmpty(subNo))
                 + '/' + searchResult.get(0)
                                     .getApplicantAddress()
                                     .getHouseName()

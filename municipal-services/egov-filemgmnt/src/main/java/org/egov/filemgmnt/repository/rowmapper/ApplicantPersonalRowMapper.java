@@ -26,11 +26,13 @@ public class ApplicantPersonalRowMapper implements ResultSetExtractor<List<Appli
                                         .fileCode(rs.getString("filecode"))
                                         .build();
             ApplicantChild child = ApplicantChild.builder()
-                                                 .buildingNumber(rs.getString("buildingnumber"))
+					.ownerNameMal(rs.getString("ownernamemal")).ownerAddressMal(rs.getString("owneraddressmal"))
+					.durationOfResidenceInYears(rs.getString("durationofresidenceinyears"))
+					.durationOfResidenceInMonths(rs.getString("durationofresidenceinmonths"))
                                                  .build();
             ApplicantAddress address = ApplicantAddress.builder()
                                                        .wardNo(rs.getString("wardno"))
-                                                       .buildingNo(rs.getString("houseno"))
+					.buildingNo(rs.getString("buildingno"))
                                                        .houseName(rs.getString("housename"))
                                                        .localPlace(rs.getString("localplace"))
                                                        .mainPlace(rs.getString("mainplace"))
