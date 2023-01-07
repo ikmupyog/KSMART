@@ -449,6 +449,7 @@ public class TLQueryBuilder {
             preparedStmtList.add(criteria.getTradeName());
         }
 
+        builder.append( " ORDER BY tl.id ,tltax.service");
         // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);
 
         if (!isCount) {
