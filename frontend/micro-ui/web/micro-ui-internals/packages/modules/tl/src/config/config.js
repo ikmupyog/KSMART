@@ -844,7 +844,7 @@ export const newConfig = [
         component: "TLPdeEntry",
         texts: {
           headerCaption: "",
-          header: "LICENSE PDE",
+          header: "TL_LICENSING_PDE_ENTRY_HEADER",
           cardText: "",
           submitBarLabel: "Save",
         },

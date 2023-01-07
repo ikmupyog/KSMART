@@ -62,7 +62,8 @@ import CitizenApp from "./pages/citizen";
 import EmployeeApp from "./pages/employee";
 import PdeApplication from "./pages/employee/PdeApplication";
 import TLPdeEntry from "./pageComponents/TLPdeEntry";
-
+import SearchPde from "./pages/employee/SearchPde";
+import SearchPdeApplication from "./components/SearchPdeApplication";
 
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -164,6 +165,8 @@ const componentsToRegister = {
   TLResponse : Response,
   TLCreatePdeApplication  : PdeApplication,
   TLPdeEntry,
+  TLSearchPde:SearchPde,
+  SearchPdeApplication
 };
 
 export const initTLComponents = () => {

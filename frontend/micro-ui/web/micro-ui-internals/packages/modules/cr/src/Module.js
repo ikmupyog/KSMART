@@ -19,6 +19,9 @@ import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
 import AddressPresent from "../src/pageComponents/birthComponents/AddressPresent";
 import AddressSameAsAbove  from "../src/pageComponents/birthComponents/AddressSameAsAbove";
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
+import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
+import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
+
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -47,6 +50,7 @@ import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVe
 import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
+import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
@@ -134,7 +138,8 @@ const componentsToRegister = {
   AddressPresent,
   AddressSameAsAbove,
   AddressPermanent,
-
+  MultipleBirth,
+  BornOutsideIndia,
 
 
   
@@ -168,6 +173,7 @@ const componentsToRegister = {
   StatisticalInfo,
   StatisticalInfoContinue,
   ApplicantDetails,
+  DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,

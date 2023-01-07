@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, CheckBo
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
+const DeathCertificate = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -665,4 +665,4 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default ApplicantDetails;
+export default DeathCertificate;
