@@ -9,7 +9,7 @@ const SearchRoute = ({ parentUrl }) => {
   const history = useHistory();
   const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
   const ApplicationDetails = Digit?.ComponentRegistryService?.getComponent('CRApplicationDetails');
-  const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
+  // const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
   return (
     <React.Fragment>
       <Switch>
@@ -19,7 +19,7 @@ const SearchRoute = ({ parentUrl }) => {
         </Route>
         <PrivateRoute path={`${path}/birthsearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/deathsearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
-        <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
+        {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
       </Switch>
     </React.Fragment>

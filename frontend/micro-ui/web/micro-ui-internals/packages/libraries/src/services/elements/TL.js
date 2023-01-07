@@ -74,4 +74,13 @@ export const TLService = {
       params: {},
       auth: true,
     }),
+  searchpde: ({ tenantId, filters }) =>
+     Request({
+      url: Urls.tl.searchpde,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
 };

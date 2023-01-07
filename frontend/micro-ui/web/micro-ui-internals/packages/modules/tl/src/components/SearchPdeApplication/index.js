@@ -20,10 +20,9 @@ const mystyle = {
   color:"#2B2F3E",
   marginBottom:".5rem",
   lineHieght:"1.5rem"
-
  };
 
-const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
+const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
     const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
         defaultValues: {
             offset: 0,
@@ -70,15 +69,15 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     const GetCell = (value) => <span className="cell-text">{value}</span>;
     const columns = useMemo( () => ([
         {
-          Header: t("CR_COMMON_COL_APP_NO"),
-          accessor: "applicationno",
+          Header: t("TL_COMMON_TABLE_COL_APP_NO"),
+          accessor: "applicationNo",
           disableSortBy: true,
           Cell: ({ row }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.applicationno}`}>
-                    {row.original.applicationno}
+                  <Link to={`/digit-ui/employee/tl/pde-editapplication`}>
+                    Edit
                   </Link>
                 </span>
               </div>
@@ -86,45 +85,27 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
           },
         },
         {
-          Header: t("CR_COMMON_COL_APP_DATE"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.dateofbirth) : ""),
-        },
-        {
-            Header: t("CR_COMMON_COL_DOB"),
+            Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+            accessor: (row) => GetCell(row.tradeName),
         },
-        // {
-        //     Header: t("TL_APPLICATION_TYPE_LABEL"),
-        //     disableSortBy: true,
-        //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
-        // },
         {
-            Header: t("CR_COMMON_COL_FATHER_NAME"),
+            Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.birthFather.firstname_en + " " + row.birthFather.middlename_en + " " + row.birthFather.lastname_en  || "-"),
+            accessor: (row) => GetCell(row.ownersPde),
         },
         {
-          Header: t("CR_COMMON_COL_MOTHER_NAME"),
+          Header: t("TL_LOCALIZATION_SECTOR"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.birthMother.firstname_en + " " + row.birthMother.middlename_en + " " + row.birthMother.lastname_en  || "-"),
+          accessor: (row) => GetCell(row.tradeLicenseDetail.businessSector),
         },
-        // {
-        //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
-        //   disableSortBy: true,
-        //   accessor: (row) => GetCell(row.tradeName || ""),
-        // },
-        // {
-        //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
-        //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
-        //   disableSortBy: true,
-        // },
-        // {
-        //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
-        //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
-        //   disableSortBy: true,
-        // }
+        {
+          Header: t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"),
+          disableSortBy: true,
+          accessor: (row) => GetCell(row.status),
+        },
+        
+
       ]), [] )
 
     return <React.Fragment>
@@ -177,4 +158,4 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         </React.Fragment>
 }
 
-export default SearchApplication
+export default SearchPdeApplication

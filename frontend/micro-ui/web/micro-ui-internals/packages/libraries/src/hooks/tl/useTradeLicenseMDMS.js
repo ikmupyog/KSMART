@@ -2,7 +2,7 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
-  
+
   const useTLDocuments = () => {
     return useQuery("TL_DOCUMENTS", () => MdmsService.getTLDocumentRequiredScreen(tenantId, moduleCode, type), config);
   };
@@ -30,14 +30,17 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
   const useSector = () => {
     return useQuery("TL_STRUCTURE_TYPE_SECTOR", () => MdmsService.getTLSector(tenantId, moduleCode, type), config);
   };
+  const useTLFinancialPeriod = () => {
+    return useQuery("TL_TRADE_FINANCIAL_PERIOD", () => MdmsService.getTLFinancePeriod(tenantId, moduleCode, type), config);
+  };
   const useTradeOwnerShipCategory = () => {
     return useQuery("TL_TRADE_OWNERSHIP_CATEGORY", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), config);
   };
   const useTradeOwnershipSubType = () => {
     return useQuery("TL_TRADE_OWNERSHIP_CATEGORY", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), {
       select: data => {
-        const {"common-masters":{OwnerShipCategory: categoryData} ={}} = data
-        const filteredSubtypesData = categoryData.filter( e => e.code.includes(filter.keyToSearchOwnershipSubtype)).map( e => ({...e, i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_${e.code.replaceAll(".", "_")}`}))
+        const { "common-masters": { OwnerShipCategory: categoryData } = {} } = data
+        const filteredSubtypesData = categoryData.filter(e => e.code.includes(filter.keyToSearchOwnershipSubtype)).map(e => ({ ...e, i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_${e.code.replaceAll(".", "_")}` }))
         return filteredSubtypesData
       },
       ...config
@@ -47,42 +50,40 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
   const useOwnerTypeWithSubtypes = () => {
     return useQuery("TL_TRADE_OWNERSSHIP_TYPE", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), {
       select: data => {
-        const {"common-masters":{OwnerShipCategory: categoryData} ={}} = data
+        const { "common-masters": { OwnerShipCategory: categoryData } = {} } = data
         let OwnerShipCategory = {};
         let ownerShipdropDown = [];
-        
+
         function getDropdwonForProperty(ownerShipdropDown) {
           if (filter?.userType === "employee") {
             const arr = ownerShipdropDown
               ?.filter((e) => e.code.split(".").length <= 2)
               ?.map((ownerShipDetails) => ({
                 ...ownerShipDetails,
-                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${
-                  ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
-                }`,
+                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+                  }`,
               }));
-              const finalArr = arr.filter(data => data.code.includes("INDIVIDUAL") || data.code.includes("OTHER"))
-      
+            const finalArr = arr.filter(data => data.code.includes("INDIVIDUAL") || data.code.includes("OTHER"))
+
             return finalArr;
           }
-      
+
           const res = ownerShipdropDown?.length ? ownerShipdropDown?.map((ownerShipDetails) => ({
-                ...ownerShipDetails,
-                i18nKey: `PT_OWNERSHIP_${
-                  ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
-                }`,
-              })).reduce((acc, ownerShipDetails) => {
-                if(ownerShipDetails.code.includes("INDIVIDUAL")){
-                  return [...acc, ownerShipDetails]
-                } else if (ownerShipDetails.code.includes("OTHER")) {
-                  const { code, value, ...everythingElse } = ownerShipDetails
-                  const mutatedOwnershipDetails =  { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse }
-                  return [...acc, mutatedOwnershipDetails]
-                } else {
-                  return acc
-                }
-              },[]) : null
-              
+            ...ownerShipDetails,
+            i18nKey: `PT_OWNERSHIP_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+              }`,
+          })).reduce((acc, ownerShipDetails) => {
+            if (ownerShipDetails.code.includes("INDIVIDUAL")) {
+              return [...acc, ownerShipDetails]
+            } else if (ownerShipDetails.code.includes("OTHER")) {
+              const { code, value, ...everythingElse } = ownerShipDetails
+              const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse }
+              return [...acc, mutatedOwnershipDetails]
+            } else {
+              return acc
+            }
+          }, []) : null
+
           return res
         }
 
@@ -105,9 +106,9 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
             ownerShipdropDown.push(formDropdown(OwnerShipCategory[category]));
           });
         }
-        
+
         return getDropdwonForProperty(ownerShipdropDown);
-    
+
       },
       ...config
     });
@@ -151,6 +152,8 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
       return useTLFinancialYear();
     case "TradeOwnershipSubType":
       return useTradeOwnershipSubType();
+    case "FinancialPeriod":
+      return useTLFinancialPeriod();
     default:
       return _default();
   }
