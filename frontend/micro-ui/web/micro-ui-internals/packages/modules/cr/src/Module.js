@@ -10,10 +10,11 @@ import Address from "../src/pageComponents/birthComponents/Address";
 import AddressOutsideIndia from "../src/pageComponents/birthComponents/AddressOutsideIndia";
 import FatherInformation from "../src/pageComponents/birthComponents/FatherInformation";
 import MotherInformation from "../src/pageComponents/birthComponents/MotherInformation";
-import PlaceofBirth from "../src/pageComponents/birthComponents/PlaceofBirth";
+import PlaceofBirthHome from "../src/pageComponents/birthComponents/PlaceofBirthHome";
 import HospitalDetails from "../src/pageComponents/birthComponents/HospitalDetails";
 import OtherCountry from "../src/pageComponents/birthComponents/OtherCountry";
 import InstitutionDetails from "../src/pageComponents/birthComponents/InstitutionDetails";
+import InstitutionAddress from "../src/pageComponents/birthComponents/InstitutionAddress";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
 import AddressPresent from "../src/pageComponents/birthComponents/AddressPresent";
@@ -122,7 +123,7 @@ const componentsToRegister = {
   AddressOutsideIndia,
   FatherInformation,
   MotherInformation,
-  PlaceofBirth,
+  PlaceofBirthHome,
   HospitalDetails,
   OtherCountry,
   InstitutionDetails,
@@ -137,6 +138,7 @@ const componentsToRegister = {
   AddressPermanent,
   MultipleBirth,
   BornOutsideIndia,
+  InstitutionAddress,
 
 
   
