@@ -49,6 +49,7 @@ module.exports = function (app) {
     "/inbox/v1/_search",
     "/tl-services",
     "/birth-services",
+    "/death-services",
     "/filemgmnt",
     "/tl-calculator",
     "/edcr",
