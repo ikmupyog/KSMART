@@ -112,7 +112,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled = {!FatherOrHusbandNameEN}>
         <div className="row">
@@ -157,7 +157,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="col-md-4">
             <CardLabel>
-              {`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span>
+              {`${t("CR_NAME_EN")}`} 
             </CardLabel>
             <TextInput
               t={t}
@@ -169,12 +169,12 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectFatherOrHusbandNameEN}
               disable={isEdit}
               placeholder={`${t("CR_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
             />
           </div>
           <div className="col-md-4">
             <CardLabel>
-              {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
+              {`${t("CR_NAME_ML")}`} 
             </CardLabel>
             <TextInput
               t={t}
@@ -186,7 +186,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectFatherOrHusbandNameMl}
               disable={isEdit}
               placeholder={`${t("CR_NAME_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_ML") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_ML") })}
             />
           </div>
         </div>
