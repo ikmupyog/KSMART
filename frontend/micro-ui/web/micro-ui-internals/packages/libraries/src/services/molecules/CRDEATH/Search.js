@@ -65,49 +65,58 @@ export const CRDeathsearch = {
     //   propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
     // }
     let employeeResponse = [];
-    const childdetails = {
-      title: "CR_BIRTH_CHILD_DETAILS",
+    const deathdetails = {
+      title: "CR_DEATH_INFORMATION",
       asSectionHeader: true,
       values: [
-        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationno || "NA" },
-        { title: "CR_BIRTH_DOB_LABEL", value: response?.dateofbirth ? convertEpochToDate(response?.dateofbirth) : "NA" },
+        { title: "CR_DEATH_APP_NO_LABEL", value: response?.deathApplicationNo || "NA" },
+        { title: "CR_DEATH_DATE_LABEL", value: response?.dateOfDeath ? convertEpochToDate(response?.dateOfDeath) : "NA" },
 
       ],
     };
-    const fatherInfo = {
-      title: "CR_BIRTH_FATHER_INFORMATION_HEADER",
-      values: [
-        { title: "CR_BIRTH_FATHERNAME_LABEL", value: response?.birthFather.firstname_en + response?.birthFather.middlename_en + response?.birthFather.lastname_en },
-        { title: "CR_BIRTH_FATHER_AADHAR_LABEL", value: response?.birthFather.aadharno || "NA" },
-        { title: "CR_BIRTH_FATHER_EMAIL_LABEL", value: response?.birthFather.emailid || "NA" },
-        { title: "CR_BIRTH_FATHER_MOBILE_LABEL", value: response?.birthFather.mobileno || "NA" },
+    const deathplaceAddress = {
+      title: "CR_DEATH_PLACE_ADDRESS_INFORMATION_HEADER",
+      values: [        
+        { title: "CR_DEATH_PLACE_HOUSE_NO_LABEL", value: response?.deathPlace.houseNo || "NA" },
+        { title: "CR_DEATH_PLACE_HOUSE_NAME_LABEL", value: response?.deathPlace.houeNameEn || "NA" },
+        { title: "CR_DEATH_PLACE_LOCALITY_LABEL", value: response?.deathPlace.localityEn || "NA" },
+        { title: "CR_DEATH_PLACE_CITY_LABEL", value: response?.deathPlace.cityEn || "NA" },
       ],
     };
-    const motherInfo = {
-      title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
-      values: [
-        { title: "CR_BIRTH_MOTHERNAME_LABEL", value: response?.birthMother.firstname_en + " " + response?.birthMother.middlename_en + " " + response?.birthMother.lastname_en },
-        { title: "CR_BIRTH_MOTHER_AADHAR_LABEL", value: response?.birthMother.aadharnoaadharno || "NA"},
-        { title: "CR_BIRTH_MOTHER_EMAIL_LABEL", value: response?.birthMother.emailid || "NA" },
-        { title: "CR_BIRTH_MOTHER_MOBILE_LABEL", value: response?.birthMother.mobileno || "NA" },
+    const informantAddress = {
+      title: "CR_DEATH_INFORMANT_ADDRESS_INFORMATION_HEADER",
+      values: [        
+        { title: "CR_DEATH_INFORMANT_HOUSE_NO_LABEL", value: response?.deathInformant.houseNo || "NA"},
+        { title: "CR_DEATH_INFORMANT_HOUSE_NAME_LABEL", value: response?.deathInformant.houeNameEn || "NA" },
+        { title: "CR_DEATH_INFORMANT_LOCALITY_LABEL", value: response?.deathInformant.localityEn || "NA" },
+        { title: "CR_DEATH_INFORMANT_CITY_LABEL", value: response?.deathInformant.cityEn || "NA" },
       ],
     };
     const addressInfo = {
-      title: "CR_ADDRESS_INFORMATION_HEADER",
+      title: "CR_DEATH_ADDRESS_INFORMATION_HEADER",
       values: [
-        { title: "CR_BIRTH_PERM_HO_NO_LABEL", value: response?.birthPermanent.houseno || "NA"},
-        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.birthPermanent?.housename_en || "NA" },
-        { title: "CR_BIRTH_PERM_HO_LOCALITY_LABEL", value: response?.birthPermanent.locality_en || "NA" },
-        { title: "CR_BIRTH_PERM_HO_CITY_LABEL", value: response?.birthPermanent.city_en || "NA" },
+        { title: "CR_DEATH_ADDRESS_HOUSE_NO_LABEL", value: response?.deathAddress.houseNo || "NA"},
+        { title: "CR_DEATH_ADDRESS_HOUSE_NAME_LABEL", value: response?.deathAddress?.houeNameEn || "NA" },
+        { title: "CR_DEATH_ADDRESS_HOUSE_LOCALITY_LABEL", value: response?.deathAddress.localityEn || "NA" },
+        { title: "CR_DEATH_ADDRESS_HOUSE_CITY_LABEL", value: response?.deathAddress.cityEn || "NA" },
       ],
     };
     const statisticalInfo = {
-      title: "CR_STATSTICAL_INFORMATION_HEADER",
+      title: "CR_DEATH_STATSTICAL_INFORMATION_HEADER",
       values: [
-        { title: "CR_STATSTICAL_WEIGHT_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
-        { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.birthStatistical?.height_of_child || "NA" },
-        { title: "CR_STATSTICAL_PWEEK_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
-        { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
+        { title: "CR_STATSTICAL_DEATH_CAUSE_MAIN", value: response?.deathStatistical.deathCauseMain || "NA" },
+        { title: "CR_STATSTICAL_DEATH_MEDICAL_ATTENTION_TYPE", value: response?.deathStatistical?.medicalAttentionType || "NA" },
+        { title: "CR_STATSTICAL_DEATH_OCCUPATION", value: response?.deathStatistical.occupation || "NA" },
+        { title: "CR_STATSTICAL_DEATH_SMOKING_NUM_YEARS", value: response?.deathStatistical.smokingNumYears || "NA" },
+      ],
+    };
+    const permanentAddress = {
+      title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
+      values: [
+        { title: "CR_DEATH_PERM_HOUSE_NO_LABEL", value: response?.deathAddress.houseNo || "NA"},
+        { title: "CR_DEATH_PERM_HOUSE_NAME_LABEL", value: response?.deathAddress?.houeNameEn || "NA" },
+        { title: "CR_DEATH_PERM_HOUSE_LOCALITY_LABEL", value: response?.deathAddress.localityEn || "NA" },
+        { title: "CR_DEATH_PERM_HOUSE_CITY_LABEL", value: response?.deathAddress.cityEn || "NA" },
       ],
     };
     // const tradeUnits = {
