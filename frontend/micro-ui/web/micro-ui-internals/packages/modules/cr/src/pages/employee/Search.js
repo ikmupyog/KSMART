@@ -12,6 +12,7 @@ const Search = ({ path }) => {
     // const Search = Digit.ComponentRegistryService.getComponent( variant === "death-correction" ? "DeathCorrection" : "SearchCrApplication" )
 
     const Search = Digit.ComponentRegistryService.getComponent('SearchCrApplication')
+    const SearchDeath = Digit.ComponentRegistryService.getComponent('SearchDeathApplication')
 
     function onSubmit(_data) {
         var fromDate = new Date(_data?.fromDate)
@@ -31,12 +32,13 @@ const Search = ({ path }) => {
         enabled: !!(payload && Object.keys(payload).length > 0)
     }
     if (window.location.href.includes("/birthsearch") == true) {
-        const { data: { Licenses: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: payload, config })
+        const { data: { BirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: payload, config })
         console.log(searchReult);
         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     } else {
-        const { data: { Licenses: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchDeath({ tenantId, filters: payload, config })
-        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+        const { data: { deathCertificateDtls: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchDeath({ tenantId, filters: payload, config })
+        console.log(searchReult);
+        return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }
 
 

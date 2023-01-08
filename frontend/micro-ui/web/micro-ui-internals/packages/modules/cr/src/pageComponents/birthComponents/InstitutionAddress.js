@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressPresent = ({ config, onSelect, userType, formData }) => {
+const InstitutionAddress = ({ config, onSelect, userType, formData }) => {
  const stateId = Digit.ULBService.getStateId();
  const { t } = useTranslation();
  let validation = {};
@@ -17,30 +17,35 @@ const AddressPresent = ({ config, onSelect, userType, formData }) => {
  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
- const [WardNo, setWardNo] = useState(formData.AddressPresentDetails?.wardno);
+ const [WardNo, setWardNo] = useState(formData.InstitutionAddressDetails?.wardno);
 //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
  const [isInitialRender, setIsInitialRender] = useState(true);
  const [lbs, setLbs] = useState(0);
  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
- const [AdrsDistrict, setAdrsDistrict] = useState(formData?.AddressPresentDetails?.AdrsDistrict);
- const [AdrsLBTypeName, setAdrsLBTypeName] = useState(formData?.AddressPresentDetails?.AdrsLBTypeName);
- const [AdrsLBName, setAdrsLBName] = useState(formData?.AddressPresentDetails?.AdrsLBName);
- const [AdrsTaluk, setAdrsTaluk] = useState(formData?.AddressPresentDetails?.AdrsTaluk);
- const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.AddressPresentDetails?.AdrsPostOffice);
- const [AdrsPincode, setAdrsPincode] = useState(formData?.AddressPresentDetails?.AdrsPincode);
- const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.AddressPresentDetails?.AdrsHouseNameEn); 
- const [AdrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.AddressPresentDetails?.AdrsHouseNameMl); 
- const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.AddressPresentDetails?.AdrsBuldingNo);
- const [AdrsResNo, setAdrsResNo] = useState(formData?.AddressPresentDetails?.AdrsResNo);
- const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.AddressPresentDetails?.AdrsDoorNo);
- const [AdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.AddressPresentDetails?.AdrsMainPlaceEn); 
- const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.AddressPresentDetails?.AdrsMainPlaceMl); 
- const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.AddressPresentDetails?.AdrsLocalityNameEn); 
- const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.AddressPresentDetails?.AdrsLocalityNameMl);
- const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.AddressPresentDetails?.AdrsStreetNameEn);
- const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.AddressPresentDetails?.AdrsStreetNameMl);  
- const [AdrsVillage, setAdrsVillage] = useState(formData?.AddressPresentDetails?.AdrsVillage);  
- 
+ const [AdrsCountry, setAdrsCountry] = useState(formData?.InstitutionAddressDetails?.AdrsCountry);
+ const [AdrsStateName, setAdrsStateName] = useState(formData?.InstitutionAddressDetails?.AdrsStateName);
+ const [AdrsDistrict, setAdrsDistrict] = useState(formData?.InstitutionAddressDetails?.AdrsDistrict);
+ const [AdrsLBTypeName, setAdrsLBTypeName] = useState(formData?.InstitutionAddressDetails?.AdrsLBTypeName);
+ const [AdrsLBName, setAdrsLBName] = useState(formData?.InstitutionAddressDetails?.AdrsLBName);
+ const [AdrsTaluk, setAdrsTaluk] = useState(formData?.InstitutionAddressDetails?.AdrsTaluk);
+ const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.InstitutionAddressDetails?.AdrsPostOffice);
+ const [AdrsPincode, setAdrsPincode] = useState(formData?.InstitutionAddressDetails?.AdrsPincode);
+ const [AdrsInstnNameEn, setAdrsInstnNameEn] = useState(formData?.InstitutionAddressDetails?.AdrsInstnNameEn); 
+ const [AdrsInstnNameMl, setAdrsInstnNameMl] = useState(formData?.InstitutionAddressDetails?.AdrsInstnNameMl); 
+ const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.InstitutionAddressDetails?.AdrsBuldingNo);
+ const [AdrsResNo, setAdrsResNo] = useState(formData?.InstitutionAddressDetails?.AdrsResNo);
+
+ const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.InstitutionAddressDetails?.AdrsDoorNo);
+ const [AdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.InstitutionAddressDetails?.AdrsMainPlaceEn); 
+ const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.InstitutionAddressDetails?.AdrsMainPlaceMl); 
+ const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.InstitutionAddressDetails?.AdrsLocalityNameEn); 
+ const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.InstitutionAddressDetails?.AdrsLocalityNameMl);
+ const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.InstitutionAddressDetails?.AdrsStreetNameEn);
+ const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.InstitutionAddressDetails?.AdrsStreetNameMl);  
+ const [AdrsVillage, setAdrsVillage] = useState(formData?.InstitutionAddressDetails?.AdrsVillage);  
+
+ let cmbCountry = [];
+ let cmbState = [];
  let cmbPlace = [];
  let cmbTaluk = [];
  let cmbVillage = [];
@@ -70,7 +75,17 @@ const AddressPresent = ({ config, onSelect, userType, formData }) => {
  PostOffice["common-masters"].PostOffice.map((ob) => {
  cmbPostOffice.push(ob);
  });
-
+Country &&
+ Country["common-masters"] &&
+ Country["common-masters"].Country.map((ob) => {
+ cmbCountry.push(ob);
+ });
+ 
+ State &&
+ State["common-masters"] &&
+ State["common-masters"].State.map((ob) => {
+ cmbState.push(ob);
+ });
 
  LBType &&
  LBType["common-masters"] &&
@@ -102,6 +117,17 @@ const AddressPresent = ({ config, onSelect, userType, formData }) => {
 
 
  const onSkip = () => onSelect();
+
+ function setSelectAdrsCountry(value) {
+  setAdrsCountry(value);
+  console.log("Country" + cmbCountry);
+  
+  }
+  function setSelectAdrsStateName(value) {
+  setAdrsStateName(value);
+  console.log("StateName" + cmbState);
+  
+  }
 
   function setSelectAdrsDistrict(value) {
     setIsInitialRender(true);
@@ -145,12 +171,12 @@ function setSelectAdrsPincode(e) {
  setAdrsDoorNo(e.target.value);
  
  }
- function setSelectAdrsHouseNameEn(e) {
- setAdrsHouseNameEn(e.target.value);
+ function setSelectAdrsInstnNameEn(e) {
+ setAdrsInstnNameEn(e.target.value);
  
  }
- function setSelectAdrsHouseNameMl(e) {
-  setAdrsHouseNameMl(e.target.value);
+ function setSelectAdrsInstnNameMl(e) {
+  setAdrsInstnNameMl(e.target.value);
   
   }
 
@@ -194,13 +220,14 @@ function setSelectAdrsPincode(e) {
  }
  }, [lbs, isInitialRender]);
  const goNext = () => {
-
+ sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
+ sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
  sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName.code);
  sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo);
  sessionStorage.setItem("AdrsResNo", AdrsResNo);
  sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo);
- sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn);
- sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl); 
+ sessionStorage.setItem("AdrsInstnNameEn", AdrsInstnNameEn);
+ sessionStorage.setItem("AdrsInstnNameMl", AdrsInstnNameMl); 
  sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn); 
  sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl); 
  sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn);
@@ -215,7 +242,7 @@ function setSelectAdrsPincode(e) {
  sessionStorage.setItem("AdrsPincode", AdrsPincode.code);
 
  onSelect(config.key, {
-  AdrsBuldingNo, AdrsDoorNo, AdrsHouseNameEn,AdrsHouseNameMl, AdrsLocalityNameEn, 
+  AdrsBuldingNo, AdrsDoorNo, AdrsInstnNameEn,AdrsInstnNameMl, AdrsLocalityNameEn, AdrsCountry, AdrsStateName,
   AdrsLocalityNameMl, AdrsLBTypeName, AdrsMainPlaceEn, AdrsMainPlaceMl, AdrsStreetNameEn, 
   AdrsStreetNameMl, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsResNo,
   
@@ -229,11 +256,39 @@ function setSelectAdrsPincode(e) {
  <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdrsDoorNo}>
 
  <div className="row">
- <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span> </h1>
+ <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSTITUTION_ADDRESS")}`}</span> </h1>
  </div>
  </div>
 
- 
+ <div className="row">
+ <div className="col-md-12" >
+ <div className="col-md-6" >
+ <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
+ <Dropdown
+ t={t}
+ optionKey="name"
+ isMandatory={false}
+ option={cmbCountry}
+ selected={AdrsCountry}
+ select={setSelectAdrsCountry}
+ disabled={isEdit}
+ />
+ </div>
+ <div className="col-md-6" >
+ <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
+ <Dropdown
+ t={t}
+ optionKey="name"
+ isMandatory={false}
+ option={cmbState}
+ selected={AdrsStateName}
+ select={setSelectAdrsStateName}
+ disabled={isEdit}
+ />
+ </div>
+ </div>
+ </div>
+
 
  <div className="row">
  <div className="col-md-12" >
@@ -317,11 +372,11 @@ function setSelectAdrsPincode(e) {
  </div>
  <div className="row">
  <div className="col-md-12" >
- <div className="col-md-6" ><CardLabel>{t("CR_HOUSE_NAME_EN")}<span className="mandatorycss">*</span></CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsHouseNameEn" value={AdrsHouseNameEn} onChange={setSelectAdrsHouseNameEn} placeholder={`${t("CR_HOUSE_NAME_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })} />
+ <div className="col-md-6" ><CardLabel>{t("CR_INSTITUTION_NAME_EN")}<span className="mandatorycss">*</span></CardLabel>
+ <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsInstnNameEn" value={AdrsInstnNameEn} onChange={setSelectAdrsInstnNameEn} placeholder={`${t("CR_INSTITUTION_NAME_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INSTITUTION_NAME_EN") })} />
  </div>
- <div className="col-md-6" ><CardLabel>{t("CR_HOUSE_NAME_ML")}<span className="mandatorycss">*</span></CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsHouseNameMl" value={AdrsHouseNameMl} onChange={setSelectAdrsHouseNameMl} placeholder={`${t("CR_HOUSE_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })} />
+ <div className="col-md-6" ><CardLabel>{t("CR_INSTITUTION_NAME_ML")}<span className="mandatorycss">*</span></CardLabel>
+ <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsInstnNameMl" value={AdrsInstnNameMl} onChange={setSelectAdrsInstnNameMl} placeholder={`${t("CR_INSTITUTION_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INSTITUTION_NAME_ML") })} />
  </div>
  </div>
  </div>
@@ -335,7 +390,7 @@ function setSelectAdrsPincode(e) {
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsDoorNo" value={AdrsDoorNo} onChange={setSelectAdrsDoorNo} placeholder={`${t("CR_DOOR_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })} />
  </div>
  <div className="col-md-4" ><CardLabel>{t("CR_RES_ASSOCIATION_NO")}</CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsResNo" value={AdrsResNo} onChange={setSelectAdrsResNo} placeholder={`${t("CCR_RES_ASSOCIATION_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO") })} />
+ <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsResNo" value={AdrsResNo} onChange={setSelectAdrsResNo} placeholder={`${t("CR_RES_ASSOCIATION_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO") })} />
  </div>
  </div>
  </div>
@@ -345,4 +400,4 @@ function setSelectAdrsPincode(e) {
  </React.Fragment>
  );
 };
-export default AddressPresent;
+export default InstitutionAddress;

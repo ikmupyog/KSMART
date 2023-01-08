@@ -235,7 +235,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("MotherEducationSubject", MotherEducationSubject.code);
         sessionStorage.setItem("MotherProfession", MotherProfession.code);
         sessionStorage.setItem("MotherNationality", MotherNationality.code);
-        sessionStorage.setItem("MotherAgeDeleivery", MotherAgeDeleivery);
+        // sessionStorage.setItem("MotherAgeDeleivery", MotherAgeDeleivery);
         sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage);
         sessionStorage.setItem("MotherDOB", MotherDOB);
         sessionStorage.setItem("MotherMaritalStatus", MotherMaritalStatus);
@@ -243,7 +243,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("OrderofDelivery", OrderofDelivery);
         sessionStorage.setItem("MotherResPlace", MotherResPlace);
         sessionStorage.setItem("MotherPlaceNameEn ", MotherPlaceNameEn);
-        sessionStorage.setItem("MotherPlaceNameMl ", MotherPlaceNameMl);
+        // sessionStorage.setItem("MotherPlaceNameMl ", MotherPlaceNameMl);
         sessionStorage.setItem("MotherPlaceType", MotherPlaceType.code);
         sessionStorage.setItem("MotherLBName", MotherLBName.code);//MotherLBName.code
         // sessionStorage.setItem("LBTypeName", LBTypeName.code);
@@ -262,8 +262,8 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
       }
     return (
         <React.Fragment>
-            {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
-            {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+            {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+            {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
             <BackButton >{t("CS_COMMON_BACK")}</BackButton>
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!MotherFirstNameEn}>
 

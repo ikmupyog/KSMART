@@ -7,6 +7,7 @@ const AdoptionParentsAddress = ({ config, onSelect, userType, formData }) => {
  const stateId = Digit.ULBService.getStateId();
  const { t } = useTranslation();
  let validation = {};
+ const tenantId = Digit.ULBService.getCurrentTenantId();
  const { data: Country = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
  const { data: State = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
  const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
@@ -15,40 +16,37 @@ const AdoptionParentsAddress = ({ config, onSelect, userType, formData }) => {
  const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District"); 
  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
+ const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+ const [WardNo, setWardNo] = useState(formData.TradeDetails?.address?.wardno);
 //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
  const [isInitialRender, setIsInitialRender] = useState(true);
  const [lbs, setLbs] = useState(0);
  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
- const [MotherCountry, setMotherCountry] = useState(formData?.ParentsAddressDetails?.MotherCountry);
- const [MotherStateName, setMotherStateName] = useState(formData?.ParentsAddressDetails?.MotherStateName);
- const [MotherDistrict, setMotherDistrict] = useState(formData?.ParentsAddressDetails?.MotherDistrict);
- const [MotherLBTypeName, setMotherLBTypeName] = useState(formData?.ParentsAddressDetails?.MotherLBTypeName);
- const [MotherLBName, setMotherLBName] = useState(formData?.ParentsAddressDetails?.MotherLBName);
- const [MotherTaluk, setMotherTaluk] = useState(formData?.ParentsAddressDetails?.MotherTaluk);
- const [MotherPostOffice, setMotherPostOffice] = useState(formData?.ParentsAddressDetails?.MotherPostOffice);
- const [MotherPincode, setMotherPincode] = useState(formData?.ParentsAddressDetails?.MotherPincode);
- const [MotherHouseNameEn, setMotherHouseNameEn] = useState(formData?.ParentsAddressDetails?.MotherHouseNameEn); 
- const [MotherHouseNameMl, setMotherHouseNameMl] = useState(formData?.ParentsAddressDetails?.MotherHouseNameMl); 
- const [MotherBuldingNo, setMotherBuldingNo] = useState(formData?.ParentsAddressDetails?.MotherBuldingNo);
- const [MotherDoorNo, setMotherDoorNo] = useState(formData?.ParentsAddressDetails?.MotherDoorNo);
- const [MotherMainPlaceEn, setMotherMainPlaceEn] = useState(formData?.ParentsAddressDetails?.MotherMainPlaceEn); 
- const [MotherMainPlaceMl, setMotherMainPlaceMl] = useState(formData?.ParentsAddressDetails?.MotherMainPlaceMl); 
- const [MotherLocalityNameEn, setMotherLocalityNameEn] = useState(formData?.ParentsAddressDetails?.MotherLocalityNameEn); 
- const [MotherLocalityNameMl, setMotherLocalityNameMl] = useState(formData?.ParentsAddressDetails?.MotherLocalityNameMl);
- const [MotherStreetNameEn, setMotherStreetNameEn] = useState(formData?.ParentsAddressDetails?.MotherStreetNameEn);
- const [MotherStreetNameMl, setMotherStreetNameMl] = useState(formData?.ParentsAddressDetails?.MotherStreetNameMl);  
- const [MotherVillage, setMotherVillage] = useState(formData?.ParentsAddressDetails?.MotherVillage); 
+ const [MotherDistrict, setMotherDistrict] = useState(formData?.AdoptionParentsAddressDetails?.MotherDistrict);
+ const [MotherLBTypeName, setMotherLBTypeName] = useState(formData?.AdoptionParentsAddressDetails?.MotherLBTypeName);
+ const [MotherLBName, setMotherLBName] = useState(formData?.AdoptionParentsAddressDetails?.MotherLBName);
+ const [MotherTaluk, setMotherTaluk] = useState(formData?.AdoptionParentsAddressDetails?.MotherTaluk);
+ const [MotherPostOffice, setMotherPostOffice] = useState(formData?.AdoptionParentsAddressDetails?.MotherPostOffice);
+ const [MotherPincode, setMotherPincode] = useState(formData?.AdoptionParentsAddressDetails?.MotherPincode);
+ const [MotherHouseNameEn, setMotherHouseNameEn] = useState(formData?.AdoptionParentsAddressDetails?.MotherHouseNameEn); 
+ const [MotherHouseNameMl, setMotherHouseNameMl] = useState(formData?.AdoptionParentsAddressDetails?.MotherHouseNameMl); 
+ const [MotherBuldingNo, setMotherBuldingNo] = useState(formData?.AdoptionParentsAddressDetails?.MotherBuldingNo);
+ const [MotherResNo, setMotherResNo] = useState(formData?.AdoptionParentsAddressDetails?.MotherResNo);
 
-
- 
+ const [MotherDoorNo, setMotherDoorNo] = useState(formData?.AdoptionParentsAddressDetails?.MotherDoorNo);
+ const [MotherMainPlaceEn, setMotherMainPlaceEn] = useState(formData?.AdoptionParentsAddressDetails?.MotherMainPlaceEn); 
+ const [MotherMainPlaceMl, setMotherMainPlaceMl] = useState(formData?.AdoptionParentsAddressDetails?.MotherMainPlaceMl); 
+ const [MotherLocalityNameEn, setMotherLocalityNameEn] = useState(formData?.AdoptionParentsAddressDetails?.MotherLocalityNameEn); 
+ const [MotherLocalityNameMl, setMotherLocalityNameMl] = useState(formData?.AdoptionParentsAddressDetails?.MotherLocalityNameMl);
+ const [MotherStreetNameEn, setMotherStreetNameEn] = useState(formData?.AdoptionParentsAddressDetails?.MotherStreetNameEn);
+ const [MotherStreetNameMl, setMotherStreetNameMl] = useState(formData?.AdoptionParentsAddressDetails?.MotherStreetNameMl);  
+ const [MotherVillage, setMotherVillage] = useState(formData?.AdoptionParentsAddressDetails?.MotherVillage);  
  
  let cmbPlace = [];
  let cmbTaluk = [];
  let cmbVillage = [];
  let cmbDistrict = [];
  let cmbPostOffice = [];
- let cmbCountry = [];
- let cmbState = [];
  let districtid = null;
  let cmbLBType = [];
  
@@ -73,35 +71,39 @@ const AdoptionParentsAddress = ({ config, onSelect, userType, formData }) => {
  PostOffice["common-masters"].PostOffice.map((ob) => {
  cmbPostOffice.push(ob);
  });
- 
- Country &&
- Country["common-masters"] &&
- Country["common-masters"].Country.map((ob) => {
- cmbCountry.push(ob);
- });
- 
- State &&
- State["common-masters"] &&
- State["common-masters"].State.map((ob) => {
- cmbState.push(ob);
- });
+
 
  LBType &&
  LBType["common-masters"] &&
  LBType["common-masters"].LBType.map((ob) => {
  cmbLBType.push(ob);
  });
+ let Zonal = [];
+ let cmbWardNo = [];
+ let cmbWardNoFinal = [];
+ boundaryList &&
+   boundaryList["egov-location"] &&
+   boundaryList["egov-location"].TenantBoundary.map((ob) => {
+     //  console.log(ob);
+     // if(ob?.boundary){
+     Zonal.push(...ob.boundary.children);
+     ob.boundary.children.map((obward) => {
+       cmbWardNo.push(...obward.children);
+     });
+     // }
+
+   });
+ //console.log(Zonal);
+ cmbWardNo.map((wardmst) => {
+   wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+   wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+   cmbWardNoFinal.push(wardmst);
+ });
+
+
 
  const onSkip = () => onSelect();
 
- function setSelectMotherCountry(value) {
-  setMotherCountry(value);
-  console.log("Country" + cmbCountry); 
-  }
-  function setSelectMotherStateName(value) {
-  setMotherStateName(value);
-  console.log("StateName" + cmbState); 
-  }
   function setSelectMotherDistrict(value) {
     setIsInitialRender(true);
     setMotherDistrict(value);
@@ -136,6 +138,10 @@ function setSelectMotherPincode(e) {
  setMotherBuldingNo(e.target.value);
 
  }
+ function setSelectMotherResNo(e) {
+  setMotherResNo(e.target.value);
+ 
+  }
  function setSelectMotherDoorNo(e) {
  setMotherDoorNo(e.target.value);
  
@@ -174,6 +180,9 @@ function setSelectMotherPincode(e) {
  function setSelectMotherStreetNameMl(e) {
   setMotherStreetNameMl(e.target.value); 
   }
+  function setSelectWard(value) {
+    setWardNo(value);
+  }
 
  useEffect(() => {
  if (isInitialRender) {
@@ -186,10 +195,10 @@ function setSelectMotherPincode(e) {
  }
  }, [lbs, isInitialRender]);
  const goNext = () => {
- sessionStorage.setItem("MotherCountry", MotherCountry.code);
- sessionStorage.setItem("MotherStateName", MotherStateName.code);
+
  sessionStorage.setItem("MotherLBTypeName", MotherLBTypeName.code);
  sessionStorage.setItem("MotherBuldingNo", MotherBuldingNo);
+ sessionStorage.setItem("MotherResNo", MotherResNo);
  sessionStorage.setItem("MotherDoorNo", MotherDoorNo);
  sessionStorage.setItem("MotherHouseNameEn", MotherHouseNameEn);
  sessionStorage.setItem("MotherHouseNameMl", MotherHouseNameMl); 
@@ -205,14 +214,14 @@ function setSelectMotherPincode(e) {
  sessionStorage.setItem("MotherTaluk", MotherTaluk.code);
  sessionStorage.setItem("MotherPostOffice", MotherPostOffice.code);
  sessionStorage.setItem("MotherPincode", MotherPincode.code);
- sessionStorage.setItem("PermanentCountry", PermanentCountry.code);
 
  onSelect(config.key, {
- MotherBuldingNo, MotherDoorNo, MotherHouseNameEn,MotherHouseNameMl, MotherLocalityNameEn, MotherLocalityNameMl, MotherLBTypeName, MotherCountry, MotherStateName, 
- MotherMainPlaceEn, MotherMainPlaceMl, MotherStreetNameEn, MotherStreetNameMl, MotherVillage, MotherLBName, MotherDistrict, MotherTaluk, MotherPostOffice, MotherPincode,
- 
- });
- }
+  MotherBuldingNo, MotherDoorNo, MotherHouseNameEn,MotherHouseNameMl, MotherLocalityNameEn, 
+  MotherLocalityNameMl, MotherLBTypeName, MotherMainPlaceEn, MotherMainPlaceMl, MotherStreetNameEn, 
+  MotherStreetNameMl, MotherVillage, MotherLBName, MotherDistrict, MotherTaluk, MotherPostOffice, MotherPincode, MotherResNo,
+  
+  });
+  }
  return (
  <React.Fragment>
  {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
@@ -221,38 +230,11 @@ function setSelectMotherPincode(e) {
  <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!MotherDoorNo}>
 
  <div className="row">
- <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADOPTED_PARENTS_ADDRESS")}`}</span> </h1>
+ <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span> </h1>
  </div>
  </div>
 
- <div className="row">
- <div className="col-md-12" >
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbCountry}
- selected={MotherCountry}
- select={setSelectMotherCountry}
- disabled={isEdit}
- />
- </div>
- <div className="col-md-6" >
- <CardLabel>{`${t("CS_COMMON_STATE")}`}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown
- t={t}
- optionKey="name"
- isMandatory={false}
- option={cmbState}
- selected={MotherStateName}
- select={setSelectMotherStateName}
- disabled={isEdit}
- />
- </div>
- </div>
- </div>
+ 
 
  <div className="row">
  <div className="col-md-12" >
@@ -277,19 +259,22 @@ function setSelectMotherPincode(e) {
  <div className="row">
  <div className="col-md-12" >
  
- <div className="col-md-6" ><CardLabel>{t("CS_COMMON_LB_NAME")}<span className="mandatorycss">*</span></CardLabel>
+ <div className="col-md-4" ><CardLabel>{t("CS_COMMON_LB_NAME")}<span className="mandatorycss">*</span></CardLabel>
  <Dropdown t={t} optionKey="name" isMandatory={false} option={lbs} selected={MotherLBName} select={setSelectMotherLBName} disabled={isEdit} placeholder={`${t("CS_COMMON_LB_NAME")}`} />
  </div>
- <div className="col-md-6" ><CardLabel>{t("CS_COMMON_VILLAGE")}<span className="mandatorycss">*</span></CardLabel>
+ <div className="col-md-4" ><CardLabel>{t("CS_COMMON_VILLAGE")}<span className="mandatorycss">*</span></CardLabel>
  <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbVillage} selected={MotherVillage} select={setSelectMotherVillage} disabled={isEdit} placeholder={`${t("CS_COMMON_VILLAGE")}`} />
+ </div>
+ <div className="col-md-4" ><CardLabel>{t("CS_COMMON_TALUK")}<span className="mandatorycss">*</span></CardLabel>
+ <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={MotherTaluk} select={setSelectMotherTaluk} disabled={isEdit} placeholder={`${t("CS_COMMON_TALUK")}`} />
  </div>
  </div>
  </div>
  <div className="row">
  <div className="col-md-12" >
- <div className="col-md-4" ><CardLabel>{t("CS_COMMON_TALUK")}<span className="mandatorycss">*</span></CardLabel>
- <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={MotherTaluk} select={setSelectMotherTaluk} disabled={isEdit} placeholder={`${t("CS_COMMON_TALUK")}`} />
- </div>
+ <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={WardNo} select={setSelectWard}  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })} />
+                </div>
  <div className="col-md-4" ><CardLabel>{t("CS_COMMON_POST_OFFICE")}<span className="mandatorycss">*</span></CardLabel>
  <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPostOffice} selected={MotherPostOffice} select={setSelectMotherPostOffice} disabled={isEdit} placeholder={`${t("CS_COMMON_POST_OFFICE")}`} />
  </div>
@@ -344,15 +329,17 @@ function setSelectMotherPincode(e) {
  
  <div className="row">
  <div className="col-md-12" >
- <div className="col-md-6" ><CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
+ <div className="col-md-4" ><CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="MotherBuldingNo" value={MotherBuldingNo} onChange={setSelectMotherBuldingNo} placeholder={`${t("CR_BUILDING_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })} />
  </div>
- <div className="col-md-6" ><CardLabel>{t("CR_DOOR_NO")}<span className="mandatorycss">*</span></CardLabel>
+ <div className="col-md-4" ><CardLabel>{t("CR_DOOR_NO")}<span className="mandatorycss">*</span></CardLabel>
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="MotherDoorNo" value={MotherDoorNo} onChange={setSelectMotherDoorNo} placeholder={`${t("CR_DOOR_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })} />
  </div>
+ <div className="col-md-4" ><CardLabel>{t("CR_RES_ASSOCIATION_NO")}</CardLabel>
+ <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="MotherResNo" value={MotherResNo} onChange={setSelectMotherResNo} placeholder={`${t("CCR_RES_ASSOCIATION_NO")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO") })} />
  </div>
  </div>
- 
+ </div>
  
 
  </FormStep>

@@ -77,8 +77,8 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.applicationno}`}>
-                    {row.original.applicationno}
+                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.deathApplicationNo}`}>
+                    {row.original.deathApplicationNo}
                   </Link>
                 </span>
               </div>
@@ -86,29 +86,29 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
           },
         },
         {
-          Header: t("CR_COMMON_COL_APP_DATE"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.dateofbirth) : ""),
-        },
-        {
-            Header: t("CR_COMMON_COL_DOB"),
+            Header: t("CR_COMMON_COL_APP_DATE"),
             disableSortBy: true,
             accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
         },
+        {
+          Header: t("CR_COMMON_COL_DOD"),
+          disableSortBy: true,
+          accessor: (row) => GetCell(row.dateOfDeath ? convertEpochToDateDMY(row.dateOfDeath) : ""),
+      },
         // {
         //     Header: t("TL_APPLICATION_TYPE_LABEL"),
         //     disableSortBy: true,
         //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
         // },
         {
-            Header: t("CR_COMMON_COL_FATHER_NAME"),
+            Header: t("CR_COMMON_DECEASED_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.birthFather.firstname_en + " " + row.birthFather.middlename_en + " " + row.birthFather.lastname_en  || "-"),
+            accessor: (row) => GetCell(row.deceasedFirstNameEn + row.deceasedMiddleNameEn + row.deceasedLastNameEn  || "-"),
         },
         {
-          Header: t("CR_COMMON_COL_MOTHER_NAME"),
+          Header: t("CR_COMMON_DEATH_PLACE"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.birthMother.firstname_en + " " + row.birthMother.middlename_en + " " + row.birthMother.lastname_en  || "-"),
+          accessor: (row) => GetCell(row.deathPlace || "-"),
         },
         // {
         //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),

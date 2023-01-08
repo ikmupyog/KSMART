@@ -3,7 +3,7 @@ import { ArrowRightInbox } from "./svgindex";
 import { Link } from "react-router-dom";
 
 const EmployeeModuleCard = ({ Icon, moduleName, kpis = [], links = [], isCitizen = false, className, styles, FsmHideCount }) => {
-console.log(moduleName);
+
   const ClassList = 
     {
      'Complaints':  'complaint-links-container',

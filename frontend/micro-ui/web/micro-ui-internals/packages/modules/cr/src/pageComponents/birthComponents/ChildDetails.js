@@ -197,41 +197,18 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6" >
-            {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
-            <CheckBox label={t("CR_ADOPTION")} onChange={setAdopted} value={isAdopted} checked={isAdopted} />
-          </div>
+         
           <div className="col-md-6" >
             {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
             <CheckBox label={t("CR_MULTIPLE_BIRTH")} onChange={setMultipleBirth} value={isMultipleBirth} checked={isMultipleBirth} />
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6" >
-            {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
-            <CheckBox label={t("CR_FATHER_INFORMATION_MISSING")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
-          </div>
-          <div className="col-md-6" >
-            {/* <CardLabel>{`${t("CR_GENDER")}`}</CardLabel> */}
-            <CheckBox label={t("CR_MOTHER_INFORMATION_MISSING")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
+          <div className="col-md-12" ><h1 className="" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span> </h1>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12" >
-            <CheckBox label={t("CR_BORN_OUTSIDE_INDIA")} onChange={setBornOutSide} value={isBornOutSide} checked={isBornOutSide} />
-          </div>
-        </div>
-        {isBornOutSide === "true" && (
-          <div>
-            <div className="row">
-              <div className="col-md-6" > <CardLabel>{`${t("CR_PASSPORT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildPassportNo" value={ChildPassportNo} onChange={setSelectPassportNo} disable={isEdit} placeholder={`${t("CR_PASSPORT_NO")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PASSPORT_NO") })} />
-              </div>
-              <div className="col-md-6" > <CardLabel>{`${t("CR_DATE_OF_ARRIVAL")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildArrivalDate" value={ChildArrivalDate} onChange={setSelectArrivalDate} disable={isEdit} placeholder={`${t("CR_DATE_OF_ARRIVAL")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DATE_OF_ARRIVAL") })} />
-              </div>
-            </div>
-          </div>)}
+        
+   
         {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
 
       </FormStep>
