@@ -92,15 +92,14 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                     <div>
                    <PlaceOfDeathHome />                 
                   <InformentAddress />
-                 </div>
-                
+                 </div>               
                     
                   )
-
           }
           {value === "VEHICLE" && (
                     <div>
                    <PlaceOfDeathVehicle />
+                   <InformentAddress />
                   </div>)
           }
           {value === "PUBLIC_PLACES" && (

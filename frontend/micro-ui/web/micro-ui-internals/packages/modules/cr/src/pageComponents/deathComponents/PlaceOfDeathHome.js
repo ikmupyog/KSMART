@@ -29,8 +29,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [CityMl, setCityMl] = useState(formData?.PlaceOfDeathHome?.CityMl);
   const [setWard, setSelectedWard] = useState(formData?.PlaceOfDeathHome?.setWard);
   const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
-  const [InformentName, setSelectedInformentName] = useState(formData?.PlaceOfDeathHome?.InformentName);
-  
+   
 
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -78,9 +77,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     districtid = value.districtid
    
   }
-  function setSelectInformentName(e) {
-    setSelectedInformentName(e.target.value);
-  }
+ 
   function setSelectPresentLBName(value) {
     setPresentLBName(value);
   }
@@ -135,15 +132,15 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     setSelectedWard(value);
   }
   
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
-  function selectPlaceofactivity(value) {
-    setSelectedPlaceofActivity(value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
+  // function selectPlaceofactivity(value) {
+  //   setSelectedPlaceofActivity(value);
+  // }
   useEffect(() => {
     if (isInitialRender) {
       console.log("PresentDistrict" + districtid);
@@ -154,8 +151,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
       }
     }
   }, [lbs, isInitialRender]);
-  const goNext = () => {
-    sessionStorage.setItem("InformentName", InformentName);
+  const goNext = () => {   
     sessionStorage.setItem("setVillage", setVillage?setVillage.code:null);
     sessionStorage.setItem("PresentLBName", null);
     sessionStorage.setItem("setPostOffice", setPostOffice?setPostOffice.code:null);
@@ -170,8 +166,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("CityMl", CityMl);
     sessionStorage.setItem("setWard", setWard?setWard.code:null);
    
-    onSelect(config.key, {
-      InformentName,
+    onSelect(config.key, {     
       setVillage,
       PresentLBName,
       setPostOffice,
@@ -199,25 +194,6 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
             </h1>
           </div>
         </div>
-        <div className="row">
-        <div className="col-md-12">
-          <div className="col-md-6">
-            <CardLabel>{t("CR_INFORMANT_NAME")}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="Informent_Name"
-              value={InformentName}
-              onChange={setSelectInformentName}
-              disable={isEdit}
-              placeholder={`${t("CR_INFORMANT_NAME")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
-            />
-          </div>
-          </div>
-        </div> 
         <div className="row">
           <div className="col-md-6">
             <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
