@@ -17,7 +17,8 @@ const CRBreadCrumb = ({ location }) => {
   const { t } = useTranslation();
   const isSearch = location?.pathname?.includes("search");
   const isInbox = location?.pathname?.includes("inbox");
-  const isApplicationSearch = location?.pathname?.includes("search/application");
+  const isApplicationSearch = location?.pathname?.includes("birthsearch/application");
+  const isApplicationDeathSearch = location?.pathname?.includes("deathsearch/application");
   const isDeathCorrectSearch = location?.pathname?.includes("search-correction/application");
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
@@ -94,7 +95,7 @@ const CRBreadCrumb = ({ location }) => {
     },
     {
       path: "/digit-ui/employee/cr/search-flow",
-      content: t("Search Registration"),
+      content: t("Search Application"),
       show: breadCrumbUrls.includes("search-flow") || isSearchFlow
     },
     {
@@ -118,13 +119,19 @@ const CRBreadCrumb = ({ location }) => {
       show: breadCrumbUrls.includes("death-flow/information-death") || isDeathDetails
     },
     {
-      path: "/digit-ui/employee/cr/search/application",
-      content: t("ES_COMMON_SEARCH_APPLICATION"),
+      path: "/digit-ui/employee/cr/search-flow/birthsearch/application",
+      content: t("Birth Applications"),
       show: isApplicationSearch ||
-      breadCrumbUrls.includes("home/search-flow") 
+      breadCrumbUrls.includes("home/search-flow/birthsearch") 
     },
     {
-      path: sessionStorage.getItem("applicationNumber") ? `/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}` : "",
+      path: "/digit-ui/employee/cr/deathsearch/application",
+      content: t("Death Applications"),
+      show: isApplicationDeathSearch ||
+      breadCrumbUrls.includes("home/search-flow/deathsearch") 
+    },
+    {
+      path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationno")}` : "",
       content: t("TL_DETAILS_HEADER_LABEL"),
       show: isApplicationDetails ||
       breadCrumbUrls.includes("inbox/appDetails") || 
@@ -221,9 +228,9 @@ const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearch
         <PrivateRoute parentRoute={path} path={`${path}/death-flow`} component={() => <DeathCrFlow parentUrl={url} />} />
         {/* <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} /> */}
         {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} /> */}
-        {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
+        {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />*/}
 
-        <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> */}
+        <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
 
       </div>
     </React.Fragment>

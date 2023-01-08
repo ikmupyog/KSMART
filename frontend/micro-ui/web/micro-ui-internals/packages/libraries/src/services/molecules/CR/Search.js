@@ -1,5 +1,6 @@
 import cloneDeep from "lodash/cloneDeep";
 import { CRService } from "../../elements/CR";
+// import { convertEpochToDateDMY } from  "../../utils";
 
 const stringReplaceAll = (str = "", searcher = "", replaceWith = "") => {
   if (searcher == "") return str;
@@ -55,7 +56,7 @@ export const CRsearch = {
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
     if (response?.licenseNumber) {
-      const licenseNumbers = response?.licenseNumber;
+      const licenseNumbers = response?.applicationno;
       const filters = { licenseNumbers, offset: 0 };
       numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
     }
@@ -64,40 +65,51 @@ export const CRsearch = {
     //   propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
     // }
     let employeeResponse = [];
-    const tradedetails = {
-      title: "TL_COMMON_TR_DETAILS",
+    const childdetails = {
+      title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
-        // { title: "TL_FINANCIAL_YEAR_LABEL", value: response?.financialYear ? `FY${response?.financialYear}` : "NA" },
-        // { title: "TL_NEW_TRADE_DETAILS_LIC_TYPE_LABEL", value: response?.licenseType ? `TRADELICENSE_LICENSETYPE_${response?.licenseType}` : "NA" },
-        // { title: "TL_COMMON_TABLE_COL_TRD_NAME", value: response?.tradeName },
-        { title: "Application No", value: response?.applicationno},
-        { title: "Father First Name", value: response?.BirthDetails?.birthFather.firstname_en},
-        // { title: "Last Name", value: response?.lastName},
-        // { title: "House Name", value: response?.ApplicantPersonals?.applicantAddress?.houseName},
-        // { title: "Mobile No", value: response?.mobileNo},
-        // {
-        //   title: "TL_NEW_TRADE_DETAILS_STRUCT_TYPE_LABEL",
-        //   value: response?.tradeLicenseDetail?.structureType
-        //     ? `COMMON_MASTERS_STRUCTURETYPE_${response?.tradeLicenseDetail?.structureType?.split(".")[0]}`
-        //     : "NA",
-        // },
-        // {
-        //   title: "TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_LABEL",
-        //   value: response?.tradeLicenseDetail?.structureType
-        //     ? `TL_${response?.tradeLicenseDetail?.tradeType}`
-        //     : "NA",
-        // },
-        // {
-        //   title: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL",
-        //   value: response?.commencementDate ? convertEpochToDate(response?.commencementDate) : "NA",
-        // },
-        // { title: "TL_NEW_GST_NUMBER_LABEL", value: response?.tradeLicenseDetail?.additionalDetail?.gstNo || "NA" },
-        // { title: "TL_NEW_OPERATIONAL_SQ_FT_AREA_LABEL", value: response?.tradeLicenseDetail?.operationalArea || "NA" },
-        // { title: "TL_NEW_NUMBER_OF_EMPLOYEES_LABEL", value: response?.tradeLicenseDetail?.noOfEmployees || "NA" },
+        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationno || "NA" },
+        { title: "CR_BIRTH_DOB_LABEL", value: response?.dateofbirth ? convertEpochToDate(response?.dateofbirth) : "NA" },
+
       ],
     };
-
+    const fatherInfo = {
+      title: "CR_BIRTH_FATHER_INFORMATION_HEADER",
+      values: [
+        { title: "CR_BIRTH_FATHERNAME_LABEL", value: response?.birthFather.firstname_en + response?.birthFather.middlename_en + response?.birthFather.lastname_en },
+        { title: "CR_BIRTH_FATHER_AADHAR_LABEL", value: response?.birthFather.aadharno || "NA" },
+        { title: "CR_BIRTH_FATHER_EMAIL_LABEL", value: response?.birthFather.emailid || "NA" },
+        { title: "CR_BIRTH_FATHER_MOBILE_LABEL", value: response?.birthFather.mobileno || "NA" },
+      ],
+    };
+    const motherInfo = {
+      title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
+      values: [
+        { title: "CR_BIRTH_MOTHERNAME_LABEL", value: response?.birthMother.firstname_en + " " + response?.birthMother.middlename_en + " " + response?.birthMother.lastname_en },
+        { title: "CR_BIRTH_MOTHER_AADHAR_LABEL", value: response?.birthMother.aadharnoaadharno || "NA"},
+        { title: "CR_BIRTH_MOTHER_EMAIL_LABEL", value: response?.birthMother.emailid || "NA" },
+        { title: "CR_BIRTH_MOTHER_MOBILE_LABEL", value: response?.birthMother.mobileno || "NA" },
+      ],
+    };
+    const addressInfo = {
+      title: "CR_ADDRESS_INFORMATION_HEADER",
+      values: [
+        { title: "CR_BIRTH_PERM_HO_NO_LABEL", value: response?.birthPermanent.houseno || "NA"},
+        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.birthPermanent?.housename_en || "NA" },
+        { title: "CR_BIRTH_PERM_HO_LOCALITY_LABEL", value: response?.birthPermanent.locality_en || "NA" },
+        { title: "CR_BIRTH_PERM_HO_CITY_LABEL", value: response?.birthPermanent.city_en || "NA" },
+      ],
+    };
+    const statisticalInfo = {
+      title: "CR_STATSTICAL_INFORMATION_HEADER",
+      values: [
+        { title: "CR_STATSTICAL_NO_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
+        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical?.height_of_child || "NA" },
+        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
+        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
+      ],
+    };
     // const tradeUnits = {
     //   title: "TL_TRADE_UNITS_HEADER",
     //   additionalDetails: {
@@ -267,7 +279,11 @@ export const CRsearch = {
     //   response && employeeResponse.push(details);
     // }
 
-    response && employeeResponse.push(tradedetails);
+    response && employeeResponse.push(childdetails);
+    response && employeeResponse.push(fatherInfo);
+    response && employeeResponse.push(motherInfo);
+    response && employeeResponse.push(addressInfo);
+    response && employeeResponse.push(statisticalInfo);
     // response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
     // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);
     // propertyDetails?.Properties?.length > 0 && employeeResponse.push(PropertyDetail);
