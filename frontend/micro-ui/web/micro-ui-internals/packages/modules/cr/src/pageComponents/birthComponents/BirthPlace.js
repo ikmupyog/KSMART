@@ -7,6 +7,8 @@ import InstitutionDetails from "../../pageComponents/birthComponents/Institution
 import BirthVehicle from "../../pageComponents/birthComponents/BirthVehicle";
 import PublicPlace from "../../pageComponents/birthComponents/PublicPlace";
 import OtherCountry from "../../pageComponents/birthComponents/OtherCountry";
+import InstitutionAddress from "../../pageComponents/birthComponents/InstitutionAddress";
+import PlaceofBirthHome from "../../pageComponents/birthComponents/PlaceofBirthHome";
 
 const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -16,6 +18,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
   const [BirthPlaceDescription, setBirthPlaceDeccription] = useState(formData?.BirthPlace?.BirthPlaceDescription);
   const [value, setValue] = useState();
+  const [value1, setValue1] = useState();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let menu = [];
   Menu &&
@@ -67,14 +70,18 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
                    <HospitalDetails />
           </div>)
           }
+
+
           {value === "INSTITUTION" && (
                     <div>
                    <InstitutionDetails />
-          </div>)
+                   
+          </div>
+          ) 
           }
           {value === "HOME" && (
                     <div>
-                   <PublicPlace />
+                   <PlaceofBirthHome />
           </div>)
           }
           {value === "VEHICLE" && (
@@ -87,11 +94,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
                    <PublicPlace />
           </div>)
           }
-          {value === "OTHERS_COUNTRY" && (
-                    <div>
-                   <OtherCountry />
-          </div>)
-          }
+          
            
           
       </FormStep>

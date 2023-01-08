@@ -1,5 +1,6 @@
 import { CardLabel, SubmitBar, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSelect, TextInput, TextArea, LogoutIcon, Banner, Card } from "@egovernments/digit-ui-react-components";
 import React, { useState, useReducer, useEffect } from "react";
+import { useParams } from "react-router-dom";
 // import { useLocation } from "react-router-dom";
 // import Timeline from "../components/TLTimeline";
 // import { sortDropdownNames } from "../utils/index";
@@ -7,7 +8,7 @@ import { useQueryClient } from "react-query";
 const TLPdeEntry = ({ t, config, onSelect, formData }) => {
   let validation = {};
   const queryClient = useQueryClient();
-  // const [ownername, setIndividualName] = useState(formData.address?.IndividualName);
+  // const [name, setIndividualName] = useState(formData.address?.IndividualName);
   const [pdeformdata, setPdeformdata, getPdeformdata] = useState("");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
@@ -33,9 +34,9 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
   const [isInitialRenderRadio, setIsInitialRenderRadio] = useState(true);
   const [value2, setValue2] = useState();
   const [value3, setValue3] = useState();
-  const [OwnerName, setOwnername] = useState(formData?.TadeDetails?.licenseedetails?.ownername || "");
+  const [name, setName] = useState(formData?.TadeDetails?.licenseedetails?.name || "");
   const [fields, setFeilds] = useState(
-    (formData?.TradeDetails && formData?.TradeDetails?.licenseedetails?.ownername) || [{ ownername: "" }]
+    (formData?.TradeDetails && formData?.TradeDetails?.licenseedetails?.name) || [{ name: "" }]
   );
   const [fields1, setFeilds1] = useState(
     (formData?.TradeDetails && formData?.TradeDetails?.licenseedetails.door) || [{ doorno: "", subno: "" }]
@@ -191,7 +192,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
 
   function setSelectIndividualName(i, value) {
     let owners = [...fields];
-    owners[i].ownername = value;
+    owners[i].name = value;
     setFeilds(owners);
   }
   function selectedsetrentArrear(e) {
@@ -281,7 +282,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
   const initFn = (initData) => {
     return [
       {
-        ownername: "",
+        name: "",
       },
     ];
   };
@@ -304,7 +305,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
         return [
           ...state,
           {
-            ownername: "",
+            name: "",
           },
         ];
       case "REMOVE_THIS_OWNER":
@@ -454,7 +455,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
       rentFromMonth?.code !== undefined && rentFromMonth?.code !== null &&
       rentToMonth?.code !== undefined && rentToMonth?.code !== null) {
       let renttax = {
-        service: "RENT",
+        service: "RT.Municipal_Shops_Rent",
         fromYear: rentFromYear.code,
         fromPeriod: rentFromMonth.code,
         toYear: rentToYear.code,
@@ -495,7 +496,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
             capitalInvestment: capitalAmount,
             //enterpriseType: Sector,
             licenseeType: value2,
-            Tax: Tax
+            taxPde: Tax
           },
           tradeName: licensingInstitutionName,
           workflowCode: "PdeTL"
@@ -575,7 +576,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
                     }} className="col-md-7">
                       {/* <CardLabel>{`${t("TL_LICENSE_NAME_LICENSEE")}`}<span className="mandatorycss">*</span></CardLabel> */}
                       <CardLabel>Name of Licensee<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="ownername" value={fields.ownername} onChange={(e) => handleTextInputField(index, e, "ownername")} placeholder={`${t("TL_LICENSEE_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="name" value={fields.name} onChange={(e) => handleTextInputField(index, e, "name")} placeholder={`${t("TL_LICENSEE_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
 
 
                       <LinkButton
