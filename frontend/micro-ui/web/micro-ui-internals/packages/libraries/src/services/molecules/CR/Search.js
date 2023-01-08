@@ -104,10 +104,10 @@ export const CRsearch = {
     const statisticalInfo = {
       title: "CR_STATSTICAL_INFORMATION_HEADER",
       values: [
-        { title: "CR_STATSTICAL_NO_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
-        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical?.height_of_child || "NA" },
-        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
-        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
+        { title: "CR_STATSTICAL_WEIGHT_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
+        { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.birthStatistical?.height_of_child || "NA" },
+        { title: "CR_STATSTICAL_PWEEK_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
+        { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
       ],
     };
     // const tradeUnits = {
