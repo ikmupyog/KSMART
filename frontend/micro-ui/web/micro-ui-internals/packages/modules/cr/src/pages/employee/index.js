@@ -7,6 +7,7 @@ import Inbox from "./Inbox";
 import Search from "./Search";
 // import Response from "../Response";
 import ApplicationDetails from "./ApplicationDetails";
+import ApplicationDeathDetails from "./ApplicationDeathDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
@@ -24,6 +25,7 @@ const CRBreadCrumb = ({ location }) => {
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
   const isApplicationDetails = location?.pathname?.includes("cr/application-details");
+  const isApplicationDeathDetails = location?.pathname?.includes("cr/application-details");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -132,8 +134,18 @@ const CRBreadCrumb = ({ location }) => {
     },
     {
       path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationno")}` : "",
-      content: t("TL_DETAILS_HEADER_LABEL"),
+      content: t("Birth Application Details"),
       show: isApplicationDetails ||
+      breadCrumbUrls.includes("inbox/appDetails") || 
+      breadCrumbUrls.includes("home/license/appDetails") || 
+      breadCrumbUrls.includes("inbox/license/appDetails") || 
+      breadCrumbUrls.includes("home/search/appDetails") || 
+      breadCrumbUrls.includes("inbox/search/appDetails")
+    },
+    {
+      path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-deathdetails/${sessionStorage.getItem("deathApplicationNo")}` : "",
+      content: t("Death Application Details"),
+      show: isApplicationDeathDetails ||
       breadCrumbUrls.includes("inbox/appDetails") || 
       breadCrumbUrls.includes("home/license/appDetails") || 
       breadCrumbUrls.includes("inbox/license/appDetails") || 
@@ -231,7 +243,7 @@ const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearch
         {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />*/}
 
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
-
+        <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} /> 
       </div>
     </React.Fragment>
   </Switch>
