@@ -14,42 +14,40 @@ const CrFlow = ({ path }) => {
       img: <BankIcon />,
       link: `${path}/child-details`,
     },
-
-    {
-      title: "Name Inclusion",
-      subTitle: "Include Name In Registered Birth",
-      img: <FileProtected />,
-      // link: `${path}/structure-type`,
-    },
-    {
-      title: "Correction",
-      subTitle: "Correction of Registered Birth",
-      img: <FileProtected />, 
-    },
     {
       title: "Adoption",
       subTitle: "Registered/New Adoption",
       img: <FileProtected />,
       link: `${path}/adoption-details`,
     },
-    // {
-    //   title: "Cancellation",
-    //   subTitle: "Inbox",
-    //   img: <FileProtected />,
-    // },
-    // {
-    //   title: "Revoke",
-    //   subTitle: "Inbox",
-    //   img: <FileProtected />,
-    // },
+    {
+      title: "Still Birth",
+      subTitle: "Still Birth Registration",
+      img: <BankIcon />,
+      // link: `${path}/child-details`,
+    },
+    {
+      title: "Born Outside India",
+      subTitle: "Registration of Born Outside India",
+      img: <BankIcon />,
+      // link: `${path}/child-details`,
+    },
+
+    {
+      title: "Name Inclusion/Correction",
+      subTitle: "Name Inclusion/Correction In Registered Birth",
+      img: <FileProtected />,
+      // link: `${path}/structure-type`,
+    },
     
   ];
   const ClassList = 
     {
-     'New Registration':  'crfile',
-     'Name Inclusion':  'crfilename',
-     'Correction':  'crfilecorrection', 
+     'New Registration':  'crfilename',
      'Adoption':  'crfileadoption', 
+     'Still Birth':  'crstillbirthfile',
+     'Born Outside India':  'crfile',
+     'Name Inclusion/Correction':  'crfilecorrection',    
     };
   return (
     <div>

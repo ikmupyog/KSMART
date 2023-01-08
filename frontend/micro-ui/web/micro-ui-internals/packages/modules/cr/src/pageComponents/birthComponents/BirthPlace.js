@@ -20,8 +20,10 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [HospitalName, selectHospitalName] = useState(formData?.HospitalName);
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let menu = [];
+  let naturetype = null;
   Menu &&
     Menu["death-services"] &&
     Menu["death-services"].PlaceMaster.map((ob) => {
@@ -37,6 +39,21 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   function setSelectBirthPlaceDeccription(e) {
     setBirthPlaceDeccription(e.target.value);
   }
+  React.useEffect(() => {
+    if (isInitialRender) {
+      if (BirthPlace) {
+        setIsInitialRender(false);
+        naturetype = BirthPlace.code;
+        setValue(naturetype);
+        // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(naturetype)));
+        if (naturetype === "HOSPITAL") {
+          // setValue3(formData?.TradeDetails?.ResurveyedLand ? formData?.TradeDetails?.ResurveyedLand.code : null);
+          // setisInitialRendercombo(true);
+          <HospitalDetails formData={formData} />
+        }
+      }
+    }
+  }, [isInitialRender]);
   const goNext = () => {
     sessionStorage.setItem("BirthPlace", BirthPlace.code);
     sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
