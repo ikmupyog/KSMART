@@ -192,4 +192,14 @@ public class TLRepository {
         return licenses;
     }
 
+    /**
+     * Pushes the update request to update topic or on workflow topic depending on
+     * the status
+     *
+     * @param tradeLicenseRequest The update requuest
+     */
+    public void updatePde(TradeLicenseRequest tradeLicenseRequest) {
+        producer.push(config.getUpdatePdeTopic(), tradeLicenseRequest);
+    }
+
 }

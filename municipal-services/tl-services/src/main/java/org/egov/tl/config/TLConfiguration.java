@@ -98,6 +98,9 @@ public class TLConfiguration {
     @Value("${persister.savepde.tradelicense.topic}")
     private String savePdeTopic;
 
+    @Value("${persister.updatepde.tradelicense.topic}")
+    private String updatePdeTopic;
+
     @Value("${persister.update.tradelicense.workflow.topic}")
     private String updateWorkflowTopic;
 

@@ -91,13 +91,13 @@ public class EnrichmentPdeService {
             InstitutionMaster ins = new InstitutionMaster();
             ins.setTenantId(tradeLicense.getTenantId());
             ins.setId(UUID.randomUUID().toString());
+            ins.setInstitutionId(UUID.randomUUID().toString());
             ins.setInstitutionName(tradeLicense.getTradeName());
             ins.setActive(true);
-            // tradeLicense.getTradeLicenseDetail().getInstitutionMaster().setTenantId(tradeLicense.getTenantId());
             tradeLicense.getTradeLicenseDetail().setInstitutionMaster(ins);
-            // tradeLicense.getTradeLicenseDetail().getInstitutionMaster().setId(UUID.randomUUID().toString());
-            // tradeLicense.getTradeLicenseDetail().getInstitutionMaster().setInstitutionName(tradeLicense.getTradeName());
-            // tradeLicense.getTradeLicenseDetail().getInstitutionMaster().setActive(true);
+
+            tradeLicense.getTradeLicenseDetail()
+                    .setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitutionMaster().getInstitutionId());
 
             tradeLicense.getTradeLicenseDetail().getStructurePlace().forEach(structurePlace -> {
                 structurePlace.setTenantId(tradeLicense.getTenantId());
@@ -180,26 +180,6 @@ public class EnrichmentPdeService {
             // });
             // }
 
-            // }
-
-            // tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
-            // owner.setUserActive(true);
-            // if (!CollectionUtils.isEmpty(owner.getDocuments()))
-            // owner.getDocuments().forEach(document -> {
-            // document.setId(UUID.randomUUID().toString());
-            // document.setActive(true);
-            // });
-            // });
-
-            // if
-            // (tradeLicense.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional()))
-            // {
-            // tradeLicense.getTradeLicenseDetail().getInstitution().setId(UUID.randomUUID().toString());
-            // tradeLicense.getTradeLicenseDetail().getInstitution().setActive(true);
-            // tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
-            // tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
-            // owner.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitution().getId());
-            // });
             // }
 
             if (requestInfo.getUserInfo().getType().equalsIgnoreCase("CITIZEN"))
@@ -444,78 +424,88 @@ public class EnrichmentPdeService {
      */
     public void enrichTLUpdateRequest(TradeLicenseRequest tradeLicenseRequest, BusinessService businessService) {
         RequestInfo requestInfo = tradeLicenseRequest.getRequestInfo();
-        AuditDetails auditDetails = tradeUtil.getAuditDetails(requestInfo.getUserInfo().getUuid(), false);
+        AuditDetails auditDetails = tradeUtil.getAuditDetails(requestInfo.getUserInfo().getUuid(), true);
         tradeLicenseRequest.getLicenses().forEach(tradeLicense -> {
             tradeLicense.setAuditDetails(auditDetails);
-            enrichAssignes(tradeLicense);
+            // enrichAssignes(tradeLicense);
             String nameOfBusinessService = tradeLicense.getBusinessService();
             if (nameOfBusinessService == null) {
                 nameOfBusinessService = businessService_TL;
                 tradeLicense.setBusinessService(nameOfBusinessService);
             }
-            if ((nameOfBusinessService.equals(businessService_BPA)
-                    && (tradeLicense.getStatus().equalsIgnoreCase(STATUS_INITIATED)))
-                    || workflowService.isStateUpdatable(tradeLicense.getStatus(), businessService)) {
-                tradeLicense.getTradeLicenseDetail().setAuditDetails(auditDetails);
-                if (!CollectionUtils.isEmpty(tradeLicense.getTradeLicenseDetail().getAccessories())) {
-                    tradeLicense.getTradeLicenseDetail().getAccessories().forEach(accessory -> {
-                        if (accessory.getId() == null) {
-                            accessory.setTenantId(tradeLicense.getTenantId());
-                            accessory.setId(UUID.randomUUID().toString());
-                            accessory.setActive(true);
-                        }
-                    });
-                }
+            // if ((nameOfBusinessService.equals(businessService_BPA)
+            // && (tradeLicense.getStatus().equalsIgnoreCase(STATUS_INITIATED)))
+            // || workflowService.isStateUpdatable(tradeLicense.getStatus(),
+            // businessService)) {
+            tradeLicense.getTradeLicenseDetail().setAuditDetails(auditDetails);
 
-                tradeLicense.getTradeLicenseDetail().getTradeUnits().forEach(tradeUnit -> {
-                    if (tradeUnit.getId() == null) {
-                        tradeUnit.setTenantId(tradeLicense.getTenantId());
-                        tradeUnit.setId(UUID.randomUUID().toString());
-                        tradeUnit.setActive(true);
+            InstitutionMaster ins = new InstitutionMaster();
+            ins.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitutionId());
+            ins.setInstitutionName(tradeLicense.getTradeName());
+            tradeLicense.getTradeLicenseDetail().setInstitutionMaster(ins);
+
+            tradeLicense.getTradeLicenseDetail().getStructurePlace().forEach(structurePlace -> {
+                structurePlace.setTenantId(tradeLicense.getTenantId());
+                structurePlace.setId(UUID.randomUUID().toString());
+                structurePlace.setActive(true);
+            });
+
+            tradeLicense.getTradeLicenseDetail().getOwnersPde().forEach(owner -> {
+                owner.setId(UUID.randomUUID().toString());
+                owner.setTenantId(tradeLicense.getTenantId());
+                owner.setActive(true);
+            });
+
+            List<TaxPde> taxPdelist = new ArrayList<>();
+            tradeLicense.getTradeLicenseDetail().getTaxPde().forEach(taxPde -> {
+                if (taxPde.getArrear() > 0) {
+                    try {
+                        taxPdelist.add(
+                                TaxPde.builder().id(UUID.randomUUID().toString()).tenantId(tradeLicense.getTenantId())
+                                        .service(taxPde.getService()).fromYear(taxPde.getFromYear())
+                                        .fromPeriod(taxPde.getFromPeriod()).toYear(taxPde.getToYear())
+                                        .toPeriod(taxPde.getToPeriod()).active(true).amount(taxPde.getArrear())
+                                        .headCode(TLConstants.class
+                                                .getDeclaredField(
+                                                        taxPde.getService().toString().replace(".", "_") + "_ARR")
+                                                .get(null)
+                                                .toString())
+                                        .build());
+                    } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
+                            | SecurityException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
                     }
-                });
 
-                tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
-                    if (owner.getUuid() == null || owner.getUserActive() == null)
-                        owner.setUserActive(true);
-                    if (!CollectionUtils.isEmpty(owner.getDocuments()))
-                        owner.getDocuments().forEach(document -> {
-                            if (document.getId() == null) {
-                                document.setId(UUID.randomUUID().toString());
-                                document.setActive(true);
-                            }
-                        });
-                });
-
-                // if
-                // (tradeLicense.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional())
-                // && tradeLicense.getTradeLicenseDetail().getInstitution().getId() == null) {
-                tradeLicense.getTradeLicenseDetail().getInstitution().setId(UUID.randomUUID().toString());
-                tradeLicense.getTradeLicenseDetail().getInstitution().setActive(true);
-                tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
-                tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
-                    owner.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitution().getId());
-                });
-                // }
-
-                if (!CollectionUtils.isEmpty(tradeLicense.getTradeLicenseDetail().getApplicationDocuments())) {
-                    tradeLicense.getTradeLicenseDetail().getApplicationDocuments().forEach(document -> {
-                        if (document.getId() == null) {
-                            document.setId(UUID.randomUUID().toString());
-                            document.setActive(true);
-                        }
-                    });
                 }
-            } else {
-                if (!CollectionUtils.isEmpty(tradeLicense.getTradeLicenseDetail().getVerificationDocuments())) {
-                    tradeLicense.getTradeLicenseDetail().getVerificationDocuments().forEach(document -> {
-                        if (document.getId() == null) {
-                            document.setId(UUID.randomUUID().toString());
-                            document.setActive(true);
-                        }
-                    });
+
+                if (taxPde.getCurrent() > 0) {
+
+                    try {
+                        taxPdelist.add(
+                                TaxPde.builder().id(UUID.randomUUID().toString()).tenantId(tradeLicense.getTenantId())
+                                        .service(taxPde.getService()).fromYear(taxPde.getFromYear())
+                                        .fromPeriod(taxPde.getFromPeriod()).toYear(taxPde.getToYear())
+                                        .toPeriod(taxPde.getToPeriod()).active(true).amount(taxPde.getCurrent())
+                                        .headCode(TLConstants.class
+                                                .getDeclaredField(
+                                                        taxPde.getService().toString().replace(".", "_") + "_CUR")
+                                                .get(null)
+                                                .toString())
+                                        .build());
+                    } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
+                            | SecurityException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+
                 }
-            }
+
+            });
+            if (taxPdelist.size() > 0)
+                tradeLicense.getTradeLicenseDetail().setTaxPdefinal(taxPdelist);
+
+            // }
         });
     }
 
