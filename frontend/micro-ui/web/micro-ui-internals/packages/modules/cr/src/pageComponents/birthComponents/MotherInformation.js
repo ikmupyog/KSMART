@@ -41,7 +41,6 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherMaritalStatus, setMotherMaritalStatus] = useState(formData?.MotherInfoDetails?.MotherMaritalStatus);
     const [MotherNoOfBirths, setMotherNoOfBirths] = useState(formData?.MotherInfoDetails?.MotherNoOfBirths);
     const [OrderofDelivery, setOrderofDelivery] = useState(formData?.MotherInfoDetails?.OrderofDelivery);
-
     const [MotherResPlace, setMotherResPlace] = useState(formData?.MotherInfoDetails?.MotherResPlace);
     const [MotherPlaceNameEn, setMotherPlaceNameEn] = useState(formData?.MotherInfoDetails?.MotherPlaceNameEn);
     const [MotherPlaceNameMl, setMotherPlaceNameMl] = useState(formData?.MotherInfoDetails?.MotherPlaceNameMl);

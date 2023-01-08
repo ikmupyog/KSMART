@@ -15,7 +15,7 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
   // const [TradeName, setTradeName] = useState(null);
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   console.log(boundaryList);
-  const [WardNo, setWardNo] = useState(formData.BirthVehicleDetails?.wardno);
+  // const [WardNo, setWardNo] = useState(formData.BirthVehicleDetails?.wardno);
   const [DriverName, setDriverName] = useState(formData?.BirthVehicleDetails?.DriverName);
   const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthVehicleDetails?.DriverMobileNo);
   const [DriverAadhar, setDriverAadhar] = useState(formData?.BirthVehicleDetails?.DriverAadhar);
@@ -33,27 +33,27 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
       cmbhospital.push(ob);
     });
 
-      let Zonal = [];
-      let cmbWardNo = [];
-      let cmbWardNoFinal = [];
-      boundaryList &&
-        boundaryList["egov-location"] &&
-        boundaryList["egov-location"].TenantBoundary.map((ob) => {
-          //  console.log(ob);
-          // if(ob?.boundary){
-          Zonal.push(...ob.boundary.children);
-          ob.boundary.children.map((obward) => {
-            cmbWardNo.push(...obward.children);
-          });
-          // }
+      // let Zonal = [];
+      // let cmbWardNo = [];
+      // let cmbWardNoFinal = [];
+      // boundaryList &&
+      //   boundaryList["egov-location"] &&
+      //   boundaryList["egov-location"].TenantBoundary.map((ob) => {
+      //     //  console.log(ob);
+      //     // if(ob?.boundary){
+      //     Zonal.push(...ob.boundary.children);
+      //     ob.boundary.children.map((obward) => {
+      //       cmbWardNo.push(...obward.children);
+      //     });
+      //     // }
      
-        });
-      //console.log(Zonal);
-      cmbWardNo.map((wardmst) => {
-        wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
-        wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
-        cmbWardNoFinal.push(wardmst);
-      });
+      //   });
+      // //console.log(Zonal);
+      // cmbWardNo.map((wardmst) => {
+      //   wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+      //   wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+      //   cmbWardNoFinal.push(wardmst);
+      // });
   const onSkip = () => onSelect(); 
 
 
@@ -85,17 +85,14 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
     setVehicleToEn(e.target.value);
   } 
  
-  function setSelectWard(value) {
-    setWardNo(value);
-  }
+  // function setSelectWard(value) {
+  //   setWardNo(value);
+  // }
   function setselectHospitalName(value) {
     selectHospitalName(value);
-  }
- 
-  
+  }  
 
-  const goNext = () => {
-    
+  const goNext = () => {    
     sessionStorage.setItem("DriverName", DriverName);    
     sessionStorage.setItem("DriverMobileNo", DriverMobileNo);   
     sessionStorage.setItem("DriverAadhar", DriverAadhar);
@@ -103,21 +100,19 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);      
     sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
     sessionStorage.setItem("VehicleToEn", VehicleToEn);  
-    sessionStorage.setItem("Ward", Ward.code);
+    // sessionStorage.setItem("Ward", Ward.code);
     sessionStorage.setItem("HospitalName", HospitalName.hospitalName);  
-    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt);      
+    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt);     
     
-    onSelect(config.key, {
-     
-      DriverName,
-    
+    onSelect(config.key, {     
+      DriverName,    
       DriverMobileNo,
       DriverAadhar,
       VehicleType,
       VehicleRegistrationNo,     
       VehicleFromEn,
       VehicleToEn,
-      ward,     
+      // ward,     
       HospitalName,
       VehiclePlaceFirstHalt,
       
@@ -188,9 +183,6 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
         </div>
         </div>
         </div>
-
-
-
 
     <div className="row">    
        <div className="col-md-12" >         
@@ -283,10 +275,10 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
   
     <div className="row">  
     <div className="col-md-12" > 
-    <div className="col-md-6" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
+    {/* <div className="col-md-6" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
                   <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={WardNo} select={setSelectWard}  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })} />
                 </div>
-        
+         */}
                 <div className="col-md-6">
             <CardLabel>
               {`${t("CR_HOSPITAL")}`}
