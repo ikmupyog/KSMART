@@ -17,6 +17,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const { data: Menu = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
   const [BirthPlaceDescription, setBirthPlaceDeccription] = useState(formData?.BirthPlace?.BirthPlaceDescription);
+  const [HospitalName, selectHospitalName] = useState(formData?.HospitalName);
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -38,8 +39,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   }
   const goNext = () => {
     sessionStorage.setItem("BirthPlace", BirthPlace.code);
+    sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
     // sessionStorage.setItem("BirthPlaceDescription", BirthPlaceDescription);
-    onSelect(config.key, { BirthPlace, BirthPlaceDescription });
+    onSelect(config.key, { BirthPlace, BirthPlaceDescription,HospitalName });
   }
   return (
     <React.Fragment>
@@ -67,7 +69,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         </div> */}
         {value === "HOSPITAL" && (
           <div>
-            <HospitalDetails />
+            <HospitalDetails selectHospitalName={selectHospitalName} HospitalName={HospitalName}/>
           </div>)
         }
         {value === "INSTITUTION" && (

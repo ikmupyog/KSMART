@@ -3,14 +3,14 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernme
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const HospitalDetails = ({ config, onSelect, userType, formData }) => {
+const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,selectHospitalName }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   const { t } = useTranslation();
   let validation = {};
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   console.log(hospital);
-  const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
+  // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
   const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.HospitalDetails?.SignedOfficerDesignation);
   const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.HospitalDetails?.SignedOfficerAadharNo);
@@ -41,19 +41,20 @@ const HospitalDetails = ({ config, onSelect, userType, formData }) => {
     setSignedOfficerMobileNo(e.target.value);
   }
   const goNext = () => {
-    sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
-    sessionStorage.setItem("SignedOfficerName", SignedOfficerName.hospitalName);
-    sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
-    sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo);
-    sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo);
-    onSelect(config.key, { HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo });
+    console.log('clicked');
+    // sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
+    // sessionStorage.setItem("SignedOfficerName", SignedOfficerName.hospitalName);
+    // sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
+    // sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo);
+    // sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo);
+    // onSelect(config.key, { HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo });
   };
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null} */}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!HospitalName}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
