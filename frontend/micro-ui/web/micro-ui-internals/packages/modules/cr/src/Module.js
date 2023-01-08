@@ -51,10 +51,12 @@ import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVe
 import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
+// import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
 import CRApplicationDetails from "./pages/employee/ApplicationDetails";
+import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails";
 import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
 import SearchDeathApplication from "./components/SearchApplicationDeath";
 import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
@@ -130,6 +132,7 @@ const componentsToRegister = {
   InstitutionDetails,
   ChildDetails,
   CRApplicationDetails,
+  CRApplicationDeathDetails,
   CRSearch,
   SearchCrApplication, 
   SearchDeathApplication,
@@ -174,6 +177,7 @@ const componentsToRegister = {
   StatisticalInfo,
   StatisticalInfoContinue,
   ApplicantDetails,
+  // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,
