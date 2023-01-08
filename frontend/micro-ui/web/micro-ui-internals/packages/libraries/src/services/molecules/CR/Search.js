@@ -49,7 +49,6 @@ export const CRsearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    console.log("Jetheesh");
     const filter = { applicationNumber };
     const response = await CRsearch.application(tenantId, filter);
     // const propertyDetails =
@@ -88,9 +87,27 @@ export const CRsearch = {
       title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
       values: [
         { title: "CR_BIRTH_MOTHERNAME_LABEL", value: response?.birthMother.firstname_en + " " + response?.birthMother.middlename_en + " " + response?.birthMother.lastname_en },
-        { title: "CR_BIRTH_MOTHER_AADHAR_LABEL", value: response?.birthMother ? response?.birthMother?.aadharnoaadharno : "NA" },
+        { title: "CR_BIRTH_MOTHER_AADHAR_LABEL", value: response?.birthMother.aadharnoaadharno || "NA"},
         { title: "CR_BIRTH_MOTHER_EMAIL_LABEL", value: response?.birthMother.emailid || "NA" },
         { title: "CR_BIRTH_MOTHER_MOBILE_LABEL", value: response?.birthMother.mobileno || "NA" },
+      ],
+    };
+    const addressInfo = {
+      title: "CR_ADDRESS_INFORMATION_HEADER",
+      values: [
+        { title: "CR_BIRTH_PERM_HO_NO_LABEL", value: response?.birthPermanent.houseno || "NA"},
+        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.birthPermanent?.housename_en || "NA" },
+        { title: "CR_BIRTH_PERM_HO_LOCALITY_LABEL", value: response?.birthPermanent.locality_en || "NA" },
+        { title: "CR_BIRTH_PERM_HO_CITY_LABEL", value: response?.birthPermanent.city_en || "NA" },
+      ],
+    };
+    const statisticalInfo = {
+      title: "CR_STATSTICAL_INFORMATION_HEADER",
+      values: [
+        { title: "CR_STATSTICAL_NO_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
+        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical?.height_of_child || "NA" },
+        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
+        { title: "CR_STATSTICAL_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
       ],
     };
     // const tradeUnits = {
@@ -265,6 +282,8 @@ export const CRsearch = {
     response && employeeResponse.push(childdetails);
     response && employeeResponse.push(fatherInfo);
     response && employeeResponse.push(motherInfo);
+    response && employeeResponse.push(addressInfo);
+    response && employeeResponse.push(statisticalInfo);
     // response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
     // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);
     // propertyDetails?.Properties?.length > 0 && employeeResponse.push(PropertyDetail);

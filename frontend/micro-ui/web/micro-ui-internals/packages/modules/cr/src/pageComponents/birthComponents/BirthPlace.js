@@ -46,7 +46,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <BackButton >{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!BirthPlace }>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!BirthPlace}>
         <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BIRTH_PLACE")}`}</span> </h1>
           </div>
@@ -66,37 +66,32 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           </div>
         </div> */}
         {value === "HOSPITAL" && (
-                    <div>
-                   <HospitalDetails />
+          <div>
+            <HospitalDetails />
           </div>)
-          }
-
-
-          {value === "INSTITUTION" && (
-                    <div>
-                   <InstitutionDetails />
-                   
+        }
+        {value === "INSTITUTION" && (
+          <div>
+            <InstitutionDetails />
           </div>
-          ) 
-          }
-          {value === "HOME" && (
-                    <div>
-                   <PlaceofBirthHome />
+        )
+        }
+        {value === "HOME" && (
+          <div>
+            <PlaceofBirthHome />
           </div>)
-          }
-          {value === "VEHICLE" && (
-                    <div>
-                   <BirthVehicle />
+        }
+        {value === "VEHICLE" && (
+          <div>
+            <BirthVehicle />
           </div>)
-          }
-          {value === "PUBLIC_PLACES" && (
-                    <div>
-                   <PublicPlace />
+        }
+        {value === "PUBLIC_PLACES" && (
+          <div>
+            <PublicPlace />
           </div>)
-          }
-          
-           
-          
+        }
+
       </FormStep>
     </React.Fragment>
   );
