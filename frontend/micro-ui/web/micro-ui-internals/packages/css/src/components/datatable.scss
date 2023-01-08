@@ -43,7 +43,7 @@
     }
 
     h2 {
-      width: 30%;
+      width: 40%;
       font-weight: 400;
       padding: 15px;
     }
@@ -52,6 +52,7 @@
       width: 50%;
       @apply text-heading-s;
       font-weight: 700;
+      line-height: 50px !important;
     }
 
     .caption {
@@ -63,7 +64,6 @@
   .last {
     border: none;
     padding: 0;
-    margin: 0;
   }
 }
 

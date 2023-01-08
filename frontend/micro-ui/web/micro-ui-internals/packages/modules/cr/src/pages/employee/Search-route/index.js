@@ -7,9 +7,21 @@ import SearchFlow from "./SearchFlow";
 const SearchRoute = ({ parentUrl }) => {
   const { path } = useRouteMatch();
   const history = useHistory();
+  // const isApplicationDetailsPage = location?.pathname?.includes("cr/application-details");
+  const breadCrumbUrls = sessionStorage.getItem("breadCrumbUrl") || "";
+
+  // const crumbs = [
+    
+  //   {
+  //     path: "/digit-ui/employee/cr/application-details",
+  //     content: t("TL_DETAILS_HEADER_LABEL"),
+  //     show: isApplicationDetailsPage ||
+  //     breadCrumbUrls.includes("home/search/Details") 
+  //   },
+  // ];
+
   const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
   const ApplicationDetails = Digit?.ComponentRegistryService?.getComponent('CRApplicationDetails');
-  // const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
   return (
     <React.Fragment>
       <Switch>
@@ -19,7 +31,6 @@ const SearchRoute = ({ parentUrl }) => {
         </Route>
         <PrivateRoute path={`${path}/birthsearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/deathsearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
-        {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
       </Switch>
     </React.Fragment>
