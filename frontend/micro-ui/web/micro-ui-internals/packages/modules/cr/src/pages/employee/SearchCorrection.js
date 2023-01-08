@@ -11,6 +11,7 @@ const SearchCorrection = ({path}) => {
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [payload, setPayload] = useState({})
     const Search = Digit.ComponentRegistryService.getComponent('CRDeathcorrection')
+    const SearchDeath = Digit.ComponentRegistryService.getComponent('CRDeathcorrection')
 
     // const Search = Digit.ComponentRegistryService.getComponent('SearchCrApplication')
 
@@ -32,9 +33,9 @@ const SearchCorrection = ({path}) => {
         enabled: !!( payload && Object.keys(payload).length > 0 )
     }
 
-    const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } = Digit.Hooks.cr.useSearchDeath({tenantId, filters: payload, config})
-
-    return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={ !isLoading && isSuccess ? (searchReult?.length>0? searchReult : { display: "ES_COMMON_NO_DATA" }) : "" } count={count} /> 
+    const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchDeath({ tenantId, filters: payload, config })
+    console.log(searchResult);
+    return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
 
 }
 
