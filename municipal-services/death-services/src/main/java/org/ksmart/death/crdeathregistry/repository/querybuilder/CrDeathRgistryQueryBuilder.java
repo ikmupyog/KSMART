@@ -218,8 +218,16 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
          addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
          addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
          addFilter("dt.deceased_aadhar_number", criteria.getAadhaarNo(), query, preparedStmtValues);   
-         addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);                                               
-         return query.toString();
+         addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues); 
+         addFilter("dt.application_no", criteria.getDeathApplicationNo(), query, preparedStmtValues);  
+         addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
+         addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
+         addDateRangeFilter("dt.dateofdeath",
+         criteria.getFromDate(),
+         criteria.getToDate(),
+         query,
+         preparedStmtValues);
+         return query.toString();                                              
        }   
        
      private static final String REGNOQUERY = new StringBuilder()

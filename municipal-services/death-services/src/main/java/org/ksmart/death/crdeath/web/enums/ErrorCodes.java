@@ -23,6 +23,9 @@ public enum ErrorCodes {
      DEATH_REG_INVALID_UPDATE("INVALID_UPDATE"),
      DEATH_REG_REQUIRED("REQUIRED"),
 
+     //Search
+     INVALID_SEARCH("INVALID_SEARCH"),
+
      // Idgen Service
     IDGEN_ERROR("IDGEN_ERROR");
 

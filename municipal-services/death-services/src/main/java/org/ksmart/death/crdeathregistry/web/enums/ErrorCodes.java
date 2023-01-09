@@ -18,13 +18,16 @@ public enum ErrorCodes {
     DEATH_DETAILS_NOT_FOUND("NOT_FOUND"),
     DEATH_DETAILS_INVALID_CREATE("INVALID_CREATE"),
 
-     //Updare
+     //Updae
      DEATH_REG_NOT_FOUND("NOT_FOUND"),
      DEATH_REG_INVALID_UPDATE("INVALID_UPDATE"),
      DEATH_REG_REQUIRED("REQUIRED"),
-
+     //Search
+     INVALID_SEARCH("INVALID_SEARCH"),
      // Idgen Service
-    IDGEN_ERROR("IDGEN_ERROR");
+     IDGEN_ERROR("IDGEN_ERROR");
+
+
 
      private String code;
 }

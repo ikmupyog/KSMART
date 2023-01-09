@@ -60,28 +60,14 @@ public class CrDeathRegistryService {
     }
 
     public List<CrDeathRegistryDtl> create(CrDeathRegistryRequest request) {
-        // validate request
+      // validate request
        // validatorService.validateCreate(request);
-
        // RAkhi S IKM validate mdms data       
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
          
-         /********************************************* */
-
-        // try {
-        //     ObjectMapper mapper = new ObjectMapper();
-        //     Object obj = mdmsData;
-        //     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        //    System.out.println("mdmsDataRegistry "+ mapper.writeValueAsString(obj));
-        //     }catch(Exception e) {
-        //        // log.error("Exception while fetching from searcher: ",e);
-        //     }
-
-
-            /********************************************** */
        // mdmsValidator.validateMDMSData(request,mdmsData);
 
-         // enrich request
+        // enrich request
         enrichmentService.enrichCreate(request);
         //IDGen call
         //enrichmentService.setIdgenIds(request);    
@@ -112,8 +98,8 @@ public class CrDeathRegistryService {
       }
     //Search  
      public List<CrDeathRegistryDtl> search(CrDeathRegistryCriteria criteria, RequestInfo requestInfo) {
-	    // validatorService.validateSearch(requestInfo, criteria);
-		return repository.getDeathApplication(criteria);
+	      validatorService.validateSearch(requestInfo, criteria);
+		    return repository.getDeathApplication(criteria);
      }
      
      //Certificate download Rakhi S IKM on 15.12.2022

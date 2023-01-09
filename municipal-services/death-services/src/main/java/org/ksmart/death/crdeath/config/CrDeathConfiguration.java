@@ -55,6 +55,13 @@ public class CrDeathConfiguration {
 
     //Rakhi S on 24.12.2022 
     @Value("${egov.state.level.tenant.id}")
-    private String egovStateLevelTenant;    
+    private String egovStateLevelTenant;   
+    
+    //Jasmine 07.01.2023
 
+    @Value("${citizen.allowed.search.params}")
+    private String allowedCitizenSearchParams;
+
+    @Value("${employee.allowed.search.params}")
+    private String allowedEmployeeSearchParams;
 }
