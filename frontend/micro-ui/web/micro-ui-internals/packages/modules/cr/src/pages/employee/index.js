@@ -136,21 +136,13 @@ const CRBreadCrumb = ({ location }) => {
       path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationno")}` : "",
       content: t("Birth Application Details"),
       show: isApplicationDetails ||
-      breadCrumbUrls.includes("inbox/appDetails") || 
-      breadCrumbUrls.includes("home/license/appDetails") || 
-      breadCrumbUrls.includes("inbox/license/appDetails") || 
-      breadCrumbUrls.includes("home/search/appDetails") || 
-      breadCrumbUrls.includes("inbox/search/appDetails")
+      breadCrumbUrls.includes("home/application-details") 
     },
     {
       path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-deathdetails/${sessionStorage.getItem("deathApplicationNo")}` : "",
       content: t("Death Application Details"),
       show: isApplicationDeathDetails ||
-      breadCrumbUrls.includes("inbox/appDetails") || 
-      breadCrumbUrls.includes("home/license/appDetails") || 
-      breadCrumbUrls.includes("inbox/license/appDetails") || 
-      breadCrumbUrls.includes("home/search/appDetails") || 
-      breadCrumbUrls.includes("inbox/search/appDetails")
+      breadCrumbUrls.includes("home/application-deathdetails") 
     },
     {
       path: "/digit-ui/employee/cr/death-flow/search-correction/application",

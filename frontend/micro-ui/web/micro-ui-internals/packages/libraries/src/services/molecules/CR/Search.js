@@ -96,7 +96,7 @@ export const CRsearch = {
       title: "CR_ADDRESS_INFORMATION_HEADER",
       values: [
         { title: "CR_BIRTH_PERM_HO_NO_LABEL", value: response?.birthPermanent.houseno || "NA"},
-        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.birthPermanent?.housename_en || "NA" },
+        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.birthPermanent.housename_en || "NA" },
         { title: "CR_BIRTH_PERM_HO_LOCALITY_LABEL", value: response?.birthPermanent.locality_en || "NA" },
         { title: "CR_BIRTH_PERM_HO_CITY_LABEL", value: response?.birthPermanent.city_en || "NA" },
       ],
@@ -105,7 +105,7 @@ export const CRsearch = {
       title: "CR_STATSTICAL_INFORMATION_HEADER",
       values: [
         { title: "CR_STATSTICAL_WEIGHT_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
-        { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.birthStatistical?.height_of_child || "NA" },
+        { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.birthStatistical.height_of_child || "NA" },
         { title: "CR_STATSTICAL_PWEEK_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
         { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
       ],

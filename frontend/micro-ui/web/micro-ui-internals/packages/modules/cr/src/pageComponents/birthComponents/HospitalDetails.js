@@ -3,7 +3,10 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernme
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,selectHospitalName }) => {
+const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,selectHospitalName,selectSignedOfficerName,
+  SignedOfficerName  
+
+}) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   const { t } = useTranslation();
@@ -11,7 +14,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   console.log(hospital);
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
-  const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
+  // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
   const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.HospitalDetails?.SignedOfficerDesignation);
   const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.HospitalDetails?.SignedOfficerAadharNo);
   const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.HospitalDetails?.SignedOfficerMobileNo);
