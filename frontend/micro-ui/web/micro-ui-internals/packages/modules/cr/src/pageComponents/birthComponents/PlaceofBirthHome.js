@@ -3,47 +3,51 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
+const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, setAdrsCountry,AdrsStateName, setAdrsStateName,AdrsDistrict, setAdrsDistrict,
+  AdrsLBTypeName, setAdrsLBTypeName,AdrsTaluk, setAdrsTaluk,AdrsPostOffice, setAdrsPostOffice, AdrsPincode, setAdrsPincode, AdrsHouseNameEn, setAdrsHouseNameEn,
+  AdrsBuldingNo, setAdrsBuldingNo,AdrsResNo, setAdrsResNo,AdrsInfomntName, setAdrsInfomntName,AdrsDoorNo, setAdrsDoorNo,AdrsMainPlaceEn, setAdrsMainPlaceEn,
+  AdrsLocalityNameEn, setAdrsLocalityNameEn,AdrsStreetNameEn, setAdrsStreetNameEn,AdrsVillage, setAdrsVillage,AdrsLBName, setAdrsLBName,
+ }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const tenantId = Digit.ULBService.getCurrentTenantId(); 
-  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const { data: State = {},isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-  const { data: PostOffice = {},isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Taluk = {},isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-  const { data: Village = {},isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: District = {},isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: localbodies={}, islocalbodiesLoading } = Digit.Hooks.useTenants();
+  // const tenantId = Digit.ULBService.getCurrentTenantId(); 
+  const { data: Country = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: State = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+  const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+  const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+  const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District"); 
+  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
 
   //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [AdrsCountry, setAdrsCountry] = useState(formData?.BirthPlaceHomeDetails?.AdrsCountry);
-  const [AdrsStateName, setAdrsStateName] = useState(formData?.BirthPlaceHomeDetails?.AdrsStateName);
-  const [AdrsDistrict, setAdrsDistrict] = useState(formData?.BirthPlaceHomeDetails?.AdrsDistrict);
-  const [AdrsLBTypeName, setAdrsLBTypeName] = useState(formData?.BirthPlaceHomeDetails?.AdrsLBTypeName);
-  const [AdrsLBName, setAdrsLBName] = useState(formData?.BirthPlaceHomeDetails?.AdrsLBName);
-  const [AdrsTaluk, setAdrsTaluk] = useState(formData?.BirthPlaceHomeDetails?.AdrsTaluk);
-  const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.BirthPlaceHomeDetails?.AdrsPostOffice);
-  const [AdrsPincode, setAdrsPincode] = useState(formData?.BirthPlaceHomeDetails?.AdrsPincode);
-  const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.BirthPlaceHomeDetails?.AdrsHouseNameEn);
-  //  const [AdrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.BirthPlaceHomeDetails?.AdrsHouseNameMl);
-  const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.BirthPlaceHomeDetails?.AdrsBuldingNo);
-  const [AdrsResNo, setAdrsResNo] = useState(formData?.BirthPlaceHomeDetails?.AdrsResNo);
-  const [AdrsInfontName, setAdrsInfontName] = useState(formData?.BirthPlaceHomeDetails?.AdrsInfontName);
-  const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.BirthPlaceHomeDetails?.AdrsDoorNo);
-  const [AdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.BirthPlaceHomeDetails?.AdrsMainPlaceEn);
-  //  const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.BirthPlaceHomeDetails?.AdrsMainPlaceMl);
-  const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.BirthPlaceHomeDetails?.AdrsLocalityNameEn);
-  //  const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.BirthPlaceHomeDetails?.AdrsLocalityNameMl);
-  const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.BirthPlaceHomeDetails?.AdrsStreetNameEn);
-  //  const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.BirthPlaceHomeDetails?.AdrsStreetNameMl);
-  const [AdrsVillage, setAdrsVillage] = useState(formData?.BirthPlaceHomeDetails?.AdrsVillage);
-  const [WardNo, setWardNo] = useState(formData.BirthPlaceHomeDetails?.wardno);
+  // const [AdrsCountry, setAdrsCountry] = useState(formData?.BirthPlaceHomeDetails?.AdrsCountry);
+  // const [AdrsStateName, setAdrsStateName] = useState(formData?.BirthPlaceHomeDetails?.AdrsStateName);
+  // const [AdrsDistrict, setAdrsDistrict] = useState(formData?.BirthPlaceHomeDetails?.AdrsDistrict);
+  // const [AdrsLBTypeName, setAdrsLBTypeName] = useState(formData?.BirthPlaceHomeDetails?.AdrsLBTypeName);
+  // const [AdrsLBName, setAdrsLBName] = useState(formData?.BirthPlaceHomeDetails?.AdrsLBName);
+  // const [AdrsTaluk, setAdrsTaluk] = useState(formData?.BirthPlaceHomeDetails?.AdrsTaluk);
+  // const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.BirthPlaceHomeDetails?.AdrsPostOffice);
+  // const [AdrsPincode, setAdrsPincode] = useState(formData?.BirthPlaceHomeDetails?.AdrsPincode);
+  // const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.BirthPlaceHomeDetails?.AdrsHouseNameEn);
+  // //  const [AdrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.BirthPlaceHomeDetails?.AdrsHouseNameMl);
+  // const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.BirthPlaceHomeDetails?.AdrsBuldingNo);
+  // const [AdrsResNo, setAdrsResNo] = useState(formData?.BirthPlaceHomeDetails?.AdrsResNo);
+  // const [AdrsInfomntName, setAdrsInfomntName] = useState(formData?.BirthPlaceHomeDetails?.AdrsInfomntName);
+  // const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.BirthPlaceHomeDetails?.AdrsDoorNo);
+  // const [AdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.BirthPlaceHomeDetails?.AdrsMainPlaceEn);
+  // //  const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.BirthPlaceHomeDetails?.AdrsMainPlaceMl);
+  // const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.BirthPlaceHomeDetails?.AdrsLocalityNameEn);
+  // //  const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.BirthPlaceHomeDetails?.AdrsLocalityNameMl);
+  // const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.BirthPlaceHomeDetails?.AdrsStreetNameEn);
+  // //  const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.BirthPlaceHomeDetails?.AdrsStreetNameMl);
+  // const [AdrsVillage, setAdrsVillage] = useState(formData?.BirthPlaceHomeDetails?.AdrsVillage);
+  // const [WardNo, setWardNo] = useState(formData.BirthPlaceHomeDetails?.wardno);
 
   let cmbCountry = [];
   let cmbState = [];
@@ -93,26 +97,26 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
-  let Zonal = [];
-  let cmbWardNo = [];
-  let cmbWardNoFinal = [];
-  boundaryList &&
-    boundaryList["egov-location"] &&
-    boundaryList["egov-location"].TenantBoundary.map((ob) => {
-      //  console.log(ob);
-      // if(ob?.boundary){
-      Zonal.push(...ob.boundary.children);
-      ob.boundary.children.map((obward) => {
-        cmbWardNo.push(...obward.children);
-      });
-      // }
-    });
-  //console.log(Zonal);
-  cmbWardNo.map((wardmst) => {
-    wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
-    wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
-    cmbWardNoFinal.push(wardmst);
-  });
+  // let Zonal = [];
+  // let cmbWardNo = [];
+  // let cmbWardNoFinal = [];
+  // boundaryList &&
+  //   boundaryList["egov-location"] &&
+  //   boundaryList["egov-location"].TenantBoundary.map((ob) => {
+  //     //  console.log(ob);
+  //     // if(ob?.boundary){
+  //     Zonal.push(...ob.boundary.children);
+  //     ob.boundary.children.map((obward) => {
+  //       cmbWardNo.push(...obward.children);
+  //     });
+  //     // }
+  //   });
+  // //console.log(Zonal);
+  // cmbWardNo.map((wardmst) => {
+  //   wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
+  //   wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
+  //   cmbWardNoFinal.push(wardmst);
+  // });
 
   const onSkip = () => onSelect();
   function setSelectAdrsCountry(value) {
@@ -168,8 +172,8 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
   //   setAdrsHouseNameMl(e.target.value);
 
   //   }
-  function setSelectAdrsInfontName(e) {
-    setAdrsInfontName(e.target.value);
+  function setSelectAdrsInfomntName(e) {
+    setAdrsInfomntName(e.target.value);
   }
 
   function setSelectAdrsMainPlaceEn(e) {
@@ -195,9 +199,9 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
   //  function setSelectAdrsStreetNameMl(e) {
   //   setAdrsStreetNameMl(e.target.value);
   //   }
-  function setSelectWard(value) {
-    setWardNo(value);
-  }
+  // function setSelectWard(value) {
+  //   setWardNo(value);
+  // }
 
   useEffect(() => {
     if (isInitialRender) {
@@ -210,57 +214,57 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
     }
   }, [lbs, isInitialRender]);
   const goNext = () => {
-    sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
-    sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
-    sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName.code);
-    sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo);
-    sessionStorage.setItem("AdrsResNo", AdrsResNo);
-    sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo);
-    sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn);
-    //  sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl);
-    sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn);
-    //  sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl);
-    sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn);
-    //  sessionStorage.setItem("AdrsLocalityNameMl", AdrsLocalityNameMl);
-    sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn);
-    //  sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl);
-    sessionStorage.setItem("AdrsVillage", AdrsVillage.code);
-    sessionStorage.setItem("AdrsLBName", null);
-    sessionStorage.setItem("AdrsDistrict", AdrsDistrict.code);
-    sessionStorage.setItem("AdrsTaluk", AdrsTaluk.code);
-    sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice.code);
-    sessionStorage.setItem("AdrsPincode", AdrsPincode.code);
-    sessionStorage.setItem("AdrsInfontName", AdrsInfontName);
-    sessionStorage.setItem(" WardNo",  WardNo);
+    // sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
+    // sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
+    // sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName.code);
+    // sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo);
+    // sessionStorage.setItem("AdrsResNo", AdrsResNo);
+    // sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo);
+    // sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn);
+    // //  sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl);
+    // sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn);
+    // //  sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl);
+    // sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn);
+    // //  sessionStorage.setItem("AdrsLocalityNameMl", AdrsLocalityNameMl);
+    // sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn);
+    // //  sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl);
+    // sessionStorage.setItem("AdrsVillage", AdrsVillage.code);
+    // sessionStorage.setItem("AdrsLBName", null);
+    // sessionStorage.setItem("AdrsDistrict", AdrsDistrict.code);
+    // sessionStorage.setItem("AdrsTaluk", AdrsTaluk.code);
+    // sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice.code);
+    // sessionStorage.setItem("AdrsPincode", AdrsPincode.code);
+    // sessionStorage.setItem("AdrsInfomntName", AdrsInfomntName);
+    // // sessionStorage.setItem(" WardNo",  WardNo);
    
-    onSelect(config.key, {
-      AdrsBuldingNo,
-      AdrsDoorNo,
-      AdrsHouseNameEn,
-      AdrsLocalityNameEn,
-      AdrsInfontName,
-      AdrsCountry,
-      AdrsStateName,
-      AdrsLBTypeName,
-      AdrsMainPlaceEn,
-      AdrsStreetNameEn,
-      AdrsVillage,
-      AdrsLBName,
-      AdrsDistrict,
-      AdrsTaluk,
-      AdrsPostOffice,
-      AdrsPincode,
-      AdrsResNo,
-      WardNo
-    });
+    // onSelect(config.key, {
+    //   AdrsBuldingNo,
+    //   AdrsDoorNo,
+    //   AdrsHouseNameEn,
+    //   AdrsLocalityNameEn,
+    //   AdrsInfomntName,
+    //   AdrsCountry,
+    //   AdrsStateName,
+    //   AdrsLBTypeName,
+    //   AdrsMainPlaceEn,
+    //   AdrsStreetNameEn,
+    //   AdrsVillage,
+    //   AdrsLBName,
+    //   AdrsDistrict,
+    //   AdrsTaluk,
+    //   AdrsPostOffice,
+    //   AdrsPincode,
+    //   AdrsResNo,
+    //   // WardNo
+    // });
   };
 
 
  
 
-  if (isLoaded || isCountryLoading || isStateLoading  ||islocalbodiesLoading|| isPostOfficeLoading  || isDistrictLoading || isTalukLoading || isVillageLoading ) {
-    return <Loader></Loader>;
-  }
+  // if (isCountryLoading || isStateLoading  ||islocalbodiesLoading|| isPostOfficeLoading  || isDistrictLoading || isTalukLoading || isVillageLoading ) {
+  //   return <Loader></Loader>;
+  // }
  
 
   return (
@@ -399,7 +403,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
                 <span className="mandatorycss">*</span>
@@ -413,8 +417,8 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
                 select={setSelectWard}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
-            </div>
-            <div className="col-md-4">
+            </div> */}
+            <div className="col-md-6">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -430,7 +434,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
                 <span className="mandatorycss">*</span>
@@ -627,9 +631,9 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="AdrsInfontName"
-                value={AdrsInfontName}
-                onChange={setSelectAdrsInfontName}
+                name="AdrsInfomntName"
+                value={AdrsInfomntName}
+                onChange={setSelectAdrsInfomntName}
                 placeholder={`${t("CR_INFORMANT_NAME")}`}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
