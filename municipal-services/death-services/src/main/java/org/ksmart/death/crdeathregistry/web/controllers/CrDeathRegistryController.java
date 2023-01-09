@@ -111,6 +111,8 @@ public ResponseEntity<CrDeathRegistryResponse> update(@RequestBody CrDeathRegist
     @PostMapping("/crdeathregistry/_download")
     public ResponseEntity<DeathCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
                                                     @Valid @ModelAttribute CrDeathRegistryCriteria criteria){
+
+    // DeathCertificate deathCertSearch = deathService.searchCertificate(criteria, requestInfoWrapper.getRequestInfo());              
     DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
     
     DeathCertResponse response = DeathCertResponse.builder().filestoreId(deathCert.getFilestoreid()).responseInfo(

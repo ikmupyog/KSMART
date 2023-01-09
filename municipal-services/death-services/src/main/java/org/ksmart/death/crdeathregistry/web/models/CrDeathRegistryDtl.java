@@ -402,6 +402,10 @@ public class CrDeathRegistryDtl {
     // @Size(max = 64)
     // @JsonProperty("familyContactEmailId")
     // private String familyContactEmailId ;
+
+    //RAkhi S on 07.01.2023
+
+    private String localBodyNameMl;
     
    
 }

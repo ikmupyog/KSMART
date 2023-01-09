@@ -145,4 +145,10 @@ public class CrDeathRegistryService {
           throw new CustomException("DOWNLOAD_ERROR","Error in Downloading Certificate");
 		}
      }
+
+     //Rakhi S IKM on 06.01.2022
+    //  public DeathCertificate searchCertificate(CrDeathRegistryCriteria criteria, RequestInfo requestInfo) {
+    //   return repository.searchCertificateBydeathDtlId(criteria.getId(),requestInfo);
+    // }
+    
 }
