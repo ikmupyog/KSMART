@@ -13,7 +13,7 @@ const ApplicationDeathDetails = () => {
   const { id: applicationNo } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("21days"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("death21days"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNo", applicationNo)

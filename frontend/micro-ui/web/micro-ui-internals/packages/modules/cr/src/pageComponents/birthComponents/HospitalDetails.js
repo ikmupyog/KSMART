@@ -128,7 +128,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
               value={SignedOfficerAadharNo}
               onChange={setSelectSignedOfficerAadharNo}
               placeholder={`${t("CS_COMMON_AADHAAR")}`}
-              {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
           <div className="col-md-6">
