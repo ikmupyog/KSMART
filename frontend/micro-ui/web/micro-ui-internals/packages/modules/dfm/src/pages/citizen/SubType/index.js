@@ -138,11 +138,11 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
     };
     return code === "DFM" ? (
       <React.Fragment>
-        {/* <div className="moduleLinkHomePage">
+        <div className="moduleLinkHomePage">
           <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
           <BackButton className="moduleLinkHomePageBackButton" />
           <h1>{t("Sub Type" .toUpperCase())}</h1>
-        </div> */}
+        </div>
         <div className="moduleLinkHomePageModuleLinks">
           {/* <div className="fileText">
             <h3>Choose file type</h3>
