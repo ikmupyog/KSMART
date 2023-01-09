@@ -19,13 +19,12 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [ChildFirstNameMl, setChildFirstNameMl] = useState(formData?.ChildDetails?.ChildFirstNameMl);
   const [ChildMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.ChildMiddleNameMl);
   const [ChildLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.ChildLastNameMl);
-  const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
-  const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
-  const [isFatherInfo, setIsFatherInfo] = useState(formData?.ChildDetails?.isFatherInfo);
-  const [isMotherInfo, setIsMotherInfo] = useState(formData?.ChildDetails?.isMotherInfo);
+  // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
+  const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);  
+  // const [isMotherInfo, setIsMotherInfo] = useState(formData?.ChildDetails?.isMotherInfo);
   const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
-  const [ChildPassportNo, setChildPassportNo] = useState(formData?.ChildDetails?.ChildPassportNo);
-  const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.ChildDetails?.ChildArrivalDate);
+  // const [ChildPassportNo, setChildPassportNo] = useState(formData?.ChildDetails?.ChildPassportNo);
+  // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.ChildDetails?.ChildArrivalDate);
   const [tripStartTime, setTripStartTime] = useState(formData?.ChildDetails?.tripStartTime);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
@@ -78,13 +77,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       setIsMultipleBirth(false);
     }
   }
-  function setFatherInfo(e) {
-    if (e.target.checked == true) {
-      setIsFatherInfo(true);
-    } else {
-      setIsFatherInfo(false);
-    }
-  }
+  
   function setMotherInfo(e) {
     if (e.target.checked == true) {
       setIsMotherInfo(true);
@@ -118,24 +111,24 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   const goNext = () => {
-    sessionStorage.setItem("ChildDOB", ChildDOB);
-    sessionStorage.setItem("tripStartTime", tripStartTime);
-    sessionStorage.setItem("Gender",Gender?Gender.code:null);
-    sessionStorage.setItem("ChildAadharNo", ChildAadharNo);
-    sessionStorage.setItem("ChildFirstNameEn", ChildFirstNameEn);
-    sessionStorage.setItem("ChildMiddleNameEn", ChildMiddleNameEn);
-    sessionStorage.setItem("ChildLastNameEn", ChildLastNameEn);
-    sessionStorage.setItem("ChildFirstNameMl", ChildFirstNameMl);
-    sessionStorage.setItem("ChildMiddleNameMl", ChildMiddleNameMl);
-    sessionStorage.setItem("ChildLastNameMl", ChildLastNameMl);
-    sessionStorage.setItem("isAdopted", isAdopted);
-    sessionStorage.setItem("isMultipleBirth", isMultipleBirth);
-    sessionStorage.setItem("isFatherInfo", isFatherInfo);
-    sessionStorage.setItem("isMotherInfo", isMotherInfo);
-    sessionStorage.setItem("isBornOutSide", isBornOutSide);
-    sessionStorage.setItem("ChildPassportNo", ChildPassportNo);
-    sessionStorage.setItem("ChildArrivalDate", ChildArrivalDate);
-    onSelect(config.key, { ChildDOB, tripStartTime, Gender, ChildAadharNo, ChildFirstNameEn, ChildMiddleNameEn, ChildLastNameEn, ChildFirstNameMl, ChildMiddleNameMl, ChildLastNameMl, isAdopted, isMultipleBirth, isFatherInfo, isMotherInfo, isBornOutSide, ChildPassportNo, ChildArrivalDate });
+    sessionStorage.setItem("ChildDOB", ChildDOB ? ChildDOB : null);
+    sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
+    sessionStorage.setItem("Gender",Gender ? Gender.code : null);
+    sessionStorage.setItem("ChildAadharNo", ChildAadharNo ? ChildAadharNo : null);
+    sessionStorage.setItem("ChildFirstNameEn", ChildFirstNameEn ? ChildFirstNameEn : null);
+    sessionStorage.setItem("ChildMiddleNameEn", ChildMiddleNameEn ? ChildMiddleNameEn : null);
+    sessionStorage.setItem("ChildLastNameEn", ChildLastNameEn ? ChildLastNameEn : null);
+    sessionStorage.setItem("ChildFirstNameMl", ChildFirstNameMl ? ChildFirstNameMl : null);
+    sessionStorage.setItem("ChildMiddleNameMl", ChildMiddleNameMl ? ChildMiddleNameMl : null);
+    sessionStorage.setItem("ChildLastNameMl", ChildLastNameMl ? ChildLastNameMl : null);
+    // sessionStorage.setItem("isAdopted", isAdopted);
+    sessionStorage.setItem("isMultipleBirth", isMultipleBirth ? isMultipleBirth : null);    
+    // sessionStorage.setItem("isMotherInfo", isMotherInfo);
+    // sessionStorage.setItem("isBornOutSide", isBornOutSide);
+    // sessionStorage.setItem("ChildPassportNo", ChildPassportNo);
+    // sessionStorage.setItem("ChildArrivalDate", ChildArrivalDate);
+    onSelect(config.key, { ChildDOB, tripStartTime, Gender, ChildAadharNo, ChildFirstNameEn, ChildMiddleNameEn, 
+      ChildLastNameEn, ChildFirstNameMl, ChildMiddleNameMl, ChildLastNameMl, isMultipleBirth });
   }
   if (isLoading ){
     return <Loader></Loader>;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton,CheckBox  } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -7,9 +7,9 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
-    const { data: Qualification = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
-    const { data: QualificationSub = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
-    const { data: Profession = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
+    const { data: Qualification = {}, isQualificationLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
+    const { data: QualificationSub = {}, isQualificationSubLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
+    const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
     const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     const [FatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.FatherInfoDetails?.FatherFirstNameEn);
@@ -26,7 +26,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     const [FatherEducationSubject, setFatherEducationSubject] = useState(formData?.FatherInfoDetails?.FatherEducationSubject);
     const [FatherProfession, setFatherProfession] = useState(formData?.FatherInfoDetails?.FatherProfession);
     const [FatherNationality, setFatherNationality] = useState(formData?.FatherInfoDetails?.FatherNationality);
-
+    const [isFatherInfo, setIsFatherInfo] = useState(formData?.FatherInfoDetails?.isFatherInfo);
     let cmbQualification = [];
     Qualification &&
         Qualification["birth-death-service"] &&
@@ -45,12 +45,12 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
         Profession["birth-death-service"].Profession.map((ob) => {
             cmbProfession.push(ob);
         });
-        let cmbNation = [];
-        Nation &&
-          Nation["common-masters"] &&
-          Nation["common-masters"].Country.map((ob) => {
+    let cmbNation = [];
+    Nation &&
+        Nation["common-masters"] &&
+        Nation["common-masters"].Country.map((ob) => {
             cmbNation.push(ob);
-          });
+        });
     const onSkip = () => onSelect();
 
     function setSelectFatherFirstNameEn(e) {
@@ -95,25 +95,37 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     function setSelectFatherNationality(value) {
         setFatherNationality(value);
     }
+    function setFatherInfo(e) {
+        if (e.target.checked == true) {
+          setIsFatherInfo(true);
+        } else {
+          setIsFatherInfo(false);
+        }
+      }
     const goNext = () => {
-        sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn);
-        sessionStorage.setItem("FatherMiddleNameEn", FatherMiddleNameEn);
-        sessionStorage.setItem("FatherLastNameEn", FatherLastNameEn);
-        sessionStorage.setItem("FatherFirstNameMl", FatherFirstNameMl);
-        sessionStorage.setItem("FatherMiddleNameMl", FatherMiddleNameMl);
-        sessionStorage.setItem("FatherLastNameMl", FatherLastNameMl);
-        sessionStorage.setItem("FatherAadhar", FatherAadhar);
-        sessionStorage.setItem("FatherPassportNo", FatherPassportNo);
-        sessionStorage.setItem("FatherEmail", FatherEmail);
-        sessionStorage.setItem("FatherMobile", FatherMobile);
-        sessionStorage.setItem("FatherEducation", FatherEducation.code);
-        sessionStorage.setItem("FatherEducationSubject", FatherEducationSubject.code);
-        sessionStorage.setItem("FatherProfession", FatherProfession.code);
-        sessionStorage.setItem("FatherNationality", FatherNationality.code);
+        sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn ? FatherFirstNameEn : null);
+        sessionStorage.setItem("FatherMiddleNameEn", FatherMiddleNameEn ? FatherMiddleNameEn : null);
+        sessionStorage.setItem("FatherLastNameEn", FatherLastNameEn ? FatherLastNameEn : null);
+        sessionStorage.setItem("FatherFirstNameMl", FatherFirstNameMl ? FatherFirstNameMl : null);
+        sessionStorage.setItem("FatherMiddleNameMl", FatherMiddleNameMl ? FatherMiddleNameMl : null);
+        sessionStorage.setItem("FatherLastNameMl", FatherLastNameMl ? FatherLastNameMl : null);
+        sessionStorage.setItem("FatherAadhar", FatherAadhar ? FatherAadhar : null);
+        sessionStorage.setItem("FatherPassportNo", FatherPassportNo ? FatherPassportNo : null);
+        sessionStorage.setItem("FatherEmail", FatherEmail ? FatherEmail : null);
+        sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null);
+        sessionStorage.setItem("FatherEducation", FatherEducation ? FatherEducation.code : null);
+        sessionStorage.setItem("FatherEducationSubject", FatherEducationSubject ? FatherEducationSubject.code : null);
+        sessionStorage.setItem("FatherProfession", FatherProfession ? FatherProfession.code : null);
+        sessionStorage.setItem("FatherNationality", FatherNationality ? FatherNationality.code : null);
+        sessionStorage.setItem("isFatherInfo",isFatherInfo ? isFatherInfo : null);
         onSelect(config.key, {
             FatherFirstNameEn, FatherMiddleNameEn, FatherLastNameEn,
-            FatherFirstNameMl, FatherMiddleNameMl, FatherLastNameMl, FatherAadhar, FatherPassportNo, FatherEmail, FatherMobile, FatherEducation, FatherEducationSubject, FatherProfession, FatherNationality
+            FatherFirstNameMl, FatherMiddleNameMl, FatherLastNameMl, FatherAadhar, FatherPassportNo, FatherEmail, 
+            FatherMobile, FatherEducation, FatherEducationSubject, FatherProfession, FatherNationality,isFatherInfo
         });
+    }
+    if (isQualificationLoading || isQualificationSubLoading || isProfessionLoading || isNationLoad) {
+        return <Loader></Loader>;
     }
     return (
         <React.Fragment>
@@ -122,6 +134,16 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             <BackButton >{t("CS_COMMON_BACK")}</BackButton>
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!FatherFirstNameEn}>
                 <div className="row">
+                    <div className="col-md-12" ><h1 className="headingh1" ></h1>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6" >
+                        {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
+                        <CheckBox label={t("Father Information Missing")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
+                    </div>
+                </div>
+                <div className="row">
                     <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FATHER_INFORMATION")}`}</span> </h1>
                     </div>
                 </div>
@@ -129,13 +151,13 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-12" >
                         <div className="col-md-4" ><CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherFirstNameEn"
-                                value={FatherFirstNameEn} onChange={setSelectFatherFirstNameEn} disable={isEdit}  placeholder={`${t("CR_FIRST_NAME_EN")}`}{...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+                                value={FatherFirstNameEn} onChange={setSelectFatherFirstNameEn} disable={isEdit} placeholder={`${t("CR_FIRST_NAME_EN")}`}{...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
                         </div>
                         <div className="col-md-4" ><CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherMiddleNameEn" value={FatherMiddleNameEn} onChange={setSelectFatherMiddleNameEn} disable={isEdit}  placeholder={`${t("CR_MIDDLE_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherMiddleNameEn" value={FatherMiddleNameEn} onChange={setSelectFatherMiddleNameEn} disable={isEdit} placeholder={`${t("CR_MIDDLE_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })} />
                         </div>
                         <div className="col-md-4" ><CardLabel>{`${t("CR_LAST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherLastNameEn" value={FatherLastNameEn} onChange={setSelectFatherLastNameEn} disable={isEdit}  placeholder={`${t("CR_LAST_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherLastNameEn" value={FatherLastNameEn} onChange={setSelectFatherLastNameEn} disable={isEdit} placeholder={`${t("CR_LAST_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })} />
                         </div>
                     </div>
                 </div>

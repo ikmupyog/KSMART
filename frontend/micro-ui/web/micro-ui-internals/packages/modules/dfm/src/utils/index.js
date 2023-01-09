@@ -286,7 +286,7 @@ export const convertToFileSubmission = (data = {}) => {
         fatherLastName:data?.ApplicantDetails?.FatherLastName,
         motherFirstName:data?.ApplicantDetails?.MotherFirstName,
         motherLastName:data?.ApplicantDetails?.MotherLastName,
-        applicantCategory:data?.ApplicantDetails?.CategoryList.id,
+        applicantCategory:data?.ApplicantDetails?.CategoryList?.id,
         dateOfBirth:Date.parse(data?.ApplicantDetails?.DateofBirth),
         bankAccountNo:data?.ApplicantDetails?.AccountNo,
 
