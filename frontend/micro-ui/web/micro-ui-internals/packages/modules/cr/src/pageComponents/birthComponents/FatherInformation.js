@@ -195,12 +195,12 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                                 disabled={isFatherInfo}
                             />
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+                        <div className="col-md-2" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
                             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherAadhar" value={FatherAadhar}
                              onChange={setSelectFatherAadhar} disable={isFatherInfo} placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
                         </div>
 
-                        <div className="col-md-4" >  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
+                        <div className="col-md-2" >  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
                             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey"
                                 name="FatherPassportNo"
                                 value={FatherPassportNo}
@@ -209,31 +209,22 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
                             />
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12" >
-
-                        <div className="col-md-6" ><CardLabel>{`${t("CR_EMAIL")}`}</CardLabel>
+                        <div className="col-md-4" ><CardLabel>{`${t("CR_EMAIL")}`}</CardLabel>
                             <TextInput t={t} isMandatory={false} type="email" optionKey="i18nKey" name="FatherEmail" value={FatherEmail} 
                             onChange={setSelectFatherEmail} disable={isFatherInfo} placeholder={`${t("CR_EMAIL")}`} {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })} />
                         </div>
-                        <div className="col-md-6" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12" >
+                       
+                        <div className="col-md-4" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="FatherMobile" value={FatherMobile} 
                             onChange={setSelectFatherMobile} disable={isFatherInfo} placeholder={`${t("CR_EMAIL")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
                         </div>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-md-12" >
                         <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualification} selected={FatherEducation}
                              select={setSelectFatherEducation} disable={isFatherInfo} />
-                        </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualificationSub} selected={FatherEducationSubject} 
-                            select={setSelectFatherEducationSubject} disable={isFatherInfo} />
                         </div>
                         <div className="col-md-4" ><CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbProfession} selected={FatherProfession} 
@@ -241,6 +232,17 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                     </div>
                 </div>
+
+                {/* <div className="row">
+                    <div className="col-md-12" > */}
+                        
+                        {/* <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}<span className="mandatorycss">*</span></CardLabel>
+                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualificationSub} selected={FatherEducationSubject} 
+                            select={setSelectFatherEducationSubject} disable={isFatherInfo} />
+                        </div> */}
+                       
+                    {/* </div>
+                </div> */}
             </FormStep>
         </React.Fragment>
     );
