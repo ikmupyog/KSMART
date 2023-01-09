@@ -3,28 +3,25 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton } from 
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-  const PlaceOfDeathHospital = ({ config, onSelect, userType, formData }) => {
-  const stateId = Digit.ULBService.getStateId();
+
+  const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOfficerName,selectSignedOfficerName,HospitalName,selectHospitalName, setDesignation,
+    setSelectedDesignation, HospitalAadhaar , setHospitalAadhaar ,HospitalMobile, setHospitalMobile  
+   }) =>  {
+  const stateId = Digit.ULBService.getStateId(); 
   const { t } = useTranslation();
   let validation = {};
-  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+ 
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
-  const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
-  const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
-  const [setDesignation, setSelectedDesignation] = useState(formData?.HospitalDetails?.setDesignation);
+  // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
+  // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
+  // const [setDesignation, setSelectedDesignation] = useState(formData?.HospitalDetails?.setDesignation);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [HospitalAadhaar, setHospitalAadhaar] = useState(formData?.HospitalDetails?.HospitalAadhaar);
-  const [HospitalMobile, setHospitalMobile] = useState(formData?.HospitalDetails?.HospitalMobile);
+  // const [HospitalAadhaar, setHospitalAadhaar] = useState(formData?.HospitalDetails?.HospitalAadhaar);
+  // const [HospitalMobile, setHospitalMobile] = useState(formData?.HospitalDetails?.HospitalMobile);
 
-  // const [TradeName, setTradeName] = useState(null);
-  // const [CommencementDate, setCommencementDate] = useState();
+  
   let naturetypecmbvalue = null;
-  // let cmbPlace = [];
-  // place &&
-  //   place["TradeLicense"] &&
-  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
-  //     cmbPlace.push(ob);
-  //   });
+ 
   let cmbhospital = [];
   hospital &&
     hospital["birth-death-service"] &&
@@ -59,13 +56,13 @@ import { useTranslation } from "react-i18next";
   }
 
   const goNext = () => {
-    sessionStorage.setItem("SignedOfficerName", SignedOfficerName);
-    sessionStorage.setItem("HospitalName", HospitalName);
-    sessionStorage.setItem("setDesignation", setDesignation.code);
-    sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar);
-    sessionStorage.setItem("HospitalMobile", HospitalMobile);
+    // sessionStorage.setItem("SignedOfficerName", SignedOfficerName);
+    // sessionStorage.setItem("HospitalName", HospitalName);
+    // sessionStorage.setItem("setDesignation", setDesignation.code);
+    // sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar);
+    // sessionStorage.setItem("HospitalMobile", HospitalMobile);
 
-    onSelect(config.key, { SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile });
+    // onSelect(config.key, { SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile });
   };
   return (
     <React.Fragment>
