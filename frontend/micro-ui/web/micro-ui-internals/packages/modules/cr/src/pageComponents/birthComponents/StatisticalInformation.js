@@ -99,14 +99,15 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
         setModeOfPregnancy(value);
     }
     const goNext = () => {
-        sessionStorage.setItem("BirthWeight", BirthWeight);
-        sessionStorage.setItem("BirthHeight", BirthHeight);
-        sessionStorage.setItem("Religion", Religion.code);
-        sessionStorage.setItem("PregnancyDuration", PregnancyDuration.code);
-        sessionStorage.setItem("MedicalAttension", MedicalAttension.code);
-        sessionStorage.setItem("MedicalAttensionSub", MedicalAttensionSub.code);
-        sessionStorage.setItem("DeliveryMethod", DeliveryMethod.code);
-        sessionStorage.setItem("ModeOfPregnancy", ModeOfPregnancy.code);
+        sessionStorage.setItem("BirthWeight", BirthWeight ? BirthWeight : null );
+        sessionStorage.setItem("BirthHeight", BirthHeight ? BirthHeight : null);
+        sessionStorage.setItem("Religion", Religion ? Religion.code : null);
+        sessionStorage.setItem("PregnancyDuration", PregnancyDuration ? PregnancyDuration.code : null);
+        sessionStorage.setItem("MedicalAttension", MedicalAttension ? MedicalAttension.code : null);
+        sessionStorage.setItem("MedicalAttensionSub", MedicalAttensionSub ? MedicalAttensionSub.code : null);
+        sessionStorage.setItem("DeliveryMethod", DeliveryMethod ? DeliveryMethod.code : null);
+        sessionStorage.setItem("ModeOfPregnancy", ModeOfPregnancy ? ModeOfPregnancy.code : null);
+        
         onSelect(config.key, { BirthWeight, BirthHeight, Religion, PregnancyDuration, MedicalAttension, MedicalAttensionSub, DeliveryMethod, DeliveryMethodSub });
     }
     console.log(formData);
