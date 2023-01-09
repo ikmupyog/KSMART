@@ -18,7 +18,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
   const { data: PostOffice = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "PostOffice");
   const { data: Wardno = {} } = Digit.Hooks.dfm.useFileManagmentMDMS(stateId, "common-masters", "WardNo");
-  const { data: boundaryList = {}, isLoading } = Digit.Hooks.dfm.useFileManagmentMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const docs = Documentsob?.PropertyTax?.Documents;
   const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
   const [WardNo, setWardNo] = useState(formData?.ServiceDet?.WardNo);
@@ -34,7 +34,8 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   const [ResidenceDurationMon, setResidenceDurationMon] = useState(formData?.ServiceDet?.ResidenceDurationMon);
   // const [ResidenceDuration, setResidenceDuration] = useState(formData?.ServiceDet?.ResidenceDuration);
   const [ServiceDetailsTxt, setServiceDetailsTxt] = useState(formData?.ServiceDet?.ServiceDetailsTxt);
-  console.log(formData,Wardno,boundaryList);
+  console.log('s',boundaryList);
+
   
   let cmbPostOffice = [];
   PostOffice &&
@@ -42,14 +43,28 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
     });
-    let cmbWard = [];
-
+    let Zonal = [];
+    let cmbWardNo = [];
+    let cmbWardNoFinal = [];
     boundaryList &&
       boundaryList["egov-location"] &&
       boundaryList["egov-location"].TenantBoundary.map((ob) => {
-        console.log(ob.boundary.children);
-        cmbWard.push(ob.boundary.children);
+        //  console.log(ob);
+        // if(ob?.boundary){
+        Zonal.push(...ob.boundary.children);
+        ob.boundary.children.map((obward) => {
+          cmbWardNo.push(...obward.children);
+        });
+        // }
+   
       });
+    //console.log(Zonal);
+    cmbWardNo.map((wardmst) => {
+      wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+      wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+      cmbWardNoFinal.push(wardmst);
+    });
+   
   function setSelectedWardNo(e) {
     setWardNo(e);
   }
@@ -92,6 +107,10 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
   function setSelectedServiceDetailsTxt(e) {
     setServiceDetailsTxt(e.target.value);
   }
+  function setSelectWard(e) {
+    setWardNo(e);
+  }
+
 
   const onSkip = () => onSelect();
   const goNext = () => {
@@ -145,7 +164,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
 
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <CardLabel>
                     {`${t("DFM_WARD_NO")}`}
                     <span className="mandatorycss">*</span>
@@ -159,7 +178,25 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                     placeholder={`${t("DFM_WARD_NO")}`}
                     select={setSelectedWardNo}
                   />
+                </div> */}
+
+                <div className="col-md-6">
+                  <CardLabel>
+                    {`${t("TL_LOCALIZATION_WARD_NO")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={config.isMandatory}
+                    option={cmbWardNo}
+                    selected={WardNo}
+                    select={setSelectWard}
+                    placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`}
+                    {...(validation = { isRequired: true, title: t("TL_INVALID_WARD_NO") })}
+                  />
                 </div>
+
                 {/* <div className="col-md-4" ><CardLabel>{t("DFM_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="WardNo"
              value={WardNo} 

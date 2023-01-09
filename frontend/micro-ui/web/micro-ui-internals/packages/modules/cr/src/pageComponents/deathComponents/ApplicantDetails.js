@@ -39,6 +39,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   const [PresentLBName, setSelectedPresentLBName] = useState(formData?.ApplicantDetails?.PresentLBName);  
   const [AadhaarNo, setAadhaarNo] = useState(formData?.ApplicantDetails?.AadhaarNo);
   const [InformentMobileNo, setInformentMobileNo] = useState(formData?.ApplicantDetails?.InformentMobileNo);
+  const [InformentEmail, setInformentEmail] = useState(formData?.ApplicantDetails?.InformentEmail);  
   const [InformentOfAge, setInformentOfAge] = useState(formData?.ApplicantDetails?.InformentOfAge);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -144,6 +145,10 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   function setSelectInformentMobileNo(e) {
     setInformentMobileNo(e.target.value);
   }
+  function setSelectInformentEmail(e) {
+    setInformentEmail(e.target.value);
+  }
+  
   function setSelectInformentOfAge(e) {
     setInformentOfAge(e.target.value);
   }
@@ -209,6 +214,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);    
     sessionStorage.setItem("AadhaarNo", AadhaarNo);    
     sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
+    sessionStorage.setItem("InformentEmail", InformentEmail);    
     sessionStorage.setItem("InformentOfAge", InformentOfAge);
 
     onSelect(config.key, {
@@ -236,6 +242,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
       setTitle,      
       AadhaarNo,      
       InformentMobileNo,
+      InformentEmail,
       InformentOfAge,
     });
   };
@@ -298,7 +305,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
        
         <div className="row">
         <div className="col-md-12">
-          <div className="col-md-3">
+          <div className="col-md-4">
             <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput
               t={t}
@@ -313,7 +320,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>          
-          <div className="col-md-3">
+          <div className="col-md-4">
             <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
             <TextInput
               t={t}
@@ -328,7 +335,22 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
-          
+          <div className="col-md-4">
+              <CardLabel>{`${t("CR_EMAIL")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type="email"
+                optionKey="i18nKey"
+                name="InformentEmail"
+                value={InformentEmail}
+                onChange={setSelectInformentEmail}
+                disable={isEdit}
+                placeholder={`${t("CR_EMAIL")}`}
+                {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
+              />
+            </div>
+        
           </div>
         </div>
 
