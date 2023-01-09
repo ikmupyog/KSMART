@@ -26,7 +26,7 @@ public class CrDeathRegistryCriteria {
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("aadhaarNo")
+    @JsonProperty("deceasedAadharNumber")
     private String aadhaarNo;
 
     @JsonProperty("fromDate")
@@ -37,6 +37,16 @@ public class CrDeathRegistryCriteria {
 
     @JsonProperty("registration_no")
     private String registrationNo;
+
+    //Jasmine 07.01.2023
+    @JsonProperty("deathApplicationNo")
+    private String deathApplicationNo;
+
+    @JsonProperty("deathACKNo")
+    private String deathACKNo;
+
+    @JsonProperty("deceasedFirstNameEn")
+    private String deceasedFirstNameEn;
 
     //Rakhi S on 15.12.2022
     public enum SourceEnum {

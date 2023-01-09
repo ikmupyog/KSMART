@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
     @Validated
 public class CrDeathRegistryController {
 
-     @Autowired
+    @Autowired
     private ResponseInfoFactory responseInfoFactory;
 
 	private final CrDeathRegistryService deathService;
@@ -54,7 +54,60 @@ public class CrDeathRegistryController {
     @PostMapping("/crdeathregistry/_create")
 
     public ResponseEntity<CrDeathRegistryResponse> create(@Valid @RequestBody CrDeathRegistryRequest request) {
+ 
+        List<CrDeathRegistryDtl> deathDetails = deathService.create(request);
 
+        CrDeathRegistryResponse response = CrDeathRegistryResponse
+                                            .builder()
+                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                            .deathCertificateDtls(deathDetails)
+                                            .build();
+        return ResponseEntity.ok(response);
+    }
+
+    //Update Begin Jasmine
+    @PutMapping("/crdeathregistry/_update")
+
+    public ResponseEntity<CrDeathRegistryResponse> update(@RequestBody CrDeathRegistryRequest request) {
+
+        List<CrDeathRegistryDtl> deathDetails = deathService.update(request);
+
+        CrDeathRegistryResponse response = CrDeathRegistryResponse
+                                            .builder()
+                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                            .deathCertificateDtls(deathDetails)
+                                            .build();
+        return ResponseEntity.ok(response);
+    }
+
+    //Search Begin Jasmine
+    @PostMapping("/crdeathregistry/_search")
+
+    public ResponseEntity<CrDeathRegistryResponse> search(@RequestBody RequestInfoWrapper request,
+                                                          @ModelAttribute CrDeathRegistryCriteria criteria) {
+
+        List<CrDeathRegistryDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
+
+        CrDeathRegistryResponse response = CrDeathRegistryResponse
+                                            .builder()
+                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                            .deathCertificateDtls(deathDetails)
+                                            .build();
+        return ResponseEntity.ok(response);
+    }
+    //Certificate Download by Rakhi S on 15.12.2022
+    @PostMapping("/crdeathregistry/_download")
+    public ResponseEntity<DeathCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
+                                                    @Valid @ModelAttribute CrDeathRegistryCriteria criteria){
+        DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
+    
+        DeathCertResponse response = DeathCertResponse
+                                    .builder()
+                                    .filestoreId(deathCert.getFilestoreid())
+                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                                    .build();
+        return ResponseEntity.ok(response);
+    }
         // System.out.println("hai");
         //    /********************************************* */
 
@@ -69,55 +122,5 @@ public class CrDeathRegistryController {
 
  
         /********************************************** */
-        
-        List<CrDeathRegistryDtl> deathDetails = deathService.create(request);
-
-        CrDeathRegistryResponse response = CrDeathRegistryResponse.builder()
-                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                                                      .deathCertificateDtls(deathDetails)
-                                                                      .build();
-        return ResponseEntity.ok(response);
-    }
-
-//Update Begin Jasmine
-@PutMapping("/crdeathregistry/_update")
-
-public ResponseEntity<CrDeathRegistryResponse> update(@RequestBody CrDeathRegistryRequest request) {
-
-    List<CrDeathRegistryDtl> deathDetails = deathService.update(request);
-
-    CrDeathRegistryResponse response = CrDeathRegistryResponse.builder()
-                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-                                        .deathCertificateDtls(deathDetails)
-                                        .build();
-    return ResponseEntity.ok(response);
-}
-//End
-//Search Begin Jasmine
-  @PostMapping("/crdeathregistry/_search")
-
-  public ResponseEntity<CrDeathRegistryResponse> search(@RequestBody RequestInfoWrapper request,
-                                                          @ModelAttribute CrDeathRegistryCriteria criteria) {
-
-      List<CrDeathRegistryDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
-
-      CrDeathRegistryResponse response = CrDeathRegistryResponse.builder()
-                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                            .deathCertificateDtls(deathDetails)
-                                            .build();
-      return ResponseEntity.ok(response);
-  }
-    //Certificate Download by Rakhi S on 15.12.2022
-    @PostMapping("/crdeathregistry/_download")
-    public ResponseEntity<DeathCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
-                                                    @Valid @ModelAttribute CrDeathRegistryCriteria criteria){
-    DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
-    
-    DeathCertResponse response = DeathCertResponse.builder().filestoreId(deathCert.getFilestoreid()).responseInfo(
-       responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
-       .build();
-       return ResponseEntity.ok(response);
- }
- 
 
 }

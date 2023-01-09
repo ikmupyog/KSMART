@@ -93,6 +93,8 @@ public class CrDeathEnrichment implements BaseEnrichment{
         RequestInfo requestInfo = request.getRequestInfo();
         // String tenantId = request.getDeathCertificateDtls().get(0).getTenantId();
         String tenantId = requestInfo.getUserInfo().getTenantId();
+       // String tenantIdPath = tenantId.split("\\.")[1];
+       // System.out.println("tenantIdPath"+tenantIdPath);
         List<CrDeathDtl> deathDtls = request.getDeathCertificateDtls();
         String applNo = getIdList(requestInfo, tenantId, config.getDeathApplnFileCodeName(), config.getDeathApplnFileCodeFormat(), 1).get(0);
         deathDtls.get(0).setDeathApplicationNo(applNo);

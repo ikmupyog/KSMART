@@ -141,7 +141,6 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
         request.getDeathCertificateDtls()
                 .forEach(deathDtls -> {
                     deathDtls.setAuditDetails(auditDetails);
-
                     CrDeathRegistryAddressInfo  addressInfo = deathDtls.getAddressInfo();
                     addressInfo.setParentdeathDtlId(deathDtls.getId());
                     addressInfo.setAuditDetails(auditDetails);  
