@@ -92,6 +92,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                     <div>
                    <PlaceOfDeathHome />                 
                   <InformentAddress />
+                  
                  </div>               
                     
                   )
