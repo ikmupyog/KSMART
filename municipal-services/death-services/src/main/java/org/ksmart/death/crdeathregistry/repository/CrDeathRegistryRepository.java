@@ -18,6 +18,7 @@ import org.ksmart.death.crdeathregistry.util.CrDeathRegistryConstants;
 import org.ksmart.death.crdeathregistry.util.CrDeathRegistryMdmsUtil;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
 import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathCertRequest;
+import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathCertificate;
 import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathPdfApplicationRequest;
 import org.ksmart.death.crdeathregistry.web.models.certmodel.DeathPdfResp;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryCriteria;
@@ -131,8 +132,17 @@ public class CrDeathRegistryRepository {
                  String[] masterArray = {CrDeathRegistryConstants.TENANTS};
                  String lbName = masterData.get(CrDeathRegistryConstants.TENANTS).toString();
                  lbName = lbName.replaceAll("[\\[\\]\\(\\)]", "");
+                 System.out.println("lbName:"+lbName);
                  cert.setLocalBodyName(lbName);
-                
+                 
+                 //RAkhi S on 07.01.2023 MDMS Call Malayalam fields 
+                Object mdmsDataMl = util.mDMSCallCertificateMl(pdfApplicationRequest.getRequestInfo(), cert.getTenantId());
+                Map<String,List<String>> masterDataMl = getAttributeValuesMl(mdmsDataMl);
+                String lbNameMl = masterDataMl.get(CrDeathRegistryConstants.TENANTS).toString();
+                lbNameMl = lbNameMl.replaceAll("[\\[\\]\\(\\)]", "");
+                System.out.println("lbNameMl:"+lbNameMl);
+                cert.setLocalBodyNameMl(lbNameMl);
+
                 //Rakhi S on 16.12.2022
                 cert.setFullName(cert.getDeceasedTitle() + 
                                 cert.getDeceasedFirstNameMl() + 
@@ -144,13 +154,38 @@ public class CrDeathRegistryRepository {
 
                 cert.setGender(cert.getDeceasedGender());
 
-                cert.setMotherName(cert.getFemaleDependentTitle()+
-                                    cert.getFemaleDependentNameMl()+" / "+
-                                    cert.getFemaleDependentNameEn());  
-        
-                cert.setMaledependentname(cert.getMaleDependentTitle()+
-                                            cert.getMaleDependentNameMl()+" / "+
-                                            cert.getMaleDependentNameEn());
+                if(cert.getFemaleDependentTitle()!=null){
+                cert.setMotherName(cert.getFemaleDependentTitle()+" "+
+                                    cert.getFemaleDependentNameMl()+" (മാതാവ്)"+" / "+
+                                    cert.getFemaleDependentNameEn()+" (Mother)");  
+                }
+                else{
+                    cert.setMotherName(cert.getFemaleDependentNameMl()+" (മാതാവ്)"+" / "+
+                                    cert.getFemaleDependentNameEn()+" (Mother)"); 
+                }
+                String maleDependentMl = "";
+                String maleDependentEn = "";
+                String maleDependentTypeFather ="MALE_DEPENDENT_FATHER";
+                String maleDependentTypeHusband ="MALE_DEPENDENT_HUSBAND";
+                String maleDependentType = cert.getMaleDependentType();
+                
+                if(maleDependentType.equals(maleDependentTypeFather)){
+                     maleDependentMl = " (പിതാവ്) ";
+                     maleDependentEn = " (Father) ";
+                }
+                else if(maleDependentType.equals(maleDependentTypeHusband)){
+                     maleDependentMl = " (ഭർത്താവ്) ";
+                     maleDependentEn = " (Husband) ";
+                }
+                if(cert.getMaleDependentTitle()!=null){
+                cert.setMaledependentname(cert.getMaleDependentTitle()+" "+
+                                            cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
+                                            cert.getMaleDependentNameEn() + maleDependentEn);
+                }
+                else{
+                    cert.setMaledependentname(cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
+                                            cert.getMaleDependentNameEn()+ maleDependentEn);
+                }
 
                 cert.setPresentAddressFullEn(cert.getAddressInfo().getPresentAddress().getResidenceAsscNo() + " "+
                                             cert.getAddressInfo().getPresentAddress().getHouseNo()+ " "+
@@ -272,6 +307,51 @@ public class CrDeathRegistryRepository {
         // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
     }
-
+    //Rakhi S ikm on 07.01.2023
+    private Map<String, List<String>> getAttributeValuesMl(Object mdmsdata){
+        List<String> modulepaths = Arrays.asList(CrDeathRegistryConstants.TENANT_JSONPATH);
+        final Map<String, List<String>> mdmsResMap = new HashMap<>();
+       
+        modulepaths.forEach(modulepath -> {
+            try {
+                mdmsResMap.putAll(JsonPath.read(mdmsdata,modulepath));
+                log.error("jsonpathMl"+JsonPath.read(mdmsdata,modulepath));
+            } catch (Exception e) {
+                log.error("Error while fetching MDMS data",e);
+                throw new CustomException(CrDeathRegistryConstants.INVALID_TENANT_ID_MDMS_KEY,
+                CrDeathRegistryConstants.INVALID_TENANT_ID_MDMS_MSG);
+            }
+           
+        });
+        // System.out.println("mdmsResMap"+mdmsResMap);
+        return mdmsResMap;
+    }
+    //Rakhi S on 06.01.2022
+    // public DeathCertificate searchCertificateBydeathDtlId(String deathDtlId, RequestInfo requestInfo) {
+	// 	try {
+	// 		List<Object> preparedStmtList = new ArrayList<>();
+	// 		SearchCriteria criteria = new SearchCriteria();
+	// 		String query = allqueryBuilder.getDeathCertReq(deathDtlId, requestInfo, preparedStmtList);
+	// 		List<DeathCertificate> deathCerts = jdbcTemplate.query(query, preparedStmtList.toArray(), deathCertRowMapper);
+	// 		if (null != deathCerts && !deathCerts.isEmpty()) {
+	// 			criteria.setTenantId(deathCerts.get(0).getTenantId());
+	// 			criteria.setId(deathCerts.get(0).getDeathDtlId());
+	// 			List<EgDeathDtl> deathDtls = getDeathDtlsAll(criteria, requestInfo);
+	// 			deathCerts.get(0).setGender(deathDtls.get(0).getGenderStr());
+	// 			deathCerts.get(0).setAge(deathDtls.get(0).getAge());
+	// 			deathCerts.get(0).setWard(deathDtls.get(0).getDeathPermaddr().getTehsil());
+	// 			deathCerts.get(0).setState(deathDtls.get(0).getDeathPermaddr().getState());
+	// 			deathCerts.get(0).setDistrict(deathDtls.get(0).getDeathPermaddr().getDistrict());
+	// 			deathCerts.get(0).setDateofdeath(deathDtls.get(0).getDateofdeath());
+	// 			deathCerts.get(0).setDateofreport(deathDtls.get(0).getDateofreport());
+	// 			deathCerts.get(0).setPlaceofdeath(deathDtls.get(0).getPlaceofdeath());
+	// 			return deathCerts.get(0);
+	// 		}
+	// 	}catch(Exception e) {
+	// 		e.printStackTrace();
+	// 		throw new CustomException("invalid_data","Invalid Data");
+	// 	}
+	// 	return null;
+	// }
 
 }

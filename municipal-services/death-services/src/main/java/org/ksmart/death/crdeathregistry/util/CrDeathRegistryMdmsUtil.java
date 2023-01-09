@@ -188,13 +188,13 @@ public class CrDeathRegistryMdmsUtil {
     //RAkhi S ikm on 23.12.2022
     private MdmsCriteriaReq getMDMSRequestCertificate(RequestInfo requestInfo, String tenantId) {
         ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
-        ModuleDetail GenderTypeRequest = getGenderTypeRequest();
+        ModuleDetail GenderTypeRequest = getGenderTypeRequest();        
         // List<ModuleDetail> BNDListRequest = getBNDListRequest();
 
         
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);
-        moduleDetails.add(GenderTypeRequest);
+        moduleDetails.add(GenderTypeRequest);        
         // moduleDetails.addAll(BNDListRequest);
 
         MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
@@ -218,8 +218,57 @@ public class CrDeathRegistryMdmsUtil {
         // master details for crDeath module
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
-        // filter to only get code field from master data    
+        // filter to only get code field from master data            
         final String filterCode = "$.[?(@.code=='"+tenantId+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.TENANTS).filter(filterCode).build());       
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(CrDeathRegistryConstants.TENANT_MODULE_NAME).build();
+
+       
+        return crDeathModuleDtls;
+    }
+    //RAkhi S ikm on 07.01.2023 for Malayalam fields 
+    public Object mDMSCallCertificateMl(RequestInfo requestInfo, String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateMl(requestInfo, tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    //RAkhi S ikm on 07.01.2023 for Malayalam fields 
+    private MdmsCriteriaReq getMDMSRequestCertificateMl(RequestInfo requestInfo, String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantIdCertificateMl(tenantId);
+        // ModuleDetail GenderTypeRequest = getGenderTypeRequest();        
+        // List<ModuleDetail> BNDListRequest = getBNDListRequest();
+
+        
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);
+        // moduleDetails.add(GenderTypeRequest);        
+        // moduleDetails.addAll(BNDListRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+        System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+     /**
+     * Creates request to search tenantID in mdms
+     * 
+     * @return MDMS request for tenantID
+     */
+    //RAkhi S ikm on  07.01.2023 for Malayalam fields
+    private ModuleDetail getTenantIdCertificateMl(String tenantId) {
+
+        // master details for crDeath module
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+        // filter to only get code field from master data            
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')].city.localName";
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(CrDeathRegistryConstants.TENANTS).filter(filterCode).build());       
 

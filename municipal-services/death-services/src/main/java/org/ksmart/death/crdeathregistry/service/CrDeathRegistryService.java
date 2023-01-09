@@ -132,16 +132,9 @@ public class CrDeathRegistryService {
 		}
      }
 
-     
-        // try {
-        //     ObjectMapper mapper = new ObjectMapper();
-        //     Object obj = mdmsData;
-        //     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        //    System.out.println("mdmsDataRegistry "+ mapper.writeValueAsString(obj));
-        //     }catch(Exception e) {
-        //        // log.error("Exception while fetching from searcher: ",e);
-        //     }
-
-
-            /********************************************** */
+     //Rakhi S IKM on 06.01.2022
+    //  public DeathCertificate searchCertificate(CrDeathRegistryCriteria criteria, RequestInfo requestInfo) {
+    //   return repository.searchCertificateBydeathDtlId(criteria.getId(),requestInfo);
+    // }
+    
 }

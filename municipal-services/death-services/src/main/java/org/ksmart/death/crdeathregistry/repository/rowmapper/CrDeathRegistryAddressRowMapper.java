@@ -37,6 +37,9 @@ interface CrDeathRegistryAddressRowMapper {
                             .villageNameMl(rs.getString(prefix +"village_name_ml"))
                             .postofficeNameEn(rs.getString(prefix +"postoffice_name_en"))
                             .postofficeNameMl(rs.getString(prefix +"postoffice_name_ml"))
+                            //RAkhi S on 09.01.2023
+                            .houeNameEn(rs.getString(prefix +"houename_en"))
+                            .houeNameMl(rs.getString(prefix +"houename_ml"))
                             .build();
     }
 

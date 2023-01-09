@@ -74,6 +74,10 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
                                                   .append(" ,presentaddress.village_name_ml as  P_village_name_ml") 
                                                   .append(" ,presentaddress.postoffice_name_en as  P_postoffice_name_en") 
                                                   .append(" ,presentaddress.postoffice_name_ml as  P_postoffice_name_ml") 
+                                                  //RAkhi S on 09.01.2023 
+                                                  .append(" ,presentaddress.houename_en as  P_houename_en") 
+                                                  .append(" ,presentaddress.houename_ml as  P_houename_ml") 
+
                                                   .append(" ,permanentAddress.death_dtl_id  as R_death_dtl_id")  
                                                   .append(" ,permanentAddress.tenantid as R_tenantid") 
                                                   .append(" ,permanentAddress.addr_typeid as R_addr_typeid")  
@@ -99,6 +103,10 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
                                                   .append(" ,permanentAddress.village_name_ml as  R_village_name_ml")
                                                   .append(" ,permanentAddress.postoffice_name_en as  R_postoffice_name_en")
                                                   .append(" ,permanentAddress.postoffice_name_ml as  R_postoffice_name_ml")
+                                                  //RAkhi S on 09.01.2023 
+                                                  .append(" ,permanentAddress.houename_en as  R_houename_en") 
+                                                  .append(" ,permanentAddress.houename_ml as  R_houename_ml") 
+
                                                   .append(" ,informantAddress.death_dtl_id  as I_death_dtl_id") 
                                                   .append(" ,informantAddress.tenantid as I_tenantid") 
                                                   .append(" ,informantAddress.addr_typeid as I_addr_typeid") 
@@ -124,6 +132,10 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
                                                   .append(" ,informantAddress.village_name_ml as  I_village_name_ml") 
                                                   .append(" ,informantAddress.postoffice_name_en as  I_postoffice_name_en")
                                                   .append(" ,informantAddress.postoffice_name_ml as  I_postoffice_name_ml") 
+                                                  //RAkhi S on 09.01.2023 
+                                                  .append(" ,informantAddress.houename_en as  I_houename_en") 
+                                                  .append(" ,informantAddress.houename_ml as  I_houename_ml")
+
                                                   .append(" ,deathplaceAddress.death_dtl_id  as D_death_dtl_id") 
                                                   .append(" ,deathplaceAddress.tenantid as D_tenantid") 
                                                   .append(" ,deathplaceAddress.addr_typeid as D_addr_typeid") 
@@ -149,6 +161,10 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
                                                   .append(" ,deathplaceAddress.village_name_ml as  D_village_name_ml") 
                                                   .append(" ,deathplaceAddress.postoffice_name_en as  D_postoffice_name_en") 
                                                   .append(" ,deathplaceAddress.postoffice_name_ml as  D_postoffice_name_ml")
+                                                  //RAkhi S on 09.01.2023 
+                                                  .append(" ,deathplaceAddress.houename_en as  D_houename_en") 
+                                                  .append(" ,deathplaceAddress.houename_ml as  D_houename_ml")
+
                                                   // .append(" ,burialAddress.death_dtl_id  as B_death_dtl_id") 
                                                   // .append(" ,burialAddress.tenantid as B_tenantid") 
                                                   // .append(" ,burialAddress.addr_typeid as B_addr_typeid") 
