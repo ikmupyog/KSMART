@@ -8,6 +8,7 @@ import PlaceOfDeathHome from "../../pageComponents/deathComponents/PlaceOfDeathH
 import PlaceOfDeathVehicle from "../../pageComponents/deathComponents/PlaceOfDeathVehicle";
 import PlaceOfDeathOther from "../../pageComponents/deathComponents/PlaceOfDeathOther";
 import InformentAddress from "../../pageComponents/deathComponents/InformentAddress";
+// import PlaceOfDeathHome from "../../pageComponents/deathComponents/PlaceOfDeathHome";
 
 const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -92,6 +93,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                     <div>
                    <PlaceOfDeathHome />                 
                   <InformentAddress />
+                  <PlaceOfDeathHome />
                   
                  </div>               
                     
@@ -101,6 +103,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                     <div>
                    <PlaceOfDeathVehicle />
                    <InformentAddress />
+                    <PlaceOfDeathHome />
                   </div>)
           }
           {value === "PUBLIC_PLACES" && (

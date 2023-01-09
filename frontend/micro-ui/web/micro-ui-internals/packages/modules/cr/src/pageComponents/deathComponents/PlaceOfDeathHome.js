@@ -40,6 +40,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
    const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.PlaceOfDeathHome?.AdrsMainPlaceMl);
   const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsLocalityNameEn);
    const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsLocalityNameMl);
+   const [AdrsCityEn, setAdrsCityNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsCityNameEn);
+   const [AdrsCityMl, setAdrsCityMl] = useState(formData?.PlaceOfDeathHome?.AdrsCityMl);
+   
   const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsStreetNameEn);
    const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsStreetNameMl);
   const [AdrsVillage, setAdrsVillage] = useState(formData?.PlaceOfDeathHome?.AdrsVillage);
@@ -187,6 +190,14 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     setAdrsLocalityNameMl(e.target.value);
 
     }
+    function setSelectAdrsCityEn(e) {
+      setAdrsCityEn(e.target.value);
+    }
+     function setSelectAdrsCityMl(e) {
+      setAdrsCityMl(e.target.value);
+  
+      }
+    
 
   function setSelectAdrsStreetNameEn(e) {
     setAdrsStreetNameEn(e.target.value);
@@ -222,6 +233,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
      sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl);
     sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn);
      sessionStorage.setItem("AdrsLocalityNameMl", AdrsLocalityNameMl);
+     sessionStorage.setItem("AdrsCityEn", AdrsCityEn);
+     sessionStorage.setItem("AdrsCityMl", AdrsCityMl);
     sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn);
      sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl);
     sessionStorage.setItem("AdrsVillage", AdrsVillage.code);
@@ -240,6 +253,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
       AdrsHouseNameMl,
       AdrsLocalityNameEn,
       AdrsLocalityNameMl,
+      AdrsCityEn,
+      AdrsCityMl,      
       AdrsInfontName,
       AdrsCountry,
       AdrsStateName,
@@ -488,16 +503,29 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
             
           </div>
         </div>
-        <div className="row">
- <div className="col-md-12" >
- <div className="col-md-6" ><CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsLocalityNameEn" value={AdrsLocalityNameEn} onChange={setSelectAdrsLocalityNameEn} placeholder={`${t("CR_LOCALITY_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })} />
- </div>
- <div className="col-md-6" ><CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsLocalityNameMl" value={AdrsLocalityNameMl} onChange={setSelectAdrsLocalityNameMl} disable={isEdit} placeholder={`${t("CR_LOCALITY_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
- </div>
- </div>
- </div>
+      <div className="row">
+        <div className="col-md-12" >
+         <div className="col-md-6" >
+            <CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsLocalityNameEn" value={AdrsLocalityNameEn} onChange={setSelectAdrsLocalityNameEn} placeholder={`${t("CR_LOCALITY_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })} />
+         </div>
+        <div className="col-md-6" ><CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
+           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsLocalityNameMl" value={AdrsLocalityNameMl} onChange={setSelectAdrsLocalityNameMl} disable={isEdit} placeholder={`${t("CR_LOCALITY_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
+        </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12" >
+         <div className="col-md-6" >
+            <CardLabel>{t("CR_CITY_EN")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsCityEn" value={AdrsCityEn} onChange={setSelectAdrsCityEn} placeholder={`${t("CR_LOCALITY_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })} />
+         </div>
+        <div className="col-md-6" >
+          <CardLabel>{t("CR_CITY_ML")}<span className="mandatorycss">*</span></CardLabel>
+           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsCityMl" value={AdrsCityMl} onChange={setSelectAdrsCityMl} disable={isEdit} placeholder={`${t("CR_LOCALITY_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
+        </div>
+        </div>
+      </div>
 
         <div className="row">
           <div className="col-md-12">
