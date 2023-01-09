@@ -179,23 +179,26 @@ public class CrDeathRegistryMdmsUtil {
 
     
     //RAkhi S ikm on 23.12.2022
-    public Object mDMSCallCertificate(RequestInfo requestInfo, String tenantId) {
-        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificate(requestInfo, tenantId);
+    public Object mDMSCallCertificate(RequestInfo requestInfo, String tenantId, String presentAddressDistrict) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificate(requestInfo, tenantId, presentAddressDistrict);
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
         return result;
     }
 
     //RAkhi S ikm on 23.12.2022
-    private MdmsCriteriaReq getMDMSRequestCertificate(RequestInfo requestInfo, String tenantId) {
+    private MdmsCriteriaReq getMDMSRequestCertificate(RequestInfo requestInfo
+                            , String tenantId
+                            , String presentAddressDistrict) {
         ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
-        ModuleDetail GenderTypeRequest = getGenderTypeRequest();        
+        // ModuleDetail GenderTypeRequest = getGenderTypeRequest();
+        List<ModuleDetail> commonMasterRequest = getcommonMasterRequest(presentAddressDistrict);       
         // List<ModuleDetail> BNDListRequest = getBNDListRequest();
 
         
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);
-        moduleDetails.add(GenderTypeRequest);        
-        // moduleDetails.addAll(BNDListRequest);
+        // moduleDetails.add(GenderTypeRequest);        
+        moduleDetails.addAll(commonMasterRequest);
 
         MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
                                     .build();
@@ -277,5 +280,23 @@ public class CrDeathRegistryMdmsUtil {
 
        
         return crDeathModuleDtls;
+    }
+    //RAkhi S ikm on 09.01.2023
+    private List<ModuleDetail> getcommonMasterRequest(String presentAddressDistrict) {
+
+        // master details for death certificate
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+        final String filterCode = "$.[?(@.code=='"+presentAddressDistrict+"')].name";
+        System.out.println("filterCode"+filterCode);
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.DISTRICT).filter(filterCode).build());        
+        
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+
+               
+         return Arrays.asList(crDeathModuleDtls);
     }
 }

@@ -38,6 +38,11 @@ public class CrDeathRegistryConstants {
     //RegistrationNumber
     public static final String REGISTRATION_NUMBER_FIRST = "1";
 
+    //Rakhi  S on 09.01.2023
+    public static final String DISTRICT = "District";
+    public static final String COMMON_MASTERS_MODULE = "common-masters";
+
+
 
 
 }
