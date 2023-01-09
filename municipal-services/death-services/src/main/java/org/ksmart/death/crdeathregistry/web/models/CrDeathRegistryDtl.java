@@ -171,9 +171,9 @@ public class CrDeathRegistryDtl {
     @JsonProperty("applicationStatus")
     private String   applicationStatus ;
 
-    @Size(max = 64)
+    
     @JsonProperty("submittedOn")
-    private String  submittedOn ;    
+    private Long  submittedOn ;    
 
     @Size(max = 64)
     @JsonProperty("placeBurial")
