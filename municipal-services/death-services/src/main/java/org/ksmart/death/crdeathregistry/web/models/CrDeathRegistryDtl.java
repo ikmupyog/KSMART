@@ -41,8 +41,8 @@ public class CrDeathRegistryDtl {
     @JsonProperty("tenantId")
     private String tenantId ;
 
-    @JsonProperty("correctDeathDateKnown")
-    private Integer correctDeathDateKnown ;
+    @JsonProperty("deathDateUnavailable")
+    private Integer deathDateUnavailable ;
 
     @JsonProperty("dateOfDeath")
     private Long dateOfDeath ;
@@ -64,8 +64,8 @@ public class CrDeathRegistryDtl {
     @JsonProperty("timeOfDeathUnit1")
     private String timeOfDeathUnit1 ;
 
-    @JsonProperty("deceasedIdentified")
-    private Integer deceasedIdentified ;
+    @JsonProperty("deceasedUnIdentified")
+    private Integer deceasedUnIdentified ;
 
     @Size(max = 64)
     @JsonProperty("deceasedTitle")
@@ -129,8 +129,8 @@ public class CrDeathRegistryDtl {
     private String deathPlaceInstId ;
 
     @Size(max = 200)
-    @JsonProperty("deathPlaceOfficeName")
-    private String deathPlaceOfficeName ;
+    @JsonProperty("deathPlaceOfficerName")
+    private String deathPlaceOfficerName ;
 
     @Size(max = 200)
     @JsonProperty("deathPlaceOtherMl")

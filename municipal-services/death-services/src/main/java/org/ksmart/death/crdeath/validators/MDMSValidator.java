@@ -45,10 +45,10 @@ public class MDMSValidator {
         errorMap.put("INVALID GENDER TYPE", "The gender of the deceased " +
                     request.getDeathCertificateDtls().get(0).getDeceasedGender()+ " is invalid");
 
-        if(!masterData.get(CrDeathConstants.HOSPITAL_LIST)
-                    .contains(request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName()))
-            errorMap.put("HOSPITAL DETAILS INVALID", "The deceased hospital details " +
-                        request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName()+ " is invalid");
+        // if(!masterData.get(CrDeathConstants.HOSPITAL_LIST)
+        //             .contains(request.getDeathCertificateDtls().get(0).getDeathPlaceOfficerName()))
+        //     errorMap.put("HOSPITAL DETAILS INVALID", "The deceased hospital details " +
+        //                 request.getDeathCertificateDtls().get(0).getDeathPlaceOfficerName()+ " is invalid");
 
         if(!masterData.get(CrDeathConstants.DEATH_PLACE)
                         .contains(request.getDeathCertificateDtls().get(0).getDeathPlace()))

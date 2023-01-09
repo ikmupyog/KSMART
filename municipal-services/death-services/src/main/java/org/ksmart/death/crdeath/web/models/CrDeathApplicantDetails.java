@@ -48,5 +48,11 @@ public class CrDeathApplicantDetails {
     @JsonProperty("applicantMobileNo")
     private String applicantMobileNo ;
 
+    @Size(max = 64)
+    @JsonProperty("applicantEmailId")
+    private String applicantEmailId ;
+
+    
+
 
 }

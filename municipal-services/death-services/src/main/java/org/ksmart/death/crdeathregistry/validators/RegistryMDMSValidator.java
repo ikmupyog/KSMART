@@ -44,10 +44,10 @@ public class RegistryMDMSValidator {
         errorMap.put("INVALID GENDER TYPE", "The gender of the deceased " +
                     request.getDeathCertificateDtls().get(0).getDeceasedGender()+ " is invalid");
 
-        if(!masterData.get(CrDeathRegistryConstants.HOSPITAL_LIST)
-                    .contains(request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName()))
-            errorMap.put("HOSPITAL DETAILS INVALID", "The deceased hospital details " +
-                        request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName()+ " is invalid");
+        // if(!masterData.get(CrDeathRegistryConstants.HOSPITAL_LIST)
+        //             .contains(request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName()))
+        //     errorMap.put("HOSPITAL DETAILS INVALID", "The deceased hospital details " +
+        //                 request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName()+ " is invalid");
 
         if(!masterData.get(CrDeathRegistryConstants.DEATH_PLACE)
                         .contains(request.getDeathCertificateDtls().get(0).getDeathPlace()))

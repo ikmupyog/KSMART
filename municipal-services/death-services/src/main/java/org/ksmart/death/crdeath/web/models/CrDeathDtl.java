@@ -53,8 +53,8 @@ public class CrDeathDtl {
     private String tenantId ;
 
     @Schema(type = "integer", description="1 for Yes /0 for No")
-    @JsonProperty("correctDeathDateKnown")
-    private Integer correctDeathDateKnown ;
+    @JsonProperty("deathDateUnavailable")
+    private Integer deathDateUnavailable ;
 
     @Schema(type = "Long",description = "Death date (If death date is not known enter the from date)")
     @JsonProperty("dateOfDeath")
@@ -83,8 +83,8 @@ public class CrDeathDtl {
     private String timeOfDeathUnit1 ;
 
     @Schema(type = "integer" ,description = "If it is unidentified enter 0 else 1" )
-    @JsonProperty("deceasedIdentified")
-    private Integer deceasedIdentified ;
+    @JsonProperty("deceasedUnIdentified")
+    private Integer deceasedUnIdentified ;
 
     @Schema(type = "String" ,description = "Mr/Mrs/Adv etc" )
     @Size(max = 64)
@@ -162,8 +162,8 @@ public class CrDeathDtl {
     private String deathPlaceInstId ;
 
     @Size(max = 200)
-    @JsonProperty("deathPlaceOfficeName")
-    private String deathPlaceOfficeName ;
+    @JsonProperty("deathPlaceOfficerName")
+    private String deathPlaceOfficerName ;
 
     @Size(max = 200)
     @JsonProperty("deathPlaceOtherMl")
@@ -298,7 +298,7 @@ public class CrDeathDtl {
 
     @Size(max = 64)
     @JsonProperty("deathApplicationNo")
-    private String deathApplicationNo = null;
+    private String deathApplicationNo ;
 
     @Size(max = 64)
     @JsonProperty("deathACKNo")
@@ -440,6 +440,10 @@ public class CrDeathDtl {
     @Size(max = 64)
     @JsonProperty("deceasedIdproofType")
     private String  deceasedIdproofType ;
+
+    // @Size(max = 64)
+    // @JsonProperty("badRecord")
+    // private String  badRecord ;
 
     // @Size(max = 64)
     // @JsonProperty("familyContactMobileNumber")

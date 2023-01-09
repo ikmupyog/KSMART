@@ -11,14 +11,14 @@ serviceMaps:
       queryMaps:
         - query: >-
             INSERT INTO
-            public.eg_death_dtls_registry(id,registrationunit,tenantid,correct_death_date_known,dateofdeath,
+            public.eg_death_dtls_registry(id,registrationunit,tenantid,death_date_unavailable,dateofdeath,
             time_of_death, timeofdeath_unit, date_of_death_to, time_of_death_to,
-            timeofdeath_unit_to, deceased_identified, deceased_title,
+            timeofdeath_unit_to, deceased_unidentified, deceased_title,
             deceased_firstname_en, deceased_firstname_ml,
             deceased_middlename_en, deceased_middlename_ml,
             deceased_lastname_en, deceased_lastname_ml, deceased_aadhar_number,
             deceased_gender, age, age_unit, dateofbirth, death_place,
-            death_place_inst_type, death_place_inst_id, death_place_office_name,
+            death_place_inst_type, death_place_inst_id, death_place_officer_name,
             death_place_other_ml, death_place_other_en, informant_title,
             informant_name_en, informant_name_ml, informant_aadhar_submitted,
             informant_aadhar_no, informant_mobile_no, general_remarks,
@@ -48,14 +48,14 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.id
             - jsonPath: $.deathCertificateDtls.*.registrationUnit
             - jsonPath: $.deathCertificateDtls.*.tenantId
-            - jsonPath: $.deathCertificateDtls.*.correctDeathDateKnown
+            - jsonPath: $.deathCertificateDtls.*.deathDateUnavailable
             - jsonPath: $.deathCertificateDtls.*.dateOfDeath
             - jsonPath: $.deathCertificateDtls.*.timeOfDeath
             - jsonPath: $.deathCertificateDtls.*.timeOfDeathUnit
             - jsonPath: $.deathCertificateDtls.*.dateOfDeath1
             - jsonPath: $.deathCertificateDtls.*.timeOfDeath1
             - jsonPath: $.deathCertificateDtls.*.timeOfDeathUnit1
-            - jsonPath: $.deathCertificateDtls.*.deceasedIdentified
+            - jsonPath: $.deathCertificateDtls.*.deceasedUnIdentified
             - jsonPath: $.deathCertificateDtls.*.deceasedTitle
             - jsonPath: $.deathCertificateDtls.*.deceasedFirstNameEn
             - jsonPath: $.deathCertificateDtls.*.deceasedFirstNameMl
@@ -71,7 +71,7 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.deathPlace
             - jsonPath: $.deathCertificateDtls.*.deathPlaceType
             - jsonPath: $.deathCertificateDtls.*.deathPlaceInstId
-            - jsonPath: $.deathCertificateDtls.*.deathPlaceOfficeName
+            - jsonPath: $.deathCertificateDtls.*.deathPlaceOfficerName
             - jsonPath: $.deathCertificateDtls.*.deathPlaceOtherMl
             - jsonPath: $.deathCertificateDtls.*.deathPlaceOtherEn
             - jsonPath: $.deathCertificateDtls.*.informantTitle
@@ -468,15 +468,15 @@ serviceMaps:
         - query: >-
             UPDATE public.eg_death_dtls_registry SET registrationunit = ?,
             tenantid = ?,application_no = ?, file_no = ?,
-            correct_death_date_known = ?, dateofdeath = ?, time_of_death = ?,
+            death_date_unavailable = ?, dateofdeath = ?, time_of_death = ?,
             timeofdeath_unit = ?, date_of_death_to = ? , time_of_death_to = ?,
-            timeofdeath_unit_to = ?, deceased_identified = ?, deceased_title =
+            timeofdeath_unit_to = ?, deceased_unidentified = ?, deceased_title =
             ?, deceased_firstname_en = ?, deceased_firstname_ml = ?,
             deceased_middlename_en = ?, deceased_middlename_ml = ?,
             deceased_lastname_en = ?, deceased_lastname_ml = ?,
             deceased_aadhar_number = ?, deceased_gender = ?, age = ?, age_unit =
             ?, dateofbirth = ?, death_place = ?, death_place_inst_type = ?,
-            death_place_inst_id = ?, death_place_office_name = ?,
+            death_place_inst_id = ?, death_place_officer_name = ?,
             death_place_other_ml = ?, death_place_other_en = ?, informant_title
             = ?, informant_name_en = ?, informant_name_ml = ?,
             informant_aadhar_submitted = ?, informant_aadhar_no = ?,
@@ -504,14 +504,14 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.tenantId
             - jsonPath: $.deathCertificateDtls.*.deathApplicationNo
             - jsonPath: $.deathCertificateDtls.*.fileNumber
-            - jsonPath: $.deathCertificateDtls.*.correctDeathDateKnown
+            - jsonPath: $.deathCertificateDtls.*.deathDateUnavailable
             - jsonPath: $.deathCertificateDtls.*.dateOfDeath
             - jsonPath: $.deathCertificateDtls.*.timeOfDeath
             - jsonPath: $.deathCertificateDtls.*.timeOfDeathUnit
             - jsonPath: $.deathCertificateDtls.*.dateOfDeath1
             - jsonPath: $.deathCertificateDtls.*.timeOfDeath1
             - jsonPath: $.deathCertificateDtls.*.timeOfDeathUnit1
-            - jsonPath: $.deathCertificateDtls.*.deceasedIdentified
+            - jsonPath: $.deathCertificateDtls.*.deceasedUnIdentified
             - jsonPath: $.deathCertificateDtls.*.deceasedTitle
             - jsonPath: $.deathCertificateDtls.*.deceasedFirstNameEn
             - jsonPath: $.deathCertificateDtls.*.deceasedFirstNameMl
@@ -527,7 +527,7 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.deathPlace
             - jsonPath: $.deathCertificateDtls.*.deathPlaceType
             - jsonPath: $.deathCertificateDtls.*.deathPlaceInstId
-            - jsonPath: $.deathCertificateDtls.*.deathPlaceOfficeName
+            - jsonPath: $.deathCertificateDtls.*.deathPlaceOfficerName
             - jsonPath: $.deathCertificateDtls.*.deathPlaceOtherMl
             - jsonPath: $.deathCertificateDtls.*.deathPlaceOtherEn
             - jsonPath: $.deathCertificateDtls.*.informantTitle
