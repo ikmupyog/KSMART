@@ -1,138 +1,139 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, CheckBox } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
+import PlaceOfDeathHome from "./PlaceOfDeathHome";
 
 const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-  const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
-  const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-  const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
-  const [lbs, setLbs] = useState(0);
-  const [isInitialRender, setIsInitialRender] = useState(true);
+  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+  // const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
+  // const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+  // const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+  // const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+  // const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
+  // const [lbs, setLbs] = useState(0);
+  // const [isInitialRender, setIsInitialRender] = useState(true);
   const [ApplicantNameEn, setApplicantNameEn] = useState(formData?.ApplicantDetails?.ApplicantNameEn);
   const [ApplicantNameMl, setApplicantNameMl] = useState(formData?.ApplicantDetails?.ApplicantNameMl);
-  const [setTitle, setSelectedTitle] = useState(formData?.ApplicantDetails?.setTitle);
-  const [setVillage, setSelectedVillage] = useState(formData?.ApplicantDetails?.setVillage);
-  const [setTaluk, setSelectedTaluk] = useState(formData?.ApplicantDetails?.setTaluk);
-  const [PresentDistrict, setSelectedPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
-  const [StateName, setSelectedStateName] = useState(formData?.AddressDetails?.StateName); 
-  const [BuildingNo, setBuildingNo] = useState(formData?.ApplicantDetails?.BuildingNo);
-  const [HouseNo, setHouseNo] = useState(formData?.ApplicantDetails?.HouseNo);
-  const [HouseNameEn, setHouseNameEn] = useState(formData?.ApplicantDetails?.HouseNameEn);
-  const [HouseNameMl, setHouseNameMl] = useState(formData?.ApplicantDetails?.HouseNameMl);
-  const [StreetNameMl, setStreetNameMl] = useState(formData?.ApplicantDetails?.StreetNameMl);
-  const [StreetNameEn, setStreetNameEn] = useState(formData?.ApplicantDetailss?.StreetNameEn);
-  const [Locality, setLocality] = useState(formData?.ApplicantDetails?.Locality);
-  const [LocalityMl, setLocalityMl] = useState(formData?.ApplicantDetails?.LocalityMl);
-  const [MainPlaceEn, setMainPlaceEn] = useState(formData?.ApplicantDetails?.MainPlaceEn);  
-  const [MainPlaceMl, setMainPlaceMl] = useState(formData?.ApplicantDetails?.MainPlaceMl);
-  const [ViaEn, setViaEn] = useState(formData?.ApplicantDetails?.ViaEn);
-  const [ViaMl, setViaMl] = useState(formData?.ApplicantDetails?.ViaMl);
-  const [PinCode, setPinCode] = useState(formData?.ApplicantDetails?.PinCode);
-  const [setPostOffice, setSelectedPostOffice] = useState(formData?.ApplicantDetails?.setPostOffice);
-  const [PresentLBName, setSelectedPresentLBName] = useState(formData?.ApplicantDetails?.PresentLBName);  
+  // const [setTitle, setSelectedTitle] = useState(formData?.ApplicantDetails?.setTitle);
+  // const [setVillage, setSelectedVillage] = useState(formData?.ApplicantDetails?.setVillage);
+  // const [setTaluk, setSelectedTaluk] = useState(formData?.ApplicantDetails?.setTaluk);
+  // const [PresentDistrict, setSelectedPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
+  // const [StateName, setSelectedStateName] = useState(formData?.AddressDetails?.StateName); 
+  // const [BuildingNo, setBuildingNo] = useState(formData?.ApplicantDetails?.BuildingNo);
+  // const [HouseNo, setHouseNo] = useState(formData?.ApplicantDetails?.HouseNo);
+  // const [HouseNameEn, setHouseNameEn] = useState(formData?.ApplicantDetails?.HouseNameEn);
+  // const [HouseNameMl, setHouseNameMl] = useState(formData?.ApplicantDetails?.HouseNameMl);
+  // const [StreetNameMl, setStreetNameMl] = useState(formData?.ApplicantDetails?.StreetNameMl);
+  // const [StreetNameEn, setStreetNameEn] = useState(formData?.ApplicantDetailss?.StreetNameEn);
+  // const [Locality, setLocality] = useState(formData?.ApplicantDetails?.Locality);
+  // const [LocalityMl, setLocalityMl] = useState(formData?.ApplicantDetails?.LocalityMl);
+  // const [MainPlaceEn, setMainPlaceEn] = useState(formData?.ApplicantDetails?.MainPlaceEn);  
+  // const [MainPlaceMl, setMainPlaceMl] = useState(formData?.ApplicantDetails?.MainPlaceMl);
+  // const [ViaEn, setViaEn] = useState(formData?.ApplicantDetails?.ViaEn);
+  // const [ViaMl, setViaMl] = useState(formData?.ApplicantDetails?.ViaMl);
+  // const [PinCode, setPinCode] = useState(formData?.ApplicantDetails?.PinCode);
+  // const [setPostOffice, setSelectedPostOffice] = useState(formData?.ApplicantDetails?.setPostOffice);
+  // const [PresentLBName, setSelectedPresentLBName] = useState(formData?.ApplicantDetails?.PresentLBName);  
   const [AadhaarNo, setAadhaarNo] = useState(formData?.ApplicantDetails?.AadhaarNo);
   const [InformentMobileNo, setInformentMobileNo] = useState(formData?.ApplicantDetails?.InformentMobileNo);
   const [InformentEmail, setInformentEmail] = useState(formData?.ApplicantDetails?.InformentEmail);  
-  const [InformentOfAge, setInformentOfAge] = useState(formData?.ApplicantDetails?.InformentOfAge);
+  // const [InformentOfAge, setInformentOfAge] = useState(formData?.ApplicantDetails?.InformentOfAge);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  let districtid = null;
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
-  let cmbVillage = [];
-  let cmbTaluk = [];
-  let cmbDistrict = [];
-  Village &&
-    Village["common-masters"] &&
-    Village["common-masters"].Village.map((ob) => {
-      cmbVillage.push(ob);
-    });
-  Taluk &&
-    Taluk["common-masters"] &&
-    Taluk["common-masters"].Taluk.map((ob) => {
-      cmbTaluk.push(ob);
-    });
-  District &&
-    District["common-masters"] &&
-    District["common-masters"].District.map((ob) => {
-      cmbDistrict.push(ob);
-    });
+  // let cmbPlace = [];
+  // let districtid = null;
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
+  // let cmbVillage = [];
+  // let cmbTaluk = [];
+  // let cmbDistrict = [];
+  // Village &&
+  //   Village["common-masters"] &&
+  //   Village["common-masters"].Village.map((ob) => {
+  //     cmbVillage.push(ob);
+  //   });
+  // Taluk &&
+  //   Taluk["common-masters"] &&
+  //   Taluk["common-masters"].Taluk.map((ob) => {
+  //     cmbTaluk.push(ob);
+  //   });
+  // District &&
+  //   District["common-masters"] &&
+  //   District["common-masters"].District.map((ob) => {
+  //     cmbDistrict.push(ob);
+  //   });
 
-  let cmbTitle = [];
-  title &&
-    title["common-masters"] &&
-    title["common-masters"].Title.map((ob) => {
-      cmbTitle.push(ob);
-    });
+  // let cmbTitle = [];
+  // title &&
+  //   title["common-masters"] &&
+  //   title["common-masters"].Title.map((ob) => {
+  //     cmbTitle.push(ob);
+  //   });
 
   const onSkip = () => onSelect();
 
-  function setSelectPresentDistrict(value) {
-    setIsInitialRender(true);
-    setPresentDistrict(value);
-    setPresentLBName(null);
-    setLbs(null);
-    districtid = value.districtid;
-  }
-  function setSelectStateName(value) {
-    setStateName(value);
-  }
-  function setSelectPresentLBName(value) {
-    setPresentLBName(value);
-  }
-  function setSelectBuildingNo(e) {
-    setBuildingNo(e.target.value);
-  }
-  function setSelectHouseNameEn(e) {
-    setHouseNameEn(e.target.value);
-  }
-  function setSelectHouseNameMl(e) {
-    setHouseNameMl(e.target.value);
-  }
-  function setSelectHouseNo(e) {
-    setHouseNo(e.target.value);
-  }
+  // function setSelectPresentDistrict(value) {
+  //   setIsInitialRender(true);
+  //   setPresentDistrict(value);
+  //   setPresentLBName(null);
+  //   setLbs(null);
+  //   districtid = value.districtid;
+  // }
+  // function setSelectStateName(value) {
+  //   setStateName(value);
+  // }
+  // function setSelectPresentLBName(value) {
+  //   setPresentLBName(value);
+  // }
+  // function setSelectBuildingNo(e) {
+  //   setBuildingNo(e.target.value);
+  // }
+  // function setSelectHouseNameEn(e) {
+  //   setHouseNameEn(e.target.value);
+  // }
+  // function setSelectHouseNameMl(e) {
+  //   setHouseNameMl(e.target.value);
+  // }
+  // function setSelectHouseNo(e) {
+  //   setHouseNo(e.target.value);
+  // }
   
-  function setSelectLocality(e) {
-    setLocality(e.target.value);
-  }
-  function setSelectLocalityMl(e) {
-    setLocalityMl(e.target.value);
-  }
-  function setSelectStreetNameMl(e) {
-    setStreetNameMl(e.target.value);
-  }
-  function setSelectStreetNameEn(e) {
-    setStreetNameEn(e.target.value);
-  }
+  // function setSelectLocality(e) {
+  //   setLocality(e.target.value);
+  // }
+  // function setSelectLocalityMl(e) {
+  //   setLocalityMl(e.target.value);
+  // }
+  // function setSelectStreetNameMl(e) {
+  //   setStreetNameMl(e.target.value);
+  // }
+  // function setSelectStreetNameEn(e) {
+  //   setStreetNameEn(e.target.value);
+  // }
   
-  function setSelectMainPlaceEn(e) {
-    setMainPlaceEn(e.target.value);
-  }
-  function setSelectMainPlaceMl(e) {
-    setMainPlaceMl(e.target.value);
-  }
-  function setSelectViaEn(e) {
-    setViaEn(e.target.value);
-  }
-  function setSelectViaMl(e) {
-    setViaMl(e.target.value);
-  }
-  function setSelectPinCode(e) {
-    setPinCode(e.target.value);
-  }
+  // function setSelectMainPlaceEn(e) {
+  //   setMainPlaceEn(e.target.value);
+  // }
+  // function setSelectMainPlaceMl(e) {
+  //   setMainPlaceMl(e.target.value);
+  // }
+  // function setSelectViaEn(e) {
+  //   setViaEn(e.target.value);
+  // }
+  // function setSelectViaMl(e) {
+  //   setViaMl(e.target.value);
+  // }
+  // function setSelectPinCode(e) {
+  //   setPinCode(e.target.value);
+  // }
   function setSelectApplicantNameEn(e) {
     setApplicantNameEn(e.target.value);
   }
@@ -149,101 +150,99 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
     setInformentEmail(e.target.value);
   }
   
-  function setSelectInformentOfAge(e) {
-    setInformentOfAge(e.target.value);
-  }
 
-  function selectTitle(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedTitle(value);
-  }
 
-  function selectVillage(value) {
-    setSelectedVillage(value);
-  }
+  // function selectTitle(value) {
+  //   naturetypecmbvalue = value.code.substring(0, 4);
+  //   setSelectedTitle(value);
+  // }
+
+  // function selectVillage(value) {
+  //   setSelectedVillage(value);
+  // }
    
-  function selectTaluk(value) {
-    setSelectedTaluk(value);
-  }
-  function selectDistrict(value) {
-    setSelectPresentDistrict(value);
-  }
-  function selectPostOffice(value) {
-    setSelectedPostOffice(value);
-  }
-  function selectPresentLbName(value) {
-    setSelectedPresentLbName(value);
-  }
-  function selectStateName(value) {
-    setSelectedStateName(value);
-  }
+  // function selectTaluk(value) {
+  //   setSelectedTaluk(value);
+  // }
+  // function selectDistrict(value) {
+  //   setSelectPresentDistrict(value);
+  // }
+  // function selectPostOffice(value) {
+  //   setSelectedPostOffice(value);
+  // }
+  // function selectPresentLbName(value) {
+  //   setSelectedPresentLbName(value);
+  // }
+  // function selectStateName(value) {
+  //   setSelectedStateName(value);
+  // }
   
  
-  useEffect(() => {
-    if (isInitialRender) {
-      console.log("PresentDistrict" + districtid);
-      console.log(localbodies);
-      if (PresentDistrict) {
-        setIsInitialRender(false);
-        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
-      }
-    }
-  }, [lbs, isInitialRender]);
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     console.log("PresentDistrict" + districtid);
+  //     console.log(localbodies);
+  //     if (PresentDistrict) {
+  //       setIsInitialRender(false);
+  //       setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
+  //     }
+  //   }
+  // }, [lbs, isInitialRender]);
   const goNext = () => {
-    sessionStorage.setItem("setStateName", setStateName ? setStateName.code : null);
-    sessionStorage.setItem("setVillage", setVillage ? setVillage.code : null);
-    sessionStorage.setItem("setTaluk", setTaluk ? setTaluk.code : null);
-    sessionStorage.setItem("PresentDistrict", PresentDistrict ? PresentDistrict.code : null);
-    sessionStorage.setItem("BuildingNo", BuildingNo);
-    sessionStorage.setItem("HouseNo", HouseNo);
-    sessionStorage.setItem("StreetNameEn", StreetNameEn);
-    sessionStorage.setItem("StreetNameMl", StreetNameMl);    
-    sessionStorage.setItem("HouseNameEn", HouseNameEn);
-    sessionStorage.setItem("HouseNameMl", HouseNameMl);
-    sessionStorage.setItem("Locality", Locality);
-    sessionStorage.setItem("LocalityMl", LocalityMl);
-    sessionStorage.setItem("MainPlaceEn", MainPlaceEn);
-    sessionStorage.setItem("MainPlaceMl",MainPlaceMl);
-    sessionStorage.setItem("ViaMl",ViaMl);
-    sessionStorage.setItem("ViaEn",ViaEn);
-    sessionStorage.setItem("PinCode", PinCode);
-    sessionStorage.setItem("setPostOffice", setPostOffice ? setPostOffice.code : null);
-    sessionStorage.setItem("PresentLBName", null);
+    // sessionStorage.setItem("setStateName", setStateName ? setStateName.code : null);
+    // sessionStorage.setItem("setVillage", setVillage ? setVillage.code : null);
+    // sessionStorage.setItem("setTaluk", setTaluk ? setTaluk.code : null);
+    // sessionStorage.setItem("PresentDistrict", PresentDistrict ? PresentDistrict.code : null);
+    // sessionStorage.setItem("BuildingNo", BuildingNo);
+    // sessionStorage.setItem("HouseNo", HouseNo);
+    // sessionStorage.setItem("StreetNameEn", StreetNameEn);
+    // sessionStorage.setItem("StreetNameMl", StreetNameMl);    
+    // sessionStorage.setItem("HouseNameEn", HouseNameEn);
+    // sessionStorage.setItem("HouseNameMl", HouseNameMl);
+    // sessionStorage.setItem("Locality", Locality);
+    // sessionStorage.setItem("LocalityMl", LocalityMl);
+    // sessionStorage.setItem("MainPlaceEn", MainPlaceEn);
+    // sessionStorage.setItem("MainPlaceMl",MainPlaceMl);
+    // sessionStorage.setItem("ViaMl",ViaMl);
+    // sessionStorage.setItem("ViaEn",ViaEn);
+    // sessionStorage.setItem("PinCode", PinCode);
+    // sessionStorage.setItem("setPostOffice", setPostOffice ? setPostOffice.code : null);
+    // sessionStorage.setItem("PresentLBName", null);
     sessionStorage.setItem("ApplicantNameEn",  ApplicantNameEn);
     sessionStorage.setItem("ApplicantNameMl", ApplicantNameMl);
-    sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);    
+    // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);    
     sessionStorage.setItem("AadhaarNo", AadhaarNo);    
     sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
     sessionStorage.setItem("InformentEmail", InformentEmail);    
-    sessionStorage.setItem("InformentOfAge", InformentOfAge);
+    // sessionStorage.setItem("InformentOfAge", InformentOfAge);
 
     onSelect(config.key, {
-      setVillage,
-      setTaluk,
-      PresentDistrict,
-      BuildingNo,
-      HouseNo,
-      HouseNameEn,
-      HouseNameMl,
-      StreetNameEn,
-      StreetNameMl,
-      Locality,
-      LocalityMl,
-      MainPlaceMl,
-      MainPlaceEn,
-      ViaEn,
-      ViaMl,
-      PinCode,
-      setStateName,
-      setPostOffice,
-      PresentLBName,
+      // setVillage,
+      // setTaluk,
+      // PresentDistrict,
+      // BuildingNo,
+      // HouseNo,
+      // HouseNameEn,
+      // HouseNameMl,
+      // StreetNameEn,
+      // StreetNameMl,
+      // Locality,
+      // LocalityMl,
+      // MainPlaceMl,
+      // MainPlaceEn,
+      // ViaEn,
+      // ViaMl,
+      // PinCode,
+      // setStateName,
+      // setPostOffice,
+      // PresentLBName,
       ApplicantNameEn,
       ApplicantNameMl,
-      setTitle,      
+      // setTitle,      
       AadhaarNo,      
       InformentMobileNo,
       InformentEmail,
-      InformentOfAge,
+      // InformentOfAge,
     });
   };
   return (
@@ -251,7 +250,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled = {!ApplicantNameEn}>
         <div className="row">
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
             <Dropdown
               t={t}
@@ -263,7 +262,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
               disabled={isEdit}
               placeholder={`${t("CR_TITLE_NAME_EN")}`}
             />
-          </div>
+          </div> */}
           <div className="col-md-4">
             <CardLabel>
               {t("CR_APPLICANT_NAME_EN")}
@@ -354,7 +353,13 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
 
-        <div className="row">
+        
+        <div>
+        <div>
+        <PlaceOfDeathHome />
+        </div>
+        </div>
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>
@@ -682,7 +687,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^([0-9]){6}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_PIN_CODE") })}
             />
           </div>
-        </div>
+        </div> */}
       </FormStep>
     </React.Fragment>
   );

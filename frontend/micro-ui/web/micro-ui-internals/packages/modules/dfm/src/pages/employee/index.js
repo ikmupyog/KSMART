@@ -22,6 +22,7 @@ const DFMBreadCrumb = ({ location }) => {
   const isAddressDetails = location?.pathname?.includes("file-flow/create/AddressDetails");
   const isServiceDetails = location?.pathname?.includes("file-flow/create/ServiceDetails");
   const isDocumentDetails = location?.pathname?.includes("file-flow/create/DocumentDetails");
+  const isCheckPage = location?.pathname?.includes("file-flow/create/check");
   const isApplicationSearch = location?.pathname?.includes("search/application");
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
@@ -139,6 +140,12 @@ const DFMBreadCrumb = ({ location }) => {
       // path: "/digit-ui/employee/dfm/trade-lisense",
       content: t("Document details"),
       show: breadCrumbUrls.includes("file-flow/create/DocumentDetails") || isDocumentDetails
+    },
+    {
+      path: "/digit-ui/employee/dfm/file-flow/create/check",
+      // path: "/digit-ui/employee/dfm/trade-lisense",
+      content: t("Check Page"),
+      show: breadCrumbUrls.includes("file-flow/create/check") || isCheckPage
     },
     {
       path: "/digit-ui/employee/dfm/search/application",
