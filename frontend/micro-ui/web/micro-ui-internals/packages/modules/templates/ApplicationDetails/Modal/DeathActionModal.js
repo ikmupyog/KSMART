@@ -40,7 +40,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     {
       details: {
         tenantId: Digit.ULBService.getStateId(),
-        moduleDetails: [{ moduleName: "egf-master", masterDetails: [{ name: "FinancialYear", filter: "[?(@.module == 'birth-services')]" }] }],
+        moduleDetails: [{ moduleName: "egf-master", masterDetails: [{ name: "FinancialYear", filter: "[?(@.module == 'death-services')]" }] }],
       },
     }
   );
@@ -110,7 +110,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
         : null,
     };
     submitAction({
-      BirthDetails: [applicationData],
+      deathCertificateDtls: [applicationData],
     });
   }
 

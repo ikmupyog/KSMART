@@ -9,6 +9,7 @@ import BPAActionModal from "./BPAActionModal";
 import NOCActionModal from "./NOCActionModal";
 
 const ActionModal = (props) => {
+  console.log("businessService" + props?.businessService);
   if (props?.businessService.includes("PT")) {
     return <PTActionModal {...props} />;
   }

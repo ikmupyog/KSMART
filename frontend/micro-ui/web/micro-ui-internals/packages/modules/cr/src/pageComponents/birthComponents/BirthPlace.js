@@ -23,7 +23,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo);
   const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.BirthPlace?.SignedOfficerMobileNo);
 
-
   const [setInstitution, setSelectedInstitution] = useState(formData?.BirthPlace?.setInstitution);
   const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.BirthPlace?.setInstitutionId);
   const [SiginedOfficer, setSiginedOfficer] = useState(formData?.BirthPlace?.SiginedOfficer);
@@ -110,34 +109,34 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   }, [isInitialRender]);
   const goNext = () => {
     sessionStorage.setItem("BirthPlace", BirthPlace.code);
-    sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
-    sessionStorage.setItem("SignedOfficerName", SignedOfficerName.hospitalName);
-    sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
-    sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo.SignedOfficerAadharNo);
-     sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo.SignedOfficerMobileNo);
+    sessionStorage.setItem("HospitalName",HospitalName ? HospitalName.hospitalName : null);
+    sessionStorage.setItem("SignedOfficerName",SignedOfficerName ? SignedOfficerName.hospitalName : null);
+    sessionStorage.setItem("SignedOfficerDesignation",SignedOfficerDesignation ? SignedOfficerDesignation.hospitalName : null);
+    sessionStorage.setItem("SignedOfficerAadharNo",SignedOfficerAadharNo ? SignedOfficerAadharNo.SignedOfficerAadharNo : null);
+    sessionStorage.setItem("SignedOfficerMobileNo",SignedOfficerMobileNo ? SignedOfficerMobileNo.SignedOfficerMobileNo : null);
     //sessionStorage.setItem("BirthPlaceDescription", BirthPlaceDescription);
 
 
-    sessionStorage.setItem("setInstitution", setInstitution.setInstitution);
-    sessionStorage.setItem("setInstitutionId", setInstitutionId.setInstitutionId);
-    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer.SiginedOfficer);
-    sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation.SiginedOfficerDesignation);
-    sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo.InstitutionMobilNo);
-    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar.InstitutionAadhaar);  
+    sessionStorage.setItem("setInstitution",setInstitution ? setInstitution.setInstitution : null);
+    sessionStorage.setItem("setInstitutionId",setInstitutionId ? setInstitutionId.setInstitutionId : null);
+    sessionStorage.setItem("setSiginedOfficer",SiginedOfficer ? SiginedOfficer.SiginedOfficer : null);
+    sessionStorage.setItem("setSiginedOfficerDesignation",SiginedOfficerDesignation ? SiginedOfficerDesignation.SiginedOfficerDesignation : null);
+    sessionStorage.setItem("setInstitutionMobilNo",InstitutionMobilNo ? InstitutionMobilNo.InstitutionMobilNo : null);
+    sessionStorage.setItem("setInstitutionAadhaar",InstitutionAadhaar ? InstitutionAadhaar.InstitutionAadhaar : null);  
 
 
-    sessionStorage.setItem("DriverName", DriverName); 
-    sessionStorage.setItem("DriverMobileNo", DriverMobileNo);   
-    sessionStorage.setItem("DriverAadhar", DriverAadhar);
-    sessionStorage.setItem("VehicleType", VehicleType);
-    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);      
-    sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
-    sessionStorage.setItem("VehicleToEn", VehicleToEn);  
-    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt); 
+    sessionStorage.setItem("DriverName", DriverName ? DriverName : null); 
+    sessionStorage.setItem("DriverMobileNo", DriverMobileNo ? DriverMobileNo : null);   
+    sessionStorage.setItem("DriverAadhar", DriverAadhar ? DriverAadhar : null);
+    sessionStorage.setItem("VehicleType", VehicleType ? VehicleType : null);
+    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null);      
+    sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);  
+    sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);  
+    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt ? VehiclePlaceFirstHalt : null); 
 
     onSelect(config.key, { BirthPlace, HospitalName,SignedOfficerName ,SignedOfficerDesignation ,SignedOfficerAadharNo ,SignedOfficerMobileNo,
-      setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,DriverName ,DriverMobileNo,
-      DriverAadhar, VehicleType,VehicleRegistrationNo,VehicleFromEn,VehicleToEn,VehiclePlaceFirstHalt,
+      setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,
+      DriverName ,DriverMobileNo,DriverAadhar, VehicleType,VehicleRegistrationNo,VehicleFromEn,VehicleToEn,VehiclePlaceFirstHalt,
     });
   }
   return (

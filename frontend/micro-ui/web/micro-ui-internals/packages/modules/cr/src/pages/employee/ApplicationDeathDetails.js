@@ -19,7 +19,7 @@ const ApplicationDeathDetails = () => {
   sessionStorage.setItem("applicationNo", applicationNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNo);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, applicationNo);
 
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
@@ -30,7 +30,7 @@ const ApplicationDeathDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useApplicationDeathActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   console.log(applicationDetails?.applicationData.tenantid);
@@ -186,7 +186,7 @@ const ApplicationDeathDetails = () => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="birth-services"
+        moduleCode="death-services"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
