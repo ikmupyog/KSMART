@@ -503,8 +503,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null} 
-     <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep
         t={t}
         config={config}
@@ -539,7 +539,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_COUNTRY")}`}
                 <span className="mandatorycss">*</span>
@@ -554,7 +554,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_STATE")}`}
                 <span className="mandatorycss">*</span>
@@ -569,12 +569,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
               />
             </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_DISTRICT")}
                 <span className="mandatorycss">*</span>
@@ -591,7 +586,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
               />
             </div>
 
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
               <Dropdown
                 t={t}
@@ -605,9 +600,10 @@ const Address = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
+
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_LB_NAME")}
                 <span className="mandatorycss">*</span>
@@ -623,7 +619,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_LB_NAME")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_VILLAGE")}
                 <span className="mandatorycss">*</span>
@@ -639,7 +635,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_VILLAGE")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_TALUK")}
                 <span className="mandatorycss">*</span>
@@ -655,14 +651,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_TALUK")}`}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-          {/* <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
-                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PresentWardNo} select={setSelectPresentWard}  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })} />
-                </div> */}
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -678,7 +667,15 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
-            <div className="col-md-6">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+          {/* <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PresentWardNo} select={setSelectPresentWard}  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })} />
+                </div> */}
+           
+            <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
                 <span className="mandatorycss">*</span>
@@ -703,12 +700,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 })}
               />
             </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>
                 {t("CR_MAIN_PLACE_EN")}
                 <span className="mandatorycss">*</span>
@@ -726,7 +718,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>
                 {t("CR_MAIN_PLACE_ML")}
                 <span className="mandatorycss">*</span>
@@ -863,7 +855,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-2">
               <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
               <TextInput
                 t={t}
@@ -878,7 +870,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-2">
               <CardLabel>
                 {t("CR_DOOR_NO")}
                 <span className="mandatorycss">*</span>
@@ -896,7 +888,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-2">
               <CardLabel>{t("CR_RES_ASSOCIATION_NO")}</CardLabel>
               <TextInput
                 t={t}
@@ -961,7 +953,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {`${t("CS_COMMON_COUNTRY")}`}
                   <span className="mandatorycss">*</span>
@@ -976,7 +968,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   disabled={isEdit}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {`${t("CS_COMMON_STATE")}`}
                   <span className="mandatorycss">*</span>
@@ -991,12 +983,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   disabled={isEdit}
                 />
               </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_DISTRICT")}
                   <span className="mandatorycss">*</span>
@@ -1012,7 +999,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_DISTRICT")}`}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                 <Dropdown
                   t={t}
@@ -1026,9 +1013,10 @@ const Address = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
+
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_LB_NAME")}
                   <span className="mandatorycss">*</span>
@@ -1044,7 +1032,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_LB_NAME")}`}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_VILLAGE")}
                   <span className="mandatorycss">*</span>
@@ -1060,7 +1048,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_VILLAGE")}`}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_TALUK")}
                   <span className="mandatorycss">*</span>
@@ -1076,14 +1064,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_TALUK")}`}
                 />
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-            {/* <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
-                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PermanentWardNo} select={setSelectPermanentWard}  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })} />
-                </div> */}
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_POST_OFFICE")}
                   <span className="mandatorycss">*</span>
@@ -1099,7 +1080,15 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                 />
               </div>
-              <div className="col-md-6">
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+            {/* <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PermanentWardNo} select={setSelectPermanentWard}  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })} />
+                </div> */}
+             
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_PIN_CODE")}
                   <span className="mandatorycss">*</span>
@@ -1124,11 +1113,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   })}
                 />
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_MAIN_PLACE_EN")}
                   <span className="mandatorycss">*</span>
@@ -1146,7 +1131,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_MAIN_PLACE_ML")}
                   <span className="mandatorycss">*</span>
@@ -1166,7 +1151,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-
+          
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
@@ -1290,7 +1275,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-4">
+              <div className="col-md-2">
                 <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
                 <TextInput
                   t={t}
@@ -1305,7 +1290,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-2">
                 <CardLabel>
                   {t("CR_DOOR_NO")}
                   <span className="mandatorycss">*</span>
@@ -1323,7 +1308,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-2">
                 <CardLabel>{t("CR_RES_ASSOCIATION_NO")}</CardLabel>
                 <TextInput
                   t={t}
