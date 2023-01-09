@@ -7,7 +7,7 @@ import { Header,CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
-const ApplicationDetails = () => {
+const ApplicationDeathDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber } = useParams();
@@ -19,7 +19,7 @@ const ApplicationDetails = () => {
   sessionStorage.setItem("applicationNumber", applicationNumber)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, applicationNumber);
 
   const stateId = Digit.ULBService.getStateId();
   // const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
@@ -176,7 +176,7 @@ const ApplicationDetails = () => {
     <div >
       <div /* style={{marginLeft: "15px"}} */>
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
-        <CardHeader>{`${t("Birth Application Summary Details")}`}</CardHeader>
+        <CardHeader>{`${t("Death Application Summary Details")}`}</CardHeader>
       </div>
       <ApplicationDetailsTemplate
         applicationDetails={applicationDetails}
@@ -196,4 +196,4 @@ const ApplicationDetails = () => {
   );
 };
 
-export default ApplicationDetails;
+export default ApplicationDeathDetails;

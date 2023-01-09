@@ -22,6 +22,7 @@ const SearchRoute = ({ parentUrl }) => {
 
   const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
   const ApplicationDetails = Digit?.ComponentRegistryService?.getComponent('CRApplicationDetails');
+  const ApplicationDeathDetails = Digit?.ComponentRegistryService?.getComponent('CRApplicationDeathDetails');
   return (
     <React.Fragment>
       <Switch>
@@ -32,6 +33,8 @@ const SearchRoute = ({ parentUrl }) => {
         <PrivateRoute path={`${path}/birthsearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/deathsearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
+        <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} /> 
+
       </Switch>
     </React.Fragment>
   );

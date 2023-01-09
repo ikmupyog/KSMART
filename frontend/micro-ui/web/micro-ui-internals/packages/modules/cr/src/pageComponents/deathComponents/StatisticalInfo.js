@@ -138,7 +138,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">

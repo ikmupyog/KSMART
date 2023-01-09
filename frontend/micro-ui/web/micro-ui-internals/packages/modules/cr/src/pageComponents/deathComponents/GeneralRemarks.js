@@ -23,7 +23,7 @@ const GeneralRemarks = ({ config, onSelect, userType, formData }) => {
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">

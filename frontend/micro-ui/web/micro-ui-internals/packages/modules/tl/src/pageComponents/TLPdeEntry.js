@@ -5,7 +5,9 @@ import { useParams } from "react-router-dom";
 // import Timeline from "../components/TLTimeline";
 // import { sortDropdownNames } from "../utils/index";
 import { useQueryClient } from "react-query";
-const TLPdeEntry = ({ t, config, onSelect, formData }) => {
+const TLPdeEntry = ({ t, config, onSelect, formData,isEdit }) => {
+  console.log(isEdit);
+  console.log(JSON.stringify(formData));
   let validation = {};
   const queryClient = useQueryClient();
   // const [name, setIndividualName] = useState(formData.address?.IndividualName);
@@ -15,7 +17,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
   // const [ownershipCategory, setOwnershipCategory] = useState(formData?.ownershipCategory);
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [WardNo, setWardNo] = useState(formData.TradeDetails?.address?.wardno);
-  const [licensingInstitutionName, setLicensingInstitution] = useState(formData.TradeDetails?.tradeName ? formData.TradeDetails?.tradeName : "");
+  const [licensingInstitutionName, setLicensingInstitution] = useState(formData?.tradeName ? formData?.tradeName : "");
   const { data: yearList = {}, isLoadyear } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialYear");
   const { data: periodList = {}, isLoadPeriod } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialPeriod");
 
@@ -28,8 +30,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData }) => {
 
   const [BuildingstallNo, setBuildingstallNo] = useState(formData.TradeDetails?.BuildingstallNo);
   const { data: sector = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "EnterpriseType");
-  const [Sector, setSelectedSector] = useState(formData?.TradeDetails?.setSector);
-  const [capitalAmount, setCapitalAmount] = useState(formData.TradeDetails?.capitalAmount ? formData.TradeDetails?.capitalAmount : "");
+  const [Sector, setSelectedSector] = useState(formData?.tradeLicenseDetail?.businessSector);
+  const [capitalAmount, setCapitalAmount] = useState(formData?.capitalInvestment ? formData?.capitalInvestment : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderRadio, setIsInitialRenderRadio] = useState(true);
   const [value2, setValue2] = useState();

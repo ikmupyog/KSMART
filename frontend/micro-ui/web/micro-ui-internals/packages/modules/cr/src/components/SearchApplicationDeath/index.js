@@ -71,13 +71,13 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     const columns = useMemo( () => ([
         {
           Header: t("CR_COMMON_COL_APP_NO"),
-          accessor: "applicationno",
+          accessor: "deathApplicationNo",
           disableSortBy: true,
           Cell: ({ row }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.deathApplicationNo}`}>
+                  <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
                     {row.original.deathApplicationNo}
                   </Link>
                 </span>
