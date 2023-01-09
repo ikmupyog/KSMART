@@ -198,9 +198,9 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/edit-application-details/:id`} component={(props) => <ReNewApplication {...props} header={t("TL_ACTION_RESUBMIT")} parentRoute={path} />} />
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
-          <PrivateRoute path={`${path}/pde-application`} component={() => <PdeApplication parentUrl={url} />} />
+          <PrivateRoute path={`${path}/pde-application`} component={() => <PdeApplication parentUrl={url} isEdit={false} />} />
           <PrivateRoute path={`${path}/pde-search`} component={() => <SearchPde parentUrl={url} />} />
-          <PrivateRoute path={`${path}/pde-editapplication`} component={() => <PdeApplication parentUrl={url} />} />
+          <PrivateRoute path={`${path}/pde-editapplication`} component={() => <PdeApplication parentUrl={url} isEdit={true}/>} />	
         </div>
       </React.Fragment>
     </Switch>
