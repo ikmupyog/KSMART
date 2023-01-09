@@ -744,6 +744,7 @@ export const newConfig = [
       },
       {
         route: "place-of-death",
+        isMandatory: true,
         component: "PlaceOfDeath",
         texts: {
           headerCaption: "",
@@ -760,6 +761,7 @@ export const newConfig = [
       },
       {
         route: "address-of-decesed",
+        isMandatory: true,
         component: "AddressOfDecesed",
         texts: {
           headerCaption: "",

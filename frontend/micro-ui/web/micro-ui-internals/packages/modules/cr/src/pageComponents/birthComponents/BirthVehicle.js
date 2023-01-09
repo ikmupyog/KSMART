@@ -3,7 +3,10 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, BackBut
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const BirthVehicle = ({ config, onSelect, userType, formData }) => {
+const BirthVehicle = ({ config, onSelect, userType, formData ,DriverName, setDriverName,DriverMobileNo, setDriverMobileNo,DriverAadhar, setDriverAadhar,
+  VehicleType, setVehicleType,VehicleRegistrationNo, setVehicleRegistrationNo,VehicleFromEn, setVehicleFromEn,VehicleToEn, setVehicleToEn,VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt,
+
+}) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
@@ -16,14 +19,14 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   console.log(boundaryList);
   // const [WardNo, setWardNo] = useState(formData.BirthVehicleDetails?.wardno);
-  const [DriverName, setDriverName] = useState(formData?.BirthVehicleDetails?.DriverName);
-  const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthVehicleDetails?.DriverMobileNo);
-  const [DriverAadhar, setDriverAadhar] = useState(formData?.BirthVehicleDetails?.DriverAadhar);
-  const [VehicleType, setVehicleType] = useState(formData?.BirthVehicleDetails?.VehicleType);
-  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthVehicleDetails?.VehicleRegistrationNo);  
-  const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthVehicleDetails?.setVehicleFromEn);
-  const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthVehicleDetails?.setSelectVehicleToEn);  
-  const [VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt] = useState(formData?.BirthVehicleDetails?.VehiclePlaceFirstHalt); 
+  // const [DriverName, setDriverName] = useState(formData?.BirthVehicleDetails?.DriverName);
+  // const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthVehicleDetails?.DriverMobileNo);
+  // const [DriverAadhar, setDriverAadhar] = useState(formData?.BirthVehicleDetails?.DriverAadhar);
+  // const [VehicleType, setVehicleType] = useState(formData?.BirthVehicleDetails?.VehicleType);
+  // const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthVehicleDetails?.VehicleRegistrationNo);  
+  // const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthVehicleDetails?.setVehicleFromEn);
+  // const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthVehicleDetails?.setSelectVehicleToEn);  
+  // const [VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt] = useState(formData?.BirthVehicleDetails?.VehiclePlaceFirstHalt); 
 
 
   let cmbhospital = [];
@@ -93,30 +96,30 @@ const BirthVehicle = ({ config, onSelect, userType, formData }) => {
   }  
 
   const goNext = () => {    
-    sessionStorage.setItem("DriverName", DriverName);    
-    sessionStorage.setItem("DriverMobileNo", DriverMobileNo);   
-    sessionStorage.setItem("DriverAadhar", DriverAadhar);
-    sessionStorage.setItem("VehicleType", VehicleType);
-    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);      
-    sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
-    sessionStorage.setItem("VehicleToEn", VehicleToEn);  
-    // sessionStorage.setItem("Ward", Ward.code);
-    sessionStorage.setItem("HospitalName", HospitalName.hospitalName);  
-    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt);     
+    // sessionStorage.setItem("DriverName", DriverName);    
+    // sessionStorage.setItem("DriverMobileNo", DriverMobileNo);   
+    // sessionStorage.setItem("DriverAadhar", DriverAadhar);
+    // sessionStorage.setItem("VehicleType", VehicleType);
+    // sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);      
+    // sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
+    // sessionStorage.setItem("VehicleToEn", VehicleToEn);  
+    // // sessionStorage.setItem("Ward", Ward.code);
+    // sessionStorage.setItem("HospitalName", HospitalName.hospitalName);  
+    // sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt);     
     
-    onSelect(config.key, {     
-      DriverName,    
-      DriverMobileNo,
-      DriverAadhar,
-      VehicleType,
-      VehicleRegistrationNo,     
-      VehicleFromEn,
-      VehicleToEn,
-      // ward,     
-      HospitalName,
-      VehiclePlaceFirstHalt,
+    // onSelect(config.key, {     
+    //   DriverName,    
+    //   DriverMobileNo,
+    //   DriverAadhar,
+    //   VehicleType,
+    //   VehicleRegistrationNo,     
+    //   VehicleFromEn,
+    //   VehicleToEn,
+    //   // ward,     
+    //   HospitalName,
+    //   VehiclePlaceFirstHalt,
       
-     });
+    //  });
   };
   return (
     <React.Fragment>

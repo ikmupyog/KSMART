@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
@@ -33,6 +33,7 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
     subtype: [],
     functionality: [],
   });
+  console.log('fn',MajorFunction,FunctionDet);
   const [showError, setShowError] = useState(false);
   //   console.log(state);
   let modules = state.common.modules;
@@ -66,31 +67,47 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
       setShowError(true);
     }
   };
+  let cmbMinorFunction = [];
+  let cmbMajorFunction = [];
+  useEffect(() => {
+    if (FunctionDet?.mainCode) {
+      MinorFunction &&
+        MinorFunction["FileManagement"] &&
+        MinorFunction["FileManagement"].MinorFunction.filter((item) => {
+          // cmbMinorFunction.push(ob);
 
+          if (item?.subCode === FunctionDet?.mainCode) {
+            cmbMinorFunction.push(item);
+          }
+        });
+    }
+  }, [FunctionDet]);
+  useEffect(() => {
+    if (SubFunctionDet?.mainCode) {
+    
+    MajorFunction &&
+    MajorFunction["FileManagement"] &&
+    MajorFunction["FileManagement"].MajorFunction.filter((item) => {
+          if (item?.code === SubFunctionDet?.mainCode) {
+            cmbMajorFunction.push(item);
+          }
+        });
+    }
+  }, [SubFunctionDet]);
   let cmbSubFunction = [];
   SubFunction &&
     SubFunction["FileManagement"] &&
     SubFunction["FileManagement"].SubFunction.map((ob) => {
       cmbSubFunction.push(ob);
     });
-  let cmbMajorFunction = [];
-  MajorFunction &&
-    MajorFunction["FileManagement"] &&
-    MajorFunction["FileManagement"].MajorFunction.map((ob) => {
-      cmbMajorFunction.push(ob);
-    });
+  
   let cmbFunction = [];
   Function &&
     Function["FileManagement"] &&
     Function["FileManagement"].Function.map((ob) => {
       cmbFunction.push(ob);
     });
-  let cmbMinorFunction = [];
-  MinorFunction &&
-    MinorFunction["FileManagement"] &&
-    MinorFunction["FileManagement"].MinorFunction.map((ob) => {
-      cmbMinorFunction.push(ob);
-    });
+ 
 
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
@@ -99,15 +116,17 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
     }
     function setSelectSubFunctionDet(value) {
       setSubFunctionDet(value);
+      setMajorFunctionDet([])
     }
     function setSelectFunctionDet(value) {
       setFunctionDet(value);
+      setMinorFunctionDet([])
     }
     function setSelectMinorFunctionDet(value) {
       setMinorFunctionDet(value);
     }
 
-    const goNext = () => {
+    const goNext = () => { 
       // if(subtypeData.subtype?.value && subtypeData.functionality?.value){
       handleNext();
       // }else{
@@ -117,7 +136,6 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
       // onSelect(config.key, { applicationData });
       // console.log("d", applicationData);
     };
-   
     return code === "DFM" ? (
       <React.Fragment>
         {/* <div className="moduleLinkHomePage">
@@ -154,13 +172,14 @@ selectOptions={functionalityOptions}
 <div ><CardLabel>{`${t("Minor Function")}`}<span className="mandatorycss">*</span></CardLabel>
   <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMinorFunction} selected={MinorFunctionDet} select={setSelectMinorFunctionDet} />
 </div>
+<div ><CardLabel>{`${t("Sub Function")}`}<span className="mandatorycss">*</span></CardLabel>
+  <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbSubFunction} selected={SubFunctionDet} select={setSelectSubFunctionDet} />
+  </div>
 <div>
   <CardLabel>{`${t("Major Function")}`}<span className="mandatorycss">*</span></CardLabel>
     <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMajorFunction} selected={MajorFunctionDet} select={setSelectMajorFunctionDet} />
 </div>
- <div ><CardLabel>{`${t("Sub Function")}`}<span className="mandatorycss">*</span></CardLabel>
-  <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbSubFunction} selected={SubFunctionDet} select={setSelectSubFunctionDet} />
-  </div>
+
 {showError ? <CardLabelError>{t("DFM_SELECT_FIELDS")}</CardLabelError> : null}
 <SubmitBar label={t("CS_COMMON_NEXT")} onSubmit={onSubmit} />
 </div>

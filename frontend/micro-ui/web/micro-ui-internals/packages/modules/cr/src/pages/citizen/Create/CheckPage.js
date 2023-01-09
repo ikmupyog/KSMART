@@ -1,4 +1,13 @@
-import {Card,CardLabel ,CardSubHeader,  CardText,CitizenInfoLabel,LinkButton,  Row, StatusTable, SubmitBar,  
+import {
+  Card,
+  CardLabel,
+  CardSubHeader,
+  CardText,
+  CitizenInfoLabel,
+  LinkButton,
+  Row,
+  StatusTable,
+  SubmitBar,
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -31,12 +40,22 @@ const getPath = (path, params) => {
   return path;
 };
 
-const CheckPage = ({ onSubmit, value,userType }) => {
+const CheckPage = ({ onSubmit, value, userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { ChildDetails, BirthPlace, HospitalDetails, FatherInfoDetails, MotherInfoDetails, AddressDetails, StatisticalInfoDetails, isEditProperty, cpt } = value;
+  const {
+    ChildDetails,
+    BirthPlace,
+    HospitalDetails,
+    FatherInfoDetails,
+    MotherInfoDetails,
+    AddressDetails,
+    StatisticalInfoDetails,
+    isEditProperty,
+    cpt,
+  } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -44,17 +63,17 @@ const CheckPage = ({ onSubmit, value,userType }) => {
     }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
-  let routeLink = '';
+  let routeLink = "";
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
   //   routeLink = `${getPath(match.path, match.params)}`;
   //   routeLink = routeLink.replace("/check", "");
   // }
-  
-  if(window.location.href.includes("/citizen")=="citizen"){
-    userType="citizen";
-  } else{
-    userType="employee";
+
+  if (window.location.href.includes("/citizen") == "citizen") {
+    userType = "citizen";
+  } else {
+    userType = "employee";
   }
   console.log(value);
   return (
@@ -62,40 +81,56 @@ const CheckPage = ({ onSubmit, value,userType }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
-      <label style={{ fontSize: "17px", fontWeight: "bold" }} >{t("CR_REG_SUMMARY_HEADING")}</label>
+        <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label>
         <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span></h1>
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>
+            </h1>
           </div>
         </div>
-        <StatusTable >
+        <StatusTable>
           <div className="row">
-             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.ChildDOB)}</CardText>
             </div>
-           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.Gender.value)}</CardText>
             </div>
           </div>
           <div className="row">
-             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.BirthPlace.name)}</CardText>
             </div>
-           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(HospitalDetails.HospitalName.hospitalName)}</CardText>
             </div>
           </div>
           <div className="row">
-             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FatherInfoDetails.FatherFirstNameEn)}&nbsp;{t(FatherInfoDetails.FatherLastNameEn)}</CardText>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                {t(FatherInfoDetails.FatherFirstNameEn)}&nbsp;{t(FatherInfoDetails.FatherLastNameEn)}
+              </CardText>
             </div>
-           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(MotherInfoDetails.MotherFirstNameEn)}&nbsp;{t(MotherInfoDetails.MotherLastNameEn)}</CardText>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>
+                {t(MotherInfoDetails.MotherFirstNameEn)}&nbsp;{t(MotherInfoDetails.MotherLastNameEn)}
+              </CardText>
             </div>
           </div>
           <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}></span>
+              </h1>
+            </div>
           </div>
-        </div> 
         </StatusTable>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>

@@ -11,6 +11,9 @@ const Home = () => {
   const tenantId = Digit.ULBService.getCitizenCurrentTenant(true);
   const { data: { stateInfo } = {}, isLoading } = Digit.Hooks.useStore.getInitData();
 
+  const handleClick = () => {
+    history.push('/my-component')
+  }
   const conditionsToDisableNotificationCountTrigger = () => {
     if (Digit.UserService?.getUser()?.info?.type === "EMPLOYEE") return false;
     if (!Digit.UserService?.getUser()?.access_token) return false;
@@ -59,7 +62,8 @@ const Home = () => {
       {
         name: t("ACTION_TEST_BIRTH"),
         Icon: <OBPSIcon />,
-        onClick: () => history.push("/citizen/birth-common/"),
+        // onClick: () => history.push("/citizen/birth-common/"),
+        onClick:()=>{handleClick},
       },
       {
         name: t("ACTION_TEST_DEATH"),
