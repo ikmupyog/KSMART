@@ -122,12 +122,12 @@ public class TradeLicensePdeService {
         /*
          * call workflow service if it's enable else uses internal workflow process
          */
-        // switch (businessServicefromPath) {
-        // case businessService_TL:
-        // if (config.getIsExternalWorkFlowEnabled())
-        // wfIntegrator.callWorkFlow(tradeLicenseRequest);
-        // break;
-        // }
+        switch (businessServicefromPath) {
+            case businessService_TL:
+                if (config.getIsExternalWorkFlowEnabled())
+                    wfIntegrator.callWorkFlow(tradeLicenseRequest);
+                break;
+        }
         repository.savePde(tradeLicenseRequest);
 
         return tradeLicenseRequest.getLicenses();
@@ -440,15 +440,18 @@ public class TradeLicensePdeService {
                 businessServiceName = tradeType;
                 break;
         }
-        BusinessService businessService = workflowService.getBusinessService(
-                tradeLicenseRequest.getLicenses().get(0).getTenantId(), tradeLicenseRequest.getRequestInfo(),
-                businessServiceName);
+        // BusinessService businessService = workflowService.getBusinessService(
+        // tradeLicenseRequest.getLicenses().get(0).getTenantId(),
+        // tradeLicenseRequest.getRequestInfo(),
+        // businessServiceName);
         // List<TradeLicense> searchResult =
         // getLicensesWithOwnerInfo(tradeLicenseRequest);
 
         // validateLatestApplicationCancellation(tradeLicenseRequest, businessService);
 
-        enrichmentPdeService.enrichTLUpdateRequest(tradeLicenseRequest, businessService);
+        enrichmentPdeService.enrichTLUpdateRequest(tradeLicenseRequest);
+        // enrichmentPdeService.enrichTLUpdateRequest(tradeLicenseRequest,
+        // businessService);
         // tlValidator.validateUpdate(tradeLicenseRequest, searchResult, mdmsData);
         // switch (businessServicefromPath) {
         // case businessService_BPA:

@@ -186,7 +186,7 @@ public class EnrichmentPdeService {
                 tradeLicense.setAccountId(requestInfo.getUserInfo().getUuid());
 
         });
-        // setIdgenIds(tradeLicenseRequest);
+        setIdgenIds(tradeLicenseRequest);
         setStatusForCreate(tradeLicenseRequest);
         String businessService = tradeLicenseRequest.getLicenses().isEmpty() ? null
                 : tradeLicenseRequest.getLicenses().get(0).getBusinessService();
@@ -422,7 +422,7 @@ public class EnrichmentPdeService {
      * 
      * @param tradeLicenseRequest The input update request
      */
-    public void enrichTLUpdateRequest(TradeLicenseRequest tradeLicenseRequest, BusinessService businessService) {
+    public void enrichTLUpdateRequest(TradeLicenseRequest tradeLicenseRequest) {
         RequestInfo requestInfo = tradeLicenseRequest.getRequestInfo();
         AuditDetails auditDetails = tradeUtil.getAuditDetails(requestInfo.getUserInfo().getUuid(), true);
         tradeLicenseRequest.getLicenses().forEach(tradeLicense -> {
