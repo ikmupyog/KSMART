@@ -48,8 +48,9 @@ export const CRsearch = {
     return response.BirthDetails;
   },
 
-  applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    const filter = { applicationNumber };
+  applicationDetails: async (t, tenantId, applicationNo, userType) => {
+    console.log("applicationNo" + applicationNo);
+    const filter = { applicationNo };
     const response = await CRsearch.application(tenantId, filter);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&

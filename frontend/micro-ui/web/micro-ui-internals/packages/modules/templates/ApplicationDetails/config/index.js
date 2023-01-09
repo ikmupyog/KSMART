@@ -6,6 +6,7 @@ import { configAcceptDso } from "./AcceptDso";
 import { configPTApproverApplication } from "./PTApproverApplication";
 import { configPTAssessProperty } from "./PTAssessProperty";
 import { configTLApproverApplication } from "./TLApproverApplication";
+import { configBirthApproverApplication } from "./BirthApproverApplication";
 import { configBPAREGApproverApplication } from "./BPAREGApproverApplication";
 import { configBPAApproverApplication } from "./BPAApproverApplication";
 import { configNOCApproverApplication } from "./NOCApproverApplication";
@@ -19,6 +20,7 @@ export {
   configPTApproverApplication,
   configPTAssessProperty,
   configTLApproverApplication,
+  configBirthApproverApplication,
   configBPAREGApproverApplication,
   configBPAApproverApplication,
   configNOCApproverApplication
