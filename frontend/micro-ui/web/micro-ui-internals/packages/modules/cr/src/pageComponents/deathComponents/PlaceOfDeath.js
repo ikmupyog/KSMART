@@ -8,9 +8,9 @@ import PlaceOfDeathHome from "../../pageComponents/deathComponents/PlaceOfDeathH
 import PlaceOfDeathVehicle from "../../pageComponents/deathComponents/PlaceOfDeathVehicle";
 import PlaceOfDeathOther from "../../pageComponents/deathComponents/PlaceOfDeathOther";
 import InformentAddress from "../../pageComponents/deathComponents/InformentAddress";
-// import PlaceOfDeathHome from "../../pageComponents/deathComponents/PlaceOfDeathHome";
 
 const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -18,10 +18,19 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [setPlaceofDeath, setSelectedPlaceofDeath] = useState(formData?.PlaceOfDeath?.setPlaceofDeath);
   const [value, setValue] = useState();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  // const [TradeName, setTradeName] = useState(null);
-  // const [CommencementDate, setCommencementDate] = useState();
-  // let naturetypecmbvalue = null;
-  let cmbPlace = [];
+  // Death Place Hospital
+   
+  
+  const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.PlaceOfDeath?.SignedOfficerName);
+  const [HospitalName, selectHospitalName] = useState(formData?.PlaceOfDeath?.HospitalName);
+  const [setDesignation, setSelectedDesignation] = useState(formData?.PlaceOfDeath?.setDesignation);
+  const [HospitalAadhaar, setHospitalAadhaar] = useState(formData?.PlaceOfDeath?.HospitalAadhaar);
+  const [HospitalMobile, setHospitalMobile] = useState(formData?.PlaceOfDeath?.HospitalMobile);
+
+  const [value1, setValue1] = useState();
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  let naturetype = null;
+   let cmbPlace = [];
   place &&
     place["death-services"] &&
     place["death-services"].PlaceMaster.map((ob) => {
@@ -36,16 +45,39 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     setValue(value.code);
   }
   
-  // function setSelectTradeName(e) {
-  //   setTradeName(e.target.value);
-  // }
-  // function selectCommencementDate(value) {
-  //   setCommencementDate(value);
-  // }
-
+  React.useEffect(() => {
+    if (isInitialRender) {
+      if (cmbPlace) {
+        setIsInitialRender(false);
+        naturetype = cmbPlace.code;
+        setValue(naturetype);
+        // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(naturetype)));
+        if (naturetype === "HOSPITAL") {
+          <HospitalDetails   
+          HospitalName={HospitalName} 
+          SignedOfficerName={SignedOfficerName}
+          setDesignation={setDesignation}
+          HospitalAadhaar={HospitalAadhaar}
+          HospitalMobile={HospitalMobile}
+          />
+        }       
+       
+      }
+    }
+  }, [isInitialRender]);
   const goNext = () => {
     sessionStorage.setItem("setPlaceofDeath", setPlaceofDeath?setPlaceofDeath.code:null);
-    onSelect(config.key, { setPlaceofDeath });
+    sessionStorage.setItem("SignedOfficerName", SignedOfficerName);
+    sessionStorage.setItem("HospitalName", HospitalName);
+    sessionStorage.setItem("setDesignation", setDesignation.code);
+    sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar);
+    sessionStorage.setItem("HospitalMobile", HospitalMobile);
+
+    onSelect(config.key, { setPlaceofDeath,SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile });
+
+
+
+
   };
   return (
     <React.Fragment>
@@ -81,7 +113,13 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     
           {value === "HOSPITAL" && (
                     <div>
-                   <PlaceOfDeathHospital />
+                   <PlaceOfDeathHospital 
+                    
+                                selectHospitalName={selectHospitalName} HospitalName={HospitalName}
+                                selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName}
+                                setSelectedDesignation={setSelectedDesignation}  setDesignation={setDesignation}
+                                setHospitalAadhaar={setHospitalAadhaar} HospitalAadhaar={setHospitalAadhaar}
+                                setHospitalMobile={setHospitalMobile} HospitalMobile={HospitalMobile} />
                    </div>)
           }
           {value === "INSTITUTION" && (
@@ -93,7 +131,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                     <div>
                    <PlaceOfDeathHome />                 
                   <InformentAddress />
-                  <PlaceOfDeathHome />
+                  {/* <PlaceOfDeathHome /> */}
                   
                  </div>               
                     
@@ -103,7 +141,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                     <div>
                    <PlaceOfDeathVehicle />
                    <InformentAddress />
-                    <PlaceOfDeathHome />
+                    {/* <PlaceOfDeathHome /> */}
                   </div>)
           }
           {value === "PUBLIC_PLACES" && (

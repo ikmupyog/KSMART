@@ -15,6 +15,7 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 //   setOutside(true);
 // };
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
