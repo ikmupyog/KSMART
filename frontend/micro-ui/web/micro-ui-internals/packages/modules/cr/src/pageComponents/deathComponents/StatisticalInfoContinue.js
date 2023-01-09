@@ -12,7 +12,9 @@ import {
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
+const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
+  console.log(formData);
+
   const stateId = Digit.ULBService.getStateId();
   const menu = [
     { i18nKey: "YES", code: "YES" },
@@ -62,11 +64,9 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
   const [setCauseOfDeathSub, setSelectedCauseOfDeathSub] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeathSub);
   // const [setFemaleDeathPregnant, setSelectedFemaleDeathPregnant] = useState(formData?.StatisticalInfoContinue?.setFemaleDeathPregnant);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
   const [CauseOfDeath, setSelectedCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.CauseOfDeath);
   const [alcoholyears, setSelectedalcoholyears] = useState(formData?.StatisticalInfoContinue?.alcoholyears);
 
-  const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbPlace = [];
   place &&
@@ -328,7 +328,5 @@ const StatisticalInfoContonue = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-function Textbox() {
-  return <input type="text" placeholder="Enter something here" />;
-}
-export default StatisticalInfoContonue;
+
+export default StatisticalInfoContinue;

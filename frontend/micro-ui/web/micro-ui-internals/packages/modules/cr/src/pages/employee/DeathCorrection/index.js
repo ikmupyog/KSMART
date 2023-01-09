@@ -75,14 +75,14 @@ const DeathCorrection = ({ tenantId, onSubmit, data, count }) => {
     () => [
       {
         Header: t("TL_TRADE_LICENSE_LABEL"),
-        accessor: "licenseNumber",
+        accessor: "deathApplicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
             <div>
               <span className="link">
-                <a href={`/digit-ui/employee/tl/application-details/${row.original["applicationNumber"]}?renewalPending=true`}>
-                  {row.original["licenseNumber"]}
+                <a href={`/digit-ui/employee/tl/application-details/${row.original["deathApplicationNo"]}?renewalPending=true`}>
+                  {row.original["deathApplicationNo"]}
                 </a>
               </span>
             </div>

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import PlaceOfDeathHome from "./PlaceOfDeathHome";
 
 const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -22,7 +23,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   // const [setVillage, setSelectedVillage] = useState(formData?.ApplicantDetails?.setVillage);
   // const [setTaluk, setSelectedTaluk] = useState(formData?.ApplicantDetails?.setTaluk);
   // const [PresentDistrict, setSelectedPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
-  // const [StateName, setSelectedStateName] = useState(formData?.AddressDetails?.StateName); 
+  // const [StateName, setSelectedStateName] = useState(formData?.AddressDetails?.StateName);
   // const [BuildingNo, setBuildingNo] = useState(formData?.ApplicantDetails?.BuildingNo);
   // const [HouseNo, setHouseNo] = useState(formData?.ApplicantDetails?.HouseNo);
   // const [HouseNameEn, setHouseNameEn] = useState(formData?.ApplicantDetails?.HouseNameEn);
@@ -31,16 +32,16 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   // const [StreetNameEn, setStreetNameEn] = useState(formData?.ApplicantDetailss?.StreetNameEn);
   // const [Locality, setLocality] = useState(formData?.ApplicantDetails?.Locality);
   // const [LocalityMl, setLocalityMl] = useState(formData?.ApplicantDetails?.LocalityMl);
-  // const [MainPlaceEn, setMainPlaceEn] = useState(formData?.ApplicantDetails?.MainPlaceEn);  
+  // const [MainPlaceEn, setMainPlaceEn] = useState(formData?.ApplicantDetails?.MainPlaceEn);
   // const [MainPlaceMl, setMainPlaceMl] = useState(formData?.ApplicantDetails?.MainPlaceMl);
   // const [ViaEn, setViaEn] = useState(formData?.ApplicantDetails?.ViaEn);
   // const [ViaMl, setViaMl] = useState(formData?.ApplicantDetails?.ViaMl);
   // const [PinCode, setPinCode] = useState(formData?.ApplicantDetails?.PinCode);
   // const [setPostOffice, setSelectedPostOffice] = useState(formData?.ApplicantDetails?.setPostOffice);
-  // const [PresentLBName, setSelectedPresentLBName] = useState(formData?.ApplicantDetails?.PresentLBName);  
+  // const [PresentLBName, setSelectedPresentLBName] = useState(formData?.ApplicantDetails?.PresentLBName);
   const [AadhaarNo, setAadhaarNo] = useState(formData?.ApplicantDetails?.AadhaarNo);
   const [InformentMobileNo, setInformentMobileNo] = useState(formData?.ApplicantDetails?.InformentMobileNo);
-  const [InformentEmail, setInformentEmail] = useState(formData?.ApplicantDetails?.InformentEmail);  
+  const [InformentEmail, setInformentEmail] = useState(formData?.ApplicantDetails?.InformentEmail);
   // const [InformentOfAge, setInformentOfAge] = useState(formData?.ApplicantDetails?.InformentOfAge);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -105,7 +106,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   // function setSelectHouseNo(e) {
   //   setHouseNo(e.target.value);
   // }
-  
+
   // function setSelectLocality(e) {
   //   setLocality(e.target.value);
   // }
@@ -118,7 +119,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   // function setSelectStreetNameEn(e) {
   //   setStreetNameEn(e.target.value);
   // }
-  
+
   // function setSelectMainPlaceEn(e) {
   //   setMainPlaceEn(e.target.value);
   // }
@@ -149,8 +150,6 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   function setSelectInformentEmail(e) {
     setInformentEmail(e.target.value);
   }
-  
-
 
   // function selectTitle(value) {
   //   naturetypecmbvalue = value.code.substring(0, 4);
@@ -160,7 +159,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   // function selectVillage(value) {
   //   setSelectedVillage(value);
   // }
-   
+
   // function selectTaluk(value) {
   //   setSelectedTaluk(value);
   // }
@@ -176,8 +175,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   // function selectStateName(value) {
   //   setSelectedStateName(value);
   // }
-  
- 
+
   // useEffect(() => {
   //   if (isInitialRender) {
   //     console.log("PresentDistrict" + districtid);
@@ -196,7 +194,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
     // sessionStorage.setItem("BuildingNo", BuildingNo);
     // sessionStorage.setItem("HouseNo", HouseNo);
     // sessionStorage.setItem("StreetNameEn", StreetNameEn);
-    // sessionStorage.setItem("StreetNameMl", StreetNameMl);    
+    // sessionStorage.setItem("StreetNameMl", StreetNameMl);
     // sessionStorage.setItem("HouseNameEn", HouseNameEn);
     // sessionStorage.setItem("HouseNameMl", HouseNameMl);
     // sessionStorage.setItem("Locality", Locality);
@@ -208,12 +206,12 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
     // sessionStorage.setItem("PinCode", PinCode);
     // sessionStorage.setItem("setPostOffice", setPostOffice ? setPostOffice.code : null);
     // sessionStorage.setItem("PresentLBName", null);
-    sessionStorage.setItem("ApplicantNameEn",  ApplicantNameEn);
+    sessionStorage.setItem("ApplicantNameEn", ApplicantNameEn);
     sessionStorage.setItem("ApplicantNameMl", ApplicantNameMl);
-    // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);    
-    sessionStorage.setItem("AadhaarNo", AadhaarNo);    
+    // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
+    sessionStorage.setItem("AadhaarNo", AadhaarNo);
     sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
-    sessionStorage.setItem("InformentEmail", InformentEmail);    
+    sessionStorage.setItem("InformentEmail", InformentEmail);
     // sessionStorage.setItem("InformentOfAge", InformentOfAge);
 
     onSelect(config.key, {
@@ -238,8 +236,8 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
       // PresentLBName,
       ApplicantNameEn,
       ApplicantNameMl,
-      // setTitle,      
-      AadhaarNo,      
+      // setTitle,
+      AadhaarNo,
       InformentMobileNo,
       InformentEmail,
       // InformentOfAge,
@@ -248,7 +246,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled = {!ApplicantNameEn}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ApplicantNameEn}>
         <div className="row">
           {/* <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
@@ -301,40 +299,39 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
 
-       
         <div className="row">
-        <div className="col-md-12">
-          <div className="col-md-4">
-            <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="AadhaarNo"
-              value={AadhaarNo}
-              onChange={setSelectAadhaarNo}
-              disable={isEdit}
-              placeholder={`${t("CS_COMMON_AADHAAR")}`}
-              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-            />
-          </div>          
-          <div className="col-md-4">
-            <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="InformentMobileNo"
-              value={InformentMobileNo}
-              onChange={setSelectInformentMobileNo}
-              disable={isEdit}
-              placeholder={`${t("CR_MOBILE_NO")}`}
-              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
-            />
-          </div>
-          <div className="col-md-4">
+          <div className="col-md-12">
+            <div className="col-md-4">
+              <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="AadhaarNo"
+                value={AadhaarNo}
+                onChange={setSelectAadhaarNo}
+                disable={isEdit}
+                placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="InformentMobileNo"
+                value={InformentMobileNo}
+                onChange={setSelectInformentMobileNo}
+                disable={isEdit}
+                placeholder={`${t("CR_MOBILE_NO")}`}
+                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
+              />
+            </div>
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_EMAIL")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -349,15 +346,12 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
               />
             </div>
-        
           </div>
         </div>
-
-        
         <div>
-        <div>
-        <PlaceOfDeathHome />
-        </div>
+          <div>
+            <PlaceOfDeathHome />
+          </div>
         </div>
         {/* <div className="row">
           <div className="col-md-12">

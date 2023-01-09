@@ -10,6 +10,7 @@ import PlaceOfDeathOther from "../../pageComponents/deathComponents/PlaceOfDeath
 import InformentAddress from "../../pageComponents/deathComponents/InformentAddress";
 
 const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
