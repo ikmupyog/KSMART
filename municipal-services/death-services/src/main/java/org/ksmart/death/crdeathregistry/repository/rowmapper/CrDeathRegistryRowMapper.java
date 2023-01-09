@@ -113,7 +113,9 @@ public class CrDeathRegistryRowMapper implements ResultSetExtractor<List<CrDeath
                                         .deceasedIdproofNo(rs.getString("deceased_idproofno"))
                                         .deceasedIdproofType(rs.getString("deceased_idprooftype"))
                                         .deathApplicationNo(rs.getString("application_no"))
-                                        .deathACKNo(rs.getString("ack_no"))   
+                                        .deathACKNo(rs.getString("ack_no")) 
+                                        //Rakhi S ikm on 09.01.2023 
+                                        .registrationDate(rs.getLong("registration_date")) 
                                         .auditDetails(getAuditDetails(rs))
                                         .statisticalInfo(rowMapper.extractData(rs))
                                         .addressInfo(getCrDeathAddressInfo(rs))
