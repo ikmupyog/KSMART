@@ -270,7 +270,7 @@ export const gettradeupdateaccessories = (data) => {
 }
 export const convertToFileSubmission = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
-  console.log(data);
+  console.log('filesub data',data);
   const formdata = {
     ApplicantPersonals: [
       {
@@ -279,9 +279,9 @@ export const convertToFileSubmission = (data = {}) => {
         email:  data?.ApplicantDetails?.Email, 
         firstName:  data?.ApplicantDetails?.FirstName,     
         lastName:  data?.ApplicantDetails?.LastName,
-        title:  data?.ApplicantDetails?.Title.code, 
+        title:  data?.ApplicantDetails?.Title?.code, 
         mobileNo:  data?.ApplicantDetails?.MobileNo, 
-        tenantId: "kl",
+        tenantId: Digit.ULBService.getCitizenCurrentTenant(),
         fatherFirstName:data?.ApplicantDetails?.FatherFirstName,
         fatherLastName:data?.ApplicantDetails?.FatherLastName,
         motherFirstName:data?.ApplicantDetails?.MotherFirstName,
@@ -310,11 +310,11 @@ export const convertToFileSubmission = (data = {}) => {
           houseName:data?.AddressDet?.HouseName, 
           street:data?.AddressDet?.StreetName, 
           pincode:data?.AddressDet?.Pincode, 
-          postOfficeName:data?.AddressDet?.PostOfficeList.code, 
+          postOfficeName:data?.AddressDet?.PostOfficeList?.code, 
           residenceAssociationNo:data?.AddressDet?.ResAssociationNo, 
           localPlace:data?.AddressDet?.LocalPlace, 
           mainPlace:data?.AddressDet?.MainPlace, 
-          wardNo: data?.AddressDet?.WardNo.code, 
+          wardNo: data?.AddressDet?.WardNo?.code, 
         },
         applicantServiceDocuments: {
           applicantPersonalId: '23',

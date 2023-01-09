@@ -51,7 +51,7 @@ const EmployeeCheckPage = ({ onSubmit, value }) => {
   //   routeLink = `${getPath(match.path, match.params)}`;
   //   routeLink = routeLink.replace("/check", "");
   // }
-  console.log("value" + ApplicantDetails?.FirstName);
+  console.log("value" + ApplicantDetails?.FirstName,AddressDet,ServiceDet,GetCUrrentDate());
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
@@ -75,7 +75,7 @@ const EmployeeCheckPage = ({ onSubmit, value }) => {
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.AadharNo)}</CardText>
             </div>
             <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Category")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList.name)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.CategoryList?.name)}</CardText>
             </div>
           </div>
           <div className="row">
@@ -90,6 +90,25 @@ const EmployeeCheckPage = ({ onSubmit, value }) => {
             </div>
             <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Mobile No")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ApplicantDetails?.MobileNo)}</CardText>
+            </div>
+          </div>
+          <div className="row">
+          <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Service Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t('Residential Certificate')}</CardText>
+            </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Building No")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(AddressDet?.BuildingNo)}</CardText>
+            </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Owner Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ServiceDet?.OwnerName)}</CardText>
+            </div>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Occupier Name")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ServiceDet?.NameOccupier)}</CardText>
+            </div>
+          </div>
+          <div className="row">
+          <div className="col-md-8" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Application Date")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{new Date().toLocaleDateString()}</CardText>
             </div>
           </div>
           <div className="row">
