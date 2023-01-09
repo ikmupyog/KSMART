@@ -26,7 +26,7 @@ const BannerPicker = (props) => {
     <Banner
       message={GetActionMessage(props)}
       applicationNumber={props.data?.ApplicantPersonals[0]?.fileDetail.fileCode}
-      info={props.isSuccess ? props.t("KL-FM-2022-11-23-000139") : ""}
+      info={props.isSuccess ? props.data?.ApplicantPersonals[0]?.fileDetail.fileCode:props.t("KL-FM-2022-11-23-000139")}
       successful={props.isSuccess}
     />
   );

@@ -149,9 +149,9 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
       Taluk,
     });
   };
-  if (isLoading) {
-    return <Loader></Loader>;
-  }
+  // if (isLoading) {
+  //   return <Loader></Loader>;
+  // }
 
   return (
     <React.Fragment>
@@ -424,6 +424,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   optionKey="name"
                   isMandatory={false}
+                  // option={cmbPostOffice}
                   option={cmbVillage}
                   selected={Village}
                   placeholder={`${t("DFM_VILLAGE")}`}
@@ -436,6 +437,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   optionKey="name"
                   isMandatory={false}
+                  // option={cmbPostOffice}
                   option={cmbTaluk}
                   selected={Taluk}
                   placeholder={`${t("DFM_TALUK")}`}
