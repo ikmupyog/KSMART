@@ -20,9 +20,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [ChildMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.ChildMiddleNameMl);
   const [ChildLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.ChildLastNameMl);
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
-  const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);  
-  // const [isMotherInfo, setIsMotherInfo] = useState(formData?.ChildDetails?.isMotherInfo);
-  const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
+  const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);    
+  // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
   // const [ChildPassportNo, setChildPassportNo] = useState(formData?.ChildDetails?.ChildPassportNo);
   // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.ChildDetails?.ChildArrivalDate);
   const [tripStartTime, setTripStartTime] = useState(formData?.ChildDetails?.tripStartTime);
@@ -78,13 +77,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   
-  function setMotherInfo(e) {
-    if (e.target.checked == true) {
-      setIsMotherInfo(true);
-    } else {
-      setIsMotherInfo(false);
-    }
-  }
 
   function setBornOutSide(e) {
     console.log(e.target.checked);
