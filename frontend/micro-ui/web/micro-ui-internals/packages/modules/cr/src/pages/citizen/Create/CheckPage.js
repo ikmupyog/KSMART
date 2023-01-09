@@ -107,7 +107,7 @@ const CheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(HospitalDetails.HospitalName.hospitalName)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.HospitalName.hospitalName)}</CardText>
             </div>
           </div>
           <div className="row">
