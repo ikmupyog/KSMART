@@ -96,7 +96,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_ADDRESS_INFORMATION_HEADER",
       values: [
         { title: "CR_DEATH_ADDRESS_HOUSE_NO_LABEL", value: response?.deathAddress.houseNo || "NA"},
-        { title: "CR_DEATH_ADDRESS_HOUSE_NAME_LABEL", value: response?.deathAddress?.houeNameEn || "NA" },
+        { title: "CR_DEATH_ADDRESS_HOUSE_NAME_LABEL", value: response?.deathAddress.houeNameEn || "NA" },
         { title: "CR_DEATH_ADDRESS_HOUSE_LOCALITY_LABEL", value: response?.deathAddress.localityEn || "NA" },
         { title: "CR_DEATH_ADDRESS_HOUSE_CITY_LABEL", value: response?.deathAddress.cityEn || "NA" },
       ],
@@ -105,7 +105,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_STATSTICAL_INFORMATION_HEADER",
       values: [
         { title: "CR_STATSTICAL_DEATH_CAUSE_MAIN", value: response?.deathStatistical.deathCauseMain || "NA" },
-        { title: "CR_STATSTICAL_DEATH_MEDICAL_ATTENTION_TYPE", value: response?.deathStatistical?.medicalAttentionType || "NA" },
+        { title: "CR_STATSTICAL_DEATH_MEDICAL_ATTENTION_TYPE", value: response?.deathStatistical.medicalAttentionType || "NA" },
         { title: "CR_STATSTICAL_DEATH_OCCUPATION", value: response?.deathStatistical.occupation || "NA" },
         { title: "CR_STATSTICAL_DEATH_SMOKING_NUM_YEARS", value: response?.deathStatistical.smokingNumYears || "NA" },
       ],
@@ -114,7 +114,7 @@ export const CRDeathsearch = {
       title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
       values: [
         { title: "CR_DEATH_PERM_HOUSE_NO_LABEL", value: response?.deathAddress.houseNo || "NA"},
-        { title: "CR_DEATH_PERM_HOUSE_NAME_LABEL", value: response?.deathAddress?.houeNameEn || "NA" },
+        { title: "CR_DEATH_PERM_HOUSE_NAME_LABEL", value: response?.deathAddress.houeNameEn || "NA" },
         { title: "CR_DEATH_PERM_HOUSE_LOCALITY_LABEL", value: response?.deathAddress.localityEn || "NA" },
         { title: "CR_DEATH_PERM_HOUSE_CITY_LABEL", value: response?.deathAddress.cityEn || "NA" },
       ],
