@@ -126,6 +126,21 @@ import { useTranslation } from "react-i18next";
             />
           </div>
           <div className="col-md-4">
+            <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              name="HospitalMobile"
+              value={HospitalMobile}
+              onChange={setSelectHospitalMobile}
+              disable={isEdit}
+              placeholder={`${t("CR_MOBILE_NO")}`}
+              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
+            />
+          </div>
+          <div className="col-md-4">
             <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
             <TextInput
               t={t}
@@ -141,21 +156,7 @@ import { useTranslation } from "react-i18next";
              
             />
           </div>
-          <div className="col-md-4">
-            <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="HospitalMobile"
-              value={HospitalMobile}
-              onChange={setSelectHospitalMobile}
-              disable={isEdit}
-              placeholder={`${t("CR_MOBILE_NO")}`}
-              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
-            />
-          </div>
+          
         </div> 
         </div>
       </FormStep>

@@ -159,7 +159,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
                 getCellProps={(cellInfo) => {
                 return {
                     style: {
-                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "180px" : "",
                     padding: "20px 18px",
                     fontSize: "16px"
                   },

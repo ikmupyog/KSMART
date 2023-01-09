@@ -49,7 +49,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [ToDate, setToDate] = useState(formData?.InformationDeath?.ToDate);
   const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom);
   const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo);
-  const [tripStartTime, setTripStartTime] = useState(formData?.InformationDeath?.tripStartTime);
+  const [DeathTime, setDeathTime] = useState(formData?.InformationDeath?.DeathTime);
   const [checked, setChecked] = useState(false);
   const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit);
   const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo);
@@ -173,7 +173,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate);
-    sessionStorage.setItem("tripStartTime", tripStartTime);
+    sessionStorage.setItem("DeathTime", DeathTime);
     sessionStorage.setItem("FirstName", FirstName);
     sessionStorage.setItem("MiddleName", MiddleName);
     sessionStorage.setItem("LastName", LastName);
@@ -194,7 +194,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     onSelect(config.key, {
       DeathDate,
-      tripStartTime,
+      DeathTime,
       FirstName,
       MiddleName,
       LastName,
@@ -277,7 +277,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 </div>
                 <div className="col-md-2">
                   <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-                  <CustomTimePicker name="tripStartTime" onChange={(val) => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
+                  <CustomTimePicker name="DeathTime" onChange={(val) => handleTimeChange(val, setDeathTime)} value={DeathTime} />
                 </div>
               </div>
             </div>

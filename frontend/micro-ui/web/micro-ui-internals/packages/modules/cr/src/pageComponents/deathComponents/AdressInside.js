@@ -38,8 +38,13 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressOfDecesed?.PresentStreetNameEn);
   const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressOfDecesed?.PresentStreetNameMl);
   const [PresentViaEn, setPresentViaEn] = useState(formData?.AddressDetails?.PresentViaEn);
-  const [PresentViaMl, setPresentViaMl] = useState(formData?.AddressDetails?.PresentViaMl); 
+  const [PresentViaMl, setPresentViaMl] = useState(formData?.AddressDetails?.PresentViaMl);
+  const [PresentCityEn, setPresentCityEn] = useState(formData?.AddressDetails?.PresentCityEn);
+  const [PresentCityMl, setPresentCityMl] = useState(formData?.AddressDetails?.PresentCityMl);   
   const [PresentVillage, setPresentVillage] = useState(formData?.AddressOfDecesed?.PresentVillage);
+
+
+  
   const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressOfDecesed?.PermanentCountry);
   const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressOfDecesed?.PermanentStateName);
   const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressOfDecesed?.PermanentDistrict);
@@ -57,7 +62,9 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn);
   const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl);
   const [PermanentViaEn, setPermanentViaEn] = useState(formData?.AddressDetails?.PermanentViaEn);
-    const [PermanentViaMl, setPermanentViaMl] = useState(formData?.AddressDetails?.PermanentViaMl);
+  const [PermanentViaMl, setPermanentViaMl] = useState(formData?.AddressDetails?.PermanentViaMl);
+  const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressDetails?.PermanentCityEn);
+  const [PermanentCityMl, setPermanentCityMl] = useState(formData?.AddressDetails?.PermanentCityMl);    
   const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameEn);
   const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameMl);
   const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressOfDecesed?.PermanentStreetNameEn);
@@ -240,13 +247,26 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentViaMl(PresentViaMl);
     }
   }
+  
   function setSelectPresentViaEn(e) {
     setPresentViaEn(e.target.value);
     if (isPrsentAddress) {
       setPermanentViaEn(PresentViaEn);
     }
   }
-
+  function setSelectPresentCityMl(e) {
+    setPresentCityMl(e.target.value);
+    if (isPrsentAddress) {
+      setPermanentCityMl(PresentCityMl);
+    }
+  }
+  
+  function setSelectPresentCityEn(e) {
+    setPresentCityEn(e.target.value);
+    if (isPrsentAddress) {
+      setPermanentCityEn(PresentCityEn);
+    }
+  }
   function setSelectPresentStreetNameEn(e) {
     setPresentStreetNameEn(e.target.value);
     if (isPrsentAddress) {
@@ -298,6 +318,12 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   function setSelectPermanentViaEn(e) {
     setPermanentViaEn(e.target.value);
   }  
+  function setSelectPermanentCityMl(e) {
+    setPermanentCityMl(e.target.value);
+  }
+  function setSelectPermanentCityEn(e) {
+    setPermanentCityEn(e.target.value);
+  }    
   function setSelectPermanentBuldingNo(e) {
     setPermanentBuldingNo(e.target.value);
   }
@@ -351,7 +377,9 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentStreetNameEn(PresentStreetNameEn);
       setPermanentStreetNameMl(PresentStreetNameMl);
       setPermanentViaEn(PresentViaEn);
-      setPermanentViaMl(PresentViaMl); 
+      setPermanentViaMl(PresentViaMl);
+      setPermanentCityEn(PresentCityEn);
+      setPermanentCityMl(PresentCityMl);       
       setPermanentVillage(PresentVillage);
       setPermanentLBName(PresentLBName);
       setPermanentDistrict(PresentDistrict);
@@ -375,6 +403,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentStreetNameMl("");
       setPermanentViaMl('');
       setPermanentViaEn(''); 
+      setPermanentCityMl('');
+      setPermanentCityEn('');       
       setPermanentVillage("");
       setPermanentLBName("");
       setPermanentDistrict("");
@@ -410,6 +440,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl);
     sessionStorage.setItem("PresentViaEn", PresentViaEn); 
     sessionStorage.setItem("PresentViaMl", PresentViaMl);
+    sessionStorage.setItem("PresentCityEn", PresentCityEn); 
+    sessionStorage.setItem("PresentCityaMl", PresentCityMl);    
     sessionStorage.setItem("PresentVillage", PresentVillage.code);
     sessionStorage.setItem("PresentLBName", null);
     sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
@@ -432,6 +464,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl);
     sessionStorage.setItem("PermanentViaEn", PermanentViaEn);   
     sessionStorage.setItem("PermanentViaMl", PermanentViaMl);
+    sessionStorage.setItem("PermanentCityEn", PermanentCityEn);   
+    sessionStorage.setItem("PermanenCityMl", PermanentCityMl);    
     sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
     sessionStorage.setItem("PermanentLBName", null);
     sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
@@ -455,6 +489,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       PresentStreetNameMl,
       PresentViaEn,
       PresentViaMl,
+      PresentCityEn,
+      PresentCityMl,      
       PresentVillage,
       PresentLBName,
       PresentDistrict,
@@ -474,6 +510,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       PermanentStreetNameMl,
       PermanentViaMl,
       PermanentViaEn, 
+      PermanentCityMl,
+      PermanentCityEn,      
       PermanentVillage,
       PermanentLBName,
       PermanentDistrict,
@@ -721,6 +759,40 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 disable={isEdit}
                 placeholder={`${t("CR_MAIN_PLACE_ML")}`}
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_CITY_EN")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentCityEn"
+                value={PresentCityEn}
+                onChange={setSelectPresentCityEn}
+                placeholder={`${t("CR_CITY_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_CITY_ML")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentCityMl"
+                value={PresentCityMl}
+                onChange={setSelectPresentCityMl}
+                placeholder={`${t("CR_CITY_ML")}`}
+                disable={isEdit}
+                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
           </div>
@@ -1144,6 +1216,40 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
+          <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_CITY_EN")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PermanentCityEn"
+                value={PermanentCityEn}
+                onChange={setSelectPermanentCityEn}
+                placeholder={`${t("CR_CITY_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_CITY_ML")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PermanentCityMl"
+                value={PermanentCityMl}
+                onChange={setSelectPermanentCityMl}
+                placeholder={`${t("CR_CITY_ML")}`}
+                disable={isEdit}
+                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+              />
+            </div>
+          </div>
+        </div>
           <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">

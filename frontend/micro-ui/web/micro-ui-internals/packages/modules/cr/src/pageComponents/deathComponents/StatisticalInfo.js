@@ -608,7 +608,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                   onChange={SelectOccupationOthers}
                   disable={isEdit}
                   placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
                 />
               </div>
             </div>

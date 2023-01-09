@@ -16,12 +16,36 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   const { data: Menu = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
-  const [BirthPlaceDescription, setBirthPlaceDeccription] = useState(formData?.BirthPlace?.BirthPlaceDescription);
+  // const [BirthPlaceDescription, setBirthPlaceDeccription] = useState(formData?.BirthPlace?.BirthPlaceDescription);
   const [HospitalName, selectHospitalName] = useState(formData?.BirthPlace?.HospitalName);
   const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.BirthPlace?.SignedOfficerName);
-  // const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.BirthPlace?.SignedOfficerDesignation);
-  // const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo);
-  // const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.BirthPlace?.SignedOfficerMobileNo);
+  const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.BirthPlace?.SignedOfficerDesignation);
+  const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo);
+  const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.BirthPlace?.SignedOfficerMobileNo);
+
+
+  const [setInstitution, setSelectedInstitution] = useState(formData?.BirthPlace?.setInstitution);
+  const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.BirthPlace?.setInstitutionId);
+  const [SiginedOfficer, setSiginedOfficer] = useState(formData?.BirthPlace?.SiginedOfficer);
+  const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.BirthPlace?.SiginedOfficerDesignation);
+  const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.BirthPlace?.InstitutionMobilNo);
+  const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.BirthPlace?.InstitutionAadhaar);
+
+  const [DriverName, setDriverName] = useState(formData?.BirthPlace?.DriverName);
+  const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthPlace?.DriverMobileNo);
+  const [DriverAadhar, setDriverAadhar] = useState(formData?.BirthPlace?.DriverAadhar);
+  const [VehicleType, setVehicleType] = useState(formData?.BirthPlace?.VehicleType);
+  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthPlace?.VehicleRegistrationNo);  
+  const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthPlace?.setVehicleFromEn);
+  const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn);  
+  const [VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt] = useState(formData?.BirthPlace?.VehiclePlaceFirstHalt); 
+ const [WardNo, setWardNo] = useState(formData.BirthPlaceHomeDetails?.wardno);
+
+  const [setPublicPlaceType, setSelectedPublicPlaceType] = useState(formData?.PublicPlaceDetails?.setPublicPlaceType);
+  const [AdrsInfontName, setAdrsInfontName] = useState(formData?.PublicPlaceDetails?.AdrsInfontName);
+  const [ AdrsPublicPlace, setAdrsPublicPlace] = useState(formData?.PublicPlaceDetails?.AdrsPublicPlace);
+  const [ PublicPlaceDesption, setPublicPlaceDesption] = useState(formData?.PublicPlaceDetails?.PublicPlaceDesption);
+
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -40,9 +64,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     selectBirthPlace(value);
     setValue(value.code);
   }
-  function setSelectBirthPlaceDeccription(e) {
-    setBirthPlaceDeccription(e.target.value);
-  }
+  // function setSelectBirthPlaceDeccription(e) {
+  //   setBirthPlaceDeccription(e.target.value);
+  // }
   React.useEffect(() => {
     if (isInitialRender) {
       if (BirthPlace) {
@@ -54,6 +78,31 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           <HospitalDetails  
             HospitalName={HospitalName} 
             SignedOfficerName={SignedOfficerName}
+            SignedOfficerDesignation={SignedOfficerDesignation}
+            SignedOfficerAadharNo={SignedOfficerAadharNo}
+            SignedOfficerMobileNo={SignedOfficerMobileNo}
+          />
+        }
+        if (naturetype === "INSTITUTION") {
+          <InstitutionDetails  
+          setInstitution={setInstitution} 
+          setInstitutionId={setInstitutionId} 
+          SiginedOfficer={SiginedOfficer} 
+          SiginedOfficerDesignation={SiginedOfficerDesignation} 
+          InstitutionMobilNo={InstitutionMobilNo} 
+          InstitutionAadhaar={InstitutionAadhaar}            
+          />
+        }
+        if (naturetype === "VEHICLE") {
+          <BirthVehicle  
+          DriverName={DriverName} 
+          DriverMobileNo={DriverMobileNo} 
+          DriverAadhar={DriverAadhar} 
+          VehicleType={VehicleType} 
+          VehicleRegistrationNo={VehicleRegistrationNo} 
+          VehicleFromEn={VehicleFromEn}   
+          VehicleToEn={VehicleToEn}   
+          VehiclePlaceFirstHalt={VehiclePlaceFirstHalt}            
           />
         }
       }
@@ -63,11 +112,33 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("BirthPlace", BirthPlace.code);
     sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
     sessionStorage.setItem("SignedOfficerName", SignedOfficerName.hospitalName);
-    // sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
-    // sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo);
-    // sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo);
-    // sessionStorage.setItem("BirthPlaceDescription", BirthPlaceDescription);
-    onSelect(config.key, { BirthPlace, HospitalName,SignedOfficerName });
+    sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
+    sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo.SignedOfficerAadharNo);
+     sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo.SignedOfficerMobileNo);
+    //sessionStorage.setItem("BirthPlaceDescription", BirthPlaceDescription);
+
+
+    sessionStorage.setItem("setInstitution", setInstitution.setInstitution);
+    sessionStorage.setItem("setInstitutionId", setInstitutionId.setInstitutionId);
+    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer.SiginedOfficer);
+    sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation.SiginedOfficerDesignation);
+    sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo.InstitutionMobilNo);
+    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar.InstitutionAadhaar);  
+
+
+    sessionStorage.setItem("DriverName", DriverName); 
+    sessionStorage.setItem("DriverMobileNo", DriverMobileNo);   
+    sessionStorage.setItem("DriverAadhar", DriverAadhar);
+    sessionStorage.setItem("VehicleType", VehicleType);
+    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);      
+    sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
+    sessionStorage.setItem("VehicleToEn", VehicleToEn);  
+    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt); 
+
+    onSelect(config.key, { BirthPlace, HospitalName,SignedOfficerName ,SignedOfficerDesignation ,SignedOfficerAadharNo ,SignedOfficerMobileNo,
+      setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,DriverName ,DriverMobileNo,
+      DriverAadhar, VehicleType,VehicleRegistrationNo,VehicleFromEn,VehicleToEn,VehiclePlaceFirstHalt,
+    });
   }
   return (
     <React.Fragment>
@@ -98,13 +169,41 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             <HospitalDetails 
              selectHospitalName={selectHospitalName} HospitalName={HospitalName}
              selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName}
-            
+             selectSignedOfficerDesignation={selectSignedOfficerDesignation}  SignedOfficerDesignation={SignedOfficerDesignation}
+             setSignedOfficerAadharNo={setSignedOfficerAadharNo} SignedOfficerAadharNo={SignedOfficerAadharNo}
+             setSignedOfficerMobileNo={setSignedOfficerMobileNo} SignedOfficerMobileNo={SignedOfficerMobileNo}        
+             
+             
             />
           </div>)
         }
         {value === "INSTITUTION" && (
           <div>
-            <InstitutionDetails />
+            <InstitutionDetails 
+             setSelectedInstitution={setSelectedInstitution} setInstitution={setInstitution}
+             setSelectedInstitutionId={setSelectedInstitutionId} setInstitutionId={setInstitutionId}
+             setSiginedOfficer={setSiginedOfficer} SiginedOfficer={SiginedOfficer}
+             setSiginedOfficerDesignation={setSiginedOfficerDesignation} SiginedOfficerDesignation={SiginedOfficerDesignation}
+             setInstitutionMobilNo={setInstitutionMobilNo} InstitutionMobilNo={InstitutionMobilNo}
+             setInstitutionAadhaar={setInstitutionAadhaar} InstitutionAadhaar={InstitutionAadhaar}               
+            
+            />
+          </div>
+        )
+        }
+        {value === "VEHICLE" && (
+          <div>
+            <BirthVehicle 
+             setDriverName={setDriverName} DriverName={DriverName}
+             setDriverMobileNo={setDriverMobileNo} DriverMobileNo={DriverMobileNo}
+             setDriverAadhar={setDriverAadhar} DriverAadhar={DriverAadhar}
+             setVehicleType={setVehicleType} VehicleType={VehicleType}
+             setVehicleRegistrationNo={setVehicleRegistrationNo} VehicleRegistrationNo={VehicleRegistrationNo}
+             setVehicleFromEn={ setVehicleFromEn} VehicleFromEn={VehicleFromEn}   
+             setVehicleToEn={setVehicleToEn} VehicleToEn={VehicleToEn}    
+             setVehiclePlaceFirstHalt={setVehiclePlaceFirstHalt} VehiclePlaceFirstHalt={VehiclePlaceFirstHalt}                
+            
+            />
           </div>
         )
         }
@@ -113,11 +212,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             <PlaceofBirthHome />
           </div>)
         }
-        {value === "VEHICLE" && (
+        {/* {value === "VEHICLE" && (
           <div>
             <BirthVehicle />
           </div>)
-        }
+        } */}
         {value === "PUBLIC_PLACES" && (
           <div>
             <PublicPlace />
