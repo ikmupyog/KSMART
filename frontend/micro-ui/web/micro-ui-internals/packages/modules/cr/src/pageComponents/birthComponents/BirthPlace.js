@@ -17,7 +17,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const { data: Menu = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
   const [BirthPlaceDescription, setBirthPlaceDeccription] = useState(formData?.BirthPlace?.BirthPlaceDescription);
-  const [HospitalName, selectHospitalName] = useState(formData?.HospitalName);
+  const [HospitalName, selectHospitalName] = useState(formData?.BirthPlace?.HospitalName);
+  const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.BirthPlace?.SignedOfficerName);
+  // const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.BirthPlace?.SignedOfficerDesignation);
+  // const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo);
+  // const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.BirthPlace?.SignedOfficerMobileNo);
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -47,9 +51,10 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         setValue(naturetype);
         // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(naturetype)));
         if (naturetype === "HOSPITAL") {
-          // setValue3(formData?.TradeDetails?.ResurveyedLand ? formData?.TradeDetails?.ResurveyedLand.code : null);
-          // setisInitialRendercombo(true);
-          <HospitalDetails formData={formData} />
+          <HospitalDetails  
+            HospitalName={HospitalName} 
+            SignedOfficerName={SignedOfficerName}
+          />
         }
       }
     }
@@ -57,8 +62,12 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const goNext = () => {
     sessionStorage.setItem("BirthPlace", BirthPlace.code);
     sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
+    sessionStorage.setItem("SignedOfficerName", SignedOfficerName.hospitalName);
+    // sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
+    // sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo);
+    // sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo);
     // sessionStorage.setItem("BirthPlaceDescription", BirthPlaceDescription);
-    onSelect(config.key, { BirthPlace, BirthPlaceDescription,HospitalName });
+    onSelect(config.key, { BirthPlace, HospitalName,SignedOfficerName });
   }
   return (
     <React.Fragment>
@@ -86,7 +95,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         </div> */}
         {value === "HOSPITAL" && (
           <div>
-            <HospitalDetails selectHospitalName={selectHospitalName} HospitalName={HospitalName}/>
+            <HospitalDetails 
+             selectHospitalName={selectHospitalName} HospitalName={HospitalName}
+             selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName}
+            
+            />
           </div>)
         }
         {value === "INSTITUTION" && (

@@ -64,6 +64,9 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
     if (isMobile) {
       return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }}/>
     }
+    const handleLinkClick = (finaldata) => {
+      Digit.SessionStorage.set("PDE_CREATE_TRADE", finaldata);
+    }
 
     //need to get from workflow
     const GetCell = (value) => <span className="cell-text">{value}</span>;
@@ -76,8 +79,8 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/tl/pde-editapplication`}>
-                    Edit
+                <Link onClick={event => handleLinkClick(row.original)} to={{pathname:`/digit-ui/employee/tl/pde-editapplication`}}>
+                    Edit 
                   </Link>
                 </span>
               </div>

@@ -6,14 +6,17 @@ import { newConfig as newConfigTL } from "../../../config/config";
 // import CheckPage from "./CheckPage";
 // import TLAcknowledgement from "./TLAcknowledgement";
 
-const CreatePdeApplication = ({ parentRoute }) => {
+const CreatePdeApplication = ({parentRoute,isEdit }) => {
   const queryClient = useQueryClient();
   const match = useRouteMatch();
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const history = useHistory();
   let config = [];
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
+  if(!isEdit){
+    Digit.SessionStorage.set("PDE_CREATE_TRADE", "");
+  }
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PDE_CREATE_TRADE", {});
   let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/")
 
   const stateId = Digit.ULBService.getStateId();
@@ -132,6 +135,7 @@ const CreatePdeApplication = ({ parentRoute }) => {
               onSkip={handleSkip}
               t={t}
               formData={params}
+              isEdit={isEdit}
               onAdd={handleMultiple}
               userType="employee"
             />

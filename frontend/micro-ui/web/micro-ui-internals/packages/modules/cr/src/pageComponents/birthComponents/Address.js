@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const Address = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   let validation = {};
   const { data: Country = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
@@ -15,7 +16,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");  
+
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -24,6 +26,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
   const [PresentLBTypeName, setPresentLBTypeName] = useState(formData?.AddressDetails?.PresentLBTypeName);
   const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
+  // const [PresentWardNo, setPresentWardNo] = useState(formData.AddressPresentDetails?.Presentwardno);
   const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressDetails?.PresentTaluk);
   const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressDetails?.PresentPostOffice);
   const [PresentPincode, setPresentPincode] = useState(formData?.AddressDetails?.PresentPincode);
@@ -45,6 +48,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressDetails?.PermanentDistrict);
   const [PermanentLBTypeName, setPermanentLBTypeName] = useState(formData?.AddressDetails?.PermanentLBTypeName);
   const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressDetails?.PermanentLBName);
+  // const [PermanentWardNo, setPermanentWardNo] = useState(formData.AddressPresentDetails?.Presentwardno);
   const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressDetails?.PermanentVillage);
   const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk);
   const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressDetails?.PermanentPostOffice);
@@ -111,6 +115,29 @@ const Address = ({ config, onSelect, userType, formData }) => {
       cmbLBType.push(ob);
     });
 
+//     let Zonal = [];
+//  let cmbWardNo = [];
+//  let cmbWardNoFinal = [];
+//  boundaryList &&
+//    boundaryList["egov-location"] &&
+//    boundaryList["egov-location"].TenantBoundary.map((ob) => {
+//      //  console.log(ob);
+//      // if(ob?.boundary){
+//      Zonal.push(...ob.boundary.children);
+//      ob.boundary.children.map((obward) => {
+//        cmbWardNo.push(...obward.children);
+//      });
+//      // }
+
+//    });
+//  //console.log(Zonal);
+//  cmbWardNo.map((wardmst) => {
+//    wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+//    wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+//    cmbWardNoFinal.push(wardmst);
+//  });
+
+
   const onSkip = () => onSelect();
 
   function setSelectPresentCountry(value) {
@@ -149,6 +176,14 @@ const Address = ({ config, onSelect, userType, formData }) => {
       setPermanentLBName(PresentLBName);
     }
   }
+  // function setSelectPresentWard(value) {
+  //   setPresentWardNo(value);
+  //   if (isPrsentAddress) {
+  //     setPermanentWardNo(PresentWardNo);
+  //   }
+  // }
+
+
   function setSelectPresentVillage(value) {
     setPresentVillage(value);
     console.log("Village" + cmbVillage);
@@ -265,6 +300,9 @@ const Address = ({ config, onSelect, userType, formData }) => {
   function setSelectPermanentVillage(value) {
     setPermanentVillage(value);
   }
+  // function setSelectPermanentWard(value) {
+  //   setPermanentWardNo(value);
+  // }
 
   function setSelectPermanentTaluk(value) {
     setPermanentTaluk(value);
@@ -329,6 +367,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       setPermanentStreetNameEn(PresentStreetNameEn);
       setPermanentStreetNameMl(PresentStreetNameMl);
       setPermanentVillage(PresentVillage);
+      // setPermanentWardNo(PresentWardNo);
       setPermanentLBName(PresentLBName);
       setPermanentDistrict(PresentDistrict);
       setPermanentTaluk(PresentTaluk);
@@ -350,6 +389,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       setPermanentStreetNameEn("");
       setPermanentStreetNameMl("");
       setPermanentVillage("");
+      // setPermanentWardNo("");
       setPermanentLBName("");
       setPermanentDistrict("");
       setPermanentTaluk("");
@@ -383,6 +423,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PresentStreetNameEn", PresentStreetNameEn);
     sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl);
     sessionStorage.setItem("PresentVillage", PresentVillage.code);
+    // sessionStorage.setItem("PresentWardNo", PresentWardNo.code);
     sessionStorage.setItem("PresentLBName", null);
     sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
     sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
@@ -403,6 +444,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn);
     sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl);
     sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
+    // sessionStorage.setItem("PermanentWardNo", PermanentWardNo.code);
     sessionStorage.setItem("PermanentLBName", null);
     sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
     sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
@@ -453,9 +495,9 @@ const Address = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null} */}
+      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep
         t={t}
         config={config}
@@ -558,7 +600,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_LB_NAME")}
                 <span className="mandatorycss">*</span>
@@ -574,7 +616,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_LB_NAME")}`}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_VILLAGE")}
                 <span className="mandatorycss">*</span>
@@ -590,10 +632,6 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_VILLAGE")}`}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_TALUK")}
@@ -610,7 +648,14 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_TALUK")}`}
               />
             </div>
-            <div className="col-md-4">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+          {/* <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PresentWardNo} select={setSelectPresentWard}  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })} />
+                </div> */}
+            <div className="col-md-6">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -626,7 +671,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
                 <span className="mandatorycss">*</span>
@@ -976,7 +1021,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_LB_NAME")}
                   <span className="mandatorycss">*</span>
@@ -992,7 +1037,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_LB_NAME")}`}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_VILLAGE")}
                   <span className="mandatorycss">*</span>
@@ -1008,10 +1053,6 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_VILLAGE")}`}
                 />
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
               <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_TALUK")}
@@ -1028,7 +1069,14 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_TALUK")}`}
                 />
               </div>
-              <div className="col-md-4">
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+            {/* <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={PermanentWardNo} select={setSelectPermanentWard}  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })} />
+                </div> */}
+              <div className="col-md-6">
                 <CardLabel>
                   {t("CS_COMMON_POST_OFFICE")}
                   <span className="mandatorycss">*</span>
@@ -1044,7 +1092,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <CardLabel>
                   {t("CS_COMMON_PIN_CODE")}
                   <span className="mandatorycss">*</span>

@@ -56,7 +56,7 @@ export const CRDeathsearch = {
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
     if (response?.licenseNumber) {
-      const licenseNumbers = response?.applicationno;
+      const licenseNumbers = response?.deathApplicationNo;
       const filters = { licenseNumbers, offset: 0 };
       numOfApplications = await CRDeathsearch.numberOfApplications(tenantId, filters);
     }
@@ -77,46 +77,46 @@ export const CRDeathsearch = {
     const deathplaceAddress = {
       title: "CR_DEATH_PLACE_ADDRESS_INFORMATION_HEADER",
       values: [        
-        { title: "CR_DEATH_PLACE_HOUSE_NO_LABEL", value: response?.deathPlace.houseNo || "NA" },
-        { title: "CR_DEATH_PLACE_HOUSE_NAME_LABEL", value: response?.deathPlace.houeNameEn || "NA" },
-        { title: "CR_DEATH_PLACE_LOCALITY_LABEL", value: response?.deathPlace.localityEn || "NA" },
-        { title: "CR_DEATH_PLACE_CITY_LABEL", value: response?.deathPlace.cityEn || "NA" },
+        { title: "CR_DEATH_PLACE_HOUSE_NO_LABEL", value: response?.addressInfo?.deathplaceAddress.houseNo || "NA" },
+        { title: "CR_DEATH_PLACE_HOUSE_NAME_LABEL", value: response?.addressInfo?.deathplaceAddress.houeNameEn || "NA" },
+        { title: "CR_DEATH_PLACE_LOCALITY_LABEL", value: response?.addressInfo?.deathplaceAddress.localityEn || "NA" },
+        { title: "CR_DEATH_PLACE_CITY_LABEL", value: response?.addressInfo?.deathplaceAddress.cityEn || "NA" },
       ],
     };
     const informantAddress = {
       title: "CR_DEATH_INFORMANT_ADDRESS_INFORMATION_HEADER",
       values: [        
-        { title: "CR_DEATH_INFORMANT_HOUSE_NO_LABEL", value: response?.deathInformant.houseNo || "NA"},
-        { title: "CR_DEATH_INFORMANT_HOUSE_NAME_LABEL", value: response?.deathInformant.houeNameEn || "NA" },
-        { title: "CR_DEATH_INFORMANT_LOCALITY_LABEL", value: response?.deathInformant.localityEn || "NA" },
-        { title: "CR_DEATH_INFORMANT_CITY_LABEL", value: response?.deathInformant.cityEn || "NA" },
+        { title: "CR_DEATH_INFORMANT_HOUSE_NO_LABEL", value: response?.addressInfo?.informantAddress.houseNo || "NA"},
+        { title: "CR_DEATH_INFORMANT_HOUSE_NAME_LABEL", value: response?.addressInfo?.informantAddress.houeNameEn || "NA" },
+        { title: "CR_DEATH_INFORMANT_LOCALITY_LABEL", value: response?.addressInfo?.informantAddress.localityEn || "NA" },
+        { title: "CR_DEATH_INFORMANT_CITY_LABEL", value: response?.addressInfo?.informantAddress.cityEn || "NA" },
       ],
     };
     const addressInfo = {
       title: "CR_DEATH_ADDRESS_INFORMATION_HEADER",
       values: [
-        { title: "CR_DEATH_ADDRESS_HOUSE_NO_LABEL", value: response?.deathAddress.houseNo || "NA"},
-        { title: "CR_DEATH_ADDRESS_HOUSE_NAME_LABEL", value: response?.deathAddress?.houeNameEn || "NA" },
-        { title: "CR_DEATH_ADDRESS_HOUSE_LOCALITY_LABEL", value: response?.deathAddress.localityEn || "NA" },
-        { title: "CR_DEATH_ADDRESS_HOUSE_CITY_LABEL", value: response?.deathAddress.cityEn || "NA" },
+        { title: "CR_DEATH_ADDRESS_HOUSE_NO_LABEL", value: response?.addressInfo?.presentAddress.houseNo || "NA"},
+        { title: "CR_DEATH_ADDRESS_HOUSE_NAME_LABEL", value: response?.addressInfo?.presentAddress.houeNameEn || "NA" },
+        { title: "CR_DEATH_ADDRESS_HOUSE_LOCALITY_LABEL", value: response?.addressInfo?.presentAddress.localityEn || "NA" },
+        { title: "CR_DEATH_ADDRESS_HOUSE_CITY_LABEL", value: response?.addressInfo?.presentAddress.cityEn || "NA" },
       ],
     };
     const statisticalInfo = {
       title: "CR_DEATH_STATSTICAL_INFORMATION_HEADER",
       values: [
-        { title: "CR_STATSTICAL_DEATH_CAUSE_MAIN", value: response?.deathStatistical.deathCauseMain || "NA" },
-        { title: "CR_STATSTICAL_DEATH_MEDICAL_ATTENTION_TYPE", value: response?.deathStatistical?.medicalAttentionType || "NA" },
-        { title: "CR_STATSTICAL_DEATH_OCCUPATION", value: response?.deathStatistical.occupation || "NA" },
-        { title: "CR_STATSTICAL_DEATH_SMOKING_NUM_YEARS", value: response?.deathStatistical.smokingNumYears || "NA" },
+        { title: "CR_STATSTICAL_DEATH_CAUSE_MAIN", value: response?.statisticalInfo.deathCauseMain || "NA" },
+        { title: "CR_STATSTICAL_DEATH_MEDICAL_ATTENTION_TYPE", value: response?.statisticalInfo.medicalAttentionType || "NA" },
+        { title: "CR_STATSTICAL_DEATH_OCCUPATION", value: response?.statisticalInfo.occupation || "NA" },
+        { title: "CR_STATSTICAL_DEATH_SMOKING_NUM_YEARS", value: response?.statisticalInfo.smokingNumYears || "NA" },
       ],
     };
     const permanentAddress = {
       title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
       values: [
-        { title: "CR_DEATH_PERM_HOUSE_NO_LABEL", value: response?.deathAddress.houseNo || "NA"},
-        { title: "CR_DEATH_PERM_HOUSE_NAME_LABEL", value: response?.deathAddress?.houeNameEn || "NA" },
-        { title: "CR_DEATH_PERM_HOUSE_LOCALITY_LABEL", value: response?.deathAddress.localityEn || "NA" },
-        { title: "CR_DEATH_PERM_HOUSE_CITY_LABEL", value: response?.deathAddress.cityEn || "NA" },
+        { title: "CR_DEATH_PERM_HOUSE_NO_LABEL", value: response?.addressInfo?.permanentAddress.houseNo || "NA"},
+        { title: "CR_DEATH_PERM_HOUSE_NAME_LABEL", value: response?.addressInfo?.permanentAddress.houeNameEn || "NA" },
+        { title: "CR_DEATH_PERM_HOUSE_LOCALITY_LABEL", value: response?.addressInfo?.permanentAddress.localityEn || "NA" },
+        { title: "CR_DEATH_PERM_HOUSE_CITY_LABEL", value: response?.addressInfo?.permanentAddress.cityEn || "NA" },
       ],
     };
     // const tradeUnits = {
@@ -288,10 +288,11 @@ export const CRDeathsearch = {
     //   response && employeeResponse.push(details);
     // }
 
-    response && employeeResponse.push(childdetails);
-    response && employeeResponse.push(fatherInfo);
-    response && employeeResponse.push(motherInfo);
+    response && employeeResponse.push(deathdetails);
+    response && employeeResponse.push(deathplaceAddress);
+    response && employeeResponse.push(informantAddress);
     response && employeeResponse.push(addressInfo);
+    response && employeeResponse.push(permanentAddress);
     response && employeeResponse.push(statisticalInfo);
     // response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
     // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);

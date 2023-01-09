@@ -18,7 +18,8 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
   const [SubFunctionDet, setSubFunctionDet] = useState(formData?.FatherInfoDetails?.SubFunctionDet);
   const [FunctionDet, setFunctionDet] = useState(formData?.FatherInfoDetails?.FunctionDet);
   const [MinorFunctionDet, setMinorFunctionDet] = useState(formData?.FatherInfoDetails?.MinorFunctionDet);
-
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [minFn, setminFn] = useState(0);
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("DFM_SUB_TYPES", {});
   const [subtypeData, setSubtypeData] = useState({
     subtype: [],
@@ -29,14 +30,7 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
   let modules = state.common.modules;
   let stateInfo = state.common.stateInfo;
   //   console.log(path, modules);
-  let subtypeOptions = [
-    { label: "type1", value: "type1" },
-    { label: "type2", value: "type2" },
-  ]
-  let functionalityOptions = [
-    { label: "function1", value: "function1" },
-    { label: "function2", value: "function2" },
-  ]
+  
   const handleChange = (text, type) => {
     let tempdata = { ...subtypeData };
     if (type === "subtype") {
@@ -48,40 +42,7 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
       setSubtypeData(tempdata);
     }
   }
-  const cardMenuData = [
-    {
-      title: "Finance",
-      subTitle: "Inbox",
-    },
-
-    {
-      title: "Create",
-      subTitle: "Inbox",
-      link: `${path}/sub-type`,
-      // link: `${path}/create`,
-      // link: `${path}/form-ui`,
-    },
-    {
-      title: "BPA",
-      subTitle: "Inbox",
-    },
-    {
-      title: "PGR",
-      subTitle: "Inbox",
-    },
-    {
-      title: "Pension",
-      subTitle: "Inbox",
-    },
-    {
-      title: "License-1",
-      subTitle: "Inbox",
-    },
-    {
-      title: " License-2",
-      subTitle: "Inbox",
-    },
-  ];
+  
   const onSubmit = () => {
     // console.log('sub');
     if (subtypeData.subtype?.value && subtypeData.functionality?.value) {
@@ -122,6 +83,21 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
     MinorFunction["FileManagement"].MinorFunction.map((ob) => {
       cmbMinorFunction.push(ob);
     });
+  let functionCode=null;
+    React.useEffect(() => {
+      if (isInitialRender) {
+        if (FunctionDet) {
+          setIsInitialRender(false);
+          functionCode = FunctionDet.mainCode;
+          console.log(cmbMinorFunction.subCode);
+          setminFn(cmbMinorFunction.filter((cmbMinorFunction) => cmbMinorFunction.subCode.includes(FunctionDet.mainCode)));
+          // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(naturetype)));
+          // if (naturetype === "HOSPITAL") {
+           
+          // }
+        }
+      }
+    }, [minFn,isInitialRender]);
 
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
@@ -133,6 +109,8 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
     }
     function setSelectFunctionDet(value) {
       setFunctionDet(value);
+      setminFn(null);
+      setIsInitialRender(true);
     }
     function setSelectMinorFunctionDet(value) {
       setMinorFunctionDet(value);
@@ -176,7 +154,7 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
                 <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbFunction} selected={FunctionDet} select={setSelectFunctionDet} />
               </div>
               <div ><CardLabel>{`${t("Minor Function")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMinorFunction} selected={MinorFunctionDet} select={setSelectMinorFunctionDet} />
+                <Dropdown t={t} optionKey="name" isMandatory={true} option={minFn} selected={MinorFunctionDet} select={setSelectMinorFunctionDet} />
               </div>
                 <div><CardLabel>{`${t("Major Function")}`}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbMajorFunction} selected={MajorFunctionDet} select={setSelectMajorFunctionDet} />
