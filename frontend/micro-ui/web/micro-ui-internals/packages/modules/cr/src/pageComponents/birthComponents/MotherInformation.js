@@ -24,7 +24,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherLastNameEn, setMotherLastNameEn] = useState(formData?.MotherInfoDetails?.MotherLastNameEn);
     const [MotherFirstNameMl, setMotherFirstNameMl] = useState(formData?.MotherInfoDetails?.MotherFirstNameMl);
     const [MotherMiddleNameMl, setMotherMiddleNameMl] = useState(formData?.MotherInfoDetails?.MotherMiddleNameMl);
-    const [MotherLastNameMl, setMotherLastNameMl] = useState(formData?.MotherInfoDetails?.MotherLotherPlaceNameastNameMl);
+    const [MotherLastNameMl, setMotherLastNameMl] = useState(formData?.MotherInfoDetails?.MotherLastNameMl);
     const [MotherAadhar, setMotherAadhar] = useState(formData?.MotherInfoDetails?.MotherAadhar);
     const [MotherPassportNo, setMotherPassportNo] = useState(formData?.MotherInfoDetails?.MotherPassportNo);
     const [MotherEmail, setMotherEmail] = useState(formData?.MotherInfoDetails?.MotherEmail);
@@ -37,7 +37,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherDistrict, setMotherDistrict] = useState(formData?.MotherInfoDetails?.MotherDistrict);
     const [MotherAgeDeleivery, setMotherAgeDeleivery] = useState(formData?.MotherInfoDetails?.MotherAgeDeleivery);
     const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.MotherInfoDetails?.MotherAgeMarriage);
-    const [MotherDOB, setMotherDOB] = useState(formData?.MotherInfoDetailsFdob?.MotherDOB);
+    const [MotherDOB, setMotherDOB] = useState(formData?.MotherInfoDetails?.MotherDOB);
     const [MotherMaritalStatus, setMotherMaritalStatus] = useState(formData?.MotherInfoDetails?.MotherMaritalStatus);
     const [MotherNoOfBirths, setMotherNoOfBirths] = useState(formData?.MotherInfoDetails?.MotherNoOfBirths);
     const [OrderofDelivery, setOrderofDelivery] = useState(formData?.MotherInfoDetails?.OrderofDelivery);
@@ -263,7 +263,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             MotherFirstNameEn, MotherMiddleNameEn, MotherLastNameEn,
             MotherFirstNameMl, MotherMiddleNameMl, MotherLastNameMl, MotherAadhar, MotherPassportNo, MotherEmail, MotherMobile, MotherEducation, MotherEducationSubject, MotherProfession,
             MotherNationality, MotherAgeDeleivery, MotherDOB, MotherNoOfBirths, OrderofDelivery, MotherPlaceType, MotherLBName, 
-             MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl,
+             MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl,MotherAgeMarriage,
              isMotherInfo
         });
     }
