@@ -269,9 +269,9 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null} */}
+      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdrsDoorNo}>
         <div className="row">
           <div className="col-md-12">

@@ -189,6 +189,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                     t={t}
                     optionKey="name"
                     isMandatory={config.isMandatory}
+                    // option={cmbPostOffice}
                     option={cmbWardNo}
                     selected={WardNo}
                     select={setSelectWard}
