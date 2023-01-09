@@ -532,7 +532,7 @@ const AdoptionParentsAddress = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADOPTED_PARENTS_ADDRESS")}`}</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADOPTION_PARENTS_ADDRESS_DETAILS")}`}</span>{" "}
             </h1>
           </div>
         </div>
