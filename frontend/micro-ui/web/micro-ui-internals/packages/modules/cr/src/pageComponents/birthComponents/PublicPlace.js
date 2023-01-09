@@ -3,23 +3,25 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea ,BackButt
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const PublicPlace = ({ config, onSelect, userType, formData }) => {
+const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType, setSelectedPublicPlaceType, AdrsInfontName, setAdrsInfontName,
+  AdrsPublicPlace, setAdrsPublicPlace, PublicPlaceDesption, setPublicPlaceDesption,
+}) => {
   const stateId = Digit.ULBService.getStateId();
-  const tenantId = Digit.ULBService.getCurrentTenantId(); 
+  // const tenantId = Digit.ULBService.getCurrentTenantId(); 
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
-  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   // const [TradeName, setTradeName] = useState(null); 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [WardNo, setWardNo] = useState(formData.BirthPlaceHomeDetails?.wardno);
+  // const [WardNo, setWardNo] = useState(formData.BirthPlaceHomeDetails?.wardno);
 
-  const [setPublicPlaceType, setSelectedPublicPlaceType] = useState(formData?.PublicPlaceDetails?.setPublicPlaceType);
-  const [AdrsInfontName, setAdrsInfontName] = useState(formData?.PublicPlaceDetails?.AdrsInfontName);
-  const [ AdrsPublicPlace, setAdrsPublicPlace] = useState(formData?.PublicPlaceDetails?.AdrsPublicPlace);
-  const [ PublicPlaceDesption, setPublicPlaceDesption] = useState(formData?.PublicPlaceDetails?.PublicPlaceDesption);
+  // const [setPublicPlaceType, setSelectedPublicPlaceType] = useState(formData?.PublicPlaceDetails?.setPublicPlaceType);
+  // const [AdrsInfontName, setAdrsInfontName] = useState(formData?.PublicPlaceDetails?.AdrsInfontName);
+  // const [ AdrsPublicPlace, setAdrsPublicPlace] = useState(formData?.PublicPlaceDetails?.AdrsPublicPlace);
+  // const [ PublicPlaceDesption, setPublicPlaceDesption] = useState(formData?.PublicPlaceDetails?.PublicPlaceDesption);
  
   let naturetypecmbvalue = null;
   // let cmbPlace = [];
@@ -34,26 +36,26 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
     otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
       cmbOtherplace.push(ob);
     });
-    let Zonal = [];
-    let cmbWardNo = [];
-    let cmbWardNoFinal = [];
-    boundaryList &&
-      boundaryList["egov-location"] &&
-      boundaryList["egov-location"].TenantBoundary.map((ob) => {
-        //  console.log(ob);
-        // if(ob?.boundary){
-        Zonal.push(...ob.boundary.children);
-        ob.boundary.children.map((obward) => {
-          cmbWardNo.push(...obward.children);
-        });
-        // }
-      });
-    //console.log(Zonal);
-    cmbWardNo.map((wardmst) => {
-      wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
-      wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
-      cmbWardNoFinal.push(wardmst);
-    });
+    // let Zonal = [];
+    // let cmbWardNo = [];
+    // let cmbWardNoFinal = [];
+    // boundaryList &&
+    //   boundaryList["egov-location"] &&
+    //   boundaryList["egov-location"].TenantBoundary.map((ob) => {
+    //     //  console.log(ob);
+    //     // if(ob?.boundary){
+    //     Zonal.push(...ob.boundary.children);
+    //     ob.boundary.children.map((obward) => {
+    //       cmbWardNo.push(...obward.children);
+    //     });
+    //     // }
+    //   });
+    // //console.log(Zonal);
+    // cmbWardNo.map((wardmst) => {
+    //   wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
+    //   wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
+    //   cmbWardNoFinal.push(wardmst);
+    // });
   const onSkip = () => onSelect();
 
   // function selectPlaceofactivity(value) {
@@ -68,9 +70,9 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
     setAdrsInfontName(e.target.value);
   }
 
-  function setSelectWard(value) {
-    setWardNo(value);
-  }
+  // function setSelectWard(value) {
+  //   setWardNo(value);
+  // }
   // function setSelectTradeName(e) {
   //   setTradeName(e.target.value);
   // }
@@ -85,21 +87,22 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
   // }
 
   const goNext = () => {
+    console.log('clicked');
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    sessionStorage.setItem("setPublicPlaceType", setPublicPlaceType.code);
-    sessionStorage.setItem("AdrsInfontName", AdrsInfontName);
-    sessionStorage.setItem(" WardNo",  WardNo);
-    sessionStorage.setItem("AdrsPublicPlace", AdrsPublicPlace);
-    sessionStorage.setItem("PublicPlaceDesption", PublicPlaceDesption);
+    // sessionStorage.setItem("setPublicPlaceType", setPublicPlaceType.code);
+    // sessionStorage.setItem("AdrsInfontName", AdrsInfontName);
+    // // sessionStorage.setItem(" WardNo",  WardNo);
+    // sessionStorage.setItem("AdrsPublicPlace", AdrsPublicPlace);
+    // sessionStorage.setItem("PublicPlaceDesption", PublicPlaceDesption);
       
-    onSelect(config.key, {
-      AdrsInfontName,
-       setPublicPlaceType,
-       WardNo,
-       AdrsPublicPlace,
-       PublicPlaceDesption,
-      //  setPlaceofActivity 
-      });
+    // onSelect(config.key, {
+    //   AdrsInfontName,
+    //    setPublicPlaceType,
+    //   //  WardNo,
+    //    AdrsPublicPlace,
+    //    PublicPlaceDesption,
+    //   //  setPlaceofActivity 
+    //   });
   };
   return (
     <React.Fragment>
@@ -113,7 +116,7 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
 
     <div className="row">
     <div className="col-md-12" >
-         <div className="col-md-4" >
+         <div className="col-md-6" >
             <CardLabel>{`${t("CR_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
                 t={t}
@@ -126,7 +129,7 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_TYPE")}`}
             />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-6">
               <CardLabel>
                 {t("CR_INFORMANT_NAME")}
                 <span className="mandatorycss">*</span>
@@ -144,7 +147,7 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
                 <span className="mandatorycss">*</span>
@@ -158,7 +161,7 @@ const PublicPlace = ({ config, onSelect, userType, formData }) => {
                 select={setSelectWard}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
-            </div>
+            </div> */}
       </div> 
     </div>  
     <div className="row">
