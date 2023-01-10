@@ -176,7 +176,7 @@ console.log("Jetheesh" + applicationno);
     <div >
       <div /* style={{marginLeft: "15px"}} */>
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
-        <CardHeader>{`${t("Birth Application Summary Details")}`}</CardHeader>
+        <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label>
       </div>
       <ApplicationDetailsTemplate
         applicationDetails={applicationDetails}

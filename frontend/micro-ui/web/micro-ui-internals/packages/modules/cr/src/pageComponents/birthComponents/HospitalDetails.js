@@ -120,8 +120,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
           <div className="col-md-6">
             {" "}
             <CardLabel>
-              {`${t("CS_COMMON_AADHAAR")}`}
-              <span className="mandatorycss">*</span>
+              {`${t("CS_COMMON_AADHAAR")}`}             
             </CardLabel>
             <TextInput
               t={t}
