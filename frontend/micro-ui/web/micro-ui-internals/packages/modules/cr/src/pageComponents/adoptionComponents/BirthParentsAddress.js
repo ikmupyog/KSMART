@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/ADTimeline";
 import { useTranslation } from "react-i18next";
 
 const BirthParentsAddress = ({ config, onSelect, userType, formData }) => {
@@ -502,9 +502,9 @@ const BirthParentsAddress = ({ config, onSelect, userType, formData }) => {
      }
   return (
     <React.Fragment>
-     {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-     {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
+     {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+     {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton> 
       <FormStep
         t={t}
         config={config}

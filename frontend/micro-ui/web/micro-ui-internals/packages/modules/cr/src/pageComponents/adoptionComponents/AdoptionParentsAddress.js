@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/ADTimeline";
 import { useTranslation } from "react-i18next";
 
 const AdoptionParentsAddress = ({ config, onSelect, userType, formData }) => {

@@ -10,7 +10,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   
   const [AdressEn, setAdressEn] = useState(formData?.AddressOutsideIndiaDetails?.AdressEn);
@@ -23,7 +23,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
   const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceMl);
   const [setCountry, setSelectedCountry] = useState(formData?.AddressOutsideIndiaDetails?.setCountry);
 
-  const [CommencementDate, setCommencementDate] = useState();
+  // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   let cmbNation = [];
   Nation &&
@@ -33,10 +33,10 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
     });
   const onSkip = () => onSelect();
 
-  function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
-  }
+  // function selectPlaceofactivity(value) {
+  //   naturetypecmbvalue = value.code.substring(0, 4);
+  //   setSelectedPlaceofActivity(value);
+  // }
   function setSelectAdressEn(e) {
     setAdressEn(e.target.value);
   }
@@ -65,24 +65,25 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
     setSelectedCountry(e.target.value);
   }
   
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
+  
   const goNext = () => {
-    sessionStorage.setItem("AdressEn", AdressEn);
-    sessionStorage.setItem("AdressMl", AdressMl);
-    sessionStorage.setItem("AdressEnB", AdressEnB);
-    sessionStorage.setItem("AdressMlB", AdressMlB);
-    sessionStorage.setItem("LocalityEn", LocalityEn);
-    sessionStorage.setItem("LocalityMl", LocalityMl);
-    sessionStorage.setItem("ProvinceEn", ProvinceEn);
-    sessionStorage.setItem("ProvinceMl", ProvinceMl);
-    sessionStorage.setItem("setCountry", setCountry.code);
+    sessionStorage.setItem("AdressEn", AdressEn ? AdressEn  : null);
+    sessionStorage.setItem("AdressMl", AdressMl  ? AdressMl  : null);
+    sessionStorage.setItem("AdressEnB", AdressEnB  ? AdressEnB  : null);
+    sessionStorage.setItem("AdressMlB", AdressMlB  ? AdressMlB  : null) ;
+    sessionStorage.setItem("LocalityEn", LocalityEn  ? LocalityEn  : null);
+    sessionStorage.setItem("LocalityMl", LocalityMl  ? LocalityMl  : null);
+    sessionStorage.setItem("ProvinceEn", ProvinceEn  ? ProvinceEn  : null);
+    sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl  : null);
+    sessionStorage.setItem("setCountry", setCountry  ? setCountry.code  : null);
     onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, setCountry });
   };
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!CommencementDate}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdressEn}>
         <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header>
