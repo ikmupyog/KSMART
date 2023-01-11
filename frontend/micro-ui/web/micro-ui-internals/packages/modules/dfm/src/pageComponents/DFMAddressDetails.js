@@ -149,9 +149,9 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
       Taluk,
     });
   };
-  if (isLoading) {
-    return <Loader></Loader>;
-  }
+  // if (isLoading) {
+  //   return <Loader></Loader>;
+  // }
 
   return (
     <React.Fragment>
@@ -260,7 +260,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   value={HouseNameMal}
                   onChange={setSelectedHouseNameMal}
                   placeholder={`${t("DFM_HOUSE_NAME_MAL")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_HOUSE_NAME_MAL") })}
+                  {...(validation = {  isRequired: false, type: "text", title: t("DFM_INVALID_HOUSE_NAME_MAL") })}
                 />
               </div>
 
@@ -289,7 +289,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   value={StreetNameMal}
                   onChange={setSelectedStreetNameMal}
                   placeholder={`${t("DFM_STREET_MAL")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_DFM_STREET_MAL") })}
+                  {...(validation = {  isRequired: false, type: "text", title: t("DFM_INVALID_DFM_STREET_MAL") })}
                 />
               </div>
             </div>
@@ -379,7 +379,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   value={LocalPlaceMal}
                   onChange={setSelectedLocalPlaceMal}
                   placeholder={`${t("DFM_LOCAL_PLACE_MAL")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_LOCAL_PLACE_MAL") })}
+                  {...(validation = {  isRequired: true, type: "text", title: t("DFM_INVALID_LOCAL_PLACE_MAL") })}
                 />
               </div>
               <div className="col-md-4">
@@ -415,7 +415,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   value={MainPlaceMal}
                   onChange={setSelectedMainPlaceMal}
                   placeholder={`${t("DFM_MAIN_PLACE_MAL")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_MAIN_PLACE_MAL") })}
+                  {...(validation = {  isRequired: true, type: "text", title: t("DFM_INVALID_MAIN_PLACE_MAL") })}
                 />
               </div>
               <div className="col-md-4">
@@ -424,6 +424,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   optionKey="name"
                   isMandatory={false}
+                  // option={cmbPostOffice}
                   option={cmbVillage}
                   selected={Village}
                   placeholder={`${t("DFM_VILLAGE")}`}
@@ -436,6 +437,7 @@ const DFMAddressDetails = ({ t, config, onSelect, value, userType, formData }) =
                   t={t}
                   optionKey="name"
                   isMandatory={false}
+                  // option={cmbPostOffice}
                   option={cmbTaluk}
                   selected={Taluk}
                   placeholder={`${t("DFM_TALUK")}`}

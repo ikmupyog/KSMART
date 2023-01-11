@@ -6,12 +6,14 @@ import { useTranslation } from "react-i18next";
 const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
-    let validation = {};
-    const { data: ReligionList = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
-    const { data: AttentionOfDelivery = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
-    const { data: MedicalAttentionType = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MedicalAttentionType");
-    const { data: DeliveryMethodList = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
-    const { data: ModeOfPregnancyList = {}, } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "ModeOfPregnancy");
+    let validation = {};  
+    
+   
+    const { data: ReligionList = {}, isReligionListLoading} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
+    const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
+    const { data: MedicalAttentionType = {}, isMedicalAttentionTypeLoading} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MedicalAttentionType");
+    const { data: DeliveryMethodList = {},isDeliveryMethodListLoading} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
+    const { data: ModeOfPregnancyList = {}, isModeOfPregnancyListLoading} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "ModeOfPregnancy");
     const [BirthWeight, setBirthWeight] = useState(formData?.StatisticalInfoDetails?.BirthWeight);
     const [BirthHeight, setBirthHeight] = useState(formData?.StatisticalInfoDetails?.BirthHeight);
     const [Religion, setReligion] = useState(formData?.StatisticalInfoDetails?.Religion);
@@ -99,17 +101,23 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
         setModeOfPregnancy(value);
     }
     const goNext = () => {
-        sessionStorage.setItem("BirthWeight", BirthWeight);
-        sessionStorage.setItem("BirthHeight", BirthHeight);
-        sessionStorage.setItem("Religion", Religion.code);
-        sessionStorage.setItem("PregnancyDuration", PregnancyDuration.code);
-        sessionStorage.setItem("MedicalAttension", MedicalAttension.code);
-        sessionStorage.setItem("MedicalAttensionSub", MedicalAttensionSub.code);
-        sessionStorage.setItem("DeliveryMethod", DeliveryMethod.code);
-        sessionStorage.setItem("ModeOfPregnancy", ModeOfPregnancy.code);
-        onSelect(config.key, { BirthWeight, BirthHeight, Religion, PregnancyDuration, MedicalAttension, MedicalAttensionSub, DeliveryMethod, DeliveryMethodSub });
+        sessionStorage.setItem("BirthWeight", BirthWeight ? BirthWeight : null );
+        sessionStorage.setItem("BirthHeight", BirthHeight ? BirthHeight : null);
+        sessionStorage.setItem("Religion", Religion ? Religion.code : null);
+        sessionStorage.setItem("PregnancyDuration", PregnancyDuration ? PregnancyDuration.code : null);
+        sessionStorage.setItem("MedicalAttension", MedicalAttension ? MedicalAttension.code : null);
+        sessionStorage.setItem("MedicalAttensionSub", MedicalAttensionSub ? MedicalAttensionSub.code : null);
+        sessionStorage.setItem("DeliveryMethod", DeliveryMethod ? DeliveryMethod.code : null);
+        sessionStorage.setItem("ModeOfPregnancy", ModeOfPregnancy ? ModeOfPregnancy.code : null);
+
+        onSelect(config.key, { BirthWeight, BirthHeight, Religion, PregnancyDuration, MedicalAttension, MedicalAttensionSub, DeliveryMethod, ModeOfPregnancy });
     }
     console.log(formData);
+
+    if (isReligionListLoading || isAttentionOfDeliveryLoading  ||isMedicalAttentionTypeLoading|| isDeliveryMethodListLoading  || isModeOfPregnancyListLoading ) {
+        return <Loader></Loader>;
+       }
+   
     return (
         <React.Fragment>
             {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}

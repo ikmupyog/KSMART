@@ -10,19 +10,19 @@ import orderBy from "lodash/orderBy";
 const ApplicationDeathDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { id: applicationNumber } = useParams();
+  const { id: applicationNo } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("NewTL"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("death21days"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
-  sessionStorage.setItem("applicationNumber", applicationNumber)
+  sessionStorage.setItem("applicationNo", applicationNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, applicationNumber);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, applicationNo);
 
   const stateId = Digit.ULBService.getStateId();
-  // const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
+  const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
 
   const {
     isLoading: updatingApplication,
@@ -30,16 +30,16 @@ const ApplicationDeathDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useCRDeathApplicationActions(tenantId);
 
-  let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-
+  // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
+  console.log(applicationDetails?.applicationData.tenantid);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
-    tenantId: applicationDetails?.tenantId || tenantId,
-    id: applicationDetails?.applicationData?.applicationNumber,
+    tenantId: applicationDetails?.applicationData.tenantid || tenantId,
+    id: applicationDetails?.applicationData?.applicationno,
     moduleCode: businessService,
     role: "BND_CEMP",
-    config:{EditRenewalApplastModifiedTime:EditRenewalApplastModifiedTime},
+    config:{},
   });
 
   const closeToast = () => {
@@ -89,29 +89,29 @@ const ApplicationDeathDetails = () => {
   if ((item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
 
   const rolecheck = rolearray.length > 0 ? true : false;
-  // const validTo = applicationDetails?.applicationData?.validTo;
+  const validTo = applicationDetails?.applicationData?.validTo;
   const currentDate = Date.now();
-  // const duration = validTo - currentDate;
-  // const renewalPeriod = TradeRenewalDate?.TradeLicense?.TradeRenewal?.[0]?.renewalPeriod;
+  const duration = validTo - currentDate;
+  const renewalPeriod = TradeRenewalDate?.TradeLicense?.TradeRenewal?.[0]?.renewalPeriod;
 
-  // if (rolecheck && (applicationDetails?.applicationData?.status === "APPROVED" || applicationDetails?.applicationData?.status === "EXPIRED" || (applicationDetails?.applicationData?.status === "MANUALEXPIRED" && renewalPending==="true")) && duration <= renewalPeriod) {
-  //   if(workflowDetails?.data && allowedToNextYear) {
-      // if(!workflowDetails?.data?.actionState) {
-      //   workflowDetails.data.actionState = {};
-      //   workflowDetails.data.actionState.nextActions = [];
-      // }
-      // const flagData = workflowDetails?.data?.actionState?.nextActions?.filter(data => data.action == "RENEWAL_SUBMIT_BUTTON");
-      // if(flagData && flagData.length === 0) {
-      //   workflowDetails?.data?.actionState?.nextActions?.push({
-      //     action: "RENEWAL_SUBMIT_BUTTON",
-      //     redirectionUrl: {
-      //       pathname: `/digit-ui/employee/tl/renew-application-details/${applicationNumber}`,
-      //       state: applicationDetails
-      //     },
-      //     tenantId: stateId,
-      //     role: []
-      //   });
-      // }
+  if (rolecheck && (applicationDetails?.applicationData?.status === "APPROVED" || applicationDetails?.applicationData?.status === "EXPIRED" || (applicationDetails?.applicationData?.status === "MANUALEXPIRED" && renewalPending==="true")) && duration <= renewalPeriod) {
+    if(workflowDetails?.data && allowedToNextYear) {
+      if(!workflowDetails?.data?.actionState) {
+        workflowDetails.data.actionState = {};
+        workflowDetails.data.actionState.nextActions = [];
+      }
+      const flagData = workflowDetails?.data?.actionState?.nextActions?.filter(data => data.action == "RENEWAL_SUBMIT_BUTTON");
+      if(flagData && flagData.length === 0) {
+        workflowDetails?.data?.actionState?.nextActions?.push({
+          action: "RENEWAL_SUBMIT_BUTTON",
+          redirectionUrl: {
+            pathname: `/digit-ui/employee/tl/renew-application-details/${applicationNumber}`,
+            state: applicationDetails
+          },
+          tenantId: stateId,
+          role: []
+        });
+      }
       // workflowDetails = {
       //   ...workflowDetails,
       //   data: {
@@ -130,45 +130,45 @@ const ApplicationDeathDetails = () => {
       //     },
       //   },
       // };
-  //   }
-  // }
+    }
+  }
 
-  // if (rolearray && applicationDetails?.applicationData?.status === "PENDINGPAYMENT") {
-  //     workflowDetails?.data?.nextActions?.map(data => {
-  //       if (data.action === "PAY") {
-  //         workflowDetails = {
-  //           ...workflowDetails,
-  //           data: {
-  //             ...workflowDetails?.data,
-  //             actionState: {
-  //               nextActions: [
-  //                 {
-  //                   action: data.action,
-  //                   redirectionUrll: {
-  //                     pathname: `TL/${applicationDetails?.applicationData?.applicationNumber}/${tenantId}`,
-  //                     state: tenantId
-  //                   },
-  //                   tenantId: tenantId,
-  //                 }
-  //               ],
-  //             },
-  //           },
-  //         };
-  //       }
-  //     })
-  // };
+  if (rolearray && applicationDetails?.applicationData?.status === "PENDINGPAYMENT") {
+      workflowDetails?.data?.nextActions?.map(data => {
+        if (data.action === "PAY") {
+          workflowDetails = {
+            ...workflowDetails,
+            data: {
+              ...workflowDetails?.data,
+              actionState: {
+                nextActions: [
+                  {
+                    action: data.action,
+                    redirectionUrll: {
+                      pathname: `TL/${applicationDetails?.applicationData?.applicationNumber}/${tenantId}`,
+                      state: tenantId
+                    },
+                    tenantId: tenantId,
+                  }
+                ],
+              },
+            },
+          };
+        }
+      })
+  };
 
-  // const wfDocs = workflowDetails.data?.timeline?.reduce((acc, { wfDocuments }) => {
-  //   return wfDocuments ? [...acc, ...wfDocuments] : acc;
-  // }, []);
-  // const ownerdetails = applicationDetails?.applicationDetails.find(e => e.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS");
-  // let appdetailsDocuments = ownerdetails?.additionalDetails?.documents;
-  // if(appdetailsDocuments && wfDocs?.length && !(appdetailsDocuments.find(e => e.title === "TL_WORKFLOW_DOCS"))){
-  //   ownerdetails.additionalDetails.documents = [...ownerdetails.additionalDetails.documents,{
-  //     title: "TL_WORKFLOW_DOCS",
-  //     values: wfDocs?.map?.((e) => ({ ...e, title: e.documentType})),
-  //   }];
-  // }
+  const wfDocs = workflowDetails.data?.timeline?.reduce((acc, { wfDocuments }) => {
+    return wfDocuments ? [...acc, ...wfDocuments] : acc;
+  }, []);
+  const ownerdetails = applicationDetails?.applicationDetails.find(e => e.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS");
+  let appdetailsDocuments = ownerdetails?.additionalDetails?.documents;
+  if(appdetailsDocuments && wfDocs?.length && !(appdetailsDocuments.find(e => e.title === "TL_WORKFLOW_DOCS"))){
+    ownerdetails.additionalDetails.documents = [...ownerdetails.additionalDetails.documents,{
+      title: "TL_WORKFLOW_DOCS",
+      values: wfDocs?.map?.((e) => ({ ...e, title: e.documentType})),
+    }];
+  }
 
 
 
@@ -176,7 +176,8 @@ const ApplicationDeathDetails = () => {
     <div >
       <div /* style={{marginLeft: "15px"}} */>
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
-        <CardHeader>{`${t("Birth Application Details")}`}</CardHeader>
+        {/* <CardHeader>{`${t("Death Application Summary Details")}`}</CardHeader> */}
+        <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Death Application Summary Details")}`}</label>
       </div>
       <ApplicationDetailsTemplate
         applicationDetails={applicationDetails}
@@ -186,11 +187,11 @@ const ApplicationDeathDetails = () => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="TL"
+        moduleCode="death-services"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
-        timelineStatusPrefix={"WF_NEWTL_"}
+        timelineStatusPrefix={"WF_21DAYS_"}
       />
     </div>
   );

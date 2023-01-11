@@ -219,7 +219,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   value={FirstNameMal}
                   onChange={setSelectFirstNameMal}
                   placeholder={`${t("DFM_FIRST_NAME_MALAYALAM")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_FIRST_NAME_MALAYALAM") })}
+                  {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_FIRST_NAME_MALAYALAM") })}
                 />
               </div>
               <div className="col-md-4">
@@ -227,7 +227,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 <TextInput t={t}  isMandatory={false} type={"text"} optionKey="i18nKey" name="LastNameMal" placeholder={`${t("DFM_LAST_NAME_MALAYALAM")}`}
                   value={LastName}
                   onChange={setSelectLastName}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME_MALAYALAM") })}
+                  {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME_MALAYALAM") })}
                 />
               </div>
             </div>
@@ -313,7 +313,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   value={FatherFirstNameMal}
                   onChange={setSelectFatherFirstNameMal}
                   placeholder={`${t("DFM_FATHER_FIRST_NAME_MALAYALAM")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_FATHER_FIRST_NAME_MALAYALAM") })}
+                  {...(validation = {  isRequired: false, type: "text", title: t("DFM_INVALID_FATHER_FIRST_NAME_MALAYALAM") })}
                 />
               </div>
             </div>
@@ -329,7 +329,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   value={FatherLastNameMal}
                   onChange={setSelectFatherLastNameMal}
                   placeholder={`${t("DFM_FATHER_LAST_NAME_MALAYALAM")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_FATHER_LAST_NAME_MALAYALAM") })}
+                  {...(validation = {  isRequired: false, type: "text", title: t("DFM_INVALID_FATHER_LAST_NAME_MALAYALAM") })}
                 />
               </div>
               <div className="col-md-4">
@@ -373,7 +373,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   value={MotherFirstNameMal}
                   placeholder={`${t("DFM_MOTHER_FIRST_NAME_MALAYALAM")}`}
                   onChange={setSelectMotherFirstNameMal}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_MOTHER_FIRST_NAME_MALAYALAM") })}
+                  {...(validation = {  isRequired: false, type: "text", title: t("DFM_INVALID_MOTHER_FIRST_NAME_MALAYALAM") })}
                 />
               </div>
               <div className="col-md-4">
@@ -387,7 +387,7 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                   value={MotherLastNameMal}
                   onChange={setSelectMotherLastNameMal}
                   placeholder={`${t("DFM_MOTHER_LAST_NAME_MALAYALAN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_MOTHER_LAST_NAME_MALAYALAM") })}
+                  {...(validation = {  isRequired: false, type: "text", title: t("DFM_INVALID_MOTHER_LAST_NAME_MALAYALAM") })}
                 />
               </div>
               <div className="col-md-4">

@@ -4,6 +4,7 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -114,7 +115,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}  isDisabled = {!FatherOrHusbandNameEN}>
+     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}> 
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -265,7 +266,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-4">
             <CardLabel>
               {`${t("CR_NAME_EN")}`}
-              <span className="mandatorycss">*</span>
+              {/* <span className="mandatorycss">*</span> */}
             </CardLabel>
             <TextInput
               t={t}
@@ -277,13 +278,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectMotherNameEn}
               disable={isEdit}
               placeholder={`${t("CR_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
             />
           </div>
           <div className="col-md-4">
             <CardLabel>
               {`${t("CR_NAME_ML")}`}
-              <span className="mandatorycss">*</span>
+              {/* <span className="mandatorycss">*</span> */}
             </CardLabel>
             <TextInput
               t={t}
@@ -295,7 +296,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectMotherNameMl}
               disable={isEdit}
               placeholder={`${t("CR_NAME_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_ML") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_ML") })}
             />
           </div>
         </div>

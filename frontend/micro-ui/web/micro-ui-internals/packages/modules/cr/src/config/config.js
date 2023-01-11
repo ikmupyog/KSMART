@@ -304,7 +304,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "birthaddress",
+        key: "FatherInfoDetails",
         type: "component",
         nextStep: "mother-informations",
         hideInEmployee: false,
@@ -426,14 +426,14 @@ export const newConfig = [
         route: "public-place",
         component: "PublicPlace",
         texts: {
-          headerCaption: "",
+          headerCaption: "PublicPlace",
           header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },
         withoutLabel: true,
-        key: "TradeDetails",
+        key: "PublicPlaceDetails",
         nextStep: "father-informations",
         type: "component",
         hideInEmployee: true,
@@ -567,7 +567,23 @@ export const newConfig = [
         nextStep: "hospital-details",
         type: "component",
         hideInEmployee: false,
-      },    
+      }, 
+      {
+        route: "other-country-details",
+        component: "OtherCountry",
+        texts: {
+          headerCaption: "",
+          header: "Other Country Details",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "OtherCountry",
+        nextStep: "father-informations",
+        type: "component",
+        hideInEmployee: false,
+      },   
     ],
   },
 
@@ -728,6 +744,7 @@ export const newConfig = [
       },
       {
         route: "place-of-death",
+        isMandatory: true,
         component: "PlaceOfDeath",
         texts: {
           headerCaption: "",
@@ -744,6 +761,7 @@ export const newConfig = [
       },
       {
         route: "address-of-decesed",
+        isMandatory: true,
         component: "AddressOfDecesed",
         texts: {
           headerCaption: "",

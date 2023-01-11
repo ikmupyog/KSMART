@@ -3,20 +3,22 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton} from "
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const InstitutionDetails = ({ config, onSelect, userType, formData }) => {
+const InstitutionDetails = ({ config, onSelect, userType, formData,setInstitution, setSelectedInstitution,setInstitutionId, setSelectedInstitutionId,
+  SiginedOfficer, setSiginedOfficer,SiginedOfficerDesignation, setSiginedOfficerDesignation,InstitutionMobilNo, setInstitutionMobilNo,InstitutionAadhaar, setInstitutionAadhaar,
+}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
   const { data: institutionid = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
-  const [setInstitution, setSelectedInstitution] = useState(formData?.InstitutionDetails?.setInstitution);
-  const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.InstitutionDetails?.setInstitutionId);
+  // const [setInstitution, setSelectedInstitution] = useState(formData?.InstitutionDetails?.setInstitution);
+  // const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.InstitutionDetails?.setInstitutionId);
   
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [SiginedOfficer, setSiginedOfficer] = useState(formData?.InstitutionDetails?.SiginedOfficer);
-  const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.InstitutionDetails?.SiginedOfficerDesignation);
-  const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.InstitutionDetails?.InstitutionMobilNo);
-  const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.InstitutionDetails?.InstitutionAadhaar);
+  // const [SiginedOfficer, setSiginedOfficer] = useState(formData?.InstitutionDetails?.SiginedOfficer);
+  // const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.InstitutionDetails?.SiginedOfficerDesignation);
+  // const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.InstitutionDetails?.InstitutionMobilNo);
+  // const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.InstitutionDetails?.InstitutionAadhaar);
 
   let naturetypecmbvalue = null;
   
@@ -59,21 +61,22 @@ const InstitutionDetails = ({ config, onSelect, userType, formData }) => {
   
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    sessionStorage.setItem("setInstitution", setInstitution.code);
-    sessionStorage.setItem("setInstitutionId", setInstitutionId.code);
-    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer);
-    sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation);
-    sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
-    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);  
+    console.log('clicked');
+    // sessionStorage.setItem("setInstitution", setInstitution.code);
+    // sessionStorage.setItem("setInstitutionId", setInstitutionId.code);
+    // sessionStorage.setItem("setSiginedOfficer", SiginedOfficer);
+    // sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation);
+    // sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
+    // sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);  
 
-    onSelect(config.key, { 
-      setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,      
-    });
+    // onSelect(config.key, { 
+    //   setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,      
+    // });
   };
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null} */}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!SiginedOfficer}>     
         <div className="row">
           <div className="col-md-12">

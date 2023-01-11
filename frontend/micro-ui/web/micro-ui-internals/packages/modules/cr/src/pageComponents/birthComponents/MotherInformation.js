@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton,Loader } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton,Loader,CheckBox  } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +16,10 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: Taluk = {},isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-    const { data: localbodies={}, isLoading } = Digit.Hooks.useTenants();
+    const { data: LocalBodies={}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+    // Digit.Hooks.useTenants();
+    // Digit.Hooks.cr.useCivilRegistrationMDMS("kl", "tenant", "tenants");
+    // 
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [lbs, setLbs] = useState(0);
     const [MotherFirstNameEn, setMotherFirstNameEn] = useState(formData?.MotherInfoDetails?.MotherFirstNameEn);
@@ -24,7 +27,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherLastNameEn, setMotherLastNameEn] = useState(formData?.MotherInfoDetails?.MotherLastNameEn);
     const [MotherFirstNameMl, setMotherFirstNameMl] = useState(formData?.MotherInfoDetails?.MotherFirstNameMl);
     const [MotherMiddleNameMl, setMotherMiddleNameMl] = useState(formData?.MotherInfoDetails?.MotherMiddleNameMl);
-    const [MotherLastNameMl, setMotherLastNameMl] = useState(formData?.MotherInfoDetails?.MotherLotherPlaceNameastNameMl);
+    const [MotherLastNameMl, setMotherLastNameMl] = useState(formData?.MotherInfoDetails?.MotherLastNameMl);
     const [MotherAadhar, setMotherAadhar] = useState(formData?.MotherInfoDetails?.MotherAadhar);
     const [MotherPassportNo, setMotherPassportNo] = useState(formData?.MotherInfoDetails?.MotherPassportNo);
     const [MotherEmail, setMotherEmail] = useState(formData?.MotherInfoDetails?.MotherEmail);
@@ -37,7 +40,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherDistrict, setMotherDistrict] = useState(formData?.MotherInfoDetails?.MotherDistrict);
     const [MotherAgeDeleivery, setMotherAgeDeleivery] = useState(formData?.MotherInfoDetails?.MotherAgeDeleivery);
     const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.MotherInfoDetails?.MotherAgeMarriage);
-    const [MotherDOB, setMotherDOB] = useState(formData?.MotherInfoDetailsFdob?.MotherDOB);
+    const [MotherDOB, setMotherDOB] = useState(formData?.MotherInfoDetails?.MotherDOB);
     const [MotherMaritalStatus, setMotherMaritalStatus] = useState(formData?.MotherInfoDetails?.MotherMaritalStatus);
     const [MotherNoOfBirths, setMotherNoOfBirths] = useState(formData?.MotherInfoDetails?.MotherNoOfBirths);
     const [OrderofDelivery, setOrderofDelivery] = useState(formData?.MotherInfoDetails?.OrderofDelivery);
@@ -49,6 +52,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherNationality, setMotherNationality] = useState(formData?.MotherInfoDetails?.MotherNationality);
     const [MotherCountry, setMotherCountry] = useState(formData?.MotherInfoDetails?.MotherCountry);
     const [MotherTaluk, setMotherTaluk] = useState(formData?.MotherInfoDetails?.MotherTaluk);
+    const [isMotherInfo, setIsMotherInfo] = useState(formData?.MotherInfoDetails?.isMotherInfo);
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     const cmbUrbanRural = [
         { i18nKey: "Urban", code: "URBAN" },
@@ -107,12 +111,17 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             cmbNation.push(ob);
         });
     let cmbTaluk = [];
-    console.log("Taluk" + Taluk);
     Taluk &&
         Taluk["common-masters"] &&
         Taluk["common-masters"].Taluk.map((ob) => {
             cmbTaluk.push(ob);
         });
+        let cmbLB = [];
+        LocalBodies &&
+        LocalBodies["tenant"] &&
+        LocalBodies["tenant"].tenants.map((ob) => {
+                cmbLB.push(ob);
+            });
     const onSkip = () => onSelect();
 
     function setSelectMotherFirstNameEn(e) {
@@ -206,10 +215,8 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     useEffect(() => {
         if (isInitialRender) {
             if (MotherDistrict) {
-                console.log(MotherDistrict);
-                console.log(localbodies);
                 setIsInitialRender(false);
-                setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === MotherDistrict.districtid));
+                setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === MotherDistrict.districtid));
             }
         }
     }, [lbs, isInitialRender]);
@@ -219,41 +226,51 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     function setSelectMotherCountry(value) {
         setMotherCountry(value);
     }
+    function setMotherInfo(e) {
+        if (e.target.checked == true) {
+          setIsMotherInfo(true);
+        } else {
+          setIsMotherInfo(false);
+        }
+      }
     const goNext = () => {
-        sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn);
-        sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn);
-        sessionStorage.setItem("MotherLastNameEn", MotherLastNameEn);
-        sessionStorage.setItem("MotherFirstNameMl", MotherFirstNameMl);
-        sessionStorage.setItem("MotherMiddleNameMl", MotherMiddleNameMl);
-        sessionStorage.setItem("MotherLastNameMl", MotherLastNameMl);
-        sessionStorage.setItem("MotherAadhar", MotherAadhar);
-        sessionStorage.setItem("MotherPassportNo", MotherPassportNo);
-        sessionStorage.setItem("MotherEmail", MotherEmail);
-        sessionStorage.setItem("MotherMobile", MotherMobile);
-        sessionStorage.setItem("MotherEducation", MotherEducation.code);
-        sessionStorage.setItem("MotherEducationSubject", MotherEducationSubject.code);
-        sessionStorage.setItem("MotherProfession", MotherProfession.code);
-        sessionStorage.setItem("MotherNationality", MotherNationality.code);
+        sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn ? MotherFirstNameEn : null);
+        sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn ? MotherMiddleNameEn : null);
+        sessionStorage.setItem("MotherLastNameEn", MotherLastNameEn ? MotherLastNameEn : null);
+        sessionStorage.setItem("MotherFirstNameMl", MotherFirstNameMl ? MotherFirstNameMl : null);
+        sessionStorage.setItem("MotherMiddleNameMl", MotherMiddleNameMl ? MotherMiddleNameMl : null);
+        sessionStorage.setItem("MotherLastNameMl", MotherLastNameMl ? MotherLastNameMl : null);
+        sessionStorage.setItem("MotherAadhar", MotherAadhar ? MotherAadhar : null);
+        sessionStorage.setItem("MotherPassportNo", MotherPassportNo ? MotherPassportNo : null);
+        sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
+        sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
+        sessionStorage.setItem("MotherEducation", MotherEducation ? MotherEducation.code : null);
+        sessionStorage.setItem("MotherEducationSubject", MotherEducationSubject ?  MotherEducationSubject.code : null);
+        sessionStorage.setItem("MotherProfession", MotherProfession ? MotherProfession.code : null);
+        sessionStorage.setItem("MotherNationality", MotherNationality ? MotherNationality.code : null);
         // sessionStorage.setItem("MotherAgeDeleivery", MotherAgeDeleivery);
-        sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage);
-        sessionStorage.setItem("MotherDOB", MotherDOB);
-        sessionStorage.setItem("MotherMaritalStatus", MotherMaritalStatus);
-        sessionStorage.setItem("MotherNoOfBirths", MotherNoOfBirths);
-        sessionStorage.setItem("OrderofDelivery", OrderofDelivery);
-        sessionStorage.setItem("MotherResPlace", MotherResPlace);
-        sessionStorage.setItem("MotherPlaceNameEn ", MotherPlaceNameEn);
+        sessionStorage.setItem("MotherAgeMarriage",MotherAgeMarriage ? MotherAgeMarriage : null);
+        sessionStorage.setItem("MotherDOB", MotherDOB ? MotherDOB : null);
+        sessionStorage.setItem("MotherMaritalStatus",MotherMaritalStatus ?  MotherMaritalStatus : null);
+        sessionStorage.setItem("MotherNoOfBirths",MotherNoOfBirths ? MotherNoOfBirths : null);
+        sessionStorage.setItem("OrderofDelivery",OrderofDelivery ? OrderofDelivery : null);
+        sessionStorage.setItem("MotherResPlace", MotherResPlace ? MotherResPlace : null);
+        sessionStorage.setItem("MotherPlaceNameEn ", MotherPlaceNameEn ? MotherPlaceNameEn : null);
         // sessionStorage.setItem("MotherPlaceNameMl ", MotherPlaceNameMl);
-        sessionStorage.setItem("MotherPlaceType", MotherPlaceType.code);
-        sessionStorage.setItem("MotherLBName", MotherLBName.code);//MotherLBName.code
+        sessionStorage.setItem("MotherPlaceType",MotherPlaceType ? MotherPlaceType.code : null);
+        sessionStorage.setItem("MotherLBName",MotherLBName ? MotherLBName.code : null);//MotherLBName.code
         // sessionStorage.setItem("LBTypeName", LBTypeName.code);
-        sessionStorage.setItem("MotherDistrict", MotherDistrict.code);
-        sessionStorage.setItem("MotherTaluk", MotherTaluk.code);
-        sessionStorage.setItem("StateName", StateName.code);
-        sessionStorage.setItem("MotherCountry", MotherCountry.code);
+        sessionStorage.setItem("MotherDistrict",MotherDistrict ? MotherDistrict.code : null);
+        sessionStorage.setItem("MotherTaluk",MotherTaluk ? MotherTaluk.code : null);
+        sessionStorage.setItem("StateName",StateName ? StateName.code : null);
+        sessionStorage.setItem("MotherCountry",MotherCountry ? MotherCountry.code : null);
+        sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
         onSelect(config.key, {
             MotherFirstNameEn, MotherMiddleNameEn, MotherLastNameEn,
             MotherFirstNameMl, MotherMiddleNameMl, MotherLastNameMl, MotherAadhar, MotherPassportNo, MotherEmail, MotherMobile, MotherEducation, MotherEducationSubject, MotherProfession,
-            MotherNationality, MotherAgeDeleivery, MotherDOB, MotherNoOfBirths, OrderofDelivery, MotherPlaceType, MotherLBName,  MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl
+            MotherNationality, MotherAgeDeleivery, MotherDOB, MotherNoOfBirths, OrderofDelivery, MotherPlaceType, MotherLBName, 
+             MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl,MotherAgeMarriage,
+             isMotherInfo
         });
     }
     if (isLoading || isQualificationLoading || isQualificationSubLoading || isProfessionLoading || isStateLoading || isDistrictLoading || isLBTypeLoading || isCountryLoading || isTalukLoading || isNationLoad) {
@@ -264,8 +281,18 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
             {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
             <BackButton >{t("CS_COMMON_BACK")}</BackButton>
-            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!MotherFirstNameEn}>
-
+            {/* isDisabled={!MotherFirstNameEn} */}
+            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+                 <div className="row">
+                    <div className="col-md-12" ><h1 className="headingh1" ></h1>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6" >
+                        {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
+                        <CheckBox label={t("Mother Information Missing")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span> </h1>
                     </div>
@@ -282,7 +309,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherFirstNameEn"
                                 value={MotherFirstNameEn}
                                 onChange={setSelectMotherFirstNameEn}
-                                disable={isEdit} placeholder={`${t("CR_FIRST_NAME_EN")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_FIRST_NAME_EN")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                             />
                         </div>
@@ -296,7 +323,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherMiddleNameEn"
                                 value={MotherMiddleNameEn}
                                 onChange={setSelectMotherMiddleNameEn}
-                                disable={isEdit} placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                             />
                         </div>
@@ -310,7 +337,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherLastNameEn"
                                 value={MotherLastNameEn}
                                 onChange={setSelectMotherLastNameEn}
-                                disable={isEdit} placeholder={`${t("CR_LAST_NAME_EN")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_LAST_NAME_EN")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                             />
                         </div>
@@ -328,7 +355,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherFirstNameMl"
                                 value={MotherFirstNameMl}
                                 onChange={setSelectMotherFirstNameMl}
-                                disable={isEdit} placeholder={`${t("CR_FIRST_NAME_ML")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_FIRST_NAME_ML")}`}
                                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
                             />
                         </div>
@@ -342,7 +369,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherMiddleNameMl"
                                 value={MotherMiddleNameMl}
                                 onChange={setSelectMotherMiddleNameMl}
-                                disable={isEdit} placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                                 {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
                             />
                         </div>
@@ -356,7 +383,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherLastNameMl"
                                 value={MotherLastNameMl}
                                 onChange={setSelectMotherLastNameMl}
-                                disable={isEdit} placeholder={`${t("CR_LAST_NAME_ML")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_LAST_NAME_ML")}`}
                                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
                             />
                         </div>
@@ -374,7 +401,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherAadhar"
                                 value={MotherAadhar}
                                 onChange={setSelectMotherAadhar}
-                                disable={isEdit} placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                                disable={isMotherInfo} placeholder={`${t("CS_COMMON_AADHAAR")}`}
                                 {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                             />
                         </div>
@@ -388,7 +415,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherPassportNo"
                                 value={MotherPassportNo}
                                 onChange={setSelectMotherPassportNo}
-                                disable={isEdit} placeholder={`${t("CR_PASSPORT_NO")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_PASSPORT_NO")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
                             />
                         </div>
@@ -402,7 +429,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherEmail"
                                 value={MotherEmail}
                                 onChange={setSelectMotherEmail}
-                                disable={isEdit} placeholder={`${t("CR_EMAIL")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_EMAIL")}`}
                                 {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
                             />
                         </div>
@@ -420,7 +447,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherMobile"
                                 value={MotherMobile}
                                 onChange={setSelectMotherMobile}
-                                disable={isEdit} placeholder={`${t("CR_MOBILE_NO")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_MOBILE_NO")}`}
                                 {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                             />
                         </div>
@@ -433,25 +460,9 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbQualification}
                                 selected={MotherEducation}
                                 select={setSelectMotherEducation}
-                                disabled={isEdit} placeholder={`${t("CR_EDUCATION")}`}
+                                disabled={isMotherInfo} placeholder={`${t("CR_EDUCATION")}`}
                             />
                         </div>
-                        <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown
-                                t={t}
-                                optionKey="name"
-                                isMandatory={false}
-                                option={cmbQualificationSub}
-                                selected={MotherEducationSubject}
-                                select={setSelectMotherEducationSubject}
-                                disabled={isEdit} placeholder={`${t("CR_EDUCATION_SUBJECT")}`}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="row" >
-                    <div className="col-md-12" >
                         <div className="col-md-4" >
                             <CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
@@ -461,9 +472,26 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbProfession}
                                 selected={MotherProfession}
                                 select={setSelectMotherProfession}
-                                disabled={isEdit} placeholder={`${t("CR_PROFESSIONAL")}`}
+                                disabled={isMotherInfo} placeholder={`${t("CR_PROFESSIONAL")}`}
                             />
                         </div>
+                        {/* <div className="col-md-4" >
+                            <CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}<span className="mandatorycss">*</span></CardLabel>
+                            <Dropdown
+                                t={t}
+                                optionKey="name"
+                                isMandatory={false}
+                                option={cmbQualificationSub}
+                                selected={MotherEducationSubject}
+                                select={setSelectMotherEducationSubject}
+                                disabled={isMotherInfo} placeholder={`${t("CR_EDUCATION_SUBJECT")}`}
+                            />
+                        </div> */}
+                    </div>
+                </div>
+                <div className="row" >
+                    <div className="col-md-12" >
+                       
                         <div className="col-md-4" >
                             <CardLabel>{`${t("CR_NATIONALITY")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
@@ -473,7 +501,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbNation}
                                 selected={MotherNationality}
                                 select={setSelectMotherNationality}
-                                disabled={isEdit} placeholder={`${t("CR_NATIONALITY")}`}
+                                disabled={isMotherInfo} placeholder={`${t("CR_NATIONALITY")}`}
                             />
                         </div>
                         <div className="col-md-4" >
@@ -485,15 +513,10 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbMaritalStatus}
                                 selected={MotherMaritalStatus}
                                 select={setSelectMotherMaritalStatus}
-                                disabled={isEdit} placeholder={`${t("CR_MOTHER_MARITAL_STATUS")}`}
+                                disabled={isMotherInfo} placeholder={`${t("CR_MOTHER_MARITAL_STATUS")}`}
                             />
-
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12" >
-                        <div className="col-md-3" >
+                        <div className="col-md-2" >
                             <CardLabel>{`${t("CR_AGE_OF_MARRIAGE")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
@@ -503,7 +526,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherAgeMarriage"
                                 value={MotherAgeMarriage}
                                 onChange={setSelectMotherAgeMarriage}
-                                disable={isEdit} placeholder={`${t("CR_AGE_OF_MARRIAGE")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_AGE_OF_MARRIAGE")}`}
                                 {...(validation = { pattern: "^([0-9]){2}$", isRequired: true, type: "text", title: t("CR_INVALID_AGE_OF_MARRIAGE") })}
                             />
                         </div>
@@ -511,7 +534,12 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <DatePicker date={MotherDOB} name="MotherDOB" onChange={setselectMotherDOB} placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} />
 
                         </div>
-                        <div className="col-md-3" >
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12" >
+                        
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_NO_OF_BIRTH_GIVEN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
@@ -521,11 +549,11 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherNoOfBirths"
                                 value={MotherNoOfBirths}
                                 onChange={setSelectMotherNoOfBirths}
-                                disable={isEdit} placeholder={`${t("CR_NO_OF_BIRTH_GIVEN")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_NO_OF_BIRTH_GIVEN")}`}
                                 {...(validation = { pattern: "^([0-9]){1}$", type: "text", isRequired: true, title: t("CR_INVALID_NO_OF_BIRTH_GIVEN") })}
                             />
                         </div>
-                        <div className="col-md-3" >
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
@@ -535,7 +563,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="OrderofDelivery"
                                 value={OrderofDelivery}
                                 onChange={setSelectOrderofDelivery}
-                                disable={isEdit} placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
                                 {...(validation = { pattern: "^([0-9]){1}$", isRequired: true, type: "text", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                             />
                         </div>
@@ -557,7 +585,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbCountry}
                                 selected={MotherCountry}
                                 select={setSelectMotherCountry}
-                                disabled={isEdit} placeholder={`${t("CS_COMMON_COUNTRY")}`}
+                                disable={isMotherInfo} placeholder={`${t("CS_COMMON_COUNTRY")}`}
                             />
                         </div>
                         <div className="col-md-6" >
@@ -569,7 +597,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbState}
                                 selected={StateName}
                                 select={setSelectStateName}
-                                disabled={isEdit} placeholder={`${t("CS_COMMON_STATE")}`}
+                                disable={isMotherInfo} placeholder={`${t("CS_COMMON_STATE")}`}
                             />
                         </div>
 
@@ -587,7 +615,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbDistrict}
                                 selected={MotherDistrict}
                                 select={setSelectMotherDistrict}
-                                disabled={isEdit} placeholder={`${t("CS_COMMON_DISTRICT")}`}
+                                disabled={isMotherInfo} placeholder={`${t("CS_COMMON_DISTRICT")}`}
                             />
                         </div>
                         <div className="col-md-6" >
@@ -599,7 +627,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={lbs}
                                 selected={MotherLBName}
                                 select={setSelectMotherLBName}
-                                disabled={isEdit} placeholder={`${t("CS_COMMON_LB_NAME")}`}
+                                disable={isMotherInfo} placeholder={`${t("CS_COMMON_LB_NAME")}`}
                             />
                         </div>
                     </div>
@@ -608,7 +636,8 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-12" >
                         <div className="col-md-6" >
                             <CardLabel>{`${t("CS_COMMON_TALUK")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={MotherTaluk} select={setSelectMotherTaluk} disabled={isEdit} placeholder={`${t("CS_COMMON_TALUK")}`} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={MotherTaluk} select={setSelectMotherTaluk} 
+                            disable={isMotherInfo} placeholder={`${t("CS_COMMON_TALUK")}`} />
                         </div>
                         <div className="col-md-6" >
                             <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -619,7 +648,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbUrbanRural}
                                 selected={MotherPlaceType}
                                 select={setSelectMotherPlaceType} placeholder={`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}
-                                disabled={isEdit}
+                                disable={isMotherInfo}
                             />
                         </div>
                     </div>
@@ -636,7 +665,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherResPlace"
                                 value={MotherResPlace}
                                 onChange={setSelectMotherResPlace}
-                                disable={isEdit} placeholder={`${t("CR_MOTHERS_RESIDENTIAL_PLACE_LONGER_YEAR")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_MOTHERS_RESIDENTIAL_PLACE_LONGER_YEAR")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", type: "text", isRequired: true, title: t("CR_INVALID_MOTHERS_RESIDENTIAL_PLACE_LONGER_YEAR") })}
                             />
                         </div>
@@ -650,7 +679,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 name="MotherPlaceNameEn"
                                 value={MotherPlaceNameEn}
                                 onChange={setSelectMotherPlaceNameEn}
-                                disable={isEdit} placeholder={`${t("CR_PLACE_NAME_EN")}`}
+                                disable={isMotherInfo} placeholder={`${t("CR_PLACE_NAME_EN")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", type: "text", isRequired: true, title: t("CR_INVALID_PLACE_NAME_EN") })}
                             />
                         </div>

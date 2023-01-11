@@ -270,7 +270,7 @@ export const gettradeupdateaccessories = (data) => {
 }
 export const convertToFileSubmission = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
-  console.log(data);
+  console.log('filesub data',data);
   const formdata = {
     ApplicantPersonals: [
       {
@@ -279,14 +279,16 @@ export const convertToFileSubmission = (data = {}) => {
         email:  data?.ApplicantDetails?.Email, 
         firstName:  data?.ApplicantDetails?.FirstName,     
         lastName:  data?.ApplicantDetails?.LastName,
-        title:  data?.ApplicantDetails?.Title.code, 
+        firstNameMal:  data?.ApplicantDetails?.LastNameMal,
+        lastNameMal:  data?.ApplicantDetails?.LastNameMal,
+        title:  data?.ApplicantDetails?.Title?.code, 
         mobileNo:  data?.ApplicantDetails?.MobileNo, 
-        tenantId: "kl",
+        tenantId: Digit.ULBService.getCitizenCurrentTenant(),
         fatherFirstName:data?.ApplicantDetails?.FatherFirstName,
         fatherLastName:data?.ApplicantDetails?.FatherLastName,
         motherFirstName:data?.ApplicantDetails?.MotherFirstName,
         motherLastName:data?.ApplicantDetails?.MotherLastName,
-        applicantCategory:data?.ApplicantDetails?.CategoryList.id,
+        applicantCategory:data?.ApplicantDetails?.CategoryList?.id,
         dateOfBirth:Date.parse(data?.ApplicantDetails?.DateofBirth),
         bankAccountNo:data?.ApplicantDetails?.AccountNo,
 
@@ -306,22 +308,28 @@ export const convertToFileSubmission = (data = {}) => {
         },
         applicantAddress: {
           applicantPersonalId: '23',
-          houseNo:data?.AddressDet?.HouseNo, 
+          buildingNo: data?.AddressDet?.BuildingNo,
+          subNo: data?.AddressDet?.SubNo,
           houseName:data?.AddressDet?.HouseName, 
           street:data?.AddressDet?.StreetName, 
           pincode:data?.AddressDet?.Pincode, 
-          postOfficeName:data?.AddressDet?.PostOfficeList.code, 
+          postOfficeName: data?.AddressDet?.PostOfficeList?.code, 
+          taluk: data?.AddressDet?.Taluk?.code, 
+          houseNameMal: data?.AddressDet?.HouseNameMal, 
+          village:data?.AddressDet?.Village?.code, 
           residenceAssociationNo:data?.AddressDet?.ResAssociationNo, 
           localPlace:data?.AddressDet?.LocalPlace, 
           mainPlace:data?.AddressDet?.MainPlace, 
-          wardNo: data?.AddressDet?.WardNo.code, 
+          localPlaceMal:data?.AddressDet?.LocalPlaceMal, 
+          mainPlaceMal:data?.AddressDet?.MainPlaceMal, 
+          wardNo: data?.ServiceDet?.WardNo?.code, 
         },
         applicantServiceDocuments: {
           applicantPersonalId: '23',
           documentTypeId: '2',
           fileStoreId: '537',
           serviceDetailsId: '34',
-          businessService:5,
+          applicationdetails:12345,
           active: "Yes",
           documentNumber: '12345',
         },
@@ -334,22 +342,25 @@ export const convertToFileSubmission = (data = {}) => {
         fileDetail: {
           applicantPersonalId : 23,
           documenttypeId :9,
-          tenantId: "kl",
+          tenantId: "kl.cochin",
           serviceDetailsId :537,
           fileNumber :1,
-          fileCode :"KL-05-T",
+          fileCode :"KL-FM-2022-11-02-000043",
           fileName :"PensionAdalath",
           fileArisingMode :1,
           fileArisingDate : null,
           financialYear : Financialyear ? Financialyear : 2022-23,
           applicationDate : null,
-          workflowCode :10,
-          action :null,
+          workflowCode :"NewDFM",
+          action :"INITIATE",
           fileStatus :1,
           active : "Yes",
-          documentNumber :12345,
           docexpiryDate : 2225,
-          businessService : 89
+          businessService : 89,
+          comment:"Test",
+          assignee:[
+            
+          ]
         },
         auditDetails: {
           createdBy: null,

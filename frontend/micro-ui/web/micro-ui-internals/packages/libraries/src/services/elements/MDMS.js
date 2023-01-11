@@ -65,6 +65,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getLocalBodyMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: "tenant",
+        masterDetails: [
+          {
+            name: "tenants",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRQualificationSubList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2013,6 +2028,9 @@ export const MdmsService = {
     const cacheSetting = getCacheSetting(mdmsDetails.details.moduleDetails[0].moduleName);
     PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
+  },
+  getLocalBodyMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getLocalBodyMasterList(tenantId, moduleCode), moduleCode);
   },
   getCRQualificationSub: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRQualificationSubList(tenantId, moduleCode), moduleCode);

@@ -3,7 +3,11 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernme
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,selectHospitalName }) => {
+const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,selectHospitalName,selectSignedOfficerName,
+  SignedOfficerName ,SignedOfficerDesignation, selectSignedOfficerDesignation ,SignedOfficerAadharNo, setSignedOfficerAadharNo,
+  SignedOfficerMobileNo, setSignedOfficerMobileNo,
+
+}) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   const { t } = useTranslation();
@@ -11,10 +15,10 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   console.log(hospital);
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
-  const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
-  const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.HospitalDetails?.SignedOfficerDesignation);
-  const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.HospitalDetails?.SignedOfficerAadharNo);
-  const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.HospitalDetails?.SignedOfficerMobileNo);
+  // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
+  // const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.HospitalDetails?.SignedOfficerDesignation);
+  // const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.HospitalDetails?.SignedOfficerAadharNo);
+  // const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.HospitalDetails?.SignedOfficerMobileNo);
   // const isEdit = window.location.href.includes("/edit-application/")||window.location.href.includes("renew-trade");
   let cmbhospital = [];
   hospital &&
@@ -41,7 +45,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
     setSignedOfficerMobileNo(e.target.value);
   }
   const goNext = () => {
-    console.log('clicked');
+    // console.log('clicked');
     // sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
     // sessionStorage.setItem("SignedOfficerName", SignedOfficerName.hospitalName);
     // sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
@@ -49,6 +53,9 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
     // sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo);
     // onSelect(config.key, { HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo });
   };
+  // if (isLoading ){
+  //   return <Loader></Loader>;
+  // }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
@@ -113,8 +120,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
           <div className="col-md-6">
             {" "}
             <CardLabel>
-              {`${t("CS_COMMON_AADHAAR")}`}
-              <span className="mandatorycss">*</span>
+              {`${t("CS_COMMON_AADHAAR")}`}             
             </CardLabel>
             <TextInput
               t={t}
@@ -125,7 +131,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
               value={SignedOfficerAadharNo}
               onChange={setSelectSignedOfficerAadharNo}
               placeholder={`${t("CS_COMMON_AADHAAR")}`}
-              {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
           <div className="col-md-6">

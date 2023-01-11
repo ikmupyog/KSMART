@@ -2,6 +2,11 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+
+  const useLocalBodyMaster = () => {
+    console.log("Jetheesh LB");
+    return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
+  };  
   const useCRQualificationSub = () => {
     return useQuery("CR_QUALIFICATION_SUB", () => MdmsService.getCRQualificationSub(tenantId, moduleCode), config);
   };
@@ -222,6 +227,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "tenants":
+      return useLocalBodyMaster();
     case "QualificationSub":
       return useCRQualificationSub();
     case "ModeOfPregnancy":

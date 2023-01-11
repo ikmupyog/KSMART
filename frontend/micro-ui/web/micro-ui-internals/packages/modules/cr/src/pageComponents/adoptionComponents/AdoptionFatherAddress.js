@@ -186,26 +186,27 @@ function setSelectAdoptionFatherPincode(e) {
  }
  }, [lbs, isInitialRender]);
  const goNext = () => {
- sessionStorage.setItem("AdoptionFatherCountry", AdoptionFatherCountry.code);
- sessionStorage.setItem("AdoptionFatherStateName", AdoptionFatherStateName.code);
- sessionStorage.setItem("AdoptionFatherLBTypeName", AdoptionFatherLBTypeName.code);
- sessionStorage.setItem("AdoptionFatherBuldingNo", AdoptionFatherBuldingNo);
- sessionStorage.setItem("AdoptionFatherDoorNo", AdoptionFatherDoorNo);
- sessionStorage.setItem("AdoptionFatherHouseNameEn", AdoptionFatherHouseNameEn);
- sessionStorage.setItem("AdoptionFatherHouseNameMl", AdoptionFatherHouseNameMl); 
- sessionStorage.setItem("AdoptionFatherMainPlaceEn", AdoptionFatherMainPlaceEn); 
- sessionStorage.setItem("AdoptionFatherMainPlaceMl", AdoptionFatherMainPlaceMl); 
- sessionStorage.setItem("AdoptionFatherLocalityNameEn", AdoptionFatherLocalityNameEn);
- sessionStorage.setItem("AdoptionFatherLocalityNameMl", AdoptionFatherLocalityNameMl);
- sessionStorage.setItem("AdoptionFatherStreetNameEn", AdoptionFatherStreetNameEn);
- sessionStorage.setItem("AdoptionFatherStreetNameMl", AdoptionFatherStreetNameMl);
- sessionStorage.setItem("AdoptionFatherVillage", AdoptionFatherVillage.code);
- sessionStorage.setItem("AdoptionFatherLBName", null);
- sessionStorage.setItem("AdoptionFatherDistrict", AdoptionFatherDistrict.code);
- sessionStorage.setItem("AdoptionFatherTaluk", AdoptionFatherTaluk.code);
- sessionStorage.setItem("AdoptionFatherPostOffice", AdoptionFatherPostOffice.code);
- sessionStorage.setItem("AdoptionFatherPincode", AdoptionFatherPincode.code);
- sessionStorage.setItem("PermanentCountry", PermanentCountry.code);
+  
+ sessionStorage.setItem("AdoptionFatherCountry", AdoptionFatherCountry ? AdoptionFatherCountry.code : null);
+ sessionStorage.setItem("AdoptionFatherStateName", AdoptionFatherStateName ? AdoptionFatherStateName.code : null);
+ sessionStorage.setItem("AdoptionFatherLBTypeName", AdoptionFatherLBTypeName ? AdoptionFatherLBTypeName.code : null);
+ sessionStorage.setItem("AdoptionFatherBuldingNo", AdoptionFatherBuldingNo ? AdoptionFatherBuldingNo : null);
+ sessionStorage.setItem("AdoptionFatherDoorNo", AdoptionFatherDoorNo ? AdoptionFatherDoorNo : null);
+ sessionStorage.setItem("AdoptionFatherHouseNameEn", AdoptionFatherHouseNameEn ? AdoptionFatherHouseNameEn : null);
+ sessionStorage.setItem("AdoptionFatherHouseNameMl", AdoptionFatherHouseNameMl ? AdoptionFatherHouseNameMl : null); 
+ sessionStorage.setItem("AdoptionFatherMainPlaceEn", AdoptionFatherMainPlaceEn ? AdoptionFatherMainPlaceEn : null); 
+ sessionStorage.setItem("AdoptionFatherMainPlaceMl", AdoptionFatherMainPlaceMl ? AdoptionFatherMainPlaceMl : null); 
+ sessionStorage.setItem("AdoptionFatherLocalityNameEn", AdoptionFatherLocalityNameEn ? AdoptionFatherLocalityNameEn : null);
+ sessionStorage.setItem("AdoptionFatherLocalityNameMl", AdoptionFatherLocalityNameMl ? AdoptionFatherLocalityNameMl : null);
+ sessionStorage.setItem("AdoptionFatherStreetNameEn", AdoptionFatherStreetNameEn ? AdoptionFatherStreetNameEn : null);
+ sessionStorage.setItem("AdoptionFatherStreetNameMl", AdoptionFatherStreetNameMl ? AdoptionFatherStreetNameMl : null);
+ sessionStorage.setItem("AdoptionFatherVillage", AdoptionFatherVillage ? AdoptionFatherVillage.code : null);
+ sessionStorage.setItem("AdoptionFatherLBName", AdoptionFatherLBName ? AdoptionFatherLBName : null);
+ sessionStorage.setItem("AdoptionFatherDistrict", AdoptionFatherDistrict ? AdoptionFatherDistrict.code : null);
+ sessionStorage.setItem("AdoptionFatherTaluk", AdoptionFatherTaluk ? AdoptionFatherTaluk.code : null);
+ sessionStorage.setItem("AdoptionFatherPostOffice", AdoptionFatherPostOffice ? AdoptionFatherPostOffice.code : null);
+ sessionStorage.setItem("AdoptionFatherPincode", AdoptionFatherPincode ? AdoptionFatherPincode.code  : null) ;
+ sessionStorage.setItem("PermanentCountry", PermanentCountry ? PermanentCountry.code  : null);
 
  onSelect(config.key, {
  AdoptionFatherBuldingNo, AdoptionFatherDoorNo, AdoptionFatherHouseNameEn,AdoptionFatherHouseNameMl, AdoptionFatherLocalityNameEn, AdoptionFatherLocalityNameMl, AdoptionFatherLBTypeName, AdoptionFatherCountry, AdoptionFatherStateName, 

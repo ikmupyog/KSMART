@@ -14,7 +14,6 @@ import SearchFlow from "./Search-route";
 //import ReNewApplication from "./ReNewApplication";
 
 const CRBreadCrumb = ({ location }) => {
-  console.log("search-flow");
   const { t } = useTranslation();
   const isSearch = location?.pathname?.includes("search");
   const isInbox = location?.pathname?.includes("inbox");
@@ -25,7 +24,7 @@ const CRBreadCrumb = ({ location }) => {
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
   const isApplicationDetails = location?.pathname?.includes("cr/application-details");
-  const isApplicationDeathDetails = location?.pathname?.includes("cr/application-details");
+  const isApplicationDeathDetails = location?.pathname?.includes("cr/application-deathdetails");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -136,21 +135,13 @@ const CRBreadCrumb = ({ location }) => {
       path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationno")}` : "",
       content: t("Birth Application Details"),
       show: isApplicationDetails ||
-      breadCrumbUrls.includes("inbox/appDetails") || 
-      breadCrumbUrls.includes("home/license/appDetails") || 
-      breadCrumbUrls.includes("inbox/license/appDetails") || 
-      breadCrumbUrls.includes("home/search/appDetails") || 
-      breadCrumbUrls.includes("inbox/search/appDetails")
+      breadCrumbUrls.includes("home/application-details") 
     },
     {
       path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-deathdetails/${sessionStorage.getItem("deathApplicationNo")}` : "",
       content: t("Death Application Details"),
       show: isApplicationDeathDetails ||
-      breadCrumbUrls.includes("inbox/appDetails") || 
-      breadCrumbUrls.includes("home/license/appDetails") || 
-      breadCrumbUrls.includes("inbox/license/appDetails") || 
-      breadCrumbUrls.includes("home/search/appDetails") || 
-      breadCrumbUrls.includes("inbox/search/appDetails")
+      breadCrumbUrls.includes("home/application-deathdetails") 
     },
     {
       path: "/digit-ui/employee/cr/death-flow/search-correction/application",

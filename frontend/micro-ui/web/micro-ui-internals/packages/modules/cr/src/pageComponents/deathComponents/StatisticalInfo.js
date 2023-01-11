@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, TextArea, NewRadioButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, CheckBox,BackButton, TextArea, NewRadioButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const [checked, setChecked] = useState(false);
   const { t } = useTranslation();
@@ -139,6 +140,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+    <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -606,7 +608,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                   onChange={SelectOccupationOthers}
                   disable={isEdit}
                   placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
                 />
               </div>
             </div>
