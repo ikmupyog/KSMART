@@ -45,7 +45,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
     setSignedOfficerMobileNo(e.target.value);
   }
   const goNext = () => {
-    console.log('clicked');
+    // console.log('clicked');
     // sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
     // sessionStorage.setItem("SignedOfficerName", SignedOfficerName.hospitalName);
     // sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
@@ -53,6 +53,9 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
     // sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo);
     // onSelect(config.key, { HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo });
   };
+  // if (isLoading ){
+  //   return <Loader></Loader>;
+  // }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
@@ -117,8 +120,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
           <div className="col-md-6">
             {" "}
             <CardLabel>
-              {`${t("CS_COMMON_AADHAAR")}`}
-              <span className="mandatorycss">*</span>
+              {`${t("CS_COMMON_AADHAAR")}`}             
             </CardLabel>
             <TextInput
               t={t}

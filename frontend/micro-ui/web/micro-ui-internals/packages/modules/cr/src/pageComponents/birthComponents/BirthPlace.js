@@ -23,7 +23,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo);
   const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.BirthPlace?.SignedOfficerMobileNo);
 
-
   const [setInstitution, setSelectedInstitution] = useState(formData?.BirthPlace?.setInstitution);
   const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.BirthPlace?.setInstitutionId);
   const [SiginedOfficer, setSiginedOfficer] = useState(formData?.BirthPlace?.SiginedOfficer);
@@ -35,16 +34,35 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthPlace?.DriverMobileNo);
   const [DriverAadhar, setDriverAadhar] = useState(formData?.BirthPlace?.DriverAadhar);
   const [VehicleType, setVehicleType] = useState(formData?.BirthPlace?.VehicleType);
-  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthPlace?.VehicleRegistrationNo);  
+  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthPlace?.VehicleRegistrationNo);
   const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthPlace?.setVehicleFromEn);
-  const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn);  
-  const [VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt] = useState(formData?.BirthPlace?.VehiclePlaceFirstHalt); 
- const [WardNo, setWardNo] = useState(formData.BirthPlaceHomeDetails?.wardno);
+  const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn);
+  const [VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt] = useState(formData?.BirthPlace?.VehiclePlaceFirstHalt);
+  const [WardNo, setWardNo] = useState(formData.BirthPlace?.wardno);
 
-  const [setPublicPlaceType, setSelectedPublicPlaceType] = useState(formData?.PublicPlaceDetails?.setPublicPlaceType);
-  const [AdrsInfontName, setAdrsInfontName] = useState(formData?.PublicPlaceDetails?.AdrsInfontName);
-  const [ AdrsPublicPlace, setAdrsPublicPlace] = useState(formData?.PublicPlaceDetails?.AdrsPublicPlace);
-  const [ PublicPlaceDesption, setPublicPlaceDesption] = useState(formData?.PublicPlaceDetails?.PublicPlaceDesption);
+  const [setPublicPlaceType, setSelectedPublicPlaceType] = useState(formData?.BirthPlace?.setPublicPlaceType);
+  const [AdrsInfontName, setAdrsInfontName] = useState(formData?.BirthPlace?.AdrsInfontName);
+  const [AdrsPublicPlace, setAdrsPublicPlace] = useState(formData?.BirthPlace?.AdrsPublicPlace);
+  const [PublicPlaceDesption, setPublicPlaceDesption] = useState(formData?.BirthPlace?.PublicPlaceDesption);
+
+  const [lbs, setLbs] = useState(0);
+  const [AdrsCountry, setAdrsCountry] = useState(formData?.BirthPlace?.AdrsCountry);
+  const [AdrsStateName, setAdrsStateName] = useState(formData?.BirthPlace?.AdrsStateName);
+  const [AdrsDistrict, setAdrsDistrict] = useState(formData?.BirthPlace?.AdrsDistrict);
+  const [AdrsLBTypeName, setAdrsLBTypeName] = useState(formData?.BirthPlace?.AdrsLBTypeName);
+  const [AdrsLBName, setAdrsLBName] = useState(formData?.BirthPlace?.AdrsLBName);
+  const [AdrsTaluk, setAdrsTaluk] = useState(formData?.BirthPlace?.AdrsTaluk);
+  const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.BirthPlace?.AdrsPostOffice);
+  const [AdrsPincode, setAdrsPincode] = useState(formData?.BirthPlace?.AdrsPincode);
+  const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.BirthPlace?.AdrsHouseNameEn);
+  const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.BirthPlace?.AdrsBuldingNo);
+  const [AdrsResNo, setAdrsResNo] = useState(formData?.BirthPlace?.AdrsResNo);
+  const [AdrsInfomntName, setAdrsInfomntName] = useState(formData?.BirthPlace?.AdrsInfomntName);
+  const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.BirthPlace?.AdrsDoorNo);
+  const [AdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.BirthPlace?.AdrsMainPlaceEn);
+  const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.BirthPlace?.AdrsLocalityNameEn);
+  const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.BirthPlace?.AdrsStreetNameEn);
+  const [AdrsVillage, setAdrsVillage] = useState(formData?.BirthPlace?.AdrsVillage);
 
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
@@ -57,7 +75,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     Menu["death-services"].PlaceMaster.map((ob) => {
       menu.push(ob);
     });
-  console.log(menu);
   const onSkip = () => onSelect();
 
   function setselectBirthPlace(value) {
@@ -75,8 +92,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         setValue(naturetype);
         // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(naturetype)));
         if (naturetype === "HOSPITAL") {
-          <HospitalDetails  
-            HospitalName={HospitalName} 
+          <HospitalDetails
+            HospitalName={HospitalName}
             SignedOfficerName={SignedOfficerName}
             SignedOfficerDesignation={SignedOfficerDesignation}
             SignedOfficerAadharNo={SignedOfficerAadharNo}
@@ -84,60 +101,123 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           />
         }
         if (naturetype === "INSTITUTION") {
-          <InstitutionDetails  
-          setInstitution={setInstitution} 
-          setInstitutionId={setInstitutionId} 
-          SiginedOfficer={SiginedOfficer} 
-          SiginedOfficerDesignation={SiginedOfficerDesignation} 
-          InstitutionMobilNo={InstitutionMobilNo} 
-          InstitutionAadhaar={InstitutionAadhaar}            
+          <InstitutionDetails
+            setInstitution={setInstitution}
+            setInstitutionId={setInstitutionId}
+            SiginedOfficer={SiginedOfficer}
+            SiginedOfficerDesignation={SiginedOfficerDesignation}
+            InstitutionMobilNo={InstitutionMobilNo}
+            InstitutionAadhaar={InstitutionAadhaar}
           />
         }
         if (naturetype === "VEHICLE") {
-          <BirthVehicle  
-          DriverName={DriverName} 
-          DriverMobileNo={DriverMobileNo} 
-          DriverAadhar={DriverAadhar} 
-          VehicleType={VehicleType} 
-          VehicleRegistrationNo={VehicleRegistrationNo} 
-          VehicleFromEn={VehicleFromEn}   
-          VehicleToEn={VehicleToEn}   
-          VehiclePlaceFirstHalt={VehiclePlaceFirstHalt}            
+          <BirthVehicle
+            DriverName={DriverName}
+            DriverMobileNo={DriverMobileNo}
+            DriverAadhar={DriverAadhar}
+            VehicleType={VehicleType}
+            VehicleRegistrationNo={VehicleRegistrationNo}
+            VehicleFromEn={VehicleFromEn}
+            VehicleToEn={VehicleToEn}
+            VehiclePlaceFirstHalt={VehiclePlaceFirstHalt}
           />
         }
+        if (naturetype === "PUBLIC_PLACES") {
+          <PublicPlace
+            setPublicPlaceType={setPublicPlaceType}
+            AdrsInfontName={AdrsInfontName}
+            AdrsPublicPlace={AdrsPublicPlace}
+            PublicPlaceDesption={PublicPlaceDesption}
+
+          />
+        }
+
+        if (naturetype === "HOME") {
+          <PlaceofBirthHome
+
+            AdrsCountry={AdrsCountry}
+            AdrsStateName={AdrsStateName}
+            AdrsDistrict={AdrsDistrict}
+            AdrsLBTypeName={AdrsLBTypeName}
+            AdrsLBName={AdrsLBName}
+            AdrsTaluk={AdrsTaluk}
+            AdrsPostOffice={AdrsPostOffice}
+            AdrsPincode={AdrsPincode}
+            AdrsHouseNameEn={AdrsHouseNameEn}
+            AdrsBuldingNo={AdrsBuldingNo}
+            AdrsResNo={AdrsResNo}
+            AdrsInfomntName={AdrsInfomntName}
+            AdrsDoorNo={AdrsDoorNo}
+            AdrsMainPlaceEn={AdrsMainPlaceEn}
+            AdrsLocalityNameEn={AdrsLocalityNameEn}
+            AdrsStreetNameEn={AdrsStreetNameEn}
+            AdrsVillage={AdrsVillage}
+          />
+        }
+
+
       }
     }
   }, [isInitialRender]);
   const goNext = () => {
     sessionStorage.setItem("BirthPlace", BirthPlace.code);
-    sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
-    sessionStorage.setItem("SignedOfficerName", SignedOfficerName.hospitalName);
-    sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation.hospitalName);
-    sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo.SignedOfficerAadharNo);
-     sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo.SignedOfficerMobileNo);
+    sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.hospitalName : null);
+    sessionStorage.setItem("SignedOfficerName", SignedOfficerName ? SignedOfficerName.hospitalName : null);
+    sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation ? SignedOfficerDesignation.hospitalName : null);
+    sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo ? SignedOfficerAadharNo.SignedOfficerAadharNo : null);
+    sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo ? SignedOfficerMobileNo.SignedOfficerMobileNo : null);
     //sessionStorage.setItem("BirthPlaceDescription", BirthPlaceDescription);
 
 
-    sessionStorage.setItem("setInstitution", setInstitution.setInstitution);
-    sessionStorage.setItem("setInstitutionId", setInstitutionId.setInstitutionId);
-    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer.SiginedOfficer);
-    sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation.SiginedOfficerDesignation);
-    sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo.InstitutionMobilNo);
-    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar.InstitutionAadhaar);  
+    sessionStorage.setItem("setInstitution", setInstitution ? setInstitution.setInstitution : null);
+    sessionStorage.setItem("setInstitutionId", setInstitutionId ? setInstitutionId.setInstitutionId : null);
+    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer ? SiginedOfficer.SiginedOfficer : null);
+    sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation ? SiginedOfficerDesignation.SiginedOfficerDesignation : null);
+    sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo ? InstitutionMobilNo.InstitutionMobilNo : null);
+    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar ? InstitutionAadhaar.InstitutionAadhaar : null);
 
 
-    sessionStorage.setItem("DriverName", DriverName); 
-    sessionStorage.setItem("DriverMobileNo", DriverMobileNo);   
-    sessionStorage.setItem("DriverAadhar", DriverAadhar);
-    sessionStorage.setItem("VehicleType", VehicleType);
-    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);      
-    sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
-    sessionStorage.setItem("VehicleToEn", VehicleToEn);  
-    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt); 
+    sessionStorage.setItem("DriverName", DriverName ? DriverName : null);
+    sessionStorage.setItem("DriverMobileNo", DriverMobileNo ? DriverMobileNo : null);
+    sessionStorage.setItem("DriverAadhar", DriverAadhar ? DriverAadhar : null);
+    sessionStorage.setItem("VehicleType", VehicleType ? VehicleType : null);
+    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null);
+    sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);
+    sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
+    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt ? VehiclePlaceFirstHalt : null);
 
-    onSelect(config.key, { BirthPlace, HospitalName,SignedOfficerName ,SignedOfficerDesignation ,SignedOfficerAadharNo ,SignedOfficerMobileNo,
-      setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,DriverName ,DriverMobileNo,
-      DriverAadhar, VehicleType,VehicleRegistrationNo,VehicleFromEn,VehicleToEn,VehiclePlaceFirstHalt,
+
+    sessionStorage.setItem("setPublicPlaceType", setPublicPlaceType ? setPublicPlaceType.code : null);
+    sessionStorage.setItem("AdrsInfontName", AdrsInfontName ? AdrsInfontName : null);
+    sessionStorage.setItem("AdrsPublicPlace", AdrsPublicPlace ? AdrsPublicPlace : null);
+    sessionStorage.setItem("PublicPlaceDesption", PublicPlaceDesption ? PublicPlaceDesption : null);
+
+
+    sessionStorage.setItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
+    sessionStorage.setItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
+    sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName ? AdrsLBTypeName.code : null);
+    sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo ? AdrsBuldingNo : null);
+    sessionStorage.setItem("AdrsResNo", AdrsResNo ? AdrsResNo : null);
+    sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo ? AdrsDoorNo : null);
+    sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn ? AdrsHouseNameEn : null);
+    sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn ? AdrsMainPlaceEn : null);
+    sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn ? AdrsLocalityNameEn : null);
+    sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn ? AdrsStreetNameEn : null);
+    sessionStorage.setItem("AdrsVillage", AdrsVillage ? AdrsVillage.code : null);
+    sessionStorage.setItem("AdrsLBName", AdrsLBName ? AdrsLBName.code : null);
+    // sessionStorage.setItem("AdrsLBName", null);
+    sessionStorage.setItem("AdrsDistrict", AdrsDistrict ? AdrsDistrict.code : null);
+    sessionStorage.setItem("AdrsTaluk", AdrsTaluk ? AdrsTaluk.code : null);
+    sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice ? AdrsPostOffice.code : null);
+    sessionStorage.setItem("AdrsPincode", AdrsPincode ? AdrsPincode.code : null);
+    sessionStorage.setItem("AdrsInfomntName", AdrsInfomntName ? AdrsInfomntName : null);
+
+    onSelect(config.key, {
+      BirthPlace, HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo,
+      setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,
+      DriverName, DriverMobileNo, DriverAadhar, VehicleType, VehicleRegistrationNo, VehicleFromEn, VehicleToEn, VehiclePlaceFirstHalt, setPublicPlaceType,
+      AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsBuldingNo, AdrsResNo, AdrsDoorNo, AdrsHouseNameEn,
+      AdrsMainPlaceEn, AdrsLocalityNameEn, AdrsStreetNameEn, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsInfomntName,
     });
   }
   return (
@@ -166,62 +246,101 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         </div> */}
         {value === "HOSPITAL" && (
           <div>
-            <HospitalDetails 
-             selectHospitalName={selectHospitalName} HospitalName={HospitalName}
-             selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName}
-             selectSignedOfficerDesignation={selectSignedOfficerDesignation}  SignedOfficerDesignation={SignedOfficerDesignation}
-             setSignedOfficerAadharNo={setSignedOfficerAadharNo} SignedOfficerAadharNo={SignedOfficerAadharNo}
-             setSignedOfficerMobileNo={setSignedOfficerMobileNo} SignedOfficerMobileNo={SignedOfficerMobileNo}        
-             
-             
+            <HospitalDetails
+              selectHospitalName={selectHospitalName} HospitalName={HospitalName}
+              selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName}
+              selectSignedOfficerDesignation={selectSignedOfficerDesignation} SignedOfficerDesignation={SignedOfficerDesignation}
+              setSignedOfficerAadharNo={setSignedOfficerAadharNo} SignedOfficerAadharNo={SignedOfficerAadharNo}
+              setSignedOfficerMobileNo={setSignedOfficerMobileNo} SignedOfficerMobileNo={SignedOfficerMobileNo}
+
+
             />
           </div>)
         }
         {value === "INSTITUTION" && (
           <div>
-            <InstitutionDetails 
-             setSelectedInstitution={setSelectedInstitution} setInstitution={setInstitution}
-             setSelectedInstitutionId={setSelectedInstitutionId} setInstitutionId={setInstitutionId}
-             setSiginedOfficer={setSiginedOfficer} SiginedOfficer={SiginedOfficer}
-             setSiginedOfficerDesignation={setSiginedOfficerDesignation} SiginedOfficerDesignation={SiginedOfficerDesignation}
-             setInstitutionMobilNo={setInstitutionMobilNo} InstitutionMobilNo={InstitutionMobilNo}
-             setInstitutionAadhaar={setInstitutionAadhaar} InstitutionAadhaar={InstitutionAadhaar}               
-            
+            <InstitutionDetails
+              setSelectedInstitution={setSelectedInstitution} setInstitution={setInstitution}
+              setSelectedInstitutionId={setSelectedInstitutionId} setInstitutionId={setInstitutionId}
+              setSiginedOfficer={setSiginedOfficer} SiginedOfficer={SiginedOfficer}
+              setSiginedOfficerDesignation={setSiginedOfficerDesignation} SiginedOfficerDesignation={SiginedOfficerDesignation}
+              setInstitutionMobilNo={setInstitutionMobilNo} InstitutionMobilNo={InstitutionMobilNo}
+              setInstitutionAadhaar={setInstitutionAadhaar} InstitutionAadhaar={InstitutionAadhaar}
+
             />
           </div>
         )
         }
         {value === "VEHICLE" && (
           <div>
-            <BirthVehicle 
-             setDriverName={setDriverName} DriverName={DriverName}
-             setDriverMobileNo={setDriverMobileNo} DriverMobileNo={DriverMobileNo}
-             setDriverAadhar={setDriverAadhar} DriverAadhar={DriverAadhar}
-             setVehicleType={setVehicleType} VehicleType={VehicleType}
-             setVehicleRegistrationNo={setVehicleRegistrationNo} VehicleRegistrationNo={VehicleRegistrationNo}
-             setVehicleFromEn={ setVehicleFromEn} VehicleFromEn={VehicleFromEn}   
-             setVehicleToEn={setVehicleToEn} VehicleToEn={VehicleToEn}    
-             setVehiclePlaceFirstHalt={setVehiclePlaceFirstHalt} VehiclePlaceFirstHalt={VehiclePlaceFirstHalt}                
-            
+            <BirthVehicle
+              setDriverName={setDriverName} DriverName={DriverName}
+              setDriverMobileNo={setDriverMobileNo} DriverMobileNo={DriverMobileNo}
+              setDriverAadhar={setDriverAadhar} DriverAadhar={DriverAadhar}
+              setVehicleType={setVehicleType} VehicleType={VehicleType}
+              setVehicleRegistrationNo={setVehicleRegistrationNo} VehicleRegistrationNo={VehicleRegistrationNo}
+              setVehicleFromEn={setVehicleFromEn} VehicleFromEn={VehicleFromEn}
+              setVehicleToEn={setVehicleToEn} VehicleToEn={VehicleToEn}
+              setVehiclePlaceFirstHalt={setVehiclePlaceFirstHalt} VehiclePlaceFirstHalt={VehiclePlaceFirstHalt}
+
+            />
+          </div>
+        )
+        }
+        {value === "PUBLIC_PLACES" && (
+          <div>
+            <PublicPlace
+              setSelectedPublicPlaceType={setSelectedPublicPlaceType} setPublicPlaceType={setPublicPlaceType}
+              setAdrsInfontName={setAdrsInfontName} AdrsInfontName={AdrsInfontName}
+              setAdrsPublicPlace={setAdrsPublicPlace} AdrsPublicPlace={AdrsPublicPlace}
+              setPublicPlaceDesption={setPublicPlaceDesption} PublicPlaceDesption={PublicPlaceDesption}
+
             />
           </div>
         )
         }
         {value === "HOME" && (
           <div>
+            <PlaceofBirthHome
+              setAdrsCountry={setAdrsCountry} AdrsCountry={AdrsCountry}
+              setAdrsStateName={setAdrsStateName} AdrsStateName={AdrsStateName}
+              setAdrsDistrict={setAdrsDistrict} AdrsDistrict={AdrsDistrict}
+              setAdrsLBTypeName={setAdrsLBTypeName} AdrsLBTypeName={AdrsLBTypeName}
+              setAdrsLBName={setAdrsLBName} AdrsLBName={AdrsLBName}
+              setAdrsTaluk={setAdrsTaluk} AdrsTaluk={AdrsTaluk}
+              setAdrsPostOffice={setAdrsPostOffice} AdrsPostOffice={AdrsPostOffice}
+              setAdrsPincode={setAdrsPincode} AdrsPincode={AdrsPincode}
+              setAdrsHouseNameEn={setAdrsHouseNameEn} AdrsHouseNameEn={AdrsHouseNameEn}
+              setAdrsBuldingNo={setAdrsBuldingNo} AdrsBuldingNo={AdrsBuldingNo}
+              setAdrsResNo={setAdrsResNo} AdrsResNo={AdrsResNo}
+              setAdrsInfomntName={setAdrsInfomntName} AdrsInfomntName={AdrsInfomntName}
+              setAdrsDoorNo={setAdrsDoorNo} AdrsDoorNo={AdrsDoorNo}
+              setAdrsMainPlaceEn={setAdrsMainPlaceEn} AdrsMainPlaceEn={AdrsMainPlaceEn}
+              setAdrsLocalityNameEn={setAdrsLocalityNameEn} AdrsLocalityNameEn={AdrsLocalityNameEn}
+              setAdrsStreetNameEn={setAdrsStreetNameEn} AdrsStreetNameEn={AdrsStreetNameEn}
+              setAdrsVillage={setAdrsVillage} AdrsVillage={AdrsVillage}
+
+
+            />
+          </div>
+        )
+        }
+
+        {/* {value === "HOME" && (
+          <div>
             <PlaceofBirthHome />
           </div>)
-        }
+        } */}
         {/* {value === "VEHICLE" && (
           <div>
             <BirthVehicle />
           </div>)
         } */}
-        {value === "PUBLIC_PLACES" && (
+        {/* {value === "PUBLIC_PLACES" && (
           <div>
             <PublicPlace />
           </div>)
-        }
+        } */}
 
       </FormStep>
     </React.Fragment>

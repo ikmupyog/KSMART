@@ -12,12 +12,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,DriverName, setDri
   const { t } = useTranslation();
   let validation = {};
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
-  console.log(hospital);
   const [HospitalName, selectHospitalName] = useState(formData?.BirthVehicleDetails?.HospitalName);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [TradeName, setTradeName] = useState(null);
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-  console.log(boundaryList);
+  
   // const [WardNo, setWardNo] = useState(formData.BirthVehicleDetails?.wardno);
   // const [DriverName, setDriverName] = useState(formData?.BirthVehicleDetails?.DriverName);
   // const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthVehicleDetails?.DriverMobileNo);
@@ -123,8 +122,8 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,DriverName, setDri
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={2}/> : null}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {/* {window.location.href.includes("/employee") ? <Timeline currentStep={2}/> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">
         <div className="col-md-12" >

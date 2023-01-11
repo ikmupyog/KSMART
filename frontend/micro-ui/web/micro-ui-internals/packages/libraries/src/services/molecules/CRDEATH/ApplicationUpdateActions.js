@@ -1,8 +1,8 @@
-import { CRService } from "../../elements/CR";
+import { CRDeathService } from "../../elements/CRDEATH";
 
 const ApplicationUpdateActions = async (applicationData, tenantId) => {
   try {
-    const response = await CRService.update(applicationData, tenantId);
+    const response = await CRDeathService.update(applicationData, tenantId);
     return response;
   } catch (error) {
     throw new Error(error?.response?.data?.Errors[0].message);

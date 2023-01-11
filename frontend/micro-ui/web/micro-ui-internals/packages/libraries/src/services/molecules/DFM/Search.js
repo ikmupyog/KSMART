@@ -1,5 +1,6 @@
 import cloneDeep from "lodash/cloneDeep";
 import { DFMService } from "../../elements/DFM";
+// import { convertEpochToDateDMY } from  "../../utils";
 
 const stringReplaceAll = (str = "", searcher = "", replaceWith = "") => {
   if (searcher == "") return str;
@@ -24,13 +25,13 @@ const convertEpochToDate = (dateEpoch) => {
     return null;
   }
 };
-const getAddress = (address, t) => {
-  return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
-    address?.landmark ? `${address?.landmark}, ` : ""
-  }${t(Digit.Utils.pt.getMohallaLocale(address?.locality.code, address?.tenantId))}, ${t(Digit.Utils.pt.getCityLocale(address?.tenantId))}${
-    address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
-  }`;
-};
+// const getAddress = (address, t) => {
+//   return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
+//     address?.landmark ? `${address?.landmark}, ` : ""
+//   }${t(Digit.Utils.pt.getMohallaLocale(address?.locality.code, address?.tenantId))}, ${t(Digit.Utils.pt.getCityLocale(address?.tenantId))}${
+//     address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
+//   }`;
+// };
 export const DFMsearch = {
   all: async (tenantId, filters = {}) => {
     const response = await DFMService.DFMsearch({ tenantId, filters });
@@ -38,6 +39,7 @@ export const DFMsearch = {
   },
   application: async (tenantId, filters = {}) => {
     const response = await DFMService.DFMsearch({ tenantId, filters });
+    console.log('dfm-appl',response);
     return response.ApplicantPersonals[0];
   },
 
@@ -46,56 +48,87 @@ export const DFMsearch = {
     return response.ApplicantPersonals;
   },
 
-  applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    const filter = { applicationNumber };
+  applicationDetails: async (t, tenantId, fileCode, userType) => {
+    console.log("applicationNo" + fileCode);
+    const filter = { fileCode };
     const response = await DFMsearch.application(tenantId, filter);
-    console.log("response" + response);
-    const propertyDetails =
-      response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
-      (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
+    console.log('DFM-res',response);
+    
+  
+    // const propertyDetails =
+    //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
+    //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
-    if (response?.licenseNumber) {
-      const licenseNumbers = response?.licenseNumber;
-      const filters = { licenseNumbers, offset: 0 };
-      numOfApplications = await DFMsearch.numberOfApplications(tenantId, filters);
-    }
-    let propertyAddress = "";
-    if (propertyDetails && propertyDetails?.Properties.length) {
-      propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
-    }
+    // if (response?.licenseNumber) {
+    //   const licenseNumbers = response?.applicationno;
+    //   const filters = { licenseNumbers, offset: 0 };
+    //   numOfApplications = await DFMsearch.numberOfApplications(tenantId, filters);
+    // }
+
+    // let propertyAddress = "";
+    // if (propertyDetails && propertyDetails?.Properties.length) {
+    //   propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
+    // }
+//     File Code, Applicant Name, Service Name, Name of Owner, Owner Mobile Number,
+// Ward Name, Building No, Sub No, House Name, Street,PostOffice,Pincode,
+// Name of Occupier,Duration of residence of occupier
+// Documents Uploaded details
     let employeeResponse = [];
-    const tradedetails = {
-      title: "TL_COMMON_TR_DETAILS",
+    const childdetails = {
+      title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
-        // { title: "TL_FINANCIAL_YEAR_LABEL", value: response?.financialYear ? `FY${response?.financialYear}` : "NA" },
-        // { title: "TL_NEW_TRADE_DETAILS_LIC_TYPE_LABEL", value: response?.licenseType ? `TRADELICENSE_LICENSETYPE_${response?.licenseType}` : "NA" },
-        { title: "Application No", value: response?.fileCode},
-        { title: "First Name", value: response?.firstName},
-        { title: "Last Name", value: response?.lastName},
-        { title: "House Name", value: response?.ApplicantPersonals?.applicantAddress?.houseName},
-        { title: "Mobile No", value: response?.mobileNo},
-        // {
-        //   title: "TL_NEW_TRADE_DETAILS_STRUCT_TYPE_LABEL",
-        //   value: response?.tradeLicenseDetail?.structureType
-        //     ? `COMMON_MASTERS_STRUCTURETYPE_${response?.tradeLicenseDetail?.structureType?.split(".")[0]}`
-        //     : "NA",
-        // },
-        // {
-        //   title: "TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_LABEL",
-        //   value: response?.tradeLicenseDetail?.structureType
-        //     ? `TL_${response?.tradeLicenseDetail?.tradeType}`
-        //     : "NA",
-        // },
-        // {
-        //   title: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL",
-        //   value: response?.commencementDate ? convertEpochToDate(response?.commencementDate) : "NA",
-        // },
-        // { title: "TL_NEW_GST_NUMBER_LABEL", value: response?.tradeLicenseDetail?.additionalDetail?.gstNo || "NA" },
-        // { title: "TL_NEW_OPERATIONAL_SQ_FT_AREA_LABEL", value: response?.tradeLicenseDetail?.operationalArea || "NA" },
-        // { title: "TL_NEW_NUMBER_OF_EMPLOYEES_LABEL", value: response?.tradeLicenseDetail?.noOfEmployees || "NA" },
+        { title: "File Code", value: response?.fileDetail?.fileCode || "NA" },
+        { title: "Applicant Name", value: response?.firstName +' '+response?.lastName || "NA" },
+        { title: "Service Name", value: response?.serviceDetails?.serviceId?.fileCode || "NA" },
+        { title: "Name of Owner", value: response?.applicantAddress?.ownerName|| "NA" },
+        { title: "Owner Mobile Number", value: response?.mobileNo || "NA" },
+        { title: "Building No", value: response?.applicantAddress?.buildingNo || "NA" },
+        { title: "Sub No", value: response?.applicantAddress?.subNo || "NA" },
+        { title: "House Name", value: response?.applicantAddress?.houseName || "NA" },
+        { title: "Street", value: response?.applicantAddress?.street || "NA" },
+        { title: "PostOffice", value: response?.applicantAddress?.postOfficeName || "NA" },
+        { title: "Pincode", value: response?.applicantAddress?.pincode || "NA" },
+        { title: "Documents Uploaded details", value: response?.fileDetail?.fileNumber || "NA" },
       ],
     };
+    // const fatherInfo = {
+    //   title: "CR_BIRTH_FATHER_INFORMATION_HEADER",
+    //   values: [
+    //     { title: "CR_BIRTH_FATHERNAME_LABEL", value: response?.birthFather?.firstname_en + response?.birthFather?.middlename_en + response?.birthFather?.lastname_en },
+    //     { title: "CR_BIRTH_FATHER_AADHAR_LABEL", value: response?.birthFather?.aadharno || "NA" },
+    //     { title: "CR_BIRTH_FATHER_EMAIL_LABEL", value: response?.birthFather?.emailid || "NA" },
+    //     { title: "CR_BIRTH_FATHER_MOBILE_LABEL", value: response?.birthFather?.mobileno || "NA" },
+    //   ],
+    // };
+    // const motherInfo = {
+    //   title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
+    //   values: [
+    //     { title: "CR_BIRTH_MOTHERNAME_LABEL", value: response?.birthMother?.firstname_en + " " + response?.birthMother?.middlename_en + " " + response?.birthMother?.lastname_en },
+    //     { title: "CR_BIRTH_MOTHER_AADHAR_LABEL", value: response?.birthMother?.aadharnoaadharno || "NA"},
+    //     { title: "CR_BIRTH_MOTHER_EMAIL_LABEL", value: response?.birthMother?.emailid || "NA" },
+    //     { title: "CR_BIRTH_MOTHER_MOBILE_LABEL", value: response?.birthMother?.mobileno || "NA" },
+    //   ],
+    // };
+    // const addressInfo = {
+    //   title: "CR_ADDRESS_INFORMATION_HEADER",
+    //   values: [
+    //     { title: "CR_BIRTH_PERM_HO_NO_LABEL", value: response?.birthPermanent?.houseno || "NA"},
+    //     { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.birthPermanent?.housename_en || "NA" },
+    //     { title: "CR_BIRTH_PERM_HO_LOCALITY_LABEL", value: response?.birthPermanent?.locality_en || "NA" },
+    //     { title: "CR_BIRTH_PERM_HO_CITY_LABEL", value: response?.birthPermanent?.city_en || "NA" },
+    //   ],
+    // };
+    // const statisticalInfo = {
+    //   title: "CR_STATSTICAL_INFORMATION_HEADER",
+    //   values: [
+    //     { title: "CR_STATSTICAL_WEIGHT_LABEL", value: response?.birthStatistical?.weight_of_child || "NA" },
+    //     { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.birthStatistical?.height_of_child || "NA" },
+    //     { title: "CR_STATSTICAL_PWEEK_LABEL", value: response?.birthStatistical?.duration_of_pregnancy_in_week || "NA" },
+    //     { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.birthStatistical?.delivery_method || "NA" },
+    //   ],
+    // };
+    // console.log('res-em',childdetails);
 
     // const tradeUnits = {
     //   title: "TL_TRADE_UNITS_HEADER",
@@ -266,19 +299,26 @@ export const DFMsearch = {
     //   response && employeeResponse.push(details);
     // }
 
-    response && employeeResponse.push(tradedetails);
+     employeeResponse.push(childdetails);
+    //  employeeResponse.push(fatherInfo);
+    //  employeeResponse.push(motherInfo);
+    //  employeeResponse.push(addressInfo);
+    //  employeeResponse.push(statisticalInfo);
     // response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
     // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);
     // propertyDetails?.Properties?.length > 0 && employeeResponse.push(PropertyDetail);
     // response && !(propertyDetails?.Properties?.length > 0) && employeeResponse.push(tradeAddress);
     // response?.tradeLicenseDetail?.owners && employeeResponse.push(owners);
 
+    console.log('das',employeeResponse); 
     return {
-      tenantId: response.tenantId,
+      tenantId: response?.tenantId,
       applicationDetails: employeeResponse,
       // additionalDetails: response?.additionalDetails,
       applicationData: response,
       numOfApplications: numOfApplications,
     };
+    // return employeeResponse
+    // return response
   },
 };

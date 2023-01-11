@@ -25,8 +25,8 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.ApplicantPersonals[0]?.fileDetail.fileCode}
-      info={props.isSuccess ? props.t("KL-FM-2022-11-23-000139") : ""}
+      // applicationNumber={props.data?.ApplicantPersonals[0]?.fileDetail.fileCode}
+      info={props.isSuccess ? props.data?.ApplicantPersonals[0]?.fileDetail.fileCode:props.t("KL-FM-2022-11-23-000139")}
       successful={props.isSuccess}
     />
   );
@@ -158,7 +158,7 @@ const DFMAcknowlegement = ({ data, onSuccess }) => {
   // else
   return(
     <Card>
-      <BannerPicker t={t} data={mutation2.data} isSuccess={"success"} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
+      <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
        <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
     
         <LinkButton

@@ -14,7 +14,6 @@ import SearchFlow from "./Search-route";
 //import ReNewApplication from "./ReNewApplication";
 
 const CRBreadCrumb = ({ location }) => {
-  console.log("search-flow");
   const { t } = useTranslation();
   const isSearch = location?.pathname?.includes("search");
   const isInbox = location?.pathname?.includes("inbox");
@@ -25,7 +24,7 @@ const CRBreadCrumb = ({ location }) => {
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
   const isApplicationDetails = location?.pathname?.includes("cr/application-details");
-  const isApplicationDeathDetails = location?.pathname?.includes("cr/application-details");
+  const isApplicationDeathDetails = location?.pathname?.includes("cr/application-deathdetails");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();

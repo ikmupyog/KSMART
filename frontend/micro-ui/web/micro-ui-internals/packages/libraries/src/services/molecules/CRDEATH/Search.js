@@ -48,8 +48,8 @@ export const CRDeathsearch = {
     return response.deathCertificateDtls;
   },
 
-  applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    const filter = { applicationNumber };
+  applicationDetails: async (t, tenantId, deathApplicationNo, userType) => {
+    const filter = { deathApplicationNo };
     const response = await CRDeathsearch.application(tenantId, filter);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&

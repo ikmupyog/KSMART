@@ -21,7 +21,7 @@ export const configDeathApproverApplication = ({
     label: {
       heading: `WF_${action?.action}_APPLICATION`,
       submit: `WF_${businessService?.toUpperCase()}_${action?.action}`,
-      cancel: "WF_EMPLOYEE_NEWBIRTH_CANCEL",
+      cancel: "WF_EMPLOYEE_NEWDEATH_CANCEL",
     },
     form: [
       {
@@ -50,7 +50,7 @@ export const configDeathApproverApplication = ({
             },
           },
           {
-            label: t("BIRTH_APPROVAL_CHECKLIST_BUTTON_UP_FILE"),
+            label: t("DEATH_APPROVAL_CHECKLIST_BUTTON_UP_FILE"),
             populators: (
               <UploadFile
                 id={"workflow-doc"}

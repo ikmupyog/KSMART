@@ -304,7 +304,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "birthaddress",
+        key: "FatherInfoDetails",
         type: "component",
         nextStep: "mother-informations",
         hideInEmployee: false,

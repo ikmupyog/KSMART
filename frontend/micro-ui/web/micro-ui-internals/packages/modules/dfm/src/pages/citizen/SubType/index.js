@@ -69,6 +69,7 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
   };
   let cmbMinorFunction = [];
   let cmbMajorFunction = [];
+  let cmbSubFunction = [];
   useEffect(() => {
     if (FunctionDet?.mainCode) {
       MinorFunction &&
@@ -76,7 +77,8 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
         MinorFunction["FileManagement"].MinorFunction.filter((item) => {
           // cmbMinorFunction.push(ob);
 
-          if (item?.subCode === FunctionDet?.mainCode) {
+          if (item?.mainCode === FunctionDet?.code) {
+          // if (item?.subCode === FunctionDet?.mainCode) {
             cmbMinorFunction.push(item);
           }
         });
@@ -94,12 +96,24 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
         });
     }
   }, [SubFunctionDet]);
-  let cmbSubFunction = [];
-  SubFunction &&
-    SubFunction["FileManagement"] &&
-    SubFunction["FileManagement"].SubFunction.map((ob) => {
-      cmbSubFunction.push(ob);
-    });
+  useEffect(() => {
+    if (MinorFunctionDet?.mainCode) {
+      
+        SubFunction &&
+        SubFunction["FileManagement"] &&
+        SubFunction["FileManagement"].SubFunction.filter((item) => {
+          if (item?.code === MinorFunctionDet?.subCode) {
+            cmbSubFunction.push(item);
+          }
+        });
+    }
+  }, [MinorFunctionDet]);
+  // let cmbSubFunction = [];
+  // SubFunction &&
+  //   SubFunction["FileManagement"] &&
+  //   SubFunction["FileManagement"].SubFunction.map((ob) => {
+  //     cmbSubFunction.push(ob);
+  //   });
   
   let cmbFunction = [];
   Function &&
@@ -138,11 +152,11 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
     };
     return code === "DFM" ? (
       <React.Fragment>
-        {/* <div className="moduleLinkHomePage">
+        <div className="moduleLinkHomePage">
           <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
           <BackButton className="moduleLinkHomePageBackButton" />
           <h1>{t("Sub Type" .toUpperCase())}</h1>
-        </div> */}
+        </div>
         <div className="moduleLinkHomePageModuleLinks">
           {/* <div className="fileText">
             <h3>Choose file type</h3>

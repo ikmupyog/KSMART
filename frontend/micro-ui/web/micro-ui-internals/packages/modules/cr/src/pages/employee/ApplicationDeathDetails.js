@@ -19,7 +19,7 @@ const ApplicationDeathDetails = () => {
   sessionStorage.setItem("applicationNo", applicationNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNo);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, applicationNo);
 
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
@@ -30,7 +30,7 @@ const ApplicationDeathDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useCRDeathApplicationActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   console.log(applicationDetails?.applicationData.tenantid);
@@ -176,7 +176,8 @@ const ApplicationDeathDetails = () => {
     <div >
       <div /* style={{marginLeft: "15px"}} */>
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
-        <CardHeader>{`${t("Death Application Summary Details")}`}</CardHeader>
+        {/* <CardHeader>{`${t("Death Application Summary Details")}`}</CardHeader> */}
+        <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Death Application Summary Details")}`}</label>
       </div>
       <ApplicationDetailsTemplate
         applicationDetails={applicationDetails}
@@ -186,7 +187,7 @@ const ApplicationDeathDetails = () => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="birth-services"
+        moduleCode="death-services"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
