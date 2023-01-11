@@ -42,6 +42,10 @@ public class CrDeathRegistryConstants {
     public static final String DISTRICT = "District";
     public static final String COMMON_MASTERS_MODULE = "common-masters";
 
+     //Rakhi  S on 11.01.2023
+     public static final String STATE = "State";
+     public static final String COUNTRY = "Country";
+
 
 
 

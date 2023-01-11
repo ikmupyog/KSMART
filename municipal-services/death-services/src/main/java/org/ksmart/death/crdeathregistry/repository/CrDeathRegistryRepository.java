@@ -128,25 +128,56 @@ public class CrDeathRegistryRepository {
                 //RAkhi S on 23.12.2022 MDMS Call
                 Object mdmsData = util.mDMSCallCertificate(pdfApplicationRequest.getRequestInfo()
                                 , cert.getTenantId()
-                                , cert.getAddressInfo().getPresentAddress().getDistrictId());
+                                , cert.getAddressInfo().getPresentAddress().getDistrictId()
+                                , cert.getAddressInfo().getPresentAddress().getStateId()
+                                , cert.getAddressInfo().getPresentAddress().getCountryId());
                 //Rakhi S on 24.12.2022
                  Map<String,List<String>> masterData = getAttributeValues(mdmsData);
-                 String[] masterArray = {CrDeathRegistryConstants.TENANTS,CrDeathRegistryConstants.DISTRICT};
+
                  String lbName = masterData.get(CrDeathRegistryConstants.TENANTS).toString();
                  lbName = lbName.replaceAll("[\\[\\]\\(\\)]", "");
-                 cert.setLocalBodyName(lbName);
-                 
-                  //RAkhi S on 09.01.2023 MDMS Call 
-                 String presentAddDistrict = masterData.get(CrDeathRegistryConstants.DISTRICT).toString();
-                 presentAddDistrict = presentAddDistrict.replaceAll("[\\[\\]\\(\\)]", "");
-                 cert.getAddressInfo().getPresentAddress().setDistrictId(presentAddDistrict);
+                 cert.setLocalBodyName(lbName);    
+                  
                 
                  //RAkhi S on 07.01.2023 MDMS Call Malayalam fields 
-                Object mdmsDataMl = util.mDMSCallCertificateMl(pdfApplicationRequest.getRequestInfo(), cert.getTenantId());
+                Object mdmsDataMl = util.mDMSCallCertificateMl(pdfApplicationRequest.getRequestInfo()
+                                , cert.getTenantId()
+                                , cert.getAddressInfo().getPresentAddress().getDistrictId()
+                                , cert.getAddressInfo().getPresentAddress().getStateId()
+                                , cert.getAddressInfo().getPresentAddress().getCountryId());
                 Map<String,List<String>> masterDataMl = getAttributeValuesMl(mdmsDataMl);
+
                 String lbNameMl = masterDataMl.get(CrDeathRegistryConstants.TENANTS).toString();
                 lbNameMl = lbNameMl.replaceAll("[\\[\\]\\(\\)]", "");
                 cert.setLocalBodyNameMl(lbNameMl);
+
+                //RAkhi S on 09.01.2023 MDMS Call English
+                String presentAddDistrict = masterData.get(CrDeathRegistryConstants.DISTRICT).toString();
+                presentAddDistrict = presentAddDistrict.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPresentAddress().setDistrictId(presentAddDistrict);
+
+                //Rakhi S on 11.01.2023
+                String presentAddState = masterData.get(CrDeathRegistryConstants.STATE).toString();
+                presentAddState = presentAddState.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPresentAddress().setStateId(presentAddState);
+
+                String presentAddCountry = masterData.get(CrDeathRegistryConstants.COUNTRY).toString();
+                presentAddCountry = presentAddCountry.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPresentAddress().setCountryId(presentAddCountry);
+
+
+                //RAkhi S on 11.01.2023 MDMS Call Malayalam
+                String presentAddDistrictMl = masterDataMl.get(CrDeathRegistryConstants.DISTRICT).toString();
+                presentAddDistrictMl = presentAddDistrictMl.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPresentAddress().setDistrictMl(presentAddDistrictMl);
+
+                String presentAddStateMl = masterDataMl.get(CrDeathRegistryConstants.STATE).toString();
+                presentAddStateMl = presentAddStateMl.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPresentAddress().setStateMl(presentAddStateMl);
+                
+                String presentAddCountryMl = masterDataMl.get(CrDeathRegistryConstants.COUNTRY).toString();
+                presentAddCountryMl = presentAddCountryMl.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPresentAddress().setCountryMl(presentAddCountryMl);
 
                 //Rakhi S on 16.12.2022
                 cert.setFullName(cert.getDeceasedTitle() + 
@@ -208,9 +239,9 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPresentAddress().getStreetNameMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCityMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getLocalityMl()+ " "+
-                                            cert.getAddressInfo().getPresentAddress().getDistrictId()+ " "+
-                                            cert.getAddressInfo().getPresentAddress().getStateId()+ " "+
-                                            cert.getAddressInfo().getPresentAddress().getCountryId());
+                                            cert.getAddressInfo().getPresentAddress().getDistrictMl()+ " "+
+                                            cert.getAddressInfo().getPresentAddress().getStateMl()+ " "+
+                                            cert.getAddressInfo().getPresentAddress().getCountryMl());
                                             
                 cert.setPermanentAddressFullEn(cert.getAddressInfo().getPermanentAddress().getResidenceAsscNo() + " "+
                                             cert.getAddressInfo().getPermanentAddress().getHouseNo()+ " "+
@@ -314,7 +345,8 @@ public class CrDeathRegistryRepository {
     }
     //Rakhi S ikm on 07.01.2023
     private Map<String, List<String>> getAttributeValuesMl(Object mdmsdata){
-        List<String> modulepaths = Arrays.asList(CrDeathRegistryConstants.TENANT_JSONPATH);
+        List<String> modulepaths = Arrays.asList(CrDeathRegistryConstants.TENANT_JSONPATH, 
+        CrDeathRegistryConstants.COMMON_MASTER_JSONPATH);
         final Map<String, List<String>> mdmsResMap = new HashMap<>();
        
         modulepaths.forEach(modulepath -> {
