@@ -406,6 +406,10 @@ public class CrDeathRegistryDtl {
     //RAkhi S on 07.01.2023
 
     private String localBodyNameMl;
+
+    //Jasmine  on 11.01.2023
+     @JsonProperty("badRecord")
+     private Integer  badRecord ;
     
    
 }

@@ -628,31 +628,33 @@ serviceMaps:
       jsonMaps:
       - jsonPath: $.deathCertificateDtls.*.id
 
-    - query: UPDATE public.eg_death_dtls SET registrationunit = ?, tenantid = ?,application_no = ?, file_no = ?, 
+    - query: UPDATE public.eg_death_dtls SET 
           death_date_unavailable = ?, dateofdeath = ?, time_of_death = ?, timeofdeath_unit = ?, date_of_death_to = ? ,
           time_of_death_to = ?, timeofdeath_unit_to = ?, deceased_unidentified = ?, deceased_title = ?, deceased_firstname_en = ?, deceased_firstname_ml = ?, 
           deceased_middlename_en = ?, deceased_middlename_ml = ?, deceased_lastname_en = ?, deceased_lastname_ml = ?, 
-          deceased_aadhar_number = ?, deceased_gender = ?, age = ?, age_unit = ?, dateofbirth = ?, death_place = ?, death_place_inst_type = ?, death_place_inst_id = ?, 
+          deceased_aadhar_number = ?, deceased_gender = ?, age = ?, age_unit = ?, dateofbirth = ?, 
           death_place_officer_name = ?, death_place_other_ml = ?, death_place_other_en = ?, informant_title = ?, informant_name_en = ?, informant_name_ml = ?, 
-          informant_aadhar_submitted = ?, informant_aadhar_no = ?, informant_mobile_no = ?, general_remarks = ?, submitted_on = ?, 
+          informant_aadhar_submitted = ?, informant_aadhar_no = ?, informant_mobile_no = ?, general_remarks = ?, 
           lastmodifiedby = ?, lastmodifiedtime = ?, place_burial = ?, place_burial_institution_type = ?, place_burial_institution_name = ?, 
-          registration_no = ?, ip_no = ?, op_no = ?, male_dependent_type = ?, male_dependent_title = ?, male_dependent_name_en = ?, male_dependent_name_ml = ?, 
+           ip_no = ?, op_no = ?, male_dependent_type = ?, male_dependent_title = ?, male_dependent_name_en = ?, male_dependent_name_ml = ?, 
           male_dependent_aadharno = ?, male_dependent_mobileno = ?, male_dependent_mailid = ?, female_dependent_type = ?, female_dependent_title = ?, 
           female_dependent_name_en = ?, female_dependent_name_ml = ?, female_dependent_aadharno = ?, female_dependent_mobileno = ?, female_dependent_mailid = ?,
           isvehicle = ?, vehicle_hospital_ml = ?, vehicle_hospital_en = ?, vehicle_fromplace_ml = ?, vehicle_fromplace_en = ?,
           vehicle_toplace_ml = ?, vehicle_toplace_en = ?, vehicle_number = ?, death_place_ward_id = ?, informant_age = ?, vehicle_driver_licenceno = ?, 
-          death_signed_officer_designation = ?, death_place_officer_mobile = ?, death_place_officer_aadhaar = ?, deceased_idprooftype = ?, deceased_idproofno = ?,
-          ack_no = ? where id = ?
+          death_signed_officer_designation = ?, death_place_officer_mobile = ?, death_place_officer_aadhaar = ?, deceased_idprooftype = ?, deceased_idproofno = ?
+          where id = ?
+      # registrationunit = ?, tenantid = ?,application_no = ?, file_no = ?, submitted_on = ?, 
+      # death_place = ?, death_place_inst_type = ?, death_place_inst_id = ?,registration_no = ?,ack_no = ?
 
       basePath: deathCertificateDtls.*
       jsonMaps:
-      - jsonPath: $.deathCertificateDtls.*.registrationUnit
+      # - jsonPath: $.deathCertificateDtls.*.registrationUnit
 
-      - jsonPath: $.deathCertificateDtls.*.tenantId
+      # - jsonPath: $.deathCertificateDtls.*.tenantId
 
-      - jsonPath: $.deathCertificateDtls.*.applicationNumber
+      # - jsonPath: $.deathCertificateDtls.*.applicationNumber
 
-      - jsonPath: $.deathCertificateDtls.*.fileNumber
+      # - jsonPath: $.deathCertificateDtls.*.fileNumber
 
       - jsonPath: $.deathCertificateDtls.*.deathDateUnavailable
       
@@ -696,11 +698,11 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.dateOfBirth
       
-      - jsonPath: $.deathCertificateDtls.*.deathPlace
+      # - jsonPath: $.deathCertificateDtls.*.deathPlace
 
-      - jsonPath: $.deathCertificateDtls.*.deathPlaceType
+      # - jsonPath: $.deathCertificateDtls.*.deathPlaceType
       
-      - jsonPath: $.deathCertificateDtls.*.deathPlaceInstId
+      # - jsonPath: $.deathCertificateDtls.*.deathPlaceInstId
 
       - jsonPath: $.deathCertificateDtls.*.deathPlaceOfficerName
       
@@ -724,7 +726,7 @@ serviceMaps:
 
      # - jsonPath: $.deathCertificateDtls.*.applicationStatus      
       
-      - jsonPath: $.deathCertificateDtls.*.submittedOn
+      # - jsonPath: $.deathCertificateDtls.*.submittedOn
 
       - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
       
@@ -736,7 +738,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.placePurialInstitutionName
       
-      - jsonPath: $.deathCertificateDtls.*.registrationNo
+      # - jsonPath: $.deathCertificateDtls.*.registrationNo
 
       - jsonPath: $.deathCertificateDtls.*.ipNo
       
@@ -806,7 +808,7 @@ serviceMaps:
 
      # - jsonPath: $.deathCertificateDtls.*.fileNo
 
-      - jsonPath: $.deathCertificateDtls.*.deathACKNo
+      #- jsonPath: $.deathCertificateDtls.*.deathACKNo
 
       - jsonPath: $.deathCertificateDtls.*.id 
 
