@@ -13,7 +13,7 @@ const EmployeeDetails = () => {
   const { id: applicationno } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("21days"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("NewDFM"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNo", applicationno)
@@ -39,7 +39,7 @@ console.log("employee" + applicationno);
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.fileDetail?.fileCode,
     moduleCode: businessService,
-    role: "DFM_CEMP",
+    role: "FM_CEMP",
     config:{},
   });
 
@@ -87,7 +87,7 @@ console.log("employee" + applicationno);
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter(item => {
-  if ((item.code == "DFM_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
+  if ((item.code == "FM_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
 
   const rolecheck = rolearray.length > 0 ? true : false;
   const validTo = applicationDetails?.applicationData?.validTo;
@@ -188,11 +188,11 @@ console.log("employee" + applicationno);
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="DFM"
+        moduleCode="egov-filemgmnt"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
-        timelineStatusPrefix={"WF_21DAYS_"}
+        timelineStatusPrefix={"WF_NEWDFM_"}
       />
     </div>
   );

@@ -215,8 +215,6 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     useEffect(() => {
         if (isInitialRender) {
             if (MotherDistrict) {
-                console.log(MotherDistrict);
-                console.log(LocalBodies);
                 setIsInitialRender(false);
                 setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === MotherDistrict.districtid));
             }
