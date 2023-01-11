@@ -16,7 +16,10 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: Taluk = {},isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-    const { data: localbodies={}, isLoading } = Digit.Hooks.useTenants();
+    const { data: LocalBodies={}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+    // Digit.Hooks.useTenants();
+    // Digit.Hooks.cr.useCivilRegistrationMDMS("kl", "tenant", "tenants");
+    // 
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [lbs, setLbs] = useState(0);
     const [MotherFirstNameEn, setMotherFirstNameEn] = useState(formData?.MotherInfoDetails?.MotherFirstNameEn);
@@ -49,7 +52,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherNationality, setMotherNationality] = useState(formData?.MotherInfoDetails?.MotherNationality);
     const [MotherCountry, setMotherCountry] = useState(formData?.MotherInfoDetails?.MotherCountry);
     const [MotherTaluk, setMotherTaluk] = useState(formData?.MotherInfoDetails?.MotherTaluk);
-    const [isMotherInfo, setIsMotherInfo] = useState(formData?.ChildDetails?.isMotherInfo);
+    const [isMotherInfo, setIsMotherInfo] = useState(formData?.MotherInfoDetails?.isMotherInfo);
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     const cmbUrbanRural = [
         { i18nKey: "Urban", code: "URBAN" },
@@ -108,12 +111,17 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             cmbNation.push(ob);
         });
     let cmbTaluk = [];
-    console.log("Taluk" + Taluk);
     Taluk &&
         Taluk["common-masters"] &&
         Taluk["common-masters"].Taluk.map((ob) => {
             cmbTaluk.push(ob);
         });
+        let cmbLB = [];
+        LocalBodies &&
+        LocalBodies["tenant"] &&
+        LocalBodies["tenant"].tenants.map((ob) => {
+                cmbLB.push(ob);
+            });
     const onSkip = () => onSelect();
 
     function setSelectMotherFirstNameEn(e) {
@@ -208,9 +216,9 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         if (isInitialRender) {
             if (MotherDistrict) {
                 console.log(MotherDistrict);
-                console.log(localbodies);
+                console.log(LocalBodies);
                 setIsInitialRender(false);
-                setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === MotherDistrict.districtid));
+                setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === MotherDistrict.districtid));
             }
         }
     }, [lbs, isInitialRender]);
