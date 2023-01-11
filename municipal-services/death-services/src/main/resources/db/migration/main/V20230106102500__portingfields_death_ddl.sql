@@ -42,7 +42,7 @@ ALTER TABLE eg_death_dtls_registry ADD COLUMN IF NOT EXISTS F12_issued smallint;
 ALTER TABLE eg_death_dtls_registry ADD COLUMN IF NOT EXISTS book_no character varying(20);
 ALTER TABLE eg_death_dtls_registry ADD COLUMN IF NOT EXISTS is_migrated smallint;
 ALTER TABLE eg_death_dtls_registry ADD COLUMN IF NOT EXISTS migration_date bigint;
-ALTER TABLE eg_death_dtls_registry ADD COLUMN IF NOT EXISTS kiosk_id bigint;
+
 
 ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS bad_record smallint;
 ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS record_no character varying(20);
@@ -51,6 +51,6 @@ ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS F12_issued small
 ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS book_no character varying(20);
 ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS is_migrated smallint;
 ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS migration_date bigint;
-ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS kiosk_id bigint;
+
 
 ALTER TABLE eg_death_applicant_dtls ADD COLUMN IF NOT EXISTS applicant_email character varying(64);
