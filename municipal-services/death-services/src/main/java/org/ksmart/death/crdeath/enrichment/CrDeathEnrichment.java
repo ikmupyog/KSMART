@@ -112,11 +112,15 @@ public class CrDeathEnrichment implements BaseEnrichment{
     
         request.getDeathCertificateDtls()
                 .forEach(deathDtls -> {
+                CrDeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathDtls, "BndDetail", CrDeathDtl.class);
+                deathDtls.setDeceasedAadharNumber(deathDtlEnc.getDeceasedAadharNumber());
+                deathDtls.setInformantAadharNo(deathDtlEnc.getInformantAadharNo());
+                deathDtls.setMaleDependentAadharNo(deathDtlEnc.getMaleDependentAadharNo());
+                deathDtls.setFemaleDependentAadharNo(deathDtlEnc.getFemaleDependentAadharNo());
                 deathDtls.setAuditDetails(auditDetails);
                 CrDeathAddressInfo  addressInfo = deathDtls.getAddressInfo();
                 addressInfo.setParentdeathDtlId(deathDtls.getId());
                 addressInfo.setAuditDetails(auditDetails);
-                
                 } );
     
     }//UPDATE END
