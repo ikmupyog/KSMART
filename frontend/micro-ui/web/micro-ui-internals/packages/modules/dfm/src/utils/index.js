@@ -342,7 +342,7 @@ export const convertToFileSubmission = (data = {}) => {
         fileDetail: {
           applicantPersonalId : 23,
           documenttypeId :9,
-          tenantId: "kl",
+          tenantId: "kl.cochin",
           serviceDetailsId :537,
           fileNumber :1,
           fileCode :"KL-FM-2022-11-02-000043",
