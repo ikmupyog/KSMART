@@ -3,42 +3,34 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton} from "
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
+const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInstitution,setSelectedInstitution,setInstitutionId,setSelectedInstitutionId,
+  SiginedOfficer,setSiginedOfficer,SiginedOfficerDesignation,setSiginedOfficerDesignation,InstitutionMobilNo,setInstitutionMobilNo,
+  InstitutionAadhaar,setInstitutionAadhaar}) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+ 
   const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
   const { data: institutionid = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
-  const [setInstitution, setSelectedInstitution] = useState(formData?.PlaceOfDeathInstitution?.setInstitution);
-  const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.PlaceOfDeathInstitution?.setInstitutionId);
-  
-  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  // const [TradeName, setTradeName] = useState(null);
-  const [SiginedOfficer, setSiginedOfficer] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficer);
-  const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficerDesignation);
-  const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.PlaceOfDeathInstitution?.InstitutionMobilNo);
-  const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.PlaceOfDeathInstitution?.InstitutionAadhaar);
-  // const [CommencementDate, setCommencementDate] = useState();
+  // const [setInstitution, setSelectedInstitution] = useState(formData?.PlaceOfDeathInstitution?.setInstitution);
+  // const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.PlaceOfDeathInstitution?.setInstitutionId);   
+  // const [SiginedOfficer, setSiginedOfficer] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficer);
+  // const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficerDesignation);
+  // const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.PlaceOfDeathInstitution?.InstitutionMobilNo);
+  // const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.PlaceOfDeathInstitution?.InstitutionAadhaar);
+ 
   let naturetypecmbvalue = null;
-  // let cmbPlace = [];
-  // place &&
-  //   place["TradeLicense"] &&
-  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
-  //     cmbPlace.push(ob);
-  //   });
-    ///institution-type
   let cmbInstitution = [];
   institution &&
     institution["birth-death-service"] &&
     institution["birth-death-service"].InstitutionType.map((ob) => {
       cmbInstitution.push(ob);
     });
-    ///institution-id
-  let cmbInstitutionId = [];
-  institutionid &&
+    
+    let cmbInstitutionId = [];
+    institutionid &&
     institutionid["birth-death-service"] &&
     institutionid["birth-death-service"].Institution.map((ob) => {
       cmbInstitutionId.push(ob);
@@ -51,14 +43,8 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   }
   function selectInstitutionId(value) {
     setSelectedInstitutionId(value);
-  }
+  }  
   
-  // function selectPlaceofactivity(value) {
-  //   setSelectedPlaceofActivity(value);
-  // }
-  // function setSelectTradeName(e) {
-  //   setTradeName(e.target.value);
-  // }
   function setSelectSiginedOfficer(e) {
     setSiginedOfficer(e.target.value);
   }
@@ -71,27 +57,22 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData }) => {
   function  setSelectInstitutionAadhaar(e) {
     setInstitutionAadhaar(e.target.value);
   }
-  // function selectCommencementDate(value) {
-  //   setCommencementDate(value);
-  // }
-
+ 
   const goNext = () => {
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    sessionStorage.setItem("setInstitution", setInstitution.code);
-    sessionStorage.setItem("setInstitutionId", setInstitutionId.code);
-    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer);
-    sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation);
-    sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
-    sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);    
-    onSelect(config.key, { 
-      setInstitution,
-      setInstitutionId,
-      SiginedOfficer,
-      SiginedOfficerDesignation,
-      InstitutionMobilNo,
-      InstitutionAadhaar,
-      // setPlaceofActivity 
-    });
+    // sessionStorage.setItem("setInstitution", setInstitution.code);
+    // sessionStorage.setItem("setInstitutionId", setInstitutionId.code);
+    // sessionStorage.setItem("setSiginedOfficer", SiginedOfficer);
+    // sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation);
+    // sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
+    // sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);    
+    // onSelect(config.key, { 
+    //   setInstitution,
+    //   setInstitutionId,
+    //   SiginedOfficer,
+    //   SiginedOfficerDesignation,
+    //   InstitutionMobilNo,
+    //   InstitutionAadhaar,     
+    // });
   };
   return (
     <React.Fragment>

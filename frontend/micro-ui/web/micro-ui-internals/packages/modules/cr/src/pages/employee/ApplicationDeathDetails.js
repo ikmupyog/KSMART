@@ -176,7 +176,8 @@ const ApplicationDeathDetails = () => {
     <div >
       <div /* style={{marginLeft: "15px"}} */>
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
-        <CardHeader>{`${t("Death Application Summary Details")}`}</CardHeader>
+        {/* <CardHeader>{`${t("Death Application Summary Details")}`}</CardHeader> */}
+        <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Death Application Summary Details")}`}</label>
       </div>
       <ApplicationDetailsTemplate
         applicationDetails={applicationDetails}

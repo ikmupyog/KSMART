@@ -3,7 +3,12 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "
 // import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
+const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,setAdrsCountry, AdrsStateName,setAdrsStateName,AdrsDistrict,setAdrsDistrict,
+  AdrsLBTypeName, setAdrsLBTypeName, AdrsLBName, setAdrsLBName, AdrsTaluk,setAdrsTaluk, AdrsPostOffice, setAdrsPostOffice,AdrsPincode, setAdrsPincode,
+  AdrsHouseNameEn, setAdrsHouseNameEn,AdrsHouseNameMl, setAdrsHouseNameMl,AdrsBuldingNo, setAdrsBuldingNo,AdrsResNo, setAdrsResNo,AdrsDoorNo, setAdrsDoorNo,
+  AdrsMainPlaceEn, setAdrsMainPlaceEn,AdrsMainPlaceMl, setAdrsMainPlaceMl,AdrsLocalityNameEn, setAdrsLocalityNameEn,AdrsLocalityNameMl, setAdrsLocalityNameML,AdrsCityEn, setAdrsCityEn,AdrsCityMl, setAdrsCityMl,
+  AdrsStreetNameEn, setAdrsStreetNameEn ,AdrsStreetNameMl, setAdrsStreetNameMl,AdrsVillage, setAdrsVillage}) => {
+
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -22,35 +27,33 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [AdrsCountry, setAdrsCountry] = useState(formData?.PlaceOfDeathHome?.AdrsCountry);
-  const [AdrsStateName, setAdrsStateName] = useState(formData?.PlaceOfDeathHome?.AdrsStateName);
-  const [AdrsDistrict, setAdrsDistrict] = useState(formData?.PlaceOfDeathHome?.AdrsDistrict);
-  const [AdrsLBTypeName, setAdrsLBTypeName] = useState(formData?.PlaceOfDeathHome?.AdrsLBTypeName);
-  const [AdrsLBName, setAdrsLBName] = useState(formData?.PlaceOfDeathHome?.AdrsLBName);
-  const [AdrsTaluk, setAdrsTaluk] = useState(formData?.PlaceOfDeathHome?.AdrsTaluk);
-  const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.PlaceOfDeathHome?.AdrsPostOffice);
-  const [AdrsPincode, setAdrsPincode] = useState(formData?.PlaceOfDeathHome?.AdrsPincode);
-  const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsHouseNameEn);
-   const [AdrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsHouseNameMl);
-  const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.PlaceOfDeathHome?.AdrsBuldingNo);
-  const [AdrsResNo, setAdrsResNo] = useState(formData?.PlaceOfDeathHome?.AdrsResNo);
-  const [AdrsInfontName, setAdrsInfontName] = useState(formData?.PlaceOfDeathHome?.AdrsInfontName);
-  const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.PlaceOfDeathHome?.AdrsDoorNo);
-  const [AdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.PlaceOfDeathHome?.AdrsMainPlaceEn);
-   const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.PlaceOfDeathHome?.AdrsMainPlaceMl);
-  const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsLocalityNameEn);
-   const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsLocalityNameMl);
-   const [AdrsCityEn, setAdrsCityNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsCityNameEn);
-   const [AdrsCityMl, setAdrsCityMl] = useState(formData?.PlaceOfDeathHome?.AdrsCityMl);
-   
-  const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsStreetNameEn);
-   const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsStreetNameMl);
-  const [AdrsVillage, setAdrsVillage] = useState(formData?.PlaceOfDeathHome?.AdrsVillage);
+
+  // const [AdrsCountry, setAdrsCountry] = useState(formData?.PlaceOfDeathHome?.AdrsCountry);
+  // const [AdrsStateName, setAdrsStateName] = useState(formData?.PlaceOfDeathHome?.AdrsStateName);
+  // const [AdrsDistrict, setAdrsDistrict] = useState(formData?.PlaceOfDeathHome?.AdrsDistrict);
+  // const [AdrsLBTypeName, setAdrsLBTypeName] = useState(formData?.PlaceOfDeathHome?.AdrsLBTypeName);
+  // const [AdrsLBName, setAdrsLBName] = useState(formData?.PlaceOfDeathHome?.AdrsLBName);
+  // const [AdrsTaluk, setAdrsTaluk] = useState(formData?.PlaceOfDeathHome?.AdrsTaluk);
+  // const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.PlaceOfDeathHome?.AdrsPostOffice);
+  // const [AdrsPincode, setAdrsPincode] = useState(formData?.PlaceOfDeathHome?.AdrsPincode);
+  // const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsHouseNameEn);
+  // const [AdrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsHouseNameMl);
+  // const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.PlaceOfDeathHome?.AdrsBuldingNo);
+  // const [AdrsResNo, setAdrsResNo] = useState(formData?.PlaceOfDeathHome?.AdrsResNo);  
+  // const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.PlaceOfDeathHome?.AdrsDoorNo);
+  // const [AdrsMainPlaceEn, setAdrsMainPlaceEnAdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.PlaceOfDeathHome?.AdrsMainPlaceEn);
+  // const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.PlaceOfDeathHome?.AdrsMainPlaceMl);
+  // const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsLocalityNameEn);
+  // const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsLocalityNameMl);
+  // const [AdrsCityEn, setAdrsCityEn] = useState(formData?.PlaceOfDeathHome?.AdrsCityNameEn);
+  // const [AdrsCityMl, setAdrsCityMl] = useState(formData?.PlaceOfDeathHome?.AdrsCityMl);   
+  // const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.PlaceOfDeathHome?.AdrsStreetNameEn);
+  // const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsStreetNameMl);
+  // const [AdrsVillage, setAdrsVillage] = useState(formData?.PlaceOfDeathHome?.AdrsVillage);
   // const [WardNo, setWardNo] = useState(formData.PlaceOfDeathHome?.wardno);
 
   let cmbCountry = [];
   let cmbState = [];
-  // let cmbPlace = [];
   let cmbTaluk = [];
   let cmbVillage = [];
   let cmbDistrict = [];
@@ -96,9 +99,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
-  let Zonal = [];
-  let cmbWardNo = [];
-  let cmbWardNoFinal = [];
+  // let Zonal = [];
+  // let cmbWardNo = [];
+  // let cmbWardNoFinal = [];
   // boundaryList &&
   //   boundaryList["egov-location"] &&
   //   boundaryList["egov-location"].TenantBoundary.map((ob) => {
@@ -171,11 +174,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     setAdrsHouseNameMl(e.target.value);
 
     }
-  function setSelectAdrsInfontName(e) {
-    setAdrsInfontName(e.target.value);
-  }
-
-  function setSelectAdrsMainPlaceEn(e) {
+    function setSelectAdrsMainPlaceEn(e) {
     setAdrsMainPlaceEn(e.target.value);
   }
    function setSelectAdrsMainPlaceMl(e) {
@@ -196,12 +195,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
      function setSelectAdrsCityMl(e) {
       setAdrsCityMl(e.target.value);
   
-      }
-    
+    }    
 
-  function setSelectAdrsStreetNameEn(e) {
+     function setSelectAdrsStreetNameEn(e) {
     setAdrsStreetNameEn(e.target.value);
-  }
+   }
 
    function setSelectAdrsStreetNameMl(e) {
     setAdrsStreetNameMl(e.target.value);
@@ -221,57 +219,55 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
     }
   }, [lbs, isInitialRender]);
   const goNext = () => {
-    sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
-    sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
-    sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName.code);
-    sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo);
-    sessionStorage.setItem("AdrsResNo", AdrsResNo);
-    sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo);
-    sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn);
-     sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl);
-    sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn);
-     sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl);
-    sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn);
-     sessionStorage.setItem("AdrsLocalityNameMl", AdrsLocalityNameMl);
-     sessionStorage.setItem("AdrsCityEn", AdrsCityEn);
-     sessionStorage.setItem("AdrsCityMl", AdrsCityMl);
-    sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn);
-     sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl);
-    sessionStorage.setItem("AdrsVillage", AdrsVillage.code);
-    sessionStorage.setItem("AdrsLBName", null);
-    sessionStorage.setItem("AdrsDistrict", AdrsDistrict.code);
-    sessionStorage.setItem("AdrsTaluk", AdrsTaluk.code);
-    sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice.code);
-    sessionStorage.setItem("AdrsPincode", AdrsPincode.code);
-    sessionStorage.setItem("AdrsInfontName", AdrsInfontName);
+    // sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
+    // sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
+    // sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName.code);
+    // sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo);
+    // sessionStorage.setItem("AdrsResNo", AdrsResNo);
+    // sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo);
+    // sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn);
+    // sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl);
+    // sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn);
+    // sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl);
+    // sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn);
+    // sessionStorage.setItem("AdrsLocalityNameMl", AdrsLocalityNameMl);
+    // sessionStorage.setItem("AdrsCityEn", AdrsCityEn);
+    // sessionStorage.setItem("AdrsCityMl", AdrsCityMl);
+    // sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn);
+    // sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl);
+    // sessionStorage.setItem("AdrsVillage", AdrsVillage.code);
+    // sessionStorage.setItem("AdrsLBName", null);
+    // sessionStorage.setItem("AdrsDistrict", AdrsDistrict.code);
+    // sessionStorage.setItem("AdrsTaluk", AdrsTaluk.code);
+    // sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice.code);
+    // sessionStorage.setItem("AdrsPincode", AdrsPincode.code);
     // sessionStorage.setItem(" WardNo",  WardNo);
    
-    onSelect(config.key, {
-      AdrsBuldingNo,
-      AdrsDoorNo,
-      AdrsHouseNameEn,
-      AdrsHouseNameMl,
-      AdrsLocalityNameEn,
-      AdrsLocalityNameMl,
-      AdrsCityEn,
-      AdrsCityMl,      
-      AdrsInfontName,
-      AdrsCountry,
-      AdrsStateName,
-      AdrsLBTypeName,
-      AdrsMainPlaceEn,
-      AdrsMainPlaceMl,
-      AdrsStreetNameEn,
-      AdrsStreetNameMl,
-      AdrsVillage,
-      AdrsLBName,
-      AdrsDistrict,
-      AdrsTaluk,
-      AdrsPostOffice,
-      AdrsPincode,
-      AdrsResNo,
-      // WardNo
-    });
+    // onSelect(config.key, {
+    //   AdrsBuldingNo,
+    //   AdrsDoorNo,
+    //   AdrsHouseNameEn,
+    //   AdrsHouseNameMl,
+    //   AdrsLocalityNameEn,
+    //   AdrsLocalityNameMl,
+    //   AdrsCityEn,
+    //   AdrsCityMl,      
+    //   AdrsCountry,
+    //   AdrsStateName,
+    //   AdrsLBTypeName,
+    //   AdrsMainPlaceEn,
+    //   AdrsMainPlaceMl,
+    //   AdrsStreetNameEn,
+    //   AdrsStreetNameMl,
+    //   AdrsVillage,
+    //   AdrsLBName,
+    //   AdrsDistrict,
+    //   AdrsTaluk,
+    //   AdrsPostOffice,
+    //   AdrsPincode,
+    //   AdrsResNo,
+    //   // WardNo
+    // });
   };
 
 
@@ -497,20 +493,41 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
               />
             </div>
-            <div className="col-md-6" ><CardLabel>{t("CR_MAIN_PLACE_ML")}<span className="mandatorycss">*</span></CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsMainPlaceMl" value={AdrsMainPlaceMl} onChange={setSelectAdrsMainPlaceMl} placeholder={`${t("CR_MAIN_PLACE_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })} />
- </div>
-            
+            <div className="col-md-6" >
+              <CardLabel>{t("CR_MAIN_PLACE_ML")}<span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput t={t} 
+              isMandatory={false} 
+              type={"text"} 
+              optionKey="i18nKey" 
+              name="AdrsMainPlaceMl" 
+              value={AdrsMainPlaceMl} 
+              onChange={setSelectAdrsMainPlaceMl} 
+              placeholder={`${t("CR_MAIN_PLACE_ML")}`} 
+              disable={isEdit} 
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })} />
+           </div>            
           </div>
         </div>
-      <div className="row">
-        <div className="col-md-12" >
-         <div className="col-md-6" >
+        <div className="row">
+          <div className="col-md-12" >
+            <div className="col-md-6" >
             <CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsLocalityNameEn" value={AdrsLocalityNameEn} onChange={setSelectAdrsLocalityNameEn} placeholder={`${t("CR_LOCALITY_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })} />
-         </div>
-        <div className="col-md-6" ><CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
-           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsLocalityNameMl" value={AdrsLocalityNameMl} onChange={setSelectAdrsLocalityNameMl} disable={isEdit} placeholder={`${t("CR_LOCALITY_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
+            </div>
+          <div className="col-md-6" >
+            <CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput 
+            t={t} 
+            isMandatory={false} 
+            type={"text"} 
+            optionKey="i18nKey" 
+            name="AdrsLocalityNameMl" 
+            value={AdrsLocalityNameMl} 
+            onChange={setSelectAdrsLocalityNameMl} 
+            disable={isEdit} 
+            placeholder={`${t("CR_LOCALITY_ML")}`} 
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
         </div>
         </div>
       </div>
@@ -518,21 +535,39 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
         <div className="col-md-12" >
          <div className="col-md-6" >
             <CardLabel>{t("CR_CITY_EN")}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsCityEn" value={AdrsCityEn} onChange={setSelectAdrsCityEn} placeholder={`${t("CR_LOCALITY_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })} />
-         </div>
-        <div className="col-md-6" >
+            <TextInput 
+            t={t} 
+            isMandatory={false} 
+            type={"text"} 
+            optionKey="i18nKey" 
+            name="AdrsCityEn" 
+            value={AdrsCityEn} 
+            onChange={setSelectAdrsCityEn} 
+            placeholder={`${t("CR_LOCALITY_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })} />
+          </div>
+         <div className="col-md-6" >
           <CardLabel>{t("CR_CITY_ML")}<span className="mandatorycss">*</span></CardLabel>
-           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsCityMl" value={AdrsCityMl} onChange={setSelectAdrsCityMl} disable={isEdit} placeholder={`${t("CR_LOCALITY_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
-        </div>
+          <TextInput 
+          t={t} 
+          isMandatory={false} 
+          type={"text"} 
+          optionKey="i18nKey" 
+          name="AdrsCityMl" 
+          value={AdrsCityMl} 
+          onChange={setSelectAdrsCityMl} 
+          disable={isEdit} 
+          placeholder={`${t("CR_LOCALITY_ML")}`} 
+          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
+          </div>
         </div>
       </div>
 
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+      <div className="row">
+        <div className="col-md-12">
+          <div className="col-md-6">
               <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
               <TextInput
-                t={t}
+                t={t} 
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
@@ -543,24 +578,52 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData }) => {
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
-            </div>
-            <div className="col-md-6" ><CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsStreetNameMl" value={AdrsStreetNameMl} onChange={setSelectAdrsStreetNameMl} placeholder={`${t("CR_STREET_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })} />
- </div>
-            
+          </div>
+          <div className="col-md-6" >
+            <CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
+            <TextInput t={t} 
+            isMandatory={false} 
+            type={"text"} 
+            optionKey="i18nKey" 
+            name="AdrsStreetNameMl" 
+            value={AdrsStreetNameMl} 
+            onChange={setSelectAdrsStreetNameMl} 
+            placeholder={`${t("CR_STREET_NAME_ML")}`} 
+            disable={isEdit} 
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })} />
           </div>
         </div>
-        <div className="row">
- <div className="col-md-12" >
- <div className="col-md-6" ><CardLabel>{t("CR_HOUSE_NAME_EN")}<span className="mandatorycss">*</span></CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsHouseNameEn" value={AdrsHouseNameEn} onChange={setSelectAdrsHouseNameEn} placeholder={`${t("CR_HOUSE_NAME_EN")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })} />
+       </div>
+      <div className="row">
+        <div className="col-md-12" >
+          <div className="col-md-6" >
+            <CardLabel>{t("CR_HOUSE_NAME_EN")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} 
+            isMandatory={false} 
+            type={"text"} 
+            optionKey="i18nKey" 
+            name="AdrsHouseNameEn" 
+            value={AdrsHouseNameEn} 
+            onChange={setSelectAdrsHouseNameEn} 
+            placeholder={`${t("CR_HOUSE_NAME_EN")}`} 
+            disable={isEdit} 
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })} />
+            </div>
+          <div className="col-md-6" >
+            <CardLabel>{t("CR_HOUSE_NAME_ML")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} 
+            isMandatory={false} 
+            type={"text"} 
+            optionKey="i18nKey" 
+            name="AdrsHouseNameMl" 
+            value={AdrsHouseNameMl} 
+            onChange={setSelectAdrsHouseNameMl} 
+            placeholder={`${t("CR_HOUSE_NAME_ML")}`} 
+            disable={isEdit} 
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })} />
+          </div>
+        </div>
  </div>
- <div className="col-md-6" ><CardLabel>{t("CR_HOUSE_NAME_ML")}<span className="mandatorycss">*</span></CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsHouseNameMl" value={AdrsHouseNameMl} onChange={setSelectAdrsHouseNameMl} placeholder={`${t("CR_HOUSE_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })} />
- </div>
- </div>
- </div>
-
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-4">

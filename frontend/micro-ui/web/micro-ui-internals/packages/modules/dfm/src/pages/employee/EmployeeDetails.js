@@ -3,23 +3,24 @@ import { useTranslation } from "react-i18next";
 import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams } from "react-router-dom";
-import { Header } from "@egovernments/digit-ui-react-components";
+import { Header,CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
 const EmployeeDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { id: applicationNumber } = useParams();
+  const { id: applicationno } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("NewTL"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("NewDFM"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
-  sessionStorage.setItem("applicationNumber", applicationNumber)
-  const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.tl.useApplicationDetail(t, tenantId, applicationNumber);
+  sessionStorage.setItem("applicationNo", applicationno)
+  // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
+console.log("employee" + applicationno);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.dfm.useApplicationDetail(t, tenantId, applicationno);
+      console.log('employye-details',applicationDetails);
 
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
@@ -30,16 +31,16 @@ const EmployeeDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.tl.useApplicationActions(tenantId);
+  } = Digit.Hooks.dfm.useApplicationActions(tenantId);
 
-  let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-
+  // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
+  console.log("employeeDFM",applicationDetails);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
-    tenantId: applicationDetails?.tenantId || tenantId,
-    id: applicationDetails?.applicationData?.applicationNumber,
+    tenantId: applicationDetails?.applicationData.tenantid || tenantId,
+    id: applicationDetails?.fileDetail?.fileCode,
     moduleCode: businessService,
-    role: "TL_CEMP",
-    config:{EditRenewalApplastModifiedTime:EditRenewalApplastModifiedTime},
+    role: "FM_CEMP",
+    config:{},
   });
 
   const closeToast = () => {
@@ -86,7 +87,7 @@ const EmployeeDetails = () => {
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter(item => {
-  if ((item.code == "TL_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
+  if ((item.code == "FM_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
 
   const rolecheck = rolearray.length > 0 ? true : false;
   const validTo = applicationDetails?.applicationData?.validTo;
@@ -161,7 +162,8 @@ const EmployeeDetails = () => {
   const wfDocs = workflowDetails.data?.timeline?.reduce((acc, { wfDocuments }) => {
     return wfDocuments ? [...acc, ...wfDocuments] : acc;
   }, []);
-  const ownerdetails = applicationDetails?.applicationDetails.find(e => e.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS");
+  const ownerdetails = applicationDetails?.applicationData?.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS";
+  // const ownerdetails = applicationDetails?.find(e => e.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS");
   let appdetailsDocuments = ownerdetails?.additionalDetails?.documents;
   if(appdetailsDocuments && wfDocs?.length && !(appdetailsDocuments.find(e => e.title === "TL_WORKFLOW_DOCS"))){
     ownerdetails.additionalDetails.documents = [...ownerdetails.additionalDetails.documents,{
@@ -175,7 +177,8 @@ const EmployeeDetails = () => {
   return (
     <div >
       <div /* style={{marginLeft: "15px"}} */>
-        <Header>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("TL_TRADE_LICENSE_DETAILS_LABEL")}</Header>
+        {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
+        <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("File Management Application Summary Details")}`}</label>
       </div>
       <ApplicationDetailsTemplate
         applicationDetails={applicationDetails}
@@ -185,11 +188,11 @@ const EmployeeDetails = () => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="TL"
+        moduleCode="egov-filemgmnt"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
-        timelineStatusPrefix={"WF_NEWTL_"}
+        timelineStatusPrefix={"WF_NEWDFM_"}
       />
     </div>
   );

@@ -105,10 +105,10 @@ const CheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.BirthPlace.name)}</CardText>
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.HospitalName.hospitalName)}</CardText>
-            </div>
+            </div> */}
           </div>
           <div className="row">
             <div className="col-md-6">
