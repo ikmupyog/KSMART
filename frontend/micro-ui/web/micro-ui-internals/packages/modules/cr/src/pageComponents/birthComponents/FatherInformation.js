@@ -192,7 +192,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                                 option={cmbNation}
                                 selected={FatherNationality}
                                 select={setSelectFatherNationality}
-                                disabled={isFatherInfo}
+                                disable={isFatherInfo}
                             />
                         </div>
                         <div className="col-md-2" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
