@@ -43,7 +43,7 @@ ALTER TABLE eg_death_statistical_dtls_log ADD COLUMN IF NOT EXISTS occupation_mi
 ALTER TABLE eg_death_statistical_dtls_log ADD COLUMN IF NOT EXISTS education_main character varying(64);
 ALTER TABLE eg_death_statistical_dtls_log ADD COLUMN IF NOT EXISTS  education_sub character varying(64);
 
-ALTER TABLE ed_death_applicat_dtls ADD COLUMN IF NOT EXISTS applicant_relation  character varying(64);
+ALTER TABLE eg_death_applicant_dtls ADD COLUMN IF NOT EXISTS applicant_relation  character varying(64);
 
 DO $$
 BEGIN
