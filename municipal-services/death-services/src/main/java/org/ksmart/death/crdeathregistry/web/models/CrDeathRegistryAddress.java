@@ -111,4 +111,11 @@ public class CrDeathRegistryAddress {
  
      @JsonProperty("houeNameEn")
      private String houeNameEn ;
+
+     //Rakhi S on 11.01.2023
+     private String districtMl;
+
+     private String StateMl;
+
+     private String countryMl;
 }

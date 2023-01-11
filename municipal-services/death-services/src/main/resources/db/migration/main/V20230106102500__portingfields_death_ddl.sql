@@ -52,3 +52,4 @@ ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS dataporting_flag
 ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS dataporting_date bigint;
 
 ALTER TABLE eg_death_applicant_dtls ADD COLUMN IF NOT EXISTS applicant_email character varying(64);
+-- modification needed
