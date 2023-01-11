@@ -77,8 +77,8 @@ public class TaxPde {
     @JsonProperty("current")
     private Double current = null;
 
-    @JsonProperty("penal")
-    private Double penal = null;
+    @JsonProperty("current2")
+    private Double current2 = null;
 
     @JsonProperty("amount")
     private Double amount = null;

@@ -124,6 +124,8 @@ public class EnrichmentPdeService {
                                                         taxPde.getService().toString().replace(".", "_") + "_ARR")
                                                 .get(null)
                                                 .toString())
+                                        .current(taxPde.getCurrent())
+                                        .current2(taxPde.getCurrent2())
                                         .build());
                     } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
                             | SecurityException e1) {
@@ -140,12 +142,15 @@ public class EnrichmentPdeService {
                                 TaxPde.builder().id(UUID.randomUUID().toString()).tenantId(tradeLicense.getTenantId())
                                         .service(taxPde.getService()).fromYear(taxPde.getFromYear())
                                         .fromPeriod(taxPde.getFromPeriod()).toYear(taxPde.getToYear())
-                                        .toPeriod(taxPde.getToPeriod()).active(true).amount(taxPde.getCurrent())
+                                        .toPeriod(taxPde.getToPeriod()).active(true)
+                                        .amount(taxPde.getCurrent() + taxPde.getCurrent2())
                                         .headCode(TLConstants.class
                                                 .getDeclaredField(
                                                         taxPde.getService().toString().replace(".", "_") + "_CUR")
                                                 .get(null)
                                                 .toString())
+                                        .current(taxPde.getCurrent())
+                                        .current2(taxPde.getCurrent2())
                                         .build());
                     } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
                             | SecurityException e1) {
@@ -186,7 +191,7 @@ public class EnrichmentPdeService {
                 tradeLicense.setAccountId(requestInfo.getUserInfo().getUuid());
 
         });
-        setIdgenIds(tradeLicenseRequest);
+        setIdgenPdeIds(tradeLicenseRequest);
         setStatusForCreate(tradeLicenseRequest);
         String businessService = tradeLicenseRequest.getLicenses().isEmpty() ? null
                 : tradeLicenseRequest.getLicenses().get(0).getBusinessService();
@@ -682,6 +687,41 @@ public class EnrichmentPdeService {
 
             license.setAssignee(new LinkedList<>(assignes));
         }
+    }
+
+    /**
+     * Sets the ApplicationNumber for given TradeLicenseRequest
+     *
+     * @param request TradeLicenseRequest which is to be created
+     */
+    private void setIdgenPdeIds(TradeLicenseRequest request) {
+        RequestInfo requestInfo = request.getRequestInfo();
+        String tenantId = request.getLicenses().get(0).getTenantId();
+        List<TradeLicense> licenses = request.getLicenses();
+        String businessService = licenses.isEmpty() ? null : licenses.get(0).getBusinessService();
+        if (businessService == null)
+            businessService = businessService_TL;
+        List<String> applicationNumbers = null;
+        switch (businessService) {
+            case businessService_TL:
+                applicationNumbers = getIdList(requestInfo, tenantId, config.getApplicationNumberPdeIdgenNameTL(),
+                        config.getApplicationNumberPdeIdgenFormatTL(), request.getLicenses().size());
+                break;
+        }
+        ListIterator<String> itr = applicationNumbers.listIterator();
+
+        Map<String, String> errorMap = new HashMap<>();
+        if (applicationNumbers.size() != request.getLicenses().size()) {
+            errorMap.put("IDGEN ERROR ",
+                    "The number of LicenseNumber returned by idgen is not equal to number of TradeLicenses");
+        }
+
+        if (!errorMap.isEmpty())
+            throw new CustomException(errorMap);
+
+        licenses.forEach(tradeLicense -> {
+            tradeLicense.setApplicationNumber(itr.next());
+        });
     }
 
 }

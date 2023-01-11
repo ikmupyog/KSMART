@@ -110,6 +110,9 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     .zonalId(rs.getString("zonalid") == null ? null : Long.parseLong(rs.getString("zonalid")))
                     .wardId(rs.getString("wardid") == null ? null : Long.parseLong(rs.getString("wardid")))
                     .wardNo(rs.getString("wardno") == null ? null : Integer.parseInt(rs.getString("wardno")))
+                    .lbBuildingCode(rs.getString("lbbuildingcode"))
+                    .lbBuildingName(rs.getString("lbbuildingname"))
+                    .buildingType(rs.getString("buildingtype"))
                     .build();
 
             AuditDetails auditdetails = AuditDetails.builder()

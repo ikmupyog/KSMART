@@ -317,4 +317,10 @@ public class TLConfiguration {
     @Value("${egov.download.receipt.link}")
     private String receiptDownloadLink;
 
+    @Value("${egov.idgen.tlpde.applicationNum.name}")
+    private String applicationNumberPdeIdgenNameTL;
+
+    @Value("${egov.idgen.tlpde.applicationNum.format}")
+    private String applicationNumberPdeIdgenFormatTL;
+
 }
