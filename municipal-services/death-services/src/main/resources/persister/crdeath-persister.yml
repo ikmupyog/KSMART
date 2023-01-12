@@ -190,7 +190,7 @@ serviceMaps:
 
         
      
-    - query: INSERT INTO public.eg_death_statistical_dtls(id, death_dtl_id, tenantid, residencelocalbody, residence_place_type, residencedistrict, residencestate, religion, religion_other, occupation, occupation_other, medical_attention_type, death_medically_certified, death_cause_main, death_cause_sub, death_cause_other, death_during_delivery, smoking_num_years, tobacco_num_years, arecanut_num_years, alcohol_num_years, createdby, createdtime, lastmodifiedby, lastmodifiedtime, nationality)
+    - query: INSERT INTO public.eg_death_statistical_dtls(id, death_dtl_id, tenantid, residencelocalbody, residence_place_type, residencedistrict, residencestate, religion, religion_other, occupation, occupation_other, medical_attention_type, death_medically_certified, death_cause_main, death_cause_sub, death_cause_other, death_during_delivery, smoking_num_years, tobacco_num_years, arecanut_num_years, alcohol_num_years, createdby, createdtime, lastmodifiedby, lastmodifiedtime, nationality, occupation_sub, occupation_minor, education_main, education_sub, residencelbtype)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: deathCertificateDtls.*.statisticalInfo
       jsonMaps:
@@ -245,6 +245,16 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
 
       - jsonPath: $.deathCertificateDtls.*.statisticalInfo.nationality
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.occupationSub
+      
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.occupationMinor
+      
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationMain
+      
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationSub      
+      
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.residenceLBType
 
 
     - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, house_no, residence_assc_no, streetname_en, streetname_ml, locality_en, locality_ml, city_en, city_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, taluk_name_en, taluk_name_ml, village_name_en, village_name_ml, postoffice_name_en, postoffice_name_ml, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, houename_ml, houename_en)

@@ -142,9 +142,9 @@ serviceMaps:
             death_medically_certified, death_cause_main, death_cause_sub,
             death_cause_other, death_during_delivery, smoking_num_years,
             tobacco_num_years, arecanut_num_years, alcohol_num_years, createdby,
-            createdtime, lastmodifiedby, lastmodifiedtime, nationality) VALUES
+            createdtime, lastmodifiedby, lastmodifiedtime, nationality, occupation_sub, occupation_minor, education_main, education_sub, residencelbtype) VALUES
             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?);
+            ?, ?, ?, ??, ?, ?, ?, ?);
           basePath: deathCertificateDtls.*.statisticalInfo
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.id
@@ -173,6 +173,11 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
             - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.nationality
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.occupationSub      
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.occupationMinor     
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationMain      
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationSub      
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.residenceLBType
         - query: >-
             INSERT INTO public.eg_death_address_registry(id, death_dtl_id,
             tenantid, addr_typeid, house_no, residence_assc_no, streetname_en,
