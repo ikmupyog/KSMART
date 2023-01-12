@@ -132,20 +132,20 @@ const AdoptionMotherInformation = ({ config, onSelect, userType, formData }) => 
   
  
   const goNext = () => {
-    sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn);
-    sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn);
-    sessionStorage.setItem("MotherLastNameEn", MotherLastNameEn);
-    sessionStorage.setItem("MotherFirstNameMl", MotherFirstNameMl);
-    sessionStorage.setItem("MotherMiddleNameMl", MotherMiddleNameMl);
-    sessionStorage.setItem("MotherLastNameMl", MotherLastNameMl);
-    sessionStorage.setItem("MotherAadhar", MotherAadhar);
-    sessionStorage.setItem("MotherPassportNo", MotherPassportNo);
-    sessionStorage.setItem("MotherEmail", MotherEmail);
-    sessionStorage.setItem("MotherMobile", MotherMobile);
-    sessionStorage.setItem("MotherEducation", MotherEducation.code);
+    sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn ? MotherFirstNameEn : null);
+    sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn ? MotherMiddleNameEn : null);
+    sessionStorage.setItem("MotherLastNameEn", MotherLastNameEn ? MotherLastNameEn : null);
+    sessionStorage.setItem("MotherFirstNameMl", MotherFirstNameMl ? MotherFirstNameMl : null);
+    sessionStorage.setItem("MotherMiddleNameMl", MotherMiddleNameMl ? MotherMiddleNameMl : null);
+    sessionStorage.setItem("MotherLastNameMl", MotherLastNameMl ? MotherLastNameMl :null);
+    sessionStorage.setItem("MotherAadhar", MotherAadhar ? MotherAadhar : null);
+    sessionStorage.setItem("MotherPassportNo", MotherPassportNo ? MotherPassportNo :null);
+    sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
+    sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
+    sessionStorage.setItem("MotherEducation", MotherEducation ? MotherEducation.code : null);
     // sessionStorage.setItem("MotherEducationSubject", MotherEducationSubject.code);
-    sessionStorage.setItem("MotherProfession", MotherProfession.code);
-    sessionStorage.setItem("MotherNationality", MotherNationality.code);    
+    sessionStorage.setItem("MotherProfession", MotherProfession ? MotherProfession.code : null);
+    sessionStorage.setItem("MotherNationality", MotherNationality ? MotherNationality.code : null);    
     onSelect(config.key, {
       MotherFirstNameEn,
       MotherMiddleNameEn,

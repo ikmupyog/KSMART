@@ -54,6 +54,15 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.PlaceOfDeath?.SiginedOfficerDesignation);
   const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.PlaceOfDeath?.InstitutionMobilNo);
   const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.PlaceOfDeath?.InstitutionAadhaar);
+//informent details for Home and Vehicle
+const [InformentNameEn, setInformentNameEn] = useState(formData?.PlaceOfDeath?.InformentNameEn);
+const [InformentNameMl, setInformentNameMl] = useState(formData?.PlaceOfDeath?.InformentNameMl);
+const [setTitle, setSelectedTitle] = useState(formData?.PlaceOfDeath?.setTitle); 
+const [AadhaarNo, setAadhaarNo] = useState(formData?.PlaceOfDeath?.AadhaarNo);
+const [setDeclaration, setSelectedDeclaration] = useState(formData?.PlaceOfDeath?.setDeclaration);
+const [InformentMobileNo, setInformentMobileNo] = useState(formData?.PlaceOfDeath?.InformentMobileNo); 
+const [InformentEmail, setInformentEmail] = useState(formData?.PlaceOfDeath?.InformentEmail);
+const [isNoAadhaar, setIsNoAadhaar] = useState(formData?.PlaceOfDeath?.isNoAadhaar);
 
 
   const [value1, setValue1] = useState();
@@ -91,6 +100,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
           />
         }   
         if (naturetype === "HOME") {
+          
           <PlaceOfDeathHome 
           AdrsCountry={AdrsCountry}
           AdrsStateName={AdrsStateName}
@@ -115,15 +125,29 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
           AdrsStreetNameMl ={AdrsStreetNameMl}
           AdrsVillage ={AdrsVillage}
           />
+        }
+        if (naturetype === "HOME") {
+          
+          <InformentAddress
+          InformentNameEn ={InformentNameEn}
+          InformentNameMl ={InformentNameMl}
+          setTitle ={setTitle}
+          AadhaarNo ={AadhaarNo}
+          setDeclaration ={setDeclaration}
+          InformentMobileNo ={InformentMobileNo}
+          AdrsVillage ={AdrsVillage}          
+
+          />
         }  
         if (naturetype === "INSTITUTION") {
           <PlaceOfDeathInstitution  
           setInstitution={setInstitution} 
           setInstitutionId={setInstitutionId}
           SiginedOfficer={SiginedOfficer} 
+          AadhaarNo={AadhaarNo}
           SiginedOfficerDesignation={SiginedOfficerDesignation}
           InstitutionMobilNo={InstitutionMobilNo}
-          InstitutionAadhaar={InstitutionAadhaar}
+          InformentEmail={InformentEmail}
           />
         }         
        
@@ -167,12 +191,21 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation);
     sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
     sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);
+    //InformentAddress
+    sessionStorage.setItem("InformentNameEn", InformentNameEn);
+    sessionStorage.setItem("InformentNameMl", InformentNameMl);
+    sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
+    sessionStorage.setItem("isNoAadhaar", isNoAadhaar);
+    sessionStorage.setItem("AadhaarNo", AadhaarNo);
+    sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
+    sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
+    sessionStorage.setItem("InformentEmail", InformentEmail);
 
     onSelect(config.key, { setPlaceofDeath,SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile, AdrsBuldingNo,
       AdrsDoorNo,AdrsHouseNameEn,AdrsHouseNameMl,AdrsLocalityNameEn, AdrsLocalityNameMl, AdrsCityEn,AdrsCityMl, AdrsCountry, AdrsStateName,
       AdrsLBTypeName, AdrsMainPlaceEn,AdrsMainPlaceMl,AdrsStreetNameEn,AdrsStreetNameMl,AdrsVillage,AdrsLBName,AdrsDistrict,AdrsTaluk,
       AdrsPostOffice,AdrsPincode, AdrsResNo,setInstitution,setInstitutionId,SiginedOfficer,SiginedOfficerDesignation,InstitutionMobilNo,
-      InstitutionAadhaar, });
+      InstitutionAadhaar,InformentNameEn,InformentNameMl,setTitle,isNoAadhaar,AadhaarNo,setDeclaration,InformentMobileNo,InformentEmail, });
 
 
 
@@ -259,7 +292,16 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                    AdrsStreetNameEn ={AdrsStreetNameEn} setAdrsStreetNameEn ={setAdrsStreetNameEn}
                    AdrsStreetNameMl ={AdrsStreetNameMl} setAdrsStreetNameMl ={setAdrsStreetNameMl}
                    AdrsVillage ={AdrsVillage}   setAdrsVillage ={setAdrsVillage}      />                  
-                  <InformentAddress />
+                  <InformentAddress
+                  InformentNameEn ={InformentNameEn} setInformentNameEn ={setInformentNameEn}
+                  InformentNameMl ={InformentNameMl} setInformentNameMl ={setInformentNameMl}
+                  setTitle ={setTitle}   setSelectedTitle ={setSelectedTitle} 
+                  AadhaarNo ={AadhaarNo} setAadhaarNo ={setAadhaarNo}
+                  setDeclaration ={setDeclaration} setSelectedDeclaration ={setSelectedDeclaration}
+                  InformentMobileNo ={InformentMobileNo}   setInformentMobileNo ={setInformentMobileNo} 
+                  InformentEmail ={InformentEmail} setInformentEmail ={setInformentEmail}
+                  isNoAadhaar ={isNoAadhaar} setIsNoAadhaar ={setIsNoAadhaar}                  
+                  />
                   {/* <PlaceOfDeathHome /> */}
                   
                  </div>               

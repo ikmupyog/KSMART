@@ -10,7 +10,7 @@ const SearchFields = ({register, control, reset, tenantId }) => {
     return <>
         <SearchField>
             <label>{t("CR_REG_NO")}</label>
-            <TextInput name="registrationNumbers" inputRef={register({})} />
+            <TextInput name="registrationNo" inputRef={register({})} />
         </SearchField>
         {/* <SearchField>
             <label>{t("TL_TRADE_OWNER_S_NUMBER_LABEL")}</label>
@@ -49,7 +49,7 @@ const SearchFields = ({register, control, reset, tenantId }) => {
             <p onClick={() => 
                 {
                 reset({ 
-                    registrationNumbers: "", 
+                    registrationNo: "", 
                     fromDate: "",
                     toDate: "",
                     offset: 0,

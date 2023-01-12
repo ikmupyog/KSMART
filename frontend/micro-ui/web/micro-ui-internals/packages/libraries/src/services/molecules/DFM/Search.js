@@ -74,51 +74,58 @@ export const DFMsearch = {
 // Name of Occupier,Duration of residence of occupier
 // Documents Uploaded details
     let employeeResponse = [];
-    const childdetails = {
-      title: "CR_BIRTH_CHILD_DETAILS",
+    const applicationInfo = {
+      title: "Applicant Details",
       asSectionHeader: true,
       values: [
-        { title: "File Code", value: response?.fileDetail?.fileCode || "NA" },
-        { title: "Applicant Name", value: response?.firstName +' '+response?.lastName || "NA" },
-        { title: "Service Name", value: response?.serviceDetails?.serviceId?.fileCode || "NA" },
-        { title: "Name of Owner", value: response?.applicantAddress?.ownerName|| "NA" },
-        { title: "Owner Mobile Number", value: response?.mobileNo || "NA" },
-        { title: "Building No", value: response?.applicantAddress?.buildingNo || "NA" },
-        { title: "Sub No", value: response?.applicantAddress?.subNo || "NA" },
-        { title: "House Name", value: response?.applicantAddress?.houseName || "NA" },
-        { title: "Street", value: response?.applicantAddress?.street || "NA" },
-        { title: "PostOffice", value: response?.applicantAddress?.postOfficeName || "NA" },
-        { title: "Pincode", value: response?.applicantAddress?.pincode || "NA" },
-        { title: "Documents Uploaded details", value: response?.fileDetail?.fileNumber || "NA" },
+        { title: "Aadhar No ", value: response?.aadhaarNo || "NA" },
+        { title: "First Name", value: response?.firstName || "NA" },
+        { title: "Last Name", value: response?.lastName || "NA" },
+        { title: "Mobile No", value: response?.mobileNo || "NA" },
+        { title: "Email", value: response?.email || "NA" },
+        // { title: "File Code", value: response?.fileDetail?.fileCode || "NA" },
+        // { title: "Applicant Name", value: response?.firstName +' '+response?.lastName || "NA" },
+        // { title: "Service Name", value: response?.serviceDetails?.serviceId?.fileCode || "NA" },
+        // { title: "Name of Owner", value: response?.applicantAddress?.ownerName|| "NA" },
+        // { title: "Owner Mobile Number", value: response?.mobileNo || "NA" },
+     
+      
+        // { title: "Street", value: response?.applicantAddress?.street || "NA" },
+     
+        // { title: "Documents Uploaded details", value: response?.fileDetail?.fileNumber || "NA" },
+       
       ],
     };
-    // const fatherInfo = {
-    //   title: "CR_BIRTH_FATHER_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_BIRTH_FATHERNAME_LABEL", value: response?.birthFather?.firstname_en + response?.birthFather?.middlename_en + response?.birthFather?.lastname_en },
-    //     { title: "CR_BIRTH_FATHER_AADHAR_LABEL", value: response?.birthFather?.aadharno || "NA" },
-    //     { title: "CR_BIRTH_FATHER_EMAIL_LABEL", value: response?.birthFather?.emailid || "NA" },
-    //     { title: "CR_BIRTH_FATHER_MOBILE_LABEL", value: response?.birthFather?.mobileno || "NA" },
-    //   ],
-    // };
-    // const motherInfo = {
-    //   title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_BIRTH_MOTHERNAME_LABEL", value: response?.birthMother?.firstname_en + " " + response?.birthMother?.middlename_en + " " + response?.birthMother?.lastname_en },
-    //     { title: "CR_BIRTH_MOTHER_AADHAR_LABEL", value: response?.birthMother?.aadharnoaadharno || "NA"},
-    //     { title: "CR_BIRTH_MOTHER_EMAIL_LABEL", value: response?.birthMother?.emailid || "NA" },
-    //     { title: "CR_BIRTH_MOTHER_MOBILE_LABEL", value: response?.birthMother?.mobileno || "NA" },
-    //   ],
-    // };
-    // const addressInfo = {
-    //   title: "CR_ADDRESS_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_BIRTH_PERM_HO_NO_LABEL", value: response?.birthPermanent?.houseno || "NA"},
-    //     { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.birthPermanent?.housename_en || "NA" },
-    //     { title: "CR_BIRTH_PERM_HO_LOCALITY_LABEL", value: response?.birthPermanent?.locality_en || "NA" },
-    //     { title: "CR_BIRTH_PERM_HO_CITY_LABEL", value: response?.birthPermanent?.city_en || "NA" },
-    //   ],
-    // };
+    const addressInfo = {
+      title: "Address Details",
+      values: [
+         { title: "Building No", value: response?.applicantAddress?.buildingNo || "NA" },
+         { title: "Sub No", value: response?.applicantAddress?.subNo || "NA" },
+         { title: "House Name", value: response?.applicantAddress?.houseName || "NA" },
+         { title: "Local place ", value: response?.applicantAddress?.localPlace || "NA" },
+         { title: "Main place ", value: response?.applicantAddress?.mainPlace || "NA" },
+         { title: "PostOffice", value: response?.applicantAddress?.postOfficeName || "NA" },
+        { title: "Taluk", value: response?.applicantAddress?.taluk || "NA" },
+        { title: "Village", value: response?.applicantAddress?.village || "NA" },
+        { title: "Pincode", value: response?.applicantAddress?.pincode || "NA" },
+      ],
+    };
+    const certificateInfo = {
+      title: "Certificate Details",
+      values: [
+        { title: "Name of Occupier", value: response?.serviceDetails?.NameOccupier  },
+        { title: "Name of owner", value: response?.serviceDetails?.OwnerName || "NA"},
+        { title: "Owner Mobile No", value: response?.serviceDetails?.OwnerMobileNo || "NA" },
+        { title: "Residence Duration", value: response?.serviceDetails?.ResidenceDuration || "NA" },
+        { title: "Details", value: response?.serviceDetails?.ServiceDetailsTxt || "NA" },
+      ],
+    };
+    const attachmentsInfo = {
+      title: "Attachments",
+      values: [
+        { title: "List all attachments (While clicking can view from AWS)", value: "NA"},
+      ],
+    };
     // const statisticalInfo = {
     //   title: "CR_STATSTICAL_INFORMATION_HEADER",
     //   values: [
@@ -299,10 +306,10 @@ export const DFMsearch = {
     //   response && employeeResponse.push(details);
     // }
 
-     employeeResponse.push(childdetails);
-    //  employeeResponse.push(fatherInfo);
-    //  employeeResponse.push(motherInfo);
-    //  employeeResponse.push(addressInfo);
+     employeeResponse.push(applicationInfo);
+     employeeResponse.push(addressInfo);
+     employeeResponse.push(certificateInfo);
+     employeeResponse.push(attachmentsInfo);
     //  employeeResponse.push(statisticalInfo);
     // response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
     // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);

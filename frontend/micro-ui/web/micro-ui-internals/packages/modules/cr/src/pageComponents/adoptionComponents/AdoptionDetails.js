@@ -61,17 +61,18 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
     
    
     const goNext = () => {
-        sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn);
-        sessionStorage.setItem("FatherMiddleNameEn", FatherMiddleNameEn);
-        sessionStorage.setItem("FatherLastNameEn", FatherLastNameEn);
-        sessionStorage.setItem("FatherFirstNameMl", FatherFirstNameMl);
-        sessionStorage.setItem("FatherMiddleNameMl", FatherMiddleNameMl);
-        sessionStorage.setItem("FatherLastNameMl", FatherLastNameMl);
-        sessionStorage.setItem("AdoptionDeedNo", AdoptionDeedNo);          
-        sessionStorage.setItem("AdoptionIssuingAthority", AdoptionIssuingAthority);        
-        sessionStorage.setItem("AdoptionOrderDate", AdoptionOrderDate);
-        sessionStorage.setItem("AdoptionAgencyName", AdoptionAgencyName);
-        sessionStorage.setItem("AdoptionAgencyAddress", AdoptionAgencyAddress);        
+        
+        sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn ? FatherFirstNameEn : null);
+        sessionStorage.setItem("FatherMiddleNameEn", FatherMiddleNameEn ? FatherMiddleNameEn : null);
+        sessionStorage.setItem("FatherLastNameEn", FatherLastNameEn ? FatherLastNameEn : null);
+        sessionStorage.setItem("FatherFirstNameMl", FatherFirstNameMl ? FatherFirstNameMl : null);
+        sessionStorage.setItem("FatherMiddleNameMl", FatherMiddleNameMl ? FatherMiddleNameMl : null);
+        sessionStorage.setItem("FatherLastNameMl", FatherLastNameMl ? FatherLastNameMl : null);
+        sessionStorage.setItem("AdoptionDeedNo", AdoptionDeedNo ? AdoptionDeedNo : null);          
+        sessionStorage.setItem("AdoptionIssuingAthority", AdoptionIssuingAthority ? AdoptionIssuingAthority : null);        
+        sessionStorage.setItem("AdoptionOrderDate", AdoptionOrderDate ? AdoptionOrderDate : null);
+        sessionStorage.setItem("AdoptionAgencyName", AdoptionAgencyName ? AdoptionAgencyName : null);
+        sessionStorage.setItem("AdoptionAgencyAddress", AdoptionAgencyAddress ? AdoptionAgencyAddress : null);        
         
         onSelect(config.key, {
             FatherFirstNameEn, FatherMiddleNameEn, FatherLastNameEn,
