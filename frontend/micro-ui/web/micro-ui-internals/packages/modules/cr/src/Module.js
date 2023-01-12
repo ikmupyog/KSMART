@@ -22,6 +22,9 @@ import AddressSameAsAbove  from "../src/pageComponents/birthComponents/AddressSa
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
+import InformantDetails from "../src/pageComponents/birthComponents/InformantDetails";
+import InformantAddress from "../src/pageComponents/birthComponents/InformantAddress";
+
 
 
 
@@ -144,7 +147,8 @@ const componentsToRegister = {
   MultipleBirth,
   BornOutsideIndia,
   InstitutionAddress,
-
+  InformantDetails,
+  InformantAddress,
 
   
  //////////////////
