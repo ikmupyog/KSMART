@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
-import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
+import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-router-dom";
+import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
@@ -15,7 +15,7 @@ import SearchCorrection from "../../employee/SearchCorrection";
 const DeathCrFlowApp = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
-  const match = useRouteMatch();  
+  const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
@@ -33,7 +33,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
-    let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
+    let { isCreateEnabled: enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
     // if (typeof nextStep == "object" && nextStep != null) {
     //   if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
     //   {
@@ -43,7 +43,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
     //     nextStep[sessionStorage.getItem("isAccessories")] &&
     //     (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
     //       nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
+    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" ||
     //       nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
     //   ) {
     //     nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
@@ -69,7 +69,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
     //   }
     // }
     // if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
-    // { 
+    // {
     //   nextStep = "property-details";
     // }
     // let redirectWithHistory = history.push;
@@ -102,12 +102,9 @@ const DeathCrFlowApp = ({ parentUrl }) => {
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
-    if(key === "isSkip" && data === true)
-    {
+    if (key === "isSkip" && data === true) {
       goNext(skipStep, index, isAddMultiple, key, true);
-    }
-    else
-    {
+    } else {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
@@ -115,7 +112,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
   const createProperty = async () => {
     history.push(`${match.path}/acknowledgement`);
   };
-  
+
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_BIRTH");
@@ -124,44 +121,42 @@ const DeathCrFlowApp = ({ parentUrl }) => {
   const handleMultiple = () => {};
   const DeathCheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
   const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
-  const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
+  const SearchCorrection = Digit?.ComponentRegistryService?.getComponent("CRSearchdeathcorrection");
 
   return (
-    
     <React.Fragment>
       <Switch>
-       {config.map((routeObj, index) => {
-        const { component, texts, inputs, key, isSkipEnabled } = routeObj;
-        const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
-        return (
-          <Route path={`${match.path}/${routeObj.route}`} key={index}>
-            <Component
-              config={{ texts, inputs, key, isSkipEnabled }}
-              onSelect={handleSelect}
-              onSkip={handleSkip}
-              t={t}
-              formData={params}
-              onAdd={handleMultiple}
-              userType="employee"
-            />
-           </Route>  
-          
-        );
-      })}
-      <Route path={`${match.path}/check`}>
-        <DeathCheckPage onSubmit={createProperty} value={params} />
-      </Route>
-      <Route path={`${match.path}/acknowledgement`}>
-        <DeathAcknowledgement data={params} onSuccess={onSuccess} />
-      </Route>
-      <Route path={`${path}`} exact>
-              <DeathCrFlow  path={path}/>
-             </Route>
-             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
-             {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
-             <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
+        {config.map((routeObj, index) => {
+          const { component, texts, inputs, key, isSkipEnabled } = routeObj;
+          const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
+          return (
+            <Route path={`${match.path}/${routeObj.route}`} key={index}>
+              <Component
+                config={{ texts, inputs, key, isSkipEnabled }}
+                onSelect={handleSelect}
+                onSkip={handleSkip}
+                t={t}
+                formData={params}
+                onAdd={handleMultiple}
+                userType="employee"
+              />
+            </Route>
+          );
+        })}
+        <Route path={`${match.path}/check`}>
+          <DeathCheckPage onSubmit={createProperty} value={params} />
+        </Route>
+        <Route path={`${match.path}/acknowledgement`}>
+          <DeathAcknowledgement data={params} onSuccess={onSuccess} />
+        </Route>
+        <Route path={`${path}`} exact>
+          <DeathCrFlow path={path} />
+        </Route>
+        <PrivateRoute parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
+        {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
+        <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
 
-             {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
+        {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
       </Switch>
     </React.Fragment>
   );
