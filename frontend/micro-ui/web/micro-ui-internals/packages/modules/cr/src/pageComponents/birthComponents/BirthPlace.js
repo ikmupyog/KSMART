@@ -10,6 +10,7 @@ import OtherCountry from "../../pageComponents/birthComponents/OtherCountry";
 import InstitutionAddress from "../../pageComponents/birthComponents/InstitutionAddress";
 import PlaceofBirthHome from "../../pageComponents/birthComponents/PlaceofBirthHome";
 import InformantDetails from "./InformantDetails";
+import InformantAddress from "./InformantAddress";
 
 const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -71,10 +72,10 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [AdrsResNoMl, setAdrsResNoMl] = useState(formData?.BirthPlace?.AdrsResNoMl);
 
 
-  const [InfomantFirstNameEn, setInfomantFirstNameEn] = useState(formData?.InfomantInfoDetails?.InfomantFirstNameEn);
-  const [InfomantAadhar, setInfomantAadhar] = useState(formData?.InfomantInfoDetails?.InfomantAadhar);
-  const [InfomantEmail, setInfomantEmail] = useState(formData?.InfomantInfoDetails?.InfomantEmail);
-  const [InfomantMobile, setInfomantMobile] = useState(formData?.InfomantInfoDetails?.InfomantMobile);
+  const [InfomantFirstNameEn, setInfomantFirstNameEn] = useState(formData?.BirthPlace?.InfomantFirstNameEn);
+  const [InfomantAadhar, setInfomantAadhar] = useState(formData?.BirthPlace?.InfomantAadhar);
+  const [InfomantEmail, setInfomantEmail] = useState(formData?.BirthPlace?.InfomantEmail);
+  const [InfomantMobile, setInfomantMobile] = useState(formData?.BirthPlace?.InfomantMobile);
 
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
