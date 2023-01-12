@@ -13,7 +13,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
   const { t } = useTranslation();
   let validation = {};
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
-  console.log(hospital);
+ 
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
   // const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.HospitalDetails?.SignedOfficerDesignation);

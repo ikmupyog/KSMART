@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 
 const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,setAdrsCountry, AdrsStateName,setAdrsStateName,AdrsDistrict,setAdrsDistrict,
   AdrsLBTypeName, setAdrsLBTypeName, AdrsLBName, setAdrsLBName, AdrsTaluk,setAdrsTaluk, AdrsPostOffice, setAdrsPostOffice,AdrsPincode, setAdrsPincode,
-  AdrsHouseNameEn, setAdrsHouseNameEn,AdrsHouseNameMl, setAdrsHouseNameMl,AdrsBuldingNo, setAdrsBuldingNo,AdrsResNo, setAdrsResNo,AdrsDoorNo, setAdrsDoorNo,
-  AdrsMainPlaceEn, setAdrsMainPlaceEn,AdrsMainPlaceMl, setAdrsMainPlaceMl,AdrsLocalityNameEn, setAdrsLocalityNameEn,AdrsLocalityNameMl, setAdrsLocalityNameML, setAdrsCityEn, setAdrsCityMl,
+  AdrsHouseNameEn, setAdrsHouseNameEn,AdrsHouseNameMl, setAdrsHouseNameMl,AdrsResNo, setAdrsResNo,AdrsDoorNo, setAdrsDoorNo,
+  AdrsMainPlaceEn, setAdrsMainPlaceEn,AdrsMainPlaceMl, setAdrsMainPlaceMl,AdrsLocalityNameEn, setAdrsLocalityNameEn,AdrsLocalityNameMl, setAdrsLocalityNameMl,
   AdrsStreetNameEn, setAdrsStreetNameEn ,AdrsStreetNameMl, setAdrsStreetNameMl,AdrsVillage, setAdrsVillage}) => {
 
   const stateId = Digit.ULBService.getStateId();
@@ -158,9 +158,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
   function setSelectAdrsPincode(e) {
     setAdrsPincode(e.target.value);
   }
-  function setSelectAdrsBuldingNo(e) {
-    setAdrsBuldingNo(e.target.value);
-  }
+  // function setSelectAdrsBuldingNo(e) {
+  //   setAdrsBuldingNo(e.target.value);
+  // }
   function setSelectAdrsResNo(e) {
     setAdrsResNo(e.target.value);
   }
@@ -189,13 +189,13 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
     setAdrsLocalityNameMl(e.target.value);
 
     }
-    function setSelectAdrsCityEn(e) {
-      setAdrsCityEn(e.target.value);
-    }
-     function setSelectAdrsCityMl(e) {
-      setAdrsCityMl(e.target.value);
+    // function setSelectAdrsCityEn(e) {
+    //   setAdrsCityEn(e.target.value);
+    // }
+    //  function setSelectAdrsCityMl(e) {
+    //   setAdrsCityMl(e.target.value);
   
-    }    
+    // }    
 
      function setSelectAdrsStreetNameEn(e) {
     setAdrsStreetNameEn(e.target.value);
@@ -219,10 +219,10 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
     }
   }, [lbs, isInitialRender]);
   const goNext = () => {
-    // sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
-    // sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
-    // sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName.code);
-    // sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo);
+    // sessionStorage.setItem("AdrsCountry", AdrsCountry ?AdrsCountry.code : null);
+    // sessionStorage.setItem("AdrsStateName", AdrsStateName? AdrsStateName.code : null);
+    // sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName? AdrsLBTypeName.code : null);
+    // sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo); 
     // sessionStorage.setItem("AdrsResNo", AdrsResNo);
     // sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo);
     // sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn);
@@ -235,13 +235,12 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
     // sessionStorage.setItem("AdrsCityMl", AdrsCityMl);
     // sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn);
     // sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl);
-    // sessionStorage.setItem("AdrsVillage", AdrsVillage.code);
-    // sessionStorage.setItem("AdrsLBName", null);
-    // sessionStorage.setItem("AdrsDistrict", AdrsDistrict.code);
-    // sessionStorage.setItem("AdrsTaluk", AdrsTaluk.code);
-    // sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice.code);
-    // sessionStorage.setItem("AdrsPincode", AdrsPincode.code);
-    // sessionStorage.setItem(" WardNo",  WardNo);
+    // sessionStorage.setItem("AdrsVillage", AdrsVillage ? AdrsVillage.code : null);
+    // sessionStorage.setItem("AdrsLBName",AdrsLBName ? AdrsLBName.code: null);
+    // sessionStorage.setItem("AdrsDistrict", AdrsDistrict ? AdrsDistrict.code : null);
+    // sessionStorage.setItem("AdrsTaluk", AdrsTaluk ? AdrsTaluk.code : null);
+    // sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice ?AdrsPostOffice.code : null);
+    // sessionStorage.setItem("AdrsPincode", AdrsPincode);
    
     // onSelect(config.key, {
     //   AdrsBuldingNo,
@@ -380,22 +379,6 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
             </div>
             <div className="col-md-4">
               <CardLabel>
-                {t("CS_COMMON_VILLAGE")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={true}
-                option={cmbVillage}
-                selected={AdrsVillage}
-                select={setSelectAdrsVillage}
-                disabled={isEdit}
-                placeholder={`${t("CS_COMMON_VILLAGE")}`}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
                 {t("CS_COMMON_TALUK")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
@@ -410,6 +393,23 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
                 placeholder={`${t("CS_COMMON_TALUK")}`}
               />
             </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CS_COMMON_VILLAGE")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={true}
+                option={cmbVillage}
+                selected={AdrsVillage}
+                select={setSelectAdrsVillage}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_VILLAGE")}`}
+              />
+            </div>
+            
           </div>
         </div>
         <div className="row">
@@ -626,7 +626,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
  </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
               <TextInput
                 t={t}
@@ -640,7 +640,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
               />
-            </div>
+            </div> */}
             <div className="col-md-4">
               <CardLabel>
                 {t("CR_DOOR_NO")}
