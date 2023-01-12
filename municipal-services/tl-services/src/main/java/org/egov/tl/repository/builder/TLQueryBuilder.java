@@ -120,7 +120,7 @@ public class TLQueryBuilder {
             +
             " tlstructplace.vehicleno as stallno, tlstructplace.active as tlstructplace_active, tltax.id as tltax_id, tltax.active as tltax_active, "
             +
-            " tltax.service, tltax.fromyear, tltax.fromperiod, tltax.toyear, tltax.toperiod, tltax.headcode, tltax.amount "
+            " tltax.service, tltax.fromyear, tltax.fromperiod, tltax.toyear, tltax.toperiod, tltax.headcode, tltax.amount,firsthalfcur,secondhalfcur "
             +
             " FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
