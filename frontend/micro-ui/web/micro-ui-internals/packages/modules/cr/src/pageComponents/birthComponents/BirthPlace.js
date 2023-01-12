@@ -71,6 +71,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [AdrsResNoMl, setAdrsResNoMl] = useState(formData?.BirthPlace?.AdrsResNoMl);
 
 
+  const [InfomantFirstNameEn, setInfomantFirstNameEn] = useState(formData?.InfomantInfoDetails?.InfomantFirstNameEn);
+  const [InfomantAadhar, setInfomantAadhar] = useState(formData?.InfomantInfoDetails?.InfomantAadhar);
+  const [InfomantEmail, setInfomantEmail] = useState(formData?.InfomantInfoDetails?.InfomantEmail);
+  const [InfomantMobile, setInfomantMobile] = useState(formData?.InfomantInfoDetails?.InfomantMobile);
+
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -165,8 +170,19 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             AdrsStreetNameMl ={AdrsStreetNameMl}
             AdrsHouseNameMl ={AdrsHouseNameMl}
           />
+          
         }
+        if (naturetype === "HOME") {
+          <InformantDetails
 
+          InfomantFirstNameEn={InfomantFirstNameEn}
+          InfomantAadhar={InfomantAadhar}
+          InfomantEmail={InfomantEmail}
+          InfomantMobile={InfomantMobile}
+            
+          />
+          
+        }
 
       }
     }
@@ -228,13 +244,18 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("AdrsInfomntName", AdrsInfomntName ? AdrsInfomntName : null);
     sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl ? AdrsMainPlaceMl : null);
 
+    sessionStorage.setItem("InfomantFirstNameEn", InfomantFirstNameEn ? InfomantFirstNameEn : null);          
+    sessionStorage.setItem("InfomantAadhar", InfomantAadhar ? InfomantAadhar : null );       
+    sessionStorage.setItem("InfomantEmail", InfomantEmail ? InfomantEmail : null );
+    sessionStorage.setItem("InfomantMobile", InfomantMobile ? InfomantMobile : null );  
+
     onSelect(config.key, {
       BirthPlace, HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo,
       setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,
       DriverName, DriverMobileNo, DriverAadhar, VehicleType, VehicleRegistrationNo, VehicleFromEn, VehicleToEn, VehiclePlaceFirstHalt, setPublicPlaceType,
       AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsBuldingNo, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,
       AdrsMainPlaceEn, AdrsLocalityNameEn, AdrsStreetNameEn, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsInfomntName, AdrsMainPlaceMl,
-      AdrsLocalityNameMl,AdrsStreetNameMl, AdrsResNoMl,
+      AdrsLocalityNameMl,AdrsStreetNameMl, AdrsResNoMl,InfomantFirstNameEn, InfomantAadhar,InfomantEmail,InfomantMobile,
     });
   }
   return (
@@ -343,7 +364,15 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               setAdrsHouseNameMl={setAdrsHouseNameMl} AdrsHouseNameMl={AdrsHouseNameMl}
 
             />
-            <InformantDetails/>
+            <InformantDetails
+            
+            setInfomantFirstNameEn={setInfomantFirstNameEn} InfomantFirstNameEn={InfomantFirstNameEn}
+            setInfomantAadhar={setInfomantAadhar} InfomantAadhar={InfomantAadhar}
+            setInfomantEmail={setInfomantEmail} InfomantEmail={InfomantEmail}
+            setInfomantMobile={setInfomantMobile} InfomantMobile={InfomantMobile}
+
+            
+            />
 
             
           </div>

@@ -645,7 +645,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
               />
             </div>
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               <CardLabel>
                 {t("CR_INFORMANT_NAME")}
                 <span className="mandatorycss">*</span>
@@ -662,7 +662,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
-            </div>
+            </div> */}
           </div>
         </div>
         
