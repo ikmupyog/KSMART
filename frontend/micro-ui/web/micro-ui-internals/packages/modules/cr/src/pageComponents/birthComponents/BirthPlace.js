@@ -11,6 +11,7 @@ import InstitutionAddress from "../../pageComponents/birthComponents/Institution
 import PlaceofBirthHome from "../../pageComponents/birthComponents/PlaceofBirthHome";
 import InformantDetails from "./InformantDetails";
 import InformantAddress from "./InformantAddress";
+// import VehicleInformtAddress from "./VehicleInformtAddress";
 
 const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -32,15 +33,27 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.BirthPlace?.InstitutionMobilNo);
   const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.BirthPlace?.InstitutionAadhaar);
 
-  const [DriverName, setDriverName] = useState(formData?.BirthPlace?.DriverName);
-  const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthPlace?.DriverMobileNo);
-  const [DriverAadhar, setDriverAadhar] = useState(formData?.BirthPlace?.DriverAadhar);
-  const [VehicleType, setVehicleType] = useState(formData?.BirthPlace?.VehicleType);
+  // const [DriverName, setDriverName] = useState(formData?.BirthPlace?.DriverName);
+  // const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthPlace?.DriverMobileNo);
+  // const [DriverAadhar, setDriverAadhar] = useState(formData?.BirthPlace?.DriverAadhar);
+  // const [VehicleType, setVehicleType] = useState(formData?.BirthPlace?.VehicleType);
+  // const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthPlace?.VehicleRegistrationNo);
+  // const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthPlace?.setVehicleFromEn);
+  // const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn);
+  // const [VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt] = useState(formData?.BirthPlace?.VehiclePlaceFirstHalt);
+
   const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthPlace?.VehicleRegistrationNo);
   const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthPlace?.setVehicleFromEn);
   const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn);
-  const [VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt] = useState(formData?.BirthPlace?.VehiclePlaceFirstHalt);
-  const [WardNo, setWardNo] = useState(formData.BirthPlace?.wardno);
+  const [VehicleHaltPlace, setSelectVehicleHaltPlace] = useState(formData?.BirthPlace?.VehicleHaltPlace);
+  const [VehicleFromMl, setVehicleFromMl] = useState(formData?.BirthPlace?.VehicleFromMl);
+  const [VehicleToMl, setVehicleToMl] = useState(formData?.BirthPlace?.VehicleToMl);
+  const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.BirthPlace?.VehicleOtherDetailsEn);
+  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.BirthPlace?.VehicleOtherDetailsMl); 
+  const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.BirthPlace?.setAdmittedHospitalEn);
+  const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.BirthPlace?.setAdmittedHospitalMl);
+  
+  // const [WardNo, setWardNo] = useState(formData.BirthPlace?.wardno);
 
   const [setPublicPlaceType, setSelectedPublicPlaceType] = useState(formData?.BirthPlace?.setPublicPlaceType);
   const [AdrsInfontName, setAdrsInfontName] = useState(formData?.BirthPlace?.AdrsInfontName);
@@ -57,7 +70,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.BirthPlace?.AdrsPostOffice);
   const [AdrsPincode, setAdrsPincode] = useState(formData?.BirthPlace?.AdrsPincode);
   const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.BirthPlace?.AdrsHouseNameEn);
-  const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.BirthPlace?.AdrsBuldingNo);
+  // const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.BirthPlace?.AdrsBuldingNo);
   const [AdrsResNoEn, setAdrsResNoEn] = useState(formData?.BirthPlace?.AdrsResNoEn);
   const [AdrsInfomntName, setAdrsInfomntName] = useState(formData?.BirthPlace?.AdrsInfomntName);
   const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.BirthPlace?.AdrsDoorNo);
@@ -76,6 +89,46 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [InfomantAadhar, setInfomantAadhar] = useState(formData?.BirthPlace?.InfomantAadhar);
   const [InfomantEmail, setInfomantEmail] = useState(formData?.BirthPlace?.InfomantEmail);
   const [InfomantMobile, setInfomantMobile] = useState(formData?.BirthPlace?.InfomantMobile);
+
+  const [lbss, setsLbs] = useState(0);
+  const [InformantAdrsCountry, setInformantAdrsCountry] = useState(formData?.BirthPlace?.InformantAdrsCountry);
+  const [InformantAdrsStateName, setInformantAdrsStateName] = useState(formData?.BirthPlace?.InformantAdrsStateName);
+  const [InformantAdrsDistrict, setInformantAdrsDistrict] = useState(formData?.BirthPlace?.InformantAdrsDistrict);
+  const [InformantAdrsLBTypeName, setInformantAdrsLBTypeName] = useState(formData?.BirthPlace?.InformantAdrsLBTypeName);
+  const [InformantAdrsLBName, setInformantAdrsLBName] = useState(formData?.BirthPlace?.InformantAdrsLBName);
+  const [InformantAdrsTaluk, setInformantAdrsTaluk] = useState(formData?.BirthPlace?.InformantAdrsTaluk);
+  const [InformantAdrsPostOffice, setInformantAdrsPostOffice] = useState(formData?.BirthPlace?.InformantAdrsPostOffice);
+  const [InformantAdrsPincode, setInformantAdrsPincode] = useState(formData?.BirthPlace?.InformantAdrsPincode);
+  const [InformantAdrsHouseNameEn, setInformantAdrsHouseNameEn] = useState(formData?.BirthPlace?.InformantAdrsHouseNameEn);  
+  // const [InformantAdrsBuldingNo, setInformantAdrsBuldingNo] = useState(formData?.BirthPlace?.InformantAdrsBuldingNo);
+  const [InformantAdrsResNo, setInformantAdrsResNo] = useState(formData?.BirthPlace?.InformantAdrsResNo);  
+  const [InformantAdrsDoorNo, setInformantAdrsDoorNo] = useState(formData?.BirthPlace?.InformantAdrsDoorNo);
+  const [InformantAdrsMainPlaceEn, setInformantAdrsMainPlaceEn] = useState(formData?.BirthPlace?.InformantAdrsMainPlaceEn); 
+  const [InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn] = useState(formData?.BirthPlace?.InformantAdrsLocalityNameEn);  
+  const [InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn] = useState(formData?.BirthPlace?.InformantAdrsStreetNameEn); 
+  const [InformantAdrsVillage, setInformantAdrsVillage] = useState(formData?.BirthPlace?.InformantAdrsVillage);
+  // const [InfntWardNo, setInfntWardNo] = useState(formData.BirthPlace?.InfntWardNo);
+
+
+  // const [lbsss, setssLbs] = useState(0);
+  // const [VehicleInfmntAdrsCountry, setVehicleInfmntAdrsCountry] = useState(formData?.BirthPlace?.VehicleInfmntAdrsCountry);
+  // const [VehicleInfmntAdrsStateName, setVehicleInfmntAdrsStateName] = useState(formData?.BirthPlace?.VehicleInfmntAdrsStateName);
+  // const [VehicleInfmntAdrsDistrict, setVehicleInfmntAdrsDistrict] = useState(formData?.BirthPlace?.VehicleInfmntAdrsDistrict);
+  // const [VehicleInfmntAdrsLBTypeName, setVehicleInfmntAdrsLBTypeName] = useState(formData?.BirthPlace?.VehicleInfmntAdrsLBTypeName);
+  // const [VehicleInfmntAdrsLBName, setVehicleInfmntAdrsLBName] = useState(formData?.BirthPlace?.VehicleInfmntAdrsLBName);
+  // const [VehicleInfmntAdrsTaluk, setVehicleInfmntAdrsTaluk] = useState(formData?.BirthPlace?.VehicleInfmntAdrsTaluk);
+  // const [VehicleInfmntAdrsPostOffice, setVehicleInfmntAdrsPostOffice] = useState(formData?.BirthPlace?.VehicleInfmntAdrsPostOffice);
+  // const [VehicleInfmntAdrsPincode, setVehicleInfmntAdrsPincode] = useState(formData?.BirthPlace?.VehicleInfmntAdrsPincode);
+  // const [VehicleInfmntAdrsHouseNameEn, setVehicleInfmntAdrsHouseNameEn] = useState(formData?.BirthPlace?.VehicleInfmntAdrsHouseNameEn);  
+  // // const [VehicleInfmntAdrsBuldingNo, setVehicleInfmntAdrsBuldingNo] = useState(formData?.BirthPlace?.VehicleInfmntAdrsBuldingNo);
+  // const [VehicleInfmntAdrsResNo, setVehicleInfmntAdrsResNo] = useState(formData?.BirthPlace?.VehicleInfmntAdrsResNo);  
+  // const [VehicleInfmntAdrsDoorNo, setVehicleInfmntAdrsDoorNo] = useState(formData?.BirthPlace?.VehicleInfmntAdrsDoorNo);
+  // const [VehicleInfmntAdrsMainPlaceEn, setVehicleInfmntAdrsMainPlaceEn] = useState(formData?.BirthPlace?.VehicleInfmntAdrsMainPlaceEn); 
+  // const [VehicleInfmntAdrsLocalityNameEn, setVehicleInfmntAdrsLocalityNameEn] = useState(formData?.BirthPlace?.VehicleInfmntAdrsLocalityNameEn);  
+  // const [VehicleInfmntAdrsStreetNameEn, setVehicleInfmntAdrsStreetNameEn] = useState(formData?.BirthPlace?.VehicleInfmntAdrsStreetNameEn); 
+  // const [VehicleInfmntAdrsVillage, setVehicleInfmntAdrsVillage] = useState(formData?.BirthPlace?.VehicleInfmntAdrsVillage);
+  // // const [InfntWardNo, setInfntWardNo] = useState(formData.BirthPlace?.InfntWardNo);
+
 
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
@@ -125,16 +178,39 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         }
         if (naturetype === "VEHICLE") {
           <BirthVehicle
-            DriverName={DriverName}
-            DriverMobileNo={DriverMobileNo}
-            DriverAadhar={DriverAadhar}
-            VehicleType={VehicleType}
-            VehicleRegistrationNo={VehicleRegistrationNo}
-            VehicleFromEn={VehicleFromEn}
-            VehicleToEn={VehicleToEn}
-            VehiclePlaceFirstHalt={VehiclePlaceFirstHalt}
+          VehicleRegistrationNo={VehicleRegistrationNo}
+          VehicleFromEn={VehicleFromEn}
+          VehicleToEn={VehicleToEn}
+          VehicleFromMl={VehicleFromMl}
+          VehicleHaltPlace={VehicleHaltPlace}           
+          VehicleToMl={VehicleToMl}
+          VehicleOtherDetailsEn={VehicleOtherDetailsEn}
+          VehicleOtherDetailsMl={VehicleOtherDetailsMl}           
+          setAdmittedHospitalEn={setAdmittedHospitalEn}
+          setAdmittedHospitalMl={setAdmittedHospitalMl}
           />
         }
+        // if (naturetype === "VEHICLE") {
+        //   <VehicleInformtAddress
+        //   VehicleInfmntAdrsCountry={VehicleInfmntAdrsCountry}
+        //   VehicleInfmntAdrsStateName={VehicleInfmntAdrsStateName}
+        //   VehicleInfmntAdrsDistrict={VehicleInfmntAdrsDistrict}
+        //   VehicleInfmntAdrsLBTypeName={VehicleInfmntAdrsLBTypeName}
+        //   VehicleInfmntAdrsLBName={VehicleInfmntAdrsLBName}
+        //   VehicleInfmntAdrsTaluk={VehicleInfmntAdrsTaluk}
+        //   VehicleInfmntAdrsPostOffice={VehicleInfmntAdrsPostOffice}
+        //   VehicleInfmntAdrsPincode={VehicleInfmntAdrsPincode}
+        //   VehicleInfmntAdrsHouseNameEn={VehicleInfmntAdrsHouseNameEn}
+        //   // VehicleInfmntAdrsBuldingNo={VehicleInfmntAdrsBuldingNo}
+        //   VehicleInfmntAdrsResNo={VehicleInfmntAdrsResNo}             
+        //   VehicleInfmntAdrsDoorNo={VehicleInfmntAdrsDoorNo}
+        //   VehicleInfmntAdrsMainPlaceEn={VehicleInfmntAdrsMainPlaceEn}
+        //   VehicleInfmntAdrsLocalityNameEn={VehicleInfmntAdrsLocalityNameEn}
+        //   VehicleInfmntAdrsStreetNameEn={VehicleInfmntAdrsStreetNameEn}
+        //   VehicleInfmntAdrsVillage={VehicleInfmntAdrsVillage} 
+        //   />
+        // }
+
         if (naturetype === "PUBLIC_PLACES") {
           <PublicPlace
             setPublicPlaceType={setPublicPlaceType}
@@ -157,7 +233,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             AdrsPostOffice={AdrsPostOffice}
             AdrsPincode={AdrsPincode}
             AdrsHouseNameEn={AdrsHouseNameEn}
-            AdrsBuldingNo={AdrsBuldingNo}
+            // AdrsBuldingNo={AdrsBuldingNo}
             AdrsResNoEn={AdrsResNoEn}
             AdrsResNoMl={AdrsResNoMl}
             AdrsInfomntName={AdrsInfomntName}
@@ -173,7 +249,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           />
           
         }
-        if (naturetype === "HOME") {
+        if (naturetype === "HOME  || VEHICLE") {
           <InformantDetails
 
           InfomantFirstNameEn={InfomantFirstNameEn}
@@ -181,6 +257,30 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           InfomantEmail={InfomantEmail}
           InfomantMobile={InfomantMobile}
             
+          />
+          
+        }
+
+        if (naturetype === "HOME || VEHICLE") {
+          <InformantAddress
+
+          InformantAdrsCountry={InformantAdrsCountry}
+          InformantAdrsStateName={InformantAdrsStateName}
+          InformantAdrsDistrict={InformantAdrsDistrict}
+          InformantAdrsLBTypeName={InformantAdrsLBTypeName}
+          InformantAdrsLBName={InformantAdrsLBName}
+          InformantAdrsTaluk={InformantAdrsTaluk}
+          InformantAdrsPostOffice={InformantAdrsPostOffice}
+          InformantAdrsPincode={InformantAdrsPincode}
+          InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
+          // InformantAdrsBuldingNo={InformantAdrsBuldingNo}
+          InformantAdrsResNo={InformantAdrsResNo}             
+          InformantAdrsDoorNo={InformantAdrsDoorNo}
+          InformantAdrsMainPlaceEn={InformantAdrsMainPlaceEn}
+          InformantAdrsLocalityNameEn={InformantAdrsLocalityNameEn}
+          InformantAdrsStreetNameEn={InformantAdrsStreetNameEn}
+          InformantAdrsVillage={InformantAdrsVillage}   
+       
           />
           
         }
@@ -205,15 +305,28 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo ? InstitutionMobilNo.InstitutionMobilNo : null);
     sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar ? InstitutionAadhaar.InstitutionAadhaar : null);
 
-
-    sessionStorage.setItem("DriverName", DriverName ? DriverName : null);
-    sessionStorage.setItem("DriverMobileNo", DriverMobileNo ? DriverMobileNo : null);
-    sessionStorage.setItem("DriverAadhar", DriverAadhar ? DriverAadhar : null);
-    sessionStorage.setItem("VehicleType", VehicleType ? VehicleType : null);
     sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null);
     sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);
     sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
-    sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt ? VehiclePlaceFirstHalt : null);
+    sessionStorage.setItem("VehicleFromMl", VehicleFromMl ? VehicleFromMl : null);
+    sessionStorage.setItem("VehicleHaltPlace", VehicleHaltPlace ? VehicleHaltPlace : null);    
+    sessionStorage.setItem("VehicleToMl", VehicleToMl ? VehicleToMl : null);
+    // sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard ? setDeathVehicleWard.code : null);
+    sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn ? setAdmittedHospitalEn.hospitalName  : null);
+    sessionStorage.setItem("setAdmittedHospitalMl", setAdmittedHospitalMl ? setAdmittedHospitalMl.hospitalName : null);
+    sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn ? VehicleOtherDetailsEn : null);
+    sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsEn ? VehicleOtherDetailsEn : null);
+    // sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.hospitalName : null);
+
+
+    // sessionStorage.setItem("DriverName", DriverName ? DriverName : null);
+    // sessionStorage.setItem("DriverMobileNo", DriverMobileNo ? DriverMobileNo : null);
+    // sessionStorage.setItem("DriverAadhar", DriverAadhar ? DriverAadhar : null);
+    // sessionStorage.setItem("VehicleType", VehicleType ? VehicleType : null);
+    // sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null);
+    // sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);
+    // sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
+    // sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt ? VehiclePlaceFirstHalt : null);
 
 
     sessionStorage.setItem("setPublicPlaceType", setPublicPlaceType ? setPublicPlaceType.code : null);
@@ -225,7 +338,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
     sessionStorage.setItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
     sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName ? AdrsLBTypeName.code : null);
-    sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo ? AdrsBuldingNo : null);
+    // sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo ? AdrsBuldingNo : null);
     sessionStorage.setItem("AdrsResNoEn", AdrsResNoEn ? AdrsResNoEn : null);
     sessionStorage.setItem("AdrsResNoMl", AdrsResNoMl ? AdrsResNoMl : null);
     sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo ? AdrsDoorNo : null);
@@ -250,13 +363,55 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("InfomantEmail", InfomantEmail ? InfomantEmail : null );
     sessionStorage.setItem("InfomantMobile", InfomantMobile ? InfomantMobile : null );  
 
+
+    sessionStorage.setItem("InformantAdrsCountry", InformantAdrsCountry ? InformantAdrsCountry.code : null );
+    sessionStorage.setItem("InformantAdrsStateName", InformantAdrsStateName ? InformantAdrsStateName.code: null);
+    sessionStorage.setItem("InformantAdrsLBTypeName", InformantAdrsLBTypeName ? InformantAdrsLBTypeName.code : null);
+    // sessionStorage.setItem("InformantAdrsBuldingNo", InformantAdrsBuldingNo ? InformantAdrsBuldingNo : null);
+    sessionStorage.setItem("InformantAdrsResNo", InformantAdrsResNo ? InformantAdrsResNo : null);
+    sessionStorage.setItem("InformantAdrsDoorNo", InformantAdrsDoorNo ? InformantAdrsDoorNo :null );
+    sessionStorage.setItem("InformantAdrsHouseNameEn", InformantAdrsHouseNameEn ? InformantAdrsHouseNameEn : null);   
+    sessionStorage.setItem("InformantAdrsMainPlaceEn", InformantAdrsMainPlaceEn ? InformantAdrsMainPlaceEn : null);    
+    sessionStorage.setItem("InformantAdrsLocalityNameEn", InformantAdrsLocalityNameEn ? InformantAdrsLocalityNameEn : null);    
+    sessionStorage.setItem("InformantAdrsStreetNameEn", InformantAdrsStreetNameEn ? InformantAdrsStreetNameEn : null );   
+    sessionStorage.setItem("InformantAdrsVillage", InformantAdrsVillage ? InformantAdrsVillage.code : null);
+    sessionStorage.setItem("InformantAdrsLBName", InformantAdrsLBName ? InformantAdrsLBName.code : null);
+    sessionStorage.setItem("InformantAdrsDistrict", InformantAdrsDistrict ? InformantAdrsDistrict.code : null);
+    sessionStorage.setItem("InformantAdrsTaluk", InformantAdrsTaluk ? InformantAdrsTaluk.code : null);
+    sessionStorage.setItem("InformantAdrsPostOffice", InformantAdrsPostOffice ? InformantAdrsPostOffice.code :null);
+    sessionStorage.setItem("InformantAdrsPincode", InformantAdrsPincode ? InformantAdrsPincode.code :null);   
+    // sessionStorage.setItem(" InfntWardNo",  InfntWardNo ? InfntWardNo :null);
+
+    // sessionStorage.setItem("VehicleInfmntAdrsCountry", VehicleInfmntAdrsCountry ? VehicleInfmntAdrsCountry.code : null );
+    // sessionStorage.setItem("VehicleInfmntAdrsStateName", VehicleInfmntAdrsStateName ? VehicleInfmntAdrsStateName.code: null);
+    // sessionStorage.setItem("VehicleInfmntAdrsLBTypeName", VehicleInfmntAdrsLBTypeName ? VehicleInfmntAdrsLBTypeName.code : null);
+    // // sessionStorage.setItem("VehicleInfmntAdrsBuldingNo", VehicleInfmntAdrsBuldingNo ? VehicleInfmntAdrsBuldingNo : null);
+    // sessionStorage.setItem("VehicleInfmntAdrsResNo", VehicleInfmntAdrsResNo ? VehicleInfmntAdrsResNo : null);
+    // sessionStorage.setItem("VehicleInfmntAdrsDoorNo", VehicleInfmntAdrsDoorNo ? VehicleInfmntAdrsDoorNo :null );
+    // sessionStorage.setItem("VehicleInfmntAdrsHouseNameEn", VehicleInfmntAdrsHouseNameEn ? VehicleInfmntAdrsHouseNameEn : null);   
+    // sessionStorage.setItem("VehicleInfmntAdrsMainPlaceEn", VehicleInfmntAdrsMainPlaceEn ? VehicleInfmntAdrsMainPlaceEn : null);    
+    // sessionStorage.setItem("VehicleInfmntAdrsLocalityNameEn", VehicleInfmntAdrsLocalityNameEn ? VehicleInfmntAdrsLocalityNameEn : null);    
+    // sessionStorage.setItem("VehicleInfmntAdrsStreetNameEn", VehicleInfmntAdrsStreetNameEn ? VehicleInfmntAdrsStreetNameEn : null );   
+    // sessionStorage.setItem("VehicleInfmntAdrsVillage", VehicleInfmntAdrsVillage ? VehicleInfmntAdrsVillage.code : null);
+    // sessionStorage.setItem("VehicleInfmntAdrsLBName", VehicleInfmntAdrsLBName ? VehicleInfmntAdrsLBName.code : null);
+    // sessionStorage.setItem("VehicleInfmntAdrsDistrict", VehicleInfmntAdrsDistrict ? VehicleInfmntAdrsDistrict.code : null);
+    // sessionStorage.setItem("VehicleInfmntAdrsTaluk", VehicleInfmntAdrsTaluk ? VehicleInfmntAdrsTaluk.code : null);
+    // sessionStorage.setItem("VehicleInfmntAdrsPostOffice", VehicleInfmntAdrsPostOffice ? VehicleInfmntAdrsPostOffice.code :null);
+    // sessionStorage.setItem("VehicleInfmntAdrsPincode", VehicleInfmntAdrsPincode ? VehicleInfmntAdrsPincode.code :null);   
+    // // sessionStorage.setItem(" InfntWardNo",  InfntWardNo ? InfntWardNo :null);
+   
+   
+
     onSelect(config.key, {
       BirthPlace, HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo,
-      setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,
-      DriverName, DriverMobileNo, DriverAadhar, VehicleType, VehicleRegistrationNo, VehicleFromEn, VehicleToEn, VehiclePlaceFirstHalt, setPublicPlaceType,
-      AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsBuldingNo, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,
+      setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar,setPublicPlaceType,
+      AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,
       AdrsMainPlaceEn, AdrsLocalityNameEn, AdrsStreetNameEn, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsInfomntName, AdrsMainPlaceMl,
-      AdrsLocalityNameMl,AdrsStreetNameMl, AdrsResNoMl,InfomantFirstNameEn, InfomantAadhar,InfomantEmail,InfomantMobile,
+      AdrsLocalityNameMl,AdrsStreetNameMl, AdrsResNoMl,InfomantFirstNameEn, InfomantAadhar,InfomantEmail,InfomantMobile,InformantAdrsCountry,InformantAdrsStateName,InformantAdrsLBTypeName,
+     InformantAdrsResNo,InformantAdrsDoorNo,InformantAdrsHouseNameEn,InformantAdrsMainPlaceEn,InformantAdrsLocalityNameEn,InformantAdrsStreetNameEn,
+      InformantAdrsVillage,InformantAdrsLBName,InformantAdrsDistrict,InformantAdrsTaluk,InformantAdrsPostOffice,InformantAdrsPincode,VehicleRegistrationNo,
+      VehicleFromEn, VehicleToEn, VehicleFromMl, VehicleToMl,VehicleHaltPlace, setAdmittedHospitalEn, setAdmittedHospitalMl, VehicleOtherDetailsEn,
+      VehicleOtherDetailsMl,
     });
   }
   return (
@@ -313,14 +468,47 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         {value === "VEHICLE" && (
           <div>
             <BirthVehicle
-              setDriverName={setDriverName} DriverName={DriverName}
-              setDriverMobileNo={setDriverMobileNo} DriverMobileNo={DriverMobileNo}
-              setDriverAadhar={setDriverAadhar} DriverAadhar={DriverAadhar}
-              setVehicleType={setVehicleType} VehicleType={VehicleType}
-              setVehicleRegistrationNo={setVehicleRegistrationNo} VehicleRegistrationNo={VehicleRegistrationNo}
-              setVehicleFromEn={setVehicleFromEn} VehicleFromEn={VehicleFromEn}
-              setVehicleToEn={setVehicleToEn} VehicleToEn={VehicleToEn}
-              setVehiclePlaceFirstHalt={setVehiclePlaceFirstHalt} VehiclePlaceFirstHalt={VehiclePlaceFirstHalt}
+             VehicleRegistrationNo={VehicleRegistrationNo} setVehicleRegistrationNo={setVehicleRegistrationNo}
+             VehicleFromEn={VehicleFromEn} setVehicleToEn={setVehicleToEn}
+             VehicleToEn={VehicleToEn} setVehicleFromEn = {setVehicleFromEn}
+             VehicleFromMl={VehicleFromMl} setVehicleFromMl={setVehicleFromMl}
+             VehicleToMl={VehicleToMl} setVehicleToMl={setVehicleToMl}
+             VehicleHaltPlace= {VehicleHaltPlace} setSelectVehicleHaltPlace= {setSelectVehicleHaltPlace}
+             VehicleOtherDetailsEn={VehicleOtherDetailsEn} setVehicleOtherDetailsEn={setVehicleOtherDetailsEn}
+             VehicleOtherDetailsMl={VehicleOtherDetailsMl} setVehicleOtherDetailsMl={setVehicleOtherDetailsMl}             
+             setAdmittedHospitalEn={setAdmittedHospitalEn} setSelectedAdmittedHospitalEn={setSelectedAdmittedHospitalEn}
+             setAdmittedHospitalMl={setAdmittedHospitalMl} setSelectedAdmittedHospitalMl={setSelectedAdmittedHospitalMl}
+            />
+              <InformantDetails
+            
+            setInfomantFirstNameEn={setInfomantFirstNameEn} InfomantFirstNameEn={InfomantFirstNameEn}
+            setInfomantAadhar={setInfomantAadhar} InfomantAadhar={InfomantAadhar}
+            setInfomantEmail={setInfomantEmail} InfomantEmail={InfomantEmail}
+            setInfomantMobile={setInfomantMobile} InfomantMobile={InfomantMobile}
+
+            
+            />
+
+<InformantAddress
+               setInformantAdrsCountry={setInformantAdrsCountry} InformantAdrsCountry={InformantAdrsCountry}
+               setInformantAdrsStateName={setInformantAdrsStateName} InformantAdrsStateName={InformantAdrsStateName}
+               setInformantAdrsDistrict={setInformantAdrsDistrict} InformantAdrsDistrict={InformantAdrsDistrict}
+               setInformantAdrsLBTypeName={setInformantAdrsLBTypeName} InformantAdrsLBTypeName={InformantAdrsLBTypeName}
+               setInformantAdrsLBName={setInformantAdrsLBName} InformantAdrsLBName={InformantAdrsLBName}
+               setInformantAdrsTaluk={setInformantAdrsTaluk} InformantAdrsTaluk={InformantAdrsTaluk}
+               setInformantAdrsPostOffice={setInformantAdrsPostOffice} InformantAdrsPostOffice={InformantAdrsPostOffice}
+               setInformantAdrsPincode={setInformantAdrsPincode} InformantAdrsPincode={InformantAdrsPincode}
+               setInformantAdrsHouseNameEn={setInformantAdrsHouseNameEn} InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
+               // setInformantAdrsBuldingNo={setInformantAdrsBuldingNo} InformantAdrsBuldingNo={InformantAdrsBuldingNo}
+               setInformantAdrsResNo={setInformantAdrsResNo} InformantAdrsResNo={InformantAdrsResNo}
+               setInformantAdrsDoorNo={setInformantAdrsDoorNo} InformantAdrsDoorNo={InformantAdrsDoorNo}
+               setInformantAdrsMainPlaceEn={setInformantAdrsMainPlaceEn} InformantAdrsMainPlaceEn={InformantAdrsMainPlaceEn}
+               setInformantAdrsLocalityNameEn={setInformantAdrsLocalityNameEn} InformantAdrsLocalityNameEn={InformantAdrsLocalityNameEn}
+               setInformantAdrsStreetNameEn={setInformantAdrsStreetNameEn} InformantAdrsStreetNameEn={InformantAdrsStreetNameEn}
+               setInformantAdrsVillage={setInformantAdrsVillage} InformantAdrsVillage={InformantAdrsVillage}
+               // setInfntWardNo={setInfntWardNo} InfntWardNo={InfntWardNo}
+   
+   
 
             />
           </div>
@@ -350,7 +538,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               setAdrsPostOffice={setAdrsPostOffice} AdrsPostOffice={AdrsPostOffice}
               setAdrsPincode={setAdrsPincode} AdrsPincode={AdrsPincode}
               setAdrsHouseNameEn={setAdrsHouseNameEn} AdrsHouseNameEn={AdrsHouseNameEn}
-              setAdrsBuldingNo={setAdrsBuldingNo} AdrsBuldingNo={AdrsBuldingNo}
+              // setAdrsBuldingNo={setAdrsBuldingNo} AdrsBuldingNo={AdrsBuldingNo}
               setAdrsResNoEn={setAdrsResNoEn} AdrsResNoEn={AdrsResNoEn}
               setAdrsResNoMl={setAdrsResNoMl} AdrsResNoMl={AdrsResNoMl}
               setAdrsInfomntName={setAdrsInfomntName} AdrsInfomntName={AdrsInfomntName}
@@ -374,6 +562,29 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
             
             />
+             <InformantAddress
+            
+            setInformantAdrsCountry={setInformantAdrsCountry} InformantAdrsCountry={InformantAdrsCountry}
+            setInformantAdrsStateName={setInformantAdrsStateName} InformantAdrsStateName={InformantAdrsStateName}
+            setInformantAdrsDistrict={setInformantAdrsDistrict} InformantAdrsDistrict={InformantAdrsDistrict}
+            setInformantAdrsLBTypeName={setInformantAdrsLBTypeName} InformantAdrsLBTypeName={InformantAdrsLBTypeName}
+            setInformantAdrsLBName={setInformantAdrsLBName} InformantAdrsLBName={InformantAdrsLBName}
+            setInformantAdrsTaluk={setInformantAdrsTaluk} InformantAdrsTaluk={InformantAdrsTaluk}
+            setInformantAdrsPostOffice={setInformantAdrsPostOffice} InformantAdrsPostOffice={InformantAdrsPostOffice}
+            setInformantAdrsPincode={setInformantAdrsPincode} InformantAdrsPincode={InformantAdrsPincode}
+            setInformantAdrsHouseNameEn={setInformantAdrsHouseNameEn} InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
+            // setInformantAdrsBuldingNo={setInformantAdrsBuldingNo} InformantAdrsBuldingNo={InformantAdrsBuldingNo}
+            setInformantAdrsResNo={setInformantAdrsResNo} InformantAdrsResNo={InformantAdrsResNo}
+            setInformantAdrsDoorNo={setInformantAdrsDoorNo} InformantAdrsDoorNo={InformantAdrsDoorNo}
+            setInformantAdrsMainPlaceEn={setInformantAdrsMainPlaceEn} InformantAdrsMainPlaceEn={InformantAdrsMainPlaceEn}
+            setInformantAdrsLocalityNameEn={setInformantAdrsLocalityNameEn} InformantAdrsLocalityNameEn={InformantAdrsLocalityNameEn}
+            setInformantAdrsStreetNameEn={setInformantAdrsStreetNameEn} InformantAdrsStreetNameEn={InformantAdrsStreetNameEn}
+            setInformantAdrsVillage={setInformantAdrsVillage} InformantAdrsVillage={InformantAdrsVillage}
+            // setInfntWardNo={setInfntWardNo} InfntWardNo={InfntWardNo}
+
+            
+            />
+
 
             
           </div>
