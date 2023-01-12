@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.text.Document;
 import javax.validation.Valid;
@@ -440,6 +441,16 @@ public class CrDeathDtl {
     @Size(max = 64)
     @JsonProperty("deceasedIdproofType")
     private String  deceasedIdproofType ;
+
+//    @Size(max = 64)
+//    @JsonProperty("assignees")
+//    private List<String>  assignees ;
+//    public Object getWorkFlowCode() {
+//    }
+
+    public void setStatus(String s) {
+    }
+
 
     // @Size(max = 64)
     // @JsonProperty("badRecord")

@@ -13,12 +13,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Component
 public class CrDeathConfiguration {
-   
-      //Persister Config
+
+    //Persister Config
     @Value("${persister.save.crdeath.topic}")
     private String saveDeathDetailsTopic;
 
-    
+
     //MDMS
     @Value("${egov.mdms.host}")
     private String mdmsHost;
@@ -34,7 +34,7 @@ public class CrDeathConfiguration {
     @Value("${egov.idgen.path}")
     private String idGenPath;
 
-    
+
     @Value("${egov.idgen.deathapplfilecode.name}")
     private String deathApplnFileCodeName;
 
@@ -55,8 +55,8 @@ public class CrDeathConfiguration {
 
     //Rakhi S on 24.12.2022 
     @Value("${egov.state.level.tenant.id}")
-    private String egovStateLevelTenant;   
-    
+    private String egovStateLevelTenant;
+
     //Jasmine 07.01.2023
 
     @Value("${citizen.allowed.search.params}")
@@ -64,4 +64,13 @@ public class CrDeathConfiguration {
 
     @Value("${employee.allowed.search.params}")
     private String allowedEmployeeSearchParams;
+
+    public String getWfHost() {
+        return null;
+    }
+
+    public String getWfTransitionPath() {
+        return null;
+    }
+
 }

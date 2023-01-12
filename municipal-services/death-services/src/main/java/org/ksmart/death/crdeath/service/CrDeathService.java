@@ -14,6 +14,7 @@ import org.ksmart.death.crdeath.web.models.CrDeathDtl;
 import org.ksmart.death.crdeath.web.models.CrDeathDtlRequest;
 import org.ksmart.death.crdeath.web.models.CrDeathSearchCriteria;
 import org.egov.common.contract.request.RequestInfo;
+import org.ksmart.death.workflow.WorkflowIntegrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class CrDeathService {
     private final CrDeathConfiguration deathConfig;
     private final CrDeathEnrichment enrichmentService;
     private final CrDeathMdmsUtil util;
+    private final WorkflowIntegrator workflowIntegrator;
     private final MDMSValidator mdmsValidator;
     private final CrDeathValidator validatorService;
     private final CrDeathRepository repository;
@@ -42,9 +44,10 @@ public class CrDeathService {
     @Autowired
     CrDeathService(CrDeathProducer producer,CrDeathConfiguration deathConfig,
                 CrDeathEnrichment enrichmentService,CrDeathMdmsUtil util,MDMSValidator mdmsValidator,
-                CrDeathValidator validatorService,CrDeathRepository repository){
+                CrDeathValidator validatorService,CrDeathRepository repository,WorkflowIntegrator workflowIntegrator){
         this.producer = producer;
         this.deathConfig = deathConfig;
+        this.workflowIntegrator = workflowIntegrator;
         this.enrichmentService = enrichmentService;
         this.util = util;
         this.mdmsValidator = mdmsValidator;
@@ -84,7 +87,7 @@ public class CrDeathService {
         enrichmentService.setIdgenIds(request);    
 
         producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
-
+        workflowIntegrator.callWorkFlow(request);
         return request.getDeathCertificateDtls();
     }
     //Rakhi S on 05.12.2022
@@ -116,6 +119,13 @@ public class CrDeathService {
         enrichmentService.enrichUpdate(request);
 
         producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+
+
+
+        workflowIntegrator.callWorkFlow(request);
+
+
+
 
         return request.getDeathCertificateDtls();
       }
