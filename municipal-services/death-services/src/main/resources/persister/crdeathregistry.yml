@@ -489,9 +489,7 @@ serviceMaps:
             informant_aadhar_submitted = ?, informant_aadhar_no = ?,
             informant_mobile_no = ?, general_remarks = ?, application_status =
             ?, lastmodifiedby = ?, lastmodifiedtime = ?,
-            place_burial = ?, place_burial_institution_type = ?,
-            place_burial_institution_name = ?, ip_no = ?,
-            op_no = ?, male_dependent_type = ?, male_dependent_title = ?,
+            ip_no = ?,op_no = ?, male_dependent_type = ?, male_dependent_title = ?,
             male_dependent_name_en = ?, male_dependent_name_ml = ?,
             male_dependent_aadharno = ?, male_dependent_mobileno = ?,
             male_dependent_mailid = ?, female_dependent_type = ?,
@@ -504,9 +502,12 @@ serviceMaps:
             death_place_ward_id = ?, informant_age = ?, vehicle_driver_licenceno
             = ?, death_signed_officer_designation = ?,
             death_place_officer_mobile = ?, death_place_officer_aadhaar = ?,
-            deceased_idproofno = ?, deceased_idprooftype = ?  where id = ?
+            deceased_idproofno = ?, deceased_idprooftype = ? ,burial_district = ?,burial_lbtype = ?, burial_lbname = ?,
+            burial_state = ?, vehicle_first_halt = ?, male_dependent_unavailable = ?, 
+            female_dependent_unavailable = ?  where id = ?
         #  registrationunit = ?, tenantid = ?,application_no = ?, file_no = ?, submitted_on = ?,
         # death_place = ?, death_place_inst_type = ?, death_place_inst_id = ?,ack_no = ?, registration_no = ?
+        #place_burial = ?, place_burial_institution_type = ?, place_burial_institution_name = ?,
 
 
           basePath: deathCertificateDtls.*
@@ -552,9 +553,9 @@ serviceMaps:
             # - jsonPath: $.deathCertificateDtls.*.submittedOn
             - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
             - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
-            - jsonPath: $.deathCertificateDtls.*.placeBurial
-            - jsonPath: $.deathCertificateDtls.*.placeBurialInstitutionType
-            - jsonPath: $.deathCertificateDtls.*.placePurialInstitutionName
+            # - jsonPath: $.deathCertificateDtls.*.placeBurial
+            # - jsonPath: $.deathCertificateDtls.*.placeBurialInstitutionType
+            # - jsonPath: $.deathCertificateDtls.*.placePurialInstitutionName
             # - jsonPath: $.deathCertificateDtls.*.registrationNo
             - jsonPath: $.deathCertificateDtls.*.ipNo
             - jsonPath: $.deathCertificateDtls.*.opNo
@@ -590,6 +591,13 @@ serviceMaps:
             # - jsonPath: $.deathCertificateDtls.*.deathACKNo
             - jsonPath: $.deathCertificateDtls.*.deceasedIdproofNo
             - jsonPath: $.deathCertificateDtls.*.deceasedIdproofType
+            - jsonPath: $.deathCertificateDtls.*.burialDistrict
+            - jsonPath: $.deathCertificateDtls.*.burialLBType
+            - jsonPath: $.deathCertificateDtls.*.burialLBName
+            - jsonPath: $.deathCertificateDtls.*.burialState
+            - jsonPath: $.deathCertificateDtls.*.vehicleFirstHalt
+            - jsonPath: $.deathCertificateDtls.*.maleDependentUnavailable
+            - jsonPath: $.deathCertificateDtls.*.femaleDependentUnavailable
             - jsonPath: $.deathCertificateDtls.*.id
 
         - query: >-
@@ -607,7 +615,8 @@ serviceMaps:
             = ?, death_cause_other = ?, death_during_delivery = ?,
             smoking_num_years = ?, tobacco_num_years = ?, arecanut_num_years =
             ?, alcohol_num_years = ?, lastmodifiedby = ?, lastmodifiedtime = ? ,
-            nationality = ? WHERE death_dtl_id = ?
+            nationality = ? ,occupation_sub = ?, occupation_minor = ?, education_main = ?, 
+            education_sub = ?, residencelbtype = ? WHERE death_dtl_id = ?
           basePath: deathCertificateDtls.*.statisticalInfo
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.residencelocalbody
@@ -631,6 +640,11 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
             - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.nationality
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.occupationSub
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.occupationMinor
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationMain
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationSub     
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.residenceLBType
             - jsonPath: $.deathCertificateDtls.*.id
         - query: >-
             INSERT INTO public.eg_death_address_registry_log SELECT * FROM 
