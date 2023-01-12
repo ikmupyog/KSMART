@@ -84,12 +84,21 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     .tenantId(currentTradeLicense.getTenantId())
                     .service(String.valueOf(taxpdetemp.get("service")))
                     .fromYear(String.valueOf(taxpdetemp.get("fromyear")))
+                    .fromPeriod(String.valueOf(taxpdetemp.get("fromperiod")))
+                    .toYear(String.valueOf(taxpdetemp.get("toyear")))
+                    .toPeriod(String.valueOf(taxpdetemp.get("toperiod")))
                     .arrear(Double.parseDouble(String
                             .valueOf(taxpdetemp.get("arrearamnt") == null ? 0
                                     : taxpdetemp.get("arrearamnt"))))
-                    .current(Double.parseDouble(String.valueOf(
-                            taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
+                    .current(String.valueOf(taxpdetemp.get("headcode")).equals("431190101")
+                            ? Double.parseDouble(String.valueOf(
+                                    taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current")))
+                            : Double.parseDouble(String.valueOf(
+                                    taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
                     .active(true) // (Boolean) taxpdetemp.get("tltax_active")
+                    .current2(Double.parseDouble(String
+                            .valueOf(taxpdetemp.get("current2") == null ? 0
+                                    : taxpdetemp.get("current2"))))
                     .build();
             currentTradeLicense.getTradeLicenseDetail().addTaxPdeItem(taxPde);
         }
@@ -180,9 +189,15 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                             .headCode(String.valueOf(taxpdetemp.get("headcode")))
                             .arrear(Double.parseDouble(String
                                     .valueOf(taxpdetemp.get("arrearamnt") == null ? 0 : taxpdetemp.get("arrearamnt"))))
-                            .current(Double.parseDouble(String.valueOf(
-                                    taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
-                            .active(true) // (Boolean) taxpdetemp.get("tltax_active")
+                            .active(true)
+                            .current(String.valueOf(taxpdetemp.get("headcode")).equals("431190101")
+                                    ? Double.parseDouble(String.valueOf(
+                                            taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current")))
+                                    : Double.parseDouble(String.valueOf(
+                                            taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
+                            .current2(Double.parseDouble(String
+                                    .valueOf(taxpdetemp.get("current2") == null ? 0
+                                            : taxpdetemp.get("current2"))))
                             .build();
                     if (prevTradeLicense != null)
                         prevTradeLicense.getTradeLicenseDetail().addTaxPdeItem(taxPde);
@@ -197,7 +212,12 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                 taxpdetemp.put("headcode", rs.getString("headcode"));
                 if ("431190101".equals(rs.getString("headcode")) || "431300201".equals(rs.getString("headcode"))
                         || "431400101".equals(rs.getString("headcode"))) {
-                    taxpdetemp.put("currentamnt", rs.getString("amount"));
+                    if ("431190101".equals(rs.getString("headcode"))) {
+                        taxpdetemp.put("current", rs.getString("firsthalfcur"));
+                        taxpdetemp.put("current2", rs.getString("secondhalfcur"));
+                    } else {
+                        taxpdetemp.put("currentamnt", rs.getString("amount"));
+                    }
                 } else {
                     taxpdetemp.put("arrearamnt", rs.getString("amount"));
                 }
@@ -211,12 +231,22 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                                 .tenantId(tenantId)
                                 .service(String.valueOf(taxpdetemp.get("service")))
                                 .fromYear(String.valueOf(taxpdetemp.get("fromyear")))
+                                .fromPeriod(String.valueOf(taxpdetemp.get("fromperiod")))
+                                .toYear(String.valueOf(taxpdetemp.get("toyear")))
+                                .toPeriod(String.valueOf(taxpdetemp.get("toperiod")))
                                 .arrear(Double.parseDouble(String
                                         .valueOf(taxpdetemp.get("arrearamnt") == null ? 0
                                                 : taxpdetemp.get("arrearamnt"))))
-                                .current(Double.parseDouble(String.valueOf(
-                                        taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
                                 .active(true) // (Boolean) taxpdetemp.get("tltax_active")
+                                .current(String.valueOf(taxpdetemp.get("headcode")).equals("431190101")
+                                        ? Double.parseDouble(String.valueOf(
+                                                taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current")))
+                                        : Double.parseDouble(String.valueOf(
+                                                taxpdetemp.get("currentamnt") == null ? 0
+                                                        : taxpdetemp.get("currentamnt"))))
+                                .current2(Double.parseDouble(String
+                                        .valueOf(taxpdetemp.get("current2") == null ? 0
+                                                : taxpdetemp.get("current2"))))
                                 .build();
                         tradeLicense.getTradeLicenseDetail().addTaxPdeItem(taxPde);
                     }
@@ -230,7 +260,12 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     taxpdetemp.put("headcode", rs.getString("headcode"));
                     if ("431190101".equals(rs.getString("headcode")) || "431300201".equals(rs.getString("headcode"))
                             || "431400101".equals(rs.getString("headcode"))) {
-                        taxpdetemp.put("currentamnt", rs.getString("amount"));
+                        if ("431190101".equals(rs.getString("headcode"))) {
+                            taxpdetemp.put("current", rs.getString("firsthalfcur"));
+                            taxpdetemp.put("current2", rs.getString("secondhalfcur"));
+                        } else {
+                            taxpdetemp.put("currentamnt", rs.getString("amount"));
+                        }
                     } else {
                         taxpdetemp.put("arrearamnt", rs.getString("amount"));
                     }
@@ -239,7 +274,13 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     if (taxpdetemp.containsKey(rs.getString("service"))) {
                         if ("431190101".equals(rs.getString("headcode")) || "431300201".equals(rs.getString("headcode"))
                                 || "431400101".equals(rs.getString("headcode"))) {
-                            taxpdetemp.put("currentamnt", rs.getString("amount"));
+                            if ("431190101".equals(rs.getString("headcode"))) {
+                                taxpdetemp.put("current", rs.getString("firsthalfcur"));
+                                taxpdetemp.put("current2", rs.getString("secondhalfcur"));
+                            } else {
+                                taxpdetemp.put("currentamnt", rs.getString("amount"));
+                            }
+
                         } else {
                             taxpdetemp.put("arrearamnt", rs.getString("amount"));
                         }
@@ -253,7 +294,12 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                         taxpdetemp.put("headcode", rs.getString("headcode"));
                         if ("431190101".equals(rs.getString("headcode")) || "431300201".equals(rs.getString("headcode"))
                                 || "431400101".equals(rs.getString("headcode"))) {
-                            taxpdetemp.put("currentamnt", rs.getString("amount"));
+                            if ("431190101".equals(rs.getString("headcode"))) {
+                                taxpdetemp.put("current", rs.getString("firsthalfcur"));
+                                taxpdetemp.put("current2", rs.getString("secondhalfcur"));
+                            } else {
+                                taxpdetemp.put("currentamnt", rs.getString("amount"));
+                            }
                         } else {
                             taxpdetemp.put("arrearamnt", rs.getString("amount"));
                         }
