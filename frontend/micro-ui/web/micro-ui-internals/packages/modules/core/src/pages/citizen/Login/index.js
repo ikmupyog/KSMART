@@ -213,7 +213,7 @@ if(window?.globalConfigs?.getConfig("ENABLE_SINGLEINSTANCE")){
   return (
     <Switch>
       <AppContainer>
-        <BackButton />
+        
         <Route path={`${path}`} exact>
           <SelectMobileNumber
             onSelect={selectMobileNumber}

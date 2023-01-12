@@ -1,8 +1,8 @@
 export const loginSteps = [
   {
     texts: {
-      header: "CS_LOGIN_PROVIDE_MOBILE_NUMBER",
-      cardText: "CS_LOGIN_TEXT",
+      header: "",
+      cardText: "",
       nextText: "CS_COMMONS_NEXT",
       submitBarLabel: "CS_COMMONS_NEXT",
     },
@@ -22,8 +22,8 @@ export const loginSteps = [
   },
   {
     texts: {
-      header: "CS_LOGIN_OTP",
-      cardText: "CS_LOGIN_OTP_TEXT",
+      header: "",
+      cardText: "",
       nextText: "CS_COMMONS_NEXT",
       submitBarLabel: "CS_COMMONS_NEXT",
     },

@@ -34,10 +34,10 @@ console.log("employee" + applicationno);
   } = Digit.Hooks.dfm.useApplicationActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  console.log("employeeDFM",applicationDetails);
+  console.log("employeeDFM",applicationDetails?.applicationData?.fileDetail?.fileCode);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
-    tenantId: applicationDetails?.applicationData.tenantid || tenantId,
-    id: applicationDetails?.fileDetail?.fileCode,
+    tenantId: applicationDetails?.tenantId || tenantId,
+    id: applicationDetails?.applicationData?.fileDetail?.fileCode,
     moduleCode: businessService,
     role: "FM_CEMP",
     config:{},

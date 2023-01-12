@@ -8,6 +8,7 @@ import { configPTAssessProperty } from "./PTAssessProperty";
 import { configTLApproverApplication } from "./TLApproverApplication";
 import { configBirthApproverApplication } from "./BirthApproverApplication";
 import { configDeathApproverApplication } from "./DeathApproverApplication";
+import { configDFMApproverApplication } from "./DFMApproverApplication";
 import { configBPAREGApproverApplication } from "./BPAREGApproverApplication";
 import { configBPAApproverApplication } from "./BPAApproverApplication";
 import { configNOCApproverApplication } from "./NOCApproverApplication";
@@ -23,6 +24,7 @@ export {
   configTLApproverApplication,
   configBirthApproverApplication,
   configDeathApproverApplication,
+  configDFMApproverApplication,
   configBPAREGApproverApplication,
   configBPAApproverApplication,
   configNOCApproverApplication

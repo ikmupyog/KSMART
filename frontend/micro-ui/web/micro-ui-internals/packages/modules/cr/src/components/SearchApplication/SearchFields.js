@@ -17,7 +17,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     if(applicationType && applicationType?.code==="RENEWAL")
     businessServices=["EDITRENEWAL","DIRECTRENEWAL"]
     else if(applicationType && applicationType?.code==="NEW")
-    businessServices=["NewTL"]
+    businessServices=["NewBirth"]
     else
     businessServices=["EDITRENEWAL","DIRECTRENEWAL","NewTL"]
 
