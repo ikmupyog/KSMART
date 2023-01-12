@@ -202,8 +202,7 @@ public class CrDeathRegistryMdmsUtil {
         ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
         List<ModuleDetail> commonMasterRequest = getcommonMasterRequest(presentAddressDistrict
                                 ,presentAddressState
-                                ,presentAddressCountry);       
-
+                                ,presentAddressCountry);     
         
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);     
@@ -306,7 +305,6 @@ public class CrDeathRegistryMdmsUtil {
     private List<ModuleDetail> getcommonMasterRequest(String presentAddressDistrict
                                         , String presentAddressState
                                         , String presentAddressCountry) {
-
         // master details for death certificate
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
@@ -321,7 +319,7 @@ public class CrDeathRegistryMdmsUtil {
                 
         final String filterCodeCountry = "$.[?(@.code=='"+presentAddressCountry+"')].name"; 
         crDeathMasterDetails
-                .add(MasterDetail.builder().name(CrDeathRegistryConstants.COUNTRY).filter(filterCodeCountry).build()); 
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.COUNTRY).filter(filterCodeCountry).build());        
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
@@ -355,4 +353,136 @@ public class CrDeathRegistryMdmsUtil {
                
          return Arrays.asList(crDeathModuleDtls);
     }
+    //mdms for permanent fields
+     //RAkhi S ikm on 12.01.2023
+     public Object mDMSCallCertificateP(RequestInfo requestInfo  
+                        , String tenantId   
+                        , String permanentAddressDistrict
+                        , String permanentAddressState
+                        , String permanentAddressCountry) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateP(requestInfo   
+                        , tenantId
+                        , permanentAddressDistrict
+                        , permanentAddressState
+                        , permanentAddressCountry);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+        }
+    private MdmsCriteriaReq getMDMSRequestCertificateP(RequestInfo requestInfo    
+                            , String tenantId                       
+                            , String permanentAddressDistrict
+                            , String permanentAddressState
+                            , String permanentAddressCountry) {
+
+        ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        List<ModuleDetail> commonMasterRequest = getcommonMasterRequestP(
+                                 tenantId
+                                ,permanentAddressDistrict
+                                ,permanentAddressState
+                                ,permanentAddressCountry);       
+
+        
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);
+        moduleDetails.addAll(commonMasterRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+        System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+    private List<ModuleDetail> getcommonMasterRequestP( String tenantId
+                                        , String permanentAddressDistrict
+                                        , String permanentAddressState
+                                        , String permanentAddressCountry) {
+
+        // master details for death certificate
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
+        final String perAddrfilterCode = "$.[?(@.code=='"+permanentAddressDistrict+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.DISTRICT).filter(perAddrfilterCode).build());  
+        
+        final String perAddrfilterCodeState = "$.[?(@.code=='"+permanentAddressState+"')].name"; 
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.STATE).filter(perAddrfilterCodeState).build());        
+                
+        final String perAddrfilterCodeCountry = "$.[?(@.code=='"+permanentAddressCountry+"')].name"; 
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.COUNTRY).filter(perAddrfilterCodeCountry).build()); 
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+
+               
+         return Arrays.asList(crDeathModuleDtls);
+    }
+    public Object mDMSCallCertificatePMl(RequestInfo requestInfo  
+        , String tenantId   
+        , String permanentAddressDistrict
+        , String permanentAddressState
+        , String permanentAddressCountry) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificatePMl(requestInfo   
+        , tenantId
+        , permanentAddressDistrict
+        , permanentAddressState
+        , permanentAddressCountry);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+        }
+   private MdmsCriteriaReq getMDMSRequestCertificatePMl(RequestInfo requestInfo    
+                , String tenantId                       
+                , String permanentAddressDistrict
+                , String permanentAddressState
+                , String permanentAddressCountry) {
+
+        ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        List<ModuleDetail> commonMasterRequest = getcommonMasterRequestPMl(
+                tenantId
+                ,permanentAddressDistrict
+                ,permanentAddressState
+                ,permanentAddressCountry);       
+
+
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);
+        moduleDetails.addAll(commonMasterRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                        .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+        .requestInfo(requestInfo).build();
+
+        System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+        }
+        private List<ModuleDetail> getcommonMasterRequestPMl( String tenantId
+                        , String permanentAddressDistrict
+                        , String permanentAddressState
+                        , String permanentAddressCountry) {
+
+        // master details for death certificate
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
+        final String perAddrfilterCode = "$.[?(@.code=='"+permanentAddressDistrict+"')].localname";
+        crDeathMasterDetails
+        .add(MasterDetail.builder().name(CrDeathRegistryConstants.DISTRICT).filter(perAddrfilterCode).build());  
+
+        final String perAddrfilterCodeState = "$.[?(@.code=='"+permanentAddressState+"')].namelocal"; 
+        crDeathMasterDetails
+        .add(MasterDetail.builder().name(CrDeathRegistryConstants.STATE).filter(perAddrfilterCodeState).build());        
+
+        final String perAddrfilterCodeCountry = "$.[?(@.code=='"+permanentAddressCountry+"')].namelocal"; 
+        crDeathMasterDetails
+        .add(MasterDetail.builder().name(CrDeathRegistryConstants.COUNTRY).filter(perAddrfilterCodeCountry).build()); 
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+        .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+
+
+        return Arrays.asList(crDeathModuleDtls);
+        }
 }

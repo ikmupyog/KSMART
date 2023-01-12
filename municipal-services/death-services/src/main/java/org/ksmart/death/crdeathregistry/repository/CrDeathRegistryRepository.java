@@ -163,7 +163,7 @@ public class CrDeathRegistryRepository {
 
                 String presentAddCountry = masterData.get(CrDeathRegistryConstants.COUNTRY).toString();
                 presentAddCountry = presentAddCountry.replaceAll("[\\[\\]\\(\\)]", "");
-                cert.getAddressInfo().getPresentAddress().setCountryId(presentAddCountry);
+                cert.getAddressInfo().getPresentAddress().setCountryId(presentAddCountry);               
 
 
                 //RAkhi S on 11.01.2023 MDMS Call Malayalam
@@ -178,6 +178,46 @@ public class CrDeathRegistryRepository {
                 String presentAddCountryMl = masterDataMl.get(CrDeathRegistryConstants.COUNTRY).toString();
                 presentAddCountryMl = presentAddCountryMl.replaceAll("[\\[\\]\\(\\)]", "");
                 cert.getAddressInfo().getPresentAddress().setCountryMl(presentAddCountryMl);
+
+                 //Rakhi S on 12.01.2023 
+
+                 Object mdmsDataPermanent = util.mDMSCallCertificateP(pdfApplicationRequest.getRequestInfo()     
+                 , cert.getTenantId()                           
+                 , cert.getAddressInfo().getPermanentAddress().getDistrictId()
+                 , cert.getAddressInfo().getPermanentAddress().getStateId()
+                 , cert.getAddressInfo().getPermanentAddress().getCountryId());
+                Map<String,List<String>> masterDataPermanent = getAttributeValues(mdmsDataPermanent);
+
+                Object mdmsDataPermanentMl = util.mDMSCallCertificatePMl(pdfApplicationRequest.getRequestInfo()     
+                                , cert.getTenantId()                           
+                                , cert.getAddressInfo().getPermanentAddress().getDistrictId()
+                                , cert.getAddressInfo().getPermanentAddress().getStateId()
+                                , cert.getAddressInfo().getPermanentAddress().getCountryId());
+                Map<String,List<String>> masterDataPermanentMl = getAttributeValues(mdmsDataPermanentMl);
+
+                String permanentAddDistrict = masterDataPermanent.get(CrDeathRegistryConstants.DISTRICT).toString();
+                permanentAddDistrict = permanentAddDistrict.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPermanentAddress().setDistrictId(permanentAddDistrict);
+
+                String permanentAddState = masterDataPermanent.get(CrDeathRegistryConstants.STATE).toString();
+                permanentAddState = permanentAddState.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPermanentAddress().setStateId(permanentAddState);
+
+                String permanentAddCountry = masterDataPermanent.get(CrDeathRegistryConstants.COUNTRY).toString();
+                permanentAddCountry = permanentAddCountry.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPermanentAddress().setCountryId(permanentAddCountry);
+
+                String permanentAddDistrictMl = masterDataPermanentMl.get(CrDeathRegistryConstants.DISTRICT).toString();
+                permanentAddDistrictMl = permanentAddDistrictMl.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPermanentAddress().setDistrictMl(permanentAddDistrictMl);
+
+                String permanentAddStateMl = masterDataPermanentMl.get(CrDeathRegistryConstants.STATE).toString();
+                permanentAddStateMl = permanentAddStateMl.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPermanentAddress().setStateMl(permanentAddStateMl);
+
+                String permanentAddCountryMl = masterDataPermanentMl.get(CrDeathRegistryConstants.COUNTRY).toString();
+                permanentAddCountryMl = permanentAddCountryMl.replaceAll("[\\[\\]\\(\\)]", "");
+                cert.getAddressInfo().getPermanentAddress().setCountryMl(permanentAddCountryMl);
 
                 //Rakhi S on 16.12.2022
                 cert.setFullName(cert.getDeceasedTitle() + 
@@ -259,9 +299,9 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPermanentAddress().getStreetNameMl()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getCityMl()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getLocalityMl()+ " "+
-                                            cert.getAddressInfo().getPermanentAddress().getDistrictId()+ " "+
-                                            cert.getAddressInfo().getPermanentAddress().getStateId()+ " "+
-                                            cert.getAddressInfo().getPermanentAddress().getCountryId());
+                                            cert.getAddressInfo().getPermanentAddress().getDistrictMl()+ " "+
+                                            cert.getAddressInfo().getPermanentAddress().getStateMl()+ " "+
+                                            cert.getAddressInfo().getPermanentAddress().getCountryMl());
 
                 cert.setRegistrationDate(cert.getRegistrationDate());
                 cert.setLocalBodyName(cert.getLocalBodyName());
