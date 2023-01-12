@@ -229,14 +229,14 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
 
 
 
-    // sessionStorage.setItem("InformentNameEn", InformentNameEn);
-    // sessionStorage.setItem("InformentNameMl", InformentNameMl);
+    // sessionStorage.setItem("InformentNameEn", InformentNameEn ? InformentNameEn:null);
+    // sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl:null); 
     // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
-    // sessionStorage.setItem("isNoAadhaar", isNoAadhaar);
-    // sessionStorage.setItem("AadhaarNo", AadhaarNo);
+    // sessionStorage.setItem("isNoAadhaar", isNoAadhaar ? isNoAadhaar:null);
+    // sessionStorage.setItem("AadhaarNo", AadhaarNo ? AadhaarNo : null);
     // sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
-    // sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
-    // sessionStorage.setItem("InformentEmail", InformentEmail);
+    // sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo :null );
+    // sessionStorage.setItem("InformentEmail", InformentEmail ? InformentEmail :null);
     
 
     onSelect(config.key, {

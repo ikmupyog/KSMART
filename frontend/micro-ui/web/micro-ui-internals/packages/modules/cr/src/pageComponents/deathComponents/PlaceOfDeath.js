@@ -35,15 +35,15 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [AdrsPincode, setAdrsPincode] = useState(formData?.PlaceOfDeath?.AdrsPincode);
   const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.PlaceOfDeath?.AdrsHouseNameEn);
   const [AdrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.PlaceOfDeath?.AdrsHouseNameMl);
-  const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.PlaceOfDeath?.AdrsBuldingNo);
+  // const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.PlaceOfDeath?.AdrsBuldingNo);
   const [AdrsResNo, setAdrsResNo] = useState(formData?.PlaceOfDeath?.AdrsResNo);
   const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.PlaceOfDeath?.AdrsDoorNo);
   const [AdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.PlaceOfDeath?.AdrsMainPlaceEn);
   const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.PlaceOfDeath?.AdrsMainPlaceMl);
   const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.PlaceOfDeath?.AdrsLocalityNameEn);
   const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.PlaceOfDeath?.AdrsLocalityNameMl);
-  const [AdrsCityEn, setAdrsCityEn] = useState(formData?.PlaceOfDeath?.AdrsCityNameEn);
-  const [AdrsCityMl, setAdrsCityMl] = useState(formData?.PlaceOfDeath?.AdrsCityMl);
+  // const [AdrsCityEn, setAdrsCityEn] = useState(formData?.PlaceOfDeath?.AdrsCityNameEn);
+  // const [AdrsCityMl, setAdrsCityMl] = useState(formData?.PlaceOfDeath?.AdrsCityMl);
   const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.PlaceOfDeath?.AdrsStreetNameEn);
   const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.PlaceOfDeath?.AdrsStreetNameMl);
   const [AdrsVillage, setAdrsVillage] = useState(formData?.PlaceOfDeath?.AdrsVillage);
@@ -122,15 +122,15 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
             AdrsPincode={AdrsPincode}
             AdrsHouseNameEn={AdrsHouseNameEn}
             AdrsHouseNameMl={AdrsHouseNameMl}
-            AdrsBuldingNo={AdrsBuldingNo}
+            // AdrsBuldingNo={AdrsBuldingNo}
             AdrsResNo={AdrsResNo}
             AdrsDoorNo={AdrsDoorNo}
             AdrsMainPlaceEn={AdrsMainPlaceEn}
             AdrsMainPlaceMl={AdrsMainPlaceMl}
             AdrsLocalityNameEn={AdrsLocalityNameEn}
             AdrsLocalityNameMl={AdrsLocalityNameMl}
-            AdrsCityEn={AdrsCityEn}
-            AdrsCityMl={AdrsCityMl}
+            // AdrsCityEn={AdrsCityEn}
+            // AdrsCityMl={AdrsCityMl}
             AdrsStreetNameEn={AdrsStreetNameEn}
             AdrsStreetNameMl={AdrsStreetNameMl}
             AdrsVillage={AdrsVillage}
@@ -187,28 +187,28 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar);
     sessionStorage.setItem("HospitalMobile", HospitalMobile);
     //Place of Death Home
-    sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
-    sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
-    sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName.code);
-    sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo);
-    sessionStorage.setItem("AdrsResNo", AdrsResNo);
-    sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo);
-    sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn);
-    sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl);
-    sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn);
-    sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl);
-    sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn);
-    sessionStorage.setItem("AdrsLocalityNameMl", AdrsLocalityNameMl);
-    sessionStorage.setItem("AdrsCityEn", AdrsCityEn);
-    sessionStorage.setItem("AdrsCityMl", AdrsCityMl);
-    sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn);
-    sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl);
-    sessionStorage.setItem("AdrsVillage", AdrsVillage.code);
-    sessionStorage.setItem("AdrsLBName", null);
-    sessionStorage.setItem("AdrsDistrict", AdrsDistrict.code);
-    sessionStorage.setItem("AdrsTaluk", AdrsTaluk.code);
-    sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice.code);
-    sessionStorage.setItem("AdrsPincode", AdrsPincode.code);
+    sessionStorage.setItem("AdrsCountry", AdrsCountry ?AdrsCountry.code : null);
+    sessionStorage.setItem("AdrsStateName", AdrsStateName? AdrsStateName.code : null);
+    sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName? AdrsLBTypeName.code : null);
+    // sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo ? AdrsBuldingNo : null); 
+    sessionStorage.setItem("AdrsResNo", AdrsResNo ? AdrsResNo : null );
+    sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo ? AdrsDoorNo : null);
+    sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn ? AdrsHouseNameEn : null);
+    sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl ? AdrsHouseNameMl :null );
+    sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn ? AdrsMainPlaceEn : null);
+    sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl ? AdrsMainPlaceMl : null);
+    sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn ? AdrsLocalityNameEn : null);
+    sessionStorage.setItem("AdrsLocalityNameMl", AdrsLocalityNameMl ? AdrsLocalityNameMl : null);
+    // sessionStorage.setItem("AdrsCityEn", AdrsCityEn ? AdrsCityEn : null);
+    // sessionStorage.setItem("AdrsCityMl", AdrsCityMl ? AdrsCityMl : null);
+    sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn ? AdrsStreetNameEn : null);
+    sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl ? AdrsStreetNameMl : null);
+    sessionStorage.setItem("AdrsVillage", AdrsVillage ? AdrsVillage.code : null);
+    sessionStorage.setItem("AdrsLBName",AdrsLBName ? AdrsLBName.code: null);
+    sessionStorage.setItem("AdrsDistrict", AdrsDistrict ? AdrsDistrict.code : null);
+    sessionStorage.setItem("AdrsTaluk", AdrsTaluk ? AdrsTaluk.code : null);
+    sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice ?AdrsPostOffice.code : null);
+    sessionStorage.setItem("AdrsPincode", AdrsPincode ? AdrsPincode : null);
     //Place Of DeathInstitution
     sessionStorage.setItem("setInstitution", setInstitution.code);
     sessionStorage.setItem("setInstitutionId", setInstitutionId.code);
@@ -217,14 +217,14 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
     sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar);
     //InformentAddress
-    sessionStorage.setItem("InformentNameEn", InformentNameEn);
-    sessionStorage.setItem("InformentNameMl", InformentNameMl);
+    sessionStorage.setItem("InformentNameEn", InformentNameEn ? InformentNameEn:null);
+    sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl:null); 
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
-    sessionStorage.setItem("isNoAadhaar", isNoAadhaar);
-    sessionStorage.setItem("AadhaarNo", AadhaarNo);
+    sessionStorage.setItem("isNoAadhaar", isNoAadhaar ? isNoAadhaar:null);
+    sessionStorage.setItem("AadhaarNo", AadhaarNo ? AadhaarNo : null);
     sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
-    sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
-    sessionStorage.setItem("InformentEmail", InformentEmail);
+    sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo :null );
+    sessionStorage.setItem("InformentEmail", InformentEmail ? InformentEmail :null);
     //PlaceOfDeathVehicle
     sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);
     sessionStorage.setItem("VehicleFromEn", VehicleFromEn);
@@ -240,8 +240,8 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
 
 
     onSelect(config.key, {
-      setPlaceofDeath, SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile, AdrsBuldingNo,
-      AdrsDoorNo, AdrsHouseNameEn, AdrsHouseNameMl, AdrsLocalityNameEn, AdrsLocalityNameMl, AdrsCityEn, AdrsCityMl, AdrsCountry, AdrsStateName,
+      setPlaceofDeath, SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile, 
+      AdrsDoorNo, AdrsHouseNameEn, AdrsHouseNameMl, AdrsLocalityNameEn, AdrsLocalityNameMl, AdrsCountry, AdrsStateName,
       AdrsLBTypeName, AdrsMainPlaceEn, AdrsMainPlaceMl, AdrsStreetNameEn, AdrsStreetNameMl, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk,
       AdrsPostOffice, AdrsPincode, AdrsResNo, setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo,
       InstitutionAadhaar, InformentNameEn, InformentNameMl, setTitle, isNoAadhaar, AadhaarNo, setDeclaration, InformentMobileNo, InformentEmail, VehicleRegistrationNo,
@@ -322,15 +322,15 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
               AdrsPincode={AdrsPincode} setAdrsPincode={setAdrsPincode}
               AdrsHouseNameEn={AdrsHouseNameEn} setAdrsHouseNameEn={setAdrsHouseNameEn}
               AdrsHouseNameMl={AdrsHouseNameMl} setAdrsHouseNameMl={setAdrsHouseNameMl}
-              AdrsBuldingNo={AdrsBuldingNo} setAdrsBuldingNo={setAdrsBuldingNo}
+              // AdrsBuldingNo={AdrsBuldingNo} setAdrsBuldingNo={setAdrsBuldingNo}
               AdrsResNo={AdrsResNo} setAdrsResNo={setAdrsResNo}
               AdrsDoorNo={AdrsDoorNo} setAdrsDoorNo={setAdrsDoorNo}
               AdrsMainPlaceEn={AdrsMainPlaceEn} setAdrsMainPlaceEn={setAdrsMainPlaceEn}
               AdrsMainPlaceMl={AdrsMainPlaceMl} setAdrsMainPlaceMl={setAdrsMainPlaceMl}
               AdrsLocalityNameEn={AdrsLocalityNameEn} setAdrsLocalityNameEn={setAdrsLocalityNameEn}
               AdrsLocalityNameml={AdrsLocalityNameMl} setAdrsLocalityNameMl={setAdrsLocalityNameMl}
-              AdrsCityEn={AdrsCityEn} setAdrsCityEn={setAdrsCityEn}
-              AdrsCityMl={AdrsCityMl} setAdrsCityMl={setAdrsCityMl}
+              // AdrsCityEn={AdrsCityEn} setAdrsCityEn={setAdrsCityEn}
+              // AdrsCityMl={AdrsCityMl} setAdrsCityMl={setAdrsCityMl}
               AdrsStreetNameEn={AdrsStreetNameEn} setAdrsStreetNameEn={setAdrsStreetNameEn}
               AdrsStreetNameMl={AdrsStreetNameMl} setAdrsStreetNameMl={setAdrsStreetNameMl}
               AdrsVillage={AdrsVillage} setAdrsVillage={setAdrsVillage} />
