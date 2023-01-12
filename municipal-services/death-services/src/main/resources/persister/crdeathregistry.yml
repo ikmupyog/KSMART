@@ -144,7 +144,7 @@ serviceMaps:
             tobacco_num_years, arecanut_num_years, alcohol_num_years, createdby,
             createdtime, lastmodifiedby, lastmodifiedtime, nationality, occupation_sub, occupation_minor, education_main, education_sub, residencelbtype) VALUES
             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ??, ?, ?, ?, ?);
+            ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: deathCertificateDtls.*.statisticalInfo
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.id

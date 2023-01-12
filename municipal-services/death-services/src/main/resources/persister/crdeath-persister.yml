@@ -191,7 +191,7 @@ serviceMaps:
         
      
     - query: INSERT INTO public.eg_death_statistical_dtls(id, death_dtl_id, tenantid, residencelocalbody, residence_place_type, residencedistrict, residencestate, religion, religion_other, occupation, occupation_other, medical_attention_type, death_medically_certified, death_cause_main, death_cause_sub, death_cause_other, death_during_delivery, smoking_num_years, tobacco_num_years, arecanut_num_years, alcohol_num_years, createdby, createdtime, lastmodifiedby, lastmodifiedtime, nationality, occupation_sub, occupation_minor, education_main, education_sub, residencelbtype)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: deathCertificateDtls.*.statisticalInfo
       jsonMaps:
       - jsonPath: $.deathCertificateDtls.*.statisticalInfo.id
