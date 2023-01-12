@@ -106,5 +106,8 @@ public class CrDeathStatistical {
     @JsonProperty("educationSub")
     private String educationSub;
 
+    @JsonProperty("residenceLBType")
+    private String residenceLBType;
+
     
 }
