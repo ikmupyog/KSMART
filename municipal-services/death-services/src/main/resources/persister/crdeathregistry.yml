@@ -23,8 +23,8 @@ serviceMaps:
             informant_name_en, informant_name_ml, informant_aadhar_submitted,
             informant_aadhar_no, informant_mobile_no, general_remarks,
             application_status, submitted_on, created_by, createdtime,
-            lastmodifiedby, lastmodifiedtime, place_burial,
-            place_burial_institution_type, place_burial_institution_name,
+            lastmodifiedby, lastmodifiedtime, burial_district,
+            burial_lbtype, burial_lbname,
             registration_no, ip_no, op_no, male_dependent_type,
             male_dependent_title, male_dependent_name_en,
             male_dependent_name_ml, male_dependent_aadharno,
@@ -38,11 +38,11 @@ serviceMaps:
             death_place_ward_id, informant_age, vehicle_driver_licenceno,
             death_signed_officer_designation, death_place_officer_mobile,
             death_place_officer_aadhaar, application_no,
-            file_no, ack_no,registration_date, registration_no_id, deceased_idproofno, deceased_idprooftype) VALUES (?, ?,
+            file_no, ack_no,registration_date, registration_no_id, deceased_idproofno, deceased_idprooftype, burial_state, vehicle_first_halt, male_dependent_unavailable, female_dependent_unavailable) VALUES (?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: deathCertificateDtls.*
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.id
@@ -87,9 +87,9 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
             - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
             - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
-            - jsonPath: $.deathCertificateDtls.*.placeBurial
-            - jsonPath: $.deathCertificateDtls.*.placeBurialInstitutionType
-            - jsonPath: $.deathCertificateDtls.*.placePurialInstitutionName
+            - jsonPath: $.deathCertificateDtls.*.burialDistrict
+            - jsonPath: $.deathCertificateDtls.*.burialLBType
+            - jsonPath: $.deathCertificateDtls.*.burialLBName
             - jsonPath: $.deathCertificateDtls.*.registrationNo
             - jsonPath: $.deathCertificateDtls.*.ipNo
             - jsonPath: $.deathCertificateDtls.*.opNo
@@ -129,6 +129,10 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.registrationNoId
             - jsonPath: $.deathCertificateDtls.*.deceasedIdproofNo
             - jsonPath: $.deathCertificateDtls.*.deceasedIdproofType
+            - jsonPath: $.deathCertificateDtls.*.burialState
+            - jsonPath: $.deathCertificateDtls.*.vehicleFirstHalt
+            - jsonPath: $.deathCertificateDtls.*.maleDependentUnavailable
+            - jsonPath: $.deathCertificateDtls.*.femaleDependentUnavailable
 
         - query: >-
             INSERT INTO public.eg_death_statistical_registry(id, death_dtl_id,
