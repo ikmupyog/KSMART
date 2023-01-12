@@ -14,11 +14,13 @@ import org.egov.filemgmnt.validators.ApplicantPersonalValidator;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
 import org.egov.filemgmnt.web.models.ApplicantPersonalSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantPersonalServiceRequest;
 import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificates.CertificateRequest;
 //import org.egov.filemgmnt.web.models.certificates.CertificatePdfApplicationRequest;
 import org.egov.filemgmnt.workflow.WorkflowIntegrator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,8 +51,8 @@ public class ApplicantPersonalService {
 
     // @Autowired
     ApplicantPersonalService(ApplicantPersonalValidator validatorService, ApplicantPersonalEnrichment enrichmentService,
-                             ApplicantPersonalRepository repository, Producer producer, MdmsUtil mdmsUtil,
-                             FMConfiguration fmConfig, WorkflowIntegrator wfIntegrator
+                             ApplicantPersonalRepository repository, @Qualifier("fmProducer") Producer producer,
+                             MdmsUtil mdmsUtil, FMConfiguration fmConfig, WorkflowIntegrator wfIntegrator
 //                             CertificatePdfApplicationRequest certReq
     ) {
         this.validatorService = validatorService;
@@ -61,6 +63,27 @@ public class ApplicantPersonalService {
         this.fmConfig = fmConfig;
         this.wfIntegrator = wfIntegrator;
 //        this.certReq = certReq;
+    }
+
+    public ApplicantPersonalService createService(ApplicantPersonalServiceRequest request) {
+        // 1. create/update applicant personal + enc service
+        // 2. create/update user service + enc service
+        // 3. create applicant service details
+
+        return null;
+    }
+
+    public ApplicantPersonalService updateService(ApplicantPersonalServiceRequest request) {
+        // 1. update applicant personal
+        // 2. update user service
+        // 3. create applicant service details
+
+        return null;
+    }
+
+    public ApplicantPersonalService searchApplicantPersonals(ApplicantPersonalServiceRequest request) {
+        // 1. search by mobile/aadhar no for existing applicant personal
+        return null;
     }
 
     /**

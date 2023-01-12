@@ -163,6 +163,26 @@
             "name": "employee.allowed.search.params",
             "type": "java.lang.String",
             "description": "A description for 'employee.allowed.search.params'"
+        },
+        {
+            "name": "egov.enc.host",
+            "type": "java.lang.String",
+            "description": "A description for 'egov.enc.host'"
+        },
+        {
+            "name": "egov.enc.encrypt.endpoint",
+            "type": "java.lang.String",
+            "description": "A description for 'egov.enc.encrypt.endpoint'"
+        },
+        {
+            "name": "egov.enc.decrypt.endpoint",
+            "type": "java.lang.String",
+            "description": "A description for 'egov.enc.decrypt.endpoint'"
+        },
+        {
+            "name": "egov.state.level.tenant.id",
+            "type": "java.lang.String",
+            "description": "A description for 'egov.state.level.tenant.id'"
         }
     ],
     "hints": [
@@ -172,6 +192,14 @@
                 {
                     "value": "UTC",
                     "description": "Coordinated Universal Time, (IST, India Standard Time, Asia/Kolkata = UTC+05:30)."
+                }
+            ]
+        },
+        {
+            "name": "egov.state.level.tenant.id",
+            "values": [
+                {
+                    "value": "kl"
                 }
             ]
         }

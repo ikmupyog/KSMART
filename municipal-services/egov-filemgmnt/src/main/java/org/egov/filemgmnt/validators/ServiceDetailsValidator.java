@@ -6,7 +6,7 @@ import static org.egov.filemgmnt.web.enums.ErrorCodes.REQUIRED;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.egov.filemgmnt.web.models.ServiceDetails;
+import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ServiceDetailsRequest;
 import org.egov.tracer.model.CustomException;
 import org.springframework.stereotype.Component;
@@ -31,8 +31,8 @@ public class ServiceDetailsValidator {
      * @param request      the {@link ServiceDetailsRequest}
      * @param searchResult the search result
      */
-    public void validateUpdate(ServiceDetailsRequest request, List<ServiceDetails> searchResult) {
-        List<ServiceDetails> applicantServices = request.getServiceDetails();
+    public void validateUpdate(ServiceDetailsRequest request, List<ApplicantServiceDetail> searchResult) {
+        List<ApplicantServiceDetail> applicantServices = request.getServiceDetails();
 
         if (CollectionUtils.isEmpty(applicantServices)) {
             throw new CustomException(REQUIRED.getCode(), "Atleast one applicant service is required.");

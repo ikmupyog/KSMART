@@ -7,7 +7,6 @@ import org.egov.filemgmnt.repository.querybuilder.CommunicationFileManagementQue
 import org.egov.filemgmnt.repository.rowmapper.CommunicationFileManagementRowMapper;
 import org.egov.filemgmnt.web.models.CommunicationFile;
 import org.egov.filemgmnt.web.models.CommunicationFileSearchCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +17,7 @@ public class CommunicationFileManagementRepository {
     private final CommunicationFileManagementQueryBuilder queryBuilder;
     private final CommunicationFileManagementRowMapper rowMapper;
 
-    @Autowired
+    // @Autowired
     CommunicationFileManagementRepository(JdbcTemplate jdbcTemplate,
                                           CommunicationFileManagementQueryBuilder queryBuilder,
                                           CommunicationFileManagementRowMapper rowMapper) {

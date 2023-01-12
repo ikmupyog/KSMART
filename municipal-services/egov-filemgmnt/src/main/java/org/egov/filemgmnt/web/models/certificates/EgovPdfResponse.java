@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EgovPdfResp {
+public class EgovPdfResponse {
 
-    List<String> filestoreIds;
+    private List<String> filestoreIds;
 }

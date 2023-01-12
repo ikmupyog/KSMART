@@ -15,7 +15,7 @@ import org.egov.filemgmnt.validators.CommunicationFileManagementValidator;
 import org.egov.filemgmnt.web.models.CommunicationFile;
 import org.egov.filemgmnt.web.models.CommunicationFileRequest;
 import org.egov.filemgmnt.web.models.CommunicationFileSearchCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,11 +28,12 @@ public class CommunicationFileManagementService {
     private final MdmsUtil mdmsUtil;
     private final FMConfiguration fmConfig;
 
-    @Autowired
+    // @Autowired
     CommunicationFileManagementService(CommunicationFileManagementValidator validator,
                                        CommunicationFileManagementEnrichment enrichmentService,
-                                       CommunicationFileManagementRepository repository, Producer producer,
-                                       MdmsUtil mdmsUtil, FMConfiguration fmConfig) {
+                                       CommunicationFileManagementRepository repository,
+                                       @Qualifier("fmProducer") Producer producer, MdmsUtil mdmsUtil,
+                                       FMConfiguration fmConfig) {
 
         this.validator = validator;
         this.enrichmentService = enrichmentService;

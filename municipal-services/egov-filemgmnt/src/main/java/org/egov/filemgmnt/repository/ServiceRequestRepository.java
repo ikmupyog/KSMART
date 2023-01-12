@@ -3,7 +3,6 @@ package org.egov.filemgmnt.repository;
 import java.util.Map;
 
 import org.egov.tracer.model.ServiceCallException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -21,7 +20,7 @@ public class ServiceRequestRepository {
 
     private final RestTemplate restTemplate;
 
-    @Autowired
+    // @Autowired
     public ServiceRequestRepository(ObjectMapper mapper, RestTemplate restTemplate) {
         this.mapper = mapper;
         this.restTemplate = restTemplate;

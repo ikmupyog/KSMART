@@ -5,9 +5,8 @@ import java.util.List;
 
 import org.egov.filemgmnt.repository.querybuilder.ServiceDetailsQueryBuilder;
 import org.egov.filemgmnt.repository.rowmapper.ServiceDetailsRowMapper;
-import org.egov.filemgmnt.web.models.ServiceDetails;
+import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ServiceDetailsSearchCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +17,7 @@ public class ServiceDetailsRepository {
     private final ServiceDetailsQueryBuilder queryBuilder;
     private final ServiceDetailsRowMapper rowMapper;
 
-    @Autowired
+    // @Autowired
     ServiceDetailsRepository(JdbcTemplate jdbcTemplate, ServiceDetailsQueryBuilder queryBuilder,
                              ServiceDetailsRowMapper rowMapper) {
         this.jdbcTemplate = jdbcTemplate;
@@ -26,12 +25,12 @@ public class ServiceDetailsRepository {
         this.rowMapper = rowMapper;
     }
 
-    public List<ServiceDetails> getApplicantServices(ServiceDetailsSearchCriteria criteria) {
+    public List<ApplicantServiceDetail> getApplicantServices(ServiceDetailsSearchCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
 
         String query = queryBuilder.getServiceDetailsSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
 
-        List<ServiceDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
+        List<ApplicantServiceDetail> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
 
         return result; // NOPMD
     }

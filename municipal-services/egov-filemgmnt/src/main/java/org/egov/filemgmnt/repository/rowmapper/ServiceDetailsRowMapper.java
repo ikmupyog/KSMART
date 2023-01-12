@@ -5,20 +5,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.egov.filemgmnt.web.models.ServiceDetails;
+import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ServiceDetailsRowMapper implements ResultSetExtractor<List<ServiceDetails>>, BaseRowMapper {
+public class ServiceDetailsRowMapper implements ResultSetExtractor<List<ApplicantServiceDetail>>, BaseRowMapper {
 
     @Override
-    public List<ServiceDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { // NOPMD
+    public List<ApplicantServiceDetail> extractData(ResultSet rs) throws SQLException, DataAccessException { // NOPMD
 
-        List<ServiceDetails> result = new ArrayList<>();
+        List<ApplicantServiceDetail> result = new ArrayList<>();
         while (rs.next()) {
-            result.add(ServiceDetails.builder()
+            result.add(ApplicantServiceDetail.builder()
                                      .id(rs.getString("id"))
                                      .applicantPersonalId(rs.getString("applicantpersonalid"))
                                      .serviceId(rs.getString("serviceid"))

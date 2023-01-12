@@ -5,6 +5,8 @@ import javax.validation.Valid;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
 import org.egov.filemgmnt.web.models.ApplicantPersonalResponse;
 import org.egov.filemgmnt.web.models.ApplicantPersonalSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantPersonalServiceRequest;
+import org.egov.filemgmnt.web.models.ApplicantPersonalServiceResponse;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.tracer.model.ErrorRes;
 import org.springframework.http.MediaType;
@@ -23,6 +25,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "File Management")
 @Validated
 interface FileManagementResource {
+
+    ResponseEntity<ApplicantPersonalServiceResponse> createService(@Valid ApplicantPersonalServiceRequest request);
+
+    ResponseEntity<ApplicantPersonalServiceResponse> updateService(@Valid ApplicantPersonalServiceRequest request);
+
+    ResponseEntity<ApplicantPersonalResponse> searchApplicantPersonal(@Valid RequestInfoWrapper request,
+                                                                      @Valid ApplicantPersonalSearchCriteria criteria);
 
     @Operation(summary = "Create applicant personal along with details.",
                description = "",

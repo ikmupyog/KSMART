@@ -21,7 +21,6 @@ import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
 import org.egov.filemgmnt.web.models.user.UserDetailResponse;
 import org.egov.filemgmnt.web.models.user.UserSearchRequest;
 import org.egov.tracer.model.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +35,7 @@ class UserService {
     private final FMConfiguration fmConfig;
     private final ObjectMapper mapper;
 
-    @Autowired
+    // @Autowired
     UserService(ServiceRequestRepository restRepo, FMConfiguration fmConfig, ObjectMapper mapper) {
         this.restRepo = restRepo;
         this.fmConfig = fmConfig;

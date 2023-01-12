@@ -30,6 +30,11 @@ public class ApplicantAddress {
     @JsonProperty("id")
     private String id;
 
+    @Schema(type = "string", format = "uuid", description = "Applicant id")
+    @Size(max = 64)
+    @JsonProperty("applicantPersonalId")
+    private String applicantPersonalId;
+
     @Schema(type = "string", description = "Building number")
     @Size(max = 64)
     @NotBlank(message = "Building number is required")
@@ -121,11 +126,6 @@ public class ApplicantAddress {
     @NotBlank(message = "Taluk is required")
     @JsonProperty("taluk")
     private String taluk;
-
-    @Schema(type = "string", format = "uuid", description = "Applicant id")
-    @Size(max = 64)
-    @JsonProperty("applicantPersonalId")
-    private String applicantPersonalId;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;

@@ -1,4 +1,4 @@
-# Swagger generated server
+r generated server
 
 Spring Boot Server 
 
@@ -16,3 +16,29 @@ You can view the api documentation in swagger-ui by pointing to
 http://localhost:8080/  
 
 Change default port value in application.properties
+
+### ApplicantPersonal
+    - ApplicantAddress
+    - ApplicantDocument(s)
+      - User Service
+      - Encryption Service
+      - Persister
+    
+      - save-fm-applicantpersonal
+      - update-fm-applicantpersonal
+    
+### ApplicantPersonalService
+    - ApplicantPersonal
+    - ServiceDetail
+    - ApplicantServiceDocument
+    - FileDetail
+    - ApplicantChild
+      - Mdms Service
+      - IdGen Service
+      - Workflow Service
+      - Pdf Service
+      - Persister
+    
+      - save-fm-applicantpersonalservice
+      - update-fm-applicantpersonalservice
+      - save-fm-applicantpersonalservicecertificate

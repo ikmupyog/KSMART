@@ -11,10 +11,11 @@ import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
 import org.egov.filemgmnt.web.models.ApplicantPersonalResponse;
 import org.egov.filemgmnt.web.models.ApplicantPersonalSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantPersonalServiceRequest;
+import org.egov.filemgmnt.web.models.ApplicantPersonalServiceResponse;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificates.CertificateResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,10 +34,32 @@ public class FileManagementController implements FileManagementResource {
     private final ResponseInfoFactory responseInfoFactory;
     private final ApplicantPersonalService personalService;
 
-    @Autowired
+    // @Autowired
     FileManagementController(ApplicantPersonalService personalService, ResponseInfoFactory responseInfoFactory) {
         this.personalService = personalService;
         this.responseInfoFactory = responseInfoFactory;
+    }
+
+    @Override
+    // @PostMapping("/applicantpersonals/service/_create")
+    public ResponseEntity<ApplicantPersonalServiceResponse> createService(@Valid ApplicantPersonalServiceRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    // @PutMapping("/applicantpersonals/service/_update")
+    public ResponseEntity<ApplicantPersonalServiceResponse> updateService(@Valid ApplicantPersonalServiceRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    // @PostMapping("/applicantpersonals/_search")
+    public ResponseEntity<ApplicantPersonalResponse> searchApplicantPersonal(@Valid RequestInfoWrapper request,
+                                                                             @Valid ApplicantPersonalSearchCriteria criteria) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
@@ -84,7 +107,7 @@ public class FileManagementController implements FileManagementResource {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = { "/applicantpersonals/_download" })
+    @PostMapping("/applicantpersonals/_download") // value = { "/applicantpersonals/_download" }
     public ResponseEntity<CertificateResponse> download(@RequestBody RequestInfoWrapper request,
                                                         @Valid @ModelAttribute ApplicantPersonalSearchCriteria criteria) {
 

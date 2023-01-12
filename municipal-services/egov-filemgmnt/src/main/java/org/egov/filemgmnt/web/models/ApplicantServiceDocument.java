@@ -1,6 +1,5 @@
 package org.egov.filemgmnt.web.models;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
@@ -14,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(name = "ApplicantDocument", description = "A Object holds the basic data for a Applicant Documents")
+@Schema(name = "ApplicantServiceDocument", description = "A Object holds the  data for a Service Document Details")
 @Validated
 
 @Getter
@@ -22,10 +21,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+public class ApplicantServiceDocument {
 
-public class ApplicantDocuments {
-
-    @Schema(type = "string", format = "uuid", description = "Applicant dDocument id")
+    @Schema(type = "string", format = "uuid", description = "Applicant service document id")
     @Size(max = 64)
     @JsonProperty("id")
     private String id;
@@ -35,22 +33,38 @@ public class ApplicantDocuments {
     @JsonProperty("applicantPersonalId")
     private String applicantPersonalId;
 
+    @Schema(type = "string", description = "Service details id")
+    @Size(max = 64)
+    @JsonProperty("serviceDetailsId")
+    private String serviceDetailsId;
+
     @Schema(type = "string", description = "Document type id")
     @Size(max = 64)
-    @NotNull
+//    @NotNull
     @JsonProperty("documentTypeId")
     private String documentTypeId;
 
+    @Schema(type = "string", description = "File store id")
+    @Size(max = 64)
+//    @NotNull
+    @JsonProperty("fileStoreId")
+    private String fileStoreId;
+
+    @Schema(type = "string", description = "Document active or not")
+    @Size(max = 64)
+    @JsonProperty("active")
+    private String active;
+
     @Schema(type = "string", description = "Document number")
     @Size(max = 64)
-    @NotNull
+//    @NotNull
     @JsonProperty("documentNumber")
     private String documentNumber;
 
-    @Schema(type = "long", description = "Document expiry date")
-    @NotNull
-    @JsonProperty("docExpiryDate")
-    private Long docExpiryDate;
+    @Schema(type = "string", description = "Application details")
+    @Size(max = 64)
+    @JsonProperty("applicationDetails")
+    private String applicationdetails;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;

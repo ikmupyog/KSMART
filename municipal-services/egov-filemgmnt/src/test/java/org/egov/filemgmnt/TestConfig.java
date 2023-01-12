@@ -19,19 +19,19 @@ public class TestConfig { // NOPMD
     @Bean
     @Primary
     @SuppressWarnings("unchecked")
-    public KafkaTemplate<String, Object> kafkaTemplate() {
+    KafkaTemplate<String, Object> kafkaTemplate() {
         return mock(KafkaTemplate.class);
     }
 
     @Bean
     @Primary
-    public JdbcTemplate jdbcTemplate() {
+    JdbcTemplate jdbcTemplate() {
         return mock(JdbcTemplate.class);
     }
 
     @Bean
     @Primary
-    public RestTemplate restTemplate() {
+    RestTemplate restTemplate() {
         return mock(RestTemplate.class);
     }
 }

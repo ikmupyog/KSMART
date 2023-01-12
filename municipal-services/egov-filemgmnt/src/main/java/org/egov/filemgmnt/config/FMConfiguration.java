@@ -70,7 +70,7 @@ public class FMConfiguration {
     @Value("${egov.user.search.path}")
     private String userSearchEndpoint;
 
-    // communication file config
+    // Communication file config
     @Value("${persister.save.communicationfile.topic}")
     private String saveCommunicationFileTopic;
 

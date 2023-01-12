@@ -14,7 +14,6 @@ import org.egov.mdms.model.MdmsCriteria;
 import org.egov.mdms.model.MdmsCriteriaReq;
 import org.egov.mdms.model.ModuleDetail;
 import org.egov.tracer.model.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -27,16 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class MdmsUtil {
-	private ObjectMapper mapper;
-
-
-	private RestTemplate restTemplate;
-
-    @Autowired
-	public MdmsUtil(ObjectMapper mapper, RestTemplate restTemplate) {
-		this.mapper = mapper;
-		this.restTemplate = restTemplate;
-	}
+    private final ObjectMapper mapper;
+    private final RestTemplate restTemplate;
 
     @Value("${egov.mdms.host}")
     private String mdmsHost;
@@ -50,6 +41,12 @@ public class MdmsUtil {
     @Value("${egov.mdms.module.name}")
     private String moduleName;
 
+    // @Autowired
+    public MdmsUtil(ObjectMapper mapper, RestTemplate restTemplate) {
+        this.mapper = mapper;
+        this.restTemplate = restTemplate;
+    }
+
     public Object mdmsCall(RequestInfo requestInfo, String tenantId) {
         MdmsCriteriaReq mdmsCriteriaReq = getMdmsRequest(requestInfo, tenantId);
 
@@ -61,17 +58,13 @@ public class MdmsUtil {
         } catch (Exception e) {
             log.error("Exception occurred while fetching category lists from mdms: ", e);
         }
-		System.out.println("result  :" + result);
+        System.out.println("result  :" + result);
         return result;
     }
 
     private MdmsCriteriaReq getMdmsRequest(RequestInfo requestInfo, String tenantId) {
 
-
-
-
         List<ModuleDetail> moduleDetails = new LinkedList<>();
-
 
         moduleDetails.addAll(getFMModuleDetails());
 
@@ -80,13 +73,12 @@ public class MdmsUtil {
                                                 .tenantId(tenantId)
                                                 .build();
 
-		MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder()
-                              .mdmsCriteria(mdmsCriteria)
-                              .requestInfo(requestInfo)
-                              .build();
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder()
+                                                         .mdmsCriteria(mdmsCriteria)
+                                                         .requestInfo(requestInfo)
+                                                         .build();
 
-
-		return mdmsCriteriaReq;
+        return mdmsCriteriaReq; // NOPMD
 
     }
 
@@ -105,75 +97,79 @@ public class MdmsUtil {
 
     }
 
+    private List<ModuleDetail> getTenantIdRequestAddress(String tenantId) {
 
+        List<MasterDetail> fmMasterDetails = new ArrayList<>();
 
+        final String address = "$.[?(@.code=='" + tenantId + "')].address";
 
-	private List<ModuleDetail> getTenantIdRequestAddress(String tenantId) {
+        fmMasterDetails.add(MasterDetail.builder()
+                                        .name(FMConstants.TENANTS)
+                                        .filter(address)
+                                        .build());
 
-		List<MasterDetail> fmMasterDetails = new ArrayList<>();
+        ModuleDetail masterModule = ModuleDetail.builder()
+                                                .masterDetails(fmMasterDetails)
+                                                .moduleName(FMConstants.TENANT_MODULE_NAME)
+                                                .build();
 
-		final String address = "$.[?(@.code=='" + tenantId + "')].address";
+        return Arrays.asList(masterModule);
+    }
 
+    public Map<String, List<String>> getAttributeValues(Object mdmsdata) {
+        List<String> modulepaths = Arrays.asList(FMConstants.TENANT_JSONPATH);
+        final Map<String, List<String>> mdmsResMap = new HashMap<>();
 
-		fmMasterDetails.add(MasterDetail.builder().name(FMConstants.TENANTS).filter(address).build());
+        modulepaths.forEach(modulepath -> {
+            try {
+                mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
 
-		ModuleDetail masterModule = ModuleDetail.builder().masterDetails(fmMasterDetails)
-				.moduleName(FMConstants.TENANT_MODULE_NAME).build();
+            } catch (Exception e) {
+                log.error("Error while fetching MDMS data", e);
+                throw new CustomException(FMConstants.INVALID_TENANT_ID_MDMS_KEY,
+                        FMConstants.INVALID_TENANT_ID_MDMS_MSG);
+            }
 
+        });
 
-		return Arrays.asList(masterModule);
-	}
+        return mdmsResMap;
+    }
 
+    public Object mdmsCallCertificateOfficeAddress(RequestInfo requestInfo, String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMdmsRequestCertificateOfficeAddress(requestInfo, tenantId);
 
-	public Map<String, List<String>> getAttributeValues(Object mdmsdata) {
-		List<String> modulepaths = Arrays.asList(FMConstants.TENANT_JSONPATH);
-		final Map<String, List<String>> mdmsResMap = new HashMap<>();
+        String mdmsUri = String.format("%s%s", mdmsHost, mdmsUrl);
+        Object result = null;
+        try {
 
-		modulepaths.forEach(modulepath -> {
-			try {
-				mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
+            result = restTemplate.postForObject(mdmsUri, mdmsCriteriaReq, Map.class);
+        } catch (Exception e) {
+            log.error("Exception occurred while fetching category lists from mdms: ", e);
+        }
 
-			} catch (Exception e) {
-				log.error("Error while fetching MDMS data", e);
-				throw new CustomException(FMConstants.INVALID_TENANT_ID_MDMS_KEY,
-						FMConstants.INVALID_TENANT_ID_MDMS_MSG);
-			}
+        return result;
+    }
 
-		});
+    private MdmsCriteriaReq getMdmsRequestCertificateOfficeAddress(RequestInfo requestInfo, String tenantId) {
 
-		return mdmsResMap;
-	}
+        List<ModuleDetail> tenantIdRequest = getTenantIdRequestAddress(tenantId);
 
-	public Object mdmsCallCertificateOfficeAddress(RequestInfo requestInfo, String tenantId) {
-		MdmsCriteriaReq mdmsCriteriaReq = getMdmsRequestCertificateOfficeAddress(requestInfo, tenantId);
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
 
-		String mdmsUri = String.format("%s%s", mdmsHost, mdmsUrl);
-		Object result = null;
-		try {
+        moduleDetails.addAll(tenantIdRequest);
 
-			result = restTemplate.postForObject(mdmsUri, mdmsCriteriaReq, Map.class);
-		} catch (Exception e) {
-			log.error("Exception occurred while fetching category lists from mdms: ", e);
-		}
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder()
+                                                .moduleDetails(moduleDetails)
+                                                .tenantId(tenantId)
+                                                .build();
 
-		return result;
-	}
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder()
+                                                         .mdmsCriteria(mdmsCriteria)
+                                                         .requestInfo(requestInfo)
+                                                         .build();
 
-	private MdmsCriteriaReq getMdmsRequestCertificateOfficeAddress(RequestInfo requestInfo, String tenantId) {
+        System.out.println(mdmsCriteriaReq);
+        return mdmsCriteriaReq;
 
-		List<ModuleDetail> tenantIdRequest = getTenantIdRequestAddress(tenantId);
-
-		List<ModuleDetail> moduleDetails = new LinkedList<>();
-
-		moduleDetails.addAll(tenantIdRequest);
-
-		MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId).build();
-
-		MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria).requestInfo(requestInfo)
-				.build();
-
-		System.out.println(mdmsCriteriaReq);
-		return mdmsCriteriaReq;
-
-	}
+    }
 }

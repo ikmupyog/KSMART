@@ -17,23 +17,23 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.egov.filemgmnt.TestConfig;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Disabled
 @SpringBootTest
-@Import(TestConfig.class)
-@TestPropertySource(locations = { "classpath:test.properties" })
+@ActiveProfiles("local")
+//@Import(TestConfig.class)
+//@TestPropertySource(locations = { "classpath:test.properties" })
 @SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert" })
 @Slf4j
 class LearningTests {
 
+    @Disabled
     @Test
     void convertDateToLong() {
         LocalDateTime localDateTime = LocalDateTime.of(2022, 11, 13, 19, 10, 05);
@@ -47,6 +47,7 @@ class LearningTests {
 //        log.info("date={}, milliseconds={}", date, dateMillis);
     }
 
+    @Disabled
     @Test
     void dateToLongTest() {
         java.util.Date now = new java.util.Date();

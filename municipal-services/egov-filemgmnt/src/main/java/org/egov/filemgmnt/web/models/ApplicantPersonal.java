@@ -32,19 +32,6 @@ public class ApplicantPersonal {
     @JsonProperty("id")
     private String id;
 
-    @Schema(type = "string", description = "Aadhaar number")
-    @Size(max = 12)
-    @NotNull
-//    @Pattern(regexp = "^[1-9][0-9]{11}$")
-    @JsonProperty("aadhaarNo")
-    private String aadhaarNo;
-
-    @Schema(type = "string", format = "email", description = "Email address")
-    @Size(max = 64)
-    @Email
-    @JsonProperty("email")
-    private String email;
-
     @Schema(type = "string", description = "First name")
     @Size(max = 64)
     @NotNull
@@ -69,10 +56,17 @@ public class ApplicantPersonal {
     @JsonProperty("lastNameMal")
     private String lastNameMal;
 
-    @Schema(type = "string", description = "Title")
-    @Size(max = 64)
-    @JsonProperty("title")
-    private String title;
+    @Schema(type = "integer", format = "int64", description = "Date of birth")
+    // @NotNull
+    @JsonProperty("dateOfBirth")
+    private Long dateOfBirth;
+
+    @Schema(type = "string", description = "Aadhaar number")
+    @Size(max = 12)
+    @NotNull
+//    @Pattern(regexp = "^[1-9][0-9]{11}$")
+    @JsonProperty("aadhaarNo")
+    private String aadhaarNo;
 
     @Schema(type = "string", description = "Mobile number")
     @Size(max = 15)
@@ -80,6 +74,22 @@ public class ApplicantPersonal {
     @Pattern(regexp = "^[1-9][0-9]{9,14}$")
     @JsonProperty("mobileNo")
     private String mobileNo;
+
+    @Schema(type = "string", format = "email", description = "Email address")
+    @Size(max = 64)
+    @Email
+    @JsonProperty("email")
+    private String email;
+
+    @Schema(type = "string", description = "Bank account number")
+    @Size(max = 64)
+    @JsonProperty("bankAccountNo")
+    private String bankAccountNo;
+
+    @Schema(type = "string", description = "Title")
+    @Size(max = 64)
+    @JsonProperty("title")
+    private String title;
 
     @Schema(type = "string", description = "Tenant identification number")
     @Size(max = 64)
@@ -132,21 +142,17 @@ public class ApplicantPersonal {
     @JsonProperty("applicantCategory")
     private String applicantCategory;
 
-    @Schema(type = "integer", format = "int64", description = "Date of birth")
+    @Valid
     // @NotNull
-    @JsonProperty("dateOfBirth")
-    private Long dateOfBirth;
-
-    @Schema(type = "string", description = "Bank account number")
-    @Size(max = 64)
-    @JsonProperty("bankAccountNo")
-    private String bankAccountNo;
+    @JsonProperty("address")
+    private ApplicantAddress address;
 
     @Valid
-    @NotNull
-    @JsonProperty("serviceDetails")
-    private ServiceDetails serviceDetails;
+    // @NotNull
+    @JsonProperty("document")
+    private ApplicantDocument document;
 
+    // TODO:: remove START
     @Valid
     @NotNull
     @JsonProperty("applicantAddress")
@@ -154,24 +160,31 @@ public class ApplicantPersonal {
 
     @Valid
     @NotNull
-    @JsonProperty("applicantChild")
-    private ApplicantChild applicantChild;
+    @JsonProperty("applicantDocuments")
+    private ApplicantDocument applicantDocuments;
+
+    @Valid
+    @NotNull
+    @JsonProperty("serviceDetails")
+    private ApplicantServiceDetail serviceDetails;
 
     @Valid
     @NotNull
     @JsonProperty("applicantServiceDocuments")
-    private ApplicantServiceDocuments applicantServiceDocuments;
-
-    @Valid
-    @NotNull
-    @JsonProperty("applicantDocuments")
-    private ApplicantDocuments applicantDocuments;
+    private ApplicantServiceDocument applicantServiceDocuments;
 
     @Valid
     @NotNull
     @JsonProperty("fileDetail")
     private FileDetail fileDetail;
 
+    @Valid
+    @NotNull
+    @JsonProperty("applicantChild")
+    private ApplicantChild applicantChild;
+    // TODO:: remove END
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
+
 }

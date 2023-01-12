@@ -10,16 +10,17 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
+//import org.egov.filemgmnt.util.EncryptionDecryptionUtil;
 import org.egov.filemgmnt.util.IdgenUtil;
 import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.ApplicantChild;
-import org.egov.filemgmnt.web.models.ApplicantDocuments;
+import org.egov.filemgmnt.web.models.ApplicantDocument;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
-import org.egov.filemgmnt.web.models.ApplicantServiceDocuments;
+import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
+import org.egov.filemgmnt.web.models.ApplicantServiceDocument;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.filemgmnt.web.models.FileDetail;
-import org.egov.filemgmnt.web.models.ServiceDetails;
 import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificates.CertificateRequest;
 import org.egov.tracer.model.CustomException;
@@ -40,6 +41,9 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
 
     private final FMConfiguration fmConfig;
     private final IdgenUtil idgenUtil;
+//
+//    @Autowired
+//    EncryptionDecryptionUtil encryptionDecryptionUtil;
 
     // @Autowired
     ApplicantPersonalEnrichment(FMConfiguration fmConfig, IdgenUtil idgenUtil) {
@@ -75,6 +79,8 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
                .forEach(personal -> enrichApplicantPersonalCreate(personal, auditDetails));
 
         setFileCodes(request);
+
+//        CrDeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathDtl.class);
     }
 
     private void enrichApplicantPersonalCreate(final ApplicantPersonal personal, final AuditDetails auditDetails) {
@@ -84,7 +90,16 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
 
         String applicantPersonalId = personal.getId();
 
-        ServiceDetails serviceDetails = personal.getServiceDetails();
+        // Encryption
+
+//        ApplicantPersonal fmDtlEnc = encryptionDecryptionUtil.encryptObject(personal,
+//                                                                            "FMDetail",
+//                                                                            ApplicantPersonal.class);
+//        personal.setAadhaarNo(fmDtlEnc.getAadhaarNo());
+
+        //
+
+        ApplicantServiceDetail serviceDetails = personal.getServiceDetails();
         if (serviceDetails != null) {
             serviceDetails.setId(UUID.randomUUID()
                                      .toString());
@@ -100,7 +115,7 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
             address.setAuditDetails(auditDetails);
         }
 
-        ApplicantServiceDocuments serviceDocument = personal.getApplicantServiceDocuments();
+        ApplicantServiceDocument serviceDocument = personal.getApplicantServiceDocuments();
         if (serviceDocument != null) {
             serviceDocument.setId(UUID.randomUUID()
                                       .toString());
@@ -108,7 +123,7 @@ public class ApplicantPersonalEnrichment implements BaseEnrichment {
             serviceDocument.setAuditDetails(auditDetails);
         }
 
-        ApplicantDocuments applicantDocument = personal.getApplicantDocuments();
+        ApplicantDocument applicantDocument = personal.getApplicantDocuments();
         if (applicantDocument != null) {
             applicantDocument.setId(UUID.randomUUID()
                                         .toString());

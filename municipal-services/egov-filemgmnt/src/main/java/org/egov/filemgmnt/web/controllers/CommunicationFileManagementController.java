@@ -9,7 +9,6 @@ import org.egov.filemgmnt.web.models.CommunicationFileRequest;
 import org.egov.filemgmnt.web.models.CommunicationFileResponse;
 import org.egov.filemgmnt.web.models.CommunicationFileSearchCriteria;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +27,7 @@ public class CommunicationFileManagementController {
     private final ResponseInfoFactory responseInfoFactory;
     private final CommunicationFileManagementService communicationService;
 
-    @Autowired
+    // @Autowired
     CommunicationFileManagementController(ResponseInfoFactory responseInfoFactory,
                                           CommunicationFileManagementService communicationService) {
         this.responseInfoFactory = responseInfoFactory;

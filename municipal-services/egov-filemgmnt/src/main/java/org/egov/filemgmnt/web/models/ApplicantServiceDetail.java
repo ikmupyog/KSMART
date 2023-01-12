@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(name = "ServiceDetail", description = "A Object holds the  data for a Service Details")
+@Schema(name = "ApplicantServiceDetail", description = "A Object holds the  data for a Service Details")
 @Validated
 
 @Getter
@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 
-public class ServiceDetails {
+public class ApplicantServiceDetail {
 
     @Schema(type = "string", format = "uuid", description = "Service details id")
     @Size(max = 64)

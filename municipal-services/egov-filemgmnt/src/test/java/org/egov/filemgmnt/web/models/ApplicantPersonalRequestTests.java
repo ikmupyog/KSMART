@@ -53,10 +53,10 @@ class ApplicantPersonalRequestTests {
                                                       .id(UUID.randomUUID()
                                                               .toString())
                                                       .firstName("FirstName")
-                                                      .serviceDetails(new ServiceDetails())
+                                                      .serviceDetails(new ApplicantServiceDetail())
                                                       .applicantAddress(new ApplicantAddress())
-                                                      .applicantServiceDocuments(new ApplicantServiceDocuments())
-                                                      .applicantDocuments(new ApplicantDocuments())
+                                                      .applicantServiceDocuments(new ApplicantServiceDocument())
+                                                      .applicantDocuments(new ApplicantDocument())
                                                       .fileDetail(new FileDetail())
                                                       .auditDetails(new AuditDetails())
                                                       .build());

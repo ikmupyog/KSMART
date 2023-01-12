@@ -10,15 +10,15 @@ public class FMConstants {
 
     public static final String FILEMANAGEMENT_MODULE_CODE = "FM";
 
-	public static final String TENANTS = "tenants";
+    public static final String TENANTS = "tenants";
 
-//	public static final String NAME = "name";
+//    public static final String NAME = "name";
 
-	public static final String TENANT_MODULE_NAME = "tenant";
+    public static final String TENANT_MODULE_NAME = "tenant";
 
-	public static final String TENANT_JSONPATH = "$.MdmsRes.tenant";
+    public static final String TENANT_JSONPATH = "$.MdmsRes.tenant";
 
-	public static final String COMMON_MASTER_JSONPATH = "$.MdmsRes.common-masters";
+    public static final String COMMON_MASTER_JSONPATH = "$.MdmsRes.common-masters";
 
     // mdms master names
     public static final String COMMON_MASTERS_MODULE = "common-masters";
@@ -92,13 +92,13 @@ public class FMConstants {
 
     public static final String FINANCIALYEAR = "financialYear";
 
-	public static final String DURATIONYR = "durationYear";
+    public static final String DURATIONYR = "durationYear";
 
-	public static final String DURATIONMNTH = "durationMonth";
+    public static final String DURATIONMNTH = "durationMonth";
 
-	public static final String OWNERNAME = "ownerName";
+    public static final String OWNERNAME = "ownerName";
 
-	public static final String OWNERADDRESS = "ownerAddress";
+    public static final String OWNERADDRESS = "ownerAddress";
 
     public static final String NAME = "name";
 

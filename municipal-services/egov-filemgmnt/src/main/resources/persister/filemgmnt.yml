@@ -317,11 +317,11 @@ serviceMaps:
       
     - query: >      
         UPDATE eg_fm_applicantaddress 
-        SET houseno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?
+        SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?
         WHERE applicantpersonalid = ?;
       basePath: ApplicantPersonals.*.applicantAddress
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.houseNo 
+      - jsonPath: $.ApplicantPersonals.*.applicantAddress.buildingNo 
       
       - jsonPath: $.ApplicantPersonals.*.applicantAddress.houseName  
       

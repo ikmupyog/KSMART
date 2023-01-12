@@ -18,7 +18,6 @@ import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
 import org.egov.filemgmnt.web.models.FileDetail;
 import org.egov.tracer.model.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.HttpClientErrorException;
@@ -39,7 +38,7 @@ public class WorkflowIntegrator {
     private final RestTemplate restTemplate;
     private final FMConfiguration fmConfig;
 
-    @Autowired
+    // @Autowired
     WorkflowIntegrator(RestTemplate restTemplate, FMConfiguration fmConfig) {
         this.restTemplate = restTemplate;
         this.fmConfig = fmConfig;
@@ -120,11 +119,11 @@ public class WorkflowIntegrator {
             List<Object> errros;
             try {
                 errros = responseContext.read("$.Errors");
-            } catch (PathNotFoundException pe) {
+            } catch (PathNotFoundException ex) {
                 log.error(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
-                          " Unable to read the json path in error object : " + pe.getMessage());
+                          " Unable to read the json path in error object : " + ex.getMessage());
                 throw new CustomException(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
-                        " Unable to read the json path in error object : " + pe.getMessage());
+                        " Unable to read the json path in error object : " + ex.getMessage());
             }
             throw new CustomException(WORKFLOW_ERROR.getCode(), errros.toString());
         } catch (Exception e) {

@@ -1,9 +1,7 @@
 package org.egov.filemgmnt.web.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.egov.common.contract.response.ResponseInfo;
 import org.springframework.validation.annotation.Validated;
@@ -22,27 +20,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-public class ServiceDetailsResponse {
+public class ApplicantPersonalServiceResponse {
 
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("ServiceDetails")
+    @JsonProperty("ApplicantPersonalService")
+    @NotNull
     @Valid
-    private List<ApplicantServiceDetail> serviceDetailsreq;
-
-    @JsonProperty("Count")
-    private int count;
-
-    public ServiceDetailsResponse addServiceDetails(ApplicantServiceDetail serviceDetails) {
-        if (serviceDetailsreq == null) {
-            serviceDetailsreq = new ArrayList<>();
-        }
-        serviceDetailsreq.add(serviceDetails);
-
-        return this;
-
-    }
-
+    private ApplicantPersonalServiceDetails applicantPersonalService;
 }

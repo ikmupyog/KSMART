@@ -31,7 +31,7 @@ class JsonMapperConfiguration {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
+    ObjectMapper objectMapper() {
 
         return JsonMapper.builder()
                          .addModules(new JavaTimeModule())
