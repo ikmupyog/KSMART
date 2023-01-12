@@ -426,7 +426,7 @@ public class CrDeathRegistryDtl {
 
     @Size(max = 64)
     @JsonProperty("burialState")
-    private String  burialLBName;
+    private String  burialState;
 
     @Size(max = 64)
     @JsonProperty("vehicleFirstHalt")
@@ -434,11 +434,11 @@ public class CrDeathRegistryDtl {
 
 
     @JsonProperty("maleDependentUnavailable")
-    private String  maleDependentUnavailable;
+    private Integer  maleDependentUnavailable;
 
 
     @JsonProperty("femaleDependentUnavailable")
-    private String  femaleDependentUnavailable;
+    private Integer  femaleDependentUnavailable;
 
     
    
