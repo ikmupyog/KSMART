@@ -69,6 +69,7 @@ export const CRsearch = {
     const Birthdetails = {
       title: "Birth Application Summary Details",
       asSectionHeader: true,
+      
     }
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
