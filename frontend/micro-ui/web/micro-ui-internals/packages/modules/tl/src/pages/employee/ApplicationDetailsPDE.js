@@ -62,7 +62,6 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
   // }, [applicationDetails?.numOfApplications]);
 
   useEffect(() => {
-    console.log("again");
     if (workflowDetails?.data?.applicationBusinessService) {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
