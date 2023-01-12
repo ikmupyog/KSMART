@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 
-  const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOfficerName,selectSignedOfficerName,HospitalName,selectHospitalName, setDesignation,
-    setSelectedDesignation, HospitalAadhaar , setHospitalAadhaar ,HospitalMobile, setHospitalMobile  
-   }) =>  {
-  const stateId = Digit.ULBService.getStateId(); 
+const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOfficerName, selectSignedOfficerName, HospitalName, selectHospitalName, setDesignation,
+  setSelectedDesignation, HospitalAadhaar, setHospitalAadhaar, HospitalMobile, setHospitalMobile, OfficerName, setOfficerName, OfficerDesignation, setOfficerDesignation,
+}) => {
+  const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
- 
+
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
@@ -18,10 +18,11 @@ import { useTranslation } from "react-i18next";
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [HospitalAadhaar, setHospitalAadhaar] = useState(formData?.HospitalDetails?.HospitalAadhaar);
   // const [HospitalMobile, setHospitalMobile] = useState(formData?.HospitalDetails?.HospitalMobile);
+  // const [OfficerName, setOfficerName] = useState(formData?.HospitalDetails?.OfficerName);
+  // const [OfficerDesignation, setOfficerDesignation] = useState(formData?.HospitalDetails?.OfficerDesignation);
 
-  
   let naturetypecmbvalue = null;
- 
+
   let cmbhospital = [];
   hospital &&
     hospital["birth-death-service"] &&
@@ -41,34 +42,45 @@ import { useTranslation } from "react-i18next";
     setSelectedDesignation(value);
   }
 
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
   function setSelectHospitalAadhaar(e) {
     setHospitalAadhaar(e.target.value);
   }
   function setSelectHospitalMobile(e) {
     setHospitalMobile(e.target.value);
   }
-
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
+  function setselectOfficerName(e) {
+    setOfficerName(e.target.value);
+  }
+  function setSelectOfficerDesignation(e) {
+    setOfficerDesignation(e.target.value);
   }
 
+
+
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
+
   const goNext = () => {
-    // sessionStorage.setItem("SignedOfficerName", SignedOfficerName);
-    // sessionStorage.setItem("HospitalName", HospitalName);
-    // sessionStorage.setItem("setDesignation", setDesignation.code);
-    // sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar);
-    // sessionStorage.setItem("HospitalMobile", HospitalMobile);
+    // sessionStorage.setItem("SignedOfficerName", SignedOfficerName ? SignedOfficerName.code : null);
+    // sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.code : null );
+    // sessionStorage.setItem("setDesignation", setDesignation ? setDesignation.code : null);
+    // sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar ? HospitalAadhaar : null );
+    // sessionStorage.setItem("HospitalMobile", HospitalMobile ? HospitalMobile : null);
+    // sessionStorage.setItem("OfficerName", OfficerName ? OfficerName : null);
+    // sessionStorage.setItem("OfficerDesignation", OfficerDesignation ? OfficerDesignation : null);
+
 
     // onSelect(config.key, { SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile });
   };
   return (
     <React.Fragment>
-        {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
+      {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
         <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!HospitalAadhaar}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!HospitalAadhaar}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -78,81 +90,111 @@ import { useTranslation } from "react-i18next";
         </div>
 
         <div className="row">
-        <div className="col-md-12">
-          <div className="col-md-6">
-            <CardLabel>{`${t("CR_HOSPITAL")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="hospitalName"
-              isMandatory={true}
-              option={cmbhospital}
-              selected={HospitalName}
-              select={setselectHospitalName}
-              placeholder={`${t("CR_HOSPITAL")}`}
-            />
+          <div className="col-md-12">
+            <div className="col-md-4">
+              <CardLabel>{`${t("CR_HOSPITAL")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="hospitalName"
+                isMandatory={true}
+                option={cmbhospital}
+                selected={HospitalName}
+                select={setselectHospitalName}
+                placeholder={`${t("CR_HOSPITAL")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="hospitalName"
+                isMandatory={true}
+                option={cmbhospital}
+                selected={SignedOfficerName}
+                select={setselectSignedOfficerName}
+                placeholder={`${t("CR_SIGNED_OFFICER")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={true}
+                option={cmbhospital}
+                selected={setDesignation}
+                select={selectDesignation}
+                disabled={isEdit}
+                placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
+              />
+            </div>
           </div>
-          <div className="col-md-6">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="hospitalName"
-              isMandatory={true}
-              option={cmbhospital}
-              selected={SignedOfficerName}
-              select={setselectSignedOfficerName}
-              placeholder={`${t("CR_SIGNED_OFFICER")}`}
-            />
-          </div>
-        </div>
         </div>
         <div className="row">
-        <div className="col-md-12"> 
-          <div className="col-md-4">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="code"
-              isMandatory={true}
-              option={cmbhospital}
-              selected={setDesignation}
-              select={selectDesignation}
-              disabled={isEdit}
-              placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
-            />
+          <div className="col-md-12">
+            <div className="col-md-3">
+              <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="OfficerName"
+                value={OfficerName}
+                onChange={setselectOfficerName}
+                disable={isEdit}
+                placeholder={`${t("CR_SIGNED_OFFICER")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
+
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="OfficerDesignation"
+                value={OfficerDesignation}
+                onChange={setSelectOfficerDesignation}
+                disable={isEdit}
+                placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
+
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="HospitalMobile"
+                value={HospitalMobile}
+                onChange={setSelectHospitalMobile}
+                disable={isEdit}
+                placeholder={`${t("CR_MOBILE_NO")}`}
+                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="HospitalAadhaar"
+                value={HospitalAadhaar}
+                onChange={setSelectHospitalAadhaar}
+                disable={isEdit}
+                placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              />
+            </div>
           </div>
-          <div className="col-md-4">
-            <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="HospitalMobile"
-              value={HospitalMobile}
-              onChange={setSelectHospitalMobile}
-              disable={isEdit}
-              placeholder={`${t("CR_MOBILE_NO")}`}
-              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
-            />
-          </div>
-          <div className="col-md-4">
-            <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="HospitalAadhaar"
-              value={HospitalAadhaar}
-              onChange={setSelectHospitalAadhaar}
-              disable={isEdit}
-              placeholder={`${t("CS_COMMON_AADHAAR")}`}
-              {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} 
-             
-            />
-          </div>
-          
-        </div> 
         </div>
       </FormStep>
     </React.Fragment>
