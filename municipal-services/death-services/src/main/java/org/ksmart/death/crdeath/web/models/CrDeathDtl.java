@@ -216,17 +216,17 @@ public class CrDeathDtl {
     @JsonProperty("submittedOn")
     private Long  submittedOn ;    
 
-    @Size(max = 64)
-    @JsonProperty("placeBurial")
-    private String  placeBurial;
+    // @Size(max = 64)
+    // @JsonProperty("placeBurial")
+    // private String  placeBurial;
 
-    @Size(max = 64)
-    @JsonProperty("placeBurialInstitutionType")
-    private String   placeBurialInstitutionType ;
+    // @Size(max = 64)
+    // @JsonProperty("placeBurialInstitutionType")
+    // private String   placeBurialInstitutionType ;
 
-    @Size(max = 200)
-    @JsonProperty("placePurialInstitutionName")
-    private String  placePurialInstitutionName ;
+    // @Size(max = 200)
+    // @JsonProperty("placePurialInstitutionName")
+    // private String  placePurialInstitutionName ;
 
     @Size(max = 64)
     @JsonProperty("registrationNo")
@@ -452,5 +452,38 @@ public class CrDeathDtl {
     // @Size(max = 64)
     // @JsonProperty("familyContactEmailId")
     // private String familyContactEmailId ;
+
+    //jasmine 12/01/2023
+    @Size(max = 64)
+    @JsonProperty("burialState")
+    private String  burialState;
+
+    @Size(max = 64)
+    @JsonProperty("burialDistrict")
+    private String  burialDistrict;
+
+    @Size(max = 64)
+    @JsonProperty("burialLBType")
+    private String burialLBType;
+
+    @Size(max = 64)
+    @JsonProperty("burialState")
+    private String  burialLBName;
+
+    @Size(max = 64)
+    @JsonProperty("vehicleFirstHalt")
+    private String  vehicleFirstHalt;
+
+
+    @JsonProperty("maleDependentUnavailable")
+    private String  maleDependentUnavailable;
+
+
+    @JsonProperty("femaleDependentUnavailable")
+    private String  femaleDependentUnavailable;
+
+
+
+
 
 }

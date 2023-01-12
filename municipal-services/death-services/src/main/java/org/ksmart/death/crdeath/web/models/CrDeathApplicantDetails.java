@@ -52,6 +52,10 @@ public class CrDeathApplicantDetails {
     @JsonProperty("applicantEmailId")
     private String applicantEmailId ;
 
+    //Jasmine 12.01.2023
+    @Size(max = 64)
+    @JsonProperty("applicantRelation")
+    private String applicantRelation ; 
     
 
 
