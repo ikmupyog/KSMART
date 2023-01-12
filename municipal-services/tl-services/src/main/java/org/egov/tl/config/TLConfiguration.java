@@ -323,4 +323,7 @@ public class TLConfiguration {
     @Value("${egov.idgen.tlpde.applicationNum.format}")
     private String applicationNumberPdeIdgenFormatTL;
 
+    @Value("${persister.updatewfpde.tradelicense.topic}")
+    private String updateWfPdeTopic;
+
 }

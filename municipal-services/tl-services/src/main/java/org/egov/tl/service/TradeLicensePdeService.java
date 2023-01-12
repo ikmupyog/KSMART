@@ -601,4 +601,65 @@ public class TradeLicensePdeService {
      * }
      */
 
+    /**
+     * Updates the tradeLicenses
+     * 
+     * @param tradeLicenseRequest The update Request
+     * @return Updated TradeLcienses
+     */
+    public List<TradeLicense> updatewf(TradeLicenseRequest tradeLicenseRequest, String businessServicefromPath) {
+        TradeLicense licence = tradeLicenseRequest.getLicenses().get(0);
+        TradeLicense.ApplicationTypeEnum applicationType = licence.getApplicationType();
+        List<TradeLicense> licenceResponse = null;
+        if (businessServicefromPath == null)
+            businessServicefromPath = businessService_TL;
+        tlValidator.validateBusinessService(tradeLicenseRequest, businessServicefromPath);
+        Object mdmsData = util.mDMSCall(tradeLicenseRequest.getRequestInfo(),
+                tradeLicenseRequest.getLicenses().get(0).getTenantId());
+        String businessServiceName = null;
+        switch (businessServicefromPath) {
+            case businessService_TL:
+                businessServiceName = config.getTlBusinessServiceValue();
+                break;
+
+            case businessService_BPA:
+                String tradeType = tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getTradeUnits()
+                        .get(0).getTradeType();
+                if (pickWFServiceNameFromTradeTypeOnly)
+                    tradeType = tradeType.split("\\.")[0];
+                businessServiceName = tradeType;
+                break;
+        }
+
+        // enrichmentPdeService.enrichTLUpdateRequest(tradeLicenseRequest);
+
+        /*
+         * call workflow service if it's enable else uses internal workflow process
+         */
+        List<String> endStates = Collections.nCopies(tradeLicenseRequest.getLicenses().size(), STATUS_APPROVED);
+        switch (businessServicefromPath) {
+            case businessService_TL:
+                if (config.getIsExternalWorkFlowEnabled()) {
+                    wfIntegrator.callWorkFlow(tradeLicenseRequest);
+                } else {
+                    TLWorkflowService.updateStatus(tradeLicenseRequest);
+                }
+                break;
+
+            case businessService_BPA:
+                endStates = tradeUtil.getBPAEndState(tradeLicenseRequest);
+                wfIntegrator.callWorkFlow(tradeLicenseRequest);
+                break;
+        }
+        // enrichmentPdeService.postStatusEnrichment(tradeLicenseRequest, endStates,
+        // mdmsData);
+        // userService.createUser(tradeLicenseRequest, false);
+        // calculationService.addCalculation(tradeLicenseRequest);
+        repository.updatePdeWf(tradeLicenseRequest);
+        licenceResponse = tradeLicenseRequest.getLicenses();
+        // }
+        return licenceResponse;
+
+    }
+
 }

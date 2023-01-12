@@ -193,13 +193,23 @@ public class TLRepository {
     }
 
     /**
-     * Pushes the update request to update topic or on workflow topic depending on
+     * Pushes the update request to update topic depending on
      * the status
      *
      * @param tradeLicenseRequest The update requuest
      */
     public void updatePde(TradeLicenseRequest tradeLicenseRequest) {
         producer.push(config.getUpdatePdeTopic(), tradeLicenseRequest);
+    }
+
+    /**
+     * Pushes the update request to update topic or on workflow topic depending on
+     * the status
+     *
+     * @param tradeLicenseRequest The update requuest
+     */
+    public void updatePdeWf(TradeLicenseRequest tradeLicenseRequest) {
+        producer.push(config.getUpdateWfPdeTopic(), tradeLicenseRequest);
     }
 
 }

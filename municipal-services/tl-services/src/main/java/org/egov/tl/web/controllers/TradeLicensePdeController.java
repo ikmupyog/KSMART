@@ -98,6 +98,20 @@ public class TradeLicensePdeController {
                 return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
+        @RequestMapping(value = { "/{servicename}/_updatewf", "/_updatewf" }, method = RequestMethod.POST)
+        public ResponseEntity<TradeLicenseResponse> updatewf(
+                        @Valid @RequestBody TradeLicenseRequest tradeLicenseRequest,
+                        @PathVariable(required = false) String servicename) {
+                List<TradeLicense> licenses = tradeLicensePdeService.updatewf(tradeLicenseRequest, servicename);
+
+                TradeLicenseResponse response = TradeLicenseResponse.builder().licenses(licenses).responseInfo(
+                                responseInfoFactory.createResponseInfoFromRequestInfo(
+                                                tradeLicenseRequest.getRequestInfo(),
+                                                true))
+                                .build();
+                return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
         // @RequestMapping(value = { "/{servicename}/{jobname}/_batch", "/_batch" },
         // method = RequestMethod.POST)
         // public ResponseEntity sendReminderSMS(@Valid @RequestBody RequestInfoWrapper
