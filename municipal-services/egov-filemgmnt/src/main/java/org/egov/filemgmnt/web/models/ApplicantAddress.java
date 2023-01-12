@@ -43,7 +43,7 @@ public class ApplicantAddress {
 
     @Schema(type = "string", description = "Sub number")
     @Size(max = 64)
-    @NotBlank(message = "Sub number is required")
+//    @NotBlank(message = "Sub number is required")
     @JsonProperty("subNo")
     private String subNo;
 
@@ -78,6 +78,8 @@ public class ApplicantAddress {
 
     @Schema(type = "string", description = "Postoffice name")
     @Size(max = 64)
+    @NotNull
+    @NotBlank(message = "Postoffice name is required")
     @JsonProperty("postOfficeName")
     private String postOfficeName;
 
@@ -88,21 +90,29 @@ public class ApplicantAddress {
 
     @Schema(type = "string", description = "Local place")
     @Size(max = 64)
+    @NotNull
+    @NotBlank(message = "Local place is required")
     @JsonProperty("localPlace")
     private String localPlace;
 
     @Schema(type = "string", description = "Local place malayalam")
     @Size(max = 64)
+    @NotNull
+    @NotBlank(message = "Local place malayalam is required")
     @JsonProperty("localPlaceMal")
     private String localPlaceMal;
 
     @Schema(type = "string", description = "Main place")
     @Size(max = 64)
+    @NotNull
+    @NotBlank(message = "Main place  is required")
     @JsonProperty("mainPlace")
     private String mainPlace;
 
     @Schema(type = "string", description = "Main place malayalam")
     @Size(max = 64)
+    @NotNull
+    @NotBlank(message = "Main place malayalam is required")
     @JsonProperty("mainPlaceMal")
     private String mainPlaceMal;
 
@@ -115,15 +125,11 @@ public class ApplicantAddress {
 
     @Schema(type = "string", description = "Village no")
     @Size(max = 64)
-    @NotNull
-    @NotBlank(message = "Village is required")
     @JsonProperty("village")
     private String village;
 
     @Schema(type = "string", description = "Taluk no")
     @Size(max = 64)
-    @NotNull
-    @NotBlank(message = "Taluk is required")
     @JsonProperty("taluk")
     private String taluk;
 

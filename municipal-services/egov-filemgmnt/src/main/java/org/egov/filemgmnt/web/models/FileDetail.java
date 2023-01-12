@@ -53,7 +53,7 @@ public class FileDetail {
 
     @Schema(type = "string", description = "File number")
     @Size(max = 64)
-    @NotNull
+//    @NotNull
     @JsonProperty("fileNumber")
     private String fileNumber;
 
@@ -64,7 +64,7 @@ public class FileDetail {
 
     @Schema(type = "string", description = "File name")
     @Size(max = 64)
-    @NotNull
+//    @NotNull
     @JsonProperty("fileName")
     private String fileName;
 
@@ -75,7 +75,7 @@ public class FileDetail {
     private String fileArisingMode;
 
     @Schema(type = "integer", format = "int64", description = "File arising date")
-    // @NotNull
+    @NotNull
     @JsonProperty("fileArisingDate")
     private Long fileArisingDate;
 
@@ -83,12 +83,12 @@ public class FileDetail {
 //    @Size(min = 4, max = 4, message = "Invalid financial year")
 //    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid financial year")
     @Size(max = 10)
-    @NotNull(message = "Financial year is required")
+//    @NotNull(message = "Financial year is required")
     @JsonProperty("financialYear")
     private String financialYear;
 
     @Schema(type = "integer", format = "int64", description = "Application submitted date")
-    // @NotNull
+    @NotNull
     @JsonProperty("applicationDate")
     private Long applicationDate;
 
@@ -100,6 +100,7 @@ public class FileDetail {
 
     @Schema(type = "string", description = "Workflow action")
     @Size(max = 64)
+    @NotNull
     @JsonProperty("action")
     private String action;
 
@@ -110,6 +111,7 @@ public class FileDetail {
 
     @Schema(type = "string", description = "Business service")
     @Size(max = 64)
+    @NotNull
     @JsonProperty("businessService")
     private String businessService;
 
@@ -117,6 +119,7 @@ public class FileDetail {
     private AuditDetails auditDetails;
 
     @JsonProperty("assignees")
+    @NotNull
     private List<String> assignees;
 
     @Schema(type = "string", description = "Comments")

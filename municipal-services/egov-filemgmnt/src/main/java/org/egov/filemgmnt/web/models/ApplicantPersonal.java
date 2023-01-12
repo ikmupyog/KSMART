@@ -46,13 +46,11 @@ public class ApplicantPersonal {
 
     @Schema(type = "string", description = "Last name")
     @Size(max = 64)
-    @NotNull
     @JsonProperty("lastName")
     private String lastName;
 
     @Schema(type = "string", description = "Last name malayalam")
     @Size(max = 64)
-    @NotNull
     @JsonProperty("lastNameMal")
     private String lastNameMal;
 
@@ -64,7 +62,7 @@ public class ApplicantPersonal {
     @Schema(type = "string", description = "Aadhaar number")
     @Size(max = 12)
     @NotNull
-//    @Pattern(regexp = "^[1-9][0-9]{11}$")
+    @Pattern(regexp = "^[1-9][0-9]{11}$")
     @JsonProperty("aadhaarNo")
     private String aadhaarNo;
 

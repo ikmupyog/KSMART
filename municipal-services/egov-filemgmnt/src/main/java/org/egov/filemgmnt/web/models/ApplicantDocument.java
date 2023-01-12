@@ -43,12 +43,12 @@ public class ApplicantDocument {
 
     @Schema(type = "string", description = "Document number")
     @Size(max = 64)
-    @NotNull
+//    @NotNull
     @JsonProperty("documentNumber")
     private String documentNumber;
 
     @Schema(type = "integer", format = "int64", description = "Document expiry date")
-    @NotNull
+//    @NotNull
     @JsonProperty("docExpiryDate")
     private Long docExpiryDate;
 
