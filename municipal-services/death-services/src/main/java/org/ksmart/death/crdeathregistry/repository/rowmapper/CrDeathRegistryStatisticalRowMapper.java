@@ -42,6 +42,11 @@ public class CrDeathRegistryStatisticalRowMapper
                             .arecanutNumYears(rs.getInt("arecanut_num_years"))
                             .alcoholNumYears(rs.getInt("alcohol_num_years"))
                             .nationality(rs.getString("nationality"))
+                            .occupationSub(rs.getString("occupation_sub"))
+                            .occupationMinor(rs.getString("occupation_minor"))
+                            .educationMain(rs.getString("education_main"))
+                            .educationSub(rs.getString("education_sub"))
+                            .residenceLBType(rs.getString("residencelbtype"))
                             .build();
     }
 

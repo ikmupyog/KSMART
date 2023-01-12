@@ -114,6 +114,10 @@ public class CrDeathRegistryRowMapper implements ResultSetExtractor<List<CrDeath
                                         .deceasedIdproofType(rs.getString("deceased_idprooftype"))
                                         .deathApplicationNo(rs.getString("application_no"))
                                         .deathACKNo(rs.getString("ack_no")) 
+                                        .burialState(rs.getString("burial_state"))
+                                        .vehicleFirstHalt(rs.getString("vehicle_first_halt"))
+                                        .maleDependentUnavailable(rs.getInt("male_dependent_unavailable"))
+                                        .femaleDependentUnavailable (rs.getInt("female_dependent_unavailable"))
                                         //Rakhi S ikm on 09.01.2023 
                                         .registrationDate(rs.getLong("registration_date")) 
                                         .auditDetails(getAuditDetails(rs))
