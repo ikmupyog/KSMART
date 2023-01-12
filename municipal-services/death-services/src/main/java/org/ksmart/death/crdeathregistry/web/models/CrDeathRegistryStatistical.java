@@ -91,5 +91,16 @@ public class CrDeathRegistryStatistical {
     //Rakhi S on 07.12.2022
     @JsonProperty("nationality")
     private String nationality;
-    
+     //Jasmine 12.01.2023
+    @JsonProperty("occupationSub")
+    private Integer occupationSub;
+
+    @JsonProperty("occupationMinor")
+    private Integer occupationMinor;
+
+    @JsonProperty("educationMain")
+    private Integer educationMain;
+
+    @JsonProperty("educationSub")
+    private Integer educationSub;
 }

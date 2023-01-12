@@ -1,0 +1,2 @@
+ALTER TABLE eg_death_statistical_dtls ADD COLUMN IF NOT EXISTS  residenceLBType character varying(64);
+ALTER TABLE eg_death_statistical_dtls_log ADD COLUMN IF NOT EXISTS  residenceLBType character varying(64);
