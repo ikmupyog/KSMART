@@ -49,7 +49,7 @@ export const DFMService = {
       useCache: false,
       setTimeParam: false,
       userService: true,
-      method: "POST",
+      method: "PUT",
       params: {},
       auth: true,
     }),

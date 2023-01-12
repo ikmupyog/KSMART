@@ -33,7 +33,7 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
     subtype: [],
     functionality: [],
   });
-  console.log('fn',MajorFunction,FunctionDet);
+  // console.log('fn',MajorFunction,FunctionDet);
   const [showError, setShowError] = useState(false);
   //   console.log(state);
   let modules = state.common.modules;
@@ -84,36 +84,30 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
         });
     }
   }, [FunctionDet]);
-  useEffect(() => {
-    if (SubFunctionDet?.mainCode) {
+  // useEffect(() => {
+  //   if (SubFunctionDet?.mainCode) {
     
-    MajorFunction &&
-    MajorFunction["FileManagement"] &&
-    MajorFunction["FileManagement"].MajorFunction.filter((item) => {
-          if (item?.code === SubFunctionDet?.mainCode) {
-            cmbMajorFunction.push(item);
-          }
-        });
-    }
-  }, [SubFunctionDet]);
-  useEffect(() => {
-    if (MinorFunctionDet?.mainCode) {
+  //   MajorFunction &&
+  //   MajorFunction["FileManagement"] &&
+  //   MajorFunction["FileManagement"].MajorFunction.filter((item) => {
+  //         if (item?.code === SubFunctionDet?.mainCode) {
+  //           cmbMajorFunction.push(item);
+  //         }
+  //       });
+  //   }
+  // }, [SubFunctionDet]);
+  // useEffect(() => {
+  //   if (MinorFunctionDet?.mainCode) {
       
-        SubFunction &&
-        SubFunction["FileManagement"] &&
-        SubFunction["FileManagement"].SubFunction.filter((item) => {
-          if (item?.code === MinorFunctionDet?.subCode) {
-            cmbSubFunction.push(item);
-          }
-        });
-    }
-  }, [MinorFunctionDet]);
-  // let cmbSubFunction = [];
-  // SubFunction &&
-  //   SubFunction["FileManagement"] &&
-  //   SubFunction["FileManagement"].SubFunction.map((ob) => {
-  //     cmbSubFunction.push(ob);
-  //   });
+  //       SubFunction &&
+  //       SubFunction["FileManagement"] &&
+  //       SubFunction["FileManagement"].SubFunction.filter((item) => {
+  //         if (item?.code === MinorFunctionDet?.subCode) {
+  //           cmbSubFunction.push(item);
+  //         }
+  //       });
+  //   }
+  // }, [MinorFunctionDet]);
   
   let cmbFunction = [];
   Function &&
@@ -138,6 +132,22 @@ const SubType = ({ path, handleNext, formData, config, onSelect }) => {
     }
     function setSelectMinorFunctionDet(value) {
       setMinorFunctionDet(value);
+      SubFunction &&
+            SubFunction["FileManagement"] &&
+            SubFunction["FileManagement"].SubFunction.filter((item) => {
+              if (item?.code === value?.subCode) {
+                cmbSubFunction.push(item);
+              }
+            });
+            setSubFunctionDet(cmbSubFunction[0])
+            MajorFunction &&
+            MajorFunction["FileManagement"] &&
+            MajorFunction["FileManagement"].MajorFunction.filter((item) => {
+                  if (item?.code === cmbSubFunction[0]?.mainCode) {
+                    cmbMajorFunction.push(item);
+                  }
+                });
+            setMajorFunctionDet(cmbMajorFunction[0])
     }
 
     const goNext = () => { 
