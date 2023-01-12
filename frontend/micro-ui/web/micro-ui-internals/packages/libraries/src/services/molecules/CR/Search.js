@@ -66,6 +66,10 @@ export const CRsearch = {
     //   propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
     // }
     let employeeResponse = [];
+    const Birthdetails = {
+      title: "Birth Application Summary Details",
+      asSectionHeader: true,
+    }
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
@@ -279,7 +283,7 @@ export const CRsearch = {
     //   };
     //   response && employeeResponse.push(details);
     // }
-
+    response && employeeResponse.push(Birthdetails);
     response && employeeResponse.push(childdetails);
     response && employeeResponse.push(fatherInfo);
     response && employeeResponse.push(motherInfo);

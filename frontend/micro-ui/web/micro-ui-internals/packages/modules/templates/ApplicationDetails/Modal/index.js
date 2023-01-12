@@ -4,6 +4,7 @@ import PTActionModal from "./PTActionModal";
 import TLActionModal from "./TLActionModal";
 import BirthActionModal from "./BirthActionModal";
 import DeathActionModal from "./DeathActionModal";
+import DFMActionModal from "./DFMActionModal";
 import BPAREGActionModal from "./BPAREGActionModal";
 import BPAActionModal from "./BPAActionModal";
 import NOCActionModal from "./NOCActionModal";
@@ -13,14 +14,15 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("PT")) {
     return <PTActionModal {...props} />;
   }
-
-  if (props?.businessService.includes("21days")) {
+  if (props?.businessService.includes("NewBirth")) {
     return <BirthActionModal {...props} />;
   }
   if (props?.businessService.includes("death21days")) {
     return <DeathActionModal {...props} />;
   }
-
+  if (props?.businessService.includes("NewDFM")) {
+    return <DFMActionModal {...props} />;
+  }
   if (props?.businessService.includes("NewTL") || props?.businessService.includes("TL") || props?.businessService.includes("EDITRENEWAL") || props?.businessService.includes("DIRECTRENEWAL")) {
     return <TLActionModal {...props} />;
   }

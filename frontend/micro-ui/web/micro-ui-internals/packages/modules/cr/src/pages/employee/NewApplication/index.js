@@ -154,7 +154,7 @@ console.log(newConfig);
     let formData = {
       action: "INITIATE",
       applicationType: "NEW",
-      workflowCode: "NewTL",
+      workflowCode: "NewBirth",
       commencementDate,
       financialYear,
       licenseType,

@@ -292,9 +292,9 @@ export const convertToBirthRegistration = (data = {}) => {
         remarks_ml: null, //Not needed
         applicationtype: "NEW",
         businessservice: "birth-services",
-        workflowcode: "21days",
+        workflowcode: "NewBirth",
         aadharno: data?.ChildDetails?.ChildAadharNo,
-        action: "INITIATE",
+        action: "APPROVE",
         status: null,
         birthPlace: {
           placeofbirthid: data?.BirthPlace?.BirthPlace.code,

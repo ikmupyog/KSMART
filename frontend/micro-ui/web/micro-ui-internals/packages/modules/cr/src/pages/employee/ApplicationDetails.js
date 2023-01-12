@@ -13,7 +13,7 @@ const ApplicationDetails = () => {
   const { id: applicationno } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("21days"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("NewBirth"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNo", applicationno)
