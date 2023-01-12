@@ -65,21 +65,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
-// const getLocalBodyMasterList = (tenantId, moduleCode) => ({
-//   details: {
-//     tenantId: tenantId,
-//     moduleDetails: [
-//       {
-//         moduleName: "tenant",
-//         masterDetails: [
-//           {
-//             name: "tenants",
-//           },
-//         ],
-//       },
-//     ],
-//   },
-// });
+const getLocalBodyMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: "tenant",
+        masterDetails: [
+          {
+            name: "tenants",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRQualificationSubList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,

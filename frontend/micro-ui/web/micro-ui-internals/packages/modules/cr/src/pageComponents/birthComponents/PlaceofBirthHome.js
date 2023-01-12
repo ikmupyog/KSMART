@@ -19,7 +19,8 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
   const { data: Taluk = {},isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {},isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {},isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: localbodies={}, islocalbodiesLoading } = Digit.Hooks.useTenants();
+  const { data: localbodies={}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+  // Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
@@ -61,7 +62,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
   let cmbPostOffice = [];
   let districtid = null;
   let cmbLBType = [];
-
+  let cmbLB = [];
   console.log("Taluk" + Taluk);
   Taluk &&
     Taluk["common-masters"] &&
@@ -99,6 +100,11 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
     LBType["common-masters"] &&
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
+    });
+    localbodies &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants.map((ob) => {
+      cmbLB.push(ob);
     });
   // let Zonal = [];
   // let cmbWardNo = [];
@@ -212,7 +218,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
       console.log(localbodies);
       if (AdrsDistrict) {
         setIsInitialRender(false);
-        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === AdrsDistrict.districtid));
+        setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === AdrsDistrict.districtid));
       }
     }
   }, [lbs, isInitialRender]);
