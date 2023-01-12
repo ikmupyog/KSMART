@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,setAdrsCountry, AdrsStateName,setAdrsStateName,AdrsDistrict,setAdrsDistrict,
   AdrsLBTypeName, setAdrsLBTypeName, AdrsLBName, setAdrsLBName, AdrsTaluk,setAdrsTaluk, AdrsPostOffice, setAdrsPostOffice,AdrsPincode, setAdrsPincode,
   AdrsHouseNameEn, setAdrsHouseNameEn,AdrsHouseNameMl, setAdrsHouseNameMl,AdrsBuldingNo, setAdrsBuldingNo,AdrsResNo, setAdrsResNo,AdrsDoorNo, setAdrsDoorNo,
-  AdrsMainPlaceEn, setAdrsMainPlaceEn,AdrsMainPlaceMl, setAdrsMainPlaceMl,AdrsLocalityNameEn, setAdrsLocalityNameEn,AdrsLocalityNameMl, setAdrsLocalityNameML,AdrsCityEn, setAdrsCityEn,AdrsCityMl, setAdrsCityMl,
+  AdrsMainPlaceEn, setAdrsMainPlaceEn,AdrsMainPlaceMl, setAdrsMainPlaceMl,AdrsLocalityNameEn, setAdrsLocalityNameEn,AdrsLocalityNameMl, setAdrsLocalityNameML, setAdrsCityEn, setAdrsCityMl,
   AdrsStreetNameEn, setAdrsStreetNameEn ,AdrsStreetNameMl, setAdrsStreetNameMl,AdrsVillage, setAdrsVillage}) => {
 
   const stateId = Digit.ULBService.getStateId();
@@ -531,7 +531,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
         </div>
         </div>
       </div>
-      <div className="row">
+      {/* <div className="row">
         <div className="col-md-12" >
          <div className="col-md-6" >
             <CardLabel>{t("CR_CITY_EN")}<span className="mandatorycss">*</span></CardLabel>
@@ -560,7 +560,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="row">
         <div className="col-md-12">

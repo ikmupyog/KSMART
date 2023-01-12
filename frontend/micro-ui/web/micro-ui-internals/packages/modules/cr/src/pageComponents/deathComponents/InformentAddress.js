@@ -3,7 +3,8 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, CheckBo
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const InformentAddress = ({ config, onSelect, userType, formData }) => {
+const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn, setInformentNameEn,InformentNameMl, setInformentNameMl,
+  setTitle, setSelectedTitle,AadhaarNo, setAadhaarNo,setDeclaration, setSelectedDeclaration,InformentMobileNo, setInformentMobileNo,InformentEmail, setInformentEmail,isNoAadhaar, setIsNoAadhaar }) => {
   const stateId = Digit.ULBService.getStateId();
   const [checked, setChecked] = useState(false);
   const { t } = useTranslation();
@@ -36,16 +37,18 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
   // const [PinCode, setPinCode] = useState(formData?.InformentAddress?.PinCode);
   // const [setPostOffice, setSelectedPostOffice] = useState(formData?.InformentAddress?.setPostOffice);
   // const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
-  const [InformentNameEn, setInformentNameEn] = useState(formData?.InformentAddress?.InformentNameEn);
-  const [InformentNameMl, setInformentNameMl] = useState(formData?.InformentAddress?.InformentNameMl);
-  const [setTitle, setSelectedTitle] = useState(formData?.InformentAddress?.setTitle);
+   
+    // const [InformentAge, setInformentAge] = useState(formData?.InformentAddress?.InformentAge);
+
+    // Place of death Home and vehicle
+  // const [InformentNameEn, setInformentNameEn] = useState(formData?.InformentAddress?.InformentNameEn);
+  // const [InformentNameMl, setInformentNameMl] = useState(formData?.InformentAddress?.InformentNameMl);
+  // const [setTitle, setSelectedTitle] = useState(formData?.InformentAddress?.setTitle); 
+  // const [AadhaarNo, setAadhaarNo] = useState(formData?.InformentAddress?.AadhaarNo);
+  // const [setDeclaration, setSelectedDeclaration] = useState(formData?.InformentAddress?.setDeclaration);
+  // const [InformentMobileNo, setInformentMobileNo] = useState(formData?.InformentAddress?.InformentMobileNo); 
+  // const [InformentEmail, setInformentEmail] = useState(formData?.InformentAddress?.InformentEmail);
   // const [isNoAadhaar, setIsNoAadhaar] = useState(formData?.InformentAddress?.isNoAadhaar);
-  const [AadhaarNo, setAadhaarNo] = useState(formData?.InformentAddress?.AadhaarNo);
-  const [setDeclaration, setSelectedDeclaration] = useState(formData?.InformentAddress?.setDeclaration);
-  const [InformentMobileNo, setInformentMobileNo] = useState(formData?.InformentAddress?.InformentMobileNo);
-  // const [InformentAge, setInformentAge] = useState(formData?.InformentAddress?.InformentAge);
-  const [InformentEmail, setInformentEmail] = useState(formData?.InformentAddress?.InformentEmail);
-  
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
@@ -222,15 +225,18 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
     // sessionStorage.setItem("PinCode", PinCode);
     // sessionStorage.setItem("setPostOffice", setPostOffice ? setPostOffice.code : null);
     // sessionStorage.setItem("PresentLBName", null);
-    sessionStorage.setItem("InformentNameEn", InformentNameEn);
-    sessionStorage.setItem("InformentNameMl", InformentNameMl);
-    sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
-    sessionStorage.setItem("isNoAadhaar", isNoAadhaar);
-    sessionStorage.setItem("AadhaarNo", AadhaarNo);
-    sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
-    sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
     // sessionStorage.setItem("InformentAge", InformentAge);
-    sessionStorage.setItem("InformentEmail", InformentEmail);
+
+
+
+    // sessionStorage.setItem("InformentNameEn", InformentNameEn);
+    // sessionStorage.setItem("InformentNameMl", InformentNameMl);
+    // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
+    // sessionStorage.setItem("isNoAadhaar", isNoAadhaar);
+    // sessionStorage.setItem("AadhaarNo", AadhaarNo);
+    // sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
+    // sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
+    // sessionStorage.setItem("InformentEmail", InformentEmail);
     
 
     onSelect(config.key, {
@@ -253,15 +259,19 @@ const InformentAddress = ({ config, onSelect, userType, formData }) => {
       // setStateName,
       // setPostOffice,
       // PresentLBName,
-      InformentNameEn,
-      InformentNameMl,
-      setTitle,
-      isNoAadhaar,
-      AadhaarNo,
-      setDeclaration,
-      InformentMobileNo,
       // InformentAge,
-      InformentEmail,
+
+
+      // InformentNameEn,
+      // InformentNameMl,
+      // setTitle,
+      // isNoAadhaar,
+      // AadhaarNo,
+      // setDeclaration,
+      // InformentMobileNo,
+      // InformentEmail,
+      
+      
     });
   };
   return (

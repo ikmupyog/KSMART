@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox,BackButton} from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, InputCard } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -15,19 +15,28 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 //   setOutside(true);
 // };
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
+  const [dob, setDob] = useState("");
+  const calculateAge = (e) => {
+    const today = new Date();
+    const birthDate = new Date(e.target.value);
+    let age_in_ms = today - birthDate;
+    let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
+    setAgeofbirth(age_in_years);
+  };
+
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
-  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");  
-  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");  
+  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
-  const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
+  const [Gender, setselectedGender] = useState(formData?.InformationDeath?.Gender);
   const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
   const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
   const [setNationality, setSelectedNationality] = useState(formData?.InformationDeath?.setNationality);
@@ -42,7 +51,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [MlLastName, setMlLastName] = useState(formData?.InformationDeath?.MlLastName);
   const [Ageofbirth, setAgeofbirth] = useState(formData?.InformationDeath?.Ageofbirth);
   const [AdharNo, setAdharNo] = useState(formData?.InformationDeath?.AdharNo);
-  const [IdNo, setIdNo] = useState(formData?.InformationDeath?.IdNoNo);
+  const [IdNo, setIdNo] = useState(formData?.InformationDeath?.IdNo);
   const [CommencementDate, setCommencementDate] = useState(formData?.InformationDeath?.CommencementDate);
   const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
   const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate);
@@ -54,8 +63,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit);
   const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo);
 
-  
-  let naturetypecmbvalue = null; 
+  let naturetypecmbvalue = null;
 
   let menu = [];
   Menu &&
@@ -80,18 +88,18 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     religion["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
-    let cmbDocumentType = [];
-    documentType &&
+  let cmbDocumentType = [];
+  documentType &&
     documentType["common-masters"] &&
     documentType["common-masters"].IdProof.map((ob) => {
       cmbDocumentType.push(ob);
-      });
-    let cmbAgeUnit = [];
-    AgeUnit &&
+    });
+  let cmbAgeUnit = [];
+  AgeUnit &&
     AgeUnit["birth-death-service"] &&
     AgeUnit["birth-death-service"].AgeUnit.map((ob) => {
-        cmbAgeUnit.push(ob);
-      });
+      cmbAgeUnit.push(ob);
+    });
 
   function selectReligion(value) {
     setSelectedReligion(value);
@@ -105,10 +113,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectNationality(value) {
     setSelectedNationality(value);
   }
-  function setselectGender(value) {
-    selectGender(value);
+  function selectGender(value) {
+    console.log("gender" + value);
+    setselectedGender(value);
   }
-   function setSelectMlLastName(e) {
+  function setSelectMlLastName(e) {
     setMlLastName(e.target.value);
   }
   function setSelectMlMiddleName(e) {
@@ -133,11 +142,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     setAdharNo(e.target.value);
   }
   function setSelectIdNo(e) {
+    console.log("Test" + e);
     setIdNo(e.target.value);
   }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function calculateAge(value) {
+  //   setCommencementDate(value);
+  // }
   function selectDeathDate(value) {
     setDeathDate(value);
   }
@@ -178,7 +188,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MiddleName", MiddleName);
     sessionStorage.setItem("LastName", LastName);
     sessionStorage.setItem("MLFirstName", MLFirstName);
-    sessionStorage.setItem("Ageofbirth", Ageofbirth);
+    sessionStorage.setItem("Ageofbirth", Ageofbirth ? Ageofbirth : null);
     sessionStorage.setItem("AdharNo", AdharNo);
     sessionStorage.setItem("IdNo", IdNo);
     sessionStorage.setItem("FromDate", FromDate);
@@ -190,6 +200,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
+    sessionStorage.setItem("CommencementDate", CommencementDate);
+
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     onSelect(config.key, {
@@ -204,6 +216,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       IdNo,
       FromDate,
       ToDate,
+      CommencementDate,
+      Gender,
       setTitle,
       setTitleB,
       setNationality,
@@ -218,7 +232,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!Gender}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!Gender}>
         {/* //    isDisabled={!CommencementDate} */}
         <div className="row">
           <div className="col-md-12">
@@ -249,8 +263,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-3">
-                  <CardLabel>{t("CR_FROM_DATE")}<span className="mandatorycss">*</span></CardLabel>
-                  <DatePicker date={FromDate} name="FromDate" onChange={selectFromDate} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })}/>
+                  <CardLabel>
+                    {t("CR_FROM_DATE")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <DatePicker
+                    date={FromDate}
+                    name="FromDate"
+                    onChange={selectFromDate}
+                    {...(validation = {
+                      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_DATE"),
+                    })}
+                  />
                 </div>
                 <div className="col-md-3">
                   <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
@@ -258,8 +285,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 </div>
 
                 <div className="col-md-3">
-                  <CardLabel>{t("CR_TO_DATE")}<span className="mandatorycss">*</span></CardLabel>
-                  <DatePicker date={ToDate} name="ToDate" onChange={selectToDate}{...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })} />
+                  <CardLabel>
+                    {t("CR_TO_DATE")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <DatePicker
+                    date={ToDate}
+                    name="ToDate"
+                    onChange={selectToDate}
+                    {...(validation = {
+                      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_DATE"),
+                    })}
+                  />
                 </div>
                 <div className="col-md-3">
                   <CardLabel>{t("CR_TO_TIME")}</CardLabel>
@@ -271,9 +311,22 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-6">
-                  <CardLabel>{t("CR_DATE_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
+                  <CardLabel>
+                    {t("CR_DATE_OF_DEATH")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
                   {/* date={CommencementDate} */}
-                  <DatePicker date={DeathDate} name="DeathDate" onChange={selectDeathDate} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })}/>
+                  <DatePicker
+                    date={DeathDate}
+                    name="DeathDate"
+                    onChange={selectDeathDate}
+                    {...(validation = {
+                      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_DATE"),
+                    })}
+                  />
                 </div>
                 <div className="col-md-2">
                   <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
@@ -296,10 +349,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             <div className="col-md-3">
               <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
-              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTitle} selected={setTitle} select={selectTitle} disabled={isEdit} placeholder={`${t("CR_TITLE_NAME_EN")}`} />
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbTitle}
+                selected={setTitle}
+                select={selectTitle}
+                disabled={isEdit}
+                placeholder={`${t("CR_TITLE_NAME_EN")}`}
+              />
             </div>
             <div className="col-md-3">
-              <CardLabel>{`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -340,7 +404,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectLastName}
                 disable={isEdit}
                 placeholder={`${t("CR_LAST_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$",isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
               />
             </div>
           </div>
@@ -361,7 +425,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {`${t("CR_FIRST_NAME_ML")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -417,14 +484,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-4">
-              <CardLabel>{t("CR_GENDER")} <span className="mandatorycss">*</span> </CardLabel>
+              <CardLabel>
+                {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="code"
                 isMandatory={false}
                 option={menu}
                 selected={Gender}
-                select={setselectGender}
+                select={selectGender}
                 disabled={isEdit}
                 placeholder={`${t("CR_GENDER")}`}
                 {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
@@ -433,11 +502,36 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-4">
               <CardLabel>{`${t("CR_DATE_OF_BIRTH_DECEASED")}`}</CardLabel>
               {/* date={CommencementDate} */}
-              <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`} />
+              {/* <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`} /> */}
+              <input
+                t={t}
+                isMandatory={false}
+                optionKey="i18nKey"
+                className="employee-card-input"
+                type="date"
+                name="CommencementDate"
+                date={CommencementDate}
+                onChange={calculateAge}
+                placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`}
+              />
             </div>
             <div className="col-md-2">
-              <CardLabel>{`${t("CR_AGE_OF_BIRTH")}`}<span className="mandatorycss">*</span> </CardLabel>
-              <TextInput
+              <CardLabel>
+                {`${t("CR_AGE_OF_BIRTH")}`}
+                <span className="mandatorycss">*</span>{" "}
+              </CardLabel>
+              <input
+                className="employee-card-input"
+                name="Ageofbirth"
+                type="text"
+                onChange={setSelectAgeofbirth}
+                value={Ageofbirth}
+                placeholder={`${t("CR_AGE_OF_BIRTH")}`}
+                {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
+                disabled
+              />
+
+              {/* <TextInput
               
                 t={t}
                 isMandatory={false}
@@ -450,11 +544,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_AGE_OF_BIRTH")}`}
                 {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
                 // {...(validation = { pattern: "^([0-9]){2}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
-              />
-              </div>
-              <div className="col-md-2">
-              <CardLabel>{`${t("CR_AGE_UNIT")}`}<span className="mandatorycss">*</span> </CardLabel>
-               <Dropdown
+              /> */}
+            </div>
+            <div className="col-md-2">
+              <CardLabel>
+                {`${t("CR_AGE_UNIT")}`}
+                <span className="mandatorycss">*</span>{" "}
+              </CardLabel>
+              <Dropdown
                 t={t}
                 optionKey="name"
                 isMandatory={false}
@@ -521,7 +618,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_ID_NO")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
               />
-            </div>            
+            </div>
           </div>
         </div>
         {/* <div className="row">
@@ -532,7 +629,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
         </div> */}
 
-        
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">

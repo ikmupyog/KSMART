@@ -14,6 +14,8 @@ const AddressPresent = ({ config, onSelect, userType, formData }) => {
  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
  const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
  const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District"); 
+ console.log("Country");
+ console.log(Country);
  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
@@ -60,7 +62,7 @@ const AddressPresent = ({ config, onSelect, userType, formData }) => {
  Village["common-masters"].Village.map((ob) => {
  cmbVillage.push(ob);
  });
- PostOffice &&
+ District &&
  District["common-masters"] &&
  District["common-masters"].District.map((ob) => {
  cmbDistrict.push(ob);

@@ -13,12 +13,11 @@ const ApplicationDetails = () => {
   const { id: applicationno } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("21days"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("NewBirth"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNo", applicationno)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-console.log("Jetheesh" + applicationno);
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationno);
 
   const stateId = Digit.ULBService.getStateId();
@@ -176,9 +175,10 @@ console.log("Jetheesh" + applicationno);
     <div >
       <div /* style={{marginLeft: "15px"}} */>
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
-        <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label>
+        {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
+        header={"Birth Application Summary Details"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}
