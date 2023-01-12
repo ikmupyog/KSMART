@@ -48,7 +48,7 @@ ALTER TABLE eg_death_applicant_dtls ADD COLUMN IF NOT EXISTS applicant_relation 
 DO $$
 BEGIN
   IF EXISTS(SELECT * FROM information_schema.columns
-    WHERE table_name='eg_death_dtls' and column_name='burial_district')
+    WHERE table_name='eg_death_dtls' and column_name='place_burial')
   THEN
       ALTER TABLE "public"."eg_death_dtls" RENAME COLUMN "place_burial" TO "burial_district";
 	  ALTER TABLE "public"."eg_death_dtls" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";

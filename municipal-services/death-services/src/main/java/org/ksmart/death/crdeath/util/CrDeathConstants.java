@@ -42,4 +42,13 @@ public class CrDeathConstants {
     //mdms tenantId
     public static final String MDMS_TENANTID = "kl";
 
+    //form based validations
+    public static final String DEATH_PLACE_HOSPITAL = "HOSPITAL";
+    public static final String DEATH_PLACE_INSTITUTION = "INSTITUTION";
+    public static final String DEATH_PLACE_HOME = "HOME";
+    public static final String DEATH_PLACE_VEHICLE = "VEHICLE";
+    public static final String DEATH_PLACE_OTHER = "OTHER";
+    
+
+
 }
