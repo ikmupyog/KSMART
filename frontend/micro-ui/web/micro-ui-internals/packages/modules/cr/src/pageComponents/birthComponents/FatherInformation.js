@@ -139,8 +139,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-6" >
-                        {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
+                    <div className="col-md-6" >                      
                         <CheckBox label={t("Father Information Missing")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
                     </div>
                 </div>
