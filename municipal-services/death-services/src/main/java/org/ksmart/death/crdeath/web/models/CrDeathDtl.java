@@ -303,7 +303,7 @@ public class CrDeathDtl {
 
     @Size(max = 64)
     @JsonProperty("deathACKNo")
-    private String deathACKNo = null;
+    private String deathACKNo ;
 
     //Rakhi S on 02.12.2022
     @JsonProperty("isvehicle")

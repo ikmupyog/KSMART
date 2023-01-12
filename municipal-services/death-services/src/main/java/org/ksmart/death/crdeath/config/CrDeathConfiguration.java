@@ -65,12 +65,18 @@ public class CrDeathConfiguration {
     @Value("${employee.allowed.search.params}")
     private String allowedEmployeeSearchParams;
 
-    public String getWfHost() {
-        return null;
-    }
+    // public String getWfHost() {
+    //     return null;
+    // }
 
-    public String getWfTransitionPath() {
-        return null;
-    }
+    // public String getWfTransitionPath() {
+    //     return null;
+    // }
+
+    @Value("${egov.workflow.host}")
+    private String wfHost;
+
+    @Value("${egov.workflow.path}")
+    private String wfTransitionPath;
 
 }
