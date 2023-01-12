@@ -93,14 +93,14 @@ public class CrDeathRegistryStatistical {
     private String nationality;
      //Jasmine 12.01.2023
     @JsonProperty("occupationSub")
-    private Integer occupationSub;
+    private String occupationSub;
 
     @JsonProperty("occupationMinor")
-    private Integer occupationMinor;
+    private String occupationMinor;
 
     @JsonProperty("educationMain")
-    private Integer educationMain;
+    private String educationMain;
 
     @JsonProperty("educationSub")
-    private Integer educationSub;
+    private String educationSub;
 }

@@ -467,8 +467,8 @@ public class CrDeathDtl {
     private String burialLBType;
 
     @Size(max = 64)
-    @JsonProperty("burialState")
-    private String  burialState;
+    @JsonProperty("burialLBName")
+    private String  burialLBName;
 
     @Size(max = 64)
     @JsonProperty("vehicleFirstHalt")
