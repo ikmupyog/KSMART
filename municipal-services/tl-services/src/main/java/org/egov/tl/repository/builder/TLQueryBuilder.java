@@ -445,11 +445,41 @@ public class TLQueryBuilder {
 
         if (criteria.getTradeName() != null) {
             addClauseIfRequired(preparedStmtList, builder);
-            builder.append("  LOWER(tl.tradename) = LOWER(?) ");
-            preparedStmtList.add(criteria.getTradeName());
+            builder.append("  LOWER(tl.tradename) LIKE LOWER(?) ");
+            preparedStmtList.add(criteria.getTradeName().split("\\.")[0] + "%");
         }
 
-        builder.append( " ORDER BY tl.id ,tltax.service");
+        if (criteria.getBusinessCategory() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tld.businesssector = ? ");
+            preparedStmtList.add(criteria.getBusinessCategory());
+        }
+
+        if (criteria.getOwnerName() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  eg_tl_owner_pde.ownername LIKE ? ");
+            preparedStmtList.add(criteria.getOwnerName().split("\\.")[0] + "%");
+        }
+
+        if (criteria.getWardNo() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tladdress.wardno = ? ");
+            preparedStmtList.add(criteria.getWardNo());
+        }
+
+        if (criteria.getDoorNo() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tlstructplace.doorno = ? ");
+            preparedStmtList.add(criteria.getDoorNo());
+        }
+
+        if (criteria.getDoorNoSub() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tlstructplace.doorsub = ? ");
+            preparedStmtList.add(criteria.getDoorNoSub());
+        }
+        System.out.println("rohit" + preparedStmtList);
+        builder.append(" ORDER BY tl.id ,tltax.service");
         // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);
 
         if (!isCount) {

@@ -113,6 +113,7 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
         if (tradeLicense.getTradeLicenseDetail() == null) {
             Address address = Address.builder().addressId(rs.getString("addressId"))
                     .pincode(rs.getString("pincode"))
+                    .id(rs.getString("tl_ad_id"))
                     .doorNo(rs.getString("doorno"))
                     .street(rs.getString("street"))
                     .tenantId(tenantId)
