@@ -28,6 +28,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName || true);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+    // disable future dates
+    // const maxDate = new Date();
+    // let currentDate = new Date().toJSON().slice(0, 10);
+    const [access, setAccess] = React.useState(true);
 
   let menu = [];
   Menu &&
@@ -109,6 +113,12 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   function setChildName(e) {
     if (e.target.checked == true) {
       setIsChildName(true);
+      setChildFirstNameEn('');
+      setChildMiddleNameEn('');
+      setChildLastNameEn('');
+      setChildFirstNameMl('');
+      setChildMiddleNameMl('');
+      setChildLastNameMl('');
     } else {
       setIsChildName(false);
     }
@@ -152,7 +162,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-2" ><CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}<span className="mandatorycss">*</span></CardLabel>
-            <DatePicker date={ChildDOB} name="ChildDOB" onChange={setselectChildDOB} placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} />
+            <DatePicker date={ChildDOB} name="ChildDOB" onChange={setselectChildDOB} 
+            placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} maxDate={new Date() || undefined}/>
 
           </div>
           <div className="col-md-2"  ><CardLabel>{t("Time of Birth")}</CardLabel>
@@ -189,13 +200,13 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameMl" value={ChildFirstNameMl} onChange={setSelectChildFirstNameMl} disable={isChildName} placeholder={`${t("CR_FIRST_NAME_ML")}`} {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })} />
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameMl" value={ChildFirstNameMl} onChange={setSelectChildFirstNameMl} disable={isChildName} placeholder={`${t("CR_FIRST_NAME_ML")}`} {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })} />
           </div>
           <div className="col-md-4" > <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildMiddleNameMl" value={ChildMiddleNameMl} onChange={setSelectChildMiddleNameMl} disable={isChildName} placeholder={`${t("CR_MIDDLE_NAME_ML")}`} {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })} />
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildMiddleNameMl" value={ChildMiddleNameMl} onChange={setSelectChildMiddleNameMl} disable={isChildName} placeholder={`${t("CR_MIDDLE_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })} />
           </div>
           <div className="col-md-4" > <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildLastNameMl" value={ChildLastNameMl} onChange={setSelectChildLastNameMl} disable={isChildName} placeholder={`${t("CR_LAST_NAME_ML")}`} {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })} />
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildLastNameMl" value={ChildLastNameMl} onChange={setSelectChildLastNameMl} disable={isChildName} placeholder={`${t("CR_LAST_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })} />
           </div>
         </div>
         {/* <div className="row">
