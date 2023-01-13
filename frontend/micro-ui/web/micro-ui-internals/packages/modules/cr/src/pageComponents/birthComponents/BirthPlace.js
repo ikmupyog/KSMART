@@ -45,7 +45,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthPlace?.VehicleRegistrationNo);
   const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthPlace?.setVehicleFromEn);
   const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn);
-  const [VehicleHaltPlace, setSelectVehicleHaltPlace] = useState(formData?.BirthPlace?.VehicleHaltPlace);
+  const [VehicleHaltPlace, setVehicleHaltPlace] = useState(formData?.BirthPlace?.VehicleHaltPlace);
   const [VehicleFromMl, setVehicleFromMl] = useState(formData?.BirthPlace?.VehicleFromMl);
   const [VehicleToMl, setVehicleToMl] = useState(formData?.BirthPlace?.VehicleToMl);
   const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.BirthPlace?.VehicleOtherDetailsEn);
@@ -473,7 +473,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
              VehicleToEn={VehicleToEn} setVehicleFromEn = {setVehicleFromEn}
              VehicleFromMl={VehicleFromMl} setVehicleFromMl={setVehicleFromMl}
              VehicleToMl={VehicleToMl} setVehicleToMl={setVehicleToMl}
-             VehicleHaltPlace= {VehicleHaltPlace} setSelectVehicleHaltPlace= {setSelectVehicleHaltPlace}
+             VehicleHaltPlace= {VehicleHaltPlace} setVehicleHaltPlace= {setVehicleHaltPlace}
              VehicleOtherDetailsEn={VehicleOtherDetailsEn} setVehicleOtherDetailsEn={setVehicleOtherDetailsEn}
              VehicleOtherDetailsMl={VehicleOtherDetailsMl} setVehicleOtherDetailsMl={setVehicleOtherDetailsMl}             
              setAdmittedHospitalEn={setAdmittedHospitalEn} setSelectedAdmittedHospitalEn={setSelectedAdmittedHospitalEn}

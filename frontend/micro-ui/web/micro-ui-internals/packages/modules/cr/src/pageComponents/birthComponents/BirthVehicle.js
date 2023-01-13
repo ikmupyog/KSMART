@@ -4,7 +4,7 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistrationNo, setVehicleRegistrationNo,VehicleFromEn, setVehicleFromEn,
-  VehicleToEn, setVehicleToEn,VehicleFromMl, setVehicleFromMl,VehicleHaltPlace, setSelectVehicleHaltPlace,VehicleToMl, setVehicleToMl,VehicleOtherDetailsEn, setVehicleOtherDetailsEn,
+  VehicleToEn, setVehicleToEn,VehicleFromMl, setVehicleFromMl,VehicleHaltPlace, setVehicleHaltPlace,VehicleToMl, setVehicleToMl,VehicleOtherDetailsEn, setVehicleOtherDetailsEn,
   VehicleOtherDetailsMl, setVehicleOtherDetailsMl,setAdmittedHospitalEn, setSelectedAdmittedHospitalEn,setAdmittedHospitalMl, setSelectedAdmittedHospitalMl}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();

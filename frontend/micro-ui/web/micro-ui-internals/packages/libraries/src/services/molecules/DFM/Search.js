@@ -75,14 +75,14 @@ export const DFMsearch = {
 // Documents Uploaded details
     let employeeResponse = [];
     const applicationInfo = {
-      title: "Applicant Details",
+      title: "Applicant Personal",
       asSectionHeader: true,
       values: [
-        { title: "Aadhar No ", value: response?.aadhaarNo || "NA" },
         { title: "First Name", value: response?.firstName || "NA" },
-        { title: "Last Name", value: response?.lastName || "NA" },
+        { title: "First Name Mal", value: response?.lastName || "NA" },
+        { title: "Aadhar No ", value: response?.aadhaarNo || "NA" },
         { title: "Mobile No", value: response?.mobileNo || "NA" },
-        { title: "Email", value: response?.email || "NA" },
+        // { title: "Email", value: response?.email || "NA" },
         // { title: "File Code", value: response?.fileDetail?.fileCode || "NA" },
         // { title: "Applicant Name", value: response?.firstName +' '+response?.lastName || "NA" },
         // { title: "Service Name", value: response?.serviceDetails?.serviceId?.fileCode || "NA" },
@@ -97,33 +97,56 @@ export const DFMsearch = {
       ],
     };
     const addressInfo = {
-      title: "Address Details",
+      title: "Applicant Address",
       values: [
-         { title: "Building No", value: response?.applicantAddress?.buildingNo || "NA" },
-         { title: "Sub No", value: response?.applicantAddress?.subNo || "NA" },
+         { title: "Door No", value: response?.applicantAddress?.DoorNo || "NA" },
+        //  { title: "Sub No", value: response?.applicantAddress?.subNo || "NA" },
          { title: "House Name", value: response?.applicantAddress?.houseName || "NA" },
-         { title: "Local place ", value: response?.applicantAddress?.localPlace || "NA" },
-         { title: "Main place ", value: response?.applicantAddress?.mainPlace || "NA" },
+         { title: "House Name Mal", value: response?.applicantAddress?.houseName || "NA" },
+         { title: "Pincode", value: response?.applicantAddress?.pincode || "NA" },
          { title: "PostOffice", value: response?.applicantAddress?.postOfficeName || "NA" },
-        { title: "Taluk", value: response?.applicantAddress?.taluk || "NA" },
-        { title: "Village", value: response?.applicantAddress?.village || "NA" },
-        { title: "Pincode", value: response?.applicantAddress?.pincode || "NA" },
+         { title: "Local place", value: response?.applicantAddress?.localPlace || "NA" },
+         { title: "Local place Mal ", value: response?.applicantAddress?.localPlace || "NA" },
+         { title: "Main place", value: response?.applicantAddress?.mainPlace || "NA" },
+         { title: "Main place Mal", value: response?.applicantAddress?.mainPlace || "NA" },
+          { title: "Ward No", value: response?.applicantAddress?.WardNo || "NA" },
+        // { title: "Taluk", value: response?.applicantAddress?.taluk || "NA" },
+        // { title: "Village", value: response?.applicantAddress?.village || "NA" },
+      
       ],
     };
-    const certificateInfo = {
-      title: "Certificate Details",
+    const documentInfo = {
+      title: "Applicant Document",
       values: [
-        { title: "Name of Occupier", value: response?.serviceDetails?.NameOccupier  },
-        { title: "Name of owner", value: response?.serviceDetails?.OwnerName || "NA"},
-        { title: "Owner Mobile No", value: response?.serviceDetails?.OwnerMobileNo || "NA" },
-        { title: "Residence Duration", value: response?.serviceDetails?.ResidenceDuration || "NA" },
-        { title: "Details", value: response?.serviceDetails?.ServiceDetailsTxt || "NA" },
+        { title: "documentInfo", value: "NA"},
       ],
     };
-    const attachmentsInfo = {
-      title: "Attachments",
+    const serviceDetailInfo = {
+      title: "Applicant Service Detail",
       values: [
-        { title: "List all attachments (While clicking can view from AWS)", value: "NA"},
+         { title: "Service Code", value: response?.serviceDetails?.NameOccupier  },
+        { title: "Service SubType", value: response?.serviceDetails?.OwnerName || "NA"},
+        { title: "Service MinorType", value: response?.serviceDetails?.OwnerMobileNo || "NA" },
+
+        // { title: "Name of Occupier", value: response?.serviceDetails?.NameOccupier  },
+        // { title: "Name of owner", value: response?.serviceDetails?.OwnerName || "NA"},
+        // { title: "Owner Mobile No", value: response?.serviceDetails?.OwnerMobileNo || "NA" },
+        // { title: "Residence Duration", value: response?.serviceDetails?.ResidenceDuration || "NA" },
+        // { title: "Details", value: response?.serviceDetails?.ServiceDetailsTxt || "NA" },
+      ],
+    };
+
+    const serviceDocumentInfo = {
+      title: "ApplicantServiceDocument",
+      values: [
+        { title: "fileArisingMode", value: "NA"},
+        { title: "fileArisingDate", value: "NA"},
+        { title: "applicationDate", value: "NA"},
+        { title: "workflowCode", value: "NA"},
+        { title: "action", value: "NA"},
+        { title: "businessService", value: "NA"},
+        { title: "assignees", value: "NA"},
+        // { title: "List all attachments (While clicking can view from AWS)", value: "NA"},
       ],
     };
     // const statisticalInfo = {
@@ -308,8 +331,9 @@ export const DFMsearch = {
 
      employeeResponse.push(applicationInfo);
      employeeResponse.push(addressInfo);
-     employeeResponse.push(certificateInfo);
-     employeeResponse.push(attachmentsInfo);
+     employeeResponse.push(documentInfo);
+     employeeResponse.push(serviceDetailInfo);
+     employeeResponse.push(serviceDocumentInfo);
     //  employeeResponse.push(statisticalInfo);
     // response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
     // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -8,7 +8,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -21,15 +21,15 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
   const [LocalityMl, setLocalityMl] = useState(formData?.AddressOutsideIndiaDetails?.LocalityMl);
   const [ProvinceEn, setProvinceEn] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceEn);
   const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceMl);
-  const [setCountry, setSelectedCountry] = useState(formData?.AddressOutsideIndiaDetails?.setCountry);
+  const [PresentCountry, setPresentCountry] = useState(formData?.AddressOutsideIndiaDetails?.PresentCountry);
 
   // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
-  let cmbNation = [];
-  Nation &&
-    Nation["common-masters"] &&
-    Nation["common-masters"].Country.map((ob) => {
-      cmbNation.push(ob);
+  let cmbCountry = [];
+  Country &&
+    Country["common-masters"] &&
+    Country["common-masters"].Country.map((ob) => {
+      cmbCountry.push(ob);
     });
   const onSkip = () => onSelect();
 
@@ -61,8 +61,9 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
   function setSelectProvinceMl(e) {
     setProvinceMl(e.target.value);
   }
-  function selectCountry(e) {
-    setSelectedCountry(e.target.value);
+  function setSelectPresentCountry(value) {
+    setPresentCountry(value);
+    console.log("Country" + cmbCountry);   
   }
   
   // function selectCommencementDate(value) {
@@ -78,9 +79,12 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("LocalityMl", LocalityMl  ? LocalityMl  : null);
     sessionStorage.setItem("ProvinceEn", ProvinceEn  ? ProvinceEn  : null);
     sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl  : null);
-    sessionStorage.setItem("setCountry", setCountry  ? setCountry.code  : null);
-    onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, setCountry });
+    sessionStorage.setItem("PresentCountry", PresentCountry ? PresentCountry.code : null);
+    onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, PresentCountry, });
   };
+  if (isCountryLoading ) {
+    return <Loader></Loader>;
+   }
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdressEn}>
@@ -96,7 +100,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
         </div>
 
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_ADDRESS_1_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -111,7 +115,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_ADDRESS_1_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -123,12 +127,10 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectAdressMl}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_1_ML")}`}
-              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_ADDRESS_2_EN")}</CardLabel>
             <TextInput
               t={t}
@@ -143,7 +145,10 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
-          <div className="col-md-6">
+        </div>
+      
+        <div className="row">
+        <div className="col-md-4">
             <CardLabel>{t("CR_ADDRESS_2_ML")}</CardLabel>
             <TextInput
               t={t}
@@ -155,12 +160,10 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectAdressMlB}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_2_ML")}`}
-              {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_LOCALITY_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -175,7 +178,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_LOCALITY_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -187,13 +190,13 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectLocalityMl}
               disable={isEdit}
               placeholder={`${t("CR_LOCALITY_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />
           </div>
         </div>
         <div >
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -208,7 +211,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -220,25 +223,26 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectProvinceMl}
               disable={isEdit}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
             />
           </div>
+          <div className="col-md-4">
+              <CardLabel>
+                {`${t("CS_COMMON_COUNTRY")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbCountry}
+                selected={PresentCountry}
+                select={setSelectPresentCountry}
+                disabled={isEdit}
+              />
+            </div>
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>{t("CS_COMMON_COUNTRY")}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown t={t} 
-            optionKey="name" 
-            isMandatory={true} 
-            option={cmbNation} 
-            selected={setCountry} 
-            select={selectCountry} 
-            disabled={isEdit}
-            placeholder={`${t("CS_COMMON_COUNTRY")}`}
-             />
-           
-          </div>
-        </div>
+        
         </div>
        
       </FormStep>
