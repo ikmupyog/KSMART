@@ -11,6 +11,8 @@ import ApplicationDetailsPDE from "../pages/employee/ApplicationDetailsPDE";
 import ApplicationDetailsActionBar from "../../../templates/ApplicationDetails/components/ApplicationDetailsActionBar";
 
 const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
+
+  console.log(JSON.stringify(formData));
   const menusector = [
     { name: "Manufacturing Sector", code: "MANUFACTORING" },
     { name: "Service Sector", code: "SERVICE" },
@@ -132,6 +134,12 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       else if (ob.service == "RT.Municipal_Shops_Rent")
         rentdata.push(ob);
     });
+
+    console.log("Tax Details");
+    console.log(JSON.stringify(rentdata));
+    console.log(JSON.stringify(profdata));
+    console.log(JSON.stringify(tldata));
+
   const [licArrear, setLicArrear] = useState(tldata[0]?.arrear ? tldata[0]?.arrear : "");
   const [licCurrent, setLicCurrent] = useState(tldata[0]?.current ? tldata[0]?.current : "");
   const [licFromYear, setLicFromYear] = useState(tldata[0]?.fromYear ? cmbPayYear.filter((year) => year.code.includes(tldata[0]?.fromYear))[0] : "");
@@ -359,11 +367,11 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const initFn1 = (initData) => {
     return [
       {
-        doorno: "",
-        subno: "",
+        doorNo: "",
+        doorNoSub: "",
         // buildingcode:"",
         // buildingname:"",
-        buildingstallno: ""
+        stallNo: ""
       },
     ];
   };
@@ -816,11 +824,11 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   <div className="col-md-12">
                     <div className="col-md-4">
                       <CardLabel>Building Code</CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="BuildingCode" value={BuildingCode} onChange={setSelectBuildingcode}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO") })} />
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="BuildingCode" value={BuildingCode} onChange={setSelectBuildingcode}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_CODE") })} />
                     </div>
                     <div className="col-md-3">
                       <CardLabel>Building Name</CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="BuildingName" value={BuildingName} onChange={setSelectBuildingName}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO") })} />
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="BuildingName" value={BuildingName} onChange={setSelectBuildingName}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_NAME") })} />
                     </div>
                   </div>
                 )}
@@ -838,11 +846,11 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                       }} className="col-md-7">
                         <div className="col-md-4">
                           <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="DoorNoBuild" value={field.doorNo} onChange={(e) => handleTextInputField1(index, e, "doorno")}  {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="DoorNoBuild" value={field.doorNo} onChange={(e) => handleTextInputField1(index, e, "doorNo")}  {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
                         </div>
                         <div className="col-md-4">
                           <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO_SUB")}`}</CardLabel>
-                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="DoorSubBuild" value={field.doorNoSub} onChange={(e) => handleTextInputField1(index, e, "subno")}  {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="DoorSubBuild" value={field.doorNoSub} onChange={(e) => handleTextInputField1(index, e, "doorNoSub")}  {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
                         </div>
                         {value3 === "LBBUILDING" && (
                           <div className="row">
@@ -856,7 +864,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                           </div> */}
                             <div className="col-md-4">
                               <CardLabel>Stall No</CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="BuildingstallNo" value={fields1.stallNo} onChange={(e) => handleTextInputField1(index, e, "buildingstallno")}  {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
+                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="BuildingstallNo" value={fields1.stallNo} onChange={(e) => handleTextInputField1(index, e, "stallNo")}  {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_STALL_NO") })} />
                             </div>
                           </div>
                         )}
@@ -986,7 +994,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   <div className="row">
                     <div className="col-md-4" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} optionKey="i18nKey" name="profArrear" value={profArrear} onChange={selectedsetProfArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
+                      <TextInput t={t} isMandatory={config.isMandatory} optionKey="i18nKey" name="profArrear" value={profArrear}  onChange={selectedsetProfArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-4" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT_FIRST")}`}</CardLabel>
