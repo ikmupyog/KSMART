@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -23,6 +23,8 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     const [ModeOfPregnancy, setModeOfPregnancy] = useState(formData?.StatisticalInfoDetails?.ModeOfPregnancy);
     const [DeliveryMethod, setDeliveryMethod] = useState(formData?.StatisticalInfoDetails?.DeliveryMethod);
     const [DeliveryMethodSub, setDeliveryMethodSub] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub);
+    const [BirthPlaceDeccription, setBirthPlaceDeccription] = useState(formData?.StatisticalInfoDetails?.BirthPlaceDeccription);
+    const [BirthPlaceDeccriptionMl, setBirthPlaceDeccriptionMl] = useState(formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl);
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     let cmbAttDelivery = [];
     let cmbAttDeliverySub = [];
@@ -31,6 +33,16 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     let cmbModePregnancy = [];
 
     const cmbPregWeek = [
+        { i18nKey: "20", code: "20" },
+        { i18nKey: "21", code: "21" },
+        { i18nKey: "22", code: "22" },
+        { i18nKey: "22", code: "22" },
+        { i18nKey: "23", code: "23" },
+        { i18nKey: "25", code: "25" },
+        { i18nKey: "26", code: "26" },
+        { i18nKey: "27", code: "27" },
+        { i18nKey: "28", code: "28" },
+        { i18nKey: "29", code: "29" },
         { i18nKey: "30", code: "30" },
         { i18nKey: "31", code: "31" },
         { i18nKey: "32", code: "32" },
@@ -100,6 +112,12 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     function setSelectModeOfPregnancy(value) {
         setModeOfPregnancy(value);
     }
+    function setSelectBirthPlaceDeccription(e) {
+           setBirthPlaceDeccription(e.target.value);
+         }
+         function setSelectBirthPlaceDeccriptionMl(e) {
+            setBirthPlaceDeccriptionMl(e.target.value);
+          }
     const goNext = () => {
         sessionStorage.setItem("BirthWeight", BirthWeight ? BirthWeight : null );
         sessionStorage.setItem("BirthHeight", BirthHeight ? BirthHeight : null);
@@ -109,8 +127,10 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("MedicalAttensionSub", MedicalAttensionSub ? MedicalAttensionSub.code : null);
         sessionStorage.setItem("DeliveryMethod", DeliveryMethod ? DeliveryMethod.code : null);
         sessionStorage.setItem("ModeOfPregnancy", ModeOfPregnancy ? ModeOfPregnancy.code : null);
+        sessionStorage.setItem("BirthPlaceDeccription", BirthPlaceDeccription ? BirthPlaceDeccription : null);
+        sessionStorage.setItem("BirthPlaceDeccriptionMl",BirthPlaceDeccriptionMl ? BirthPlaceDeccriptionMl : null);
 
-        onSelect(config.key, { BirthWeight, BirthHeight, Religion, PregnancyDuration, MedicalAttension, MedicalAttensionSub, DeliveryMethod, ModeOfPregnancy });
+        onSelect(config.key, { BirthWeight, BirthHeight, Religion, PregnancyDuration, MedicalAttension, BirthPlaceDeccription,BirthPlaceDeccriptionMl, MedicalAttensionSub, DeliveryMethod, ModeOfPregnancy });
     }
     console.log(formData);
 
@@ -123,7 +143,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
             {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
             {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
             <BackButton >{t("CS_COMMON_BACK")}</BackButton>
-            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!BirthWeight}>
+            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!BirthWeight || !BirthPlaceDeccription  || !BirthPlaceDeccriptionMl}>
                 <div className="row">
                     <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_STATISTICAL_INFORMATION")}`}</span> </h1>
                     </div>
@@ -131,50 +151,70 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-3" ><CardLabel>{t("CR_BIRTH_WEIGHT")}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthWeight" value={BirthWeight} onChange={setSelectBirthWeight} disable={isEdit} {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_WEIGHT") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthWeight" value={BirthWeight} onChange={setSelectBirthWeight} disable={isEdit}  placeholder={`${t("CR_BIRTH_WEIGHT")}`} {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_WEIGHT") })} />
                         </div>
                         <div className="col-md-3" >
-                            <CardLabel>{t("CR_BIRTH_HEIGHT")}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthHeight" value={BirthHeight} onChange={setSelectBirthHeight} disable={isEdit} {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_HEIGHT") })} />
+                            <CardLabel>{t("CR_BIRTH_HEIGHT")}</CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthHeight" value={BirthHeight} onChange={setSelectBirthHeight} disable={isEdit} placeholder={`${t("CR_BIRTH_HEIGHT")}`}{...(validation = { pattern: "^[.0-9`' ]*$",  type: "text", title: t("CR_INVALID_BIRTH_HEIGHT") })} />
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CS_COMMON_RELIGION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbReligion} selected={Religion} select={setSelectReligion} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbReligion} selected={Religion} select={setSelectReligion} disabled={isEdit} placeholder={`${t("CS_COMMON_RELIGION")}`}/>
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="i18nKey" isMandatory={false} option={cmbPregWeek} selected={PregnancyDuration} select={setSelectPregnancyDuration} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="i18nKey" isMandatory={false} option={cmbPregWeek} selected={PregnancyDuration} select={setSelectPregnancyDuration} disabled={isEdit} placeholder={`${t("CR_PREGNANCY_DURATION")}`} />
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12" >
-                        <div className="col-md-6" >
+                        <div className="col-md-3" >
                             <CardLabel>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDelivery} selected={MedicalAttension} select={setSelectMedicalAttension} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDelivery} selected={MedicalAttension} select={setSelectMedicalAttension} disabled={isEdit}placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} />
                         </div>
-                        <div className="col-md-6" >
+                        <div className="col-md-3" >
                             <CardLabel>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDeliverySub} selected={MedicalAttensionSub} select={setSelectMedicalAttensionSub} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDeliverySub} selected={MedicalAttensionSub} select={setSelectMedicalAttensionSub} disabled={isEdit} placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}  />
                         </div>
+                        <div className="col-md-3" >
+                            <CardLabel>{`${t("CR_DELIVERY_METHORD")}`}<span className="mandatorycss">*</span></CardLabel>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethod} select={setSelectDeliveryMethod} disabled={isEdit} placeholder={`${t("CR_DELIVERY_METHORD")}`}/>
+                        </div>
+                        <div className="col-md-3" >
+                            <CardLabel>{`${t("CR_MODE_OF_PREGNANCY")}`}<span className="mandatorycss">*</span></CardLabel>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbModePregnancy} selected={ModeOfPregnancy} select={setSelectModeOfPregnancy} disabled={isEdit}placeholder={`${t("CR_MODE_OF_PREGNANCY")}`} />
+                        </div>  
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12" >
-                        <div className="col-md-6" >
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_DELIVERY_METHORD")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethod} select={setSelectDeliveryMethod} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethod} select={setSelectDeliveryMethod} disabled={isEdit} placeholder={`${t("CR_DELIVERY_METHORD")}`}/>
                         </div>
                         {/* <div className="col-md-6" >
                             <CardLabel>{`${t("CR_DELIVERY_METHOD_SUB")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethodSub} select={setSelectDeliveryMethodSub} disabled={isEdit} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethodSub} select={setSelectDeliveryMethodSub} disabled={isEdit} placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}/>
                         </div> */}
-                        <div className="col-md-6" >
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_MODE_OF_PREGNANCY")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbModePregnancy} selected={ModeOfPregnancy} select={setSelectModeOfPregnancy} disabled={isEdit} />
-                        </div>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbModePregnancy} selected={ModeOfPregnancy} select={setSelectModeOfPregnancy} disabled={isEdit}placeholder={`${t("CR_MODE_OF_PREGNANCY")}`} />
+                        </div>                       
+                      
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col-md-12" >
+                    <div className="col-md-6" >
+                         <CardLabel>{`${t("CR_DESCRIPTION")}`}<span className="mandatorycss">*</span></CardLabel>
+                        <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccription" value={BirthPlaceDeccription} onChange={setSelectBirthPlaceDeccription} disable={isEdit} placeholder={`${t("CR_DESCRIPTION")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })} />
+                     </div>
+                    <div className="col-md-6 " >
+                         <CardLabel>{`${t("CR_DESCRIPTION_ML")}`}<span className="mandatorycss">*</span></CardLabel>
+                        <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccriptionMl" value={BirthPlaceDeccriptionMl} onChange={setSelectBirthPlaceDeccriptionMl} disable={isEdit} placeholder={`${t("CR_DESCRIPTION_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION_ML") })} />
+                     </div>
+                        </div></div>
 
             </FormStep>
         </React.Fragment>
