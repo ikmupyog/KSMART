@@ -50,21 +50,21 @@ ALTER TABLE eg_death_applicant_dtls ADD COLUMN IF NOT EXISTS applicant_relation 
 --   IF EXISTS(SELECT * FROM information_schema.columns
 --     WHERE table_name='eg_death_dtls' and column_name='place_burial')
 --   THEN
-      ALTER TABLE "public"."eg_death_dtls" RENAME COLUMN "place_burial" TO "burial_district";
-	  ALTER TABLE "public"."eg_death_dtls" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";
-	  ALTER TABLE "public"."eg_death_dtls" RENAME COLUMN "place_burial_institution_name" TO "burial_lbname";
+    --   ALTER TABLE "public"."eg_death_dtls" RENAME COLUMN "place_burial" TO "burial_district";
+	--   ALTER TABLE "public"."eg_death_dtls" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";
+	--   ALTER TABLE "public"."eg_death_dtls" RENAME COLUMN "place_burial_institution_name" TO "burial_lbname";
  	 
-	  ALTER TABLE "public"."eg_death_dtls_log" RENAME COLUMN "place_burial" TO "burial_district";
-	  ALTER TABLE "public"."eg_death_dtls_log" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";
-	  ALTER TABLE "public"."eg_death_dtls_log" RENAME COLUMN "place_burial_institution_name" TO "burial_lbname";
+	--   ALTER TABLE "public"."eg_death_dtls_log" RENAME COLUMN "place_burial" TO "burial_district";
+	--   ALTER TABLE "public"."eg_death_dtls_log" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";
+	--   ALTER TABLE "public"."eg_death_dtls_log" RENAME COLUMN "place_burial_institution_name" TO "burial_lbname";
 	  
-	  ALTER TABLE "public"."eg_death_dtls_registry" RENAME COLUMN "place_burial" TO "burial_district";
-	  ALTER TABLE "public"."eg_death_dtls_registry" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";
-	  ALTER TABLE "public"."eg_death_dtls_registry" RENAME COLUMN "place_burial_institution_name" TO "burial_lbname";
+	--   ALTER TABLE "public"."eg_death_dtls_registry" RENAME COLUMN "place_burial" TO "burial_district";
+	--   ALTER TABLE "public"."eg_death_dtls_registry" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";
+	--   ALTER TABLE "public"."eg_death_dtls_registry" RENAME COLUMN "place_burial_institution_name" TO "burial_lbname";
  	 
-	  ALTER TABLE "public"."eg_death_dtls_registry_log" RENAME COLUMN "place_burial" TO "burial_district";
-	  ALTER TABLE "public"."eg_death_dtls_registry_log" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";
-	  ALTER TABLE "public"."eg_death_dtls_registry_log" RENAME COLUMN "place_burial_institution_name" TO "burial_lbname";
+	--   ALTER TABLE "public"."eg_death_dtls_registry_log" RENAME COLUMN "place_burial" TO "burial_district";
+	--   ALTER TABLE "public"."eg_death_dtls_registry_log" RENAME COLUMN "place_burial_institution_type" TO "burial_lbtype";
+	--   ALTER TABLE "public"."eg_death_dtls_registry_log" RENAME COLUMN "place_burial_institution_name" TO "burial_lbname";
 	  
 --   END IF;
 -- END $$;
