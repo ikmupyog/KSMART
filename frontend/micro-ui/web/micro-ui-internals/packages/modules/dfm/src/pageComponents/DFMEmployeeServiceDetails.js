@@ -1,4 +1,13 @@
-import { CardLabel, TextInput, TextArea,Dropdown,CardLabelDesc, FormStep, UploadFile, FormInputGroup } from "@egovernments/digit-ui-react-components";
+import {
+  CardLabel,
+  TextInput,
+  TextArea,
+  Dropdown,
+  CardLabelDesc,
+  FormStep,
+  UploadFile,
+  FormInputGroup,
+} from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
@@ -34,37 +43,35 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
   const [ResidenceDurationMon, setResidenceDurationMon] = useState(formData?.ServiceDet?.ResidenceDurationMon);
   // const [ResidenceDuration, setResidenceDuration] = useState(formData?.ServiceDet?.ResidenceDuration);
   const [ServiceDetailsTxt, setServiceDetailsTxt] = useState(formData?.ServiceDet?.ServiceDetailsTxt);
-  console.log('s',boundaryList);
+  console.log("s", boundaryList);
 
-  
   let cmbPostOffice = [];
   PostOffice &&
     PostOffice["common-masters"] &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
     });
-    let Zonal = [];
-    let cmbWardNo = [];
-    let cmbWardNoFinal = [];
-    boundaryList &&
-      boundaryList["egov-location"] &&
-      boundaryList["egov-location"].TenantBoundary.map((ob) => {
-        //  console.log(ob);
-        // if(ob?.boundary){
-        Zonal.push(...ob.boundary.children);
-        ob.boundary.children.map((obward) => {
-          cmbWardNo.push(...obward.children);
-        });
-        // }
-   
+  let Zonal = [];
+  let cmbWardNo = [];
+  let cmbWardNoFinal = [];
+  boundaryList &&
+    boundaryList["egov-location"] &&
+    boundaryList["egov-location"].TenantBoundary.map((ob) => {
+      //  console.log(ob);
+      // if(ob?.boundary){
+      Zonal.push(...ob.boundary.children);
+      ob.boundary.children.map((obward) => {
+        cmbWardNo.push(...obward.children);
       });
-    //console.log(Zonal);
-    cmbWardNo.map((wardmst) => {
-      wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
-      wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
-      cmbWardNoFinal.push(wardmst);
+      // }
     });
-   
+  //console.log(Zonal);
+  cmbWardNo.map((wardmst) => {
+    wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
+    wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
+    cmbWardNoFinal.push(wardmst);
+  });
+
   function setSelectedWardNo(e) {
     setWardNo(e);
   }
@@ -111,10 +118,9 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
     setWardNo(e);
   }
 
-
   const onSkip = () => onSelect();
   const goNext = () => {
-    sessionStorage.setItem("WardNo", WardNo);
+    // sessionStorage.setItem("WardNo", WardNo);
     sessionStorage.setItem("OwnerName", OwnerName);
     sessionStorage.setItem("OwnerNameMal", OwnerNameMal);
     sessionStorage.setItem("OwnerAddress", OwnerAddress);
@@ -128,7 +134,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
     sessionStorage.setItem("ServiceDetailsTxt", ServiceDetailsTxt);
     onSelect(config.key, {
       BuldingNo,
-      WardNo,
+      // WardNo,
       OwnerName,
       OwnerNameMal,
       OwnerAddress,
@@ -180,7 +186,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                   />
                 </div> */}
 
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <CardLabel>
                     {`${t("TL_LOCALIZATION_WARD_NO")}`}
                     <span className="mandatorycss">*</span>
@@ -189,13 +195,14 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     t={t}
                     optionKey="name"
                     isMandatory={config.isMandatory}
+                    // option={cmbPostOffice}
                     option={cmbWardNo}
                     selected={WardNo}
                     select={setSelectWard}
                     placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`}
                     {...(validation = { isRequired: true, title: t("TL_INVALID_WARD_NO") })}
                   />
-                </div>
+                </div> */}
                 <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_NAME_OCCUPIER")}
@@ -230,18 +237,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     {...(validation = { isRequired: true, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER_MAL") })}
                   />
                 </div>
-
-                {/* <div className="col-md-4" ><CardLabel>{t("DFM_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="WardNo"
-             value={WardNo} 
-             onChange={setSelectedWardNo}  placeholder={`${t("DFM_WARD_NO")}`}   {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_WARD_NO") })} />
-          </div> */}
-              
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-              <div className="col-md-4">
+                <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_OWNER_NAME")}
                     <span className="mandatorycss">*</span>
@@ -258,6 +254,16 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_NAME") })}
                   />
                 </div>
+
+                {/* <div className="col-md-4" ><CardLabel>{t("DFM_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="WardNo"
+             value={WardNo} 
+             onChange={setSelectedWardNo}  placeholder={`${t("DFM_WARD_NO")}`}   {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_WARD_NO") })} />
+          </div> */}
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
                 <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_OWNER_NAME_MAL")}
@@ -272,7 +278,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     value={OwnerNameMal}
                     onChange={setSelectedOwnerNameMal}
                     placeholder={`${t("DFM_OWNER_NAME_MAL")}`}
-                    {...(validation = {  isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_NAME_MAL") })}
+                    {...(validation = { isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_NAME_MAL") })}
                   />
                 </div>
                 {/* <div className="col-md-4">
@@ -324,17 +330,6 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_MOBILE_NO") })}
                   />
                 </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                {/* <div className="col-md-4" ><CardLabel>{t("DFM_BUILDING_NO")}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuldingNo"
-             value={BuldingNo} 
-             onChange={setSelectedBuldingNo}  placeholder={`${t("DFM_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_BUILDING_NO") })} />
-          </div> */}
-
-          
                 <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_DURATION_RESIDENCE")}
@@ -385,7 +380,16 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                 </div>
               </div>
             </div>
-
+            
+            {/* <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-4" ><CardLabel>{t("DFM_BUILDING_NO")}</CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuldingNo"
+             value={BuldingNo} 
+             onChange={setSelectedBuldingNo}  placeholder={`${t("DFM_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_BUILDING_NO") })} />
+          </div>
+              </div>
+            </div> */}
           </div>
         </div>
       </FormStep>
