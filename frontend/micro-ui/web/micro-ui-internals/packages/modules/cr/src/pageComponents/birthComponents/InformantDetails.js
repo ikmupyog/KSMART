@@ -50,7 +50,7 @@ const InformantDetails = ({ config, onSelect, userType, formData,InfomantFirstNa
             <BackButton >{t("CS_COMMON_BACK")}</BackButton> */}
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!InfomantFirstNameEn}>
                 <div className="row">
-                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_Infomant_INFORMATION")}`}</span> </h1>
+                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMENT_DETAILS")}`}</span> </h1>
                     </div>
                 </div>
                 <div className="row">

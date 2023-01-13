@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import cloneDeep from "lodash/cloneDeep";
 import { useParams,useHistory } from "react-router-dom";
@@ -7,6 +8,9 @@ import { Header ,Banner, Card,SubmitBar} from "@egovernments/digit-ui-react-comp
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 import ApplicationDetailsActionBar from "../../../../templates/ApplicationDetails/components/ApplicationDetailsActionBar";
+import ApplicationDetailsWarningPopup from "../../../../templates/ApplicationDetails/components/ApplicationDetailsWarningPopup";
+import ActionModal from "../../../../templates/ApplicationDetails/Modal";
+import ApplicationDetailsToast from "../../../../templates/ApplicationDetails/components/ApplicationDetailsToast";
 const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
   const history = useHistory();
   const [businessService, setBusinessService] = useState("PdeTL");
@@ -14,53 +18,36 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [selectedAction, setSelectedAction] = useState(null);
-  // const { id: applicationNumber } = useParams();
-  // const [showToast, setShowToast] = useState(null);
-  // const [callUpdateService, setCallUpdateValve] = useState(false);
-  // const [businessService, setBusinessService] = useState("PdeTL"); //DIRECTRENEWAL
-  // const [numberOfApplications, setNumberOfApplications] = useState([]);
-  // const [allowedToNextYear, setAllowedToNextYear] = useState(false);
-  // sessionStorage.setItem("applicationNumber", applicationNumber)
-  // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
+  const [showModal, setShowModal] = useState(false);
+  const [isEnableLoader, setIsEnableLoader] = useState(false);
+  const [isWarningPop, setWarningPopUp] = useState(false);
+  const [showToast,setShowToast]=useState(false);
+    
+  const closeToast = () => {
+    setShowToast(null);
+  };
 
-  // const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.tl.useApplicationDetail(t, tenantId, applicationNumber);
+  const {
+    isLoading: updatingApplication,
+    isError: updateApplicationError,
+    data: updateResponse,
+    error: updateError,
+    mutate,
+  } = Digit.Hooks.tl.useApplicationActions(tenantId,true);
 
-  // const stateId = Digit.ULBService.getStateId();
-  // const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
-
-  // const {
-  //   isLoading: updatingApplication,
-  //   isError: updateApplicationError,
-  //   data: updateResponse,
-  //   error: updateError,
-  //   mutate,
-  // } = Digit.Hooks.tl.useApplicationActions(tenantId);
-
-  // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
+  let applicationNumber=data.data?.Licenses[0]?.applicationNumber;
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId:  tenantId,
     id: data.data?.Licenses[0]?.applicationNumber,
     moduleCode: businessService,
     role: "EMPLOYEE",
-  //  config:{EditRenewalApplastModifiedTime:EditRenewalApplastModifiedTime},
   });
 
-  // const closeToast = () => {
-  //   setShowToast(null);
-  // };
-
-  // useEffect(() => {
-  //   if (applicationDetails?.numOfApplications?.length > 0) {
-  //      let financialYear = cloneDeep(applicationDetails?.applicationData?.financialYear);
-  //     const financialYearDate = financialYear?.split('-')[1];
-  //     const finalFinancialYear = `20${Number(financialYearDate)}-${Number(financialYearDate)+1}`
-  //     const isAllowedToNextYear = applicationDetails?.numOfApplications?.filter(data => (data.financialYear == finalFinancialYear && data?.status !== "REJECTED"));
-  //     if (isAllowedToNextYear?.length > 0) setAllowedToNextYear(false);
-  //     if (!isAllowedToNextYear || isAllowedToNextYear?.length == 0) setAllowedToNextYear(true);
-  //     setNumberOfApplications(applicationDetails?.numOfApplications);
-  //   }
-  // }, [applicationDetails?.numOfApplications]);
-
+  useEffect(() => {
+    if (showToast) {
+      workflowDetails.revalidate();
+    }
+  }, [showToast]);
   useEffect(() => {
     if (workflowDetails?.data?.applicationBusinessService) {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
@@ -86,74 +73,6 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
     })
   }
 
-
-  // const userInfo = Digit.UserService.getUser();
-  // const rolearray = userInfo?.info?.roles.filter(item => {
-  // if ((item.code == "TL_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
-
-  // const rolecheck = rolearray.length > 0 ? true : false;
-  // const validTo = applicationDetails?.applicationData?.validTo;
-  // const currentDate = Date.now();
-  // const duration = validTo - currentDate;
-  // const renewalPeriod = TradeRenewalDate?.TradeLicense?.TradeRenewal?.[0]?.renewalPeriod;
-
-  // if (rolecheck && (applicationDetails?.applicationData?.status === "APPROVED" || applicationDetails?.applicationData?.status === "EXPIRED" || (applicationDetails?.applicationData?.status === "MANUALEXPIRED" && renewalPending==="true")) && duration <= renewalPeriod) {
-  //   if(workflowDetails?.data && allowedToNextYear) {
-  //     if(!workflowDetails?.data?.actionState) {
-  //       workflowDetails.data.actionState = {};
-  //       workflowDetails.data.actionState.nextActions = [];
-  //     }
-  //     const flagData = workflowDetails?.data?.actionState?.nextActions?.filter(data => data.action == "RENEWAL_SUBMIT_BUTTON");
-  //     if(flagData && flagData.length === 0) {
-  //       workflowDetails?.data?.actionState?.nextActions?.push({
-  //         action: "RENEWAL_SUBMIT_BUTTON",
-  //         redirectionUrl: {
-  //           pathname: `/digit-ui/employee/tl/renew-application-details/${applicationNumber}`,
-  //           state: applicationDetails
-  //         },
-  //         tenantId: stateId,
-  //         role: []
-  //       });
-  //     }
-  //   }
-  // }
-
-  // if (rolearray && applicationDetails?.applicationData?.status === "PENDINGPAYMENT") {
-  //     workflowDetails?.data?.nextActions?.map(data => {
-  //       if (data.action === "PAY") {
-  //         workflowDetails = {
-  //           ...workflowDetails,
-  //           data: {
-  //             ...workflowDetails?.data,
-  //             actionState: {
-  //               nextActions: [
-  //                 {
-  //                   action: data.action,
-  //                   redirectionUrll: {
-  //                     pathname: `TL/${applicationDetails?.applicationData?.applicationNumber}/${tenantId}`,
-  //                     state: tenantId
-  //                   },
-  //                   tenantId: tenantId,
-  //                 }
-  //               ],
-  //             },
-  //           },
-  //         };
-  //       }
-  //     })
-  // };
-
-  // const wfDocs = workflowDetails.data?.timeline?.reduce((acc, { wfDocuments }) => {
-  //   return wfDocuments ? [...acc, ...wfDocuments] : acc;
-  // }, []);
-  // const ownerdetails = applicationDetails?.applicationDetails.find(e => e.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS");
-  // let appdetailsDocuments = ownerdetails?.additionalDetails?.documents;
-  // if(appdetailsDocuments && wfDocs?.length && !(appdetailsDocuments.find(e => e.title === "TL_WORKFLOW_DOCS"))){
-  //   ownerdetails.additionalDetails.documents = [...ownerdetails.additionalDetails.documents,{
-  //     title: "TL_WORKFLOW_DOCS",
-  //     values: wfDocs?.map?.((e) => ({ ...e, title: e.documentType})),
-  //   }];
-  // }
   function onActionSelect(action) {
     if (action) {
       if (action?.isWarningPopUp) {
@@ -172,6 +91,7 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
     setSelectedAction(action);
     setDisplayMenu(false);
   }
+  const queryClient = useQueryClient();
   const closeModal = () => {
     setSelectedAction(null);
     setShowModal(false);
@@ -196,6 +116,68 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
       // tenantId: billDetails.tenantId,
     });
   }
+
+  const submitAction = async (data, nocData = false, isOBPS = {}) => {
+    setIsEnableLoader(true);
+    if (typeof data?.customFunctionToExecute === "function") {
+      data?.customFunctionToExecute({ ...data });
+    }
+    if (nocData !== false && nocMutation) {
+      const nocPrmomises = nocData?.map((noc) => {
+        return nocMutation?.mutateAsync(noc);
+      });
+      try {
+        setIsEnableLoader(true);
+        const values = await Promise.all(nocPrmomises);
+        values &&
+          values.map((ob) => {
+            Digit.SessionStorage.del(ob?.Noc?.[0]?.nocType);
+          });
+      } catch (err) {
+        setIsEnableLoader(false);
+        let errorValue = err?.response?.data?.Errors?.[0]?.code
+          ? t(err?.response?.data?.Errors?.[0]?.code)
+          : err?.response?.data?.Errors?.[0]?.message || err;
+        closeModal();
+        setShowToast({ key: "error", error: { message: errorValue } });
+        setTimeout(closeToast, 5000);
+        return;
+      }
+    }
+    if (mutate) {
+      console.log("mutate is there");
+      setIsEnableLoader(true);
+      mutate(data, {
+        onError: (error, variables) => {
+          setIsEnableLoader(false);
+          setShowToast({ key: "error", error });
+          setTimeout(closeToast, 5000);
+        },
+        onSuccess: (data, variables) => {
+          setIsEnableLoader(false);
+          if (isOBPS?.bpa) {
+            data.selectedAction = selectedAction;
+            history.replace(`/digit-ui/employee/obps/response`, { data: data });
+          }
+          if (isOBPS?.isStakeholder) {
+            data.selectedAction = selectedAction;
+            history.push(`/digit-ui/employee/obps/stakeholder-response`, { data: data });
+          }
+          if (isOBPS?.isNoc) {
+            history.push(`/digit-ui/employee/noc/response`, { data: data });
+          }
+          setShowToast({ key: "success", action: selectedAction });
+          setTimeout(closeToast, 5000);
+          queryClient.clear();
+          queryClient.refetchQueries("APPLICATION_SEARCH");
+        },
+      });
+    }
+
+    closeModal();
+  };
+
+
   return (
     <Card>
       <BannerPicker t={t} data={data.data} isSuccess={data.isSuccess} isLoading={(data.isIdle || data.isLoading)} />
@@ -206,10 +188,38 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
             onActionSelect={onActionSelect}
             setDisplayMenu={setDisplayMenu}
             businessService={businessService}
+            mutate={mutate}
             // forcedActionPrefix={forcedActionPrefix}
             // ActionBarStyle={ActionBarStyle}
             // MenuStyle={MenuStyle}
           />
+          {showModal ? (
+            <ActionModal
+              t={t}
+              action={selectedAction}
+              tenantId={tenantId}
+              // state={state}
+              id={applicationNumber}
+              // applicationDetails={applicationDetails}
+               applicationData={data?.data?.Licenses[0]}
+              closeModal={closeModal}
+              submitAction={submitAction}
+              actionData={workflowDetails?.data?.timeline}
+              businessService={businessService}
+              workflowDetails={workflowDetails}
+              moduleCode="TL"
+            />
+          ) : null}
+           {isWarningPop ? (
+            <ApplicationDetailsWarningPopup
+              action={selectedAction}
+              workflowDetails={workflowDetails}
+              businessService={businessService}
+              isWarningPop={isWarningPop}
+              closeWarningPopup={closeWarningPopup}
+            />
+          ) : null}
+           <ApplicationDetailsToast t={t} showToast={showToast} closeToast={closeToast} businessService={businessService} />
       </Card>
   );
 };
