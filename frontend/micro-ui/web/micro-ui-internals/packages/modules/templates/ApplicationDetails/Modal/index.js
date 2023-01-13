@@ -17,7 +17,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("NewBirth")) {
     return <BirthActionModal {...props} />;
   }
-  if (props?.businessService.includes("birth30days")) {
+  if (props?.businessService.includes("NewBirthTwentyOne")) {
     return <BirthActionModal {...props} />;
   }
   if (props?.businessService.includes("death21days")) {
