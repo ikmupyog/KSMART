@@ -21,7 +21,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     const birthDate = new Date(e.target.value);
     let age_in_ms = today - birthDate;
     let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
-    setAgeofbirth(age_in_years);
+    setAgeofbirth(Math.floor(age_in_years));
   };
 
   console.log(formData);
@@ -182,7 +182,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
   const onSkip = () => onSelect();
   const goNext = () => {
-    sessionStorage.setItem("DeathDate", DeathDate);
+    sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
     sessionStorage.setItem("DeathTime", DeathTime);
     sessionStorage.setItem("FirstName", FirstName);
     sessionStorage.setItem("MiddleName", MiddleName);
@@ -201,10 +201,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
     sessionStorage.setItem("CommencementDate", CommencementDate);
+    sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
 
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     onSelect(config.key, {
+      setIdCombo,
       DeathDate,
       DeathTime,
       FirstName,
@@ -232,7 +234,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!Gender}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathDate || !Gender}>
         {/* //    isDisabled={!CommencementDate} */}
         <div className="row">
           <div className="col-md-12">

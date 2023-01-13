@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, setAdrsCountry,AdrsStateName, setAdrsStateName,AdrsDistrict, setAdrsDistrict,
   AdrsLBTypeName, setAdrsLBTypeName,AdrsTaluk, setAdrsTaluk,AdrsPostOffice, setAdrsPostOffice, AdrsPincode, setAdrsPincode, AdrsHouseNameEn, setAdrsHouseNameEn,
-  AdrsBuldingNo, setAdrsBuldingNo,AdrsResNoEn, setAdrsResNoEn,AdrsInfomntName, setAdrsInfomntName,AdrsDoorNo, setAdrsDoorNo,AdrsMainPlaceEn, setAdrsMainPlaceEn,
+ AdrsResNoEn, setAdrsResNoEn,AdrsInfomntName, setAdrsInfomntName,AdrsDoorNo, setAdrsDoorNo,AdrsMainPlaceEn, setAdrsMainPlaceEn,
   AdrsLocalityNameEn, setAdrsLocalityNameEn,AdrsStreetNameEn, setAdrsStreetNameEn,AdrsVillage, setAdrsVillage,AdrsLBName, setAdrsLBName,AdrsMainPlaceMl, setAdrsMainPlaceMl,
   AdrsLocalityNameMl, setAdrsLocalityNameMl, AdrsStreetNameMl, setAdrsStreetNameMl, AdrsHouseNameMl, setAdrsHouseNameMl,AdrsResNoMl, setAdrsResNoMl,
  }) => {
@@ -165,9 +165,9 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
   function setSelectAdrsPincode(e) {
     setAdrsPincode(e.target.value);
   }
-  function setSelectAdrsBuldingNo(e) {
-    setAdrsBuldingNo(e.target.value);
-  }
+  // function setSelectAdrsBuldingNo(e) {
+  //   setAdrsBuldingNo(e.target.value);
+  // }
   function setSelectAdrsResNoEn(e) {
     setAdrsResNoEn(e.target.value);
   }
@@ -572,7 +572,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
             </div>  
-              <div className="col-md-3">
+              {/* <div className="col-md-3">
               <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
               <TextInput
                 t={t}
@@ -586,7 +586,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
               />
-            </div> 
+            </div>  */}
             <div className="col-md-3">
               <CardLabel>
                 {t("CR_DOOR_NO")}
@@ -620,6 +620,21 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_EN") })}
               />
             </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="AdrsResNoMl"
+                value={AdrsResNoMl}
+                onChange={setSelectAdrsResNoMl}
+                placeholder={`${t("CR_RES_ASSOCIATION_NO_ML")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
+              />
+            </div>
           </div>
         </div>
         {/* <div className="row">
@@ -632,7 +647,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
  </div>
  </div>
  </div> */}
-
+{/* 
         <div className="row">
           <div className="col-md-12">    
             
@@ -650,7 +665,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
               />
-            </div>
+            </div> */}
             {/* <div className="col-md-3">
               <CardLabel>
                 {t("CR_INFORMANT_NAME")}
@@ -669,9 +684,9 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div> */}
-          </div>
+          {/* </div>
         </div>
-        
+         */}
       </FormStep>
     </React.Fragment>
   );
