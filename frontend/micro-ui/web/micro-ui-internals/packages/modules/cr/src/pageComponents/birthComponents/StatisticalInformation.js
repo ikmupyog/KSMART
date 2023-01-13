@@ -155,7 +155,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{t("CR_BIRTH_HEIGHT")}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthHeight" value={BirthHeight} onChange={setSelectBirthHeight} disable={isEdit} placeholder={`${t("CR_BIRTH_HEIGHT")}`}{...(validation = { pattern: "^[.0-9`' ]*$",  type: "text", title: t("CR_INVALID_BIRTH_HEIGHT") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthHeight" value={BirthHeight} onChange={setSelectBirthHeight} disable={isEdit} placeholder={`${t("CR_BIRTH_HEIGHT")}`}{...(validation = { pattern: "^[.0-9`' ]*$",  isRequired: false, type: "text", title: t("CR_INVALID_BIRTH_HEIGHT") })} />
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CS_COMMON_RELIGION")}`}<span className="mandatorycss">*</span></CardLabel>
