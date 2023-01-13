@@ -412,7 +412,7 @@ public class CrDeathDtl {
     @JsonProperty("businessService")
     private String businessService;
 
-    @JsonProperty("assignees")
+    @JsonProperty("assignee")
     private List<String> assignees;
 
     //@Schema(type = "string", description = "Comments")
