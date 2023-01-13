@@ -95,5 +95,15 @@ export const TLService = {
       params: {},
       auth: true,
     }),
-    
+    updatepdewf: (details, tenantId) =>
+    Request({
+      url: Urls.tl.updatepdewf,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),  
 };
