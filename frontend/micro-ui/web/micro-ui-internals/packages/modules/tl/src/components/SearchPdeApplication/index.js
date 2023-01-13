@@ -27,7 +27,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
         defaultValues: {
             offset: 0,
             limit: 10,
-            sortBy: "commencementDate",
+            sortBy: "wardNo",
             sortOrder: "DESC"
         }
     })
@@ -35,7 +35,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
     useEffect(() => {
       register("offset", 0)
       register("limit", 10)
-      register("sortBy", "commencementDate")
+      register("sortBy", "wardNo")
       register("sortOrder", "DESC")
     },[register])
 
@@ -79,8 +79,8 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
             return (
               <div>
                 <span className="link">
-                <Link onClick={event => handleLinkClick(row.original)} to={{pathname:`/digit-ui/employee/tl/pde-editapplication`}}>
-                    Edit 
+                  <Link onClick={event => handleLinkClick(row.original)} to={{pathname:`/digit-ui/employee/tl/pde-editapplication`}}>
+                    {row.original["applicationNumber"]}
                   </Link>
                 </span>
               </div>
