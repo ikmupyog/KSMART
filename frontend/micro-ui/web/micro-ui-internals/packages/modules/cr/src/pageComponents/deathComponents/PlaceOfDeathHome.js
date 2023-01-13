@@ -669,7 +669,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
                 name="AdrsResNo"
                 value={AdrsResNo}
                 onChange={setSelectAdrsResNo}
-                placeholder={`${t("CCR_RES_ASSOCIATION_NO")}`}
+                placeholder={`${t("CR_RES_ASSOCIATION_NO")}`}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO") })}
               />

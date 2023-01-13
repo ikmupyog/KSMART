@@ -129,8 +129,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
     // sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
     // sessionStorage.setItem("VehicleToEn", VehicleToEn);
     // sessionStorage.setItem("VehicleFromMl", VehicleFromMl);  
-       sessionStorage.setItem("VehicleHaltPlace", VehicleHaltPlace);
-       sessionStorage.setItem("VehicleType", VehicleType);
+      //  sessionStorage.setItem("VehicleHaltPlace", VehicleHaltPlace);
+      //  sessionStorage.setItem("VehicleType", VehicleType);
     
     // sessionStorage.setItem("VehicleToMl", VehicleToMl);
     // sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn.code);
@@ -148,8 +148,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
       // DriverNameMl,
       // DriverMobileNo,
       // DriverAadhar,
-       VehicleType,
-      VehicleHaltPlace     
+      //  VehicleType,
+      // VehicleHaltPlace     
       // DriverLicenceNo,
       // setDeathVehicleWard,
 

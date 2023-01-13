@@ -10,12 +10,12 @@ import PlaceOfDeathOther from "../../pageComponents/deathComponents/PlaceOfDeath
 import InformentAddress from "../../pageComponents/deathComponents/InformentAddress";
 
 const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
-  console.log(formData);
+  // console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
-  const [setPlaceofDeath, setSelectedPlaceofDeath] = useState(formData?.PlaceOfDeath?.setPlaceofDeath);
+  const [PlaceOfDeath, selectPlaceOfDeath] = useState(formData?.PlaceOfDeath?.PlaceOfDeath);
   const [value, setValue] = useState();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // Death Place Hospital
@@ -26,7 +26,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [HospitalMobile, setHospitalMobile] = useState(formData?.PlaceOfDeath?.HospitalMobile);
   const [OfficerName, setOfficerName] = useState(formData?.PlaceOfDeath?.OfficerName);
   const [OfficerDesignation, setOfficerDesignation] = useState(formData?.PlaceOfDeath?.OfficerDesignation);
-  
+
   //DeathPlace Home
   const [AdrsCountry, setAdrsCountry] = useState(formData?.PlaceOfDeath?.AdrsCountry);
   const [AdrsStateName, setAdrsStateName] = useState(formData?.PlaceOfDeath?.AdrsStateName);
@@ -74,7 +74,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [VehicleFromMl, setVehicleFromMl] = useState(formData?.PlaceOfDeath?.VehicleFromMl);
   const [VehicleToMl, setVehicleToMl] = useState(formData?.PlaceOfDeath?.VehicleToMl);
   const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeath?.VehicleOtherDetailsEn);
-  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeath?.VehicleOtherDetailsMl); 
+  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeath?.VehicleOtherDetailsMl);
   const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeath?.setAdmittedHospitalEn);
   const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeath?.setAdmittedHospitalMl);
   const [VehicleType, setVehicleType] = useState(formData?.PlaceOfDeath?.VehicleType);
@@ -93,26 +93,26 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectPlaceofDeath(value) {
-    setSelectedPlaceofDeath(value);
+    selectPlaceOfDeath(value);
     setValue(value.code);
   }
 
   React.useEffect(() => {
     if (isInitialRender) {
-      if (cmbPlace) {
+      if (PlaceOfDeath) {
         setIsInitialRender(false);
-        naturetype = cmbPlace.code;
+        naturetype = PlaceOfDeath.code;
         setValue(naturetype);
         // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(naturetype)));
         if (naturetype === "HOSPITAL") {
-          <HospitalDetails
+          <PlaceOfDeathHospital
             HospitalName={HospitalName}
             SignedOfficerName={SignedOfficerName}
             setDesignation={setDesignation}
             HospitalAadhaar={HospitalAadhaar}
             HospitalMobile={HospitalMobile}
-            OfficerName = {OfficerName}
-        OfficerDesignation = {OfficerDesignation}
+            OfficerName={OfficerName}
+            OfficerDesignation={OfficerDesignation}
           />
         }
         if (naturetype === "HOME") {
@@ -172,10 +172,10 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
             VehicleFromEn={VehicleFromEn}
             VehicleToEn={VehicleToEn}
             VehicleFromMl={VehicleFromMl}
-            VehicleHaltPlace={VehicleHaltPlace}           
+            VehicleHaltPlace={VehicleHaltPlace}
             VehicleToMl={VehicleToMl}
             VehicleOtherDetailsEn={VehicleOtherDetailsEn}
-            VehicleOtherDetailsMl={VehicleOtherDetailsMl}           
+            VehicleOtherDetailsMl={VehicleOtherDetailsMl}
             setAdmittedHospitalEn={setAdmittedHospitalEn}
             setAdmittedHospitalMl={setAdmittedHospitalMl}
           />
@@ -185,23 +185,24 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
   const goNext = () => {
-  sessionStorage.setItem("SignedOfficerName", SignedOfficerName ? SignedOfficerName.code : null);
-  sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.code : null );
-  sessionStorage.setItem("setDesignation", setDesignation ? setDesignation.code : null);
-  sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar ? HospitalAadhaar : null );
-  sessionStorage.setItem("HospitalMobile", HospitalMobile ? HospitalMobile : null);
-  sessionStorage.setItem("OfficerName", OfficerName ? OfficerName : null);
-  sessionStorage.setItem("OfficerDesignation", OfficerDesignation ? OfficerDesignation : null);
+    // sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.hospitalName : null);
 
+    sessionStorage.setItem("SignedOfficerName", SignedOfficerName ? SignedOfficerName.code : null);
+    sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.code : null);
+    sessionStorage.setItem("setDesignation", setDesignation ? setDesignation.code : null);
+    sessionStorage.setItem("HospitalAadhaar", HospitalAadhaar ? HospitalAadhaar : null);
+    sessionStorage.setItem("HospitalMobile", HospitalMobile ? HospitalMobile : null);
+    sessionStorage.setItem("OfficerName", OfficerName ? OfficerName : null);
+    sessionStorage.setItem("OfficerDesignation", OfficerDesignation ? OfficerDesignation : null);
     //Place of Death Home
-    sessionStorage.setItem("AdrsCountry", AdrsCountry ?AdrsCountry.code : null);
-    sessionStorage.setItem("AdrsStateName", AdrsStateName? AdrsStateName.code : null);
-    sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName? AdrsLBTypeName.code : null);
+    sessionStorage.setItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
+    sessionStorage.setItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
+    sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName ? AdrsLBTypeName.code : null);
     // sessionStorage.setItem("AdrsBuldingNo", AdrsBuldingNo ? AdrsBuldingNo : null); 
-    sessionStorage.setItem("AdrsResNo", AdrsResNo ? AdrsResNo : null );
+    sessionStorage.setItem("AdrsResNo", AdrsResNo ? AdrsResNo : null);
     sessionStorage.setItem("AdrsDoorNo", AdrsDoorNo ? AdrsDoorNo : null);
     sessionStorage.setItem("AdrsHouseNameEn", AdrsHouseNameEn ? AdrsHouseNameEn : null);
-    sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl ? AdrsHouseNameMl :null );
+    sessionStorage.setItem("AdrsHouseNameMl", AdrsHouseNameMl ? AdrsHouseNameMl : null);
     sessionStorage.setItem("AdrsMainPlaceEn", AdrsMainPlaceEn ? AdrsMainPlaceEn : null);
     sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl ? AdrsMainPlaceMl : null);
     sessionStorage.setItem("AdrsLocalityNameEn", AdrsLocalityNameEn ? AdrsLocalityNameEn : null);
@@ -211,55 +212,49 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("AdrsStreetNameEn", AdrsStreetNameEn ? AdrsStreetNameEn : null);
     sessionStorage.setItem("AdrsStreetNameMl", AdrsStreetNameMl ? AdrsStreetNameMl : null);
     sessionStorage.setItem("AdrsVillage", AdrsVillage ? AdrsVillage.code : null);
-    sessionStorage.setItem("AdrsLBName",AdrsLBName ? AdrsLBName.code: null);
+    sessionStorage.setItem("AdrsLBName", AdrsLBName ? AdrsLBName.code : null);
     sessionStorage.setItem("AdrsDistrict", AdrsDistrict ? AdrsDistrict.code : null);
     sessionStorage.setItem("AdrsTaluk", AdrsTaluk ? AdrsTaluk.code : null);
-    sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice ?AdrsPostOffice.code : null);
+    sessionStorage.setItem("AdrsPostOffice", AdrsPostOffice ? AdrsPostOffice.code : null);
     sessionStorage.setItem("AdrsPincode", AdrsPincode ? AdrsPincode : null);
     //Place Of DeathInstitution
     sessionStorage.setItem("setInstitution", setInstitution ? setInstitution.code : null);
     sessionStorage.setItem("setInstitutionId", setInstitutionId ? setInstitutionId.code : null);
-    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer ? SiginedOfficer : nill);
+    sessionStorage.setItem("setSiginedOfficer", SiginedOfficer ? SiginedOfficer : null);
     sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation ? SiginedOfficerDesignation : null);
     sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo ? InstitutionMobilNo : null);
     sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar ? InstitutionAadhaar : null);
     //InformentAddress
-    sessionStorage.setItem("InformentNameEn", InformentNameEn ? InformentNameEn:null);
-    sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl:null); 
+    sessionStorage.setItem("InformentNameEn", InformentNameEn ? InformentNameEn : null);
+    sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl : null);
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
-    sessionStorage.setItem("isNoAadhaar", isNoAadhaar ? isNoAadhaar:null);
+    sessionStorage.setItem("isNoAadhaar", isNoAadhaar ? isNoAadhaar : null);
     sessionStorage.setItem("AadhaarNo", AadhaarNo ? AadhaarNo : null);
     sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
-    sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo :null );
-    sessionStorage.setItem("InformentEmail", InformentEmail ? InformentEmail :null);
+    sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo : null);
+    sessionStorage.setItem("InformentEmail", InformentEmail ? InformentEmail : null);
     //PlaceOfDeathVehicle
-    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo :null );
-    sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null );
+    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null);
+    sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);
     sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
     sessionStorage.setItem("VehicleFromMl", VehicleFromMl ? VehicleFromMl : null);
-    sessionStorage.setItem("VehicleHaltPlace", VehicleHaltPlace ? VehicleHaltPlace : null  );     
+    sessionStorage.setItem("VehicleHaltPlace", VehicleHaltPlace ? VehicleHaltPlace : null);
     sessionStorage.setItem("VehicleToMl", VehicleToMl ? VehicleToMl : null);
-    sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard ? setDeathVehicleWard.code : null);
+    // sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard ? setDeathVehicleWard.code : null);
     sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn ? setAdmittedHospitalEn.code : null);
-    sessionStorage.setItem("setAdmittedHospitalMl", setAdmittedHospitalMl ? setAdmittedHospitalMl .code : nill);
+    sessionStorage.setItem("setAdmittedHospitalMl", setAdmittedHospitalMl ? setAdmittedHospitalMl.code : null);
     sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn ? VehicleOtherDetailsEn : null);
     sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsMl ? VehicleOtherDetailsMl : null);
     sessionStorage.setItem("VehicleType", VehicleType ? VehicleType : null);
-
-
     onSelect(config.key, {
-      setPlaceofDeath, SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile, OfficerName,OfficerDesignation,
+      PlaceOfDeath, SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile, OfficerName, OfficerDesignation,
       AdrsDoorNo, AdrsHouseNameEn, AdrsHouseNameMl, AdrsLocalityNameEn, AdrsLocalityNameMl, AdrsCountry, AdrsStateName,
       AdrsLBTypeName, AdrsMainPlaceEn, AdrsMainPlaceMl, AdrsStreetNameEn, AdrsStreetNameMl, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk,
       AdrsPostOffice, AdrsPincode, AdrsResNo, setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo,
       InstitutionAadhaar, InformentNameEn, InformentNameMl, setTitle, isNoAadhaar, AadhaarNo, setDeclaration, InformentMobileNo, InformentEmail, VehicleRegistrationNo,
-      VehicleFromEn, VehicleToEn, VehicleFromMl, VehicleToMl,VehicleHaltPlace, setDeathVehicleWard, setAdmittedHospitalEn, setAdmittedHospitalMl, VehicleOtherDetailsEn,
-      VehicleOtherDetailsMl,VehicleType,
+      VehicleFromEn, VehicleToEn, VehicleFromMl, VehicleToMl, VehicleHaltPlace, setAdmittedHospitalEn, setAdmittedHospitalMl, VehicleOtherDetailsEn,
+      VehicleOtherDetailsMl, VehicleType,
     });
-
-
-
-
   };
   return (
     <React.Fragment>
@@ -284,7 +279,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
                 optionKey="code"
                 isMandatory={false}
                 option={cmbPlace}
-                selected={setPlaceofDeath}
+                selected={PlaceOfDeath}
                 select={selectPlaceofDeath}
                 disabled={isEdit}
                 placeholder={`${t("CR_PLACE_OF_DEATH")}`}
@@ -302,9 +297,9 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
               setSelectedDesignation={setSelectedDesignation} setDesignation={setDesignation}
               setHospitalAadhaar={setHospitalAadhaar} HospitalAadhaar={HospitalAadhaar}
               setHospitalMobile={setHospitalMobile} HospitalMobile={HospitalMobile}
-              setOfficerName={setOfficerName} OfficerName={OfficerName} 
+              setOfficerName={setOfficerName} OfficerName={OfficerName}
               setOfficerDesignation={setOfficerDesignation} OfficerDesignation={OfficerDesignation} />
-          
+
           </div>)
         }
         {value === "INSTITUTION" && (
@@ -344,8 +339,19 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
               // AdrsCityMl={AdrsCityMl} setAdrsCityMl={setAdrsCityMl}
               AdrsStreetNameEn={AdrsStreetNameEn} setAdrsStreetNameEn={setAdrsStreetNameEn}
               AdrsStreetNameMl={AdrsStreetNameMl} setAdrsStreetNameMl={setAdrsStreetNameMl}
-              AdrsVillage={AdrsVillage} setAdrsVillage={setAdrsVillage} />        
-              {/* <PlaceOfDeathHome /> */}
+              AdrsVillage={AdrsVillage} setAdrsVillage={setAdrsVillage} />
+              
+               <InformentAddress
+              InformentNameEn={InformentNameEn} setInformentNameEn={setInformentNameEn}
+              InformentNameMl={InformentNameMl} setInformentNameMl={setInformentNameMl}
+              setTitle={setTitle} setSelectedTitle={setSelectedTitle}
+              AadhaarNo={AadhaarNo} setAadhaarNo={setAadhaarNo}
+              setDeclaration={setDeclaration} setSelectedDeclaration={setSelectedDeclaration}
+              InformentMobileNo={InformentMobileNo} setInformentMobileNo={setInformentMobileNo}
+              InformentEmail={InformentEmail} setInformentEmail={setInformentEmail}
+              isNoAadhaar={isNoAadhaar} setIsNoAadhaar={setIsNoAadhaar}
+            />
+            {/* <PlaceOfDeathHome /> */}
           </div>
         )
         }
@@ -355,13 +361,13 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
 
               VehicleRegistrationNo={VehicleRegistrationNo} setVehicleRegistrationNo={setVehicleRegistrationNo}
               VehicleFromEn={VehicleFromEn} setVehicleToEn={setVehicleToEn}
-              VehicleToEn={VehicleToEn} setVehicleFromEn = {setVehicleFromEn}
+              VehicleToEn={VehicleToEn} setVehicleFromEn={setVehicleFromEn}
               VehicleFromMl={VehicleFromMl} setVehicleFromMl={setVehicleFromMl}
               VehicleToMl={VehicleToMl} setVehicleToMl={setVehicleToMl}
-              VehicleHaltPlace= {VehicleHaltPlace} setSelectVehicleHaltPlace= {setSelectVehicleHaltPlace}
+              VehicleHaltPlace={VehicleHaltPlace} setSelectVehicleHaltPlace={setSelectVehicleHaltPlace}
               VehicleOtherDetailsEn={VehicleOtherDetailsEn} setVehicleOtherDetailsEn={setVehicleOtherDetailsEn}
-              VehicleType = {VehicleType} setVehicleType = {setVehicleType}
-              VehicleOtherDetailsMl={VehicleOtherDetailsMl} setVehicleOtherDetailsMl={setVehicleOtherDetailsMl}             
+              VehicleType={VehicleType} setVehicleType={setVehicleType}
+              VehicleOtherDetailsMl={VehicleOtherDetailsMl} setVehicleOtherDetailsMl={setVehicleOtherDetailsMl}
               setAdmittedHospitalEn={setAdmittedHospitalEn} setSelectedAdmittedHospitalEn={setSelectedAdmittedHospitalEn}
               setAdmittedHospitalMl={setAdmittedHospitalMl} setSelectedAdmittedHospitalMl={setSelectedAdmittedHospitalMl}
             />

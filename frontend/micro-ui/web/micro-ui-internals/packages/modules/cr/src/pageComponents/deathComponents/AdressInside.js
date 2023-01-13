@@ -37,14 +37,12 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PresentLocalityNameMl);
   const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressOfDecesed?.PresentStreetNameEn);
   const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressOfDecesed?.PresentStreetNameMl);
-  const [PresentViaEn, setPresentViaEn] = useState(formData?.AddressDetails?.PresentViaEn);
-  const [PresentViaMl, setPresentViaMl] = useState(formData?.AddressDetails?.PresentViaMl);
-  const [PresentCityEn, setPresentCityEn] = useState(formData?.AddressDetails?.PresentCityEn);
-  const [PresentCityMl, setPresentCityMl] = useState(formData?.AddressDetails?.PresentCityMl);   
+  // const [PresentViaEn, setPresentViaEn] = useState(formData?.AddressDetails?.PresentViaEn);
+  // const [PresentViaMl, setPresentViaMl] = useState(formData?.AddressDetails?.PresentViaMl);
+  const [PresentCityEn, setPresentCityEn] = useState(formData?.AddressOfDecesed?.PresentCityEn);
+  const [PresentCityMl, setPresentCityMl] = useState(formData?.AddressOfDecesed?.PresentCityMl);   
   const [PresentVillage, setPresentVillage] = useState(formData?.AddressOfDecesed?.PresentVillage);
-
-
-  
+    //Permanent Address
   const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressOfDecesed?.PermanentCountry);
   const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressOfDecesed?.PermanentStateName);
   const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressOfDecesed?.PermanentDistrict);
@@ -61,10 +59,10 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl);
   const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn);
   const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl);
-  const [PermanentViaEn, setPermanentViaEn] = useState(formData?.AddressDetails?.PermanentViaEn);
-  const [PermanentViaMl, setPermanentViaMl] = useState(formData?.AddressDetails?.PermanentViaMl);
-  const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressDetails?.PermanentCityEn);
-  const [PermanentCityMl, setPermanentCityMl] = useState(formData?.AddressDetails?.PermanentCityMl);    
+  // const [PermanentViaEn, setPermanentViaEn] = useState(formData?.AddressDetails?.PermanentViaEn);
+  // const [PermanentViaMl, setPermanentViaMl] = useState(formData?.AddressDetails?.PermanentViaMl);
+  const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressOfDecesed?.PermanentCityEn);
+  const [PermanentCityMl, setPermanentCityMl] = useState(formData?.AddressOfDecesed?.PermanentCityMl);    
   const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameEn);
   const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameMl);
   const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressOfDecesed?.PermanentStreetNameEn);
@@ -241,19 +239,19 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLocalityNameMl(PresentLocalityNameMl);
     }
   }
-  function setSelectPresentViaMl(e) {
-    setPresentViaMl(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentViaMl(PresentViaMl);
-    }
-  }
+  // function setSelectPresentViaMl(e) {
+  //   setPresentViaMl(e.target.value);
+  //   if (isPrsentAddress) {
+  //     setPermanentViaMl(PresentViaMl);
+  //   }
+  // }
   
-  function setSelectPresentViaEn(e) {
-    setPresentViaEn(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentViaEn(PresentViaEn);
-    }
-  }
+  // function setSelectPresentViaEn(e) {
+  //   setPresentViaEn(e.target.value);
+  //   if (isPrsentAddress) {
+  //     setPermanentViaEn(PresentViaEn);
+  //   }
+  // }
   function setSelectPresentCityMl(e) {
     setPresentCityMl(e.target.value);
     if (isPrsentAddress) {
@@ -312,12 +310,12 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     setPermanentPincode(e.target.value);
   }
       
-  function setSelectPermanentViaMl(e) {
-    setPermanentViaMl(e.target.value);
-  }
-  function setSelectPermanentViaEn(e) {
-    setPermanentViaEn(e.target.value);
-  }  
+  // function setSelectPermanentViaMl(e) {
+  //   setPermanentViaMl(e.target.value);
+  // }
+  // function setSelectPermanentViaEn(e) {
+  //   setPermanentViaEn(e.target.value);
+  // }  
   function setSelectPermanentCityMl(e) {
     setPermanentCityMl(e.target.value);
   }
@@ -376,8 +374,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLocalityNameMl(PresentLocalityNameMl);
       setPermanentStreetNameEn(PresentStreetNameEn);
       setPermanentStreetNameMl(PresentStreetNameMl);
-      setPermanentViaEn(PresentViaEn);
-      setPermanentViaMl(PresentViaMl);
+      // setPermanentViaEn(PresentViaEn);
+      // setPermanentViaMl(PresentViaMl);
       setPermanentCityEn(PresentCityEn);
       setPermanentCityMl(PresentCityMl);       
       setPermanentVillage(PresentVillage);
@@ -401,8 +399,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentLocalityNameMl("");
       setPermanentStreetNameEn("");
       setPermanentStreetNameMl("");
-      setPermanentViaMl('');
-      setPermanentViaEn(''); 
+      // setPermanentViaMl('');
+      // setPermanentViaEn(''); 
       setPermanentCityMl('');
       setPermanentCityEn('');       
       setPermanentVillage("");
@@ -424,54 +422,54 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     }
   }, [lbs, isInitialRender]);
   const goNext = () => {
-    sessionStorage.setItem("PresentCountry", PresentCountry.code);
-    sessionStorage.setItem("PresentStateName", PresentStateName.code);
-    sessionStorage.setItem("PresentLBTypeName", PresentLBTypeName.code);
-    sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo);
-    sessionStorage.setItem("PresentDoorNo", PresentDoorNo);
-    sessionStorage.setItem("PresentResNo", PresentResNo);
-    sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn);
-    sessionStorage.setItem("PresentHouseNameMl", PresentHouseNameMl);
-    sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn);
-    sessionStorage.setItem("PresentMainPlaceMl", PresentMainPlaceMl);
-    sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn);
-    sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl);
-    sessionStorage.setItem("PresentStreetNameEn", PresentStreetNameEn);
-    sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl);
-    sessionStorage.setItem("PresentViaEn", PresentViaEn); 
-    sessionStorage.setItem("PresentViaMl", PresentViaMl);
-    sessionStorage.setItem("PresentCityEn", PresentCityEn); 
-    sessionStorage.setItem("PresentCityaMl", PresentCityMl);    
-    sessionStorage.setItem("PresentVillage", PresentVillage.code);
-    sessionStorage.setItem("PresentLBName", null);
-    sessionStorage.setItem("PresentDistrict", PresentDistrict.code);
-    sessionStorage.setItem("PresentTaluk", PresentTaluk.code);
-    sessionStorage.setItem("PresentPostOffice", PresentPostOffice.code);
-    sessionStorage.setItem("PresentPincode", PresentPincode.code);
-    sessionStorage.setItem("PermanentCountry", PermanentCountry.code);
-    sessionStorage.setItem("PermanentStateName", PermanentStateName.code);
-    sessionStorage.setItem("PermanentLBTypeName", PermanentLBTypeName.code);
-    sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo);
-    sessionStorage.setItem("PermanentDoorNo", PermanentDoorNo);
-    sessionStorage.setItem("PermanentResNo", PermanentResNo);
-    sessionStorage.setItem("PermanentHouseNameEn", PermanentHouseNameEn);
-    sessionStorage.setItem("PermanentHouseNameMl", PermanentHouseNameMl);
-    sessionStorage.setItem("PermanentMainPlaceEn", PermanentMainPlaceEn);
-    sessionStorage.setItem("PermanentMainPlaceMl", PermanentMainPlaceMl);
-    sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn);
-    sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl);
-    sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn);
-    sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl);
-    sessionStorage.setItem("PermanentViaEn", PermanentViaEn);   
-    sessionStorage.setItem("PermanentViaMl", PermanentViaMl);
-    sessionStorage.setItem("PermanentCityEn", PermanentCityEn);   
-    sessionStorage.setItem("PermanenCityMl", PermanentCityMl);    
-    sessionStorage.setItem("PermanentVillage", PermanentVillage.code);
-    sessionStorage.setItem("PermanentLBName", null);
-    sessionStorage.setItem("PermanentDistrict", PermanentDistrict.code);
-    sessionStorage.setItem("PermanentTaluk", PermanentTaluk.code);
-    sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice.code);
-    sessionStorage.setItem("PermanentPincode", PermanentPincode.code);
+    sessionStorage.setItem("PresentCountry",PresentCountry ? PresentCountry.code : null);
+    sessionStorage.setItem("PresentStateName",PresentStateName ? PresentStateName.code : null);
+    sessionStorage.setItem("PresentLBTypeName",PresentStateName ?  PresentLBTypeName.code : null);
+    sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo ? PresentBuldingNo : null);
+    sessionStorage.setItem("PresentDoorNo", PresentDoorNo ? PresentDoorNo : null );
+    sessionStorage.setItem("PresentResNo", PresentResNo ? PresentResNo : null);
+    sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn ? PresentHouseNameEn : null );
+    sessionStorage.setItem("PresentHouseNameMl", PresentHouseNameMl ? PresentHouseNameMl : null);
+    sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn ? PresentMainPlaceEn : null);
+    sessionStorage.setItem("PresentMainPlaceMl", PresentMainPlaceMl ? PresentMainPlaceMl : null);
+    sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn ? PresentLocalityNameEn : null);
+    sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl ? PresentLocalityNameMl : null );
+    sessionStorage.setItem("PresentStreetNameEn", PresentStreetNameEn ? PresentStreetNameEn : null);
+    sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl ? PresentStreetNameMl : null );
+    // sessionStorage.setItem("PresentViaEn", PresentViaEn); 
+    // sessionStorage.setItem("PresentViaMl", PresentViaMl);
+    sessionStorage.setItem("PresentCityEn", PresentCityEn ? PresentCityEn : null); 
+    sessionStorage.setItem("PresentCityaMl", PresentCityMl ? PresentCityMl : null);    
+    sessionStorage.setItem("PresentVillage", PresentVillage ? PresentVillage.code : null);
+    sessionStorage.setItem("PresentLBName", PresentLBName ? PresentLBName : null);
+    sessionStorage.setItem("PresentDistrict", PresentDistrict ? PresentDistrict.code : null);
+    sessionStorage.setItem("PresentTaluk", PresentTaluk ? PresentTaluk.code : null);
+    sessionStorage.setItem("PresentPostOffice", PresentPostOffice ? PresentPostOffice.code : null);
+    sessionStorage.setItem("PresentPincode",PresentPincode ? PresentPincode.code : null );
+    // sessionStorage.setItem("PermanentCountry", PermanentCountry  .code);
+    sessionStorage.setItem("PermanentStateName", PermanentStateName ? PermanentStateName.code : null);
+    sessionStorage.setItem("PermanentLBTypeName", PermanentLBTypeName ? PermanentLBTypeName.code : null);
+    sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo ? PermanentBuldingNo : null);
+    sessionStorage.setItem("PermanentDoorNo", PermanentDoorNo ? PermanentDoorNo : null );
+    sessionStorage.setItem("PermanentResNo", PermanentResNo ? PermanentResNo : null);
+    sessionStorage.setItem("PermanentHouseNameEn", PermanentHouseNameEn ? PermanentHouseNameEn : null);
+    sessionStorage.setItem("PermanentHouseNameMl", PermanentHouseNameMl ? PermanentHouseNameMl : null);
+    sessionStorage.setItem("PermanentMainPlaceEn", PermanentMainPlaceEn ? PermanentMainPlaceEn : null);
+    sessionStorage.setItem("PermanentMainPlaceMl", PermanentMainPlaceMl ? PermanentMainPlaceMl : null );
+    sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn ? PermanentLocalityNameEn : null);
+    sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl ? PermanentLocalityNameMl : null);
+    sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn ? PermanentStreetNameEn : null);
+    sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl ? PermanentStreetNameMl : null);
+    // sessionStorage.setItem("PermanentViaEn", PermanentViaEn);   
+    // sessionStorage.setItem("PermanentViaMl", PermanentViaMl);
+    sessionStorage.setItem("PermanentCityEn", PermanentCityEn ? PermanentCityEn : null);   
+    sessionStorage.setItem("PermanentCityMl", PermanentCityMl ? PermanentCityMl : null);    
+    sessionStorage.setItem("PermanentVillage", PermanentVillage ? PermanentVillage.code : null);
+    sessionStorage.setItem("PermanentLBName", PermanentLBName ? PermanentLBName : null);
+    sessionStorage.setItem("PermanentDistrict", PermanentDistrict ? PermanentDistrict.code : null);
+    sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
+    sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice ? PermanentPostOffice.code : null);
+    sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
     onSelect(config.key, {
       PresentBuldingNo,
       PresentDoorNo,
@@ -487,8 +485,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       PresentLocalityNameMl,
       PresentStreetNameEn,
       PresentStreetNameMl,
-      PresentViaEn,
-      PresentViaMl,
+      // PresentViaEn,
+      // PresentViaMl,
       PresentCityEn,
       PresentCityMl,      
       PresentVillage,
@@ -508,8 +506,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       PermanentLocalityNameMl,
       PermanentStreetNameEn,
       PermanentStreetNameMl,
-      PermanentViaMl,
-      PermanentViaEn, 
+      // PermanentViaMl,
+      // PermanentViaEn, 
       PermanentCityMl,
       PermanentCityEn,      
       PermanentVillage,
@@ -559,7 +557,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_COUNTRY")}`}
                 <span className="mandatorycss">*</span>
@@ -574,7 +572,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_STATE")}`}
                 <span className="mandatorycss">*</span>
@@ -589,12 +587,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
               />
             </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_DISTRICT")}
                 <span className="mandatorycss">*</span>
@@ -610,8 +603,11 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
             </div>
-
-            <div className="col-md-6">
+          </div>
+        </div>        
+        <div className="row">
+          <div className="col-md-12">
+          <div className="col-md-3">
               <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
               <Dropdown
                 t={t}
@@ -623,11 +619,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_LB_NAME")}
                 <span className="mandatorycss">*</span>
@@ -643,7 +635,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_LB_NAME")}`}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_VILLAGE")}
                 <span className="mandatorycss">*</span>
@@ -659,11 +651,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_VILLAGE")}`}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_TALUK")}
                 <span className="mandatorycss">*</span>
@@ -679,7 +667,12 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_TALUK")}`}
               />
             </div>
-            <div className="col-md-4">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -695,7 +688,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
                 <span className="mandatorycss">*</span>
@@ -725,7 +718,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_MAIN_PLACE_EN")}
                 <span className="mandatorycss">*</span>
@@ -743,7 +736,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_MAIN_PLACE_ML")}
                 <span className="mandatorycss">*</span>
@@ -761,11 +754,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>{t("CR_CITY_EN")} </CardLabel>
               <TextInput
                 t={t}
@@ -780,7 +769,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>{t("CR_CITY_ML")} </CardLabel>
               <TextInput
                 t={t}
@@ -797,7 +786,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
-        <div className="row">
+        
+        {/* <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_VIA_EN")} </CardLabel>
@@ -830,10 +820,10 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_LOCALITY_EN")}
                 <span className="mandatorycss">*</span>
@@ -851,7 +841,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_LOCALITY_ML")}
                 <span className="mandatorycss">*</span>
@@ -869,11 +859,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
               <TextInput
                 t={t}
@@ -888,7 +874,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
               <TextInput
                 t={t}
@@ -904,10 +890,10 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               />
             </div>
           </div>
-        </div>
+        </div>        
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_HOUSE_NAME_EN")}
                 <span className="mandatorycss">*</span>
@@ -925,7 +911,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_HOUSE_NAME_ML")}
                 <span className="mandatorycss">*</span>
@@ -943,26 +929,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
-              <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="PresentBuldingNo"
-                value={PresentBuldingNo}
-                onChange={setSelectPresentBuldingNo}
-                placeholder={`${t("CR_BUILDING_NO")}`}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
-              />
-            </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_DOOR_NO")}
                 <span className="mandatorycss">*</span>
@@ -980,7 +947,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>{t("CR_RES_ASSOCIATION_NO")}</CardLabel>
               <TextInput
                 t={t}
@@ -997,24 +964,42 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
+        {/* <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-3">
+              <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PresentBuldingNo"
+                value={PresentBuldingNo}
+                onChange={setSelectPresentBuldingNo}
+                placeholder={`${t("CR_BUILDING_NO")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
+              />
+            </div>
+          
+          </div>
+        </div> */}
         <div>
           <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-12">
+            <div className="col-md-12">            
                 <CheckBox label={t("CR_PERMANANT_ADDRESS_SAME_AS_PRESENT_ADDRESS")} onChange={setSameAsPresent} value={isPrsentAddress} checked={isPrsentAddress} />
-              </div>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
-              <h1 className="headingh1">
+               <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
-              </h1>
+               </h1>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {`${t("CS_COMMON_COUNTRY")}`}
                   <span className="mandatorycss">*</span>
@@ -1029,7 +1014,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   disabled={isEdit}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {`${t("CS_COMMON_STATE")}`}
                   <span className="mandatorycss">*</span>
@@ -1044,12 +1029,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   disabled={isEdit}
                 />
               </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CS_COMMON_DISTRICT")}
                   <span className="mandatorycss">*</span>
@@ -1065,7 +1045,11 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_DISTRICT")}`}
                 />
               </div>
-              <div className="col-md-6">
+            </div>
+          </div>          
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-3">
                 <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                 <Dropdown
                   t={t}
@@ -1077,11 +1061,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   disabled={isEdit}
                 />
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_LB_NAME")}
                   <span className="mandatorycss">*</span>
@@ -1097,27 +1077,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_LB_NAME")}`}
                 />
               </div>
-              <div className="col-md-6">
-                <CardLabel>
-                  {t("CS_COMMON_VILLAGE")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={false}
-                  option={cmbVillage}
-                  selected={PermanentVillage}
-                  select={setSelectPermanentVillage}
-                  disabled={isEdit}
-                  placeholder={`${t("CS_COMMON_VILLAGE")}`}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_TALUK")}
                   <span className="mandatorycss">*</span>
@@ -1133,7 +1093,28 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_TALUK")}`}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
+                <CardLabel>
+                  {t("CS_COMMON_VILLAGE")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbVillage}
+                  selected={PermanentVillage}
+                  select={setSelectPermanentVillage}
+                  disabled={isEdit}
+                  placeholder={`${t("CS_COMMON_VILLAGE")}`}
+                />
+              </div>              
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_POST_OFFICE")}
                   <span className="mandatorycss">*</span>
@@ -1149,7 +1130,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CS_COMMON_PIN_CODE")}
                   <span className="mandatorycss">*</span>
@@ -1178,7 +1159,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_MAIN_PLACE_EN")}
                   <span className="mandatorycss">*</span>
@@ -1196,7 +1177,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_EN") })}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_MAIN_PLACE_ML")}
                   <span className="mandatorycss">*</span>
@@ -1214,11 +1195,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
                 />
               </div>
-            </div>
-          </div>
-          <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+              <div className="col-md-3">
               <CardLabel>{t("CR_CITY_EN")} </CardLabel>
               <TextInput
                 t={t}
@@ -1233,7 +1210,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_EN") })}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>{t("CR_CITY_ML")} </CardLabel>
               <TextInput
                 t={t}
@@ -1248,10 +1225,11 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
+            </div>
           </div>
-        </div>
-          <div className="row">
-          <div className="col-md-12">
+
+          {/* <div className="row"> */}
+          {/* <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_VIA_EN")} </CardLabel>
               <TextInput
@@ -1283,11 +1261,11 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_LOCALITY_EN")}
                   <span className="mandatorycss">*</span>
@@ -1305,7 +1283,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_LOCALITY_ML")}
                   <span className="mandatorycss">*</span>
@@ -1323,11 +1301,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
                 />
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_STREET_NAME_EN")}
                   <span className="mandatorycss">*</span>
@@ -1345,7 +1319,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_STREET_NAME_ML")}
                   <span className="mandatorycss">*</span>
@@ -1364,10 +1338,10 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
             </div>
-          </div>
+          </div>          
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_HOUSE_NAME_EN")}
                   <span className="mandatorycss">*</span>
@@ -1385,7 +1359,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_HOUSE_NAME_ML")}
                   <span className="mandatorycss">*</span>
@@ -1403,27 +1377,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
                 />
               </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-4">
-                <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="PermanentBuldingNo"
-                  value={PermanentBuldingNo}
-                  onChange={setSelectPermanentBuldingNo}
-                  disable={isEdit}
-                  placeholder={`${t("CR_BUILDING_NO")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
-                />
-              </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>
                   {t("CR_DOOR_NO")}
                   <span className="mandatorycss">*</span>
@@ -1441,7 +1395,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>{t("CR_RES_ASSOCIATION_NO")}</CardLabel>
                 <TextInput
                   t={t}
@@ -1458,6 +1412,26 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
+
+          {/* <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="PermanentBuldingNo"
+                  value={PermanentBuldingNo}
+                  onChange={setSelectPermanentBuldingNo}
+                  disable={isEdit}
+                  placeholder={`${t("CR_BUILDING_NO")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_BUILDING_NO") })}
+                />
+              </div>              
+            </div>
+          </div> */}
         </div>
       </FormStep>
     </React.Fragment>
