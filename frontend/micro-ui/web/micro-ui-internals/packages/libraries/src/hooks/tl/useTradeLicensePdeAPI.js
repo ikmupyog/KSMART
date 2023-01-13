@@ -3,7 +3,6 @@ import { useMutation } from "react-query";
 
 const useTradeLicensePdeAPI = (tenantId, type = true) => {
   if(type){
-    console.log("fired create");
   return useMutation((data) => TLService.createpde(data, tenantId));
 } else {
   return useMutation((data) => TLService.updatepde(data, tenantId));

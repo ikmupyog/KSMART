@@ -76,7 +76,7 @@ const DeathCheckPage = ({ onSubmit, value,userType }) => {
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.Gender)}</CardText>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
              <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(PlaceOfDeath.setPlaceofDeath)}</CardText>
             </div>
@@ -95,7 +95,7 @@ const DeathCheckPage = ({ onSubmit, value,userType }) => {
           <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span></h1>
           </div>
-        </div> 
+        </div>  */}
         </StatusTable>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>

@@ -104,6 +104,7 @@ const Urls = {
     createpde:"/tl-services/pde/_create",
     searchpde:"/tl-services/pde/_search",
     updatepde:"/tl-services/pde/_update",
+    updatepdewf: "/tl-services/pde/_updatewf"
   },
   cr: {
     create: "/birth-services/cr/birth/_create",

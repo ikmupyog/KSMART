@@ -13,8 +13,37 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
-  console.log(formData);
+  const RadioButtons = ({ selected, handleChange }) => {
+    return (
+      <div>
+        <input
+          type="radio"
+          id="yes"
+          // name="answer"
+          value="yes"
+          checked={selected === "yes"}
+          onChange={handleChange}
+        />
+        <label htmlFor="yes">Yes</label>
 
+        <input
+          type="radio"
+          id="no"
+          // name="answer"
+          value="no"
+          checked={selected === "no"}
+          onChange={handleChange}
+        />
+        <label htmlFor="no">No</label>
+      </div>
+    );
+  };
+
+  const [answer, setAnswer] = useState("");
+  const [text, setText] = useState("");
+
+  console.log(formData);
+  const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const menu = [
     { i18nKey: "YES", code: "YES" },
@@ -45,10 +74,14 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "YES", code: "YESSMOKE" },
     { i18nKey: "NO", code: "NOSMOKE" },
   ];
+
   const [isSmoke, setisSmoke] = useState(formData?.StatisticalInfoContinue?.isSmoke);
   const [isTabacco, setisTabacco] = useState(formData?.StatisticalInfoContinue?.isTabacco);
   const [isPanMasala, setisPanMasala] = useState(formData?.StatisticalInfoContinue?.isPanMasala);
   const [isalcohol, setisalcohol] = useState(formData?.StatisticalInfoContinue?.isalcohol);
+  const handleRadioChange = (e) => {
+    selectisalcohol(e.target.value);
+  };
   const [isPregnent, setisPregnent] = useState(formData?.StatisticalInfoContinue?.isPregnent);
   const { t } = useTranslation();
   let validation = {};
@@ -249,14 +282,20 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="col-md-6">
               <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
-              <RadioButtons
+              yes
+              <input type="radio" name="isyes" value="1" onClick={() => setVisible(true)} />
+              no
+              <input type="radio" name="isyes" value="0" onClick={() => setVisible(false)} />
+              {visible && <div>testi</div>}
+              {/* <RadioButtons
                 t={t}
                 optionsKey="i18nKey"
                 isMandatory={config.isMandatory}
                 options={menu}
                 selectedOption={isPregnent}
                 onSelect={selectisPregnent}
-              />
+
+              /> */}
             </div>
           </div>
         </div>
@@ -303,26 +342,20 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             <RadioButtons
               t={t}
               optionsKey="i18nKey"
-              isMandatory={config.isMandatory}
-              options={options}
-              selectedOption={isalcohol}
-              onSelect={selectisalcohol}
               onChange={setOptionkey}
+              isMandatory={config.isMandatory}
+              selected={isalcohol}
+              onSelect={selectisalcohol}
+              handleChange={handleRadioChange}
             />
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="alcoholyears"
-              value={alcoholyears}
-              onChange={setSelectalcoholyears}
-              disable={isEdit}
-              placeholder={`${t(" ")}`}
-              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_NUMBER_OF_YEARS") })}
-            />
-            {optionkey === "yes" && <Textbox />}
+            {isalcohol === "yes" && (
+              <div>
+                <label htmlFor="text">Enter Years</label>
+                <input type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} />
+              </div>
+            )}
           </div>
+          <div>{/* <RadioButtons selected={answer} handleChange={handleRadioChange} /> */}</div>
         </div>
       </FormStep>
     </React.Fragment>
