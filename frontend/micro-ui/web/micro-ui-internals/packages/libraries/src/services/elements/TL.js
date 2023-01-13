@@ -64,6 +64,7 @@ export const TLService = {
       auth: true,
     }),
   createpde: (details, tenantId) =>
+ 
     Request({
       url: Urls.tl.createpde,
       data: details,
@@ -83,4 +84,26 @@ export const TLService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
+    updatepde: (details, tenantId ) =>
+     Request({
+      url: Urls.tl.updatepde,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+    updatepdewf: (details, tenantId) =>
+    Request({
+      url: Urls.tl.updatepdewf,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),  
 };

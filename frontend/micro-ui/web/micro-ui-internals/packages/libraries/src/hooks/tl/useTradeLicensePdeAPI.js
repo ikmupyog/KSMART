@@ -5,7 +5,7 @@ const useTradeLicensePdeAPI = (tenantId, type = true) => {
   if(type){
   return useMutation((data) => TLService.createpde(data, tenantId));
 } else {
-  return useMutation((data) => TLService.update(data, tenantId));
+  return useMutation((data) => TLService.updatepde(data, tenantId));
 }
 };
 
