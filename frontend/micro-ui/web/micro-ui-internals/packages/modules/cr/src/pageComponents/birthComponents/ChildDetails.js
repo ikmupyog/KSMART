@@ -32,8 +32,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     // const maxDate = new Date();
     // let currentDate = new Date().toJSON().slice(0, 10);
     const [access, setAccess] = React.useState(true);
-  console.log(formData?.ChildDetails?.isChildName);
-  console.log(isChildName);
   let menu = [];
   Menu &&
     Menu.map((genderDetails) => {
@@ -119,7 +117,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setChildName(e) {
-    console.log(e.target.checked);
     if (e.target.checked === true) {
       setIsChildName(e.target.checked);
       setChildFirstNameEn('');
@@ -130,7 +127,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       setChildLastNameMl('');
     } else {
       setIsChildName(e.target.checked);
-      console.log(isChildName);
     }
   }
   const goNext = () => {
@@ -194,7 +190,11 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameEn" value={ChildFirstNameEn} onChange={setSelectChildFirstNameEn} disable={isChildName} placeholder={`${t("CR_FIRST_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameEn"
+             value={ChildFirstNameEn} onChange={setSelectChildFirstNameEn} disable={isChildName} 
+             placeholder={`${t("CR_FIRST_NAME_EN")}`}
+             onInput = {(e) =>{e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,12)}}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
           </div>
           <div className="col-md-4" > <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildMiddleNameEn" value={ChildMiddleNameEn} onChange={setSelectChildMiddleNameEn} disable={isChildName} placeholder={`${t("CR_MIDDLE_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })} />
