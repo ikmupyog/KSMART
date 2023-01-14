@@ -333,7 +333,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         setSignedOfficerDesgError(false);
       }
       if (SignedOfficerMobileNo == null) {
-        // BIRTH_ERROR_CODE = 'BIRTH_ERROR_SIGNED_OFFICER_CHOOSE';
         setMobileError(true);
         validFlag = false;
         setToast(true);
@@ -649,7 +648,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         } */}
         {toast && (
           <Toast
-            error={HospitalError || signedOfficerError}
+            error={HospitalError || signedOfficerError || SiginedOfficerDesignation }
             // !commentError ? t(`CS_COMPLAINT_COMMENT_SUCCESS`)
             label={
               // (!HospitalError ? t(`CS_COMPLAINT_COMMENT_SUCCESS`) : t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)) ||
