@@ -201,11 +201,11 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
             </div>
             <div className="row">
             <div className="col-md-4">
-                <CardLabel>{`${t("DFM_LAST_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("DFM_LAST_NAME")}`}</CardLabel>
                 <TextInput t={t}  isMandatory={false} type={"text"} optionKey="i18nKey" name="LastNameMal" placeholder={`${t("DFM_LAST_NAME")}`}
                   value={LastNameMal}
                   onChange={setSelectLastNameMal}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_LAST_NAME") })}
                 />
               </div>
               <div className="col-md-4">
@@ -223,11 +223,11 @@ const DFMApplicationDetails = ({ t, config, onSelect, value, userType, formData 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("DFM_LAST_NAME_MALAYALAM")}`}<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>{`${t("DFM_LAST_NAME_MALAYALAM")}`}</CardLabel>
                 <TextInput t={t}  isMandatory={false} type={"text"} optionKey="i18nKey" name="LastNameMal" placeholder={`${t("DFM_LAST_NAME_MALAYALAM")}`}
                   value={LastName}
                   onChange={setSelectLastName}
-                  {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LAST_NAME_MALAYALAM") })}
+                  {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_LAST_NAME_MALAYALAM") })}
                 />
               </div>
             </div>

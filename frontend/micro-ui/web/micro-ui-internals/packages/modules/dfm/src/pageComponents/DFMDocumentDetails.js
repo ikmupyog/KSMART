@@ -16,6 +16,8 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   const [uploadedFile, setUploadedFile] = useState(formData?.DocumentDet?.fileStoreId || null);
   const [file, setFile] = useState(formData?.DocumentDet?.OwnerPhotoProof);
   const [error, setError] = useState(null);
+  const [fileLimit,setFileLmit] = useState(0);
+  const [uploadFiles,setUploadFiles] = useState([]);
   console.log(formData);
   let cmbDocumentType = [];
   DocumentType &&
@@ -27,6 +29,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   function setSelectedDocumentTypeList(value) {
     setDocumentTypeList(value);
   }
+  console.log(uploadFiles);
   const handleChange = (text, type) => {
     // let tempData = { ...documentDetails };
     // if (type === "documentType") {
@@ -66,9 +69,14 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectfile(e) {
+    let uploadDocuments =[]
     setUploadedFile(null);
-    setFile(e.target.files[0]);
+    console.log(e.target.files[0]);
+    uploadDocuments.push(e.target.files[0])
+    setFile((file)=>[...file,uploadDocuments]);
+    // setFile(e.target.files[0]);
   }
+  
 
   useEffect(() => {
     (async () => {
@@ -94,6 +102,27 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
       }
     })();
   }, [file]);
+
+  const handleFileEvent =(e)=>{
+    const chooseFiles = Array.prototype.slice.call(e.target.files)
+    handleUploadFiles(chooseFiles)
+  }
+  const handleUploadFiles =(files)=>{
+    const uploaded =[...uploadFiles]
+    let limitExceed = false
+    files.some((file)=>{
+      if(uploaded.findIndex((f)=>f.name === file.name) === -1) {
+        uploaded.push(file)
+      }
+      if(uploaded.length === 5) setFileLimit(true)
+      if(uploaded.length > 5){
+        setFileLimit(false)
+        limitExceed =true
+        return true;
+      }
+    })
+    if (!limitExceed) setUploadFiles(uploaded)
+  }
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
@@ -129,7 +158,8 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
                 id={"tl-doc"}
                 extraStyleName={"propertyCreate"}
                 accept=".jpg,.png,.pdf"
-                onUpload={selectfile}
+                onUpload={handleFileEvent}
+                // onUpload={selectfile}
                 onDelete={() => {
                   setUploadedFile(null);
                 }}
