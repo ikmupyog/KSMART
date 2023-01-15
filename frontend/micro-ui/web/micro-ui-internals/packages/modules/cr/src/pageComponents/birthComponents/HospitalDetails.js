@@ -31,15 +31,15 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    let cmbRegistrarNames =[];
-    let cmbDesignations =[];
+    // let cmbRegistrarNames =[];
+    // let cmbDesignations =[];
     useEffect(() => {
           if (isInitialRender) {
         if(HospitalName){
           setIsInitialRender(false);
-          cmbRegistrarNames.push(cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code));   
-          cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
-          console.log("cmbDesignations" + cmbRegistrarNames["hospitalList"]);                
+          let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);   
+          let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
+          console.log(cmbRegistrarNames);                
           // setFilteredOfficerName(cmbRegistrarNames.registar);
           // setFilteredDesignation(cmbDesignations);
           // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
