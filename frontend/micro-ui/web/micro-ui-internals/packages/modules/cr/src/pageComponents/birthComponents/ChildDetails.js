@@ -164,7 +164,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-2" ><CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}<span className="mandatorycss">*</span></CardLabel>
-            <DatePicker date={ChildDOB} name="ChildDOB" onChange={setselectChildDOB}
+            <DatePicker date={ChildDOB} name="ChildDOB" onChange={setselectChildDOB} inputFormat="DD-MM-YYYY"
               placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} maxDate={new Date() || undefined} />
 
           </div>

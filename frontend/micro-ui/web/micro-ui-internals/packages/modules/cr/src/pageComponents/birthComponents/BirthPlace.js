@@ -392,22 +392,22 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
 
     if (validFlag === true) {
+      if (BirthPlace.code === "HOSPITAL") {
       sessionStorage.setItem("BirthPlace", BirthPlace.code);
       sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.hospitalName : null);
-      sessionStorage.setItem("SignedOfficerName", SignedOfficerName ? SignedOfficerName.hospitalName : null);
-      sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation ? SignedOfficerDesignation.hospitalName : null);
+      sessionStorage.setItem("SignedOfficerName", SignedOfficerName ? SignedOfficerName.hospitalRegistar : null);
+      sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation ? SignedOfficerDesignation.registarDesig : null);
       sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo ? SignedOfficerAadharNo.SignedOfficerAadharNo : null);
       sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo ? SignedOfficerMobileNo.SignedOfficerMobileNo : null);
       //sessionStorage.setItem("BirthPlaceDescription", BirthPlaceDescription);
-
-
+      } else if (BirthPlace.code === "INSTITUTION") {
       sessionStorage.setItem("setInstitution", setInstitution ? setInstitution.setInstitution : null);
       sessionStorage.setItem("setInstitutionId", setInstitutionId ? setInstitutionId.setInstitutionId : null);
       sessionStorage.setItem("setSiginedOfficer", SiginedOfficer ? SiginedOfficer.SiginedOfficer : null);
       sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation ? SiginedOfficerDesignation.SiginedOfficerDesignation : null);
       sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo ? InstitutionMobilNo.InstitutionMobilNo : null);
       sessionStorage.setItem("setInstitutionAadhaar", InstitutionAadhaar ? InstitutionAadhaar.InstitutionAadhaar : null);
-
+      } else if (BirthPlace.code === "VEHICLE") {
       sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null);
       sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);
       sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
@@ -430,13 +430,12 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       // sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);
       // sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
       // sessionStorage.setItem("VehiclePlaceFirstHalt", VehiclePlaceFirstHalt ? VehiclePlaceFirstHalt : null);
-
-
+      } else if (BirthPlace.code === "PUBLIC_PLACES") {
       sessionStorage.setItem("setPublicPlaceType", setPublicPlaceType ? setPublicPlaceType.code : null);
       sessionStorage.setItem("AdrsInfontName", AdrsInfontName ? AdrsInfontName : null);
       sessionStorage.setItem("AdrsPublicPlace", AdrsPublicPlace ? AdrsPublicPlace : null);
       sessionStorage.setItem("PublicPlaceDesption", PublicPlaceDesption ? PublicPlaceDesption : null);
-
+      } else if (BirthPlace.code === "HOME") {
 
       sessionStorage.setItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
       sessionStorage.setItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
@@ -460,7 +459,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("AdrsPincode", AdrsPincode ? AdrsPincode.code : null);
       sessionStorage.setItem("AdrsInfomntName", AdrsInfomntName ? AdrsInfomntName : null);
       sessionStorage.setItem("AdrsMainPlaceMl", AdrsMainPlaceMl ? AdrsMainPlaceMl : null);
-
+      
       sessionStorage.setItem("InfomantFirstNameEn", InfomantFirstNameEn ? InfomantFirstNameEn : null);
       sessionStorage.setItem("InfomantAadhar", InfomantAadhar ? InfomantAadhar : null);
       sessionStorage.setItem("InfomantEmail", InfomantEmail ? InfomantEmail : null);
@@ -502,7 +501,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       // sessionStorage.setItem("VehicleInfmntAdrsPostOffice", VehicleInfmntAdrsPostOffice ? VehicleInfmntAdrsPostOffice.code :null);
       // sessionStorage.setItem("VehicleInfmntAdrsPincode", VehicleInfmntAdrsPincode ? VehicleInfmntAdrsPincode.code :null);   
       // // sessionStorage.setItem(" InfntWardNo",  InfntWardNo ? InfntWardNo :null);
-
+      }
 
 
       onSelect(config.key, {

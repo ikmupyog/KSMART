@@ -14,7 +14,6 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
   let validation = {};
   // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-  console.log(hospitalData);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [OfficerNames, setFilteredOfficerName] = useState(0);
   const [Designations, setFilteredDesignation] = useState(0);
@@ -31,19 +30,17 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    // let cmbRegistrarNames =[];
-    // let cmbDesignations =[];
     useEffect(() => {
           if (isInitialRender) {
         if(HospitalName){
           setIsInitialRender(false);
           let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);   
           let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
-          console.log(cmbRegistrarNames);                
-          // setFilteredOfficerName(cmbRegistrarNames.registar);
-          // setFilteredDesignation(cmbDesignations);
-          // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
-          // setSelectSignedOfficerMobileNo(HospitalName.registrationMobile);
+          // console.log(cmbRegistrarNames[0].registar);                
+          setFilteredOfficerName(cmbRegistrarNames[0].registar);
+          setFilteredDesignation(cmbDesignations[0].registar);
+          // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
+          // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
         }
       }
     }, [OfficerNames,Designations,isInitialRender]);
@@ -56,6 +53,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
     setFilteredDesignation(null);
   }
   function setselectSignedOfficerName(value) {
+    console.log(value);
     selectSignedOfficerName(value);
   }
   function setselectSignedOfficerDesignation(value) {
@@ -130,7 +128,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="hospitalRegistar"
+              optionKey="registarDesig"
               isMandatory={false}
               option={Designations}
               selected={SignedOfficerDesignation}
