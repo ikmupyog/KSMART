@@ -764,7 +764,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                 onChange={setSelectPresentMainPlaceMl}
                 disable={isEdit}
                 placeholder={`${t("CR_MAIN_PLACE_ML")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
+                {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -794,7 +794,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                 onChange={setSelectPresentCityMl}
                 placeholder={`${t("CR_CITY_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
           </div>
@@ -869,7 +869,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                 onChange={setSelectPresentLocalityNameMl}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -898,8 +898,8 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                 value={PresentStreetNameMl}
                 onChange={setSelectPresentStreetNameMl}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
-                disable={isEdit}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                disable={isEdit} 
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
           </div>
@@ -939,7 +939,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                 onChange={setSelectPresentHouseNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -1205,7 +1205,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                   onChange={setSelectPermanentMainPlaceMl}
                   disable={isEdit}
                   placeholder={`${t("CR_MAIN_PLACE_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
+                  {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
                 />
               </div>
               <div className="col-md-3">
@@ -1235,7 +1235,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                 onChange={setSelectPermanentCityMl}
                 placeholder={`${t("CR_CITY_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
             </div>
@@ -1311,7 +1311,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                   onChange={setSelectPermanentLocalityNameMl}
                   disable={isEdit}
                   placeholder={`${t("CR_LOCALITY_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+                  {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
                 />
               </div>
               <div className="col-md-3">
@@ -1347,7 +1347,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                   onChange={setSelectPermanentStreetNameMl}
                   disable={isEdit}
                   placeholder={`${t("CR_STREET_NAME_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
+                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
                 />
               </div>
             </div>
@@ -1387,7 +1387,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
                   onChange={setSelectPermanentHouseNameMl}
                   disable={isEdit}
                   placeholder={`${t("CR_HOUSE_NAME_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                  {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
                 />
               </div>
               <div className="col-md-3">

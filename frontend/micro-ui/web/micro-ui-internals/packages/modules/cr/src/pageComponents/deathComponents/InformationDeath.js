@@ -441,7 +441,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectMLFirstName}
                 disable={isEdit}
                 placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
+                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -456,7 +456,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectMlMiddleName}
                 disable={isEdit}
                 placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
+                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -471,7 +471,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectMlLastName}
                 disable={isEdit}
                 placeholder={`${t("CR_LAST_NAME_ML")}`}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
               />
             </div>
           </div>

@@ -332,7 +332,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
               onChange={setSelectInformentNameMl}
               disable={isEdit}
               placeholder={`${t("CR_INFORMENT_NAME_Ml")}`}
-              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
             />
           </div>
         </div>

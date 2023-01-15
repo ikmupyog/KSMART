@@ -408,7 +408,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     onChange={SelectLocalityMl}
                     disable={isEdit}
                     placeholder={`${t("CR_LOCALITY_ML")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -426,7 +426,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     onChange={SelectCityMl}
                     disable={isEdit}
                     placeholder={`${t("CR_CITY_ML")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -608,7 +608,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                   onChange={SelectOccupationOthers}
                   disable={isEdit}
                   placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
+                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
                 />
               </div>
             </div>

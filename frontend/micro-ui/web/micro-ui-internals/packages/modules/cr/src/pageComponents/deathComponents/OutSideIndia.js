@@ -124,7 +124,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectAdressMl}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_1_ML")}`}
-              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
         </div>
@@ -156,7 +156,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectAdressMlB}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_2_ML")}`}
-              {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
         </div>
@@ -188,7 +188,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectLocalityMl}
               disable={isEdit}
               placeholder={`${t("CR_LOCALITY_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />
           </div>
         </div>
@@ -220,7 +220,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectProvinceMl}
               disable={isEdit}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
             />
           </div>
         </div>

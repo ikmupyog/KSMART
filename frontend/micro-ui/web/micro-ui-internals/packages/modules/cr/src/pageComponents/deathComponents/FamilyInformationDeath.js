@@ -187,7 +187,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectFatherOrHusbandNameMl}
               disable={isEdit}
               placeholder={`${t("CR_NAME_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_NAME_ML") })}
             />
           </div>
         </div>
@@ -296,7 +296,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectMotherNameMl}
               disable={isEdit}
               placeholder={`${t("CR_NAME_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_NAME_ML") })}
             />
           </div>
         </div>
