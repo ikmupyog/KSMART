@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea, Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea, Toast,Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import HospitalDetails from "../../pageComponents/birthComponents/HospitalDetails";
@@ -18,7 +18,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: Menu = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
+  const { data: Menu = {},isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [toast, setToast] = useState(false);
   const [HospitalError, setHospitalError] = useState(true);
   const [signedOfficerError, setSignedOfficerError] = useState(true);
@@ -30,8 +30,10 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [HospitalName, selectHospitalName] = useState(formData?.BirthPlace?.HospitalName);
   const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.BirthPlace?.SignedOfficerName);
   const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.BirthPlace?.SignedOfficerDesignation);
-  const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo);
-  const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.BirthPlace?.SignedOfficerMobileNo);
+  const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo ? formData?.BirthPlace?.SignedOfficerAadharNo : "");
+  const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState( formData?.BirthPlace?.SignedOfficerMobileNo ? formData?.BirthPlace?.SignedOfficerMobileNo : "");
+  const [OfficerNames, setFilteredOfficerName] = useState(0);
+  const [Designations, setFilteredDesignation] = useState(0);
 
   const [setInstitution, setSelectedInstitution] = useState(formData?.BirthPlace?.setInstitution);
   const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.BirthPlace?.setInstitutionId);
@@ -157,6 +159,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   // function setSelectBirthPlaceDeccription(e) {
   //   setBirthPlaceDeccription(e.target.value);
   // }
+  
   React.useEffect(() => {
     if (isInitialRender) {
       if (BirthPlace) {
@@ -289,13 +292,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       }
     }
   }, [isInitialRender]);
-  // let BIRTH_ERROR_HOSPITAL_CHOOSE = '';
-  // let BIRTH_ERROR_SIGNED_OFFICER_CHOOSE = '';
-  let validFlag = true;
 
-  function formValidation() {
-
-  }
+  let validFlag = true;  
   const goNext = () => {
     console.log(HospitalError);
     if (BirthPlace.code === "HOSPITAL") {
@@ -322,7 +320,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setSignedOfficerError(false);
       }
-      if (SignedOfficerName == null) {
+      if (SiginedOfficerDesignation == null) {
         setSignedOfficerDesgError(true);
         validFlag = false;
         setToast(true);
@@ -470,6 +468,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       });
     }
   }
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
@@ -497,9 +498,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         {value === "HOSPITAL" && (
           <div>
             <HospitalDetails
-              selectHospitalName={selectHospitalName} HospitalName={HospitalName}
-              selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName}
-              selectSignedOfficerDesignation={selectSignedOfficerDesignation} SignedOfficerDesignation={SignedOfficerDesignation}
+              selectHospitalName={selectHospitalName} HospitalName={HospitalName} 
+              selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName} 
+              selectSignedOfficerDesignation={selectSignedOfficerDesignation} SignedOfficerDesignation={SignedOfficerDesignation} 
               setSignedOfficerAadharNo={setSignedOfficerAadharNo} SignedOfficerAadharNo={SignedOfficerAadharNo}
               setSignedOfficerMobileNo={setSignedOfficerMobileNo} SignedOfficerMobileNo={SignedOfficerMobileNo}
 
@@ -648,14 +649,14 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         } */}
         {toast && (
           <Toast
-            error={HospitalError || signedOfficerError || SiginedOfficerDesignation }
+            error={HospitalError || signedOfficerError || signedOfficerDesgError || mobileError }
             // !commentError ? t(`CS_COMPLAINT_COMMENT_SUCCESS`)
             label={
               // (!HospitalError ? t(`CS_COMPLAINT_COMMENT_SUCCESS`) : t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)) ||
               // (!signedOfficerError ? t(`CS_COMPLAINT_COMMENT_SUCCESS`) : t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`))
 
-              (HospitalError || signedOfficerError ?
-                (HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`) : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`)
+              (HospitalError || signedOfficerError || signedOfficerDesgError || mobileError ? 
+                (HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`) : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`)
                   : setToast(false)
                 ) : setToast(false)
               )

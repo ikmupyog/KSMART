@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
 
   const useLocalBodyMaster = () => {
-    console.log("Jetheesh LB");
     return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
   };  
   const useCRQualificationSub = () => {
@@ -235,7 +234,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRModeOfPregnancy();
     case "PlaceMaster":
       return useCRPlaceMaster();
-    case "hospitalList":
+    case "hospital":
       return useCRHospital();
     case "PlaceMaster":
       return usePLaceOfDeath();

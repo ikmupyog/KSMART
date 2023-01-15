@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,selectHospitalName,selectSignedOfficerName,
   SignedOfficerName ,SignedOfficerDesignation, selectSignedOfficerDesignation ,SignedOfficerAadharNo, setSignedOfficerAadharNo,
-  SignedOfficerMobileNo, setSignedOfficerMobileNo,
+  SignedOfficerMobileNo, setSignedOfficerMobileNo
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   const { t } = useTranslation();
   let validation = {};
-  const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
- 
+  // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  console.log(hospitalData);
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [OfficerNames, setFilteredOfficerName] = useState(0);
+  const [Designations, setFilteredDesignation] = useState(0);
+  // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
   // const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.HospitalDetails?.SignedOfficerDesignation);
@@ -21,16 +26,34 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
   // const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.HospitalDetails?.SignedOfficerMobileNo);
   // const isEdit = window.location.href.includes("/edit-application/")||window.location.href.includes("renew-trade");
   let cmbhospital = [];
-  hospital &&
-    hospital["birth-death-service"] &&
-    hospital["birth-death-service"].hospitalList.map((ob) => {
+  hospitalData &&
+  hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-
+    let cmbRegistrarNames =[];
+    let cmbDesignations =[];
+    useEffect(() => {
+          if (isInitialRender) {
+        if(HospitalName){
+          setIsInitialRender(false);
+          cmbRegistrarNames.push(cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code));   
+          cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
+          console.log("cmbDesignations" + cmbRegistrarNames["hospitalList"]);                
+          // setFilteredOfficerName(cmbRegistrarNames.registar);
+          // setFilteredDesignation(cmbDesignations);
+          // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
+          // setSelectSignedOfficerMobileNo(HospitalName.registrationMobile);
+        }
+      }
+    }, [OfficerNames,Designations,isInitialRender]);
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {
-    selectHospitalName(value);
+    setIsInitialRender(true);
+    selectHospitalName(value);    
+    setFilteredOfficerName(null);
+    setFilteredDesignation(null);
   }
   function setselectSignedOfficerName(value) {
     selectSignedOfficerName(value);
@@ -92,9 +115,9 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="hospitalName"
+              optionKey="hospitalRegistar"
               isMandatory={false}
-              option={cmbhospital}
+              option={OfficerNames}
               selected={SignedOfficerName}
               select={setselectSignedOfficerName}
               placeholder={`${t("CR_SIGNED_OFFICER")}`}
@@ -107,9 +130,9 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
             </CardLabel>
             <Dropdown
               t={t}
-              optionKey="hospitalName"
+              optionKey="hospitalRegistar"
               isMandatory={false}
-              option={cmbhospital}
+              option={Designations}
               selected={SignedOfficerDesignation}
               select={setselectSignedOfficerDesignation}
               placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}

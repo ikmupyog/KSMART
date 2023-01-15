@@ -220,7 +220,7 @@ const getCRHospitalMasterList = (tenantId, moduleCode) => ({
     tenantId: tenantId,
     moduleDetails: [
       {
-        moduleName: moduleCode,
+        moduleName: "egov-location",
         masterDetails: [
           {
             name: "hospitalList",
@@ -2063,6 +2063,7 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getCRPlaceMasterList(tenantId, moduleCode), moduleCode);
   },
   getCRHospitalMaster: (tenantId, moduleCode) => {
+    console.log("JetheeshHospital");
     return MdmsService.getDataByCriteria(tenantId, getCRHospitalMasterList(tenantId, moduleCode), moduleCode);
   },
   getCRNationlity: (tenantId, moduleCode) => {
