@@ -191,8 +191,14 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameEn"
-             value={ChildFirstNameEn} onChange={setSelectChildFirstNameEn} disable={isChildName} 
+             value={ChildFirstNameEn} 
+             onChange={setSelectChildFirstNameEn} 
+            //  onChange={(e,v) => this.updateTextField(e,v)}
+             disable={isChildName} 
              placeholder={`${t("CR_FIRST_NAME_EN")}`}
+             inputProps={
+              {maxLength: 12}
+            }
              onInput = {(e) =>{e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,12)}}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
           </div>

@@ -32,6 +32,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.BirthPlace?.SignedOfficerDesignation);
   const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo);
   const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.BirthPlace?.SignedOfficerMobileNo);
+  const [OfficerNames, setFilteredOfficerName] = useState(0);
+  const [Designations, setFilteredDesignation] = useState(0);
 
   const [setInstitution, setSelectedInstitution] = useState(formData?.BirthPlace?.setInstitution);
   const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.BirthPlace?.setInstitutionId);
@@ -157,6 +159,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   // function setSelectBirthPlaceDeccription(e) {
   //   setBirthPlaceDeccription(e.target.value);
   // }
+  
   React.useEffect(() => {
     if (isInitialRender) {
       if (BirthPlace) {
@@ -495,9 +498,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         {value === "HOSPITAL" && (
           <div>
             <HospitalDetails
-              selectHospitalName={selectHospitalName} HospitalName={HospitalName}
-              selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName}
-              selectSignedOfficerDesignation={selectSignedOfficerDesignation} SignedOfficerDesignation={SignedOfficerDesignation}
+              selectHospitalName={selectHospitalName} HospitalName={HospitalName} 
+              selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName} 
+              selectSignedOfficerDesignation={selectSignedOfficerDesignation} SignedOfficerDesignation={SignedOfficerDesignation} 
               setSignedOfficerAadharNo={setSignedOfficerAadharNo} SignedOfficerAadharNo={SignedOfficerAadharNo}
               setSignedOfficerMobileNo={setSignedOfficerMobileNo} SignedOfficerMobileNo={SignedOfficerMobileNo}
 
