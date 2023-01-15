@@ -12,7 +12,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
 
   const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(formData?.AddressOfDecesed?.setPlaceofActivity);
+  // const [TradeName, setTradeName] = useState(formData?.AddressOfDecesed?.setPlaceofActivity);
   const [AdressEn, setAdressEn] = useState(formData?.AddressOfDecesed?.AdressEn);
   const [AdressMl, setAdressMl] = useState(formData?.AddressOfDecesed?.AdressMl);
   const [AdressEnB, setAdressEnB] = useState(formData?.AddressOfDecesed?.AdressEnB);
@@ -71,15 +71,15 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     setCommencementDate(value);
   }
   const goNext = () => {
-    sessionStorage.setItem("AdressEn", AdressEn);
-    sessionStorage.setItem("AdressMl", AdressMl);
-    sessionStorage.setItem("AdressEnB", AdressEnB);
-    sessionStorage.setItem("AdressMlB", AdressMlB);
-    sessionStorage.setItem("LocalityEn", LocalityEn);
-    sessionStorage.setItem("LocalityMl", LocalityMl);
-    sessionStorage.setItem("ProvinceEn", ProvinceEn);
-    sessionStorage.setItem("ProvinceMl", ProvinceMl);
-    sessionStorage.setItem("setCountry", setCountry.code);
+    sessionStorage.setItem("AdressEn", AdressEn ? AdressEn : null );
+    sessionStorage.setItem("AdressMl", AdressMl ? AdressMl : null);
+    sessionStorage.setItem("AdressEnB", AdressEnB ? AdressEnB : null);
+    sessionStorage.setItem("AdressMlB", AdressMlB ? AdressMlB : null);
+    sessionStorage.setItem("LocalityEn", LocalityEn ? LocalityEn : null );
+    sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl : null);
+    sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn : null);
+    sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl : null);
+    sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
     onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, setCountry });
   };
   return (

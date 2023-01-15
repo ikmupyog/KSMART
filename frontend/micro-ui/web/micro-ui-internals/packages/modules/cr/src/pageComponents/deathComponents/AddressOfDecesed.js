@@ -1,21 +1,112 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton,BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton, BackButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import AdressInside from "./AdressInside";
 import OutSideIndia from "./OutSideIndia";
 import Timeline from "../../components/DRTimeline";
-
+// import AddressInside from "./AdressInside";
 
 const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const [PresentCountry, setPresentCountry] = useState(formData?.AddressOfDecesed?.PresentCountry);
+  const [PresentStateName, setPresentStateName] = useState(formData?.AddressOfDecesed?.PresentStateName);
+  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressOfDecesed?.PresentDistrict);
+  const [PresentLBTypeName, setPresentLBTypeName] = useState(formData?.AddressOfDecesed?.PresentLBTypeName);
+  const [PresentLBName, setPresentLBName] = useState(formData?.AddressOfDecesed?.PresentLBName);
+  const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressOfDecesed?.PresentTaluk);
+  const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressOfDecesed?.PresentPostOffice);
+  const [PresentPincode, setPresentPincode] = useState(formData?.AddressOfDecesed?.PresentPincode);
+  const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressOfDecesed?.PresentHouseNameEn);
+  const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressOfDecesed?.PresentHouseNameMl);
+  const [PresentDoorNo, setPresentDoorNo] = useState(formData?.AddressOfDecesed?.PresentDoorNo);
+  const [PresentResNo, setPresentResNo] = useState(formData?.AddressOfDecesed?.PresentResNo);
+  const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PresentMainPlaceEn);
+  const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PresentMainPlaceMl);
+  const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PresentLocalityNameEn);
+  const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PresentLocalityNameMl);
+  const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressOfDecesed?.PresentStreetNameEn);
+  const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressOfDecesed?.PresentStreetNameMl);
+  const [PresentCityEn, setPresentCityEn] = useState(formData?.AddressOfDecesed?.PresentCityEn);
+  const [PresentCityMl, setPresentCityMl] = useState(formData?.AddressOfDecesed?.PresentCityMl);
+  const [PresentVillage, setPresentVillage] = useState(formData?.AddressOfDecesed?.PresentVillage);
+  //Permanent Address
+  const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressOfDecesed?.PermanentCountry);
+  const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressOfDecesed?.PermanentStateName);
+  const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressOfDecesed?.PermanentDistrict);
+  const [PermanentLBTypeName, setPermanentLBTypeName] = useState(formData?.AddressOfDecesed?.PermanentLBTypeName);
+  const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressOfDecesed?.PermanentLBName);
+  const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressOfDecesed?.PermanentVillage);
+  const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressOfDecesed?.PermanentTaluk);
+  const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressOfDecesed?.PermanentPostOffice);
+  const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressOfDecesed?.PermanentPincode);
+  const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressOfDecesed?.PermanentDoorNo);
+  const [PermanentResNo, setPermanentResNo] = useState(formData?.AddressOfDecesed?.PermanentResNo);
+  const [PermanentHouseNameEn, setPrmanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn);
+  const [PermanentHouseNameMl, setPermeanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl);
+  const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn);
+  const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl);
+  const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressOfDecesed?.PermanentCityEn);
+  const [PermanentCityMl, setPermanentCityMl] = useState(formData?.AddressOfDecesed?.PermanentCityMl);
+  const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameEn);
+  const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameMl);
+  const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressOfDecesed?.PermanentStreetNameEn);
+  const [PermanentStreetNameMl, setPermanentStreetNameMl] = useState(formData?.AddressOfDecesed?.PermanentStreetNameMl);
+  const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressOfDecesed?.isPrsentAddress);
   const onSkip = () => onSelect();
   const goNext = () => {
-    console.log("test");    
-
-    onSelect(config.key, {});
+    sessionStorage.setItem("PresentCountry",PresentCountry ? PresentCountry.code : null);
+    sessionStorage.setItem("PresentStateName",PresentStateName ? PresentStateName.code : null);
+    sessionStorage.setItem("PresentLBTypeName",PresentStateName ?  PresentLBTypeName.code : null);
+    sessionStorage.setItem("PresentDoorNo", PresentDoorNo ? PresentDoorNo : null );
+    sessionStorage.setItem("PresentResNo", PresentResNo ? PresentResNo : null);
+    sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn ? PresentHouseNameEn : null );
+    sessionStorage.setItem("PresentHouseNameMl", PresentHouseNameMl ? PresentHouseNameMl : null);
+    sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn ? PresentMainPlaceEn : null);
+    sessionStorage.setItem("PresentMainPlaceMl", PresentMainPlaceMl ? PresentMainPlaceMl : null);
+    sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn ? PresentLocalityNameEn : null);
+    sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl ? PresentLocalityNameMl : null );
+    sessionStorage.setItem("PresentStreetNameEn", PresentStreetNameEn ? PresentStreetNameEn : null);
+    sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl ? PresentStreetNameMl : null );
+    sessionStorage.setItem("PresentCityEn", PresentCityEn ? PresentCityEn : null); 
+    sessionStorage.setItem("PresentCityaMl", PresentCityMl ? PresentCityMl : null);    
+    sessionStorage.setItem("PresentVillage", PresentVillage ? PresentVillage.code : null);
+    sessionStorage.setItem("PresentLBName", PresentLBName ? PresentLBName : null);
+    sessionStorage.setItem("PresentDistrict", PresentDistrict ? PresentDistrict.code : null);
+    sessionStorage.setItem("PresentTaluk", PresentTaluk ? PresentTaluk.code : null);
+    sessionStorage.setItem("PresentPostOffice", PresentPostOffice ? PresentPostOffice.code : null);
+    sessionStorage.setItem("PresentPincode",PresentPincode ? PresentPincode.code : null );
+    sessionStorage.setItem("PermanentCountry", PermanentCountry ? PermanentCountry.code : null);
+    sessionStorage.setItem("PermanentStateName", PermanentStateName ? PermanentStateName.code : null);
+    sessionStorage.setItem("PermanentLBTypeName", PermanentLBTypeName ? PermanentLBTypeName.code : null);
+    sessionStorage.setItem("PermanentDoorNo", PermanentDoorNo ? PermanentDoorNo : null );
+    sessionStorage.setItem("PermanentResNo", PermanentResNo ? PermanentResNo : null);
+    sessionStorage.setItem("PermanentHouseNameEn", PermanentHouseNameEn ? PermanentHouseNameEn : null);
+    sessionStorage.setItem("PermanentHouseNameMl", PermanentHouseNameMl ? PermanentHouseNameMl : null);
+    sessionStorage.setItem("PermanentMainPlaceEn", PermanentMainPlaceEn ? PermanentMainPlaceEn : null);
+    sessionStorage.setItem("PermanentMainPlaceMl", PermanentMainPlaceMl ? PermanentMainPlaceMl : null );
+    sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn ? PermanentLocalityNameEn : null);
+    sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl ? PermanentLocalityNameMl : null);
+    sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn ? PermanentStreetNameEn : null);
+    sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl ? PermanentStreetNameMl : null);
+    sessionStorage.setItem("PermanentCityEn", PermanentCityEn ? PermanentCityEn : null);   
+    sessionStorage.setItem("PermanentCityMl", PermanentCityMl ? PermanentCityMl : null);    
+    sessionStorage.setItem("PermanentVillage", PermanentVillage ? PermanentVillage.code : null);
+    sessionStorage.setItem("PermanentLBName", PermanentLBName ? PermanentLBName : null);
+    sessionStorage.setItem("PermanentDistrict", PermanentDistrict ? PermanentDistrict.code : null);
+    sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
+    sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice ? PermanentPostOffice.code : null);
+    sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
+    // console.log("test");
+    onSelect(config.key, {PresentDoorNo,PresentResNo,PresentHouseNameEn,PresentHouseNameMl,PresentLocalityNameEn,PresentLBTypeName,
+      PresentCountry,PresentStateName,PresentMainPlaceEn,PresentMainPlaceMl,PresentLocalityNameMl,PresentStreetNameEn,
+      PresentStreetNameMl,PresentCityEn,PresentCityMl,PresentVillage,PresentLBName,PresentDistrict,PresentTaluk,PresentPostOffice,
+      PresentPincode,PermanentDoorNo,PermanentResNo,PermanentHouseNameEn,PermanentHouseNameMl,PermanentMainPlaceMl,PermanentMainPlaceEn,
+      PermanentLocalityNameEn,PermanentLocalityNameMl,PermanentStreetNameEn,PermanentStreetNameMl,PermanentCityMl,PermanentCityEn,      
+      PermanentVillage,PermanentLBName,PermanentDistrict,PermanentTaluk,PermanentPostOffice,PermanentPincode,PermanentCountry,
+      PermanentStateName,PermanentLBTypeName,});
   };
 
   const [inside, setInside] = useState(true);
@@ -28,11 +119,14 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     setInside(false);
     setOutside(true);
   };
+    const [isInitialRender, setIsInitialRender] = useState(true);
+
+
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="maindeath">
           <div className="radios">
             <div className="inside">
@@ -42,15 +136,15 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
               <p>Inside Local Body</p>
             </div>
             <div className="inside">
-            <button onClick={insideHandler}>
-              <NewRadioButton />
+              <button onClick={insideHandler}>
+                <NewRadioButton />
               </button>
               <p>Inside Kerala</p>
             </div>
             <div className="inside">
-            <button onClick={insideHandler}>
-              <NewRadioButton />
-             </button>
+              <button onClick={insideHandler}>
+                <NewRadioButton />
+              </button>
               <p>Inside India</p>
             </div>
             <div className="inside">
@@ -61,7 +155,53 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           <div>
-            {inside && <AdressInside />}
+            {inside && (
+              <AdressInside
+                PresentCountry={PresentCountry} setPresentCountry={setPresentCountry}
+                PresentStateName={PresentStateName} setPresentStateName={setPresentStateName} 
+                PresentDistrict = {PresentDistrict} setPresentDistrict = {setPresentDistrict}
+                PresentLBTypeName = {PresentLBTypeName} setPresentLBTypeName = {setPresentLBTypeName}
+                PresentLBName = {PresentLBName} setPresentLBName = {setPresentLBName}
+                PresentTaluk = {PresentTaluk} setPresentTaluk = {setPresentTaluk}
+                PresentPostOffice = {PresentPostOffice} setPresentPostOffice = {setPresentPostOffice}
+                PresentPincode = {PresentPincode} setPresentPincode = {setPresentPincode}
+                PresentHouseNameEn = {PresentHouseNameEn} setPresentHouseNameEn = {setPresentHouseNameEn}
+                PresentHouseNameMl = {PresentHouseNameMl} setPresentHouseNameMl = {setPresentHouseNameMl}
+                PresentDoorNo = {PresentDoorNo} setPresentDoorNo = {setPresentDoorNo}
+                PresentResNo = {PresentResNo} setPresentResNo = {setPresentResNo}
+                PresentMainPlaceEn = {PresentMainPlaceEn} setPresentMainPlaceEn = {setPresentMainPlaceEn}
+                PresentMainPlaceMl = {PresentMainPlaceMl} setPresentMainPlaceMl = {setPresentMainPlaceMl}
+                PresentLocalityNameEn = {PresentLocalityNameEn} setPresentLocalityNameEn = {setPresentLocalityNameEn}
+                PresentLocalityNameMl = {PresentLocalityNameMl} setPresentLocalityNameMl = {setPresentLocalityNameMl}
+                PresentStreetNameEn = {PresentStreetNameEn} setPresentStreetNameEn = {setPresentStreetNameEn}
+                PresentStreetNameMl = {PresentStreetNameMl} setPresentStreetNameMl = {setPresentStreetNameMl}
+                PresentCityEn = {PresentCityEn} setPresentCityEn = {setPresentCityEn}
+                PresentCityMl = {PresentCityMl}  setPresentCityMl = {setPresentCityMl}
+                PresentVillage = {PresentVillage} setPresentVillage = {setPresentVillage}
+                PermanentCountry  = {PermanentCountry} setPermanentCountry = {setPermanentCountry}
+                PermanentStateName = {PermanentStateName} setPermanentStateName = {setPermanentStateName}
+                PermanentDistrict = {PermanentDistrict} setPermanentDistrict = {setPermanentDistrict}
+                PermanentLBTypeName = {PermanentLBTypeName} setPermanentLBTypeName = {setPermanentLBTypeName}
+                PermanentLBName = {PermanentLBName} setPermanentLBName = {setPermanentLBName}
+                PermanentVillage = {PermanentVillage} setPermanentVillage = {setPermanentVillage}
+                PermanentTaluk = {PermanentTaluk} setPermanentTaluk = {setPermanentTaluk}
+                PermanentPostOffice = {PermanentPostOffice} setPermanentPostOffice = {setPermanentPostOffice}
+                PermanentPincode = {PermanentPincode} setPermanentPincode = {setPermanentPincode}
+                PermanentDoorNo = {PermanentDoorNo} setPermanentDoorNo = {setPermanentDoorNo}
+                PermanentResNo = {PermanentResNo} setPermanentResNo = {setPermanentResNo}
+                PermanentHouseNameEn = {PermanentHouseNameEn} setPrmanentHouseNameEn = {setPrmanentHouseNameEn}
+                PermanentHouseNameMl = {PermanentHouseNameMl} setPermeanentHouseNameMl = {setPermeanentHouseNameMl}
+                PermanentMainPlaceEn = {PermanentMainPlaceEn} setPermanentMainPlaceEn = {setPermanentMainPlaceEn}
+                PermanentMainPlaceMl = {PermanentMainPlaceMl} setPermanentMainPlaceMl ={setPermanentMainPlaceMl}
+                PermanentCityEn = {PermanentCityEn} setPermanentCityEn = {setPermanentCityEn}
+                PermanentCityMl = {PermanentCityMl} setPermanentCityMl = {setPermanentCityMl}
+                PermanentLocalityNameEn = {PermanentLocalityNameEn} setPermanentLocalityNameEn = {setPermanentLocalityNameEn}
+                PermanentLocalityNameMl = {PermanentLocalityNameMl} setPermanentLocalityNameMl = {setPermanentLocalityNameMl}
+                PermanentStreetNameEn = {PermanentStreetNameEn} setPermanentStreetNameEn = {setPermanentStreetNameEn}
+                PermanentStreetNameMl = {PermanentStreetNameMl} setPermanentStreetNameMl = {setPermanentStreetNameMl}
+                isPrsentAddress = {isPrsentAddress} setIsPrsentAddress = {setIsPrsentAddress}
+              />
+            )}
             {outside && <OutSideIndia />}
           </div>
         </div>

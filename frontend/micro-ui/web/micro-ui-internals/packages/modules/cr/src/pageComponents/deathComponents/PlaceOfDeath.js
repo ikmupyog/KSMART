@@ -26,6 +26,9 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [HospitalMobile, setHospitalMobile] = useState(formData?.PlaceOfDeath?.HospitalMobile);
   const [OfficerName, setOfficerName] = useState(formData?.PlaceOfDeath?.OfficerName);
   const [OfficerDesignation, setOfficerDesignation] = useState(formData?.PlaceOfDeath?.OfficerDesignation);
+  const [OfficerNames, setFilteredOfficerName] = useState(0);
+  const [Designations, setFilteredDesignation] = useState(0);
+  
 
   //DeathPlace Home
   const [AdrsCountry, setAdrsCountry] = useState(formData?.PlaceOfDeath?.AdrsCountry);

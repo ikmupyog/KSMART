@@ -111,16 +111,16 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
     // sessionStorage.setItem("Religion", setReligion ? setReligion.code : null);
-    sessionStorage.setItem("Country", setCountry ? setCountry.code : null);
-    sessionStorage.setItem("StateName", setStateName ? setStateName.code : null);
-    sessionStorage.setItem("District", setDistrict ? setDistrict.code : null);
-    sessionStorage.setItem("LBType", setLBType ? setLBType.code : null);
-    sessionStorage.setItem("LBName", setLBName ? setLBName.code : null);
-    sessionStorage.setItem("OccupationMain", setOccupationMain ? setOccupationMain.code : null);
-    sessionStorage.setItem("PlaceType", setPlaceType ? setPlaceType.code : null);
-    sessionStorage.setItem("OccupationOthers", OccupationOthers);
-    sessionStorage.setItem("CityMl", CityMl);
-    sessionStorage.setItem("LocalityMl", LocalityMl);
+    sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
+    sessionStorage.setItem("setStateName", setStateName ? setStateName.code : null);
+    sessionStorage.setItem("setDistrict", setDistrict ? setDistrict.code : null);
+    sessionStorage.setItem("setLBType", setLBType ? setLBType.code : null);
+    sessionStorage.setItem("setLBName", setLBName ? setLBName.code : null);
+    sessionStorage.setItem("setOccupationMain", setOccupationMain ? setOccupationMain.code : null);
+    sessionStorage.setItem("setPlaceType", setPlaceType ? setPlaceType.code : null);
+    sessionStorage.setItem("OccupationOthers", OccupationOthers ? OccupationOthers :null);
+    sessionStorage.setItem("CityMl", CityMl ? CityMl : null);
+    sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl : null );
 
     onSelect(config.key, {
       // setPlaceofActivity,

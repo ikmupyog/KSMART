@@ -85,16 +85,16 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
     sessionStorage.setItem("setmaleDependent", setmaleDependent ? setmaleDependent.code : null);
-    sessionStorage.setItem("FatherOrHusbandNameEN", FatherOrHusbandNameEN);
-    sessionStorage.setItem("FatherOrHusbandNameMl", FatherOrHusbandNameMl);
-    sessionStorage.setItem("MotherNameEn", MotherNameEn);
-    sessionStorage.setItem("MotherNameMl", MotherNameMl);
-    sessionStorage.setItem("FatherOrHusbandAdharNo", FatherOrHusbandAdharNo);
-    sessionStorage.setItem("FatherEmail", FatherEmail);
-    sessionStorage.setItem("MotherAdharNo", MotherAdharNo);
-    sessionStorage.setItem("MotherEmail", MotherEmail);
-    sessionStorage.setItem("FatherMobile", FatherMobile);
-    sessionStorage.setItem("MotherMobile", MotherMobile);
+    sessionStorage.setItem("FatherOrHusbandNameEN", FatherOrHusbandNameEN ? FatherOrHusbandNameEN :null);
+    sessionStorage.setItem("FatherOrHusbandNameMl", FatherOrHusbandNameMl ? FatherOrHusbandNameMl : null);
+    sessionStorage.setItem("MotherNameEn", MotherNameEn ? MotherNameEn : null);
+    sessionStorage.setItem("MotherNameMl", MotherNameMl ? MotherNameMl : null);
+    sessionStorage.setItem("FatherOrHusbandAdharNo", FatherOrHusbandAdharNo ? FatherOrHusbandAdharNo : null ) ;
+    sessionStorage.setItem("FatherEmail", FatherEmail ? FatherEmail : null);
+    sessionStorage.setItem("MotherAdharNo", MotherAdharNo ? MotherAdharNo : null);
+    sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
+    sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null );
+    sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
 
     onSelect(config.key, {
       setTitle,

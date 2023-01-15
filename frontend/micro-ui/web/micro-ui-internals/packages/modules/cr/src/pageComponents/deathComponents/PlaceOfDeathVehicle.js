@@ -402,7 +402,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
         <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}</CardLabel>
         <Dropdown
                 t={t}
-                optionKey="code"
+                optionKey="hospitalname"
                 isMandatory={false}
                 option={cmbhospital}
                 selected={setAdmittedHospitalEn}
