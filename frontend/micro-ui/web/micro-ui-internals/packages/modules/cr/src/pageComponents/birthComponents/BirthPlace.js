@@ -26,6 +26,27 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [mobileError, setMobileError] = useState(null);
   const [commentError, setCommentError] = useState(null);
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
+
+
+  const [setInstitutionError, setSelectedInstitutionError] = useState(true);
+  const [setInstitutionIdError, setSelectedInstitutionIdError] = useState(true);
+  const [SiginedOfficerError, setSiginedOfficerError] = useState(null)
+  const [SiginedOfficerDesignationError, setSiginedOfficerDesignationError] = useState(null)
+  const [InstitutionMobilNoError, setInstitutionMobilNoError] = useState(null)
+  const [InstitutionAadhaarError, setInstitutionAadhaarError] = useState(null)
+
+  const [VehicleRegistrationNoError, setVehicleRegistrationNoError] = useState(null)
+  const [VehicleFromEnError, setVehicleFromEnError] =useState(null);
+  const [VehicleToEnError, setVehicleToEnError] = useState(null);
+  const [VehicleHaltPlaceError, setVehicleHaltPlaceError] = useState(null);
+  const [VehicleFromMlError, setVehicleFromMlError] = useState(null);
+  const [VehicleToMlError, setVehicleToMlError] = useState(formData?.BirthPlace?.VehicleToMl);
+  const [VehicleOtherDetailsEnError, setVehicleOtherDetailsEnError] =useState(null);
+  const [VehicleOtherDetailsMlError, setVehicleOtherDetailsMlError] = useState(null);
+  const [setAdmittedHospitalEnError, setSelectedAdmittedHospitalEnError] = useState(true);
+  const [setAdmittedHospitalMlError, setSelectedAdmittedHospitalMlError] = useState(true);
+
+
   // const [BirthPlaceDescription, setBirthPlaceDeccription] = useState(formData?.BirthPlace?.BirthPlaceDescription);
   const [HospitalName, selectHospitalName] = useState(formData?.BirthPlace?.HospitalName);
   const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.BirthPlace?.SignedOfficerName);
@@ -37,10 +58,10 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
   const [setInstitution, setSelectedInstitution] = useState(formData?.BirthPlace?.setInstitution);
   const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.BirthPlace?.setInstitutionId);
-  const [SiginedOfficer, setSiginedOfficer] = useState(formData?.BirthPlace?.SiginedOfficer);
-  const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.BirthPlace?.SiginedOfficerDesignation);
-  const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.BirthPlace?.InstitutionMobilNo);
-  const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.BirthPlace?.InstitutionAadhaar);
+  const [SiginedOfficer, setSiginedOfficer] = useState(formData?.BirthPlace?.SiginedOfficer ? formData?.BirthPlace?.SiginedOfficer : "");
+  const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.BirthPlace?.SiginedOfficerDesignation ? formData?.BirthPlace?.SiginedOfficerDesignation : "");
+  const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.BirthPlace?.InstitutionMobilNo ? formData?.BirthPlace?.InstitutionMobilNo : "");
+  const [InstitutionAadhaar, setInstitutionAadhaar] = useState(formData?.BirthPlace?.InstitutionAadhaar ? formData?.BirthPlace?.InstitutionAadhaar : "");
 
   // const [DriverName, setDriverName] = useState(formData?.BirthPlace?.DriverName);
   // const [DriverMobileNo, setDriverMobileNo] = useState(formData?.BirthPlace?.DriverMobileNo);
@@ -51,14 +72,14 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   // const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn);
   // const [VehiclePlaceFirstHalt, setVehiclePlaceFirstHalt] = useState(formData?.BirthPlace?.VehiclePlaceFirstHalt);
 
-  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthPlace?.VehicleRegistrationNo);
-  const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthPlace?.setVehicleFromEn);
-  const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn);
-  const [VehicleHaltPlace, setVehicleHaltPlace] = useState(formData?.BirthPlace?.VehicleHaltPlace);
-  const [VehicleFromMl, setVehicleFromMl] = useState(formData?.BirthPlace?.VehicleFromMl);
-  const [VehicleToMl, setVehicleToMl] = useState(formData?.BirthPlace?.VehicleToMl);
-  const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.BirthPlace?.VehicleOtherDetailsEn);
-  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.BirthPlace?.VehicleOtherDetailsMl);
+  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.BirthPlace?.VehicleRegistrationNo  ? formData?.BirthPlace?.VehicleRegistrationNo : "") ;
+  const [VehicleFromEn, setVehicleFromEn] = useState(formData?.BirthPlace?.setVehicleFromEn  ? formData?.BirthPlace?.setVehicleFromEn : "");
+  const [VehicleToEn, setVehicleToEn] = useState(formData?.BirthPlace?.setSelectVehicleToEn  ? formData?.BirthPlace?.setSelectVehicleToEn : "");
+  const [VehicleHaltPlace, setVehicleHaltPlace] = useState(formData?.BirthPlace?.VehicleHaltPlace  ? formData?.BirthPlace?.VehicleHaltPlace : "");
+  const [VehicleFromMl, setVehicleFromMl] = useState(formData?.BirthPlace?.VehicleFromMl  ? formData?.BirthPlace?.VehicleFromMl : "");
+  const [VehicleToMl, setVehicleToMl] = useState(formData?.BirthPlace?.VehicleToMl  ? formData?.BirthPlace?.VehicleToMl : "");
+  const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.BirthPlace?.VehicleOtherDetailsEn  ? formData?.BirthPlace?.VehicleOtherDetailsEn : "");
+  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.BirthPlace?.VehicleOtherDetailsMl  ? formData?.BirthPlace?.VehicleOtherDetailsMl : "");
   const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.BirthPlace?.setAdmittedHospitalEn);
   const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.BirthPlace?.setAdmittedHospitalMl);
 
@@ -341,6 +362,81 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         setMobileError(false);
       }
     }
+
+
+
+    
+    if (BirthPlace.code === "INSTITUTION") {
+      // console.log(naturetype);
+      if (setInstitution == null) {
+        // 'BIRTH_ERROR_HOSPITAL_CHOOSE';
+        setSelectedInstitutionError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setSelectedInstitutionError(false);
+      }
+
+      if (setInstitutionId == null) {
+        setSelectedInstitutionIdError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setSelectedInstitutionIdError(false);
+      }
+      if (setSiginedOfficer == null) {
+        setSiginedOfficerError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setSiginedOfficerError(false);
+      }
+      if (setSiginedOfficerDesignation == null) {
+        setSiginedOfficerDesignationError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setSiginedOfficerDesignationError(false);
+      }
+
+
+      if (setInstitutionMobilNo == null) {
+        setInstitutionMobilNoError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setInstitutionMobilNoError(false);
+      }
+      if (setInstitutionAadhaar == null) {
+        setInstitutionAadhaarError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setInstitutionAadhaarError(false);
+      }
+
+
+    }
+
+    
     if (validFlag === true) {
       sessionStorage.setItem("BirthPlace", BirthPlace.code);
       sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.hospitalName : null);
@@ -660,11 +756,35 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
                   : setToast(false)
                 ) : setToast(false)
               )
-            }
+            }           
+
+            onClose={() => setToast(false)}
+          />
+          )
+
+
+          
+        }{""}
+
+             
+       {toast && (
+          <Toast
+            error={setInstitutionError || setInstitutionIdError || SiginedOfficerError || SiginedOfficerDesignationError || InstitutionMobilNoError || InstitutionAadhaarError}
+            
+            label={
+             
+
+              (setInstitutionError || setInstitutionIdError || SiginedOfficerError || SiginedOfficerDesignationError || InstitutionMobilNoError || InstitutionAadhaarError ? 
+                (setInstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : setInstitutionIdError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`) : SiginedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_NAME_CHOOSE`) : SiginedOfficerDesignationError ? t(`BIRTH_ERROR_SIGNED_OFFICER_DESIG_CHOOSE`) : InstitutionMobilNoError ? t(`BIRTH_ERROR_SIGNED_OFFICER_MOBILE_CHOOSE`) : InstitutionAadhaarError ? t(`BIRTH_ERROR_SIGNED_OFFICER_AADHAAR_CHOOSE`)
+                  : setToast(false)
+                ) : setToast(false)
+              )
+            }            
 
             onClose={() => setToast(false)}
           />)
         }{""}
+
 
       </FormStep>
     </React.Fragment>
