@@ -37,9 +37,9 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
           if (isInitialRender) {
         if(HospitalName){
           setIsInitialRender(false);
-          cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);   
+          cmbRegistrarNames.push(cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code));   
           cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
-          console.log("cmbDesignations" + cmbRegistrarNames.hospitalList);                
+          console.log("cmbDesignations" + cmbRegistrarNames["hospitalList"]);                
           // setFilteredOfficerName(cmbRegistrarNames.registar);
           // setFilteredDesignation(cmbDesignations);
           // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
