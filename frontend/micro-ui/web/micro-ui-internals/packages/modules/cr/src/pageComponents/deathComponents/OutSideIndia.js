@@ -3,25 +3,27 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernme
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const OutSideIndia = ({ config, onSelect, userType, formData }) => {
+const OutSideIndia = ({ config, onSelect, userType, formData ,AdressEn, setAdressEn,AdressMl, setAdressMl, AdressEnB, setAdressEnB,
+  AdressMlB, setAdressMlB,LocalityEn, setLocalityEn,ProvinceMl, setProvinceMl,setCountry, setSelectedCountry,LocalityMl, setLocalityMl,ProvinceEn,setProvinceEn}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(formData?.AddressOfDecesed?.setPlaceofActivity);
-  const [AdressEn, setAdressEn] = useState(formData?.AddressOfDecesed?.AdressEn);
-  const [AdressMl, setAdressMl] = useState(formData?.AddressOfDecesed?.AdressMl);
-  const [AdressEnB, setAdressEnB] = useState(formData?.AddressOfDecesed?.AdressEnB);
-  const [AdressMlB, setAdressMlB] = useState(formData?.AddressOfDecesed?.AdressMlB);
-  const [LocalityEn, setLocalityEn] = useState(formData?.AddressOfDecesed?.LocalityEn);
-  const [LocalityMl, setLocalityMl] = useState(formData?.AddressOfDecesed?.LocalityMl);
-  const [ProvinceEn, setProvinceEn] = useState(formData?.AddressOfDecesed?.ProvinceEn);
-  const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOfDecesed?.ProvinceMl);
-  const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
+  // const [TradeName, setTradeName] = useState(formData?.AddressOfDecesed?.setPlaceofActivity);
+
+  // const [AdressEn, setAdressEn] = useState(formData?.AddressOfDecesed?.AdressEn);
+  // const [AdressMl, setAdressMl] = useState(formData?.AddressOfDecesed?.AdressMl);
+  // const [AdressEnB, setAdressEnB] = useState(formData?.AddressOfDecesed?.AdressEnB);
+  // const [AdressMlB, setAdressMlB] = useState(formData?.AddressOfDecesed?.AdressMlB);
+  // const [LocalityEn, setLocalityEn] = useState(formData?.AddressOfDecesed?.LocalityEn);
+  // const [LocalityMl, setLocalityMl] = useState(formData?.AddressOfDecesed?.LocalityMl);
+  // const [ProvinceEn, setProvinceEn] = useState(formData?.AddressOfDecesed?.ProvinceEn);
+  // const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOfDecesed?.ProvinceMl);
+  // const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
 
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -33,10 +35,10 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     });
   const onSkip = () => onSelect();
 
-  function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
-  }
+  // function selectPlaceofactivity(value) {
+  //   naturetypecmbvalue = value.code.substring(0, 4);
+  //   setSelectedPlaceofActivity(value);
+  // }
   function setSelectAdressEn(e) {
     setAdressEn(e.target.value);
   }
@@ -64,23 +66,24 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
   function selectCountry(e) {
     setSelectedCountry(e.target.value);
   }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
   const goNext = () => {
-    sessionStorage.setItem("AdressEn", AdressEn);
-    sessionStorage.setItem("AdressMl", AdressMl);
-    sessionStorage.setItem("AdressEnB", AdressEnB);
-    sessionStorage.setItem("AdressMlB", AdressMlB);
-    sessionStorage.setItem("LocalityEn", LocalityEn);
-    sessionStorage.setItem("LocalityMl", LocalityMl);
-    sessionStorage.setItem("ProvinceEn", ProvinceEn);
-    sessionStorage.setItem("ProvinceMl", ProvinceMl);
-    sessionStorage.setItem("setCountry", setCountry.code);
-    onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, setCountry });
+    // sessionStorage.setItem("AdressEn", AdressEn ? AdressEn : null );
+    // sessionStorage.setItem("AdressMl", AdressMl ? AdressMl : null);
+    // sessionStorage.setItem("AdressEnB", AdressEnB ? AdressEnB : null);
+    // sessionStorage.setItem("AdressMlB", AdressMlB ? AdressMlB : null);
+    // sessionStorage.setItem("LocalityEn", LocalityEn ? LocalityEn : null );
+    // sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl : null);
+    // sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn : null);
+    // sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl : null);
+    // sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
+
+    // onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, setCountry });
   };
   return (
     <React.Fragment>
@@ -124,7 +127,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectAdressMl}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_1_ML")}`}
-              {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
         </div>
@@ -156,7 +159,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectAdressMlB}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_2_ML")}`}
-              {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
           </div>
         </div>
@@ -188,7 +191,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectLocalityMl}
               disable={isEdit}
               placeholder={`${t("CR_LOCALITY_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
             />
           </div>
         </div>
@@ -220,7 +223,7 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
               onChange={setSelectProvinceMl}
               disable={isEdit}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
             />
           </div>
         </div>

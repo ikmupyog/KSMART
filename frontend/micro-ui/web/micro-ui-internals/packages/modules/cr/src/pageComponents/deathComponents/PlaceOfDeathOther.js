@@ -145,7 +145,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
             onChange={setSelectPlaceOfDeathOtherDetailsMl}
             disable={isEdit}
             placeholder={`${t("CR_OTHER_DETAILS_ML")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$",pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
             />
         </div>
       </div>  

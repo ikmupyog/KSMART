@@ -111,16 +111,16 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
     // sessionStorage.setItem("Religion", setReligion ? setReligion.code : null);
-    sessionStorage.setItem("Country", setCountry ? setCountry.code : null);
-    sessionStorage.setItem("StateName", setStateName ? setStateName.code : null);
-    sessionStorage.setItem("District", setDistrict ? setDistrict.code : null);
-    sessionStorage.setItem("LBType", setLBType ? setLBType.code : null);
-    sessionStorage.setItem("LBName", setLBName ? setLBName.code : null);
-    sessionStorage.setItem("OccupationMain", setOccupationMain ? setOccupationMain.code : null);
-    sessionStorage.setItem("PlaceType", setPlaceType ? setPlaceType.code : null);
-    sessionStorage.setItem("OccupationOthers", OccupationOthers);
-    sessionStorage.setItem("CityMl", CityMl);
-    sessionStorage.setItem("LocalityMl", LocalityMl);
+    sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
+    sessionStorage.setItem("setStateName", setStateName ? setStateName.code : null);
+    sessionStorage.setItem("setDistrict", setDistrict ? setDistrict.code : null);
+    sessionStorage.setItem("setLBType", setLBType ? setLBType.code : null);
+    sessionStorage.setItem("setLBName", setLBName ? setLBName.code : null);
+    sessionStorage.setItem("setOccupationMain", setOccupationMain ? setOccupationMain.code : null);
+    sessionStorage.setItem("setPlaceType", setPlaceType ? setPlaceType.code : null);
+    sessionStorage.setItem("OccupationOthers", OccupationOthers ? OccupationOthers :null);
+    sessionStorage.setItem("CityMl", CityMl ? CityMl : null);
+    sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl : null );
 
     onSelect(config.key, {
       // setPlaceofActivity,
@@ -408,7 +408,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     onChange={SelectLocalityMl}
                     disable={isEdit}
                     placeholder={`${t("CR_LOCALITY_ML")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -426,7 +426,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     onChange={SelectCityMl}
                     disable={isEdit}
                     placeholder={`${t("CR_CITY_ML")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                    {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -608,7 +608,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                   onChange={SelectOccupationOthers}
                   disable={isEdit}
                   placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
+                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_OCCUPATION_OTHER_ML") })}
                 />
               </div>
             </div>

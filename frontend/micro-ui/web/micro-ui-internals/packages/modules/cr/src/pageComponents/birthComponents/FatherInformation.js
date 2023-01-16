@@ -13,21 +13,21 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     const { data: QualificationSub = {}, isQualificationSubLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
     const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-    const [FatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.FatherInfoDetails?.FatherFirstNameEn);
-    const [FatherMiddleNameEn, setFatherMiddleNameEn] = useState(formData?.FatherInfoDetails?.FatherMiddleNameEn);
-    const [FatherLastNameEn, setFatherLastNameEn] = useState(formData?.FatherInfoDetails?.FatherLastNameEn);
-    const [FatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.FatherInfoDetails?.FatherFirstNameMl);
-    const [FatherMiddleNameMl, setFatherMiddleNameMl] = useState(formData?.FatherInfoDetails?.FatherMiddleNameMl);
-    const [FatherLastNameMl, setFatherLastNameMl] = useState(formData?.FatherInfoDetails?.FatherLastNameMl);
-    const [FatherAadhar, setFatherAadhar] = useState(formData?.FatherInfoDetails?.FatherAadhar);
-    const [FatherPassportNo, setFatherPassportNo] = useState(formData?.FatherInfoDetails?.FatherPassportNo);
-    const [FatherEmail, setFatherEmail] = useState(formData?.FatherInfoDetails?.FatherEmail);
-    const [FatherMobile, setFatherMobile] = useState(formData?.FatherInfoDetails?.FatherMobile);
-    const [FatherEducation, setFatherEducation] = useState(formData?.FatherInfoDetails?.FatherEducation);
+    const [FatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.FatherInfoDetails?.FatherFirstNameEn ? formData?.FatherInfoDetails?.FatherFirstNameEn : "");
+    const [FatherMiddleNameEn, setFatherMiddleNameEn] = useState(formData?.FatherInfoDetails?.FatherMiddleNameEn ? formData?.FatherInfoDetails?.FatherMiddleNameEn : "");
+    const [FatherLastNameEn, setFatherLastNameEn] = useState(formData?.FatherInfoDetails?.FatherLastNameEn ? formData?.FatherInfoDetails?.FatherLastNameEn : "");
+    const [FatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.FatherInfoDetails?.FatherFirstNameMl ? formData?.FatherInfoDetails?.FatherFirstNameMl : "");
+    const [FatherMiddleNameMl, setFatherMiddleNameMl] = useState(formData?.FatherInfoDetails?.FatherMiddleNameMl ? formData?.FatherInfoDetails?.FatherMiddleNameMl : "");
+    const [FatherLastNameMl, setFatherLastNameMl] = useState(formData?.FatherInfoDetails?.FatherLastNameMl ? formData?.FatherInfoDetails?.FatherLastNameMl : "");
+    const [FatherAadhar, setFatherAadhar] = useState(formData?.FatherInfoDetails?.FatherAadhar ? formData?.FatherInfoDetails?.FatherAadhar : "");
+    const [FatherPassportNo, setFatherPassportNo] = useState(formData?.FatherInfoDetails?.FatherPassportNo ? formData?.FatherInfoDetails?.FatherPassportNo : "");
+    const [FatherEmail, setFatherEmail] = useState(formData?.FatherInfoDetails?.FatherEmail ? formData?.FatherInfoDetails?.FatherEmail : "");
+    const [FatherMobile, setFatherMobile] = useState(formData?.FatherInfoDetails?.FatherMobile ? formData?.FatherInfoDetails?.FatherMobile : "");
+    const [FatherEducation, setFatherEducation] = useState(formData?.FatherInfoDetails?.FatherEducation ? formData?.FatherInfoDetails?.FatherEducation : null);
     const [FatherEducationSubject, setFatherEducationSubject] = useState(formData?.FatherInfoDetails?.FatherEducationSubject);
-    const [FatherProfession, setFatherProfession] = useState(formData?.FatherInfoDetails?.FatherProfession);
-    const [FatherNationality, setFatherNationality] = useState(formData?.FatherInfoDetails?.FatherNationality);
-    const [isFatherInfo, setIsFatherInfo] = useState(formData?.FatherInfoDetails?.isFatherInfo);
+    const [FatherProfession, setFatherProfession] = useState(formData?.FatherInfoDetails?.FatherProfession ? formData?.FatherInfoDetails?.FatherProfession : null);
+    const [FatherNationality, setFatherNationality] = useState(formData?.FatherInfoDetails?.FatherNationality ? formData?.FatherInfoDetails?.FatherNationality : null);
+    const [isFatherInfo, setIsFatherInfo] = useState(formData?.FatherInfoDetails?.isFatherInfo ? formData?.FatherInfoDetails?.isFatherInfo : false);
     const [isInitialRender, setIsInitialRender] = useState(true);
 
     let cmbQualification = [];
@@ -52,13 +52,13 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     Nation &&
         Nation["common-masters"] &&
         Nation["common-masters"].Country.map((ob) => {
-            cmbNation.push(ob);           
+            cmbNation.push(ob);
         });
-        let cmbfilterNation = [];
-    if(cmbNation.length>0){
-       
+    let cmbfilterNation = [];
+    if (cmbNation.length > 0) {
+
         // cmbNation.filter((cmbNation) => cmbNation.nationalityname=="Indian");
-        cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));   
+        cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
         // if(cmbfilterNation.length>0){
         //     setFatherNationality(cmbfilterNation);
         // }
@@ -78,7 +78,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
         //     }
         // }, [isInitialRender]);  
     }
-    
+
     const onSkip = () => onSelect();
 
     function setSelectFatherFirstNameEn(e) {
@@ -125,13 +125,26 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     }
     function setFatherInfo(e) {
         if (e.target.checked == true) {
-            setIsFatherInfo(true);
+            setIsFatherInfo(e.target.checked);
+            setFatherAadhar("");
+            setFatherFirstNameEn("");
+            setFatherMiddleNameEn("");
+            setFatherLastNameEn("");
+            setFatherFirstNameMl("");
+            setFatherMiddleNameMl("");
+            setFatherLastNameMl("");
+            setFatherNationality(null);
+            setFatherPassportNo("");
+            setFatherMobile("");
+            setFatherEmail("");
+            setFatherEducation(null);
+            setFatherProfession(null);
         } else {
-            setIsFatherInfo(false);
+            setIsFatherInfo(e.target.checked);
         }
     }
     // console.log(cmbNation);
-    
+
     const goNext = () => {
         sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn ? FatherFirstNameEn : null);
         sessionStorage.setItem("FatherMiddleNameEn", FatherMiddleNameEn ? FatherMiddleNameEn : null);
@@ -255,7 +268,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
 
-                        
+
                         <div className="col-md-3" ><CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualification} selected={FatherEducation}
                                 select={setSelectFatherEducation} disable={isFatherInfo} />

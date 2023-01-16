@@ -120,6 +120,7 @@ const MultipleBirth = ({ config, onSelect, userType, formData }) => {
             </div>
            
           </div>
+          
           <div className="row">
             <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_CHILD")}`}</span> </h1>
             </div>

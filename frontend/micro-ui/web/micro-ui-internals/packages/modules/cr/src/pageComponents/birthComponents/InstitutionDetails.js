@@ -101,7 +101,7 @@ const InstitutionDetails = ({ config, onSelect, userType, formData,setInstitutio
             />
           </div>
           <div className="col-md-6">
-            <CardLabel>{`${t("CR_INSTITUTION_ID")}`}</CardLabel>
+            <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}</CardLabel>
             <Dropdown
               t={t}
               optionKey="name"
@@ -110,7 +110,7 @@ const InstitutionDetails = ({ config, onSelect, userType, formData,setInstitutio
               selected={setInstitutionId}
               select={selectInstitutionId}
               disabled={isEdit}
-              placeholder={`${t("CR_INSTITUTION_ID")}`}
+              placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
             />
           </div>
         </div>

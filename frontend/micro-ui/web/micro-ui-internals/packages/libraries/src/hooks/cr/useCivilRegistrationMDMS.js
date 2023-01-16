@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
 
   const useLocalBodyMaster = () => {
-    console.log("Jetheesh LB");
     return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
   };  
   const useCRQualificationSub = () => {
@@ -104,6 +103,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
   const useMaleDependent = () => {
     return useQuery("CR_MALE_DEPENDENT", () => MdmsService.getCRMaleDependent(tenantId, moduleCode, type), config);
+  };
+  const useCRDeathPlaceType = () => {
+    return useQuery("CR_PLACE_OF_DEATH", () => MdmsService.getCRDeathPlaceType(tenantId, moduleCode, type), config);
   };
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
@@ -235,7 +237,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRModeOfPregnancy();
     case "PlaceMaster":
       return useCRPlaceMaster();
-    case "hospitalList":
+    case "hospital":
       return useCRHospital();
     case "PlaceMaster":
       return usePLaceOfDeath();
@@ -249,8 +251,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRTitle();
     case "DocumentType":
       return useDocumentTypeB();
-      case "IdProof":
+    case "IdProof":
         return useIdProof();
+    case "DeathPlaceType":
+          return useCRDeathPlaceType();
     case "MaleDependentType":
       return useMaleDependent();
     case "Religion":

@@ -10,30 +10,34 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const [ChildDOB, setChildDOB] = useState(formData?.ChildDetails?.ChildDOB);
+  const [ChildDOB, setChildDOB] = useState(formData?.ChildDetails?.ChildDOB ? formData?.ChildDetails?.ChildDOB : "");
   const [Gender, selectGender] = useState(formData?.ChildDetails?.Gender);
-  const [ChildAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.ChildAadharNo);
-  const [ChildFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.ChildFirstNameEn);
-  const [ChildMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.ChildMiddleNameEn);
-  const [ChildLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.ChildLastNameEn);
-  const [ChildFirstNameMl, setChildFirstNameMl] = useState(formData?.ChildDetails?.ChildFirstNameMl);
-  const [ChildMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.ChildMiddleNameMl);
-  const [ChildLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.ChildLastNameMl);
+  const [ChildAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.ChildAadharNo ? formData?.ChildDetails?.ChildAadharNo : "");
+  const [ChildFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.ChildFirstNameEn ? formData?.ChildDetails?.ChildFirstNameEn : "");
+  const [ChildMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.ChildMiddleNameEn ? formData?.ChildDetails?.ChildMiddleNameEn : "");
+  const [ChildLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.ChildLastNameEn ? formData?.ChildDetails?.ChildLastNameEn : "");
+  const [ChildFirstNameMl, setChildFirstNameMl] = useState(formData?.ChildDetails?.ChildFirstNameMl ? formData?.ChildDetails?.ChildFirstNameMl : "");
+  const [ChildMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.ChildMiddleNameMl ? formData?.ChildDetails?.ChildMiddleNameMl : "");
+  const [ChildLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.ChildLastNameMl ? formData?.ChildDetails?.ChildLastNameMl : "");
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [tripStartTime, setTripStartTime] = useState(formData?.ChildDetails?.tripStartTime ? formData?.ChildDetails?.tripStartTime : "");
+  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : true);
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
   // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
   // const [ChildPassportNo, setChildPassportNo] = useState(formData?.ChildDetails?.ChildPassportNo);
   // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.ChildDetails?.ChildArrivalDate);
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [tripStartTime, setTripStartTime] = useState(formData?.ChildDetails?.tripStartTime);
-  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : true);
+
   // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // disable future dates
   // const maxDate = new Date();
   // let currentDate = new Date().toJSON().slice(0, 10);
   const [access, setAccess] = React.useState(true);
+<<<<<<< HEAD
   console.log(formData?.ChildDetails?.isChildName);
   console.log(isChildName);
+=======
+>>>>>>> 161a81708b4f0018ab2057e71d3e9c7f61b9c0a3
   let menu = [];
   Menu &&
     Menu.map((genderDetails) => {
@@ -118,7 +122,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   };
   function setChildName(e) {
-    console.log(e.target.checked);
     if (e.target.checked === true) {
       setIsChildName(e.target.checked);
       setChildFirstNameEn("");
@@ -129,7 +132,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       setChildLastNameMl("");
     } else {
       setIsChildName(e.target.checked);
-      console.log(isChildName);
     }
   }
   const goNext = () => {
@@ -176,6 +178,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
+<<<<<<< HEAD
           <div className="col-md-2">
             <CardLabel>
               {t("CR_DATE_OF_BIRTH_TIME")}
@@ -188,11 +191,18 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
               maxDate={new Date() || undefined}
             />
+=======
+          <div className="col-md-2" ><CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}<span className="mandatorycss">*</span></CardLabel>
+            <DatePicker date={ChildDOB} name="ChildDOB" onChange={setselectChildDOB} inputFormat="DD-MM-YYYY"
+              placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} maxDate={new Date() || undefined} />
+
+>>>>>>> 161a81708b4f0018ab2057e71d3e9c7f61b9c0a3
           </div>
           <div className="col-md-2">
             <CardLabel>{t("Time of Birth")}</CardLabel>
             <CustomTimePicker name="tripStartTime" onChange={(val) => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
           </div>
+<<<<<<< HEAD
           <div className="col-md-4">
             {" "}
             <CardLabel>
@@ -209,6 +219,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               placeholder={`${t("CR_GENDER")}`}
               {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
             />
+=======
+          <div className="col-md-4" > <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
+            <Dropdown t={t} optionKey="code" isMandatory={true} option={menu} selected={Gender} select={setselectGender} placeholder={`${t("CR_GENDER")}`} {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })} />
+>>>>>>> 161a81708b4f0018ab2057e71d3e9c7f61b9c0a3
           </div>
           <div className="col-md-4">
             {" "}
@@ -241,6 +255,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
+<<<<<<< HEAD
           <div className="col-md-4">
             <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
             <TextInput
@@ -255,6 +270,20 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               placeholder={`${t("CR_FIRST_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
             />
+=======
+          <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameEn"
+              value={ChildFirstNameEn}
+              onChange={setSelectChildFirstNameEn}
+              //  onChange={(e,v) => this.updateTextField(e,v)}
+              disable={isChildName}
+              placeholder={`${t("CR_FIRST_NAME_EN")}`}
+              inputProps={
+                { maxLength: 12 }
+              }
+              onInput={(e) => { e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 12) }}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+>>>>>>> 161a81708b4f0018ab2057e71d3e9c7f61b9c0a3
           </div>
           <div className="col-md-4">
             {" "}
@@ -290,6 +319,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
+<<<<<<< HEAD
           <div className="col-md-4">
             {" "}
             <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
@@ -310,6 +340,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 title: t("CR_INVALID_FIRST_NAME_ML"),
               })}
             />
+=======
+          <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameMl" value={ChildFirstNameMl} onChange={setSelectChildFirstNameMl} disable={isChildName} placeholder={`${t("CR_FIRST_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })} />
+>>>>>>> 161a81708b4f0018ab2057e71d3e9c7f61b9c0a3
           </div>
           <div className="col-md-4">
             {" "}

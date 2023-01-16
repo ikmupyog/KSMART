@@ -14,18 +14,18 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     const { data: MedicalAttentionType = {}, isMedicalAttentionTypeLoading} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MedicalAttentionType");
     const { data: DeliveryMethodList = {},isDeliveryMethodListLoading} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
     const { data: ModeOfPregnancyList = {}, isModeOfPregnancyListLoading} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "ModeOfPregnancy");
-    const [BirthWeight, setBirthWeight] = useState(formData?.StatisticalInfoDetails?.BirthWeight);
-    const [BirthHeight, setBirthHeight] = useState(formData?.StatisticalInfoDetails?.BirthHeight);
-    const [Religion, setReligion] = useState(formData?.StatisticalInfoDetails?.Religion);
-    const [PregnancyDuration, setPregnancyDuration] = useState(formData?.StatisticalInfoDetails?.PregnancyDuration);
-    const [MedicalAttension, setMedicalAttension] = useState(formData?.StatisticalInfoDetails?.MedicalAttension);
-    const [MedicalAttensionSub, setMedicalAttensionSub] = useState(formData?.StatisticalInfoDetails?.MedicalAttensionSub);
-    const [ModeOfPregnancy, setModeOfPregnancy] = useState(formData?.StatisticalInfoDetails?.ModeOfPregnancy);
-    const [DeliveryMethod, setDeliveryMethod] = useState(formData?.StatisticalInfoDetails?.DeliveryMethod);
-    const [DeliveryMethodSub, setDeliveryMethodSub] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub);
-    const [BirthPlaceDeccription, setBirthPlaceDeccription] = useState(formData?.StatisticalInfoDetails?.BirthPlaceDeccription);
-    const [BirthPlaceDeccriptionMl, setBirthPlaceDeccriptionMl] = useState(formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl);
-    const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+    const [BirthWeight, setBirthWeight] = useState(formData?.StatisticalInfoDetails?.BirthWeight ? formData?.StatisticalInfoDetails?.BirthWeight : "");
+    const [BirthHeight, setBirthHeight] = useState(formData?.StatisticalInfoDetails?.BirthHeight ? formData?.StatisticalInfoDetails?.BirthHeight : "");
+    const [Religion, setReligion] = useState(formData?.StatisticalInfoDetails?.Religion ? formData?.StatisticalInfoDetails?.Religion : null);
+    const [PregnancyDuration, setPregnancyDuration] = useState(formData?.StatisticalInfoDetails?.PregnancyDuration ? formData?.StatisticalInfoDetails?.PregnancyDuration : null);
+    const [MedicalAttension, setMedicalAttension] = useState(formData?.StatisticalInfoDetails?.MedicalAttension ? formData?.StatisticalInfoDetails?.MedicalAttension : null);
+    const [MedicalAttensionSub, setMedicalAttensionSub] = useState(formData?.StatisticalInfoDetails?.MedicalAttensionSub ? formData?.StatisticalInfoDetails?.MedicalAttensionSub : null);
+    const [ModeOfPregnancy, setModeOfPregnancy] = useState(formData?.StatisticalInfoDetails?.ModeOfPregnancy ? formData?.StatisticalInfoDetails?.ModeOfPregnancy : null);
+    const [DeliveryMethod, setDeliveryMethod] = useState(formData?.StatisticalInfoDetails?.DeliveryMethod ? formData?.StatisticalInfoDetails?.DeliveryMethod : null);
+    const [DeliveryMethodSub, setDeliveryMethodSub] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub ? formData?.StatisticalInfoDetails?.DeliveryMethodSub : null);
+    const [BirthPlaceDeccription, setBirthPlaceDeccription] = useState(formData?.StatisticalInfoDetails?.BirthPlaceDeccription ? formData?.StatisticalInfoDetails?.BirthPlaceDeccription : "");
+    const [BirthPlaceDeccriptionMl, setBirthPlaceDeccriptionMl] = useState(formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl ? formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl : "");
+    // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     let cmbAttDelivery = [];
     let cmbAttDeliverySub = [];
     let cmbDeliveryMethod = [];
@@ -151,19 +151,19 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-3" ><CardLabel>{t("CR_BIRTH_WEIGHT")}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthWeight" value={BirthWeight} onChange={setSelectBirthWeight} disable={isEdit}  placeholder={`${t("CR_BIRTH_WEIGHT")}`} {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_WEIGHT") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthWeight" value={BirthWeight} onChange={setSelectBirthWeight}   placeholder={`${t("CR_BIRTH_WEIGHT")}`} {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_WEIGHT") })} />
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{t("CR_BIRTH_HEIGHT")}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthHeight" value={BirthHeight} onChange={setSelectBirthHeight} disable={isEdit} placeholder={`${t("CR_BIRTH_HEIGHT")}`}{...(validation = { pattern: "^[.0-9`' ]*$",  type: "text", title: t("CR_INVALID_BIRTH_HEIGHT") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthHeight" value={BirthHeight} onChange={setSelectBirthHeight}  placeholder={`${t("CR_BIRTH_HEIGHT")}`}{...(validation = { pattern: "^[.0-9`' ]*$",  isRequired: false, type: "text", title: t("CR_INVALID_BIRTH_HEIGHT") })} />
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CS_COMMON_RELIGION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbReligion} selected={Religion} select={setSelectReligion} disabled={isEdit} placeholder={`${t("CS_COMMON_RELIGION")}`}/>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbReligion} selected={Religion} select={setSelectReligion}  placeholder={`${t("CS_COMMON_RELIGION")}`}/>
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="i18nKey" isMandatory={false} option={cmbPregWeek} selected={PregnancyDuration} select={setSelectPregnancyDuration} disabled={isEdit} placeholder={`${t("CR_PREGNANCY_DURATION")}`} />
+                            <Dropdown t={t} optionKey="i18nKey" isMandatory={false} option={cmbPregWeek} selected={PregnancyDuration} select={setSelectPregnancyDuration}  placeholder={`${t("CR_PREGNANCY_DURATION")}`} />
                         </div>
                     </div>
                 </div>
@@ -171,19 +171,19 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-12" >
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDelivery} selected={MedicalAttension} select={setSelectMedicalAttension} disabled={isEdit}placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDelivery} selected={MedicalAttension} select={setSelectMedicalAttension} placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} />
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDeliverySub} selected={MedicalAttensionSub} select={setSelectMedicalAttensionSub} disabled={isEdit} placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}  />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbAttDeliverySub} selected={MedicalAttensionSub} select={setSelectMedicalAttensionSub} placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}  />
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_DELIVERY_METHORD")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethod} select={setSelectDeliveryMethod} disabled={isEdit} placeholder={`${t("CR_DELIVERY_METHORD")}`}/>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethod} select={setSelectDeliveryMethod} placeholder={`${t("CR_DELIVERY_METHORD")}`}/>
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_MODE_OF_PREGNANCY")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbModePregnancy} selected={ModeOfPregnancy} select={setSelectModeOfPregnancy} disabled={isEdit}placeholder={`${t("CR_MODE_OF_PREGNANCY")}`} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbModePregnancy} selected={ModeOfPregnancy} select={setSelectModeOfPregnancy} placeholder={`${t("CR_MODE_OF_PREGNANCY")}`} />
                         </div>  
                     </div>
                 </div>
@@ -191,15 +191,15 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-12" >
                         <div className="col-md-4" >
                             <CardLabel>{`${t("CR_DELIVERY_METHORD")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethod} select={setSelectDeliveryMethod} disabled={isEdit} placeholder={`${t("CR_DELIVERY_METHORD")}`}/>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethod} select={setSelectDeliveryMethod}  placeholder={`${t("CR_DELIVERY_METHORD")}`}/>
                         </div>
                         {/* <div className="col-md-6" >
                             <CardLabel>{`${t("CR_DELIVERY_METHOD_SUB")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethodSub} select={setSelectDeliveryMethodSub} disabled={isEdit} placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}/>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbDeliveryMethod} selected={DeliveryMethodSub} select={setSelectDeliveryMethodSub}  placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}/>
                         </div> */}
                         <div className="col-md-4" >
                             <CardLabel>{`${t("CR_MODE_OF_PREGNANCY")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbModePregnancy} selected={ModeOfPregnancy} select={setSelectModeOfPregnancy} disabled={isEdit}placeholder={`${t("CR_MODE_OF_PREGNANCY")}`} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbModePregnancy} selected={ModeOfPregnancy} select={setSelectModeOfPregnancy} placeholder={`${t("CR_MODE_OF_PREGNANCY")}`} />
                         </div>                       
                       
                     </div>
@@ -208,11 +208,11 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-12" >
                     <div className="col-md-6" >
                          <CardLabel>{`${t("CR_DESCRIPTION")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccription" value={BirthPlaceDeccription} onChange={setSelectBirthPlaceDeccription} disable={isEdit} placeholder={`${t("CR_DESCRIPTION")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })} />
+                        <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccription" value={BirthPlaceDeccription} onChange={setSelectBirthPlaceDeccription}  placeholder={`${t("CR_DESCRIPTION")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })} />
                      </div>
                     <div className="col-md-6 " >
                          <CardLabel>{`${t("CR_DESCRIPTION_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccriptionMl" value={BirthPlaceDeccriptionMl} onChange={setSelectBirthPlaceDeccriptionMl} disable={isEdit} placeholder={`${t("CR_DESCRIPTION_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION_ML") })} />
+                        <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccriptionMl" value={BirthPlaceDeccriptionMl} onChange={setSelectBirthPlaceDeccriptionMl}  placeholder={`${t("CR_DESCRIPTION_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION_ML") })} />
                      </div>
                         </div></div>
 

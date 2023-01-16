@@ -339,7 +339,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
+              <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}  <span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
@@ -528,7 +528,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsLocalityNameMl" value={AdrsLocalityNameMl} onChange={setSelectAdrsLocalityNameMl} disable={isEdit} placeholder={`${t("CR_LOCALITY_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
  </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
+              <CardLabel>{t("CR_STREET_NAME_EN")}  <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -542,7 +542,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
             </div>
-            <div className="col-md-3" ><CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
+            <div className="col-md-3" ><CardLabel>{t("CR_STREET_NAME_ML")}  <span className="mandatorycss">*</span></CardLabel>
           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsStreetNameMl" value={AdrsStreetNameMl} onChange={setSelectAdrsStreetNameMl} placeholder={`${t("CR_STREET_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })} />
           </div>    
           
@@ -606,7 +606,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_INVALID_RES_ASSOCIATION_NO_EN")}</CardLabel>
+              <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}  <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -621,7 +621,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}</CardLabel>
+              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}  <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
