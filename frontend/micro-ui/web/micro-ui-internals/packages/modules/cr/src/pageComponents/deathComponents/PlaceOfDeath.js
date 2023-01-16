@@ -75,14 +75,14 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.PlaceOfDeath?.VehicleRegistrationNo);
   const [VehicleFromEn, setVehicleFromEn] = useState(formData?.PlaceOfDeath?.setVehicleFromEn);
   const [VehicleToEn, setVehicleToEn] = useState(formData?.PlaceOfDeath?.setSelectVehicleToEn);
-  const [VehicleHaltPlace, setSelectVehicleHaltPlace] = useState(formData?.PlaceOfDeath?.VehicleHaltPlace);
+  const [setVehicleHaltPlace, setSelectedVehicleHaltPlace] = useState(formData?.PlaceOfDeath?.VehicleHaltPlace);
   const [VehicleFromMl, setVehicleFromMl] = useState(formData?.PlaceOfDeath?.VehicleFromMl);
   const [VehicleToMl, setVehicleToMl] = useState(formData?.PlaceOfDeath?.VehicleToMl);
   const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeath?.VehicleOtherDetailsEn);
   const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeath?.VehicleOtherDetailsMl);
   const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeath?.setAdmittedHospitalEn);
   const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeath?.setAdmittedHospitalMl);
-  const [setVehicletype, setSelectedVehicletype] = useState(formData?.PlaceOfDeathVehicle?.setVehicletype);
+  const [setVehicletype, setSelectedVehicletype] = useState(formData?.PlaceOfDeath?.setVehicletype);
   // Informent Assess from Birth Page
   const [InformantAdrsCountry, setInformantAdrsCountry] = useState(formData?.PlaceOfDeath?.InformantAdrsCountry);
   const [InformantAdrsStateName, setInformantAdrsStateName] = useState(formData?.PlaceOfDeath?.InformantAdrsStateName);
@@ -220,7 +220,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
             VehicleFromEn={VehicleFromEn}
             VehicleToEn={VehicleToEn}
             VehicleFromMl={VehicleFromMl}
-            VehicleHaltPlace={VehicleHaltPlace}
+            setVehicleHaltPlace={setVehicleHaltPlace}            
             VehicleToMl={VehicleToMl}
             VehicleOtherDetailsEn={VehicleOtherDetailsEn}
             VehicleOtherDetailsMl={VehicleOtherDetailsMl}
@@ -288,7 +288,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
     sessionStorage.setItem("VehicleFromMl", VehicleFromMl ? VehicleFromMl : null);
     sessionStorage.setItem("setVehicletype",setVehicletype ?  setVehicletype.code : null);   
-    sessionStorage.setItem("VehicleHaltPlace", VehicleHaltPlace ? VehicleHaltPlace : null);
+    sessionStorage.setItem("setVehicleHaltPlace",setVehicleHaltPlace ?  setVehicleHaltPlace.code : null);
     sessionStorage.setItem("VehicleToMl", VehicleToMl ? VehicleToMl : null);
     // sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard ? setDeathVehicleWard.code : null);
     sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn ? setAdmittedHospitalEn.code : null);
@@ -323,7 +323,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
       AdrsLBTypeName, AdrsMainPlaceEn, AdrsMainPlaceMl, AdrsStreetNameEn, AdrsStreetNameMl, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk,
       AdrsPostOffice, AdrsPincode, AdrsResNo, setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo,
       InstitutionAadhaar, InformentNameEn, InformentNameMl, setTitle, isNoAadhaar, AadhaarNo, setDeclaration, InformentMobileNo, InformentEmail, VehicleRegistrationNo,
-      VehicleFromEn, VehicleToEn, VehicleFromMl, VehicleToMl, VehicleHaltPlace, setAdmittedHospitalEn, setAdmittedHospitalMl, VehicleOtherDetailsEn,
+      VehicleFromEn, VehicleToEn, VehicleFromMl, VehicleToMl, setVehicleHaltPlace, setAdmittedHospitalEn, setAdmittedHospitalMl, VehicleOtherDetailsEn,
       VehicleOtherDetailsMl, setVehicletype,InformantAdrsBuldingNo,InformantAdrsDoorNo,InformantAdrsHouseNameEn,InformantAdrsLocalityNameEn,InformantAdrsInfontName,
         InformantAdrsCountry,InformantAdrsStateName,InformantAdrsLBTypeName,InformantAdrsMainPlaceEn,InformantAdrsStreetNameEn,InformantAdrsVillage,
         InformantAdrsLBName,InformantAdrsDistrict,InformantAdrsTaluk,InformantAdrsPostOffice,InformantAdrsPincode,
@@ -457,7 +457,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
               VehicleToEn={VehicleToEn} setVehicleFromEn={setVehicleFromEn}
               VehicleFromMl={VehicleFromMl} setVehicleFromMl={setVehicleFromMl}
               VehicleToMl={VehicleToMl} setVehicleToMl={setVehicleToMl}
-              VehicleHaltPlace={VehicleHaltPlace} setSelectVehicleHaltPlace={setSelectVehicleHaltPlace}
+              setVehicleHaltPlace={setVehicleHaltPlace} setSelectedVehicleHaltPlace={setSelectedVehicleHaltPlace}
               VehicleOtherDetailsEn={VehicleOtherDetailsEn} setVehicleOtherDetailsEn={setVehicleOtherDetailsEn}
               setVehicletype={setVehicletype} setSelectedVehicletype={setSelectedVehicletype}
               VehicleOtherDetailsMl={VehicleOtherDetailsMl} setVehicleOtherDetailsMl={setVehicleOtherDetailsMl}
