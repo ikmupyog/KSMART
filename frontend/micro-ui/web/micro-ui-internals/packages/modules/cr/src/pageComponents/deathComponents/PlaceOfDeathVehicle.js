@@ -5,12 +5,14 @@ import { useTranslation } from "react-i18next";
 
 const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegistrationNo, setVehicleRegistrationNo,VehicleFromEn, setVehicleFromEn,
   VehicleToEn, setVehicleToEn,VehicleFromMl, setVehicleFromMl,VehicleHaltPlace, setSelectVehicleHaltPlace,VehicleToMl, setVehicleToMl,VehicleOtherDetailsEn, setVehicleOtherDetailsEn,
-  VehicleOtherDetailsMl, setVehicleOtherDetailsMl,setAdmittedHospitalEn, setSelectedAdmittedHospitalEn,setAdmittedHospitalMl, setSelectedAdmittedHospitalMl, VehicleType, setVehicleType}) => {
+  VehicleOtherDetailsMl, setVehicleOtherDetailsMl,setAdmittedHospitalEn, setSelectedAdmittedHospitalEn,setAdmittedHospitalMl, setSelectedAdmittedHospitalMl, setVehicletype, setSelectedVehicletype}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  const  { data: VehicleData = {}, isVehicleLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("stateId", "birth-death-service", "VehicleType");
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-  const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
+  // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [TradeName, setTradeName] = useState(null);
@@ -37,47 +39,37 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
   // const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.PlaceOfDeathVehicle?.setDeathVehicleWard);
   // const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalEn);
   // const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalMl);
-   // const [VehicleType, setVehicleType] = useState(formData?.PlaceOfDeathVehicle?.VehicleType);   
+   // const [VehicleType, setVehicleType] = useState(formData?.PlaceOfDeathVehicle?.VehicleType); 
+  //  const [setVehicletype, setSelectedVehicletype] = useState(formData?.PlaceOfDeathVehicle?.setVehicletype);
   let naturetypecmbvalue = null;
   
 
-    let cmbhospital = [];
-    hospital &&
-      hospital["birth-death-service"] &&
-      hospital["birth-death-service"].hospitalList.map((ob) => {
-        cmbhospital.push(ob);
-      });
+  let cmbhospital = [];
+  hospitalData &&
+  hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList.map((ob) => {
+      cmbhospital.push(ob);
+    });
 
-    
+
+
+  let  cmbVehicletype = [];
+  VehicleData &&
+  VehicleData["egov-location"] &&
+  VehicleData["egov-location"].VehicleType.map((ob) => {
+    cmbVehicletype.push(ob);
+    });
+
   const onSkip = () => onSelect();
 
- 
 
-  // function setSelectDriverName(e) {
-  //   setDriverName(e.target.value);
-  // }
-  // function setSelectDriverNameMl(e) {
-  //   setDriverNameMl(e.target.value);
-  // }
-  // function setSelectDriverMobileNo(e) {
-  //   setDriverMobileNo(e.target.value);
-  // }
-  // function setSelectDriverAge(e) {
-  //   setDriverAge(e.target.value);
-  // }
-  // function setSelectDriverAadhar(e) {
-  //   setDriverAadhar(e.target.value);
-  // }
   function setSelectVehicleType(e) {
     setVehicleType(e.target.value);
   }
   function setSelectVehicleRegistrationNo(e) {
     setVehicleRegistrationNo(e.target.value);
   }
-  // function setSelectDriverLicenceNo(e) {
-  //   setDriverLicenceNo(e.target.value);
-  // }
-  
+   
   function setSelectVehicleFromEn(e) {
     setVehicleFromEn(e.target.value);
   }
@@ -100,19 +92,17 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
   function setSelectVehicleOtherDetailsMl(e) {
     setVehicleOtherDetailsMl(e.target.value);
   }
-  // function selectDeathVehicleWard(value) {
-  //   setSelectedDeathVehicleWard(value);
-  // }
+ 
   function selectAdmittedHospitalEn(value) {
     setSelectedAdmittedHospitalEn(value);
   }
   function selectAdmittedHospitalMl(value) {
     setSelectedAdmittedHospitalMl(value);
   }
+  function selectVehicletype(value) {
+    setSelectedVehicletype(value);
+  }
   
-  // function selectCommencementDate(value) {
-  //   setCommencementDate(value);
-  // }
 
   const goNext = () => {
     
@@ -134,14 +124,12 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
     
     // sessionStorage.setItem("VehicleToMl", VehicleToMl);
     // sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn.code);
-    // sessionStorage.setItem("setAdmittedHospitalMl", setAdmittedHospitalMl.code);    
+    // sessionStorage.setItem("setVehicletype", setVehicletype.code);    
     // sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn); 
     // sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsEn); 
     
     
     
-    
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     onSelect(config.key, {
       // setPlaceofActivity,
       // DriverName,
@@ -158,6 +146,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
       // VehicleToEn,
       // VehicleFromMl,
       // VehicleToMl,
+      // setVehicletype,
   
       // setAdmittedHospitalEn,
       // setAdmittedHospitalMl,
@@ -369,22 +358,33 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
     <div className="col-md-12" > 
     <div className="col-md-3" > 
         <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}</CardLabel>
-            <TextInput       
+        <Dropdown
                 t={t}
+                optionKey="VehicleHaltPlace"
                 isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="VehicleType"
-                value={VehicleType}
-                onChange={setSelectVehicleType}
-                disable={isEdit}
-                placeholder={`${t("CR_VEHICLE_TYPE")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TYPE") })}
+                option={cmbVehicletype}
+                selected={setVehicletype}
+                select={selectVehicletype}
+                disabled={isEdit}
+                placeholder={`${t("CR_ADMITTED_HOSPITAL_ML")}`}
             />
         </div>
         <div className="col-md-3" > 
         <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}</CardLabel>
-        <TextInput       
+        <Dropdown
+                t={t}
+                optionKey="VehicleHaltPlace"
+                isMandatory={false}
+                // option={cmbVehicleHaltPlace}
+                option={cmbVehicletype}
+                selected={setVehicletype}
+                select={selectVehicletype}
+                // selected={setVehicleHaltPlace}
+                // select={selectVehicleHaltPlace}
+                disabled={isEdit}
+                placeholder={`${t("CR_ADMITTED_HOSPITAL_ML")}`}
+            />
+        {/* <TextInput       
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -395,14 +395,14 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT") })}
-            />
+            /> */}
         </div>
         
         <div className="col-md-3" > 
         <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}</CardLabel>
         <Dropdown
                 t={t}
-                optionKey="hospitalname"
+                optionKey="hospitalName"
                 isMandatory={false}
                 option={cmbhospital}
                 selected={setAdmittedHospitalEn}
@@ -415,7 +415,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
         <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_ML")}`}</CardLabel>
         <Dropdown
                 t={t}
-                optionKey="code"
+                optionKey="hospitalNamelocal"
                 isMandatory={false}
                 option={cmbhospital}
                 selected={setAdmittedHospitalMl}

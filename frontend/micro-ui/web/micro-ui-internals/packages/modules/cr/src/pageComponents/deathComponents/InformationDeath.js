@@ -4,16 +4,6 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
-// const [inside, setInside] = useState(true);
-// const [outside, setOutside] = useState(false);
-// const insideHandler = () => {
-//   setInside(true);
-//   setOutside(false);
-// };
-// const outsideHandler = () => {
-//   setInside(false);
-//   setOutside(true);
-// };
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [dob, setDob] = useState("");
   const calculateAge = (e) => {
@@ -145,9 +135,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     console.log("Test" + e);
     setIdNo(e.target.value);
   }
-  // function calculateAge(value) {
-  //   setCommencementDate(value);
-  // }
   function selectDeathDate(value) {
     setDeathDate(value);
   }
@@ -163,7 +150,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectIdCombo(value) {
     setSelectedIdCombo(value);
   }
-
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -179,7 +165,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       cb(value);
     }
   };
-
   const onSkip = () => onSelect();
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
@@ -190,14 +175,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MLFirstName", MLFirstName ? MLFirstName : null);
     sessionStorage.setItem("Ageofbirth", Ageofbirth ? Ageofbirth : null);
     sessionStorage.setItem("AdharNo", AdharNo ? AdharNo : null);
-    sessionStorage.setItem("IdNo", IdNo ? IdNo : null );
+    sessionStorage.setItem("IdNo", IdNo ? IdNo : null);
     sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
     sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
     sessionStorage.setItem("setNationality", setNationality ? setNationality.code : null);
     sessionStorage.setItem("setReligion", setReligion ? setReligion.code : null);
-    sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null );
+    sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
     sessionStorage.setItem("CommencementDate", CommencementDate);
@@ -253,13 +238,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div>
-          {/* {outside && ( */}
-
-          {/* )} */}
-        </div>
-
-        <div>
-          {/* {inside && ( */}
           {checked ? (
             <div className="row">
               <div className="col-md-12">
@@ -440,7 +418,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectMLFirstName}
                 disable={isEdit}
                 placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_FIRST_NAME_ML"),
+                })}
               />
             </div>
             <div className="col-md-3">
@@ -455,7 +438,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectMlMiddleName}
                 disable={isEdit}
                 placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: false,
+                  type: "text",
+                  title: t("CR_INVALID_MIDDLE_NAME_ML"),
+                })}
               />
             </div>
             <div className="col-md-3">
@@ -470,7 +458,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectMlLastName}
                 disable={isEdit}
                 placeholder={`${t("CR_LAST_NAME_ML")}`}
-                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_ML") })}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: false,
+                  type: "text",
+                  title: t("CR_INVALID_LAST_NAME_ML"),
+                })}
               />
             </div>
           </div>

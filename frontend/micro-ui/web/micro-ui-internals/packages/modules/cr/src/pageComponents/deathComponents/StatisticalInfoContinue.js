@@ -43,6 +43,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   const [textPregnant, setTextPregnant] = useState("");
   const [textSmoke, setTextSmoke] = useState("");
   const [textTabacco, setTextTabacco] = useState("");
+  const [textPanMasala, setTextPanMasala] = useState("");
 
   
   console.log(formData);
@@ -87,6 +88,9 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     setisTabacco(e.target.value);
   };
   const [isPanMasala, setisPanMasala] = useState(formData?.StatisticalInfoContinue?.isPanMasala);
+  const handleRadioChangePanmasala = (e) => {
+    selectisPanMasala(e.target.value);
+  };
   const [isalcohol, setisalcohol] = useState(formData?.StatisticalInfoContinue?.isalcohol);
   const handleRadioChange = (e) => {
     selectisalcohol(e.target.value);
@@ -378,17 +382,23 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
               t={t}
               // optionsKey="i18nKey"
               isMandatory={config.isMandatory}
-              options={pan}
-              selectedOption={isPanMasala}
+              selected={isPanMasala}
               onSelect={selectisPanMasala}
+              handleChange={handleRadioChangePanmasala}  
             />
+            {isPanMasala === "yes" && (
+              <div>
+                <CardLabel htmlFor="text">Enter Years</CardLabel>
+                <TextInput type="text" id="text" value={textPanMasala} onChange={(e) => setTextPanMasala(e.target.value)} />
+              </div>
+            )}
           </div>
           <div className="col-md-6">
             <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>
             <RadioButtons
               t={t}
               // optionsKey="i18nKey"
-              onChange={setOptionkey}
+              // onChange={setOptionkey}
               isMandatory={config.isMandatory}
               selected={isalcohol}
               onSelect={selectisalcohol}
@@ -396,8 +406,8 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             />
             {isalcohol === "yes" && (
               <div>
-                <label htmlFor="text">Enter Years</label>
-                <input type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} />
+                <CardLabel htmlFor="text">Enter Years</CardLabel>
+                <TextInput type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} />
               </div>
             )}
           </div>
