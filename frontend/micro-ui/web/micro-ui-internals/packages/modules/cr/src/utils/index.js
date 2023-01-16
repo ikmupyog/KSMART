@@ -298,13 +298,13 @@ export const convertToBirthRegistration = (data = {}) => {
         file_date: 21092022,
         applicationno: "APP1",
         registrationno: "",
-        registration_date: '',
+        registration_date: "",
         workflowcode: "NewBirth",
         action: "INITIATE",
         businessService: 89,
         comment: "Test",
         assignee: [],
-        counter: 0,  
+        counter: 0,
         birthPlace: {
           birthdtlid: "birthdtlid",
           placeofbirthid: data?.BirthPlace?.BirthPlace.code,
@@ -346,7 +346,7 @@ export const convertToBirthRegistration = (data = {}) => {
           auth_officer_id: data?.HospitalDetails?.SignedOfficerDesignation.code,
           auth_officer_desig_id: data?.HospitalDetails?.SignedOfficerDesignation.code,
           oth_auth_officer_name: data?.HospitalDetails?.SignedOfficerName.hospitalName,
-          oth_auth_officer_desig:data?.HospitalDetails?.SignedOfficerDesignation.hospitalName,
+          oth_auth_officer_desig: data?.HospitalDetails?.SignedOfficerDesignation.hospitalName,
           informantsname_en: null,
           informantsname_ml: null,
           informantsaddress_en: null,
@@ -419,7 +419,7 @@ export const convertToBirthRegistration = (data = {}) => {
           poid: data?.AddressDetails?.PresentPostOffice ? data?.AddressDetails?.PresentPostOffice.code : null,
           pinno: data?.Address?.PresentPincode,
           countryid: null,
-          birthdtlid: "birthdtlid"
+          birthdtlid: "birthdtlid",
         },
         birthStatistical: {
           weight_of_child: 3.5,
@@ -465,7 +465,7 @@ export const convertToBirthRegistration = (data = {}) => {
           mother_resdnce_districtid: null,
           mother_resdnce_stateid: null,
           mother_resdnce_countryid: null,
-          birthdtlid: "birthdtlid"
+          birthdtlid: "birthdtlid",
         },
       },
     ],
@@ -535,9 +535,9 @@ export const convertToTrade = (data = {}) => {
 /////////////////////////////////@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 export const convertToDeathRegistration = (data = {}) => {
   // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
-  const empTenantId =Digit.ULBService.getCurrentUlb();
+  const empTenantId = Digit.ULBService.getCurrentUlb();
   let tenantId = "";
-  tenantId =  empTenantId["code"];
+  tenantId = empTenantId["code"];
   const formdata = {
     deathCertificateDtls: [
       {
@@ -586,6 +586,7 @@ export const convertToDeathRegistration = (data = {}) => {
         registrationNo: null,
         ipNo: null,
         opNo: null,
+        residenceLBType: null,
         maleDependentType: data?.FamilyInformationDeath?.setmaleDependent.code,
         maleDependentTitle: null,
         maleDependentNameEn: data?.FamilyInformationDeath?.FatherOrHusbandNameEN,
@@ -609,6 +610,7 @@ export const convertToDeathRegistration = (data = {}) => {
         vehicleToPlaceEn: data?.PlaceOfDeathVehicle?.setSelectVehicleToEn,
         vehicleNumber: data?.PlaceOfDeathVehicle?.VehicleRegistrationNo,
         vehicleDriverLicenceNo: data?.PlaceOfDeathVehicle?.DriverLicenceNo,
+        vehicle_first_halt: null,
         informantAge: null,
         deathPlaceWardId: data?.PlaceOfDeathVehicle?.setDeathVehicleWard.code,
         deathSignedOfficerDesignation: data?.HospitalDetails?.setDesignation.code, //data?.PlaceOfDeathInstitution?.SiginedOfficerDesignation
@@ -617,7 +619,11 @@ export const convertToDeathRegistration = (data = {}) => {
         deceasedIdproofType: data?.InformationDeath?.setIdCombo?.data?.InformationDeath?.setIdCombo.code,
         deceasedIdproofNo: data?.InformationDeath?.IdNoNo,
         applicationType: null,
-
+        burial_state: null,
+        burialDistrict: null,
+        burialLBType: null,
+        burialLBName: null,
+        burialState: null,
         applicationNumber: null,
         fileNumber: null,
         ackNo: null,
@@ -633,6 +639,10 @@ export const convertToDeathRegistration = (data = {}) => {
           residenceState: null,
           religion: data?.InformationDeath?.setReligion?.data?.InformationDeath?.setReligion.code,
           religionOther: null,
+          occupationSub: null,
+          occupationMinor: null,
+          educationMain: null,
+          educationSub: null,
           occupation: data?.StatisticalInfo?.setOccupationMain?.data?.StatisticalInfo?.setOccupationMain.code,
           occupationOther: data?.StatisticalInfo?.OccupationOthers,
           medicalAttentionType: data?.StatisticalInfoContinue?.setMedicalAttentionDeath?.data?.StatisticalInfoContinue?.setMedicalAttentionDeath.code,
@@ -807,6 +817,7 @@ export const convertToDeathRegistration = (data = {}) => {
           applicantAadhar: null,
           applicantMobileNo: null,
           applicantEmailId: null,
+          applicantRelation:null,
         },
       },
     ],
