@@ -63,7 +63,7 @@ const Home = () => {
         name: t("ACTION_TEST_BIRTH"),
         Icon: <OBPSIcon />,
         // onClick: () => history.push("/citizen/birth-common/"),
-        onClick:()=>{handleClick},
+        onClick: () => history.push("/digit-ui/citizen/cr-home"),
       },
       {
         name: t("ACTION_TEST_DEATH"),
