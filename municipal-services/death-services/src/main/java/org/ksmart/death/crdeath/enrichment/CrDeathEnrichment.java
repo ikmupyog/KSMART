@@ -1,5 +1,6 @@
 package org.ksmart.death.crdeath.enrichment;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -121,6 +122,7 @@ public class CrDeathEnrichment implements BaseEnrichment{
                 CrDeathAddressInfo  addressInfo = deathDtls.getAddressInfo();
                 addressInfo.setParentdeathDtlId(deathDtls.getId());
                 addressInfo.setAuditDetails(auditDetails);
+                deathDtls.setAssignuser(deathDtls.getAssignees().get(0));
                 } );
     
     }//UPDATE END

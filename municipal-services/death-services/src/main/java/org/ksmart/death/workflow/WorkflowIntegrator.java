@@ -58,42 +58,77 @@ public class WorkflowIntegrator {
     public  void callWorkFlow(CrDeathDtlRequest request) {
 
       
-        List<CrDeathDtl> currentFile = request.getDeathCertificateDtls();     
+        // List<CrDeathDtl> currentFile = request.getDeathCertificateDtls();     
        
+        // JSONArray array = new JSONArray();
 
+//         for (CrDeathDtl deathDtl : request.getDeathCertificateDtls()) {
+//             String  businessServiceFromMDMS=deathDtl.getBusinessService();
+//                if (businessServiceFromMDMS == null) {
+//             businessServiceFromMDMS = CrDeathConstants.BUSINESS_SERVICE_BND;
+//         }
+//             if (businessServiceFromMDMS.equals(CrDeathConstants.BUSINESS_SERVICE_BND) || !request.getDeathCertificateDtls()
+//                     .get(0).getAction().equalsIgnoreCase(CrDeathConstants.TRIGGER_NOWORKFLOW)) {
 
+//                 JSONObject obj = new JSONObject();
+// //              
+//                 // Adding assignes to processInstance  assignees
+//                 List<Map<String, String>> uuidMaps = buildUUIDList(deathDtl.getAssignees());
+//                 if (CollectionUtils.isNotEmpty(uuidMaps)) {
+//                     obj.put(CrDeathConstants.ASSIGNEEKEY, uuidMaps);
+//                 }
+//               //  System.out.println();
+//                 currentFile
+//                 .forEach(deathdtls -> {
 
+//                 obj.put(CrDeathConstants.BUSINESSIDKEY, deathdtls.getDeathACKNo());
+               
+//                 obj.put(CrDeathConstants.TENANTIDKEY, deathdtls.getTenantId());
+//                 obj.put(CrDeathConstants.BUSINESSSERVICEKEY, deathdtls.getWorkflowCode());
+//             });
+
+//                 obj.put(CrDeathConstants.MODULENAMEKEY, CrDeathConstants.BNDMODULENAMEVALUE);
+//                 obj.put(CrDeathConstants.ACTIONKEY, deathDtl.getAction());
+//                 obj.put(CrDeathConstants.COMMENTKEY, deathDtl.getComment());
+
+//                 obj.put(CrDeathConstants.DOCUMENTSKEY, deathDtl.getWfDocuments());
+//                 array.add(obj);
+//             }
+//         }
+      
+        List<CrDeathDtl> currentFile = request.getDeathCertificateDtls();     
         JSONArray array = new JSONArray();
-
         for (CrDeathDtl deathDtl : request.getDeathCertificateDtls()) {
             String  businessServiceFromMDMS=deathDtl.getBusinessService();
-               if (businessServiceFromMDMS == null) {
+            if (businessServiceFromMDMS == null) {
             businessServiceFromMDMS = CrDeathConstants.BUSINESS_SERVICE_BND;
         }
             if (businessServiceFromMDMS.equals(CrDeathConstants.BUSINESS_SERVICE_BND) || !request.getDeathCertificateDtls()
                     .get(0).getAction().equalsIgnoreCase(CrDeathConstants.TRIGGER_NOWORKFLOW)) {
 
                 JSONObject obj = new JSONObject();
-//              
+                 System.out.println("businessServiceFromMDMS"+businessServiceFromMDMS);    
                 // Adding assignes to processInstance  assignees
-                List<Map<String, String>> uuidMaps = buildUUIDList(deathDtl.getAssignees());
-                if (CollectionUtils.isNotEmpty(uuidMaps)) {
-                    obj.put(CrDeathConstants.ASSIGNEEKEY, uuidMaps);
-                }
+                // List<Map<String, String>> uuidMaps = buildUUIDList(deathDtl.getAssignees());
+                // System.out.println(uuidMaps);
+                // if (CollectionUtils.isNotEmpty(uuidMaps)) {
+                //     obj.put(CrDeathConstants.ASSIGNEEKEY, uuidMaps.get(0).get("uuid"));
+                // }
                 currentFile
                 .forEach(deathdtls -> {
-                 
-              
                 obj.put(CrDeathConstants.BUSINESSIDKEY, deathdtls.getDeathACKNo());
-               
                 obj.put(CrDeathConstants.TENANTIDKEY, deathdtls.getTenantId());
                 obj.put(CrDeathConstants.BUSINESSSERVICEKEY, deathdtls.getWorkflowCode());
+                List<Map<String, String>> uuidMaps = buildUUIDList(deathdtls.getAssignees());
+                System.out.println("uuidMaps"+uuidMaps);
+                if (CollectionUtils.isNotEmpty(uuidMaps)) {
+                    obj.put(CrDeathConstants.ASSIGNEEKEY, uuidMaps.get(0).get("uuid"));
+                }
             });
 
                 obj.put(CrDeathConstants.MODULENAMEKEY, CrDeathConstants.BNDMODULENAMEVALUE);
                 obj.put(CrDeathConstants.ACTIONKEY, deathDtl.getAction());
                 obj.put(CrDeathConstants.COMMENTKEY, deathDtl.getComment());
-
                 obj.put(CrDeathConstants.DOCUMENTSKEY, deathDtl.getWfDocuments());
                 array.add(obj);
             }

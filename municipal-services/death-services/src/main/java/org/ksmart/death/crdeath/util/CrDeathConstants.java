@@ -84,6 +84,9 @@ public class CrDeathConstants {
     public static final String DEATH_PLACE_HOME = "HOME";
     public static final String DEATH_PLACE_VEHICLE = "VEHICLE";
     public static final String DEATH_PLACE_OTHER = "OTHER";
+    public static final Integer VALUE_TRUE = 1;
+    public static final Integer VALUE_FALSE = 0;
+    public static final String VALUE_NULL = "NULL";
     
 
 
