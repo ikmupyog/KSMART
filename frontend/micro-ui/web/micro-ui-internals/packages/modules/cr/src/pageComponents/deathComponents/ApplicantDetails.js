@@ -246,7 +246,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ApplicantNameEn}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">
           {/* <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
