@@ -257,7 +257,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
                 onChange={setSelectVehicleFromMl}
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_FROM_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
             />
         </div>
         <div className="col-md-3" > 
@@ -272,7 +272,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
                 onChange={setSelectVehicleToMl}
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_TO_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
             />
         </div>
     </div> 
@@ -402,7 +402,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
         <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}</CardLabel>
         <Dropdown
                 t={t}
-                optionKey="code"
+                optionKey="hospitalname"
                 isMandatory={false}
                 option={cmbhospital}
                 selected={setAdmittedHospitalEn}
@@ -455,7 +455,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData ,VehicleRegi
             onChange={setSelectVehicleOtherDetailsMl}
             disable={isEdit}
             placeholder={`${t("CR_OTHER_DETAILS_ML")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
+            {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_ML") })}
             />
         </div> 
     </div>   

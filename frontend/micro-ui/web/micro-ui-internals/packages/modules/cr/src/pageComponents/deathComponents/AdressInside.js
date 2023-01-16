@@ -2,7 +2,15 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const AddressInside = ({ config, onSelect, userType, formData }) => {
+const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, setPresentCountry, PresentStateName, setPresentStateName, PresentDistrict, setPresentDistrict,
+  PresentLBTypeName, setPresentLBTypeName,PresentLBName, setPresentLBName,PresentTaluk, setPresentTaluk, PresentPostOffice, setPresentPostOffice,PresentPincode, setPresentPincode,
+  PresentHouseNameEn, setPresentHouseNameEn , PresentHouseNameMl, setPresentHouseNameMl,PresentDoorNo,setPresentDoorNo, PresentResNo, setPresentResNo,PresentMainPlaceEn, setPresentMainPlaceEn,
+  PresentMainPlaceMl, setPresentMainPlaceMl,PresentLocalityNameEn, setPresentLocalityNameEn,   
+  PresentLocalityNameMl, setPresentLocalityNameMl,PresentStreetNameEn, setPresentStreetNameEn,PresentStreetNameMl, setPresentStreetNameMl,PresentCityEn, setPresentCityEn,PresentCityMl, setPresentCityMl,PresentVillage, setPresentVillage,
+  PermanentStateName, setPermanentStateName,PermanentDistrict, setPermanentDistrict,PermanentLBTypeName, setPermanentLBTypeName,PermanentLBName, setPermanentLBName,PermanentVillage, setPermanentVillage,PermanentTaluk, setPermanentTaluk,
+  PermanentPostOffice, setPermanentPostOffice,PermanentPincode, setPermanentPincode,PermanentResNo, setPermanentResNo,PermanentHouseNameEn, setPermanentHouseNameEn,PermanentHouseNameMl, setPermanentHouseNameMl,PermanentMainPlaceEn,
+  setPermanentMainPlaceEn,PermanentMainPlaceMl, setPermanentMainPlaceMl,PermanentDoorNo, setPermanentDoorNo,PermanentCityEn, setPermanentCityEn,PermanentCityMl, setPermanentCityMl,PermanentLocalityNameEn, setPermanentLocalityNameEn,
+  PermanentLocalityNameMl, setPermanentLocalityNameMl,PermanentStreetNameEn, setPermanentStreetNameEn,PermanentStreetNameMl, setPermanentStreetNameMl,isPrsentAddress, setIsPrsentAddress, PermanentCountry, setPermanentCountry}) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -18,57 +26,58 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [PresentCountry, setPresentCountry] = useState(formData?.AddressOfDecesed?.PresentCountry);
-  const [PresentStateName, setPresentStateName] = useState(formData?.AddressOfDecesed?.PresentStateName);
-  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressOfDecesed?.PresentDistrict);
-  const [PresentLBTypeName, setPresentLBTypeName] = useState(formData?.AddressOfDecesed?.PresentLBTypeName);
-  const [PresentLBName, setPresentLBName] = useState(formData?.AddressOfDecesed?.PresentLBName);
-  const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressOfDecesed?.PresentTaluk);
-  const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressOfDecesed?.PresentPostOffice);
-  const [PresentPincode, setPresentPincode] = useState(formData?.AddressOfDecesed?.PresentPincode);
-  const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressOfDecesed?.PresentHouseNameEn);
-  const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressOfDecesed?.PresentHouseNameMl);
-  const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressOfDecesed?.PresentBuldingNo);
-  const [PresentDoorNo, setPresentDoorNo] = useState(formData?.AddressOfDecesed?.PresentDoorNo);
-  const [PresentResNo, setPresentResNo] = useState(formData?.AddressOfDecesed?.PresentResNo);
-  const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PresentMainPlaceEn);
-  const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PresentMainPlaceMl);
-  const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PresentLocalityNameEn);
-  const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PresentLocalityNameMl);
-  const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressOfDecesed?.PresentStreetNameEn);
-  const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressOfDecesed?.PresentStreetNameMl);
+
+  // const [PresentCountry, setPresentCountry] = useState(formData?.AddressOfDecesed?.PresentCountry);
+  // const [PresentStateName, setPresentStateName] = useState(formData?.AddressOfDecesed?.PresentStateName);
+  // const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressOfDecesed?.PresentDistrict);
+  // const [PresentLBTypeName, setPresentLBTypeName] = useState(formData?.AddressOfDecesed?.PresentLBTypeName);
+  // const [PresentLBName, setPresentLBName] = useState(formData?.AddressOfDecesed?.PresentLBName);
+  // const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressOfDecesed?.PresentTaluk);
+  // const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressOfDecesed?.PresentPostOffice);
+  // const [PresentPincode, setPresentPincode] = useState(formData?.AddressOfDecesed?.PresentPincode);
+  // const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressOfDecesed?.PresentHouseNameEn);
+  // const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressOfDecesed?.PresentHouseNameMl);  
+  // const [PresentDoorNo, setPresentDoorNo] = useState(formData?.AddressOfDecesed?.PresentDoorNo);
+  // const [PresentResNo, setPresentResNo] = useState(formData?.AddressOfDecesed?.PresentResNo);
+  // const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PresentMainPlaceEn);
+  // const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PresentMainPlaceMl);
+  // const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PresentLocalityNameEn);
+  // const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PresentLocalityNameMl);
+  // const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressOfDecesed?.PresentStreetNameEn);
+  // const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressOfDecesed?.PresentStreetNameMl);  
+  // const [PresentCityEn, setPresentCityEn] = useState(formData?.AddressOfDecesed?.PresentCityEn);
+  // const [PresentCityMl, setPresentCityMl] = useState(formData?.AddressOfDecesed?.PresentCityMl);   
+  // const [PresentVillage, setPresentVillage] = useState(formData?.AddressOfDecesed?.PresentVillage);
+  //   //Permanent Address
+  // const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressOfDecesed?.PermanentCountry);
+  // const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressOfDecesed?.PermanentStateName);
+  // const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressOfDecesed?.PermanentDistrict);
+  // const [PermanentLBTypeName, setPermanentLBTypeName] = useState(formData?.AddressOfDecesed?.PermanentLBTypeName);
+  // const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressOfDecesed?.PermanentLBName);
+  // const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressOfDecesed?.PermanentVillage);
+  // const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressOfDecesed?.PermanentTaluk);
+  // const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressOfDecesed?.PermanentPostOffice);
+  // const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressOfDecesed?.PermanentPincode);  
+  // const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressOfDecesed?.PermanentDoorNo);
+  // const [PermanentResNo, setPermanentResNo] = useState(formData?.AddressOfDecesed?.PermanentResNo);
+  // const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn);
+  // const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl);
+  // const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn);
+  // const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl); 
+  // const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressOfDecesed?.PermanentCityEn);
+  // const [PermanentCityMl, setPermanentCityMl] = useState(formData?.AddressOfDecesed?.PermanentCityMl);    
+  // const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameEn);
+  // const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameMl);
+  // const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressOfDecesed?.PermanentStreetNameEn);
+  // const [PermanentStreetNameMl, setPermanentStreetNameMl] = useState(formData?.AddressOfDecesed?.PermanentStreetNameMl);
+  // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressOfDecesed?.isPrsentAddress);
+
+   // const [PermanentViaEn, setPermanentViaEn] = useState(formData?.AddressDetails?.PermanentViaEn);
+  // const [PermanentViaMl, setPermanentViaMl] = useState(formData?.AddressDetails?.PermanentViaMl);
+  // const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressOfDecesed?.PermanentBuldingNo);
+// const [PresentBuldingNo, setPresentBuldingNo] = useState(formData?.AddressOfDecesed?.PresentBuldingNo);
   // const [PresentViaEn, setPresentViaEn] = useState(formData?.AddressDetails?.PresentViaEn);
   // const [PresentViaMl, setPresentViaMl] = useState(formData?.AddressDetails?.PresentViaMl);
-  const [PresentCityEn, setPresentCityEn] = useState(formData?.AddressOfDecesed?.PresentCityEn);
-  const [PresentCityMl, setPresentCityMl] = useState(formData?.AddressOfDecesed?.PresentCityMl);   
-  const [PresentVillage, setPresentVillage] = useState(formData?.AddressOfDecesed?.PresentVillage);
-    //Permanent Address
-  const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressOfDecesed?.PermanentCountry);
-  const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressOfDecesed?.PermanentStateName);
-  const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressOfDecesed?.PermanentDistrict);
-  const [PermanentLBTypeName, setPermanentLBTypeName] = useState(formData?.AddressOfDecesed?.PermanentLBTypeName);
-  const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressOfDecesed?.PermanentLBName);
-  const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressOfDecesed?.PermanentVillage);
-  const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressOfDecesed?.PermanentTaluk);
-  const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressOfDecesed?.PermanentPostOffice);
-  const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressOfDecesed?.PermanentPincode);
-  const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressOfDecesed?.PermanentBuldingNo);
-  const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressOfDecesed?.PermanentDoorNo);
-  const [PermanentResNo, setPermanentResNo] = useState(formData?.AddressOfDecesed?.PermanentResNo);
-  const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn);
-  const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl);
-  const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn);
-  const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl);
-  // const [PermanentViaEn, setPermanentViaEn] = useState(formData?.AddressDetails?.PermanentViaEn);
-  // const [PermanentViaMl, setPermanentViaMl] = useState(formData?.AddressDetails?.PermanentViaMl);
-  const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressOfDecesed?.PermanentCityEn);
-  const [PermanentCityMl, setPermanentCityMl] = useState(formData?.AddressOfDecesed?.PermanentCityMl);    
-  const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameEn);
-  const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameMl);
-  const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressOfDecesed?.PermanentStreetNameEn);
-  const [PermanentStreetNameMl, setPermanentStreetNameMl] = useState(formData?.AddressOfDecesed?.PermanentStreetNameMl);
-  const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressOfDecesed?.isPrsentAddress);
-
   let cmbTaluk = [];
   let cmbVillage = [];
   let cmbDistrict = [];
@@ -183,12 +192,12 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentPincode(PresentPincode);
     }
   }
-  function setSelectPresentBuldingNo(e) {
-    setPresentBuldingNo(e.target.value);
-    if (isPrsentAddress) {
-      setPermanentBuldingNo(PresentBuldingNo);
-    }
-  }
+  // function setSelectPresentBuldingNo(e) {
+  //   setPresentBuldingNo(e.target.value);
+  //   if (isPrsentAddress) {
+  //     setPermanentBuldingNo(PresentBuldingNo);
+  //   }
+  // }
   function setSelectPresentDoorNo(e) {
     setPresentDoorNo(e.target.value);
     if (isPrsentAddress) {
@@ -322,9 +331,9 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   function setSelectPermanentCityEn(e) {
     setPermanentCityEn(e.target.value);
   }    
-  function setSelectPermanentBuldingNo(e) {
-    setPermanentBuldingNo(e.target.value);
-  }
+  // function setSelectPermanentBuldingNo(e) {
+  //   setPermanentBuldingNo(e.target.value);
+  // }
   function setSelectPermanentDoorNo(e) {
     setPermanentDoorNo(e.target.value);
   }
@@ -363,7 +372,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentCountry(PresentCountry);
       setPermanentStateName(PresentStateName);
       setPermanentLBTypeName(PresentLBTypeName);
-      setPermanentBuldingNo(PresentBuldingNo);
+      // setPermanentBuldingNo(PresentBuldingNo);
       setPermanentDoorNo(PresentDoorNo);
       setPermanentResNo(PresentResNo);
       setPermanentHouseNameEn(PresentHouseNameEn);
@@ -388,7 +397,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
       setPermanentCountry("");
       setPermanentStateName("");
       setPermanentLBTypeName(" ");
-      setPermanentBuldingNo("");
+      // setPermanentBuldingNo("");
       setPermanentDoorNo("");
       setPermanentResNo("");
       setPermanentHouseNameEn("");
@@ -422,103 +431,107 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     }
   }, [lbs, isInitialRender]);
   const goNext = () => {
-    sessionStorage.setItem("PresentCountry",PresentCountry ? PresentCountry.code : null);
-    sessionStorage.setItem("PresentStateName",PresentStateName ? PresentStateName.code : null);
-    sessionStorage.setItem("PresentLBTypeName",PresentStateName ?  PresentLBTypeName.code : null);
-    sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo ? PresentBuldingNo : null);
-    sessionStorage.setItem("PresentDoorNo", PresentDoorNo ? PresentDoorNo : null );
-    sessionStorage.setItem("PresentResNo", PresentResNo ? PresentResNo : null);
-    sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn ? PresentHouseNameEn : null );
-    sessionStorage.setItem("PresentHouseNameMl", PresentHouseNameMl ? PresentHouseNameMl : null);
-    sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn ? PresentMainPlaceEn : null);
-    sessionStorage.setItem("PresentMainPlaceMl", PresentMainPlaceMl ? PresentMainPlaceMl : null);
-    sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn ? PresentLocalityNameEn : null);
-    sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl ? PresentLocalityNameMl : null );
-    sessionStorage.setItem("PresentStreetNameEn", PresentStreetNameEn ? PresentStreetNameEn : null);
-    sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl ? PresentStreetNameMl : null );
+    // sessionStorage.setItem("PresentCountry",PresentCountry ? PresentCountry.code : null);
+    // sessionStorage.setItem("PresentStateName",PresentStateName ? PresentStateName.code : null);
+    // sessionStorage.setItem("PresentLBTypeName",PresentStateName ?  PresentLBTypeName.code : null);
+    // sessionStorage.setItem("PresentDoorNo", PresentDoorNo ? PresentDoorNo : null );
+    // sessionStorage.setItem("PresentResNo", PresentResNo ? PresentResNo : null);
+    // sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn ? PresentHouseNameEn : null );
+    // sessionStorage.setItem("PresentHouseNameMl", PresentHouseNameMl ? PresentHouseNameMl : null);
+    // sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn ? PresentMainPlaceEn : null);
+    // sessionStorage.setItem("PresentMainPlaceMl", PresentMainPlaceMl ? PresentMainPlaceMl : null);
+    // sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn ? PresentLocalityNameEn : null);
+    // sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl ? PresentLocalityNameMl : null );
+    // sessionStorage.setItem("PresentStreetNameEn", PresentStreetNameEn ? PresentStreetNameEn : null);
+    // sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl ? PresentStreetNameMl : null );
+    // sessionStorage.setItem("PresentCityEn", PresentCityEn ? PresentCityEn : null); 
+    // sessionStorage.setItem("PresentCityaMl", PresentCityMl ? PresentCityMl : null);    
+    // sessionStorage.setItem("PresentVillage", PresentVillage ? PresentVillage.code : null);
+    // sessionStorage.setItem("PresentLBName", PresentLBName ? PresentLBName : null);
+    // sessionStorage.setItem("PresentDistrict", PresentDistrict ? PresentDistrict.code : null);
+    // sessionStorage.setItem("PresentTaluk", PresentTaluk ? PresentTaluk.code : null);
+    // sessionStorage.setItem("PresentPostOffice", PresentPostOffice ? PresentPostOffice.code : null);
+    // sessionStorage.setItem("PresentPincode",PresentPincode ? PresentPincode.code : null );
+    // sessionStorage.setItem("PermanentStateName", PermanentStateName ? PermanentStateName.code : null);
+    // sessionStorage.setItem("PermanentLBTypeName", PermanentLBTypeName ? PermanentLBTypeName.code : null);
+    // sessionStorage.setItem("PermanentDoorNo", PermanentDoorNo ? PermanentDoorNo : null );
+    // sessionStorage.setItem("PermanentResNo", PermanentResNo ? PermanentResNo : null);
+    // sessionStorage.setItem("PermanentHouseNameEn", PermanentHouseNameEn ? PermanentHouseNameEn : null);
+    // sessionStorage.setItem("PermanentHouseNameMl", PermanentHouseNameMl ? PermanentHouseNameMl : null);
+    // sessionStorage.setItem("PermanentMainPlaceEn", PermanentMainPlaceEn ? PermanentMainPlaceEn : null);
+    // sessionStorage.setItem("PermanentMainPlaceMl", PermanentMainPlaceMl ? PermanentMainPlaceMl : null );
+    // sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn ? PermanentLocalityNameEn : null);
+    // sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl ? PermanentLocalityNameMl : null);
+    // sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn ? PermanentStreetNameEn : null);
+    // sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl ? PermanentStreetNameMl : null);
+    // sessionStorage.setItem("PermanentCityEn", PermanentCityEn ? PermanentCityEn : null);   
+    // sessionStorage.setItem("PermanentCityMl", PermanentCityMl ? PermanentCityMl : null);    
+    // sessionStorage.setItem("PermanentVillage", PermanentVillage ? PermanentVillage.code : null);
+    // sessionStorage.setItem("PermanentLBName", PermanentLBName ? PermanentLBName : null);
+    // sessionStorage.setItem("PermanentDistrict", PermanentDistrict ? PermanentDistrict.code : null);
+    // sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
+    // sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice ? PermanentPostOffice.code : null);
+    // sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
+    // sessionStorage.setItem("PermanentCountry", PermanentCountry ? PermanentCountry.code : null);
+
+
+    // sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo ? PresentBuldingNo : null);
     // sessionStorage.setItem("PresentViaEn", PresentViaEn); 
     // sessionStorage.setItem("PresentViaMl", PresentViaMl);
-    sessionStorage.setItem("PresentCityEn", PresentCityEn ? PresentCityEn : null); 
-    sessionStorage.setItem("PresentCityaMl", PresentCityMl ? PresentCityMl : null);    
-    sessionStorage.setItem("PresentVillage", PresentVillage ? PresentVillage.code : null);
-    sessionStorage.setItem("PresentLBName", PresentLBName ? PresentLBName : null);
-    sessionStorage.setItem("PresentDistrict", PresentDistrict ? PresentDistrict.code : null);
-    sessionStorage.setItem("PresentTaluk", PresentTaluk ? PresentTaluk.code : null);
-    sessionStorage.setItem("PresentPostOffice", PresentPostOffice ? PresentPostOffice.code : null);
-    sessionStorage.setItem("PresentPincode",PresentPincode ? PresentPincode.code : null );
-    // sessionStorage.setItem("PermanentCountry", PermanentCountry  .code);
-    sessionStorage.setItem("PermanentStateName", PermanentStateName ? PermanentStateName.code : null);
-    sessionStorage.setItem("PermanentLBTypeName", PermanentLBTypeName ? PermanentLBTypeName.code : null);
-    sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo ? PermanentBuldingNo : null);
-    sessionStorage.setItem("PermanentDoorNo", PermanentDoorNo ? PermanentDoorNo : null );
-    sessionStorage.setItem("PermanentResNo", PermanentResNo ? PermanentResNo : null);
-    sessionStorage.setItem("PermanentHouseNameEn", PermanentHouseNameEn ? PermanentHouseNameEn : null);
-    sessionStorage.setItem("PermanentHouseNameMl", PermanentHouseNameMl ? PermanentHouseNameMl : null);
-    sessionStorage.setItem("PermanentMainPlaceEn", PermanentMainPlaceEn ? PermanentMainPlaceEn : null);
-    sessionStorage.setItem("PermanentMainPlaceMl", PermanentMainPlaceMl ? PermanentMainPlaceMl : null );
-    sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn ? PermanentLocalityNameEn : null);
-    sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl ? PermanentLocalityNameMl : null);
-    sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn ? PermanentStreetNameEn : null);
-    sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl ? PermanentStreetNameMl : null);
+    // sessionStorage.setItem("PermanentBuldingNo", PermanentBuldingNo ? PermanentBuldingNo : null);
     // sessionStorage.setItem("PermanentViaEn", PermanentViaEn);   
     // sessionStorage.setItem("PermanentViaMl", PermanentViaMl);
-    sessionStorage.setItem("PermanentCityEn", PermanentCityEn ? PermanentCityEn : null);   
-    sessionStorage.setItem("PermanentCityMl", PermanentCityMl ? PermanentCityMl : null);    
-    sessionStorage.setItem("PermanentVillage", PermanentVillage ? PermanentVillage.code : null);
-    sessionStorage.setItem("PermanentLBName", PermanentLBName ? PermanentLBName : null);
-    sessionStorage.setItem("PermanentDistrict", PermanentDistrict ? PermanentDistrict.code : null);
-    sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
-    sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice ? PermanentPostOffice.code : null);
-    sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
     onSelect(config.key, {
-      PresentBuldingNo,
-      PresentDoorNo,
-      PresentResNo,
-      PresentHouseNameEn,
-      PresentHouseNameMl,
-      PresentLocalityNameEn,
-      PresentLBTypeName,
-      PresentCountry,
-      PresentStateName,
-      PresentMainPlaceEn,
-      PresentMainPlaceMl,
-      PresentLocalityNameMl,
-      PresentStreetNameEn,
-      PresentStreetNameMl,
+      
+      // PresentDoorNo,
+      // PresentResNo,
+      // PresentHouseNameEn,
+      // PresentHouseNameMl,
+      // PresentLocalityNameEn,
+      // PresentLBTypeName,
+      // PresentCountry,
+      // PresentStateName,
+      // PresentMainPlaceEn,
+      // PresentMainPlaceMl,
+      // PresentLocalityNameMl,
+      // PresentStreetNameEn,
+      // PresentStreetNameMl,    
+      // PresentCityEn,
+      // PresentCityMl,      
+      // PresentVillage,
+      // PresentLBName,
+      // PresentDistrict,
+      // PresentTaluk,
+      // PresentPostOffice,
+      // PresentPincode,      
+      // PermanentDoorNo,
+      // PermanentResNo,
+      // PermanentHouseNameEn,
+      // PermanentHouseNameMl,
+      // PermanentMainPlaceMl,
+      // PermanentMainPlaceEn,
+      // PermanentLocalityNameEn,
+      // PermanentLocalityNameMl,
+      // PermanentStreetNameEn,
+      // PermanentStreetNameMl,      
+      // PermanentCityMl,
+      // PermanentCityEn,      
+      // PermanentVillage,
+      // PermanentLBName,
+      // PermanentDistrict,
+      // PermanentTaluk,
+      // PermanentPostOffice,
+      // PermanentPincode,
+      // PermanentCountry,
+      // PermanentStateName,
+      // PermanentLBTypeName,
+
+    // PresentBuldingNo,  
       // PresentViaEn,
       // PresentViaMl,
-      PresentCityEn,
-      PresentCityMl,      
-      PresentVillage,
-      PresentLBName,
-      PresentDistrict,
-      PresentTaluk,
-      PresentPostOffice,
-      PresentPincode,
-      PermanentBuldingNo,
-      PermanentDoorNo,
-      PermanentResNo,
-      PermanentHouseNameEn,
-      PermanentHouseNameMl,
-      PermanentMainPlaceMl,
-      PermanentMainPlaceEn,
-      PermanentLocalityNameEn,
-      PermanentLocalityNameMl,
-      PermanentStreetNameEn,
-      PermanentStreetNameMl,
+      // PermanentBuldingNo,
       // PermanentViaMl,
       // PermanentViaEn, 
-      PermanentCityMl,
-      PermanentCityEn,      
-      PermanentVillage,
-      PermanentLBName,
-      PermanentDistrict,
-      PermanentTaluk,
-      PermanentPostOffice,
-      PermanentPincode,
-      PermanentCountry,
-      PermanentStateName,
-      PermanentLBTypeName,
     });
   };
   return (
@@ -751,7 +764,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentMainPlaceMl}
                 disable={isEdit}
                 placeholder={`${t("CR_MAIN_PLACE_ML")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
+                {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -781,7 +794,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentCityMl}
                 placeholder={`${t("CR_CITY_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
           </div>
@@ -856,7 +869,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentLocalityNameMl}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -885,8 +898,8 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 value={PresentStreetNameMl}
                 onChange={setSelectPresentStreetNameMl}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
-                disable={isEdit}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                disable={isEdit} 
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
           </div>
@@ -926,7 +939,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentHouseNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -1192,7 +1205,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   onChange={setSelectPermanentMainPlaceMl}
                   disable={isEdit}
                   placeholder={`${t("CR_MAIN_PLACE_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
+                  {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
                 />
               </div>
               <div className="col-md-3">
@@ -1222,7 +1235,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPermanentCityMl}
                 placeholder={`${t("CR_CITY_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
             </div>
@@ -1298,7 +1311,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   onChange={setSelectPermanentLocalityNameMl}
                   disable={isEdit}
                   placeholder={`${t("CR_LOCALITY_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+                  {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
                 />
               </div>
               <div className="col-md-3">
@@ -1334,7 +1347,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   onChange={setSelectPermanentStreetNameMl}
                   disable={isEdit}
                   placeholder={`${t("CR_STREET_NAME_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
+                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
                 />
               </div>
             </div>
@@ -1374,7 +1387,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
                   onChange={setSelectPermanentHouseNameMl}
                   disable={isEdit}
                   placeholder={`${t("CR_HOUSE_NAME_ML")}`}
-                  {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                  {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
                 />
               </div>
               <div className="col-md-3">

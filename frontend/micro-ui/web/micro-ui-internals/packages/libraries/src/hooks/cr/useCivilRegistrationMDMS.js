@@ -104,6 +104,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useMaleDependent = () => {
     return useQuery("CR_MALE_DEPENDENT", () => MdmsService.getCRMaleDependent(tenantId, moduleCode, type), config);
   };
+  const useCRDeathPlaceType = () => {
+    return useQuery("CR_PLACE_OF_DEATH", () => MdmsService.getCRDeathPlaceType(tenantId, moduleCode, type), config);
+  };
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
     return useQuery("TL_DOCUMENTS", () => MdmsService.getTLDocumentRequiredScreen(tenantId, moduleCode, type), config);
@@ -248,8 +251,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRTitle();
     case "DocumentType":
       return useDocumentTypeB();
-      case "IdProof":
+    case "IdProof":
         return useIdProof();
+    case "DeathPlaceType":
+          return useCRDeathPlaceType();
     case "MaleDependentType":
       return useMaleDependent();
     case "Religion":

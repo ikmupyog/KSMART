@@ -88,7 +88,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
         </div>
         <div className="row">
         <div className="col-md-12">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
@@ -101,8 +101,8 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
               placeholder={`${t("CR_INSTITUTION_TYPE")}`}
             />
           </div>
-          <div className="col-md-6">
-            <CardLabel>{`${t("CR_INSTITUTION_ID")}`}<span className="mandatorycss">*</span></CardLabel>
+          <div className="col-md-4">
+            <CardLabel>{`${t("CR_INSTITUTION_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
               optionKey="name"
@@ -111,14 +111,10 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
               selected={setInstitutionId}
               select={selectInstitutionId}
               disabled={isEdit}
-              placeholder={`${t("CR_INSTITUTION_ID")}`}
+              placeholder={`${t("CR_INSTITUTION_NAME")}`}
             />
           </div>
-        </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -133,7 +129,12 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
             />
           </div>
-          <div className="col-md-6">
+        </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+          
+          <div className="col-md-4">
             <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -148,11 +149,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
             />
           </div>
-        </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
             <TextInput
               t={t}
@@ -167,7 +164,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
               {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false,title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
             <TextInput
               t={t}
@@ -184,6 +181,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
           </div>
         </div>
         </div>
+        
       </FormStep>
     </React.Fragment>
   );
