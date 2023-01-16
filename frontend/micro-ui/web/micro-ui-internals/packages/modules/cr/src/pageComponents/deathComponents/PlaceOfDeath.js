@@ -14,7 +14,8 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
+  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMaster");
+  // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [PlaceOfDeath, selectPlaceOfDeath] = useState(formData?.PlaceOfDeath?.PlaceOfDeath);
   const [value, setValue] = useState();
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -87,8 +88,8 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   let naturetype = null;
   let cmbPlace = [];
   place &&
-    place["death-services"] &&
-    place["death-services"].PlaceMaster.map((ob) => {
+    place["common-masters"] &&
+    place["common-masters"].PlaceMaster.map((ob) => {
       cmbPlace.push(ob);
     });
   console.log(cmbPlace);

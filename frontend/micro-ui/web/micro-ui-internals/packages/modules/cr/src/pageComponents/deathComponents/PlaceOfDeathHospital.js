@@ -11,7 +11,6 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
   const { t } = useTranslation();
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-  console.log(hospitalData);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [OfficerNames, setFilteredOfficerName] = useState(0);
   const [Designations, setFilteredDesignation] = useState(0);

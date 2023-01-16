@@ -183,26 +183,25 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
-    sessionStorage.setItem("DeathTime", DeathTime);
-    sessionStorage.setItem("FirstName", FirstName);
-    sessionStorage.setItem("MiddleName", MiddleName);
-    sessionStorage.setItem("LastName", LastName);
-    sessionStorage.setItem("MLFirstName", MLFirstName);
+    sessionStorage.setItem("DeathTime", DeathTime ? DeathTime : null);
+    sessionStorage.setItem("FirstName", FirstName ? FirstName : null);
+    sessionStorage.setItem("MiddleName", MiddleName ? MiddleName : null);
+    sessionStorage.setItem("LastName", LastName ? LastName : null);
+    sessionStorage.setItem("MLFirstName", MLFirstName ? MLFirstName : null);
     sessionStorage.setItem("Ageofbirth", Ageofbirth ? Ageofbirth : null);
-    sessionStorage.setItem("AdharNo", AdharNo);
-    sessionStorage.setItem("IdNo", IdNo);
-    sessionStorage.setItem("FromDate", FromDate);
-    sessionStorage.setItem("ToDate", ToDate);
+    sessionStorage.setItem("AdharNo", AdharNo ? AdharNo : null);
+    sessionStorage.setItem("IdNo", IdNo ? IdNo : null );
+    sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
+    sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
     sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
     sessionStorage.setItem("setNationality", setNationality ? setNationality.code : null);
     sessionStorage.setItem("setReligion", setReligion ? setReligion.code : null);
-    sessionStorage.setItem("DeathTimeTo", DeathTimeTo);
+    sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null );
     sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
     sessionStorage.setItem("CommencementDate", CommencementDate);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
-
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     onSelect(config.key, {

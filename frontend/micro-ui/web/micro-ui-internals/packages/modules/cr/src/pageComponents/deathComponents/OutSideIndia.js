@@ -3,25 +3,27 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker } from "@egovernme
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const OutSideIndia = ({ config, onSelect, userType, formData }) => {
+const OutSideIndia = ({ config, onSelect, userType, formData ,AdressEn, setAdressEn,AdressMl, setAdressMl, AdressEnB, setAdressEnB,
+  AdressMlB, setAdressMlB,LocalityEn, setLocalityEn,ProvinceMl, setProvinceMl,setCountry, setSelectedCountry,LocalityMl, setLocalityMl,ProvinceEn,setProvinceEn}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [TradeName, setTradeName] = useState(formData?.AddressOfDecesed?.setPlaceofActivity);
-  const [AdressEn, setAdressEn] = useState(formData?.AddressOfDecesed?.AdressEn);
-  const [AdressMl, setAdressMl] = useState(formData?.AddressOfDecesed?.AdressMl);
-  const [AdressEnB, setAdressEnB] = useState(formData?.AddressOfDecesed?.AdressEnB);
-  const [AdressMlB, setAdressMlB] = useState(formData?.AddressOfDecesed?.AdressMlB);
-  const [LocalityEn, setLocalityEn] = useState(formData?.AddressOfDecesed?.LocalityEn);
-  const [LocalityMl, setLocalityMl] = useState(formData?.AddressOfDecesed?.LocalityMl);
-  const [ProvinceEn, setProvinceEn] = useState(formData?.AddressOfDecesed?.ProvinceEn);
-  const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOfDecesed?.ProvinceMl);
-  const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
+
+  // const [AdressEn, setAdressEn] = useState(formData?.AddressOfDecesed?.AdressEn);
+  // const [AdressMl, setAdressMl] = useState(formData?.AddressOfDecesed?.AdressMl);
+  // const [AdressEnB, setAdressEnB] = useState(formData?.AddressOfDecesed?.AdressEnB);
+  // const [AdressMlB, setAdressMlB] = useState(formData?.AddressOfDecesed?.AdressMlB);
+  // const [LocalityEn, setLocalityEn] = useState(formData?.AddressOfDecesed?.LocalityEn);
+  // const [LocalityMl, setLocalityMl] = useState(formData?.AddressOfDecesed?.LocalityMl);
+  // const [ProvinceEn, setProvinceEn] = useState(formData?.AddressOfDecesed?.ProvinceEn);
+  // const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOfDecesed?.ProvinceMl);
+  // const [setCountry, setSelectedCountry] = useState(formData?.InformationDeath?.setCountry);
 
   const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -33,10 +35,10 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
     });
   const onSkip = () => onSelect();
 
-  function selectPlaceofactivity(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedPlaceofActivity(value);
-  }
+  // function selectPlaceofactivity(value) {
+  //   naturetypecmbvalue = value.code.substring(0, 4);
+  //   setSelectedPlaceofActivity(value);
+  // }
   function setSelectAdressEn(e) {
     setAdressEn(e.target.value);
   }
@@ -64,23 +66,24 @@ const OutSideIndia = ({ config, onSelect, userType, formData }) => {
   function selectCountry(e) {
     setSelectedCountry(e.target.value);
   }
-  function setSelectTradeName(e) {
-    setTradeName(e.target.value);
-  }
-  function selectCommencementDate(value) {
-    setCommencementDate(value);
-  }
+  // function setSelectTradeName(e) {
+  //   setTradeName(e.target.value);
+  // }
+  // function selectCommencementDate(value) {
+  //   setCommencementDate(value);
+  // }
   const goNext = () => {
-    sessionStorage.setItem("AdressEn", AdressEn ? AdressEn : null );
-    sessionStorage.setItem("AdressMl", AdressMl ? AdressMl : null);
-    sessionStorage.setItem("AdressEnB", AdressEnB ? AdressEnB : null);
-    sessionStorage.setItem("AdressMlB", AdressMlB ? AdressMlB : null);
-    sessionStorage.setItem("LocalityEn", LocalityEn ? LocalityEn : null );
-    sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl : null);
-    sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn : null);
-    sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl : null);
-    sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
-    onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, setCountry });
+    // sessionStorage.setItem("AdressEn", AdressEn ? AdressEn : null );
+    // sessionStorage.setItem("AdressMl", AdressMl ? AdressMl : null);
+    // sessionStorage.setItem("AdressEnB", AdressEnB ? AdressEnB : null);
+    // sessionStorage.setItem("AdressMlB", AdressMlB ? AdressMlB : null);
+    // sessionStorage.setItem("LocalityEn", LocalityEn ? LocalityEn : null );
+    // sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl : null);
+    // sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn : null);
+    // sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl : null);
+    // sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
+
+    // onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, setCountry });
   };
   return (
     <React.Fragment>
