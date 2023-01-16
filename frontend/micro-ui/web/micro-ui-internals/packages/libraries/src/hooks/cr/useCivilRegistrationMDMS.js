@@ -2,10 +2,9 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
-
   const useLocalBodyMaster = () => {
     return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
-  };  
+  };
   const useCRQualificationSub = () => {
     return useQuery("CR_QUALIFICATION_SUB", () => MdmsService.getCRQualificationSub(tenantId, moduleCode), config);
   };
@@ -110,7 +109,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useCRVehicleType = () => {
     return useQuery("CR_VEHICLE_TYPE", () => MdmsService.getCRVehicleType(tenantId, moduleCode, type), config);
   };
-  
+
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
     return useQuery("TL_DOCUMENTS", () => MdmsService.getTLDocumentRequiredScreen(tenantId, moduleCode, type), config);
@@ -256,11 +255,11 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     case "DocumentType":
       return useDocumentTypeB();
     case "IdProof":
-        return useIdProof();
+      return useIdProof();
     case "DeathPlaceType":
-          return useCRDeathPlaceType();
-    case "VehicleType":         
-          return useCRVehicleType();    
+      return useCRDeathPlaceType();
+    case "VehicleType":
+      return useCRVehicleType();
     case "MaleDependentType":
       return useMaleDependent();
     case "Religion":

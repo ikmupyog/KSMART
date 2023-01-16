@@ -1204,7 +1204,7 @@ const getCRVehicleTypeList = (tenantId, moduleCode) => ({
     tenantId: tenantId,
     moduleDetails: [
       {
-        moduleName: moduleCode,
+        moduleName: birth-death-service,
         masterDetails: [
           {
             name: "VehicleType",
@@ -2182,8 +2182,8 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getCRDeathPlaceTypeList(tenantId, moduleCode), moduleCode);
   },
   
-  getCRVehicleTypeList: (tenantId, moduleCode) => {
-    return MdmsService.getDataByCriteria(tenantId, getVehicleType(tenantId, moduleCode), moduleCode);
+  getCRVehicleType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRVehicleTypeList(tenantId, moduleCode), moduleCode);
   },
   
   getCRMaleDependent: (tenantId, moduleCode) => {
