@@ -7,6 +7,16 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
   setTitle, setSelectedTitle,AadhaarNo, setAadhaarNo,setDeclaration, setSelectedDeclaration,InformentMobileNo, setInformentMobileNo,InformentEmail, setInformentEmail,isNoAadhaar, setIsNoAadhaar }) => {
   const stateId = Digit.ULBService.getStateId();
   const [checked, setChecked] = useState(false);
+  const handleCheckboxChange = (event) => {
+    setChecked((checked) => !checked); // toggle the checked state
+    let newSelectedValues = [...selectedValues];
+    if (event.target.checked) {
+        newSelectedValues.push(event.target.value);
+    } else {
+        newSelectedValues = newSelectedValues.filter(value => value !== event.target.value);
+    }
+    setSelectedValues(newSelectedValues);
+}
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
@@ -339,7 +349,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("No Aadhaar Number")} onChange={() => setChecked((checked) => !checked)} value={checked} />
+            <CheckBox label={t("No Aadhaar Number")}   onChange={handleCheckboxChange} value={checked} />
           </div>
         </div>
         <div className="row">
