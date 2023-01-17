@@ -9,7 +9,7 @@ const GeneralRemarks = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {}; 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [TradeName, setTradeName] = useState(null);
+  // const [TradeName, setTradeName] = useState(null);
   const [GeneralRemarks, setGeneralRemarks] = useState(formData?.GeneralRemarks?.GeneralRemarks);
   let naturetypecmbvalue = null; 
   const onSkip = () => onSelect();
@@ -18,7 +18,7 @@ const GeneralRemarks = ({ config, onSelect, userType, formData }) => {
   }
   const goNext = () => {
     console.log("test");
-    sessionStorage.setItem("GeneralRemarks", GeneralRemarks);
+    sessionStorage.setItem("GeneralRemarks", GeneralRemarks ?  GeneralRemarks : null);
     onSelect(config.key, { GeneralRemarks });
   };
 

@@ -1,4 +1,4 @@
-// import { Header, CitizenHomeCard, CaseIcon, HomeLink } from "@egovernionments/digit-ui-react-components";
+import {  CitizenHomeCard, CaseIcon} from "@egovernments/digit-ui-react-components";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
@@ -98,22 +98,26 @@ export const CRLinks = ({ matchPath, userType }) => {
     clearParams();
   }, []);
 
-  // const links = [
-  //   {
-  //     link: `${matchPath}/tradelicence/new-application`,
-  //     i18nKey: t("CR_CREATE_TRADE"),
-  //   },
-  //   {
-  //     link: `${matchPath}/tradelicence/renewal-list`,
-  //     i18nKey: t("TL_RENEWAL_HEADER"),
-  //   },
-  //   {
-  //     link: `${matchPath}/tradelicence/my-application`,
-  //     i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
-  //   },
-  // ];
+  const links = [
+    {
+      link: `${matchPath}/birthcertificate`,
+      i18nKey: t("CR_DEATH_CERTIFICATE"),
+    },
+    {
+      link: `${matchPath}/tradelicence/new-application`,
+      i18nKey: t("CR_BIRTH_CERTIFICATE"),
+    },
+    // {
+    //   link: `${matchPath}/tradelicence/renewal-list`,
+    //   i18nKey: t("TL_RENEWAL_HEADER"),
+    // },
+    // {
+    //   link: `${matchPath}/tradelicence/my-application`,
+    //   i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
+    // },
+  ];
 
-  // return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
+  return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
 };
 
 const componentsToRegister = {

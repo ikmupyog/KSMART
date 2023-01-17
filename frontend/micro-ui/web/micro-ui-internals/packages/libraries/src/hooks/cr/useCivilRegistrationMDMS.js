@@ -2,11 +2,9 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
-
   const useLocalBodyMaster = () => {
-    console.log("Jetheesh LB");
     return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
-  };  
+  };
   const useCRQualificationSub = () => {
     return useQuery("CR_QUALIFICATION_SUB", () => MdmsService.getCRQualificationSub(tenantId, moduleCode), config);
   };
@@ -105,6 +103,13 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useMaleDependent = () => {
     return useQuery("CR_MALE_DEPENDENT", () => MdmsService.getCRMaleDependent(tenantId, moduleCode, type), config);
   };
+  const useCRDeathPlaceType = () => {
+    return useQuery("CR_PLACE_OF_DEATH", () => MdmsService.getCRDeathPlaceType(tenantId, moduleCode, type), config);
+  };
+  const useCRVehicleType = () => {
+    return useQuery("CR_VEHICLE_TYPE", () => MdmsService.getCRVehicleType(tenantId, moduleCode, type), config);
+  };
+
   ////////////////////////////////////////////////////////////////////death
   const useTLDocuments = () => {
     return useQuery("TL_DOCUMENTS", () => MdmsService.getTLDocumentRequiredScreen(tenantId, moduleCode, type), config);
@@ -235,7 +240,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRModeOfPregnancy();
     case "PlaceMaster":
       return useCRPlaceMaster();
-    case "hospitalList":
+    case "hospital":
       return useCRHospital();
     case "PlaceMaster":
       return usePLaceOfDeath();
@@ -249,8 +254,12 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRTitle();
     case "DocumentType":
       return useDocumentTypeB();
-      case "IdProof":
-        return useIdProof();
+    case "IdProof":
+      return useIdProof();
+    case "DeathPlaceType":
+      return useCRDeathPlaceType();
+    case "VehicleType":
+      return useCRVehicleType();
     case "MaleDependentType":
       return useMaleDependent();
     case "Religion":

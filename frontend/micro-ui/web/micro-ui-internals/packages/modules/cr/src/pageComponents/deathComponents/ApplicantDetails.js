@@ -206,12 +206,12 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
     // sessionStorage.setItem("PinCode", PinCode);
     // sessionStorage.setItem("setPostOffice", setPostOffice ? setPostOffice.code : null);
     // sessionStorage.setItem("PresentLBName", null);
-    sessionStorage.setItem("ApplicantNameEn", ApplicantNameEn);
-    sessionStorage.setItem("ApplicantNameMl", ApplicantNameMl);
+    sessionStorage.setItem("ApplicantNameEn", ApplicantNameEn ? ApplicantNameEn : null );
+    sessionStorage.setItem("ApplicantNameMl", ApplicantNameMl ? ApplicantNameMl : null);
     // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
-    sessionStorage.setItem("AadhaarNo", AadhaarNo);
-    sessionStorage.setItem("InformentMobileNo", InformentMobileNo);
-    sessionStorage.setItem("InformentEmail", InformentEmail);
+    sessionStorage.setItem("AadhaarNo", AadhaarNo ? AadhaarNo : null);
+    sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo :null);
+    sessionStorage.setItem("InformentEmail", InformentEmail ? InformentEmail : null);
     // sessionStorage.setItem("InformentOfAge", InformentOfAge);
 
     onSelect(config.key, {
@@ -246,7 +246,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ApplicantNameEn}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">
           {/* <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
