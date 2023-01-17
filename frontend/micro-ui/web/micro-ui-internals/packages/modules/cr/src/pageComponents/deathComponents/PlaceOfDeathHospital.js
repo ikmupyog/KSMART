@@ -8,6 +8,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
   setSelectedDesignation, HospitalAadhaar, setHospitalAadhaar, HospitalMobile, setHospitalMobile, OfficerName, setOfficerName, OfficerDesignation, setOfficerDesignation,
 }) => {
   const stateId = Digit.ULBService.getStateId();
+  const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   const { t } = useTranslation();
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
@@ -15,7 +16,6 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
   const [OfficerNames, setFilteredOfficerName] = useState(0);
   const [Designations, setFilteredDesignation] = useState(0);
   // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
-  
   // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   // const [setDesignation, setSelectedDesignation] = useState(formData?.HospitalDetails?.setDesignation);
@@ -25,9 +25,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
   // const [OfficerName, setOfficerName] = useState(formData?.HospitalDetails?.OfficerName);
   // const [OfficerDesignation, setOfficerDesignation] = useState(formData?.HospitalDetails?.OfficerDesignation);
 
-  let naturetypecmbvalue = null;
-
-  // let cmbhospital = [];
+   // let cmbhospital = [];
   // hospital &&
   //   hospital["birth-death-service"] &&
   //   hospital["birth-death-service"].hospitalList.map((ob) => {
@@ -39,31 +37,32 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    let cmbRegistrarNames =[];
-    let cmbDesignations =[];
+    
     useEffect(() => {
           if (isInitialRender) {
-        if(HospitalName){
-          setIsInitialRender(false);
-          cmbRegistrarNames.push(cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code));   
-          cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
-          console.log("cmbDesignations" + cmbRegistrarNames["hospitalList"]);                
-          // setFilteredOfficerName(cmbRegistrarNames.registar);
-          // setFilteredDesignation(cmbDesignations);
-          // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
-          // setSelectSignedOfficerMobileNo(HospitalName.registrationMobile);
+          if(HospitalName){
+            setIsInitialRender(false);
+            let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);   
+            let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code); 
+            setFilteredOfficerName(cmbRegistrarNames[0].registar);
+            setFilteredDesignation(cmbDesignations[0].registar);    
+            // console.log("cmbDesignations" + cmbRegistrarNames["hospitalList"]);                
+            // setFilteredOfficerName(cmbRegistrarNames.registar);
+            // setFilteredDesignation(cmbDesignations);
+            // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
+            // setSelectSignedOfficerMobileNo(HospitalName.registrationMobile);
         }
       }
     }, [OfficerNames,Designations,isInitialRender]);  
 
-  const onSkip = () => onSelect();
+    const onSkip = () => onSelect();
+
   function setselectHospitalName(value) {
-    setIsInitialRender(true);
-    selectHospitalName(value);    
-    setFilteredOfficerName(null);
-    setFilteredDesignation(null);
+      setIsInitialRender(true);
+      selectHospitalName(value);    
+      setFilteredOfficerName(null);
+      setFilteredDesignation(null);
   }
-  
   function setselectSignedOfficerName(value) {
     selectSignedOfficerName(value);
   }
@@ -132,9 +131,9 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
               <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="hospitalName"
-                isMandatory={true}
-                option={cmbhospital}
+                optionKey="hospitalRegistar"
+                isMandatory={false}
+                option={OfficerNames}
                 selected={SignedOfficerName}
                 select={setselectSignedOfficerName}
                 placeholder={`${t("CR_SIGNED_OFFICER")}`}
@@ -144,9 +143,9 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
               <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
-                optionKey="code"
-                isMandatory={true}
-                option={OfficerNames}
+                optionKey="registarDesig"
+                isMandatory={false}
+                option={Designations}
                 selected={setDesignation}
                 select={selectDesignation}
                 disabled={isEdit}
@@ -164,7 +163,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="OfficerNames"
+                name="OfficerName"
                 value={OfficerName}
                 onChange={setselectOfficerName}
                 disable={isEdit}
@@ -180,7 +179,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="Designations"
+                name="OfficerDesignation"
                 value={OfficerDesignation}
                 onChange={setSelectOfficerDesignation}
                 disable={isEdit}

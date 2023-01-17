@@ -18,9 +18,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "GenderType");
+  
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  // const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
@@ -32,27 +31,40 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [setNationality, setSelectedNationality] = useState(formData?.InformationDeath?.setNationality);
   const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  // const [Gender, selectGender] = useState(formData?.DeathDetails?.Gender);
-  const [FirstName, setFirstName] = useState(formData?.InformationDeath?.FirstName);
-  const [MiddleName, setMiddleName] = useState(formData?.InformationDeath?.MiddleName);
-  const [LastName, setLastName] = useState(formData?.InformationDeath?.LastName);
-  const [MLFirstName, setMLFirstName] = useState(formData?.InformationDeath?.MLFirstName);
-  const [MlMiddleName, setMlMiddleName] = useState(formData?.InformationDeath?.MlMiddleName);
-  const [MlLastName, setMlLastName] = useState(formData?.InformationDeath?.MlLastName);
-  const [Ageofbirth, setAgeofbirth] = useState(formData?.InformationDeath?.Ageofbirth);
-  const [AdharNo, setAdharNo] = useState(formData?.InformationDeath?.AdharNo);
-  const [IdNo, setIdNo] = useState(formData?.InformationDeath?.IdNo);
-  const [CommencementDate, setCommencementDate] = useState(formData?.InformationDeath?.CommencementDate);
-  const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
-  const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate);
-  const [ToDate, setToDate] = useState(formData?.InformationDeath?.ToDate);
-  const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom);
-  const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo);
-  const [DeathTime, setDeathTime] = useState(formData?.InformationDeath?.DeathTime);
-  const [checked, setChecked] = useState(false);
-  const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit);
-  const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo);
 
+  const [FirstName, setFirstName] = useState(formData?.InformationDeath?.FirstName ? formData ?.InformationDeath?.FirstName : "");
+  const [MiddleName, setMiddleName] = useState(formData?.InformationDeath?.MiddleName? formData?.InformationDeath?.MiddleName : "");
+  const [LastName, setLastName] = useState(formData?.InformationDeath?.LastName ? formData?.InformationDeath?.LastName : "");
+  const [MLFirstName, setMLFirstName] = useState(formData?.InformationDeath?.MLFirstName ? formData?.InformationDeath?.MLFirstName : "");
+  const [MlMiddleName, setMlMiddleName] = useState(formData?.InformationDeath?.MlMiddleName ? formData?.InformationDeath?.MlMiddleName : "");
+  const [MlLastName, setMlLastName] = useState(formData?.InformationDeath?.MlLastName ? formData?.InformationDeath?.MlLastName  : "");
+  const [Ageofbirth, setAgeofbirth] = useState(formData?.InformationDeath?.Ageofbirth ? formData?.InformationDeath?.Ageofbirth : "");
+  const [AdharNo, setAdharNo] = useState(formData?.InformationDeath?.AdharNo ? formData?.InformationDeath?.AdharNo : "");
+  const [IdNo, setIdNo] = useState(formData?.InformationDeath?.IdNo ? formData?.InformationDeath?.IdNo : "");
+  const [CommencementDate, setCommencementDate] = useState(formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate: "");
+  const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate ? formData?.InformationDeath?.DeathDate : "");
+  const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate ? formData?.InformationDeath?.FromDate : "");
+  const [ToDate, setToDate] = useState(formData?.InformationDeath?.ToDate ? formData?.InformationDeath?.ToDate : "");
+  const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom ? formData?.InformationDeath?.DeathTimeFrom : "");
+  const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo ? formData?.InformationDeath?.DeathTimeTo : "");
+  const [DeathTime, setDeathTime] = useState(formData?.InformationDeath?.DeathTime ? formData?.InformationDeath?.DeathTime : "");
+  const [checked, setChecked] = useState(false);
+  const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit ? formData?.InformationDeath?.setAgeUnit : "");
+  const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo ? formData?.InformationDeath?.setIdCombo : "");
+
+  const [selectedValues, setSelectedValues] = useState(
+    formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : true
+  );
+  const handleCheckboxChange = (event) => {
+    setChecked((checked) => !checked); // toggle the checked state
+    let newSelectedValues = [...selectedValues];
+    if (event.target.checked) {
+      newSelectedValues.push(event.target.value);
+    } else {
+      newSelectedValues = newSelectedValues.filter((value) => value !== event.target.value);
+    }
+    setSelectedValues(newSelectedValues);
+  };
   let naturetypecmbvalue = null;
 
   let menu = [];
@@ -150,6 +162,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectIdCombo(value) {
     setSelectedIdCombo(value);
   }
+  // function calculateAge(e) {
+  //   setCommencementDate(e.target.value);
+  // }  
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -173,6 +188,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MiddleName", MiddleName ? MiddleName : null);
     sessionStorage.setItem("LastName", LastName ? LastName : null);
     sessionStorage.setItem("MLFirstName", MLFirstName ? MLFirstName : null);
+    sessionStorage.setItem("MlMiddleName", MlMiddleName ? MlMiddleName : null);
+    sessionStorage.setItem("MlLastName", MlLastName ? MlLastName : null);
     sessionStorage.setItem("Ageofbirth", Ageofbirth ? Ageofbirth : null);
     sessionStorage.setItem("AdharNo", AdharNo ? AdharNo : null);
     sessionStorage.setItem("IdNo", IdNo ? IdNo : null);
@@ -183,12 +200,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setNationality", setNationality ? setNationality.code : null);
     sessionStorage.setItem("setReligion", setReligion ? setReligion.code : null);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
-    sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom);
+    sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom: null);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
-    sessionStorage.setItem("CommencementDate", CommencementDate);
+    sessionStorage.setItem("CommencementDate", CommencementDate ? CommencementDate : null );
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
+    sessionStorage.setItem("selectedValues", selectedValues ? selectedValues : true);
+
     onSelect(config.key, {
       setIdCombo,
       DeathDate,
@@ -197,6 +216,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       MiddleName,
       LastName,
       MLFirstName,
+      MlMiddleName,
+      MlLastName,
       Ageofbirth,
       AdharNo,
       IdNo,
@@ -212,13 +233,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathTimeTo,
       setAgeUnit,
       setIdCombo,
+      selectedValues,
     });
   };
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathDate || !Gender}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         {/* //    isDisabled={!CommencementDate} */}
         <div className="row">
           <div className="col-md-12">
@@ -230,7 +252,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} />
+              <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={handleCheckboxChange} value={checked} />
             </div>
             <div className="col-md-6">
               <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} />
@@ -522,7 +544,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={Ageofbirth}
                 placeholder={`${t("CR_AGE_OF_BIRTH")}`}
                 {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
-                disabled
               />
 
               {/* <TextInput

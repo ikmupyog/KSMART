@@ -425,7 +425,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
       console.log(localbodies);
       if (PresentDistrict) {
         setIsInitialRender(false);
-        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
+        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid.code));
       }
     }
   }, [lbs, isInitialRender]);
