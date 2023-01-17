@@ -28,8 +28,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [HospitalMobile, setHospitalMobile] = useState(formData?.PlaceOfDeath?.HospitalMobile);
   const [OfficerName, setOfficerName] = useState(formData?.PlaceOfDeath?.OfficerName);
   const [OfficerDesignation, setOfficerDesignation] = useState(formData?.PlaceOfDeath?.OfficerDesignation);
-  const [OfficerNames, setFilteredOfficerName] = useState(0);
-  const [Designations, setFilteredDesignation] = useState(0);
+  
 
   //DeathPlace Home
   const [AdrsCountry, setAdrsCountry] = useState(formData?.PlaceOfDeath?.AdrsCountry);
@@ -290,7 +289,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setAdmittedHospitalMl", setAdmittedHospitalMl ? setAdmittedHospitalMl.code : null);
     sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn ? VehicleOtherDetailsEn : null);
     sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsMl ? VehicleOtherDetailsMl : null);
-    sessionStorage.setItem("VehicleType", VehicleType ? VehicleType : null);
+    // sessionStorage.setItem("VehicleType", VehicleType ? VehicleType : null);
     // Address from Birth
     sessionStorage.setItem("InformantAdrsCountry", InformantAdrsCountry.code);
     sessionStorage.setItem("InformantAdrsStateName", InformantAdrsStateName.code);
@@ -310,8 +309,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("InformantAdrsPincode", InformantAdrsPincode.code);
     // sessionStorage.setItem("InformantAdrsInfontName", InformantAdrsInfontName);
     // sessionStorage.setItem(" InfntWardNo",  InfntWardNo);
-   
-
+    
     onSelect(config.key, {
       PlaceOfDeath, SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile, OfficerName, OfficerDesignation,
       AdrsDoorNo, AdrsHouseNameEn, AdrsHouseNameMl, AdrsLocalityNameEn, AdrsLocalityNameMl, AdrsCountry, AdrsStateName,
@@ -359,20 +357,13 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
         {value === "HOSPITAL" && (
           <div>
             <PlaceOfDeathHospital
-              selectHospitalName={selectHospitalName}
-              HospitalName={HospitalName}
-              selectSignedOfficerName={selectSignedOfficerName}
-              SignedOfficerName={SignedOfficerName}
-              setSelectedDesignation={setSelectedDesignation}
-              setDesignation={setDesignation}
-              setHospitalAadhaar={setHospitalAadhaar}
-              HospitalAadhaar={HospitalAadhaar}
-              setHospitalMobile={setHospitalMobile}
-              HospitalMobile={HospitalMobile}
-              setOfficerName={setOfficerName}
-              OfficerName={OfficerName}
-              setOfficerDesignation={setOfficerDesignation}
-              OfficerDesignation={OfficerDesignation}
+              selectHospitalName={selectHospitalName}  HospitalName={HospitalName}
+              selectSignedOfficerName={selectSignedOfficerName}   SignedOfficerName={SignedOfficerName}
+              setSelectedDesignation={setSelectedDesignation}   setDesignation={setDesignation}
+              setHospitalAadhaar={setHospitalAadhaar}       HospitalAadhaar={HospitalAadhaar}
+              setHospitalMobile={setHospitalMobile}  HospitalMobile={HospitalMobile}
+              setOfficerName={setOfficerName}   OfficerName={OfficerName}
+              setOfficerDesignation={setOfficerDesignation}  OfficerDesignation={OfficerDesignation}
             />
           </div>
         )}
