@@ -11,12 +11,9 @@ import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.Role;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.repository.ServiceRequestRepository;
-import org.egov.filemgmnt.util.FMConstants;
-import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
 import org.egov.filemgmnt.web.models.user.UserDetailResponse;
 import org.egov.filemgmnt.web.models.user.UserSearchRequest;
@@ -48,24 +45,24 @@ class UserService {
         // 2. if exists update
         // 3. else insert applicant data in to user service
 
-        List<ApplicantPersonal> applicant = request.getApplicantPersonals();
-        RequestInfo requestInfo = request.getRequestInfo();
-        Role role = getCitizenRole(applicant.get(0)
-                                            .getTenantId());
-
-        final String serviceCode = FMConstants.BUSINESS_SERVICE_FM;
-        applicant.forEach(personal -> {
-
-            String businessService = personal.getFileDetail()
-                                             .getBusinessService();
-            if (personal.getId() == null) {
-
-                // addUserDefaultFields(applicant.getTenantId(), role, personal,
-                // businessService);
-                // UserDetailResponse userDetailResponse = userExists(owner,requestInfo);
-
-            }
-        });
+//        List<ApplicantPersonal> applicant = request.getApplicantPersonals();
+//        RequestInfo requestInfo = request.getRequestInfo();
+//        Role role = getCitizenRole(applicant.get(0)
+//                                            .getTenantId());
+//
+//        final String serviceCode = FMConstants.BUSINESS_SERVICE_FM;
+//        applicant.forEach(personal -> {
+//
+//            String businessService = personal.getFileDetail()
+//                                             .getBusinessService();
+//            if (personal.getId() == null) {
+//
+//                // addUserDefaultFields(applicant.getTenantId(), role, personal,
+//                // businessService);
+//                // UserDetailResponse userDetailResponse = userExists(owner,requestInfo);
+//
+//            }
+//        });
 
     }
 

@@ -37,7 +37,7 @@ public class FMUtils implements ApplicationContextAware {
         return applicationContext.getBean(ObjectMapper.class);
     }
 
-    public static String toJson(Object obj) {
+    public static String toJson(final Object obj) {
         try {
             return getObjectMapper().writerWithDefaultPrettyPrinter()
                                     .writeValueAsString(obj);
@@ -47,8 +47,8 @@ public class FMUtils implements ApplicationContextAware {
         return StringUtils.EMPTY;
     }
 
-    public static void validateSearchParam(BeanWrapper bw, String param, List<String> allowedParams) {
-        Object value = bw.getPropertyValue(param);
+    public static void validateSearchParam(final BeanWrapper bw, final String param, final List<String> allowedParams) {
+        final Object value = bw.getPropertyValue(param);
 
         boolean invalid = false; // NOPMD
         if (value instanceof Collection) {

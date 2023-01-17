@@ -1,0 +1,174 @@
+{
+    "RequestInfo": {
+        "apiId": null,
+        "ver": null,
+        "ts": null,
+        "action": null,
+        "did": null,
+        "key": null,
+        "msgId": null,
+        "authToken": null,
+        "correlationId": null,
+        "userInfo": {
+            "id": null,
+            "userName": null,
+            "name": null,
+            "type": null,
+            "mobileNumber": null,
+            "emailId": null,
+            "roles": null,
+            "tenantId": null,
+            "uuid": "c19d337c-46f3-49f6-865d-6eecf0bcb1aa"
+        }
+    },
+    "ApplicantServiceDetail": {
+        "id": null,
+        "applicantPersonalId": null,
+        "serviceId": null,
+        "serviceCode": null,
+        "serviceSubType": null,
+        "serviceMinorType": null,
+        "auditDetails": {
+            "createdBy": null,
+            "createdTime": null,
+            "lastModifiedBy": null,
+            "lastModifiedTime": null
+        },
+        "businessService": null,
+        "workflowCode": null,
+        "action": null,
+        "comments": null,
+        "assignees": null,
+        "applicant": {
+            "id": null,
+            "firstName": null,
+            "firstNameMal": null,
+            "lastName": null,
+            "lastNameMal": null,
+            "dateOfBirth": null,
+            "aadhaarNo": null,
+            "mobileNo": null,
+            "email": null,
+            "bankAccountNo": null,
+            "title": null,
+            "tenantId": null,
+            "fatherFirstName": null,
+            "fatherFirstNameMal": null,
+            "fatherLastName": null,
+            "fatherLastNameMal": null,
+            "motherFirstName": null,
+            "motherFirstNameMal": null,
+            "motherLastName": null,
+            "motherLastNameMal": null,
+            "applicantCategory": null,
+            "auditDetails": {
+                "createdBy": null,
+                "createdTime": null,
+                "lastModifiedBy": null,
+                "lastModifiedTime": null
+            },
+            "address": {
+                "id": null,
+                "applicantPersonalId": null,
+                "buildingNo": null,
+                "subNo": null,
+                "houseName": null,
+                "houseNameMal": null,
+                "street": null,
+                "streetmal": null,
+                "pincode": null,
+                "postOfficeName": null,
+                "residenceAssociationNo": null,
+                "localPlace": null,
+                "localPlaceMal": null,
+                "mainPlace": null,
+                "mainPlaceMal": null,
+                "wardNo": null,
+                "village": null,
+                "taluk": null,
+                "auditDetails": {
+                    "createdBy": null,
+                    "createdTime": null,
+                    "lastModifiedBy": null,
+                    "lastModifiedTime": null
+                }
+            },
+            "document": {
+                "id": null,
+                "applicantPersonalId": null,
+                "documentTypeId": null,
+                "documentNumber": null,
+                "docExpiryDate": null,
+                "auditDetails": {
+                    "createdBy": null,
+                    "createdTime": null,
+                    "lastModifiedBy": null,
+                    "lastModifiedTime": null
+                }
+            }
+        },
+        "serviceDocument": {
+            "id": null,
+            "applicantPersonalId": null,
+            "serviceDetailsId": null,
+            "documentTypeId": null,
+            "fileStoreId": null,
+            "active": null,
+            "documentNumber": null,
+            "applicationDetails": null,
+            "auditDetails": {
+                "createdBy": null,
+                "createdTime": null,
+                "lastModifiedBy": null,
+                "lastModifiedTime": null
+            }
+        },
+        "fileDetail": {
+            "id": null,
+            "tenantId": null,
+            "applicantPersonalId": null,
+            "serviceDetailsId": null,
+            "fileNumber": null,
+            "fileCode": null,
+            "fileName": null,
+            "fileArisingMode": null,
+            "fileArisingDate": null,
+            "financialYear": null,
+            "applicationDate": null,
+            "businessService": null,
+            "workflowCode": null,
+            "action": null,
+            "comments": null,
+            "assignees": null,
+            "fileStatus": null,
+            "auditDetails": {
+                "createdBy": null,
+                "createdTime": null,
+                "lastModifiedBy": null,
+                "lastModifiedTime": null
+            }
+        },
+        "applicantDetails": {
+            "id": null,
+            "applicantPersonalId": null,
+            "buildingNumber ": null,
+            "relationOfAssessee  ": null,
+            "nameOfOccupier": null,
+            "nameOfOccupierMal": null,
+            "relationOfOccupier": null,
+            "durationOfResidenceInYears ": null,
+            "durationOfResidenceInMonths ": null,
+            "ownerName ": null,
+            "ownerNameMal": null,
+            "ownerAddress": null,
+            "ownerAddressMal": null,
+            "ownerMobileNo": null,
+            "auditDetails": {
+                "createdBy": null,
+                "createdTime": null,
+                "lastModifiedBy": null,
+                "lastModifiedTime": null
+            }
+        }
+    }
+}

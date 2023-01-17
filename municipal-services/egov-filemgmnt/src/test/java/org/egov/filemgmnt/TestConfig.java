@@ -5,9 +5,7 @@ import static org.mockito.Mockito.mock;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.client.RestTemplate;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -23,15 +21,16 @@ public class TestConfig { // NOPMD
         return mock(KafkaTemplate.class);
     }
 
-    @Bean
-    @Primary
-    JdbcTemplate jdbcTemplate() {
-        return mock(JdbcTemplate.class);
-    }
+//    @Bean
+//    @Primary
+//    JdbcTemplate jdbcTemplate() {
+//        return mock(JdbcTemplate.class);
+//    }
 
-    @Bean
-    @Primary
-    RestTemplate restTemplate() {
-        return mock(RestTemplate.class);
-    }
+//    @Bean
+//    @Primary
+//    RestTemplate restTemplate() {
+//        return mock(RestTemplate.class);
+//    }
+
 }

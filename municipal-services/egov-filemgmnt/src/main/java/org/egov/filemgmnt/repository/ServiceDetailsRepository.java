@@ -6,7 +6,7 @@ import java.util.List;
 import org.egov.filemgmnt.repository.querybuilder.ServiceDetailsQueryBuilder;
 import org.egov.filemgmnt.repository.rowmapper.ServiceDetailsRowMapper;
 import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
-import org.egov.filemgmnt.web.models.ServiceDetailsSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +25,7 @@ public class ServiceDetailsRepository {
         this.rowMapper = rowMapper;
     }
 
-    public List<ApplicantServiceDetail> getApplicantServices(ServiceDetailsSearchCriteria criteria) {
+    public List<ApplicantServiceDetail> getApplicantServices(ApplicantServiceSearchCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
 
         String query = queryBuilder.getServiceDetailsSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);

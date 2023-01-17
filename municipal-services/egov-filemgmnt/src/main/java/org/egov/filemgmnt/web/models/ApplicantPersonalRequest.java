@@ -25,7 +25,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class ApplicantPersonalRequest {
 
     @JsonProperty("RequestInfo")
@@ -37,7 +36,7 @@ public class ApplicantPersonalRequest {
     // only")
     private List<@Valid ApplicantPersonal> applicantPersonals;
 
-    public ApplicantPersonalRequest addApplicantPersonal(ApplicantPersonal applicantPersonal) {
+    public ApplicantPersonalRequest addApplicantPersonal(final ApplicantPersonal applicantPersonal) {
         if (applicantPersonals == null) {
             applicantPersonals = new ArrayList<>();
         }

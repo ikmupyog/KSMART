@@ -21,7 +21,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class ApplicantChild {
 
     @Schema(type = "string", format = "uuid", description = "Applicant child details id")

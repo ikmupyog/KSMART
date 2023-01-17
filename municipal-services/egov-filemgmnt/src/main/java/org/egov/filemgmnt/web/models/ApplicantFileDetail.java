@@ -1,13 +1,12 @@
 package org.egov.filemgmnt.web.models;
 
-import java.util.List;
-
-import javax.swing.text.Document;
-import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.egov.filemgmnt.constraints.Html;
+import org.springframework.validation.annotation.Validated;
 
 //import org.hibernate.validator.constraints.SafeHtml;
 
@@ -21,114 +20,116 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Schema(description = "A Object holds the fie data against application submited by efile user")
+@Validated
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-public class FileDetail {
+public class ApplicantFileDetail {
 
     @Schema(type = "string", format = "uuid", description = "File id")
-    @Size(max = 64)
+    @Size(max = 64, message = "File id length cannot exceed 64 characters")
     @JsonProperty("id")
     private String id;
 
     @Schema(type = "string", description = "Tenant identification number")
-    @Size(max = 64)
-    @NotNull
+    @NotBlank(message = "Tenant identification number is required")
+    @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
     @JsonProperty("tenantId")
     private String tenantId;
 
     @Schema(type = "string", description = "Applicant id")
-    @Size(max = 64)
+    @Size(max = 64, message = "Applicant personal id length cannot exceed 64 characters")
     @JsonProperty("applicantPersonalId")
     private String applicantPersonalId;
 
     @Schema(type = "string", description = "Foreign key service details")
-    @Size(max = 64)
+    @Size(max = 64, message = "Foreign key service details length cannot exceed 64 characters")
     @JsonProperty("serviceDetailsId")
     private String serviceDetailsId;
 
     @Schema(type = "string", description = "File number")
-    @Size(max = 64)
-//    @NotNull
+    @Size(max = 64, message = "File number length cannot exceed 64 characters")
     @JsonProperty("fileNumber")
     private String fileNumber;
 
     @Schema(type = "string", description = "File code")
-    @Size(max = 64)
+    @Size(max = 64, message = "File code length cannot exceed 64 characters")
     @JsonProperty("fileCode")
     private String fileCode;
 
     @Schema(type = "string", description = "File name")
-    @Size(max = 64)
-//    @NotNull
+    @Size(max = 64, message = "File name length cannot exceed 64 characters")
     @JsonProperty("fileName")
     private String fileName;
 
     @Schema(type = "string", description = "File arising mode whether efile/frontoffice")
-    @Size(max = 64)
-    @NotNull
+    @NotBlank(message = "File arising mode is required")
+    @Size(max = 64, message = "File arising mode length cannot exceed 64 characters")
     @JsonProperty("fileArisingMode")
     private String fileArisingMode;
 
     @Schema(type = "integer", format = "int64", description = "File arising date")
-    @NotNull
+    @NotNull(message = "File arising date is required")
+    @Positive(message = "Invalid file arising date")
     @JsonProperty("fileArisingDate")
     private Long fileArisingDate;
 
     @Schema(type = "string", description = "Financial year")
+//  @NotNull(message = "Financial year is required")
 //    @Size(min = 4, max = 4, message = "Invalid financial year")
-//    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid financial year")
     @Size(max = 10)
-//    @NotNull(message = "Financial year is required")
+//    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid financial year")
     @JsonProperty("financialYear")
     private String financialYear;
 
     @Schema(type = "integer", format = "int64", description = "Application submitted date")
-    @NotNull
+    @NotNull(message = "Application submitted date is required")
+    @Positive(message = "Invalid application submitted date")
     @JsonProperty("applicationDate")
     private Long applicationDate;
 
+    @Schema(type = "string", description = "Business service")
+    // @NotBlank(message = "Business service is required")
+    @Size(max = 64, message = "Business service length cannot exceed 64 characters")
+    @JsonProperty("businessService")
+    private String businessService;
+
     @Schema(type = "string", description = "Workflow code")
-    @Size(max = 64)
-    @NotNull
+    // @NotBlank(message = "Workflow code is required")
+    @Size(max = 64, message = "Workflow code length cannot exceed 64 characters")
     @JsonProperty("workflowCode")
     private String workflowCode;
 
     @Schema(type = "string", description = "Workflow action")
-    @Size(max = 64)
-    @NotNull
+    // @NotBlank(message = "Workflow action is required")
+    @Size(max = 64, message = "Workflow action length cannot exceed 64 characters")
     @JsonProperty("action")
     private String action;
 
-    @Schema(type = "string", description = "Status of file")
-    @Size(max = 64)
+    @Schema(type = "string", description = "Comments")
+    // @NotBlank(message = "Comment is required")
+    @Size(max = 128, message = "Comment length cannot exceed 128 characters")
+    @Html
+    @JsonProperty("comments")
+    private String comment;
+
+    @Schema(type = "string", description = "File assignees")
+    @JsonProperty("assignees")
+    private String assignees;
+
+    @Schema(type = "string", description = "File status")
+    @Size(max = 64, message = "File status length cannot exceed 64 characters")
     @JsonProperty("fileStatus")
     private String fileStatus;
-
-    @Schema(type = "string", description = "Business service")
-    @Size(max = 64)
-    @NotNull
-    @JsonProperty("businessService")
-    private String businessService;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
-    @JsonProperty("assignees")
-    @NotNull
-    private List<String> assignees;
-
-    @Schema(type = "string", description = "Comments")
-    @Size(max = 128)
-    @Html
-    private String comment;
-
-    @Valid
-    @JsonProperty("wfDocuments")
-    private List<Document> wfDocuments;
+//    @Valid
+//    @JsonProperty("wfDocuments")
+//    private List<Document> wfDocuments;
 
 }

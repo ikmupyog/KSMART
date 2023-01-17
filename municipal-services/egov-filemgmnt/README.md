@@ -17,28 +17,8 @@ http://localhost:8080/
 
 Change default port value in application.properties
 
-### ApplicantPersonal
-    - ApplicantAddress
-    - ApplicantDocument(s)
-      - User Service
-      - Encryption Service
-      - Persister
-    
-      - save-fm-applicantpersonal
-      - update-fm-applicantpersonal
-    
-### ApplicantPersonalService
-    - ApplicantPersonal
-    - ServiceDetail
-    - ApplicantServiceDocument
-    - FileDetail
-    - ApplicantChild
-      - Mdms Service
-      - IdGen Service
-      - Workflow Service
-      - Pdf Service
-      - Persister
-    
-      - save-fm-applicantpersonalservice
-      - update-fm-applicantpersonalservice
-      - save-fm-applicantpersonalservicecertificate
+## TODO
+### 1. encryption
+### 2. user creation
+### 3. workflow
+### 4. pdf service

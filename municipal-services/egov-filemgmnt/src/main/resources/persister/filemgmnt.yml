@@ -1,6 +1,7 @@
 serviceMaps:
   serviceName: egov-filemgmnt
   mappings:
+  # insert applicant personal, address, document and applicant child (other details)
   - version: 1.0
     description: Persists applicant details in egov_filemgmnt database, eg_fm_applicantpersonal table
     fromTopic: save-fm-applicantpersonal
@@ -9,476 +10,414 @@ serviceMaps:
     - query: >
         INSERT INTO eg_fm_applicantpersonal(id, aadhaarno, email, firstname, firstnamemal, lastname, lastnamemal, title, mobileno, tenantid, fatherfirstname, fatherfirstnamemal, fatherlastname, fatherlastnamemal, motherfirstname, motherfirstnamemal, motherlastname, motherlastnamemal, applicantcategory, dateofbirth, bankaccountno, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      basePath: ApplicantPersonals.*
+      basePath: ApplicantServiceDetail
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.id
+      - jsonPath: $.ApplicantServiceDetail.applicant.id
 
-      - jsonPath: $.ApplicantPersonals.*.aadhaarNo 
+      - jsonPath: $.ApplicantServiceDetail.applicant.aadhaarNo 
       
-      - jsonPath: $.ApplicantPersonals.*.email 
+      - jsonPath: $.ApplicantServiceDetail.applicant.email 
       
-      - jsonPath: $.ApplicantPersonals.*.firstName 
+      - jsonPath: $.ApplicantServiceDetail.applicant.firstName 
       
-      - jsonPath: $.ApplicantPersonals.*.firstNameMal 
+      - jsonPath: $.ApplicantServiceDetail.applicant.firstNameMal 
       
-      - jsonPath: $.ApplicantPersonals.*.lastName
+      - jsonPath: $.ApplicantServiceDetail.applicant.lastName
       
-      - jsonPath: $.ApplicantPersonals.*.lastNameMal 
+      - jsonPath: $.ApplicantServiceDetail.applicant.lastNameMal 
       
-      - jsonPath: $.ApplicantPersonals.*.title 
+      - jsonPath: $.ApplicantServiceDetail.applicant.title 
       
-      - jsonPath: $.ApplicantPersonals.*.mobileNo 
+      - jsonPath: $.ApplicantServiceDetail.applicant.mobileNo 
       
-      - jsonPath: $.ApplicantPersonals.*.tenantId
+      - jsonPath: $.ApplicantServiceDetail.applicant.tenantId
       
-      - jsonPath: $.ApplicantPersonals.*.fatherFirstName
+      - jsonPath: $.ApplicantServiceDetail.applicant.fatherFirstName
       
-      - jsonPath: $.ApplicantPersonals.*.fatherFirstNameMal
+      - jsonPath: $.ApplicantServiceDetail.applicant.fatherFirstNameMal
       
-      - jsonPath: $.ApplicantPersonals.*.fatherLastName
+      - jsonPath: $.ApplicantServiceDetail.applicant.fatherLastName
       
-      - jsonPath: $.ApplicantPersonals.*.fatherLastNameMal
+      - jsonPath: $.ApplicantServiceDetail.applicant.fatherLastNameMal
       
-      - jsonPath: $.ApplicantPersonals.*.motherFirstName
+      - jsonPath: $.ApplicantServiceDetail.applicant.motherFirstName
       
-      - jsonPath: $.ApplicantPersonals.*.motherFirstNameMal
+      - jsonPath: $.ApplicantServiceDetail.applicant.motherFirstNameMal
       
-      - jsonPath: $.ApplicantPersonals.*.motherLastName
+      - jsonPath: $.ApplicantServiceDetail.applicant.motherLastName
       
-      - jsonPath: $.ApplicantPersonals.*.motherLastNameMal
+      - jsonPath: $.ApplicantServiceDetail.applicant.motherLastNameMal
       
-      - jsonPath: $.ApplicantPersonals.*.applicantCategory
+      - jsonPath: $.ApplicantServiceDetail.applicant.applicantCategory
       
-      - jsonPath: $.ApplicantPersonals.*.dateOfBirth
+      - jsonPath: $.ApplicantServiceDetail.applicant.dateOfBirth
       
-      - jsonPath: $.ApplicantPersonals.*.bankAccountNo
+      - jsonPath: $.ApplicantServiceDetail.applicant.bankAccountNo
       
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.createdBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdTime
+      - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.createdTime
       
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime
-      
-    - query: >
-        INSERT INTO eg_fm_servicedetail(id, applicantpersonalid, serviceid, servicecode, servicesubtype,  serviceminortype, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      basePath: ApplicantPersonals.*.serviceDetails
-      jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.id
-
-      - jsonPath: $.ApplicantPersonals.*.id
-      
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.serviceId 
-      
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.serviceCode   
-      
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.servicesubtype    
-      
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.serviceminortype 
-    
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
-
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdTime
-      
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
-
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime 
-      
-    - query: >
-        INSERT INTO eg_fm_applicantpersonal_child(id, applicantpersonalid, buildingnumber, relationofassessee, nameofoccupier,  relationofoccupier, durationofresidenceinyears, ownername, ownernamemal, owneraddress, owneraddressmal, ownermobileno, nameofoccupiermal, durationofresidenceinmonths, createdby, createddate, lastmodifiedby, lastmodifieddate) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?)
-      basePath: ApplicantPersonals.*.applicantChild
-      jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.id
-
-      - jsonPath: $.ApplicantPersonals.*.id
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.buildingNumber 
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.relationOfAssessee   
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.nameOfOccupier    
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.relationOfOccupier 
-    
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.durationOfResidenceInYears  
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerName 
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerNameMal 
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerAddress 
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerAddressMal 
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.ownerMobileNo 
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.nameOfOccupierMal 
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantChild.durationOfResidenceInMonths 
-      
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
-
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdTime
-      
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
-
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime     
+      - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.lastModifiedTime
  
- 
-      
     - query: >
         INSERT INTO eg_fm_applicantaddress(id, buildingno, subno, housename, housenamemal, village, taluk, street, streetmal, pincode, postofficename, residenceassociationno, localplace, localplacemal, mainplace, mainplacemal, wardno, createdby, createddate, lastmodifiedby, lastmodifieddate,applicantpersonalid)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      basePath: ApplicantPersonals.*.applicantAddress
+      basePath: ApplicantServiceDetail.applicant
       jsonMaps:    
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.id
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.id
 
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.buildingNo
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.buildingNo
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.subNo
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.subNo
      
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.houseName
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.houseName
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.houseNameMal
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.houseNameMal
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.village
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.village
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.taluk
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.taluk
      
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.street
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.street
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.streetmal
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.streetmal
      
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.pincode
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.pincode
      
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.postOfficeName
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.postOfficeName
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.residenceAssociationNo
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.residenceAssociationNo
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.localPlace
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.localPlace
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.localPlaceMal
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.localPlaceMal
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.mainPlace
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.mainPlace
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.mainPlaceMal
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.mainPlaceMal
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.wardNo
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.wardNo
      
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.auditDetails.createdBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdTime
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.auditDetails.createdTime
      
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime  
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.auditDetails.lastModifiedTime  
  
-      - jsonPath: $.ApplicantPersonals.*.id
-      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.applicantPersonalId
+ 
     - query: >
         INSERT INTO eg_fm_applicantdocument(id, applicantpersonalid, documenttypeid, documentnumber, docexpirydate, createdby, createddate, lastmodifiedby, lastmodifieddate )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?  )        
-      basePath: ApplicantPersonals.*.applicantDocuments
+      basePath: ApplicantServiceDetail.applicant
       jsonMaps:    
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.id         
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.id         
       
-      - jsonPath: $.ApplicantPersonals.*.id
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.applicantPersonalId
       
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.documentTypeId
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.documentTypeId
 
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.documentNumber
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.documentNumber
      
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.docExpiryDate              
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.docExpiryDate              
        
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.createdBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdTime
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.createdTime
      
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime  
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedTime
+
+    - query: >
+        INSERT INTO eg_fm_applicantpersonal_child(id, applicantpersonalid, buildingnumber, relationofassessee, nameofoccupier,  relationofoccupier, durationofresidenceinyears, ownername, ownernamemal, owneraddress, owneraddressmal, ownermobileno, nameofoccupiermal, durationofresidenceinmonths, createdby, createddate, lastmodifiedby, lastmodifieddate) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?)
+      basePath: ApplicantServiceDetail.applicantDetails
+      jsonMaps:
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.id
+
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.applicantPersonalId
       
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.buildingNumber 
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.relationOfAssessee   
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.nameOfOccupier    
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.relationOfOccupier 
+    
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.durationOfResidenceInYears  
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.ownerName 
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.ownerNameMal 
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.ownerAddress 
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.ownerAddressMal 
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.ownerMobileNo 
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.nameOfOccupierMal 
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.durationOfResidenceInMonths 
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.auditDetails.createdBy
+
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.auditDetails.createdTime
+      
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ApplicantServiceDetail.applicantDetails.auditDetails.lastModifiedTime
+ 
+  # insert applicant service detail, service document and service file detail
+  - version: 1.0
+    description: Persists applicant service details in egov_filemgmnt database, eg_fm_servicedetail table
+    fromTopic: save-fm-applicantservice
+    isTransaction: true
+    queryMaps:
+    - query: >
+        INSERT INTO eg_fm_servicedetail(id, applicantpersonalid, serviceid, servicecode, servicesubtype,  serviceminortype, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      basePath: ApplicantServiceDetail
+      jsonMaps:
+      - jsonPath: $.ApplicantServiceDetail.id
+
+      - jsonPath: $.ApplicantServiceDetail.applicantPersonalId
+      
+      - jsonPath: $.ApplicantServiceDetail.serviceId 
+      
+      - jsonPath: $.ApplicantServiceDetail.serviceCode   
+      
+      - jsonPath: $.ApplicantServiceDetail.servicesubtype    
+      
+      - jsonPath: $.ApplicantServiceDetail.serviceminortype 
+    
+      - jsonPath: $.ApplicantServiceDetail.auditDetails.createdBy
+
+      - jsonPath: $.ApplicantServiceDetail.auditDetails.createdTime
+      
+      - jsonPath: $.ApplicantServiceDetail.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ApplicantServiceDetail.auditDetails.lastModifiedTime
+
     - query: >
         INSERT INTO eg_fm_applicantservicedocument(id, applicantpersonalid, servicedetailsid, documenttypeid, filestoreid, active, documentnumber, applicationdetails, createdby, createddate, lastmodifiedby, lastmodifieddate)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )        
-      basePath: ApplicantPersonals.*.applicantServiceDocuments
+      basePath: ApplicantServiceDetail.serviceDocument
       jsonMaps:    
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.id         
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.id         
       
-      - jsonPath: $.ApplicantPersonals.*.id
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.applicantPersonalId
       
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.id
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.serviceDetailsId
 
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.documentTypeId
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.documentTypeId
      
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.fileStoreId
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.fileStoreId
      
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.active 
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.active 
       
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.documentNumber 
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.documentNumber 
        
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.applicationDetails              
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.applicationDetails              
        
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.auditDetails.createdBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdTime
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.auditDetails.createdTime
      
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime 
-      
-     
-      
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.auditDetails.lastModifiedTime
+
     - query: >
         INSERT INTO eg_fm_filedetail(id, tenantid, applicantpersonalid, servicedetailsid, filenumber, filecode, filename, filearisingmode, filearisingdate, financialyear, applicationdate, workflowcode, businessservice, action, filestatus, createdby, createddate, lastmodifiedby, lastmodifieddate)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?)        
-      basePath: ApplicantPersonals.*.fileDetail
+      basePath: ApplicantServiceDetail.fileDetail
       jsonMaps:    
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.id         
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.id         
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.tenantId
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.tenantId
       
-      - jsonPath: $.ApplicantPersonals.*.id
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.applicantPersonalId
       
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.id
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.serviceDetailsId
 
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.fileNumber
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.fileNumber
      
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.fileCode
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.fileCode
      
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.fileName     
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.fileName     
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.fileArisingMode 
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.fileArisingMode 
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.fileArisingDate 
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.fileArisingDate 
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.financialYear 
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.financialYear 
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.applicationDate 
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.applicationDate 
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.workflowCode 
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.workflowCode 
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.businessService 
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.businessService 
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.action 
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.action 
       
-      - jsonPath: $.ApplicantPersonals.*.fileDetail.fileStatus          
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.fileDetail.fileStatus          
        
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdBy
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.auditDetails.createdBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.createdTime
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.auditDetails.createdTime
      
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedBy
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ApplicantPersonals.*.auditDetails.lastModifiedTime          
+      - jsonPath: $.ApplicantServiceDetail.fileDetail.auditDetails.lastModifiedTime
 
+  # update applicant, address and document
   - version: 1.0
     description: Update applicant details in egov_filemgmnt database, eg_fm_applicantpersonal table
     fromTopic: update-fm-applicantpersonal
     isTransaction: true
     queryMaps:
-    
     - query: >
-         INSERT INTO eg_fm_applicantpersonal_log SELECT * FROM eg_fm_applicantpersonal WHERE id = ?;
-      basePath: ApplicantPersonals.*
+         INSERT INTO eg_fm_applicantpersonal_log 
+         SELECT * FROM eg_fm_applicantpersonal WHERE id = ?;
+      basePath: ApplicantServiceDetail
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.id
+      - jsonPath: $.ApplicantServiceDetail.applicant.id
                  
     - query: >
         UPDATE eg_fm_applicantpersonal 
-        SET aadhaarno = ?, email = ?, firstname = ?, lastname = ?, title = ?, mobileno = ?
+        SET aadhaarno = ?, email = ?, firstname = ?, lastname = ?, title = ?, mobileno = ?, lastmodifiedby = ?, lastmodifiedtime = ?
         WHERE id = ?;
         
-      basePath: ApplicantPersonals.*
+      basePath: ApplicantServiceDetail
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.aadhaarNo 
+      - jsonPath: $.ApplicantServiceDetail.applicant.aadhaarNo 
       
-      - jsonPath: $.ApplicantPersonals.*.email 
+      - jsonPath: $.ApplicantServiceDetail.applicant.email 
       
-      - jsonPath: $.ApplicantPersonals.*.firstName 
+      - jsonPath: $.ApplicantServiceDetail.applicant.firstName 
       
-      - jsonPath: $.ApplicantPersonals.*.lastName 
+      - jsonPath: $.ApplicantServiceDetail.applicant.lastName 
       
-      - jsonPath: $.ApplicantPersonals.*.title 
+      - jsonPath: $.ApplicantServiceDetail.applicant.title 
       
-      - jsonPath: $.ApplicantPersonals.*.mobileNo       
-         
-      - jsonPath: $.ApplicantPersonals.*.id   
-      
-      
+      - jsonPath: $.ApplicantServiceDetail.applicant.mobileNo
+     
+      - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.lastModifiedTime
+        
+      - jsonPath: $.ApplicantServiceDetail.applicant.id
+
     - query: >
-         INSERT INTO eg_fm_applicantaddress_log SELECT * FROM eg_fm_applicantaddress WHERE id = ?;
-      basePath: ApplicantPersonals.*
+         INSERT INTO eg_fm_applicantaddress_log 
+         SELECT * FROM eg_fm_applicantaddress WHERE id = ?;
+      basePath: ApplicantServiceDetail.applicant
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.id       
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.id       
       
     - query: >      
         UPDATE eg_fm_applicantaddress 
-        SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?
-        WHERE applicantpersonalid = ?;
-      basePath: ApplicantPersonals.*.applicantAddress
+        SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?, lastmodifiedby = ?, lastmodifieddate = ?
+        WHERE id = ?;
+      basePath: ApplicantServiceDetail.applicant
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.buildingNo 
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.buildingNo 
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.houseName  
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.houseName  
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.street 
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.street 
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.pincode
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.pincode
       
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.postOfficeName          
-         
-      - jsonPath: $.ApplicantPersonals.*.applicantAddress.applicantpersonalid
-      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.postOfficeName          
+     
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.auditDetails.lastModifiedTime  
+          
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.id
+
     - query: >
-         INSERT INTO eg_fm_applicantdocument_log SELECT * FROM eg_fm_applicantdocument WHERE id = ?;
-      basePath: ApplicantPersonals.*
+         INSERT INTO eg_fm_applicantdocument_log 
+         SELECT * FROM eg_fm_applicantdocument WHERE id = ?;
+      basePath: ApplicantServiceDetail.applicant
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.id   
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.id   
       
     - query: >      
         UPDATE eg_fm_applicantdocument 
-        SET documenttypeid = ?, documentnumber = ?, docexpirydate = ?        
-        WHERE applicantpersonalid = ?;
-      basePath: ApplicantPersonals.*.applicantDocuments
+        SET documenttypeid = ?, documentnumber = ?, docexpirydate = ?, lastmodifiedby = ?, lastmodifieddate = ?
+        WHERE id = ?;
+      basePath: ApplicantServiceDetail.applicant
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.documenttypeId 
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.documenttypeId 
       
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.documentNumber  
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.documentNumber  
       
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.docexpiryDate             
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.docexpiryDate             
+     
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedTime
          
-      - jsonPath: $.ApplicantPersonals.*.applicantDocuments.applicantpersonalid
-      
+      - jsonPath: $.ApplicantServiceDetail.applicant.document.id
+
+  # update applicant service detail, service document, service file detail and applicant chile (other details)
+  - version: 1.0
+    description: Persists applicant service details in egov_filemgmnt database, eg_fm_servicedetail table
+    fromTopic: update-fm-applicantservice
+    isTransaction: true
+    queryMaps:
     - query: >
-         INSERT INTO eg_fm_applicantservicedocument_log SELECT * FROM eg_fm_applicantservicedocument WHERE id = ?;
-      basePath: ApplicantPersonals.*
+         INSERT INTO eg_fm_servicedetail_log 
+         SELECT * FROM eg_fm_servicedetail WHERE id = ?;
+      basePath: ApplicantServiceDetail
       jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.id      
-      
-    - query: >      
-        UPDATE eg_fm_applicantservicedocument
-        SET documenttypeid = ?, servicedetailsid = ?     
-        WHERE applicantpersonalid = ?;
-      basePath: ApplicantPersonals.*.applicantServiceDocuments
-      jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.serviceDetailsId 
-      
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.documentTypeId             
-         
-      - jsonPath: $.ApplicantPersonals.*.applicantServiceDocuments.applicantpersonalid
-      
-    - query: >
-         INSERT INTO eg_fm_servicedetail_log SELECT * FROM eg_fm_servicedetail WHERE id = ?;
-      basePath: ApplicantPersonals.*
-      jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.id  
+      - jsonPath: $.ApplicantServiceDetail.id  
       
     - query: >      
         UPDATE eg_fm_servicedetail
-        SET servicecode = ? ,servicesubtype =?, serviceminortype=?      
-        WHERE applicantpersonalid = ?;
-      basePath: ApplicantPersonals.*.serviceDetails
-      jsonMaps:
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.serviceCode  
-      
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.servicesubtype 
-      
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.serviceminortype               
-         
-      - jsonPath: $.ApplicantPersonals.*.serviceDetails.applicantpersonalid 
-            
-            
-  - version: 1.0
-    description: Persists communication file  details in egov_filemgmnt database, eg_fm_communicationfile table
-    fromTopic: save-fm-communicationfile
-    isTransaction: true
-    queryMaps:
-    - query: >
-        INSERT INTO eg_fm_communicationfile(id, subjecttypeid, senderid, priorityid, filestoreid, details, createdby, createddate, lastmodifiedby, lastmodifieddate) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      basePath: CommunicationFile.*
-      jsonMaps:
-      - jsonPath: $.CommunicationFile.*.id
-
-      - jsonPath: $.CommunicationFile.*.subjectTypeId 
-      
-      - jsonPath: $.CommunicationFile.*.senderId 
-      
-      - jsonPath: $.CommunicationFile.*.priorityId 
-      
-      - jsonPath: $.CommunicationFile.*.fileStoreId 
-      
-      - jsonPath: $.CommunicationFile.*.details 
-      
-      - jsonPath: $.CommunicationFile.*.auditDetails.createdBy
-
-      - jsonPath: $.CommunicationFile.*.auditDetails.createdTime
-      
-      - jsonPath: $.CommunicationFile.*.auditDetails.lastModifiedBy
-
-      - jsonPath: $.CommunicationFile.*.auditDetails.lastModifiedTime   
-      
-  - version: 1.0
-    description: Update communication file   in egov_filemgmnt database, eg_fm_communicationfile table
-    fromTopic: update-fm-communicationfile
-    isTransaction: true
-    queryMaps:
-    - query: >
-        UPDATE eg_fm_communicationfile 
-        SET subjecttypeid = ?, senderid = ?, priorityid = ?, details = ? 
+        SET servicecode = ? ,servicesubtype =?, serviceminortype=?, lastmodifiedby = ?, lastmodifiedtime = ?
         WHERE id = ?;
-      basePath: CommunicationFile.*
+      basePath: ApplicantServiceDetail
       jsonMaps:
-      - jsonPath: $.CommunicationFile.*.subjectTypeId 
+      - jsonPath: $.ApplicantServiceDetail.serviceCode  
       
-      - jsonPath: $.CommunicationFile.*.senderId 
+      - jsonPath: $.ApplicantServiceDetail.servicesubtype 
       
-      - jsonPath: $.CommunicationFile.*.priorityId 
+      - jsonPath: $.ApplicantServiceDetail.serviceminortype               
       
-      - jsonPath: $.CommunicationFile.*.details      
- 
-      - jsonPath: $.CommunicationFile.*.id          
+      - jsonPath: $.ApplicantServiceDetail.auditDetails.lastModifiedBy
 
-      - jsonPath: $.CommunicationFile.*.auditDetails.lastModifiedTime    
-      
-  -  version: 1.0
-     description: Persists certificate details  in egov_filemgmnt database, eg_fm_certificatedetail table
-     fromTopic: save-fm-certificates
-     isTransaction: true
-     queryMaps:
-     - query: >
-        INSERT INTO eg_fm_certificatedetail(id, tenantid, businessservice, certificateno, certificatestatus, applicantpersonalid,filestoreid,dateofissue, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-       basePath: CertificateDetails.*
-       jsonMaps:
-       - jsonPath: $.CertificateDetails.*.id
+      - jsonPath: $.ApplicantServiceDetail.auditDetails.lastModifiedTime
+         
+      - jsonPath: $.ApplicantServiceDetail.id
 
-       - jsonPath: $.CertificateDetails.*.tenantId 
+    - query: >
+         INSERT INTO eg_fm_applicantservicedocument_log 
+         SELECT * FROM eg_fm_applicantservicedocument WHERE id = ?;
+      basePath: ApplicantServiceDetail
+      jsonMaps:
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.id      
       
-       - jsonPath: $.CertificateDetails.*.bussinessService 
-      
-       - jsonPath: $.CertificateDetails.*.certificateNo 
-      
-       - jsonPath: $.CertificateDetails.*.certificateStatus 
-      
-       - jsonPath: $.CertificateDetails.*.applicantPersonalId 
-       
-       - jsonPath: $.CertificateDetails.*.filestoreId 
-       
-       - jsonPath: $.CertificateDetails.*.dateofIssue 
-      
-       - jsonPath: $.CertificateDetails.*.auditDetails.createdBy
+    - query: >      
+        UPDATE eg_fm_applicantservicedocument
+        SET documenttypeid = ?, lastmodifiedby = ?, lastmodifieddate = ?     
+        WHERE id = ?;
+      basePath: ApplicantServiceDetail
+      jsonMaps:
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.documentTypeId             
+     
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.auditDetails.lastModifiedBy
 
-       - jsonPath: $.CertificateDetails.*.auditDetails.createdTime
-      
-       - jsonPath: $.CertificateDetails.*.auditDetails.lastModifiedBy
-
-       - jsonPath: $.CertificateDetails.*.auditDetails.lastModifiedTime   
-
-   
-
-       
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.auditDetails.lastModifiedTime
+         
+      - jsonPath: $.ApplicantServiceDetail.serviceDocument.id

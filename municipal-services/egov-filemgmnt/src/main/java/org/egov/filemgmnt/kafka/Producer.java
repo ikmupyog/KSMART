@@ -9,7 +9,7 @@ public class Producer {
     @Autowired
     private CustomKafkaTemplate<String, Object> kafkaTemplate;
 
-    public void push(String topic, Object value) {
+    public void push(final String topic, final Object value) {
         kafkaTemplate.send(topic, value);
     }
 }

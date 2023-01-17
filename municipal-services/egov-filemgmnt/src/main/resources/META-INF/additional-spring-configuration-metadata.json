@@ -7,12 +7,27 @@
         {
             "name": "persister.save.applicantpersonal.topic",
             "type": "java.lang.String",
-            "description": "Applicant personal save topic"
+            "description": "Applicant personal save topic."
         },
         {
             "name": "persister.update.applicantpersonal.topic",
             "type": "java.lang.String",
-            "description": "Applicant personal update topic"
+            "description": "Applicant personal update topic."
+        },
+        {
+            "name": "persister.save.applicantservice.topic",
+            "type": "java.lang.String",
+            "description": "Applicant service save topic."
+        },
+        {
+            "name": "persister.update.applicantservice.topic",
+            "type": "java.lang.String",
+            "description": "Applicant service update topic."
+        },
+        {
+            "name": "persister.save.applicantservicecertificate.topic",
+            "type": "java.lang.String",
+            "description": "Applicant service certificate save topic."
         },
         {
             "name": "persister.save.servicedetails.topic",
@@ -183,6 +198,11 @@
             "name": "egov.state.level.tenant.id",
             "type": "java.lang.String",
             "description": "A description for 'egov.state.level.tenant.id'"
+        },
+        {
+            "name": "decryption.abac.enabled",
+            "type": "java.lang.Boolean",
+            "description": "A description for 'decryption.abac.enabled'"
         }
     ],
     "hints": [

@@ -105,7 +105,7 @@ networks:
 #-Dspring.profiles.active=local
 #-Dserver.port=8082 
 #-Degov.persist.yml.repo.path=file:///D:/KSMART/municipal-services/egov-filemgmnt/src/main/resources/persister/filemgmnt.yml 
-#-Dspring.datasource.url=jdbc:postgresql://localhost:5432/egov_filemngmnt 
+#-Dspring.datasource.url=jdbc:p6spy:postgresql://localhost:5432/egov_filemgmnt 
 #-Dspring.datasource.username=postgres 
 #-Dspring.datasource.password=123
 #-Dspring.kafka.bootstrap-servers=localhost:9092

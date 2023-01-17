@@ -9,8 +9,8 @@ import org.egov.filemgmnt.kafka.Producer;
 import org.egov.filemgmnt.repository.ServiceDetailsRepository;
 import org.egov.filemgmnt.validators.ServiceDetailsValidator;
 import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
+import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.egov.filemgmnt.web.models.ServiceDetailsRequest;
-import org.egov.filemgmnt.web.models.ServiceDetailsSearchCriteria;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +27,9 @@ public class ServiceDetailsService {
     private final FMConfiguration fmConfig;
 
     // @Autowired
-    ServiceDetailsService(ServiceDetailsValidator validatorService, ServiceDetailsEnrichment enrichmentService,
-                          ServiceDetailsRepository repository, @Qualifier("fmProducer") Producer producer,
-                          FMConfiguration fmConfig) {
+    ServiceDetailsService(final ServiceDetailsValidator validatorService,
+                          final ServiceDetailsEnrichment enrichmentService, final ServiceDetailsRepository repository,
+                          @Qualifier("fmProducer") final Producer producer, final FMConfiguration fmConfig) {
         this.validatorService = validatorService;
         this.enrichmentService = enrichmentService;
         this.repository = repository;
@@ -38,7 +38,7 @@ public class ServiceDetailsService {
 
     }
 
-    public List<ApplicantServiceDetail> create(ServiceDetailsRequest request) {
+    public List<ApplicantServiceDetail> create(final ServiceDetailsRequest request) {
         // validate request
         validatorService.validateCreate(request);
 
@@ -50,7 +50,7 @@ public class ServiceDetailsService {
         return request.getServiceDetails();
     }
 
-    public List<ApplicantServiceDetail> search(ServiceDetailsSearchCriteria criteria) {
+    public List<ApplicantServiceDetail> search(final ApplicantServiceSearchCriteria criteria) {
 
 //        if (CollectionUtils.isEmpty(criteria.getIds())) {
 //
@@ -59,19 +59,19 @@ public class ServiceDetailsService {
         return repository.getApplicantServices(criteria);
     }
 
-    public List<ApplicantServiceDetail> update(ServiceDetailsRequest request) {
+    public List<ApplicantServiceDetail> update(final ServiceDetailsRequest request) {
         if (log.isDebugEnabled()) {
             log.debug("ServiceDetails.update\n{}", request);
         }
 
-        List<String> ids = new LinkedList<>();
+        final List<String> ids = new LinkedList<>();
         request.getServiceDetails()
                .forEach(personal -> ids.add(personal.getId()));
 
         // search database
-        List<ApplicantServiceDetail> searchResult = repository.getApplicantServices(ServiceDetailsSearchCriteria.builder()
-                                                                                                        .ids(ids)
-                                                                                                        .build());
+        final List<ApplicantServiceDetail> searchResult = repository.getApplicantServices(ApplicantServiceSearchCriteria.builder()
+                                                                                                                        .applicantIds(ids)
+                                                                                                                        .build());
         // validate request
         validatorService.validateUpdate(request, searchResult);
 

@@ -11,12 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServiceDetailsEnrichment implements BaseEnrichment {
 
-    /**
-     * Enrich create.
-     *
-     * @param request the {@link org.egov.filemgmnt.web.models.ServiceDetailsRequest
-     *                ServiceDetailsRequest}
-     */
     public void enrichCreate(ServiceDetailsRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
@@ -32,12 +26,6 @@ public class ServiceDetailsEnrichment implements BaseEnrichment {
                });
     }
 
-    /**
-     * Enrich update.
-     *
-     * @param request the {@link org.egov.filemgmnt.web.models.ServiceDetailsRequest
-     *                ServiceDetailsRequest}
-     */
     public void enrichUpdate(ServiceDetailsRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();

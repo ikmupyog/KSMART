@@ -2,11 +2,12 @@ package org.egov.filemgmnt.web.controllers;
 
 import javax.validation.Valid;
 
-import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
-import org.egov.filemgmnt.web.models.ApplicantPersonalResponse;
-import org.egov.filemgmnt.web.models.ApplicantPersonalSearchCriteria;
-import org.egov.filemgmnt.web.models.ApplicantPersonalServiceRequest;
-import org.egov.filemgmnt.web.models.ApplicantPersonalServiceResponse;
+import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantSearchResponse;
+import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
+import org.egov.filemgmnt.web.models.ApplicantServiceResponse;
+import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantServiceSearchResponse;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.tracer.model.ErrorRes;
 import org.springframework.http.MediaType;
@@ -24,49 +25,41 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "File Management")
 @Validated
-interface FileManagementResource {
+interface FileManagementBaseController {
 
-    ResponseEntity<ApplicantPersonalServiceResponse> createService(@Valid ApplicantPersonalServiceRequest request);
-
-    ResponseEntity<ApplicantPersonalServiceResponse> updateService(@Valid ApplicantPersonalServiceRequest request);
-
-    ResponseEntity<ApplicantPersonalResponse> searchApplicantPersonal(@Valid RequestInfoWrapper request,
-                                                                      @Valid ApplicantPersonalSearchCriteria criteria);
-
-    @Operation(summary = "Create applicant personal along with details.",
+    @Operation(summary = "Create applicant personal along with file service details.",
                description = "",
                requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                             schema = @Schema(implementation = ApplicantPersonalRequest.class)),
+                                                             schema = @Schema(implementation = ApplicantServiceRequest.class)),
                                           required = true),
                responses = {
                        @ApiResponse(responseCode = "200",
-                                    description = "Applicant personal created successfully",
+                                    description = "File service details created successfully",
                                     content = @Content(mediaType = "application/json",
-                                                       schema = @Schema(implementation = ApplicantPersonalResponse.class))),
+                                                       schema = @Schema(implementation = ApplicantServiceResponse.class))),
+                       @ApiResponse(responseCode = "400",
+                                    description = "Bad file service request",
+                                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                       schema = @Schema(implementation = ErrorRes.class))) })
+    ResponseEntity<ApplicantServiceResponse> create(@Valid ApplicantServiceRequest request);
+
+    @Operation(summary = "Update applicant personal along with file service details.",
+               description = "",
+               requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                             schema = @Schema(implementation = ApplicantServiceRequest.class)),
+                                          required = true),
+               responses = {
+                       @ApiResponse(responseCode = "200",
+                                    description = "File service details updated successfully",
+                                    content = @Content(mediaType = "application/json",
+                                                       schema = @Schema(implementation = ApplicantServiceResponse.class))),
                        @ApiResponse(responseCode = "400",
                                     description = "Bad request",
                                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                                        schema = @Schema(implementation = ErrorRes.class))) })
+    ResponseEntity<ApplicantServiceResponse> update(@Valid ApplicantServiceRequest request);
 
-    ResponseEntity<ApplicantPersonalResponse> create(@Valid ApplicantPersonalRequest request);
-
-    @Operation(summary = "Update applicant personal along with details.",
-               description = "",
-               requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                             schema = @Schema(implementation = ApplicantPersonalRequest.class)),
-                                          required = true),
-               responses = {
-                       @ApiResponse(responseCode = "200",
-                                    description = "Applicant personal updated successfully",
-                                    content = @Content(mediaType = "application/json",
-                                                       schema = @Schema(implementation = ApplicantPersonalResponse.class))),
-                       @ApiResponse(responseCode = "400",
-                                    description = "Bad request",
-                                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                       schema = @Schema(implementation = ErrorRes.class))) })
-    ResponseEntity<ApplicantPersonalResponse> update(@Valid ApplicantPersonalRequest request);
-
-    @Operation(summary = "Search applicant personal along with details.",
+    @Operation(summary = "Search applicant service details with the given query parameters.",
                description = "",
                requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                                              schema = @Schema(implementation = RequestInfoWrapper.class)),
@@ -76,13 +69,13 @@ interface FileManagementResource {
                                   name = "tenantId",
                                   required = true,
                                   allowEmptyValue = false,
-                                  description = "Tenant id",
+                                  description = "Tenant identification number",
                                   schema = @Schema(type = "string", accessMode = Schema.AccessMode.READ_ONLY)),
                        @Parameter(in = ParameterIn.QUERY,
-                                  name = "id",
+                                  name = "applicantId",
                                   required = false,
                                   allowEmptyValue = true,
-                                  description = "Applicant id",
+                                  description = "Applicant personal id",
                                   schema = @Schema(type = "string",
                                                    format = "uuid",
                                                    accessMode = Schema.AccessMode.READ_ONLY)),
@@ -134,14 +127,53 @@ interface FileManagementResource {
                                                    accessMode = Schema.AccessMode.READ_ONLY)) },
                responses = {
                        @ApiResponse(responseCode = "200",
-                                    description = "Applicant personals retrieved successfully",
+                                    description = "Applicant service details retrieved successfully",
                                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                       schema = @Schema(implementation = ApplicantPersonalResponse.class))),
+                                                       schema = @Schema(implementation = ApplicantServiceSearchResponse.class))),
                        @ApiResponse(responseCode = "400",
-                                    description = "Bad request",
+                                    description = "Bad applicant service detail search request",
                                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                                        schema = @Schema(implementation = ErrorRes.class))) })
-    ResponseEntity<ApplicantPersonalResponse> search(@Valid RequestInfoWrapper request,
-                                                     @Valid ApplicantPersonalSearchCriteria criteria);
+    ResponseEntity<ApplicantServiceSearchResponse> searchServices(@Valid RequestInfoWrapper request,
+                                                                  @Valid ApplicantServiceSearchCriteria searchCriteria);
 
+    @Operation(summary = "Search applicant details with the given query parameters.",
+               description = "",
+               requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                             schema = @Schema(implementation = RequestInfoWrapper.class)),
+                                          required = true),
+               parameters = {
+                       @Parameter(in = ParameterIn.QUERY,
+                                  name = "tenantId",
+                                  required = true,
+                                  allowEmptyValue = false,
+                                  description = "Tenant identification number",
+                                  schema = @Schema(type = "string", accessMode = Schema.AccessMode.READ_ONLY)),
+                       @Parameter(in = ParameterIn.QUERY,
+                                  name = "id",
+                                  required = false,
+                                  allowEmptyValue = true,
+                                  description = "Applicant personal id",
+                                  schema = @Schema(type = "string",
+                                                   format = "uuid",
+                                                   accessMode = Schema.AccessMode.READ_ONLY)),
+                       @Parameter(in = ParameterIn.QUERY,
+                                  name = "aadhaarNo",
+                                  required = false,
+                                  allowEmptyValue = true,
+                                  description = "Aadhaar number",
+                                  schema = @Schema(type = "string",
+                                                   pattern = "^[1-9][0-9]{11}$",
+                                                   accessMode = Schema.AccessMode.READ_ONLY)) },
+               responses = {
+                       @ApiResponse(responseCode = "200",
+                                    description = "Applicant personals retrieved successfully",
+                                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                       schema = @Schema(implementation = ApplicantSearchResponse.class))),
+                       @ApiResponse(responseCode = "400",
+                                    description = "Bad applicant personal search request",
+                                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                       schema = @Schema(implementation = ErrorRes.class))) })
+    ResponseEntity<ApplicantSearchResponse> searchApplicants(@Valid RequestInfoWrapper request,
+                                                             @Valid ApplicantSearchCriteria searchCriteria);
 }

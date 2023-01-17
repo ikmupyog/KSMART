@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.egov.filemgmnt.web.models.ServiceDetailsSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,12 +16,12 @@ public class ServiceDetailsQueryBuilder extends BaseQueryBuilder {
                                                            .append(" FROM eg_fm_servicedetails aps")
                                                            .toString();
 
-    public String getServiceDetailsSearchQuery(@NotNull ServiceDetailsSearchCriteria criteria,
+    public String getServiceDetailsSearchQuery(@NotNull ApplicantServiceSearchCriteria criteria,
                                                @NotNull List<Object> preparedStmtValues, Boolean isCount) {
 
         StringBuilder query = new StringBuilder(QUERY);
 
-        addFilters("ap.id", criteria.getIds(), query, preparedStmtValues);
+        addFilters("ap.id", criteria.getApplicantIds(), query, preparedStmtValues);
 
         return query.toString();
     }

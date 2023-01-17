@@ -7,26 +7,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResponseInfoFactory {
 
-    public ResponseInfo createResponseInfoFromRequestInfo(final RequestInfo requestInfo, final Boolean success) {
+    private static final String DEFAULT_RES_MSG_ID = "uief87324"; // FIXME : Hard-coded
 
-        final String apiId = requestInfo != null ? requestInfo.getApiId() : "";
-        final String ver = requestInfo != null ? requestInfo.getVer() : "";
+    public ResponseInfo createResponseInfoFromRequestInfo(final RequestInfo info, final Boolean success) {
+
+        String apiId = "";
+        String ver = "";
         Long ts = null;
-        if (requestInfo != null) {
-            ts = requestInfo.getTs();
+        String msgId = "";
+
+        if (info != null) {
+            apiId = info.getApiId();
+            ver = info.getVer();
+            ts = info.getTs();
+            msgId = info.getMsgId();
         }
-        String resMsgId = "uief87324"; // FIXME : Hard-coded
-        String msgId = requestInfo != null ? requestInfo.getMsgId() : "";
-        String responseStatus = success ? "successful" : "failed";
 
         return ResponseInfo.builder()
                            .apiId(apiId)
                            .ver(ver)
                            .ts(ts)
-                           .resMsgId(resMsgId)
                            .msgId(msgId)
-                           .resMsgId(resMsgId)
-                           .status(responseStatus)
+                           .resMsgId(DEFAULT_RES_MSG_ID)
+                           .status(success ? "successful" : "failed")
                            .build();
     }
 

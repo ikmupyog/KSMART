@@ -1,6 +1,6 @@
 package org.egov.filemgmnt.web.models;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(name = "ApplicantDocument", description = "A Object holds the basic data for a Applicant Documents")
+@Schema(description = "A Object holds the basic data for a Applicant Document")
 @Validated
 
 @Getter
@@ -22,33 +22,31 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class ApplicantDocument {
 
-    @Schema(type = "string", format = "uuid", description = "Applicant dDocument id")
-    @Size(max = 64)
+    @Schema(type = "string", format = "uuid", description = "Applicant document id")
+    @Size(max = 64, message = "Applicant document id length cannot exceed 64 characters")
     @JsonProperty("id")
     private String id;
 
     @Schema(type = "string", format = "uuid", description = "Applicant id")
-    @Size(max = 64)
+    @Size(max = 64, message = "Applicant personal id length cannot exceed 64 characters")
     @JsonProperty("applicantPersonalId")
     private String applicantPersonalId;
 
     @Schema(type = "string", description = "Document type id")
-    @Size(max = 64)
-    @NotNull
+    @NotBlank(message = "Document type id is required")
+    @Size(max = 64, message = "Document type id length cannot exceed 64 characters")
     @JsonProperty("documentTypeId")
     private String documentTypeId;
 
     @Schema(type = "string", description = "Document number")
-    @Size(max = 64)
-//    @NotNull
+    @Size(max = 64, message = "Document nuber length cannot exceed 64 characters")
     @JsonProperty("documentNumber")
     private String documentNumber;
 
     @Schema(type = "integer", format = "int64", description = "Document expiry date")
-//    @NotNull
+    // @PositiveOrZero(message = "Invalid document expiry date")
     @JsonProperty("docExpiryDate")
     private Long docExpiryDate;
 

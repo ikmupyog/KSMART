@@ -9,8 +9,26 @@ import org.apache.commons.lang3.StringUtils;
 
 class BaseQueryBuilder {
 
-    void addDateRangeFilter(String column, Long startDate, Long endDate, StringBuilder query,
-                            List<Object> paramValues) {
+    protected static final String APPLICANT_FIELDS = new StringBuilder().append("      ap.id AS applicant_id, ap.aadhaarno, ap.email, ap.firstname, ap.lastname, ap.title, ap.mobileno")
+                                                                        .append("    , ap.tenantid, ap.createdby AS applicant_createdby, ap.createdtime AS applicant_createdtime")
+                                                                        .append("    , ap.lastmodifiedby AS applicant_lastmodifiedby, ap.lastmodifiedtime AS applicant_lastmodifiedtime")
+                                                                        .append("    , ap.fatherfirstname, ap.fatherlastname, ap.motherfirstname, ap.motherlastname, ap.applicantcategory")
+                                                                        .append("    , ap.dateofbirth, ap.bankaccountno, ap.firstnamemal, ap.lastnamemal, ap.fatherfirstnamemal")
+                                                                        .append("    , ap.fatherlastnamemal, ap.motherfirstnamemal, ap.motherlastnamemal")
+                                                                        // applicant address columns
+                                                                        .append("    , ad.id AS address_id, ad.buildingno, ad.housename, ad.street")
+                                                                        .append("    , ad.pincode, ad.postofficename, ad.createdby AS address_createdby, ad.createddate AS address_createdtime")
+                                                                        .append("    , ad.lastmodifiedby AS address_lastmodifiedby, ad.lastmodifieddate AS address_lastmodifiedtime")
+                                                                        .append("    , ad.residenceassociationno, ad.localplace, ad.mainplace, ad.wardno, ad.subno, ad.housenamemal, ad.village")
+                                                                        .append("    , ad.taluk, ad.streetmal, ad.localplacemal, ad.mainplacemal")
+                                                                        // applicant document columns
+                                                                        .append("    , doc.id AS document_id, doc.documenttypeid, doc.documentnumber")
+                                                                        .append("    , doc.docexpirydate, doc.createdby AS document_createdby, doc.createddate AS document_createdtime")
+                                                                        .append("    , doc.lastmodifiedby AS document_lastmodifiedby, doc.lastmodifieddate AS document_lastmodifiedtime")
+                                                                        .toString();
+
+    void addDateRangeFilter(final String column, final Long startDate, final Long endDate, final StringBuilder query,
+                            final List<Object> paramValues) {
 
         if (startDate != null || endDate != null) {
             addWhereClause(paramValues, query);
@@ -36,7 +54,8 @@ class BaseQueryBuilder {
         }
     }
 
-    void addFilters(String column, List<String> ids, StringBuilder query, List<Object> paramValues) {
+    void addFilters(final String column, final List<String> ids, final StringBuilder query,
+                    final List<Object> paramValues) {
         if (CollectionUtils.isNotEmpty(ids)) {
             addWhereClause(paramValues, query);
             query.append(column)
@@ -47,7 +66,7 @@ class BaseQueryBuilder {
         }
     }
 
-    void addFilter(String column, String value, StringBuilder query, List<Object> paramValues) {
+    void addFilter(final String column, final String value, final StringBuilder query, final List<Object> paramValues) {
         if (StringUtils.isNotBlank(value)) {
             addWhereClause(paramValues, query);
             query.append(column)
@@ -56,7 +75,7 @@ class BaseQueryBuilder {
         }
     }
 
-    void addWhereClause(List<Object> values, StringBuilder query) {
+    void addWhereClause(final List<Object> values, final StringBuilder query) {
         if (CollectionUtils.isEmpty(values)) {
             query.append(" WHERE ");
         } else {
@@ -64,7 +83,7 @@ class BaseQueryBuilder {
         }
     }
 
-    private String getStatementParameters(int count) {
+    private String getStatementParameters(final int count) {
         return Collections.nCopies(count, "(?)")
                           .stream()
                           .collect(Collectors.joining(", "));

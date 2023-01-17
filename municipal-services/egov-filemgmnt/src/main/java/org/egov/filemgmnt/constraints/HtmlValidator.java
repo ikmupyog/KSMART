@@ -12,7 +12,7 @@ public class HtmlValidator implements ConstraintValidator<Html, String> {
     private Safelist safeList;
 
     @Override
-    public void initialize(Html annotation) {
+    public void initialize(final Html annotation) {
         switch (annotation.whiteListType()) {
         case NONE:
             safeList = Safelist.none();
@@ -37,7 +37,7 @@ public class HtmlValidator implements ConstraintValidator<Html, String> {
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
+    public boolean isValid(final String value, final ConstraintValidatorContext context) {
         if (StringUtils.isBlank(value)) {
             return true;
         }

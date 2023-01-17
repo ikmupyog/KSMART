@@ -4,10 +4,10 @@ import org.egov.filemgmnt.web.models.AuditDetails;
 
 interface BaseEnrichment {
 
-    default AuditDetails buildAuditDetails(String by, Boolean create) {
+    default AuditDetails buildAuditDetails(final String by, final Boolean create) {
         AuditDetails auditDetails;
 
-        Long currentTime = Long.valueOf(System.currentTimeMillis());
+        final Long currentTime = Long.valueOf(System.currentTimeMillis());
         if (create) {
             auditDetails = AuditDetails.builder()
                                        .createdBy(by)

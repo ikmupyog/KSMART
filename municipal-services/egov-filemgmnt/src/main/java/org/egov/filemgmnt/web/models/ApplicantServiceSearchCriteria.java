@@ -1,5 +1,7 @@
 package org.egov.filemgmnt.web.models;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -13,13 +15,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ApplicantPersonalSearchCriteria {
+public class ApplicantServiceSearchCriteria {
 
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @JsonProperty("id")
-    private String id; // applicant id
+    @JsonProperty("serviceDetailId")
+    private String serviceDetailId;
+
+    @JsonProperty("applicantId")
+    private String applicantId;
 
     @JsonProperty("fileCode")
     private String fileCode;
@@ -38,4 +43,8 @@ public class ApplicantPersonalSearchCriteria {
 
     @JsonProperty("limit")
     private Integer limit;
+
+    @JsonProperty("applicantIds")
+    private List<String> applicantIds;
+
 }

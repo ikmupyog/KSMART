@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -18,33 +19,32 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @Configuration
 class JsonMapperConfiguration {
 
-    private final FMConfiguration filemgmntConfig;
+    private final FMConfiguration fmConfig;
 
-    // @Autowired
-    JsonMapperConfiguration(FMConfiguration filemgmntConfig) {
-        this.filemgmntConfig = filemgmntConfig;
+    JsonMapperConfiguration(final FMConfiguration fmConfig) {
+        this.fmConfig = fmConfig;
     }
 
     @PostConstruct
     void initialize() {
-        TimeZone.setDefault(TimeZone.getTimeZone(filemgmntConfig.getTimeZone()));
+        TimeZone.setDefault(TimeZone.getTimeZone(fmConfig.getTimeZone()));
     }
 
     @Bean
-    ObjectMapper objectMapper() {
-
+    protected ObjectMapper objectMapper() {
         return JsonMapper.builder()
                          .addModules(new JavaTimeModule())
                          .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                          .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-//                       .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
-                         .defaultTimeZone(TimeZone.getTimeZone(filemgmntConfig.getTimeZone()))
+                         .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
+                         .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+                         .defaultTimeZone(TimeZone.getTimeZone(fmConfig.getTimeZone()))
                          .build();
     }
 
     @Bean
     @Autowired
-    public MappingJackson2HttpMessageConverter jacksonConverter(ObjectMapper objectMapper) {
+    protected MappingJackson2HttpMessageConverter jacksonConverter(final ObjectMapper objectMapper) {
         return new MappingJackson2HttpMessageConverter(objectMapper);
     }
 }

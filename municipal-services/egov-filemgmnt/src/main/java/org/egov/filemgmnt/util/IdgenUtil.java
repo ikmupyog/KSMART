@@ -35,9 +35,9 @@ public class IdgenUtil {
     @Autowired
     private ServiceRequestRepository restRepo;
 
-    public List<String> getIdList(RequestInfo requestInfo, String tenantId, String idName, String idformat,
-                                  Integer count) {
-        List<IdRequest> reqList = new ArrayList<>();
+    public List<String> getIdList(final RequestInfo requestInfo, final String tenantId, final String idName,
+                                  final String idformat, final Integer count) {
+        final List<IdRequest> reqList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             reqList.add(IdRequest.builder()
                                  .idName(idName)
@@ -46,15 +46,15 @@ public class IdgenUtil {
                                  .build());
         }
 
-        IdGenerationRequest request = IdGenerationRequest.builder()
-                                                         .idRequests(reqList)
-                                                         .requestInfo(requestInfo)
-                                                         .build();
-        StringBuilder uri = new StringBuilder(idGenHost).append(idGenPath);
-        IdGenerationResponse response = mapper.convertValue(restRepo.fetchResult(uri, request),
-                                                            IdGenerationResponse.class);
+        final IdGenerationRequest request = IdGenerationRequest.builder()
+                                                               .idRequests(reqList)
+                                                               .requestInfo(requestInfo)
+                                                               .build();
+        final StringBuilder uri = new StringBuilder(idGenHost).append(idGenPath);
+        final IdGenerationResponse response = mapper.convertValue(restRepo.fetchResult(uri, request),
+                                                                  IdGenerationResponse.class);
 
-        List<IdResponse> idResponses = response.getIdResponses();
+        final List<IdResponse> idResponses = response.getIdResponses();
 
         if (CollectionUtils.isEmpty(idResponses)) {
             throw new CustomException(IDGEN_ERROR.getCode(), "No ids returned from idgen Service");

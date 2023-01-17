@@ -1,7 +1,7 @@
 package org.egov.filemgmnt.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,20 +10,34 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Component
+@Configuration
 public class FMConfiguration {
 
     @Value("${app.timezone}")
     private String timeZone;
 
+    @Value("${egov.state.level.tenant.id}")
+    private String stateLevelTenantId;
+
+    // Applicant personal
     @Value("${persister.save.applicantpersonal.topic}")
     private String saveApplicantPersonalTopic;
 
-    @Value("${persister.save.certificate.topic}")
-    private String saveCertificateTopic;
-
     @Value("${persister.update.applicantpersonal.topic}")
     private String updateApplicantPersonalTopic;
+
+    // Applicant personal service
+    @Value("${persister.save.applicantservice.topic}")
+    private String saveApplicantServiceTopic;
+
+    @Value("${persister.update.applicantservice.topic}")
+    private String updateApplicantServiceTopic;
+
+    @Value("${persister.save.applicantservicecertificate.topic}")
+    private String saveApplicantServiceCertificateTopic;
+
+    @Value("${persister.save.certificate.topic}")
+    private String saveCertificateTopic;
 
     @Value("${persister.save.servicedetails.topic}")
     private String saveServiceDetailsTopic;

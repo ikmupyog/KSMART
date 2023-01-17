@@ -1,7 +1,5 @@
 package org.egov.filemgmnt.web.models;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -15,9 +13,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ServiceDetailsSearchCriteria {
+public class ApplicantSearchCriteria {
 
-    @JsonProperty("ids")
-    private List<String> ids;
+    @JsonProperty("tenantId")
+    private String tenantId;
+
+    @JsonProperty("id")
+    private String id; // applicant id
+
+    @JsonProperty("aadhaarNo")
+    private String aadhaarNo;
 
 }

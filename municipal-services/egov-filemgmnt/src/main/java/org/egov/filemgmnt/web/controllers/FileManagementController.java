@@ -2,23 +2,24 @@ package org.egov.filemgmnt.web.controllers;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.egov.filemgmnt.service.ApplicantPersonalService;
+import org.egov.filemgmnt.service.FileManagementService;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
-import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
-import org.egov.filemgmnt.web.models.ApplicantPersonalResponse;
-import org.egov.filemgmnt.web.models.ApplicantPersonalSearchCriteria;
-import org.egov.filemgmnt.web.models.ApplicantPersonalServiceRequest;
-import org.egov.filemgmnt.web.models.ApplicantPersonalServiceResponse;
+import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantSearchResponse;
+import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
+import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
+import org.egov.filemgmnt.web.models.ApplicantServiceResponse;
+import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
+import org.egov.filemgmnt.web.models.ApplicantServiceSearchResponse;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificates.CertificateResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,94 +29,82 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/v1")
-public class FileManagementController implements FileManagementResource {
+public class FileManagementController implements FileManagementBaseController {
 
+    private final FileManagementService fmService;
     private final ResponseInfoFactory responseInfoFactory;
-    private final ApplicantPersonalService personalService;
 
-    // @Autowired
-    FileManagementController(ApplicantPersonalService personalService, ResponseInfoFactory responseInfoFactory) {
-        this.personalService = personalService;
+    FileManagementController(final FileManagementService fmService, final ResponseInfoFactory responseInfoFactory) {
+        this.fmService = fmService;
         this.responseInfoFactory = responseInfoFactory;
     }
 
     @Override
-    // @PostMapping("/applicantpersonals/service/_create")
-    public ResponseEntity<ApplicantPersonalServiceResponse> createService(@Valid ApplicantPersonalServiceRequest request) {
-        // TODO Auto-generated method stub
-        return null;
+    @PostMapping("/applicantservices/_create")
+    public ResponseEntity<ApplicantServiceResponse> create(@RequestBody final ApplicantServiceRequest request) {
+        final ApplicantServiceDetail serviceDetail = fmService.create(request);
+
+        return ResponseEntity.ok(ApplicantServiceResponse.builder()
+                                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                             Boolean.TRUE))
+                                                         .applicantServiceDetail(serviceDetail)
+                                                         .build());
     }
 
     @Override
-    // @PutMapping("/applicantpersonals/service/_update")
-    public ResponseEntity<ApplicantPersonalServiceResponse> updateService(@Valid ApplicantPersonalServiceRequest request) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    // @PostMapping("/applicantpersonals/_search")
-    public ResponseEntity<ApplicantPersonalResponse> searchApplicantPersonal(@Valid RequestInfoWrapper request,
-                                                                             @Valid ApplicantPersonalSearchCriteria criteria) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    @PostMapping("/applicantpersonals/_create")
-    public ResponseEntity<ApplicantPersonalResponse> create(@RequestBody ApplicantPersonalRequest request) {
-
-        List<ApplicantPersonal> personals = personalService.create(request);
-
-        ApplicantPersonalResponse response = ApplicantPersonalResponse.builder()
-                                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                                          Boolean.TRUE))
-                                                                      .applicantPersonals(personals)
-                                                                      .build();
-        return ResponseEntity.ok(response);
-    }
-
-    @Override
-    @PostMapping("/applicantpersonals/_update")
-    public ResponseEntity<ApplicantPersonalResponse> update(@RequestBody ApplicantPersonalRequest request) {
+    @PutMapping("/applicantservices/_update")
+    public ResponseEntity<ApplicantServiceResponse> update(@RequestBody final ApplicantServiceRequest request) {
         if (log.isDebugEnabled()) {
-            log.debug("ApplicantPersonalRequest:  {}", FMUtils.toJson(request));
+            log.debug("FileServiceRequest:  %n{}", FMUtils.toJson(request));
         }
-        List<ApplicantPersonal> personals = personalService.update(request);
 
-        ApplicantPersonalResponse response = ApplicantPersonalResponse.builder()
-                                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                                          Boolean.TRUE))
-                                                                      .applicantPersonals(personals)
-                                                                      .build();
-        return ResponseEntity.ok(response);
+        final ApplicantServiceDetail serviceDetail = fmService.update(request);
+
+        return ResponseEntity.ok(ApplicantServiceResponse.builder()
+                                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                             Boolean.TRUE))
+                                                         .applicantServiceDetail(serviceDetail)
+                                                         .build());
+    }
+
+    @Override
+    @PostMapping("/applicantservices/_search")
+    public ResponseEntity<ApplicantServiceSearchResponse> searchServices(@RequestBody final RequestInfoWrapper request,
+                                                                         @ModelAttribute final ApplicantServiceSearchCriteria searchCriteria) {
+
+        final List<ApplicantServiceDetail> result = fmService.searchServices(request.getRequestInfo(), searchCriteria);
+
+        return ResponseEntity.ok(ApplicantServiceSearchResponse.builder()
+                                                               .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                                   Boolean.TRUE))
+                                                               .applicantServiceDetails(result)
+                                                               .build());
     }
 
     @Override
     @PostMapping("/applicantpersonals/_search")
-    public ResponseEntity<ApplicantPersonalResponse> search(@RequestBody RequestInfoWrapper request,
-                                                            @ModelAttribute ApplicantPersonalSearchCriteria criteria) {
+    public ResponseEntity<ApplicantSearchResponse> searchApplicants(@RequestBody final RequestInfoWrapper request,
+                                                                    @ModelAttribute final ApplicantSearchCriteria searchCriteria) {
+        final List<ApplicantPersonal> result = fmService.searchApplicants(request.getRequestInfo(), searchCriteria);
 
-        List<ApplicantPersonal> personals = personalService.search(criteria, request.getRequestInfo());
-
-        ApplicantPersonalResponse response = ApplicantPersonalResponse.builder()
-                                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                                          Boolean.TRUE))
-                                                                      .applicantPersonals(personals)
-                                                                      .build();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApplicantSearchResponse.builder()
+                                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                            Boolean.TRUE))
+                                                        .applicantPersonals(result)
+                                                        .build());
     }
 
     @PostMapping("/applicantpersonals/_download") // value = { "/applicantpersonals/_download" }
-    public ResponseEntity<CertificateResponse> download(@RequestBody RequestInfoWrapper request,
-                                                        @Valid @ModelAttribute ApplicantPersonalSearchCriteria criteria) {
+    public ResponseEntity<CertificateResponse> download(@RequestBody final RequestInfoWrapper request,
+                                                        @ModelAttribute final ApplicantSearchCriteria criteria) {
 
-        List<CertificateDetails> details = personalService.download(criteria, request.getRequestInfo());
-        CertificateResponse response = CertificateResponse.builder()
-                                                          .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                              Boolean.TRUE))
-                                                          .certificateDet(details)
-                                                          .build();
+        final List<CertificateDetails> details = fmService.download(criteria, request.getRequestInfo());
+        final CertificateResponse response = CertificateResponse.builder()
+                                                                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                                    Boolean.TRUE))
+                                                                .certificateDet(details)
+                                                                .build();
         return ResponseEntity.ok(response);
     }
+
 }

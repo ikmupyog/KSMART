@@ -15,21 +15,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Applicant personal service request for create and update.")
+@Schema(description = "Applicant personal file service request for create and update")
 @Validated
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ApplicantPersonalServiceRequest {
+public class ApplicantServiceRequest {
 
     @JsonProperty("RequestInfo")
     private RequestInfo requestInfo;
 
-    @JsonProperty("ApplicantPersonalService")
-    @NotNull
     @Valid
-    private ApplicantPersonalServiceDetails applicantPersonalService;
+    @NotNull(message = "Applicant service detail is required")
+    @JsonProperty("ApplicantServiceDetail")
+    private ApplicantServiceDetail applicantServiceDetail;
 
 }

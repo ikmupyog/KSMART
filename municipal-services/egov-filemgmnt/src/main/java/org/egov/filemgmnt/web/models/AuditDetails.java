@@ -20,7 +20,7 @@ import lombok.Setter;
 public class AuditDetails {
 
     @Schema(type = "string", format = "uuid", description = "Created by user id")
-    @Size(max = 64)
+    @Size(max = 64, message = "Created by length cannot exceed 64 characters")
     @JsonProperty("createdBy")
     private String createdBy;
 
@@ -29,7 +29,7 @@ public class AuditDetails {
     private Long createdTime;
 
     @Schema(type = "string", format = "uuid", description = "Last modified user id")
-    @Size(max = 64)
+    @Size(max = 64, message = "Last modified by length cannot exceed 64 characters")
     @JsonProperty("lastModifiedBy")
     private String lastModifiedBy;
 

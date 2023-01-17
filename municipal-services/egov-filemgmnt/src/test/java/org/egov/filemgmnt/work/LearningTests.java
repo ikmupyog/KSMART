@@ -27,8 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 @Disabled
 @SpringBootTest
 @ActiveProfiles("local")
-//@Import(TestConfig.class)
-//@TestPropertySource(locations = { "classpath:test.properties" })
 @SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert" })
 @Slf4j
 class LearningTests {

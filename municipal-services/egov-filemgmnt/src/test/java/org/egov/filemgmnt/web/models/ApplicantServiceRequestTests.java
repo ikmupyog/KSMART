@@ -36,31 +36,45 @@ import lombok.extern.slf4j.Slf4j;
 @TestPropertySource(locations = { "classpath:test.properties" })
 @SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert" })
 @Slf4j
-class ApplicantPersonalRequestTests {
+class ApplicantServiceRequestTests {
 
     @Test
     void requestJson() {
-        ApplicantPersonalRequest request = ApplicantPersonalRequest.builder()
-                                                                   .requestInfo(RequestInfo.builder()
-                                                                                           .userInfo(User.builder()
-                                                                                                         .uuid(UUID.randomUUID()
-                                                                                                                   .toString())
-                                                                                                         .build())
-                                                                                           .build())
-                                                                   .build();
+        ApplicantServiceRequest request = ApplicantServiceRequest.builder()
+                                                                 .requestInfo(RequestInfo.builder()
+                                                                                         .userInfo(User.builder()
+                                                                                                       .uuid(UUID.randomUUID()
+                                                                                                                 .toString())
+                                                                                                       .build())
+                                                                                         .build())
+                                                                 .build();
 
-        request.addApplicantPersonal(ApplicantPersonal.builder()
-                                                      .id(UUID.randomUUID()
-                                                              .toString())
-                                                      .firstName("FirstName")
-                                                      .serviceDetails(new ApplicantServiceDetail())
-                                                      .applicantAddress(new ApplicantAddress())
-                                                      .applicantServiceDocuments(new ApplicantServiceDocument())
-                                                      .applicantDocuments(new ApplicantDocument())
-                                                      .fileDetail(new FileDetail())
-                                                      .auditDetails(new AuditDetails())
-                                                      .build());
-        log.info(" *** APPLICANT PERSONAL JSON \n {}", FMUtils.toJson(request));
+        ApplicantPersonal applicant = ApplicantPersonal.builder()
+                                                       .auditDetails(new AuditDetails())
+                                                       .address(ApplicantAddress.builder()
+                                                                                .auditDetails(new AuditDetails())
+                                                                                .build())
+                                                       .document(ApplicantDocument.builder()
+                                                                                  .auditDetails(new AuditDetails())
+                                                                                  .build())
+                                                       .build();
+
+        ApplicantServiceDetail serviceDetail = ApplicantServiceDetail.builder()
+                                                                     .auditDetails(new AuditDetails())
+                                                                     .applicant(applicant)
+                                                                     .serviceDocument(ApplicantServiceDocument.builder()
+                                                                                                              .auditDetails(new AuditDetails())
+                                                                                                              .build())
+                                                                     .fileDetail(ApplicantFileDetail.builder()
+                                                                                                    .auditDetails(new AuditDetails())
+                                                                                                    .build())
+                                                                     .applicantChild(ApplicantChild.builder()
+                                                                                                   .auditDetails(new AuditDetails())
+                                                                                                   .build())
+                                                                     .build();
+
+        request.setApplicantServiceDetail(serviceDetail);
+        log.info(" *** FILE SERVICE REQUEST JSON \n {}", FMUtils.toJson(request));
     }
 
     @Test

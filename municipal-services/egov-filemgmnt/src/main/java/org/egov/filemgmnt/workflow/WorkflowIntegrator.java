@@ -4,6 +4,7 @@ import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_FILE_ACTION;
 import static org.egov.filemgmnt.web.enums.ErrorCodes.WORKFLOW_ERROR;
 import static org.egov.filemgmnt.web.enums.ErrorCodes.WORKFLOW_ERROR_KEY_NOT_FOUND;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -11,13 +12,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.util.FMConstants;
+import org.egov.filemgmnt.web.models.ApplicantFileDetail;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
-import org.egov.filemgmnt.web.models.ApplicantPersonalRequest;
-import org.egov.filemgmnt.web.models.FileDetail;
+import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
+import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.tracer.model.CustomException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.HttpClientErrorException;
@@ -35,76 +39,88 @@ import net.minidev.json.JSONObject;
 @Slf4j
 public class WorkflowIntegrator {
 
-    private final RestTemplate restTemplate;
-    private final FMConfiguration fmConfig;
+    @Autowired
+    private FMConfiguration fmConfig;
+    @Autowired
+    private RestTemplate restTemplate;
 
-    // @Autowired
-    WorkflowIntegrator(RestTemplate restTemplate, FMConfiguration fmConfig) {
-        this.restTemplate = restTemplate;
-        this.fmConfig = fmConfig;
-    }
+    public void callWorkFlow(final ApplicantServiceRequest request) {
 
-    /**
-     * Method to integrate with workflow
-     *
-     * takes the filedetails request (now take applicant personal request) as
-     * parameter constructs the work-flow request
-     *
-     * and sets the resultant status from wf-response back to file details object
-     *
-     * @param request the {@link ApplicantPersonalRequest}
-     */
-    public void callWorkFlow(ApplicantPersonalRequest request) {
+        final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();
+        Assert.notNull(serviceDetail, "Applicant service details must not be null");
 
-        ApplicantPersonal applicantPersonal = request.getApplicantPersonals()
-                                                     .get(0);
-        Assert.notNull(applicantPersonal, "Applicant personal must not be null");
+        final ApplicantFileDetail fileDetail = serviceDetail.getFileDetail();
+        Assert.notNull(fileDetail, "Applicant file detail must not be null");
 
-        String businessService = applicantPersonal.getFileDetail()
-                                                  .getBusinessService();
-        String fileAction = applicantPersonal.getFileDetail()
-                                             .getAction();
+        String businessService = fileDetail.getBusinessService();
+        final String fileAction = fileDetail.getAction();
 
-        if (businessService == null) {
+        if (StringUtils.isBlank(businessService)) {
             businessService = FMConstants.BUSINESS_SERVICE_FM;
         }
 
-        if (fileAction == null) {
+        if (StringUtils.isBlank(fileAction)) {
             throw new CustomException(INVALID_FILE_ACTION.getCode(), " File action is required.");
         }
-        JSONArray jsonArray = new JSONArray();
-        for (ApplicantPersonal personal : request.getApplicantPersonals()) {
-            if (businessService.equals(FMConstants.BUSINESS_SERVICE_FM)
-                    || !fileAction.equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW)) {
 
-                // json Object for workflow transition start
-                JSONObject jsonObj = buildJsonObjectForWorkflow(personal);
+        final ApplicantPersonal applicant = serviceDetail.getApplicant();
+        Assert.notNull(applicant, "Applicant personal must not be null");
 
-                // create an array for Json-ProcessInstances ( workflow service's request part
-                // has two json values 1.RequestInfo,2.ProcessInstances)
-                jsonArray.add(jsonObj);
-            }
+        final JSONArray jsonArray = new JSONArray();
+        if (businessService.equals(FMConstants.BUSINESS_SERVICE_FM)
+                || !fileAction.equalsIgnoreCase(FMConstants.TRIGGER_NOWORKFLOW)) {
+
+            // json Object for workflow transition start
+            final JSONObject jsonObj = buildJsonObjectForWorkflow(applicant, fileDetail);
+
+            // create an array for Json-ProcessInstances ( workflow service's request part
+            // has two json values 1.RequestInfo,2.ProcessInstances)
+            jsonArray.add(jsonObj);
         }
 
         if (CollectionUtils.isNotEmpty(jsonArray)) {
-            Map<String, String> idStatusMap = workflowRequest(request.getRequestInfo(), jsonArray);
+            final Map<String, String> idStatusMap = workflowRequest(request.getRequestInfo(), jsonArray);
 
             // setting the status back to FileDetails object from wf response
-            request.getApplicantPersonals()
-                   .forEach(personal -> personal.getFileDetail()
-                                                .setFileStatus(idStatusMap.get(personal.getFileDetail()
-                                                                                       .getFileCode())));
+            fileDetail.setFileStatus(idStatusMap.get(fileDetail.getFileCode()));
         }
 
     }
 
-    private Map<String, String> workflowRequest(RequestInfo requestInfo, JSONArray wfRequestArray) {
+    private JSONObject buildJsonObjectForWorkflow(final ApplicantPersonal applicant,
+                                                  final ApplicantFileDetail fileDetail) {
+        final JSONObject jsonObj = new JSONObject();
+        jsonObj.put(FMConstants.BUSINESSIDKEY, fileDetail.getFileCode());
+        jsonObj.put(FMConstants.TENANTIDKEY, applicant.getTenantId());
+        jsonObj.put(FMConstants.BUSINESSSERVICEKEY, fileDetail.getWorkflowCode());
+        jsonObj.put(FMConstants.MODULENAMEKEY, FMConstants.FMMODULENAMEVALUE);
+        jsonObj.put(FMConstants.ACTIONKEY, fileDetail.getAction());
+        jsonObj.put(FMConstants.COMMENTKEY, fileDetail.getComment());
+        // jsonObj.put(FMConstants.DOCUMENTSKEY, fileDetail.getWfDocuments());
+
+        // Adding assignes to processInstance
+        final String assignees = fileDetail.getAssignees();
+        final List<String> assigneeList = StringUtils.isNotBlank(assignees)//
+                ? Arrays.asList(assignees.split(","))
+                : Collections.emptyList();
+
+        final List<Map<String, String>> uuidMaps = buildUUIDList(assigneeList);
+        if (CollectionUtils.isNotEmpty(uuidMaps)) {
+            jsonObj.put(FMConstants.ASSIGNEEKEY, uuidMaps);
+        }
+
+        return jsonObj;
+    }
+
+    private Map<String, String> workflowRequest(final RequestInfo requestInfo, final JSONArray wfRequestArray) { // NOPMD
         // Create WorkflowRequest Json
-        JSONObject request = new JSONObject();
+        final JSONObject request = new JSONObject();
         request.put(FMConstants.REQUESTINFOKEY, requestInfo);
         request.put(FMConstants.WORKFLOWREQUESTARRAYKEY, wfRequestArray);
 
-        log.debug("workflow integrator request: {}", request);
+        if (log.isDebugEnabled()) {
+            log.debug("Workflow integrator request: {}", request);
+        }
 
         String response;
         try {
@@ -115,13 +131,15 @@ public class WorkflowIntegrator {
                                                   String.class);
         } catch (HttpClientErrorException e) {
             // extracting message from client error exception
-            DocumentContext responseContext = JsonPath.parse(e.getResponseBodyAsString());
+            final DocumentContext responseContext = JsonPath.parse(e.getResponseBodyAsString());
             List<Object> errros;
             try {
                 errros = responseContext.read("$.Errors");
             } catch (PathNotFoundException ex) {
-                log.error(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
-                          " Unable to read the json path in error object : " + ex.getMessage());
+                if (log.isErrorEnabled()) {
+                    log.error(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
+                              " Unable to read the json path in error object : " + ex.getMessage());
+                }
                 throw new CustomException(WORKFLOW_ERROR_KEY_NOT_FOUND.getCode(),
                         " Unable to read the json path in error object : " + ex.getMessage());
             }
@@ -131,17 +149,19 @@ public class WorkflowIntegrator {
                     " Exception occured while integrating with workflow : " + e.getMessage());
         }
 
-        log.info("workflow integrator response: {}", response);
+        if (log.isDebugEnabled()) {
+            log.debug("Workflow integrator response: {}", response);
+        }
 
         // on success result from work-flow read the data and set the status back to
         // Filedetails (filestatus)
         // object
-        DocumentContext responseContext = JsonPath.parse(response);
-        List<Map<String, Object>> responseArray = responseContext.read(FMConstants.PROCESSINSTANCESJOSNKEY);
+        final DocumentContext responseContext = JsonPath.parse(response);
+        final List<Map<String, Object>> responseArray = responseContext.read(FMConstants.PROCESSINSTANCESJOSNKEY);
 
-        Map<String, String> idStatusMap = new HashMap<>();
+        final Map<String, String> idStatusMap = new HashMap<>();
         responseArray.forEach(status -> {
-            DocumentContext instanceContext = JsonPath.parse(status);
+            final DocumentContext instanceContext = JsonPath.parse(status);
             idStatusMap.put(instanceContext.read(FMConstants.BUSINESSIDJOSNKEY),
                             instanceContext.read(FMConstants.STATUSJSONKEY));
         });
@@ -149,29 +169,8 @@ public class WorkflowIntegrator {
         return idStatusMap;
     }
 
-    private JSONObject buildJsonObjectForWorkflow(ApplicantPersonal personal) {
-        FileDetail fileDetail = personal.getFileDetail();
-
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put(FMConstants.BUSINESSIDKEY, fileDetail.getFileCode());
-        jsonObj.put(FMConstants.TENANTIDKEY, personal.getTenantId());
-        jsonObj.put(FMConstants.BUSINESSSERVICEKEY, fileDetail.getWorkflowCode());
-        jsonObj.put(FMConstants.MODULENAMEKEY, FMConstants.FMMODULENAMEVALUE);
-        jsonObj.put(FMConstants.ACTIONKEY, fileDetail.getAction());
-        jsonObj.put(FMConstants.COMMENTKEY, fileDetail.getComment());
-        jsonObj.put(FMConstants.DOCUMENTSKEY, fileDetail.getWfDocuments());
-
-        // Adding assignes to processInstance
-        List<Map<String, String>> uuidMaps = buildUUIDList(fileDetail.getAssignees());
-        if (CollectionUtils.isNotEmpty(uuidMaps)) {
-            jsonObj.put(FMConstants.ASSIGNEEKEY, uuidMaps);
-        }
-
-        return jsonObj;
-    }
-
-    private List<Map<String, String>> buildUUIDList(List<String> assignees) {
-        List<Map<String, String>> result = new LinkedList<>();
+    private List<Map<String, String>> buildUUIDList(final List<String> assignees) {
+        final List<Map<String, String>> result = new LinkedList<>();
 
         if (CollectionUtils.isNotEmpty(assignees)) {
 //            assignees.forEach(assignee -> {
