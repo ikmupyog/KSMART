@@ -168,8 +168,8 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
                 onChange={setselectOfficerName}
                 disable={isEdit}
                 placeholder={`${t("CR_SIGNED_OFFICER")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
-
+                {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: false, type: "text", title: t("CR_INVALID_YEAR") })}
+                
               />
             </div>
             <div className="col-md-3">
