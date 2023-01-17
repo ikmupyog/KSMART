@@ -61,7 +61,6 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
   let cmbLBType = [];
   let cmbLB = [];
 
-  console.log("Taluk" + Taluk);
   Taluk &&
     Taluk["common-masters"] &&
     Taluk["common-masters"].Taluk.map((ob) => {

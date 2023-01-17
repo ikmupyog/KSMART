@@ -63,7 +63,6 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
   let districtid = null;
   let cmbLBType = [];
   let cmbLB = [];
-  console.log("Taluk" + Taluk);
   Taluk &&
     Taluk["common-masters"] &&
     Taluk["common-masters"].Taluk.map((ob) => {
