@@ -440,6 +440,7 @@ public class CrDeathRegistryDtl {
     @JsonProperty("femaleDependentUnavailable")
     private Integer  femaleDependentUnavailable;
 
-    
+     //RAkhi S on 13.01.2023
+     private String placeofDeath;
    
 }

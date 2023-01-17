@@ -16,7 +16,7 @@ public class CrDeathRegistryConstants {
     public static final String BND_MODULE_NAME = "birth-death-service";
     //Modified  by Rakhi S on 20.12.2022
     public static final String HOSPITAL_LIST = "HospitalMaster";
-    public static final String DEATH_PLACE = "PlaceMaster";    
+    public static final String DEATH_PLACE = "DeathPlaceType";    
     //Rakhi S on 07.12.2022
     public static final String DEATH_CAUSE_MAIN = "DeathCause";
     public static final String DEATH_CAUSE_SUB = "DeathCauseSub";
@@ -46,7 +46,31 @@ public class CrDeathRegistryConstants {
      public static final String STATE = "State";
      public static final String COUNTRY = "Country";
 
+     //Rakhi S on 13.01.2023
+     public static final String  DEATH_PLACE_HOME = "HOME";
+     public static final String  DEATH_PLACE_HOSPITAL = "HOSPITAL";
+     public static final String  DEATH_PLACE_INSTITUTION = "INSTITUTION";
+     public static final String  DEATH_PLACE_VEHICLE = "VEHICLE";
+     public static final String  DEATH_PLACE_OTHER_PLACES = "OTHER_PLACES";
 
+     public static final String MALE_DEPENDENT_FATHER ="MALE_DEPENDENT_FATHER";
+     public static final String MALE_DEPENDENT_HUSBAND ="MALE_DEPENDENT_HUSBAND";
+     public static final String MALE_DEPENDENT_FATHER_ML = " (പിതാവ്) ";
+     public static final String MALE_DEPENDENT_FATHER_EN = " (Father) ";
+     public static final String MALE_DEPENDENT_HUSBAND_ML = " (ഭർത്താവ്) ";
+     public static final String MALE_DEPENDENT_HUSBAND_EN  = " (Husband) ";
+     public static final String FEMALE_DEPENDENT_ML = " (മാതാവ്)";
+     public static final String FEMALE_DEPENDENT_EN = " (Mother)";  
 
-
+     public static final String INSTITUTION_TYPE = "InstitutionType";
+     public static final String INSTITUTION_NAME = "Institution";
+     public static final String VEHICLE_TYPE = "VehicleType";
+     public static final String OTHER_PLACE_TYPE = "OtherDeathPlace";
+     public static final String VEHICLE_DEATH_CAPTION1 = "വാഹനത്തിൽ  യാത്രചെയ്യവേ ";
+     public static final String VEHICLE_DEATH_CAPTION2 ="-ത്തിനും ";
+     public static final String VEHICLE_DEATH_CAPTION3 =" മദ്ധ്യേ ";
+     public static final String VEHICLE_DEATH_CAPTION4 ="പരിധിയിൽ.";
+     public static final String VEHICLE_DEATH_CAPTION5 ="In the vehicle on the way from ";
+     public static final String VEHICLE_DEATH_CAPTION6 =" in the jurisdiction of ";
+     public static final String VEHICLE_DEATH_CAPTION7 =" to ";
 }

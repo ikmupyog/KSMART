@@ -59,7 +59,7 @@ public class CrDeathService {
       
 
         // Rakhi S IKM validate mdms data
-    // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
+      Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
           
           /********************************************* */
 
@@ -77,7 +77,7 @@ public class CrDeathService {
                 // validate request
         // validatorService.validateCreate(request,mdmsData);
         //Jasmine on 04/01/2023
-        Object mdmsData = util.mDMSCall(request.getRequestInfo(),CrDeathConstants.MDMS_TENANTID);
+        // Object mdmsData = util.mDMSCall(request.getRequestInfo(),CrDeathConstants.MDMS_TENANTID);
 
        // mdmsValidator.validateMDMSData(request,mdmsData);
 

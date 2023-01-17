@@ -65,6 +65,20 @@ public class CrDeathRegistryService {
        // RAkhi S IKM validate mdms data       
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
          
+         //    /********************************************* */
+        // System.out.println("mdms:"+mdmsData);
+        // try {
+        //         ObjectMapper mapper = new ObjectMapper();
+        //         Object obj = mdmsData;
+        //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //        System.out.println("rakhiRegistry "+ mapper.writeValueAsString(obj));
+        // }catch(Exception e) {
+        //     // log.error("Exception while fetching from searcher: ",e);
+        // }
+
+ 
+        /********************************************** */
+        
        // mdmsValidator.validateMDMSData(request,mdmsData);
 
         // enrich request
