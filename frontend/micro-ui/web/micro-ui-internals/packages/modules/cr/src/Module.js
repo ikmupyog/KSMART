@@ -100,8 +100,12 @@ export const CRLinks = ({ matchPath, userType }) => {
 
   const links = [
     {
+      link: `${matchPath}/birthcertificate`,
+      i18nKey: t("CR_DEATH_CERTIFICATE"),
+    },
+    {
       link: `${matchPath}/tradelicence/new-application`,
-      i18nKey: t("CR_CREATE_TRADE"),
+      i18nKey: t("CR_BIRTH_CERTIFICATE"),
     },
     // {
     //   link: `${matchPath}/tradelicence/renewal-list`,
