@@ -52,7 +52,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [checked, setChecked] = useState(false);
   const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit);
   const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo);
+  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : true);
 
+  const [selectedValues, setSelectedValues] = useState(
+    formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : true
+  );
+  const handleCheckboxChange = (event) => {
+    setChecked((checked) => !checked); // toggle the checked state
+    let newSelectedValues = [...selectedValues];
+    if (event.target.checked) {
+      newSelectedValues.push(event.target.value);
+    } else {
+      newSelectedValues = newSelectedValues.filter((value) => value !== event.target.value);
+    }
+    setSelectedValues(newSelectedValues);
+  };
   let naturetypecmbvalue = null;
 
   let menu = [];
@@ -189,6 +203,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
+    sessionStorage.setItem("selectedValues", selectedValues ? selectedValues : true);
+
     onSelect(config.key, {
       setIdCombo,
       DeathDate,
@@ -212,6 +228,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathTimeTo,
       setAgeUnit,
       setIdCombo,
+      selectedValues,
     });
   };
   return (
@@ -230,7 +247,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} />
+              <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={handleCheckboxChange} value={checked} />
             </div>
             <div className="col-md-6">
               <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} />
@@ -522,7 +539,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 value={Ageofbirth}
                 placeholder={`${t("CR_AGE_OF_BIRTH")}`}
                 {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
-                disabled
               />
 
               {/* <TextInput
