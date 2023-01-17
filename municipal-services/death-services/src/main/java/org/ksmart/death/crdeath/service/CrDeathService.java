@@ -75,7 +75,7 @@ public class CrDeathService {
 
               /********************************************** */
                 // validate request
-        // validatorService.validateCreate(request,mdmsData);
+         validatorService.validateCreate(request);
         //Jasmine on 04/01/2023
         // Object mdmsData = util.mDMSCall(request.getRequestInfo(),CrDeathConstants.MDMS_TENANTID);
 
@@ -100,9 +100,12 @@ public class CrDeathService {
       
         // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
           
-        String id = request.getDeathCertificateDtls().get(0).getId();
-
-        List<CrDeathDtl> searchResult = repository.getDeathApplication(CrDeathSearchCriteria.builder().id(id).build());
+        String ackNumber = request.getDeathCertificateDtls().get(0).getDeathACKNo();
+        List<CrDeathDtl> searchResult = repository.getDeathApplication(CrDeathSearchCriteria
+                                                  .builder()
+                                                  .deathACKNo(ackNumber)
+                                                  //.id(id)
+                                                  .build());
 
         validatorService.validateUpdate(request, searchResult);
 
@@ -118,14 +121,18 @@ public class CrDeathService {
 
         enrichmentService.enrichUpdate(request);
 
+        System.out.println("hai request"+request);
+                try {
+              ObjectMapper mapper = new ObjectMapper();
+              Object obj = request;
+              mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            System.out.println("hai request "+ mapper.writeValueAsString(obj));
+              }catch(Exception e) {
+                // log.error("Exception while fetching from searcher: ",e);
+              }
         producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
 
-
-
         workflowIntegrator.callWorkFlow(request);
-
-
-
 
         return request.getDeathCertificateDtls();
       }

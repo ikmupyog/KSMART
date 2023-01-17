@@ -99,8 +99,8 @@ public class CrDeathDtl {
 
     @Schema(type = "String" ,description = "First Name in Local Language" )
     @Size(max = 64)
-    @JsonProperty("deceasedFirstNameMl")
-    private String deceasedFirstNameMl ;
+    @JsonProperty("deceasedFirstNameMl") 
+    private String deceasedFirstNameMl;
 
     @Schema(type = "String" ,description = "Middle Name in English" )
     @Size(max = 64)
@@ -147,17 +147,17 @@ public class CrDeathDtl {
     @JsonProperty("dateOfBirth")
     private Long dateOfBirth ;
 
-    @Schema(type = "Long" ,description = "Place of death from mdms data home/hospital/vehicle etc")
+    @Schema(type = "String" ,description = "Place of death from mdms data home/hospital/vehicle etc")
     @Size(max = 64)
     @JsonProperty("deathPlace")
     private String deathPlace ;
 
-    @Schema(type = "Long" ,description = "Place of death from mdms data oldagehome/orphanage etc")
+    @Schema(type = "String" ,description = "Place of death from mdms data oldagehome/orphanage etc")
     @Size(max = 64)
     @JsonProperty("deathPlaceType")
     private String deathPlaceType ;
 
-    @Schema(type = "Long" ,description = "Place of death from mdms data hospitalname/orphanageName etc")
+    @Schema(type = "String" ,description = "Place of death from mdms data hospitalname/orphanageName etc")
     @Size(max = 64)
     @JsonProperty("deathPlaceInstId")
     private String deathPlaceInstId ;
@@ -412,7 +412,7 @@ public class CrDeathDtl {
     @JsonProperty("businessService")
     private String businessService;
 
-    @JsonProperty("assignees")
+    @JsonProperty("assignee")
     private List<String> assignees;
 
     //@Schema(type = "string", description = "Comments")
@@ -447,6 +447,8 @@ public class CrDeathDtl {
 //    private List<String>  assignees ;
 //    public Object getWorkFlowCode() {
 //    }
+
+private String assignuser;
 
     public void setStatus(String s) {
     }

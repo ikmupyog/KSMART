@@ -8,8 +8,8 @@ serviceMaps:
     isTransaction: true
     queryMaps:
 
-    - query: INSERT INTO public.eg_death_dtls(id,  registrationunit, tenantid, death_date_unavailable, dateofdeath, time_of_death, timeofdeath_unit, date_of_death_to, time_of_death_to, timeofdeath_unit_to, deceased_unidentified, deceased_title, deceased_firstname_en, deceased_firstname_ml, deceased_middlename_en, deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml, deceased_aadhar_number, deceased_gender, age, age_unit, dateofbirth, death_place, death_place_inst_type, death_place_inst_id, death_place_officer_name, death_place_other_ml, death_place_other_en, informant_title, informant_name_en, informant_name_ml, informant_aadhar_submitted, informant_aadhar_no, informant_mobile_no, general_remarks, submitted_on, created_by, createdtime, lastmodifiedby, lastmodifiedtime, burial_district, burial_lbtype, burial_lbname, registration_no, ip_no, op_no, male_dependent_type, male_dependent_title, male_dependent_name_en, male_dependent_name_ml, male_dependent_aadharno, male_dependent_mobileno, male_dependent_mailid, female_dependent_type, female_dependent_title, female_dependent_name_en, female_dependent_name_ml, female_dependent_aadharno, female_dependent_mobileno, female_dependent_mailid, isvehicle, vehicle_hospital_ml, vehicle_hospital_en, vehicle_fromplace_ml, vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, death_place_ward_id, informant_age, vehicle_driver_licenceno, death_signed_officer_designation, death_place_officer_mobile, death_place_officer_aadhaar, application_no, file_no, ack_no ,appl_type, deceased_idprooftype ,deceased_idproofno ,burial_state ,vehicle_first_halt ,male_dependent_unavailable ,female_dependent_unavailable)
-          VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    - query: INSERT INTO public.eg_death_dtls(id,  registrationunit, tenantid, death_date_unavailable, dateofdeath, time_of_death, timeofdeath_unit, date_of_death_to, time_of_death_to, timeofdeath_unit_to, deceased_unidentified, deceased_title, deceased_firstname_en, deceased_firstname_ml, deceased_middlename_en, deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml, deceased_aadhar_number, deceased_gender, age, age_unit, dateofbirth, death_place, death_place_inst_type, death_place_inst_id, death_place_officer_name, death_place_other_ml, death_place_other_en, informant_title, informant_name_en, informant_name_ml, informant_aadhar_submitted, informant_aadhar_no, informant_mobile_no, general_remarks, submitted_on, created_by, createdtime, lastmodifiedby, lastmodifiedtime, burial_district, burial_lbtype, burial_lbname, registration_no, ip_no, op_no, male_dependent_type, male_dependent_title, male_dependent_name_en, male_dependent_name_ml, male_dependent_aadharno, male_dependent_mobileno, male_dependent_mailid, female_dependent_type, female_dependent_title, female_dependent_name_en, female_dependent_name_ml, female_dependent_aadharno, female_dependent_mobileno, female_dependent_mailid, isvehicle, vehicle_hospital_ml, vehicle_hospital_en, vehicle_fromplace_ml, vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, death_place_ward_id, informant_age, vehicle_driver_licenceno, death_signed_officer_designation, death_place_officer_mobile, death_place_officer_aadhaar, application_no, file_no, ack_no ,appl_type, deceased_idprooftype ,deceased_idproofno ,burial_state ,vehicle_first_halt ,male_dependent_unavailable ,female_dependent_unavailable, workflowcode,businessservice,action,comment,assignee)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
      
 
       basePath: deathCertificateDtls.*
@@ -156,7 +156,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.deathPlaceWardId
 
-      - jsonPath: $.deathCertificateDtls.*.informantAge
+      - jsonPath: $.deathCertificateDtls.*.informantAge 
 
       - jsonPath: $.deathCertificateDtls.*.vehicleDriverLicenceNo
 
@@ -187,6 +187,16 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.maleDependentUnavailable
 
       - jsonPath: $.deathCertificateDtls.*.femaleDependentUnavailable
+
+      - jsonPath: $.deathCertificateDtls.*.workflowCode
+
+      - jsonPath: $.deathCertificateDtls.*.businessService
+
+      - jsonPath: $.deathCertificateDtls.*.action
+
+      - jsonPath: $.deathCertificateDtls.*.comment
+
+      - jsonPath: $.deathCertificateDtls.*.assignees
 
         
      
@@ -663,7 +673,8 @@ serviceMaps:
           vehicle_toplace_ml = ?, vehicle_toplace_en = ?, vehicle_number = ?, death_place_ward_id = ?, informant_age = ?, vehicle_driver_licenceno = ?, 
           death_signed_officer_designation = ?, death_place_officer_mobile = ?, death_place_officer_aadhaar = ?, deceased_idprooftype = ?, deceased_idproofno = ?,
           burial_district = ?,burial_lbtype = ?, burial_lbname = ?, burial_state = ?, vehicle_first_halt = ?, 
-          male_dependent_unavailable = ?, female_dependent_unavailable = ? where id = ?
+          male_dependent_unavailable = ?, female_dependent_unavailable = ? , workflowcode = ?,businessservice = ?,action = ?,comment = ?,assignee = ? where  ack_no = ?
+      #where id = ?
       # registrationunit = ?, tenantid = ?,application_no = ?, file_no = ?, submitted_on = ?, 
       # death_place = ?, death_place_inst_type = ?, death_place_inst_id = ?,registration_no = ?,ack_no = ?
       #place_burial = ?, place_burial_institution_type = ?, place_burial_institution_name = ?, 
@@ -840,13 +851,23 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.femaleDependentUnavailable
 
+      - jsonPath: $.deathCertificateDtls.*.workflowCode
+
+      - jsonPath: $.deathCertificateDtls.*.businessService
+
+      - jsonPath: $.deathCertificateDtls.*.action
+
+      - jsonPath: $.deathCertificateDtls.*.comment
+
+      - jsonPath: $.deathCertificateDtls.*.assignuser
+
+      - jsonPath: $.deathCertificateDtls.*.deathACKNo
+
      #- jsonPath: $.deathCertificateDtls.*.deathApplicationNo
 
      # - jsonPath: $.deathCertificateDtls.*.fileNo
 
-      #- jsonPath: $.deathCertificateDtls.*.deathACKNo
-
-      - jsonPath: $.deathCertificateDtls.*.id 
+      #- jsonPath: $.deathCertificateDtls.*.id 
 
     - query: INSERT INTO public.eg_death_statistical_dtls_log SELECT * FROM  public.eg_death_statistical_dtls WHERE death_dtl_id = ?;
      

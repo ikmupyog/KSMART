@@ -73,9 +73,9 @@ public class CrDeathController implements CrDeathResource  {
         List<CrDeathDtl> deathDetails = deathService.create(request);
 
         CrDeathDtlResponse response = CrDeathDtlResponse.builder()
-                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                                                      .deathCertificateDtls(deathDetails)
-                                                                      .build();
+                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                    .deathCertificateDtls(deathDetails)
+                                    .build();
         return ResponseEntity.ok(response);
     }
 
