@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton,Loader,CheckBox  } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loader, CheckBox,Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -7,16 +7,16 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
-    const { data: Qualification = {},isQualificationLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
-    const { data: QualificationSub = {},isQualificationSubLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
-    const { data: Profession = {},isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
-    const { data: State = {},isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-    const { data: District = {},isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-    const { data: LBType = {},isLBTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-    const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-    const { data: Taluk = {},isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+    const { data: Qualification = {}, isQualificationLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Qualification");
+    const { data: QualificationSub = {}, isQualificationSubLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "QualificationSub");
+    const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
+    const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+    const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+    const { data: LBType = {}, isLBTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
+    const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+    const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-    const { data: LocalBodies={}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+    const { data: LocalBodies = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     // Digit.Hooks.useTenants();
     // Digit.Hooks.cr.useCivilRegistrationMDMS("kl", "tenant", "tenants");
     // 
@@ -47,13 +47,20 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherResPlace, setMotherResPlace] = useState(formData?.MotherInfoDetails?.MotherResPlace ? formData?.MotherInfoDetails?.MotherResPlace : "");
     const [MotherPlaceNameEn, setMotherPlaceNameEn] = useState(formData?.MotherInfoDetails?.MotherPlaceNameEn ? formData?.MotherInfoDetails?.MotherPlaceNameEn : "");
     const [MotherPlaceNameMl, setMotherPlaceNameMl] = useState(formData?.MotherInfoDetails?.MotherPlaceNameMl ? formData?.MotherInfoDetails?.MotherPlaceNameMl : "");
-    const [MotherPlaceType, setMotherPlaceType] = useState(formData?.MotherInfoDetails?.MotherPlaceType ? formData?.MotherInfoDetails?.MotherPlaceType : null );
+    const [MotherPlaceType, setMotherPlaceType] = useState(formData?.MotherInfoDetails?.MotherPlaceType ? formData?.MotherInfoDetails?.MotherPlaceType : null);
     const [MotherLBName, setMotherLBName] = useState(formData?.MotherInfoDetails?.MotherLBName ? formData?.MotherInfoDetails?.MotherLBName : null);
     const [MotherNationality, setMotherNationality] = useState(formData?.MotherInfoDetails?.MotherNationality ? formData?.MotherInfoDetails?.MotherNationality : null);
     const [MotherCountry, setMotherCountry] = useState(formData?.MotherInfoDetails?.MotherCountry ? formData?.MotherInfoDetails?.MotherCountry : null);
     const [MotherTaluk, setMotherTaluk] = useState(formData?.MotherInfoDetails?.MotherTaluk ? formData?.MotherInfoDetails?.MotherTaluk : null);
     const [isMotherInfo, setIsMotherInfo] = useState(formData?.MotherInfoDetails?.isMotherInfo ? formData?.MotherInfoDetails?.isMotherInfo : false);
     // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+    const [toast, setToast] = useState(false);
+    const [MotherAadharError, setMotherAadharError] = useState(formData?.MotherInfoDetails?.MotherAadhar ? false : false);
+    const [MotherMobileError, setMotherMobileError] = useState(formData?.MotherInfoDetails?.MotherMobile ? false : false);
+    const [MotherEducationError, setMotherEducationError] = useState(formData?.MotherInfoDetails?.MotherEducation ? false : false);
+    const [MotherProfessionError, setMotherProfessionError] = useState(formData?.MotherInfoDetails?.MotherProfession ? false : false);
+
+
     const cmbUrbanRural = [
         { i18nKey: "Urban", code: "URBAN" },
         { i18nKey: "Rural", code: "RURAL" },
@@ -116,40 +123,109 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         Taluk["common-masters"].Taluk.map((ob) => {
             cmbTaluk.push(ob);
         });
-        let cmbLB = [];
-        LocalBodies &&
+    let cmbLB = [];
+    LocalBodies &&
         LocalBodies["tenant"] &&
         LocalBodies["tenant"].tenants.map((ob) => {
-                cmbLB.push(ob);
-            });
+            cmbLB.push(ob);
+        });
     const onSkip = () => onSelect();
 
     function setSelectMotherFirstNameEn(e) {
-        setMotherFirstNameEn(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherFirstNameEn(e.target.value);
+        }
+
     }
     function setSelectMotherMiddleNameEn(e) {
-        setMotherMiddleNameEn(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherMiddleNameEn(e.target.value);
+        }
     }
     function setSelectMotherLastNameEn(e) {
-        setMotherLastNameEn(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherLastNameEn(e.target.value);
+        }
     }
     function setSelectMotherFirstNameMl(e) {
-        setMotherFirstNameMl(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherFirstNameMl(e.target.value);
+        }
     }
     function setSelectMotherMiddleNameMl(e) {
-        setMotherMiddleNameMl(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherMiddleNameMl(e.target.value);
+        }
     }
     function setSelectMotherLastNameMl(e) {
-        setMotherLastNameMl(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherLastNameMl(e.target.value);
+        }
     }
     function setSelectMotherAadhar(e) {
-        setMotherAadhar(e.target.value);
+        if (e.target.value.length != 0) {
+
+            if (e.target.value.length > 12) {
+                // setMotherAadhar(e.target.value);
+                setMotherAadharError(true);
+                return false;
+            } else if (e.target.value.length < 12) {
+                setMotherAadharError(true);
+                setMotherAadhar(e.target.value);
+                return false;
+            }
+            else {
+                setMotherAadharError(false);
+                setMotherAadhar(e.target.value);
+                return true;
+            }
+        } else {
+            setMotherAadharError(false);
+            setMotherAadhar(e.target.value);
+            return true;
+        }
     }
     function setSelectMotherEmail(e) {
         setMotherEmail(e.target.value);
     }
     function setSelectMotherMobile(e) {
-        setMotherMobile(e.target.value);
+        if (e.target.value.length != 0) {
+
+            if (e.target.value.length > 10) {
+                setMotherMobileError(true);
+            } else if (e.target.value.length < 10) {
+                setMotherMobileError(true);
+                setMotherMobile(e.target.value);
+                return false;
+            }
+            else {
+                setMotherMobileError(false);
+                setMotherMobile(e.target.value);
+                return true;
+            }
+        } else {
+            setMotherMobileError(false);
+            setMotherMobile(e.target.value);
+            return true;
+        }
     }
     function setSelectMotherPassportNo(e) {
         setMotherPassportNo(e.target.value);
@@ -177,6 +253,11 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     }
     function setselectMotherDOB(value) {
         setMotherDOB(value);
+        const today = new Date();
+        const birthDate = new Date(value);
+        let age_in_ms = today - birthDate;
+        let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
+        setMotherAgeMarriage(Math.floor(age_in_years));
     }
     function setSelectMotherMaritalStatus(value) {
         setMotherMaritalStatus(value);
@@ -228,54 +309,114 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     }
     function setMotherInfo(e) {
         if (e.target.checked == true) {
-          setIsMotherInfo(true);
+            setIsMotherInfo(true);
         } else {
-          setIsMotherInfo(false);
+            setIsMotherInfo(false);
         }
-      }
+    }
+    let validFlag = true;
     const goNext = () => {
-        sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn ? MotherFirstNameEn : null);
-        sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn ? MotherMiddleNameEn : null);
-        sessionStorage.setItem("MotherLastNameEn", MotherLastNameEn ? MotherLastNameEn : null);
-        sessionStorage.setItem("MotherFirstNameMl", MotherFirstNameMl ? MotherFirstNameMl : null);
-        sessionStorage.setItem("MotherMiddleNameMl", MotherMiddleNameMl ? MotherMiddleNameMl : null);
-        sessionStorage.setItem("MotherLastNameMl", MotherLastNameMl ? MotherLastNameMl : null);
-        sessionStorage.setItem("MotherAadhar", MotherAadhar ? MotherAadhar : null);
-        sessionStorage.setItem("MotherPassportNo", MotherPassportNo ? MotherPassportNo : null);
-        sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
-        sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
-        sessionStorage.setItem("MotherEducation", MotherEducation ? MotherEducation.code : null);
-        sessionStorage.setItem("MotherEducationSubject", MotherEducationSubject ?  MotherEducationSubject.code : null);
-        sessionStorage.setItem("MotherProfession", MotherProfession ? MotherProfession.code : null);
-        sessionStorage.setItem("MotherNationality", MotherNationality ? MotherNationality.code : null);
-        // sessionStorage.setItem("MotherAgeDeleivery", MotherAgeDeleivery);
-        sessionStorage.setItem("MotherAgeMarriage",MotherAgeMarriage ? MotherAgeMarriage : null);
-        sessionStorage.setItem("MotherDOB", MotherDOB ? MotherDOB : null);
-        sessionStorage.setItem("MotherMaritalStatus",MotherMaritalStatus ?  MotherMaritalStatus : null);
-        // sessionStorage.setItem("MotherNoOfBirths",MotherNoOfBirths ? MotherNoOfBirths : null);
-        sessionStorage.setItem("OrderofChildren",OrderofChildren ? OrderofChildren : null);
-        sessionStorage.setItem("MotherResPlace", MotherResPlace ? MotherResPlace : null);
-        sessionStorage.setItem("MotherPlaceNameEn ", MotherPlaceNameEn ? MotherPlaceNameEn : null);
-        // sessionStorage.setItem("MotherPlaceNameMl ", MotherPlaceNameMl);
-        sessionStorage.setItem("MotherPlaceType",MotherPlaceType ? MotherPlaceType.code : null);
-        sessionStorage.setItem("MotherLBName",MotherLBName ? MotherLBName.code : null);//MotherLBName.code
-        // sessionStorage.setItem("LBTypeName", LBTypeName.code);
-        sessionStorage.setItem("MotherDistrict",MotherDistrict ? MotherDistrict.code : null);
-        sessionStorage.setItem("MotherTaluk",MotherTaluk ? MotherTaluk.code : null);
-        sessionStorage.setItem("StateName",StateName ? StateName.code : null);
-        sessionStorage.setItem("MotherCountry",MotherCountry ? MotherCountry.code : null);
-        sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
-        onSelect(config.key, {
-            MotherFirstNameEn, MotherMiddleNameEn, MotherLastNameEn,
-            MotherFirstNameMl, MotherMiddleNameMl, MotherLastNameMl, MotherAadhar, MotherPassportNo, MotherEmail, MotherMobile, MotherEducation, MotherEducationSubject, MotherProfession,
-            MotherNationality, MotherAgeDeleivery, MotherDOB, OrderofChildren, MotherPlaceType, MotherLBName, 
-             MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl,MotherAgeMarriage,
-             isMotherInfo
-        });
+        console.log(MotherEducation);
+        if (MotherAadhar != null || MotherAadhar != '' || MotherAadhar != undefined) {
+            if (MotherAadharError) {
+                validFlag = false;
+                setMotherAadharError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+                // return false;
+                // window.alert("Username shouldn't exceed 10 characters")
+            } else {
+                setMotherAadharError(false);
+            }
+        }
+        if (MotherMobile != null || MotherMobile != '' || MotherMobile != undefined) {
+            if (MotherMobileError) {
+                validFlag = false;
+                setMotherMobileError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+                // return false;
+                // window.alert("Username shouldn't exceed 10 characters")
+            } else {
+                setMotherMobileError(false);
+            }
+        }
+        if (MotherEducation == null || MotherEducation == '' || MotherEducation == undefined) {
+            if (MotherEducationError) {
+                validFlag = false;
+                setMotherEducationError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+                // return false;
+                // window.alert("Username shouldn't exceed 10 characters")
+            } else {
+                setMotherEducationError(false);
+            }
+        }
+        if (MotherProfession == null || MotherProfession == '' || MotherProfession == undefined) {
+            if (MotherProfessionError) {
+                validFlag = false;
+                setMotherProfessionError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+                // return false;
+                // window.alert("Username shouldn't exceed 10 characters")
+            } else {
+                setMotherProfessionError(false);
+            }
+        }
+        if (validFlag == true) {
+            sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn ? MotherFirstNameEn : null);
+            sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn ? MotherMiddleNameEn : null);
+            sessionStorage.setItem("MotherLastNameEn", MotherLastNameEn ? MotherLastNameEn : null);
+            sessionStorage.setItem("MotherFirstNameMl", MotherFirstNameMl ? MotherFirstNameMl : null);
+            sessionStorage.setItem("MotherMiddleNameMl", MotherMiddleNameMl ? MotherMiddleNameMl : null);
+            sessionStorage.setItem("MotherLastNameMl", MotherLastNameMl ? MotherLastNameMl : null);
+            sessionStorage.setItem("MotherAadhar", MotherAadhar ? MotherAadhar : null);
+            sessionStorage.setItem("MotherPassportNo", MotherPassportNo ? MotherPassportNo : null);
+            sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
+            sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
+            sessionStorage.setItem("MotherEducation", MotherEducation ? MotherEducation.code : null);
+            sessionStorage.setItem("MotherEducationSubject", MotherEducationSubject ? MotherEducationSubject.code : null);
+            sessionStorage.setItem("MotherProfession", MotherProfession ? MotherProfession.code : null);
+            sessionStorage.setItem("MotherNationality", MotherNationality ? MotherNationality.code : null);
+            // sessionStorage.setItem("MotherAgeDeleivery", MotherAgeDeleivery);
+            sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage ? MotherAgeMarriage : null);
+            sessionStorage.setItem("MotherDOB", MotherDOB ? MotherDOB : null);
+            sessionStorage.setItem("MotherMaritalStatus", MotherMaritalStatus ? MotherMaritalStatus : null);
+            // sessionStorage.setItem("MotherNoOfBirths",MotherNoOfBirths ? MotherNoOfBirths : null);
+            sessionStorage.setItem("OrderofChildren", OrderofChildren ? OrderofChildren : null);
+            sessionStorage.setItem("MotherResPlace", MotherResPlace ? MotherResPlace : null);
+            sessionStorage.setItem("MotherPlaceNameEn ", MotherPlaceNameEn ? MotherPlaceNameEn : null);
+            // sessionStorage.setItem("MotherPlaceNameMl ", MotherPlaceNameMl);
+            sessionStorage.setItem("MotherPlaceType", MotherPlaceType ? MotherPlaceType.code : null);
+            sessionStorage.setItem("MotherLBName", MotherLBName ? MotherLBName.code : null);//MotherLBName.code
+            // sessionStorage.setItem("LBTypeName", LBTypeName.code);
+            sessionStorage.setItem("MotherDistrict", MotherDistrict ? MotherDistrict.code : null);
+            sessionStorage.setItem("MotherTaluk", MotherTaluk ? MotherTaluk.code : null);
+            sessionStorage.setItem("StateName", StateName ? StateName.code : null);
+            sessionStorage.setItem("MotherCountry", MotherCountry ? MotherCountry.code : null);
+            sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
+            onSelect(config.key, {
+                MotherFirstNameEn, MotherMiddleNameEn, MotherLastNameEn,
+                MotherFirstNameMl, MotherMiddleNameMl, MotherLastNameMl, MotherAadhar, MotherPassportNo, MotherEmail, MotherMobile, MotherEducation, MotherEducationSubject, MotherProfession,
+                MotherNationality, MotherAgeDeleivery, MotherDOB, OrderofChildren, MotherPlaceType, MotherLBName,
+                MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl, MotherAgeMarriage,
+                isMotherInfo
+            });
+        }
     }
     if (isLoading || isQualificationLoading || isQualificationSubLoading || isProfessionLoading || isStateLoading || isDistrictLoading || isLBTypeLoading || isCountryLoading || isTalukLoading || isNationLoad) {
         return <Loader></Loader>;
-      }
+    }
     return (
         <React.Fragment>
             {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
@@ -283,7 +424,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             <BackButton >{t("CS_COMMON_BACK")}</BackButton>
             {/* isDisabled={!MotherFirstNameEn} */}
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-                 <div className="row">
+                <div className="row">
                     <div className="col-md-12" ><h1 className="headingh1" ></h1>
                     </div>
                 </div>
@@ -300,7 +441,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-4" >
-                            
+
                             <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
@@ -357,7 +498,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 value={MotherFirstNameMl}
                                 onChange={setSelectMotherFirstNameMl}
                                 disable={isMotherInfo} placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
+                                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
                             />
                         </div>
                         <div className="col-md-4" >
@@ -371,7 +512,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 value={MotherMiddleNameMl}
                                 onChange={setSelectMotherMiddleNameMl}
                                 disable={isMotherInfo} placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
+                                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })}
                             />
                         </div>
                         <div className="col-md-4" >
@@ -397,13 +538,13 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <TextInput
                                 t={t}
                                 isMandatory={false}
-                                type={"text"}
+                                type={"number"}
                                 optionKey="i18nKey"
                                 name="MotherAadhar"
                                 value={MotherAadhar}
                                 onChange={setSelectMotherAadhar}
                                 disable={isMotherInfo} placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                                {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                             />
                         </div>
                         <div className="col-md-3" >
@@ -452,7 +593,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 </div>
                 <div className="row">
                     <div className="col-md-12" >
-                      
+
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
@@ -516,11 +657,11 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                     </div>
                 </div>
                 <div className="row" >
-                    <div className="col-md-12" >                   
-                    <div className="col-md-2" ><CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}<span className="mandatorycss">*</span></CardLabel>
+                    <div className="col-md-12" >
+                        <div className="col-md-2" ><CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}<span className="mandatorycss">*</span></CardLabel>
                             <DatePicker date={MotherDOB} name="MotherDOB" onChange={setselectMotherDOB} placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} />
 
-                        </div>                     
+                        </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_AGE_OF_MARRIAGE")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
@@ -535,7 +676,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 {...(validation = { pattern: "^([0-9]){2}$", isRequired: true, type: "text", title: t("CR_INVALID_AGE_OF_MARRIAGE") })}
                             />
                         </div>
-                        
+
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
@@ -549,10 +690,10 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 disable={isMotherInfo} placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
                                 {...(validation = { pattern: "^([0-9]){1}$", isRequired: true, type: "text", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                             />
-                        </div>                        
+                        </div>
                     </div>
                 </div>
-            
+
 
                 <div className="row">
                     <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MOTHER_USUALLY_LIVES")}`}</span> </h1>
@@ -610,13 +751,13 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                     </div>
                 </div>
-               
+
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CS_COMMON_TALUK")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={MotherTaluk} select={setSelectMotherTaluk} 
-                            disable={isMotherInfo} placeholder={`${t("CS_COMMON_TALUK")}`} />
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbTaluk} selected={MotherTaluk} select={setSelectMotherTaluk}
+                                disable={isMotherInfo} placeholder={`${t("CS_COMMON_TALUK")}`} />
                         </div>
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -660,7 +801,33 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                     </div>
                 </div>
-                
+                {toast && (
+                    <Toast
+                        error={
+                            MotherAadharError || MotherMobileError || MotherEducationError || MotherProfessionError
+                            // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+
+                        }
+                        label={
+                            (MotherAadharError || MotherMobileError || MotherEducationError || MotherProfessionError
+                                //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+                                // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
+                                ?
+                                (MotherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : MotherMobileError ? t(`CR_INVALID_MOBILE_NO`) : MotherEducationError ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
+                                : MotherProfessionError ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`)
+                                    //  : || MotherProfessionError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+
+                                    : setToast(false)
+                                ) : setToast(false)
+                            )
+                        }
+
+                        onClose={() => setToast(false)}
+                    />
+                )
+                }{""}
+
             </FormStep>
         </React.Fragment>
     );
