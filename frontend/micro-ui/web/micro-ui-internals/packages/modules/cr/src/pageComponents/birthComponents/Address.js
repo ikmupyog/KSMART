@@ -481,8 +481,9 @@ const Address = ({ config, onSelect, userType, formData }) => {
     onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, OutSideCountry, 
       
     });
-
+   
     }else if(selectedValue === "1"){
+      sessionStorage.setItem("isPrsentAddress", isPrsentAddress.code );
     sessionStorage.setItem("PresentCountry", PresentCountry ? PresentCountry.code : null);
     sessionStorage.setItem("PresentStateName", PresentStateName ? PresentStateName.code : null );
     sessionStorage.setItem("PresentLBTypeName", PresentLBTypeName ? PresentLBTypeName.code : null );

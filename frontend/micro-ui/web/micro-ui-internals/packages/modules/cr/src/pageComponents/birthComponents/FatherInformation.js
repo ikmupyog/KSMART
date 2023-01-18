@@ -30,10 +30,13 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     const [isFatherInfo, setIsFatherInfo] = useState(formData?.FatherInfoDetails?.isFatherInfo ? formData?.FatherInfoDetails?.isFatherInfo : false);
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [toast, setToast] = useState(false);
+
     const [FatherAadharError, setFatherAadharError] = useState(formData?.FatherInfoDetails?.FatherAadhar ? false : false);
     const [FatherMobileError, setFatherMobileError] = useState(formData?.FatherInfoDetails?.FatherAadhar ? false : false);
     const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.FatherInfoDetails?.FatherFirstNameEn ? false : false);
     const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.FatherInfoDetails?.FatherFirstNameMl ? false : false);
+    const [FatherEduError, setFatherEduError] = useState(formData?.FatherInfoDetails?.FatherEducation ? false : false);    
+    const [FatherProfError, setFatherProfError] = useState(formData?.FatherInfoDetails?.FatherProfession ? false : false);
 
     let cmbQualification = [];
     Qualification &&
@@ -263,6 +266,27 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                 } else {
                     setFatherFirstNmeEnError(false);
                 }
+                if (FatherEducation == null || FatherEducation == '' || FatherEducation == undefined) {
+                    validFlag = false;
+                    setFatherEduError(true);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                
+            } else {
+                setFatherEduError(false);
+            }
+            if (FatherProfession == null || FatherProfession == '' || FatherProfession == undefined) {
+                    validFlag = false;
+                    setFatherProfError(true);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+            } else {
+                setFatherProfError(false);
+            }
         }
     }
         if(validFlag==true){
@@ -404,16 +428,16 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                 {toast && (
                     <Toast
                         error={
-                            FatherAadharError || FatherMobileError || FatherFirstNmeEnError
+                            FatherAadharError || FatherMobileError || FatherFirstNmeEnError || FatherEduError || FatherProfError
                             // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
 
                         }
                         label={
-                            (FatherAadharError || FatherMobileError || FatherFirstNmeEnError
+                            (FatherAadharError || FatherMobileError || FatherFirstNmeEnError  || FatherEduError || FatherProfError
                                 //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                                 // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
                                 ?
-                                (FatherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : FatherMobileError ? t(`CR_INVALID_MOBILE_NO`)  : FatherFirstNmeEnError ? t(`CR_INVALID_FIRST_NAME_EN`) 
+                                (FatherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : FatherMobileError ? t(`CR_INVALID_MOBILE_NO`)  : FatherFirstNmeEnError ? t(`CR_INVALID_FIRST_NAME_EN`)   : FatherEduError ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`) : FatherProfError ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`) 
                                     // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 
