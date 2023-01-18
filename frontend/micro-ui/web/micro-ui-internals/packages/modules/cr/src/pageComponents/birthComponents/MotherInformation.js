@@ -282,13 +282,14 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         setMotherAgeDeleivery(e.target.value);
     }
     function setSelectMotherAgeMarriage(e) {
-        setMotherAgeMarriage(e.target.value);
-        if (e.target.value.length != 0) {
-            if (e.target.value.length < 18) {
+        if (e.target.value != null || e.target.value != "") {
+            if (e.target.value < 18) {
+                setMotherAgeMarriage(e.target.value);
                 setMotherAgeMarriageError(true);
                 return false;
             }
             else {
+                setMotherAgeMarriage(e.target.value);
                 setMotherAgeMarriageError(false);
             }
         }
@@ -490,15 +491,17 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 setMotherPlaceTypeError(false);
             }
             if (MotherAgeMarriage != null || MotherAgeMarriage != '' || MotherAgeMarriage != undefined) {
-                validFlag = false;
-                setMotherAgeMarriageError(true);
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setMotherAgeMarriageError(false);
-            }
+                if(MotherAgeMarriageError){
+                    validFlag = false;
+                    setMotherAgeMarriageError(true);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setMotherAgeMarriageError(false);
+                }                
+            } 
         }
 
         if (validFlag == true) {
