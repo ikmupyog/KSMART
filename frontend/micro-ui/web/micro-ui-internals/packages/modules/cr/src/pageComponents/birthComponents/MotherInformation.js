@@ -58,6 +58,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherAadharError, setMotherAadharError] = useState(formData?.MotherInfoDetails?.MotherAadhar ? false : false);
     const [MotherMobileError, setMotherMobileError] = useState(formData?.MotherInfoDetails?.MotherMobile ? false : false);
     const [MotherEducationError, setMotherEducationError] = useState(formData?.MotherInfoDetails?.MotherEducation ? false : false);
+    const [MotherProfessionError, setMotherProfessionError] = useState(formData?.MotherInfoDetails?.MotherProfession ? false : false);
 
 
     const cmbUrbanRural = [
@@ -356,6 +357,20 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 // window.alert("Username shouldn't exceed 10 characters")
             } else {
                 setMotherEducationError(false);
+            }
+        }
+        if (MotherProfession == null || MotherProfession == '' || MotherProfession == undefined) {
+            if (MotherProfessionError) {
+                validFlag = false;
+                setMotherProfessionError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+                // return false;
+                // window.alert("Username shouldn't exceed 10 characters")
+            } else {
+                setMotherProfessionError(false);
             }
         }
         if (validFlag == true) {
@@ -789,17 +804,18 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 {toast && (
                     <Toast
                         error={
-                            MotherAadharError || MotherMobileError || MotherEducationError
+                            MotherAadharError || MotherMobileError || MotherEducationError || MotherProfessionError
                             // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
 
                         }
                         label={
-                            (MotherAadharError || MotherMobileError || MotherEducationError
+                            (MotherAadharError || MotherMobileError || MotherEducationError || MotherProfessionError
                                 //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                                 // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
                                 ?
                                 (MotherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : MotherMobileError ? t(`CR_INVALID_MOBILE_NO`) : MotherEducationError ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
-                                    //  : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                                : MotherProfessionError ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`)
+                                    //  : || MotherProfessionError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 
                                     : setToast(false)
