@@ -32,6 +32,8 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     const [toast, setToast] = useState(false);
     const [FatherAadharError, setFatherAadharError] = useState(formData?.FatherInfoDetails?.FatherAadhar ? false : false);
     const [FatherMobileError, setFatherMobileError] = useState(formData?.FatherInfoDetails?.FatherAadhar ? false : false);
+    const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.FatherInfoDetails?.FatherFirstNameEn ? false : false);
+    const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.FatherInfoDetails?.FatherFirstNameMl ? false : false);
 
     let cmbQualification = [];
     Qualification &&
@@ -247,8 +249,22 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             } else {
                 setFatherMobileError(false);
             }
+            if(FatherFirstNameEn != null || FatherFirstNameEn != '' || FatherFirstNameEn != undefined){
+                console.log(FatherFirstNameEn);
+                if (FatherFirstNmeEnError) {
+                    validFlag = false;
+                    setFatherFirstNmeEnError(true);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                    // return false;
+                    // window.alert("Username shouldn't exceed 10 characters")
+                } else {
+                    setFatherFirstNmeEnError(false);
+                }
         }
-        
+    }
         if(validFlag==true){
         sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn ? FatherFirstNameEn : null);
         sessionStorage.setItem("FatherMiddleNameEn", FatherMiddleNameEn ? FatherMiddleNameEn : null);
@@ -388,16 +404,16 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                 {toast && (
                     <Toast
                         error={
-                            FatherAadharError || FatherMobileError
+                            FatherAadharError || FatherMobileError || FatherFirstNmeEnError
                             // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
 
                         }
                         label={
-                            (FatherAadharError || FatherMobileError
+                            (FatherAadharError || FatherMobileError || FatherFirstNmeEnError
                                 //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                                 // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
                                 ?
-                                (FatherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : FatherMobileError ? t(`CR_INVALID_MOBILE_NO`)
+                                (FatherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : FatherMobileError ? t(`CR_INVALID_MOBILE_NO`)  : FatherFirstNmeEnError ? t(`CR_INVALID_FIRST_NAME_EN`) 
                                     // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 
