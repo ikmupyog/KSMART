@@ -596,13 +596,17 @@ const Address = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>    
-       
       <FormStep
-        t={t}
-        config={config}
-        onSelect={goNext}
-        onSkip={onSkip}        
-      >
+ t={t}
+ config={config}
+ onSelect={goNext}
+ onSkip={onSkip}
+ 
+ >
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PresentCountry || !PresentStateName || !PresentDistrict || !PresentLBTypeName || !PresentLBName || !PresentVillage
+|| !PresentTaluk || !PresentPostOffice || !PresentPincode || !PresentMainPlaceEn || !PresentMainPlaceMl || !PresentLocalityNameEn 
+|| !PresentLocalityNameMl || !PresentStreetNameEn || !PresentStreetNameMl || !PresentHouseNameEn || !PresentHouseNameMl || !PresentDoorNo
+|| !PresentResNoEn || !PresentResNoMl   }> */}
 
 <div className="row">
           <div className="col-md-12">         
