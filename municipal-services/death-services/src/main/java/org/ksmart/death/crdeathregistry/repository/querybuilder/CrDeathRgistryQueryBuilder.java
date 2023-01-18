@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryCriteria;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
 import org.springframework.stereotype.Component;
 
 /**
@@ -246,16 +247,16 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
         //Rakhi S on 18.01.2023
      private static final String CERTIFICATE_QUERY = new StringBuilder().append("SELECT ct.id, ct.deathcertificateno, ct.createdby, ct.createdtime, ct.deathdtlid, ct.filestoreid") 
                                                             .append("      , ct.lastmodifiedtime, ct.lastmodifiedby, ct.status, ct.additionaldetail, ct.embeddedurl, ct.dateofissue, ct.counter") 
-                                                            .append(" FROM eg_death_cert_request ct")                                                             
+                                                            .append(" FROM eg_death_cert_request ct ")                                                             
                                                       .toString();
 
-     public String getDeathCertificateSearchQuery(@NotNull CrDeathRegistryCriteria criteria,
+     public String getDeathCertificateSearchQuery(@NotNull String id,
                                                            @NotNull List<Object> preparedStmtValues, Boolean isCount) {
          
          StringBuilder query = new StringBuilder(CERTIFICATE_QUERY);
     
-         addFilter("ct.id", criteria.getId(), query, preparedStmtValues);      
-         addFilter("ct.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
+         addFilter("ct.deathdtlid", id, query, preparedStmtValues);      
+     //     addFilter("ct.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
          return query.toString();                                              
        }   
      }

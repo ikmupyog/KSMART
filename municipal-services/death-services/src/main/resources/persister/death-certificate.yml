@@ -8,8 +8,8 @@ serviceMaps:
       queryMaps:
         - query: INSERT INTO public.eg_death_cert_request(
                  id, deathcertificateno, createdby, createdtime, deathdtlid, filestoreid, lastmodifiedtime, lastmodifiedby, status, 
-                 embeddedurl, dateofissue)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                 embeddedurl, dateofissue, counter)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: deathCertificate
           jsonMaps:
             - jsonPath: $.deathCertificate.id
@@ -72,5 +72,3 @@ serviceMaps:
             - jsonPath: $.deathCertificate.dateofissue
 
             - jsonPath: $.deathCertificate.id
-
-            - jsonPath: $.deathCertificate.counter

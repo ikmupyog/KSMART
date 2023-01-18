@@ -614,24 +614,23 @@ public class CrDeathRegistryRepository {
         return mdmsResMap;
     }
     //Rakhi S on 18.01.2023
-    public DeathCertificate searchCertificate(CrDeathRegistryCriteria criteria) {
+    public List<DeathCertificate> searchCertificate(String id) {
 		try {
 
             List<Object> preparedStmtValues = new ArrayList<>();
-            String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-            List<CrDeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
-
-            // String queryCert = queryBuilder.getDeathCertificateSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-            criteria.setId(result.get(0).getId());
-            String queryCert = queryBuilder.getDeathCertificateSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+            String queryCert = queryBuilder.getDeathCertificateSearchQuery(id, preparedStmtValues, Boolean.FALSE);
+            System.out.println("queryCert"+queryCert);
             List<DeathCertificate> deathCerts = jdbcTemplate.query(queryCert, preparedStmtValues.toArray(), deathCertRowMapper);
-
+            System.out.println("deathCerts:"+deathCerts);
 			if (null != deathCerts && !deathCerts.isEmpty()) {				
-				return deathCerts.get(0);
+				// return deathCerts.get(0);
+                return deathCerts;
 			}
             else{
-                deathCerts.get(0).setCounter(0);
-                return deathCerts.get(0);
+                System.out.println("resultnull");
+                // deathCerts.get(0).setCounter(0);
+                System.out.println("counter1");
+                return deathCerts;
             }
 		}catch(Exception e) {
 			e.printStackTrace();
