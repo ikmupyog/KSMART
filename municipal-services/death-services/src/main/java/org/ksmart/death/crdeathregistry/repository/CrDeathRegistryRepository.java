@@ -15,7 +15,7 @@ import org.ksmart.death.crdeath.util.CrDeathConstants;
 import org.ksmart.death.crdeathregistry.config.CrDeathRegistryConfiguration;
 import org.ksmart.death.crdeathregistry.repository.querybuilder.CrDeathRgistryQueryBuilder;
 import org.ksmart.death.crdeathregistry.repository.rowmapper.CrDeathRegistryRowMapper;
-import org.ksmart.death.crdeathregistry.repository.rowmapper.DeathCertRowMapper;
+import org.ksmart.death.crdeathregistry.repository.rowmapper.DeathCertificateRowMapper;
 import org.ksmart.death.crdeathregistry.util.CrDeathRegistryConstants;
 import org.ksmart.death.crdeathregistry.util.CrDeathRegistryMdmsUtil;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
@@ -49,7 +49,7 @@ public class CrDeathRegistryRepository {
     private final JdbcTemplate jdbcTemplate;
     private final CrDeathRgistryQueryBuilder queryBuilder;
     private final CrDeathRegistryRowMapper rowMapper;
-    private final DeathCertRowMapper deathCertRowMapper;
+    private final DeathCertificateRowMapper deathCertRowMapper;
     //RAkhi S on 19.12.2022
     private final CrDeathProducer producer;
 
@@ -66,7 +66,7 @@ public class CrDeathRegistryRepository {
     @Autowired
     CrDeathRegistryRepository(JdbcTemplate jdbcTemplate, CrDeathRgistryQueryBuilder queryBuilder,
                             CrDeathRegistryRowMapper rowMapper,CrDeathProducer producer,
-                            CrDeathRegistryMdmsUtil util,DeathCertRowMapper deathCertRowMapper) {
+                            CrDeathRegistryMdmsUtil util,DeathCertificateRowMapper deathCertRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
@@ -626,28 +626,18 @@ public class CrDeathRegistryRepository {
             String queryCert = queryBuilder.getDeathCertificateSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
             List<DeathCertificate> deathCerts = jdbcTemplate.query(queryCert, preparedStmtValues.toArray(), deathCertRowMapper);
 
-			if (null != deathCerts && !deathCerts.isEmpty()) {
-				// criteria.setTenantId(deathCerts.get(0).getTenantId());
-				// criteria.setId(deathCerts.get(0).getDeathDtlId());
-				// List<EgDeathDtl> deathDtls = getDeathDtlsAll(criteria, requestInfo);
-				// deathCerts.get(0).setGender(deathDtls.get(0).getGenderStr());
-				// deathCerts.get(0).setAge(deathDtls.get(0).getAge());
-				// deathCerts.get(0).setWard(deathDtls.get(0).getDeathPermaddr().getTehsil());
-				// deathCerts.get(0).setState(deathDtls.get(0).getDeathPermaddr().getState());
-				// deathCerts.get(0).setDistrict(deathDtls.get(0).getDeathPermaddr().getDistrict());
-				// deathCerts.get(0).setDateofdeath(deathDtls.get(0).getDateofdeath());
-				// deathCerts.get(0).setDateofreport(deathDtls.get(0).getDateofreport());
-				// deathCerts.get(0).setPlaceofdeath(deathDtls.get(0).getPlaceofdeath());
+			if (null != deathCerts && !deathCerts.isEmpty()) {				
 				return deathCerts.get(0);
 			}
             else{
                 deathCerts.get(0).setCounter(0);
+                return deathCerts.get(0);
             }
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new CustomException("invalid_data","Invalid Data");
 		}
-		return null;
+		
 	}
 
 }
