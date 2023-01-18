@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea , Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -26,6 +26,15 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     const [BirthPlaceDeccription, setBirthPlaceDeccription] = useState(formData?.StatisticalInfoDetails?.BirthPlaceDeccription ? formData?.StatisticalInfoDetails?.BirthPlaceDeccription : "");
     const [BirthPlaceDeccriptionMl, setBirthPlaceDeccriptionMl] = useState(formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl ? formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl : "");
     // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+
+    const [toast, setToast] = useState(false);
+    const [ReligionStError, setReligionStError] = useState(formData?.StatisticalInfoDetails?.Religion ? false : false);
+    const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.StatisticalInfoDetails?false : false);
+    const [MedicalAttensionStError, setMedicalAttensionStError] = useState(formData?.StatisticalInfoDetails?.MedicalAttension ? false : false);
+    const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.StatisticalInfoDetails?.MedicalAttensionSub ? false : false);
+    const [ModeOfPregnancyStError, setModeOfPregnancyStError] = useState(formData?.StatisticalInfoDetails?.ModeOfPregnancy ? false : false);
+    const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethod ? false : false);
+    const [DeliveryMethodSubStError, setDeliveryMethodSubStError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub ?false : false);
     let cmbAttDelivery = [];
     let cmbAttDeliverySub = [];
     let cmbDeliveryMethod = [];
@@ -118,7 +127,84 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
          function setSelectBirthPlaceDeccriptionMl(e) {
             setBirthPlaceDeccriptionMl(e.target.value);
           }
+
+          let validFlag = true;
     const goNext = () => {
+
+        if (Religion == null || Religion == '' || Religion == undefined) {
+            validFlag = false;
+            setReligionStError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        
+    } else {
+        setReligionStError(false);
+    }
+    if (PregnancyDuration == null || PregnancyDuration == '' || PregnancyDuration == undefined) {
+        validFlag = false;
+        setPregnancyDurationStError(true);
+        setToast(true);
+        setTimeout(() => {
+            setToast(false);
+        }, 2000);
+    
+    } else {
+    setPregnancyDurationStError(false);
+    }
+    
+        
+        if (MedicalAttension == null || MedicalAttension == '' || MedicalAttension == undefined) {
+            validFlag = false;
+            setMedicalAttensionStError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        
+    } else {
+        setMedicalAttensionStError(false);
+    }
+    
+    if (MedicalAttensionSub == null || MedicalAttensionSub == '' || MedicalAttensionSub == undefined) {
+        validFlag = false;
+        setMedicalAttensionSubStError(true);
+        setToast(true);
+        setTimeout(() => {
+            setToast(false);
+        }, 2000);
+    
+    } else {
+    setMedicalAttensionSubStError(false);
+    }
+    
+    if (ModeOfPregnancy == null || ModeOfPregnancy == '' || ModeOfPregnancy == undefined) {
+    validFlag = false;
+    setModeOfPregnancyStError(true);
+    setToast(true);
+    setTimeout(() => {
+        setToast(false);
+    }, 2000);
+    
+    } else {
+    setModeOfPregnancyStError(false);
+    }
+    if (DeliveryMethod == null || DeliveryMethod == '' || DeliveryMethod == undefined) {
+    validFlag = false;
+    setDeliveryMethodStError(true);
+    setToast(true);
+    setTimeout(() => {
+        setToast(false);
+    }, 2000);
+    
+    } else {
+    setDeliveryMethodStError(false);
+    }
+
+
+
+    if(validFlag==true){
         sessionStorage.setItem("BirthWeight", BirthWeight ? BirthWeight : null );
         sessionStorage.setItem("BirthHeight", BirthHeight ? BirthHeight : null);
         sessionStorage.setItem("Religion", Religion ? Religion.code : null);
@@ -132,6 +218,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
 
         onSelect(config.key, { BirthWeight, BirthHeight, Religion, PregnancyDuration, MedicalAttension, BirthPlaceDeccription,BirthPlaceDeccriptionMl, MedicalAttensionSub, DeliveryMethod, ModeOfPregnancy });
     }
+}
     console.log(formData);
 
     if (isReligionListLoading || isAttentionOfDeliveryLoading  ||isMedicalAttentionTypeLoading|| isDeliveryMethodListLoading  || isModeOfPregnancyListLoading ) {
@@ -199,6 +286,44 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                         <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccriptionMl" value={BirthPlaceDeccriptionMl} onChange={setSelectBirthPlaceDeccriptionMl}  placeholder={`${t("CR_DESCRIPTION_ML")}`} {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION_ML") })} />
                      </div>
                         </div></div>
+
+                        {toast && (
+                    <Toast
+                        error={
+                            ReligionStError || PregnancyDurationStError || MedicalAttensionStError || MedicalAttensionSubStError ||  DeliveryMethodStError ||  ModeOfPregnancyStError 
+                            // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+
+                        }
+                        label={
+                            (  ReligionStError || PregnancyDurationStError || MedicalAttensionStError || MedicalAttensionSubStError ||  DeliveryMethodStError ||  ModeOfPregnancyStError 
+                                //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+                                // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
+                                ?
+                                (ReligionStError ? t(`BIRTH_ERROR_RELIGION_CHOOSE`) : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`) 
+                                : MedicalAttensionStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)   : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_SUB_CHOOSE`)   : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)  : ModeOfPregnancyStError ? t(`BIRTH_ERROR_MODE_PREGNANCY_CHOOSE`)
+                                    // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+
+                                    : setToast(false)
+                                ) : setToast(false)
+                            )
+                        }
+
+                        onClose={() => setToast(false)}
+                    />
+                )
+                }{""}
+                {/* <div className="row">
+                    <div className="col-md-12" > */}
+
+                {/* <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION_SUBJECT")}`}<span className="mandatorycss">*</span></CardLabel>
+                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualificationSub} selected={FatherEducationSubject} 
+                            select={setSelectFatherEducationSubject} disable={isFatherInfo} />
+                        </div> */}
+
+                {/* </div>
+                </div> */}
+
 
             </FormStep>
         </React.Fragment>
