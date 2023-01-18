@@ -212,7 +212,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                      </div>
                     <div className="col-md-6 " >
                          <CardLabel>{`${t("CR_DESCRIPTION_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccriptionMl" value={BirthPlaceDeccriptionMl} onChange={setSelectBirthPlaceDeccriptionMl}  placeholder={`${t("CR_DESCRIPTION_ML")}`} {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION_ML") })} />
+                        <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BirthPlaceDeccriptionMl" value={BirthPlaceDeccriptionMl} onChange={setSelectBirthPlaceDeccriptionMl}  placeholder={`${t("CR_DESCRIPTION_ML")}`} {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION_ML") })} />
                      </div>
                         </div></div>
 
