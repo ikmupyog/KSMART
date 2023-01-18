@@ -58,28 +58,12 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             cmbNation.push(ob);
         });
     let cmbfilterNation = [];
-    if (cmbNation.length > 0) {
+    if (stateId === "kl" && cmbNation.length>0 ) {
 
-        // cmbNation.filter((cmbNation) => cmbNation.nationalityname=="Indian");
-        cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
-        // if(cmbfilterNation.length>0){
-        //     setFatherNationality(cmbfilterNation);
-        // }
-        // useEffect(() => {
-        //     // console.log(isNationLoad);
-        //     if (isInitialRender) {
-        //       if (stateId === "kl" && cmbfilterNation.length>0) {
-        //         console.log(stateId);
-        //         setIsInitialRender(false);
-        //         // let cmbfilterNation = [];
-        //         // cmbNation.filter((cmbNation) => cmbNation.nationalityname=="Indian");
-        //         // cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
-        //         // console.log(cmbfilterNation);
-        //         // dropdownData?.filter((dd) => dd.code?.includes("INDIVIDUAL"))
-        //         setFatherNationality(cmbfilterNation);
-        //       }
-        //     }
-        // }, [isInitialRender]);  
+        cmbfilterNation[0] = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
+        console.log(cmbfilterNation[0]);
+         setFatherNationality(cmbfilterNation[0]);
+       
     }
 
     const onSkip = () => onSelect();
@@ -361,7 +345,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                                 t={t}
                                 optionKey="nationalityname"
                                 isMandatory={false}
-                                option={cmbfilterNation}
+                                option={cmbNation}
                                 selected={FatherNationality}
                                 select={setSelectFatherNationality}
                                 disable={isFatherInfo}

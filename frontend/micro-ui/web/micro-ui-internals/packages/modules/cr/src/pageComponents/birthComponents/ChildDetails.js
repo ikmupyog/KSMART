@@ -240,7 +240,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} maxDate={new Date() || undefined} />
 
           </div>
-          <div className="col-md-2"  ><CardLabel>{t("Time of Birth")}</CardLabel>
+          <div className="col-md-2"  ><CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
             <CustomTimePicker name="tripStartTime" onChange={val => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
           </div>
           <div className="col-md-4" > <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
