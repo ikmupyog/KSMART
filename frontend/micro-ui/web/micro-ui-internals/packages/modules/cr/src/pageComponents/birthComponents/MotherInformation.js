@@ -282,13 +282,14 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         setMotherAgeDeleivery(e.target.value);
     }
     function setSelectMotherAgeMarriage(e) {
+        setMotherAgeMarriage(e.target.value);
         if (e.target.value.length != 0) {
             if (e.target.value.length < 18) {
                 setMotherAgeMarriageError(true);
+                return false;
             }
             else {
-                setMotherAgeMarriageError(false);
-                setMotherAgeMarriage(e.target.value);
+                setMotherAgeMarriageError(false);               
             }
         }
     }

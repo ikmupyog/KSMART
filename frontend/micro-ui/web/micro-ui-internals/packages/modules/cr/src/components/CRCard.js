@@ -5,7 +5,7 @@ import { checkForEmployee } from "../utils";
 
 const CRCard = () => {
     sessionStorage.setItem("breadCrumbUrl", "home");
-    if (!Digit.Utils.tlAccess()) {
+    if (!Digit.Utils.crAccess()) {
         return null;
     }
     const { t } = useTranslation();
