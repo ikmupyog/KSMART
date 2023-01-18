@@ -80,7 +80,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeath?.setAdmittedHospitalEn);
   const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeath?.setAdmittedHospitalMl);
   const [setVehicletype, setSelectedVehicletype] = useState(formData?.PlaceOfDeath?.setVehicletype);
-  // Informent Assess from Birth Page
+  // Informent Address from Birth Page
   const [InformantAdrsCountry, setInformantAdrsCountry] = useState(formData?.PlaceOfDeath?.InformantAdrsCountry);
   const [InformantAdrsStateName, setInformantAdrsStateName] = useState(formData?.PlaceOfDeath?.InformantAdrsStateName);
   const [InformantAdrsDistrict, setInformantAdrsDistrict] = useState(formData?.PlaceOfDeath?.InformantAdrsDistrict);

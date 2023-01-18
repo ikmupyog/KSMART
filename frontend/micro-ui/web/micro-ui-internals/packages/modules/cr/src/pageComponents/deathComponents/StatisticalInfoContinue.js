@@ -89,7 +89,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   const { data: attention = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MedicalAttentionType");
   const { data: deathmain = {}, isLoadingA } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCause");
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
-   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setMedicalAttentionDeath, setSelectedMedicalAttentionDeath] = useState(formData?.StatisticalInfoContinue?.setMedicalAttentionDeath);
   const [setDeathMedicallyCertified, setSelectedDeathMedicallyCertified] = useState(formData?.StatisticalInfoContinue?.setDeathMedicallyCertified);
   const [setCauseOfDeathMain, setSelectedCauseOfDeathMain] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeathMain);
@@ -99,20 +99,20 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   const [CauseOfDeath, setSelectedCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.CauseOfDeath);
   const [alcoholyears, setSelectedalcoholyears] = useState(formData?.StatisticalInfoContinue?.alcoholyears);
   const [answer, setAnswer] = useState("");
-  const [text, setText] = useState("");
-  const [textPregnant, setTextPregnant] = useState("");
-  const [textSmoke, setTextSmoke] = useState("");
+  const [text, setText] = useState(formData?.StatisticalInfoContinue?.text);
+  const [textPregnant, setTextPregnant] = useState(formData?.StatisticalInfoContinue?.textPregnant);
+  const [textSmoke, setTextSmoke] = useState(formData?.StatisticalInfoContinue?.textSmoke);
   const [textTabacco, setTextTabacco] = useState(formData?.StatisticalInfoContinue?.textTabacco); 
-  const [textPanMasala, setTextPanMasala] = useState("");
+  const [textPanMasala, setTextPanMasala] = useState(formData?.StatisticalInfoContinue?.textPanMasala);
 
 
   let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
+  // let cmbPlace = [];
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
   let cmbAttention = [];
   attention &&
     attention["birth-death-service"] &&
@@ -184,11 +184,20 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setalcoholyears", alcoholyears);
     // sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant?setFemaleDeathPregnant.code:null);
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
-    // sessionStorage.setItem("isSmoke", isSmoke.i18nKey);
-    // sessionStorage.setItem("isPanMasala", isPanMasala.i18nKey);
-    // sessionStorage.setItem("isalcohol", isalcohol.i18nKey);
-    // sessionStorage.setItem("isPregnent", isPregnent.i18nKey);
-    sessionStorage.setItem("textTabacco", setTextTabacco ? setTextTabacco : null);
+    sessionStorage.setItem("isSmoke", isSmoke.i18nKey);
+    sessionStorage.setItem("isPanMasala", isPanMasala.i18nKey);
+    sessionStorage.setItem("isalcohol", isalcohol.i18nKey);
+    sessionStorage.setItem("isPregnent", isPregnent.i18nKey);
+    sessionStorage.setItem("isTabacco", isTabacco.i18nKey);
+    sessionStorage.setItem("textTabacco", textTabacco ? textTabacco : null);
+    sessionStorage.setItem("text", text ? text : null);
+    sessionStorage.setItem("textPregnant", textPregnant ? textPregnant : null);
+    sessionStorage.setItem("textSmoke", textSmoke ? textSmoke : null);
+    sessionStorage.setItem("textPanMasala", textPanMasala ? textPanMasala : null);
+    
+    
+    
+
   
 
     onSelect(config.key, {
@@ -198,12 +207,18 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
       setCauseOfDeathSub,
       CauseOfDeath,
       alcoholyears,
+      textTabacco,
+      text,
+      textPregnant,
+      textPanMasala,
+      textSmoke,
       // setFemaleDeathPregnant,
-      setPlaceofActivity,
-      // isSmoke,
-      // isPanMasala,
-      // isalcohol,
-      // isPregnent,
+      // setPlaceofActivity,
+      isSmoke,
+      isPanMasala,
+      isalcohol,
+      isPregnent,
+      isTabacco,
     });
   };
   console.log(formData);
@@ -337,7 +352,19 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
               {isSmoke === "yes" && (
                  <div className="col-md-4">
                  <CardLabel>{t("CR_YEAR")}</CardLabel> 
-                  <TextInput type="text" id="text" value={textSmoke} onChange={(e) => setTextSmoke(e.target.value)} />
+                  {/* <TextInput type="text" id="text" value={textSmoke} onChange={(e) => setTextSmoke(e.target.value)} /> */}
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="textSmoke"
+                    value={textSmoke}
+                    onChange={(e) => setTextSmoke(e.target.value)}
+                    disable={isEdit}
+                    placeholder={`${t("CR_YEAR")}`}
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
+                   /> 
                 </div>
               )}
             </div>
@@ -388,7 +415,19 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             {isPanMasala === "yes" && (
                <div className="col-md-4">
                <CardLabel>{t("CR_YEAR")}</CardLabel> 
-                <TextInput type="text" id="text" value={textPanMasala} onChange={(e) => setTextPanMasala(e.target.value)} />
+                {/* <TextInput type="text" id="text" value={textPanMasala} onChange={(e) => setTextPanMasala(e.target.value)} /> */}
+                <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="textPanMasala"
+                    value={textPanMasala}
+                    onChange={(e) => setTextPanMasala(e.target.value)}
+                    disable={isEdit}
+                    placeholder={`${t("CR_YEAR")}`}
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
+                   /> 
               </div>
             )}
           </div>
@@ -406,7 +445,19 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             {isalcohol === "yes" && (
                <div className="col-md-4">
                <CardLabel>{t("CR_YEAR")}</CardLabel> 
-                <TextInput type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} />
+                {/* <TextInput type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} /> */}
+                <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="text"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    disable={isEdit}
+                    placeholder={`${t("CR_YEAR")}`}
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
+                   /> 
               </div>
             )}
           </div>
