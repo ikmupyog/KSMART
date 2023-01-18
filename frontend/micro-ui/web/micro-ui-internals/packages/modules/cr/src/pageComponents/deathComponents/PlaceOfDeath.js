@@ -9,6 +9,7 @@ import PlaceOfDeathVehicle from "../../pageComponents/deathComponents/PlaceOfDea
 import PlaceOfDeathOther from "../../pageComponents/deathComponents/PlaceOfDeathOther";
 import InformentAddress from "../../pageComponents/deathComponents/InformentAddress";
 import InformantAddress from "../birthComponents/InformantAddress";
+// import PlaceOfDeathOther from "../../pageComponents/deathComponents/PlaceOfDeathOther";
 
 const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   // console.log(formData);
@@ -99,7 +100,11 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [InformantAdrsVillage, setInformantAdrsVillage] = useState(formData?.PlaceOfDeath?.InformantAdrsVillage);
   // const [InfntWardNo, setInfntWardNo] = useState(formData.PlaceOfDeath?.InfntWardNo);
   const [selectedValues, setSelectedValues] = useState(formData ?. PlaceOfDeath?.selectedValues ? formData ?. PlaceOfDeath?.selectedValues : true);
-
+// Place of Death Other
+const [setDeathOtherward, setSelectedDeathOtherward] = useState(formData?.PlaceOfDeathOther?.setDeathOtherward);
+const [setDeathOtherPlace, setSelectedDeathOtherPlace] = useState(formData?.PlaceOfDeathOther?.setDeathOtherPlace);
+const [PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsEn);
+const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl);
   const [value1, setValue1] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
   let naturetype = null;
@@ -219,6 +224,16 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
             setVehicletype={setVehicletype}
           />;
         }
+        if (naturetype === "PUBLIC_PLACES") {
+          <PlaceOfDeathOther
+          
+            setDeathOtherPlace={setDeathOtherPlace}
+            PlaceOfDeathOtherDetailsEn={PlaceOfDeathOtherDetailsEn}
+            PlaceOfDeathOtherDetailsMl={PlaceOfDeathOtherDetailsMl}
+            setDeathOtherward={setDeathOtherward}
+            
+          />;
+        }
       }
     }
   }, [isInitialRender]);
@@ -305,6 +320,11 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
     // sessionStorage.setItem("InformantAdrsInfontName", InformantAdrsInfontName);
     // sessionStorage.setItem(" InfntWardNo",  InfntWardNo);
 
+    sessionStorage.setItem("setDeathOtherPlace", setDeathOtherPlace ? setDeathOtherPlace.code : null);
+    sessionStorage.setItem("setDeathOtherward", setDeathOtherward ? setDeathOtherward.code : null);
+    sessionStorage.setItem("PlaceOfDeathOtherDetailsEn", PlaceOfDeathOtherDetailsEn ? PlaceOfDeathOtherDetailsEn : null);
+    sessionStorage.setItem("PlaceOfDeathOtherDetailsMl", PlaceOfDeathOtherDetailsMl?PlaceOfDeathOtherDetailsMl: null);
+
     onSelect(config.key, {
       PlaceOfDeath,
       SignedOfficerName,
@@ -376,6 +396,10 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
       InformantAdrsPincode,
       InformantAdrsResNo,
       // InfntWardNo,
+      setDeathOtherPlace,
+      setDeathOtherward,
+      PlaceOfDeathOtherDetailsEn,
+      PlaceOfDeathOtherDetailsMl,
     });
   };
   return (
@@ -633,7 +657,13 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
         )}
         {value === "PUBLIC_PLACES" && (
           <div>
-            <PlaceOfDeathOther />
+            <PlaceOfDeathOther 
+           
+            setDeathOtherward={setDeathOtherward} setSelectedDeathOtherward={setSelectedDeathOtherward}
+            setDeathOtherPlace={setDeathOtherPlace} setSelectedDeathOtherPlace={setSelectedDeathOtherPlace}
+            PlaceOfDeathOtherDetailsEn={PlaceOfDeathOtherDetailsEn} setPlaceOfDeathOtherDetailsEn={setPlaceOfDeathOtherDetailsEn}
+            PlaceOfDeathOtherDetailsMl={PlaceOfDeathOtherDetailsMl} setPlaceOfDeathOtherDetailsMl={setPlaceOfDeathOtherDetailsMl} 
+           />
           </div>
         )}
         {/* {value === "OTHERS_COUNTRY" && (

@@ -98,6 +98,10 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
     sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null);
     sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
+    sessionStorage.setItem("isChecked", isChecked.i18nKey);
+    sessionStorage.setItem("isCheckedMother", isCheckedMother.i18nKey);
+    
+    
 
     onSelect(config.key, {
       setTitle,
@@ -112,6 +116,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
       MotherNameMl,
       FatherMobile,
       MotherMobile,
+      isChecked,
+      isCheckedMother,
     });
   };
   return (

@@ -380,7 +380,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   handleChange={handleRadioChangeTabacco}
                 />
               {isTabacco === "yes" && (
-                 <div className="col-md-4">
+                 <div>
                  <CardLabel>{t("CR_YEAR")}</CardLabel> 
                   {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
                   <TextInput

@@ -3,29 +3,21 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, BackBut
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
+const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherward, setSelectedDeathOtherward, setDeathOtherPlace, setSelectedDeathOtherPlace,PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn,PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl}) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
-  let validation = {};
-  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+  let validation = {};  
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
-
-  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
-  // const [TradeName, setTradeName] = useState(null);
+ 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [setDeathOtherward, setSelectedDeathOtherward] = useState(formData?.PlaceOfDeathOther?.setDeathOtherward);
-  const [setDeathOtherPlace, setSelectedDeathOtherPlace] = useState(formData?.PlaceOfDeathOther?.setDeathOtherPlace);
-  const [PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsEn);
-  const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl);
+  // const [setDeathOtherward, setSelectedDeathOtherward] = useState(formData?.PlaceOfDeathOther?.setDeathOtherward);
+  // const [setDeathOtherPlace, setSelectedDeathOtherPlace] = useState(formData?.PlaceOfDeathOther?.setDeathOtherPlace);
+  // const [PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsEn);
+  // const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl);
 
   let naturetypecmbvalue = null;
-  // let cmbPlace = [];
-  // place &&
-  //   place["TradeLicense"] &&
-  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
-  //     cmbPlace.push(ob);
-  //   });
+ 
   let cmbOtherplace = [];
   otherplace &&
     otherplace["birth-death-service"] &&
@@ -59,18 +51,17 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData }) => {
   // }
 
   const goNext = () => {
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
-    sessionStorage.setItem("setDeathOtherPlace", setDeathOtherPlace.code);
-    sessionStorage.setItem("setDeathOtherward", setDeathOtherward.code);
-    sessionStorage.setItem("PlaceOfDeathOtherDetailsEn", PlaceOfDeathOtherDetailsEn);
-    sessionStorage.setItem("PlaceOfDeathOtherDetailsMl", PlaceOfDeathOtherDetailsMl);
+    
+    // sessionStorage.setItem("setDeathOtherPlace", setDeathOtherPlace ? setDeathOtherPlace.code : null);
+    // sessionStorage.setItem("setDeathOtherward", setDeathOtherward ? setDeathOtherward.code : null);
+    // sessionStorage.setItem("PlaceOfDeathOtherDetailsEn", PlaceOfDeathOtherDetailsEn ? PlaceOfDeathOtherDetailsEn : null);
+    // sessionStorage.setItem("PlaceOfDeathOtherDetailsMl", PlaceOfDeathOtherDetailsMl?PlaceOfDeathOtherDetailsMl: null);
 
     onSelect(config.key, {
-      setDeathOtherPlace,
-      setDeathOtherward,
-      PlaceOfDeathOtherDetailsEn,
-      PlaceOfDeathOtherDetailsMl,
-      //  setPlaceofActivity
+      // setDeathOtherPlace,
+      // setDeathOtherward,
+      // PlaceOfDeathOtherDetailsEn,
+      // PlaceOfDeathOtherDetailsMl,      
     });
   };
   return (
