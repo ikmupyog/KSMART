@@ -22,10 +22,10 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const [MotherEmail, setMotherEmail] = useState(formData?.FamilyInformationDeath?.MotherEmail);
   const [FatherEmail, setFatherEmail] = useState(formData?.FamilyInformationDeath?.FatherEmail);
   const [MotherMobile, setMotherMobile] = useState(formData?.FamilyInformationDeath?.MotherMobile);
-  const [FatherMobile, setFatherMobile] = useState(formData?.FamilyInformationDeath?.FatherMobile);
+  const [FatherMobile, setFatherMobile] = useState(formData?.FamilyInformationDeath?.FatherMobile ? formData?.FamilyInformationDeath?.FatherMobile :"" );
   // const [checked, setChecked] = useState(true);
-  const [isChecked, setIsChecked] = useState(false);
-  const [isCheckedMother, setIsCheckedMother] = useState(false);
+  const [isChecked, setIsChecked] = useState(formData?.FamilyInformationDeath?.isChecked ? formData?.FamilyInformationDeath?.isChecked : false);
+  const [isCheckedMother, setIsCheckedMother] = useState(formData?.FamilyInformationDeath?.isCheckedMother ? formData?.FamilyInformationDeath?.isCheckedMother : false);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
@@ -98,12 +98,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
     sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null);
     sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
-    sessionStorage.setItem("isChecked", isChecked.i18nKey);
-    sessionStorage.setItem("isCheckedMother", isCheckedMother.i18nKey);
-    
-    
+    sessionStorage.setItem("isChecked", isChecked ? isChecked : false);
+    sessionStorage.setItem("isCheckedMother", isCheckedMother ? isCheckedMother : false);
+
 
     onSelect(config.key, {
+      isChecked,
+      isCheckedMother,
       setTitle,
       setmaleDependent,
       FatherOrHusbandNameEN,

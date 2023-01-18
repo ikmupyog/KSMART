@@ -69,12 +69,12 @@ const DeathCheckPage = ({ onSubmit, value,userType }) => {
         </div>
         <StatusTable >
           <div className="row">
-             <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
+             {/* <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.DeathDate)}</CardText>
-            </div>
-           <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
+            </div> */}
+           {/* <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.Gender)}</CardText>
-            </div>
+            </div> */}
           </div>
           {/* <div className="row">
              <div className="col-md-6" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
