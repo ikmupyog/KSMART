@@ -3,7 +3,10 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@e
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
+const AddressOutsideIndia = ({ config, onSelect, userType, formData , AdressEn,setAdressEn, AdressMl, setAdressMl, AdressEnB ,setAdressEnB,AdressMlB,
+    setAdressMlB,LocalityEn,setLocalityEn,LocalityMl,setLocalityMl, ProvinceEn,setProvinceEn, ProvinceMl, setProvinceMl,OutSideCountry, setOutSideCountry
+
+}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -13,15 +16,15 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   
-  const [AdressEn, setAdressEn] = useState(formData?.AddressOutsideIndiaDetails?.AdressEn);
-  const [AdressMl, setAdressMl] = useState(formData?.AddressOutsideIndiaDetails?.AdressMl);
-  const [AdressEnB, setAdressEnB] = useState(formData?.AddressOutsideIndiaDetails?.AdressEnB);
-  const [AdressMlB, setAdressMlB] = useState(formData?.AddressOutsideIndiaDetails?.AdressMlB);
-  const [LocalityEn, setLocalityEn] = useState(formData?.AddressOutsideIndiaDetails?.LocalityEn);
-  const [LocalityMl, setLocalityMl] = useState(formData?.AddressOutsideIndiaDetails?.LocalityMl);
-  const [ProvinceEn, setProvinceEn] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceEn);
-  const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceMl);
-  const [PresentCountry, setPresentCountry] = useState(formData?.AddressOutsideIndiaDetails?.PresentCountry);
+  // const [AdressEn, setAdressEn] = useState(formData?.AddressOutsideIndiaDetails?.AdressEn);
+  // const [AdressMl, setAdressMl] = useState(formData?.AddressOutsideIndiaDetails?.AdressMl);
+  // const [AdressEnB, setAdressEnB] = useState(formData?.AddressOutsideIndiaDetails?.AdressEnB);
+  // const [AdressMlB, setAdressMlB] = useState(formData?.AddressOutsideIndiaDetails?.AdressMlB);
+  // const [LocalityEn, setLocalityEn] = useState(formData?.AddressOutsideIndiaDetails?.LocalityEn);
+  // const [LocalityMl, setLocalityMl] = useState(formData?.AddressOutsideIndiaDetails?.LocalityMl);
+  // const [ProvinceEn, setProvinceEn] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceEn);
+  // const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceMl);
+  // const [OutSideCountry, setOutSideCountry] = useState(formData?.AddressOutsideIndiaDetails?.OutSideCountry);
 
   // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -61,8 +64,8 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
   function setSelectProvinceMl(e) {
     setProvinceMl(e.target.value);
   }
-  function setSelectPresentCountry(value) {
-    setPresentCountry(value);
+  function setSelectOutSideCountry(value) {
+    setOutSideCountry(value);
     console.log("Country" + cmbCountry);   
   }
   
@@ -71,16 +74,16 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
   // }
   
   const goNext = () => {
-    sessionStorage.setItem("AdressEn", AdressEn ? AdressEn  : null);
-    sessionStorage.setItem("AdressMl", AdressMl  ? AdressMl  : null);
-    sessionStorage.setItem("AdressEnB", AdressEnB  ? AdressEnB  : null);
-    sessionStorage.setItem("AdressMlB", AdressMlB  ? AdressMlB  : null) ;
-    sessionStorage.setItem("LocalityEn", LocalityEn  ? LocalityEn  : null);
-    sessionStorage.setItem("LocalityMl", LocalityMl  ? LocalityMl  : null);
-    sessionStorage.setItem("ProvinceEn", ProvinceEn  ? ProvinceEn  : null);
-    sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl  : null);
-    sessionStorage.setItem("PresentCountry", PresentCountry ? PresentCountry.code : null);
-    onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, PresentCountry, });
+    // sessionStorage.setItem("AdressEn", AdressEn ? AdressEn  : null);
+    // sessionStorage.setItem("AdressMl", AdressMl  ? AdressMl  : null);
+    // sessionStorage.setItem("AdressEnB", AdressEnB  ? AdressEnB  : null);
+    // sessionStorage.setItem("AdressMlB", AdressMlB  ? AdressMlB  : null) ;
+    // sessionStorage.setItem("LocalityEn", LocalityEn  ? LocalityEn  : null);
+    // sessionStorage.setItem("LocalityMl", LocalityMl  ? LocalityMl  : null);
+    // sessionStorage.setItem("ProvinceEn", ProvinceEn  ? ProvinceEn  : null);
+    // sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl  : null);
+    // sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.code : null);
+    // onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, OutSideCountry, });
   };
   if (isCountryLoading ) {
     return <Loader></Loader>;
@@ -236,8 +239,8 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 optionKey="name"
                 isMandatory={false}
                 option={cmbCountry}
-                selected={PresentCountry}
-                select={setSelectPresentCountry}
+                selected={OutSideCountry}
+                select={setSelectOutSideCountry}
                 disabled={isEdit}
               />
             </div>

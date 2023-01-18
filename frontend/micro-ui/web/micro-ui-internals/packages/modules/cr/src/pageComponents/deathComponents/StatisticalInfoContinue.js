@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  FormStep,
-  CardLabel,
-  TextInput,
-  Dropdown,
-  DatePicker,
-  TextArea,
-  NewRadioButton,
-  RadioButtons,
+import {  FormStep,  CardLabel,  TextInput,  Dropdown,  DatePicker,  TextArea,  NewRadioButton,  RadioButtons,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
@@ -36,15 +28,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
         <label htmlFor="no">No</label>
       </div>
     );
-  };
-
-  const [answer, setAnswer] = useState("");
-  const [text, setText] = useState("");
-  const [textPregnant, setTextPregnant] = useState("");
-  const [textSmoke, setTextSmoke] = useState("");
-  const [textTabacco, setTextTabacco] = useState("");
-  const [textPanMasala, setTextPanMasala] = useState("");
-
+  };  
   
   console.log(formData);
   const [visible, setVisible] = useState(false);
@@ -105,8 +89,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   const { data: attention = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MedicalAttentionType");
   const { data: deathmain = {}, isLoadingA } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCause");
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
-
-  const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
+  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setMedicalAttentionDeath, setSelectedMedicalAttentionDeath] = useState(formData?.StatisticalInfoContinue?.setMedicalAttentionDeath);
   const [setDeathMedicallyCertified, setSelectedDeathMedicallyCertified] = useState(formData?.StatisticalInfoContinue?.setDeathMedicallyCertified);
   const [setCauseOfDeathMain, setSelectedCauseOfDeathMain] = useState(formData?.StatisticalInfoContinue?.setCauseOfDeathMain);
@@ -115,14 +98,21 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [CauseOfDeath, setSelectedCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.CauseOfDeath);
   const [alcoholyears, setSelectedalcoholyears] = useState(formData?.StatisticalInfoContinue?.alcoholyears);
+  const [answer, setAnswer] = useState("");
+  const [text, setText] = useState(formData?.StatisticalInfoContinue?.text);
+  const [textPregnant, setTextPregnant] = useState(formData?.StatisticalInfoContinue?.textPregnant);
+  const [textSmoke, setTextSmoke] = useState(formData?.StatisticalInfoContinue?.textSmoke);
+  const [textTabacco, setTextTabacco] = useState(formData?.StatisticalInfoContinue?.textTabacco); 
+  const [textPanMasala, setTextPanMasala] = useState(formData?.StatisticalInfoContinue?.textPanMasala);
+
 
   let naturetypecmbvalue = null;
-  let cmbPlace = [];
-  place &&
-    place["TradeLicense"] &&
-    place["TradeLicense"].PlaceOfActivity.map((ob) => {
-      cmbPlace.push(ob);
-    });
+  // let cmbPlace = [];
+  // place &&
+  //   place["TradeLicense"] &&
+  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
+  //     cmbPlace.push(ob);
+  //   });
   let cmbAttention = [];
   attention &&
     attention["birth-death-service"] &&
@@ -158,9 +148,9 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   function selectisPanMasala(value) {
     setisPanMasala(value);
   }
-  function selectPlaceofactivity(value) {
-    setSelectedPlaceofActivity(value);
-  }
+  // function selectPlaceofactivity(value) {
+  //   setSelectedPlaceofActivity(value);
+  // }
   function selectMedicalAttentionDeath(value) {
     setSelectedMedicalAttentionDeath(value);
   }
@@ -193,11 +183,22 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setCauseOfDeath", CauseOfDeath);
     sessionStorage.setItem("setalcoholyears", alcoholyears);
     // sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant?setFemaleDeathPregnant.code:null);
-    sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
-    // sessionStorage.setItem("isSmoke", isSmoke.i18nKey);
-    // sessionStorage.setItem("isPanMasala", isPanMasala.i18nKey);
-    // sessionStorage.setItem("isalcohol", isalcohol.i18nKey);
-    // sessionStorage.setItem("isPregnent", isPregnent.i18nKey);
+    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
+    sessionStorage.setItem("isSmoke", isSmoke);
+    sessionStorage.setItem("isPanMasala", isPanMasala);
+    sessionStorage.setItem("isalcohol", isalcohol);
+    sessionStorage.setItem("isPregnent", isPregnent);
+    sessionStorage.setItem("isTabacco", isTabacco);
+    sessionStorage.setItem("textTabacco", textTabacco ? textTabacco : null);
+    sessionStorage.setItem("text", text ? text : null);
+    sessionStorage.setItem("textPregnant", textPregnant ? textPregnant : null);
+    sessionStorage.setItem("textSmoke", textSmoke ? textSmoke : null);
+    sessionStorage.setItem("textPanMasala", textPanMasala ? textPanMasala : null);
+    
+    
+    
+
+  
 
     onSelect(config.key, {
       setMedicalAttentionDeath,
@@ -206,12 +207,18 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
       setCauseOfDeathSub,
       CauseOfDeath,
       alcoholyears,
+      textTabacco,
+      text,
+      textPregnant,
+      textPanMasala,
+      textSmoke,
       // setFemaleDeathPregnant,
-      setPlaceofActivity,
-      // isSmoke,
-      // isPanMasala,
-      // isalcohol,
-      // isPregnent,
+      // setPlaceofActivity,
+      isSmoke,
+      isPanMasala,
+      isalcohol,
+      isPregnent,
+      isTabacco,
     });
   };
   console.log(formData);
@@ -298,7 +305,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="col-md-6">
               <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
-              <div className="radio-flex">
+              {/* <div className="col-md-6 "> */}
                 <RadioButtons
                   t={t}
                   // optionsKey="i18nKey"
@@ -308,15 +315,13 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   onSelect={selectisPregnent}
                   handleChange={handleRadioChangeB}
                 />
-                {isPregnent === "yes" && (
+                {isPregnent === "yes" && (                        
                   <div className="col-md-4">
-                    <CardLabel className="" htmlFor="text">
-                      Enter Years
-                    </CardLabel>
+                    <CardLabel>{t("CR_YEAR")}</CardLabel>                                 
                     <TextInput type="text" id="text" value={textPregnant} onChange={(e) => setTextPregnant(e.target.value)} />
                   </div>
                 )}
-              </div>
+              {/* </div> */}
             </div>
             <div>
               {/* <RadioButtons
@@ -345,11 +350,21 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   handleChange={handleRadioChangeSmoke}
                 />
               {isSmoke === "yes" && (
-                <div className="col-md-4">
-                  <CardLabel className="" htmlFor="text">
-                    Enter Years
-                  </CardLabel>
-                  <TextInput type="text" id="text" value={textSmoke} onChange={(e) => setTextSmoke(e.target.value)} />
+                 <div className="col-md-4">
+                 <CardLabel>{t("CR_YEAR")}</CardLabel> 
+                  {/* <TextInput type="text" id="text" value={textSmoke} onChange={(e) => setTextSmoke(e.target.value)} /> */}
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="textSmoke"
+                    value={textSmoke}
+                    onChange={(e) => setTextSmoke(e.target.value)}
+                    disable={isEdit}
+                    placeholder={`${t("CR_YEAR")}`}
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
+                   /> 
                 </div>
               )}
             </div>
@@ -365,17 +380,28 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   handleChange={handleRadioChangeTabacco}
                 />
               {isTabacco === "yes" && (
-                <div className="col-md-4">
-                  <CardLabel className="" htmlFor="text">
-                    Enter Years
-                  </CardLabel>
-                  <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} />
-                </div>
+                 <div>
+                 <CardLabel>{t("CR_YEAR")}</CardLabel> 
+                  {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="textTabacco"
+                    value={textTabacco}
+                    onChange={(e) => setTextTabacco(e.target.value)}
+                    disable={isEdit}
+                    placeholder={`${t("CR_YEAR")}`}
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
+                   /> 
+                  </div>
               )}
             </div>
           </div>
         </div>
         <div className="row">
+        <div className="col-md-12">
           <div className="col-md-6">
             <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>
             <RadioButtons
@@ -387,9 +413,21 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
               handleChange={handleRadioChangePanmasala}  
             />
             {isPanMasala === "yes" && (
-              <div>
-                <CardLabel htmlFor="text">Enter Years</CardLabel>
-                <TextInput type="text" id="text" value={textPanMasala} onChange={(e) => setTextPanMasala(e.target.value)} />
+               <div className="col-md-4">
+               <CardLabel>{t("CR_YEAR")}</CardLabel> 
+                {/* <TextInput type="text" id="text" value={textPanMasala} onChange={(e) => setTextPanMasala(e.target.value)} /> */}
+                <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="textPanMasala"
+                    value={textPanMasala}
+                    onChange={(e) => setTextPanMasala(e.target.value)}
+                    disable={isEdit}
+                    placeholder={`${t("CR_YEAR")}`}
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
+                   /> 
               </div>
             )}
           </div>
@@ -405,11 +443,24 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
               handleChange={handleRadioChange}
             />
             {isalcohol === "yes" && (
-              <div>
-                <CardLabel htmlFor="text">Enter Years</CardLabel>
-                <TextInput type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} />
+               <div className="col-md-4">
+               <CardLabel>{t("CR_YEAR")}</CardLabel> 
+                {/* <TextInput type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} /> */}
+                <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="text"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    disable={isEdit}
+                    placeholder={`${t("CR_YEAR")}`}
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
+                   /> 
               </div>
             )}
+          </div>
           </div>
           <div>{/* <RadioButtons selected={answer} handleChange={handleRadioChange} /> */}</div>
         </div>

@@ -21,7 +21,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
   const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
+  const { data: localbodies={}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
@@ -86,8 +86,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
   let cmbState = [];
   let districtid = null;
   let cmbLBType = [];
-
-  console.log("Taluk" + Taluk);
+  let cmbLB = [];
   Taluk &&
     Taluk["common-masters"] &&
     Taluk["common-masters"].Taluk.map((ob) => {
@@ -125,6 +124,11 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
     LBType["common-masters"] &&
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
+    });
+    localbodies &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants.map((ob) => {
+      cmbLB.push(ob);
     });
 
   const onSkip = () => onSelect();
@@ -426,10 +430,11 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
       console.log(localbodies);
       if (PresentDistrict) {
         setIsInitialRender(false);
-        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === PresentDistrict.districtid));
+        setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === PresentDistrict.districtid));
       }
     }
   }, [lbs, isInitialRender]);
+ 
   const goNext = () => {
     // sessionStorage.setItem("PresentCountry",PresentCountry ? PresentCountry.code : null);
     // sessionStorage.setItem("PresentStateName",PresentStateName ? PresentStateName.code : null);
@@ -474,6 +479,7 @@ const AddressInside = ({ config, onSelect, userType, formData,PresentCountry, se
     // sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
     // sessionStorage.setItem("PermanentCountry", PermanentCountry ? PermanentCountry.code : null);
 
+//  sessionStorage.setItem("isPrsentAddress", isPrsentAddress.i18nKey );
 
     // sessionStorage.setItem("PresentBuldingNo", PresentBuldingNo ? PresentBuldingNo : null);
     // sessionStorage.setItem("PresentViaEn", PresentViaEn); 

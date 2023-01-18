@@ -22,85 +22,86 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
 
   const [toast, setToast] = useState(false);
-  const [HospitalError, setHospitalError] = useState(formData?.BirthPlace?.HospitalName ? false: true );
-  const [signedOfficerError, setSignedOfficerError] = useState(formData?.BirthPlace?.SignedOfficerName ? false: true );
-  const [signedOfficerDesgError, setSignedOfficerDesgError] = useState(formData?.BirthPlace?.SignedOfficerDesignation ? false: true );
-  const [mobileError, setMobileError] = useState(formData?.BirthPlace?.SignedOfficerMobileNo ? false: true );
+  const [HospitalError, setHospitalError] = useState(formData?.BirthPlace?.HospitalName ? false: false );
+  const [signedOfficerError, setSignedOfficerError] = useState(formData?.BirthPlace?.SignedOfficerName ? false: false );
+  const [signedOfficerDesgError, setSignedOfficerDesgError] = useState(formData?.BirthPlace?.SignedOfficerDesignation ? false: false );
+  const [mobileError, setMobileError] = useState(formData?.BirthPlace?.SignedOfficerMobileNo ? false: false );
+  const [mobileLengthError, setMobileLengthError] = useState(formData?.BirthPlace?.SignedOfficerMobileNo ? false: false );
 
-  const [InstitutionError, setInstitutionError] = useState(formData?.BirthPlace?.setInstitution ? false: true );
-  const [SignedOfficerInstError, setSignedOfficerInstError] = useState(formData?.BirthPlace?.SiginedOfficerDesignation ? false: true );
-  const [signedOfficerDesgInstError, setSignedOfficerDesgInstError] = useState(formData?.BirthPlace?.SiginedOfficerDesignation ? false: true );
+  const [InstitutionError, setInstitutionError] = useState(formData?.BirthPlace?.setInstitution ? false: false );
+  const [SignedOfficerInstError, setSignedOfficerInstError] = useState(formData?.BirthPlace?.SiginedOfficerDesignation ? false: false );
+  const [signedOfficerDesgInstError, setSignedOfficerDesgInstError] = useState(formData?.BirthPlace?.SiginedOfficerDesignation ? false: false );
 
-  const [VehicleRegiNoError, setVehicleRegiNoError] = useState(formData?.BirthPlace?.VehicleRegistrationNo ? false: true )
-  const [VehiFromEnError, setVehiFromEnError] = useState(formData?.BirthPlace?.VehicleFromEn ? false: true );
-  const [VehiToEnError, setVehiToEnError] = useState(formData?.BirthPlace?.VehicleToEn ? false: true );
-  const [VehiFromMlError, setVehiFromMlError] = useState(formData?.BirthPlace?.VehicleFromMl ? false: true );
-  const [VehiToMlError, setVehiToMlError] = useState(formData?.BirthPlace?.VehicleToMl ? false: true );
+  const [VehicleRegiNoError, setVehicleRegiNoError] = useState(formData?.BirthPlace?.VehicleRegistrationNo ? false: false )
+  const [VehiFromEnError, setVehiFromEnError] = useState(formData?.BirthPlace?.VehicleFromEn ? false: false );
+  const [VehiToEnError, setVehiToEnError] = useState(formData?.BirthPlace?.VehicleToEn ? false: false );
+  const [VehiFromMlError, setVehiFromMlError] = useState(formData?.BirthPlace?.VehicleFromMl ? false: false );
+  const [VehiToMlError, setVehiToMlError] = useState(formData?.BirthPlace?.VehicleToMl ? false: false );
 
-  const [PublicPlaceError, setPublicPlaceError] = useState(formData?.BirthPlace?.setPublicPlaceType ? false: true );
-  const [AdrsInfonmntNameError, setAdrsInfonmntNameError] = useState(formData?.BirthPlace?.AdrsInfontName ? false: true );
+  const [PublicPlaceError, setPublicPlaceError] = useState(formData?.BirthPlace?.setPublicPlaceType ? false: false );
+  const [AdrsInfonmntNameError, setAdrsInfonmntNameError] = useState(formData?.BirthPlace?.AdrsInfontName ? false: false );
 
-  const [AdrsHomeCountryError, setAdrsHomeCountryError] = useState(formData?.BirthPlace?.AdrsHomeCountry ? false: true );
-  const [AdrsHomeStateNameError, setAdrsHomeStateNameError] = useState(formData?.BirthPlace?.AdrsHomeStateName ? false: true );
-  const [AdrsHomeDistrictError, setAdrsHomeDistrictError] = useState(formData?.BirthPlace?.AdrsHomeDistrict ? false: true );
-  const [AdrsHomeLBTypeNameError, setAdrsHomeLBTypeNameError] = useState(formData?.BirthPlace?.AdrsHomeLBTypeName ? false: true );
-  const [AdrsHomeLBNameError, setAdrsHomeLBNameError] = useState(formData?.BirthPlace?.AdrsHomeLBName ? false: true );
-  const [AdrsHomeTalukError, setAdrsHomeTalukError] = useState(formData?.BirthPlace?.AdrsHomeTaluk ? false: true );
-  const [AdrsHomePostOfficeError, setAdrsHomePostOfficeError] = useState(formData?.BirthPlace?.AdrsHomePostOffice ? false: true );
-  const [AdrsHomePincodeError, setAdrsHomePincodeError] = useState(formData?.BirthPlace?.AdrsHomePincode ? false: true );
-  const [AdrsHomeHouseNameEnError, setAdrsHomeHouseNameEnError] = useState(formData?.BirthPlace?.AdrsHomeHouseNameEn ? false: true );
+  const [AdrsHomeCountryError, setAdrsHomeCountryError] = useState(formData?.BirthPlace?.AdrsHomeCountry ? false: false );
+  const [AdrsHomeStateNameError, setAdrsHomeStateNameError] = useState(formData?.BirthPlace?.AdrsHomeStateName ? false: false );
+  const [AdrsHomeDistrictError, setAdrsHomeDistrictError] = useState(formData?.BirthPlace?.AdrsHomeDistrict ? false: false );
+  const [AdrsHomeLBTypeNameError, setAdrsHomeLBTypeNameError] = useState(formData?.BirthPlace?.AdrsHomeLBTypeName ? false: false );
+  const [AdrsHomeLBNameError, setAdrsHomeLBNameError] = useState(formData?.BirthPlace?.AdrsHomeLBName ? false: false );
+  const [AdrsHomeTalukError, setAdrsHomeTalukError] = useState(formData?.BirthPlace?.AdrsHomeTaluk ? false: false );
+  const [AdrsHomePostOfficeError, setAdrsHomePostOfficeError] = useState(formData?.BirthPlace?.AdrsHomePostOffice ? false: false );
+  const [AdrsHomePincodeError, setAdrsHomePincodeError] = useState(formData?.BirthPlace?.AdrsHomePincode ? false: false );
+  const [AdrsHomeHouseNameEnError, setAdrsHomeHouseNameEnError] = useState(formData?.BirthPlace?.AdrsHomeHouseNameEn ? false: false );
   // const [AdrsHomeBuldingNo, setAdrsHomeBuldingNo] = useState(formData?.BirthPlace?.AdrsHomeBuldingNo);
-  const [AdrsHomeResNoEnError, setAdrsHomeResNoEnError] = useState(formData?.BirthPlace?.AdrsHomeResNoEn ? false: true );
-  // const [AdrsHomeInfomntNameError, setAdrsHomeInfomntNameError] = useState(formData?.BirthPlace?.AdrsHomeInfomntName ? false: true );
-  const [AdrsHomeDoorNoError, setAdrsHomeDoorNoError] = useState(formData?.BirthPlace?.AdrsHomeDoorNo ? false: true );
-  const [AdrsHomeMainPlaceEnError, setAdrsHomeMainPlaceEnError] = useState(formData?.BirthPlace?.AdrsHomeMainPlaceEn ? false: true );
-  const [AdrsHomeLocalityNameEnError, setAdrsHomeLocalityNameEnError] = useState(formData?.BirthPlace?.AdrsHomeLocalityNameEn ? false: true );
-  const [AdrsHomeStreetNameEnError, setAdrsHomeStreetNameEnError] = useState(formData?.BirthPlace?.AdrsHomeStreetNameEn ? false: true );
-  const [AdrsHomeVillageError, setAdrsHomeVillageError] = useState(formData?.BirthPlace?.AdrsHomeVillage ? false: true );
-  const [AdrsHomeMainPlaceMlError, setAdrsHomeMainPlaceMlError] = useState(formData?.BirthPlace?.AdrsHomeMainPlaceMl ? false: true );
-  const [AdrsHomeLocalityNameMlError, setAdrsHomeLocalityNameMlError] = useState(formData?.BirthPlace?.AdrsHomeLocalityNameMl ? false: true );
-  const [AdrsHomeStreetNameMlError, setAdrsHomeStreetNameMlError] = useState(formData?.BirthPlace?.AdrsHomeStreetNameMl ? false: true );
-  const [AdrsHomeHouseNameMlError, setAdrsHomeHouseNameMlError] = useState(formData?.BirthPlace?.AdrsHomeHouseNameMl ? false: true );
-  const [AdrsHomeResNoMlError, setAdrsHomeResNoMlError] = useState(formData?.BirthPlace?.AdrsHomeResNoMl ? false: true );
+  const [AdrsHomeResNoEnError, setAdrsHomeResNoEnError] = useState(formData?.BirthPlace?.AdrsHomeResNoEn ? false: false );
+  // const [AdrsHomeInfomntNameError, setAdrsHomeInfomntNameError] = useState(formData?.BirthPlace?.AdrsHomeInfomntName ? false: false );
+  const [AdrsHomeDoorNoError, setAdrsHomeDoorNoError] = useState(formData?.BirthPlace?.AdrsHomeDoorNo ? false: false );
+  const [AdrsHomeMainPlaceEnError, setAdrsHomeMainPlaceEnError] = useState(formData?.BirthPlace?.AdrsHomeMainPlaceEn ? false: false );
+  const [AdrsHomeLocalityNameEnError, setAdrsHomeLocalityNameEnError] = useState(formData?.BirthPlace?.AdrsHomeLocalityNameEn ? false: false );
+  const [AdrsHomeStreetNameEnError, setAdrsHomeStreetNameEnError] = useState(formData?.BirthPlace?.AdrsHomeStreetNameEn ? false: false );
+  const [AdrsHomeVillageError, setAdrsHomeVillageError] = useState(formData?.BirthPlace?.AdrsHomeVillage ? false: false );
+  const [AdrsHomeMainPlaceMlError, setAdrsHomeMainPlaceMlError] = useState(formData?.BirthPlace?.AdrsHomeMainPlaceMl ? false: false );
+  const [AdrsHomeLocalityNameMlError, setAdrsHomeLocalityNameMlError] = useState(formData?.BirthPlace?.AdrsHomeLocalityNameMl ? false: false );
+  const [AdrsHomeStreetNameMlError, setAdrsHomeStreetNameMlError] = useState(formData?.BirthPlace?.AdrsHomeStreetNameMl ? false: false );
+  const [AdrsHomeHouseNameMlError, setAdrsHomeHouseNameMlError] = useState(formData?.BirthPlace?.AdrsHomeHouseNameMl ? false: false );
+  const [AdrsHomeResNoMlError, setAdrsHomeResNoMlError] = useState(formData?.BirthPlace?.AdrsHomeResNoMl ? false: false );
 
-  const [VehiInfomantFstNameEnError, setVehiInfomantFstNameEnError] = useState(formData?.BirthPlace?.InfomantFirstNameEn ? false: true );
-  const [VehiInfomantMobileNoError, setVehiInfomantMobileNoError] = useState(formData?.BirthPlace?.InfomantMobile ? false: true );
+  const [VehiInfomantFstNameEnError, setVehiInfomantFstNameEnError] = useState(formData?.BirthPlace?.InfomantFirstNameEn ? false: false );
+  const [VehiInfomantMobileNoError, setVehiInfomantMobileNoError] = useState(formData?.BirthPlace?.InfomantMobile ? false: false );
 
-  const [VehiInfomantAdrCountryError, setVehiInfomantAdrCountryError] = useState(formData?.BirthPlace?.InformantAdrsCountry ? false: true );
-  const [VehiInfomantAdrStateNameError, setVehiInfomantAdrStateNameError] = useState(formData?.BirthPlace?.InformantAdrsStateName ? false: true );
-  const [VehiInfomantAdrDistrictError, setVehiInfomantAdrDistrictError] = useState(formData?.BirthPlace?.InformantAdrsDistrict ? false: true );
-  const [VehiInfomantAdrLBTypeNameError, setVehiInfomantAdrLBTypeNameError] = useState(formData?.BirthPlace?.InformantAdrsLBTypeName ? false: true );
-  const [VehiInfomantAdrLBNameError, setVehiInfomantAdrLBNameError] = useState(formData?.BirthPlace?.InformantAdrsLBName ? false: true );
-  const [VehiInfomantAdrTalukError, setVehiInfomantAdrTalukError] = useState(formData?.BirthPlace?.InformantAdrsTaluk ? false: true );
-  const [VehiInfomantAdrPostOfficeError, setVehiInfomantAdrPostOfficeError] = useState(formData?.BirthPlace?.InformantAdrsPostOffice ? false: true );
-  const [VehiInfomantAdrPincodeError, setVehiInfomantAdrPincodeError] = useState(formData?.BirthPlace?.InformantAdrsPincode ? false: true );
-  const [VehiInfomantAdrHouseNameEnError, setVehiInfomantAdrHouseNameEnError] = useState(formData?.BirthPlace?.InformantAdrsHouseNameEn ? false: true ); 
-  const [VehiInfomantAdrResNoEnError, setVehiInfomantAdrResNoEnError] = useState(formData?.BirthPlace?.InformantAdrsResNo ? false: true ); 
-  const [VehiInfomantAdrDoorNoError, setVehiInfomantAdrDoorNoError] = useState(formData?.BirthPlace?.InformantAdrsDoorNo ? false: true );
-  const [VehiInfomantAdrMainPlaceEnError, setVehiInfomantAdrMainPlaceEnError] = useState(formData?.BirthPlace?.InformantAdrsMainPlaceEn ? false: true );
-  const [VehiInfomantAdrLocalityNameEnError, setVehiInfomantAdrLocalityNameEnError] = useState(formData?.BirthPlace?.InformantAdrsLocalityNameEn ? false: true );
-  const [VehiInfomantAdrStreetNameEnError, setVehiInfomantAdrStreetNameEnError] = useState(formData?.BirthPlace?.InformantAdrsStreetNameEn ? false: true );
-  const [VehiInfomantAdrVillageError, setVehiInfomantAdrVillageError] = useState(formData?.BirthPlace?.InformantAdrsVillage ? false: true );
+  const [VehiInfomantAdrCountryError, setVehiInfomantAdrCountryError] = useState(formData?.BirthPlace?.InformantAdrsCountry ? false: false );
+  const [VehiInfomantAdrStateNameError, setVehiInfomantAdrStateNameError] = useState(formData?.BirthPlace?.InformantAdrsStateName ? false: false );
+  const [VehiInfomantAdrDistrictError, setVehiInfomantAdrDistrictError] = useState(formData?.BirthPlace?.InformantAdrsDistrict ? false: false );
+  const [VehiInfomantAdrLBTypeNameError, setVehiInfomantAdrLBTypeNameError] = useState(formData?.BirthPlace?.InformantAdrsLBTypeName ? false: false );
+  const [VehiInfomantAdrLBNameError, setVehiInfomantAdrLBNameError] = useState(formData?.BirthPlace?.InformantAdrsLBName ? false: false );
+  const [VehiInfomantAdrTalukError, setVehiInfomantAdrTalukError] = useState(formData?.BirthPlace?.InformantAdrsTaluk ? false: false );
+  const [VehiInfomantAdrPostOfficeError, setVehiInfomantAdrPostOfficeError] = useState(formData?.BirthPlace?.InformantAdrsPostOffice ? false: false );
+  const [VehiInfomantAdrPincodeError, setVehiInfomantAdrPincodeError] = useState(formData?.BirthPlace?.InformantAdrsPincode ? false: false );
+  const [VehiInfomantAdrHouseNameEnError, setVehiInfomantAdrHouseNameEnError] = useState(formData?.BirthPlace?.InformantAdrsHouseNameEn ? false: false ); 
+  const [VehiInfomantAdrResNoEnError, setVehiInfomantAdrResNoEnError] = useState(formData?.BirthPlace?.InformantAdrsResNo ? false: false ); 
+  const [VehiInfomantAdrDoorNoError, setVehiInfomantAdrDoorNoError] = useState(formData?.BirthPlace?.InformantAdrsDoorNo ? false: false );
+  const [VehiInfomantAdrMainPlaceEnError, setVehiInfomantAdrMainPlaceEnError] = useState(formData?.BirthPlace?.InformantAdrsMainPlaceEn ? false: false );
+  const [VehiInfomantAdrLocalityNameEnError, setVehiInfomantAdrLocalityNameEnError] = useState(formData?.BirthPlace?.InformantAdrsLocalityNameEn ? false: false );
+  const [VehiInfomantAdrStreetNameEnError, setVehiInfomantAdrStreetNameEnError] = useState(formData?.BirthPlace?.InformantAdrsStreetNameEn ? false: false );
+  const [VehiInfomantAdrVillageError, setVehiInfomantAdrVillageError] = useState(formData?.BirthPlace?.InformantAdrsVillage ? false: false );
 
 
-  const [HomeInformantFstNameEnError, setHomeInformantFstNameEnError] = useState(formData?.BirthPlace?.InfomantFirstNameEn ? false: true );
-  const [HomeInformantMobileNoError, setHomeInformantMobileNoError] = useState(formData?.BirthPlace?.InfomantMobile ? false: true );
+  const [HomeInformantFstNameEnError, setHomeInformantFstNameEnError] = useState(formData?.BirthPlace?.InfomantFirstNameEn ? false: false );
+  const [HomeInformantMobileNoError, setHomeInformantMobileNoError] = useState(formData?.BirthPlace?.InfomantMobile ? false: false );
 
-  const [HomeInformantAdrCountryError, setHomeInformantAdrCountryError] = useState(formData?.BirthPlace?.InformantAdrsCountry ? false: true );
-  const [HomeInformantAdrStateNameError, setHomeInformantAdrStateNameError] = useState(formData?.BirthPlace?.InformantAdrsStateName ? false: true );
-  const [HomeInformantAdrDistrictError, setHomeInformantAdrDistrictError] = useState(formData?.BirthPlace?.InformantAdrsDistrict ? false: true );
-  const [HomeInformantAdrLBTypeNameError, setHomeInformantAdrLBTypeNameError] = useState(formData?.BirthPlace?.InformantAdrsLBTypeName ? false: true );
-  const [HomeInformantAdrLBNameError, setHomeInformantAdrLBNameError] = useState(formData?.BirthPlace?.InformantAdrsLBName ? false: true );
-  const [HomeInformantAdrTalukError, setHomeInformantAdrTalukError] = useState(formData?.BirthPlace?.InformantAdrsTaluk ? false: true );
-  const [HomeInformantAdrPostOfficeError, setHomeInformantAdrPostOfficeError] = useState(formData?.BirthPlace?.InformantAdrsPostOffice ? false: true );
-  const [HomeInformantAdrPincodeError, setHomeInformantAdrPincodeError] = useState(formData?.BirthPlace?.InformantAdrsPincode ? false: true );
-  const [HomeInformantAdrHouseNameEnError, setHomeInformantAdrHouseNameEnError] = useState(formData?.BirthPlace?.InformantAdrsHouseNameEn ? false: true ); 
-  const [HomeInformantAdrResNoEnError, setHomeInformantAdrResNoEnError] = useState(formData?.BirthPlace?.InformantAdrsResNo ? false: true ); 
-  const [HomeInformantAdrDoorNoError, setHomeInformantAdrDoorNoError] = useState(formData?.BirthPlace?.InformantAdrsDoorNo ? false: true );
-  const [HomeInformantAdrMainPlaceEnError, setHomeInformantAdrMainPlaceEnError] = useState(formData?.BirthPlace?.InformantAdrsMainPlaceEn ? false: true );
-  const [HomeInformantAdrLocalityNameEnError, setHomeInformantAdrLocalityNameEnError] = useState(formData?.BirthPlace?.InformantAdrsLocalityNameEn ? false: true );
-  const [HomeInformantAdrStreetNameEnError, setHomeInformantAdrStreetNameEnError] = useState(formData?.BirthPlace?.InformantAdrsStreetNameEn ? false: true );
-  const [HomeInformantAdrVillageError, setHomeInformantAdrVillageError] = useState(formData?.BirthPlace?.InformantAdrsVillage ? false: true );
+  const [HomeInformantAdrCountryError, setHomeInformantAdrCountryError] = useState(formData?.BirthPlace?.InformantAdrsCountry ? false: false );
+  const [HomeInformantAdrStateNameError, setHomeInformantAdrStateNameError] = useState(formData?.BirthPlace?.InformantAdrsStateName ? false: false );
+  const [HomeInformantAdrDistrictError, setHomeInformantAdrDistrictError] = useState(formData?.BirthPlace?.InformantAdrsDistrict ? false: false );
+  const [HomeInformantAdrLBTypeNameError, setHomeInformantAdrLBTypeNameError] = useState(formData?.BirthPlace?.InformantAdrsLBTypeName ? false: false );
+  const [HomeInformantAdrLBNameError, setHomeInformantAdrLBNameError] = useState(formData?.BirthPlace?.InformantAdrsLBName ? false: false );
+  const [HomeInformantAdrTalukError, setHomeInformantAdrTalukError] = useState(formData?.BirthPlace?.InformantAdrsTaluk ? false: false );
+  const [HomeInformantAdrPostOfficeError, setHomeInformantAdrPostOfficeError] = useState(formData?.BirthPlace?.InformantAdrsPostOffice ? false: false );
+  const [HomeInformantAdrPincodeError, setHomeInformantAdrPincodeError] = useState(formData?.BirthPlace?.InformantAdrsPincode ? false: false );
+  const [HomeInformantAdrHouseNameEnError, setHomeInformantAdrHouseNameEnError] = useState(formData?.BirthPlace?.InformantAdrsHouseNameEn ? false: false ); 
+  const [HomeInformantAdrResNoEnError, setHomeInformantAdrResNoEnError] = useState(formData?.BirthPlace?.InformantAdrsResNo ? false: false ); 
+  const [HomeInformantAdrDoorNoError, setHomeInformantAdrDoorNoError] = useState(formData?.BirthPlace?.InformantAdrsDoorNo ? false: false );
+  const [HomeInformantAdrMainPlaceEnError, setHomeInformantAdrMainPlaceEnError] = useState(formData?.BirthPlace?.InformantAdrsMainPlaceEn ? false: false );
+  const [HomeInformantAdrLocalityNameEnError, setHomeInformantAdrLocalityNameEnError] = useState(formData?.BirthPlace?.InformantAdrsLocalityNameEn ? false: false );
+  const [HomeInformantAdrStreetNameEnError, setHomeInformantAdrStreetNameEnError] = useState(formData?.BirthPlace?.InformantAdrsStreetNameEn ? false: false );
+  const [HomeInformantAdrVillageError, setHomeInformantAdrVillageError] = useState(formData?.BirthPlace?.InformantAdrsVillage ? false: false );
 
   // const [BirthPlaceDescription, setBirthPlaceDeccription] = useState(formData?.BirthPlace?.BirthPlaceDescription);
   const [HospitalName, selectHospitalName] = useState(formData?.BirthPlace?.HospitalName ? formData?.BirthPlace?.HospitalName : null);
@@ -144,20 +145,19 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [AdrsLBTypeName, setAdrsLBTypeName] = useState(formData?.BirthPlace?.AdrsLBTypeName ? formData?.BirthPlace?.AdrsLBTypeName : null);
   const [AdrsLBName, setAdrsLBName] = useState(formData?.BirthPlace?.AdrsLBName ? formData?.BirthPlace?.AdrsLBName : null);
   const [AdrsTaluk, setAdrsTaluk] = useState(formData?.BirthPlace?.AdrsTaluk ? formData?.BirthPlace?.AdrsTaluk : null);
+  const [AdrsVillage, setAdrsVillage] = useState(formData?.BirthPlace?.AdrsVillage ? formData?.BirthPlace?.AdrsVillage : null);
   const [AdrsPostOffice, setAdrsPostOffice] = useState(formData?.BirthPlace?.AdrsPostOffice ? formData?.BirthPlace?.AdrsPostOffice : null);
   const [AdrsPincode, setAdrsPincode] = useState(formData?.BirthPlace?.AdrsPincode ? formData?.BirthPlace?.AdrsPincode : "");
-  const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.BirthPlace?.AdrsHouseNameEn ? formData?.BirthPlace?.AdrsHouseNameEn : "");
-  // const [AdrsBuldingNo, setAdrsBuldingNo] = useState(formData?.BirthPlace?.AdrsBuldingNo);
-  const [AdrsResNoEn, setAdrsResNoEn] = useState(formData?.BirthPlace?.AdrsResNoEn ? formData?.BirthPlace?.AdrsResNoEn : "");  
-  const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.BirthPlace?.AdrsDoorNo ? formData?.BirthPlace?.AdrsDoorNo : "");
   const [AdrsMainPlaceEn, setAdrsMainPlaceEn] = useState(formData?.BirthPlace?.AdrsMainPlaceEn ? formData?.BirthPlace?.AdrsMainPlaceEn : "");
-  const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.BirthPlace?.AdrsLocalityNameEn ? formData?.BirthPlace?.AdrsLocalityNameEn : "");
-  const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.BirthPlace?.AdrsStreetNameEn ? formData?.BirthPlace?.AdrsStreetNameEn : "");
-  const [AdrsVillage, setAdrsVillage] = useState(formData?.BirthPlace?.AdrsVillage ? formData?.BirthPlace?.AdrsVillage : null);
   const [AdrsMainPlaceMl, setAdrsMainPlaceMl] = useState(formData?.BirthPlace?.AdrsMainPlaceMl ? formData?.BirthPlace?.AdrsMainPlaceMl : "");
+  const [AdrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.BirthPlace?.AdrsLocalityNameEn ? formData?.BirthPlace?.AdrsLocalityNameEn : "");
   const [AdrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.BirthPlace?.AdrsLocalityNameMl ? formData?.BirthPlace?.AdrsLocalityNameMl : "");
+  const [AdrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.BirthPlace?.AdrsStreetNameEn ? formData?.BirthPlace?.AdrsStreetNameEn : "");
   const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.BirthPlace?.AdrsStreetNameMl ? formData?.BirthPlace?.AdrsStreetNameMl : "");
-  const [AdrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.BirthPlace?.AdrsHouseNameMl ? formData?.BirthPlace?.AdrsHouseNameMl : "");
+  const [AdrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.BirthPlace?.AdrsHouseNameEn ? formData?.BirthPlace?.AdrsHouseNameEn : "");
+  const [AdrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.BirthPlace?.AdrsHouseNameMl ? formData?.BirthPlace?.AdrsHouseNameMl : ""); 
+  const [AdrsDoorNo, setAdrsDoorNo] = useState(formData?.BirthPlace?.AdrsDoorNo ? formData?.BirthPlace?.AdrsDoorNo : "");
+  const [AdrsResNoEn, setAdrsResNoEn] = useState(formData?.BirthPlace?.AdrsResNoEn ? formData?.BirthPlace?.AdrsResNoEn : "");    
   const [AdrsResNoMl, setAdrsResNoMl] = useState(formData?.BirthPlace?.AdrsResNoMl ? formData?.BirthPlace?.AdrsResNoMl : "");
 
 
@@ -175,12 +175,15 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [InformantAdrsVillage, setInformantAdrsVillage] = useState(formData?.BirthPlace?.InformantAdrsVillage ? formData?.BirthPlace?.InformantAdrsVillage : null);
   const [InformantAdrsPostOffice, setInformantAdrsPostOffice] = useState(formData?.BirthPlace?.InformantAdrsPostOffice ? formData?.BirthPlace?.InformantAdrsPostOffice : null);
   const [InformantAdrsPincode, setInformantAdrsPincode] = useState(formData?.BirthPlace?.InformantAdrsPincode ? formData?.BirthPlace?.InformantAdrsPincode : null);
-  const [InformantAdrsHouseNameEn, setInformantAdrsHouseNameEn] = useState(formData?.BirthPlace?.InformantAdrsHouseNameEn ? formData?.BirthPlace?.InformantAdrsHouseNameEn : null);
-  const [InformantAdrsResNo, setInformantAdrsResNo] = useState(formData?.BirthPlace?.InformantAdrsResNo ? formData?.BirthPlace?.InformantAdrsResNo : null);
-  const [InformantAdrsDoorNo, setInformantAdrsDoorNo] = useState(formData?.BirthPlace?.InformantAdrsDoorNo ? formData?.BirthPlace?.InformantAdrsDoorNo : null);
-  const [InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn] = useState(formData?.BirthPlace?.InformantAdrsLocalityNameEn ? formData?.BirthPlace?.InformantAdrsLocalityNameEn : null );
-  const [InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn] = useState(formData?.BirthPlace?.InformantAdrsStreetNameEn ? formData?.BirthPlace?.InformantAdrsStreetNameEn : null);
   const [InformantAdrsMainPlaceEn, setInformantAdrsMainPlaceEn] = useState(formData?.BirthPlace?.InformantAdrsMainPlaceEn ? formData?.BirthPlace?.InformantAdrsMainPlaceEn : "");
+  const [InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn] = useState(formData?.BirthPlace?.InformantAdrsLocalityNameEn ? formData?.BirthPlace?.InformantAdrsLocalityNameEn : null );
+  const [InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn] = useState(formData?.BirthPlace?.InformantAdrsStreetNameEn ? formData?.BirthPlace?.InformantAdrsStreetNameEn : null); 
+  const [InformantAdrsHouseNameEn, setInformantAdrsHouseNameEn] = useState(formData?.BirthPlace?.InformantAdrsHouseNameEn ? formData?.BirthPlace?.InformantAdrsHouseNameEn : null);
+  const [InformantAdrsDoorNo, setInformantAdrsDoorNo] = useState(formData?.BirthPlace?.InformantAdrsDoorNo ? formData?.BirthPlace?.InformantAdrsDoorNo : null);  
+  const [InformantAdrsResNo, setInformantAdrsResNo] = useState(formData?.BirthPlace?.InformantAdrsResNo ? formData?.BirthPlace?.InformantAdrsResNo : null);
+ 
+  
+ 
   
   // const [InfntWardNo, setInfntWardNo] = useState(formData.BirthPlace?.InfntWardNo);  
 
@@ -264,21 +267,21 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             AdrsLBTypeName={AdrsLBTypeName}
             AdrsLBName={AdrsLBName}
             AdrsTaluk={AdrsTaluk}
+            AdrsVillage={AdrsVillage}
             AdrsPostOffice={AdrsPostOffice}
             AdrsPincode={AdrsPincode}
-            AdrsHouseNameEn={AdrsHouseNameEn}
-            // AdrsBuldingNo={AdrsBuldingNo}
-            AdrsResNoEn={AdrsResNoEn}
-            AdrsResNoMl={AdrsResNoMl}          
-            AdrsDoorNo={AdrsDoorNo}
             AdrsMainPlaceEn={AdrsMainPlaceEn}
-            AdrsLocalityNameEn={AdrsLocalityNameEn}
-            AdrsStreetNameEn={AdrsStreetNameEn}
-            AdrsVillage={AdrsVillage}
             AdrsMainPlaceMl={AdrsMainPlaceMl}
+            AdrsLocalityNameEn={AdrsLocalityNameEn}
             AdrsLocalityNameMl={AdrsLocalityNameMl}
+            AdrsStreetNameEn={AdrsStreetNameEn}
             AdrsStreetNameMl={AdrsStreetNameMl}
-            AdrsHouseNameMl={AdrsHouseNameMl}
+            AdrsHouseNameEn={AdrsHouseNameEn}
+            AdrsHouseNameMl={AdrsHouseNameMl}  
+            AdrsDoorNo={AdrsDoorNo}         
+            AdrsResNoEn={AdrsResNoEn}
+            AdrsResNoMl={AdrsResNoMl}      
+    
           />
 
         }
@@ -300,16 +303,17 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             InformantAdrsLBTypeName={InformantAdrsLBTypeName}
             InformantAdrsLBName={InformantAdrsLBName}
             InformantAdrsTaluk={InformantAdrsTaluk}
+            InformantAdrsVillage={InformantAdrsVillage}
             InformantAdrsPostOffice={InformantAdrsPostOffice}
             InformantAdrsPincode={InformantAdrsPincode}
-            InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
-            // InformantAdrsBuldingNo={InformantAdrsBuldingNo}
-            InformantAdrsResNo={InformantAdrsResNo}
-            InformantAdrsDoorNo={InformantAdrsDoorNo}
             InformantAdrsMainPlaceEn={InformantAdrsMainPlaceEn}
             InformantAdrsLocalityNameEn={InformantAdrsLocalityNameEn}
             InformantAdrsStreetNameEn={InformantAdrsStreetNameEn}
-            InformantAdrsVillage={InformantAdrsVillage}
+            InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
+            InformantAdrsDoorNo={InformantAdrsDoorNo}
+            InformantAdrsResNo={InformantAdrsResNo}
+       
+            
           />
 
         }
@@ -320,8 +324,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
   let validFlag = true;
   const goNext = () => {
-    sessionStorage.removeItem('BirthPlace');
-    sessionStorage.setItem("BirthPlace", BirthPlace.code);
+    
     console.log(BirthPlace.code);
     if (BirthPlace.code === "HOSPITAL") {
       if (HospitalName == null) {
@@ -366,14 +369,14 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         // console.log()
         if(SignedOfficerMobileNo.lenghth<10){
-          setMobileError(true);
+          setMobileLengthError(true);
         validFlag = false;
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
         }else {
-          setMobileError(false);
+          setMobileLengthError(false);
         }
       }
     }
@@ -546,17 +549,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
        } else {
         setVehiInfomantAdrTalukError(false);
        }
- 
-       if (InformantAdrsPostOffice == null) {
-        setVehiInfomantAdrPostOfficeError(true);
-         validFlag = false;
-         setToast(true);
-         setTimeout(() => {
-           setToast(false);
-         }, 2000);
-       } else {
-        setVehiInfomantAdrPostOfficeError(false);
-       }
        if (InformantAdrsVillage == null) {
         setVehiInfomantAdrVillageError(true);
          validFlag = false;
@@ -567,6 +559,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
        } else {
         setVehiInfomantAdrVillageError(false);
        }
+       if (InformantAdrsPostOffice == null) {
+        setVehiInfomantAdrPostOfficeError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setVehiInfomantAdrPostOfficeError(false);
+       }     
  
        if (InformantAdrsPincode == null || InformantAdrsPincode == "") {
         setVehiInfomantAdrPincodeError(true);
@@ -578,7 +580,36 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
        } else {
         setVehiInfomantAdrPincodeError(false);
        }
- 
+       if (InformantAdrsMainPlaceEn == null || InformantAdrsMainPlaceEn == "") {
+        setVehiInfomantAdrMainPlaceEnError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setVehiInfomantAdrMainPlaceEnError(false);
+       }
+       if (InformantAdrsLocalityNameEn == null || InformantAdrsLocalityNameEn == "") {
+        setVehiInfomantAdrLocalityNameEnError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setVehiInfomantAdrLocalityNameEnError(false);
+       }
+       if (InformantAdrsStreetNameEn == null || InformantAdrsStreetNameEn == "") {
+        setVehiInfomantAdrStreetNameEnError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setVehiInfomantAdrStreetNameEnError(false);
+       }       
        if (InformantAdrsHouseNameEn == null || InformantAdrsHouseNameEn == "") {
         setVehiInfomantAdrHouseNameEnError(true);
          validFlag = false;
@@ -588,18 +619,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
          }, 2000);
        } else {
         setVehiInfomantAdrHouseNameEnError(false);
-       }
- 
-       if (InformantAdrsResNo== null || InformantAdrsResNo== "") {
-        setVehiInfomantAdrResNoEnError(true);
-         validFlag = false;
-         setToast(true);
-         setTimeout(() => {
-           setToast(false);
-         }, 2000);
-       } else {
-        setVehiInfomantAdrResNoEnError(false);
-       }
+       }      
  
        if (InformantAdrsDoorNo == null || InformantAdrsDoorNo == "") {
         setVehiInfomantAdrDoorNoError(true);
@@ -612,40 +632,17 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         setVehiInfomantAdrDoorNoError(false);
        }
  
-       if (InformantAdrsMainPlaceEn == null || InformantAdrsMainPlaceEn == "") {
-        setVehiInfomantAdrMainPlaceEnError(true);
+       if (InformantAdrsResNo== null || InformantAdrsResNo== "") {
+        setVehiInfomantAdrResNoEnError(true);
          validFlag = false;
          setToast(true);
          setTimeout(() => {
            setToast(false);
          }, 2000);
        } else {
-        setVehiInfomantAdrMainPlaceEnError(false);
-       }
+        setVehiInfomantAdrResNoEnError(false);
+       } 
  
-       if (InformantAdrsLocalityNameEn == null || InformantAdrsLocalityNameEn == "") {
-        setVehiInfomantAdrLocalityNameEnError(true);
-         validFlag = false;
-         setToast(true);
-         setTimeout(() => {
-           setToast(false);
-         }, 2000);
-       } else {
-        setVehiInfomantAdrLocalityNameEnError(false);
-       }
- 
-       if (InformantAdrsStreetNameEn == null || InformantAdrsStreetNameEn == "") {
-        setVehiInfomantAdrStreetNameEnError(true);
-         validFlag = false;
-         setToast(true);
-         setTimeout(() => {
-           setToast(false);
-         }, 2000);
-       } else {
-        setVehiInfomantAdrStreetNameEnError(false);
-       }        
-     
-
     }
     if (BirthPlace.code === "PUBLIC_PLACES") {
       if (setPublicPlaceType == null) {
@@ -733,17 +730,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setAdrsHomeTalukError(false);
       }
-
-      if (AdrsPostOffice == null) {
-        setAdrsHomePostOfficeError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomePostOfficeError(false);
-      }
       if (AdrsVillage == null) {
         setAdrsHomeVillageError(true);
         validFlag = false;
@@ -754,6 +740,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setAdrsHomeVillageError(false);
       }
+      if (AdrsPostOffice == null) {
+        setAdrsHomePostOfficeError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAdrsHomePostOfficeError(false);
+      }      
 
       if (AdrsPincode == null || AdrsPincode == "") {
         setAdrsHomePincodeError(true);
@@ -765,40 +761,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setAdrsHomePincodeError(false);
       }
-
-      if (AdrsHouseNameEn == null || AdrsHouseNameEn == "") {
-        setAdrsHomeHouseNameEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeHouseNameEnError(false);
-      }
-
-      if (AdrsResNoEn == null || AdrsResNoEn == "") {
-        setAdrsHomeResNoEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeResNoEnError(false);
-      }
-
-      if (AdrsDoorNo == null || AdrsDoorNo == "") {
-        setAdrsHomeDoorNoError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeDoorNoError(false);
-      }
-
       if (AdrsMainPlaceEn == null || AdrsMainPlaceEn == "") {
         setAdrsHomeMainPlaceEnError(true);
         validFlag = false;
@@ -808,28 +770,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         }, 2000);
       } else {
         setAdrsHomeMainPlaceEnError(false);
-      }
-
-      if (AdrsLocalityNameEn == null || AdrsLocalityNameEn == "") {
-        setAdrsHomeLocalityNameEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeLocalityNameEnError(false);
-      }
-
-      if (AdrsStreetNameEn == null || AdrsStreetNameEn == "") {
-        setAdrsHomeStreetNameEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeStreetNameEnError(false);
       }
       if (AdrsMainPlaceMl == null || AdrsMainPlaceMl == "") {
         setAdrsHomeMainPlaceMlError(true);
@@ -841,6 +781,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setAdrsHomeMainPlaceMlError(false);
       }
+      if (AdrsLocalityNameEn == null || AdrsLocalityNameEn == "") {
+        setAdrsHomeLocalityNameEnError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAdrsHomeLocalityNameEnError(false);
+      }
       if (AdrsLocalityNameMl == null || AdrsLocalityNameMl == "") {
         setAdrsHomeLocalityNameMlError(true);
         validFlag = false;
@@ -850,6 +800,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         }, 2000);
       } else {
         setAdrsHomeLocalityNameMlError(false);
+      }
+      if (AdrsStreetNameEn == null || AdrsStreetNameEn == "") {
+        setAdrsHomeStreetNameEnError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAdrsHomeStreetNameEnError(false);
       }
       if (AdrsStreetNameMl == null || AdrsStreetNameMl == "") {
         setAdrsHomeStreetNameMlError(true);
@@ -861,6 +821,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setAdrsHomeStreetNameMlError(false);
       }
+      if (AdrsHouseNameEn == null || AdrsHouseNameEn == "") {
+        setAdrsHomeHouseNameEnError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAdrsHomeHouseNameEnError(false);
+      }
       if (AdrsHouseNameMl == null || AdrsHouseNameMl == "") {
         setAdrsHomeHouseNameMlError(true);
         validFlag = false;
@@ -871,6 +841,28 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setAdrsHomeHouseNameMlError(false);
       }
+      if (AdrsDoorNo == null || AdrsDoorNo == "") {
+        setAdrsHomeDoorNoError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAdrsHomeDoorNoError(false);
+      }
+
+      if (AdrsResNoEn == null || AdrsResNoEn == "") {
+        setAdrsHomeResNoEnError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAdrsHomeResNoEnError(false);
+      }   
+   
       if (AdrsResNoMl == null || AdrsResNoMl == "") {
         setAdrsHomeResNoMlError(true);
         validFlag = false;
@@ -964,7 +956,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
        setHomeInformantAdrTalukError(false);
       }
-
+      if (InformantAdrsVillage == null) {
+        setHomeInformantAdrVillageError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setHomeInformantAdrVillageError(false);
+       }
       if (InformantAdrsPostOffice == null) {
        setHomeInformantAdrPostOfficeError(true);
         validFlag = false;
@@ -975,16 +976,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
        setHomeInformantAdrPostOfficeError(false);
       }
-      if (InformantAdrsVillage == null) {
-       setHomeInformantAdrVillageError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-       setHomeInformantAdrVillageError(false);
-      }
+     
 
       if (InformantAdrsPincode == null || InformantAdrsPincode == "") {
        setHomeInformantAdrPincodeError(true);
@@ -996,7 +988,37 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
        setHomeInformantAdrPincodeError(false);
       }
-
+      if (InformantAdrsMainPlaceEn == null || InformantAdrsMainPlaceEn == "") {
+        setHomeInformantAdrMainPlaceEnError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setHomeInformantAdrMainPlaceEnError(false);
+       }
+       if (InformantAdrsLocalityNameEn == null || InformantAdrsLocalityNameEn == "") {
+        setHomeInformantAdrLocalityNameEnError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setHomeInformantAdrLocalityNameEnError(false);
+       }
+       if (InformantAdrsStreetNameEn == null || InformantAdrsStreetNameEn == "") {
+        setHomeInformantAdrStreetNameEnError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setHomeInformantAdrStreetNameEnError(false);
+       }     
+      
       if (InformantAdrsHouseNameEn == null || InformantAdrsHouseNameEn == "") {
        setHomeInformantAdrHouseNameEnError(true);
         validFlag = false;
@@ -1007,7 +1029,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
        setHomeInformantAdrHouseNameEnError(false);
       }
-
+      if (InformantAdrsDoorNo == null || InformantAdrsDoorNo == "") {
+        setHomeInformantAdrDoorNoError(true);
+         validFlag = false;
+         setToast(true);
+         setTimeout(() => {
+           setToast(false);
+         }, 2000);
+       } else {
+        setHomeInformantAdrDoorNoError(false);
+       }
       if (InformantAdrsResNo == null || InformantAdrsResNo == "") {
        setHomeInformantAdrResNoEnError(true);
         validFlag = false;
@@ -1018,56 +1049,14 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
        setHomeInformantAdrResNoEnError(false);
       }
-
-      if (InformantAdrsDoorNo == null || InformantAdrsDoorNo == "") {
-       setHomeInformantAdrDoorNoError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-       setHomeInformantAdrDoorNoError(false);
-      }
-
-      if (InformantAdrsMainPlaceEn == null || InformantAdrsMainPlaceEn == "") {
-       setHomeInformantAdrMainPlaceEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-       setHomeInformantAdrMainPlaceEnError(false);
-      }
-
-      if (InformantAdrsLocalityNameEn == null || InformantAdrsLocalityNameEn == "") {
-       setHomeInformantAdrLocalityNameEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-       setHomeInformantAdrLocalityNameEnError(false);
-      }
-
-      if (InformantAdrsStreetNameEn == null || InformantAdrsStreetNameEn == "") {
-       setHomeInformantAdrStreetNameEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-       setHomeInformantAdrStreetNameEnError(false);
-      }     
-     
+   
     }
    
     
     if (validFlag === true) {
       if (BirthPlace.code === "HOSPITAL") {
+        sessionStorage.removeItem('BirthPlace');
+        sessionStorage.setItem("BirthPlace", BirthPlace.code);
         sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.hospitalName : null);
         sessionStorage.setItem("SignedOfficerName", SignedOfficerName ? SignedOfficerName.hospitalRegistar : null);
         sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation ? SignedOfficerDesignation.registarDesig : null);
@@ -1150,6 +1139,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           VehicleOtherDetailsMl,
         });
       } else if (BirthPlace.code === "INSTITUTION") {
+        sessionStorage.removeItem('BirthPlace');
+        sessionStorage.setItem("BirthPlace", BirthPlace.code);
         sessionStorage.setItem("setInstitution", setInstitution ? setInstitution.setInstitution : null);
         sessionStorage.setItem("setInstitutionId", setInstitutionId ? setInstitutionId.setInstitutionId : null);
         sessionStorage.setItem("SiginedOfficer", SiginedOfficer ? SiginedOfficer.SiginedOfficer : null);
@@ -1232,6 +1223,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           VehicleOtherDetailsMl,
         });
       } else if (BirthPlace.code === "VEHICLE") {
+        sessionStorage.removeItem('BirthPlace');
+        sessionStorage.setItem("BirthPlace", BirthPlace.code);
         sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null);
         sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);
         sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
@@ -1316,6 +1309,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         });
 
       } else if (BirthPlace.code === "PUBLIC_PLACES") {
+        sessionStorage.removeItem('BirthPlace');
+        sessionStorage.setItem("BirthPlace", BirthPlace.code);
         sessionStorage.setItem("setPublicPlaceType", setPublicPlaceType ? setPublicPlaceType.code : null);
         sessionStorage.setItem("AdrsInfontName", AdrsInfontName ? AdrsInfontName : null);
         sessionStorage.setItem("AdrsPublicPlace", AdrsPublicPlace ? AdrsPublicPlace : null);
@@ -1398,7 +1393,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         });
 
       } else if (BirthPlace.code === "HOME") {
-
+        sessionStorage.removeItem('BirthPlace');
+        sessionStorage.setItem("BirthPlace", BirthPlace.code);
         sessionStorage.setItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
         sessionStorage.setItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
         sessionStorage.setItem("AdrsLBTypeName", AdrsLBTypeName ? AdrsLBTypeName.code : null);
@@ -1567,16 +1563,17 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
                 setInformantAdrsLBTypeName={setInformantAdrsLBTypeName} InformantAdrsLBTypeName={InformantAdrsLBTypeName}
                 setInformantAdrsLBName={setInformantAdrsLBName} InformantAdrsLBName={InformantAdrsLBName}
                 setInformantAdrsTaluk={setInformantAdrsTaluk} InformantAdrsTaluk={InformantAdrsTaluk}
+                setInformantAdrsVillage={setInformantAdrsVillage} InformantAdrsVillage={InformantAdrsVillage}
                 setInformantAdrsPostOffice={setInformantAdrsPostOffice} InformantAdrsPostOffice={InformantAdrsPostOffice}
                 setInformantAdrsPincode={setInformantAdrsPincode} InformantAdrsPincode={InformantAdrsPincode}
-                setInformantAdrsHouseNameEn={setInformantAdrsHouseNameEn} InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
-                // setInformantAdrsBuldingNo={setInformantAdrsBuldingNo} InformantAdrsBuldingNo={InformantAdrsBuldingNo}
-                setInformantAdrsResNo={setInformantAdrsResNo} InformantAdrsResNo={InformantAdrsResNo}
-                setInformantAdrsDoorNo={setInformantAdrsDoorNo} InformantAdrsDoorNo={InformantAdrsDoorNo}
                 setInformantAdrsMainPlaceEn={setInformantAdrsMainPlaceEn} InformantAdrsMainPlaceEn={InformantAdrsMainPlaceEn}
                 setInformantAdrsLocalityNameEn={setInformantAdrsLocalityNameEn} InformantAdrsLocalityNameEn={InformantAdrsLocalityNameEn}
                 setInformantAdrsStreetNameEn={setInformantAdrsStreetNameEn} InformantAdrsStreetNameEn={InformantAdrsStreetNameEn}
-                setInformantAdrsVillage={setInformantAdrsVillage} InformantAdrsVillage={InformantAdrsVillage}
+                setInformantAdrsHouseNameEn={setInformantAdrsHouseNameEn} InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
+                setInformantAdrsDoorNo={setInformantAdrsDoorNo} InformantAdrsDoorNo={InformantAdrsDoorNo}                
+                setInformantAdrsResNo={setInformantAdrsResNo} InformantAdrsResNo={InformantAdrsResNo}             
+               
+                
               // setInfntWardNo={setInfntWardNo} InfntWardNo={InfntWardNo}
               />
             </div>
@@ -1602,20 +1599,21 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
                 setAdrsLBTypeName={setAdrsLBTypeName} AdrsLBTypeName={AdrsLBTypeName}
                 setAdrsLBName={setAdrsLBName} AdrsLBName={AdrsLBName}
                 setAdrsTaluk={setAdrsTaluk} AdrsTaluk={AdrsTaluk}
+                setAdrsVillage={setAdrsVillage} AdrsVillage={AdrsVillage}
                 setAdrsPostOffice={setAdrsPostOffice} AdrsPostOffice={AdrsPostOffice}
                 setAdrsPincode={setAdrsPincode} AdrsPincode={AdrsPincode}
-                setAdrsHouseNameEn={setAdrsHouseNameEn} AdrsHouseNameEn={AdrsHouseNameEn}    
+                setAdrsMainPlaceEn={setAdrsMainPlaceEn} AdrsMainPlaceEn={AdrsMainPlaceEn}
+                setAdrsMainPlaceMl={setAdrsMainPlaceMl} AdrsMainPlaceMl={AdrsMainPlaceMl}
+                setAdrsLocalityNameEn={setAdrsLocalityNameEn} AdrsLocalityNameEn={AdrsLocalityNameEn}
+                setAdrsLocalityNameMl={setAdrsLocalityNameMl} AdrsLocalityNameMl={AdrsLocalityNameMl}
+                setAdrsStreetNameEn={setAdrsStreetNameEn} AdrsStreetNameEn={AdrsStreetNameEn}
+                setAdrsStreetNameMl={setAdrsStreetNameMl} AdrsStreetNameMl={AdrsStreetNameMl}
+                setAdrsHouseNameEn={setAdrsHouseNameEn} AdrsHouseNameEn={AdrsHouseNameEn}  
+                setAdrsHouseNameMl={setAdrsHouseNameMl} AdrsHouseNameMl={AdrsHouseNameMl} 
+                setAdrsDoorNo={setAdrsDoorNo} AdrsDoorNo={AdrsDoorNo} 
                 setAdrsResNoEn={setAdrsResNoEn} AdrsResNoEn={AdrsResNoEn}
                 setAdrsResNoMl={setAdrsResNoMl} AdrsResNoMl={AdrsResNoMl}               
-                setAdrsDoorNo={setAdrsDoorNo} AdrsDoorNo={AdrsDoorNo}
-                setAdrsMainPlaceEn={setAdrsMainPlaceEn} AdrsMainPlaceEn={AdrsMainPlaceEn}
-                setAdrsLocalityNameEn={setAdrsLocalityNameEn} AdrsLocalityNameEn={AdrsLocalityNameEn}
-                setAdrsStreetNameEn={setAdrsStreetNameEn} AdrsStreetNameEn={AdrsStreetNameEn}
-                setAdrsVillage={setAdrsVillage} AdrsVillage={AdrsVillage}
-                setAdrsMainPlaceMl={setAdrsMainPlaceMl} AdrsMainPlaceMl={AdrsMainPlaceMl}
-                setAdrsLocalityNameMl={setAdrsLocalityNameMl} AdrsLocalityNameMl={AdrsLocalityNameMl}
-                setAdrsStreetNameMl={setAdrsStreetNameMl} AdrsStreetNameMl={AdrsStreetNameMl}
-                setAdrsHouseNameMl={setAdrsHouseNameMl} AdrsHouseNameMl={AdrsHouseNameMl}
+            
               />
               <InformantDetails
                 setInfomantFirstNameEn={setInfomantFirstNameEn} InfomantFirstNameEn={InfomantFirstNameEn}
@@ -1630,16 +1628,17 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
                 setInformantAdrsLBTypeName={setInformantAdrsLBTypeName} InformantAdrsLBTypeName={InformantAdrsLBTypeName}
                 setInformantAdrsLBName={setInformantAdrsLBName} InformantAdrsLBName={InformantAdrsLBName}
                 setInformantAdrsTaluk={setInformantAdrsTaluk} InformantAdrsTaluk={InformantAdrsTaluk}
+                setInformantAdrsVillage={setInformantAdrsVillage} InformantAdrsVillage={InformantAdrsVillage}
                 setInformantAdrsPostOffice={setInformantAdrsPostOffice} InformantAdrsPostOffice={InformantAdrsPostOffice}
                 setInformantAdrsPincode={setInformantAdrsPincode} InformantAdrsPincode={InformantAdrsPincode}
-                setInformantAdrsHouseNameEn={setInformantAdrsHouseNameEn} InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
-                // setInformantAdrsBuldingNo={setInformantAdrsBuldingNo} InformantAdrsBuldingNo={InformantAdrsBuldingNo}
-                setInformantAdrsResNo={setInformantAdrsResNo} InformantAdrsResNo={InformantAdrsResNo}
-                setInformantAdrsDoorNo={setInformantAdrsDoorNo} InformantAdrsDoorNo={InformantAdrsDoorNo}
                 setInformantAdrsMainPlaceEn={setInformantAdrsMainPlaceEn} InformantAdrsMainPlaceEn={InformantAdrsMainPlaceEn}
                 setInformantAdrsLocalityNameEn={setInformantAdrsLocalityNameEn} InformantAdrsLocalityNameEn={InformantAdrsLocalityNameEn}
                 setInformantAdrsStreetNameEn={setInformantAdrsStreetNameEn} InformantAdrsStreetNameEn={InformantAdrsStreetNameEn}
-                setInformantAdrsVillage={setInformantAdrsVillage} InformantAdrsVillage={InformantAdrsVillage}
+                setInformantAdrsHouseNameEn={setInformantAdrsHouseNameEn} InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
+                setInformantAdrsDoorNo={setInformantAdrsDoorNo} InformantAdrsDoorNo={InformantAdrsDoorNo}
+                setInformantAdrsResNo={setInformantAdrsResNo} InformantAdrsResNo={InformantAdrsResNo}
+            
+                
               // setInfntWardNo={setInfntWardNo} InfntWardNo={InfntWardNo}
               />
 
@@ -1665,63 +1664,62 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           {toast && (
             <Toast
               error={
-                HospitalError || signedOfficerError || signedOfficerDesgError || mobileError ||
+                HospitalError || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                 InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError ||
                 VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError ||                
-                VehiInfomantAdrCountryError || VehiInfomantAdrStateNameError || VehiInfomantAdrDistrictError || VehiInfomantAdrLBTypeNameError || VehiInfomantAdrHouseNameEnError || VehiInfomantAdrResNoEnError || VehiInfomantAdrDoorNoError || VehiInfomantAdrMainPlaceEnError ||
-                 VehiInfomantAdrLocalityNameEnError  || VehiInfomantAdrStreetNameEnError || VehiInfomantAdrVillageError ||
+                VehiInfomantAdrCountryError || VehiInfomantAdrStateNameError || VehiInfomantAdrDistrictError || VehiInfomantAdrLBTypeNameError || VehiInfomantAdrLBNameError || VehiInfomantAdrTalukError || VehiInfomantAdrVillageError || VehiInfomantAdrPostOfficeError || 
+                VehiInfomantAdrPincodeError || VehiInfomantAdrMainPlaceEnError ||  VehiInfomantAdrLocalityNameEnError || VehiInfomantAdrStreetNameEnError ||
+                 VehiInfomantAdrHouseNameEnError  || VehiInfomantAdrDoorNoError ||  VehiInfomantAdrResNoEnError  ||
                  PublicPlaceError || AdrsInfonmntNameError ||
-                AdrsHomeCountryError || AdrsHomeStateNameError || AdrsHomeDistrictError || AdrsHomeLBTypeNameError || AdrsHomeLBNameError || AdrsHomeTalukError || AdrsHomePostOfficeError || AdrsHomePincodeError || AdrsHomeHouseNameEnError ||
-                AdrsHomeResNoEnError || AdrsHomeDoorNoError || AdrsHomeMainPlaceEnError || AdrsHomeLocalityNameEnError || AdrsHomeStreetNameEnError || AdrsHomeVillageError || AdrsHomeMainPlaceMlError || AdrsHomeLocalityNameMlError || AdrsHomeStreetNameMlError ||
-                AdrsHomeHouseNameMlError || AdrsHomeResNoMlError ||
-                HomeInformantAdrCountryError || HomeInformantAdrStateNameError || HomeInformantAdrDistrictError || HomeInformantAdrLBTypeNameError || HomeInformantAdrHouseNameEnError || HomeInformantAdrResNoEnError || HomeInformantAdrDoorNoError || HomeInformantAdrMainPlaceEnError ||
-                HomeInformantAdrLocalityNameEnError  || HomeInformantAdrStreetNameEnError || HomeInformantAdrVillageError 
+                 AdrsHomeCountryError || AdrsHomeStateNameError || AdrsHomeDistrictError || AdrsHomeLBTypeNameError || AdrsHomeLBNameError ||  AdrsHomeTalukError ||  AdrsHomeVillageError || AdrsHomePostOfficeError || AdrsHomePincodeError ||  AdrsHomeMainPlaceEnError ||
+                 AdrsHomeMainPlaceMlError  || AdrsHomeLocalityNameEnError  ||  AdrsHomeLocalityNameMlError ||  AdrsHomeStreetNameEnError || AdrsHomeStreetNameMlError || AdrsHomeHouseNameEnError ||  AdrsHomeHouseNameMlError || AdrsHomeDoorNoError ||  
+                  AdrsHomeResNoEnError ||  AdrsHomeResNoMlError ||
+                  HomeInformantAdrCountryError ||  HomeInformantAdrStateNameError ||  HomeInformantAdrDistrictError ||  HomeInformantAdrLBTypeNameError ||  HomeInformantAdrLBNameError ||  HomeInformantAdrTalukError ||  HomeInformantAdrVillageError ||  HomeInformantAdrPostOfficeError || 
+                  HomeInformantAdrPincodeError ||  HomeInformantAdrMainPlaceEnError ||   HomeInformantAdrLocalityNameEnError ||  HomeInformantAdrStreetNameEnError ||
+                   HomeInformantAdrHouseNameEnError  ||  HomeInformantAdrDoorNoError ||   HomeInformantAdrResNoEnError  
               
               }
               label={
                 // (!HospitalError ? t(`CS_COMPLAINT_COMMENT_SUCCESS`) : t(`BIRTH_ERROR_HOSPITAL_CHOOSE`))
 
-                (HospitalError || signedOfficerError || signedOfficerDesgError || mobileError ||
+                ( HospitalError || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                   InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError ||
-                  VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError ||
-                  VehiInfomantAdrCountryError || VehiInfomantAdrStateNameError || VehiInfomantAdrDistrictError || VehiInfomantAdrLBTypeNameError || VehiInfomantAdrHouseNameEnError || VehiInfomantAdrResNoEnError || VehiInfomantAdrDoorNoError || VehiInfomantAdrMainPlaceEnError ||
-                  VehiInfomantAdrLocalityNameEnError  || VehiInfomantAdrStreetNameEnError || VehiInfomantAdrVillageError ||
-                  VehiInfomantFstNameEnError || VehiInfomantMobileNoError ||
-                  PublicPlaceError || AdrsInfonmntNameError ||
-                  AdrsHomeCountryError || AdrsHomeStateNameError || AdrsHomeDistrictError || AdrsHomeLBTypeNameError || AdrsHomeLBNameError || AdrsHomeTalukError || AdrsHomePostOfficeError || AdrsHomePincodeError || AdrsHomeHouseNameEnError ||
-                  AdrsHomeResNoEnError || AdrsHomeDoorNoError || AdrsHomeMainPlaceEnError || AdrsHomeLocalityNameEnError || AdrsHomeStreetNameEnError || AdrsHomeVillageError || AdrsHomeMainPlaceMlError || AdrsHomeLocalityNameMlError || AdrsHomeStreetNameMlError ||
-                  AdrsHomeHouseNameMlError || AdrsHomeResNoMlError ||
-                  HomeInformantAdrCountryError || HomeInformantAdrStateNameError || HomeInformantAdrDistrictError || HomeInformantAdrLBTypeNameError || HomeInformantAdrHouseNameEnError || HomeInformantAdrResNoEnError || HomeInformantAdrDoorNoError || HomeInformantAdrMainPlaceEnError ||
-                  HomeInformantAdrLocalityNameEnError  || HomeInformantAdrStreetNameEnError || HomeInformantAdrVillageError 
+                  VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError ||                
+                  VehiInfomantAdrCountryError || VehiInfomantAdrStateNameError || VehiInfomantAdrDistrictError || VehiInfomantAdrLBTypeNameError || VehiInfomantAdrLBNameError || VehiInfomantAdrTalukError || VehiInfomantAdrVillageError || VehiInfomantAdrPostOfficeError || 
+                  VehiInfomantAdrPincodeError || VehiInfomantAdrMainPlaceEnError ||  VehiInfomantAdrLocalityNameEnError || VehiInfomantAdrStreetNameEnError ||
+                   VehiInfomantAdrHouseNameEnError  || VehiInfomantAdrDoorNoError ||  VehiInfomantAdrResNoEnError  ||
+                   PublicPlaceError || AdrsInfonmntNameError ||
+                   AdrsHomeCountryError || AdrsHomeStateNameError || AdrsHomeDistrictError || AdrsHomeLBTypeNameError || AdrsHomeLBNameError ||  AdrsHomeTalukError ||  AdrsHomeVillageError || AdrsHomePostOfficeError || AdrsHomePincodeError ||  AdrsHomeMainPlaceEnError ||
+                   AdrsHomeMainPlaceMlError  || AdrsHomeLocalityNameEnError  ||  AdrsHomeLocalityNameMlError ||  AdrsHomeStreetNameEnError || AdrsHomeStreetNameMlError || AdrsHomeHouseNameEnError ||  AdrsHomeHouseNameMlError || AdrsHomeDoorNoError ||  
+                    AdrsHomeResNoEnError ||  AdrsHomeResNoMlError ||
+                    HomeInformantAdrCountryError ||  HomeInformantAdrStateNameError ||  HomeInformantAdrDistrictError ||  HomeInformantAdrLBTypeNameError ||  HomeInformantAdrLBNameError ||  HomeInformantAdrTalukError ||  HomeInformantAdrVillageError ||  HomeInformantAdrPostOfficeError || 
+                    HomeInformantAdrPincodeError ||  HomeInformantAdrMainPlaceEnError ||   HomeInformantAdrLocalityNameEnError ||  HomeInformantAdrStreetNameEnError ||
+                     HomeInformantAdrHouseNameEnError  ||  HomeInformantAdrDoorNoError ||   HomeInformantAdrResNoEnError  
                
 
 
                   ?
-                  (HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`) : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`)
-                    : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
-                      : VehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`) : VehiFromEnError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_FROM_EN_CHOOSE`) : VehiToEnError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_TO_EN_CHOOSE`) : VehiFromMlError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_FROM_ML_CHOOSE`) : VehiToMlError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_TO_ML_CHOOSE`)
+                  (HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`) : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                    : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)                     
                         : PublicPlaceError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`) : AdrsInfonmntNameError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                           : AdrsHomeCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : AdrsHomeStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : AdrsHomeDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
-                            : AdrsHomeLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : AdrsHomeLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : AdrsHomeTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`)
-                              : AdrsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : AdrsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : AdrsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                : AdrsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`) : AdrsHomeDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : AdrsHomeMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`)
-                                  : AdrsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : AdrsHomeStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`) : AdrsHomeVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
-                                    : AdrsHomeMainPlaceMlError ? t(`BIRTH_ERROR_MAIN_PLACE_ML_CHOOSE`) : AdrsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                      : AdrsHomeStreetNameMlError ? t(`BIRTH_ERROR_STREET_NAME_ML_CHOOSE`) : AdrsHomeResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`) : AdrsHomeResNoMlError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_ML_CHOOSE`)
-                                        : VehiInfomantFstNameEnError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`) : VehiInfomantMobileNoError ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                                          : VehiInfomantAdrCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : VehiInfomantAdrStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : VehiInfomantAdrDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
-                                            : VehiInfomantAdrLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : VehiInfomantAdrLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : VehiInfomantAdrTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`)
-                                              : VehiInfomantAdrPostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : VehiInfomantAdrPincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : VehiInfomantAdrHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                                : VehiInfomantAdrDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : VehiInfomantAdrMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`)
-                                                   : VehiInfomantAdrLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : VehiInfomantAdrStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`) : VehiInfomantAdrVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)                                               
-                                                     : VehiInfomantAdrResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`)                                                    
-                                                       : HomeInformantFstNameEnError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`) : HomeInformantMobileNoError ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                                                         : HomeInformantAdrCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : HomeInformantAdrStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : HomeInformantAdrDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
-                                                           : HomeInformantAdrLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : HomeInformantAdrLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : HomeInformantAdrTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`)
-                                                             : HomeInformantAdrPostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : HomeInformantAdrPincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : HomeInformantAdrHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                                               : HomeInformantAdrDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : HomeInformantAdrMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`)
-                                                                : HomeInformantAdrLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : HomeInformantAdrStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`) : HomeInformantAdrVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)                                               
-                                                                  : HomeInformantAdrResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`) 
+                            : AdrsHomeLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : AdrsHomeLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : AdrsHomeTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : AdrsHomeVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
+                              : AdrsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : AdrsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : AdrsHomeMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`) 
+                                : AdrsHomeMainPlaceMlError ? t(`BIRTH_ERROR_MAIN_PLACE_ML_CHOOSE`) : AdrsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)  : AdrsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`) : AdrsHomeStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`)                                    
+                                  : AdrsHomeStreetNameMlError ? t(`BIRTH_ERROR_STREET_NAME_ML_CHOOSE`) : AdrsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`) : AdrsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`) : AdrsHomeDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`)  : AdrsHomeResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`) : AdrsHomeResNoMlError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_ML_CHOOSE`)
+                                    : VehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`) : VehiFromEnError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_FROM_EN_CHOOSE`) : VehiToEnError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_TO_EN_CHOOSE`) : VehiFromMlError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_FROM_ML_CHOOSE`) : VehiToMlError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_TO_ML_CHOOSE`)
+                                      : VehiInfomantFstNameEnError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`) : VehiInfomantMobileNoError ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                                        : VehiInfomantAdrCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : VehiInfomantAdrStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : VehiInfomantAdrDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
+                                          : VehiInfomantAdrLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : VehiInfomantAdrLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : VehiInfomantAdrTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : VehiInfomantAdrVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`) 
+                                            : VehiInfomantAdrPostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : VehiInfomantAdrPincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : VehiInfomantAdrMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`)                                                 
+                                              : VehiInfomantAdrLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : VehiInfomantAdrStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`) : VehiInfomantAdrHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)                                              
+                                                : VehiInfomantAdrDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`): VehiInfomantAdrResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`)                                                    
+                                                  : HomeInformantFstNameEnError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`) : HomeInformantMobileNoError ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                                                    : HomeInformantAdrCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : HomeInformantAdrStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : HomeInformantAdrDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
+                                                      : HomeInformantAdrLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : HomeInformantAdrLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : HomeInformantAdrTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : HomeInformantAdrVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`) 
+                                                        : HomeInformantAdrPostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : HomeInformantAdrPincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : HomeInformantAdrMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`)                                                                 
+                                                          : HomeInformantAdrLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : HomeInformantAdrStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`) : HomeInformantAdrHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)                                               
+                                                            : HomeInformantAdrDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : HomeInformantAdrResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`) 
                                           : setToast(false)
                   ) : setToast(false)
                 )

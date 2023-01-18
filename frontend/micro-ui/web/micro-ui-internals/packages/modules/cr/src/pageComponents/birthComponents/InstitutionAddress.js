@@ -54,7 +54,6 @@ const InstitutionAddress = ({ config, onSelect, userType, formData }) => {
  let districtid = null;
  let cmbLBType = [];
  
- console.log("Taluk" + Taluk);
  Taluk &&
  Taluk["common-masters"] &&
  Taluk["common-masters"].Taluk.map((ob) => {
