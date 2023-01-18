@@ -442,5 +442,6 @@ public class CrDeathRegistryDtl {
 
      //RAkhi S on 13.01.2023
      private String placeofDeath;
-   
+
+  
 }

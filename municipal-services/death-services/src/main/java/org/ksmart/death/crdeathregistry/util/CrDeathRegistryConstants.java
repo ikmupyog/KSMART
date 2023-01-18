@@ -73,4 +73,14 @@ public class CrDeathRegistryConstants {
      public static final String VEHICLE_DEATH_CAPTION5 ="In the vehicle on the way from ";
      public static final String VEHICLE_DEATH_CAPTION6 =" in the jurisdiction of ";
      public static final String VEHICLE_DEATH_CAPTION7 =" to ";
+
+     //Rakhi S on 18.01.2023
+     public static final String GENDER_MALE ="MALE";
+     public static final String GENDER_FEMALE ="FEMALE";
+     public static final String TRANSGENDER ="TRANSGENDER";
+     public static final String GENDER_MALE_CAPTION ="ആൺ/Male";
+     public static final String GENDER_FEMALE_CAPTION ="പെൺ/Female";
+     public static final String TRANSGENDER_CAPTION ="Transgender";
+
+
 }

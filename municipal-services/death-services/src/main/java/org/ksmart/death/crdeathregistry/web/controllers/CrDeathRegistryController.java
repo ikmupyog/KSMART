@@ -100,15 +100,30 @@ public class CrDeathRegistryController {
     public ResponseEntity<DeathCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
                                                     @Valid @ModelAttribute CrDeathRegistryCriteria criteria){
 
-    // DeathCertificate deathCertSearch = deathService.searchCertificate(criteria, requestInfoWrapper.getRequestInfo());              
-    DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
+    DeathCertificate deathCertSearch = deathService.searchCertificate(criteria); 
+    DeathCertResponse response ;
+    if(deathCertSearch.getCounter()<=0){
+       DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
     
-        DeathCertResponse response = DeathCertResponse
+        response = DeathCertResponse
                                     .builder()
                                     .filestoreId(deathCert.getFilestoreid())
                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
                                     .build();
         return ResponseEntity.ok(response);
+      }
+
+      else{
+        	response = DeathCertResponse
+                        .builder()
+                        .filestoreId(deathCertSearch.getFilestoreid())
+                        .consumerCode(deathCertSearch.getDeathcertificateno())
+                        .tenantId(deathCertSearch.getTenantId())
+        			    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                        .build();
+         return ResponseEntity.ok(response);
+      }
+
     }
         // System.out.println("hai");
         //    /********************************************* */

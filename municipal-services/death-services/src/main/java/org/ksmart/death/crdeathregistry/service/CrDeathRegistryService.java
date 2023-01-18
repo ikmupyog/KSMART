@@ -137,6 +137,7 @@ public class CrDeathRegistryService {
         deathCertificate.setId(UUID.randomUUID().toString());
         deathCertificate.setDeathcertificateno(applicationRequest.getDeathCertificate().get(0).getDeathACKNo());
         deathCertificate.setAuditDetails(applicationRequest.getDeathCertificate().get(0).getAuditDetails());
+        deathCertificate.setCounter(1);
         repository.save(deathCertRequest);
         return deathCertificate;
       }
@@ -147,8 +148,8 @@ public class CrDeathRegistryService {
      }
 
      //Rakhi S IKM on 06.01.2022
-    //  public DeathCertificate searchCertificate(CrDeathRegistryCriteria criteria, RequestInfo requestInfo) {
-    //   return repository.searchCertificateBydeathDtlId(criteria.getId(),requestInfo);
-    // }
+     public DeathCertificate searchCertificate(CrDeathRegistryCriteria criteria) {
+      return repository.searchCertificate(criteria);
+    }
     
 }

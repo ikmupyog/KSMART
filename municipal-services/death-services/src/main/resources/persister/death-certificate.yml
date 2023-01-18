@@ -36,6 +36,8 @@ serviceMaps:
 
             - jsonPath: $.deathCertificate.dateofissue
 
+            - jsonPath: $.deathCertificate.counter
+
         - query: INSERT INTO eg_death_cert_request_audit SELECT * FROM eg_death_cert_request WHERE id = ?;
           basePath: deathCertificate
           jsonMaps:
@@ -70,3 +72,5 @@ serviceMaps:
             - jsonPath: $.deathCertificate.dateofissue
 
             - jsonPath: $.deathCertificate.id
+
+            - jsonPath: $.deathCertificate.counter

@@ -11,9 +11,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.death.crdeath.kafka.producer.CrDeathProducer;
+import org.ksmart.death.crdeath.util.CrDeathConstants;
 import org.ksmart.death.crdeathregistry.config.CrDeathRegistryConfiguration;
 import org.ksmart.death.crdeathregistry.repository.querybuilder.CrDeathRgistryQueryBuilder;
 import org.ksmart.death.crdeathregistry.repository.rowmapper.CrDeathRegistryRowMapper;
+import org.ksmart.death.crdeathregistry.repository.rowmapper.DeathCertRowMapper;
 import org.ksmart.death.crdeathregistry.util.CrDeathRegistryConstants;
 import org.ksmart.death.crdeathregistry.util.CrDeathRegistryMdmsUtil;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
@@ -47,6 +49,7 @@ public class CrDeathRegistryRepository {
     private final JdbcTemplate jdbcTemplate;
     private final CrDeathRgistryQueryBuilder queryBuilder;
     private final CrDeathRegistryRowMapper rowMapper;
+    private final DeathCertRowMapper deathCertRowMapper;
     //RAkhi S on 19.12.2022
     private final CrDeathProducer producer;
 
@@ -63,12 +66,13 @@ public class CrDeathRegistryRepository {
     @Autowired
     CrDeathRegistryRepository(JdbcTemplate jdbcTemplate, CrDeathRgistryQueryBuilder queryBuilder,
                             CrDeathRegistryRowMapper rowMapper,CrDeathProducer producer,
-                            CrDeathRegistryMdmsUtil util) {
+                            CrDeathRegistryMdmsUtil util,DeathCertRowMapper deathCertRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
         this.producer = producer;
         this.util = util;
+        this.deathCertRowMapper = deathCertRowMapper;
         
     }
 
@@ -404,25 +408,28 @@ public class CrDeathRegistryRepository {
                 }
                 //Place of Death Vehicle
                 else if(CrDeathRegistryConstants.DEATH_PLACE_VEHICLE.toString().equals(cert.getDeathPlace())){
-                    Object mdmsDatavehicleFirstHalt = util.mDMSCallCertificateVehicle(pdfApplicationRequest.getRequestInfo()     
-                                            , cert.getVehicleFirstHalt()                   
-                                            );
-                    Map<String,List<String>> masterDataVehicle = getAttributeValuesVehicle(mdmsDatavehicleFirstHalt);
+                    // Object mdmsDatavehicleFirstHalt = util.mDMSCallCertificateVehicle(pdfApplicationRequest.getRequestInfo()     
+                    //                         , cert.getVehicleFirstHalt()                   
+                    //                         );
+                    // Map<String,List<String>> masterDataVehicle = getAttributeValuesVehicle(mdmsDatavehicleFirstHalt);
 
-                    Object mdmsDatavehicleFirstHaltMl = util.mDMSCallCertificateVehicleMl(pdfApplicationRequest.getRequestInfo()     
-                                            , cert.getVehicleFirstHalt()                   
-                                             );
-                    Map<String,List<String>> masterDataVehicleMl = getAttributeValuesVehicle(mdmsDatavehicleFirstHaltMl);
+                    // Object mdmsDatavehicleFirstHaltMl = util.mDMSCallCertificateVehicleMl(pdfApplicationRequest.getRequestInfo()     
+                    //                         , cert.getVehicleFirstHalt()                   
+                    //                          );
+                    // Map<String,List<String>> masterDataVehicleMl = getAttributeValuesVehicle(mdmsDatavehicleFirstHaltMl);
 
-                    String vehicleFirstHalt = masterDataVehicle.get(CrDeathRegistryConstants.TENANTS).toString();
-                    vehicleFirstHalt = vehicleFirstHalt.replaceAll("[\\[\\]\\(\\)]", "");  
+                    // String vehicleFirstHalt = masterDataVehicle.get(CrDeathRegistryConstants.TENANTS).toString();
+                    // vehicleFirstHalt = vehicleFirstHalt.replaceAll("[\\[\\]\\(\\)]", "");  
                     
                    
-                    String vehicleFirstHaltMl = masterDataVehicleMl.get(CrDeathRegistryConstants.TENANTS).toString();
-                    vehicleFirstHaltMl = vehicleFirstHaltMl.replaceAll("[\\[\\]\\(\\)]", "");
+                    // String vehicleFirstHaltMl = masterDataVehicleMl.get(CrDeathRegistryConstants.TENANTS).toString();
+                    // vehicleFirstHaltMl = vehicleFirstHaltMl.replaceAll("[\\[\\]\\(\\)]", "");
 
-                    cert.setPlaceofDeath(CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION1.toString()+cert.getVehicleFromplaceMl()+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+" "+cert.getVehicleToPlaceMl()+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION3.toString()+" "+vehicleFirstHaltMl+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION4.toString()
-                    +" / "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION5.toString()+cert.getVehicleFromplaceEn()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION7.toString()+cert.getVehicleToPlaceEn()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION6.toString()+vehicleFirstHalt+".");
+                    // cert.setPlaceofDeath(CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION1.toString()+cert.getVehicleFromplaceMl()+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+" "+cert.getVehicleToPlaceMl()+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION3.toString()+" "+vehicleFirstHaltMl+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION4.toString()
+                    // +" / "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION5.toString()+cert.getVehicleFromplaceEn()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION7.toString()+cert.getVehicleToPlaceEn()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION6.toString()+vehicleFirstHalt+".");
+
+                    cert.setPlaceofDeath(CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION1.toString()+cert.getVehicleFromplaceMl()+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+" "+cert.getVehicleToPlaceMl()+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION2.toString()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION3.toString()+" "+lbNameMl+" "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION4.toString()
+                    +" / "+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION5.toString()+cert.getVehicleFromplaceEn()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION7.toString()+cert.getVehicleToPlaceEn()+CrDeathRegistryConstants.VEHICLE_DEATH_CAPTION6.toString()+lbName+".");
 
                 }
                 //Place of Death Other
@@ -435,6 +442,18 @@ public class CrDeathRegistryRepository {
                     OtherPlace = OtherPlace.replaceAll("[\\[\\]\\(\\)]", ""); 
                     cert.setPlaceofDeath(OtherPlace);
                 }
+
+                //Rakhi S on 18.01.2023
+               if(cert.getDeceasedGender().equals(CrDeathRegistryConstants.GENDER_MALE.toString())){
+                    cert.setDeceasedGender(CrDeathRegistryConstants.GENDER_MALE_CAPTION.toString());
+               }
+               else if(cert.getDeceasedGender().equals(CrDeathRegistryConstants.GENDER_FEMALE.toString())){
+                     cert.setDeceasedGender(CrDeathRegistryConstants.GENDER_FEMALE_CAPTION.toString());
+               }
+               else if(cert.getDeceasedGender().equals(CrDeathRegistryConstants.TRANSGENDER.toString())){
+                cert.setDeceasedGender(CrDeathRegistryConstants.TRANSGENDER_CAPTION.toString());
+               }
+
                 cert.setRegistrationDate(cert.getRegistrationDate());
                 cert.setLocalBodyName(cert.getLocalBodyName());
                 cert.setEmbeddedUrl(getShortenedUrl(finalPath));
@@ -594,32 +613,41 @@ public class CrDeathRegistryRepository {
         // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
     }
-    //Rakhi S on 06.01.2023
-    // public DeathCertificate searchCertificateBydeathDtlId(String deathDtlId, RequestInfo requestInfo) {
-	// 	try {
-	// 		List<Object> preparedStmtList = new ArrayList<>();
-	// 		SearchCriteria criteria = new SearchCriteria();
-	// 		String query = allqueryBuilder.getDeathCertReq(deathDtlId, requestInfo, preparedStmtList);
-	// 		List<DeathCertificate> deathCerts = jdbcTemplate.query(query, preparedStmtList.toArray(), deathCertRowMapper);
-	// 		if (null != deathCerts && !deathCerts.isEmpty()) {
-	// 			criteria.setTenantId(deathCerts.get(0).getTenantId());
-	// 			criteria.setId(deathCerts.get(0).getDeathDtlId());
-	// 			List<EgDeathDtl> deathDtls = getDeathDtlsAll(criteria, requestInfo);
-	// 			deathCerts.get(0).setGender(deathDtls.get(0).getGenderStr());
-	// 			deathCerts.get(0).setAge(deathDtls.get(0).getAge());
-	// 			deathCerts.get(0).setWard(deathDtls.get(0).getDeathPermaddr().getTehsil());
-	// 			deathCerts.get(0).setState(deathDtls.get(0).getDeathPermaddr().getState());
-	// 			deathCerts.get(0).setDistrict(deathDtls.get(0).getDeathPermaddr().getDistrict());
-	// 			deathCerts.get(0).setDateofdeath(deathDtls.get(0).getDateofdeath());
-	// 			deathCerts.get(0).setDateofreport(deathDtls.get(0).getDateofreport());
-	// 			deathCerts.get(0).setPlaceofdeath(deathDtls.get(0).getPlaceofdeath());
-	// 			return deathCerts.get(0);
-	// 		}
-	// 	}catch(Exception e) {
-	// 		e.printStackTrace();
-	// 		throw new CustomException("invalid_data","Invalid Data");
-	// 	}
-	// 	return null;
-	// }
+    //Rakhi S on 18.01.2023
+    public DeathCertificate searchCertificate(CrDeathRegistryCriteria criteria) {
+		try {
+
+            List<Object> preparedStmtValues = new ArrayList<>();
+            String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+            List<CrDeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
+
+            // String queryCert = queryBuilder.getDeathCertificateSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+            criteria.setId(result.get(0).getId());
+            String queryCert = queryBuilder.getDeathCertificateSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+            List<DeathCertificate> deathCerts = jdbcTemplate.query(queryCert, preparedStmtValues.toArray(), deathCertRowMapper);
+
+			if (null != deathCerts && !deathCerts.isEmpty()) {
+				// criteria.setTenantId(deathCerts.get(0).getTenantId());
+				// criteria.setId(deathCerts.get(0).getDeathDtlId());
+				// List<EgDeathDtl> deathDtls = getDeathDtlsAll(criteria, requestInfo);
+				// deathCerts.get(0).setGender(deathDtls.get(0).getGenderStr());
+				// deathCerts.get(0).setAge(deathDtls.get(0).getAge());
+				// deathCerts.get(0).setWard(deathDtls.get(0).getDeathPermaddr().getTehsil());
+				// deathCerts.get(0).setState(deathDtls.get(0).getDeathPermaddr().getState());
+				// deathCerts.get(0).setDistrict(deathDtls.get(0).getDeathPermaddr().getDistrict());
+				// deathCerts.get(0).setDateofdeath(deathDtls.get(0).getDateofdeath());
+				// deathCerts.get(0).setDateofreport(deathDtls.get(0).getDateofreport());
+				// deathCerts.get(0).setPlaceofdeath(deathDtls.get(0).getPlaceofdeath());
+				return deathCerts.get(0);
+			}
+            else{
+                deathCerts.get(0).setCounter(0);
+            }
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new CustomException("invalid_data","Invalid Data");
+		}
+		return null;
+	}
 
 }

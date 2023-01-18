@@ -132,4 +132,8 @@ public class DeathCertificate {
   //Rakhi S on 21.12.2022
   @JsonProperty("deathcertificateno")
   private String deathcertificateno;
+
+  //Rakhi S on 18.01.2023
+  @JsonProperty("counter")
+  private Integer counter;
 }

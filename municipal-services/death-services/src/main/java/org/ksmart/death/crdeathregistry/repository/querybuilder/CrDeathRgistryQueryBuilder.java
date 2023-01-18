@@ -242,4 +242,20 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
           addFilter("A.regYear", Year, query, preparedStmtValues);                                          
           return query.toString();
         }  
+
+        //Rakhi S on 18.01.2023
+     private static final String CERTIFICATE_QUERY = new StringBuilder().append("SELECT ct.id, ct.deathcertificateno, ct.createdby, ct.createdtime, ct.deathdtlid, ct.filestoreid") 
+                                                            .append("      , ct.lastmodifiedtime, ct.lastmodifiedby, ct.status, ct.additionaldetail, ct.embeddedurl, ct.dateofissue, ct.counter") 
+                                                            .append(" FROM eg_death_cert_request ct")                                                             
+                                                      .toString();
+
+     public String getDeathCertificateSearchQuery(@NotNull CrDeathRegistryCriteria criteria,
+                                                           @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+         
+         StringBuilder query = new StringBuilder(CERTIFICATE_QUERY);
+    
+         addFilter("ct.id", criteria.getId(), query, preparedStmtValues);      
+         addFilter("ct.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
+         return query.toString();                                              
+       }   
      }
