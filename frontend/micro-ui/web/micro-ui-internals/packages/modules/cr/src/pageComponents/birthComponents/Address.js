@@ -24,7 +24,19 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const [FatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.FatherInfoDetails?.FatherFirstNameEn ? formData?.FatherInfoDetails?.FatherFirstNameEn : "");
+
+  const [OutSideAdressEnError, setOutSideAdressEnError] = useState(formData?.AddressDetails?.AdressEn ? false: false);
+  const [OutSideAdressMlError, setOutSideAdressMlError] = useState(formData?.AddressDetails?.AdressMl ? false: false);
+//   const [OutSideAdressEnBError, setOutSideAdressEnBError] = useState(formData?.AddressDetails?.AdressEnB ? false: false);
+//   const [OutSideAdressMlBError, setOutSideAdressMlBError] = useState(formData?.AddressDetails?.AdressMlB ? false: false);
+  const [OutSideLocalityEnError, setOutSideLocalityEnError] = useState(formData?.AddressDetails?.LocalityEn ? false: false);
+  const [OutSideLocalityMlError, setOutSideLocalityMlError] = useState(formData?.AddressDetails?.LocalityMl ? false: false);
+  const [OutSideProvinceEnError, setOutSideProvinceEnError] = useState(formData?.AddressDetails?.ProvinceEn ? false: false);
+  const [OutSideProvinceMlError, setOutSideProvinceMlError] = useState(formData?.AddressDetails?.ProvinceMl ? false: false);
+  const [OutSideOutSideCountryError, setOutSideOutSideCountryError] = useState(formData?.AddressDetails?.OutSideCountry ? false: false);
+
+
+ 
   const [PresentCountry, setPresentCountry] = useState(formData?.AddressDetails?.PresentCountry ? formData?.AddressDetails?.PresentCountry : "");
   const [PresentStateName, setPresentStateName] = useState(formData?.AddressDetails?.PresentStateName ? formData?.AddressDetails?.PresentStateName : "");
   const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict ? formData?.AddressDetails?.PresentDistrict : "");
@@ -58,7 +70,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressDetails?.PermanentTaluk ? formData?.AddressDetails?.PermanentTaluk : "");
   const [PermanentPostOffice, setPermanentPostOffice] =useState(formData?.AddressDetails?.PermanentPostOffice ? formData?.AddressDetails?.PermanentPostOffice : "");
   const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressDetails?.PermanentPincode ? formData?.AddressDetails?.PermanentPincode : "");
-  // const [PermanentBuldingNo, setPermanentBuldingNo] = useState(formData?.AddressDetails?.PermanentBuldingNo);
+  
   const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressDetails?.PermanentDoorNo ? formData?.AddressDetails?.PermanentDoorNo : "");
   const [PermanentResNoEn, setPermanentResNoEn] = useState(formData?.AddressDetails?.PermanentResNoEn ? formData?.AddressDetails?.PermanentResNoEn : "");
   const [PermanentResNoMl, setPermanentResNoMl] = useState(formData?.AddressDetails?.PermanentResNoMl ? formData?.AddressDetails?.PermanentResNoMl : "");
@@ -72,24 +84,17 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [PermanentStreetNameMl, setPermanentStreetNameMl] = useState(formData?.AddressDetails?.PermanentStreetNameMl ? formData?.AddressDetails?.PermanentStreetNameMl : "");
 
 
-
-  const [AdressEn, setAdressEn] = useState(formData?.AddressOutsideIndiaDetails?.AdressEn ? formData?.AddressOutsideIndiaDetails?.AdressEn : "");
-  const [AdressMl, setAdressMl] = useState(formData?.AddressOutsideIndiaDetails?.AdressMl ? formData?.AddressOutsideIndiaDetails?.AdressMl : "");
-  const [AdressEnB, setAdressEnB] = useState(formData?.AddressOutsideIndiaDetails?.AdressEnB ? formData?.AddressOutsideIndiaDetails?.AdressEnB : "");
-  const [AdressMlB, setAdressMlB] = useState(formData?.AddressOutsideIndiaDetails?.AdressMlB ? formData?.AddressOutsideIndiaDetails?.AdressMlB : "");
-  const [LocalityEn, setLocalityEn] = useState(formData?.AddressOutsideIndiaDetails?.LocalityEn ? formData?.AddressOutsideIndiaDetails?.LocalityEn : "");
-  const [LocalityMl, setLocalityMl] = useState(formData?.AddressOutsideIndiaDetails?.LocalityMl ? formData?.AddressOutsideIndiaDetails?.LocalityMl : "");
-  const [ProvinceEn, setProvinceEn] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceEn ? formData?.AddressOutsideIndiaDetails?.ProvinceEn : "");
-  const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceMl ? formData?.AddressOutsideIndiaDetails?.ProvinceMl : "");
-  const [OutSideCountry, setOutSideCountry] = useState(formData?.AddressOutsideIndiaDetails?.OutSideCountry ? formData?.AddressOutsideIndiaDetails?.OutSideCountry : null);
+  const [AdressEn, setAdressEn] = useState(formData?.AddressDetails?.AdressEn ? formData?.AddressDetails?.AdressEn : "");
+  const [AdressMl, setAdressMl] = useState(formData?.AddressDetails?.AdressMl ? formData?.AddressDetails?.AdressMl : "");
+  const [AdressEnB, setAdressEnB] = useState(formData?.AddressDetails?.AdressEnB ? formData?.AddressDetails?.AdressEnB : "");
+  const [AdressMlB, setAdressMlB] = useState(formData?.AddressDetails?.AdressMlB ? formData?.AddressDetails?.AdressMlB : "");
+  const [LocalityEn, setLocalityEn] = useState(formData?.AddressDetails?.LocalityEn ? formData?.AddressDetails?.LocalityEn : "");
+  const [LocalityMl, setLocalityMl] = useState(formData?.AddressDetails?.LocalityMl ? formData?.AddressDetails?.LocalityMl : "");
+  const [ProvinceEn, setProvinceEn] = useState(formData?.AddressDetails?.ProvinceEn ? formData?.AddressDetails?.ProvinceEn : "");
+  const [ProvinceMl, setProvinceMl] = useState(formData?.AddressDetails?.ProvinceMl ? formData?.AddressDetails?.ProvinceMl : "");
+  const [OutSideCountry, setOutSideCountry] = useState(formData?.AddressDetails?.OutSideCountry ? formData?.AddressDetails?.OutSideCountry : null);
   // // const [selectedValue, setSelectedValue] = useState(formData?.AddressDetails?.selectedValue ? formData?.AddressDetails?.selectedValue : "");
   const [selectedValue, setSelectedValue] = React.useState(null);
-  // const cmbAddressCode = [
-  //   { i18nKey: "Inside LocalBody", code: "INSIDE LOCALBODY" },
-  //   { i18nKey: "Inside Kerala", code: "INSIDE KERALA" },
-  //   { i18nKey: "Inside India", code: "INSIDE INDIA" },
-  //   { i18nKey: "Outside India", code: "OUTSIDE INDIA" },
-  // ];
   
   let cmbPlace = [];
   let cmbTaluk = [];
@@ -396,8 +401,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
   function setSameAsPresent(e) {
     if (e.target.checked == true) {
-    setIsPrsentAddress(e.target.checked);
-    
+    setIsPrsentAddress(e.target.checked);    
       setPermanentCountry(PresentCountry);
       setPermanentStateName(PresentStateName);
       setPermanentLBTypeName(PresentLBTypeName);
@@ -460,7 +464,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
   
 
 
-  const goNext = () => {   
+  const goNext = () => { 
+      
     if(selectedValue === "4"){
     
     sessionStorage.setItem("AdressEn", AdressEn ? AdressEn.AdressEn : null);
@@ -472,6 +477,10 @@ const Address = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("ProvinceEn", ProvinceEn  ? ProvinceEn.ProvinceEn  : null);
     sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl.ProvinceMl  : null);
     sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.OutSideCountry : null);
+
+    onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, OutSideCountry, 
+      
+    });
 
     }else if(selectedValue === "1"){
     sessionStorage.setItem("PresentCountry", PresentCountry ? PresentCountry.code : null);
@@ -572,6 +581,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       ProvinceEn,
       ProvinceMl,
       OutSideCountry,
+    
       
     });
   }
@@ -586,24 +596,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {/* isDisabled={
-          !PresentDoorNo ||
-          !PresentLocalityNameEn ||
-          !PresentLocalityNameMl ||
-          !PresentDistrict ||
-          !PresentVillage ||
-          !PresentTaluk ||
-          !PresentPostOffice ||
-          !PresentPincode ||
-          !PermanentDoorNo ||
-          !PermanentLocalityNameEn ||
-          !PermanentLocalityNameMl ||
-          !PermanentDistrict ||
-          !PermanentVillage ||
-          !PermanentTaluk ||
-          !PermanentPostOffice ||
-          !PermanentPincode
-        } */}
+      
       <FormStep
         t={t}
         config={config}
@@ -669,24 +662,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          {/* {selectedValue === "1" && (
-            <div id="div-1">
-              <div className="col-md-12">
-              <Address />
-            </div>
-            </div>
-          )} */}
-          {/* {selectedValue === "2" && (
-            <div id="div-2">
-              <div className="col-md-12">
-               
-                  
-                <Address />           
-              
-              </div>
-            </div>
-          )} */}
-          {selectedValue === "3" && (
+         
+          {/* {selectedValue === "3" && (
             <div id="div-3">
               <div className="col-md-12">
               <Address />                  
@@ -694,14 +671,14 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 </div>              
              
               </div>           
-          )}
-          {selectedValue === "4" && (
+          )} */}
+          {/* {selectedValue === "4" && (
             <div id="div-4">
               <div className="col-md-12">
               <AddressOutsideIndia />  
               </div>
             </div>
-          )}
+          )} */}
          
         </div>
 
@@ -773,7 +750,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
             </div>
 
             <div className="col-md-3">
-              <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
+              <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`} <span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
@@ -782,6 +759,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 selected={PresentLBTypeName}
                 select={setSelectPresentLBTypeName}
                 disabled={isEdit}
+                placeholder={`${t("CS_COMMON_LB_TYPE")}`}
               />
             </div>
           </div>
@@ -919,7 +897,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentMainPlaceMl}
                 disable={isEdit}
                 placeholder={`${t("CR_MAIN_PLACE_ML")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_MAIN_PLACE_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -961,7 +939,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentLocalityNameMl}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -991,7 +969,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentStreetNameMl}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CITY_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_ML") })}
               />
             </div>
             <div className="col-md-3">
@@ -1033,7 +1011,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentHouseNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
               />
             </div>
             {/* <div className="col-md-2">
@@ -1073,7 +1051,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}</CardLabel>
+              <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -1084,11 +1062,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentResNoEn}
                 placeholder={`${t("CR_RES_ASSOCIATION_NO_EN")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_EN") })}
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}</CardLabel>
+              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -1099,7 +1077,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectPresentResNoMl}
                 placeholder={`${t("CR_RES_ASSOCIATION_NO_ML")}`}
                 disable={isEdit}
-                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
+                {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
               />
             </div>
           </div>
@@ -1199,7 +1177,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
               <div className="col-md-3">
-                <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
+                <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -1542,7 +1520,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
               <div className="col-md-3">
-                <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}</CardLabel>
+                <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -1557,7 +1535,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
               <div className="col-md-3">
-              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}</CardLabel>
+              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -1579,7 +1557,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
           )}
          
         </div>
-        {/* {selectedValue === "4" && (
+        {selectedValue === "4" && (
           <div>
             <AddressOutsideIndia
               setAdressEn={setAdressEn} AdressEn={AdressEn}
@@ -1594,7 +1572,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
             />
           </div>)
-        } */}
+        }
 
       </FormStep>
     </React.Fragment>

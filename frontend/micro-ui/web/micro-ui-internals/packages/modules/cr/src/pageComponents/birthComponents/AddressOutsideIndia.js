@@ -83,7 +83,7 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData , AdressEn,s
     // sessionStorage.setItem("ProvinceEn", ProvinceEn  ? ProvinceEn  : null);
     // sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl  : null);
     // sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.code : null);
-    onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, OutSideCountry, });
+    // onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, OutSideCountry, });
   };
   if (isCountryLoading ) {
     return <Loader></Loader>;

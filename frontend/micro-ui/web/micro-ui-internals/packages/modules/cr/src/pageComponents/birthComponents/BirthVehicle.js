@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect  } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
@@ -10,8 +10,11 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-  
-  const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [OfficerNames, setFilteredOfficerName] = useState(0);
+  const [Designations, setFilteredDesignation] = useState(0);
+  // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [TradeName, setTradeName] = useState(null);
@@ -40,18 +43,38 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
   // const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.BirthVehicleDetails?.setAdmittedHospitalMl);
     
   let naturetypecmbvalue = null;
-  
+    let cmbhospital = [];
+  hospitalData &&
+  hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList.map((ob) => {
+      cmbhospital.push(ob);
+    });
+    useEffect(() => {
+          if (isInitialRender) {
+        if(setAdmittedHospitalEn){
+          setIsInitialRender(false);
+          let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === setAdmittedHospitalEn.code);   
+          let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === setAdmittedHospitalEn.code);     
+          // console.log(cmbRegistrarNames[0].registar);                
+          setFilteredOfficerName(cmbRegistrarNames[0].registar);
+          setFilteredDesignation(cmbDesignations[0].registar);
+          // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
+          // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
+        }
+      }
+    }, [OfficerNames,Designations,isInitialRender]);
+  const onSkip = () => onSelect();
  
 
-    let cmbhospital = [];
-    hospital &&
-      hospital["birth-death-service"] &&
-      hospital["birth-death-service"].hospitalList.map((ob) => {
-        cmbhospital.push(ob);
-      });
+  //   let cmbhospital = [];
+  //   hospital &&
+  //     hospital["birth-death-service"] &&
+  //     hospital["birth-death-service"].hospitalList.map((ob) => {
+  //       cmbhospital.push(ob);
+  //     });
 
     
-  const onSkip = () => onSelect();
+  // const onSkip = () => onSelect();
 
  
 
