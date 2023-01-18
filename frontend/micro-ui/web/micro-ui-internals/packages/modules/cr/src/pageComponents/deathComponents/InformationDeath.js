@@ -5,14 +5,14 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
-  const [dob, setDob] = useState("");
-  const calculateAge = (e) => {
-    const today = new Date();
-    const birthDate = new Date(e.target.value);
-    let age_in_ms = today - birthDate;
-    let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
-    setAgeofbirth(Math.floor(age_in_years));
-  };
+  // const [dob, setDob] = useState("");
+  // const calculateAge = (value) => {
+  //   const today = new Date();
+  //   const birthDate = new Date(value);
+  //   let age_in_ms = today - birthDate;
+  //   let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
+  //   setAgeofbirth(Math.floor(age_in_years));
+  // };
 
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
@@ -68,7 +68,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     setSelectedValues(newSelectedValues);
   };
   let naturetypecmbvalue = null;
-const maxDate= new Date();
+  const maxDate = new Date();
   let menu = [];
   Menu &&
     Menu.map((genderDetails) => {
@@ -164,9 +164,14 @@ const maxDate= new Date();
   function selectIdCombo(value) {
     setSelectedIdCombo(value);
   }
-  // function calculateAge(e) {
-  //   setCommencementDate(e.target.value);
-  // }
+  function calculateAge(value) {
+    setCommencementDate(value);
+    const today = new Date();
+    const birthDate = new Date(value);
+    let age_in_ms = today - birthDate;
+    let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
+    setAgeofbirth(Math.floor(age_in_years));
+  }
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -521,14 +526,14 @@ const maxDate= new Date();
               <CardLabel>{`${t("CR_DATE_OF_BIRTH_DECEASED")}`}</CardLabel>
               {/* date={CommencementDate} */}
               {/* <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`} /> */}
-              <input
+              <DatePicker
                 t={t}
                 isMandatory={false}
                 optionKey="i18nKey"
                 className="employee-card-input"
                 type="date"
                 name="CommencementDate"
-                inputFormat="DD/MM/YYYY" 
+                inputFormat="DD/MM/YYYY"
                 date={CommencementDate}
                 minDate={new Date("1900-31-01")}
                 maxDate={maxDate}
@@ -600,7 +605,8 @@ const maxDate= new Date();
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type="number"
+                max="12"
                 optionKey="i18nKey"
                 name="AdharNo"
                 value={AdharNo}

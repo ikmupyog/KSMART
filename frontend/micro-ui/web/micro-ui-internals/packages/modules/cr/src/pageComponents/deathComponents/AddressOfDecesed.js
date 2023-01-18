@@ -15,7 +15,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   // PresentCountry, setPresentCountry, PresentStateName, setPresentStateName, PresentDistrict, setPresentDistrict,
   // PresentLBTypeName, setPresentLBTypeName,PresentLBName, setPresentLBName,PresentTaluk, setPresentTaluk, PresentPostOffice, setPresentPostOffice,PresentPincode, setPresentPincode,
   // PresentHouseNameEn, setPresentHouseNameEn , PresentHouseNameMl, setPresentHouseNameMl,PresentDoorNo,setPresentDoorNo, PresentResNo, setPresentResNo,PresentMainPlaceEn, setPresentMainPlaceEn,
-  // PresentMainPlaceMl, setPresentMainPlaceMl,PresentLocalityNameEn, setPresentLocalityNameEn,   
+  // PresentMainPlaceMl, setPresentMainPlaceMl,PresentLocalityNameEn, setPresentLocalityNameEn,
   // PresentLocalityNameMl, setPresentLocalityNameMl,PresentStreetNameEn, setPresentStreetNameEn,PresentStreetNameMl, setPresentStreetNameMl,PresentCityEn, setPresentCityEn,PresentCityMl, setPresentCityMl,PresentVillage, setPresentVillage,
   // PermanentStateName, setPermanentStateName,PermanentDistrict, setPermanentDistrict,PermanentLBTypeName, setPermanentLBTypeName,PermanentLBName, setPermanentLBName,PermanentVillage, setPermanentVillage,PermanentTaluk, setPermanentTaluk,
   // PermanentPostOffice, setPermanentPostOffice,PermanentPincode, setPermanentPincode,PermanentResNo, setPermanentResNo,PermanentHouseNameEn, setPermanentHouseNameEn,PermanentHouseNameMl, setPermanentHouseNameMl,PermanentMainPlaceEn,
@@ -55,7 +55,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressOfDecesed?.PermanentPincode);
   const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressOfDecesed?.PermanentDoorNo);
   const [PermanentResNo, setPermanentResNo] = useState(formData?.AddressOfDecesed?.PermanentResNo);
-  const [PermanentHouseNameEn,  setPermanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn);
+  const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn);
   const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl);
   const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn);
   const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl);
@@ -122,10 +122,8 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
     sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice ? PermanentPostOffice.code : null);
     sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
-    sessionStorage.setItem("isPrsentAddress", isPrsentAddress ?  isPrsentAddress : false );
-    
-    
-    
+    sessionStorage.setItem("isPrsentAddress", isPrsentAddress ? isPrsentAddress : false);
+
     //Outside India
     sessionStorage.setItem("AdressEn", AdressEn ? AdressEn : null);
     sessionStorage.setItem("AdressMl", AdressMl ? AdressMl : null);
@@ -137,8 +135,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("ProvinceMl", ProvinceMl ? ProvinceMl : null);
     sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
     sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
-    sessionStorage.setItem("selectedOption", selectedOption ? selectedOption  : "ILB");
-
+    sessionStorage.setItem("selectedOption", selectedOption ? selectedOption : "ILB");
 
     onSelect(config.key, {
       selectedOption,
@@ -185,8 +182,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
       PermanentStateName,
       PermanentLBTypeName,
       isPrsentAddress,
-      
-      
+
       AdressEn,
       AdressMl,
       AdressEnB,
@@ -210,7 +206,9 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     setOutside(true);
   };
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [selectedOption, setSelectedOption] = useState( formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB");
+  const [selectedOption, setSelectedOption] = useState(
+    formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
+  );
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -241,7 +239,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           <div>
-            {selectedOption === "ILB" &&  (
+            {selectedOption === "ILB" ||  (
               <AdressInside
                 PresentCountry={PresentCountry}
                 setPresentCountry={setPresentCountry}
