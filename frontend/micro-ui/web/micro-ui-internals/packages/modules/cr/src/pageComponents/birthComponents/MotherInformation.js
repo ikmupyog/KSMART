@@ -58,6 +58,15 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherAadharError, setMotherAadharError] = useState(formData?.MotherInfoDetails?.MotherAadhar ? false : false);
     const [MotherMobileError, setMotherMobileError] = useState(formData?.MotherInfoDetails?.MotherMobile ? false : false);
     const [MotherEducationError, setMotherEducationError] = useState(formData?.MotherInfoDetails?.MotherEducation ? false : false);
+    const [MotherProfessionError, setMotherProfessionError] = useState(formData?.MotherInfoDetails?.MotherProfession ? false : false);
+    const [MotherNationalityError, setMotherNationalityError] = useState(formData?.MotherInfoDetails?.MotherNationality ? false : false);
+    const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.MotherInfoDetails?.MotherMaritalStatus ? false : false);
+    const [MotherCountryError, setMotherCountryError] = useState(formData?.MotherInfoDetails?.MotherCountry ? false : false);
+    const [MotherStateError, setMotherStateError] = useState(formData?.MotherInfoDetails?.StateName ? false : false);
+    const [MotherDistrictError, setMotherDistrictError] = useState(formData?.MotherInfoDetails?.MotherDistrict ? false : false);
+    const [MotherLBNameError, setMotherLBNameError] = useState(formData?.MotherInfoDetails?.MotherLBName ? false : false);
+    const [MotherTalukError, setMotherTalukError] = useState(formData?.MotherInfoDetails?.MotherTaluk ? false : false);
+    const [MotherPlaceTypeError, setMotherPlaceTypeError] = useState(formData?.MotherInfoDetails?.MotherPlaceType ? false : false);
 
 
     const cmbUrbanRural = [
@@ -315,7 +324,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     }
     let validFlag = true;
     const goNext = () => {
-        console.log(MotherEducation);
+       
         if (MotherAadhar != null || MotherAadhar != '' || MotherAadhar != undefined) {
             if (MotherAadharError) {
                 validFlag = false;
@@ -345,18 +354,105 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             }
         }
         if (MotherEducation == null || MotherEducation == '' || MotherEducation == undefined) {
-            if (MotherEducationError) {
                 validFlag = false;
                 setMotherEducationError(true);
                 setToast(true);
                 setTimeout(() => {
                     setToast(false);
                 }, 2000);
-                // return false;
-                // window.alert("Username shouldn't exceed 10 characters")
-            } else {
-                setMotherEducationError(false);
-            }
+            
+        } else {
+            setMotherEducationError(false);
+        }
+        if (MotherProfession == null || MotherProfession == '' || MotherProfession == undefined) {
+                validFlag = false;
+                setMotherProfessionError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+        } else {
+            setMotherProfessionError(false);
+        }
+        if (MotherNationality == null || MotherNationality == '' || MotherNationality == undefined) {
+                validFlag = false;
+                setMotherNationalityError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+        } else {
+            setMotherNationalityError(false);
+        }
+        if (MotherMaritalStatus == null || MotherMaritalStatus == '' || MotherMaritalStatus == undefined) {
+            validFlag = false;
+            setMotherMaritalStatusError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        } else {
+            setMotherMaritalStatusError(false);
+        }
+        if (MotherCountry == null || MotherCountry == '' || MotherCountry == undefined) {
+            validFlag = false;
+            setMotherCountryError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        } else {
+            setMotherCountryError(false);
+        }
+        if (StateName == null || StateName == '' || StateName == undefined) {
+            validFlag = false;
+            setMotherStateError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        } else {
+            setMotherStateError(false);
+        }
+        if (MotherDistrict == null || MotherDistrict == '' || MotherDistrict == undefined) {
+            validFlag = false;
+            setMotherDistrictError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        } else {
+            setMotherDistrictError(false);
+        }
+        if (MotherLBName == null || MotherLBName == '' || MotherLBName == undefined) {
+            validFlag = false;
+            setMotherLBNameError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        } else {
+            setMotherLBNameError(false);
+        }
+        if (MotherTaluk == null || MotherTaluk == '' || MotherTaluk == undefined) {
+            validFlag = false;
+            setMotherTalukError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        } else {
+            setMotherTalukError(false);
+        }
+        if (MotherPlaceType == null || MotherPlaceType == '' || MotherPlaceType == undefined) {
+            validFlag = false;
+            setMotherPlaceTypeError(true);
+            setToast(true);
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        } else {
+            setMotherPlaceTypeError(false);
         }
         if (validFlag == true) {
             sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn ? MotherFirstNameEn : null);
@@ -565,13 +661,13 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <TextInput
                                 t={t}
                                 isMandatory={false}
-                                type={"text"}
+                                type={"number"}
                                 optionKey="i18nKey"
                                 name="MotherMobile"
                                 value={MotherMobile}
                                 onChange={setSelectMotherMobile}
                                 disable={isMotherInfo} placeholder={`${t("CR_MOBILE_NO")}`}
-                                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                                {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                             />
                         </div>
                     </div>
@@ -789,17 +885,22 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 {toast && (
                     <Toast
                         error={
-                            MotherAadharError || MotherMobileError || MotherEducationError
-                            // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+                            MotherAadharError || MotherMobileError || MotherEducationError || MotherProfessionError || MotherNationalityError
+                            || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError
+                            || MotherTalukError || MotherPlaceTypeError
 
                         }
                         label={
-                            (MotherAadharError || MotherMobileError || MotherEducationError
-                                //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-                                // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
+                            (MotherAadharError || MotherMobileError || MotherEducationError || MotherProfessionError || MotherNationalityError || MotherMaritalStatusError
+                                || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError || MotherTalukError || MotherPlaceTypeError
+                                
                                 ?
                                 (MotherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : MotherMobileError ? t(`CR_INVALID_MOBILE_NO`) : MotherEducationError ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
-                                    //  : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                                : MotherProfessionError ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`) : MotherNationalityError ? t(`BIRTH_ERROR_MOTHER_NATIONALITY_CHOOSE`)
+                                : MotherMaritalStatusError ? t(`BIRTH_ERROR_MOTHER_MARITIAL_CHOOSE`) : MotherCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)  : MotherStateError ? t(`BIRTH_ERROR_STATE_CHOOSE`)  
+                                : MotherLBNameError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`) : MotherLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`)
+                                : MotherTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : MotherPlaceTypeError ? t(`BIRTH_ERROR_URBAN_CHOOSE`)
+                                //  : || MotherProfessionError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 
                                     : setToast(false)

@@ -184,11 +184,11 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setalcoholyears", alcoholyears);
     // sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant?setFemaleDeathPregnant.code:null);
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
-    sessionStorage.setItem("isSmoke", isSmoke.i18nKey);
-    sessionStorage.setItem("isPanMasala", isPanMasala.i18nKey);
-    sessionStorage.setItem("isalcohol", isalcohol.i18nKey);
-    sessionStorage.setItem("isPregnent", isPregnent.i18nKey);
-    sessionStorage.setItem("isTabacco", isTabacco.i18nKey);
+    sessionStorage.setItem("isSmoke", isSmoke);
+    sessionStorage.setItem("isPanMasala", isPanMasala);
+    sessionStorage.setItem("isalcohol", isalcohol);
+    sessionStorage.setItem("isPregnent", isPregnent);
+    sessionStorage.setItem("isTabacco", isTabacco);
     sessionStorage.setItem("textTabacco", textTabacco ? textTabacco : null);
     sessionStorage.setItem("text", text ? text : null);
     sessionStorage.setItem("textPregnant", textPregnant ? textPregnant : null);
@@ -380,7 +380,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   handleChange={handleRadioChangeTabacco}
                 />
               {isTabacco === "yes" && (
-                 <div className="col-md-4">
+                 <div>
                  <CardLabel>{t("CR_YEAR")}</CardLabel> 
                   {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
                   <TextInput

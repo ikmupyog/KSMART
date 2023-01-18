@@ -122,6 +122,9 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
     sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice ? PermanentPostOffice.code : null);
     sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
+    sessionStorage.setItem("isPrsentAddress", isPrsentAddress.i18nKey );
+    
+    
     //Outside India
     sessionStorage.setItem("AdressEn", AdressEn ? AdressEn : null);
     sessionStorage.setItem("AdressMl", AdressMl ? AdressMl : null);
@@ -176,6 +179,9 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
       PermanentCountry,
       PermanentStateName,
       PermanentLBTypeName,
+      isPrsentAddress,
+      
+      
       AdressEn,
       AdressMl,
       AdressEnB,
@@ -199,7 +205,6 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     setOutside(true);
   };
   const [isInitialRender, setIsInitialRender] = useState(true);
-
   const [selectedOption, setSelectedOption] = useState("option1");
 
   const handleOptionChange = (event) => {

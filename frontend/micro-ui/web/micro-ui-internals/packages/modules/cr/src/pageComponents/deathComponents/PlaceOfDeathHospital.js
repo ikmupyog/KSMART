@@ -1,11 +1,27 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-
-const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOfficerName, selectSignedOfficerName, HospitalName, selectHospitalName, setDesignation,
-  setSelectedDesignation, HospitalAadhaar, setHospitalAadhaar, HospitalMobile, setHospitalMobile, OfficerName, setOfficerName, OfficerDesignation, setOfficerDesignation,
+const PlaceOfDeathHospital = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  SignedOfficerName,
+  selectSignedOfficerName,
+  HospitalName,
+  selectHospitalName,
+  setDesignation,
+  setSelectedDesignation,
+  HospitalAadhaar,
+  setHospitalAadhaar,
+  HospitalMobile,
+  setHospitalMobile,
+  OfficerName,
+  setOfficerName,
+  OfficerDesignation,
+  setOfficerDesignation,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
@@ -25,7 +41,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
   // const [OfficerName, setOfficerName] = useState(formData?.HospitalDetails?.OfficerName);
   // const [OfficerDesignation, setOfficerDesignation] = useState(formData?.HospitalDetails?.OfficerDesignation);
 
-   // let cmbhospital = [];
+  // let cmbhospital = [];
   // hospital &&
   //   hospital["birth-death-service"] &&
   //   hospital["birth-death-service"].hospitalList.map((ob) => {
@@ -33,35 +49,35 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
   //   });
   let cmbhospital = [];
   hospitalData &&
-  hospitalData["egov-location"] &&
+    hospitalData["egov-location"] &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    
-    useEffect(() => {
-          if (isInitialRender) {
-          if(HospitalName){
-            setIsInitialRender(false);
-            let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);   
-            let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code); 
-            setFilteredOfficerName(cmbRegistrarNames[0].registar);
-            setFilteredDesignation(cmbDesignations[0].registar);    
-            // console.log("cmbDesignations" + cmbRegistrarNames["hospitalList"]);                
-            // setFilteredOfficerName(cmbRegistrarNames.registar);
-            // setFilteredDesignation(cmbDesignations);
-            // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
-            // setSelectSignedOfficerMobileNo(HospitalName.registrationMobile);
-        }
-      }
-    }, [OfficerNames,Designations,isInitialRender]);  
 
-    const onSkip = () => onSelect();
+  useEffect(() => {
+    if (isInitialRender) {
+      if (HospitalName) {
+        setIsInitialRender(false);
+        let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+        let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+        setFilteredOfficerName(cmbRegistrarNames[0].registar);
+        setFilteredDesignation(cmbDesignations[0].registar);
+        // console.log("cmbDesignations" + cmbRegistrarNames["hospitalList"]);
+        // setFilteredOfficerName(cmbRegistrarNames.registar);
+        // setFilteredDesignation(cmbDesignations);
+        // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
+        // setSelectSignedOfficerMobileNo(HospitalName.registrationMobile);
+      }
+    }
+  }, [OfficerNames, Designations, isInitialRender]);
+
+  const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {
-      setIsInitialRender(true);
-      selectHospitalName(value);    
-      setFilteredOfficerName(null);
-      setFilteredDesignation(null);
+    setIsInitialRender(true);
+    selectHospitalName(value);
+    setFilteredOfficerName(null);
+    setFilteredDesignation(null);
   }
   function setselectSignedOfficerName(value) {
     selectSignedOfficerName(value);
@@ -82,8 +98,6 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
     setOfficerDesignation(e.target.value);
   }
 
-
-
   // function selectCommencementDate(value) {
   //   setCommencementDate(value);
   // }
@@ -96,8 +110,6 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
     // sessionStorage.setItem("HospitalMobile", HospitalMobile ? HospitalMobile : null);
     // sessionStorage.setItem("OfficerName", OfficerName ? OfficerName : null);
     // sessionStorage.setItem("OfficerDesignation", OfficerDesignation ? OfficerDesignation : null);
-
-
     // onSelect(config.key, { SignedOfficerName, HospitalName, setDesignation, HospitalAadhaar, HospitalMobile });
   };
   return (
@@ -116,7 +128,10 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_HOSPITAL")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {`${t("CR_HOSPITAL")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="hospitalName"
@@ -128,7 +143,11 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {`${t("CR_SIGNED_OFFICER")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+            
               <Dropdown
                 t={t}
                 optionKey="hospitalRegistar"
@@ -140,7 +159,10 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="registarDesig"
@@ -168,8 +190,7 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
                 onChange={setselectOfficerName}
                 disable={isEdit}
                 placeholder={`${t("CR_SIGNED_OFFICER")}`}
-                {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: false, type: "text", title: t("CR_INVALID_YEAR") })}
-                
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
               />
             </div>
             <div className="col-md-3">
@@ -185,7 +206,6 @@ const PlaceOfDeathHospital = ({ config, onSelect, userType, formData, SignedOffi
                 disable={isEdit}
                 placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
-
               />
             </div>
             <div className="col-md-3">
