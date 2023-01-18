@@ -48,35 +48,20 @@ public class CrDeathController implements CrDeathResource  {
     
     @Autowired
     public CrDeathController(CrDeathService deathService) {
-
         this.deathService = deathService;
     }
+
     @Override
     @PostMapping("/crdeathdetails/_create")
     public ResponseEntity<CrDeathDtlResponse> create(@Valid @RequestBody CrDeathDtlRequest request) {
 
-        // System.out.println("hai");
-           /********************************************* */
-
-        // try {
-        //         ObjectMapper mapper = new ObjectMapper();
-        //         Object obj = request;
-        //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        //        System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
-        // }catch(Exception e) {
-        //     log.error("Exception while fetching from searcher: ",e);
-        // }
-
-        
-        /********************************************** */
-        
         List<CrDeathDtl> deathDetails = deathService.create(request);
 
         CrDeathDtlResponse response = CrDeathDtlResponse
-                                    .builder()
-                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                    .deathCertificateDtls(deathDetails)
-                                    .build();
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                        .deathCertificateDtls(deathDetails)
+                                        .build();
         return ResponseEntity.ok(response);
     }
 
@@ -86,14 +71,14 @@ public class CrDeathController implements CrDeathResource  {
     public ResponseEntity<CrDeathDtlResponse> search(@RequestBody RequestInfoWrapper request,
                                                             @ModelAttribute CrDeathSearchCriteria criteria) {
 
-    List<CrDeathDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
+        List<CrDeathDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
 
-    CrDeathDtlResponse response = CrDeathDtlResponse
-                                    .builder()
-                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                    .deathCertificateDtls(deathDetails)
-                                    .build();
-    return ResponseEntity.ok(response);
+        CrDeathDtlResponse response = CrDeathDtlResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                        .deathCertificateDtls(deathDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
     }
 
     //Update Begin Jasmine
@@ -125,5 +110,19 @@ public class CrDeathController implements CrDeathResource  {
     //                                         .build();
     //     return ResponseEntity.ok(response);
     // }
+            // System.out.println("hai");
+           /********************************************* */
+
+        // try {
+        //         ObjectMapper mapper = new ObjectMapper();
+        //         Object obj = request;
+        //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //        System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
+        // }catch(Exception e) {
+        //     log.error("Exception while fetching from searcher: ",e);
+        // }
+
+        
+        /********************************************** */
 
 }
