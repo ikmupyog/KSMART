@@ -3,6 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton, B
 import { useTranslation } from "react-i18next";
 import AdressInside from "./AdressInside";
 import OutSideIndia from "./OutSideIndia";
+
 import Timeline from "../../components/DRTimeline";
 // import AddressInside from "./AdressInside";
 
@@ -11,6 +12,16 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  // PresentCountry, setPresentCountry, PresentStateName, setPresentStateName, PresentDistrict, setPresentDistrict,
+  // PresentLBTypeName, setPresentLBTypeName,PresentLBName, setPresentLBName,PresentTaluk, setPresentTaluk, PresentPostOffice, setPresentPostOffice,PresentPincode, setPresentPincode,
+  // PresentHouseNameEn, setPresentHouseNameEn , PresentHouseNameMl, setPresentHouseNameMl,PresentDoorNo,setPresentDoorNo, PresentResNo, setPresentResNo,PresentMainPlaceEn, setPresentMainPlaceEn,
+  // PresentMainPlaceMl, setPresentMainPlaceMl,PresentLocalityNameEn, setPresentLocalityNameEn,   
+  // PresentLocalityNameMl, setPresentLocalityNameMl,PresentStreetNameEn, setPresentStreetNameEn,PresentStreetNameMl, setPresentStreetNameMl,PresentCityEn, setPresentCityEn,PresentCityMl, setPresentCityMl,PresentVillage, setPresentVillage,
+  // PermanentStateName, setPermanentStateName,PermanentDistrict, setPermanentDistrict,PermanentLBTypeName, setPermanentLBTypeName,PermanentLBName, setPermanentLBName,PermanentVillage, setPermanentVillage,PermanentTaluk, setPermanentTaluk,
+  // PermanentPostOffice, setPermanentPostOffice,PermanentPincode, setPermanentPincode,PermanentResNo, setPermanentResNo,PermanentHouseNameEn, setPermanentHouseNameEn,PermanentHouseNameMl, setPermanentHouseNameMl,PermanentMainPlaceEn,
+  // setPermanentMainPlaceEn,PermanentMainPlaceMl, setPermanentMainPlaceMl,PermanentDoorNo, setPermanentDoorNo,PermanentCityEn, setPermanentCityEn,PermanentCityMl, setPermanentCityMl,PermanentLocalityNameEn, setPermanentLocalityNameEn,
+  // PermanentLocalityNameMl, setPermanentLocalityNameMl,PermanentStreetNameEn, setPermanentStreetNameEn,PermanentStreetNameMl, setPermanentStreetNameMl,isPrsentAddress, setIsPrsentAddress, PermanentCountry, setPermanentCountry
+
   const [PresentCountry, setPresentCountry] = useState(formData?.AddressOfDecesed?.PresentCountry);
   const [PresentStateName, setPresentStateName] = useState(formData?.AddressOfDecesed?.PresentStateName);
   const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressOfDecesed?.PresentDistrict);
@@ -44,8 +55,8 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressOfDecesed?.PermanentPincode);
   const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressOfDecesed?.PermanentDoorNo);
   const [PermanentResNo, setPermanentResNo] = useState(formData?.AddressOfDecesed?.PermanentResNo);
-  const [PermanentHouseNameEn, setPrmanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn);
-  const [PermanentHouseNameMl, setPermeanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl);
+  const [PermanentHouseNameEn,  setPermanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn);
+  const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl);
   const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn);
   const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl);
   const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressOfDecesed?.PermanentCityEn);
@@ -289,9 +300,9 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
                 PermanentResNo={PermanentResNo}
                 setPermanentResNo={setPermanentResNo}
                 PermanentHouseNameEn={PermanentHouseNameEn}
-                setPrmanentHouseNameEn={setPrmanentHouseNameEn}
+                setPermanentHouseNameEn={setPermanentHouseNameEn}
                 PermanentHouseNameMl={PermanentHouseNameMl}
-                setPermeanentHouseNameMl={setPermeanentHouseNameMl}
+                setPermanentHouseNameMl={setPermanentHouseNameMl}
                 PermanentMainPlaceEn={PermanentMainPlaceEn}
                 setPermanentMainPlaceEn={setPermanentMainPlaceEn}
                 PermanentMainPlaceMl={PermanentMainPlaceMl}
