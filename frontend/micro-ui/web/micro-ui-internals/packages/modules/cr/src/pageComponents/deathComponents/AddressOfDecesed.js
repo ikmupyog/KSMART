@@ -122,7 +122,8 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
     sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice ? PermanentPostOffice.code : null);
     sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
-    sessionStorage.setItem("isPrsentAddress", isPrsentAddress.i18nKey );
+    sessionStorage.setItem("isPrsentAddress", isPrsentAddress ?  isPrsentAddress : false );
+    
     
     
     //Outside India
@@ -135,8 +136,12 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn : null);
     sessionStorage.setItem("ProvinceMl", ProvinceMl ? ProvinceMl : null);
     sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
+    sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
+    sessionStorage.setItem("selectedOption", selectedOption ? selectedOption  : "ILB");
+
 
     onSelect(config.key, {
+      selectedOption,
       PresentDoorNo,
       PresentResNo,
       PresentHouseNameEn,
@@ -205,7 +210,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     setOutside(true);
   };
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [selectedOption, setSelectedOption] = useState("option1");
+  const [selectedOption, setSelectedOption] = useState( formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -219,24 +224,24 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
         <div className="maindeath">
           <div className="radios">
             <div className="inside">
-              <input type="radio" name="options" value="option1" checked={selectedOption === "option1"} onChange={handleOptionChange} />
+              <input type="radio" name="options" value="ILB" checked={selectedOption === "ILB"} onChange={handleOptionChange} />
               <p>Inside Local Body</p>
             </div>
             <div className="inside">
-              <input type="radio" name="options" value="option1" checked={selectedOption === "option1"} onChange={handleOptionChange} />
+              <input type="radio" name="options" value="IK" checked={selectedOption === "IK"} onChange={handleOptionChange} />
               <p>Inside Kerala</p>
             </div>
             <div className="inside">
-              <input type="radio" name="options" value="option1" checked={selectedOption === "option1"} onChange={handleOptionChange} />
+              <input type="radio" name="options" value="IIN" checked={selectedOption === "IIN"} onChange={handleOptionChange} />
               <p>Inside India</p>
             </div>
             <div className="inside">
-              <input type="radio" name="options" value="option2" checked={selectedOption === "option2"} onChange={handleOptionChange} />
+              <input type="radio" name="options" value="OIN" checked={selectedOption === "OIN"} onChange={handleOptionChange} />
               <p>Outside India</p>
             </div>
           </div>
           <div>
-            {selectedOption === "option1" && (
+            {selectedOption === "ILB" &&  (
               <AdressInside
                 PresentCountry={PresentCountry}
                 setPresentCountry={setPresentCountry}
@@ -326,7 +331,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
                 setPermanentStreetNameMl={setPermanentStreetNameMl}
               />
             )}
-            {selectedOption === "option2" && (
+            {selectedOption === "OIN" && (
               <OutSideIndia
                 AdressEn={AdressEn}
                 setAdressEn={setAdressEn}

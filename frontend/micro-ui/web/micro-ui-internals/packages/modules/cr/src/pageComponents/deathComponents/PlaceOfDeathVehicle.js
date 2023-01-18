@@ -14,6 +14,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [TradeName, setTradeName] = useState(null);
+  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
 
   // const [DriverName, setDriverName] = useState(formData?.PlaceOfDeathVehicle?.DriverName);
   // const [DriverNameMl, setDriverNameMl] = useState(formData?.PlaceOfDeathVehicle?.DriverNameMl);
@@ -47,6 +48,12 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
       hospital["birth-death-service"] &&
       hospital["birth-death-service"].hospitalList.map((ob) => {
         cmbhospital.push(ob);
+      });
+      let cmbLBType = [];
+      LBType &&
+      LBType["common-masters"] &&
+      LBType["common-masters"].LBType.map((ob) => {
+        cmbLBType.push(ob);
       });
 
     
@@ -384,7 +391,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="code"
                 isMandatory={false}
-                option={cmbhospital}
+                option={cmbLBType}
                 selected={setDeathVehicleWard}
                 select={selectDeathVehicleWard}
                 disabled={isEdit}
