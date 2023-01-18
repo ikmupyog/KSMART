@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loader, CheckBox,Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loader, CheckBox, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -142,27 +142,27 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     let cmbfilterNation = [];
     let cmbfilterCountry = [];
     let cmbfilterState = [];
-    useEffect(()=>{
-        if(MotherNationality==null || MotherNationality == ''){
-            if (stateId === "kl" && cmbNation.length>0 ) {
-                cmbfilterNation= cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
-                 setMotherNationality(cmbfilterNation[0]);   
+    useEffect(() => {
+        if (MotherNationality == null || MotherNationality == '') {
+            if (stateId === "kl" && cmbNation.length > 0) {
+                cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
+                setMotherNationality(cmbfilterNation[0]);
             }
         }
-        if(MotherCountry==null || MotherCountry == ''){
-            if (stateId === "kl" && cmbNation.length>0 ) {                 
-                 cmbfilterCountry= cmbNation.filter((cmbNation) => cmbNation.name.includes('India'));
-                 setMotherCountry(cmbfilterCountry[0]);
+        if (MotherCountry == null || MotherCountry == '') {
+            if (stateId === "kl" && cmbNation.length > 0) {
+                cmbfilterCountry = cmbNation.filter((cmbNation) => cmbNation.name.includes('India'));
+                setMotherCountry(cmbfilterCountry[0]);
             }
         }
-        if(StateName==null || StateName == ''){
-            if (stateId === "kl" && cmbState.length>0 ) {                 
-                cmbfilterState= cmbState.filter((cmbState) => cmbState.name.includes('Kerala'));
-                 setStateName(cmbfilterState[0]);
+        if (StateName == null || StateName == '') {
+            if (stateId === "kl" && cmbState.length > 0) {
+                cmbfilterState = cmbState.filter((cmbState) => cmbState.name.includes('Kerala'));
+                setStateName(cmbfilterState[0]);
             }
         }
-        
-    },[Nation])
+
+    }, [Nation])
 
     function setSelectMotherFirstNameEn(e) {
         if (e.target.value.length === 51) {
@@ -282,13 +282,14 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         setMotherAgeDeleivery(e.target.value);
     }
     function setSelectMotherAgeMarriage(e) {
+        setMotherAgeMarriage(e.target.value);
         if (e.target.value.length != 0) {
             if (e.target.value.length < 18) {
                 setMotherAgeMarriageError(true);
+                return false;
             }
             else {
                 setMotherAgeMarriageError(false);
-                setMotherAgeMarriage(e.target.value);
             }
         }
     }
@@ -357,148 +358,149 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     }
     let validFlag = true;
     const goNext = () => {
-       
-        if (MotherAadhar != null || MotherAadhar != '' || MotherAadhar != undefined) {
-            if (MotherAadharError) {
-                validFlag = false;
-                setMotherAadharError(true);
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-                // return false;
-                // window.alert("Username shouldn't exceed 10 characters")
-            } else {
-                setMotherAadharError(false);
+        if (isMotherInfo === false) {
+            if (MotherAadhar != null || MotherAadhar != '' || MotherAadhar != undefined) {
+                if (MotherAadharError) {
+                    validFlag = false;
+                    setMotherAadharError(true);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                    // return false;
+                    // window.alert("Username shouldn't exceed 10 characters")
+                } else {
+                    setMotherAadharError(false);
+                }
             }
-        }
-        if (MotherMobile != null || MotherMobile != '' || MotherMobile != undefined) {
-            if (MotherMobileError) {
-                validFlag = false;
-                setMotherMobileError(true);
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-                // return false;
-                // window.alert("Username shouldn't exceed 10 characters")
-            } else {
-                setMotherMobileError(false);
+            if (MotherMobile != null || MotherMobile != '' || MotherMobile != undefined) {
+                if (MotherMobileError) {
+                    validFlag = false;
+                    setMotherMobileError(true);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                    // return false;
+                    // window.alert("Username shouldn't exceed 10 characters")
+                } else {
+                    setMotherMobileError(false);
+                }
             }
-        }
-        if (MotherEducation == null || MotherEducation == '' || MotherEducation == undefined) {
+            if (MotherEducation == null || MotherEducation == '' || MotherEducation == undefined) {
                 validFlag = false;
                 setMotherEducationError(true);
                 setToast(true);
                 setTimeout(() => {
                     setToast(false);
                 }, 2000);
-            
-        } else {
-            setMotherEducationError(false);
-        }
-        if (MotherProfession == null || MotherProfession == '' || MotherProfession == undefined) {
+
+            } else {
+                setMotherEducationError(false);
+            }
+            if (MotherProfession == null || MotherProfession == '' || MotherProfession == undefined) {
                 validFlag = false;
                 setMotherProfessionError(true);
                 setToast(true);
                 setTimeout(() => {
                     setToast(false);
                 }, 2000);
-        } else {
-            setMotherProfessionError(false);
-        }
-        if (MotherNationality == null || MotherNationality == '' || MotherNationality == undefined) {
+            } else {
+                setMotherProfessionError(false);
+            }
+            if (MotherNationality == null || MotherNationality == '' || MotherNationality == undefined) {
                 validFlag = false;
                 setMotherNationalityError(true);
                 setToast(true);
                 setTimeout(() => {
                     setToast(false);
                 }, 2000);
-        } else {
-            setMotherNationalityError(false);
-        }
-        if (MotherMaritalStatus == null || MotherMaritalStatus == '' || MotherMaritalStatus == undefined) {
-            validFlag = false;
-            setMotherMaritalStatusError(true);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-            }, 2000);
-        } else {
-            setMotherMaritalStatusError(false);
-        }
-        if (MotherCountry == null || MotherCountry == '' || MotherCountry == undefined) {
-            validFlag = false;
-            setMotherCountryError(true);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-            }, 2000);
-        } else {
-            setMotherCountryError(false);
-        }
-        if (StateName == null || StateName == '' || StateName == undefined) {
-            validFlag = false;
-            setMotherStateError(true);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-            }, 2000);
-        } else {
-            setMotherStateError(false);
-        }
-        if (MotherDistrict == null || MotherDistrict == '' || MotherDistrict == undefined) {
-            validFlag = false;
-            setMotherDistrictError(true);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-            }, 2000);
-        } else {
-            setMotherDistrictError(false);
-        }
-        if (MotherLBName == null || MotherLBName == '' || MotherLBName == undefined) {
-            validFlag = false;
-            setMotherLBNameError(true);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-            }, 2000);
-        } else {
-            setMotherLBNameError(false);
-        }
-        if (MotherTaluk == null || MotherTaluk == '' || MotherTaluk == undefined) {
-            validFlag = false;
-            setMotherTalukError(true);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-            }, 2000);
-        } else {
-            setMotherTalukError(false);
-        }
-        if (MotherPlaceType == null || MotherPlaceType == '' || MotherPlaceType == undefined) {
-            validFlag = false;
-            setMotherPlaceTypeError(true);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-            }, 2000);
-        } else {
-            setMotherPlaceTypeError(false);
-        }
-        if (MotherAgeMarriage != null || MotherAgeMarriage != '' || MotherAgeMarriage != undefined) {
-            validFlag = false;
-            setMotherPlaceTypeError(true);
-            setToast(true);
-            setTimeout(() => {
-                setToast(false);
-            }, 2000);
-        } else {
-            setMotherPlaceTypeError(false);
+            } else {
+                setMotherNationalityError(false);
+            }
+            if (MotherMaritalStatus == null || MotherMaritalStatus == '' || MotherMaritalStatus == undefined) {
+                validFlag = false;
+                setMotherMaritalStatusError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+            } else {
+                setMotherMaritalStatusError(false);
+            }
+            if (MotherCountry == null || MotherCountry == '' || MotherCountry == undefined) {
+                validFlag = false;
+                setMotherCountryError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+            } else {
+                setMotherCountryError(false);
+            }
+            if (StateName == null || StateName == '' || StateName == undefined) {
+                validFlag = false;
+                setMotherStateError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+            } else {
+                setMotherStateError(false);
+            }
+            if (MotherDistrict == null || MotherDistrict == '' || MotherDistrict == undefined) {
+                validFlag = false;
+                setMotherDistrictError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+            } else {
+                setMotherDistrictError(false);
+            }
+            if (MotherLBName == null || MotherLBName == '' || MotherLBName == undefined) {
+                validFlag = false;
+                setMotherLBNameError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+            } else {
+                setMotherLBNameError(false);
+            }
+            if (MotherTaluk == null || MotherTaluk == '' || MotherTaluk == undefined) {
+                validFlag = false;
+                setMotherTalukError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+            } else {
+                setMotherTalukError(false);
+            }
+            console.log("MotherPlaceType" + MotherPlaceType);
+            if (MotherPlaceType == null || MotherPlaceType == '' || MotherPlaceType == undefined) {
+                validFlag = false;
+                setMotherPlaceTypeError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+            } else {
+                setMotherPlaceTypeError(false);
+            }
+            if (MotherAgeMarriage != null || MotherAgeMarriage != '' || MotherAgeMarriage != undefined) {
+                validFlag = false;
+                setMotherAgeMarriageError(true);
+                setToast(true);
+                setTimeout(() => {
+                    setToast(false);
+                }, 2000);
+            } else {
+                setMotherAgeMarriageError(false);
+            }
         }
 
-        MotherAgeMarriageError
         if (validFlag == true) {
             sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn ? MotherFirstNameEn : null);
             sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn ? MotherMiddleNameEn : null);
@@ -534,7 +536,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             onSelect(config.key, {
                 MotherFirstNameEn, MotherMiddleNameEn, MotherLastNameEn,
                 MotherFirstNameMl, MotherMiddleNameMl, MotherLastNameMl, MotherAadhar, MotherPassportNo, MotherEmail, MotherMobile, MotherEducation, MotherEducationSubject, MotherProfession,
-                MotherNationality, MotherAgeDeleivery, MotherDOB, OrderofChildren, MotherPlaceType, MotherLBName,MotherMaritalStatus,
+                MotherNationality, MotherAgeDeleivery, MotherDOB, OrderofChildren, MotherPlaceType, MotherLBName, MotherMaritalStatus,
                 MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl, MotherAgeMarriage,
                 isMotherInfo
             });
@@ -941,14 +943,14 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 || MotherAgeMarriageError
                                 ?
                                 (MotherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : MotherMobileError ? t(`CR_INVALID_MOBILE_NO`) : MotherEducationError ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
-                                : MotherProfessionError ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`) : MotherNationalityError ? t(`BIRTH_ERROR_MOTHER_NATIONALITY_CHOOSE`)
-                                : MotherMaritalStatusError ? t(`BIRTH_ERROR_MOTHER_MARITIAL_CHOOSE`) : MotherCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)  : MotherStateError ? t(`BIRTH_ERROR_STATE_CHOOSE`)  
-                                : MotherLBNameError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`) : MotherLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`)
-                                : MotherTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : MotherPlaceTypeError ? t(`BIRTH_ERROR_URBAN_CHOOSE`) : MotherAgeMarriageError ? t(`BIRTH_ERROR_MOTHER_AGE`)
-                                //  : || MotherProfessionError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+                                    : MotherProfessionError ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`) : MotherNationalityError ? t(`BIRTH_ERROR_MOTHER_NATIONALITY_CHOOSE`)
+                                        : MotherMaritalStatusError ? t(`BIRTH_ERROR_MOTHER_MARITIAL_CHOOSE`) : MotherCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : MotherStateError ? t(`BIRTH_ERROR_STATE_CHOOSE`)
+                                            : MotherDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`) : MotherLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`)
+                                                : MotherTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : MotherPlaceTypeError ? t(`BIRTH_ERROR_URBAN_CHOOSE`) : MotherAgeMarriageError ? t(`BIRTH_ERROR_MOTHER_AGE`)
+                                                    //  : || MotherProfessionError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                                                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 
-                                    : setToast(false)
+                                                    : setToast(false)
                                 ) : setToast(false)
                             )
                         }

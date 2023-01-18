@@ -6,17 +6,17 @@ import { useTranslation } from "react-i18next";
 const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn, setInformentNameEn,InformentNameMl, setInformentNameMl,
   setTitle, setSelectedTitle,AadhaarNo, setAadhaarNo,setDeclaration, setSelectedDeclaration,InformentMobileNo, setInformentMobileNo,InformentEmail, setInformentEmail,isNoAadhaar, setIsNoAadhaar }) => {
   const stateId = Digit.ULBService.getStateId();
-  const [checked, setChecked] = useState(false);
-  const handleCheckboxChange = (event) => {
-    setChecked((checked) => !checked); // toggle the checked state
-    let newSelectedValues = [...selectedValues];
-    if (event.target.checked) {
-        newSelectedValues.push(event.target.value);
-    } else {
-        newSelectedValues = newSelectedValues.filter(value => value !== event.target.value);
-    }
-    setSelectedValues(newSelectedValues);
-}
+  const [isChecked, setIsChecked] = useState(formData?.InformentAddress?.isChecked ? formData?.InformentAddress?.isChecked : false);
+//   const handleCheckboxChange = (event) => {
+//     setChecked((checked) => !checked); // toggle the checked state
+//     let newSelectedValues = [...selectedValues];
+//     if (event.target.checked) {
+//         newSelectedValues.push(event.target.value);
+//     } else {
+//         newSelectedValues = newSelectedValues.filter(value => value !== event.target.value);
+//     }
+//     setSelectedValues(newSelectedValues);
+// }
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
@@ -349,12 +349,13 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("No Aadhaar Number")}   onChange={handleCheckboxChange} value={checked} />
+
+            <CheckBox label={t("No Aadhaar Number")}   onChange={() => setIsChecked(!isChecked)} value={isChecked}  />
           </div>
         </div>
         <div className="row">
         <div className="col-md-12">
-        {checked ? null : (
+        <div style={{ pointerEvents: isChecked ? "none" : "all", opacity: isChecked ? 0.5 : 1 }}>
         <div className="col-md-3">
             <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput
@@ -369,8 +370,9 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
               placeholder={`${t("CS_COMMON_AADHAAR")}`}
               {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
+            
           </div>
-            )}
+          </div>
           <div className="col-md-3">
             <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
             <Dropdown

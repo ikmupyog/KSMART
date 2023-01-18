@@ -196,13 +196,31 @@ const ptAccess = () => {
 const tlAccess = () => {
   const userInfo = Digit.UserService.getUser();
   const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
-  const tlRoles = ["TL_CEMP", "TL_APPROVER", "TL_FIELD_INSPECTOR", "TL_DOC_VERIFIER"];
+  const tlRoles = ["TL_CEMP", "TL_APPROVER", "TL_FIELD_INSPECTOR", "TL_DOC_VERIFIER","TL_PDEOPERATOR","TL_PDEAPPROVER"];
 
   const TL_ACCESS = userRoles?.filter((role) => tlRoles.includes(role));
 
   return TL_ACCESS?.length > 0;
 };
+const crAccess = () => {
+  const userInfo = Digit.UserService.getUser();
+  const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
+  const crRoles = ["BND_CEMP", "BIRTH_APPLICATION_EDITOR", "BIRTH_APPLICATION_VIEWER", "BIRTH_REPORT_VIEWER",
+  "DEATH_APPLICATION_CREATOR", "DEATH_APPLICATION_EDITOR", "DEATH_APPLICATION_VIEWER","DEATH_REPORT_VIEWER" ];
 
+  const CR_ACCESS = userRoles?.filter((role) => crRoles.includes(role));
+
+  return CR_ACCESS?.length > 0;
+};
+const dfmAccess = () => {
+  const userInfo = Digit.UserService.getUser();
+  const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
+  const dfmRoles = ["FM_CEMP", "FM_OPERATOR", "FM_VERIFIER", "FM_APPROVER"];
+
+  const DFM_ACCESS = userRoles?.filter((role) => dfmRoles.includes(role));
+
+  return DFM_ACCESS?.length > 0;
+};
 const mCollectAccess = () => {
   const userInfo = Digit.UserService.getUser();
   const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
@@ -259,5 +277,7 @@ export default {
   getPattern,
   hrmsRoles,
   getUnique,
-  tlAccess
+  tlAccess,
+  crAccess,
+  dfmAccess
 };
