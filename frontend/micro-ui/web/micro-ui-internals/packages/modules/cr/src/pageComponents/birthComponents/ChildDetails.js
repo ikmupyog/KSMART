@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader,Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -22,6 +22,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tripStartTime, setTripStartTime] = useState(formData?.ChildDetails?.tripStartTime ? formData?.ChildDetails?.tripStartTime : "");
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : true);
+  const [toast, setToast] = useState(false);
+  const [AadharError, setAadharError] = useState(formData?.ChildDetails?.ChildAadharNo ? false: false );
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);    
   // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
@@ -54,28 +56,82 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     selectGender(value);
   }
   function setSelectChildAadharNo(e) {
-    setChildAadharNo(e.target.value);
+    if (e.target.value.length != 0) {   
+      
+      if (e.target.value.length > 12) {      
+        // setChildAadharNo(e.target.value);
+        setAadharError(true);    
+        return false;
+        // const limit = 12;
+        // setChildAadharNo(e.target.value.slice(0, limit));  
+        // window.alert("Username shouldn't exceed 10 characters")
+      } else  if (e.target.value.length < 12) {   
+        setAadharError(true);
+        setChildAadharNo(e.target.value);
+        return false;
+      } 
+      else {
+        setAadharError(false);
+        setChildAadharNo(e.target.value);
+        return true;
+      }
+    } else {
+      setAadharError(false);
+      setChildAadharNo(e.target.value);
+      return true;
+    }
+    
   }
   function setselectChildDOB(value) {
     setChildDOB(value);
   }
   function setSelectChildFirstNameEn(e) {
-    setChildFirstNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setChildFirstNameEn(e.target.value);
+    }
   }
   function setSelectChildMiddleNameEn(e) {
-    setChildMiddleNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setChildMiddleNameEn(e.target.value);
+    }
   }
   function setSelectChildLastNameEn(e) {
-    setChildLastNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setChildLastNameEn(e.target.value);
+    }
   }
   function setSelectChildFirstNameMl(e) {
-    setChildFirstNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setChildFirstNameMl(e.target.value);
+    }
   }
   function setSelectChildMiddleNameMl(e) {
-    setChildMiddleNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setChildMiddleNameMl(e.target.value);
+    }
   }
   function setSelectChildLastNameMl(e) {
-    setChildLastNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setChildLastNameMl(e.target.value);
+    }
   }
   // function setAdopted(e) {
   //   if (e.target.checked == true) {
@@ -130,7 +186,22 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       setIsChildName(e.target.checked);
     }
   }
+  let validFlag = true;
   const goNext = () => {
+
+    if (AadharError) {
+      validFlag=false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+        // return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAadharError(false);
+    }
+    if(validFlag==true){
     sessionStorage.setItem("ChildDOB", ChildDOB ? ChildDOB : null);
     sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
@@ -148,6 +219,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       ChildLastNameEn, ChildFirstNameMl, ChildMiddleNameMl, ChildLastNameMl, isChildName
     });
   }
+  }
   if (isLoading) {
     return <Loader></Loader>;
   }
@@ -164,7 +236,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-2" ><CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}<span className="mandatorycss">*</span></CardLabel>
-            <DatePicker date={ChildDOB} name="ChildDOB" onChange={setselectChildDOB} inputFormat="DD-MM-YYYY"
+            <DatePicker date={ChildDOB} name="ChildDOB" onChange={setselectChildDOB} inputFormat="DD-MM-YYYY" 
               placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} maxDate={new Date() || undefined} />
 
           </div>
@@ -175,7 +247,13 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             <Dropdown t={t} optionKey="code" isMandatory={true} option={menu} selected={Gender} select={setselectGender} placeholder={`${t("CR_GENDER")}`} {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })} />
           </div>
           <div className="col-md-4"> <CardLabel>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildAadharNo" value={ChildAadharNo} onChange={setSelectChildAadharNo} placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
+            <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey"
+              name="ChildAadharNo" value={ChildAadharNo} onChange={setSelectChildAadharNo}
+              placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
+              inputProps={{
+                maxLength: 12
+              }}
+              {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
           </div>
         </div>
 
@@ -197,11 +275,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               //  onChange={(e,v) => this.updateTextField(e,v)}
               disable={isChildName}
               placeholder={`${t("CR_FIRST_NAME_EN")}`}
-              inputProps={
-                { maxLength: 12 }
-              }
-              onInput={(e) => { e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 12) }}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
           </div>
           <div className="col-md-4" > <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildMiddleNameEn" value={ChildMiddleNameEn} onChange={setSelectChildMiddleNameEn} disable={isChildName} placeholder={`${t("CR_MIDDLE_NAME_EN")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })} />
@@ -212,7 +287,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameMl" value={ChildFirstNameMl} onChange={setSelectChildFirstNameMl} disable={isChildName} placeholder={`${t("CR_FIRST_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })} />
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameMl"
+              value={ChildFirstNameMl} onChange={setSelectChildFirstNameMl} disable={isChildName}
+              placeholder={`${t("CR_FIRST_NAME_ML")}`}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })} />
           </div>
           <div className="col-md-4" > <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildMiddleNameMl" value={ChildMiddleNameMl} onChange={setSelectChildMiddleNameMl} disable={isChildName} placeholder={`${t("CR_MIDDLE_NAME_ML")}`} {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_ML") })} />
@@ -237,6 +315,31 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
 
+        {toast && (
+            <Toast
+              error={
+                AadharError 
+                // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+               
+              }
+              label={
+                (AadharError
+                  //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+                  // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
+                  ?
+                  (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) 
+                    // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+                      
+                    : setToast(false)
+                  ) : setToast(false)
+                )
+              }
+
+              onClose={() => setToast(false)}
+            />
+          )
+          }{""}
 
         {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
 
