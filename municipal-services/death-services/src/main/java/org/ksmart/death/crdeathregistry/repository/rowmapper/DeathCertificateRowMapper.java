@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DeathCertRowMapper implements ResultSetExtractor<List<DeathCertificate>> {
+public class DeathCertificateRowMapper implements ResultSetExtractor<List<DeathCertificate>> {
 
 	@Override
 	public List<DeathCertificate> extractData(ResultSet rs) throws SQLException, DataAccessException {
