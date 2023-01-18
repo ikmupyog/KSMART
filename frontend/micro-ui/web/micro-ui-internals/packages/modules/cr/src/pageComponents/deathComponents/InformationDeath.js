@@ -18,7 +18,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  
+
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
@@ -32,16 +32,18 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  const [FirstName, setFirstName] = useState(formData?.InformationDeath?.FirstName ? formData ?.InformationDeath?.FirstName : "");
-  const [MiddleName, setMiddleName] = useState(formData?.InformationDeath?.MiddleName? formData?.InformationDeath?.MiddleName : "");
+  const [FirstName, setFirstName] = useState(formData?.InformationDeath?.FirstName ? formData?.InformationDeath?.FirstName : "");
+  const [MiddleName, setMiddleName] = useState(formData?.InformationDeath?.MiddleName ? formData?.InformationDeath?.MiddleName : "");
   const [LastName, setLastName] = useState(formData?.InformationDeath?.LastName ? formData?.InformationDeath?.LastName : "");
   const [MLFirstName, setMLFirstName] = useState(formData?.InformationDeath?.MLFirstName ? formData?.InformationDeath?.MLFirstName : "");
   const [MlMiddleName, setMlMiddleName] = useState(formData?.InformationDeath?.MlMiddleName ? formData?.InformationDeath?.MlMiddleName : "");
-  const [MlLastName, setMlLastName] = useState(formData?.InformationDeath?.MlLastName ? formData?.InformationDeath?.MlLastName  : "");
+  const [MlLastName, setMlLastName] = useState(formData?.InformationDeath?.MlLastName ? formData?.InformationDeath?.MlLastName : "");
   const [Ageofbirth, setAgeofbirth] = useState(formData?.InformationDeath?.Ageofbirth ? formData?.InformationDeath?.Ageofbirth : "");
   const [AdharNo, setAdharNo] = useState(formData?.InformationDeath?.AdharNo ? formData?.InformationDeath?.AdharNo : "");
   const [IdNo, setIdNo] = useState(formData?.InformationDeath?.IdNo ? formData?.InformationDeath?.IdNo : "");
-  const [CommencementDate, setCommencementDate] = useState(formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate: "");
+  const [CommencementDate, setCommencementDate] = useState(
+    formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
+  );
   const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate ? formData?.InformationDeath?.DeathDate : "");
   const [FromDate, setFromDate] = useState(formData?.InformationDeath?.FromDate ? formData?.InformationDeath?.FromDate : "");
   const [ToDate, setToDate] = useState(formData?.InformationDeath?.ToDate ? formData?.InformationDeath?.ToDate : "");
@@ -164,7 +166,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   }
   // function calculateAge(e) {
   //   setCommencementDate(e.target.value);
-  // }  
+  // }
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -200,9 +202,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setNationality", setNationality ? setNationality.code : null);
     sessionStorage.setItem("setReligion", setReligion ? setReligion.code : null);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
-    sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom: null);
+    sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
     sessionStorage.setItem("Gender", Gender ? Gender.code : null);
-    sessionStorage.setItem("CommencementDate", CommencementDate ? CommencementDate : null );
+    sessionStorage.setItem("CommencementDate", CommencementDate ? CommencementDate : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
@@ -240,7 +242,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         {/* //    isDisabled={!CommencementDate} */}
         <div className="row">
           <div className="col-md-12">
