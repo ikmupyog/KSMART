@@ -68,9 +68,9 @@ public class CrDeathService {
 
           enrichmentService.setIdgenIds(request);    
 
-          producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
-
           workflowIntegrator.callWorkFlow(request);
+
+          producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
 
           return request.getDeathCertificateDtls();
     }
@@ -86,6 +86,7 @@ public class CrDeathService {
       
         // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
 
+
         String ackNumber = request.getDeathCertificateDtls().get(0).getDeathACKNo();
 
         List<CrDeathDtl> searchResult = repository.getDeathApplication(CrDeathSearchCriteria
@@ -100,9 +101,9 @@ public class CrDeathService {
 
         enrichmentService.enrichUpdate(request);
         
-        producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
-
         workflowIntegrator.callWorkFlow(request);
+        
+        producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
         
         String status=request.getDeathCertificateDtls().get(0).getApplicationStatus();
 
