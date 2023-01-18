@@ -619,17 +619,11 @@ public class CrDeathRegistryRepository {
 
             List<Object> preparedStmtValues = new ArrayList<>();
             String queryCert = queryBuilder.getDeathCertificateSearchQuery(id, preparedStmtValues, Boolean.FALSE);
-            System.out.println("queryCert"+queryCert);
             List<DeathCertificate> deathCerts = jdbcTemplate.query(queryCert, preparedStmtValues.toArray(), deathCertRowMapper);
-            System.out.println("deathCerts:"+deathCerts);
 			if (null != deathCerts && !deathCerts.isEmpty()) {				
-				// return deathCerts.get(0);
                 return deathCerts;
 			}
             else{
-                System.out.println("resultnull");
-                // deathCerts.get(0).setCounter(0);
-                System.out.println("counter1");
                 return deathCerts;
             }
 		}catch(Exception e) {
