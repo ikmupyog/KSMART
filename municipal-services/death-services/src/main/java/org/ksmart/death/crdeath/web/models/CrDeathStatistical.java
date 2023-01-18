@@ -90,8 +90,6 @@ public class CrDeathStatistical {
     //Rakhi S on 07.12.2022
     @JsonProperty("nationality")
     private String nationality;
-
-    //Jasmine 12.01.2023
     
     //Jasmine 12.01.2023
     @JsonProperty("occupationSub")

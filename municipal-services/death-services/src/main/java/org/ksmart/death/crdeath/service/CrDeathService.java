@@ -56,12 +56,70 @@ public class CrDeathService {
     }
     
     public List<CrDeathDtl> create(CrDeathDtlRequest request) {
-      
 
         // Rakhi S IKM validate mdms data
-      Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
-          
-          /********************************************* */
+          Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
+          // field validation on 13/01/2023
+          validatorService.validateCreate(request);
+
+        // mdmsValidator.validateMDMSData(request,mdmsData);
+
+          enrichmentService.enrichCreate(request);
+
+          enrichmentService.setIdgenIds(request);    
+
+          producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
+
+          workflowIntegrator.callWorkFlow(request);
+
+          return request.getDeathCertificateDtls();
+    }
+        //Rakhi S on 05.12.2022
+    public List<CrDeathDtl> search(CrDeathSearchCriteria criteria, RequestInfo requestInfo) {
+
+		      //validatorService.validateSearch(requestInfo, criteria);
+
+		      return repository.getDeathApplication(criteria);
+	  }
+      //UPDATE BEGIN Jasmine
+    public List<CrDeathDtl> update(CrDeathDtlRequest request) {
+      
+        // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
+
+        String ackNumber = request.getDeathCertificateDtls().get(0).getDeathACKNo();
+
+        List<CrDeathDtl> searchResult = repository.getDeathApplication(CrDeathSearchCriteria
+                                                  .builder()
+                                                  .deathACKNo(ackNumber)
+                                                  //.id(id)
+                                                  .build());
+
+        validatorService.validateUpdate(request, searchResult);
+
+       // mdmsValidator.validateMDMSData(request,mdmsData);
+
+        enrichmentService.enrichUpdate(request);
+        
+        producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+
+        workflowIntegrator.callWorkFlow(request);
+        
+        String status=request.getDeathCertificateDtls().get(0).getApplicationStatus();
+
+        String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();
+
+        if ((status==CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  (applicationType==CrDeathConstants.APPLICATION_NEW)){
+
+
+        }
+       else if((status==CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  (applicationType==CrDeathConstants.APPLICATION_CORRECTION)){
+
+       }
+
+        return request.getDeathCertificateDtls();
+    }
+
+                /********************************************* */
 
           // try {
           //     ObjectMapper mapper = new ObjectMapper();
@@ -74,66 +132,4 @@ public class CrDeathService {
 
 
               /********************************************** */
-                // validate request
-         validatorService.validateCreate(request);
-        //Jasmine on 04/01/2023
-        // Object mdmsData = util.mDMSCall(request.getRequestInfo(),CrDeathConstants.MDMS_TENANTID);
-
-       // mdmsValidator.validateMDMSData(request,mdmsData);
-
-          // enrich request
-        enrichmentService.enrichCreate(request);
-          //IDGen call
-        enrichmentService.setIdgenIds(request);    
-
-        producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
-        workflowIntegrator.callWorkFlow(request);
-        return request.getDeathCertificateDtls();
-    }
-    //Rakhi S on 05.12.2022
-    public List<CrDeathDtl> search(CrDeathSearchCriteria criteria, RequestInfo requestInfo) {
-		//validatorService.validateSearch(requestInfo, criteria);
-		return repository.getDeathApplication(criteria);
-	}
-  //UPDATE BEGIN Jasmine
-    public List<CrDeathDtl> update(CrDeathDtlRequest request) {
-      
-        // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
-          
-        String ackNumber = request.getDeathCertificateDtls().get(0).getDeathACKNo();
-        List<CrDeathDtl> searchResult = repository.getDeathApplication(CrDeathSearchCriteria
-                                                  .builder()
-                                                  .deathACKNo(ackNumber)
-                                                  //.id(id)
-                                                  .build());
-
-        validatorService.validateUpdate(request, searchResult);
-
-       // mdmsValidator.validateMDMSData(request,mdmsData);
-
-        // String action=request.getDeathCertificateDtls().get(0).getAction();
-
-        // if (action==CrDeathConstants.WORKFLOW_ACTION_APPROVE){
-
-
-        // }
-        // else{
-
-        enrichmentService.enrichUpdate(request);
-
-        System.out.println("hai request"+request);
-                try {
-              ObjectMapper mapper = new ObjectMapper();
-              Object obj = request;
-              mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-            System.out.println("hai request "+ mapper.writeValueAsString(obj));
-              }catch(Exception e) {
-                // log.error("Exception while fetching from searcher: ",e);
-              }
-        producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
-
-        workflowIntegrator.callWorkFlow(request);
-
-        return request.getDeathCertificateDtls();
-      }
 }

@@ -78,19 +78,36 @@ public class CrDeathConstants {
 
     ///// KSMART
 
-    //form based validations
+    //form based validations Jasmine
     public static final String DEATH_PLACE_HOSPITAL = "HOSPITAL";
+
     public static final String DEATH_PLACE_INSTITUTION = "INSTITUTION";
+
     public static final String DEATH_PLACE_HOME = "HOME";
+
     public static final String DEATH_PLACE_VEHICLE = "VEHICLE";
+
     public static final String DEATH_PLACE_OTHER = "OTHER";
+
     public static final Integer VALUE_TRUE = 1;
+
     public static final Integer VALUE_FALSE = 0;
+
     public static final String VALUE_NULL = "NULL";
+
     public static final String ADDRESS_INSIDE_LB = "ILB";
+
     public static final String ADDRESS_INSIDE_KERALA = "IK";
+
     public static final String ADDRESS_INSIDE_INDIA = "IIN";
+
     public static final String ADDRESS_OUTSIDE_INDIA = "OIN";
+
+    public static final String WORKFLOW_STATUS_APPROVED = "Approved";
+
+    public static final String APPLICATION_NEW = "new";
+    
+    public static final String APPLICATION_CORRECTION = "corr";
     
 
 
