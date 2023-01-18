@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, CheckBox,BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-import PlaceOfDeathHome from "./PlaceOfDeathHome";
+// import PlaceOfDeathHome from "./PlaceOfDeathHome";
+import InformantAddress from "../birthComponents/InformantAddress";
 
 const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
@@ -43,6 +44,25 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   const [InformentMobileNo, setInformentMobileNo] = useState(formData?.ApplicantDetails?.InformentMobileNo);
   const [InformentEmail, setInformentEmail] = useState(formData?.ApplicantDetails?.InformentEmail);
   // const [InformentOfAge, setInformentOfAge] = useState(formData?.ApplicantDetails?.InformentOfAge);
+
+ // Informent Address from Birth Page
+  const [InformantAdrsCountry, setInformantAdrsCountry] = useState(formData?.ApplicantDetails?.InformantAdrsCountry);
+  const [InformantAdrsStateName, setInformantAdrsStateName] = useState(formData?.ApplicantDetails?.InformantAdrsStateName);
+  const [InformantAdrsDistrict, setInformantAdrsDistrict] = useState(formData?.ApplicantDetails?.InformantAdrsDistrict);
+  const [InformantAdrsLBTypeName, setInformantAdrsLBTypeName] = useState(formData?.ApplicantDetails?.InformantAdrsLBTypeName);
+  const [InformantAdrsLBName, setInformantAdrsLBName] = useState(formData?.ApplicantDetails?.InformantAdrsLBName);
+  const [InformantAdrsTaluk, setInformantAdrsTaluk] = useState(formData?.ApplicantDetails?.InformantAdrsTaluk);
+  const [InformantAdrsPostOffice, setInformantAdrsPostOffice] = useState(formData?.ApplicantDetails?.InformantAdrsPostOffice);
+  const [InformantAdrsPincode, setInformantAdrsPincode] = useState(formData?.ApplicantDetails?.InformantAdrsPincode);
+  const [InformantAdrsHouseNameEn, setInformantAdrsHouseNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsHouseNameEn);
+  // const [InformantAdrsBuldingNo, setInformantAdrsBuldingNo] = useState(formData?.ApplicantDetails?.InformantAdrsBuldingNo);
+  const [InformantAdrsResNo, setInformantAdrsResNo] = useState(formData?.ApplicantDetails?.InformantAdrsResNo);
+  const [InformantAdrsDoorNo, setInformantAdrsDoorNo] = useState(formData?.ApplicantDetails?.InformantAdrsDoorNo);
+  const [InformantAdrsMainPlaceEn, setInformantAdrsMainPlaceEn] = useState(formData?.ApplicantDetails?.InformantAdrsMainPlaceEn);
+  const [InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsLocalityNameEn);
+  const [InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsStreetNameEn);
+  const [InformantAdrsVillage, setInformantAdrsVillage] = useState(formData?.ApplicantDetails?.InformantAdrsVillage);
+  
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
@@ -213,6 +233,24 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo :null);
     sessionStorage.setItem("InformentEmail", InformentEmail ? InformentEmail : null);
     // sessionStorage.setItem("InformentOfAge", InformentOfAge);
+    
+ // Address from Birth
+    sessionStorage.setItem("InformantAdrsCountry", InformantAdrsCountry ? InformantAdrsCountry.code : null);
+    sessionStorage.setItem("InformantAdrsStateName", InformantAdrsStateName ? InformantAdrsStateName.code : null);
+    sessionStorage.setItem("InformantAdrsLBTypeName", InformantAdrsLBTypeName ? InformantAdrsLBTypeName.code : null);
+    // sessionStorage.setItem("InformantAdrsBuldingNo", InformantAdrsBuldingNo);
+    sessionStorage.setItem("InformantAdrsResNo", InformantAdrsResNo ? InformantAdrsResNo : null);
+    sessionStorage.setItem("InformantAdrsDoorNo", InformantAdrsDoorNo ? InformantAdrsDoorNo : null);
+    sessionStorage.setItem("InformantAdrsHouseNameEn", InformantAdrsHouseNameEn ? InformantAdrsHouseNameEn : null);
+    sessionStorage.setItem("InformantAdrsMainPlaceEn", InformantAdrsMainPlaceEn ? InformantAdrsMainPlaceEn : null);
+    sessionStorage.setItem("InformantAdrsLocalityNameEn", InformantAdrsLocalityNameEn ? InformantAdrsLocalityNameEn : null);
+    sessionStorage.setItem("InformantAdrsStreetNameEn", InformantAdrsStreetNameEn ? InformantAdrsStreetNameEn : null);
+    sessionStorage.setItem("InformantAdrsVillage", InformantAdrsVillage ? InformantAdrsVillage.code : null);
+    sessionStorage.setItem("InformantAdrsLBName", InformantAdrsLBName ? InformantAdrsLBName.code : null);
+    sessionStorage.setItem("InformantAdrsDistrict", InformantAdrsDistrict ? InformantAdrsDistrict.code : null);
+    sessionStorage.setItem("InformantAdrsTaluk", InformantAdrsTaluk ? InformantAdrsTaluk.code : null);
+    sessionStorage.setItem("InformantAdrsPostOffice", InformantAdrsPostOffice ? InformantAdrsPostOffice.code : null);
+    sessionStorage.setItem("InformantAdrsPincode", InformantAdrsPincode ? InformantAdrsPostOffice : null);
 
     onSelect(config.key, {
       // setVillage,
@@ -241,11 +279,31 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
       InformentMobileNo,
       InformentEmail,
       // InformentOfAge,
+
+
+      InformantAdrsCountry,
+      InformantAdrsStateName,
+      InformantAdrsLBTypeName,
+      InformantAdrsMainPlaceEn,
+      InformantAdrsStreetNameEn,
+      InformantAdrsVillage,
+      InformantAdrsLBName,
+      InformantAdrsDistrict,
+      InformantAdrsTaluk,
+      InformantAdrsPostOffice,
+      InformantAdrsPincode,
+      InformantAdrsResNo,
+      InformantAdrsDoorNo,
+      InformantAdrsHouseNameEn,
+      InformantAdrsLocalityNameEn,
+      // InfntWardNo,
+
     });
   };
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">
           {/* <div className="col-md-4">
@@ -350,7 +408,40 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div>
           <div>
-            <PlaceOfDeathHome />
+          <InformantAddress
+              InformantAdrsCountry={InformantAdrsCountry}
+              setInformantAdrsCountry={setInformantAdrsCountry}
+              InformantAdrsStateName={InformantAdrsStateName}
+              setInformantAdrsStateName={setInformantAdrsStateName}
+              InformantAdrsDistrict={InformantAdrsDistrict}
+              setInformantAdrsDistrict={setInformantAdrsDistrict}
+              InformantAdrsLBTypeName={InformantAdrsLBTypeName}
+              setInformantAdrsLBTypeName={setInformantAdrsLBTypeName}
+              InformantAdrsLBName={InformantAdrsLBName}
+              setInformantAdrsLBName={setInformantAdrsLBName}
+              InformantAdrsTaluk={InformantAdrsTaluk}
+              setInformantAdrsTaluk={setInformantAdrsTaluk}
+              InformantAdrsPostOffice={InformantAdrsPostOffice}
+              setInformantAdrsPostOffice={setInformantAdrsPostOffice}
+              InformantAdrsPincode={InformantAdrsPincode}
+              setInformantAdrsPincode={setInformantAdrsPincode}
+              InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
+              setInformantAdrsHouseNameEn={setInformantAdrsHouseNameEn}
+              // InformantAdrsBuldingNo={InformantAdrsBuldingNo} setInformantAdrsBuldingNo={setInformantAdrsBuldingNo}
+              InformantAdrsResNo={InformantAdrsResNo}
+              setInformantAdrsResNo={setInformantAdrsResNo}
+              InformantAdrsDoorNo={InformantAdrsDoorNo}
+              setInformantAdrsDoorNo={setInformantAdrsDoorNo}
+              InformantAdrsMainPlaceEn={InformantAdrsMainPlaceEn}
+              setInformantAdrsMainPlaceEn={setInformantAdrsMainPlaceEn}
+              InformantAdrsLocalityNameEn={InformantAdrsLocalityNameEn}
+              setInformantAdrsLocalityNameEn={setInformantAdrsLocalityNameEn}
+              InformantAdrsStreetNameEn={InformantAdrsStreetNameEn}
+              setInformantAdrsStreetNameEn={setInformantAdrsStreetNameEn}
+              InformantAdrsVillage={InformantAdrsVillage}
+              setInformantAdrsVillage={setInformantAdrsVillage}
+              // InfntWardNo={InfntWardNo} setInfntWardNo={setInfntWardNo}
+            />
           </div>
         </div>
         {/* <div className="row">

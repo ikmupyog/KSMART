@@ -545,14 +545,6 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsStreetNameMl" value={AdrsStreetNameMl} onChange={setSelectAdrsStreetNameMl} placeholder={`${t("CR_STREET_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })} />
           </div>    
           
-          <div className="col-md-3" ><CardLabel>{t("CR_HOUSE_NAME_ML")}<span className="mandatorycss">*</span></CardLabel>
- <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsHouseNameMl" value={AdrsHouseNameMl} onChange={setSelectAdrsHouseNameMl} placeholder={`${t("CR_HOUSE_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })} />
- </div>        
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
           <div className="col-md-3">
               <CardLabel>
                 {t("CR_HOUSE_NAME_EN")}
@@ -570,7 +562,16 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
-            </div>  
+            </div>        
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-12">
+        
+            <div className="col-md-3" ><CardLabel>{t("CR_HOUSE_NAME_ML")}<span className="mandatorycss">*</span></CardLabel>
+ <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsHouseNameMl" value={AdrsHouseNameMl} onChange={setSelectAdrsHouseNameMl} placeholder={`${t("CR_HOUSE_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })} />
+ </div>   
               {/* <div className="col-md-3">
               <CardLabel>{t("CR_BUILDING_NO")}</CardLabel>
               <TextInput

@@ -363,22 +363,6 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
             </div>
             <div className="col-md-3">
               <CardLabel>
-                {t("CS_COMMON_VILLAGE")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={true}
-                option={cmbVillage}
-                selected={InformantAdrsVillage}
-                select={setSelectInformantAdrsVillage}
-                disabled={isEdit}
-                placeholder={`${t("CS_COMMON_VILLAGE")}`}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
                 {t("CS_COMMON_TALUK")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
@@ -393,6 +377,23 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
                 placeholder={`${t("CS_COMMON_TALUK")}`}
               />
             </div>
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CS_COMMON_VILLAGE")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={true}
+                option={cmbVillage}
+                selected={InformantAdrsVillage}
+                select={setSelectInformantAdrsVillage}
+                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_VILLAGE")}`}
+              />
+            </div>
+            
             {/* <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
