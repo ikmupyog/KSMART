@@ -72,7 +72,8 @@ public class CrDeathController implements CrDeathResource  {
         
         List<CrDeathDtl> deathDetails = deathService.create(request);
 
-        CrDeathDtlResponse response = CrDeathDtlResponse.builder()
+        CrDeathDtlResponse response = CrDeathDtlResponse
+                                    .builder()
                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
                                     .deathCertificateDtls(deathDetails)
                                     .build();
@@ -87,10 +88,11 @@ public class CrDeathController implements CrDeathResource  {
 
     List<CrDeathDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
 
-    CrDeathDtlResponse response = CrDeathDtlResponse.builder()
-                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-                                                                      .deathCertificateDtls(deathDetails)
-                                                                      .build();
+    CrDeathDtlResponse response = CrDeathDtlResponse
+                                    .builder()
+                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                    .deathCertificateDtls(deathDetails)
+                                    .build();
     return ResponseEntity.ok(response);
     }
 
@@ -102,7 +104,8 @@ public class CrDeathController implements CrDeathResource  {
  
         List<CrDeathDtl> deathDetails = deathService.update(request);
     
-        CrDeathDtlResponse response = CrDeathDtlResponse.builder()
+        CrDeathDtlResponse response = CrDeathDtlResponse
+                                            .builder()
                                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
                                             .deathCertificateDtls(deathDetails)
                                             .build();

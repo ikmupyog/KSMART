@@ -120,7 +120,7 @@ public class WorkflowIntegrator {
                 obj.put(CrDeathConstants.TENANTIDKEY, deathdtls.getTenantId());
                 obj.put(CrDeathConstants.BUSINESSSERVICEKEY, deathdtls.getWorkflowCode());
                 List<Map<String, String>> uuidMaps = buildUUIDList(deathdtls.getAssignees());
-                System.out.println("uuidMaps"+uuidMaps);
+               // System.out.println("uuidMaps"+uuidMaps);
                 if (CollectionUtils.isNotEmpty(uuidMaps)) {
                     obj.put(CrDeathConstants.ASSIGNEEKEY, uuidMaps.get(0).get("uuid"));
                 }

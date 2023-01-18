@@ -87,6 +87,10 @@ public class CrDeathConstants {
     public static final Integer VALUE_TRUE = 1;
     public static final Integer VALUE_FALSE = 0;
     public static final String VALUE_NULL = "NULL";
+    public static final String ADDRESS_INSIDE_LB = "ILB";
+    public static final String ADDRESS_INSIDE_KERALA = "IK";
+    public static final String ADDRESS_INSIDE_INDIA = "IIN";
+    public static final String ADDRESS_OUTSIDE_INDIA = "OIN";
     
 
 
