@@ -12,6 +12,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const { data: Occupation = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
   const { data: Country = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: State = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+  const [lbs, setLbs] = useState(0);
+  const { data: localbodies={}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   // const { data: LBType, isLoading } = Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
@@ -72,8 +74,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   let cmbState = [];
   let cmbDistrict = [];
   let cmbLBType = [];
-  let cmbCountry = [];
-
+  let cmbCountry = [];  
+  let cmbLB = [];
   Occupation &&
     Occupation["common-masters"] &&
     Occupation["common-masters"].Occupation.map((ob) => {
@@ -99,6 +101,12 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
+    localbodies &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants.map((ob) => {
+      cmbLB.push(ob);
+    });
+
   // useEffect(() => {
   //   if (isInitialRender) {
   //   console.log("District" + districtid);
@@ -242,7 +250,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbLBType}
+                  option={lbs}
                   selected={setLBName}
                   select={setSelectedLBName}
                   disabled={isEdit}
@@ -271,7 +279,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CS_COMMON_DISTRICT")}`}
                   />
                 </div>
-                <div className="col-md-3">
+                {/* <div className="col-md-3">
                   <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -283,7 +291,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}
                     disabled={isEdit}
                   />
-                </div>
+                </div> */}
                 <div className="col-md-3">
                   <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                   <Dropdown
@@ -303,7 +311,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbLBType}
+                  option={lbs}
                   selected={setLBName}
                   select={setSelectedLBName}
                   disabled={isEdit}
@@ -348,7 +356,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CS_COMMON_DISTRICT")}`}
                   />
                 </div>
-                <div className="col-md-2">
+                {/* <div className="col-md-2">
                   <CardLabel>{`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -360,7 +368,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_PLACE_TYPE_URBAN_PLACE_TYPE_RURAL")}`}
                     disabled={isEdit}
                   />
-                </div>
+                </div> */}
                 <div className="col-md-2">
                   <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                   <Dropdown
@@ -380,7 +388,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbLBType}
+                  option={lbs}
                   selected={setLBName}
                   select={setSelectedLBName}
                   disabled={isEdit}
