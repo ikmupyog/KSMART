@@ -268,7 +268,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
+          <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameEn"
               value={ChildFirstNameEn}
               onChange={setSelectChildFirstNameEn}
@@ -286,7 +286,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
+          <div className="col-md-4" > <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ChildFirstNameMl"
               value={ChildFirstNameMl} onChange={setSelectChildFirstNameMl} disable={isChildName}
               placeholder={`${t("CR_FIRST_NAME_ML")}`}
