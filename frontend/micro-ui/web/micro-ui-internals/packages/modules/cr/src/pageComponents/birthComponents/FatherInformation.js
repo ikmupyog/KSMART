@@ -58,13 +58,13 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             cmbNation.push(ob);
         });
     let cmbfilterNation = [];
-    if (stateId === "kl" && cmbNation.length>0 ) {
+    // if (stateId === "kl" && cmbNation.length>0 ) {
 
-        cmbfilterNation[0] = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
-        console.log(cmbfilterNation[0]);
-         setFatherNationality(cmbfilterNation[0]);
+    //     cmbfilterNation[0] = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
+    //     console.log(cmbfilterNation[0]);
+    //      setFatherNationality(cmbfilterNation[0]);
        
-    }
+    // }
 
     const onSkip = () => onSelect();
 
@@ -388,16 +388,16 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                 {toast && (
                     <Toast
                         error={
-                            FatherAadhar || FatherMobileError
+                            FatherAadharError || FatherMobileError
                             // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
 
                         }
                         label={
-                            (FatherAadhar || FatherMobileError
+                            (FatherAadharError || FatherMobileError
                                 //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                                 // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
                                 ?
-                                (FatherAadhar ? t(`CS_COMMON_INVALID_AADHAR_NO`) : FatherMobileError ? t(`CR_INVALID_MOBILE_NO`)
+                                (FatherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : FatherMobileError ? t(`CR_INVALID_MOBILE_NO`)
                                     // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 
