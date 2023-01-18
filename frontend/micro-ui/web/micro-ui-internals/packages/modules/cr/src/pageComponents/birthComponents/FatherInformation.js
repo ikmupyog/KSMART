@@ -53,19 +53,19 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
         });
     let cmbNation = [];
     Nation &&
-        Nation["common-masters"] &&
-        Nation["common-masters"].Country.map((ob) => {
-            cmbNation.push(ob);
-        });
+    Nation["common-masters"] &&
+    Nation["common-masters"].Country.map((ob) => {
+        cmbNation.push(ob);
+    });
     let cmbfilterNation = [];
-    if (stateId === "kl" && cmbNation.length>0 ) {
-
-        cmbfilterNation[0] = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
-        console.log(cmbfilterNation[0]);
-         setFatherNationality(cmbfilterNation[0]);
-       
-    }
-
+    
+    useEffect(()=>{
+        if (stateId === "kl" && cmbNation.length>0 ) {
+            cmbfilterNation= cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
+             setFatherNationality(cmbfilterNation[0]);
+           
+        }
+    },[Nation])
     const onSkip = () => onSelect();
 
     function setSelectFatherFirstNameEn(e) {
