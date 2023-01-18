@@ -34,13 +34,16 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
           if (isInitialRender) {
         if(HospitalName){
           setIsInitialRender(false);
-          let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);   
-          let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
-          // console.log(cmbRegistrarNames[0].registar);                
-          setFilteredOfficerName(cmbRegistrarNames[0].registar);
-          setFilteredDesignation(cmbDesignations[0].registar);
-          // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
-          // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
+          if(cmbhospital.length>0){
+            let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);   
+            let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
+            // console.log(cmbRegistrarNames[0].registar);                
+            setFilteredOfficerName(cmbRegistrarNames[0].registar);
+            setFilteredDesignation(cmbDesignations[0].registar);
+            // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
+            // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
+          }
+         
         }
       }
     }, [OfficerNames,Designations,isInitialRender]);

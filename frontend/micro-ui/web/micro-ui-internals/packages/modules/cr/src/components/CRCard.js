@@ -33,32 +33,18 @@ const CRCard = () => {
             label: t("ES_COMMON_INBOX"),
             link: `/digit-ui/employee/tl/inbox`,
         },
-        // {
-        //     label: t("TL_NEW_APPLICATION"),
-        //     link: "/digit-ui/employee/tl/new-application",
-        //     role: "TL_CEMP"
-        // },
-        // {
-        //     label: t("TL_SEARCH_APPLICATIONS"),
-        //     link: `/digit-ui/employee/tl/search/application`
-        // },
-        // {
-        //     label: t("TL_SEARCH_LICENSE"),
-        //     link: `/digit-ui/employee/tl/search/license`,
-        //     role: "TL_CEMP"
-        // }
         {
-            label: t("Birth Registration"),
+            label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "BND_CEMP"
         },
         {
-            label: t("Death Registration"),
+            label: t("CR_DEATH_REGISTRATION"),
             link: `/digit-ui/employee/cr/death-flow`,
             role: "BND_CEMP"
         },
             {
-            label: t("TL_SEARCH_APPLICATIONS"),
+            label: t("CR_SEARCH_APPLICATIONS"),
             link: `/digit-ui/employee/cr/search-flow`
             // link: `/digit-ui/employee/cr/search/application`
         },
