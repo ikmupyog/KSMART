@@ -66,7 +66,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     setSelectedValues(newSelectedValues);
   };
   let naturetypecmbvalue = null;
-
+const maxDate= new Date();
   let menu = [];
   Menu &&
     Menu.map((genderDetails) => {
@@ -526,7 +526,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 className="employee-card-input"
                 type="date"
                 name="CommencementDate"
+                inputFormat="DD/MM/YYYY" 
                 date={CommencementDate}
+                minDate={new Date("1900-31-01")}
+                maxDate={maxDate}
                 onChange={calculateAge}
                 placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`}
               />

@@ -54,6 +54,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherTaluk, setMotherTaluk] = useState(formData?.MotherInfoDetails?.MotherTaluk ? formData?.MotherInfoDetails?.MotherTaluk : null);
     const [isMotherInfo, setIsMotherInfo] = useState(formData?.MotherInfoDetails?.isMotherInfo ? formData?.MotherInfoDetails?.isMotherInfo : false);
     // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+    const [MotherAadharError, setMotherAadharError] = useState(formData?.MotherInfoDetails?.MotherAadhar ? false: false );
     const cmbUrbanRural = [
         { i18nKey: "Urban", code: "URBAN" },
         { i18nKey: "Rural", code: "RURAL" },
@@ -125,25 +126,76 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const onSkip = () => onSelect();
 
     function setSelectMotherFirstNameEn(e) {
-        setMotherFirstNameEn(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherFirstNameEn(e.target.value);
+        }
+        
     }
     function setSelectMotherMiddleNameEn(e) {
-        setMotherMiddleNameEn(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherMiddleNameEn(e.target.value);
+        }
     }
     function setSelectMotherLastNameEn(e) {
-        setMotherLastNameEn(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherLastNameEn(e.target.value);
+        }
     }
     function setSelectMotherFirstNameMl(e) {
-        setMotherFirstNameMl(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherFirstNameMl(e.target.value);
+        }
     }
     function setSelectMotherMiddleNameMl(e) {
-        setMotherMiddleNameMl(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherMiddleNameMl(e.target.value);
+        }
     }
     function setSelectMotherLastNameMl(e) {
-        setMotherLastNameMl(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setMotherLastNameMl(e.target.value);
+        }
     }
     function setSelectMotherAadhar(e) {
-        setMotherAadhar(e.target.value);
+        if (e.target.value.length != 0) {   
+      
+            if (e.target.value.length > 12) {      
+              // setMotherAadhar(e.target.value);
+              setMotherAadharError(true);    
+              return false;
+            } else  if (e.target.value.length < 12) {   
+            setMotherAadharError(true);
+              setMotherAadhar(e.target.value);
+              return false;
+            } 
+            else {
+            setMotherAadharError(false);
+              setMotherAadhar(e.target.value);
+              return true;
+            }
+          } else {
+            setMotherAadharError(false);
+            setMotherAadhar(e.target.value);
+            return true;
+          }
     }
     function setSelectMotherEmail(e) {
         setMotherEmail(e.target.value);
@@ -176,7 +228,12 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         setMotherAgeMarriage(e.target.value);
     }
     function setselectMotherDOB(value) {
-        setMotherDOB(value);
+        setMotherDOB(value);        
+        const today = new Date();
+        const birthDate = new Date(value);
+        let age_in_ms = today - birthDate;
+        let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
+        setMotherAgeMarriage(Math.floor(age_in_years));          
     }
     function setSelectMotherMaritalStatus(value) {
         setMotherMaritalStatus(value);
@@ -233,7 +290,21 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
           setIsMotherInfo(false);
         }
       }
+    let validFlag = true;
     const goNext = () => {
+        if (AadharError) {
+            validFlag=false;
+              setAadharError(true);
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 2000);
+              // return false;
+              // window.alert("Username shouldn't exceed 10 characters")
+          } else {
+            setAadharError(false);
+          }
+          if(validFlag==true){ 
         sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn ? MotherFirstNameEn : null);
         sessionStorage.setItem("MotherMiddleNameEn", MotherMiddleNameEn ? MotherMiddleNameEn : null);
         sessionStorage.setItem("MotherLastNameEn", MotherLastNameEn ? MotherLastNameEn : null);
@@ -272,6 +343,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
              MotherDistrict, StateName, MotherCountry, MotherTaluk, MotherResPlace, MotherPlaceNameEn, MotherPlaceNameMl,MotherAgeMarriage,
              isMotherInfo
         });
+    }
     }
     if (isLoading || isQualificationLoading || isQualificationSubLoading || isProfessionLoading || isStateLoading || isDistrictLoading || isLBTypeLoading || isCountryLoading || isTalukLoading || isNationLoad) {
         return <Loader></Loader>;
@@ -397,13 +469,13 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <TextInput
                                 t={t}
                                 isMandatory={false}
-                                type={"text"}
+                                type={"number"}
                                 optionKey="i18nKey"
                                 name="MotherAadhar"
                                 value={MotherAadhar}
                                 onChange={setSelectMotherAadhar}
                                 disable={isMotherInfo} placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                                {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                             />
                         </div>
                         <div className="col-md-3" >
