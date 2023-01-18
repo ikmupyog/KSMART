@@ -5,24 +5,14 @@
             "type": "java.lang.String"
         },
         {
-            "name": "persister.save.applicantpersonal.topic",
-            "type": "java.lang.String",
-            "description": "Applicant personal save topic."
-        },
-        {
-            "name": "persister.update.applicantpersonal.topic",
-            "type": "java.lang.String",
-            "description": "Applicant personal update topic."
-        },
-        {
             "name": "persister.save.applicantservice.topic",
             "type": "java.lang.String",
-            "description": "Applicant service save topic."
+            "description": "Applicant service detail save topic."
         },
         {
             "name": "persister.update.applicantservice.topic",
             "type": "java.lang.String",
-            "description": "Applicant service update topic."
+            "description": "Applicant service detail update topic."
         },
         {
             "name": "persister.save.applicantservicecertificate.topic",

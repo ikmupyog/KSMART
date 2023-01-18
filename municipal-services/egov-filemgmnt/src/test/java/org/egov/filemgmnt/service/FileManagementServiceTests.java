@@ -35,7 +35,7 @@ class FileManagementServiceTests {
     void searchApplicants() {
 
         ApplicantSearchCriteria searchCriteria = new ApplicantSearchCriteria();
-        searchCriteria.setId("f2a93229-e688-49f4-8c92-d073710a7965");
+        searchCriteria.setId("f149795a-09ea-4fdb-908e-61576cada407");
 
         List<ApplicantPersonal> result = repository.searchApplicantPersonals(searchCriteria);
         log.debug("*** Applicant Search:: \n{}", FMUtils.toJson(result));

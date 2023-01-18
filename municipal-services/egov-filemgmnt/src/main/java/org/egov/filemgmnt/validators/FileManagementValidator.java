@@ -113,6 +113,11 @@ public class FileManagementValidator { // NOPMD
     }
 
     public void validateCreate(final ApplicantServiceRequest request, final Object mdmsData) {
+        if (StringUtils.isNotBlank(request.getApplicantServiceDetail()
+                                          .getId())) {
+            throw new CustomException(INVALID_CREATE.getCode(),
+                    "Applicant service detail id must be null for create request.");
+        }
 
         // validate service detail's service code
         mdmsValidator.validateMdmsData(request, mdmsData);
@@ -194,8 +199,8 @@ public class FileManagementValidator { // NOPMD
         }
     }
 
-    public void validateSearchServices(final RequestInfo requestInfo,
-                                       final ApplicantServiceSearchCriteria searchCriteria) { // NOPMD
+    public void validateSearchServices(final RequestInfo requestInfo, // NOPMD
+                                       final ApplicantServiceSearchCriteria searchCriteria) {
         if (StringUtils.isBlank(searchCriteria.getTenantId())) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Tenant id is required for applicant service search.");
         }

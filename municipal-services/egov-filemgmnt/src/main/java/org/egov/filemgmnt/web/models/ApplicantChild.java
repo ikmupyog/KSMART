@@ -36,12 +36,12 @@ public class ApplicantChild {
     @Schema(type = "string", description = "Building number")
     @Size(max = 64)
 //    @NotBlank(message = "Building number is required")
-    @JsonProperty("buildingNumber ")
+    @JsonProperty("buildingNumber")
     private String buildingNumber;
 
     @Schema(type = "string", description = "Relation of assessee")
     @Size(max = 64)
-    @JsonProperty("relationOfAssessee  ")
+    @JsonProperty("relationOfAssessee")
     private String relationOfAssessee;
 
     @Schema(type = "string", description = "Name of occupier")
@@ -61,17 +61,17 @@ public class ApplicantChild {
 
     @Schema(type = "string", description = "Duration of residence in years")
     @Size(max = 64)
-    @JsonProperty("durationOfResidenceInYears ")
+    @JsonProperty("durationOfResidenceInYears")
     private String durationOfResidenceInYears;
 
     @Schema(type = "string", description = "Duration of residence in months")
     @Size(max = 64)
-    @JsonProperty("durationOfResidenceInMonths ")
+    @JsonProperty("durationOfResidenceInMonths")
     private String durationOfResidenceInMonths;
 
     @Schema(type = "string", description = "Owner name")
     @Size(max = 64)
-    @JsonProperty("ownerName ")
+    @JsonProperty("ownerName")
     private String ownerName;
 
     @Schema(type = "string", description = "Owner name malayalam")

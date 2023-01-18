@@ -59,10 +59,10 @@ public class FileManagementService {
 
     public ApplicantServiceDetail create(final ApplicantServiceRequest request) {
 
-        // 1. validate mdms data
+        // validate mdms data
         final Object mdmsData = mdmsUtil.mdmsCall(request.getRequestInfo(), fmConfig.getStateLevelTenantId());
 
-        // 2. validate applicant personal
+        // validate applicant personal
         final ApplicantPersonal applicant = request.getApplicantServiceDetail()
                                                    .getApplicant();
         Assert.notNull(applicant, "Applicant personal must not be null");
@@ -72,36 +72,30 @@ public class FileManagementService {
 
         validator.validateApplicantPersonal(request, existingApplicant);
 
-        // 3. validate file service details
+        // validate file service details
         validator.validateCreate(request, mdmsData);
 
-        // 4. enrich applicant personal
+        // enrich applicant personal
         enrichment.enrichApplicantPersonal(request, existingApplicant);
 
-        // 5. enrich file service details
+        // enrich file service details
         enrichment.enrichCreate(request);
 
-        // 6. encrypt PII information - aadhaar number,
+        // encrypt PII information - aadhaar number,
 
-        // 7. create/update user
+        // create/update user
 
-        // 8. create/update applicant personal
-        final String applicantPersonalTopic = StringUtils.isBlank(applicant.getId())
-                ? fmConfig.getSaveApplicantPersonalTopic()
-                : fmConfig.getUpdateApplicantPersonalTopic();
-
-        producer.push(applicantPersonalTopic, request);
-
-        // 9. create file service details
+        // create applicant file service details and create/update applicant details
         producer.push(fmConfig.getSaveApplicantServiceTopic(), request);
 
-        // 10. create workflow
+        // create workflow
         wfIntegrator.callWorkFlow(request);
 
         return request.getApplicantServiceDetail();
     }
 
     public ApplicantServiceDetail update(final ApplicantServiceRequest request) {
+        // validate file service detail
         final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();
         Assert.notNull(serviceDetail, "Applicant service detail must not be null.");
 
@@ -110,7 +104,7 @@ public class FileManagementService {
                     "Applicant service detail id is required for update request.");
         }
 
-        // 1. validate applicant personal
+        // validate applicant personal
         final ApplicantPersonal applicant = serviceDetail.getApplicant();
         Assert.notNull(applicant, "Applicant personal must not be null.");
 
@@ -122,27 +116,24 @@ public class FileManagementService {
         final ApplicantPersonal existingApplicant = findApplicantPersonalByIdOrAadhaar(applicant);
         validator.validateApplicantPersonal(request, existingApplicant);
 
-        // 2. validate file service details
+        // validate file service details
         final ApplicantServiceDetail existingServiceDetail = findApplicantServiceDetailById(serviceDetail);
         validator.validateUpdate(request, existingServiceDetail);
 
-        // 3. enrich applicant personal
+        // enrich applicant personal
         enrichment.enrichApplicantPersonal(request, existingApplicant);
 
-        // 4. enrich file service details
+        // enrich file service details
         enrichment.enrichUpdate(request, existingServiceDetail);
 
-        // 5. encrypt PII information - aadhaar number,
+        // encrypt PII information - aadhaar number,
 
-        // 6. update user
+        // update user
 
-        // 7. update applicant personal
-        producer.push(fmConfig.getUpdateApplicantPersonalTopic(), request);
-
-        // 8. create file service details
+        // update applicant file service details along with applicant details
         producer.push(fmConfig.getUpdateApplicantServiceTopic(), request);
 
-        // 9. update workflow
+        // update workflow
         wfIntegrator.callWorkFlow(request);
 
         return request.getApplicantServiceDetail();

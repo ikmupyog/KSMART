@@ -19,13 +19,6 @@ public class FMConfiguration {
     @Value("${egov.state.level.tenant.id}")
     private String stateLevelTenantId;
 
-    // Applicant personal
-    @Value("${persister.save.applicantpersonal.topic}")
-    private String saveApplicantPersonalTopic;
-
-    @Value("${persister.update.applicantpersonal.topic}")
-    private String updateApplicantPersonalTopic;
-
     // Applicant personal service
     @Value("${persister.save.applicantservice.topic}")
     private String saveApplicantServiceTopic;

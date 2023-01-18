@@ -77,7 +77,7 @@ public class ServiceDetailsService {
 
         enrichmentService.enrichUpdate(request);
 
-        producer.push(fmConfig.getSaveApplicantPersonalTopic(), request);
+        producer.push(fmConfig.getSaveApplicantServiceTopic(), request);
 
         return request.getServiceDetails();
     }

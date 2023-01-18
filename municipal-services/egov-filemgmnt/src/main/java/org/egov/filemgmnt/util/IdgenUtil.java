@@ -50,6 +50,9 @@ public class IdgenUtil {
                                                                .idRequests(reqList)
                                                                .requestInfo(requestInfo)
                                                                .build();
+
+        System.out.println("request " + request);
+
         final StringBuilder uri = new StringBuilder(idGenHost).append(idGenPath);
         final IdGenerationResponse response = mapper.convertValue(restRepo.fetchResult(uri, request),
                                                                   IdGenerationResponse.class);
