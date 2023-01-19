@@ -25,7 +25,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [ChildLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.ChildLastNameMl ? formData?.ChildDetails?.ChildLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tripStartTime, setTripStartTime] = useState(formData?.ChildDetails?.tripStartTime ? formData?.ChildDetails?.tripStartTime : "");
-  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : true);
+  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.ChildDetails?.ChildAadharNo ? false : false);
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
@@ -176,14 +176,15 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   function setChildName(e) {
     if (e.target.checked === true) {
       setIsChildName(e.target.checked);
+      
+    } else {
+      setIsChildName(e.target.checked);
       setChildFirstNameEn("");
       setChildMiddleNameEn("");
       setChildLastNameEn("");
       setChildFirstNameMl("");
       setChildMiddleNameMl("");
       setChildLastNameMl("");
-    } else {
-      setIsChildName(e.target.checked);
     }
   }
   let validFlag = true;
@@ -305,7 +306,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName} value={isChildName} checked={isChildName} />
           </div>
         </div>
-
+        {isChildName === true && ( 
+          <div>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -329,7 +331,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               value={ChildFirstNameEn}
               onChange={setSelectChildFirstNameEn}
               //  onChange={(e,v) => this.updateTextField(e,v)}
-              disable={isChildName}
+              // disable={isChildName}
               placeholder={`${t("CR_FIRST_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
             />
@@ -345,7 +347,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               name="ChildMiddleNameEn"
               value={ChildMiddleNameEn}
               onChange={setSelectChildMiddleNameEn}
-              disable={isChildName}
+              // disable={isChildName}
               placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
             />
@@ -361,7 +363,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               name="ChildLastNameEn"
               value={ChildLastNameEn}
               onChange={setSelectChildLastNameEn}
-              disable={isChildName}
+              // disable={isChildName}
               placeholder={`${t("CR_LAST_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
             />
@@ -382,7 +384,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               name="ChildFirstNameMl"
               value={ChildFirstNameMl}
               onChange={setSelectChildFirstNameMl}
-              disable={isChildName}
+              // disable={isChildName}
               placeholder={`${t("CR_FIRST_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -403,7 +405,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               name="ChildMiddleNameMl"
               value={ChildMiddleNameMl}
               onChange={setSelectChildMiddleNameMl}
-              disable={isChildName}
+              // disable={isChildName}
               placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -424,7 +426,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               name="ChildLastNameMl"
               value={ChildLastNameMl}
               onChange={setSelectChildLastNameMl}
-              disable={isChildName}
+              // disable={isChildName}
               placeholder={`${t("CR_LAST_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -435,6 +437,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         </div>
+        </div>)}
         {/* <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("OTHER_DETAILS")}`}</span> </h1>
           </div>
