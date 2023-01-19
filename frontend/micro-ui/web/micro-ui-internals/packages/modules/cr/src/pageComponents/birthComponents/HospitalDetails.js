@@ -1,11 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,selectHospitalName,selectSignedOfficerName,
-  SignedOfficerName ,SignedOfficerDesignation, selectSignedOfficerDesignation ,SignedOfficerAadharNo, setSignedOfficerAadharNo,
-  SignedOfficerMobileNo, setSignedOfficerMobileNo, mobileError,setMobileError,
+const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, selectHospitalName, selectSignedOfficerName,
+  SignedOfficerName, SignedOfficerDesignation, selectSignedOfficerDesignation, SignedOfficerAadharNo, setSignedOfficerAadharNo,
+  SignedOfficerMobileNo, setSignedOfficerMobileNo,
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -26,32 +26,32 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
   // const isEdit = window.location.href.includes("/edit-application/")||window.location.href.includes("renew-trade");
   let cmbhospital = [];
   hospitalData &&
-  hospitalData["egov-location"] &&
+    hospitalData["egov-location"] &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    useEffect(() => {
-          if (isInitialRender) {
-        if(HospitalName){
-          setIsInitialRender(false);
-          if(cmbhospital.length>0){
-            let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);   
-            let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);     
-            // console.log(cmbRegistrarNames[0].registar);                
-            setFilteredOfficerName(cmbRegistrarNames[0].registar);
-            setFilteredDesignation(cmbDesignations[0].registar);
-            // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
-            // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
-          }
-         
+  useEffect(() => {
+    if (isInitialRender) {
+      if (HospitalName) {
+        setIsInitialRender(false);
+        if (cmbhospital.length > 0) {
+          let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+          let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+          // console.log(cmbRegistrarNames[0].registar);                
+          setFilteredOfficerName(cmbRegistrarNames[0].registar);
+          setFilteredDesignation(cmbDesignations[0].registar);
+          // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
+          // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
         }
+
       }
-    }, [OfficerNames,Designations,isInitialRender]);
+    }
+  }, [OfficerNames, Designations, isInitialRender]);
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {
     setIsInitialRender(true);
-    selectHospitalName(value);    
+    selectHospitalName(value);
     setFilteredOfficerName(null);
     setFilteredDesignation(null);
   }
@@ -72,50 +72,32 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
 
   function setSelectSignedOfficerMobileNo(e) {
     if (e.target.value.length != 0) {
-  
-        if (e.target.value.length > 10) {
-          setSignedOfficerMobileNo(true);
-        } else if (e.target.value.length < 10) {
-          setMobileError(true);
-          setSignedOfficerMobileNo(e.target.value);
-            return false;
-        }
-        else {
-          setMobileError(false);
-          setSignedOfficerMobileNo(e.target.value);
-            return true;
-        }
+      if (e.target.value.length > 10) {
+        return false;
+      } else if (e.target.value.length < 10) {
+        // setSignedOfficerMobileNo(e.target.value);
+        return false;
+      } else {
+        setSignedOfficerMobileNo(e.target.value);
+      }
     } else {
-      setMobileError(false);
       setSignedOfficerMobileNo(e.target.value);
-        return true;
     }
   }
   function setSelectSignedOfficerAadharNo(e) {
     if (e.target.value.length != 0) {
-  
-        if (e.target.value.length > 12) {
-            // setChildAadharNo(e.target.value);
-            setSignedOfficerAdharNoError(true);
-            // const limit = 12;
-            // setFatherAadhar(e.target.value.slice(0, limit));
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else if (e.target.value.length < 12) {
-          setSignedOfficerAdharNoError(true);
-          setSignedOfficerAadharNo(e.target.value);
-            return false;
-        }
-        else {
-          setSignedOfficerAdharNoError(false);
-          setSignedOfficerAadharNo(e.target.value);
-            return true;
-        }
-    } else {
-      setSignedOfficerAdharNoError(false);
+      if (e.target.value.length > 12) {
+        return false;
+      } else if (e.target.value.length < 12) {
+        // setSignedOfficerAadharNo(e.target.value);
+        return false;
+      } else {
         setSignedOfficerAadharNo(e.target.value);
-        return true;
+      }
+    } else {
+      setSignedOfficerAadharNo(e.target.value);
     }
-  
+
   }
   const goNext = () => {
     // console.log('clicked');
@@ -193,18 +175,18 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
           <div className="col-md-6">
             {" "}
             <CardLabel>
-              {`${t("CS_COMMON_AADHAAR")}`}             
+              {`${t("CS_COMMON_AADHAAR")}`}
             </CardLabel>
             <TextInput
               t={t}
               isMandatory={false}
-              type={"text"}
+              type={"number"}
               optionKey="i18nKey"
               name="SignedOfficerAadharNo"
               value={SignedOfficerAadharNo}
               onChange={setSelectSignedOfficerAadharNo}
               placeholder={`${t("CS_COMMON_AADHAAR")}`}
-              {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
             />
           </div>
           <div className="col-md-6">
@@ -216,7 +198,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
             <TextInput
               t={t}
               isMandatory={false}
-              type={"text"}
+              type={"number"}
               optionKey="i18nKey"
               name="SignedOfficerMobileNo"
               value={SignedOfficerMobileNo}
