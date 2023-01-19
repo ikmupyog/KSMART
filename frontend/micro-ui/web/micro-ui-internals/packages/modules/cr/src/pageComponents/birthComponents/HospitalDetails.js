@@ -75,7 +75,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
       if (e.target.value.length > 10) {
         return false;
       } else if (e.target.value.length < 10) {
-        // setSignedOfficerMobileNo(e.target.value);
+        setSignedOfficerMobileNo(e.target.value);
         return false;
       } else {
         setSignedOfficerMobileNo(e.target.value);
@@ -89,7 +89,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
       if (e.target.value.length > 12) {
         return false;
       } else if (e.target.value.length < 12) {
-        // setSignedOfficerAadharNo(e.target.value);
+        setSignedOfficerAadharNo(e.target.value);
         return false;
       } else {
         setSignedOfficerAadharNo(e.target.value);

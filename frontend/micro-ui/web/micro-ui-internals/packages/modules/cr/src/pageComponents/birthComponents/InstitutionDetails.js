@@ -71,7 +71,7 @@ const InstitutionDetails = ({ config, onSelect, userType, formData,setInstitutio
       if (e.target.value.length > 12) {
         return false;
       } else if (e.target.value.length < 12) {
-        // setInstitutionAadhaar(e.target.value);
+        setInstitutionAadhaar(e.target.value);
         return false;
       } else {
         setInstitutionAadhaar(e.target.value);

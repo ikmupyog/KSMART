@@ -27,7 +27,7 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
             if (e.target.value.length > 12) {
                 return false;
             } else if (e.target.value.length < 12) {
-                // setInfomantAadhar(e.target.value);
+                setInfomantAadhar(e.target.value);
                 return false;
             } else {
                 setInfomantAadhar(e.target.value);
@@ -45,7 +45,7 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
             if (e.target.value.length > 10) {
                 return false;
             } else if (e.target.value.length < 10) {
-                // setInfomantMobile(e.target.value);
+                setInfomantMobile(e.target.value);
                 return false;
             } else {
                 setInfomantMobile(e.target.value);
