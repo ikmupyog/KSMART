@@ -39,7 +39,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [StateName, setStateName] = useState(formData?.MotherInfoDetails?.StateName ? formData?.MotherInfoDetails?.StateName : null);
     const [MotherDistrict, setMotherDistrict] = useState(formData?.MotherInfoDetails?.MotherDistrict ? formData?.MotherInfoDetails?.MotherDistrict : null);
     const [MotherAgeDeleivery, setMotherAgeDeleivery] = useState(formData?.MotherInfoDetails?.MotherAgeDeleivery ? formData?.MotherInfoDetails?.MotherAgeDeleivery : null);
-    const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.MotherInfoDetails?.MotherAgeMarriage ? formData?.MotherInfoDetails?.MotherAgeMarriage : null);
+    const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.MotherInfoDetails?.MotherAgeMarriage ? formData?.MotherInfoDetails?.MotherAgeMarriage : "");
     const [MotherDOB, setMotherDOB] = useState(formData?.MotherInfoDetails?.MotherDOB ? formData?.MotherInfoDetails?.MotherDOB : "");
     const [MotherMaritalStatus, setMotherMaritalStatus] = useState(formData?.MotherInfoDetails?.MotherMaritalStatus ? formData?.MotherInfoDetails?.MotherMaritalStatus : null);
     // const [MotherNoOfBirths, setMotherNoOfBirths] = useState(formData?.MotherInfoDetails?.MotherNoOfBirths);
@@ -68,7 +68,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherTalukError, setMotherTalukError] = useState(formData?.MotherInfoDetails?.MotherTaluk ? false : false);
     const [MotherPlaceTypeError, setMotherPlaceTypeError] = useState(formData?.MotherInfoDetails?.MotherPlaceType ? false : false);
     const [MotherAgeMarriageError, setMotherAgeMarriageError] = useState(formData?.MotherInfoDetails?.MotherAgeMarriage ? false : false);
-
+    const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.MotherInfoDetails?.OrderofChildren ?  false : false);
 
     const cmbUrbanRural = [
         { i18nKey: "Urban", code: "URBAN" },
@@ -282,15 +282,23 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         setMotherAgeDeleivery(e.target.value);
     }
     function setSelectMotherAgeMarriage(e) {
-        if (e.target.value != null || e.target.value != "") {
-            if (e.target.value < 18) {
-                setMotherAgeMarriage(e.target.value);
+        if (e.target.value != null || e.target.value != "" ) {
+           
+            if (e.target.value.length <= 3){
+                if (e.target.value < 18) {
+                    setMotherAgeMarriage(e.target.value);
+                    setMotherAgeMarriageError(true);
+                    return false;
+                }
+                else {
+                    setMotherAgeMarriage(e.target.value);
+                    setMotherAgeMarriageError(false);
+                }
+            } else {
+                console.log(e.target.value.length);
                 setMotherAgeMarriageError(true);
-                return false;
-            }
-            else {
-                setMotherAgeMarriage(e.target.value);
-                setMotherAgeMarriageError(false);
+                return false;              
+                
             }
         }
     }
@@ -309,8 +317,15 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     //     setMotherNoOfBirths(e.target.value);
     // }
     function setSelectOrderofChildren(e) {
+        if (e.target.value.length === 3) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {           
         setOrderofChildren(e.target.value);
     }
+
+    }
+
 
     function setSelectMotherResPlace(e) {
         setMotherResPlace(e.target.value);
@@ -500,6 +515,18 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                     }, 2000);
                 } else {
                     setMotherAgeMarriageError(false);
+                }                
+            } 
+            if (OrderofChildren != null || OrderofChildren != '' || OrderofChildren != undefined) {
+                if(OrderofChildrenError){
+                    validFlag = false;
+                    setOrderofChildrenError(true);
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setOrderofChildrenError(false);
                 }                
             } 
         }
@@ -798,13 +825,13 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <TextInput
                                 t={t}
                                 isMandatory={false}
-                                type={"text"}
+                                type={"number"}
                                 optionKey="i18nKey"
                                 name="MotherAgeMarriage"
                                 value={MotherAgeMarriage}
                                 onChange={setSelectMotherAgeMarriage}
                                 disable={isMotherInfo} placeholder={`${t("CR_AGE_OF_MARRIAGE")}`}
-                                {...(validation = { pattern: "^([0-9]){2}$", isRequired: true, type: "text", title: t("CR_INVALID_AGE_OF_MARRIAGE") })}
+                                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_AGE_OF_MARRIAGE") })}
                             />
                         </div>
 
@@ -813,13 +840,13 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <TextInput
                                 t={t}
                                 isMandatory={false}
-                                type={"text"}
+                                type={"number"}
                                 optionKey="i18nKey"
                                 name="OrderofChildren"
                                 value={OrderofChildren}
                                 onChange={setSelectOrderofChildren}
                                 disable={isMotherInfo} placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
-                                {...(validation = { pattern: "^([0-9]){1}$", isRequired: true, type: "text", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
+                                {...(validation = { pattern:  "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                             />
                         </div>
                     </div>
@@ -907,13 +934,13 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                             <TextInput
                                 t={t}
                                 isMandatory={false}
-                                type={"text"}
+                                type={"number"}
                                 optionKey="i18nKey"
                                 name="MotherResPlace"
                                 value={MotherResPlace}
                                 onChange={setSelectMotherResPlace}
                                 disable={isMotherInfo} placeholder={`${t("CR_MOTHERS_RESIDENTIAL_PLACE_LONGER_YEAR")}`}
-                                {...(validation = { pattern: "^([0-9]){1}$", type: "text", isRequired: true, title: t("CR_INVALID_MOTHERS_RESIDENTIAL_PLACE_LONGER_YEAR") })}
+                                {...(validation = { pattern:  "^[.0-9`' ]*$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHERS_RESIDENTIAL_PLACE_LONGER_YEAR") })}
                             />
                         </div>
                         <div className="col-md-3" >
@@ -937,19 +964,19 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                         error={
                             MotherAadharError || MotherMobileError || MotherEducationError || MotherProfessionError || MotherNationalityError
                             || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError
-                            || MotherTalukError || MotherPlaceTypeError || MotherAgeMarriageError
+                            || MotherTalukError || MotherPlaceTypeError || MotherAgeMarriageError || OrderofChildrenError
 
                         }
                         label={
                             (MotherAadharError || MotherMobileError || MotherEducationError || MotherProfessionError || MotherNationalityError || MotherMaritalStatusError
-                                || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError || MotherTalukError || MotherPlaceTypeError
+                                || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError || MotherTalukError || MotherPlaceTypeError || OrderofChildrenError
                                 || MotherAgeMarriageError
                                 ?
                                 (MotherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : MotherMobileError ? t(`CR_INVALID_MOBILE_NO`) : MotherEducationError ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
                                     : MotherProfessionError ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`) : MotherNationalityError ? t(`BIRTH_ERROR_MOTHER_NATIONALITY_CHOOSE`)
                                         : MotherMaritalStatusError ? t(`BIRTH_ERROR_MOTHER_MARITIAL_CHOOSE`) : MotherCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : MotherStateError ? t(`BIRTH_ERROR_STATE_CHOOSE`)
                                             : MotherDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`) : MotherLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`)
-                                                : MotherTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : MotherPlaceTypeError ? t(`BIRTH_ERROR_URBAN_CHOOSE`) : MotherAgeMarriageError ? t(`BIRTH_ERROR_MOTHER_AGE`)
+                                                : MotherTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : MotherPlaceTypeError ? t(`BIRTH_ERROR_URBAN_CHOOSE`) : MotherAgeMarriageError ? t(`BIRTH_ERROR_MOTHER_AGE`) : OrderofChildrenError ? t(`BIRTH_ERROR_ORDER_OF_CHILDREN`)
                                                     //  : || MotherProfessionError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                                                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 

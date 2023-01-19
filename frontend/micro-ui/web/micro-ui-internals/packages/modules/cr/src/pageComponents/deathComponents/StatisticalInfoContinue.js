@@ -21,17 +21,17 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
           type="radio"
           id="yes"
           // name="answer"
-          value="yes"
-          checked={selected === "yes"}
+          value="1"
+          checked={selected === "1"}
           onChange={handleChange}
         />
         <label htmlFor="yes">Yes</label>
         <input
           type="radio"
-          id="no"
+          id="no  "
           // name="answer"
-          value="no"
-          checked={selected === "no"}
+          value="0"
+          checked={selected === "0"}
           onChange={handleChange}
         />
         <label htmlFor="no">No</label>
@@ -72,23 +72,23 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "NO", code: "NOSMOKE" },
   ];
 
-  const [isSmoke, setisSmoke] = useState(formData?.StatisticalInfoContinue?.isSmoke);
+  const [isSmoke, setisSmoke] = useState(formData?.StatisticalInfoContinue?.isSmoke ? formData?.StatisticalInfoContinue?.isSmoke : 0);
   const handleRadioChangeSmoke = (e) => {
     selectisSmoke(e.target.value);
   };
-  const [isTabacco, setisTabacco] = useState(formData?.StatisticalInfoContinue?.isTabacco);
+  const [isTabacco, setisTabacco] = useState(formData?.StatisticalInfoContinue?.isTabacco ? formData?.StatisticalInfoContinue?.isTabacco : 0);
   const handleRadioChangeTabacco = (e) => {
     setisTabacco(e.target.value);
   };
-  const [isPanMasala, setisPanMasala] = useState(formData?.StatisticalInfoContinue?.isPanMasala);
+  const [isPanMasala, setisPanMasala] = useState(formData?.StatisticalInfoContinue?.isPanMasala ? formData?.StatisticalInfoContinue?.isPanMasala : 0);
   const handleRadioChangePanmasala = (e) => {
     selectisPanMasala(e.target.value);
   };
-  const [isalcohol, setisalcohol] = useState(formData?.StatisticalInfoContinue?.isalcohol);
+  const [isalcohol, setisalcohol] = useState(formData?.StatisticalInfoContinue?.isalcohol ? formData?.StatisticalInfoContinue?.isalcohol : 0);
   const handleRadioChange = (e) => {
     selectisalcohol(e.target.value);
   };
-  const [isPregnent, setisPregnent] = useState(formData?.StatisticalInfoContinue?.isPregnent);
+  const [isPregnent, setisPregnent] = useState(formData?.StatisticalInfoContinue?.isPregnent ? formData?.StatisticalInfoContinue?.isPregnent : 0);
   const handleRadioChangeB = (e) => {
     selectisPregnent(e.target.value);
   };
@@ -106,21 +106,15 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   // const [setFemaleDeathPregnant, setSelectedFemaleDeathPregnant] = useState(formData?.StatisticalInfoContinue?.setFemaleDeathPregnant);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [CauseOfDeath, setSelectedCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.CauseOfDeath);
-  const [alcoholyears, setSelectedalcoholyears] = useState(formData?.StatisticalInfoContinue?.alcoholyears);
+  // const [alcoholyears, setSelectedalcoholyears] = useState(formData?.StatisticalInfoContinue?.alcoholyears);
   const [answer, setAnswer] = useState("");
-  const [text, setText] = useState(formData?.StatisticalInfoContinue?.text);
-  const [textPregnant, setTextPregnant] = useState(formData?.StatisticalInfoContinue?.textPregnant);
-  const [textSmoke, setTextSmoke] = useState(formData?.StatisticalInfoContinue?.textSmoke);
-  const [textTabacco, setTextTabacco] = useState(formData?.StatisticalInfoContinue?.textTabacco);
-  const [textPanMasala, setTextPanMasala] = useState(formData?.StatisticalInfoContinue?.textPanMasala);
+  const [text, setText] = useState(formData?.StatisticalInfoContinue?.text?formData?.StatisticalInfoContinue?.text:"");
+  const [textPregnant, setTextPregnant] = useState(formData?.StatisticalInfoContinue?.textPregnant?formData?.StatisticalInfoContinue?.textPregnant:"");
+  const [textSmoke, setTextSmoke] = useState(formData?.StatisticalInfoContinue?.textSmoke?formData?.StatisticalInfoContinue?.textSmoke:"");
+  const [textTabacco, setTextTabacco] = useState(formData?.StatisticalInfoContinue?.textTabacco?formData?.StatisticalInfoContinue?.textTabacco:"");
+  const [textPanMasala, setTextPanMasala] = useState(formData?.StatisticalInfoContinue?.textPanMasala?formData?.StatisticalInfoContinue?.textPanMasala:"");
 
   let naturetypecmbvalue = null;
-  // let cmbPlace = [];
-  // place &&
-  //   place["TradeLicense"] &&
-  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
-  //     cmbPlace.push(ob);
-  //   });
   let cmbAttention = [];
   attention &&
     attention["birth-death-service"] &&
@@ -133,12 +127,6 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     deathmain["birth-death-service"].DeathCause.map((ob) => {
       cmbDeathmain.push(ob);
     });
-  // let cmbDeathsub = [];
-  // deathsub &&
-  //   deathsub["birth-death-service"] &&
-  //   deathsub["birth-death-service"].DeathCauseSub.map((ob) => {
-  //     cmbDeathsub.push(ob);
-  //   });
 
   const onSkip = () => onSelect();
   function selectisSmoke(value) {
@@ -177,10 +165,10 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   function setSelectCauseOfDeath(e) {
     setSelectedCauseOfDeath(e.target.value);
   }
-  function setSelectalcoholyears(e) {
-    setSelectedalcoholyears(e.target.value);
-  }
-  const [optionkey, setOptionkey] = useState("");
+  // function setSelectalcoholyears(e) {
+  //   setSelectedalcoholyears(e.target.value);
+  // }
+  // const [optionkey, setOptionkey] = useState("");
   console.log(optionkey);
 
   const goNext = () => {
@@ -189,7 +177,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setCauseOfDeathMain", setCauseOfDeathMain ? setCauseOfDeathMain.code : null);
     sessionStorage.setItem("setCauseOfDeathSub", setCauseOfDeathSub ? setCauseOfDeathSub.code : null);
     sessionStorage.setItem("setCauseOfDeath", CauseOfDeath);
-    sessionStorage.setItem("setalcoholyears", alcoholyears);
+    // sessionStorage.setItem("setalcoholyears", alcoholyears);
     // sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant?setFemaleDeathPregnant.code:null);
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
     sessionStorage.setItem("isSmoke", isSmoke);
@@ -209,7 +197,6 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
       setCauseOfDeathMain,
       setCauseOfDeathSub,
       CauseOfDeath,
-      alcoholyears,
       textTabacco,
       text,
       textPregnant,
