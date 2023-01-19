@@ -1,8 +1,9 @@
-package org.egov.filemgmnt.web.models;
+package org.egov.filemgmnt.web.models.communication;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.egov.filemgmnt.web.models.AuditDetails;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

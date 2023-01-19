@@ -11,6 +11,8 @@ import java.security.cert.X509Certificate;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -20,16 +22,26 @@ import javax.net.ssl.TrustManagerFactory;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Disabled
 @SpringBootTest
-@ActiveProfiles("local")
+//@ActiveProfiles("local")
 @SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert" })
 @Slf4j
 class LearningTests {
+
+    @Test
+    void regexPattern() {
+        // ^KL-[1-9]{1}[0-9]*$
+        final String regex = "^kl\\.[a-z]+$|";
+
+        String[] values = { "kl.cochin", "", "pb.x", "pbc", "pb.78", "kl8io", "34.sy" };
+        Arrays.stream(values)
+              .forEach(value -> log.info("Regexp {} matches {} = {}", regex, value, Pattern.matches(regex, value)));
+
+    }
 
     @Disabled
     @Test

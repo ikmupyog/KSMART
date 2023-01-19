@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.service;
+package org.egov.filemgmnt.repository;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @TestPropertySource(locations = { "classpath:test.properties" })
 @SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert" })
 @Slf4j
-class FileManagementServiceTests {
+class FileManagementRepositoryTests {
 
     @Autowired
     private FileManagementRepository repository;

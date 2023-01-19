@@ -63,7 +63,7 @@ public class FileManagementValidator { // NOPMD
         // 3. validate applicant document
         validateApplicantDocument(applicant, existingApplicant);
 
-        // TODO: don't we need to validate tenant id?
+        // TODO: need to validate tenant id
     }
 
     private void validateApplicantDocument(final ApplicantPersonal applicant,
@@ -119,12 +119,17 @@ public class FileManagementValidator { // NOPMD
                     "Applicant service detail id must be null for create request.");
         }
 
+        // TODO: need to validate tenant id
+
         // validate service detail's service code
         mdmsValidator.validateMdmsData(request, mdmsData);
     }
 
     public void validateUpdate(final ApplicantServiceRequest request, // NOPMD
                                final ApplicantServiceDetail existingServiceDetail) {
+        // TODO: need to validate tenant id
+
+        // validate service detail
         final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();
         final ApplicantPersonal applicant = serviceDetail.getApplicant();
 
@@ -138,6 +143,17 @@ public class FileManagementValidator { // NOPMD
         }
 
         // validate service document
+        validateApplicantServiceDocumentUpdate(serviceDetail, existingServiceDetail);
+
+        // validate file detail
+        validateApplicantFileDetailUpdate(serviceDetail, existingServiceDetail);
+
+        // validate applicant child (other applicant details)
+        validateApplicantDetailUpdate(serviceDetail, existingServiceDetail);
+    }
+
+    private void validateApplicantServiceDocumentUpdate(final ApplicantServiceDetail serviceDetail,
+                                                        final ApplicantServiceDetail existingServiceDetail) {
         final ApplicantServiceDocument serviceDocument = serviceDetail.getServiceDocument();
         if (StringUtils.isAnyBlank(serviceDocument.getId(), serviceDocument.getApplicantPersonalId())) {
             throw new CustomException(INVALID_UPDATE.getCode(),
@@ -150,6 +166,7 @@ public class FileManagementValidator { // NOPMD
             throw new CustomException(INVALID_UPDATE.getCode(), "Invalid applicant service document id.");
         }
 
+        final ApplicantPersonal applicant = serviceDetail.getApplicant();
         if (!ObjectUtils.nullSafeEquals(serviceDocument.getApplicantPersonalId(), applicant.getId())) {
             throw new CustomException(INVALID_UPDATE.getCode(),
                     "Invalid applicant personal id in applicant service document.");
@@ -161,39 +178,55 @@ public class FileManagementValidator { // NOPMD
             throw new CustomException(INVALID_UPDATE.getCode(),
                     "Invalid service details id in applicant service document.");
         }
+    }
 
-        // validate file detail
+    private void validateApplicantFileDetailUpdate(final ApplicantServiceDetail serviceDetail, // NOPMD
+                                                   final ApplicantServiceDetail existingServiceDetail) {
         final ApplicantFileDetail fileDetail = serviceDetail.getFileDetail();
+
         if (StringUtils.isAnyBlank(fileDetail.getId(), fileDetail.getApplicantPersonalId())) {
             throw new CustomException(INVALID_UPDATE.getCode(),
                     "Applicant file detail id and applicant personal id is required for update request.");
         }
-        if (!ObjectUtils.nullSafeEquals(fileDetail.getId(),
-                                        existingServiceDetail.getFileDetail()
-                                                             .getId())) {
-            throw new CustomException(INVALID_UPDATE.getCode(), "Invalid applicant file detail id.");
-        }
+
+        final ApplicantPersonal applicant = serviceDetail.getApplicant();
         if (!ObjectUtils.nullSafeEquals(fileDetail.getApplicantPersonalId(), applicant.getId())) {
             throw new CustomException(INVALID_UPDATE.getCode(),
                     "Invalid applicant personal id in applicant service file detail.");
         }
 
-        if (!ObjectUtils.nullSafeEquals(fileDetail.getServiceDetailsId(), serviceDetailId)) {
+        if (!ObjectUtils.nullSafeEquals(fileDetail.getServiceDetailsId(), serviceDetail.getId())) {
             throw new CustomException(INVALID_UPDATE.getCode(),
                     "Invalid service details id in applicant service file detail.");
         }
 
-        // validate applicant child (other applicant details)
+        final ApplicantFileDetail existingFileDetail = existingServiceDetail.getFileDetail();
+        if (!ObjectUtils.nullSafeEquals(fileDetail.getId(), existingFileDetail.getId())) {
+            throw new CustomException(INVALID_UPDATE.getCode(), "Invalid applicant file detail id.");
+        }
+
+        if (!ObjectUtils.nullSafeEquals(fileDetail.getFileCode(), existingFileDetail.getFileCode())) {
+            throw new CustomException(INVALID_UPDATE.getCode(), "Invalid applicant file code.");
+        }
+    }
+
+    private void validateApplicantDetailUpdate(final ApplicantServiceDetail serviceDetail,
+                                               final ApplicantServiceDetail existingServiceDetail) {
+
         final ApplicantChild applicantDetail = serviceDetail.getApplicantChild();
+
         if (StringUtils.isAnyBlank(applicantDetail.getId(), applicantDetail.getApplicantPersonalId())) {
             throw new CustomException(INVALID_UPDATE.getCode(),
                     "Applicant child id and applicant personal id is required for update request.");
         }
+
         if (!ObjectUtils.nullSafeEquals(applicantDetail.getId(),
                                         existingServiceDetail.getApplicantChild()
                                                              .getId())) {
             throw new CustomException(INVALID_UPDATE.getCode(), "Invalid applicant child id.");
         }
+
+        final ApplicantPersonal applicant = serviceDetail.getApplicant();
         if (!ObjectUtils.nullSafeEquals(applicantDetail.getApplicantPersonalId(), applicant.getId())) {
             throw new CustomException(INVALID_UPDATE.getCode(), "Invalid applicant personal id in applicant child.");
         }

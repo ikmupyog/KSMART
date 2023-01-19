@@ -4,6 +4,7 @@ import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_SEARCH;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public class FMUtils implements ApplicationContextAware {
+
+    public static final String TENANT_FORMAT = "^kl\\.[a-z]+$";
 
     private static ApplicationContext applicationContext;
 
@@ -60,5 +63,9 @@ public class FMUtils implements ApplicationContextAware {
         if (invalid) {
             throw new CustomException(INVALID_SEARCH.getCode(), String.format("Search on %s is not allowed", param));
         }
+    }
+
+    public static boolean isValidFormat(final String regex, final String input) {
+        return Pattern.matches(regex, input);
     }
 }

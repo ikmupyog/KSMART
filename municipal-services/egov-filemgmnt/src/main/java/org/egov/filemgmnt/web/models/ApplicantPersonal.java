@@ -94,6 +94,7 @@ public class ApplicantPersonal {
     @Schema(type = "string", description = "Tenant identification number")
     @NotBlank(message = "Tenant identification number is required")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
+    @Pattern(regexp = "^kl\\.[a-z]+$", message = "Invalid tenant identification number format, ex: kl.cochin")
     @JsonProperty("tenantId")
     private String tenantId;
 

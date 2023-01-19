@@ -26,14 +26,8 @@ public class FMConfiguration {
     @Value("${persister.update.applicantservice.topic}")
     private String updateApplicantServiceTopic;
 
-    @Value("${persister.save.applicantservicecertificate.topic}")
-    private String saveApplicantServiceCertificateTopic;
-
-    @Value("${persister.save.certificate.topic}")
-    private String saveCertificateTopic;
-
-    @Value("${persister.save.servicedetails.topic}")
-    private String saveServiceDetailsTopic;
+    @Value("${persister.save.applicantcertificate.topic}")
+    private String saveApplicantCertificateTopic;
 
     @Value("${citizen.allowed.search.params}")
     private String allowedCitizenSearchParams;

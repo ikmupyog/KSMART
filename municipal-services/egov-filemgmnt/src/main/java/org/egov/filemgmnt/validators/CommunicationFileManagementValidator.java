@@ -10,9 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.repository.CommunicationFileManagementRepository;
-import org.egov.filemgmnt.web.models.CommunicationFile;
-import org.egov.filemgmnt.web.models.CommunicationFileRequest;
-import org.egov.filemgmnt.web.models.CommunicationFileSearchCriteria;
+import org.egov.filemgmnt.web.models.communication.CommunicationFile;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileRequest;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileSearchCriteria;
 import org.egov.tracer.model.CustomException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -79,7 +79,7 @@ public class CommunicationFileManagementValidator {
      * Validate CommunicationFile update request.
      *
      * @param request the
-     *                {@link org.egov.filemgmnt.web.models.CommunicationFileRequest
+     *                {@link org.egov.filemgmnt.web.models.communication.CommunicationFileRequest
      *                CommunicationFileRequest}
      */
 

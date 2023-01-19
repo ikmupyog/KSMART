@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.egov.filemgmnt.repository.querybuilder.CommunicationFileManagementQueryBuilder;
 import org.egov.filemgmnt.repository.rowmapper.CommunicationFileManagementRowMapper;
-import org.egov.filemgmnt.web.models.CommunicationFile;
-import org.egov.filemgmnt.web.models.CommunicationFileSearchCriteria;
+import org.egov.filemgmnt.web.models.communication.CommunicationFile;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileSearchCriteria;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

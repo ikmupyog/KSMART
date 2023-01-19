@@ -171,7 +171,7 @@ serviceMaps:
       - jsonPath: $.ApplicantServiceDetail.applicant.document.id
        
     - query: >
-        INSERT INTO eg_fm_applicantdocument( id, applicantpersonalid, documenttypeid, documentnumber, docexpirydate, createdb
+        INSERT INTO eg_fm_applicantdocument( id, applicantpersonalid, documenttypeid, documentnumber, docexpirydate, createdby
           , createddate, lastmodifiedby, lastmodifieddate )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )
         ON CONFLICT (id) DO UPDATE SET documenttypeid = ?, documentnumber = ?, docexpirydate = ?, lastmodifiedby = ?, lastmodifieddate = ? ;

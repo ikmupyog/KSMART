@@ -21,8 +21,8 @@ import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceDocument;
 import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.AuditDetails;
-import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
-import org.egov.filemgmnt.web.models.certificates.CertificateRequest;
+import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
+import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -108,16 +108,21 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
         document.setAuditDetails(auditDetails);
     }
 
-    public void enrichCreate(final ApplicantServiceRequest request) {
+    public void enrichCreate(final ApplicantServiceRequest request, boolean newApplicant) {
         final User userInfo = request.getRequestInfo()
                                      .getUserInfo();
-        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 
         final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();
         Assert.notNull(serviceDetail, "Applicant service detail must not be null");
 
-        final String applicantId = serviceDetail.getApplicant()
-                                                .getId();
+        final ApplicantPersonal applicant = serviceDetail.getApplicant();
+        final String applicantId = applicant.getId();
+
+        if (newApplicant) {
+            auditDetails = applicant.getAuditDetails();
+        }
+
         serviceDetail.setId(UUID.randomUUID()
                                 .toString());
         serviceDetail.setApplicantPersonalId(applicantId);

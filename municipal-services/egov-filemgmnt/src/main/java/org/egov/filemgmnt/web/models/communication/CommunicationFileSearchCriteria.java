@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models;
+package org.egov.filemgmnt.web.models.communication;
 
 import java.util.List;
 

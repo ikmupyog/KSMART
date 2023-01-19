@@ -20,8 +20,8 @@ import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
 import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
-import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
-import org.egov.filemgmnt.web.models.certificates.CertificateRequest;
+import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
+import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
 //import org.egov.filemgmnt.web.models.certificates.CertificatePdfApplicationRequest;
 import org.egov.filemgmnt.workflow.WorkflowIntegrator;
 import org.egov.tracer.model.CustomException;
@@ -79,7 +79,7 @@ public class FileManagementService {
         enrichment.enrichApplicantPersonal(request, existingApplicant);
 
         // enrich file service details
-        enrichment.enrichCreate(request);
+        enrichment.enrichCreate(request, (existingApplicant != null));
 
         // encrypt PII information - aadhaar number,
 
@@ -191,7 +191,7 @@ public class FileManagementService {
             log.debug("Pdf response " + request.getCertificateDetails());
         }
 
-        producer.push(fmConfig.getSaveCertificateTopic(), request);
+        producer.push(fmConfig.getSaveApplicantCertificateTopic(), request);
 
         return request.getCertificateDetails();
 
