@@ -85,6 +85,13 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   }
   function setselectChildDOB(value) {
     setChildDOB(value);
+    // const today = new Date();
+    //     const birthDate = new Date(value);
+    //     let diffdate = birthDate.setMonth(birthDate.getMonth() - 6)
+    //     console.log(diffdate);
+        // let age_in_ms = today - birthDate;
+        // let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
+        // setMotherAgeMarriage(Math.floor(age_in_years));
   }
   function setSelectChildFirstNameEn(e) {
     if (e.target.value.length === 51) {
