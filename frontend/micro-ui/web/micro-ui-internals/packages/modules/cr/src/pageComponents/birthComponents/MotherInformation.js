@@ -587,11 +587,13 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-6" >
+                    <div className="col-md-12" >
                         {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
                         <CheckBox label={t("Mother Information Missing")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
                     </div>
                 </div>
+                {isMotherInfo === false && ( 
+                <div>
                 <div className="row">
                     <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span> </h1>
                     </div>
@@ -959,6 +961,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                     </div>
                 </div>
+            </div>)}
                 {toast && (
                     <Toast
                         error={
