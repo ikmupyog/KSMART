@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,selectHospitalName,selectSignedOfficerName,
   SignedOfficerName ,SignedOfficerDesignation, selectSignedOfficerDesignation ,SignedOfficerAadharNo, setSignedOfficerAadharNo,
-  SignedOfficerMobileNo, setSignedOfficerMobileNo
+  SignedOfficerMobileNo, setSignedOfficerMobileNo, mobileError,setMobileError,
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -67,6 +67,55 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
   }
   function setSelectSignedOfficerMobileNo(e) {
     setSignedOfficerMobileNo(e.target.value);
+  }
+
+
+  function setSelectSignedOfficerMobileNo(e) {
+    if (e.target.value.length != 0) {
+  
+        if (e.target.value.length > 10) {
+          setSignedOfficerMobileNo(true);
+        } else if (e.target.value.length < 10) {
+          setMobileError(true);
+          setSignedOfficerMobileNo(e.target.value);
+            return false;
+        }
+        else {
+          setMobileError(false);
+          setSignedOfficerMobileNo(e.target.value);
+            return true;
+        }
+    } else {
+      setMobileError(false);
+      setSignedOfficerMobileNo(e.target.value);
+        return true;
+    }
+  }
+  function setSelectSignedOfficerAadharNo(e) {
+    if (e.target.value.length != 0) {
+  
+        if (e.target.value.length > 12) {
+            // setChildAadharNo(e.target.value);
+            setSignedOfficerAdharNoError(true);
+            // const limit = 12;
+            // setFatherAadhar(e.target.value.slice(0, limit));
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else if (e.target.value.length < 12) {
+          setSignedOfficerAdharNoError(true);
+          setSignedOfficerAadharNo(e.target.value);
+            return false;
+        }
+        else {
+          setSignedOfficerAdharNoError(false);
+          setSignedOfficerAadharNo(e.target.value);
+            return true;
+        }
+    } else {
+      setSignedOfficerAdharNoError(false);
+        setSignedOfficerAadharNo(e.target.value);
+        return true;
+    }
+  
   }
   const goNext = () => {
     // console.log('clicked');
@@ -173,7 +222,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData,HospitalName,sel
               value={SignedOfficerMobileNo}
               onChange={setSelectSignedOfficerMobileNo}
               placeholder={`${t("CR_MOBILE_NO")}`}
-              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+              {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
             />
           </div>
         </div>

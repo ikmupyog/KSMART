@@ -27,10 +27,13 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [signedOfficerDesgError, setSignedOfficerDesgError] = useState(formData?.BirthPlace?.SignedOfficerDesignation ? false: false );
   const [mobileError, setMobileError] = useState(formData?.BirthPlace?.SignedOfficerMobileNo ? false: false );
   const [mobileLengthError, setMobileLengthError] = useState(formData?.BirthPlace?.SignedOfficerMobileNo ? false: false );
+  const [SignedOfficerAdharNoError, setSignedOfficerAdharNoError] = useState(formData?.BirthPlace?.SignedOfficerAadharNo ? false: false );
 
   const [InstitutionError, setInstitutionError] = useState(formData?.BirthPlace?.setInstitution ? false: false );
   const [SignedOfficerInstError, setSignedOfficerInstError] = useState(formData?.BirthPlace?.SiginedOfficerDesignation ? false: false );
   const [signedOfficerDesgInstError, setSignedOfficerDesgInstError] = useState(formData?.BirthPlace?.SiginedOfficerDesignation ? false: false );
+  const [InstitutionMobilError, setInstitutionMobilError] = useState(formData?.BirthPlace?.InstitutionMobilNo ? false: false);
+  const [InstitutionAadharError, setInstitutionAadharError] = useState(formData?.BirthPlace?.InstitutionAadhaar ? false: false);
 
   const [VehicleRegiNoError, setVehicleRegiNoError] = useState(formData?.BirthPlace?.VehicleRegistrationNo ? false: false )
   const [VehiFromEnError, setVehiFromEnError] = useState(formData?.BirthPlace?.VehicleFromEn ? false: false );
@@ -66,6 +69,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
   const [VehiInfomantFstNameEnError, setVehiInfomantFstNameEnError] = useState(formData?.BirthPlace?.InfomantFirstNameEn ? false: false );
   const [VehiInfomantMobileNoError, setVehiInfomantMobileNoError] = useState(formData?.BirthPlace?.InfomantMobile ? false: false );
+  const [VehiInfomantAadharError, setVehiInfomantAadharError] = useState(formData?.BirthPlace?.InfomantAadhar ?  false: false );
 
   const [VehiInfomantAdrCountryError, setVehiInfomantAdrCountryError] = useState(formData?.BirthPlace?.InformantAdrsCountry ? false: false );
   const [VehiInfomantAdrStateNameError, setVehiInfomantAdrStateNameError] = useState(formData?.BirthPlace?.InformantAdrsStateName ? false: false );
@@ -86,6 +90,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
   const [HomeInformantFstNameEnError, setHomeInformantFstNameEnError] = useState(formData?.BirthPlace?.InfomantFirstNameEn ? false: false );
   const [HomeInformantMobileNoError, setHomeInformantMobileNoError] = useState(formData?.BirthPlace?.InfomantMobile ? false: false );
+  const [HomeInformantAadharError, setHomeInformantAadharError] = useState(formData?.BirthPlace?.InfomantAadhar ?  false: false );
 
   const [HomeInformantAdrCountryError, setHomeInformantAdrCountryError] = useState(formData?.BirthPlace?.InformantAdrsCountry ? false: false );
   const [HomeInformantAdrStateNameError, setHomeInformantAdrStateNameError] = useState(formData?.BirthPlace?.InformantAdrsStateName ? false: false );
@@ -204,9 +209,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     selectBirthPlace(value);
     setValue(value.code);
   }
-  // function setSelectBirthPlaceDeccription(e) {
-  //   setBirthPlaceDeccription(e.target.value);
-  // }
 
   React.useEffect(() => {
     if (isInitialRender) {
@@ -324,7 +326,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
   let validFlag = true;
   const goNext = () => {
+  
     
+
     console.log(BirthPlace.code);
     if (BirthPlace.code === "HOSPITAL") {
       if (HospitalName == null) {
@@ -379,8 +383,18 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           setMobileLengthError(false);
         }
       }
+      if (SignedOfficerAadharNo == null || SignedOfficerAadharNo == "") {
+        setSignedOfficerAdharNoError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setSignedOfficerAdharNoError(false);
+      }
     }
-
+  
     if (BirthPlace.code === "INSTITUTION") {
       if (setInstitution == null) {
         setInstitutionError(true);
@@ -413,6 +427,37 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setSignedOfficerDesgInstError(false);
       }
+      if (InstitutionMobilNo == null || InstitutionMobilNo == "") {
+        setInstitutionMobilError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        // console.log()
+        if(InstitutionMobilNo.lenghth<10){
+          setMobileLengthError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+        }else {
+          setMobileLengthError(false);
+        }
+      }
+      if (InstitutionAadhaar == null || InstitutionAadhaar == "") {
+        setInstitutionAadharError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setInstitutionAadharError(false);
+      }
+
     }
 
     if (BirthPlace.code === "VEHICLE") {
@@ -1664,9 +1709,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           {toast && (
             <Toast
               error={
-                HospitalError || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-                InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError ||
-                VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError ||                
+                HospitalError || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError || SignedOfficerAdharNoError ||
+                InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError || InstitutionMobilError || InstitutionAadharError ||
+                VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError ||   VehiInfomantFstNameEnError  ||           
                 VehiInfomantAdrCountryError || VehiInfomantAdrStateNameError || VehiInfomantAdrDistrictError || VehiInfomantAdrLBTypeNameError || VehiInfomantAdrLBNameError || VehiInfomantAdrTalukError || VehiInfomantAdrVillageError || VehiInfomantAdrPostOfficeError || 
                 VehiInfomantAdrPincodeError || VehiInfomantAdrMainPlaceEnError ||  VehiInfomantAdrLocalityNameEnError || VehiInfomantAdrStreetNameEnError ||
                  VehiInfomantAdrHouseNameEnError  || VehiInfomantAdrDoorNoError ||  VehiInfomantAdrResNoEnError  ||
@@ -1682,9 +1727,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               label={
                 // (!HospitalError ? t(`CS_COMPLAINT_COMMENT_SUCCESS`) : t(`BIRTH_ERROR_HOSPITAL_CHOOSE`))
 
-                ( HospitalError || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-                  InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError ||
-                  VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError ||                
+                ( HospitalError || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError || SignedOfficerAdharNoError ||
+                  InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError || InstitutionMobilError || InstitutionAadharError ||
+                  VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError ||    VehiInfomantFstNameEnError  ||              
                   VehiInfomantAdrCountryError || VehiInfomantAdrStateNameError || VehiInfomantAdrDistrictError || VehiInfomantAdrLBTypeNameError || VehiInfomantAdrLBNameError || VehiInfomantAdrTalukError || VehiInfomantAdrVillageError || VehiInfomantAdrPostOfficeError || 
                   VehiInfomantAdrPincodeError || VehiInfomantAdrMainPlaceEnError ||  VehiInfomantAdrLocalityNameEnError || VehiInfomantAdrStreetNameEnError ||
                    VehiInfomantAdrHouseNameEnError  || VehiInfomantAdrDoorNoError ||  VehiInfomantAdrResNoEnError  ||
@@ -1699,8 +1744,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
 
                   ?
-                  (HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`) : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                    : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)                     
+                  (HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`) : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`) : SignedOfficerAdharNoError ? t(`CS_COMMON_INVALID_AADHAR_NO`) 
+                    : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)  : InstitutionMobilError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) :  InstitutionAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)                    
                         : PublicPlaceError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`) : AdrsInfonmntNameError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                           : AdrsHomeCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : AdrsHomeStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : AdrsHomeDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
                             : AdrsHomeLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : AdrsHomeLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : AdrsHomeTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : AdrsHomeVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
