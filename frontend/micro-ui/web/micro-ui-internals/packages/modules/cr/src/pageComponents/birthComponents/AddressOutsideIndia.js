@@ -91,9 +91,9 @@ const AddressOutsideIndia = ({ config, onSelect, userType, formData , AdressEn,s
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdressEn}>
-        <header className="card-header" style={{ fontSize: "35px" }}>
+        {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
-        </header>
+        </header> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">

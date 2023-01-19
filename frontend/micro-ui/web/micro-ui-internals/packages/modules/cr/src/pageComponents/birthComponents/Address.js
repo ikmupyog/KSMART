@@ -46,14 +46,6 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [PermanentPostOfficeError, setPermanentPostOfficeError] = useState(formData?.AddressDetails?.PermanentPostOffice ? false : false);
   const [PermanentPincodeError, setPermanentPincodeError] = useState(formData?.AddressDetails?.PermanentPincode ? false : false);
 
-  const [OutSideAdressEnError, setOutSideAdressEnError] = useState(formData?.AddressDetails?.AdressEn ? false : false);
-  const [OutSideAdressMlError, setOutSideAdressMlError] = useState(formData?.AddressDetails?.AdressMl ? false : false);
-  //   const [OutSideAdressEnBError, setOutSideAdressEnBError] = useState(formData?.AddressDetails?.AdressEnB ? false: false);
-  //   const [OutSideAdressMlBError, setOutSideAdressMlBError] = useState(formData?.AddressDetails?.AdressMlB ? false: false);
-  const [OutSideLocalityEnError, setOutSideLocalityEnError] = useState(formData?.AddressDetails?.LocalityEn ? false : false);
-  const [OutSideLocalityMlError, setOutSideLocalityMlError] = useState(formData?.AddressDetails?.LocalityMl ? false : false);
-  const [OutSideProvinceEnError, setOutSideProvinceEnError] = useState(formData?.AddressDetails?.ProvinceEn ? false : false);
-  const [OutSideProvinceMlError, setOutSideProvinceMlError] = useState(formData?.AddressDetails?.ProvinceMl ? false : false);
   const [OutSideOutSideCountryError, setOutSideOutSideCountryError] = useState(formData?.AddressDetails?.OutSideCountry ? false : false);
 
 
@@ -80,7 +72,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressDetails?.PresentStreetNameEn ? formData?.AddressDetails?.PresentStreetNameEn : "");
   const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressDetails?.PresentStreetNameMl ? formData?.AddressDetails?.PresentStreetNameMl : "");
   const [PresentVillage, setPresentVillage] = useState(formData?.AddressDetails?.PresentVillage ? formData?.AddressDetails?.PresentVillage : null);
-  const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress ? formData?.AddressDetails?.isPrsentAddress : "");
+  const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressDetails?.isPrsentAddress ? formData?.AddressDetails?.isPrsentAddress : false);
 
   const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressDetails?.PermanentCountry ? formData?.AddressDetails?.PermanentCountry : null);
   const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressDetails?.PermanentStateName ? formData?.AddressDetails?.PermanentStateName : null);
@@ -180,7 +172,6 @@ const Address = ({ config, onSelect, userType, formData }) => {
   let cmbfilterState = [];
   let cmbfilterDistrict = [];
   useEffect(() => {
-    console.log("selectedValueRadio" + valueRad);
     if (isInitialRenderRadioButtons) {
       setisInitialRenderRadioButtons(false)
       if (valueRad == "ILB") {
@@ -219,20 +210,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
           cmbfilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.name.includes('India'));
           setPresentCountry(cmbfilterCountry[0]);
           setPermanentCountry(cmbfilterCountry[0]);
+          setPresentStateName(null);
+          setPermanentStateName(null);
         }
       }
-      // if (MotherCountry == null || MotherCountry == '') {
-      //     if (stateId === "kl" && cmbNation.length > 0) {
-      //         cmbfilterCountry = cmbNation.filter((cmbNation) => cmbNation.name.includes('India'));
-      //         setMotherCountry(cmbfilterCountry[0]);
-      //     }
-      // }
-      // if (StateName == null || StateName == '') {
-      //     if (stateId === "kl" && cmbState.length > 0) {
-      //         cmbfilterState = cmbState.filter((cmbState) => cmbState.name.includes('Kerala'));
-      //         setStateName(cmbfilterState[0]);
-      //     }
-      // }
+      
     }
 
   }, [Country, State, District, isInitialRenderRadioButtons])
@@ -634,8 +616,9 @@ const Address = ({ config, onSelect, userType, formData }) => {
   }
 
   function setSameAsPresent(e) {
-    console.log("e.target.checked" + e.target.checked);
+    
     if (e.target.checked == true) {
+      console.log("e.target.checked" + e.target.checked);
       setIsPrsentAddress(e.target.checked);
       setPermanentCountry(PresentCountry);
       setPermanentStateName(PresentStateName);
@@ -660,6 +643,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
       setPermanentPostOffice(PresentPostOffice);
       setPermanentPincode(PresentPincode);
     } else {
+      console.log("e.target.checked else" + e.target.checked);
+      setIsPrsentAddress(e.target.checked);
       setPermanentCountry("");
       setPermanentStateName("");
       setPermanentLBTypeName(" ");
@@ -927,6 +912,20 @@ const Address = ({ config, onSelect, userType, formData }) => {
         }
       }
     }
+    if (valueRad === "OIND" ) {
+      if (OutSideCountry == null) {
+        validFlag = false;
+        setOutSideOutSideCountryError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+        // return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+      } else {
+        setOutSideOutSideCountryError(false);
+      }
+      }    
     sessionStorage.setItem("selectedValueRadio", selectedValueRadio ? selectedValueRadio.code : null);
     if (validFlag === true) {
       if (valueRad === "OIND") {
@@ -1987,13 +1986,13 @@ const Address = ({ config, onSelect, userType, formData }) => {
               PresentCountryError || PresentStateNameError || PresentDistrictError || PresentLBTypeNameError || PresentLBNameError
               || PresentVillageError || PresentTalukError || PresentPostOfficeError || PresentPincodeError || PermanentCountryError
               || PermanentStateNameError || PermanentDistrictError || PermanentLBTypeNameError || PermanentLBNameError || PermanentVillageError
-              || PermanentTalukError || PermanentPostOfficeError || PermanentPincodeError
+              || PermanentTalukError || PermanentPostOfficeError || PermanentPincodeError || OutSideOutSideCountryError
 
             }
             label={
               (PresentCountryError || PresentStateNameError || PresentDistrictError || PresentLBTypeNameError || PresentLBNameError || PresentVillageError
                 || PresentTalukError || PresentPostOfficeError || PresentPincodeError || PermanentCountryError || PermanentStateNameError || PermanentDistrictError
-                || PermanentLBTypeNameError || PermanentLBNameError || PermanentVillageError || PermanentTalukError || PermanentPostOfficeError || PermanentPincodeError
+                || PermanentLBTypeNameError || PermanentLBNameError || PermanentVillageError || PermanentTalukError || PermanentPostOfficeError || PermanentPincodeError || OutSideOutSideCountryError
                 ?
                 (PresentCountryError ? t(`BIRTH_ERROR_PRESENT_COUNTRY_CHOOSE`) : PresentStateNameError ? t(`BIRTH_ERROR_PRESENT_STATE_CHOOSE`) : PresentDistrictError ? t(`BIRTH_ERROR_PRESENT_DISTRICT_CHOOSE`)
                   : PresentLBTypeNameError ? t(`BIRTH_ERROR_PRESENT_LBTYPE_CHOOSE`) : PresentLBNameError ? t(`BIRTH_ERROR_PRESENT_LBNAME_CHOOSE`)
@@ -2001,7 +2000,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       : PresentPincodeError ? t(`BIRTH_ERROR_PRESENT_PINCODE_CHOOSE`) : PermanentCountryError ? t(`BIRTH_ERROR_PERMANENT_COUNTRY_CHOOSE`)
                         : PermanentStateNameError ? t(`BIRTH_ERROR_PERMANENT_STATE_CHOOSE`) : PermanentDistrictError ? t(`BIRTH_ERROR_PERMANENT_DISTRICT_CHOOSE`) : PermanentLBTypeNameError ? t(`BIRTH_ERROR_PERMANENT_LBTYPE_CHOOSE`)
                           : PermanentLBNameError ? t(`BIRTH_ERROR_PERMANENT_LBNAME_CHOOSE`) : PermanentVillageError ? t(`BIRTH_ERROR_PERMANENT_VILLAGE_CHOOSE`) : PermanentTalukError ? t(`BIRTH_ERROR_PERMANENT_TALUK_CHOOSE`)
-                            : PermanentPostOfficeError ? t(`BIRTH_ERROR_PERMANENT_POSTOFFICE_CHOOSE`) : PermanentPincodeError ? t(`BIRTH_ERROR_PERMANENT_PINCODE_CHOOSE`)
+                            : PermanentPostOfficeError ? t(`BIRTH_ERROR_PERMANENT_POSTOFFICE_CHOOSE`) : PermanentPincodeError ? t(`BIRTH_ERROR_PERMANENT_PINCODE_CHOOSE`) : OutSideOutSideCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)
 
                               : setToast(false)
                 ) : setToast(false)
