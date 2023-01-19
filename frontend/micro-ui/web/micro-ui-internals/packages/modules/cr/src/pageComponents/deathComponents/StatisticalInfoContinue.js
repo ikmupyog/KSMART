@@ -169,7 +169,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   //   setSelectedalcoholyears(e.target.value);
   // }
   // const [optionkey, setOptionkey] = useState("");
-  console.log(optionkey);
+  // console.log(optionkey);
 
   const goNext = () => {
     sessionStorage.setItem("setMedicalAttentionDeath", setMedicalAttentionDeath ? setMedicalAttentionDeath.code : null);
@@ -306,7 +306,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 onSelect={selectisPregnent}
                 handleChange={handleRadioChangeB}
               />
-              {isPregnent === "yes" && (
+              {isPregnent === "1" && (
                 <div className="col-md-4">
                   <CardLabel>{t("CR_YEAR")}</CardLabel>
                   <TextInput type="text" id="text" value={textPregnant} onChange={(e) => setTextPregnant(e.target.value)} />
@@ -340,7 +340,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 onSelect={selectisSmoke}
                 handleChange={handleRadioChangeSmoke}
               />
-              {isSmoke === "yes" && (
+              {isSmoke === "1" && (
                 <div className="col-md-4">
                   <CardLabel>{t("CR_YEAR")}</CardLabel>
                   {/* <TextInput type="text" id="text" value={textSmoke} onChange={(e) => setTextSmoke(e.target.value)} /> */}
@@ -348,7 +348,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     t={t}
                     isMandatory={false}
                     type={"text"}
-                    optionKey="i18nKey"
+                    // optionKey="i18nKey"
                     name="textSmoke"
                     value={textSmoke}
                     onChange={(e) => setTextSmoke(e.target.value)}
@@ -370,7 +370,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 onSelect={selectisTabacco}
                 handleChange={handleRadioChangeTabacco}
               />
-              {isTabacco === "yes" && (
+              {isTabacco === "1" && (
                 <div>
                   <CardLabel>{t("CR_YEAR")}</CardLabel>
                   {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
@@ -378,7 +378,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     t={t}
                     isMandatory={false}
                     type={"text"}
-                    optionKey="i18nKey"
+                    // optionKey="i18nKey"
                     name="textTabacco"
                     value={textTabacco}
                     onChange={(e) => setTextTabacco(e.target.value)}
@@ -403,7 +403,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 onSelect={selectisPanMasala}
                 handleChange={handleRadioChangePanmasala}
               />
-              {isPanMasala === "yes" && (
+              {isPanMasala === "1" && (
                 <div className="col-md-4">
                   <CardLabel>{t("CR_YEAR")}</CardLabel>
                   {/* <TextInput type="text" id="text" value={textPanMasala} onChange={(e) => setTextPanMasala(e.target.value)} /> */}
@@ -411,7 +411,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     t={t}
                     isMandatory={false}
                     type={"text"}
-                    optionKey="i18nKey"
+                    // optionKey="i18nKey"
                     name="textPanMasala"
                     value={textPanMasala}
                     onChange={(e) => setTextPanMasala(e.target.value)}
@@ -433,7 +433,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 onSelect={selectisalcohol}
                 handleChange={handleRadioChange}
               />
-              {isalcohol === "yes" && (
+              {isalcohol === "1" && (
                 <div className="col-md-4">
                   <CardLabel>{t("CR_YEAR")}</CardLabel>
                   {/* <TextInput type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} /> */}
@@ -441,7 +441,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     t={t}
                     isMandatory={false}
                     type={"text"}
-                    optionKey="i18nKey"
+                    // optionKey="i18nKey"
                     name="text"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
