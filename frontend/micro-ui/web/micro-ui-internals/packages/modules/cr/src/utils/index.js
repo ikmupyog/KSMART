@@ -657,6 +657,11 @@ export const convertToDeathRegistration = (data = {}) => {
           arecanutNumYears: null,
           alcoholNumYears: null,
           nationality: data?.InformationDeath?.setNationality,
+          isSmoking: 1,
+          isTobaccog: 1,
+          isArecanut: 1,
+          isAlcohol: 1,
+
         },
         auditDetails: {
           createdBy: null,
