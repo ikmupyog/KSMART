@@ -164,7 +164,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <CardLabel>{t("CR_TOWN_VILLAGE_DECEASED-DETAILS")}</CardLabel>
+            <CardLabel>{t("CR_DECEASED_USUALLY_LIVES")}</CardLabel>
             {/* radio buttons */}
             <div className="radios">
               <div className="radiobuttons">
