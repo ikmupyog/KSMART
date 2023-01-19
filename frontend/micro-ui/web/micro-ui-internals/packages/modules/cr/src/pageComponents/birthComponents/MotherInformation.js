@@ -601,6 +601,24 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 <div className="row">
                     <div className="col-md-12" >
                         <div className="col-md-4" >
+                            <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+                            <TextInput
+                                t={t}
+                                isMandatory={false}
+                                type={"number"}
+                                optionKey="i18nKey"
+                                name="MotherAadhar"
+                                value={MotherAadhar}
+                                onChange={setSelectMotherAadhar}
+                                disable={isMotherInfo} placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                                {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                            />
+                        </div>
+                        </div>
+                        </div>
+                <div className="row">
+                    <div className="col-md-12" >
+                        <div className="col-md-4" >
 
                             <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
@@ -693,7 +711,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 </div>
                 <div className="row">
                     <div className="col-md-12" >
-                        <div className="col-md-3" >
+                        {/* <div className="col-md-3" >
                             <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
                             <TextInput
                                 t={t}
@@ -706,8 +724,8 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 disable={isMotherInfo} placeholder={`${t("CS_COMMON_AADHAAR")}`}
                                 {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                             />
-                        </div>
-                        <div className="col-md-3" >
+                        </div> */}
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
                             <TextInput
                                 t={t}
@@ -721,7 +739,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
                             />
                         </div>
-                        <div className="col-md-3" >
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_EMAIL")}`}</CardLabel>
                             <TextInput
                                 t={t}
@@ -735,7 +753,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
                             />
                         </div>
-                        <div className="col-md-3" >
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}

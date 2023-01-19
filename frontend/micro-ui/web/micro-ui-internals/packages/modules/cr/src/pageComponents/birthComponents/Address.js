@@ -53,6 +53,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [OutSideIndiaAddressLocMlError, setOutSideIndiaAddressLocMlError] = useState(formData?.AddressDetails?.LocalityMl ? false : false);
   const [OutSideIndiaAddressProvinceEnError, setOutSideIndiaAddressProvinceEnError] = useState(formData?.AddressDetails?.setProvinceEn ? false : false);
   const [OutSideIndiaAddressProvinceMlError, setOutSideIndiaAddressProvinceMlError] = useState(formData?.AddressDetails?.setProvinceMl ? false : false);
+  const [OutSideIndiaAddressPostCodeError, setOutSideIndiaAddressPostCodeError] = useState(formData?.AddressDetails?.setPostCode ? false : false);
   const [OutSideIndiaAddressError, setOutSideIndiaAddressError] = useState(formData?.AddressDetails?.OutSideCountry ? false : false);
 
 
@@ -113,6 +114,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [LocalityMl, setLocalityMl] = useState(formData?.AddressDetails?.LocalityMl ? formData?.AddressDetails?.LocalityMl : "");
   const [ProvinceEn, setProvinceEn] = useState(formData?.AddressDetails?.ProvinceEn ? formData?.AddressDetails?.ProvinceEn : "");
   const [ProvinceMl, setProvinceMl] = useState(formData?.AddressDetails?.ProvinceMl ? formData?.AddressDetails?.ProvinceMl : "");
+  const [PostCode, setPostCode] = useState(formData?.AddressDetails?.PostCode ? formData?.AddressDetails?.PostCode : "");
   const [OutSideCountry, setOutSideCountry] = useState(formData?.AddressDetails?.OutSideCountry ? formData?.AddressDetails?.OutSideCountry : null);
   const [selectedValueRadio, setSelectedValue] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
   const [valueRad, setValueRad] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
@@ -1032,10 +1034,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl.LocalityMl : null);
         sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn.ProvinceEn : null);
         sessionStorage.setItem("ProvinceMl", ProvinceMl ? ProvinceMl.ProvinceMl : null);
+        sessionStorage.setItem("PostCode", PostCode ? PostCode.PostCode : null);
         sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.OutSideCountry : null);
 
         onSelect(config.key, {
-          AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, OutSideCountry,
+          AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl,PostCode, OutSideCountry,
           selectedValueRadio
 
         });
@@ -1137,6 +1140,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
           LocalityMl,
           ProvinceEn,
           ProvinceMl,
+          PostCode,
           OutSideCountry,
 
 
@@ -1240,7 +1244,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
                   <div className="col-md-12">
                     <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>{" "}
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
@@ -1648,7 +1652,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS_OF_THE_FAMILY")}`}</span>{" "}
                       </h1>
                     </div>
                   </div>
@@ -2070,6 +2074,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
               setLocalityMl={setLocalityMl} LocalityMl={LocalityMl}
               setProvinceEn={setProvinceEn} ProvinceEn={ProvinceEn}
               setProvinceMl={setProvinceMl} ProvinceMl={ProvinceMl}
+              setPostCode={setPostCode} PostCode={PostCode}
               setOutSideCountry={setOutSideCountry} OutSideCountry={OutSideCountry}
 
             />

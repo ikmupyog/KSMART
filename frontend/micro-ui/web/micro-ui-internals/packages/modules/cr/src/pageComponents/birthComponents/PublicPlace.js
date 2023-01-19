@@ -167,10 +167,10 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
     <div className="row">
          <div className="col-md-12" >
          <div className="col-md-6" >
-          <CardLabel>{`${t("CR_ADDRESS")}`}</CardLabel>
+          <CardLabel>{`${t("CR_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel> 
             <TextArea       
             t={t}
-            isMandatory={false}
+            isMandatory={true}
             type={"text"}
             optionKey="i18nKey"
             name="AdrsPublicPlace"
@@ -178,7 +178,7 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
             onChange={setSelectAdrsPublicPlace}
             disable={isEdit}
             placeholder={`${t("CR_ADDRESS")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
             />
         </div>
          <div className="col-md-6" >
