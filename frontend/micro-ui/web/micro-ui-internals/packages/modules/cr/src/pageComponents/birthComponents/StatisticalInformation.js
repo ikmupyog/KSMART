@@ -132,7 +132,12 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function setSelectBirthWeight(e) {
-    setBirthWeight(e.target.value);
+    if (e.target.value.length === 3) {
+        return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+        setBirthWeight(e.target.value);
+    }
   }
   function setSelectBirthHeight(e) {
     setBirthHeight(e.target.value);
@@ -313,7 +318,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"number"}
                 optionKey="i18nKey"
                 name="BirthWeight"
                 value={BirthWeight}
