@@ -478,7 +478,6 @@ public class TLQueryBuilder {
             builder.append("  tlstructplace.doorsub = ? ");
             preparedStmtList.add(criteria.getDoorNoSub());
         }
-        System.out.println("rohit" + preparedStmtList);
         builder.append(" ORDER BY tl.id ,tltax.service");
         // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);
 

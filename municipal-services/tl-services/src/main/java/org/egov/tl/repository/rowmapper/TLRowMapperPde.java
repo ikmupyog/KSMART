@@ -91,10 +91,10 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                             .valueOf(taxpdetemp.get("arrearamnt") == null ? 0
                                     : taxpdetemp.get("arrearamnt"))))
                     .current(String.valueOf(taxpdetemp.get("headcode")).equals("431190101")
-                            ? Double.parseDouble(String.valueOf(
-                                    taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current")))
-                            : Double.parseDouble(String.valueOf(
-                                    taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
+                            ? (Double.parseDouble(String.valueOf(
+                                    taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current"))))
+                            : (Double.parseDouble(String.valueOf(
+                                    taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt")))))
                     .active(true) // (Boolean) taxpdetemp.get("tltax_active")
                     .current2(Double.parseDouble(String
                             .valueOf(taxpdetemp.get("current2") == null ? 0
@@ -192,10 +192,10 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                                     .valueOf(taxpdetemp.get("arrearamnt") == null ? 0 : taxpdetemp.get("arrearamnt"))))
                             .active(true)
                             .current(String.valueOf(taxpdetemp.get("headcode")).equals("431190101")
-                                    ? Double.parseDouble(String.valueOf(
-                                            taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current")))
-                                    : Double.parseDouble(String.valueOf(
-                                            taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt"))))
+                                    ? (Double.parseDouble(String.valueOf(
+                                            taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current"))))
+                                    : (Double.parseDouble(String.valueOf(
+                                            taxpdetemp.get("currentamnt") == null ? 0 : taxpdetemp.get("currentamnt")))))
                             .current2(Double.parseDouble(String
                                     .valueOf(taxpdetemp.get("current2") == null ? 0
                                             : taxpdetemp.get("current2"))))
@@ -240,11 +240,11 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                                                 : taxpdetemp.get("arrearamnt"))))
                                 .active(true) // (Boolean) taxpdetemp.get("tltax_active")
                                 .current(String.valueOf(taxpdetemp.get("headcode")).equals("431190101")
-                                        ? Double.parseDouble(String.valueOf(
-                                                taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current")))
-                                        : Double.parseDouble(String.valueOf(
+                                        ? (Double.parseDouble(String.valueOf(
+                                                taxpdetemp.get("current") == null ? 0 : taxpdetemp.get("current"))))
+                                        : (Double.parseDouble(String.valueOf(
                                                 taxpdetemp.get("currentamnt") == null ? 0
-                                                        : taxpdetemp.get("currentamnt"))))
+                                                        : taxpdetemp.get("currentamnt")))))
                                 .current2(Double.parseDouble(String
                                         .valueOf(taxpdetemp.get("current2") == null ? 0
                                                 : taxpdetemp.get("current2"))))
