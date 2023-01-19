@@ -132,7 +132,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function setSelectBirthWeight(e) {
-    if (e.target.value.length === 3) {
+    if (e.target.value.length === 5) {
         return false;
         // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -140,7 +140,13 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectBirthHeight(e) {
-    setBirthHeight(e.target.value);
+    if (e.target.value.length === 5) {
+        return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+        setBirthHeight(e.target.value);
+        
+    }
   }
   function setSelectReligion(value) {
     setReligion(value);
