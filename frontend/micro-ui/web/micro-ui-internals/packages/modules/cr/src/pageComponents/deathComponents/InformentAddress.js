@@ -4,7 +4,7 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn, setInformentNameEn,InformentNameMl, setInformentNameMl,
-  setTitle, setSelectedTitle,AadhaarNo, setAadhaarNo,setDeclaration, setSelectedDeclaration,InformentMobileNo, setInformentMobileNo,InformentEmail, setInformentEmail,isNoAadhaar, setIsNoAadhaar }) => {
+ AadhaarNo, setAadhaarNo, setSelectedDeclaration,InformentMobileNo, setInformentMobileNo,InformentEmail, setInformentEmail,isNoAadhaar, setIsNoAadhaar }) => {
   const stateId = Digit.ULBService.getStateId();
   const [isChecked, setIsChecked] = useState(formData?.InformentAddress?.isChecked ? formData?.InformentAddress?.isChecked : false);
 //   const handleCheckboxChange = (event) => {
@@ -170,10 +170,10 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
     setInformentEmail(e.target.value);
   }
 
-  function selectTitle(value) {
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setSelectedTitle(value);
-  }
+  // function selectTitle(value) {
+  //   naturetypecmbvalue = value.code.substring(0, 4);
+  //   setSelectedTitle(value);
+  // }
 
   // function selectVillage(value) {
   //   setSelectedVillage(value);
@@ -296,7 +296,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
             <Dropdown
               t={t}
@@ -308,7 +308,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
               disabled={isEdit}
               placeholder={`${t("CR_TITLE_NAME_EN")}`}
             />
-          </div>
+          </div> */}
           <div className="col-md-4">
             <CardLabel>
               {t("CR_INFORMENT_NAME_EN")}
@@ -350,7 +350,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
         <div className="row">
           <div className="col-md-12">
 
-            <CheckBox label={t("No Aadhaar Number")}   onChange={() => setIsChecked(!isChecked)} value={isChecked}  />
+            <CheckBox label={t("CR_NO_AADHAAR")}   onChange={() => setIsChecked(!isChecked)} value={isChecked}  />
           </div>
         </div>
         <div className="row">
@@ -373,7 +373,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
             
           </div>
           </div>
-          <div className="col-md-3">
+          {/* <div className="col-md-3">
             <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
             <Dropdown
               t={t}
@@ -386,15 +386,15 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
               placeholder={`${t("CR_DECLARATION")}`}
             />
 
-            {/* <Dropdown t={t} 
+            <Dropdown t={t} 
             optionKey="name" 
             isMandatory={false} 
             option={cmbDeclaration} 
             selected={setDeclaration} 
             select={selectDeclaration} 
             disabled={isEdit} 
-            />             */}
-          </div>
+            />            
+          </div> */}
           <div className="col-md-3">
             <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
             <TextInput

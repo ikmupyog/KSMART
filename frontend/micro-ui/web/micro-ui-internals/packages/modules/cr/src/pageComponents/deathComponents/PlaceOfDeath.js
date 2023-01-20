@@ -170,7 +170,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
           <InformentAddress
             InformentNameEn={InformentNameEn}
             InformentNameMl={InformentNameMl}
-            setTitle={setTitle}
+            // setTitle={setTitle}
             AadhaarNo={AadhaarNo}
             setDeclaration={setDeclaration}
             InformentMobileNo={InformentMobileNo}
@@ -279,10 +279,10 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
     //InformentAddress
     sessionStorage.setItem("InformentNameEn", InformentNameEn ? InformentNameEn : null);
     sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl : null);
-    sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
+    // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("isNoAadhaar", isNoAadhaar ? isNoAadhaar : null);
     sessionStorage.setItem("AadhaarNo", AadhaarNo ? AadhaarNo : null);
-    sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
+    // sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
     sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo : null);
     sessionStorage.setItem("InformentEmail", InformentEmail ? InformentEmail : null);
     //PlaceOfDeathVehicle
@@ -360,7 +360,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
       InstitutionAadhaar,
       InformentNameEn,
       InformentNameMl,
-      setTitle,
+      // setTitle,
       isNoAadhaar,
       AadhaarNo,
       setDeclaration,
@@ -521,8 +521,8 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               setInformentNameEn={setInformentNameEn}
               InformentNameMl={InformentNameMl}
               setInformentNameMl={setInformentNameMl}
-              setTitle={setTitle}
-              setSelectedTitle={setSelectedTitle}
+              // setTitle={setTitle}
+              // setSelectedTitle={setSelectedTitle}
               AadhaarNo={AadhaarNo}
               setAadhaarNo={setAadhaarNo}
               setDeclaration={setDeclaration}
@@ -604,8 +604,8 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               setInformentNameEn={setInformentNameEn}
               InformentNameMl={InformentNameMl}
               setInformentNameMl={setInformentNameMl}
-              setTitle={setTitle}
-              setSelectedTitle={setSelectedTitle}
+              // setTitle={setTitle}
+              // setSelectedTitle={setSelectedTitle}
               AadhaarNo={AadhaarNo}
               setAadhaarNo={setAadhaarNo}
               setDeclaration={setDeclaration}
