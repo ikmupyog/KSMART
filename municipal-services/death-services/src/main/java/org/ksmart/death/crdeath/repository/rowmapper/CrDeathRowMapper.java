@@ -118,6 +118,14 @@ public class CrDeathRowMapper implements ResultSetExtractor<List<CrDeathDtl>>, B
                                         .vehicleFirstHalt(rs.getString("vehicle_first_halt"))
                                         .maleDependentUnavailable(rs.getInt("male_dependent_unavailable"))
                                         .femaleDependentUnavailable (rs.getInt("female_dependent_unavailable"))
+                                        //RAkhi S on 21.01.2023
+                                        .spouseNameEn(rs.getString("spouse_name_en"))
+                                        .spouseNameMl(rs.getString("spouse_name_ml"))
+                                        .spouseUnavailable(rs.getInt("spouse_unavailable"))
+                                        .spouseType(rs.getInt("spouse_type"))
+                                        .spouseEmailid(rs.getString("spouse_emailid"))
+                                        .spouseAadhaar(rs.getString("spouse_aadhaar"))
+                                        .spouseMobileno(rs.getString("spouse_mobileno"))
                                         .auditDetails(getAuditDetails(rs))
                                         //RAKHI S ON 09.12.2022
                                         .statisticalInfo(rowMapper.extractData(rs))

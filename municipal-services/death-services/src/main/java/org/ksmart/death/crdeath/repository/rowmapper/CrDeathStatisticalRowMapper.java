@@ -47,6 +47,11 @@ public class CrDeathStatisticalRowMapper
                             .educationMain(rs.getString("education_main"))
                             .educationSub(rs.getString("education_sub"))
                             .residenceLBType(rs.getString("residencelbtype"))
+                            //Rakhi S on 20.01.2023
+                            .smokingType(rs.getInt("smoking_type"))
+                            .tobaccoType(rs.getInt("tobacco_type"))
+                            .arecanutType(rs.getInt("arecanut_type"))
+                            .alcoholType(rs.getInt("alcohol_type"))
                             .build();
     }
 
