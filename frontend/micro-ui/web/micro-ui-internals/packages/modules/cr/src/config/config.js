@@ -330,7 +330,7 @@ export const newConfig = [
         component: "StatisticalInformation",
         texts: {
           headerCaption: "",
-          header: "CR_STATISTICAL_INFORMATION",
+          header: "CR_MORE_INFORMATION",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",

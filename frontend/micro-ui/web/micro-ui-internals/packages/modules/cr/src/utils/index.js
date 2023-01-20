@@ -785,7 +785,7 @@ export const convertToDeathRegistration = (data = {}) => {
             id: null,
             deathDtlId: null,
             tenantId: tenantId,
-            addrTypeId: A,
+            addrTypeId: "A",
             houseNo: data?.ApplicantDetails?.InformantAdrsDoorNo ? data?.ApplicantDetails?.InformantAdrsDoorNo : "",
             residenceAsscno: data?.ApplicantDetails?.InformantAdrsResNo ? data?.ApplicantDetails?.InformantAdrsResNo : "",
             streetNameEn: data?.ApplicantDetails?.InformantAdrsStreetNameEn ? data?.ApplicantDetails?.InformantAdrsStreetNameEn : "",

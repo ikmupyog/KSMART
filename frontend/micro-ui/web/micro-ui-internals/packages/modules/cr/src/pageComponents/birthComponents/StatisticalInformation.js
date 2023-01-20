@@ -30,14 +30,14 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     "ModeOfPregnancy"
   );
   const [BirthWeight, setBirthWeight] = useState(formData?.StatisticalInfoDetails?.BirthWeight ? formData?.StatisticalInfoDetails?.BirthWeight : "");
-  const [BirthHeight, setBirthHeight] = useState(formData?.StatisticalInfoDetails?.BirthHeight ? formData?.StatisticalInfoDetails?.BirthHeight : "");
+  // const [BirthHeight, setBirthHeight] = useState(formData?.StatisticalInfoDetails?.BirthHeight ? formData?.StatisticalInfoDetails?.BirthHeight : "");
   const [Religion, setReligion] = useState(formData?.StatisticalInfoDetails?.Religion ? formData?.StatisticalInfoDetails?.Religion : null);
   const [PregnancyDuration, setPregnancyDuration] = useState(
     formData?.StatisticalInfoDetails?.PregnancyDuration ? formData?.StatisticalInfoDetails?.PregnancyDuration : null
   );
-  const [MedicalAttension, setMedicalAttension] = useState(
-    formData?.StatisticalInfoDetails?.MedicalAttension ? formData?.StatisticalInfoDetails?.MedicalAttension : null
-  );
+  // const [MedicalAttension, setMedicalAttension] = useState(
+  //   formData?.StatisticalInfoDetails?.MedicalAttension ? formData?.StatisticalInfoDetails?.MedicalAttension : null
+  // );
   const [MedicalAttensionSub, setMedicalAttensionSub] = useState(
     formData?.StatisticalInfoDetails?.MedicalAttensionSub ? formData?.StatisticalInfoDetails?.MedicalAttensionSub : null
   );
@@ -50,28 +50,28 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
   const [DeliveryMethodSub, setDeliveryMethodSub] = useState(
     formData?.StatisticalInfoDetails?.DeliveryMethodSub ? formData?.StatisticalInfoDetails?.DeliveryMethodSub : null
   );
-  const [BirthPlaceDeccription, setBirthPlaceDeccription] = useState(
-    formData?.StatisticalInfoDetails?.BirthPlaceDeccription ? formData?.StatisticalInfoDetails?.BirthPlaceDeccription : ""
-  );
-  const [BirthPlaceDeccriptionMl, setBirthPlaceDeccriptionMl] = useState(
-    formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl ? formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl : ""
-  );
+  // const [BirthPlaceDeccription, setBirthPlaceDeccription] = useState(
+  //   formData?.StatisticalInfoDetails?.BirthPlaceDeccription ? formData?.StatisticalInfoDetails?.BirthPlaceDeccription : ""
+  // );
+  // const [BirthPlaceDeccriptionMl, setBirthPlaceDeccriptionMl] = useState(
+  //   formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl ? formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl : ""
+  // );
   // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   const [toast, setToast] = useState(false);
   const [ReligionStError, setReligionStError] = useState(formData?.StatisticalInfoDetails?.Religion ? false : false);
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.StatisticalInfoDetails ? false : false);
-  const [MedicalAttensionStError, setMedicalAttensionStError] = useState(formData?.StatisticalInfoDetails?.MedicalAttension ? false : false);
+  // const [MedicalAttensionStError, setMedicalAttensionStError] = useState(formData?.StatisticalInfoDetails?.MedicalAttension ? false : false);
   const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.StatisticalInfoDetails?.MedicalAttensionSub ? false : false);
   const [ModeOfPregnancyStError, setModeOfPregnancyStError] = useState(formData?.StatisticalInfoDetails?.ModeOfPregnancy ? false : false);
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethod ? false : false);
   const [DeliveryMethodSubStError, setDeliveryMethodSubStError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub ? false : false);
-  const [BirthPlaceDeccriptionStError, setBirthPlaceDeccriptionStError] = useState(
-    formData?.StatisticalInfoDetails?.BirthPlaceDeccription ? false : false
-  );
-  const [BirthPlaceDeccriptionMlStError, setBirthPlaceDeccriptionMlStError] = useState(
-    formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl ? false : false
-  );
+  // const [BirthPlaceDeccriptionStError, setBirthPlaceDeccriptionStError] = useState(
+  //   formData?.StatisticalInfoDetails?.BirthPlaceDeccription ? false : false
+  // );
+  // const [BirthPlaceDeccriptionMlStError, setBirthPlaceDeccriptionMlStError] = useState(
+  //   formData?.StatisticalInfoDetails?.BirthPlaceDeccriptionMl ? false : false
+  // );
   let cmbAttDelivery = [];
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
@@ -132,25 +132,39 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function setSelectBirthWeight(e) {
-    if (e.target.value.length === 3) {
+    if (e.target.value.length === 5) {
         return false;
         // window.alert("Username shouldn't exceed 10 characters")
     } else {
         setBirthWeight(e.target.value);
     }
   }
-  function setSelectBirthHeight(e) {
-    setBirthHeight(e.target.value);
-  }
+  // function setSelectBirthWeight(e) {
+  //   if (e.target.value.length === 5) {
+  //       return false;
+  //       // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //       setBirthWeight(e.target.value);
+  //   }
+  // }
+  // function setSelectBirthHeight(e) {
+  //   if (e.target.value.length === 5) {
+  //       return false;
+  //       // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //       setBirthHeight(e.target.value);
+        
+  //   }
+  // }
   function setSelectReligion(value) {
     setReligion(value);
   }
   function setSelectPregnancyDuration(value) {
     setPregnancyDuration(value);
   }
-  function setSelectMedicalAttension(value) {
-    setMedicalAttension(value);
-  }
+  // function setSelectMedicalAttension(value) {
+  //   setMedicalAttension(value);
+  // }
   function setSelectMedicalAttensionSub(value) {
     setMedicalAttensionSub(value);
   }
@@ -163,12 +177,12 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
   function setSelectModeOfPregnancy(value) {
     setModeOfPregnancy(value);
   }
-  function setSelectBirthPlaceDeccription(e) {
-    setBirthPlaceDeccription(e.target.value);
-  }
-  function setSelectBirthPlaceDeccriptionMl(e) {
-    setBirthPlaceDeccriptionMl(e.target.value);
-  }
+  // function setSelectBirthPlaceDeccription(e) {
+  //   setBirthPlaceDeccription(e.target.value);
+  // }
+  // function setSelectBirthPlaceDeccriptionMl(e) {
+  //   setBirthPlaceDeccriptionMl(e.target.value);
+  // }
 
   let validFlag = true;
   const goNext = () => {
@@ -193,16 +207,16 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
       setPregnancyDurationStError(false);
     }
 
-    if (MedicalAttension == null || MedicalAttension == "" || MedicalAttension == undefined) {
-      validFlag = false;
-      setMedicalAttensionStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setMedicalAttensionStError(false);
-    }
+    // if (MedicalAttension == null || MedicalAttension == "" || MedicalAttension == undefined) {
+    //   validFlag = false;
+    //   setMedicalAttensionStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setMedicalAttensionStError(false);
+    // }
 
     if (MedicalAttensionSub == null || MedicalAttensionSub == "" || MedicalAttensionSub == undefined) {
       validFlag = false;
@@ -236,47 +250,43 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
       setDeliveryMethodStError(false);
     }
 
-    if (BirthPlaceDeccription == null || BirthPlaceDeccription == "" || BirthPlaceDeccription == undefined) {
-      validFlag = false;
-      setBirthPlaceDeccriptionStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setBirthPlaceDeccriptionStError(false);
-    }
-    if (BirthPlaceDeccriptionMl == null || BirthPlaceDeccriptionMl == "" || BirthPlaceDeccriptionMl == undefined) {
-      validFlag = false;
-      setBirthPlaceDeccriptionMlStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setBirthPlaceDeccriptionMlStError(false);
-    }
+    // if (BirthPlaceDeccription == null || BirthPlaceDeccription == "" || BirthPlaceDeccription == undefined) {
+    //   validFlag = false;
+    //   setBirthPlaceDeccriptionStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setBirthPlaceDeccriptionStError(false);
+    // }
+    // if (BirthPlaceDeccriptionMl == null || BirthPlaceDeccriptionMl == "" || BirthPlaceDeccriptionMl == undefined) {
+    //   validFlag = false;
+    //   setBirthPlaceDeccriptionMlStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setBirthPlaceDeccriptionMlStError(false);
+    // }
 
     if (validFlag == true) {
       sessionStorage.setItem("BirthWeight", BirthWeight ? BirthWeight : null);
-      sessionStorage.setItem("BirthHeight", BirthHeight ? BirthHeight : null);
+      // sessionStorage.setItem("BirthHeight", BirthHeight ? BirthHeight : null);
       sessionStorage.setItem("Religion", Religion ? Religion.code : null);
       sessionStorage.setItem("PregnancyDuration", PregnancyDuration ? PregnancyDuration.code : null);
-      sessionStorage.setItem("MedicalAttension", MedicalAttension ? MedicalAttension.code : null);
+      // sessionStorage.setItem("MedicalAttension", MedicalAttension ? MedicalAttension.code : null);
       sessionStorage.setItem("MedicalAttensionSub", MedicalAttensionSub ? MedicalAttensionSub.code : null);
       sessionStorage.setItem("DeliveryMethod", DeliveryMethod ? DeliveryMethod.code : null);
       sessionStorage.setItem("ModeOfPregnancy", ModeOfPregnancy ? ModeOfPregnancy.code : null);
-      sessionStorage.setItem("BirthPlaceDeccription", BirthPlaceDeccription ? BirthPlaceDeccription : null);
-      sessionStorage.setItem("BirthPlaceDeccriptionMl", BirthPlaceDeccriptionMl ? BirthPlaceDeccriptionMl : null);
+      // sessionStorage.setItem("BirthPlaceDeccription", BirthPlaceDeccription ? BirthPlaceDeccription : null);
+      // sessionStorage.setItem("BirthPlaceDeccriptionMl", BirthPlaceDeccriptionMl ? BirthPlaceDeccriptionMl : null);
 
       onSelect(config.key, {
         BirthWeight,
-        BirthHeight,
         Religion,
-        PregnancyDuration,
-        MedicalAttension,
-        BirthPlaceDeccription,
-        BirthPlaceDeccriptionMl,
+        PregnancyDuration,       
         MedicalAttensionSub,
         DeliveryMethod,
         ModeOfPregnancy,
@@ -301,16 +311,112 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!BirthWeight}>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_STATISTICAL_INFORMATION")}`}</span>{" "}
             </h1>
           </div>
+        </div> */}
+        <div className="row">
+          <div className="col-md-12">
+          <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_MODE_OF_PREGNANCY")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbModePregnancy}
+                selected={ModeOfPregnancy}
+                select={setSelectModeOfPregnancy}
+                placeholder={`${t("CR_MODE_OF_PREGNANCY")}`}
+              />
+            </div>
+           
+            {/* <div className="col-md-3">
+              <CardLabel>{t("CR_BIRTH_HEIGHT")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="BirthHeight"
+                value={BirthHeight}
+                onChange={setSelectBirthHeight}
+                placeholder={`${t("CR_BIRTH_HEIGHT")}`}
+                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "number", title: t("CR_INVALID_BIRTH_HEIGHT") })}
+              />
+            </div> */}
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_PREGNANCY_DURATION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="i18nKey"
+                isMandatory={false}
+                option={cmbPregWeek}
+                selected={PregnancyDuration}
+                select={setSelectPregnancyDuration}
+                placeholder={`${t("CR_PREGNANCY_DURATION")}`}
+              />
+            </div>
+           
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbAttDeliverySub}
+                selected={MedicalAttensionSub}
+                select={setSelectMedicalAttensionSub}
+                placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
+              />
+            </div>
+          </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbAttDelivery}
+                selected={MedicalAttension}
+                select={setSelectMedicalAttension}
+                placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
+              />
+            </div> */}
+           
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_DELIVERY_METHOD")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbDeliveryMethod}
+                selected={DeliveryMethod}
+                select={setSelectDeliveryMethod}
+                placeholder={`${t("CR_DELIVERY_METHORD")}`}
+              />
+            </div>
+            <div className="col-md-4">
               <CardLabel>
                 {t("CR_BIRTH_WEIGHT")}
                 <span className="mandatorycss">*</span>
@@ -327,21 +433,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_BIRTH_WEIGHT") })}
               />
             </div>
-            <div className="col-md-3">
-              <CardLabel>{t("CR_BIRTH_HEIGHT")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="BirthHeight"
-                value={BirthHeight}
-                onChange={setSelectBirthHeight}
-                placeholder={`${t("CR_BIRTH_HEIGHT")}`}
-                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "number", title: t("CR_INVALID_BIRTH_HEIGHT") })}
-              />
-            </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_RELIGION")}`}
                 <span className="mandatorycss">*</span>
@@ -356,89 +448,10 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_RELIGION")}`}
               />
             </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_PREGNANCY_DURATION")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="i18nKey"
-                isMandatory={false}
-                option={cmbPregWeek}
-                selected={PregnancyDuration}
-                select={setSelectPregnancyDuration}
-                placeholder={`${t("CR_PREGNANCY_DURATION")}`}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbAttDelivery}
-                selected={MedicalAttension}
-                select={setSelectMedicalAttension}
-                placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbAttDeliverySub}
-                selected={MedicalAttensionSub}
-                select={setSelectMedicalAttensionSub}
-                placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION_SUB")}`}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_DELIVERY_METHOD")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbDeliveryMethod}
-                selected={DeliveryMethod}
-                select={setSelectDeliveryMethod}
-                placeholder={`${t("CR_DELIVERY_METHORD")}`}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_MODE_OF_PREGNANCY")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbModePregnancy}
-                selected={ModeOfPregnancy}
-                select={setSelectModeOfPregnancy}
-                placeholder={`${t("CR_MODE_OF_PREGNANCY")}`}
-              />
-            </div>
           </div>
         </div>
 
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
@@ -480,49 +493,45 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {toast && (
           <Toast
             error={
               ReligionStError ||
-              PregnancyDurationStError ||
-              MedicalAttensionStError ||
+              PregnancyDurationStError ||             
               MedicalAttensionSubStError ||
               DeliveryMethodStError ||
-              ModeOfPregnancyStError ||
-              BirthPlaceDeccriptionStError ||
-              BirthPlaceDeccriptionMlStError
+              ModeOfPregnancyStError 
+             
               
               // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
             }
             label={
               ReligionStError ||
               PregnancyDurationStError ||
-              MedicalAttensionStError ||
               MedicalAttensionSubStError ||
               DeliveryMethodStError ||
-              ModeOfPregnancyStError ||
-              BirthPlaceDeccriptionStError ||
-              BirthPlaceDeccriptionMlStError
+              ModeOfPregnancyStError 
+            
                 ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                   // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
                   ReligionStError
                   ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
                   : PregnancyDurationStError
                   ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                  : MedicalAttensionStError
-                  ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                  // : MedicalAttensionStError
+                  // ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_SUB_CHOOSE`) 
                   : MedicalAttensionSubStError
-                  ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_SUB_CHOOSE`)
+                  ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
                   : DeliveryMethodStError
                   ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
                   : ModeOfPregnancyStError
                   ? t(`BIRTH_ERROR_MODE_PREGNANCY_CHOOSE`)
-                  : BirthPlaceDeccriptionStError
-                  ? t(`BIRTH_ERROR_DESCRIPTION_EN_ERROR`)
-                  : BirthPlaceDeccriptionMlStError
-                  ? t(`BIRTH_ERROR_DESCRIPTION_ML_ERROR`)
+                  // : BirthPlaceDeccriptionStError
+                  // ? t(`BIRTH_ERROR_DESCRIPTION_EN_ERROR`)
+                  // : BirthPlaceDeccriptionMlStError
+                  // ? t(`BIRTH_ERROR_DESCRIPTION_ML_ERROR`)
                   : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 

@@ -53,12 +53,33 @@ const InstitutionDetails = ({ config, onSelect, userType, formData,setInstitutio
     setSiginedOfficerDesignation(e.target.value);
   }
   function  setSelectInstitutionMobilNo(e) {
-    setInstitutionMobilNo(e.target.value);
+    if (e.target.value.length != 0) {
+      if (e.target.value.length > 10) {
+        return false;
+      } else if (e.target.value.length < 10) {
+        // setInstitutionMobilNo(e.target.value);
+        return false;
+      } else {
+        setInstitutionMobilNo(e.target.value);
+      }
+    } else {
+      setInstitutionMobilNo(e.target.value);
+    }
   }
   function  setSelectInstitutionAadhaar(e) {
-    setInstitutionAadhaar(e.target.value);
+    if (e.target.value.length != 0) {
+      if (e.target.value.length > 12) {
+        return false;
+      } else if (e.target.value.length < 12) {
+        setInstitutionAadhaar(e.target.value);
+        return false;
+      } else {
+        setInstitutionAadhaar(e.target.value);
+      }
+    } else {
+      setInstitutionAadhaar(e.target.value);
+    }
   }
-  
   const goNext = () => {
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
     console.log('clicked');

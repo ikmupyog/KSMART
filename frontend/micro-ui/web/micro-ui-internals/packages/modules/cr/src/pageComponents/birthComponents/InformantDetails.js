@@ -3,19 +3,19 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernme
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const InformantDetails = ({ config, onSelect, userType, formData,InfomantFirstNameEn, setInfomantFirstNameEn,InfomantAadhar, setInfomantAadhar,InfomantEmail, setInfomantEmail,
+const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstNameEn, setInfomantFirstNameEn, InfomantAadhar, setInfomantAadhar, InfomantEmail, setInfomantEmail,
     InfomantMobile, setInfomantMobile
- }) => {
+}) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
-    
+
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     // const [InfomantFirstNameEn, setInfomantFirstNameEn] = useState(formData?.InfomantInfoDetails?.InfomantFirstNameEn);
     // const [InfomantAadhar, setInfomantAadhar] = useState(formData?.InfomantInfoDetails?.InfomantAadhar);
     // const [InfomantEmail, setInfomantEmail] = useState(formData?.InfomantInfoDetails?.InfomantEmail);
     // const [InfomantMobile, setInfomantMobile] = useState(formData?.InfomantInfoDetails?.InfomantMobile);
-  
+
     const onSkip = () => onSelect();
 
     function setSelectInfomantFirstNameEn(e) {
@@ -23,23 +23,46 @@ const InformantDetails = ({ config, onSelect, userType, formData,InfomantFirstNa
     }
 
     function setSelectInfomantAadhar(e) {
-        setInfomantAadhar(e.target.value);
+        if (e.target.value.length != 0) {
+            if (e.target.value.length > 12) {
+                return false;
+            } else if (e.target.value.length < 12) {
+                setInfomantAadhar(e.target.value);
+                return false;
+            } else {
+                setInfomantAadhar(e.target.value);
+            }
+        } else {
+            setInfomantAadhar(e.target.value);
+        }
     }
-   
+
     function setSelectInfomantEmail(e) {
         setInfomantEmail(e.target.value);
     }
     function setSelectInfomantMobile(e) {
+        if (e.target.value.length != 0) {
+            if (e.target.value.length > 10) {
+                return false;
+            } else if (e.target.value.length < 10) {
+                setInfomantMobile(e.target.value);
+                return false;
+            } else {
+                setInfomantMobile(e.target.value);
+            }
+        } else {
+            setInfomantMobile(e.target.value);
+        }
         setInfomantMobile(e.target.value);
     }
-  
+
     const goNext = () => {
         // sessionStorage.setItem("InfomantFirstNameEn", InfomantFirstNameEn);          
         // sessionStorage.setItem("InfomantAadhar", InfomantAadhar);       
         // sessionStorage.setItem("InfomantEmail", InfomantEmail);
         // sessionStorage.setItem("InfomantMobile", InfomantMobile);   
-     
-      
+
+
         // onSelect(config.key, {
         //     InfomantFirstNameEn,  InfomantAadhar,  InfomantEmail, InfomantMobile        });
     }
@@ -57,7 +80,7 @@ const InformantDetails = ({ config, onSelect, userType, formData,InfomantFirstNa
                     <div className="col-md-12" >
                         <div className="col-md-3" ><CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="InfomantFirstNameEn"
-                                value={InfomantFirstNameEn} onChange={setSelectInfomantFirstNameEn} disable={isEdit}  placeholder={`${t("CR_FIRST_NAME_EN")}`}{...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+                                value={InfomantFirstNameEn} onChange={setSelectInfomantFirstNameEn} disable={isEdit} placeholder={`${t("CR_FIRST_NAME_EN")}`}{...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
                         </div>
                         <div className="col-md-3" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
                             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="InfomantAadhar" value={InfomantAadhar} onChange={setSelectInfomantAadhar} disable={isEdit} placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
@@ -70,11 +93,11 @@ const InformantDetails = ({ config, onSelect, userType, formData,InfomantFirstNa
                         </div>
                     </div>
                 </div>
-                
 
-               
 
-                
+
+
+
             </FormStep>
         </React.Fragment>
     );

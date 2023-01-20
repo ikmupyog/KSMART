@@ -239,7 +239,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           <div>
-            {selectedOption === "ILB" ||  (
+            {selectedOption === "ILB" &&  (
               <AdressInside
                 PresentCountry={PresentCountry}
                 setPresentCountry={setPresentCountry}
