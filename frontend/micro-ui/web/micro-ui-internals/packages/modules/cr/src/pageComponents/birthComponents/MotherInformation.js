@@ -69,6 +69,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     const [MotherPlaceTypeError, setMotherPlaceTypeError] = useState(formData?.MotherInfoDetails?.MotherPlaceType ? false : false);
     const [MotherAgeMarriageError, setMotherAgeMarriageError] = useState(formData?.MotherInfoDetails?.MotherAgeMarriage ? false : false);
     const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.MotherInfoDetails?.OrderofChildren ?  false : false);
+    const [AgeMariageStatusHide, setAgeMariageStatus] = useState(formData?.MotherInfoDetails?.MotherMaritalStatus ? formData?.MotherInfoDetails?.MotherMaritalStatus : null);
 
     const cmbUrbanRural = [
         { i18nKey: "Urban", code: "URBAN" },
@@ -312,6 +313,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
     }
     function setSelectMotherMaritalStatus(value) {
         setMotherMaritalStatus(value);
+        setAgeMariageStatus(value.code);
     }
     // function setSelectMotherNoOfBirths(e) {
     //     setMotherNoOfBirths(e.target.value);
@@ -807,7 +809,8 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 select={setSelectMotherNationality}
                                 disabled={isMotherInfo} placeholder={`${t("CR_NATIONALITY")}`}
                             />
-                        </div>
+                        </div>                       
+                         
                         <div className="col-md-3" >
                             <CardLabel>{`${t("CR_MOTHER_MARITAL_STATUS")}`}<span className="mandatorycss">*</span></CardLabel>
                             <Dropdown
@@ -836,11 +839,12 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                 </div>
                 <div className="row" >
                     <div className="col-md-12" >
-                        <div className="col-md-2" ><CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}<span className="mandatorycss">*</span></CardLabel>
+                        <div className="col-md-4" ><CardLabel>{t("CR_DATE_OF_BIRTH_TIME")}<span className="mandatorycss">*</span></CardLabel>
                             <DatePicker date={MotherDOB} name="MotherDOB" onChange={setselectMotherDOB} placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`} />
 
                         </div>
-                        <div className="col-md-3" >
+                        {AgeMariageStatusHide === "MARRIED" && ( 
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_AGE_OF_MARRIAGE")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
@@ -853,9 +857,9 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
                                 disable={isMotherInfo} placeholder={`${t("CR_AGE_OF_MARRIAGE")}`}
                                 {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_AGE_OF_MARRIAGE") })}
                             />
-                        </div>
+                        </div>)}
 
-                        <div className="col-md-3" >
+                        <div className="col-md-4" >
                             <CardLabel>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
