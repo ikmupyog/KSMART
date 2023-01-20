@@ -1568,7 +1568,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-3">
                       <CardLabel>
                         {t("CR_DOOR_NO")}
-                        <span className="mandatorycss">*</span>
+                       
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1579,11 +1579,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         value={PresentDoorNo}
                         onChange={setSelectPresentDoorNo}
                         placeholder={`${t("CR_DOOR_NO")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
                       />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")} <span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")} </CardLabel>
                       <TextInput
                         t={t}
                         isMandatory={false}
@@ -1593,11 +1593,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         value={PresentResNoEn}
                         onChange={setSelectPresentResNoEn}
                         placeholder={`${t("CR_RES_ASSOCIATION_NO_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_EN") })}
                       />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")} <span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")} </CardLabel>
                       <TextInput
                         t={t}
                         isMandatory={false}
@@ -1607,7 +1607,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         value={PresentResNoMl}
                         onChange={setSelectPresentResNoMl}
                         placeholder={`${t("CR_RES_ASSOCIATION_NO_ML")}`}
-                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
+                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
                       />
                     </div>
                   </div>
@@ -1922,7 +1922,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-3">
                         <CardLabel>
                           {t("CR_STREET_NAME_EN")}
-                          <span className="mandatorycss">*</span>
+                         
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1933,13 +1933,13 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           value={PermanentStreetNameEn}
                           onChange={setSelectPermanentStreetNameEn}
                           placeholder={`${t("CR_STREET_NAME_EN")}`}
-                          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+                          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
                         />
                       </div>
                       <div className="col-md-3">
                         <CardLabel>
                           {t("CR_STREET_NAME_ML")}
-                          <span className="mandatorycss">*</span>
+                         
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1950,7 +1950,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           value={PermanentStreetNameMl}
                           onChange={setSelectPermanentStreetNameMl}
                           placeholder={`${t("CR_STREET_NAME_ML")}`}
-                          {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
+                          {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
                         />
                       </div>
                       <div className="col-md-3">
@@ -2013,7 +2013,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-3">
                         <CardLabel>
                           {t("CR_DOOR_NO")}
-                          <span className="mandatorycss">*</span>
+                          
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -2024,11 +2024,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           value={PermanentDoorNo}
                           onChange={setSelectPermanentDoorNo}
                           placeholder={`${t("CR_DOOR_NO")}`}
-                          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
+                          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
                         />
                       </div>
                       <div className="col-md-3">
-                        <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}<span className="mandatorycss">*</span></CardLabel>
+                        <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}</CardLabel>
                         <TextInput
                           t={t}
                           isMandatory={false}
@@ -2042,7 +2042,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         />
                       </div>
                       <div className="col-md-3">
-                        <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}<span className="mandatorycss">*</span></CardLabel>
+                        <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}</CardLabel>
                         <TextInput
                           t={t}
                           isMandatory={false}
