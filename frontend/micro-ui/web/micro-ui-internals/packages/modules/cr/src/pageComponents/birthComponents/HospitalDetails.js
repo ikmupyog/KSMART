@@ -30,15 +30,34 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
+    let cmbDesignations =[];
+    let cmbRegistrarNames =[];
+    let OtherRegistrar =[];
   useEffect(() => {
     if (isInitialRender) {
       if (HospitalName) {
         setIsInitialRender(false);
+        setFilteredOfficerName(null);
+        setFilteredDesignation(null);
         if (cmbhospital.length > 0) {
-          let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
-          let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
-          // console.log(cmbRegistrarNames[0].registar);                
-          setFilteredOfficerName(cmbRegistrarNames[0].registar);
+          cmbDesignations =[];
+          cmbRegistrarNames =[];
+          cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+          // console.log(cmbRegistrarNames);
+          cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+          // console.log(cmbRegistrarNames[0].registar);      
+          OtherRegistrar=[];
+          OtherRegistrar = cmbRegistrarNames[0].registar;
+          OtherRegistrar.push({
+            hospitalRegistar:'Others',
+            registarDesig:'',
+            registrationAadhaar:'',
+            registrationMobile:'',
+            registrationNo:''
+          })
+          console.log(OtherRegistrar) ;       
+
+          setFilteredOfficerName(OtherRegistrar);
           setFilteredDesignation(cmbDesignations[0].registar);
           // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
           // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
