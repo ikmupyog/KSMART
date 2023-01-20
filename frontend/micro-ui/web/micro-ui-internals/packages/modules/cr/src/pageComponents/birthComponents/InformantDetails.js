@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton ,TextArea } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstNameEn, setInfomantFirstNameEn, InfomantAadhar, setInfomantAadhar, InfomantEmail, setInfomantEmail,
-    InfomantMobile, setInfomantMobile
+    InfomantMobile, setInfomantMobile ,
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
@@ -15,13 +15,21 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
     // const [InfomantAadhar, setInfomantAadhar] = useState(formData?.InfomantInfoDetails?.InfomantAadhar);
     // const [InfomantEmail, setInfomantEmail] = useState(formData?.InfomantInfoDetails?.InfomantEmail);
     // const [InfomantMobile, setInfomantMobile] = useState(formData?.InfomantInfoDetails?.InfomantMobile);
+    const [InformantAddressLineOne, setInformantAddressLineOne] = useState(formData?.InfomantInfoDetails?.InformantAddressLineOne);
+    const [InformantAddressLineTwo, setInformantAddressLineTwo] = useState(formData?.InfomantInfoDetails?.InformantAddressLineTwo);
+
 
     const onSkip = () => onSelect();
 
     function setSelectInfomantFirstNameEn(e) {
         setInfomantFirstNameEn(e.target.value);
     }
-
+    function setSelectInformantAddressLineOne(e) {
+        setInformantAddressLineOne(e.target.value);
+    }
+    function setSelectInformantAddressLineTwo(e) {
+        setInformantAddressLineTwo(e.target.value);
+    }
     function setSelectInfomantAadhar(e) {
         if (e.target.value.length != 0) {
             if (e.target.value.length > 12) {
@@ -61,7 +69,9 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
         // sessionStorage.setItem("InfomantAadhar", InfomantAadhar);       
         // sessionStorage.setItem("InfomantEmail", InfomantEmail);
         // sessionStorage.setItem("InfomantMobile", InfomantMobile);   
-
+        // sessionStorage.setItem("InformantAddressLineOne", InformantAddressLineOne);   
+        // sessionStorage.setItem("InformantAddressLineTwo", InformantAddressLineTwo);   
+       
 
         // onSelect(config.key, {
         //     InfomantFirstNameEn,  InfomantAadhar,  InfomantEmail, InfomantMobile        });
@@ -93,7 +103,40 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
                         </div>
                     </div>
                 </div>
-
+                <div className="row">
+         <div className="col-md-12" >
+         <div className="col-md-6" >
+          <CardLabel>{`${t("CR_ADDRESS_1_EN")}`}<span className="mandatorycss">*</span></CardLabel> 
+            <TextArea       
+            t={t}
+            isMandatory={true}
+            type={"text"}
+            optionKey="i18nKey"
+            name="InformantAddressLineOne"
+            value={InformantAddressLineOne}
+            onChange={setSelectInformantAddressLineOne}
+            disable={isEdit}
+            placeholder={`${t("CR_ADDRESS_1_EN")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS_1_EN") })}
+            />
+        </div>
+         <div className="col-md-6" >
+         <CardLabel>{`${t("CR_ADDRESS_2_EN")}`}</CardLabel>
+            <TextArea       
+            t={t}
+            isMandatory={false}
+            type={"text"}
+            optionKey="i18nKey"
+            name="InformantAddressLineTwo"
+            value={InformantAddressLineTwo}
+            onChange={setSelectInformantAddressLineTwo}
+            disable={isEdit}
+            placeholder={`${t("CR_ADDRESS_2_EN")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS_2_EN") })}
+            />
+        </div>
+      </div>  
+    </div>    
 
 
 
