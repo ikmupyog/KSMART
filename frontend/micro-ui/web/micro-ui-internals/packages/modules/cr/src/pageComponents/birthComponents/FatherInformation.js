@@ -35,7 +35,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     const [FatherMobileError, setFatherMobileError] = useState(formData?.FatherInfoDetails?.FatherAadhar ? false : false);
     const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.FatherInfoDetails?.FatherFirstNameEn ? false : false);
     const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.FatherInfoDetails?.FatherFirstNameMl ? false : false);
-    const [FatherEduError, setFatherEduError] = useState(formData?.FatherInfoDetails?.FatherEducation ? false : false);    
+    const [FatherEduError, setFatherEduError] = useState(formData?.FatherInfoDetails?.FatherEducation ? false : false);
     const [FatherProfError, setFatherProfError] = useState(formData?.FatherInfoDetails?.FatherProfession ? false : false);
 
     let cmbQualification = [];
@@ -58,19 +58,19 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
         });
     let cmbNation = [];
     Nation &&
-    Nation["common-masters"] &&
-    Nation["common-masters"].Country.map((ob) => {
-        cmbNation.push(ob);
-    });
+        Nation["common-masters"] &&
+        Nation["common-masters"].Country.map((ob) => {
+            cmbNation.push(ob);
+        });
     let cmbfilterNation = [];
-    
-    useEffect(()=>{
-        if (stateId === "kl" && cmbNation.length>0 ) {
-            cmbfilterNation= cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
-             setFatherNationality(cmbfilterNation[0]);
-           
+
+    useEffect(() => {
+        if (stateId === "kl" && cmbNation.length > 0) {
+            cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
+            setFatherNationality(cmbfilterNation[0]);
+
         }
-    },[Nation])
+    }, [Nation])
     const onSkip = () => onSelect();
 
     function setSelectFatherFirstNameEn(e) {
@@ -224,39 +224,11 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
     // console.log(cmbNation);
     let validFlag = true;
     const goNext = () => {
-        if(FatherAadhar != null || FatherAadhar != '' || FatherAadhar != undefined){
-            if (FatherAadharError) {
-                validFlag = false;
-                setFatherAadharError(true);
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-                // return false;
-                // window.alert("Username shouldn't exceed 10 characters")
-            } else {
-                setFatherAadharError(false);
-            }
-        } 
-        if(FatherMobile != null || FatherMobile != '' || FatherMobile != undefined){
-            console.log(FatherMobile);
-            if (FatherMobileError) {
-                validFlag = false;
-                setFatherMobileError(true);
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-                // return false;
-                // window.alert("Username shouldn't exceed 10 characters")
-            } else {
-                setFatherMobileError(false);
-            }
-            if(FatherFirstNameEn != null || FatherFirstNameEn != '' || FatherFirstNameEn != undefined){
-                console.log(FatherFirstNameEn);
-                if (FatherFirstNmeEnError) {
+        if (isFatherInfo === false) {
+            if (FatherAadhar != null || FatherAadhar != '' || FatherAadhar != undefined) {
+                if (FatherAadharError) {
                     validFlag = false;
-                    setFatherFirstNmeEnError(true);
+                    setFatherAadharError(true);
                     setToast(true);
                     setTimeout(() => {
                         setToast(false);
@@ -264,53 +236,83 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                     // return false;
                     // window.alert("Username shouldn't exceed 10 characters")
                 } else {
-                    setFatherFirstNmeEnError(false);
+                    setFatherAadharError(false);
                 }
-                if (FatherEducation == null || FatherEducation == '' || FatherEducation == undefined) {
-                    validFlag = false;
-                    setFatherEduError(true);
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                
-            } else {
-                setFatherEduError(false);
             }
-            if (FatherProfession == null || FatherProfession == '' || FatherProfession == undefined) {
+            if (FatherMobile != null || FatherMobile != '' || FatherMobile != undefined) {
+                console.log(FatherMobile);
+                if (FatherMobileError) {
                     validFlag = false;
-                    setFatherProfError(true);
+                    setFatherMobileError(true);
                     setToast(true);
                     setTimeout(() => {
                         setToast(false);
                     }, 2000);
-            } else {
-                setFatherProfError(false);
+                    // return false;
+                    // window.alert("Username shouldn't exceed 10 characters")
+                } else {
+                    setFatherMobileError(false);
+                }
+                if (FatherFirstNameEn != null || FatherFirstNameEn != '' || FatherFirstNameEn != undefined) {
+                    console.log(FatherFirstNameEn);
+                    if (FatherFirstNmeEnError) {
+                        validFlag = false;
+                        setFatherFirstNmeEnError(true);
+                        setToast(true);
+                        setTimeout(() => {
+                            setToast(false);
+                        }, 2000);
+                        // return false;
+                        // window.alert("Username shouldn't exceed 10 characters")
+                    } else {
+                        setFatherFirstNmeEnError(false);
+                    }
+                    if (FatherEducation == null || FatherEducation == '' || FatherEducation == undefined) {
+                        validFlag = false;
+                        setFatherEduError(true);
+                        setToast(true);
+                        setTimeout(() => {
+                            setToast(false);
+                        }, 2000);
+
+                    } else {
+                        setFatherEduError(false);
+                    }
+                    if (FatherProfession == null || FatherProfession == '' || FatherProfession == undefined) {
+                        validFlag = false;
+                        setFatherProfError(true);
+                        setToast(true);
+                        setTimeout(() => {
+                            setToast(false);
+                        }, 2000);
+                    } else {
+                        setFatherProfError(false);
+                    }
+                }
             }
         }
-    }
-        if(validFlag==true){
-        sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn ? FatherFirstNameEn : null);
-        sessionStorage.setItem("FatherMiddleNameEn", FatherMiddleNameEn ? FatherMiddleNameEn : null);
-        sessionStorage.setItem("FatherLastNameEn", FatherLastNameEn ? FatherLastNameEn : null);
-        sessionStorage.setItem("FatherFirstNameMl", FatherFirstNameMl ? FatherFirstNameMl : null);
-        sessionStorage.setItem("FatherMiddleNameMl", FatherMiddleNameMl ? FatherMiddleNameMl : null);
-        sessionStorage.setItem("FatherLastNameMl", FatherLastNameMl ? FatherLastNameMl : null);
-        sessionStorage.setItem("FatherAadhar", FatherAadhar ? FatherAadhar : null);
-        sessionStorage.setItem("FatherPassportNo", FatherPassportNo ? FatherPassportNo : null);
-        sessionStorage.setItem("FatherEmail", FatherEmail ? FatherEmail : null);
-        sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null);
-        sessionStorage.setItem("FatherEducation", FatherEducation ? FatherEducation.code : null);
-        sessionStorage.setItem("FatherEducationSubject", FatherEducationSubject ? FatherEducationSubject.code : null);
-        sessionStorage.setItem("FatherProfession", FatherProfession ? FatherProfession.code : null);
-        sessionStorage.setItem("FatherNationality", FatherNationality ? FatherNationality.code : null);
-        sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
-        onSelect(config.key, {
-            FatherFirstNameEn, FatherMiddleNameEn, FatherLastNameEn,
-            FatherFirstNameMl, FatherMiddleNameMl, FatherLastNameMl, FatherAadhar, FatherPassportNo, FatherEmail,
-            FatherMobile, FatherEducation, FatherEducationSubject, FatherProfession, FatherNationality, isFatherInfo
-        });
-    }
+        if (validFlag == true) {
+            sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn ? FatherFirstNameEn : null);
+            sessionStorage.setItem("FatherMiddleNameEn", FatherMiddleNameEn ? FatherMiddleNameEn : null);
+            sessionStorage.setItem("FatherLastNameEn", FatherLastNameEn ? FatherLastNameEn : null);
+            sessionStorage.setItem("FatherFirstNameMl", FatherFirstNameMl ? FatherFirstNameMl : null);
+            sessionStorage.setItem("FatherMiddleNameMl", FatherMiddleNameMl ? FatherMiddleNameMl : null);
+            sessionStorage.setItem("FatherLastNameMl", FatherLastNameMl ? FatherLastNameMl : null);
+            sessionStorage.setItem("FatherAadhar", FatherAadhar ? FatherAadhar : null);
+            sessionStorage.setItem("FatherPassportNo", FatherPassportNo ? FatherPassportNo : null);
+            sessionStorage.setItem("FatherEmail", FatherEmail ? FatherEmail : null);
+            sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null);
+            sessionStorage.setItem("FatherEducation", FatherEducation ? FatherEducation.code : null);
+            sessionStorage.setItem("FatherEducationSubject", FatherEducationSubject ? FatherEducationSubject.code : null);
+            sessionStorage.setItem("FatherProfession", FatherProfession ? FatherProfession.code : null);
+            sessionStorage.setItem("FatherNationality", FatherNationality ? FatherNationality.code : null);
+            sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
+            onSelect(config.key, {
+                FatherFirstNameEn, FatherMiddleNameEn, FatherLastNameEn,
+                FatherFirstNameMl, FatherMiddleNameMl, FatherLastNameMl, FatherAadhar, FatherPassportNo, FatherEmail,
+                FatherMobile, FatherEducation, FatherEducationSubject, FatherProfession, FatherNationality, isFatherInfo
+            });
+        }
     }
     if (isQualificationLoading || isQualificationSubLoading || isProfessionLoading || isNationLoad) {
         return <Loader></Loader>;
@@ -327,10 +329,12 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-6" >
+                    <div className="col-md-12" >
                         <CheckBox label={t("Father Information Missing")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
                     </div>
                 </div>
+                {isFatherInfo === false && ( 
+                <div>
                 <div className="row">
                     <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FATHER_INFORMATION")}`}</span> </h1>
                     </div>
@@ -397,7 +401,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                                 value={FatherPassportNo}
                                 onChange={setSelectFatherPassportNo}
                                 disable={isFatherInfo} placeholder={`${t("CR_PASSPORT_NO")}`}
-                                style={{textTransform:"uppercase"}}
+                                style={{ textTransform: "uppercase" }}
                                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
                             />
                         </div>
@@ -425,6 +429,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                     </div>
                 </div>
+                </div>)}
                 {toast && (
                     <Toast
                         error={
@@ -433,11 +438,11 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
 
                         }
                         label={
-                            (FatherAadharError || FatherMobileError || FatherFirstNmeEnError  || FatherEduError || FatherProfError
+                            (FatherAadharError || FatherMobileError || FatherFirstNmeEnError || FatherEduError || FatherProfError
                                 //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                                 // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
                                 ?
-                                (FatherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : FatherMobileError ? t(`CR_INVALID_MOBILE_NO`)  : FatherFirstNmeEnError ? t(`CR_INVALID_FIRST_NAME_EN`)   : FatherEduError ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`) : FatherProfError ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`) 
+                                (FatherAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : FatherMobileError ? t(`CR_INVALID_MOBILE_NO`) : FatherFirstNmeEnError ? t(`CR_INVALID_FIRST_NAME_EN`) : FatherEduError ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`) : FatherProfError ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`)
                                     // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 

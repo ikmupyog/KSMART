@@ -15,57 +15,57 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
   // PresentCountry, setPresentCountry, PresentStateName, setPresentStateName, PresentDistrict, setPresentDistrict,
   // PresentLBTypeName, setPresentLBTypeName,PresentLBName, setPresentLBName,PresentTaluk, setPresentTaluk, PresentPostOffice, setPresentPostOffice,PresentPincode, setPresentPincode,
   // PresentHouseNameEn, setPresentHouseNameEn , PresentHouseNameMl, setPresentHouseNameMl,PresentDoorNo,setPresentDoorNo, PresentResNo, setPresentResNo,PresentMainPlaceEn, setPresentMainPlaceEn,
-  // PresentMainPlaceMl, setPresentMainPlaceMl,PresentLocalityNameEn, setPresentLocalityNameEn,   
+  // PresentMainPlaceMl, setPresentMainPlaceMl,PresentLocalityNameEn, setPresentLocalityNameEn,
   // PresentLocalityNameMl, setPresentLocalityNameMl,PresentStreetNameEn, setPresentStreetNameEn,PresentStreetNameMl, setPresentStreetNameMl,PresentCityEn, setPresentCityEn,PresentCityMl, setPresentCityMl,PresentVillage, setPresentVillage,
   // PermanentStateName, setPermanentStateName,PermanentDistrict, setPermanentDistrict,PermanentLBTypeName, setPermanentLBTypeName,PermanentLBName, setPermanentLBName,PermanentVillage, setPermanentVillage,PermanentTaluk, setPermanentTaluk,
   // PermanentPostOffice, setPermanentPostOffice,PermanentPincode, setPermanentPincode,PermanentResNo, setPermanentResNo,PermanentHouseNameEn, setPermanentHouseNameEn,PermanentHouseNameMl, setPermanentHouseNameMl,PermanentMainPlaceEn,
   // setPermanentMainPlaceEn,PermanentMainPlaceMl, setPermanentMainPlaceMl,PermanentDoorNo, setPermanentDoorNo,PermanentCityEn, setPermanentCityEn,PermanentCityMl, setPermanentCityMl,PermanentLocalityNameEn, setPermanentLocalityNameEn,
   // PermanentLocalityNameMl, setPermanentLocalityNameMl,PermanentStreetNameEn, setPermanentStreetNameEn,PermanentStreetNameMl, setPermanentStreetNameMl,isPrsentAddress, setIsPrsentAddress, PermanentCountry, setPermanentCountry
 
-  const [PresentCountry, setPresentCountry] = useState(formData?.AddressOfDecesed?.PresentCountry);
-  const [PresentStateName, setPresentStateName] = useState(formData?.AddressOfDecesed?.PresentStateName);
-  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressOfDecesed?.PresentDistrict);
-  const [PresentLBTypeName, setPresentLBTypeName] = useState(formData?.AddressOfDecesed?.PresentLBTypeName);
-  const [PresentLBName, setPresentLBName] = useState(formData?.AddressOfDecesed?.PresentLBName);
-  const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressOfDecesed?.PresentTaluk);
-  const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressOfDecesed?.PresentPostOffice);
-  const [PresentPincode, setPresentPincode] = useState(formData?.AddressOfDecesed?.PresentPincode);
-  const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressOfDecesed?.PresentHouseNameEn);
-  const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressOfDecesed?.PresentHouseNameMl);
-  const [PresentDoorNo, setPresentDoorNo] = useState(formData?.AddressOfDecesed?.PresentDoorNo);
-  const [PresentResNo, setPresentResNo] = useState(formData?.AddressOfDecesed?.PresentResNo);
-  const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PresentMainPlaceEn);
-  const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PresentMainPlaceMl);
-  const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PresentLocalityNameEn);
-  const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PresentLocalityNameMl);
-  const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressOfDecesed?.PresentStreetNameEn);
-  const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressOfDecesed?.PresentStreetNameMl);
-  const [PresentCityEn, setPresentCityEn] = useState(formData?.AddressOfDecesed?.PresentCityEn);
-  const [PresentCityMl, setPresentCityMl] = useState(formData?.AddressOfDecesed?.PresentCityMl);
-  const [PresentVillage, setPresentVillage] = useState(formData?.AddressOfDecesed?.PresentVillage);
+  const [PresentCountry, setPresentCountry] = useState(formData?.AddressOfDecesed?.PresentCountry ? formData?.AddressOfDecesed?.PresentCountry : null);
+  const [PresentStateName, setPresentStateName] = useState(formData?.AddressOfDecesed?.PresentStateName ? formData?.AddressOfDecesed?.PresentStateName : null);
+  const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressOfDecesed?.PresentDistrict ? formData?.AddressOfDecesed?.PresentDistrict : null);
+  const [PresentLBTypeName, setPresentLBTypeName] = useState(formData?.AddressOfDecesed?.PresentLBTypeName ? formData?.AddressOfDecesed?.PresentLBTypeName : null);
+  const [PresentLBName, setPresentLBName] = useState(formData?.AddressOfDecesed?.PresentLBName ? formData?.AddressOfDecesed?.PresentLBName : null);
+  const [PresentTaluk, setPresentTaluk] = useState(formData?.AddressOfDecesed?.PresentTaluk ? formData?.AddressOfDecesed?.PresentTaluk : null);
+  const [PresentPostOffice, setPresentPostOffice] = useState(formData?.AddressOfDecesed?.PresentPostOffice ? formData?.AddressOfDecesed?.PresentPostOffice : null);
+  const [PresentPincode, setPresentPincode] = useState(formData?.AddressOfDecesed?.PresentPincode ? formData?.AddressOfDecesed?.PresentPincode : 0);
+  const [PresentHouseNameEn, setPresentHouseNameEn] = useState(formData?.AddressOfDecesed?.PresentHouseNameEn ? formData?.AddressOfDecesed?.PresentHouseNameEn : "");
+  const [PresentHouseNameMl, setPresentHouseNameMl] = useState(formData?.AddressOfDecesed?.PresentHouseNameMl ? formData?.AddressOfDecesed?.PresentHouseNameMl : ""); 
+  const [PresentDoorNo, setPresentDoorNo] = useState(formData?.AddressOfDecesed?.PresentDoorNo ? formData?.AddressOfDecesed?.PresentDoorNo : "");
+  const [PresentResNo, setPresentResNo] = useState(formData?.AddressOfDecesed?.PresentResNo ? formData?.AddressOfDecesed?.PresentResNo : "");
+  const [PresentMainPlaceEn, setPresentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PresentMainPlaceEn ? formData?.AddressOfDecesed?.PresentMainPlaceEn : "");
+  const [PresentMainPlaceMl, setPresentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PresentMainPlaceMl ? formData?.AddressOfDecesed?.PresentMainPlaceMl : "");
+  const [PresentLocalityNameEn, setPresentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PresentLocalityNameEn ? formData?.AddressOfDecesed?.PresentLocalityNameEn :"");
+  const [PresentLocalityNameMl, setPresentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PresentLocalityNameMl ? formData?.AddressOfDecesed?.PresentLocalityNameMl : "");
+  const [PresentStreetNameEn, setPresentStreetNameEn] = useState(formData?.AddressOfDecesed?.PresentStreetNameEn ? formData?.AddressOfDecesed?.PresentStreetNameEn : "" );
+  const [PresentStreetNameMl, setPresentStreetNameMl] = useState(formData?.AddressOfDecesed?.PresentStreetNameMl ? formData?.AddressOfDecesed?.PresentStreetNameMl : "");
+  const [PresentCityEn, setPresentCityEn] = useState(formData?.AddressOfDecesed?.PresentCityEn ? formData?.AddressOfDecesed?.PresentCityEn : "");
+  const [PresentCityMl, setPresentCityMl] = useState(formData?.AddressOfDecesed?.PresentCityMl ? formData?.AddressOfDecesed?.PresentCityMl : "");
+  const [PresentVillage, setPresentVillage] = useState(formData?.AddressOfDecesed?.PresentVillage ? formData?.AddressOfDecesed?.PresentVillage : null);
   //Permanent Address
-  const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressOfDecesed?.PermanentCountry);
-  const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressOfDecesed?.PermanentStateName);
-  const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressOfDecesed?.PermanentDistrict);
-  const [PermanentLBTypeName, setPermanentLBTypeName] = useState(formData?.AddressOfDecesed?.PermanentLBTypeName);
-  const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressOfDecesed?.PermanentLBName);
-  const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressOfDecesed?.PermanentVillage);
-  const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressOfDecesed?.PermanentTaluk);
-  const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressOfDecesed?.PermanentPostOffice);
-  const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressOfDecesed?.PermanentPincode);
-  const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressOfDecesed?.PermanentDoorNo);
-  const [PermanentResNo, setPermanentResNo] = useState(formData?.AddressOfDecesed?.PermanentResNo);
-  const [PermanentHouseNameEn,  setPermanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn);
-  const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl);
-  const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn);
-  const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl);
-  const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressOfDecesed?.PermanentCityEn);
-  const [PermanentCityMl, setPermanentCityMl] = useState(formData?.AddressOfDecesed?.PermanentCityMl);
-  const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameEn);
-  const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameMl);
-  const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressOfDecesed?.PermanentStreetNameEn);
-  const [PermanentStreetNameMl, setPermanentStreetNameMl] = useState(formData?.AddressOfDecesed?.PermanentStreetNameMl);
-  const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressOfDecesed?.isPrsentAddress);
+  const [PermanentCountry, setPermanentCountry] = useState(formData?.AddressOfDecesed?.PermanentCountry ? formData?.AddressOfDecesed?.PermanentCountry : null);
+  const [PermanentStateName, setPermanentStateName] = useState(formData?.AddressOfDecesed?.PermanentStateName ? formData?.AddressOfDecesed?.PermanentStateName : null);
+  const [PermanentDistrict, setPermanentDistrict] = useState(formData?.AddressOfDecesed?.PermanentDistrict ? formData?.AddressOfDecesed?.PermanentDistrict : null);
+  const [PermanentLBTypeName, setPermanentLBTypeName] = useState(formData?.AddressOfDecesed?.PermanentLBTypeName ? formData?.AddressOfDecesed?.PermanentLBTypeName : null);
+  const [PermanentLBName, setPermanentLBName] = useState(formData?.AddressOfDecesed?.PermanentLBName ? formData?.AddressOfDecesed?.PermanentLBName : null);
+  const [PermanentVillage, setPermanentVillage] = useState(formData?.AddressOfDecesed?.PermanentVillage ? formData?.AddressOfDecesed?.PermanentVillage : null);
+  const [PermanentTaluk, setPermanentTaluk] = useState(formData?.AddressOfDecesed?.PermanentTaluk ? formData?.AddressOfDecesed?.PermanentTaluk : null);
+  const [PermanentPostOffice, setPermanentPostOffice] = useState(formData?.AddressOfDecesed?.PermanentPostOffice ? formData?.AddressOfDecesed?.PermanentPostOffice : null);
+  const [PermanentPincode, setPermanentPincode] = useState(formData?.AddressOfDecesed?.PermanentPincode ? formData?.AddressOfDecesed?.PermanentPincode : 0 );
+  const [PermanentDoorNo, setPermanentDoorNo] = useState(formData?.AddressOfDecesed?.PermanentDoorNo ? formData?.AddressOfDecesed?.PermanentDoorNo : "" );
+  const [PermanentResNo, setPermanentResNo] = useState(formData?.AddressOfDecesed?.PermanentResNo ? formData?.AddressOfDecesed?.PermanentResNo : "");
+  const [PermanentHouseNameEn, setPermanentHouseNameEn] = useState(formData?.AddressOfDecesed?.PermanentHouseNameEn ? formData?.AddressOfDecesed?.PermanentHouseNameEn:""  );
+  const [PermanentHouseNameMl, setPermanentHouseNameMl] = useState(formData?.AddressOfDecesed?.PermanentHouseNameMl ? formData?.AddressOfDecesed?.PermanentHouseNameMl : "");
+  const [PermanentMainPlaceEn, setPermanentMainPlaceEn] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceEn ? formData?.AddressOfDecesed?.PermanentMainPlaceEn : "");
+  const [PermanentMainPlaceMl, setPermanentMainPlaceMl] = useState(formData?.AddressOfDecesed?.PermanentMainPlaceMl ? formData?.AddressOfDecesed?.PermanentMainPlaceMl : "");
+  const [PermanentCityEn, setPermanentCityEn] = useState(formData?.AddressOfDecesed?.PermanentCityEn ? formData?.AddressOfDecesed?.PermanentCityEn : "");
+  const [PermanentCityMl, setPermanentCityMl] = useState(formData?.AddressOfDecesed?.PermanentCityMl ? formData?.AddressOfDecesed?.PermanentCityMl : "");
+  const [PermanentLocalityNameEn, setPermanentLocalityNameEn] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameEn ? formData?.AddressOfDecesed?.PermanentLocalityNameEn : "");
+  const [PermanentLocalityNameMl, setPermanentLocalityNameMl] = useState(formData?.AddressOfDecesed?.PermanentLocalityNameMl ? formData?.AddressOfDecesed?.PermanentLocalityNameMl : "");
+  const [PermanentStreetNameEn, setPermanentStreetNameEn] = useState(formData?.AddressOfDecesed?.PermanentStreetNameEn ? formData?.AddressOfDecesed?.PermanentStreetNameEn : "");
+  const [PermanentStreetNameMl, setPermanentStreetNameMl] = useState(formData?.AddressOfDecesed?.PermanentStreetNameMl ? formData?.AddressOfDecesed?.PermanentStreetNameMl : "");
+  const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressOfDecesed?.isPrsentAddress ? formData?.AddressOfDecesed?.isPrsentAddress : false);
 
   //Outside India
   const [AdressEn, setAdressEn] = useState(formData?.AddressOfDecesed?.AdressEn);
@@ -122,9 +122,8 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("PermanentTaluk", PermanentTaluk ? PermanentTaluk.code : null);
     sessionStorage.setItem("PermanentPostOffice", PermanentPostOffice ? PermanentPostOffice.code : null);
     sessionStorage.setItem("PermanentPincode", PermanentPincode ? PermanentPincode.code : null);
-    sessionStorage.setItem("isPrsentAddress", isPrsentAddress.i18nKey );
-    
-    
+    sessionStorage.setItem("isPrsentAddress", isPrsentAddress ? isPrsentAddress : false);
+
     //Outside India
     sessionStorage.setItem("AdressEn", AdressEn ? AdressEn : null);
     sessionStorage.setItem("AdressMl", AdressMl ? AdressMl : null);
@@ -135,8 +134,11 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn : null);
     sessionStorage.setItem("ProvinceMl", ProvinceMl ? ProvinceMl : null);
     sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
+    sessionStorage.setItem("setCountry", setCountry ? setCountry.code : null);
+    sessionStorage.setItem("selectedOption", selectedOption ? selectedOption : "ILB");
 
     onSelect(config.key, {
+      selectedOption,
       PresentDoorNo,
       PresentResNo,
       PresentHouseNameEn,
@@ -180,8 +182,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
       PermanentStateName,
       PermanentLBTypeName,
       isPrsentAddress,
-      
-      
+
       AdressEn,
       AdressMl,
       AdressEnB,
@@ -205,7 +206,9 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
     setOutside(true);
   };
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [selectedOption, setSelectedOption] = useState("option1");
+  const [selectedOption, setSelectedOption] = useState(
+    formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
+  );
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -219,24 +222,24 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
         <div className="maindeath">
           <div className="radios">
             <div className="inside">
-              <input type="radio" name="options" value="option1" checked={selectedOption === "option1"} onChange={handleOptionChange} />
+              <input type="radio" name="options" value="ILB" checked={selectedOption === "ILB"} onChange={handleOptionChange} />
               <p>Inside Local Body</p>
             </div>
             <div className="inside">
-              <input type="radio" name="options" value="option1" checked={selectedOption === "option1"} onChange={handleOptionChange} />
+              <input type="radio" name="options" value="IK" checked={selectedOption === "IK"} onChange={handleOptionChange} />
               <p>Inside Kerala</p>
             </div>
             <div className="inside">
-              <input type="radio" name="options" value="option1" checked={selectedOption === "option1"} onChange={handleOptionChange} />
+              <input type="radio" name="options" value="IIN" checked={selectedOption === "IIN"} onChange={handleOptionChange} />
               <p>Inside India</p>
             </div>
             <div className="inside">
-              <input type="radio" name="options" value="option2" checked={selectedOption === "option2"} onChange={handleOptionChange} />
+              <input type="radio" name="options" value="OIN" checked={selectedOption === "OIN"} onChange={handleOptionChange} />
               <p>Outside India</p>
             </div>
           </div>
           <div>
-            {selectedOption === "option1" && (
+            {selectedOption === "ILB" &&  (
               <AdressInside
                 PresentCountry={PresentCountry}
                 setPresentCountry={setPresentCountry}
@@ -326,7 +329,7 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
                 setPermanentStreetNameMl={setPermanentStreetNameMl}
               />
             )}
-            {selectedOption === "option2" && (
+            {selectedOption === "OIN" && (
               <OutSideIndia
                 AdressEn={AdressEn}
                 setAdressEn={setAdressEn}

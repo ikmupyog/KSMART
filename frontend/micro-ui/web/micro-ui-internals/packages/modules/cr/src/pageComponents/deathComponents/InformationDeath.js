@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, InputCard } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
-  const [dob, setDob] = useState("");
-  const calculateAge = (e) => {
-    const today = new Date();
-    const birthDate = new Date(e.target.value);
-    let age_in_ms = today - birthDate;
-    let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
-    setAgeofbirth(Math.floor(age_in_years));
-  };
+  // const [dob, setDob] = useState("");
+  // const calculateAge = (value) => {
+  //   const today = new Date();
+  //   const birthDate = new Date(value);
+  //   let age_in_ms = today - birthDate;
+  //   let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
+  //   setAgeofbirth(Math.floor(age_in_years));
+  // };
 
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
@@ -21,17 +21,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
+  // const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const [Gender, setselectedGender] = useState(formData?.InformationDeath?.Gender);
-  const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
-  const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
+  // const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
+  // const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
   const [setNationality, setSelectedNationality] = useState(formData?.InformationDeath?.setNationality);
   const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-
   const [FirstName, setFirstName] = useState(formData?.InformationDeath?.FirstName ? formData?.InformationDeath?.FirstName : "");
   const [MiddleName, setMiddleName] = useState(formData?.InformationDeath?.MiddleName ? formData?.InformationDeath?.MiddleName : "");
   const [LastName, setLastName] = useState(formData?.InformationDeath?.LastName ? formData?.InformationDeath?.LastName : "");
@@ -50,25 +49,25 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom ? formData?.InformationDeath?.DeathTimeFrom : "");
   const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo ? formData?.InformationDeath?.DeathTimeTo : "");
   const [DeathTime, setDeathTime] = useState(formData?.InformationDeath?.DeathTime ? formData?.InformationDeath?.DeathTime : "");
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(formData?.InformationDeath?.checked ? formData?.InformationDeath?.checked : false);
   const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit ? formData?.InformationDeath?.setAgeUnit : "");
   const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo ? formData?.InformationDeath?.setIdCombo : "");
 
-  const [selectedValues, setSelectedValues] = useState(
-    formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : true
-  );
-  const handleCheckboxChange = (event) => {
-    setChecked((checked) => !checked); // toggle the checked state
-    let newSelectedValues = [...selectedValues];
-    if (event.target.checked) {
-      newSelectedValues.push(event.target.value);
-    } else {
-      newSelectedValues = newSelectedValues.filter((value) => value !== event.target.value);
-    }
-    setSelectedValues(newSelectedValues);
-  };
+  // const [selectedValues,  ] = useState(
+  //   formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : false
+  // );
+  // const handleCheckboxChange = (event) => {
+  //   setChecked((checked) => !checked); // toggle the checked state
+  //   let newSelectedValues = [...selectedValues];
+  //   if (event.target.checked) {
+  //     newSelectedValues.push(event.target.value);
+  //   } else {
+  //     newSelectedValues = newSelectedValues.filter((value) => value !== event.target.value);
+  //   }
+  //   setSelectedValues(newSelectedValues);
+  // };
   let naturetypecmbvalue = null;
-const maxDate= new Date();
+  const maxDate = new Date();
   let menu = [];
   Menu &&
     Menu.map((genderDetails) => {
@@ -80,12 +79,12 @@ const maxDate= new Date();
     Nation["common-masters"].Country.map((ob) => {
       cmbNation.push(ob);
     });
-  let cmbTitle = [];
-  title &&
-    title["common-masters"] &&
-    title["common-masters"].Title.map((ob) => {
-      cmbTitle.push(ob);
-    });
+  // let cmbTitle = [];
+  // title &&
+  //   title["common-masters"] &&
+  //   title["common-masters"].Title.map((ob) => {
+  //     cmbTitle.push(ob);
+  //   });
   let cmbReligion = [];
   religion &&
     religion["common-masters"] &&
@@ -108,12 +107,12 @@ const maxDate= new Date();
   function selectReligion(value) {
     setSelectedReligion(value);
   }
-  function selectTitle(value) {
-    setSelectedTitle(value);
-  }
-  function selectTitleB(value) {
-    setSelectedTitleB(value);
-  }
+  // function selectTitle(value) {
+  //   setSelectedTitle(value);
+  // }
+  // function selectTitleB(value) {
+  //   setSelectedTitleB(value);
+  // }
   function selectNationality(value) {
     setSelectedNationality(value);
   }
@@ -164,9 +163,14 @@ const maxDate= new Date();
   function selectIdCombo(value) {
     setSelectedIdCombo(value);
   }
-  // function calculateAge(e) {
-  //   setCommencementDate(e.target.value);
-  // }
+  function calculateAge(value) {
+    setCommencementDate(value);
+    const today = new Date();
+    const birthDate = new Date(value);
+    let age_in_ms = today - birthDate;
+    let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
+    setAgeofbirth(Math.floor(age_in_years));
+  }
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -183,6 +187,30 @@ const maxDate= new Date();
     }
   };
   const onSkip = () => onSelect();
+  let cmbfilterNation = [];
+  let cmbfilterReligion =[];
+  let cmbfilterAgeUnit = [];
+  useEffect(() => {
+    if (setNationality == null || setNationality == '') {
+        if (stateId === "kl" && cmbNation.length > 0) {
+            cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
+            setSelectedNationality(cmbfilterNation[0]);
+        }
+    }
+    if (setReligion == null || setReligion == '') {
+      if (stateId === "kl" && cmbReligion.length > 0) {
+          cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes('No Religion'));
+          setSelectedReligion(cmbfilterReligion[0]);
+      }
+  }
+  if (setAgeUnit == null || setAgeUnit == '') {
+    if (stateId === "kl" && cmbAgeUnit.length > 0) {
+        cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes('Years'));
+        setSelectedAgeUnit(cmbfilterAgeUnit[0]);
+    }
+}
+    
+}, )
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
     sessionStorage.setItem("DeathTime", DeathTime ? DeathTime : null);
@@ -197,8 +225,8 @@ const maxDate= new Date();
     sessionStorage.setItem("IdNo", IdNo ? IdNo : null);
     sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
     sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
-    sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
-    sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
+    // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
+    // sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
     sessionStorage.setItem("setNationality", setNationality ? setNationality.code : null);
     sessionStorage.setItem("setReligion", setReligion ? setReligion.code : null);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
@@ -208,7 +236,7 @@ const maxDate= new Date();
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
-    sessionStorage.setItem("selectedValues", selectedValues ? selectedValues : true);
+    // sessionStorage.setItem("selectedValues", selectedValues ? selectedValues : true);
 
     onSelect(config.key, {
       setIdCombo,
@@ -227,15 +255,15 @@ const maxDate= new Date();
       ToDate,
       CommencementDate,
       Gender,
-      setTitle,
-      setTitleB,
+      // setTitle,
+      // setTitleB,
       setNationality,
       setReligion,
       DeathTimeFrom,
       DeathTimeTo,
       setAgeUnit,
       setIdCombo,
-      selectedValues,
+        // selectedValues,
     });
   };
   return (
@@ -254,10 +282,10 @@ const maxDate= new Date();
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={handleCheckboxChange} value={checked} />
+              <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}onChange={() => setChecked((checked) => !checked)} value={checked} />
             </div>
             <div className="col-md-6">
-              <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} />
+              <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")}  />
             </div>
           </div>
         </div>
@@ -350,7 +378,7 @@ const maxDate= new Date();
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
               <Dropdown
                 t={t}
@@ -362,8 +390,8 @@ const maxDate= new Date();
                 disabled={isEdit}
                 placeholder={`${t("CR_TITLE_NAME_EN")}`}
               />
-            </div>
-            <div className="col-md-3">
+            </div> */}
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span>
               </CardLabel>
@@ -380,7 +408,7 @@ const maxDate= new Date();
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -395,7 +423,7 @@ const maxDate= new Date();
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -414,7 +442,7 @@ const maxDate= new Date();
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               <CardLabel>{`${t("CR_TITLE_NAME_ML")}`}</CardLabel>
               <Dropdown
                 t={t}
@@ -426,8 +454,8 @@ const maxDate= new Date();
                 disabled={isEdit}
                 placeholder={`${t("CR_TITLE_NAME_ML")}`}
               />
-            </div>
-            <div className="col-md-3">
+            </div> */}
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_FIRST_NAME_ML")}`}
                 <span className="mandatorycss">*</span>
@@ -450,7 +478,7 @@ const maxDate= new Date();
                 })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -470,7 +498,7 @@ const maxDate= new Date();
                 })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -495,7 +523,7 @@ const maxDate= new Date();
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OTHER_DETAILS")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_LEGAL_INFORMATION")}`}</span>
             </h1>
           </div>
         </div>
@@ -521,14 +549,14 @@ const maxDate= new Date();
               <CardLabel>{`${t("CR_DATE_OF_BIRTH_DECEASED")}`}</CardLabel>
               {/* date={CommencementDate} */}
               {/* <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`} /> */}
-              <input
+              <DatePicker
                 t={t}
                 isMandatory={false}
                 optionKey="i18nKey"
                 className="employee-card-input"
                 type="date"
                 name="CommencementDate"
-                inputFormat="DD/MM/YYYY" 
+                inputFormat="DD/MM/YYYY"
                 date={CommencementDate}
                 minDate={new Date("1900-31-01")}
                 maxDate={maxDate}
@@ -600,7 +628,8 @@ const maxDate= new Date();
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type="number"
+                max="12"
                 optionKey="i18nKey"
                 name="AdharNo"
                 value={AdharNo}

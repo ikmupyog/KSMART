@@ -89,17 +89,47 @@ const CheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <StatusTable>
-          <div className="row">
+        <div  style={{maxWidth:"900px",margin:"0 auto",padding:"4rem 2rem", border: "2px solid black" , borderRadius:"4px"}}>
+        {/* class="site-wrap" */}
+        <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.ChildDOB)}</CardText>
+            <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
+        <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.ChildDOB)}</CardText>
+              
+            </div>
+            <div className="col-md-6">           
+        <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.ChildDOB)}</CardText>
+              
+            </div>
+            {/* <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.Gender.value)}</CardText>
+            </div> */}
+          </div>
+        
+        <div className="row">
+            <div className="col-md-6">
+              
+              
             </div>
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ChildDetails.Gender.value)}</CardText>
             </div>
           </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+
+            <div className="radios">
+              {/* <div className="radiobuttons"> */}
+             
+              {/* </div> */}
+            </div>
+          </div>
+        </div>
+        <StatusTable>
+          
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>

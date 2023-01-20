@@ -270,14 +270,14 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!InformantAdrsDoorNo}>
-        {/* <div className="row">
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!InformantAdrsCountry}>
+        <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOME_ADDRESS")}`}</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BIRTH_INFORMANT_ADDRESS_HEADER")}`}</span>{" "}
             </h1>
           </div>
-        </div> */}
+        </div>
 
         <div className="row">
           <div className="col-md-12">
@@ -537,7 +537,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
             <div className="col-md-3">
             <CardLabel>
                 {t("CR_DOOR_NO")}
-                <span className="mandatorycss">*</span>
+                
               </CardLabel>
               <TextInput
                 t={t}
@@ -549,7 +549,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
                 onChange={setSelectInformantAdrsDoorNo}
                 placeholder={`${t("CR_DOOR_NO")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
               />
             </div>
             <div className="col-md-3">

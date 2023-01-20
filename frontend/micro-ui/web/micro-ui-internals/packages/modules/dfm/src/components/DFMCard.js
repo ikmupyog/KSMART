@@ -5,7 +5,7 @@ import { checkForEmployee } from "../utils";
 
 const DFMCard = () => {
     sessionStorage.setItem("breadCrumbUrl", "home");
-    if (!Digit.Utils.tlAccess()) {
+    if (!Digit.Utils.dfmAccess()) {
         return null;
     }
     const { t } = useTranslation();

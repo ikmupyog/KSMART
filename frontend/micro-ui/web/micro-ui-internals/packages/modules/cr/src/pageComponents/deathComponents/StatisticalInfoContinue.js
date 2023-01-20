@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import {  FormStep,  CardLabel,  TextInput,  Dropdown,  DatePicker,  TextArea,  NewRadioButton,  RadioButtons,
+import {
+  FormStep,
+  CardLabel,
+  TextInput,
+  Dropdown,
+  BackButton,
+  DatePicker,
+  TextArea,
+  NewRadioButton,
+  RadioButtons,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
@@ -12,24 +21,24 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
           type="radio"
           id="yes"
           // name="answer"
-          value="yes"
-          checked={selected === "yes"}
+          value="1"
+          checked={selected === "1"}
           onChange={handleChange}
         />
         <label htmlFor="yes">Yes</label>
         <input
           type="radio"
-          id="no"
+          id="no  "
           // name="answer"
-          value="no"
-          checked={selected === "no"}
+          value="0"
+          checked={selected === "0"}
           onChange={handleChange}
         />
         <label htmlFor="no">No</label>
       </div>
     );
-  };  
-  
+  };
+
   console.log(formData);
   const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
@@ -63,23 +72,23 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "NO", code: "NOSMOKE" },
   ];
 
-  const [isSmoke, setisSmoke] = useState(formData?.StatisticalInfoContinue?.isSmoke);
+  const [isSmoke, setisSmoke] = useState(formData?.StatisticalInfoContinue?.isSmoke ? formData?.StatisticalInfoContinue?.isSmoke : 0);
   const handleRadioChangeSmoke = (e) => {
     selectisSmoke(e.target.value);
   };
-  const [isTabacco, setisTabacco] = useState(formData?.StatisticalInfoContinue?.isTabacco);
+  const [isTabacco, setisTabacco] = useState(formData?.StatisticalInfoContinue?.isTabacco ? formData?.StatisticalInfoContinue?.isTabacco : 0);
   const handleRadioChangeTabacco = (e) => {
     setisTabacco(e.target.value);
   };
-  const [isPanMasala, setisPanMasala] = useState(formData?.StatisticalInfoContinue?.isPanMasala);
+  const [isPanMasala, setisPanMasala] = useState(formData?.StatisticalInfoContinue?.isPanMasala ? formData?.StatisticalInfoContinue?.isPanMasala : 0);
   const handleRadioChangePanmasala = (e) => {
     selectisPanMasala(e.target.value);
   };
-  const [isalcohol, setisalcohol] = useState(formData?.StatisticalInfoContinue?.isalcohol);
+  const [isalcohol, setisalcohol] = useState(formData?.StatisticalInfoContinue?.isalcohol ? formData?.StatisticalInfoContinue?.isalcohol : 0);
   const handleRadioChange = (e) => {
     selectisalcohol(e.target.value);
   };
-  const [isPregnent, setisPregnent] = useState(formData?.StatisticalInfoContinue?.isPregnent);
+  const [isPregnent, setisPregnent] = useState(formData?.StatisticalInfoContinue?.isPregnent ? formData?.StatisticalInfoContinue?.isPregnent : 0);
   const handleRadioChangeB = (e) => {
     selectisPregnent(e.target.value);
   };
@@ -97,22 +106,15 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   // const [setFemaleDeathPregnant, setSelectedFemaleDeathPregnant] = useState(formData?.StatisticalInfoContinue?.setFemaleDeathPregnant);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [CauseOfDeath, setSelectedCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.CauseOfDeath);
-  const [alcoholyears, setSelectedalcoholyears] = useState(formData?.StatisticalInfoContinue?.alcoholyears);
+  // const [alcoholyears, setSelectedalcoholyears] = useState(formData?.StatisticalInfoContinue?.alcoholyears);
   const [answer, setAnswer] = useState("");
-  const [text, setText] = useState(formData?.StatisticalInfoContinue?.text);
-  const [textPregnant, setTextPregnant] = useState(formData?.StatisticalInfoContinue?.textPregnant);
-  const [textSmoke, setTextSmoke] = useState(formData?.StatisticalInfoContinue?.textSmoke);
-  const [textTabacco, setTextTabacco] = useState(formData?.StatisticalInfoContinue?.textTabacco); 
-  const [textPanMasala, setTextPanMasala] = useState(formData?.StatisticalInfoContinue?.textPanMasala);
-
+  const [text, setText] = useState(formData?.StatisticalInfoContinue?.text?formData?.StatisticalInfoContinue?.text:"");
+  const [textPregnant, setTextPregnant] = useState(formData?.StatisticalInfoContinue?.textPregnant?formData?.StatisticalInfoContinue?.textPregnant:"");
+  const [textSmoke, setTextSmoke] = useState(formData?.StatisticalInfoContinue?.textSmoke?formData?.StatisticalInfoContinue?.textSmoke:"");
+  const [textTabacco, setTextTabacco] = useState(formData?.StatisticalInfoContinue?.textTabacco?formData?.StatisticalInfoContinue?.textTabacco:"");
+  const [textPanMasala, setTextPanMasala] = useState(formData?.StatisticalInfoContinue?.textPanMasala?formData?.StatisticalInfoContinue?.textPanMasala:"");
 
   let naturetypecmbvalue = null;
-  // let cmbPlace = [];
-  // place &&
-  //   place["TradeLicense"] &&
-  //   place["TradeLicense"].PlaceOfActivity.map((ob) => {
-  //     cmbPlace.push(ob);
-  //   });
   let cmbAttention = [];
   attention &&
     attention["birth-death-service"] &&
@@ -125,12 +127,6 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     deathmain["birth-death-service"].DeathCause.map((ob) => {
       cmbDeathmain.push(ob);
     });
-  // let cmbDeathsub = [];
-  // deathsub &&
-  //   deathsub["birth-death-service"] &&
-  //   deathsub["birth-death-service"].DeathCauseSub.map((ob) => {
-  //     cmbDeathsub.push(ob);
-  //   });
 
   const onSkip = () => onSelect();
   function selectisSmoke(value) {
@@ -169,11 +165,11 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   function setSelectCauseOfDeath(e) {
     setSelectedCauseOfDeath(e.target.value);
   }
-  function setSelectalcoholyears(e) {
-    setSelectedalcoholyears(e.target.value);
-  }
-  const [optionkey, setOptionkey] = useState("");
-  console.log(optionkey);
+  // function setSelectalcoholyears(e) {
+  //   setSelectedalcoholyears(e.target.value);
+  // }
+  // const [optionkey, setOptionkey] = useState("");
+  // console.log(optionkey);
 
   const goNext = () => {
     sessionStorage.setItem("setMedicalAttentionDeath", setMedicalAttentionDeath ? setMedicalAttentionDeath.code : null);
@@ -181,7 +177,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setCauseOfDeathMain", setCauseOfDeathMain ? setCauseOfDeathMain.code : null);
     sessionStorage.setItem("setCauseOfDeathSub", setCauseOfDeathSub ? setCauseOfDeathSub.code : null);
     sessionStorage.setItem("setCauseOfDeath", CauseOfDeath);
-    sessionStorage.setItem("setalcoholyears", alcoholyears);
+    // sessionStorage.setItem("setalcoholyears", alcoholyears);
     // sessionStorage.setItem("setFemaleDeathPregnant", setFemaleDeathPregnant?setFemaleDeathPregnant.code:null);
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
     sessionStorage.setItem("isSmoke", isSmoke);
@@ -194,11 +190,6 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("textPregnant", textPregnant ? textPregnant : null);
     sessionStorage.setItem("textSmoke", textSmoke ? textSmoke : null);
     sessionStorage.setItem("textPanMasala", textPanMasala ? textPanMasala : null);
-    
-    
-    
-
-  
 
     onSelect(config.key, {
       setMedicalAttentionDeath,
@@ -206,7 +197,6 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
       setCauseOfDeathMain,
       setCauseOfDeathSub,
       CauseOfDeath,
-      alcoholyears,
       textTabacco,
       text,
       textPregnant,
@@ -225,6 +215,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -306,21 +297,21 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-6">
               <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
               {/* <div className="col-md-6 "> */}
-                <RadioButtons
-                  t={t}
-                  // optionsKey="i18nKey"
-                  // onChange={setOptionkey}
-                  isMandatory={config.isMandatory}
-                  selected={isPregnent}
-                  onSelect={selectisPregnent}
-                  handleChange={handleRadioChangeB}
-                />
-                {isPregnent === "yes" && (                        
-                  <div className="col-md-4">
-                    <CardLabel>{t("CR_YEAR")}</CardLabel>                                 
-                    <TextInput type="text" id="text" value={textPregnant} onChange={(e) => setTextPregnant(e.target.value)} />
-                  </div>
-                )}
+              <RadioButtons
+                t={t}
+                // optionsKey="i18nKey"
+                // onChange={setOptionkey}
+                isMandatory={config.isMandatory}
+                selected={isPregnent}
+                onSelect={selectisPregnent}
+                handleChange={handleRadioChangeB}
+              />
+              {isPregnent === "1" && (
+                <div className="col-md-4">
+                  <CardLabel>{t("CR_YEAR")}</CardLabel>
+                  <TextInput type="text" id="text" value={textPregnant} onChange={(e) => setTextPregnant(e.target.value)} />
+                </div>
+              )}
               {/* </div> */}
             </div>
             <div>
@@ -341,126 +332,126 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_SMOKE")}</CardLabel>
               <RadioButtons
-                  t={t}
-                  // optionsKey="i18nKey"
-                  // onChange={setOptionkey}
-                  isMandatory={config.isMandatory}
-                  selected={isSmoke}
-                  onSelect={selectisSmoke}
-                  handleChange={handleRadioChangeSmoke}
-                />
-              {isSmoke === "yes" && (
-                 <div className="col-md-4">
-                 <CardLabel>{t("CR_YEAR")}</CardLabel> 
+                t={t}
+                // optionsKey="i18nKey"
+                // onChange={setOptionkey}
+                isMandatory={config.isMandatory}
+                selected={isSmoke}
+                onSelect={selectisSmoke}
+                handleChange={handleRadioChangeSmoke}
+              />
+              {isSmoke === "1" && (
+                <div className="col-md-4">
+                  <CardLabel>{t("CR_YEAR")}</CardLabel>
                   {/* <TextInput type="text" id="text" value={textSmoke} onChange={(e) => setTextSmoke(e.target.value)} /> */}
                   <TextInput
                     t={t}
                     isMandatory={false}
                     type={"text"}
-                    optionKey="i18nKey"
+                    // optionKey="i18nKey"
                     name="textSmoke"
                     value={textSmoke}
                     onChange={(e) => setTextSmoke(e.target.value)}
                     disable={isEdit}
                     placeholder={`${t("CR_YEAR")}`}
-                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
-                   /> 
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
+                  />
                 </div>
               )}
             </div>
             <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_CHEW_TOBACCO")}</CardLabel>
               <RadioButtons
-                  t={t}
-                  // optionsKey="i18nKey"
-                  // onChange={setOptionkey}
-                  isMandatory={config.isMandatory}
-                  selected={isTabacco}
-                  onSelect={selectisTabacco}
-                  handleChange={handleRadioChangeTabacco}
-                />
-              {isTabacco === "yes" && (
-                 <div>
-                 <CardLabel>{t("CR_YEAR")}</CardLabel> 
+                t={t}
+                // optionsKey="i18nKey"
+                // onChange={setOptionkey}
+                isMandatory={config.isMandatory}
+                selected={isTabacco}
+                onSelect={selectisTabacco}
+                handleChange={handleRadioChangeTabacco}
+              />
+              {isTabacco === "1" && (
+                <div>
+                  <CardLabel>{t("CR_YEAR")}</CardLabel>
                   {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
                   <TextInput
                     t={t}
                     isMandatory={false}
                     type={"text"}
-                    optionKey="i18nKey"
+                    // optionKey="i18nKey"
                     name="textTabacco"
                     value={textTabacco}
                     onChange={(e) => setTextTabacco(e.target.value)}
                     disable={isEdit}
                     placeholder={`${t("CR_YEAR")}`}
-                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
-                   /> 
-                  </div>
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
+                  />
+                </div>
               )}
             </div>
           </div>
         </div>
         <div className="row">
-        <div className="col-md-12">
-          <div className="col-md-6">
-            <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>
-            <RadioButtons
-              t={t}
-              // optionsKey="i18nKey"
-              isMandatory={config.isMandatory}
-              selected={isPanMasala}
-              onSelect={selectisPanMasala}
-              handleChange={handleRadioChangePanmasala}  
-            />
-            {isPanMasala === "yes" && (
-               <div className="col-md-4">
-               <CardLabel>{t("CR_YEAR")}</CardLabel> 
-                {/* <TextInput type="text" id="text" value={textPanMasala} onChange={(e) => setTextPanMasala(e.target.value)} /> */}
-                <TextInput
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>
+              <RadioButtons
+                t={t}
+                // optionsKey="i18nKey"
+                isMandatory={config.isMandatory}
+                selected={isPanMasala}
+                onSelect={selectisPanMasala}
+                handleChange={handleRadioChangePanmasala}
+              />
+              {isPanMasala === "1" && (
+                <div className="col-md-4">
+                  <CardLabel>{t("CR_YEAR")}</CardLabel>
+                  {/* <TextInput type="text" id="text" value={textPanMasala} onChange={(e) => setTextPanMasala(e.target.value)} /> */}
+                  <TextInput
                     t={t}
                     isMandatory={false}
                     type={"text"}
-                    optionKey="i18nKey"
+                    // optionKey="i18nKey"
                     name="textPanMasala"
                     value={textPanMasala}
                     onChange={(e) => setTextPanMasala(e.target.value)}
                     disable={isEdit}
                     placeholder={`${t("CR_YEAR")}`}
-                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
-                   /> 
-              </div>
-            )}
-          </div>
-          <div className="col-md-6">
-            <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>
-            <RadioButtons
-              t={t}
-              // optionsKey="i18nKey"
-              // onChange={setOptionkey}
-              isMandatory={config.isMandatory}
-              selected={isalcohol}
-              onSelect={selectisalcohol}
-              handleChange={handleRadioChange}
-            />
-            {isalcohol === "yes" && (
-               <div className="col-md-4">
-               <CardLabel>{t("CR_YEAR")}</CardLabel> 
-                {/* <TextInput type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} /> */}
-                <TextInput
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
+                  />
+                </div>
+              )}
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>
+              <RadioButtons
+                t={t}
+                // optionsKey="i18nKey"
+                // onChange={setOptionkey}
+                isMandatory={config.isMandatory}
+                selected={isalcohol}
+                onSelect={selectisalcohol}
+                handleChange={handleRadioChange}
+              />
+              {isalcohol === "1" && (
+                <div className="col-md-4">
+                  <CardLabel>{t("CR_YEAR")}</CardLabel>
+                  {/* <TextInput type="text" id="text" value={text} onChange={(e) => setText(e.target.value)} /> */}
+                  <TextInput
                     t={t}
                     isMandatory={false}
                     type={"text"}
-                    optionKey="i18nKey"
+                    // optionKey="i18nKey"
                     name="text"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     disable={isEdit}
                     placeholder={`${t("CR_YEAR")}`}
-                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}                    
-                   /> 
-              </div>
-            )}
-          </div>
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <div>{/* <RadioButtons selected={answer} handleChange={handleRadioChange} /> */}</div>
         </div>
