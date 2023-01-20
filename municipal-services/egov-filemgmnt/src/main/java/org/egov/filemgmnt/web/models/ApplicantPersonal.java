@@ -1,8 +1,12 @@
 package org.egov.filemgmnt.web.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -11,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -65,21 +70,21 @@ public class ApplicantPersonal {
     @NotBlank(message = "Aadhaar number is required")
     @Size(min = 12, max = 12, message = "Aadhaar number must be a 12 digit number")
     @Pattern(regexp = "^[1-9][0-9]{11}$", message = "Invalid aadhaar number")
-    @JsonProperty("aadhaarNo")
-    private String aadhaarNo;
+    @JsonProperty("aadhaarNumber")
+    private String aadhaarNumber;
 
     @Schema(type = "string", description = "Mobile number")
     @NotBlank(message = "Mobile number is required")
     @Size(min = 10, max = 15, message = "Invalid mobile number")
     @Pattern(regexp = "^[1-9][0-9]{9,14}$", message = "Invalid mobile number")
-    @JsonProperty("mobileNo")
-    private String mobileNo;
+    @JsonProperty("mobileNumber")
+    private String mobileNumber;
 
     @Schema(type = "string", format = "email", description = "Email address")
     @Email(message = "Invalid email address")
     @Size(max = 64, message = "Email length cannot exceed 64 characters")
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("emailId")
+    private String emailId;
 
     @Schema(type = "string", description = "Bank account number")
     @Size(max = 64, message = "Bank account number length cannot exceed 64 characters")
@@ -147,13 +152,20 @@ public class ApplicantPersonal {
     private AuditDetails auditDetails;
 
     @Valid
-    @NotNull
+    @NotNull(message = "Applicant address is required")
     @JsonProperty("address")
     private ApplicantAddress address;
 
     @Valid
-    @NotNull
-    @JsonProperty("document")
-    private ApplicantDocument document;
+    @ArraySchema(minItems = 1, schema = @Schema(implementation = ApplicantDocument.class))
+    @NotEmpty(message = "Applicant document(s) is required")
+    @JsonProperty("documents")
+    private List<@Valid ApplicantDocument> documents;
 
+    public void addDocument(final ApplicantDocument document) {
+        if (documents == null) {
+            documents = new ArrayList<>();
+        }
+        documents.add(document);
+    }
 }

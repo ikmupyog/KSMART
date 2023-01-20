@@ -21,7 +21,7 @@ public class ApplicantSearchCriteria {
     @JsonProperty("id")
     private String id; // applicant id
 
-    @JsonProperty("aadhaarNo")
-    private String aadhaarNo;
+    @JsonProperty("aadhaarNumber")
+    private String aadhaarNumber;
 
 }

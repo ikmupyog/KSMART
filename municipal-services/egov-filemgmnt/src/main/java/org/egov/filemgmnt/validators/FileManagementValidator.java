@@ -6,6 +6,7 @@ import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_UPDATE;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
@@ -49,10 +50,10 @@ public class FileManagementValidator { // NOPMD
                 throw new CustomException(INVALID_CREATE.getCode(), "Invalid applicant personal id.");
             }
 
-            if (!ObjectUtils.nullSafeEquals(applicant.getAadhaarNo(), existingApplicant.getAadhaarNo())) {
+            if (!ObjectUtils.nullSafeEquals(applicant.getAadhaarNumber(), existingApplicant.getAadhaarNumber())) {
                 throw new CustomException(INVALID_CREATE.getCode(), "Invalid applicant personal aadhaar number.");
             }
-        } else if (StringUtils.isNotBlank(applicant.getAadhaarNo()) && existingApplicant != null) {
+        } else if (StringUtils.isNotBlank(applicant.getAadhaarNumber()) && existingApplicant != null) {
             throw new CustomException(INVALID_CREATE.getCode(),
                     "Invalid applicant personal id, applicant with same aadhaar number exists.");
         }
@@ -61,32 +62,46 @@ public class FileManagementValidator { // NOPMD
         validateApplicantAddress(applicant, existingApplicant);
 
         // 3. validate applicant document
-        validateApplicantDocument(applicant, existingApplicant);
+        validateApplicantDocuments(applicant, existingApplicant);
 
         // TODO: need to validate tenant id
     }
 
-    private void validateApplicantDocument(final ApplicantPersonal applicant,
-                                           final ApplicantPersonal existingApplicant) {
-        final ApplicantDocument document = applicant.getDocument();
-        Assert.notNull(document, "Applicant document must not be null");
+    private void validateApplicantDocuments(final ApplicantPersonal applicant,
+                                            final ApplicantPersonal existingApplicant) {
 
-        if (StringUtils.isNotBlank(applicant.getId())) { // existing applicant personal
-            if (!ObjectUtils.nullSafeEquals(applicant.getId(), document.getApplicantPersonalId())) {
-                throw new CustomException(INVALID_CREATE.getCode(),
-                        "Invalid applicant personal id in applicant document.");
-            }
+        if (existingApplicant != null) {
+            final List<String> existingDocumentIds = existingApplicant.getDocuments()
+                                                                      .stream()
+                                                                      .map(ApplicantDocument::getId)
+                                                                      .collect(Collectors.toList());
+            final List<String> documentIds = applicant.getDocuments()
+                                                      .stream()
+                                                      .map(ApplicantDocument::getId)
+                                                      .filter(StringUtils::isNotBlank)
+                                                      .collect(Collectors.toList());
 
-            final ApplicantDocument existingDocument = existingApplicant.getDocument();
-            if (!ObjectUtils.nullSafeEquals(document.getId(), existingDocument.getId())) {
-                throw new CustomException(INVALID_CREATE.getCode(), "Invalid applicant document id.");
-            }
-        } else { // new applicant personal
-            if (StringUtils.isNotBlank(document.getId())) {
+            if (!documentIds.containsAll(existingDocumentIds)) {
                 throw new CustomException(INVALID_CREATE.getCode(),
-                        "Invalid applicant document id, document id must be null for create request.");
+                        "Invalid applicant document, existing applicant document not found.");
             }
         }
+
+        applicant.getDocuments()
+                 .forEach(document -> {
+                     if (StringUtils.isNotBlank(applicant.getId())) { // existing applicant personal
+                         if (!ObjectUtils.nullSafeEquals(applicant.getId(), document.getApplicantPersonalId())) {
+                             throw new CustomException(INVALID_CREATE.getCode(),
+                                     "Invalid applicant personal id in applicant document.");
+                         }
+
+                     } else { // new applicant personal
+                         if (StringUtils.isNotBlank(document.getId())) {
+                             throw new CustomException(INVALID_CREATE.getCode(),
+                                     "Invalid applicant document id, document id must be null for create request.");
+                         }
+                     }
+                 });
     }
 
     private void validateApplicantAddress(final ApplicantPersonal applicant,
@@ -247,7 +262,7 @@ public class FileManagementValidator { // NOPMD
 
         if (StringUtils.isNotBlank(searchCriteria.getTenantId()) && StringUtils.isBlank(searchCriteria.getApplicantId())
                 && StringUtils.isBlank(searchCriteria.getFileCode()) && searchCriteria.getFromDate() == null
-                && StringUtils.isBlank(searchCriteria.getAadhaarNo())) {
+                && StringUtils.isBlank(searchCriteria.getAadhaarNumber())) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Search based only on tenant id is not allowed.");
         }
     }
@@ -265,7 +280,7 @@ public class FileManagementValidator { // NOPMD
         }
 
         if (StringUtils.isNotBlank(searchCriteria.getTenantId()) && StringUtils.isBlank(searchCriteria.getId())
-                && StringUtils.isBlank(searchCriteria.getAadhaarNo())) {
+                && StringUtils.isBlank(searchCriteria.getAadhaarNumber())) {
             throw new CustomException(INVALID_SEARCH.getCode(), "Search based only on tenant id is not allowed.");
         }
     }
@@ -275,7 +290,7 @@ public class FileManagementValidator { // NOPMD
 
         FMUtils.validateSearchParam(bw, "tenantId", allowedParams);
         FMUtils.validateSearchParam(bw, "id", allowedParams); // applicant id
-        FMUtils.validateSearchParam(bw, "aadhaarNo", allowedParams);
+        FMUtils.validateSearchParam(bw, "aadhaarNumber", allowedParams);
     }
 
     private void validateSearchParams(final ApplicantServiceSearchCriteria searchCriteria,
@@ -288,7 +303,7 @@ public class FileManagementValidator { // NOPMD
         FMUtils.validateSearchParam(bw, "fileCode", allowedParams);
         FMUtils.validateSearchParam(bw, "fromDate", allowedParams);
         FMUtils.validateSearchParam(bw, "toDate", allowedParams);
-        FMUtils.validateSearchParam(bw, "aadhaarNo", allowedParams);
+        FMUtils.validateSearchParam(bw, "aadhaarNumber", allowedParams);
         FMUtils.validateSearchParam(bw, "offset", allowedParams);
         FMUtils.validateSearchParam(bw, "limit", allowedParams);
         // FMUtils.validateSearchParam(bw, "applicantIds", allowedParams);

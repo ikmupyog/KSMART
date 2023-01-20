@@ -91,16 +91,16 @@ serviceMaps:
          INSERT INTO eg_fm_applicantaddress_log 
          SELECT * FROM eg_fm_applicantaddress WHERE id = ?;
          
-      basePath: ApplicantServiceDetail.applicant.address
+      basePath: ApplicantServiceDetail.applicant.address.*
       jsonMaps:
       - jsonPath: $.ApplicantServiceDetail.applicant.address.id
         
     - query: >
         INSERT INTO eg_fm_applicantaddress( id, buildingno, subno, housename, housenamemal, village, taluk, street, streetmal, pincode
-          , postofficename, residenceassociationno, localplace, localplacemal, mainplace, mainplacemal, wardno, createdby, createddate
-          , lastmodifiedby, lastmodifieddate,applicantpersonalid)
+          , postofficename, residenceassociationno, localplace, localplacemal, mainplace, mainplacemal, wardno, createdby, createdtime
+          , lastmodifiedby, lastmodifiedtime,applicantpersonalid)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
-        ON CONFLICT (id) DO UPDATE SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?, lastmodifiedby = ?, lastmodifieddate = ?;
+        ON CONFLICT (id) DO UPDATE SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?, lastmodifiedby = ?, lastmodifiedtime = ?;
  
       basePath: ApplicantServiceDetail.applicant.address
       jsonMaps:    
@@ -166,50 +166,50 @@ serviceMaps:
          INSERT INTO eg_fm_applicantdocument_log 
          SELECT * FROM eg_fm_applicantdocument WHERE id = ?;
          
-      basePath: ApplicantServiceDetail.applicant.document
+      basePath: ApplicantServiceDetail.applicant.documents.*
       jsonMaps:
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.id
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.id
        
     - query: >
         INSERT INTO eg_fm_applicantdocument( id, applicantpersonalid, documenttypeid, documentnumber, docexpirydate, createdby
-          , createddate, lastmodifiedby, lastmodifieddate )
+          , createdtime, lastmodifiedby, lastmodifiedtime )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )
-        ON CONFLICT (id) DO UPDATE SET documenttypeid = ?, documentnumber = ?, docexpirydate = ?, lastmodifiedby = ?, lastmodifieddate = ? ;
+        ON CONFLICT (id) DO UPDATE SET documenttypeid = ?, documentnumber = ?, docexpirydate = ?, lastmodifiedby = ?, lastmodifiedtime = ? ;
 
-      basePath: ApplicantServiceDetail.applicant.document
+      basePath: ApplicantServiceDetail.applicant.documents.*
       jsonMaps:    
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.id
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.id
       
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.applicantPersonalId
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.applicantPersonalId
       
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.documentTypeId
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.documentTypeId
 
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.documentNumber
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.documentNumber
      
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.docExpiryDate
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.docExpiryDate
        
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.createdBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.createdBy
 
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.createdTime
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.createdTime
      
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedTime
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.lastModifiedTime
       
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.documentTypeId
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.documentTypeId
 
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.documentNumber
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.documentNumber
      
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.docExpiryDate
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.docExpiryDate
      
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedTime
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.lastModifiedTime
 
     - query: >
         INSERT INTO eg_fm_applicantpersonal_child( id, applicantpersonalid, buildingnumber, relationofassessee, nameofoccupier
           , relationofoccupier, durationofresidenceinyears, ownername, ownernamemal, owneraddress, owneraddressmal, ownermobileno
-          , nameofoccupiermal, durationofresidenceinmonths, createdby, createddate, lastmodifiedby, lastmodifieddate) 
+          , nameofoccupiermal, durationofresidenceinmonths, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?)
         ON CONFLICT (id) DO NOTHING;
 
@@ -280,7 +280,7 @@ serviceMaps:
 
     - query: >
         INSERT INTO eg_fm_applicantservicedocument(id, applicantpersonalid, servicedetailsid, documenttypeid, filestoreid, active
-          , documentnumber, applicationdetails, createdby, createddate, lastmodifiedby, lastmodifieddate)
+          , documentnumber, applicationdetails, createdby, createdtime, lastmodifiedby, lastmodifiedtime)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ;
         
       basePath: ApplicantServiceDetail.serviceDocument
@@ -312,7 +312,7 @@ serviceMaps:
     - query: >
         INSERT INTO eg_fm_filedetail(id, tenantid, applicantpersonalid, servicedetailsid, filenumber, filecode, filename
           , filearisingmode, filearisingdate, financialyear, applicationdate, workflowcode, businessservice, action, filestatus
-          , createdby, createddate, lastmodifiedby, lastmodifieddate)
+          , createdby, createdtime, lastmodifiedby, lastmodifiedtime)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?) ;
         
       basePath: ApplicantServiceDetail.fileDetail
@@ -403,7 +403,7 @@ serviceMaps:
       
     - query: >      
         UPDATE eg_fm_applicantaddress 
-        SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?, lastmodifiedby = ?, lastmodifieddate = ?
+        SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?, lastmodifiedby = ?, lastmodifiedtime = ?
         WHERE id = ?;
         
       basePath: ApplicantServiceDetail.applicant.address
@@ -428,28 +428,45 @@ serviceMaps:
          INSERT INTO eg_fm_applicantdocument_log 
          SELECT * FROM eg_fm_applicantdocument WHERE id = ?;
          
-      basePath: ApplicantServiceDetail.applicant.document
+      basePath: ApplicantServiceDetail.applicant.documents.*
       jsonMaps:
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.id
-      
-    - query: >      
-        UPDATE eg_fm_applicantdocument 
-        SET documenttypeid = ?, documentnumber = ?, docexpirydate = ?, lastmodifiedby = ?, lastmodifieddate = ?
-        WHERE id = ?;
-        
-      basePath: ApplicantServiceDetail.applicant.document
-      jsonMaps:
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.documenttypeId 
-      
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.documentNumber  
-      
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.docexpiryDate
-     
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedBy
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.id
+       
+    - query: >
+        INSERT INTO eg_fm_applicantdocument( id, applicantpersonalid, documenttypeid, documentnumber, docexpirydate, createdby
+          , createdtime, lastmodifiedby, lastmodifiedtime )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )
+        ON CONFLICT (id) DO UPDATE SET documenttypeid = ?, documentnumber = ?, docexpirydate = ?, lastmodifiedby = ?, lastmodifiedtime = ? ;
 
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.auditDetails.lastModifiedTime
-         
-      - jsonPath: $.ApplicantServiceDetail.applicant.document.id
+      basePath: ApplicantServiceDetail.applicant.documents.*
+      jsonMaps:    
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.id
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.applicantPersonalId
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.documentTypeId
+
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.documentNumber
+     
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.docExpiryDate
+       
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.createdBy
+
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.createdTime
+     
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.lastModifiedTime
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.documentTypeId
+
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.documentNumber
+     
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.docExpiryDate
+     
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.ApplicantServiceDetail.applicant.documents.*.auditDetails.lastModifiedTime
 
     - query: >
          INSERT INTO eg_fm_servicedetail_log 
@@ -488,7 +505,7 @@ serviceMaps:
       
     - query: >      
         UPDATE eg_fm_applicantservicedocument
-        SET documenttypeid = ?, lastmodifiedby = ?, lastmodifieddate = ?
+        SET documenttypeid = ?, lastmodifiedby = ?, lastmodifiedtime = ?
         WHERE id = ?;
         
       basePath: ApplicantServiceDetail.serviceDocument

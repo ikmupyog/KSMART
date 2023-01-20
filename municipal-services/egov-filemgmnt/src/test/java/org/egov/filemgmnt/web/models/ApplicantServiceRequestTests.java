@@ -54,9 +54,9 @@ class ApplicantServiceRequestTests {
                                                        .address(ApplicantAddress.builder()
                                                                                 .auditDetails(new AuditDetails())
                                                                                 .build())
-                                                       .document(ApplicantDocument.builder()
-                                                                                  .auditDetails(new AuditDetails())
-                                                                                  .build())
+                                                       .documents(Collections.singletonList(ApplicantDocument.builder()
+                                                                                                             .auditDetails(new AuditDetails())
+                                                                                                             .build()))
                                                        .build();
 
         ApplicantServiceDetail serviceDetail = ApplicantServiceDetail.builder()
@@ -84,9 +84,9 @@ class ApplicantServiceRequestTests {
                                                                .toString())
                                                        .firstName("FirstName")
                                                        .lastName("LastName")
-                                                       .mobileNo("9446903827")
+                                                       .mobileNumber("9446903827")
                                                        .tenantId("kl")
-                                                       .aadhaarNo("123456789123")
+                                                       .aadhaarNumber("123456789123")
                                                        .build();
 
         List<String> allowedParams = Collections.singletonList("firstName");
@@ -112,10 +112,10 @@ class ApplicantServiceRequestTests {
                                                                .toString())
                                                        .firstName("FirstName")
                                                        .lastName("LastName")
-                                                       .mobileNo("9446903827")
+                                                       .mobileNumber("9446903827")
                                                        .tenantId("kl")
-                                                       .aadhaarNo("123456789123")
-                                                       .email("demo@gmail.com")
+                                                       .aadhaarNumber("123456789123")
+                                                       .emailId("demo@gmail.com")
 //            .serviceDetails(new ServiceDetails())
 //            .applicantAddress(new ApplicantAddress())
 //            .applicantServiceDocuments(new ApplicantServiceDocuments())

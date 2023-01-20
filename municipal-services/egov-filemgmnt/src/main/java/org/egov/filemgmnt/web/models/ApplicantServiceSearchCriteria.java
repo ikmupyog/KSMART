@@ -35,8 +35,8 @@ public class ApplicantServiceSearchCriteria {
     @JsonProperty("toDate")
     private Long toDate; // file arising date
 
-    @JsonProperty("aadhaarNo")
-    private String aadhaarNo;
+    @JsonProperty("aadhaarNumber")
+    private String aadhaarNumber;
 
     @JsonProperty("offset")
     private Integer offset;

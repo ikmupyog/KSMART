@@ -3,7 +3,6 @@ package org.egov.filemgmnt.repository;
 import java.util.List;
 
 import org.egov.filemgmnt.TestConfig;
-import org.egov.filemgmnt.repository.FileManagementRepository;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;

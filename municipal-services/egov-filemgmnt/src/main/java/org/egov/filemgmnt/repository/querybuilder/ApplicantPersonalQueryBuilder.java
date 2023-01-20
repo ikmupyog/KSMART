@@ -29,7 +29,7 @@ public class ApplicantPersonalQueryBuilder extends BaseQueryBuilder {
         final StringBuilder query = new StringBuilder(QUERY);
 
         addFilter("ap.id", criteria.getId(), query, preparedStmtValues);
-        addFilter("ap.aadhaarno", criteria.getAadhaarNo(), query, preparedStmtValues);
+        addFilter("ap.aadhaarno", criteria.getAadhaarNumber(), query, preparedStmtValues);
         addFilter("ap.tenantid", criteria.getTenantId(), query, preparedStmtValues);
 
         return query.toString();

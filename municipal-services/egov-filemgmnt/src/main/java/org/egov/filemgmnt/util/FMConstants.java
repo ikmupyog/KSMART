@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class FMConstants {
 
+    // Encryption / Decryption constants
+    public static final String FM_APPLICANT_ENC_KEY = "FMApplicant";
+
     // MDMS
     public static final String FILEMANAGEMENT_MODULE = "FileManagement";
 

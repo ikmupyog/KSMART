@@ -136,7 +136,6 @@
             <artifactId>sql-formatter</artifactId>
             <version>${sql-formatter.version}</version>
         </dependency>
-
         <!-- development only : end -->
         <dependency>
             <groupId>org.jsoup</groupId>

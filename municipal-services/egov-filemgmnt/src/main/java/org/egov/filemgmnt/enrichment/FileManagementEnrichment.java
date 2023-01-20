@@ -1,10 +1,14 @@
 package org.egov.filemgmnt.enrichment;
 
 import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
+import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_CREATE;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -75,14 +79,42 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
         addressAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
 
         // 3. enrich document
-        final ApplicantDocument document = applicant.getDocument();
-        final AuditDetails documentAuditDetails = existingApplicant.getDocument()
-                                                                   .getAuditDetails();
+        if (existingApplicant != null) {
+            final List<String> existingDocumentIds = existingApplicant.getDocuments()
+                                                                      .stream()
+                                                                      .map(ApplicantDocument::getId)
+                                                                      .collect(Collectors.toList());
+            final List<String> documentIds = applicant.getDocuments()
+                                                      .stream()
+                                                      .map(ApplicantDocument::getId)
+                                                      .filter(StringUtils::isNotBlank)
+                                                      .collect(Collectors.toList());
 
-        document.setApplicantPersonalId(applicant.getId());
-        document.setAuditDetails(documentAuditDetails);
-        documentAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
-        documentAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
+            if (!documentIds.containsAll(existingDocumentIds)) {
+                throw new CustomException(INVALID_CREATE.getCode(),
+                        "Invalid applicant document, existing applicant document not found.");
+            }
+        }
+
+        final Map<String, ApplicantDocument> existingDocuments = existingApplicant.getDocuments()
+                                                                                  .stream()
+                                                                                  .collect(Collectors.toMap(ApplicantDocument::getId,
+                                                                                                            Function.identity()));
+
+        applicant.getDocuments()
+                 .forEach(document -> {
+                     document.setApplicantPersonalId(applicant.getId());
+
+                     if (StringUtils.isNotBlank(document.getId())) {
+                         final AuditDetails documentAuditDetails = existingDocuments.get(document.getId())
+                                                                                    .getAuditDetails();
+                         document.setAuditDetails(documentAuditDetails);
+                         documentAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
+                         documentAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
+                     } else {
+                         document.setAuditDetails(buildAuditDetails(userInfo.getUuid(), Boolean.TRUE));
+                     }
+                 });
     }
 
     private void enrichNewApplicantPersonal(final ApplicantPersonal applicant, final User userInfo) {
@@ -100,15 +132,17 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
         address.setApplicantPersonalId(applicant.getId());
         address.setAuditDetails(auditDetails);
 
-        // 3. enrich document
-        final ApplicantDocument document = applicant.getDocument();
-        document.setId(UUID.randomUUID()
-                           .toString());
-        document.setApplicantPersonalId(applicant.getId());
-        document.setAuditDetails(auditDetails);
+        // 3. enrich documents
+        applicant.getDocuments()
+                 .forEach(document -> {
+                     document.setId(UUID.randomUUID()
+                                        .toString());
+                     document.setApplicantPersonalId(applicant.getId());
+                     document.setAuditDetails(auditDetails);
+                 });
     }
 
-    public void enrichCreate(final ApplicantServiceRequest request, boolean newApplicant) {
+    public void enrichCreate(final ApplicantServiceRequest request, final boolean newApplicant) {
         final User userInfo = request.getRequestInfo()
                                      .getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
