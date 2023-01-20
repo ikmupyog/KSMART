@@ -106,4 +106,17 @@ public class CrDeathRegistryStatistical {
 
     @JsonProperty("residenceLBType")
     private String residenceLBType;
+
+     //RAkhi S on 20.01.2022 
+     @JsonProperty("smokingType")
+     private Integer smokingType;
+ 
+     @JsonProperty("tobaccoType")
+     private Integer tobaccoType;
+ 
+     @JsonProperty("arecanutType")
+     private Integer arecanutType;
+ 
+     @JsonProperty("alcoholType")
+     private Integer alcoholType;
 }

@@ -107,11 +107,12 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
                     String registrationNo=null;
                     Long registrationNoId=null;
                     if (RegistrationNoDetails.size()>=1) {
-                        registrationNo=String.valueOf(RegistrationNoDetails.get(0).get("regno"))+"/"+String.valueOf(Year);
+                        //RegistrationNo new format decision by Domain team created by Rakhi S
+                        registrationNo=String.valueOf("RG-"+RegistrationNoDetails.get(0).get("regno"))+"-"+String.valueOf(Year)+"-"+"CRDRNR";
                         registrationNoId=Long.parseLong(String.valueOf(RegistrationNoDetails.get(0).get("regno")));
                     }
                     else{
-                        registrationNo=CrDeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"/"+String.valueOf(Year);
+                        registrationNo="RG-"+CrDeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+"CRDRNR";
                         registrationNoId=Long.parseLong(CrDeathRegistryConstants.REGISTRATION_NUMBER_FIRST);
                     }
 

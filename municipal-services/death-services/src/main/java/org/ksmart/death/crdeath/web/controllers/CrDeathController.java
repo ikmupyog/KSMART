@@ -11,6 +11,8 @@ import org.ksmart.death.crdeath.web.models.CrDeathDtlRequest;
 import org.ksmart.death.crdeath.web.models.CrDeathDtlResponse;
 import org.ksmart.death.crdeath.web.models.CrDeathSearchCriteria;
 import org.ksmart.death.crdeath.web.models.RequestInfoWrapper;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryRequest;
 import org.ksmart.death.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -87,8 +89,8 @@ public class CrDeathController implements CrDeathResource  {
 
     public ResponseEntity<CrDeathDtlResponse> update(@RequestBody CrDeathDtlRequest request) {
  
-        List<CrDeathDtl> deathDetails = deathService.update(request);
-    
+        List<CrDeathDtl> deathDetails = deathService.update(request);     
+
         CrDeathDtlResponse response = CrDeathDtlResponse
                                             .builder()
                                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))

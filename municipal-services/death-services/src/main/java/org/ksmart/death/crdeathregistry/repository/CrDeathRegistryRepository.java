@@ -224,7 +224,7 @@ public class CrDeathRegistryRepository {
                 cert.getAddressInfo().getPermanentAddress().setCountryMl(permanentAddCountryMl);
 
                 //Rakhi S on 16.12.2022
-                cert.setFullName(cert.getDeceasedTitle() + 
+                cert.setFullName(
                                 cert.getDeceasedFirstNameMl() + 
                                 cert.getDeceasedMiddleNameMl() + 
                                 cert.getDeceasedLastNameMl() + " / " +
@@ -234,15 +234,15 @@ public class CrDeathRegistryRepository {
 
                 cert.setGender(cert.getDeceasedGender());
 
-                if(cert.getFemaleDependentTitle()!=null){
-                cert.setMotherName(cert.getFemaleDependentTitle()+" "+
-                                    cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
-                                    cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString());  
-                }
-                else{
+                // if(cert.getFemaleDependentTitle()!=null){
+                // cert.setMotherName(cert.getFemaleDependentTitle()+" "+
+                //                     cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
+                //                     cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString());  
+                // }
+                // else{
                     cert.setMotherName(cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
-                                    cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString()); 
-                }     
+                    cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString()); 
+                // }     
                 String maleDependentMl = "";
                 String maleDependentEn = "";    
                 
@@ -254,15 +254,15 @@ public class CrDeathRegistryRepository {
                      maleDependentMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
                      maleDependentEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
                 }
-                if(cert.getMaleDependentTitle()!=null){
-                cert.setMaledependentname(cert.getMaleDependentTitle()+" "+
-                                            cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
-                                            cert.getMaleDependentNameEn() + maleDependentEn);
-                }
-                else{
+                // if(cert.getMaleDependentTitle()!=null){
+                // cert.setMaledependentname(cert.getMaleDependentTitle()+" "+
+                //                             cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
+                //                             cert.getMaleDependentNameEn() + maleDependentEn);
+                // }
+                // else{
                     cert.setMaledependentname(cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
                                             cert.getMaleDependentNameEn()+ maleDependentEn);
-                }
+                // }
 
                 cert.setPresentAddressFullEn(cert.getAddressInfo().getPresentAddress().getResidenceAsscNo() + " "+
                                             cert.getAddressInfo().getPresentAddress().getHouseNo()+ " "+

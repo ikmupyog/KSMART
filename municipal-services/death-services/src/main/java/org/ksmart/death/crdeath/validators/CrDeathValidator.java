@@ -348,25 +348,25 @@ public class CrDeathValidator {
             }   
             //DECEASED IDENTIFIED END
             //STATISTICAL DETAILS VALIDATION
-            if (statisticalInfo.getIsSmoking()==CrDeathConstants.VALUE_TRUE){
+            if (statisticalInfo.getSmokingType()==CrDeathConstants.VALUE_TRUE){
                 if((statisticalInfo.getSmokingNumYears()<=0)){
                     throw new CustomException("STATISTICAL DETAILS:", "The number of  years of smoking " +
                     statisticalInfo.getSmokingNumYears() +" is invalid");  
                 }  
             } 
-            if (statisticalInfo.getIsAlcohol()==CrDeathConstants.VALUE_TRUE){
+            if (statisticalInfo.getAlcoholType()==CrDeathConstants.VALUE_TRUE){
                 if((statisticalInfo.getAlcoholNumYears()<=0)){
                     throw new CustomException("STATISTICAL DETAILS:", "The number of  years of alcohol " +
                     statisticalInfo.getAlcoholNumYears() +" is invalid");  
                 }  
             }
-            if (statisticalInfo.getIsArecanut()==CrDeathConstants.VALUE_TRUE){
+            if (statisticalInfo.getArecanutType()==CrDeathConstants.VALUE_TRUE){
                 if((statisticalInfo.getArecanutNumYears()<=0)){
                     throw new CustomException("STATISTICAL DETAILS:", "The number of  years of arecanut " +
                     statisticalInfo.getArecanutNumYears() +" is invalid");  
                 }  
             }
-            if (statisticalInfo.getIsTobacco()==CrDeathConstants.VALUE_TRUE){
+            if (statisticalInfo.getTobaccoType()==CrDeathConstants.VALUE_TRUE){
                 if((statisticalInfo.getTobaccoNumYears()<=0)){
                     throw new CustomException("STATISTICAL DETAILS:", "The number of  years of tobacco " +
                     statisticalInfo.getTobaccoNumYears() +" is invalid");  
