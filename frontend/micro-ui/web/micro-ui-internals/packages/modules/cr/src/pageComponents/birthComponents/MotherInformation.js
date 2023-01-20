@@ -286,7 +286,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
         if (e.target.value != null || e.target.value != "" ) {
            
             if (e.target.value.length <= 3){
-                if (e.target.value < 18) {
+                if (e.target.value < 12) {
                     setMotherAgeMarriage(e.target.value);
                     setMotherAgeMarriageError(true);
                     return false;
