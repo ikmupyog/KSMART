@@ -1,18 +1,12 @@
-import { CardLabel, SubmitBar, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSelect, TextInput, TextArea, LogoutIcon, Banner, Card } from "@egovernments/digit-ui-react-components";
+import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, TextInput, Banner,Toast } from "@egovernments/digit-ui-react-components";
 import React, { useState, useReducer, useEffect } from "react";
-import { useParams } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
-// import Timeline from "../components/TLTimeline";
-// import { sortDropdownNames } from "../utils/index";
 import { useQueryClient } from "react-query";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 import ApplicationDetailsPDE from "../pages/employee/ApplicationDetailsPDE";
-import ApplicationDetailsActionBar from "../../../templates/ApplicationDetails/components/ApplicationDetailsActionBar";
-import { includes, trim } from "lodash";
 
 const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
-
+  const [toast, setToast] = useState(false);
   const menusector = [
     { name: "Manufacturing Sector", code: "MANUFACTORING" },
     { name: "Service Sector", code: "SERVICE" },
@@ -601,26 +595,48 @@ function validateData(){
 
 
   const goNext = (e) => {
+    setToast(false)
     let tenantId1 = tenantId;
     let combineddoorno = "";
     let Tax = [];
     if(validateData()==="DN"){
+      setToast(true)
       console.log("");
     }
     else if (validateData()==="CA") {
       setErrorMessage("Capital Investment must be greater than 1 ");
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
     else if (validateData()==="LT"){
       setErrorMessage("Select Ownership Type");
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
     else if (validateData()==="WN"){
       setErrorMessage("Select Ward No");
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
     else if (validateData()==="BT"){
       setErrorMessage("Select Building Type");
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
     else if (validateData()==="BS"){
       setErrorMessage("Select Bussiness Category");
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
 
     else{
@@ -748,7 +764,11 @@ function validateData(){
         }
       }
       else{
-        console.log("Year Mismatch Error");
+        setErrorMessage("Year Mismatch Error");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
       }
     }
   }
@@ -811,7 +831,7 @@ function validateData(){
     return (
 
       <Banner
-        message="CS_TRADE_APPLICATION_SUCCESS"  ///{GetActionMessage(props)}
+        message={t("CS_TRADE_APPLICATION_SUCCESS")}  ///{GetActionMessage(props)}
         applicationNumber={props.data?.Licenses[0]?.applicationNumber}
         info={props.isSuccess ? "Saved Success Fully" : ""}   //props.t("TL_REF_NO_LABEL") 
         successful={props.isSuccess}
@@ -884,8 +904,13 @@ function validateData(){
           <FormStep   config={formData?.status==="APPROVED" && isEdit ?"":config} onSelect={goNext} onSkip={onSkip} t={t} >
             <div>
               <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
+
+              <div className="row">
+                  <div className="col-md-12" > <header class="card-header">{formData?.status==="APPROVED" && isEdit ? t("TL_LICENSING_PDE_ENTRY_HEADER"):""} </header>
+                  </div>
+                </div>
                 <div className="row">
-                  <div className="col-md-12" ><h1 className="headingh1" ></h1>
+                  <div className="col-md-12" ><h1 className="headingh1" > </h1>
                   </div>
                 </div>
                 {isEdit && (
@@ -1167,11 +1192,20 @@ function validateData(){
                     </div>
                   </div>
                 </div>
-                <div style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
+                {/* <div style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
                   <div className="row">
                     {errorMessage && <div className="mandatorycss"> {errorMessage} </div>}
                   </div>
-                </div>
+                </div> */}
+            </div>
+            <div>
+            {toast && (
+              <Toast
+              error={toast}
+              label={errorMessage}
+              onClose={() => setToast(false)}
+              />
+            )}{""}
             </div>
           </div>
           </FormStep>
