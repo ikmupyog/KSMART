@@ -66,6 +66,8 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
   const [ModeOfPregnancyStError, setModeOfPregnancyStError] = useState(formData?.StatisticalInfoDetails?.ModeOfPregnancy ? false : false);
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethod ? false : false);
   const [DeliveryMethodSubStError, setDeliveryMethodSubStError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub ? false : false);
+  const [BirthWeightError, setBirthWeightError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub ? false : false);
+  
   // const [BirthPlaceDeccriptionStError, setBirthPlaceDeccriptionStError] = useState(
   //   formData?.StatisticalInfoDetails?.BirthPlaceDeccription ? false : false
   // );
@@ -132,11 +134,22 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function setSelectBirthWeight(e) {
-    if (e.target.value.length === 5) {
+    if (e.target.value.length === 4) {
         return false;
         // window.alert("Username shouldn't exceed 10 characters")
     } else {
-        setBirthWeight(e.target.value);
+      setBirthWeight(e.target.value);        
+      // if(e.target.value <= 0 || e.target.value > 10 ){
+      //   setBirthWeightError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //   setToast(false);
+      // }, 3000);
+      // } else {
+      //   setBirthWeightError(false);
+      //   setBirthWeight(e.target.value);        
+      // }
+    
     }
   }
   // function setSelectBirthWeight(e) {
@@ -186,15 +199,15 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
 
   let validFlag = true;
   const goNext = () => {
-    if (Religion == null || Religion == "" || Religion == undefined) {
+    if (ModeOfPregnancy == null || ModeOfPregnancy == "" || ModeOfPregnancy == undefined) {
       validFlag = false;
-      setReligionStError(true);
+      setModeOfPregnancyStError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setReligionStError(false);
+      setModeOfPregnancyStError(false);
     }
     if (PregnancyDuration == null || PregnancyDuration == "" || PregnancyDuration == undefined) {
       validFlag = false;
@@ -205,6 +218,60 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
       }, 2000);
     } else {
       setPregnancyDurationStError(false);
+    }    
+    if (MedicalAttensionSub == null || MedicalAttensionSub == "" || MedicalAttensionSub == undefined) {
+      validFlag = false;
+      setMedicalAttensionSubStError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMedicalAttensionSubStError(false);
+    }
+    if (DeliveryMethod == null || DeliveryMethod == "" || DeliveryMethod == undefined) {
+      validFlag = false;
+      setDeliveryMethodStError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setDeliveryMethodStError(false);
+    }
+    console.log(BirthWeight);
+    if (BirthWeight == null || BirthWeight == "" || BirthWeight == undefined) {
+      validFlag = false;
+      setBirthWeightError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else if(BirthWeight !=null || BirthWeight !=""){
+      let BirthWeightCheck = BirthWeight;
+      if(BirthWeightCheck <= 0 || BirthWeightCheck > 10){
+        validFlag = false;
+        setBirthWeightError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setBirthWeightError(false);
+      }      
+    }    
+    else {
+      setBirthWeightError(false);
+    }
+    if (Religion == null || Religion == "" || Religion == undefined) {
+      validFlag = false;
+      setReligionStError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setReligionStError(false);
     }
 
     // if (MedicalAttension == null || MedicalAttension == "" || MedicalAttension == undefined) {
@@ -218,37 +285,9 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
     //   setMedicalAttensionStError(false);
     // }
 
-    if (MedicalAttensionSub == null || MedicalAttensionSub == "" || MedicalAttensionSub == undefined) {
-      validFlag = false;
-      setMedicalAttensionSubStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setMedicalAttensionSubStError(false);
-    }
-
-    if (ModeOfPregnancy == null || ModeOfPregnancy == "" || ModeOfPregnancy == undefined) {
-      validFlag = false;
-      setModeOfPregnancyStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setModeOfPregnancyStError(false);
-    }
-    if (DeliveryMethod == null || DeliveryMethod == "" || DeliveryMethod == undefined) {
-      validFlag = false;
-      setDeliveryMethodStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setDeliveryMethodStError(false);
-    }
+    
+   
+    
 
     // if (BirthPlaceDeccription == null || BirthPlaceDeccription == "" || BirthPlaceDeccription == undefined) {
     //   validFlag = false;
@@ -310,14 +349,14 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!BirthWeight}>
-        {/* <div className="row">
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ModeOfPregnancy || !PregnancyDuration|| !MedicalAttensionSub || !DeliveryMethod || !Religion || !BirthWeight }>
+        <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_STATISTICAL_INFORMATION")}`}</span>{" "}
+              {/* <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_STATISTICAL_INFORMATION")}`}</span>{" "} */}
             </h1>
           </div>
-        </div> */}
+        </div>
         <div className="row">
           <div className="col-md-12">
           <div className="col-md-4">
@@ -502,7 +541,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
               PregnancyDurationStError ||             
               MedicalAttensionSubStError ||
               DeliveryMethodStError ||
-              ModeOfPregnancyStError 
+              ModeOfPregnancyStError || BirthWeightError
              
               
               // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
@@ -512,7 +551,7 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
               PregnancyDurationStError ||
               MedicalAttensionSubStError ||
               DeliveryMethodStError ||
-              ModeOfPregnancyStError 
+              ModeOfPregnancyStError || BirthWeightError
             
                 ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                   // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
@@ -528,6 +567,8 @@ const StatisticalInformation = ({ config, onSelect, userType, formData }) => {
                   ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
                   : ModeOfPregnancyStError
                   ? t(`BIRTH_ERROR_MODE_PREGNANCY_CHOOSE`)
+                  : BirthWeightError
+                  ? t(`BIRTH_WEIGHT_ERROR`)
                   // : BirthPlaceDeccriptionStError
                   // ? t(`BIRTH_ERROR_DESCRIPTION_EN_ERROR`)
                   // : BirthPlaceDeccriptionMlStError
