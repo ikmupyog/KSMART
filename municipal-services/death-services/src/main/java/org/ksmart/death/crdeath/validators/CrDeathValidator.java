@@ -51,7 +51,7 @@ public class CrDeathValidator {
                     "Supports only single death application create request.");
         }
 
-        validateCommonFields( request);
+       // validateCommonFields( request);
         //validateHOMEFields( request);
         
     }
@@ -416,7 +416,7 @@ public class CrDeathValidator {
             throw new CustomException(DEATH_REG_INVALID_UPDATE.getCode(),
                     "Death registration(s) not found in database.");
         }
-        validateCommonFields( request);
+       // validateCommonFields( request);
     }
 //UPDATE END
 
