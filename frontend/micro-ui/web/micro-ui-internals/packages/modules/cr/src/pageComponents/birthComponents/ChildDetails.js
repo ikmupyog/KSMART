@@ -29,6 +29,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.ChildDetails?.ChildAadharNo ? false : false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.ChildAadharNo ? true : false);
+  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
 
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
@@ -89,17 +90,26 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     setChildDOB(value);
     const today = new Date();
     const birthDate = new Date(value);
+    if (birthDate.getTime() <= today.getTime()){
 
-    // To calculate the time difference of two dates
-    let Difference_In_Time = today.getTime() - birthDate.getTime();
-    let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
-    console.log(Difference_In_DaysRounded);
-    if (Difference_In_DaysRounded >= 180) {
-      setChildAadharHIde(true);
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - birthDate.getTime();
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+      console.log(Difference_In_DaysRounded);
+      if (Difference_In_DaysRounded >= 180) {
+        setChildAadharHIde(true);
+      } else {
+        setChildAadharHIde(false);
+        setChildAadharNo("");
+      }
     } else {
-      setChildAadharHIde(false);
-      setChildAadharNo("");
+      setChildDOB(null);
+      setDOBError(true);      
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     }
 
     // const today = new Date();
@@ -487,15 +497,15 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         {toast && (
           <Toast
             error={
-              AadharError
+              AadharError || DOBError
               // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
             }
             label={
-              AadharError
+              AadharError || DOBError
                 ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                 // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
                 AadharError
-                  ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                  ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
                   : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                   // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 
