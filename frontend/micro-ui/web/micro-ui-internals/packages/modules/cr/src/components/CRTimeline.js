@@ -9,8 +9,8 @@ const getAction = (flow) => {
     case "STAKEHOLDER": actions = []
       break;
     default: actions = [
-      'BIRTH_TIME_LINE_CHILD',
-      'BIRTH_TIME_LINE_BIRTH_PLACE',
+      'CR_BIRTH_CHILD_DETAILS',
+      'CR_PLACE_OF_BIRTH',
       'BIRTH_TIME_LINE_FATHER_AND_MOTHER',
       'BIRTH_TIME_LINE_ADDRESS',      
       'BIRTH_TIME_LINE_STATSTICAL',

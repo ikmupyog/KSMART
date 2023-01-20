@@ -1634,13 +1634,13 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       <BackButton >{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!BirthPlace}>
         <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BIRTH_PLACE")}`}</span> </h1>
+          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</span> </h1>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12" >
             <div className="col-md-6" >
-              <CardLabel>{t("CR_BIRTH_PLACE")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_PLACE_OF_BIRTH")}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown t={t} optionKey="code" isMandatory={false} option={menu} selected={BirthPlace} select={setselectBirthPlace} disabled={isEdit} placeholder={`${t("CR_BIRTH_PLACE")}`} />
             </div>
           </div>
