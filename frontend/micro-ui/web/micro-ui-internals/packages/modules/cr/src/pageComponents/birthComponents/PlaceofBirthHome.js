@@ -280,7 +280,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdrsDoorNo}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!AdrsCountry}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -527,7 +527,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
  <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsLocalityNameMl" value={AdrsLocalityNameMl} onChange={setSelectAdrsLocalityNameMl} disable={isEdit} placeholder={`${t("CR_LOCALITY_ML")}`} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })} />
  </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_STREET_NAME_EN")}  <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_STREET_NAME_EN")}  </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -541,7 +541,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
             </div>
-            <div className="col-md-3" ><CardLabel>{t("CR_STREET_NAME_ML")}  <span className="mandatorycss">*</span></CardLabel>
+            <div className="col-md-3" ><CardLabel>{t("CR_STREET_NAME_ML")} </CardLabel>
           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdrsStreetNameMl" value={AdrsStreetNameMl} onChange={setSelectAdrsStreetNameMl} placeholder={`${t("CR_STREET_NAME_ML")}`} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })} />
           </div>    
           
@@ -590,7 +590,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
             <div className="col-md-3">
               <CardLabel>
                 {t("CR_DOOR_NO")}
-                <span className="mandatorycss">*</span>
+                
               </CardLabel>
               <TextInput
                 t={t}
@@ -602,11 +602,11 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
                 onChange={setSelectAdrsDoorNo}
                 placeholder={`${t("CR_DOOR_NO")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}  <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")} </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -621,7 +621,7 @@ const PlaceofBirthHome = ({ config, onSelect, userType, formData, AdrsCountry, s
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}  <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}  </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}

@@ -43,6 +43,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
   const [PublicPlaceError, setPublicPlaceError] = useState(formData?.BirthPlace?.setPublicPlaceType ? false : false);
   const [AdrsInfonmntNameError, setAdrsInfonmntNameError] = useState(formData?.BirthPlace?.AdrsInfontName ? false : false);
+  const [PublicPlaceAdrsError, setPublicPlaceAdrsError] = useState(formData?.BirthPlace?.AdrsPublicPlace ? false : false);
 
   const [AdrsHomeCountryError, setAdrsHomeCountryError] = useState(formData?.BirthPlace?.AdrsHomeCountry ? false : false);
   const [AdrsHomeStateNameError, setAdrsHomeStateNameError] = useState(formData?.BirthPlace?.AdrsHomeStateName ? false : false);
@@ -732,16 +733,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setVehiInfomantAdrLocalityNameEnError(false);
       }
-      if (InformantAdrsStreetNameEn == null || InformantAdrsStreetNameEn == "") {
-        setVehiInfomantAdrStreetNameEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setVehiInfomantAdrStreetNameEnError(false);
-      }
+      // if (InformantAdrsStreetNameEn == null || InformantAdrsStreetNameEn == "") {
+      //   setVehiInfomantAdrStreetNameEnError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setVehiInfomantAdrStreetNameEnError(false);
+      // }
       if (InformantAdrsHouseNameEn == null || InformantAdrsHouseNameEn == "") {
         setVehiInfomantAdrHouseNameEnError(true);
         validFlag = false;
@@ -753,27 +754,27 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         setVehiInfomantAdrHouseNameEnError(false);
       }
 
-      if (InformantAdrsDoorNo == null || InformantAdrsDoorNo == "") {
-        setVehiInfomantAdrDoorNoError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setVehiInfomantAdrDoorNoError(false);
-      }
+      // if (InformantAdrsDoorNo == null || InformantAdrsDoorNo == "") {
+      //   setVehiInfomantAdrDoorNoError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setVehiInfomantAdrDoorNoError(false);
+      // }
 
-      if (InformantAdrsResNo == null || InformantAdrsResNo == "") {
-        setVehiInfomantAdrResNoEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setVehiInfomantAdrResNoEnError(false);
-      }
+      // if (InformantAdrsResNo == null || InformantAdrsResNo == "") {
+      //   setVehiInfomantAdrResNoEnError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setVehiInfomantAdrResNoEnError(false);
+      // }
 
     }
     if (BirthPlace.code === "PUBLIC_PLACES") {
@@ -797,6 +798,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         }, 2000);
       } else {
         setAdrsInfonmntNameError(false);
+      }
+      if (AdrsPublicPlace == null || AdrsPublicPlace == "") {
+        setPublicPlaceAdrsError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setPublicPlaceAdrsError(false);
       }
     }
 
@@ -933,26 +944,26 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setAdrsHomeLocalityNameMlError(false);
       }
-      if (AdrsStreetNameEn == null || AdrsStreetNameEn == "") {
-        setAdrsHomeStreetNameEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeStreetNameEnError(false);
-      }
-      if (AdrsStreetNameMl == null || AdrsStreetNameMl == "") {
-        setAdrsHomeStreetNameMlError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeStreetNameMlError(false);
-      }
+      // if (AdrsStreetNameEn == null || AdrsStreetNameEn == "") {
+      //   setAdrsHomeStreetNameEnError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setAdrsHomeStreetNameEnError(false);
+      // }
+      // if (AdrsStreetNameMl == null || AdrsStreetNameMl == "") {
+      //   setAdrsHomeStreetNameMlError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setAdrsHomeStreetNameMlError(false);
+      // }
       if (AdrsHouseNameEn == null || AdrsHouseNameEn == "") {
         setAdrsHomeHouseNameEnError(true);
         validFlag = false;
@@ -973,38 +984,38 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setAdrsHomeHouseNameMlError(false);
       }
-      if (AdrsDoorNo == null || AdrsDoorNo == "") {
-        setAdrsHomeDoorNoError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeDoorNoError(false);
-      }
+      // if (AdrsDoorNo == null || AdrsDoorNo == "") {
+      //   setAdrsHomeDoorNoError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setAdrsHomeDoorNoError(false);
+      // }
 
-      if (AdrsResNoEn == null || AdrsResNoEn == "") {
-        setAdrsHomeResNoEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeResNoEnError(false);
-      }
+      // if (AdrsResNoEn == null || AdrsResNoEn == "") {
+      //   setAdrsHomeResNoEnError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setAdrsHomeResNoEnError(false);
+      // }
 
-      if (AdrsResNoMl == null || AdrsResNoMl == "") {
-        setAdrsHomeResNoMlError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAdrsHomeResNoMlError(false);
-      }
+      // if (AdrsResNoMl == null || AdrsResNoMl == "") {
+      //   setAdrsHomeResNoMlError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setAdrsHomeResNoMlError(false);
+      // }
 
       if (InfomantFirstNameEn == null || InfomantFirstNameEn == "") {
         setHomeInformantFstNameEnError(true);
@@ -1140,16 +1151,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setHomeInformantAdrLocalityNameEnError(false);
       }
-      if (InformantAdrsStreetNameEn == null || InformantAdrsStreetNameEn == "") {
-        setHomeInformantAdrStreetNameEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setHomeInformantAdrStreetNameEnError(false);
-      }
+      // if (InformantAdrsStreetNameEn == null || InformantAdrsStreetNameEn == "") {
+      //   setHomeInformantAdrStreetNameEnError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setHomeInformantAdrStreetNameEnError(false);
+      // }
 
       if (InformantAdrsHouseNameEn == null || InformantAdrsHouseNameEn == "") {
         setHomeInformantAdrHouseNameEnError(true);
@@ -1161,26 +1172,26 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setHomeInformantAdrHouseNameEnError(false);
       }
-      if (InformantAdrsDoorNo == null || InformantAdrsDoorNo == "") {
-        setHomeInformantAdrDoorNoError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setHomeInformantAdrDoorNoError(false);
-      }
-      if (InformantAdrsResNo == null || InformantAdrsResNo == "") {
-        setHomeInformantAdrResNoEnError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setHomeInformantAdrResNoEnError(false);
-      }
+      // if (InformantAdrsDoorNo == null || InformantAdrsDoorNo == "") {
+      //   setHomeInformantAdrDoorNoError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setHomeInformantAdrDoorNoError(false);
+      // }
+      // if (InformantAdrsResNo == null || InformantAdrsResNo == "") {
+      //   setHomeInformantAdrResNoEnError(true);
+      //   validFlag = false;
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setHomeInformantAdrResNoEnError(false);
+      // }
 
     }
 
@@ -1262,7 +1273,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         onSelect(config.key, {
           BirthPlace, HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo,
           setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar, setPublicPlaceType,
-          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,
+          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,AdrsHouseNameMl,
           AdrsMainPlaceEn, AdrsLocalityNameEn, AdrsStreetNameEn, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsMainPlaceMl,
           AdrsLocalityNameMl, AdrsStreetNameMl, AdrsResNoMl, InfomantFirstNameEn, InfomantAadhar, InfomantEmail, InfomantMobile, InformantAdrsCountry, InformantAdrsStateName, InformantAdrsLBTypeName,
           InformantAdrsResNo, InformantAdrsDoorNo, InformantAdrsHouseNameEn, InformantAdrsMainPlaceEn, InformantAdrsLocalityNameEn, InformantAdrsStreetNameEn,
@@ -1346,7 +1357,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         onSelect(config.key, {
           BirthPlace, HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo,
           setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar, setPublicPlaceType,
-          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,
+          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,AdrsHouseNameMl,
           AdrsMainPlaceEn, AdrsLocalityNameEn, AdrsStreetNameEn, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsMainPlaceMl,
           AdrsLocalityNameMl, AdrsStreetNameMl, AdrsResNoMl, InfomantFirstNameEn, InfomantAadhar, InfomantEmail, InfomantMobile, InformantAdrsCountry, InformantAdrsStateName, InformantAdrsLBTypeName,
           InformantAdrsResNo, InformantAdrsDoorNo, InformantAdrsHouseNameEn, InformantAdrsMainPlaceEn, InformantAdrsLocalityNameEn, InformantAdrsStreetNameEn,
@@ -1431,7 +1442,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         onSelect(config.key, {
           BirthPlace, HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo,
           setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar, setPublicPlaceType,
-          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,
+          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,AdrsHouseNameMl,
           AdrsMainPlaceEn, AdrsLocalityNameEn, AdrsStreetNameEn, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsMainPlaceMl,
           AdrsLocalityNameMl, AdrsStreetNameMl, AdrsResNoMl, InfomantFirstNameEn, InfomantAadhar, InfomantEmail, InfomantMobile, InformantAdrsCountry, InformantAdrsStateName, InformantAdrsLBTypeName,
           InformantAdrsResNo, InformantAdrsDoorNo, InformantAdrsHouseNameEn, InformantAdrsMainPlaceEn, InformantAdrsLocalityNameEn, InformantAdrsStreetNameEn,
@@ -1515,7 +1526,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         onSelect(config.key, {
           BirthPlace, HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo,
           setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar, setPublicPlaceType,
-          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,
+          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,AdrsHouseNameMl,
           AdrsMainPlaceEn, AdrsLocalityNameEn, AdrsStreetNameEn, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsMainPlaceMl,
           AdrsLocalityNameMl, AdrsStreetNameMl, AdrsResNoMl, InfomantFirstNameEn, InfomantAadhar, InfomantEmail, InfomantMobile, InformantAdrsCountry, InformantAdrsStateName, InformantAdrsLBTypeName,
           InformantAdrsResNo, InformantAdrsDoorNo, InformantAdrsHouseNameEn, InformantAdrsMainPlaceEn, InformantAdrsLocalityNameEn, InformantAdrsStreetNameEn,
@@ -1602,7 +1613,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         onSelect(config.key, {
           BirthPlace, HospitalName, SignedOfficerName, SignedOfficerDesignation, SignedOfficerAadharNo, SignedOfficerMobileNo,
           setInstitution, setInstitutionId, SiginedOfficer, SiginedOfficerDesignation, InstitutionMobilNo, InstitutionAadhaar, setPublicPlaceType,
-          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn,
+          AdrsInfontName, AdrsPublicPlace, PublicPlaceDesption, AdrsCountry, AdrsStateName, AdrsLBTypeName, AdrsResNoEn, AdrsDoorNo, AdrsHouseNameEn, AdrsHouseNameMl,
           AdrsMainPlaceEn, AdrsLocalityNameEn, AdrsStreetNameEn, AdrsVillage, AdrsLBName, AdrsDistrict, AdrsTaluk, AdrsPostOffice, AdrsPincode, AdrsMainPlaceMl,
           AdrsLocalityNameMl, AdrsStreetNameMl, AdrsResNoMl, InfomantFirstNameEn, InfomantAadhar, InfomantEmail, InfomantMobile, InformantAdrsCountry, InformantAdrsStateName, InformantAdrsLBTypeName,
           InformantAdrsResNo, InformantAdrsDoorNo, InformantAdrsHouseNameEn, InformantAdrsMainPlaceEn, InformantAdrsLocalityNameEn, InformantAdrsStreetNameEn,
@@ -1800,15 +1811,17 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError || InstitutionMobilError || InstitutionAadharError ||
               VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError || VehiInfomantFstNameEnError ||
               VehiInfomantAdrCountryError || VehiInfomantAdrStateNameError || VehiInfomantAdrDistrictError || VehiInfomantAdrLBTypeNameError || VehiInfomantAdrLBNameError || VehiInfomantAdrTalukError || VehiInfomantAdrVillageError || VehiInfomantAdrPostOfficeError ||
-              VehiInfomantAdrPincodeError || VehiInfomantAdrMainPlaceEnError || VehiInfomantAdrLocalityNameEnError || VehiInfomantAdrStreetNameEnError ||
-              VehiInfomantAdrHouseNameEnError || VehiInfomantAdrDoorNoError || VehiInfomantAdrResNoEnError ||
-              PublicPlaceError || AdrsInfonmntNameError ||
+              VehiInfomantAdrPincodeError || VehiInfomantAdrMainPlaceEnError || VehiInfomantAdrLocalityNameEnError  ||
+              VehiInfomantAdrHouseNameEnError ||
+              //  VehiInfomantAdrDoorNoError || VehiInfomantAdrResNoEnError ||  VehiInfomantAdrStreetNameEnError ||
+              PublicPlaceError || AdrsInfonmntNameError || PublicPlaceAdrsError || 
               AdrsHomeCountryError || AdrsHomeStateNameError || AdrsHomeDistrictError || AdrsHomeLBTypeNameError || AdrsHomeLBNameError || AdrsHomeTalukError || AdrsHomeVillageError || AdrsHomePostOfficeError || AdrsHomePincodeError || AdrsHomeMainPlaceEnError ||
-              AdrsHomeMainPlaceMlError || AdrsHomeLocalityNameEnError || AdrsHomeLocalityNameMlError || AdrsHomeStreetNameEnError || AdrsHomeStreetNameMlError || AdrsHomeHouseNameEnError || AdrsHomeHouseNameMlError || AdrsHomeDoorNoError ||
-              AdrsHomeResNoEnError || AdrsHomeResNoMlError ||
+              AdrsHomeMainPlaceMlError || AdrsHomeLocalityNameEnError || AdrsHomeLocalityNameMlError  || AdrsHomeHouseNameEnError || AdrsHomeHouseNameMlError || 
+              // AdrsHomeDoorNoError || AdrsHomeStreetNameEnError || AdrsHomeStreetNameMlError ||  AdrsHomeResNoEnError || AdrsHomeResNoMlError ||
+                // HomeInformantAdrStreetNameEnError ||HomeInformantAdrDoorNoError || HomeInformantAdrResNoEnError ||
               HomeInformantAdrCountryError || HomeInformantAdrStateNameError || HomeInformantAdrDistrictError || HomeInformantAdrLBTypeNameError || HomeInformantAdrLBNameError || HomeInformantAdrTalukError || HomeInformantAdrVillageError || HomeInformantAdrPostOfficeError ||
-              HomeInformantAdrPincodeError || HomeInformantAdrMainPlaceEnError || HomeInformantAdrLocalityNameEnError || HomeInformantAdrStreetNameEnError ||
-              HomeInformantAdrHouseNameEnError || HomeInformantAdrDoorNoError || HomeInformantAdrResNoEnError
+              HomeInformantAdrPincodeError || HomeInformantAdrMainPlaceEnError || HomeInformantAdrLocalityNameEnError || HomeInformantAdrHouseNameEnError 
+            
 
             }
             label={
@@ -1818,40 +1831,44 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
                 InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError || InstitutionMobilError || InstitutionAadharError ||
                 VehicleRegiNoError || VehiFromEnError || VehiToEnError || VehiFromMlError || VehiToMlError || VehiInfomantFstNameEnError ||
                 VehiInfomantAdrCountryError || VehiInfomantAdrStateNameError || VehiInfomantAdrDistrictError || VehiInfomantAdrLBTypeNameError || VehiInfomantAdrLBNameError || VehiInfomantAdrTalukError || VehiInfomantAdrVillageError || VehiInfomantAdrPostOfficeError ||
-                VehiInfomantAdrPincodeError || VehiInfomantAdrMainPlaceEnError || VehiInfomantAdrLocalityNameEnError || VehiInfomantAdrStreetNameEnError ||
-                VehiInfomantAdrHouseNameEnError || VehiInfomantAdrDoorNoError || VehiInfomantAdrResNoEnError ||
-                PublicPlaceError || AdrsInfonmntNameError ||
+                VehiInfomantAdrPincodeError || VehiInfomantAdrMainPlaceEnError || VehiInfomantAdrLocalityNameEnError || 
+                VehiInfomantAdrHouseNameEnError ||
+                // VehiInfomantAdrStreetNameEnError || VehiInfomantAdrDoorNoError || VehiInfomantAdrResNoEnError ||
+                PublicPlaceError || AdrsInfonmntNameError || PublicPlaceAdrsError || 
                 AdrsHomeCountryError || AdrsHomeStateNameError || AdrsHomeDistrictError || AdrsHomeLBTypeNameError || AdrsHomeLBNameError || AdrsHomeTalukError || AdrsHomeVillageError || AdrsHomePostOfficeError || AdrsHomePincodeError || AdrsHomeMainPlaceEnError ||
-                AdrsHomeMainPlaceMlError || AdrsHomeLocalityNameEnError || AdrsHomeLocalityNameMlError || AdrsHomeStreetNameEnError || AdrsHomeStreetNameMlError || AdrsHomeHouseNameEnError || AdrsHomeHouseNameMlError || AdrsHomeDoorNoError ||
-                AdrsHomeResNoEnError || AdrsHomeResNoMlError ||
+                AdrsHomeMainPlaceMlError || AdrsHomeLocalityNameEnError || AdrsHomeLocalityNameMlError  || AdrsHomeHouseNameEnError || AdrsHomeHouseNameMlError || 
+                // AdrsHomeDoorNoError ||AdrsHomeResNoEnError || AdrsHomeResNoMlError || AdrsHomeStreetNameEnError || AdrsHomeStreetNameMlError || 
+                  // HomeInformantAdrDoorNoError || HomeInformantAdrResNoEnError || HomeInformantAdrStreetNameEnError  
                 HomeInformantAdrCountryError || HomeInformantAdrStateNameError || HomeInformantAdrDistrictError || HomeInformantAdrLBTypeNameError || HomeInformantAdrLBNameError || HomeInformantAdrTalukError || HomeInformantAdrVillageError || HomeInformantAdrPostOfficeError ||
-                HomeInformantAdrPincodeError || HomeInformantAdrMainPlaceEnError || HomeInformantAdrLocalityNameEnError || HomeInformantAdrStreetNameEnError ||
-                HomeInformantAdrHouseNameEnError || HomeInformantAdrDoorNoError || HomeInformantAdrResNoEnError
+                HomeInformantAdrPincodeError || HomeInformantAdrMainPlaceEnError || HomeInformantAdrLocalityNameEnError  ||
+                HomeInformantAdrHouseNameEnError 
+              
 
-
-
+              
                 ?
+                
                 (HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`) : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`) : SignedOfficerAdharNoError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                   : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : InstitutionMobilError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : InstitutionAadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                    : PublicPlaceError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`) : AdrsInfonmntNameError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
+                    : PublicPlaceError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`) : AdrsInfonmntNameError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`) : PublicPlaceAdrsError ? t(`BIRTH_ERROR_PUBLIC_PLACE_ADDRESS_CHOOSE`)
                       : AdrsHomeCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : AdrsHomeStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : AdrsHomeDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
                         : AdrsHomeLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : AdrsHomeLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : AdrsHomeTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : AdrsHomeVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
                           : AdrsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : AdrsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : AdrsHomeMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`)
-                            : AdrsHomeMainPlaceMlError ? t(`BIRTH_ERROR_MAIN_PLACE_ML_CHOOSE`) : AdrsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : AdrsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`) : AdrsHomeStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`)
-                              : AdrsHomeStreetNameMlError ? t(`BIRTH_ERROR_STREET_NAME_ML_CHOOSE`) : AdrsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`) : AdrsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`) : AdrsHomeDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : AdrsHomeResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`) : AdrsHomeResNoMlError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_ML_CHOOSE`)
+                            : AdrsHomeMainPlaceMlError ? t(`BIRTH_ERROR_MAIN_PLACE_ML_CHOOSE`) : AdrsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : AdrsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`) 
+                             : AdrsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`) : AdrsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                              //  : AdrsHomeStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`): AdrsHomeStreetNameMlError ? t(`BIRTH_ERROR_STREET_NAME_ML_CHOOSE`) : AdrsHomeDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : AdrsHomeResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`) : AdrsHomeResNoMlError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_ML_CHOOSE`)
                                 : VehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`) : VehiFromEnError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_FROM_EN_CHOOSE`) : VehiToEnError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_TO_EN_CHOOSE`) : VehiFromMlError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_FROM_ML_CHOOSE`) : VehiToMlError ? t(`BIRTH_ERROR_VEHICLE_TRAVELLING_TO_ML_CHOOSE`)
                                   : VehiInfomantFstNameEnError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`) : VehiInfomantMobileNoError ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
                                     : VehiInfomantAdrCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : VehiInfomantAdrStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : VehiInfomantAdrDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
                                       : VehiInfomantAdrLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : VehiInfomantAdrLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : VehiInfomantAdrTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : VehiInfomantAdrVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
                                         : VehiInfomantAdrPostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : VehiInfomantAdrPincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : VehiInfomantAdrMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`)
-                                          : VehiInfomantAdrLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : VehiInfomantAdrStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`) : VehiInfomantAdrHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                            : VehiInfomantAdrDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : VehiInfomantAdrResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`)
+                                          : VehiInfomantAdrLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)  : VehiInfomantAdrHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                          //  : VehiInfomantAdrStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`) : VehiInfomantAdrDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : VehiInfomantAdrResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`)
                                               : HomeInformantFstNameEnError ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`) : HomeInformantMobileNoError ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
                                                 : HomeInformantAdrCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : HomeInformantAdrStateNameError ? t(`BIRTH_ERROR_STATE_CHOOSE`) : HomeInformantAdrDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
                                                   : HomeInformantAdrLBTypeNameError ? t(`BIRTH_ERROR_LBTYPE_CHOOSE`) : HomeInformantAdrLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : HomeInformantAdrTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : HomeInformantAdrVillageError ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
                                                     : HomeInformantAdrPostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : HomeInformantAdrPincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : HomeInformantAdrMainPlaceEnError ? t(`BIRTH_ERROR_MAIN_PLACE_EN_CHOOSE`)
-                                                      : HomeInformantAdrLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : HomeInformantAdrStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`) : HomeInformantAdrHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                                        : HomeInformantAdrDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : HomeInformantAdrResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`)
+                                                      : HomeInformantAdrLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)  : HomeInformantAdrHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                                      //  : HomeInformantAdrStreetNameEnError ? t(`BIRTH_ERROR_STREET_NAME_EN_CHOOSE`): HomeInformantAdrDoorNoError ? t(`BIRTH_ERROR_DOOR_NO_CHOOSE`) : HomeInformantAdrResNoEnError ? t(`BIRTH_ERROR_RES_ASSOCIATION_NO_EN_CHOOSE`)
                                                           : setToast(false)
                 ) : setToast(false)
               )

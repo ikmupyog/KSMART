@@ -78,9 +78,9 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
                 </div>
                 <div className="row">
                     <div className="col-md-12" >
-                        <div className="col-md-3" ><CardLabel>{`${t("CR_FIRST_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+                        <div className="col-md-3" ><CardLabel>{`${t("CR_INFORMANT_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="InfomantFirstNameEn"
-                                value={InfomantFirstNameEn} onChange={setSelectInfomantFirstNameEn} disable={isEdit} placeholder={`${t("CR_FIRST_NAME_EN")}`}{...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })} />
+                                value={InfomantFirstNameEn} onChange={setSelectInfomantFirstNameEn} disable={isEdit} placeholder={`${t("CR_INFORMANT_NAME_EN")}`}{...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME_EN") })} />
                         </div>
                         <div className="col-md-3" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
                             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="InfomantAadhar" value={InfomantAadhar} onChange={setSelectInfomantAadhar} disable={isEdit} placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />

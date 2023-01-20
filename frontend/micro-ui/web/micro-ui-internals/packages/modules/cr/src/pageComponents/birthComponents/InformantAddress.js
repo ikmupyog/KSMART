@@ -270,7 +270,7 @@ const InformantAddress = ({ config, onSelect, userType, formData , InformantAdrs
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!InformantAdrsDoorNo}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!InformantAdrsCountry}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
