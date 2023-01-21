@@ -82,5 +82,10 @@ public class CrDeathRegistryConstants {
      public static final String GENDER_FEMALE_CAPTION ="പെൺ/Female";
      public static final String TRANSGENDER_CAPTION ="Transgender";
 
+     //RAkhi S on 21.01.2023
+     public static final String HUSBAND ="HUSBAND";
+     public static final String WIFE ="WIFE";
+     public static final String WIFE_ML = " (ഭാര്യ) ";
+     public static final String WIFE_EN  = " (Wife) ";
 
 }

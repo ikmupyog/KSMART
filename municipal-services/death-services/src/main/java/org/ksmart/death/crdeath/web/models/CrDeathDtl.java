@@ -509,9 +509,10 @@ private String assignuser;
     @JsonProperty("spouseUnavailable")
     private Integer spouseUnavailable ;
 
-    @Schema(type = "integer", description="1 for Husband /0 for Wife")
+    @Schema(type = "String", description="spouseType.json mdms")
+    @Size(max = 64)
     @JsonProperty("spouseType")
-    private Integer spouseType ;
+    private String spouseType ;
 
     @Schema(type = "String", description="spouse email id")
     @Size(max = 64)

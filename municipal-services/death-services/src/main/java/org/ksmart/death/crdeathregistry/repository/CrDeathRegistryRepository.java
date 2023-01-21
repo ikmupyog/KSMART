@@ -233,7 +233,20 @@ public class CrDeathRegistryRepository {
                                 cert.getDeceasedLastNameEn() );
 
                 cert.setGender(cert.getDeceasedGender());
-
+                //Rakhi S on 21.01.2023
+                String spouseMl = "";
+                String spouseEn = "";    
+                
+                if(cert.getSpouseType().equals(CrDeathRegistryConstants.WIFE.toString())){
+                    spouseMl = CrDeathRegistryConstants.WIFE_ML.toString();
+                    spouseEn = CrDeathRegistryConstants.WIFE_EN.toString();
+                }
+                else if(cert.getSpouseType().equals(CrDeathRegistryConstants.HUSBAND.toString())){
+                    spouseMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
+                    spouseEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
+                }
+                cert.setSpouseName(cert.getSpouseNameMl()+ spouseMl+" / "+
+                    cert.getSpouseNameEn()+ spouseEn);
                 // if(cert.getFemaleDependentTitle()!=null){
                 // cert.setMotherName(cert.getFemaleDependentTitle()+" "+
                 //                     cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
@@ -246,14 +259,14 @@ public class CrDeathRegistryRepository {
                 String maleDependentMl = "";
                 String maleDependentEn = "";    
                 
-                if(cert.getMaleDependentType().equals(CrDeathRegistryConstants.MALE_DEPENDENT_FATHER.toString())){
+                // if(cert.getMaleDependentType().equals(CrDeathRegistryConstants.MALE_DEPENDENT_FATHER.toString())){
                      maleDependentMl = CrDeathRegistryConstants.MALE_DEPENDENT_FATHER_ML.toString();
                      maleDependentEn = CrDeathRegistryConstants.MALE_DEPENDENT_FATHER_EN.toString();
-                }
-                else if(cert.getMaleDependentType().equals(CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND.toString())){
-                     maleDependentMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
-                     maleDependentEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
-                }
+                // }
+                // else if(cert.getMaleDependentType().equals(CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND.toString())){
+                //      maleDependentMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
+                //      maleDependentEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
+                // }
                 // if(cert.getMaleDependentTitle()!=null){
                 // cert.setMaledependentname(cert.getMaleDependentTitle()+" "+
                 //                             cert.getMaleDependentNameMl()+ maleDependentMl+" / "+

@@ -122,7 +122,7 @@ public class CrDeathRowMapper implements ResultSetExtractor<List<CrDeathDtl>>, B
                                         .spouseNameEn(rs.getString("spouse_name_en"))
                                         .spouseNameMl(rs.getString("spouse_name_ml"))
                                         .spouseUnavailable(rs.getInt("spouse_unavailable"))
-                                        .spouseType(rs.getInt("spouse_type"))
+                                        .spouseType(rs.getString("spouse_type"))
                                         .spouseEmailid(rs.getString("spouse_emailid"))
                                         .spouseAadhaar(rs.getString("spouse_aadhaar"))
                                         .spouseMobileno(rs.getString("spouse_mobileno"))

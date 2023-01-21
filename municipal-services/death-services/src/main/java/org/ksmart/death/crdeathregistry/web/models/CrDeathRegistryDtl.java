@@ -458,8 +458,9 @@ public class CrDeathRegistryDtl {
    private Integer spouseUnavailable ;
 
 // description="1 for Husband /0 for Wife"
+   @Size(max = 64)
    @JsonProperty("spouseType")
-   private Integer spouseType ;
+   private String spouseType ;
 
    @Size(max = 64)
    @JsonProperty("spouseEmailid")
@@ -472,5 +473,7 @@ public class CrDeathRegistryDtl {
    @Size(max = 15)
    @JsonProperty("spouseMobileno")
    private String  spouseMobileno;
+
+   private String spouseName;
 
 }
