@@ -10,7 +10,7 @@ import InformationDeath from "../../../pageComponents/deathComponents/Informatio
 import ApplicationDetails from "../../../../../templates/ApplicationDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 // import Search from "../Search";
-import SearchCorrection from "../../employee/SearchCorrection";
+import SpecifyCorrection from "../SpecifyCorrection";
 
 const DeathCrFlowApp = ({ parentUrl }) => {
   const { t } = useTranslation();
@@ -19,7 +19,128 @@ const DeathCrFlowApp = ({ parentUrl }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
+  // let params1 = sessionStorage.getItem('CR_DEATH_CORRECTIONS')
 
+  console.log('para',params);
+  // useEffect(()=>{
+  //   let InformationDeath ={
+  //     "setIdCombo": {
+  //         "name": "GST Registration Number",
+  //         "namelocal": "‍‍‍ജി എസ്സ് ടി രെജിസ്ട്രേഷന്‍ നമ്പര്‍",
+  //         "id": 11,
+  //         "code": "MIDPROOF_GST_REGISTRATION_NUMBER",
+  //         "active": true,
+  //         "type": "COMMON"
+  //     },
+  //     "DeathDate": "2023-01-01",
+  //     "DeathTime": "10:11",
+  //     "FirstName": "dash",
+  //     "MiddleName": "",
+  //     "LastName": "",
+  //     "MLFirstName": "മലയാളം",
+  //     "MlMiddleName": "",
+  //     "MlLastName": "",
+  //     "Ageofbirth": "fdf",
+  //     "AdharNo": "",
+  //     "IdNo": "",
+  //     "FromDate": "",
+  //     "ToDate": "",
+  //     "CommencementDate": "",
+  //     "Gender": {
+  //         "i18nKey": "CR_COMMON_GENDER_MALE",
+  //         "code": "MALE",
+  //         "value": "MALE"
+  //     },
+  //     "DeathTimeFrom": "",
+  //     "DeathTimeTo": "",
+  //     "setAgeUnit": {
+  //         "name": "Years",
+  //         "namelocal": "വർഷം",
+  //         "code": "AGE_UNIT_YEARS",
+  //         "id": 1,
+  //         "active": true,
+  //         "type": "BND"
+  //     },
+  //     "InformationDeath": {
+  //         "setIdCombo": {
+  //             "name": "GST Registration Number",
+  //             "namelocal": "‍‍‍ജി എസ്സ് ടി രെജിസ്ട്രേഷന്‍ നമ്പര്‍",
+  //             "id": 11,
+  //             "code": "MIDPROOF_GST_REGISTRATION_NUMBER",
+  //             "active": true,
+  //             "type": "COMMON"
+  //         },
+  //         "DeathDate": "2023-01-01",
+  //         "DeathTime": "10:11",
+  //         "FirstName": "dash",
+  //         "MiddleName": "ds",
+  //         "LastName": "dsd",
+  //         "MLFirstName": "മലയാളം",
+  //         "MlMiddleName": "മലയാളം",
+  //         "MlLastName": "മലയാളം",
+  //         "Ageofbirth": 0,
+  //         "AdharNo": "123456789012",
+  //         "IdNo": "2323",
+  //         "FromDate": "2023-01-03",
+  //         "ToDate": "2023-01-02",
+  //         "CommencementDate": "2023-01-16",
+  //         "Gender": {
+  //             "i18nKey": "CR_COMMON_GENDER_MALE",
+  //             "code": "MALE",
+  //             "value": "MALE"
+  //         },
+  //         "DeathTimeFrom": "11:11",
+  //         "DeathTimeTo": "02:22",
+  //         "setAgeUnit": {
+  //             "name": "Years",
+  //             "namelocal": "വർഷം",
+  //             "code": "AGE_UNIT_YEARS",
+  //             "id": 1,
+  //             "active": true,
+  //             "type": "BND"
+  //         },
+  //         "setTitle": {
+  //             "name": "Smt.",
+  //             "namelocal": "ശ്രീമതി",
+  //             "code": "TITLE_SMT.",
+  //             "id": 4,
+  //             "titlecode": "F",
+  //             "active": true,
+  //             "type": "COMMON"
+  //         },
+  //         "setTitleB": {
+  //             "name": "Shri.",
+  //             "namelocal": "ശ്രീ",
+  //             "code": "TITLE_SHRI.",
+  //             "id": 3,
+  //             "titlecode": "M",
+  //             "active": true,
+  //             "type": "COMMON"
+  //         },
+  //         "setNationality": {
+  //             "name": "India ",
+  //             "namelocal": "ഇന്‍ഡ്യ",
+  //             "countrycode": "IND",
+  //             "code": "COUNTRY_INDIA",
+  //             "id": 77,
+  //             "active": true,
+  //             "type": "COMMON",
+  //             "nationalityname": "Indian",
+  //             "nationalitynamelocal": null
+  //         },
+  //         "setReligion": {
+  //             "name": "Christian",
+  //             "namelocal": "ക്രിസ്ത്യൻ",
+  //             "migrationId": 2,
+  //             "id": 2,
+  //             "code": "RELIGION_CHRISTIAN",
+  //             "active": true,
+  //             "type": "COMMON"
+  //         }
+  //     }
+  // }
+  // setParams({ ...params, ...{ ["InformationDeath"]: { ...params["InformationDeath"], ...InformationDeath } } });
+  // },[])
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
@@ -122,6 +243,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
   const DeathCheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
   const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
   const SearchCorrection = Digit?.ComponentRegistryService?.getComponent("CRSearchdeathcorrection");
+  const DeathCorrection = Digit?.ComponentRegistryService?.getComponent("CRSearchDeathCorrectionRoute");
 
   return (
     <React.Fragment>
@@ -155,6 +277,8 @@ const DeathCrFlowApp = ({ parentUrl }) => {
         <PrivateRoute parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
         {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
         <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
+        <PrivateRoute path={`${path}/death-information`} component={(props) => <DeathCorrection {...props} parentRoute={path} />} />
+        <PrivateRoute path={`${path}/specify-correction`} component={(props) => <SpecifyCorrection {...props} parentRoute={path} />} />
 
         {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
       </Switch>

@@ -20,6 +20,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationSearch = location?.pathname?.includes("birthsearch/application");
   const isApplicationDeathSearch = location?.pathname?.includes("deathsearch/application");
   const isDeathCorrectSearch = location?.pathname?.includes("search-correction/application");
+  const isSpecifyCorrectSearch = location?.pathname?.includes("death-flow/specify-correction");
   const isLicenceSearch = location?.pathname?.includes("search/license");
   const isEditApplication = location?.pathname?.includes("edit-application-details");
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
@@ -144,11 +145,18 @@ const CRBreadCrumb = ({ location }) => {
       breadCrumbUrls.includes("home/application-deathdetails") 
     },
     {
-      path: "/digit-ui/employee/cr/death-flow/search-correction/application",
+      path: "/digit-ui/employee/cr/death-flow/specify-correction",
+      content: t("Specify Correction"),
+      show: isSpecifyCorrectSearch ||
+      breadCrumbUrls.includes("home/specify-correction") 
+    },
+    {
+      path: "/digit-ui/employee/cr/death-flow/specify-correction/search-correction/application",
       content: t("ES_COMMON_SEARCH_APPLICATION"),
       show: isDeathCorrectSearch ||
-      breadCrumbUrls.includes("home/death-flow") 
+      breadCrumbUrls.includes("home/specify-correction/search-correction/application") 
     },
+   
    
     // {
     //   path: "/digit-ui/employee/cr/cr-flow/trade-lisense",

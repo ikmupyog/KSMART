@@ -16,7 +16,7 @@ const RadioButtons = (props) => {
       {props?.options?.map((option, ind) => {
         if (props?.optionsKey && !props?.isDependent) {
           return (
-            <div style={props.innerStyles} key={ind}>
+            <div style={props.innerStyles?props.innerStyles :{display:"flex",alignItems:"center"}} key={ind}>
               <span className="radio-btn-wrap">
                 <input
                   className="radio-btn"
@@ -30,7 +30,11 @@ const RadioButtons = (props) => {
                 />
                 <span className="radio-btn-checkmark"></span>
               </span>
-              <label style={props.inputStyle}>{t(option[props.optionsKey])}</label>
+              <div style={{display:"flex", marginBottom:"unset"}}>
+              <label style={props.inputStyle}>{t(option[props.optionsKey])}
+              {option?.discription &&(<span style={{fontSize:"12px",fontWeight:"400",marginLeft:"5px"}}>{t(option["discription"])}</span> )}
+              </label>
+              </div>
             </div>
           );
         } else if (props?.optionsKey && props?.isDependent) {
