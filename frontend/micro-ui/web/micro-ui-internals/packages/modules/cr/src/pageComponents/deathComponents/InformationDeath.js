@@ -662,7 +662,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         {checkedAdhar ? (
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
                 <Dropdown
                   t={t}
@@ -676,7 +676,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                   // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <CardLabel>{t("CR_ID_NO")}</CardLabel>
                 <TextInput
                   t={t}
@@ -696,7 +696,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         ) : (
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <CardLabel>{t("CR_AADHAR_OF_DECEASED")}</CardLabel>
                 <TextInput
                   t={t}
@@ -762,16 +762,18 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         </div> */}
         <div className="row">
           <div className="col-md-12">
-            <CheckBox
-              label={t("CR_OCCUPATION_DECEASED_NO")}
-              onChange={() => setCheckedOcuupation((checkedOcuupation) => !checkedOcuupation)}
-              value={checkedOcuupation}
-            />
+            <div className="col-md-6">
+              <CheckBox
+                label={t("CR_OCCUPATION_DECEASED_NO")}
+                onChange={() => setCheckedOcuupation((checkedOcuupation) => !checkedOcuupation)}
+                value={checkedOcuupation}
+              />{" "}
+            </div>
           </div>
         </div>
-        <div className="row">
-          {checkedOcuupation ? null : (
-            <div>
+        {checkedOcuupation ? null : (
+          <div className="row">
+            <div className="col-md-12">
               <div className="col-md-6">
                 <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
                 <Dropdown
@@ -806,8 +808,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </FormStep>
     </React.Fragment>
   );
