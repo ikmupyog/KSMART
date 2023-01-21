@@ -3,8 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea ,BackButt
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType, setSelectedPublicPlaceType, AdrsInfontName, setAdrsInfontName,
-  AdrsPublicPlace, setAdrsPublicPlace, PublicPlaceDesption, setPublicPlaceDesption,
+const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType, setSelectedPublicPlaceType, 
 }) => {
   const stateId = Digit.ULBService.getStateId();
   // const tenantId = Digit.ULBService.getCurrentTenantId(); 
@@ -129,7 +128,7 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
                 placeholder={`${t("CR_TYPE")}`}
             />
         </div>
-        <div className="col-md-6">
+        {/* <div className="col-md-6">
               <CardLabel>
                 {t("CR_INFORMANT_NAME")}
                 <span className="mandatorycss">*</span>
@@ -146,7 +145,7 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
-            </div>
+            </div> */}
             {/* <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
@@ -164,7 +163,7 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
             </div> */}
       </div> 
     </div>  
-    <div className="row">
+    {/* <div className="row">
          <div className="col-md-12" >
          <div className="col-md-6" >
           <CardLabel>{`${t("CR_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel> 
@@ -197,7 +196,7 @@ const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType,
             />
         </div>
       </div>  
-    </div>    
+    </div>     */}
       </FormStep>
     </React.Fragment>
   );

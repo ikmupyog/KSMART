@@ -4,7 +4,7 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstNameEn, setInfomantFirstNameEn, InfomantAadhar, setInfomantAadhar, InfomantEmail, setInfomantEmail,
-    InfomantMobile, setInfomantMobile ,
+    InfomantMobile, setInfomantMobile ,InformantAddressLineOne,setInformantAddressLineOne,InformantAddressLineTwo,setInformantAddressLineTwo,
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
@@ -15,8 +15,8 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
     // const [InfomantAadhar, setInfomantAadhar] = useState(formData?.InfomantInfoDetails?.InfomantAadhar);
     // const [InfomantEmail, setInfomantEmail] = useState(formData?.InfomantInfoDetails?.InfomantEmail);
     // const [InfomantMobile, setInfomantMobile] = useState(formData?.InfomantInfoDetails?.InfomantMobile);
-    const [InformantAddressLineOne, setInformantAddressLineOne] = useState(formData?.InfomantInfoDetails?.InformantAddressLineOne);
-    const [InformantAddressLineTwo, setInformantAddressLineTwo] = useState(formData?.InfomantInfoDetails?.InformantAddressLineTwo);
+    // const [InformantAddressLineOne, setInformantAddressLineOne] = useState(formData?.InfomantInfoDetails?.InformantAddressLineOne);
+    // const [InformantAddressLineTwo, setInformantAddressLineTwo] = useState(formData?.InfomantInfoDetails?.InformantAddressLineTwo);
 
 
     const onSkip = () => onSelect();
@@ -106,7 +106,7 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
                 <div className="row">
          <div className="col-md-12" >
          <div className="col-md-6" >
-          <CardLabel>{`${t("CR_ADDRESS_1_EN")}`}<span className="mandatorycss">*</span></CardLabel> 
+          <CardLabel>{`${t("CR_ADDRESS_1_EN")}`}</CardLabel> 
             <TextArea       
             t={t}
             isMandatory={true}
@@ -117,7 +117,7 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
             onChange={setSelectInformantAddressLineOne}
             disable={isEdit}
             placeholder={`${t("CR_ADDRESS_1_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS_1_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS_1_EN") })}
             />
         </div>
          <div className="col-md-6" >
