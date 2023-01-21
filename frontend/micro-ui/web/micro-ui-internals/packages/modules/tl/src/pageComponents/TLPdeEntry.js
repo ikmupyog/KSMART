@@ -1,5 +1,5 @@
 import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, TextInput, Banner,Toast } from "@egovernments/digit-ui-react-components";
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState, useReducer, useEffect ,useCallback } from "react";
 import { useQueryClient } from "react-query";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
@@ -255,7 +255,9 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   function selectSector(value) {
     setSector(value);
   }
-  function selectedsetCapitalAmount(e) {
+  function changesetCapitalAmount(e) {
+    console.log(e.target);
+    console.log(e.target.value);
     setCapitalAmount(e.target.value);
   }
   function selectYear(value) {
@@ -317,12 +319,14 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     owners[i].name = value;
     setFeilds(owners);
   }
-  function selectedsetrentArrear(e) {
-    setRentArrear(e.target.value);
-  }
-  function selectedsetrentCurrent(e) {
+
+  const changesetrentArrear= useCallback(e=> {
+    setRentArrear(e.target.value)
+  },[rentArrear]);
+  const changesetrentCurrent =useCallback(e=> {
     setRentCurrent(e.target.value);
-  }
+  },[rentCurrent]);
+
   function selectedsetrentPenal(e) {
     setRentPenal(e.target.value);
   }
@@ -342,13 +346,13 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setIsInitialRender(false);
     setRentToMonth(value);
   }
-  function selectedsetProfArrear(e) {
+  function changesetProfArrear(e) {
     setProfArrear(e.target.value);
   }
   // function selectedsetProfCurrent(e) {
   //   setProfCurrent(e.target.value);
   // }
-  function selectedsetProfCurrentFirst(e) {
+  function changesetProfCurrentFirst(e) {
     setProfCurrentFirst(e.target.value);
   }
   function selectedsetProfCurrentSecond(e) {
@@ -383,9 +387,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setLicToYear(value);
   }
 
-  function selectedsetLicArrear(e) {
+  function changesetLicArrear(e) {
     setLicArrear(e.target.value);
-    console.log(licArrear);
   }
   function setSelectLicensingInstitutionName(e) {
     if(e.target.value.trim().length>0){
@@ -396,7 +399,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     }
   }
 
-  function selectedsetLicCurrent(e) {
+  function changesetLicCurrent(e) {
     setLicCurrent(e.target.value);
     console.log(licCurrent);
   }
@@ -1091,7 +1094,7 @@ function validateData(){
                 </div>
                 <div className="row">
                   <div className="col-md-7" ><CardLabel>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} type="text" isMandatory={config.isMandatory} optionKey="i18nKey" name="capitalAmount" value={capitalAmount} keyboardType="numeric" onChange={selectedsetCapitalAmount} {...(validation = { pattern: "^([0-9])$", isRequired: true, type: "number", title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
+                    <TextInput t={t} type="text" isMandatory={config.isMandatory} optionKey="i18nKey" name="capitalAmount" value={capitalAmount} keyboardType="numeric" onChange={changesetCapitalAmount} {...(validation = { pattern: "^([0-9])$", isRequired: true, type: "number", title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
                   </div>
                 </div>
                 <div className="row">
@@ -1111,11 +1114,11 @@ function validateData(){
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="licArrear" value={licArrear} onChange={selectedsetLicArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
+                      <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="licArrear" value={licArrear} onChange={changesetLicArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="licCurrent" value={licCurrent} onChange={selectedsetLicCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
+                      <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="licCurrent" value={licCurrent} onChange={changesetLicCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
                     </div>
                   </div>
                 </div>
@@ -1145,11 +1148,11 @@ function validateData(){
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="profArrear" value={profArrear} onChange={selectedsetProfArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
+                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="profArrear" value={profArrear} onChange={changesetProfArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT_FIRST")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="profCurrentFirst" value={profCurrentFirst} onChange={selectedsetProfCurrentFirst} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
+                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="profCurrentFirst" value={profCurrentFirst} onChange={changesetProfCurrentFirst} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT_SECOND")}`}</CardLabel>
@@ -1184,11 +1187,11 @@ function validateData(){
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="rentArrear" value={rentArrear} onChange={selectedsetrentArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
+                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="rentCurrent" value={rentCurrent} onChange={selectedsetrentCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
+                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CURRENT") })} />
                     </div>
                   </div>
                 </div>
