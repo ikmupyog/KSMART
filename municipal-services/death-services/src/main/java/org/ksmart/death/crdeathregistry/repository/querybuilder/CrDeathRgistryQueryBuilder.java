@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryCriteria;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
 import org.springframework.stereotype.Component;
 
 /**
@@ -46,9 +47,13 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
                                                   .append("      , dt.female_dependent_type, dt.female_dependent_title, dt.female_dependent_name_en, dt.female_dependent_name_ml, dt.female_dependent_aadharno, dt.female_dependent_mobileno, dt.female_dependent_mailid")
                                                   .append("      , dt.isvehicle, dt.vehicle_hospital_ml, dt.vehicle_hospital_en, dt.vehicle_fromplace_ml, dt.vehicle_fromplace_en, dt.vehicle_toplace_ml, dt.vehicle_toplace_en, dt.vehicle_number, dt.death_place_ward_id, dt.informant_age, dt.vehicle_driver_licenceno")
                                                   .append("      , dt.death_signed_officer_designation, dt.death_place_officer_mobile, dt.death_place_officer_aadhaar,  dt.application_no, dt.file_no, dt.ack_no")
+                                                  //Rakhi S on 21.01.2023
+                                                  .append("      , dt.vehicle_first_halt,dt.male_dependent_unavailable,dt.female_dependent_unavailable,dt.spouse_name_en,dt.spouse_name_ml,dt.spouse_unavailable,dt.spouse_type,dt.spouse_emailid,dt.spouse_aadhaar,dt.spouse_mobileno,dt.funcion_uid")
                                                   .append("      , stat.id statid, stat.death_dtl_id, stat.tenantid stattenantid, stat.residencelocalbody, stat.residence_place_type, stat.residencedistrict, stat.residencestate, stat.religion, stat.religion_other, stat.occupation, stat.occupation_other, stat.medical_attention_type")
                                                   .append("      , stat.death_medically_certified, stat.death_cause_main, stat.death_cause_sub, stat.death_cause_other, stat.death_during_delivery, stat.smoking_num_years, stat.tobacco_num_years, stat.arecanut_num_years, stat.alcohol_num_years")
-                                                  .append("      , stat.createdby, stat.createdtime, stat.lastmodifiedby, stat.lastmodifiedtime, stat.nationality ,dt.deceased_idproofno ,dt.deceased_idprooftype,dt.burial_state,dt.vehicle_first_halt,stat.occupation_sub, stat.occupation_minor, stat.education_main, stat.education_sub, stat.residencelbtype,dt.male_dependent_unavailable ,dt.female_dependent_unavailable")
+                                                  .append("      , stat.createdby, stat.createdtime, stat.lastmodifiedby, stat.lastmodifiedtime, stat.nationality ,dt.deceased_idproofno ,dt.deceased_idprooftype,dt.burial_state,stat.occupation_sub, stat.occupation_minor, stat.education_main, stat.education_sub, stat.residencelbtype")
+                                                  //Rakhi S on 21.01.2023
+                                                  .append("      , stat.smoking_type,stat.tobacco_type,stat.arecanut_type,stat.alcohol_type")
                                                   .append(" ,presentaddress.death_dtl_id  as P_death_dtl_id") 
                                                   .append(" ,presentaddress.tenantid as P_tenantid") 
                                                   .append(" ,presentaddress.addr_typeid as P_addr_typeid") 
@@ -246,16 +251,16 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
         //Rakhi S on 18.01.2023
      private static final String CERTIFICATE_QUERY = new StringBuilder().append("SELECT ct.id, ct.deathcertificateno, ct.createdby, ct.createdtime, ct.deathdtlid, ct.filestoreid") 
                                                             .append("      , ct.lastmodifiedtime, ct.lastmodifiedby, ct.status, ct.additionaldetail, ct.embeddedurl, ct.dateofissue, ct.counter") 
-                                                            .append(" FROM eg_death_cert_request ct")                                                             
+                                                            .append(" FROM eg_death_cert_request ct ")                                                             
                                                       .toString();
 
-     public String getDeathCertificateSearchQuery(@NotNull CrDeathRegistryCriteria criteria,
+     public String getDeathCertificateSearchQuery(@NotNull String id,
                                                            @NotNull List<Object> preparedStmtValues, Boolean isCount) {
          
          StringBuilder query = new StringBuilder(CERTIFICATE_QUERY);
     
-         addFilter("ct.id", criteria.getId(), query, preparedStmtValues);      
-         addFilter("ct.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
+         addFilter("ct.deathdtlid", id, query, preparedStmtValues);      
+     //     addFilter("ct.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
          return query.toString();                                              
        }   
      }

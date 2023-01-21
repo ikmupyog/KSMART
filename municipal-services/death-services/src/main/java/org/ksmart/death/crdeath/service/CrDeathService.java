@@ -60,13 +60,15 @@ public class CrDeathService {
         // Rakhi S IKM validate mdms data
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
           // field validation on 13/01/2023
-          validatorService.validateCreate(request);
+        //  validatorService.validateCreate(request);
 
         // mdmsValidator.validateMDMSData(request,mdmsData);
 
           enrichmentService.enrichCreate(request);
 
           enrichmentService.setIdgenIds(request);    
+
+          enrichmentService.setACKNumber(request); 
 
           workflowIntegrator.callWorkFlow(request);
 

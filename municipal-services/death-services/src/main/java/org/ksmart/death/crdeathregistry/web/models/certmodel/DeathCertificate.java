@@ -134,6 +134,5 @@ public class DeathCertificate {
   private String deathcertificateno;
 
   //Rakhi S on 18.01.2023
-  @JsonProperty("counter")
-  private Integer counter;
+  private Integer counter = 0;
 }

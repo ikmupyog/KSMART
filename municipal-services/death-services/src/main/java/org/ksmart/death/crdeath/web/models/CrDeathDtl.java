@@ -495,8 +495,49 @@ private String assignuser;
     @JsonProperty("femaleDependentUnavailable")
     private Integer  femaleDependentUnavailable;
 
+    //Rakhi S on 20.01.2023
 
+    @Size(max = 64)
+    @JsonProperty("spouseNameEn")
+    private String  spouseNameEn;
 
+    @Size(max = 64)
+    @JsonProperty("spouseNameML")
+    private String  spouseNameMl;
 
+    @Schema(type = "integer", description="1 for Yes /0 for No")
+    @JsonProperty("spouseUnavailable")
+    private Integer spouseUnavailable ;
 
+    @Schema(type = "String", description="spouseType.json mdms")
+    @Size(max = 64)
+    @JsonProperty("spouseType")
+    private String spouseType ;
+
+    @Schema(type = "String", description="spouse email id")
+    @Size(max = 64)
+    @JsonProperty("spouseEmailid")
+    private String  spouseEmailid;
+
+    @Schema(type = "String", description="spouse aadhaar")
+    @Size(max = 12)
+    @JsonProperty("spouseAadhaar")
+    private String  spouseAadhaar;
+
+    @Schema(type = "String", description="spouse mobile no")
+    @Size(max = 15)
+    @JsonProperty("spouseMobileno")
+    private String  spouseMobileno;
+
+    @Schema(type = "String", description="funcionUID")
+    @Size(max = 64)
+    @JsonProperty("funcionUID")
+    private String funcionUID ;
+
+    @JsonProperty("ackNoId")
+    private Long ackNoId ;
+
+    @JsonProperty("applicationDate")
+    private Long applicationDate ;
+    
 }

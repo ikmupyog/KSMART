@@ -1,8 +1,10 @@
 package org.ksmart.death.crdeathregistry.enrichment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -16,6 +18,7 @@ import org.ksmart.death.common.repository.ServiceRequestRepository;
 import org.ksmart.death.crdeathregistry.config.CrDeathRegistryConfiguration;
 import org.ksmart.death.crdeathregistry.repository.CrDeathRegistryRepository;
 import org.ksmart.death.crdeathregistry.util.CrDeathRegistryConstants;
+import org.ksmart.death.crdeathregistry.util.CrDeathRegistryMdmsUtil;
 import org.ksmart.death.crdeathregistry.web.models.AuditDetails;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryAddress;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryAddressInfo;
@@ -29,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.jayway.jsonpath.JsonPath;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,6 +61,10 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
 
     @Autowired
     EncryptionDecryptionUtil encryptionDecryptionUtil;
+
+    //rakhi s on 21.01.2023
+    @Autowired
+    CrDeathRegistryMdmsUtil util;
 
 
     public void enrichCreate(CrDeathRegistryRequest request) {
@@ -107,16 +115,45 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
         Long currentTime = Long.valueOf(System.currentTimeMillis());
         String tenantId = requestInfo.getUserInfo().getTenantId();
         List<Map<String, Object>> RegistrationNoDetails = repository.getDeathRegDetails(tenantId, Year);
+        
         request.getDeathCertificateDtls()
                 .forEach(deathdtls -> {    
                     String registrationNo=null;
                     Long registrationNoId=null;
+                    //Rakhi S on 21.01.2023 mdms call for tenand idgencode and lbtypecode
+                    Object mdmsData = util.mDMSCallRegNoFormating(request.getRequestInfo()
+                                        , request.getDeathCertificateDtls().get(0).getTenantId());
+
+                    Map<String,List<String>> masterData = getAttributeValues(mdmsData);
+
+                    String idgenCode = masterData.get(CrDeathRegistryConstants.TENANTS).toString();
+                    idgenCode = idgenCode.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    Object mdmsDataLBType = util.mDMSCallLBType(request.getRequestInfo()
+                                    , request.getDeathCertificateDtls().get(0).getTenantId());
+
+                    Map<String,List<String>> masterDataLBType = getAttributeValues(mdmsDataLBType);
+
+                    String lbType = masterDataLBType.get(CrDeathRegistryConstants.TENANTS).toString();
+                    lbType = lbType.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    String lbTypeCode = "";
+
+                    if(lbType.equals(CrDeathRegistryConstants.LB_TYPE_CORPORATION.toString())){
+                        lbTypeCode=CrDeathRegistryConstants.LB_TYPE_CORPORATION_CAPTION.toString();
+                    }
+                    else if(lbType.equals(CrDeathRegistryConstants.LB_TYPE_MUNICIPALITY.toString())){
+                        lbTypeCode=CrDeathRegistryConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
+                    }
+                    //end
+
                     if (RegistrationNoDetails.size()>=1) {
-                        registrationNo=String.valueOf(RegistrationNoDetails.get(0).get("regno"))+"/"+String.valueOf(Year);
+                        //RegistrationNo new format decision by Domain team created by Rakhi S                       
+                        registrationNo=String.valueOf("RG-"+RegistrationNoDetails.get(0).get("regno"))+"-"+String.valueOf(Year)+"-"+CrDeathRegistryConstants.DEATH_REGNO_UID.toString()+"-"+lbTypeCode+"-"+idgenCode+"-"+CrDeathRegistryConstants.STATE_CODE.toString();
                         registrationNoId=Long.parseLong(String.valueOf(RegistrationNoDetails.get(0).get("regno")));
                     }
                     else{
-                        registrationNo=CrDeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"/"+String.valueOf(Year);
+                        registrationNo="RG-"+CrDeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+CrDeathRegistryConstants.DEATH_REGNO_UID.toString()+"-"+lbTypeCode+"-"+idgenCode+"-"+CrDeathRegistryConstants.STATE_CODE.toString();
                         registrationNoId=Long.parseLong(CrDeathRegistryConstants.REGISTRATION_NUMBER_FIRST);
                     }
 
@@ -152,4 +189,23 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
                 } );
     }
         //UPDATE END
+        //Rakhi S ikm on 21.01.2023
+    private Map<String, List<String>> getAttributeValues(Object mdmsdata){
+        List<String> modulepaths = Arrays.asList(CrDeathRegistryConstants.TENANT_JSONPATH);
+        final Map<String, List<String>> mdmsResMap = new HashMap<>();
+       
+        modulepaths.forEach(modulepath -> {
+            try {
+                mdmsResMap.putAll(JsonPath.read(mdmsdata,modulepath));
+                log.error("jsonpath1"+JsonPath.read(mdmsdata,modulepath));
+            } catch (Exception e) {
+                log.error("Error while fetching MDMS data",e);
+                throw new CustomException(CrDeathRegistryConstants.INVALID_TENANT_ID_MDMS_KEY,
+                CrDeathRegistryConstants.INVALID_TENANT_ID_MDMS_MSG);
+            }
+           
+        });
+        // System.out.println("mdmsResMap"+mdmsResMap);
+        return mdmsResMap;
+    }
 }

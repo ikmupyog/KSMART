@@ -884,5 +884,84 @@ public class CrDeathRegistryMdmsUtil {
                 return crDeathModuleDtls;
         }
         
-        
+         //RAkhi S ikm on 21.01.2023
+    public Object mDMSCallRegNoFormating(RequestInfo requestInfo
+                                , String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestRegNoFormating(requestInfo
+                        , tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+        }
+
+        //RAkhi S ikm on21.01.2023
+    private MdmsCriteriaReq getMDMSRequestRegNoFormating(RequestInfo requestInfo
+                                , String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantIdRegNoFormating(tenantId);
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);     
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+        .requestInfo(requestInfo).build();
+
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+        }
+
+         //RAkhi S ikm on 21.01.2023
+    private ModuleDetail getTenantIdRegNoFormating(String tenantId) {
+
+        // master details for crDeath module
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+        // filter to only get code field from master data            
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')].idgencode";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.TENANTS).filter(filterCode).build());       
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(CrDeathRegistryConstants.TENANT_MODULE_NAME).build();
+
+       
+        return crDeathModuleDtls;
+    }
+
+    public Object mDMSCallLBType(RequestInfo requestInfo
+                        , String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestLBType(requestInfo
+                                , tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSRequestLBType(RequestInfo requestInfo
+                                , String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantIdLBType(tenantId);
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);     
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+        .requestInfo(requestInfo).build();
+
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+    private ModuleDetail getTenantIdLBType(String tenantId) {
+
+        // master details for crDeath module
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+        // filter to only get code field from master data            
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')].lbtypecode";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.TENANTS).filter(filterCode).build());       
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(CrDeathRegistryConstants.TENANT_MODULE_NAME).build();
+
+       
+        return crDeathModuleDtls;
+    }
 }

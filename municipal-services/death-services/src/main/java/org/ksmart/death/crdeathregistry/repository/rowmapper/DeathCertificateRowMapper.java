@@ -22,15 +22,18 @@ public class DeathCertificateRowMapper
     @Override
     public List<DeathCertificate> extractData(ResultSet rs) throws SQLException, DataAccessException { // death certificate
 
+		System.out.println("rowmappertest");
 		List<DeathCertificate> result = new ArrayList<>();
         while (rs.next()) {
 			result.add(DeathCertificate.builder()
                             .id(rs.getString("id"))
                             .deathDtlId(rs.getString("deathdtlid"))
                             .filestoreid(rs.getString("filestoreid"))
-                            .deathcertificateno(rs.getString("deathcertificateno"))                           
+                            .deathcertificateno(rs.getString("deathcertificateno"))   
+							.counter(rs.getInt("counter"))                        
                             .build());
 		}
+		System.out.println("rowmapperresult"+result);
 		return result;
     }
 

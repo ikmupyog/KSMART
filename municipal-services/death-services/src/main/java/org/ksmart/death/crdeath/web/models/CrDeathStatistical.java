@@ -107,18 +107,20 @@ public class CrDeathStatistical {
     @JsonProperty("residenceLBType")
     private String residenceLBType;
 
-    //Jasmine on 18.01.2022
-    @JsonProperty("isSmoking")
-    private Integer isSmoking;
+    //Jasmine on 18.01.2022 
 
-    @JsonProperty("isTobacco")
-    private Integer isTobacco;
+    //0-No 1-Yes 2-probably 3-unknown
+    @JsonProperty("smokingType")
+    private Integer smokingType;
 
-    @JsonProperty("isArecanut")
-    private Integer isArecanut;
+    @JsonProperty("tobaccoType")
+    private Integer tobaccoType;
 
-    @JsonProperty("isAlcohol")
-    private Integer isAlcohol;
+    @JsonProperty("arecanutType")
+    private Integer arecanutType;
+
+    @JsonProperty("alcoholType")
+    private Integer alcoholType;
 
     
 }

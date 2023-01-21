@@ -443,5 +443,41 @@ public class CrDeathRegistryDtl {
      //RAkhi S on 13.01.2023
      private String placeofDeath;
 
-  
+   //Rakhi S on 20.01.2023
+
+   @Size(max = 64)
+   @JsonProperty("spouseNameEn")
+   private String  spouseNameEn;
+
+   @Size(max = 64)
+   @JsonProperty("spouseNameML")
+   private String  spouseNameMl;
+
+//  description="1 for Yes /0 for No"
+   @JsonProperty("spouseUnavailable")
+   private Integer spouseUnavailable ;
+
+// description="1 for Husband /0 for Wife"
+   @Size(max = 64)
+   @JsonProperty("spouseType")
+   private String spouseType ;
+
+   @Size(max = 64)
+   @JsonProperty("spouseEmailid")
+   private String  spouseEmailid;
+
+   @Size(max = 12)
+   @JsonProperty("spouseAadhaar")
+   private String  spouseAadhaar;
+
+   @Size(max = 15)
+   @JsonProperty("spouseMobileno")
+   private String  spouseMobileno;
+
+   private String spouseName;
+
+   @Size(max = 64)
+   @JsonProperty("funcionUID")
+   private String funcionUID ;
+
 }

@@ -82,5 +82,16 @@ public class CrDeathRegistryConstants {
      public static final String GENDER_FEMALE_CAPTION ="പെൺ/Female";
      public static final String TRANSGENDER_CAPTION ="Transgender";
 
+     //RAkhi S on 21.01.2023
+     public static final String HUSBAND ="HUSBAND";
+     public static final String WIFE ="WIFE";
+     public static final String WIFE_ML = " (ഭാര്യ) ";
+     public static final String WIFE_EN  = " (Wife) ";
 
+     public static final String LB_TYPE_CORPORATION = "LB_TYPE_CORPORATION";
+     public static final String LB_TYPE_MUNICIPALITY = "LB_TYPE_MUNICIPALITY";
+     public static final String LB_TYPE_CORPORATION_CAPTION = "C";
+     public static final String LB_TYPE_MUNICIPALITY_CAPTION = "M";
+     public static final String DEATH_REGNO_UID= "CRDRNR";
+     public static final String STATE_CODE= "KL";
 }

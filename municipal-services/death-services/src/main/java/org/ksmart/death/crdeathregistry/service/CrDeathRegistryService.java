@@ -44,7 +44,6 @@ public class CrDeathRegistryService {
     private final RegistryMDMSValidator mdmsValidator;
     private final CrDeathRegistryValidator validatorService;
 
-
     @Autowired
     CrDeathRegistryService(CrDeathProducer producer,CrDeathRegistryConfiguration deathConfig,
     CrDeathRegistryEnrichment enrichmentService ,CrDeathRegistryRepository repository ,
@@ -140,9 +139,10 @@ public class CrDeathRegistryService {
 		}
      }
 
-     //Rakhi S IKM on 06.01.2022
-     public DeathCertificate searchCertificate(CrDeathRegistryCriteria criteria) {
-      return repository.searchCertificate(criteria);
+     //Rakhi S IKM on 18.01.2022
+     public List<DeathCertificate> searchCertificate(CrDeathRegistryCriteria criteria) {      
+      List<CrDeathRegistryDtl> obj = repository.getDeathApplication(criteria);
+      return repository.searchCertificate(obj.get(0).getId());
     }
     
 }

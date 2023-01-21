@@ -224,7 +224,7 @@ public class CrDeathRegistryRepository {
                 cert.getAddressInfo().getPermanentAddress().setCountryMl(permanentAddCountryMl);
 
                 //Rakhi S on 16.12.2022
-                cert.setFullName(cert.getDeceasedTitle() + 
+                cert.setFullName(
                                 cert.getDeceasedFirstNameMl() + 
                                 cert.getDeceasedMiddleNameMl() + 
                                 cert.getDeceasedLastNameMl() + " / " +
@@ -233,36 +233,49 @@ public class CrDeathRegistryRepository {
                                 cert.getDeceasedLastNameEn() );
 
                 cert.setGender(cert.getDeceasedGender());
-
-                if(cert.getFemaleDependentTitle()!=null){
-                cert.setMotherName(cert.getFemaleDependentTitle()+" "+
-                                    cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
-                                    cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString());  
+                //Rakhi S on 21.01.2023
+                String spouseMl = "";
+                String spouseEn = "";    
+                
+                if(cert.getSpouseType().equals(CrDeathRegistryConstants.WIFE.toString())){
+                    spouseMl = CrDeathRegistryConstants.WIFE_ML.toString();
+                    spouseEn = CrDeathRegistryConstants.WIFE_EN.toString();
                 }
-                else{
+                else if(cert.getSpouseType().equals(CrDeathRegistryConstants.HUSBAND.toString())){
+                    spouseMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
+                    spouseEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
+                }
+                cert.setSpouseName(cert.getSpouseNameMl()+ spouseMl+" / "+
+                    cert.getSpouseNameEn()+ spouseEn);
+                // if(cert.getFemaleDependentTitle()!=null){
+                // cert.setMotherName(cert.getFemaleDependentTitle()+" "+
+                //                     cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
+                //                     cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString());  
+                // }
+                // else{
                     cert.setMotherName(cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
-                                    cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString()); 
-                }     
+                    cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString()); 
+                // }     
                 String maleDependentMl = "";
                 String maleDependentEn = "";    
                 
-                if(cert.getMaleDependentType().equals(CrDeathRegistryConstants.MALE_DEPENDENT_FATHER.toString())){
+                // if(cert.getMaleDependentType().equals(CrDeathRegistryConstants.MALE_DEPENDENT_FATHER.toString())){
                      maleDependentMl = CrDeathRegistryConstants.MALE_DEPENDENT_FATHER_ML.toString();
                      maleDependentEn = CrDeathRegistryConstants.MALE_DEPENDENT_FATHER_EN.toString();
-                }
-                else if(cert.getMaleDependentType().equals(CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND.toString())){
-                     maleDependentMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
-                     maleDependentEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
-                }
-                if(cert.getMaleDependentTitle()!=null){
-                cert.setMaledependentname(cert.getMaleDependentTitle()+" "+
-                                            cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
-                                            cert.getMaleDependentNameEn() + maleDependentEn);
-                }
-                else{
+                // }
+                // else if(cert.getMaleDependentType().equals(CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND.toString())){
+                //      maleDependentMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
+                //      maleDependentEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
+                // }
+                // if(cert.getMaleDependentTitle()!=null){
+                // cert.setMaledependentname(cert.getMaleDependentTitle()+" "+
+                //                             cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
+                //                             cert.getMaleDependentNameEn() + maleDependentEn);
+                // }
+                // else{
                     cert.setMaledependentname(cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
                                             cert.getMaleDependentNameEn()+ maleDependentEn);
-                }
+                // }
 
                 cert.setPresentAddressFullEn(cert.getAddressInfo().getPresentAddress().getResidenceAsscNo() + " "+
                                             cert.getAddressInfo().getPresentAddress().getHouseNo()+ " "+
@@ -614,24 +627,17 @@ public class CrDeathRegistryRepository {
         return mdmsResMap;
     }
     //Rakhi S on 18.01.2023
-    public DeathCertificate searchCertificate(CrDeathRegistryCriteria criteria) {
+    public List<DeathCertificate> searchCertificate(String id) {
 		try {
 
             List<Object> preparedStmtValues = new ArrayList<>();
-            String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-            List<CrDeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
-
-            // String queryCert = queryBuilder.getDeathCertificateSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-            criteria.setId(result.get(0).getId());
-            String queryCert = queryBuilder.getDeathCertificateSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+            String queryCert = queryBuilder.getDeathCertificateSearchQuery(id, preparedStmtValues, Boolean.FALSE);
             List<DeathCertificate> deathCerts = jdbcTemplate.query(queryCert, preparedStmtValues.toArray(), deathCertRowMapper);
-
 			if (null != deathCerts && !deathCerts.isEmpty()) {				
-				return deathCerts.get(0);
+                return deathCerts;
 			}
             else{
-                deathCerts.get(0).setCounter(0);
-                return deathCerts.get(0);
+                return deathCerts;
             }
 		}catch(Exception e) {
 			e.printStackTrace();

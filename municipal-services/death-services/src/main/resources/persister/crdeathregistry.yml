@@ -38,11 +38,14 @@ serviceMaps:
             death_place_ward_id, informant_age, vehicle_driver_licenceno,
             death_signed_officer_designation, death_place_officer_mobile,
             death_place_officer_aadhaar, application_no,
-            file_no, ack_no,registration_date, registration_no_id, deceased_idproofno, deceased_idprooftype, burial_state, vehicle_first_halt, male_dependent_unavailable, female_dependent_unavailable) VALUES (?, ?,
+            file_no, ack_no,registration_date, registration_no_id, deceased_idproofno, 
+            deceased_idprooftype, burial_state, vehicle_first_halt, male_dependent_unavailable, 
+            female_dependent_unavailable,spouse_name_en,spouse_name_ml,spouse_unavailable,
+            spouse_type,spouse_emailid,spouse_aadhaar,spouse_mobileno,funcion_uid) VALUES (?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: deathCertificateDtls.*
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.id
@@ -133,6 +136,15 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.vehicleFirstHalt
             - jsonPath: $.deathCertificateDtls.*.maleDependentUnavailable
             - jsonPath: $.deathCertificateDtls.*.femaleDependentUnavailable
+            - jsonPath: $.deathCertificateDtls.*.spouseNameEn
+            - jsonPath: $.deathCertificateDtls.*.spouseNameML
+            - jsonPath: $.deathCertificateDtls.*.spouseUnavailable
+            - jsonPath: $.deathCertificateDtls.*.spouseType
+            - jsonPath: $.deathCertificateDtls.*.spouseEmailid
+            - jsonPath: $.deathCertificateDtls.*.spouseAadhaar
+            - jsonPath: $.deathCertificateDtls.*.spouseMobileno
+            - jsonPath: $.deathCertificateDtls.*.funcionUID
+
 
         - query: >-
             INSERT INTO public.eg_death_statistical_registry(id, death_dtl_id,
@@ -142,9 +154,11 @@ serviceMaps:
             death_medically_certified, death_cause_main, death_cause_sub,
             death_cause_other, death_during_delivery, smoking_num_years,
             tobacco_num_years, arecanut_num_years, alcohol_num_years, createdby,
-            createdtime, lastmodifiedby, lastmodifiedtime, nationality, occupation_sub, occupation_minor, education_main, education_sub, residencelbtype) VALUES
+            createdtime, lastmodifiedby, lastmodifiedtime, nationality, 
+            occupation_sub, occupation_minor, education_main, education_sub, 
+            residencelbtype,smoking_type,tobacco_type,arecanut_type,alcohol_type) VALUES
             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: deathCertificateDtls.*.statisticalInfo
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.id
@@ -178,6 +192,11 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationMain      
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationSub      
             - jsonPath: $.deathCertificateDtls.*.statisticalInfo.residenceLBType
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.smokingType
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.tobaccoType
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.arecanutType
+            - jsonPath: $.deathCertificateDtls.*.statisticalInfo.alcoholType
+
         - query: >-
             INSERT INTO public.eg_death_address_registry(id, death_dtl_id,
             tenantid, addr_typeid, house_no, residence_assc_no, streetname_en,
