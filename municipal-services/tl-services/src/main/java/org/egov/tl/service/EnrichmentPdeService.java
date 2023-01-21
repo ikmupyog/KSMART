@@ -475,6 +475,8 @@ public class EnrichmentPdeService {
                                                         taxPde.getService().toString().replace(".", "_") + "_ARR")
                                                 .get(null)
                                                 .toString())
+                                        .current(taxPde.getCurrent())
+                                        .current2(taxPde.getCurrent2())
                                         .build());
                     } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
                             | SecurityException e1) {
@@ -491,12 +493,15 @@ public class EnrichmentPdeService {
                                 TaxPde.builder().id(UUID.randomUUID().toString()).tenantId(tradeLicense.getTenantId())
                                         .service(taxPde.getService()).fromYear(taxPde.getFromYear())
                                         .fromPeriod(taxPde.getFromPeriod()).toYear(taxPde.getToYear())
-                                        .toPeriod(taxPde.getToPeriod()).active(true).amount(taxPde.getCurrent())
+                                        .toPeriod(taxPde.getToPeriod()).active(true)
+                                        .amount(taxPde.getCurrent() + taxPde.getCurrent2())
                                         .headCode(TLConstants.class
                                                 .getDeclaredField(
                                                         taxPde.getService().toString().replace(".", "_") + "_CUR")
                                                 .get(null)
                                                 .toString())
+                                        .current(taxPde.getCurrent())
+                                        .current2(taxPde.getCurrent2())
                                         .build());
                     } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
                             | SecurityException e1) {
