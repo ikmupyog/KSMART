@@ -129,9 +129,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   yearListTo &&
   yearListTo["egf-master"] &&
   yearListTo["egf-master"].FinancialYear.map((ob) => {
-    cmbPayYearTo.push(ob);
+    ob.code === "2022-23" ? cmbPayYearTo.push(ob) : ""
   });
-  
 
   let cmbPeriod = [];
   periodList &&
@@ -139,13 +138,18 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     periodList["egf-master"].FinancialPeriod.map((ob) => {
       cmbPeriod.push(ob);
     });
+  
+  // const [FilteredLicToYear,setFilteredLicToYear] = useState(cmbPayYearTo);
+  // const [FilteredProfToYear,setFilteredProfToYear] = useState(cmbPayYearTo);
+  // const [FilteredRentToYear,setFilteredRentToYear] = useState(cmbPayYearTo);
 
-  const [FilteredLicToYear,setFilteredLicToYear] = useState(cmbPayYearFrom);
-  const [FilteredProfToYear,setFilteredProfToYear] = useState(cmbPayYearFrom);
-  const [FilteredRentToYear,setFilteredRentToYear] = useState(cmbPayYearFrom);
+  // console.log("FilteredLicToYear");
+  // console.log(FilteredLicToYear);
+  // console.log(cmbPayYearTo);
 
   const cmbptperiod = cmbPeriod.filter((doc) => doc.category.includes("CATEGORY_TAX"));
   const cmbrentperiod = cmbPeriod.filter((doc) => doc.category.includes("CATEGORY_RENT"));
+
 
   const [licArrear, setLicArrear] = useState(tldata[0]?.arrear ? tldata[0]?.arrear : "");
   const [licCurrent, setLicCurrent] = useState(tldata[0]?.current ? tldata[0]?.current : "");
@@ -167,77 +171,61 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   // const [rentToYear, setRentToYear] = useState(rentdata[0]?.toYear ? cmbPayRentYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
   const [rentToMonth, setRentToMonth] = useState(rentdata[0]?.toPeriod ? cmbrentperiod.filter((month) => month.code.includes(rentdata[0]?.toPeriod))[0] : "");
   
-    useEffect(() => {
-      if(isInitialRender===true){
-        if(licFromYear){
-          yearListTo &&
-          yearListTo["egf-master"] &&
-          yearListTo["egf-master"].FinancialYear.map( year => ( 
-            (parseInt(year.code.replace(/-/g, "")) >= parseInt(licFromYear.code.replace(/-/g, ""))) ? cmbPayLicYearTo.push(year) : ""
-          ));
+    // useEffect(() => {
+    //   if(isInitialRender===true){
+    //     if(licFromYear){
+    //       yearListTo &&
+    //       yearListTo["egf-master"] &&
+    //       yearListTo["egf-master"].FinancialYear.map( year => ( 
+    //         (parseInt(year.code.replace(/-/g, "")) >= parseInt(licFromYear.code.replace(/-/g, ""))) ? cmbPayLicYearTo.push(year) : ""
+    //       ));
 
-          setFilteredLicToYear(cmbPayLicYearTo);
-        }
+    //       setFilteredLicToYear(cmbPayLicYearTo);
+    //     }
        
-        if(profFromYear){
-          yearListTo &&
-          yearListTo["egf-master"] &&
-          yearListTo["egf-master"].FinancialYear.map( year => ( 
-            (parseInt(year.code.replace(/-/g, "")) >= parseInt(profFromYear.code.replace(/-/g, ""))) ? cmbPayProfYearTo.push(year) : ""
-          ));
-          setFilteredProfToYear(cmbPayProfYearTo);
-        }
+    //     if(profFromYear){
+    //       yearListTo &&
+    //       yearListTo["egf-master"] &&
+    //       yearListTo["egf-master"].FinancialYear.map( year => ( 
+    //         (parseInt(year.code.replace(/-/g, "")) >= parseInt(profFromYear.code.replace(/-/g, ""))) ? cmbPayProfYearTo.push(year) : ""
+    //       ));
+    //       setFilteredProfToYear(cmbPayProfYearTo);
+    //     }
        
-        if(rentFromYear){
-          yearListTo &&
-          yearListTo["egf-master"] &&
-          yearListTo["egf-master"].FinancialYear.map( year => ( 
-            (parseInt(year.code.replace(/-/g, "")) >= parseInt(rentFromYear.code.replace(/-/g, ""))) ? cmbPayRentYearTo.push(year) : ""
-          ));
-          setFilteredRentToYear(cmbPayRentYearTo);
-        }
-        setIsInitialRender(false);
-      }
-    },[isInitialRender]);
+    //     if(rentFromYear){
+    //       yearListTo &&
+    //       yearListTo["egf-master"] &&
+    //       yearListTo["egf-master"].FinancialYear.map( year => ( 
+    //         (parseInt(year.code.replace(/-/g, "")) >= parseInt(rentFromYear.code.replace(/-/g, ""))) ? cmbPayRentYearTo.push(year) : ""
+    //       ));
+    //       setFilteredRentToYear(cmbPayRentYearTo);
+    //     }
+    //     setIsInitialRender(false);
+    //   }
+    // },[isInitialRender]);
 
     const [licToYear, setLicToYear] = useState(tldata[0]?.toYear ? FilteredLicToYear.filter((year) => year.code.includes(tldata[0]?.toYear))[0] : "");
     const [profToYear, setProfToYear] = useState(profdata[0]?.toYear ? FilteredProfToYear.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
     const [rentToYear, setRentToYear] = useState(rentdata[0]?.toYear ? FilteredRentToYear.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
     
-
-  function handleTextInputField(index, e, key) {
-    if(e.target.value.trim().length>0){
-      dispatch({ type: "EDIT_CURRENT_OWNER_PROPERTY", payload: { index, key, value: e.target.value.replace(/[^A-Za-z. ]/ig, '') } });
-    }
-    else{
-      dispatch({ type: "EDIT_CURRENT_OWNER_PROPERTY", payload: { index, key, value: e.target.value.replace(/[ ]/ig, '')} });
-    }
-  }
-
-  function handleTextInputField1(index, e, key) {
-    if(key==="doorNo")
-    dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length<=5 ? e.target.value : e.target.value.substring(0, 5)} });
-    if(key==="doorNoSub")
-    dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length<=14 ? e.target.value : e.target.value.substring(0, 14)} });
-  }
-
-  function setSelectBuildingcode(e) {
+  const setSelectBuildingcode= useCallback(e=> {
     setBuildingCode(e.target.value);
-  }
-  function setSelectBuildingName(e) {
+  },[BuildingCode]);
+
+  const setSelectBuildingName= useCallback(e=> {
     setBuildingName(e.target.value.replace(/[^A-Za-z0-9, ]/ig, ''));
-  }
-  function setSelectWard(value) {
-    setIsInitialRender(false);
+  },[BuildingName]);
+
+  const setSelectWard= useCallback(value=> {
     setWardNo(value);
-  }
-  function selectLicenseeType(value) {
+  },[WardNo]);
+
+  const selectLicenseeType= useCallback(value=> {
     setLicenseeType(value);
     setValue2(value.code);
-    setIsInitialRenderRadio(true);
-  }
+  },[value2]);
 
-  function selectBuildingType(value) {
+  const selectBuildingType= useCallback(value=> {
     setBuildingCode("");
     setBuildingName("");
     setBuildingstallNo("");
@@ -250,20 +238,15 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setBuildingType(value);
     setValue3(value.code);
     setIsInitialRenderRadio(true);
-  }
+  },[buildingtype]);
 
-  function selectSector(value) {
+  const selectSector= useCallback(value=> {
     setSector(value);
-  }
-  function changesetCapitalAmount(e) {
-    console.log(e.target);
-    console.log(e.target.value);
-    setCapitalAmount(e.target.value);
-  }
-  function selectYear(value) {
-    setSelectedYear(value);
-  }
+  },[sector]);
 
+  const changesetCapitalAmount= useCallback(e=> {
+    setCapitalAmount(e.target.value);
+  },[capitalAmount]);
 
   const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
   let TradeCategoryMenu = [];
@@ -314,101 +297,111 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   // }
 
 
-  function setSelectIndividualName(i, value) {
+  const setSelectIndividualName= useCallback((i, value)=> {
     let owners = [...fields];
     owners[i].name = value;
     setFeilds(owners);
-  }
+  },[fields]);
 
   const changesetrentArrear= useCallback(e=> {
     setRentArrear(e.target.value)
   },[rentArrear]);
+
   const changesetrentCurrent =useCallback(e=> {
     setRentCurrent(e.target.value);
   },[rentCurrent]);
 
-  function selectedsetrentPenal(e) {
-    setRentPenal(e.target.value);
-  }
-  function selectRentFromYear(value) {
-    setIsInitialRender(true);
+  // function selectedsetrentPenal(e) {
+  //   setRentPenal(e.target.value);
+  // }
+  const selectRentFromYear = useCallback(value => {
     setRentFromYear(value);
-  }
-  function selectRentFromMonth(value) {
-    setIsInitialRender(false);
+    setRentToYear(cmbPayYearTo[0]);
+  },[rentFromYear,rentToYear]);
+
+  const selectRentFromMonth = useCallback(value => {
     setRentFromMonth(value);
-  }
-  function selectRentToYear(value) {
-    setIsInitialRender(false);
+  },[rentFromMonth]);
+
+  const selectRentToYear = useCallback(value => {
     setRentToYear(value);
-  }
-  function selectRentToMonth(value) {
-    setIsInitialRender(false);
+  },[rentToYear]);
+
+  const selectRentToMonth = useCallback(value => {
     setRentToMonth(value);
-  }
-  function changesetProfArrear(e) {
+  },[rentToMonth]);
+
+  const changesetProfArrear = useCallback(e => {
     setProfArrear(e.target.value);
-  }
+  },[profArrear]);
+
+  
   // function selectedsetProfCurrent(e) {
   //   setProfCurrent(e.target.value);
   // }
-  function changesetProfCurrentFirst(e) {
+
+  const changesetProfCurrentFirst = useCallback(e => {
     setProfCurrentFirst(e.target.value);
-  }
-  function selectedsetProfCurrentSecond(e) {
+  },[profCurrentFirst]);
+
+  const changesetProfCurrentSecond = useCallback(e => {
     setProfCurrentSecond(e.target.value);
-  }
-  function selectedsetProfPenal(e) {
-    setProfPenal(e.target.value);
-  }
-  function selectProfFromYear(value) {
-    setIsInitialRender(true);
+  },[profCurrentSecond]);
+
+  const selectProfFromYear = useCallback(value => {
     setProfFromYear(value);
-  }
-  function selectProfFromPeriod(value) {
-    setIsInitialRender(false);
+    setProfToYear(cmbPayYearTo[0]);
+  },[profFromYear,profToYear]);
+
+  const selectProfFromPeriod = useCallback(value => {
     setProfFromPeriod(value);
-  }
-  function selectProfToYear(value) {
-    setIsInitialRender(false);
+  },[profFromPeriod]);
+
+  // function selectedsetProfPenal(e) {
+  //   setProfPenal(e.target.value);
+  // }
+  const selectProfToYear = useCallback(value => {
     setProfToYear(value);
-  }
-  function selectProfToPeriod(value) {
-    setIsInitialRender(false);
+  },[profToYear]);
+
+  const selectProfToPeriod = useCallback(value => {
     setProfToPeriod(value);
-  }
-  function selectLicFromYear(value) {
+  },[profToPeriod]);
+  
+  const selectLicFromYear = useCallback(value => {
     setLicFromYear(value);
-    setIsInitialRender(true);
-  }
+    setLicToYear(cmbPayYearTo[0]);
+    console.log(licToYear);
+  },[licFromYear,licToYear]);
 
-  function selectLicToYear(value) {
-    setIsInitialRender(false);
+  const selectLicToYear = useCallback(value => {
     setLicToYear(value);
-  }
+  },[licToYear]);
 
-  function changesetLicArrear(e) {
+  const changesetLicArrear = useCallback(e => {
     setLicArrear(e.target.value);
-  }
-  function setSelectLicensingInstitutionName(e) {
+  },[licArrear]);
+
+  const changesetLicCurrent = useCallback(e => {
+    setLicCurrent(e.target.value);
+  },[licCurrent]);
+
+  const setSelectLicensingInstitutionName = useCallback(e => {
     if(e.target.value.trim().length>0){
       setLicensingInstitution(e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''));
     }
     else{
       setLicensingInstitution(e.target.value.replace(/[ ]/ig, ''));
     }
-  }
+  },[licensingInstitutionName]);
 
-  function changesetLicCurrent(e) {
-    setLicCurrent(e.target.value);
-    console.log(licCurrent);
-  }
-  function selectedsetLicPenal(e) {
-    setLicPenal(e.target.value);
-  }
-  function selectedsetLicBelated(e) {
-    setLicBelated(e.target.value);
-  }
+  
+  // function selectedsetLicPenal(e) {
+  //   setLicPenal(e.target.value);
+  // }
+  // function selectedsetLicBelated(e) {
+  //   setLicBelated(e.target.value);
+  // }
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
@@ -529,6 +522,23 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   };
   const [formState1, dispatch1] = isEdit ? useReducer(reducer1, storedDoorData, initFnEdit1) : useReducer(reducer1, storedDoorData, initFn1);
 
+  const handleTextInputField= useCallback((index, e, key)=> {
+    if(e.target.value.trim().length>0){
+      dispatch({ type: "EDIT_CURRENT_OWNER_PROPERTY", payload: { index, key, value: e.target.value.replace(/[^A-Za-z. ]/ig, '') } });
+    }
+    else{
+      dispatch({ type: "EDIT_CURRENT_OWNER_PROPERTY", payload: { index, key, value: e.target.value.replace(/[ ]/ig, '')} });
+    }
+  },[dispatch]);
+
+  const handleTextInputField1= useCallback((index, e, key)=> {
+    if(key==="doorNo")
+    dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length<=5 ? e.target.value : e.target.value.substring(0, 5)} });
+    if(key==="doorNoSub")
+    dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length<=14 ? e.target.value : e.target.value.substring(0, 14)} });
+  },[dispatch1]);
+ 
+ 
   // const convertToEditPDE = () => {
   //   let formdata = {
   //     Licenses: [
@@ -1110,7 +1120,7 @@ function validateData(){
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="name" isMandatory={false} option={FilteredLicToYear} selected={licToYear} select={selectLicToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
+                      <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={licToYear} select={selectLicToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
@@ -1140,7 +1150,7 @@ function validateData(){
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="name" isMandatory={false} option={FilteredProfToYear} selected={profToYear} select={selectProfToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
+                      <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={profToYear} select={selectProfToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_TO_PERIOD")}`}</CardLabel>
@@ -1156,7 +1166,7 @@ function validateData(){
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT_SECOND")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="profCurrentSecond" value={profCurrentSecond} onChange={selectedsetProfCurrentSecond} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_PENAL") })} />
+                      <TextInput t={t} isMandatory={false} type="text" optionKey="i18nKey" name="profCurrentSecond" value={profCurrentSecond} onChange={changesetProfCurrentSecond} {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_PENAL") })} />
                     </div>
                   </div>
                   <div className="row">
@@ -1179,7 +1189,7 @@ function validateData(){
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="name" isMandatory={false} option={FilteredRentToYear} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
+                      <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>

@@ -125,6 +125,10 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(
     formData?.BirthPlace?.SignedOfficerMobileNo ? formData?.BirthPlace?.SignedOfficerMobileNo : ""
   );
+  const [SignedOfficerNameOther, selectSignedOfficerNameOther] = useState(formData?.BirthPlace?.SignedOfficerNameOther ? formData?.BirthPlace?.SignedOfficerNameOther : "");
+  const [SignedOfficerDesignationOther, selectSignedOfficerDesignationOther] = useState(formData?.BirthPlace?.SignedOfficerDesignationOther ? formData?.BirthPlace?.SignedOfficerDesignationOther : "");
+  const [SignedOfficerOtherStatus, setSignedOfficerOtherStatus] = useState(formData?.BirthPlace?.SignedOfficerOtherStatus ? formData?.BirthPlace?.SignedOfficerOtherStatus : "");
+
 
   const [setInstitution, setSelectedInstitution] = useState(formData?.BirthPlace?.setInstitution ? formData?.BirthPlace?.setInstitution : null);
   const [setInstitutionId, setSelectedInstitutionId] = useState(
@@ -258,6 +262,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             SignedOfficerDesignation={SignedOfficerDesignation}
             SignedOfficerAadharNo={SignedOfficerAadharNo}
             SignedOfficerMobileNo={SignedOfficerMobileNo}
+            SignedOfficerNameOther={SignedOfficerNameOther}
+            SignedOfficerDesignationOther={SignedOfficerDesignationOther}
+            SignedOfficerOtherStatus={SignedOfficerOtherStatus}
           />;
         }
         if (naturetype === "INSTITUTION") {
@@ -357,7 +364,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
   let validFlag = true;
   const goNext = () => {
-    console.log(BirthPlace.code);
     if (BirthPlace.code === "HOSPITAL") {
       if (HospitalName == null) {
         setHospitalError(true);
@@ -369,27 +375,58 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setHospitalError(false);
       }
-
-      if (SignedOfficerName == null) {
-        setSignedOfficerError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
+      console.log(SignedOfficerName.hospitalRegistar);
+      if (SignedOfficerName.hospitalRegistar != "Others") {
+        if (SignedOfficerName == null) {
+          setSignedOfficerError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setSignedOfficerError(false);
+        }
+        if (SignedOfficerDesignation == null || SignedOfficerDesignation == "") {
+          setSignedOfficerDesgError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setSignedOfficerDesgError(false);
+        }
+      } else if (SignedOfficerName.hospitalRegistar === "Others") {
+       
+        if(SignedOfficerNameOther == null || SignedOfficerNameOther == "" || SignedOfficerNameOther == undefined ){
+          setSignedOfficerError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setSignedOfficerError(false);
+        } 
+        if(SignedOfficerDesignationOther == null || SignedOfficerDesignationOther == "" || SignedOfficerDesignationOther == undefined ){
+          console.log(SignedOfficerName.hospitalRegistar);
+          setSignedOfficerDesgError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        }        
+        else {
+          setSignedOfficerDesgError(false);
+        }        
       } else {
         setSignedOfficerError(false);
-      }
-      if (SignedOfficerDesignation == null || SignedOfficerDesignation == "") {
-        setSignedOfficerDesgError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
         setSignedOfficerDesgError(false);
       }
+
+
       if (SignedOfficerMobileNo != null || SignedOfficerMobileNo != "") {
         let MobileLen = SignedOfficerMobileNo;
         if (MobileLen.length != 0) {
@@ -413,6 +450,14 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             setMobileError(false);
             setMobileLengthError(false);
           }
+        } else {
+          setMobileError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+          return false;
         }
       } else {
         setMobileError(true);
@@ -425,7 +470,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       }
       if (SignedOfficerAadharNo != null || SignedOfficerAadharNo != "") {
         let AdharLen = SignedOfficerAadharNo;
-        console.log("AdharLen" + AdharLen.length);
         if (AdharLen.length != 0) {
           if (AdharLen.length > 12) {
             setSignedOfficerAdharNoError(true);
@@ -1269,11 +1313,15 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
     if (validFlag === true) {
       if (BirthPlace.code === "HOSPITAL") {
+        console.log("SignedOfficerOtherStatussave" + SignedOfficerOtherStatus);
         sessionStorage.removeItem("BirthPlace");
         sessionStorage.setItem("BirthPlace", BirthPlace.code);
         sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.hospitalName : null);
         sessionStorage.setItem("SignedOfficerName", SignedOfficerName ? SignedOfficerName.hospitalRegistar : null);
         sessionStorage.setItem("SignedOfficerDesignation", SignedOfficerDesignation ? SignedOfficerDesignation.registarDesig : null);
+        sessionStorage.setItem("SignedOfficerNameOther", SignedOfficerNameOther ? SignedOfficerNameOther : null);
+        sessionStorage.setItem("SignedOfficerDesignationOther", SignedOfficerDesignationOther ? SignedOfficerDesignationOther : null);
+        sessionStorage.setItem("SignedOfficerOtherStatus", SignedOfficerOtherStatus ? SignedOfficerOtherStatus : null);
         sessionStorage.setItem("SignedOfficerAadharNo", SignedOfficerAadharNo ? SignedOfficerAadharNo.SignedOfficerAadharNo : null);
         sessionStorage.setItem("SignedOfficerMobileNo", SignedOfficerMobileNo ? SignedOfficerMobileNo.SignedOfficerMobileNo : null);
 
@@ -1350,6 +1398,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           HospitalName,
           SignedOfficerName,
           SignedOfficerDesignation,
+          SignedOfficerNameOther,
+          SignedOfficerDesignationOther,
+          SignedOfficerOtherStatus,
           SignedOfficerAadharNo,
           SignedOfficerMobileNo,
           setInstitution,
@@ -1978,6 +2029,12 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               SignedOfficerAadharNo={SignedOfficerAadharNo}
               setSignedOfficerMobileNo={setSignedOfficerMobileNo}
               SignedOfficerMobileNo={SignedOfficerMobileNo}
+              selectSignedOfficerNameOther={selectSignedOfficerNameOther}
+              SignedOfficerNameOther={SignedOfficerNameOther}
+              selectSignedOfficerDesignationOther={selectSignedOfficerDesignationOther}
+              SignedOfficerDesignationOther={SignedOfficerDesignationOther}
+              setSignedOfficerOtherStatus={setSignedOfficerOtherStatus}
+              SignedOfficerOtherStatus={SignedOfficerOtherStatus}
             />
           </div>
         )}

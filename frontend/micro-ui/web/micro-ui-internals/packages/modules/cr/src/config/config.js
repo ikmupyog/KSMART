@@ -917,7 +917,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "InformentAddress",
-        nextStep: "statistical-info",
+        nextStep: "statistical-info-continue",
         type: "component",
         hideInEmployee: true,
       },
