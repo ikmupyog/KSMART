@@ -118,6 +118,7 @@ public class CrDeathConstants {
     public static final String STATE_CODE= "KL";
     //ACKNumber
     public static final String ACK_NUMBER_FIRST = "1";
+    public static final String ACK_NUMBER_CAPTION = "AK";
 
 
 }

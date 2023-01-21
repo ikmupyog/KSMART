@@ -2,6 +2,7 @@ package org.ksmart.death.crdeath.enrichment;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -28,12 +29,16 @@ import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jayway.jsonpath.JsonPath;
+
+import lombok.extern.slf4j.Slf4j;
+
 /**
      * Creates CrDeathEnrichment for UUID ,Audit details and IDGeneration
      * Rakhi S IKM
      * 
      */
-
+@Slf4j
 @Component
 public class CrDeathEnrichment implements BaseEnrichment{
 
@@ -150,39 +155,39 @@ public class CrDeathEnrichment implements BaseEnrichment{
                 String ackNo=null;
                 Long ackNoId=null;
                 //Rakhi S on 21.01.2023 mdms call for tenand idgencode and lbtypecode
-                // Object mdmsData = util.mDMSCallRegNoFormating(request.getRequestInfo()
-                //                     , request.getDeathCertificateDtls().get(0).getTenantId());
+                Object mdmsData = util.mDMSCallRegNoFormating(request.getRequestInfo()
+                                    , request.getDeathCertificateDtls().get(0).getTenantId());
 
-                // Map<String,List<String>> masterData = getAttributeValues(mdmsData);
+                Map<String,List<String>> masterData = getAttributeValues(mdmsData);
 
-                // String idgenCode = masterData.get(CrDeathRegistryConstants.TENANTS).toString();
-                // idgenCode = idgenCode.replaceAll("[\\[\\]\\(\\)]", "");
+                String idgenCode = masterData.get(CrDeathConstants.TENANTS).toString();
+                idgenCode = idgenCode.replaceAll("[\\[\\]\\(\\)]", "");
 
-                // Object mdmsDataLBType = util.mDMSCallLBType(request.getRequestInfo()
-                //                 , request.getDeathCertificateDtls().get(0).getTenantId());
+                Object mdmsDataLBType = util.mDMSCallLBType(request.getRequestInfo()
+                                , request.getDeathCertificateDtls().get(0).getTenantId());
 
-                // Map<String,List<String>> masterDataLBType = getAttributeValues(mdmsDataLBType);
+                Map<String,List<String>> masterDataLBType = getAttributeValues(mdmsDataLBType);
 
-                // String lbType = masterDataLBType.get(CrDeathRegistryConstants.TENANTS).toString();
-                // lbType = lbType.replaceAll("[\\[\\]\\(\\)]", "");
+                String lbType = masterDataLBType.get(CrDeathConstants.TENANTS).toString();
+                lbType = lbType.replaceAll("[\\[\\]\\(\\)]", "");
 
-                // String lbTypeCode = "";
+                String lbTypeCode = "";
 
-                // if(lbType.equals(CrDeathRegistryConstants.LB_TYPE_CORPORATION.toString())){
-                //     lbTypeCode=CrDeathRegistryConstants.LB_TYPE_CORPORATION_CAPTION.toString();
-                // }
-                // else if(lbType.equals(CrDeathRegistryConstants.LB_TYPE_MUNICIPALITY.toString())){
-                //     lbTypeCode=CrDeathRegistryConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
-                // }
+                if(lbType.equals(CrDeathConstants.LB_TYPE_CORPORATION.toString())){
+                    lbTypeCode=CrDeathConstants.LB_TYPE_CORPORATION_CAPTION.toString();
+                }
+                else if(lbType.equals(CrDeathConstants.LB_TYPE_MUNICIPALITY.toString())){
+                    lbTypeCode=CrDeathConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
+                }
                 //end
 
                 if (ackNoDetails.size()>=1) {
                     //Ackno new format decision by Domain team created by Rakhi S                       
-                    ackNo=String.valueOf("AK-"+ackNoDetails.get(0).get("ackno"))+"-"+String.valueOf(Year)+"-"+CrDeathConstants.DEATH_REGNO_UID.toString()+"-"+"C"+"-"+"KOCHI"+"-"+CrDeathConstants.STATE_CODE.toString();
+                    ackNo=String.valueOf(CrDeathConstants.ACK_NUMBER_CAPTION+"-"+ackNoDetails.get(0).get("ackno"))+"-"+String.valueOf(Year)+"-"+deathdtls.getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+CrDeathConstants.STATE_CODE.toString();
                     ackNoId=Long.parseLong(String.valueOf(ackNoDetails.get(0).get("ackno")));
                 }
                 else{
-                    ackNo="AK-"+CrDeathConstants.ACK_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+CrDeathConstants.DEATH_REGNO_UID.toString()+"-"+"KOCHI"+"-"+"C"+"-"+CrDeathConstants.STATE_CODE.toString();
+                    ackNo=CrDeathConstants.ACK_NUMBER_CAPTION+"-"+CrDeathConstants.ACK_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+deathdtls.getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+CrDeathConstants.STATE_CODE.toString();
                     ackNoId=Long.parseLong(CrDeathConstants.ACK_NUMBER_FIRST);
                 }
 
@@ -192,5 +197,23 @@ public class CrDeathEnrichment implements BaseEnrichment{
             });
     
      }
-    
+    //Rakhi S ikm on 21.01.2023
+    private Map<String, List<String>> getAttributeValues(Object mdmsdata){
+        List<String> modulepaths = Arrays.asList(CrDeathConstants.TENANT_JSONPATH);
+        final Map<String, List<String>> mdmsResMap = new HashMap<>();
+       
+        modulepaths.forEach(modulepath -> {
+            try {
+                mdmsResMap.putAll(JsonPath.read(mdmsdata,modulepath));
+                log.error("jsonpath1"+JsonPath.read(mdmsdata,modulepath));
+            } catch (Exception e) {
+                log.error("Error while fetching MDMS data",e);
+                throw new CustomException(CrDeathConstants.INVALID_TENANT_ID_MDMS_KEY,
+                CrDeathConstants.INVALID_TENANT_ID_MDMS_MSG);
+            }
+           
+        });
+        // System.out.println("mdmsResMap"+mdmsResMap);
+        return mdmsResMap;
+    }
 }
