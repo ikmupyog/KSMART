@@ -24,32 +24,34 @@ interface BaseRowMapper {
         final ApplicantAddress address = getApplicantAddress(rs);
         final ApplicantDocument document = getApplicantDocument(rs);
 
-        return ApplicantPersonal.builder()
-                                .id(rs.getString(APPLICANT_PREFIX + "id"))
-                                .aadhaarNo(rs.getString("aadhaarno"))
-                                .email(rs.getString("email"))
-                                .firstName(rs.getString("firstname"))
-                                .lastName(rs.getString("lastname"))
-                                .title(rs.getString("title"))
-                                .mobileNo(rs.getString("mobileno"))
-                                .tenantId(rs.getString("tenantid"))
-                                .fatherFirstName(rs.getString("fatherfirstname"))
-                                .fatherLastName(rs.getString("fatherlastname"))
-                                .motherFirstName(rs.getString("motherfirstname"))
-                                .motherLastName(rs.getString("motherlastname"))
-                                .applicantCategory(rs.getString("applicantcategory"))
-                                .dateOfBirth(Long.valueOf(rs.getLong("dateofbirth")))
-                                .bankAccountNo(rs.getString("bankaccountno"))
-                                .firstNameMal(rs.getString("firstnamemal"))
-                                .lastNameMal(rs.getString("lastnamemal"))
-                                .fatherFirstNameMal(rs.getString("fatherfirstnamemal"))
-                                .fatherLastNameMal(rs.getString("fatherlastnamemal"))
-                                .motherFirstNameMal(rs.getString("motherfirstnamemal"))
-                                .motherLastNameMal(rs.getString("motherlastnamemal"))
-                                .auditDetails(getAuditDetails(rs, APPLICANT_PREFIX))
-                                .address(address)
-                                .document(document)
-                                .build();
+        final ApplicantPersonal applicant = ApplicantPersonal.builder()
+                                                             .id(rs.getString(APPLICANT_PREFIX + "id"))
+                                                             .aadhaarNumber(rs.getString("aadhaarno"))
+                                                             .emailId(rs.getString("email"))
+                                                             .firstName(rs.getString("firstname"))
+                                                             .lastName(rs.getString("lastname"))
+                                                             .title(rs.getString("title"))
+                                                             .mobileNumber(rs.getString("mobileno"))
+                                                             .tenantId(rs.getString("tenantid"))
+                                                             .fatherFirstName(rs.getString("fatherfirstname"))
+                                                             .fatherLastName(rs.getString("fatherlastname"))
+                                                             .motherFirstName(rs.getString("motherfirstname"))
+                                                             .motherLastName(rs.getString("motherlastname"))
+                                                             .applicantCategory(rs.getString("applicantcategory"))
+                                                             .dateOfBirth(Long.valueOf(rs.getLong("dateofbirth")))
+                                                             .bankAccountNo(rs.getString("bankaccountno"))
+                                                             .firstNameMal(rs.getString("firstnamemal"))
+                                                             .lastNameMal(rs.getString("lastnamemal"))
+                                                             .fatherFirstNameMal(rs.getString("fatherfirstnamemal"))
+                                                             .fatherLastNameMal(rs.getString("fatherlastnamemal"))
+                                                             .motherFirstNameMal(rs.getString("motherfirstnamemal"))
+                                                             .motherLastNameMal(rs.getString("motherlastnamemal"))
+                                                             .auditDetails(getAuditDetails(rs, APPLICANT_PREFIX))
+                                                             .address(address)
+                                                             .build();
+        applicant.addDocument(document);
+
+        return applicant;
     }
 
     default ApplicantAddress getApplicantAddress(final ResultSet rs) throws SQLException {

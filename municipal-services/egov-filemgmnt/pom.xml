@@ -14,6 +14,7 @@
         <postgresql.version>42.5.0</postgresql.version>
         <lombok.version>1.18.24</lombok.version>
         <p6spy.version>3.9.1</p6spy.version>
+        <sql-formatter.version>2.0.3</sql-formatter.version>
         <jsoup.version>1.15.3</jsoup.version>
     </properties>
     <parent>
@@ -129,6 +130,11 @@
             <groupId>p6spy</groupId>
             <artifactId>p6spy</artifactId>
             <version>${p6spy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.vertical-blank</groupId>
+            <artifactId>sql-formatter</artifactId>
+            <version>${sql-formatter.version}</version>
         </dependency>
         <!-- development only : end -->
         <dependency>

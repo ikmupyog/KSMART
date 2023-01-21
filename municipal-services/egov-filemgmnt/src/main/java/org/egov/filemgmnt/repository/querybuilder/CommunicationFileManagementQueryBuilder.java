@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.egov.filemgmnt.web.models.CommunicationFileSearchCriteria;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileSearchCriteria;
 import org.springframework.stereotype.Component;
 
 @Component

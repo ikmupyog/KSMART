@@ -4,7 +4,10 @@ import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +15,7 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.util.IdgenUtil;
+import org.egov.filemgmnt.web.enums.ErrorCodes;
 import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.ApplicantChild;
 import org.egov.filemgmnt.web.models.ApplicantDocument;
@@ -21,8 +25,8 @@ import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceDocument;
 import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.AuditDetails;
-import org.egov.filemgmnt.web.models.certificates.CertificateDetails;
-import org.egov.filemgmnt.web.models.certificates.CertificateRequest;
+import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
+import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,7 +43,7 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
 //    private EncryptionUtil encryptionUtil;
 
     public void enrichApplicantPersonal(final ApplicantServiceRequest request,
-                                        final ApplicantPersonal existingApplicant) {
+                                        final ApplicantPersonal existingApplicant, final boolean create) {
         final ApplicantPersonal applicant = request.getApplicantServiceDetail()
                                                    .getApplicant();
         Assert.notNull(applicant, "Applicant personal must not be null");
@@ -48,14 +52,17 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
                                      .getUserInfo();
 
         if (StringUtils.isNotBlank(applicant.getId())) { // existing applicant
-            enrichExistingApplicantPersonal(applicant, userInfo, existingApplicant);
+            enrichExistingApplicantPersonal(applicant, userInfo, existingApplicant, create);
         } else { // new applicant
             enrichNewApplicantPersonal(applicant, userInfo);
         }
     }
 
     private void enrichExistingApplicantPersonal(final ApplicantPersonal applicant, final User userInfo,
-                                                 final ApplicantPersonal existingApplicant) {
+                                                 final ApplicantPersonal existingApplicant, final boolean create) {
+
+        final String errorCode = create ? ErrorCodes.INVALID_CREATE.getCode() : ErrorCodes.INVALID_UPDATE.getCode();
+
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
 
         // 1. enrich applicant
@@ -75,14 +82,42 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
         addressAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
 
         // 3. enrich document
-        final ApplicantDocument document = applicant.getDocument();
-        final AuditDetails documentAuditDetails = existingApplicant.getDocument()
-                                                                   .getAuditDetails();
+        if (existingApplicant != null) {
+            final List<String> existingDocumentIds = existingApplicant.getDocuments()
+                                                                      .stream()
+                                                                      .map(ApplicantDocument::getId)
+                                                                      .collect(Collectors.toList());
+            final List<String> documentIds = applicant.getDocuments()
+                                                      .stream()
+                                                      .map(ApplicantDocument::getId)
+                                                      .filter(StringUtils::isNotBlank)
+                                                      .collect(Collectors.toList());
 
-        document.setApplicantPersonalId(applicant.getId());
-        document.setAuditDetails(documentAuditDetails);
-        documentAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
-        documentAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
+            if (!documentIds.containsAll(existingDocumentIds)) {
+                throw new CustomException(errorCode,
+                        "Invalid applicant document, existing applicant document not found.");
+            }
+        }
+
+        final Map<String, ApplicantDocument> existingDocuments = existingApplicant.getDocuments()
+                                                                                  .stream()
+                                                                                  .collect(Collectors.toMap(ApplicantDocument::getId,
+                                                                                                            Function.identity()));
+
+        applicant.getDocuments()
+                 .forEach(document -> {
+                     document.setApplicantPersonalId(applicant.getId());
+
+                     if (StringUtils.isNotBlank(document.getId())) {
+                         final AuditDetails documentAuditDetails = existingDocuments.get(document.getId())
+                                                                                    .getAuditDetails();
+                         document.setAuditDetails(documentAuditDetails);
+                         documentAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
+                         documentAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
+                     } else {
+                         document.setAuditDetails(buildAuditDetails(userInfo.getUuid(), Boolean.TRUE));
+                     }
+                 });
     }
 
     private void enrichNewApplicantPersonal(final ApplicantPersonal applicant, final User userInfo) {
@@ -100,24 +135,31 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
         address.setApplicantPersonalId(applicant.getId());
         address.setAuditDetails(auditDetails);
 
-        // 3. enrich document
-        final ApplicantDocument document = applicant.getDocument();
-        document.setId(UUID.randomUUID()
-                           .toString());
-        document.setApplicantPersonalId(applicant.getId());
-        document.setAuditDetails(auditDetails);
+        // 3. enrich documents
+        applicant.getDocuments()
+                 .forEach(document -> {
+                     document.setId(UUID.randomUUID()
+                                        .toString());
+                     document.setApplicantPersonalId(applicant.getId());
+                     document.setAuditDetails(auditDetails);
+                 });
     }
 
-    public void enrichCreate(final ApplicantServiceRequest request) {
+    public void enrichCreate(final ApplicantServiceRequest request, final boolean newApplicant) {
         final User userInfo = request.getRequestInfo()
                                      .getUserInfo();
-        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 
         final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();
         Assert.notNull(serviceDetail, "Applicant service detail must not be null");
 
-        final String applicantId = serviceDetail.getApplicant()
-                                                .getId();
+        final ApplicantPersonal applicant = serviceDetail.getApplicant();
+        final String applicantId = applicant.getId();
+
+        if (newApplicant) {
+            auditDetails = applicant.getAuditDetails();
+        }
+
         serviceDetail.setId(UUID.randomUUID()
                                 .toString());
         serviceDetail.setApplicantPersonalId(applicantId);

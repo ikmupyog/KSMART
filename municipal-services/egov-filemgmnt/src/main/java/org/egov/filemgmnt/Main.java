@@ -25,9 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Main { // NOPMD
 
-//    @Autowired
-//    private EncryptionService encService;
-
     public static void main(String[] args) { // NOPMD
         SpringApplication.run(Main.class, args);
     }
@@ -41,25 +38,4 @@ public class Main { // NOPMD
             }
         };
     }
-
-//    @Autowired
-//    @Bean
-//    ApplicationRunner debugEncryption() {
-//        return args -> {
-//            DummyUser user = new DummyUser("1234567890");
-//            try {
-//                String result = encService.encryptJson(user, "User", "kl", DummyUser.class);
-//                log.info("*** Encrypted Value:  {}", result);
-//            } catch (IOException e) {
-//                log.error(e.getLocalizedMessage(), e);
-//            }
-//        };
-//    }
-//
-//    @Getter
-//    @Setter
-//    @AllArgsConstructor
-//    private static class DummyUser {
-//        private String aadhaarNumber;
-//    }
 }

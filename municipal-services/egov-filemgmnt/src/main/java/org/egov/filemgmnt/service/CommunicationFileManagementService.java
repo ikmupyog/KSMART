@@ -12,9 +12,9 @@ import org.egov.filemgmnt.kafka.Producer;
 import org.egov.filemgmnt.repository.CommunicationFileManagementRepository;
 import org.egov.filemgmnt.util.MdmsUtil;
 import org.egov.filemgmnt.validators.CommunicationFileManagementValidator;
-import org.egov.filemgmnt.web.models.CommunicationFile;
-import org.egov.filemgmnt.web.models.CommunicationFileRequest;
-import org.egov.filemgmnt.web.models.CommunicationFileSearchCriteria;
+import org.egov.filemgmnt.web.models.communication.CommunicationFile;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileRequest;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

@@ -25,8 +25,8 @@ import com.fasterxml.jackson.databind.node.TextNode;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
+@Slf4j
 public class EncryptionUtil {
 
     private final EncryptionService encryptionService;
@@ -70,35 +70,39 @@ public class EncryptionUtil {
         }
     }
 
-    public <E, P> P decryptObject(Object objectToDecrypt, final String key, final Class<E> classType,
-                                  RequestInfo requestInfo) {
+    @SuppressWarnings("unchecked")
+    public <E, P> P decryptObject(final Object objectToDecrypt, final String key, final Class<E> classType, // NOPMD
+                                  final RequestInfo requestInfo) {
         if (objectToDecrypt == null) {
             return null;
         }
 
+        Object decryptObject = objectToDecrypt;
+
+        RequestInfo request = requestInfo;
         try {
-            if (requestInfo == null || requestInfo.getUserInfo() == null) {
-                User userInfo = User.builder()
-                                    .uuid("no uuid")
-                                    .type("EMPLOYEE")
-                                    .build();
-                requestInfo = RequestInfo.builder()
-                                         .userInfo(userInfo)
-                                         .build();
+            if (request == null || request.getUserInfo() == null) {
+                request = RequestInfo.builder()
+                                     .userInfo(User.builder()
+                                                   .uuid("no uuid")
+                                                   .type("EMPLOYEE")
+                                                   .build())
+                                     .build();
             }
 
-            boolean objectToDecryptNotList = false;
-            if (!(objectToDecrypt instanceof List)) {
-                objectToDecryptNotList = true;
-                objectToDecrypt = Collections.singletonList(objectToDecrypt);
+            boolean objectIsList = false;
+            if (!(decryptObject instanceof List)) {
+                objectIsList = true;
+                decryptObject = Collections.singletonList(decryptObject);
             }
-            final User encrichedUserInfo = getEncrichedandCopiedUserInfo(requestInfo.getUserInfo());
-            P decryptedObject = (P) encryptionService.decryptJson(objectToDecrypt, key, encrichedUserInfo, classType);
+
+            final User encrichedUserInfo = getEncrichedandCopiedUserInfo(request.getUserInfo());
+            P decryptedObject = (P) encryptionService.decryptJson(decryptObject, key, encrichedUserInfo, classType);
             if (decryptedObject == null) {
                 throw new CustomException("DECRYPTION_NULL_ERROR", "Null object found on performing decryption");
             }
 //            auditTheDecryptRequest(key, encrichedUserInfo);
-            if (objectToDecryptNotList) {
+            if (objectIsList) {
                 decryptedObject = (P) ((List<E>) decryptedObject).get(0);
             }
             return decryptedObject;
@@ -111,41 +115,41 @@ public class EncryptionUtil {
         }
     }
 
-    public void auditTheDecryptRequest(String key, User userInfo) {
-        String purpose = "FMDetail";
+    public void auditTheDecryptRequest(final String key, final User userInfo) {
+        final String purpose = "FMDetail"; // NOPMD
 
-        ObjectNode abacParams = objectMapper.createObjectNode();
+        final ObjectNode abacParams = objectMapper.createObjectNode();
         abacParams.set("key", TextNode.valueOf(key));
 
-        List<String> decryptedUserUuid = Arrays.asList(userInfo.getUuid());
+        final List<String> decryptedUserUuid = Arrays.asList(userInfo.getUuid());
 
-        ObjectNode auditData = objectMapper.createObjectNode();
+        final ObjectNode auditData = objectMapper.createObjectNode();
         auditData.set("entityType", TextNode.valueOf(User.class.getName()));
         auditData.set("decryptedEntityIds", objectMapper.valueToTree(decryptedUserUuid));
         auditService.audit(userInfo.getUuid(), System.currentTimeMillis(), purpose, abacParams, auditData);
     }
 
-    private User getEncrichedandCopiedUserInfo(User userInfo) {
-        List<Role> newRoleList = new ArrayList<>();
+    private User getEncrichedandCopiedUserInfo(final User userInfo) {
+        final List<Role> newRoleList = new ArrayList<>();
         if (userInfo.getRoles() != null) {
-            for (Role role : userInfo.getRoles()) {
-                Role newRole = Role.builder()
-                                   .code(role.getCode())
-                                   .name(role.getName())
-                                   .id(role.getId())
-                                   .build();
+            for (final Role role : userInfo.getRoles()) {
+                final Role newRole = Role.builder()
+                                         .code(role.getCode())
+                                         .name(role.getName())
+                                         .id(role.getId())
+                                         .build();
                 newRoleList.add(newRole);
             }
         }
 
         if (newRoleList.stream()
-                       .filter(role -> (role.getCode() != null) && (userInfo.getType() != null) && role.getCode()
-                                                                                                       .equalsIgnoreCase(userInfo.getType()))
+                       .filter(role -> role.getCode() != null && userInfo.getType() != null && role.getCode()
+                                                                                                   .equalsIgnoreCase(userInfo.getType()))
                        .count() == 0) {
-            Role roleFromtype = Role.builder()
-                                    .code(userInfo.getType())
-                                    .name(userInfo.getType())
-                                    .build();
+            final Role roleFromtype = Role.builder()
+                                          .code(userInfo.getType())
+                                          .name(userInfo.getType())
+                                          .build();
             newRoleList.add(roleFromtype);
         }
         return User.builder()

@@ -55,7 +55,7 @@ public class ApplicantServiceQueryBuilder extends BaseQueryBuilder {
         addFilters("ap.id", criteria.getApplicantIds(), query, preparedStmtValues);
         addFilter("fd.filecode", criteria.getFileCode(), query, preparedStmtValues);
         addFilter("ap.tenantid", criteria.getTenantId(), query, preparedStmtValues);
-        addFilter("ap.aadhaarno", criteria.getAadhaarNo(), query, preparedStmtValues);
+        addFilter("ap.aadhaarno", criteria.getAadhaarNumber(), query, preparedStmtValues);
         addDateRangeFilter("fd.filearisingdate",
                            criteria.getFromDate(),
                            criteria.getToDate(),

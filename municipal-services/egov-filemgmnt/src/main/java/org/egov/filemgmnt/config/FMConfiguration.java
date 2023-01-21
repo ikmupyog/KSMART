@@ -19,13 +19,6 @@ public class FMConfiguration {
     @Value("${egov.state.level.tenant.id}")
     private String stateLevelTenantId;
 
-    // Applicant personal
-    @Value("${persister.save.applicantpersonal.topic}")
-    private String saveApplicantPersonalTopic;
-
-    @Value("${persister.update.applicantpersonal.topic}")
-    private String updateApplicantPersonalTopic;
-
     // Applicant personal service
     @Value("${persister.save.applicantservice.topic}")
     private String saveApplicantServiceTopic;
@@ -33,14 +26,8 @@ public class FMConfiguration {
     @Value("${persister.update.applicantservice.topic}")
     private String updateApplicantServiceTopic;
 
-    @Value("${persister.save.applicantservicecertificate.topic}")
-    private String saveApplicantServiceCertificateTopic;
-
-    @Value("${persister.save.certificate.topic}")
-    private String saveCertificateTopic;
-
-    @Value("${persister.save.servicedetails.topic}")
-    private String saveServiceDetailsTopic;
+    @Value("${persister.save.applicantcertificate.topic}")
+    private String saveApplicantCertificateTopic;
 
     @Value("${citizen.allowed.search.params}")
     private String allowedCitizenSearchParams;

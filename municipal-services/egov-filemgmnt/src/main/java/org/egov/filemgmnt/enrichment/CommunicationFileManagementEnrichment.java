@@ -7,7 +7,7 @@ import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.util.IdgenUtil;
 import org.egov.filemgmnt.web.models.AuditDetails;
-import org.egov.filemgmnt.web.models.CommunicationFileRequest;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,7 +26,7 @@ public class CommunicationFileManagementEnrichment implements BaseEnrichment {
      * Enrich create.
      *
      * @param request the
-     *                {@link org.egov.filemgmnt.web.models.CommunicationFileRequest
+     *                {@link org.egov.filemgmnt.web.models.communication.CommunicationFileRequest
      *                CommunicationFileRequest}
      */
     public void enrichCreate(CommunicationFileRequest request) {

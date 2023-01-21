@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.certificates;
+package org.egov.filemgmnt.web.models.certificate;
 
 import java.util.List;
 

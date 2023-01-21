@@ -20,7 +20,10 @@ import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class IdgenUtil {
 
     @Value("${egov.idgen.host}")
@@ -50,6 +53,11 @@ public class IdgenUtil {
                                                                .idRequests(reqList)
                                                                .requestInfo(requestInfo)
                                                                .build();
+
+        if (log.isDebugEnabled()) {
+            log.debug("*** Idgen requeset: \n{}", FMUtils.toJson(request));
+        }
+
         final StringBuilder uri = new StringBuilder(idGenHost).append(idGenPath);
         final IdGenerationResponse response = mapper.convertValue(restRepo.fetchResult(uri, request),
                                                                   IdGenerationResponse.class);

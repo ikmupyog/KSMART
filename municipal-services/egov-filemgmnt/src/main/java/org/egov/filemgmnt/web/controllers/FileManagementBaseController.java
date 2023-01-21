@@ -2,6 +2,7 @@ package org.egov.filemgmnt.web.controllers;
 
 import javax.validation.Valid;
 
+import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
 import org.egov.filemgmnt.web.models.ApplicantSearchResponse;
 import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
@@ -104,11 +105,13 @@ interface FileManagementBaseController {
                                                    format = "int64",
                                                    accessMode = Schema.AccessMode.READ_ONLY)),
                        @Parameter(in = ParameterIn.QUERY,
-                                  name = "aadhaarNo",
+                                  name = "aadhaarNumber",
                                   required = false,
                                   allowEmptyValue = true,
                                   description = "Aadhaar number",
-                                  schema = @Schema(type = "string", accessMode = Schema.AccessMode.READ_ONLY)),
+                                  schema = @Schema(type = "string",
+                                                   pattern = FMConstants.PATTERN_AADHAAR,
+                                                   accessMode = Schema.AccessMode.READ_ONLY)),
                        @Parameter(in = ParameterIn.QUERY,
                                   name = "offset",
                                   required = false,
@@ -158,12 +161,12 @@ interface FileManagementBaseController {
                                                    format = "uuid",
                                                    accessMode = Schema.AccessMode.READ_ONLY)),
                        @Parameter(in = ParameterIn.QUERY,
-                                  name = "aadhaarNo",
+                                  name = "aadhaarNumber",
                                   required = false,
                                   allowEmptyValue = true,
                                   description = "Aadhaar number",
                                   schema = @Schema(type = "string",
-                                                   pattern = "^[1-9][0-9]{11}$",
+                                                   pattern = FMConstants.PATTERN_AADHAAR,
                                                    accessMode = Schema.AccessMode.READ_ONLY)) },
                responses = {
                        @ApiResponse(responseCode = "200",

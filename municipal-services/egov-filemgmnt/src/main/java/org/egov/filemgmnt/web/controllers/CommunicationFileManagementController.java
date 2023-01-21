@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.egov.filemgmnt.service.CommunicationFileManagementService;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
-import org.egov.filemgmnt.web.models.CommunicationFile;
-import org.egov.filemgmnt.web.models.CommunicationFileRequest;
-import org.egov.filemgmnt.web.models.CommunicationFileResponse;
-import org.egov.filemgmnt.web.models.CommunicationFileSearchCriteria;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
+import org.egov.filemgmnt.web.models.communication.CommunicationFile;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileRequest;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileResponse;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileSearchCriteria;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;

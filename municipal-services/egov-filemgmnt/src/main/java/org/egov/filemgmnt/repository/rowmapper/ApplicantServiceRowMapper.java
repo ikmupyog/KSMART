@@ -5,10 +5,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.egov.filemgmnt.web.models.ApplicantChild;
+import org.egov.filemgmnt.web.models.ApplicantDocument;
 import org.egov.filemgmnt.web.models.ApplicantFileDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceDocument;
@@ -21,12 +24,22 @@ public class ApplicantServiceRowMapper implements ResultSetExtractor<List<Applic
 
     @Override
     public List<ApplicantServiceDetail> extractData(ResultSet rs) throws SQLException, DataAccessException { // NOPMD
-        final List<ApplicantServiceDetail> result = new ArrayList<>();
+        final Map<String, ApplicantServiceDetail> result = new LinkedHashMap<>();
 
         while (rs.next()) {
-            result.add(getApplicantServiceDetail(rs));
+            final String serviceDetailId = rs.getString(SVC_DETAIL_PREFIX + "id");
+            final ApplicantServiceDetail serviceDetail = result.get(serviceDetailId);
+
+            if (serviceDetail == null) {
+                result.put(serviceDetailId, getApplicantServiceDetail(rs));
+            } else {
+                final ApplicantDocument document = getApplicantDocument(rs);
+                serviceDetail.getApplicant()
+                             .addDocument(document);
+            }
         }
-        return result;
+
+        return new ArrayList<>(result.values());
     }
 
     private ApplicantServiceDetail getApplicantServiceDetail(final ResultSet rs) throws SQLException {

@@ -1,9 +1,8 @@
-package org.egov.filemgmnt.service;
+package org.egov.filemgmnt.repository;
 
 import java.util.List;
 
 import org.egov.filemgmnt.TestConfig;
-import org.egov.filemgmnt.repository.FileManagementRepository;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
@@ -25,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @TestPropertySource(locations = { "classpath:test.properties" })
 @SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert" })
 @Slf4j
-class FileManagementServiceTests {
+class FileManagementRepositoryTests {
 
     @Autowired
     private FileManagementRepository repository;
@@ -35,7 +34,7 @@ class FileManagementServiceTests {
     void searchApplicants() {
 
         ApplicantSearchCriteria searchCriteria = new ApplicantSearchCriteria();
-        searchCriteria.setId("f2a93229-e688-49f4-8c92-d073710a7965");
+        searchCriteria.setId("f149795a-09ea-4fdb-908e-61576cada407");
 
         List<ApplicantPersonal> result = repository.searchApplicantPersonals(searchCriteria);
         log.debug("*** Applicant Search:: \n{}", FMUtils.toJson(result));

@@ -2,6 +2,7 @@ package org.egov.filemgmnt.web.models;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -37,6 +38,7 @@ public class ApplicantFileDetail {
     @Schema(type = "string", description = "Tenant identification number")
     @NotBlank(message = "Tenant identification number is required")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
+    @Pattern(regexp = "^kl\\.[a-z]+$", message = "Invalid tenant identification number format, ex: kl.cochin")
     @JsonProperty("tenantId")
     private String tenantId;
 
