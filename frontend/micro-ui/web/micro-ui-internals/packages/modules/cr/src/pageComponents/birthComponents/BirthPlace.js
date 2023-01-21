@@ -42,8 +42,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [VehiToMlError, setVehiToMlError] = useState(formData?.BirthPlace?.VehicleToMl ? false : false);
 
   const [PublicPlaceError, setPublicPlaceError] = useState(formData?.BirthPlace?.setPublicPlaceType ? false : false);
-  const [AdrsInfonmntNameError, setAdrsInfonmntNameError] = useState(formData?.BirthPlace?.AdrsInfontName ? false : false);
-  const [PublicPlaceAdrsError, setPublicPlaceAdrsError] = useState(formData?.BirthPlace?.AdrsPublicPlace ? false : false);
+  const [PublicPlaceInfomantFstNameEnError, setPublicPlaceInfomantFstNameEnError] = useState(formData?.BirthPlace?.InfomantFirstNameEn ? false : false);
+  const [PublicPlaceInfomantMobileNoError, setPublicPlaceInfomantMobileNoError] = useState(formData?.BirthPlace?.InfomantMobile ? false : false);
+  const [PublicPlaceInfomantAadharError, setPublicPlaceInfomantAadharError] = useState(formData?.BirthPlace?.InfomantAadhar ? false : false);
+  // const [AdrsInfonmntNameError, setAdrsInfonmntNameError] = useState(formData?.BirthPlace?.AdrsInfontName ? false : false);
+  // const [PublicPlaceAdrsError, setPublicPlaceAdrsError] = useState(formData?.BirthPlace?.AdrsPublicPlace ? false : false);
 
   const [AdrsHomeCountryError, setAdrsHomeCountryError] = useState(formData?.BirthPlace?.AdrsHomeCountry ? false : false);
   const [AdrsHomeStateNameError, setAdrsHomeStateNameError] = useState(formData?.BirthPlace?.AdrsHomeStateName ? false : false);
@@ -160,11 +163,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [setPublicPlaceType, setSelectedPublicPlaceType] = useState(
     formData?.BirthPlace?.setPublicPlaceType ? formData?.BirthPlace?.setPublicPlaceType : null
   );
-  const [AdrsInfontName, setAdrsInfontName] = useState(formData?.BirthPlace?.AdrsInfontName ? formData?.BirthPlace?.AdrsInfontName : "");
+  // const [AdrsInfontName, setAdrsInfontName] = useState(formData?.BirthPlace?.AdrsInfontName ? formData?.BirthPlace?.AdrsInfontName : "");
   const [AdrsPublicPlace, setAdrsPublicPlace] = useState(formData?.BirthPlace?.AdrsPublicPlace ? formData?.BirthPlace?.AdrsPublicPlace : "");
-  const [PublicPlaceDesption, setPublicPlaceDesption] = useState(
-    formData?.BirthPlace?.PublicPlaceDesption ? formData?.BirthPlace?.PublicPlaceDesption : ""
-  );
+  // const [PublicPlaceDesption, setPublicPlaceDesption] = useState(
+  //   formData?.BirthPlace?.PublicPlaceDesption ? formData?.BirthPlace?.PublicPlaceDesption : ""
+  // );
 
   const [AdrsCountry, setAdrsCountry] = useState(formData?.BirthPlace?.AdrsCountry ? formData?.BirthPlace?.AdrsCountry : null);
   const [AdrsStateName, setAdrsStateName] = useState(formData?.BirthPlace?.AdrsStateName ? formData?.BirthPlace?.AdrsStateName : null);
@@ -285,9 +288,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         if (naturetype === "PUBLIC_PLACES") {
           <PublicPlace
             setPublicPlaceType={setPublicPlaceType}
-            AdrsInfontName={AdrsInfontName}
-            AdrsPublicPlace={AdrsPublicPlace}
-            PublicPlaceDesption={PublicPlaceDesption}
+            // AdrsInfontName={AdrsInfontName}
+            // AdrsPublicPlace={AdrsPublicPlace}
+            // PublicPlaceDesption={PublicPlaceDesption}
           />;
         }
 
@@ -316,7 +319,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             AdrsResNoMl={AdrsResNoMl}
           />;
         }
-        if (naturetype === "HOME  || VEHICLE") {
+        if (naturetype === "HOME  || VEHICLE || PUBLIC_PLACES") {
           <InformantDetails
             InfomantFirstNameEn={InfomantFirstNameEn}
             InfomantAadhar={InfomantAadhar}
@@ -805,28 +808,82 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setPublicPlaceError(false);
       }
+      if (InfomantFirstNameEn == null || InfomantFirstNameEn == "") {
+        setPublicPlaceInfomantFstNameEnError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setPublicPlaceInfomantFstNameEnError(false);
+      }
+      if (InfomantMobile != null || InfomantMobile != "") {
+        let MobileLen = InfomantMobile;
+        if (MobileLen.length != 0) {
+          if (MobileLen.length > 10) {
+            setPublicPlaceInfomantMobileNoError(true);
+            validFlag = false;
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+            return false;
+          } else if (MobileLen.length < 10) {
+            setPublicPlaceInfomantMobileNoError(true);
+            validFlag = false;
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+            return false;
+          } else {
+            setMobileError(false);
+            setPublicPlaceInfomantMobileNoError(false);
+          }
+        }
+      } else {
+        setMobileError(false);
+        setPublicPlaceInfomantMobileNoError(false);
+      }
 
-      if (AdrsInfontName == null || AdrsInfontName == "") {
-        setAdrsInfonmntNameError(true);
+      if (InfomantMobile == null || InfomantMobile == "") {
+        setPublicPlaceInfomantMobileNoError(true);
         validFlag = false;
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
       } else {
-        setAdrsInfonmntNameError(false);
+        setPublicPlaceInfomantMobileNoError(false);
       }
-      if (AdrsPublicPlace == null || AdrsPublicPlace == "") {
-        setPublicPlaceAdrsError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setPublicPlaceAdrsError(false);
-      }
+
+
     }
+
+
+
+    //   if (AdrsInfontName == null || AdrsInfontName == "") {
+    //     setAdrsInfonmntNameError(true);
+    //     validFlag = false;
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setAdrsInfonmntNameError(false);
+    //   }
+    //   if (AdrsPublicPlace == null || AdrsPublicPlace == "") {
+    //     setPublicPlaceAdrsError(true);
+    //     validFlag = false;
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setPublicPlaceAdrsError(false);
+    //   }
+    // }
 
     if (BirthPlace.code === "HOME") {
       if (AdrsCountry == null) {
@@ -1239,9 +1296,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         sessionStorage.removeItem("VehicleOtherDetailsMl");
 
         sessionStorage.removeItem("setPublicPlaceType");
-        sessionStorage.removeItem("AdrsInfontName");
-        sessionStorage.removeItem("AdrsPublicPlace");
-        sessionStorage.removeItem("PublicPlaceDesption");
+        // sessionStorage.removeItem("AdrsInfontName");
+        // sessionStorage.removeItem("AdrsPublicPlace");
+        // sessionStorage.removeItem("PublicPlaceDesption");
 
         sessionStorage.removeItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
         sessionStorage.removeItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
@@ -1302,9 +1359,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           InstitutionMobilNo,
           InstitutionAadhaar,
           setPublicPlaceType,
-          AdrsInfontName,
-          AdrsPublicPlace,
-          PublicPlaceDesption,
+         
           AdrsCountry,
           AdrsStateName,
           AdrsLBTypeName,
@@ -1371,9 +1426,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         sessionStorage.removeItem("VehicleOtherDetailsMl");
 
         sessionStorage.removeItem("setPublicPlaceType");
-        sessionStorage.removeItem("AdrsInfontName");
-        sessionStorage.removeItem("AdrsPublicPlace");
-        sessionStorage.removeItem("PublicPlaceDesption");
+        // sessionStorage.removeItem("AdrsInfontName");
+        // sessionStorage.removeItem("AdrsPublicPlace");
+        // sessionStorage.removeItem("PublicPlaceDesption");
 
         sessionStorage.removeItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
         sessionStorage.removeItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
@@ -1434,9 +1489,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           InstitutionMobilNo,
           InstitutionAadhaar,
           setPublicPlaceType,
-          AdrsInfontName,
-          AdrsPublicPlace,
-          PublicPlaceDesption,
+         
           AdrsCountry,
           AdrsStateName,
           AdrsLBTypeName,
@@ -1526,9 +1579,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         sessionStorage.removeItem("InstitutionAadhaar");
 
         sessionStorage.removeItem("setPublicPlaceType");
-        sessionStorage.removeItem("AdrsInfontName");
-        sessionStorage.removeItem("AdrsPublicPlace");
-        sessionStorage.removeItem("PublicPlaceDesption");
+        // sessionStorage.removeItem("AdrsInfontName");
+        // sessionStorage.removeItem("AdrsPublicPlace");
+        // sessionStorage.removeItem("PublicPlaceDesption");
 
         sessionStorage.removeItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
         sessionStorage.removeItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
@@ -1566,9 +1619,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           InstitutionMobilNo,
           InstitutionAadhaar,
           setPublicPlaceType,
-          AdrsInfontName,
-          AdrsPublicPlace,
-          PublicPlaceDesption,
+         
           AdrsCountry,
           AdrsStateName,
           AdrsLBTypeName,
@@ -1611,9 +1662,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         sessionStorage.removeItem("BirthPlace");
         sessionStorage.setItem("BirthPlace", BirthPlace.code);
         sessionStorage.setItem("setPublicPlaceType", setPublicPlaceType ? setPublicPlaceType.code : null);
-        sessionStorage.setItem("AdrsInfontName", AdrsInfontName ? AdrsInfontName : null);
-        sessionStorage.setItem("AdrsPublicPlace", AdrsPublicPlace ? AdrsPublicPlace : null);
-        sessionStorage.setItem("PublicPlaceDesption", PublicPlaceDesption ? PublicPlaceDesption : null);
+        // sessionStorage.setItem("AdrsInfontName", AdrsInfontName ? AdrsInfontName : null);
+        // sessionStorage.setItem("AdrsPublicPlace", AdrsPublicPlace ? AdrsPublicPlace : null);
+        // sessionStorage.setItem("PublicPlaceDesption", PublicPlaceDesption ? PublicPlaceDesption : null);
 
         sessionStorage.removeItem("HospitalName");
         sessionStorage.removeItem("SignedOfficerName");
@@ -1697,9 +1748,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           InstitutionMobilNo,
           InstitutionAadhaar,
           setPublicPlaceType,
-          AdrsInfontName,
-          AdrsPublicPlace,
-          PublicPlaceDesption,
+         
           AdrsCountry,
           AdrsStateName,
           AdrsLBTypeName,
@@ -1812,9 +1861,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         sessionStorage.removeItem("VehicleOtherDetailsMl");
 
         sessionStorage.removeItem("setPublicPlaceType");
-        sessionStorage.removeItem("AdrsInfontName");
-        sessionStorage.removeItem("AdrsPublicPlace");
-        sessionStorage.removeItem("PublicPlaceDesption");
+        // sessionStorage.removeItem("AdrsInfontName");
+        // sessionStorage.removeItem("AdrsPublicPlace");
+        // sessionStorage.removeItem("PublicPlaceDesption");
 
         onSelect(config.key, {
           BirthPlace,
@@ -1830,9 +1879,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           InstitutionMobilNo,
           InstitutionAadhaar,
           setPublicPlaceType,
-          AdrsInfontName,
-          AdrsPublicPlace,
-          PublicPlaceDesption,
+          // AdrsInfontName,
+          // AdrsPublicPlace,
+          // PublicPlaceDesption,
           AdrsCountry,
           AdrsStateName,
           AdrsLBTypeName,
@@ -2016,12 +2065,26 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             <PublicPlace
               setSelectedPublicPlaceType={setSelectedPublicPlaceType}
               setPublicPlaceType={setPublicPlaceType}
-              setAdrsInfontName={setAdrsInfontName}
-              AdrsInfontName={AdrsInfontName}
-              setAdrsPublicPlace={setAdrsPublicPlace}
-              AdrsPublicPlace={AdrsPublicPlace}
-              setPublicPlaceDesption={setPublicPlaceDesption}
-              PublicPlaceDesption={PublicPlaceDesption}
+              // setAdrsInfontName={setAdrsInfontName}
+              // AdrsInfontName={AdrsInfontName}
+              // setAdrsPublicPlace={setAdrsPublicPlace}
+              // AdrsPublicPlace={AdrsPublicPlace}
+              // setPublicPlaceDesption={setPublicPlaceDesption}
+              // PublicPlaceDesption={PublicPlaceDesption}
+            />
+              <InformantDetails
+              setInfomantFirstNameEn={setInfomantFirstNameEn}
+              InfomantFirstNameEn={InfomantFirstNameEn}
+              setInfomantAadhar={setInfomantAadhar}
+              InfomantAadhar={InfomantAadhar}
+              setInfomantEmail={setInfomantEmail}
+              InfomantEmail={InfomantEmail}
+              setInfomantMobile={setInfomantMobile}
+              InfomantMobile={InfomantMobile}
+              setInformantAddressLineOne={setInformantAddressLineOne}
+              InformantAddressLineOne={InformantAddressLineOne}
+              setInformantAddressLineTwo={setInformantAddressLineTwo}
+              InformantAddressLineTwo={InformantAddressLineTwo}
             />
           </div>
         )}
@@ -2149,8 +2212,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               // VehiInfomantAdrHouseNameEnError ||
               //  VehiInfomantAdrDoorNoError || VehiInfomantAdrResNoEnError ||  VehiInfomantAdrStreetNameEnError ||
               PublicPlaceError ||
-              AdrsInfonmntNameError ||
-              PublicPlaceAdrsError ||
+              PublicPlaceInfomantFstNameEnError ||
+               PublicPlaceInfomantMobileNoError ||
               AdrsHomeCountryError ||
               AdrsHomeStateNameError ||
               AdrsHomeDistrictError ||
@@ -2192,8 +2255,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               // VehiInfomantAdrHouseNameEnError ||
               // VehiInfomantAdrStreetNameEnError || VehiInfomantAdrDoorNoError || VehiInfomantAdrResNoEnError ||
               PublicPlaceError ||
-              AdrsInfonmntNameError ||
-              PublicPlaceAdrsError ||
+              PublicPlaceInfomantFstNameEnError ||
+               PublicPlaceInfomantMobileNoError ||
               AdrsHomeCountryError ||
               AdrsHomeStateNameError ||
               AdrsHomeDistrictError ||
@@ -2233,10 +2296,10 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
                   ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                   : PublicPlaceError
                   ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                  : AdrsInfonmntNameError
+                  : PublicPlaceInfomantFstNameEnError
                   ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
-                  : PublicPlaceAdrsError
-                  ? t(`BIRTH_ERROR_PUBLIC_PLACE_ADDRESS_CHOOSE`)
+                  : PublicPlaceInfomantMobileNoError
+                  ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
                   : AdrsHomeCountryError
                   ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)
                   : AdrsHomeStateNameError
