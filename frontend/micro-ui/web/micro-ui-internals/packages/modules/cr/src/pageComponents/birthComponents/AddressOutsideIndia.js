@@ -159,7 +159,7 @@ const AddressOutsideIndia = ({
               onChange={setSelectAdressEn}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_1_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS_1_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -177,7 +177,7 @@ const AddressOutsideIndia = ({
               onChange={setSelectAdressMl}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_1_ML")}`}
-              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRESS_1_ML") })}
             />
           </div>
         </div>
@@ -195,7 +195,7 @@ const AddressOutsideIndia = ({
               onChange={setSelectAdressEnB}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_2_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS_2_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -210,7 +210,7 @@ const AddressOutsideIndia = ({
               onChange={setSelectAdressMlB}
               disable={isEdit}
               placeholder={`${t("CR_ADDRESS_2_ML")}`}
-              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS_2_ML") })}
             />
           </div>
         </div>

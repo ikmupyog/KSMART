@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, InputCard } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
@@ -21,13 +21,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
+  // const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const [Gender, setselectedGender] = useState(formData?.InformationDeath?.Gender);
-  const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
-  const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
+  // const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
+  // const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
   const [setNationality, setSelectedNationality] = useState(formData?.InformationDeath?.setNationality);
   const [setReligion, setSelectedReligion] = useState(formData?.InformationDeath?.setReligion);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -79,12 +79,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     Nation["common-masters"].Country.map((ob) => {
       cmbNation.push(ob);
     });
-  let cmbTitle = [];
-  title &&
-    title["common-masters"] &&
-    title["common-masters"].Title.map((ob) => {
-      cmbTitle.push(ob);
-    });
+  // let cmbTitle = [];
+  // title &&
+  //   title["common-masters"] &&
+  //   title["common-masters"].Title.map((ob) => {
+  //     cmbTitle.push(ob);
+  //   });
   let cmbReligion = [];
   religion &&
     religion["common-masters"] &&
@@ -107,12 +107,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectReligion(value) {
     setSelectedReligion(value);
   }
-  function selectTitle(value) {
-    setSelectedTitle(value);
-  }
-  function selectTitleB(value) {
-    setSelectedTitleB(value);
-  }
+  // function selectTitle(value) {
+  //   setSelectedTitle(value);
+  // }
+  // function selectTitleB(value) {
+  //   setSelectedTitleB(value);
+  // }
   function selectNationality(value) {
     setSelectedNationality(value);
   }
@@ -187,6 +187,30 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     }
   };
   const onSkip = () => onSelect();
+  let cmbfilterNation = [];
+  let cmbfilterReligion =[];
+  let cmbfilterAgeUnit = [];
+  useEffect(() => {
+    if (setNationality == null || setNationality == '') {
+        if (stateId === "kl" && cmbNation.length > 0) {
+            cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
+            setSelectedNationality(cmbfilterNation[0]);
+        }
+    }
+    if (setReligion == null || setReligion == '') {
+      if (stateId === "kl" && cmbReligion.length > 0) {
+          cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes('No Religion'));
+          setSelectedReligion(cmbfilterReligion[0]);
+      }
+  }
+  if (setAgeUnit == null || setAgeUnit == '') {
+    if (stateId === "kl" && cmbAgeUnit.length > 0) {
+        cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes('Years'));
+        setSelectedAgeUnit(cmbfilterAgeUnit[0]);
+    }
+}
+    
+}, )
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
     sessionStorage.setItem("DeathTime", DeathTime ? DeathTime : null);
@@ -201,8 +225,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("IdNo", IdNo ? IdNo : null);
     sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
     sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
-    sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
-    sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
+    // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
+    // sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
     sessionStorage.setItem("setNationality", setNationality ? setNationality.code : null);
     sessionStorage.setItem("setReligion", setReligion ? setReligion.code : null);
     sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
@@ -231,8 +255,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       ToDate,
       CommencementDate,
       Gender,
-      setTitle,
-      setTitleB,
+      // setTitle,
+      // setTitleB,
       setNationality,
       setReligion,
       DeathTimeFrom,
@@ -354,7 +378,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
               <Dropdown
                 t={t}
@@ -366,8 +390,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
                 placeholder={`${t("CR_TITLE_NAME_EN")}`}
               />
-            </div>
-            <div className="col-md-3">
+            </div> */}
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span>
               </CardLabel>
@@ -384,7 +408,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -399,7 +423,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -418,7 +442,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               <CardLabel>{`${t("CR_TITLE_NAME_ML")}`}</CardLabel>
               <Dropdown
                 t={t}
@@ -430,8 +454,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 disabled={isEdit}
                 placeholder={`${t("CR_TITLE_NAME_ML")}`}
               />
-            </div>
-            <div className="col-md-3">
+            </div> */}
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_FIRST_NAME_ML")}`}
                 <span className="mandatorycss">*</span>
@@ -454,7 +478,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -474,7 +498,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -499,7 +523,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OTHER_DETAILS")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_LEGAL_INFORMATION")}`}</span>
             </h1>
           </div>
         </div>

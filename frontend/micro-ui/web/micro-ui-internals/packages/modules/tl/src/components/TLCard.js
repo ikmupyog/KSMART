@@ -57,26 +57,26 @@ const TLCard = () => {
             link: `/digit-ui/employee/tl/pde-search`,
             role: "TL_PDEOPERATOR"
         },
-        {
-            label: t("Past Data Entry - PDE"),
-            link: `/digit-ui/employee/tl/pde-application`,
-            role: "TL_PDEAPPROVER"
-        },
-        {
-            label: t("Search PDE Application"),
-            link: `/digit-ui/employee/tl/pde-search`,
-            role: "TL_PDEAPPROVER"
-        },
-        {
-            label: t("Past Data Entry - PDE"),
-            link: `/digit-ui/employee/tl/pde-application`,
-            role: "TL_CEMP"
-        },
+        // {
+        //     label: t("Past Data Entry - PDE"),
+        //     link: `/digit-ui/employee/tl/pde-application`,
+        //     role: "TL_PDEAPPROVER"
+        // },
         {
             label: t("Search PDE Application"),
             link: `/digit-ui/employee/tl/pde-search`,
-            role: "TL_CEMP"
+            role: "TL_PDEAPPROVER"
         }
+        // {
+        //     label: t("Past Data Entry - PDE"),
+        //     link: `/digit-ui/employee/tl/pde-application`,
+        //     role: "TL_CEMP"
+        // },
+        // {
+        //     label: t("Search PDE Application"),
+        //     link: `/digit-ui/employee/tl/pde-search`,
+        //     role: "TL_CEMP"
+        // }
     ]
 
     links = links.filter(link => link.role ? checkForEmployee(link.role) : true);
