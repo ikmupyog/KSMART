@@ -70,7 +70,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
-        <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label>
+        <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("Death Registration Summary")}</label>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
