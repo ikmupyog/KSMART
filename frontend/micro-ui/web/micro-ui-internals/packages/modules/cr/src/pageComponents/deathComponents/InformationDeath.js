@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, InputCard } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
@@ -25,6 +25,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
+  const { data: Occupation = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
+  const [checkedOcuupation, setCheckedOcuupation] = useState(
+    formData?.InformationDeath?.checkedOcuupation ? formData?.InformationDeath?.checkedOcuupation : false
+  );
   const [Gender, setselectedGender] = useState(formData?.InformationDeath?.Gender);
   // const [setTitle, setSelectedTitle] = useState(formData?.InformationDeath?.setTitle);
   // const [setTitleB, setSelectedTitleB] = useState(formData?.InformationDeath?.setTitleB);
@@ -50,9 +54,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathTimeTo, setDeathTimeTo] = useState(formData?.InformationDeath?.DeathTimeTo ? formData?.InformationDeath?.DeathTimeTo : "");
   const [DeathTime, setDeathTime] = useState(formData?.InformationDeath?.DeathTime ? formData?.InformationDeath?.DeathTime : "");
   const [checked, setChecked] = useState(formData?.InformationDeath?.checked ? formData?.InformationDeath?.checked : false);
-  const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit ? formData?.InformationDeath?.setAgeUnit : "");
-  const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo ? formData?.InformationDeath?.setIdCombo : "");
-
+  const [setAgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.setAgeUnit ? formData?.InformationDeath?.setAgeUnit : null);
+  const [setIdCombo, setSelectedIdCombo] = useState(formData?.InformationDeath?.setIdCombo ? formData?.InformationDeath?.setIdCombo : null);
+  const [setOccupationMain, setSelectedOccupationMain] = useState(
+    formData?.InformationDeath?.setOccupationMain ? formData?.InformationDeath?.setOccupationMain : null
+  );
+  const [OccupationOthers, setOccupationOthers] = useState(
+    formData?.InformationDeath?.OccupationOthers ? formData?.InformationDeath?.OccupationOthers : ""
+  );
+  const [checkedAdhar, setCheckedAdhar] = useState(formData?.InformationDeath?.checkedAdhar ? formData?.InformationDeath?.checkedAdhar : 0);
   // const [selectedValues,  ] = useState(
   //   formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : false
   // );
@@ -102,6 +112,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     AgeUnit["birth-death-service"] &&
     AgeUnit["birth-death-service"].AgeUnit.map((ob) => {
       cmbAgeUnit.push(ob);
+    });
+  let cmbOccupationMain = [];
+  Occupation &&
+    Occupation["common-masters"] &&
+    Occupation["common-masters"].Occupation.map((ob) => {
+      cmbOccupationMain.push(ob);
     });
 
   function selectReligion(value) {
@@ -163,6 +179,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectIdCombo(value) {
     setSelectedIdCombo(value);
   }
+  function selectOccupationMain(value) {
+    setSelectedOccupationMain(value);
+  }
+
+  function SelectOccupationOthers(e) {
+    setOccupationOthers(e.target.value);
+  }
   function calculateAge(value) {
     setCommencementDate(value);
     const today = new Date();
@@ -188,29 +211,28 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   };
   const onSkip = () => onSelect();
   let cmbfilterNation = [];
-  let cmbfilterReligion =[];
+  let cmbfilterReligion = [];
   let cmbfilterAgeUnit = [];
   useEffect(() => {
-    if (setNationality == null || setNationality == '') {
-        if (stateId === "kl" && cmbNation.length > 0) {
-            cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
-            setSelectedNationality(cmbfilterNation[0]);
-        }
-    }
-    if (setReligion == null || setReligion == '') {
-      if (stateId === "kl" && cmbReligion.length > 0) {
-          cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes('No Religion'));
-          setSelectedReligion(cmbfilterReligion[0]);
+    if (setNationality == null || setNationality == "") {
+      if (stateId === "kl" && cmbNation.length > 0) {
+        cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
+        setSelectedNationality(cmbfilterNation[0]);
       }
-  }
-  if (setAgeUnit == null || setAgeUnit == '') {
-    if (stateId === "kl" && cmbAgeUnit.length > 0) {
-        cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes('Years'));
-        setSelectedAgeUnit(cmbfilterAgeUnit[0]);
     }
-}
-    
-}, )
+    if (setReligion == null || setReligion == "") {
+      if (stateId === "kl" && cmbReligion.length > 0) {
+        cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
+        setSelectedReligion(cmbfilterReligion[0]);
+      }
+    }
+    if (setAgeUnit == null || setAgeUnit == "") {
+      if (stateId === "kl" && cmbAgeUnit.length > 0) {
+        cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes("Years"));
+        setSelectedAgeUnit(cmbfilterAgeUnit[0]);
+      }
+    }
+  });
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
     sessionStorage.setItem("DeathTime", DeathTime ? DeathTime : null);
@@ -237,8 +259,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     // sessionStorage.setItem("selectedValues", selectedValues ? selectedValues : true);
+    sessionStorage.setItem("setOccupationMain", setOccupationMain ? setOccupationMain.code : null);
+    sessionStorage.setItem("OccupationOthers", OccupationOthers ? OccupationOthers : null);
+    sessionStorage.setItem("checked", checked ? checked : false);
+    sessionStorage.setItem("checkedOcuupation", checkedOcuupation ? checkedOcuupation : false);
+    sessionStorage.setItem("checkedAdhar", checkedAdhar ? checkedAdhar : false);
 
     onSelect(config.key, {
+      checkedAdhar,
+      checkedOcuupation,
       setIdCombo,
       DeathDate,
       DeathTime,
@@ -263,7 +292,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathTimeTo,
       setAgeUnit,
       setIdCombo,
-        // selectedValues,
+      // selectedValues,
+      checked,
+      setOccupationMain,
+      OccupationOthers,
     });
   };
   return (
@@ -282,10 +314,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}onChange={() => setChecked((checked) => !checked)} value={checked} />
+              <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} />
             </div>
             <div className="col-md-6">
-              <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")}  />
+              <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} />
             </div>
           </div>
         </div>
@@ -620,56 +652,69 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             </h1>
           </div>
         </div> */}
-
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
-              <CardLabel>{t("CR_AADHAR_OF_DECEASED")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type="number"
-                max="12"
-                optionKey="i18nKey"
-                name="AdharNo"
-                value={AdharNo}
-                onChange={setSelectAdharNo}
-                disable={isEdit}
-                placeholder={`${t("CR_AADHAR_OF_DECEASED")}`}
-                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbDocumentType}
-                selected={setIdCombo}
-                select={selectIdCombo}
-                disabled={isEdit}
-                placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
-                // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>{t("CR_ID_NO")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="IdNo"
-                value={IdNo}
-                onChange={setSelectIdNo}
-                disable={isEdit}
-                placeholder={`${t("CR_ID_NO")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
-              />
+            <div className="col-md-6">
+              <CheckBox label={t("CR_ADHAR_NOT_AVAILABLE")} onChange={() => setCheckedAdhar((checkedAdhar) => !checkedAdhar)} value={checked} />
             </div>
           </div>
         </div>
+        {checkedAdhar ? (
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDocumentType}
+                  selected={setIdCombo}
+                  select={selectIdCombo}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
+                  // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
+                />
+              </div>
+              <div className="col-md-6">
+                <CardLabel>{t("CR_ID_NO")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="IdNo"
+                  value={IdNo}
+                  onChange={setSelectIdNo}
+                  disable={isEdit}
+                  placeholder={`${t("CR_ID_NO")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{t("CR_AADHAR_OF_DECEASED")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type="number"
+                  max="12"
+                  optionKey="i18nKey"
+                  name="AdharNo"
+                  value={AdharNo}
+                  onChange={setSelectAdharNo}
+                  disable={isEdit}
+                  placeholder={`${t("CR_AADHAR_OF_DECEASED")}`}
+                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                />
+              </div>
+            </div>
+          </div>
+        )}
         {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -708,6 +753,63 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
+        {/* <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OCCUPATION_DECEASED")}`}</span>
+            </h1>
+          </div>
+        </div> */}
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CheckBox
+                label={t("CR_OCCUPATION_DECEASED_NO")}
+                onChange={() => setCheckedOcuupation((checkedOcuupation) => !checkedOcuupation)}
+                value={checkedOcuupation}
+              />{" "}
+            </div>
+          </div>
+        </div>
+        {checkedOcuupation ? null : (
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbOccupationMain}
+                  selected={setOccupationMain}
+                  select={selectOccupationMain}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_OCCUPATION_MAIN_LEVEL")}`}
+                />
+              </div>
+              <div className="col-md-6">
+                <CardLabel>{t("CR_OCCUPATION_OTHER_ML")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="OccupationOthers"
+                  value={OccupationOthers}
+                  onChange={SelectOccupationOthers}
+                  disable={isEdit}
+                  placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: false,
+                    type: "text",
+                    title: t("CR_INVALID_OCCUPATION_OTHER_ML"),
+                  })}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </FormStep>
     </React.Fragment>
   );

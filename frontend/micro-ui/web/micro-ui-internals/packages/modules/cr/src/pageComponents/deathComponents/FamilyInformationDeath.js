@@ -24,8 +24,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const [MotherMobile, setMotherMobile] = useState(formData?.FamilyInformationDeath?.MotherMobile);
   const [FatherMobile, setFatherMobile] = useState(formData?.FamilyInformationDeath?.FatherMobile ? formData?.FamilyInformationDeath?.FatherMobile :"" );
   // const [checked, setChecked] = useState(true);
-  const [isChecked, setIsChecked] = useState(formData?.FamilyInformationDeath?.isChecked ? formData?.FamilyInformationDeath?.isChecked : false);
-  const [isCheckedMother, setIsCheckedMother] = useState(formData?.FamilyInformationDeath?.isCheckedMother ? formData?.FamilyInformationDeath?.isCheckedMother : false);
+  const [isChecked, setIsChecked] = useState(formData?.FamilyInformationDeath?.isChecked ? formData?.FamilyInformationDeath?.isChecked : 0);
+  const [isCheckedMother, setIsCheckedMother] = useState(formData?.FamilyInformationDeath?.isCheckedMother ? formData?.FamilyInformationDeath?.isCheckedMother : 0);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
@@ -48,6 +48,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   function selectTitle(value) {
     setSelectedTitle(value);
   }
+
+  
+
   function selectmaleDependent(value) {
     setSelectedmaleDependent(value);
   }
@@ -98,8 +101,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
     sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null);
     sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
-    sessionStorage.setItem("isChecked", isChecked ? isChecked : false);
-    sessionStorage.setItem("isCheckedMother", isCheckedMother ? isCheckedMother : false);
+    sessionStorage.setItem("isChecked", isChecked ? isChecked : 0);
+    sessionStorage.setItem("isCheckedMother", isCheckedMother ? isCheckedMother : 0);
 
 
     onSelect(config.key, {
@@ -129,7 +132,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_FATHER_OR_HUSBAND_UNAVAILABLE")} onChange={() => setIsChecked(!isChecked)} />
+              <CheckBox label={t("CR_FATHER_OR_HUSBAND_UNAVAILABLE")} onChange={() => setIsChecked(!isChecked)}  />
             </div>
           </div>
         </div>

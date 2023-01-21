@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, selectHospitalName, selectSignedOfficerName,
   SignedOfficerName, SignedOfficerDesignation, selectSignedOfficerDesignation, SignedOfficerAadharNo, setSignedOfficerAadharNo,
   SignedOfficerMobileNo, setSignedOfficerMobileNo,selectSignedOfficerDesignationOther,selectSignedOfficerNameOther,SignedOfficerNameOther,
-  SignedOfficerDesignationOther
+  SignedOfficerDesignationOther,SignedOfficerOtherStatus,setSignedOfficerOtherStatus
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -18,7 +18,8 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [OfficerNames, setFilteredOfficerName] = useState(0);
   const [Designations, setFilteredDesignation] = useState(0);
-  const [SignedOfficerOtherStatus, setSignedOfficerOtherStatus] = useState(formData?.BirthPlace?.SiginedOfficer ? formData?.BirthPlace?.SiginedOfficer : "");
+  console.log("SignedOfficerOtherStatus" + SignedOfficerOtherStatus)
+  // const [SignedOfficerOtherStatus, setSignedOfficerOtherStatus] = useState(formData?.BirthPlace?.SignedOfficerName ? formData?.BirthPlace?.SignedOfficerName : "");
   // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
@@ -47,15 +48,10 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
           // console.log(cmbRegistrarNames[0].registar);      
           let OtherRegistrar=[];
           OtherRegistrar = cmbRegistrarNames[0].registar;
-          // console.log("exists data" + OtherRegistrar.indexOf("Others"));
           let CheckIfExists = OtherRegistrar.filter((OtherRegistrar) => OtherRegistrar.hospitalRegistar === "Others");
-          console.log(CheckIfExists);
           if(CheckIfExists.length>0){
             
-            // console.log(OtherRegistrar) ; 
-            console.log("exists data Jeteesh");
           } else {
-            console.log("exists no data");
             OtherRegistrar.push({
               hospitalRegistar:'Others',
               registarDesig:'',
@@ -85,18 +81,18 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
     // setFilteredDesignation(null);
   }
   function setselectSignedOfficerName(value) {
-    console.log(value);
+    console.log("value.hospitalRegistar" + value.hospitalRegistar);
     selectSignedOfficerName(value);
     setSignedOfficerOtherStatus(value.hospitalRegistar);
   }
   function setselectSignedOfficerDesignation(value) {
     selectSignedOfficerDesignation(value);
   }
-  function setSelectSignedOfficerOther(value) {
-    selectSignedOfficerNameOther(value);
+  function setSelectSignedOfficerOther(e) {
+    selectSignedOfficerNameOther(e.target.value);
   }
-  function setSelectSignedOfficerOthersDesignation(value) {
-    selectSignedOfficerDesignationOther(value);
+  function setSelectSignedOfficerOthersDesignation(e) {
+    selectSignedOfficerDesignationOther(e.target.value);
   }
   function setSelectSignedOfficerAadharNo(e) {
     setSignedOfficerAadharNo(e.target.value);
@@ -191,7 +187,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
               placeholder={`${t("CR_SIGNED_OFFICER")}`}
             />
           </div>
-          {SignedOfficerOtherStatus === "Others" && (
+          {SignedOfficerOtherStatus != "Others" && (
           <div className="col-md-4">
             <CardLabel>
               {`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
@@ -208,7 +204,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
             />
           </div>)}
         </div>
-        {/* {SignedOfficerOtherStatus === "Others" && (  */}
+        {SignedOfficerOtherStatus === "Others" && ( 
         <div className="row">
             <div className="col-md-6">
               <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -239,7 +235,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
               />
             </div>
         </div>
-        {/* )} */}
+         )} 
         <div className="row">
           <div className="col-md-6">
             {" "}

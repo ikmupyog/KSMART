@@ -8,7 +8,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherw
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};  
-  const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
+  const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherDeathPlace");
  
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [setDeathOtherward, setSelectedDeathOtherward] = useState(formData?.PlaceOfDeathOther?.setDeathOtherward);
@@ -21,7 +21,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherw
   let cmbOtherplace = [];
   otherplace &&
     otherplace["birth-death-service"] &&
-    otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
+    otherplace["birth-death-service"].OtherDeathPlace.map((ob) => {
       cmbOtherplace.push(ob);
     });
 
@@ -94,6 +94,8 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherw
                 placeholder={`${t("CR_OTHER_PLACE")}`}
               />
             </div>
+
+
             <div className="col-md-6">
               <CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
               <Dropdown
