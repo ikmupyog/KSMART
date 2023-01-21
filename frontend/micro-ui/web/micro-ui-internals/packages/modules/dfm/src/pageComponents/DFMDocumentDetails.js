@@ -16,7 +16,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   const [uploadedFile, setUploadedFile] = useState(formData?.DocumentDet?.fileStoreId || null);
   const [file, setFile] = useState(formData?.DocumentDet?.OwnerPhotoProof);
   const [error, setError] = useState(null);
-  const [fileLimit,setFileLmit] = useState(0);
+  const [fileLimit,setFileLimit] = useState(0);
   const [uploadFiles,setUploadFiles] = useState([]);
   console.log(formData);
   let cmbDocumentType = [];

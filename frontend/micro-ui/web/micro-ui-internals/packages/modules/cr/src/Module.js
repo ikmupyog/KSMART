@@ -63,6 +63,7 @@ import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails"
 import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
 import SearchDeathApplication from "./components/SearchApplicationDeath";
 import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
+import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/DeathCorrectionroute";
 import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/Create/CheckPage";
@@ -171,6 +172,7 @@ const componentsToRegister = {
   //////////////////
   CRDeathcorrection,
   CRSearchdeathcorrection,
+  CRSearchDeathCorrectionRoute,
   InformationDeath,
   AddressOfDecesed,
   OutSideIndia,
