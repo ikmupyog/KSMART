@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.egov.filemgmnt.util.FMConstants;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -69,14 +70,14 @@ public class ApplicantPersonal {
     @Schema(type = "string", description = "Aadhaar number")
     @NotBlank(message = "Aadhaar number is required")
     @Size(min = 12, max = 12, message = "Aadhaar number must be a 12 digit number")
-    @Pattern(regexp = "^[1-9][0-9]{11}$", message = "Invalid aadhaar number")
+    @Pattern(regexp = FMConstants.PATTERN_AADHAAR, message = "Invalid aadhaar number")
     @JsonProperty("aadhaarNumber")
     private String aadhaarNumber;
 
     @Schema(type = "string", description = "Mobile number")
     @NotBlank(message = "Mobile number is required")
-    @Size(min = 10, max = 15, message = "Invalid mobile number")
-    @Pattern(regexp = "^[1-9][0-9]{9,14}$", message = "Invalid mobile number")
+    @Size(min = 10, max = 10, message = "Invalid mobile number")
+    @Pattern(regexp = FMConstants.PATTERN_MOBILE, message = "Invalid mobile number")
     @JsonProperty("mobileNumber")
     private String mobileNumber;
 
@@ -99,7 +100,8 @@ public class ApplicantPersonal {
     @Schema(type = "string", description = "Tenant identification number")
     @NotBlank(message = "Tenant identification number is required")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
-    @Pattern(regexp = "^kl\\.[a-z]+$", message = "Invalid tenant identification number format, ex: kl.cochin")
+    @Pattern(regexp = FMConstants.PATTERN_TENANT,
+             message = "Invalid tenant identification number format, ex: kl.cochin")
     @JsonProperty("tenantId")
     private String tenantId;
 

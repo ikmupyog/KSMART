@@ -24,11 +24,12 @@ import javax.net.ssl.TrustManagerFactory;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.Role;
 import org.egov.common.contract.request.User;
-import org.egov.encryption.EncryptionService;
 import org.egov.filemgmnt.util.EncryptionUtil;
+import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
+import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,6 @@ class LearningTests {
     @Autowired
     private EncryptionUtil encUtil;
 
-    @Autowired
-    private EncryptionService encService;
-
     @Test
     void encryptDecrypt() {
         ApplicantPersonal applicant = ApplicantPersonal.builder()
@@ -60,39 +58,31 @@ class LearningTests {
                                                                                 .build())
                                                        .build();
         try {
-            Object result = encUtil.encryptObject(applicant, "ApplicantPersonal", ApplicantPersonal.class);
+            ApplicantPersonal result = encUtil.encryptObject(applicant,
+                                                             FMConstants.FM_APPLICANT_ENC_KEY,
+                                                             ApplicantPersonal.class);
 
             if (log.isDebugEnabled()) { // 9327|5gYTHHFoEUfKIlwkYXanjbRYYNB4hp3PIc0=
                 log.debug("*** Encrypted Value:\n{}", FMUtils.toJson(result));
             }
 
-            result = encUtil.decryptObject(result,
-                                           "ApplicantPersonal",
-                                           ApplicantPersonal.class,
-                                           RequestInfo.builder()
-                                                      .userInfo(User.builder()
-                                                                    .roles(Collections.singletonList(Role.builder()
-                                                                                                         .code("EMPLOYEE")
-                                                                                                         .build()))
-                                                                    .build())
-                                                      .build());
+            ApplicantServiceDetail result2 = encUtil.decryptObject(ApplicantServiceDetail.builder()
+                                                                                         .applicant(result)
+                                                                                         .build(),
+                                                                   FMConstants.FM_APPLICANT_ENC_KEY,
+                                                                   ApplicantServiceDetail.class,
+                                                                   RequestInfo.builder()
+                                                                              .userInfo(User.builder()
+                                                                                            .roles(Collections.singletonList(Role.builder()
+                                                                                                                                 .code("EMPLOYEE")
+                                                                                                                                 .build()))
+                                                                                            .build())
+                                                                              .build());
 
             if (log.isDebugEnabled()) {
-                log.debug("*** Decrypted Value:\n{}", FMUtils.toJson(result));
+                log.debug("*** Decrypted Value:\n{}", FMUtils.toJson(result2));
             }
 
-//            result = encService.decryptJson(result,
-//                                            "ApplicantPersonal",
-//                                            User.builder()
-//                                                .roles(Collections.singletonList(Role.builder()
-//                                                                                     .code("EMPLOYEE")
-//                                                                                     .build()))
-//                                                .build(),
-//                                            ApplicantPersonal.class);
-//
-//            if (log.isDebugEnabled()) {
-//                log.debug("*** Decrypted Value:\n{}", FMUtils.toJson(result));
-//            }
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error(e.getLocalizedMessage(), e);

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.egov.common.contract.request.RequestInfo;
+import org.egov.filemgmnt.web.enums.ErrorCodes;
 import org.egov.mdms.model.MasterDetail;
 import org.egov.mdms.model.MdmsCriteria;
 import org.egov.mdms.model.MdmsCriteriaReq;
@@ -117,8 +118,7 @@ public class MdmsUtil {
                 mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
             } catch (Exception e) {
                 log.error("Error while fetching MDMS data", e);
-                throw new CustomException(FMConstants.INVALID_TENANT_ID_MDMS_KEY,
-                        FMConstants.INVALID_TENANT_ID_MDMS_MSG);
+                throw new CustomException(ErrorCodes.INVALID_TENANT_ID.getCode(), "No data found for this tenantId");
             }
         });
 

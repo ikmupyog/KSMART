@@ -14,7 +14,6 @@ import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.enrichment.FileManagementEnrichment;
 import org.egov.filemgmnt.kafka.Producer;
 import org.egov.filemgmnt.repository.FileManagementRepository;
-import org.egov.filemgmnt.util.EncryptionUtil;
 import org.egov.filemgmnt.util.MdmsUtil;
 import org.egov.filemgmnt.validators.FileManagementValidator;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
@@ -36,14 +35,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class FileManagementService {
+public class FileManagementService extends AbstractFileManagementService {
 
     @Autowired
     private FMConfiguration fmConfig;
     @Autowired
     private WorkflowIntegrator wfIntegrator;
-    @Autowired
-    private EncryptionUtil encUtil;
     @Autowired
     private MdmsUtil mdmsUtil;
     @Autowired
@@ -56,6 +53,7 @@ public class FileManagementService {
 
     FileManagementService(final FileManagementValidator validator, final FileManagementEnrichment enrichment,
                           final FileManagementRepository repository) {
+        super();
         this.validator = validator;
         this.enrichment = enrichment;
         this.repository = repository;
@@ -71,20 +69,20 @@ public class FileManagementService {
         ApplicantPersonal applicant = serviceDetail.getApplicant();
         Assert.notNull(applicant, "Applicant personal must not be null");
 
-//        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-//        applicant = encUtil.encryptObject(applicant, FMConstants.FM_APPLICANT_ENC_KEY, ApplicantPersonal.class);
-//        serviceDetail.setApplicant(applicant);
+        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
+        applicant = encrypt(applicant);
+        serviceDetail.setApplicant(applicant);
 
         // check applicant personal exists or not
         final ApplicantPersonal existingApplicant = findApplicantPersonalByIdOrAadhaar(applicant);
 
-        validator.validateApplicantPersonal(request, existingApplicant);
+        validator.validateApplicantPersonal(request, existingApplicant, true);
 
         // validate file service details
         validator.validateCreate(request, mdmsData);
 
         // enrich applicant personal
-        enrichment.enrichApplicantPersonal(request, existingApplicant);
+        enrichment.enrichApplicantPersonal(request, existingApplicant, true);
 
         // enrich file service details
         enrichment.enrichCreate(request, Objects.nonNull(existingApplicant));
@@ -97,12 +95,9 @@ public class FileManagementService {
         // create workflow
         wfIntegrator.callWorkFlow(request);
 
-//        // decrypt PII information - aadhaarNumber, mobileNumber, emailId
-//        applicant = encUtil.decryptObject(serviceDetail.getApplicant(),
-//                                          FMConstants.FM_APPLICANT_ENC_KEY,
-//                                          ApplicantPersonal.class,
-//                                          request.getRequestInfo());
-//        serviceDetail.setApplicant(applicant);
+        // decrypt PII information - aadhaarNumber, mobileNumber, emailId
+        applicant = decrypt(serviceDetail.getApplicant(), request.getRequestInfo());
+        serviceDetail.setApplicant(applicant);
 
         return request.getApplicantServiceDetail();
     }
@@ -118,12 +113,12 @@ public class FileManagementService {
         }
 
         // validate applicant personal
-        final ApplicantPersonal applicant = serviceDetail.getApplicant();
+        ApplicantPersonal applicant = serviceDetail.getApplicant();
         Assert.notNull(applicant, "Applicant personal must not be null.");
 
-//      // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-//      applicant = encUtil.encryptObject(applicant, FMConstants.FM_APPLICANT_ENC_KEY, ApplicantPersonal.class);
-//      serviceDetail.setApplicant(applicant);
+        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
+        applicant = encrypt(applicant);
+        serviceDetail.setApplicant(applicant);
 
         if (StringUtils.isBlank(applicant.getId())) {
             throw new CustomException(INVALID_UPDATE.getCode(),
@@ -131,14 +126,14 @@ public class FileManagementService {
         }
 
         final ApplicantPersonal existingApplicant = findApplicantPersonalByIdOrAadhaar(applicant);
-        validator.validateApplicantPersonal(request, existingApplicant);
+        validator.validateApplicantPersonal(request, existingApplicant, false);
 
         // validate file service details
         final ApplicantServiceDetail existingServiceDetail = findApplicantServiceDetailById(serviceDetail);
         validator.validateUpdate(request, existingServiceDetail);
 
         // enrich applicant personal
-        enrichment.enrichApplicantPersonal(request, existingApplicant);
+        enrichment.enrichApplicantPersonal(request, existingApplicant, false);
 
         // enrich file service details
         enrichment.enrichUpdate(request, existingServiceDetail);
@@ -151,78 +146,53 @@ public class FileManagementService {
         // update workflow
         wfIntegrator.callWorkFlow(request);
 
-//      // decrypt PII information - aadhaarNumber, mobileNumber, emailId
-//      applicant = encUtil.decryptObject(serviceDetail.getApplicant(),
-//                                        FMConstants.FM_APPLICANT_ENC_KEY,
-//                                        ApplicantPersonal.class,
-//                                        request.getRequestInfo());
-//      serviceDetail.setApplicant(applicant);
+        // decrypt PII information - aadhaarNumber, mobileNumber, emailId
+        applicant = decrypt(serviceDetail.getApplicant(), request.getRequestInfo());
+        serviceDetail.setApplicant(applicant);
 
         return request.getApplicantServiceDetail();
     }
 
     private ApplicantServiceDetail findApplicantServiceDetailById(final ApplicantServiceDetail serviceDetail) {
-        ApplicantServiceSearchCriteria searchCriteria = ApplicantServiceSearchCriteria.builder()
-                                                                                      .serviceDetailId(serviceDetail.getId())
-                                                                                      .build();
-//        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-//        searchCriteria = encUtil.encryptObject(searchCriteria,
-//                                               FMConstants.FM_APPLICANT_ENC_KEY,
-//                                               ApplicantServiceSearchCriteria.class);
-
+        final ApplicantServiceSearchCriteria searchCriteria = ApplicantServiceSearchCriteria.builder()
+                                                                                            .serviceDetailId(serviceDetail.getId())
+                                                                                            .build();
         final List<ApplicantServiceDetail> serviceDetails = repository.searchApplicantServices(searchCriteria);
+
         return CollectionUtils.isNotEmpty(serviceDetails) ? serviceDetails.get(0) : null;
     }
 
     private ApplicantPersonal findApplicantPersonalByIdOrAadhaar(final ApplicantPersonal applicant) {
-        ApplicantSearchCriteria searchCriteria = buildApplicantSearchCriteria(applicant);
-//        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-//        searchCriteria = encUtil.encryptObject(searchCriteria, FMConstants.FM_APPLICANT_ENC_KEY, ApplicantSearchCriteria.class);
-
+        final ApplicantSearchCriteria searchCriteria = buildApplicantSearchCriteria(applicant);
         final List<ApplicantPersonal> applicantPersonals = repository.searchApplicantPersonals(searchCriteria);
 
         return CollectionUtils.isNotEmpty(applicantPersonals) ? applicantPersonals.get(0) : null;
     }
 
-    private ApplicantSearchCriteria buildApplicantSearchCriteria(final ApplicantPersonal applicant) {
-        ApplicantSearchCriteria searchCriteria = null;
-
-        if (StringUtils.isNotBlank(applicant.getId()) || StringUtils.isNotBlank(applicant.getAadhaarNumber())) {
-            searchCriteria = new ApplicantSearchCriteria();
-
-            if (StringUtils.isNotBlank(applicant.getId())) {
-                searchCriteria.setId(applicant.getId());
-            } else if (StringUtils.isNotBlank(applicant.getAadhaarNumber())) {
-                searchCriteria.setAadhaarNumber(applicant.getAadhaarNumber());
-            }
-        }
-        return searchCriteria;
-    }
-
     // Applicant services search
     public List<ApplicantServiceDetail> searchServices(final RequestInfo requestInfo,
                                                        final ApplicantServiceSearchCriteria searchCriteria) {
-//      // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-//      searchCriteria = encUtil.encryptObject(searchCriteria,
-//                                             FMConstants.FM_APPLICANT_ENC_KEY,
-//                                             ApplicantServiceSearchCriteria.class);
+        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
+//        final ApplicantServiceSearchCriteria criteria = encrypt(searchCriteria);
 
         validator.validateSearchServices(requestInfo, searchCriteria);
-        return repository.searchApplicantServices(searchCriteria);
+        final List<ApplicantServiceDetail> result = repository.searchApplicantServices(searchCriteria);
 
-        // TODO: decrypt applicant personal
+        return result;
+//        return decryptServices(result, requestInfo);
     }
 
     // Applicant personal search
     public List<ApplicantPersonal> searchApplicants(final RequestInfo requestInfo,
                                                     final ApplicantSearchCriteria searchCriteria) {
-//      // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-//      searchCriteria = encUtil.encryptObject(searchCriteria, FMConstants.FM_APPLICANT_ENC_KEY, ApplicantSearchCriteria.class);
+        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
+//        final ApplicantSearchCriteria criteria = encrypt(searchCriteria);
 
         validator.validateSearchApplicants(requestInfo, searchCriteria);
-        return repository.searchApplicantPersonals(searchCriteria);
+        final List<ApplicantPersonal> result = repository.searchApplicantPersonals(searchCriteria);
 
-        // TODO: decrypt applicant personal
+        return result;
+//        return decryptApplicants(result, requestInfo);
     }
 
     public List<CertificateDetails> download(@Valid final ApplicantSearchCriteria criteria,

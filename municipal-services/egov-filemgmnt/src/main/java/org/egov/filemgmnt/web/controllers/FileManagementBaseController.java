@@ -2,6 +2,7 @@ package org.egov.filemgmnt.web.controllers;
 
 import javax.validation.Valid;
 
+import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
 import org.egov.filemgmnt.web.models.ApplicantSearchResponse;
 import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
@@ -109,7 +110,7 @@ interface FileManagementBaseController {
                                   allowEmptyValue = true,
                                   description = "Aadhaar number",
                                   schema = @Schema(type = "string",
-                                                   pattern = "^[1-9][0-9]{11}$",
+                                                   pattern = FMConstants.PATTERN_AADHAAR,
                                                    accessMode = Schema.AccessMode.READ_ONLY)),
                        @Parameter(in = ParameterIn.QUERY,
                                   name = "offset",
@@ -165,7 +166,7 @@ interface FileManagementBaseController {
                                   allowEmptyValue = true,
                                   description = "Aadhaar number",
                                   schema = @Schema(type = "string",
-                                                   pattern = "^[1-9][0-9]{11}$",
+                                                   pattern = FMConstants.PATTERN_AADHAAR,
                                                    accessMode = Schema.AccessMode.READ_ONLY)) },
                responses = {
                        @ApiResponse(responseCode = "200",

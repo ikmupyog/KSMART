@@ -1,7 +1,6 @@
 package org.egov.filemgmnt.enrichment;
 
 import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
-import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_CREATE;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -16,6 +15,7 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.util.IdgenUtil;
+import org.egov.filemgmnt.web.enums.ErrorCodes;
 import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.ApplicantChild;
 import org.egov.filemgmnt.web.models.ApplicantDocument;
@@ -43,7 +43,7 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
 //    private EncryptionUtil encryptionUtil;
 
     public void enrichApplicantPersonal(final ApplicantServiceRequest request,
-                                        final ApplicantPersonal existingApplicant) {
+                                        final ApplicantPersonal existingApplicant, final boolean create) {
         final ApplicantPersonal applicant = request.getApplicantServiceDetail()
                                                    .getApplicant();
         Assert.notNull(applicant, "Applicant personal must not be null");
@@ -52,14 +52,17 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
                                      .getUserInfo();
 
         if (StringUtils.isNotBlank(applicant.getId())) { // existing applicant
-            enrichExistingApplicantPersonal(applicant, userInfo, existingApplicant);
+            enrichExistingApplicantPersonal(applicant, userInfo, existingApplicant, create);
         } else { // new applicant
             enrichNewApplicantPersonal(applicant, userInfo);
         }
     }
 
     private void enrichExistingApplicantPersonal(final ApplicantPersonal applicant, final User userInfo,
-                                                 final ApplicantPersonal existingApplicant) {
+                                                 final ApplicantPersonal existingApplicant, final boolean create) {
+
+        final String errorCode = create ? ErrorCodes.INVALID_CREATE.getCode() : ErrorCodes.INVALID_UPDATE.getCode();
+
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
 
         // 1. enrich applicant
@@ -91,7 +94,7 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
                                                       .collect(Collectors.toList());
 
             if (!documentIds.containsAll(existingDocumentIds)) {
-                throw new CustomException(INVALID_CREATE.getCode(),
+                throw new CustomException(errorCode,
                         "Invalid applicant document, existing applicant document not found.");
             }
         }

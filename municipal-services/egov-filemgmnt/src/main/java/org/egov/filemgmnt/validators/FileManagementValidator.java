@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.util.FMUtils;
+import org.egov.filemgmnt.web.enums.ErrorCodes;
 import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.ApplicantChild;
 import org.egov.filemgmnt.web.models.ApplicantDocument;
@@ -38,8 +39,11 @@ public class FileManagementValidator { // NOPMD
     @Autowired
     private MdmsValidator mdmsValidator;
 
-    public void validateApplicantPersonal(final ApplicantServiceRequest request,
-                                          final ApplicantPersonal existingApplicant) {
+    public void validateApplicantPersonal(final ApplicantServiceRequest request, // NOPMD
+                                          final ApplicantPersonal existingApplicant, final boolean create) {
+
+        final String errorCode = create ? ErrorCodes.INVALID_CREATE.getCode() : ErrorCodes.INVALID_UPDATE.getCode();
+
         final ApplicantPersonal applicant = request.getApplicantServiceDetail()
                                                    .getApplicant();
         Assert.notNull(applicant, "Applicant personal must not be null");
@@ -47,28 +51,29 @@ public class FileManagementValidator { // NOPMD
         // 1. validate applicant personal
         if (StringUtils.isNotBlank(applicant.getId())) {
             if (existingApplicant == null) {
-                throw new CustomException(INVALID_CREATE.getCode(), "Invalid applicant personal id.");
+                throw new CustomException(errorCode,
+                        "Invalid applicant personal id, id required for existing applicant personal.");
             }
 
             if (!ObjectUtils.nullSafeEquals(applicant.getAadhaarNumber(), existingApplicant.getAadhaarNumber())) {
-                throw new CustomException(INVALID_CREATE.getCode(), "Invalid applicant personal aadhaar number.");
+                throw new CustomException(errorCode, "Invalid applicant personal aadhaar number.");
             }
         } else if (StringUtils.isNotBlank(applicant.getAadhaarNumber()) && existingApplicant != null) {
-            throw new CustomException(INVALID_CREATE.getCode(),
+            throw new CustomException(errorCode,
                     "Invalid applicant personal id, applicant with same aadhaar number exists.");
         }
 
         // 2. validate applicant address
-        validateApplicantAddress(applicant, existingApplicant);
+        validateApplicantAddress(applicant, existingApplicant, errorCode);
 
         // 3. validate applicant document
-        validateApplicantDocuments(applicant, existingApplicant);
+        validateApplicantDocuments(applicant, existingApplicant, errorCode);
 
         // TODO: need to validate tenant id
     }
 
     private void validateApplicantDocuments(final ApplicantPersonal applicant,
-                                            final ApplicantPersonal existingApplicant) {
+                                            final ApplicantPersonal existingApplicant, final String errorCode) {
 
         if (existingApplicant != null) {
             final List<String> existingDocumentIds = existingApplicant.getDocuments()
@@ -82,7 +87,7 @@ public class FileManagementValidator { // NOPMD
                                                       .collect(Collectors.toList());
 
             if (!documentIds.containsAll(existingDocumentIds)) {
-                throw new CustomException(INVALID_CREATE.getCode(),
+                throw new CustomException(errorCode,
                         "Invalid applicant document, existing applicant document not found.");
             }
         }
@@ -91,37 +96,36 @@ public class FileManagementValidator { // NOPMD
                  .forEach(document -> {
                      if (StringUtils.isNotBlank(applicant.getId())) { // existing applicant personal
                          if (!ObjectUtils.nullSafeEquals(applicant.getId(), document.getApplicantPersonalId())) {
-                             throw new CustomException(INVALID_CREATE.getCode(),
+                             throw new CustomException(errorCode,
                                      "Invalid applicant personal id in applicant document.");
                          }
 
                      } else { // new applicant personal
                          if (StringUtils.isNotBlank(document.getId())) {
-                             throw new CustomException(INVALID_CREATE.getCode(),
+                             throw new CustomException(errorCode,
                                      "Invalid applicant document id, document id must be null for create request.");
                          }
                      }
                  });
     }
 
-    private void validateApplicantAddress(final ApplicantPersonal applicant,
-                                          final ApplicantPersonal existingApplicant) {
+    private void validateApplicantAddress(final ApplicantPersonal applicant, final ApplicantPersonal existingApplicant,
+                                          final String errorCode) {
         final ApplicantAddress address = applicant.getAddress();
         Assert.notNull(address, "Applicant address must not be null.");
 
         if (StringUtils.isNotBlank(applicant.getId())) { // existing applicant personal
             if (!ObjectUtils.nullSafeEquals(applicant.getId(), address.getApplicantPersonalId())) {
-                throw new CustomException(INVALID_CREATE.getCode(),
-                        "Invalid applicant personal id in applicant address.");
+                throw new CustomException(errorCode, "Invalid applicant personal id in applicant address.");
             }
 
             final ApplicantAddress existingAddress = existingApplicant.getAddress();
             if (!ObjectUtils.nullSafeEquals(address.getId(), existingAddress.getId())) {
-                throw new CustomException(INVALID_CREATE.getCode(), "Invalid applicant address id.");
+                throw new CustomException(errorCode, "Invalid applicant address id.");
             }
         } else { // new applicant personal
             if (StringUtils.isNotBlank(address.getId())) {
-                throw new CustomException(INVALID_CREATE.getCode(),
+                throw new CustomException(errorCode,
                         "Invalid applicant address id, address id must be null for create request.");
             }
         }

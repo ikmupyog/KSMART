@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +21,7 @@ import lombok.Setter;
 
 @Schema(description = "Applicant personal request for create and update.")
 @Validated
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,8 +34,7 @@ public class ApplicantPersonalRequest {
 
     @JsonProperty("ApplicantPersonals")
     @NotEmpty(message = "Applicant personal is required")
-    // @Size(min = 1, max = 1, message = "Supports single applicant personal request
-    // only")
+    @Size(min = 1, max = 1, message = "Supports single applicant personal request only")
     private List<@Valid ApplicantPersonal> applicantPersonals;
 
     public ApplicantPersonalRequest addApplicantPersonal(final ApplicantPersonal applicantPersonal) {

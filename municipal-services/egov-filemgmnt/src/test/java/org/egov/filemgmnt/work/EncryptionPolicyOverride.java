@@ -17,10 +17,8 @@ import org.egov.encryption.models.EncryptionPolicy;
 import org.egov.encryption.models.KeyRoleAttributeAccess;
 import org.egov.encryption.models.RoleAttributeAccess;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,8 +26,8 @@ import com.fasterxml.jackson.databind.ObjectReader;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Component
-@Profile("test")
+//@Component
+//@Profile("test")
 @Slf4j
 public class EncryptionPolicyOverride {
 
