@@ -119,7 +119,6 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [selectedValueRadio, setSelectedValue] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
   const [valueRad, setValueRad] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
   // const [selectedValueRadio, setSelectedValue] = React.useState(null);
-  console.log("Jetheesh" + formData?.AddressDetails?.selectedValueRadio);
   let cmbPlace = [];
   let cmbTaluk = [];
   let cmbVillage = [];

@@ -113,8 +113,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [HospitalName, selectHospitalName] = useState(formData?.BirthPlace?.HospitalName ? formData?.BirthPlace?.HospitalName : null);
   const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.BirthPlace?.SignedOfficerName ? formData?.BirthPlace?.SignedOfficerName : null);
   const [SignedOfficerDesignation, selectSignedOfficerDesignation] = useState(formData?.BirthPlace?.SignedOfficerDesignation ? formData?.BirthPlace?.SignedOfficerDesignation : null);
+  const [SignedOfficerNameOther, selectSignedOfficerNameOther] = useState(formData?.BirthPlace?.SignedOfficerNameOther ? formData?.BirthPlace?.SignedOfficerNameOther : "");
+  const [SignedOfficerDesignationOther, selectSignedOfficerDesignationOther] = useState(formData?.BirthPlace?.SignedOfficerDesignationOther ? formData?.BirthPlace?.SignedOfficerDesignationOther : "");
   const [SignedOfficerAadharNo, setSignedOfficerAadharNo] = useState(formData?.BirthPlace?.SignedOfficerAadharNo ? formData?.BirthPlace?.SignedOfficerAadharNo : "");
   const [SignedOfficerMobileNo, setSignedOfficerMobileNo] = useState(formData?.BirthPlace?.SignedOfficerMobileNo ? formData?.BirthPlace?.SignedOfficerMobileNo : "");
+  const [SignedOfficerOtherStatus, setSignedOfficerOtherStatus] = useState(formData?.BirthPlace?.SignedOfficerName ? formData?.BirthPlace?.SignedOfficerName : "");
 
 
   const [setInstitution, setSelectedInstitution] = useState(formData?.BirthPlace?.setInstitution ? formData?.BirthPlace?.setInstitution : null);
@@ -223,8 +226,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             HospitalName={HospitalName}
             SignedOfficerName={SignedOfficerName}
             SignedOfficerDesignation={SignedOfficerDesignation}
+            SignedOfficerNameOther={SignedOfficerNameOther}
+            SignedOfficerDesignationOther={SignedOfficerDesignationOther}
             SignedOfficerAadharNo={SignedOfficerAadharNo}
             SignedOfficerMobileNo={SignedOfficerMobileNo}
+            SignedOfficerOtherStatus={SignedOfficerOtherStatus}
           />
         }
         if (naturetype === "INSTITUTION") {
@@ -328,8 +334,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   let validFlag = true;
   const goNext = () => {
 
-
-
     console.log(BirthPlace.code);
     if (BirthPlace.code === "HOSPITAL") {
       if (HospitalName == null) {
@@ -387,7 +391,16 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             setMobileError(false);
             setMobileLengthError(false);
           }
+        } else {
+          setMobileError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+          return false;
         }
+        
       } else {
         setMobileError(true);
         validFlag = false;
@@ -1657,9 +1670,11 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               selectHospitalName={selectHospitalName} HospitalName={HospitalName}
               selectSignedOfficerName={selectSignedOfficerName} SignedOfficerName={SignedOfficerName}
               selectSignedOfficerDesignation={selectSignedOfficerDesignation} SignedOfficerDesignation={SignedOfficerDesignation}
+              selectSignedOfficerNameOther={selectSignedOfficerNameOther} SignedOfficerNameOther={SignedOfficerNameOther}
+              selectSignedOfficerDesignationOther={selectSignedOfficerDesignationOther} SignedOfficerDesignationOther={SignedOfficerDesignationOther}
               setSignedOfficerAadharNo={setSignedOfficerAadharNo} SignedOfficerAadharNo={SignedOfficerAadharNo}
               setSignedOfficerMobileNo={setSignedOfficerMobileNo} SignedOfficerMobileNo={SignedOfficerMobileNo}
-
+              setSignedOfficerOtherStatus={setSignedOfficerOtherStatus} SignedOfficerOtherStatus={SignedOfficerOtherStatus}
 
             />
           </div>)
