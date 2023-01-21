@@ -2,6 +2,7 @@ package org.ksmart.death.crdeath.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ksmart.death.crdeath.repository.querybuilder.CrDeathQueryBuilder;
 import org.ksmart.death.crdeath.repository.rowmapper.CrDeathRowMapper;
@@ -49,6 +50,13 @@ public class CrDeathRepository {
     //     return result; // NOPMD
     // }
 
-
+    //Rakhi S on 21.01.2023
+    public List<Map<String, Object>>  getDeathACKDetails(String tenantId,int  Year) {
+        
+        List<Object> preparedStmtValues = new ArrayList<>();
+       String query = queryBuilder.getDeathAckNoIdQuery(tenantId, Year,preparedStmtValues);
+        List<Map<String, Object>> ackDetails= jdbcTemplate.queryForList(query,preparedStmtValues.toArray());
+        return ackDetails; 
+     }
 
 }

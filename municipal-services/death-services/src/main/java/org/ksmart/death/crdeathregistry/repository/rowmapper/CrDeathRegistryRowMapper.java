@@ -126,6 +126,7 @@ public class CrDeathRegistryRowMapper implements ResultSetExtractor<List<CrDeath
                                         .spouseEmailid(rs.getString("spouse_emailid"))
                                         .spouseAadhaar(rs.getString("spouse_aadhaar"))
                                         .spouseMobileno(rs.getString("spouse_mobileno"))
+                                        .funcionUID(rs.getString("funcion_uid"))
                                         //Rakhi S ikm on 09.01.2023 
                                         .registrationDate(rs.getLong("registration_date")) 
                                         .auditDetails(getAuditDetails(rs))

@@ -47,7 +47,7 @@ public class CrDeathQueryBuilder extends BaseQueryBuilder {
                                                   .append("      , dt.isvehicle, dt.vehicle_hospital_ml, dt.vehicle_hospital_en, dt.vehicle_fromplace_ml, dt.vehicle_fromplace_en, dt.vehicle_toplace_ml, dt.vehicle_toplace_en, dt.vehicle_number, dt.death_place_ward_id, dt.informant_age, dt.vehicle_driver_licenceno")
                                                   .append("      , dt.death_signed_officer_designation, dt.death_place_officer_mobile, dt.death_place_officer_aadhaar, dt.deceased_idprooftype, dt.application_no, dt.file_no, dt.ack_no , dt.deceased_idproofno")
                                                   //Rakhi S on 21.01.2023
-                                                  .append("      , dt.vehicle_first_halt,dt.male_dependent_unavailable,dt.female_dependent_unavailable,dt.spouse_name_en,dt.spouse_name_ml,dt.spouse_unavailable,dt.spouse_type,dt.spouse_emailid,dt.spouse_aadhaar,dt.spouse_mobileno")
+                                                  .append("      , dt.vehicle_first_halt,dt.male_dependent_unavailable,dt.female_dependent_unavailable,dt.spouse_name_en,dt.spouse_name_ml,dt.spouse_unavailable,dt.spouse_type,dt.spouse_emailid,dt.spouse_aadhaar,dt.spouse_mobileno,,dt.funcion_uid")
                                                   .append("      , stat.id statid, stat.death_dtl_id, stat.tenantid stattenantid, stat.residencelocalbody, stat.residence_place_type, stat.residencedistrict, stat.residencestate, stat.religion, stat.religion_other, stat.occupation, stat.occupation_other, stat.medical_attention_type")
                                                   .append("      , stat.death_medically_certified, stat.death_cause_main, stat.death_cause_sub, stat.death_cause_other, stat.death_during_delivery, stat.smoking_num_years, stat.tobacco_num_years, stat.arecanut_num_years, stat.alcohol_num_years")
                                                   .append("      , stat.createdby, stat.createdtime, stat.lastmodifiedby, stat.lastmodifiedtime, stat.nationality ,dt.burial_state,stat.occupation_sub, stat.occupation_minor, stat.education_main, stat.education_sub, stat.residencelbtype")
@@ -215,4 +215,17 @@ public class CrDeathQueryBuilder extends BaseQueryBuilder {
          return query.toString();
        }                                                  
     
+       //Rakhi S on 21.01.2023
+       private static final String ACKNOQUERY = new StringBuilder()
+                                             .append("Select A.ackNo , A.applnYear , A.tenantId from ")
+                                             .append("(SELECT MAX(COALESCE(ack_no_id,0))+1 as ackNo,EXTRACT(year from to_timestamp( application_date/1000)::date ) AS applnYear ")
+                                             .append(",tenantId FROM eg_death_dtls dt group by applnYear,tenantId )A ") 
+                                             .toString();
+
+       public String getDeathAckNoIdQuery(@NotNull String tenantId ,int Year ,@NotNull List<Object> preparedStmtValues) {
+          StringBuilder query = new StringBuilder(ACKNOQUERY);
+          addFilter("A.tenantId",tenantId , query, preparedStmtValues);
+          addFilter("A.applnYear", Year, query, preparedStmtValues);                                          
+          return query.toString();
+        }  
 }

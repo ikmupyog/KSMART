@@ -476,4 +476,8 @@ public class CrDeathRegistryDtl {
 
    private String spouseName;
 
+   @Size(max = 64)
+   @JsonProperty("funcionUID")
+   private String funcionUID ;
+
 }

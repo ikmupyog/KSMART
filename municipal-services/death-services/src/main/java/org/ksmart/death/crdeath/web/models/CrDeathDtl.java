@@ -529,4 +529,15 @@ private String assignuser;
     @JsonProperty("spouseMobileno")
     private String  spouseMobileno;
 
+    @Schema(type = "String", description="funcionUID")
+    @Size(max = 64)
+    @JsonProperty("funcionUID")
+    private String funcionUID ;
+
+    @JsonProperty("ackNoId")
+    private Long ackNoId ;
+
+    @JsonProperty("applicationDate")
+    private Long applicationDate ;
+    
 }

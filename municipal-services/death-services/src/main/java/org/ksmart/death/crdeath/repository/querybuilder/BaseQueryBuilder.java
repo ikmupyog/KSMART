@@ -59,7 +59,14 @@ class BaseQueryBuilder {
             paramValues.add(value);
         }
     }
-
+    void addFilter(String column, int value, StringBuilder query, List<Object> paramValues) {
+        if (value>0) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                 .append("=? ");
+            paramValues.add(value);
+        }
+    }
     // void addFilter(String column, Long value, StringBuilder query, List<Object> paramValues) {
     //     if (StringUtils.isAllBlank(value))  {
     //         addWhereClause(paramValues, query);

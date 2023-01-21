@@ -108,7 +108,16 @@ public class CrDeathConstants {
     public static final String APPLICATION_NEW = "new";
     
     public static final String APPLICATION_CORRECTION = "corr";
-    
+
+    //RAkhi S on 21.01.2023
+    public static final String LB_TYPE_CORPORATION = "LB_TYPE_CORPORATION";
+    public static final String LB_TYPE_MUNICIPALITY = "LB_TYPE_MUNICIPALITY";
+    public static final String LB_TYPE_CORPORATION_CAPTION = "C";
+    public static final String LB_TYPE_MUNICIPALITY_CAPTION = "M";
+    public static final String DEATH_REGNO_UID= "CRDRNR";
+    public static final String STATE_CODE= "KL";
+    //ACKNumber
+    public static final String ACK_NUMBER_FIRST = "1";
 
 
 }

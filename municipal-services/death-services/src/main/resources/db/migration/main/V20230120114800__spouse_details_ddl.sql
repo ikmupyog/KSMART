@@ -59,4 +59,9 @@ ALTER TABLE eg_death_dtls_log ADD COLUMN IF NOT EXISTS funcion_UID character var
 ALTER TABLE eg_death_dtls_registry ADD COLUMN IF NOT EXISTS funcion_UID character varying(64);
 ALTER TABLE eg_death_dtls_registry_log ADD COLUMN IF NOT EXISTS funcion_UID character varying(64);
 
+ALTER TABLE eg_death_dtls ADD COLUMN IF NOT EXISTS ack_no_id bigint;
+ALTER TABLE eg_death_dtls_log ADD COLUMN IF NOT EXISTS ack_no_id bigint;
+
+ALTER TABLE eg_death_dtls ADD COLUMN IF NOT EXISTS application_date bigint;
+ALTER TABLE eg_death_dtls_log ADD COLUMN IF NOT EXISTS application_date bigint;
 
