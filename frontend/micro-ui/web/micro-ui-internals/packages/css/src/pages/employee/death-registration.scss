@@ -77,12 +77,24 @@ button {
   justify-content: space-around;
   margin-bottom: 15px;
 }
-.radio-margin{
+.radio-margin {
   margin-right: 5px;
 }
-.radiobuttons{
+.radiobuttons {
   font-size: 18px;
 }
-.radio-flex{
+.radio-flex {
   display: flex;
+}
+.statistical-radio {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+.statistical-radiop {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
 }
