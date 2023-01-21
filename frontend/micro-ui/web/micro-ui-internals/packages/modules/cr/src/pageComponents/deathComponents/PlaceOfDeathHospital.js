@@ -168,7 +168,7 @@ const PlaceOfDeathHospital = ({
     } else {
       setisDrDetails(e.target.checked);
       setOfficerName("");
-      OfficerDesignation("");      
+      setOfficerDesignation("");      
     }
   }
   
@@ -258,9 +258,12 @@ const PlaceOfDeathHospital = ({
         </div>
        
         <div className="row">
-   {isDrDetails === true && (
+  
           <div className="col-md-12">
+          {isDrDetails === true && (
+            <div>
             <div className="col-md-3">
+
               <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -292,7 +295,7 @@ const PlaceOfDeathHospital = ({
             </div>
             </div>
         )}
-        <div className="col-md-12">
+        
             <div className="col-md-3">
               <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
               <TextInput
