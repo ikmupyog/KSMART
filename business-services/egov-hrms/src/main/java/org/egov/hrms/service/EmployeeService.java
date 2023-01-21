@@ -55,6 +55,7 @@ import org.egov.common.contract.response.ResponseInfo;
 import org.egov.hrms.config.PropertiesManager;
 import org.egov.hrms.model.AuditDetails;
 import org.egov.hrms.model.Employee;
+import org.egov.hrms.model.JurisdictionChild;
 import org.egov.hrms.model.enums.UserType;
 import org.egov.hrms.producer.HRMSProducer;
 import org.egov.hrms.repository.EmployeeRepository;
@@ -277,9 +278,14 @@ public class EmployeeService {
 				.build();
 		
 		employee.getJurisdictions().stream().forEach(jurisdiction -> {
-
 			jurisdiction.setId(UUID.randomUUID().toString());
 			jurisdiction.setAuditDetails(auditDetails);
+			List<JurisdictionChild> child = jurisdiction.getJurisdictionChild();
+			child.get(0).setJurisdictionId(jurisdiction.getId());
+			child.get(0).setParentJurisdictionId(jurisdiction.getId());
+			child.get(0).setId(UUID.randomUUID().toString());
+			child.get(0).setAuditDetails(auditDetails);
+
 			if(null == jurisdiction.getIsActive())
 				jurisdiction.setIsActive(true);
 		});

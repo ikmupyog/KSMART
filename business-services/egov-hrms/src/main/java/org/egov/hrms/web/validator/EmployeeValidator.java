@@ -1,18 +1,31 @@
 package org.egov.hrms.web.validator;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import static org.egov.hrms.utils.ErrorConstants.CITIZEN_TYPE_CODE;
+
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.kafka.common.protocol.types.Field;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.Role;
 import org.egov.hrms.config.PropertiesManager;
-import org.egov.hrms.model.*;
+import org.egov.hrms.model.Assignment;
+import org.egov.hrms.model.DeactivationDetails;
+import org.egov.hrms.model.DepartmentalTest;
+import org.egov.hrms.model.EducationalQualification;
+import org.egov.hrms.model.Employee;
+import org.egov.hrms.model.Jurisdiction;
+import org.egov.hrms.model.ReactivationDetails;
+import org.egov.hrms.model.ServiceHistory;
 import org.egov.hrms.service.EmployeeService;
 import org.egov.hrms.service.MDMSService;
 import org.egov.hrms.service.UserService;
@@ -28,9 +41,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import lombok.extern.slf4j.Slf4j;
+import com.jayway.jsonpath.JsonPath;
 
-import static org.egov.hrms.utils.ErrorConstants.CITIZEN_TYPE_CODE;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -84,6 +97,10 @@ public class EmployeeValidator {
 
 		List<MdmsResponse> boundaryResponseList = new ArrayList<>();
 		for(String boundary: boundarytList){
+//			System.out.println("req  :" + requestInfo);
+//			System.out.println("boundary  :" + boundary);
+//			String boundary1 = "kl";
+//			System.out.println("boundary1  :" + boundary1);
 			MdmsResponse responseLoc = mdmsService.fetchMDMSDataLoc(requestInfo, boundary);
 			if(!CollectionUtils.isEmpty(responseLoc.getMdmsRes()))
 				boundaryResponseList.add(responseLoc);

@@ -6,6 +6,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -44,6 +46,12 @@ public class JurisdictionChild {
 	private String wardCode;
 
 
+	private AuditDetails auditDetails;
+
 	private Boolean isActive;
+
+	@Size(max = 64)
+	@JsonProperty("parentJurisdictionId")
+	private String parentJurisdictionId;
 
 }
