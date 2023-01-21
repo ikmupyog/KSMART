@@ -40,9 +40,15 @@
 
 package org.egov.hrms.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.response.ResponseInfo;
@@ -56,16 +62,22 @@ import org.egov.hrms.utils.ErrorConstants;
 import org.egov.hrms.utils.HRMSConstants;
 import org.egov.hrms.utils.HRMSUtils;
 import org.egov.hrms.utils.ResponseInfoFactory;
-import org.egov.hrms.web.contract.*;
+import org.egov.hrms.web.contract.EmployeeRequest;
+import org.egov.hrms.web.contract.EmployeeResponse;
+import org.egov.hrms.web.contract.EmployeeSearchCriteria;
+import org.egov.hrms.web.contract.User;
+import org.egov.hrms.web.contract.UserRequest;
+import org.egov.hrms.web.contract.UserResponse;
 import org.egov.tracer.kafka.LogAwareKafkaTemplate;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
@@ -265,11 +277,13 @@ public class EmployeeService {
 				.build();
 		
 		employee.getJurisdictions().stream().forEach(jurisdiction -> {
+
 			jurisdiction.setId(UUID.randomUUID().toString());
 			jurisdiction.setAuditDetails(auditDetails);
 			if(null == jurisdiction.getIsActive())
 				jurisdiction.setIsActive(true);
 		});
+
 		employee.getAssignments().stream().forEach(assignment -> {
 			assignment.setId(UUID.randomUUID().toString());
 			assignment.setAuditDetails(auditDetails);
