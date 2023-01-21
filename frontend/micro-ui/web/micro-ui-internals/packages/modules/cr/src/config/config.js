@@ -235,7 +235,7 @@ export const newConfig = [
         component: "ChildDetails",
         texts: {
           headerCaption: "",
-          header: "Child Information",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
         },
@@ -250,7 +250,8 @@ export const newConfig = [
         component: "BirthPlace",
         texts: {
           headerCaption: "",
-          header: "CR_BIRTH_PLACE",
+          header: "",
+          // CR_BIRTH_PLACE
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -330,7 +331,7 @@ export const newConfig = [
         component: "StatisticalInformation",
         texts: {
           headerCaption: "",
-          header: "CR_STATISTICAL_INFORMATION",
+          header: "CR_MORE_INFORMATION",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",

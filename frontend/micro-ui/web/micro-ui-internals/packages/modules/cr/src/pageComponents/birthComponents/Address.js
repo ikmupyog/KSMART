@@ -53,6 +53,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [OutSideIndiaAddressLocMlError, setOutSideIndiaAddressLocMlError] = useState(formData?.AddressDetails?.LocalityMl ? false : false);
   const [OutSideIndiaAddressProvinceEnError, setOutSideIndiaAddressProvinceEnError] = useState(formData?.AddressDetails?.setProvinceEn ? false : false);
   const [OutSideIndiaAddressProvinceMlError, setOutSideIndiaAddressProvinceMlError] = useState(formData?.AddressDetails?.setProvinceMl ? false : false);
+  const [OutSideIndiaAddressPostCodeError, setOutSideIndiaAddressPostCodeError] = useState(formData?.AddressDetails?.setPostCode ? false : false);
   const [OutSideIndiaAddressError, setOutSideIndiaAddressError] = useState(formData?.AddressDetails?.OutSideCountry ? false : false);
 
 
@@ -113,11 +114,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [LocalityMl, setLocalityMl] = useState(formData?.AddressDetails?.LocalityMl ? formData?.AddressDetails?.LocalityMl : "");
   const [ProvinceEn, setProvinceEn] = useState(formData?.AddressDetails?.ProvinceEn ? formData?.AddressDetails?.ProvinceEn : "");
   const [ProvinceMl, setProvinceMl] = useState(formData?.AddressDetails?.ProvinceMl ? formData?.AddressDetails?.ProvinceMl : "");
+  const [PostCode, setPostCode] = useState(formData?.AddressDetails?.PostCode ? formData?.AddressDetails?.PostCode : "");
   const [OutSideCountry, setOutSideCountry] = useState(formData?.AddressDetails?.OutSideCountry ? formData?.AddressDetails?.OutSideCountry : null);
   const [selectedValueRadio, setSelectedValue] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
   const [valueRad, setValueRad] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
   // const [selectedValueRadio, setSelectedValue] = React.useState(null);
-  console.log("Jetheesh" + formData?.AddressDetails?.selectedValueRadio);
   let cmbPlace = [];
   let cmbTaluk = [];
   let cmbVillage = [];
@@ -1032,10 +1033,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl.LocalityMl : null);
         sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn.ProvinceEn : null);
         sessionStorage.setItem("ProvinceMl", ProvinceMl ? ProvinceMl.ProvinceMl : null);
+        sessionStorage.setItem("PostCode", PostCode ? PostCode.PostCode : null);
         sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.OutSideCountry : null);
 
         onSelect(config.key, {
-          AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, OutSideCountry,
+          AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl,PostCode, OutSideCountry,
           selectedValueRadio
 
         });
@@ -1137,6 +1139,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
           LocalityMl,
           ProvinceEn,
           ProvinceMl,
+          PostCode,
           OutSideCountry,
 
 
@@ -1240,7 +1243,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
 
                   <div className="col-md-12">
                     <h1 className="headingh1">
-                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>{" "}
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
                     </h1>
                   </div>
                 </div>
@@ -1564,7 +1567,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-3">
                       <CardLabel>
                         {t("CR_DOOR_NO")}
-                        <span className="mandatorycss">*</span>
+                       
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -1575,11 +1578,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         value={PresentDoorNo}
                         onChange={setSelectPresentDoorNo}
                         placeholder={`${t("CR_DOOR_NO")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
                       />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")} <span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")} </CardLabel>
                       <TextInput
                         t={t}
                         isMandatory={false}
@@ -1589,11 +1592,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         value={PresentResNoEn}
                         onChange={setSelectPresentResNoEn}
                         placeholder={`${t("CR_RES_ASSOCIATION_NO_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_EN") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_EN") })}
                       />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")} <span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")} </CardLabel>
                       <TextInput
                         t={t}
                         isMandatory={false}
@@ -1603,7 +1606,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         value={PresentResNoMl}
                         onChange={setSelectPresentResNoMl}
                         placeholder={`${t("CR_RES_ASSOCIATION_NO_ML")}`}
-                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
+                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@' .0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
                       />
                     </div>
                   </div>
@@ -1648,7 +1651,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS_OF_THE_FAMILY")}`}</span>{" "}
                       </h1>
                     </div>
                   </div>
@@ -1918,7 +1921,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-3">
                         <CardLabel>
                           {t("CR_STREET_NAME_EN")}
-                          <span className="mandatorycss">*</span>
+                         
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1929,13 +1932,13 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           value={PermanentStreetNameEn}
                           onChange={setSelectPermanentStreetNameEn}
                           placeholder={`${t("CR_STREET_NAME_EN")}`}
-                          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+                          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
                         />
                       </div>
                       <div className="col-md-3">
                         <CardLabel>
                           {t("CR_STREET_NAME_ML")}
-                          <span className="mandatorycss">*</span>
+                         
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1946,7 +1949,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           value={PermanentStreetNameMl}
                           onChange={setSelectPermanentStreetNameMl}
                           placeholder={`${t("CR_STREET_NAME_ML")}`}
-                          {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
+                          {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
                         />
                       </div>
                       <div className="col-md-3">
@@ -2009,7 +2012,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                       <div className="col-md-3">
                         <CardLabel>
                           {t("CR_DOOR_NO")}
-                          <span className="mandatorycss">*</span>
+                          
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -2020,11 +2023,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           value={PermanentDoorNo}
                           onChange={setSelectPermanentDoorNo}
                           placeholder={`${t("CR_DOOR_NO")}`}
-                          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOOR_NO") })}
+                          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
                         />
                       </div>
                       <div className="col-md-3">
-                        <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}<span className="mandatorycss">*</span></CardLabel>
+                        <CardLabel>{t("CR_RES_ASSOCIATION_NO_EN")}</CardLabel>
                         <TextInput
                           t={t}
                           isMandatory={false}
@@ -2038,7 +2041,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                         />
                       </div>
                       <div className="col-md-3">
-                        <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}<span className="mandatorycss">*</span></CardLabel>
+                        <CardLabel>{t("CR_RES_ASSOCIATION_NO_ML")}</CardLabel>
                         <TextInput
                           t={t}
                           isMandatory={false}
@@ -2070,6 +2073,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
               setLocalityMl={setLocalityMl} LocalityMl={LocalityMl}
               setProvinceEn={setProvinceEn} ProvinceEn={ProvinceEn}
               setProvinceMl={setProvinceMl} ProvinceMl={ProvinceMl}
+              setPostCode={setPostCode} PostCode={PostCode}
               setOutSideCountry={setOutSideCountry} OutSideCountry={OutSideCountry}
 
             />

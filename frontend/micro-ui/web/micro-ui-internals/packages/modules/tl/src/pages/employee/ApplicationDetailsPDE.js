@@ -99,7 +99,7 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
   const BannerPicker = (props) => {
     return (
       <Banner
-        message="CS_TRADE_APPLICATION_SUCCESS"  ///{GetActionMessage(props)}
+        message={t("CS_TRADE_APPLICATION_SUCCESS")}  ///{GetActionMessage(props)}
         applicationNumber={props.data?.Licenses[0]?.applicationNumber}
         info={props.isSuccess ? "Saved Success Fully" : ""}   //props.t("TL_REF_NO_LABEL") 
         successful={props.isSuccess}

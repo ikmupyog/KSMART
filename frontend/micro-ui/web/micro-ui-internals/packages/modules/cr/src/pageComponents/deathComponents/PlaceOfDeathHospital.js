@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton ,CheckBox} from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -31,7 +31,10 @@ const PlaceOfDeathHospital = ({
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [OfficerNames, setFilteredOfficerName] = useState(0);
   const [Designations, setFilteredDesignation] = useState(0);
-  // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
+  const [registrationMobile, setFilteredMobNo] = useState(0);
+  // const [isChecked, setIsChecked] = useState(formData?.HospitalDetails?.isChecked ? formData?.HospitalDetails?.isChecked : false);
+  const [isDrDetails, setisDrDetails] = useState(formData?.HospitalDetails?.isDrDetails ? formData?.HospitalDetails?.isDrDetails : false);
+  // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.HospitalDetailsuseCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   // const [setDesignation, setSelectedDesignation] = useState(formData?.HospitalDetails?.setDesignation);
@@ -47,29 +50,76 @@ const PlaceOfDeathHospital = ({
   //   hospital["birth-death-service"].hospitalList.map((ob) => {
   //     cmbhospital.push(ob);
   //   });
+              // let cmbhospital = [];
+              // hospitalData &&
+              //   hospitalData["egov-location"] &&
+              //   hospitalData["egov-location"].hospitalList.map((ob) => {
+              //     cmbhospital.push(ob);
+              //   });
+
+              // useEffect(() => {
+              //   if (isInitialRender) {
+              //     if (HospitalName) {
+              //       setIsInitialRender(false);
+              //       let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+              //       let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+              //       setFilteredOfficerName(cmbRegistrarNames[0].registar);
+              //       setFilteredDesignation(cmbDesignations[0].registar);
+              //       setFilteredMobNo(cmbMobNo[0].registar);        
+                    
+              //   }
+              // }, [OfficerNames, Designations, isInitialRender,registrationMobile,]);
+
   let cmbhospital = [];
   hospitalData &&
     hospitalData["egov-location"] &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-
+    let cmbDesignations =[];
+    let cmbRegistrarNames =[];
+    let OtherRegistrar =[];
   useEffect(() => {
     if (isInitialRender) {
       if (HospitalName) {
         setIsInitialRender(false);
-        let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
-        let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
-        setFilteredOfficerName(cmbRegistrarNames[0].registar);
-        setFilteredDesignation(cmbDesignations[0].registar);
-        // console.log("cmbDesignations" + cmbRegistrarNames["hospitalList"]);
-        // setFilteredOfficerName(cmbRegistrarNames.registar);
-        // setFilteredDesignation(cmbDesignations);
-        // setSignedOfficerAadharNo(HospitalName.registrationAadhaar);
-        // setSelectSignedOfficerMobileNo(HospitalName.registrationMobile);
+        setFilteredOfficerName(null);
+        setFilteredDesignation(null);
+        if (cmbhospital.length > 0) {
+          cmbDesignations =[];
+          cmbRegistrarNames =[];
+          cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+          // console.log(cmbRegistrarNames);
+          cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+          // console.log(cmbRegistrarNames[0].registar);      
+          OtherRegistrar=[];
+          OtherRegistrar = cmbRegistrarNames[0].registar;
+          OtherRegistrar.push({
+            hospitalRegistar:'Others',
+            registarDesig:'',
+            registrationAadhaar:'',
+            registrationMobile:'',
+            registrationNo:''
+          })
+          console.log(OtherRegistrar) ;       
+
+          setFilteredOfficerName(OtherRegistrar);
+          setFilteredDesignation(cmbDesignations[0].registar);
+          // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
+          // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
+        }
+
       }
+      if (formData?.HospitalDetails?.isDrDetails != null) {
+        setIsInitialRender(false);
+        setisDrDetails(formData?.HospitalDetails?.isDrDetails);
+      }
+      
     }
   }, [OfficerNames, Designations, isInitialRender]);
+
+ 
+
 
   const onSkip = () => onSelect();
 
@@ -97,7 +147,31 @@ const PlaceOfDeathHospital = ({
   function setSelectOfficerDesignation(e) {
     setOfficerDesignation(e.target.value);
   }
+  // function setChildName(e) {
+  //   if (e.target.checked === true) {
+  //     setIsChildName(e.target.checked);
 
+  //   } else {
+  //     setIsChildName(e.target.checked);
+  //     setChildFirstNameEn("");
+  //     setChildMiddleNameEn("");
+  //     setChildLastNameEn("");
+  //     setChildFirstNameMl("");
+  //     setChildMiddleNameMl("");
+  //     setChildLastNameMl("");
+  //   }
+  // }
+  function setDrDetails(e) {
+    if (e.target.checked === true) {
+      setisDrDetails(e.target.checked);
+
+    } else {
+      setisDrDetails(e.target.checked);
+      setOfficerName("");
+      setOfficerDesignation("");      
+    }
+  }
+  
   // function selectCommencementDate(value) {
   //   setCommencementDate(value);
   // }
@@ -178,7 +252,18 @@ const PlaceOfDeathHospital = ({
         </div>
         <div className="row">
           <div className="col-md-12">
+          {/* <CheckBox label={t("CR_DR_UNAVAILABLE")} onChange={setChildName} value={isChildName} checked={isChildName} /> */}
+          <CheckBox label={t("CR_DR_UNAVAILABLE")}   onChange={setDrDetails} value={isDrDetails} checked={isDrDetails} />
+          </div>
+        </div>
+       
+        <div className="row">
+  
+          <div className="col-md-12">
+          {isDrDetails === true && (
+            <div>
             <div className="col-md-3">
+
               <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -208,13 +293,16 @@ const PlaceOfDeathHospital = ({
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
               />
             </div>
+            </div>
+        )}
+        
             <div className="col-md-3">
               <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
                 type={"text"}
-                optionKey="i18nKey"
+                optionKey="registrationMobile"
                 name="HospitalMobile"
                 value={HospitalMobile}
                 onChange={setSelectHospitalMobile}
@@ -237,7 +325,7 @@ const PlaceOfDeathHospital = ({
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
-            </div>
+            </div>           
           </div>
         </div>
       </FormStep>
