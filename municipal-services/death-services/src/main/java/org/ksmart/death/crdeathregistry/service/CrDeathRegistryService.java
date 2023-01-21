@@ -64,21 +64,7 @@ public class CrDeathRegistryService {
        // validatorService.validateCreate(request);
        // RAkhi S IKM validate mdms data       
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
-         
-         //    /********************************************* */
-        // System.out.println("mdms:"+mdmsData);
-        // try {
-        //         ObjectMapper mapper = new ObjectMapper();
-        //         Object obj = mdmsData;
-        //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        //        System.out.println("rakhiRegistry "+ mapper.writeValueAsString(obj));
-        // }catch(Exception e) {
-        //     // log.error("Exception while fetching from searcher: ",e);
-        // }
-
  
-        /********************************************** */
-        
        // mdmsValidator.validateMDMSData(request,mdmsData);
 
         // enrich request
@@ -96,9 +82,16 @@ public class CrDeathRegistryService {
       
         //Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
           
-        String id = request.getDeathCertificateDtls().get(0).getId();
+       // String id = request.getDeathCertificateDtls().get(0).getId();
+       // String ackNumber = request.getDeathCertificateDtls().get(0).getDeathACKNo();
+       String regNo = request.getDeathCertificateDtls().get(0).getRegistrationNo();
+       String tenantId = request.getDeathCertificateDtls().get(0).getTenantId();
 
-        List<CrDeathRegistryDtl> searchResult = repository.getDeathApplication(CrDeathRegistryCriteria.builder().id(id).build());
+        List<CrDeathRegistryDtl> searchResult = repository.getDeathApplication(CrDeathRegistryCriteria
+                                                                              .builder()
+                                                                              .tenantId(tenantId)
+                                                                              .registrationNo(regNo)
+                                                                              .build());
 
         validatorService.validateUpdate(request, searchResult);
 

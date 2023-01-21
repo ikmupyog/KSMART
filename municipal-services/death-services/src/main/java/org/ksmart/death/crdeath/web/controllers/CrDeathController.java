@@ -4,13 +4,17 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.ksmart.death.crdeath.service.CrDeathRegistryRequestService;
 import org.ksmart.death.crdeath.service.CrDeathService;
-
+import org.ksmart.death.crdeath.util.CrDeathConstants;
 import org.ksmart.death.crdeath.web.models.CrDeathDtl;
 import org.ksmart.death.crdeath.web.models.CrDeathDtlRequest;
 import org.ksmart.death.crdeath.web.models.CrDeathDtlResponse;
 import org.ksmart.death.crdeath.web.models.CrDeathSearchCriteria;
 import org.ksmart.death.crdeath.web.models.RequestInfoWrapper;
+import org.ksmart.death.crdeathregistry.service.CrDeathRegistryService;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryRequest;
 import org.ksmart.death.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +25,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import lombok.extern.slf4j.Slf4j;
+import java.util.LinkedList;
+import java.util.List;
 
 //import io.swagger.v3.oas.annotations.parameters.RequestBody;
 /**
@@ -45,10 +52,19 @@ public class CrDeathController implements CrDeathResource  {
 
 	private final CrDeathService deathService;
 
+	private final CrDeathRegistryService deathRegistryService;
+
+    private final CrDeathRegistryRequestService deathRegistryRequestService;
+
     
     @Autowired
-    public CrDeathController(CrDeathService deathService) {
+    public CrDeathController(CrDeathService deathService,CrDeathRegistryService deathRegistryService ,CrDeathRegistryRequestService deathRegistryRequestService) {
+      
         this.deathService = deathService;
+
+        this.deathRegistryService = deathRegistryService;
+
+        this.deathRegistryRequestService =deathRegistryRequestService;
     }
 
     @Override
@@ -88,12 +104,33 @@ public class CrDeathController implements CrDeathResource  {
     public ResponseEntity<CrDeathDtlResponse> update(@RequestBody CrDeathDtlRequest request) {
  
         List<CrDeathDtl> deathDetails = deathService.update(request);
+
+
     
+    //Jasmine on 18.01.2023
+        String status=request.getDeathCertificateDtls().get(0).getApplicationStatus();
+
+        String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();
+
+        if (request.getDeathCertificateDtls().get(0).getApplicationStatus().equals(CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCertificateDtls().get(0).getApplicationType().equals(CrDeathConstants.APPLICATION_NEW)){
+         
+            CrDeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
+
+            List<CrDeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
+
+        }
+        else if((status==CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  (applicationType==CrDeathConstants.APPLICATION_CORRECTION)){
+
+            CrDeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
+
+            List<CrDeathRegistryDtl> registryDeathDetails =  deathRegistryService.update(registryRequest);                   
+        }
         CrDeathDtlResponse response = CrDeathDtlResponse
-                                            .builder()
-                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-                                            .deathCertificateDtls(deathDetails)
-                                            .build();
+                            .builder()
+                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                            .deathCertificateDtls(deathDetails)
+                            .build();
+
         return ResponseEntity.ok(response);
     }
 

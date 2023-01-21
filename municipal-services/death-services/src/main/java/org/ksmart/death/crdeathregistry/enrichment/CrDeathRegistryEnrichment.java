@@ -17,9 +17,11 @@ import org.ksmart.death.crdeathregistry.config.CrDeathRegistryConfiguration;
 import org.ksmart.death.crdeathregistry.repository.CrDeathRegistryRepository;
 import org.ksmart.death.crdeathregistry.util.CrDeathRegistryConstants;
 import org.ksmart.death.crdeathregistry.web.models.AuditDetails;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryAddress;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryAddressInfo;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryDtl;
 import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryRequest;
+import org.ksmart.death.crdeathregistry.web.models.CrDeathRegistryStatistical;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
@@ -68,31 +70,34 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
                .forEach(deathdtls -> {
                 deathdtls.setId(UUID.randomUUID().toString());
                 deathdtls.setAuditDetails(auditDetails);
-                deathdtls.getStatisticalInfo().setId(UUID.randomUUID().toString());     
+                CrDeathRegistryStatistical  statisticalInfo =deathdtls.getStatisticalInfo();
+                if (statisticalInfo!=null){
+                    statisticalInfo.setId(UUID.randomUUID().toString());
+                }    
                 CrDeathRegistryDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathRegistryDtl.class);
                 deathdtls.setDeceasedAadharNumber(deathDtlEnc.getDeceasedAadharNumber());
                 deathdtls.setInformantAadharNo(deathDtlEnc.getInformantAadharNo());
                 deathdtls.setMaleDependentAadharNo(deathDtlEnc.getMaleDependentAadharNo());
                 deathdtls.setFemaleDependentAadharNo(deathDtlEnc.getFemaleDependentAadharNo());
-                
-                // deathdtls.getAddressInfo().get(0).setParentdeathDtlId(deathdtls.getId());
-                // deathdtls.getAddressInfo().get(0).setAuditDetails(auditDetails);
-                // deathdtls.getAddressInfo().forEach(addressdtls -> {
-                //       addressdtls.getPresentAddress().setId(UUID.randomUUID().toString());
-                //       addressdtls.getPermanentAddress().setId(UUID.randomUUID().toString());
-                //       addressdtls.getInformantAddress().setId(UUID.randomUUID().toString());
-                //       addressdtls.getDeathplaceAddress().setId(UUID.randomUUID().toString());
-                //       addressdtls.getBurialAddress().setId(UUID.randomUUID().toString());                       
-                //      });
                 CrDeathRegistryAddressInfo  addressInfo = deathdtls.getAddressInfo();
                 addressInfo.setParentdeathDtlId(deathdtls.getId());
                 addressInfo.setAuditDetails(auditDetails);
-                addressInfo.getPresentAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getPermanentAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getDeathplaceAddress().setId(UUID.randomUUID().toString());
-               //addressInfo.getBurialAddress().setId(UUID.randomUUID().toString());
-
+                CrDeathRegistryAddress  presentAddress = deathdtls.getAddressInfo().getPresentAddress();
+                CrDeathRegistryAddress  permanentAddress = deathdtls.getAddressInfo().getPermanentAddress();
+                CrDeathRegistryAddress  deathplaceAddress = deathdtls.getAddressInfo().getDeathplaceAddress();
+                CrDeathRegistryAddress  informantAddress = deathdtls.getAddressInfo().getInformantAddress();
+                if (informantAddress!=null){
+                    addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
+                }
+               if(presentAddress!=null){
+                    addressInfo.getPresentAddress().setId(UUID.randomUUID().toString());
+                }
+                if(permanentAddress!=null){
+                    addressInfo.getPermanentAddress().setId(UUID.randomUUID().toString());
+                }
+                if(deathplaceAddress!=null){
+                    addressInfo.getDeathplaceAddress().setId(UUID.randomUUID().toString());
+                }
             });
     }
     //Registration Number Creation by Jasmine

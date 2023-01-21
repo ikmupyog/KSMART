@@ -13,10 +13,12 @@ import org.ksmart.death.common.repository.IdGenRepository;
 import org.ksmart.death.common.repository.ServiceRequestRepository;
 import org.ksmart.death.crdeath.config.CrDeathConfiguration;
 import org.ksmart.death.crdeath.web.models.AuditDetails;
+import org.ksmart.death.crdeath.web.models.CrDeathAddress;
 import org.ksmart.death.crdeath.web.models.CrDeathAddressInfo;
 import org.ksmart.death.crdeath.web.models.CrDeathApplicantDetails;
 import org.ksmart.death.crdeath.web.models.CrDeathDtl;
 import org.ksmart.death.crdeath.web.models.CrDeathDtlRequest;
+import org.ksmart.death.crdeath.web.models.CrDeathStatistical;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
@@ -52,15 +54,14 @@ public class CrDeathEnrichment implements BaseEnrichment{
         User userInfo = requestInfo.getUserInfo();
 
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-    //     List<CrDeathDtl> deathDtls = request.getDeathCertificateDtls();
-    //     String deathDtlsNew = StringUtils.join(deathDtls, " and ");
-    //     CrDeathDtl deathDtlEnc1 = encryptionDecryptionUtil.encryptObject(deathDtlsNew, "BndDetail", CrDeathDtl.class);
-    //    System.out.println("EncryptionDetailsNew"+deathDtlEnc1);
         request.getDeathCertificateDtls()
                .forEach(deathdtls -> {
                 deathdtls.setId(UUID.randomUUID().toString());
                 deathdtls.setAuditDetails(auditDetails);
-                deathdtls.getStatisticalInfo().setId(UUID.randomUUID().toString());               
+                CrDeathStatistical  statisticalInfo =deathdtls.getStatisticalInfo();
+                if (statisticalInfo!=null){
+                    statisticalInfo.setId(UUID.randomUUID().toString());
+                }             
                 CrDeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathDtl.class);
                 deathdtls.setDeceasedAadharNumber(deathDtlEnc.getDeceasedAadharNumber());
                 deathdtls.setInformantAadharNo(deathDtlEnc.getInformantAadharNo());
@@ -69,19 +70,32 @@ public class CrDeathEnrichment implements BaseEnrichment{
                 CrDeathAddressInfo  addressInfo = deathdtls.getAddressInfo();
                 addressInfo.setParentdeathDtlId(deathdtls.getId());
                 addressInfo.setAuditDetails(auditDetails);
-                addressInfo.getPresentAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getPermanentAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getDeathplaceAddress().setId(UUID.randomUUID().toString());
-                //addressInfo.getBurialAddress().setId(UUID.randomUUID().toString());
-                addressInfo.getApplicantAddress().setId(UUID.randomUUID().toString());
+                CrDeathAddress  presentAddress = deathdtls.getAddressInfo().getPresentAddress();
+                CrDeathAddress  permanentAddress = deathdtls.getAddressInfo().getPermanentAddress();
+                CrDeathAddress  deathplaceAddress = deathdtls.getAddressInfo().getDeathplaceAddress();
+                CrDeathAddress  informantAddress = deathdtls.getAddressInfo().getInformantAddress();
+                CrDeathAddress  applicantAddress = deathdtls.getAddressInfo().getApplicantAddress();
+                if (informantAddress!=null){
+                    addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
+                }
+               if(presentAddress!=null){
+                    addressInfo.getPresentAddress().setId(UUID.randomUUID().toString());
+                }
+                if(permanentAddress!=null){
+                    addressInfo.getPermanentAddress().setId(UUID.randomUUID().toString());
+                }
+                if(deathplaceAddress!=null){
+                    addressInfo.getDeathplaceAddress().setId(UUID.randomUUID().toString());
+                }
+                if(applicantAddress!=null){
+                    addressInfo.getApplicantAddress().setId(UUID.randomUUID().toString());
+                }   
                 CrDeathApplicantDetails  applicantDetails = deathdtls.getApplicantDetails();
                 applicantDetails.setId(UUID.randomUUID().toString());
                 applicantDetails.setApplicantAadhar(deathDtlEnc.getApplicantDetails().getApplicantAadhar());
                });
       
     }
-
     private List<String> getIdList(RequestInfo requestInfo, String tenantId, String idKey,
                                    String idformat, int count) {
         List<IdResponse> idResponses = idGenRepository.getId(requestInfo, tenantId, idKey, idformat, count).getIdResponses();

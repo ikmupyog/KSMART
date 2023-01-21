@@ -105,17 +105,6 @@ public class CrDeathService {
         
         producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
         
-        String status=request.getDeathCertificateDtls().get(0).getApplicationStatus();
-
-        String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();
-
-        if ((status==CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  (applicationType==CrDeathConstants.APPLICATION_NEW)){
-
-
-        }
-       else if((status==CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  (applicationType==CrDeathConstants.APPLICATION_CORRECTION)){
-
-       }
 
         return request.getDeathCertificateDtls();
     }

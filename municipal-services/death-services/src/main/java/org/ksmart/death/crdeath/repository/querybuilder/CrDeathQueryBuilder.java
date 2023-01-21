@@ -209,6 +209,14 @@ public class CrDeathQueryBuilder extends BaseQueryBuilder {
          query,
          preparedStmtValues);
          return query.toString();
-       }                                                  
+       }    
+       
+       public String getDeathSearchQueryforRegistry(@NotNull String deathId,
+       @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+
+          StringBuilder query = new StringBuilder(QUERY);
+          addFilter("dt.id", deathId, query, preparedStmtValues);
+          return query.toString();
+     }  
     
 }

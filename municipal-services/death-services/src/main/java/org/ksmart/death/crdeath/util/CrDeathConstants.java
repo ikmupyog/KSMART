@@ -103,7 +103,7 @@ public class CrDeathConstants {
 
     public static final String ADDRESS_OUTSIDE_INDIA = "OIN";
 
-    public static final String WORKFLOW_STATUS_APPROVED = "Approved";
+    public static final String WORKFLOW_STATUS_APPROVED = "APPROVED";
 
     public static final String APPLICATION_NEW = "new";
     
