@@ -4,7 +4,9 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 
-const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
+const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegistrationNo, setVehicleRegistrationNo,DriverLicenceNo, setDriverLicenceNo,
+  VehicleFromEn, setVehicleFromEn,VehicleToEn, setVehicleToEn,VehicleFromMl, setVehicleFromMl,VehicleToMl, setVehicleToMl,VehicleOtherDetailsEn, setVehicleOtherDetailsEn,
+  VehicleOtherDetailsMl, setVehicleOtherDetailsMl,PlaceOfHalt, setPlaceOfHalt,setAdmittedHospitalEn, setSelectedAdmittedHospitalEn,setAdmittedHospitalMl, setSelectedAdmittedHospitalMl}) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -22,17 +24,20 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   // const [DriverAge, setDriverAge] = useState(formData?.PlaceOfDeathVehicle?.DriverAge);
   // const [DriverAadhar, setDriverAadhar] = useState(formData?.PlaceOfDeathVehicle?.DriverAadhar);
   // const [VehicleType, setVehicleType] = useState(formData?.PlaceOfDeathVehicle?.VehicleType);
-  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.PlaceOfDeathVehicle?.VehicleRegistrationNo);
-  const [DriverLicenceNo, setDriverLicenceNo] = useState(formData?.PlaceOfDeathVehicle?.DriverLicenceNo);
-  const [VehicleFromEn, setVehicleFromEn] = useState(formData?.PlaceOfDeathVehicle?.setVehicleFromEn);
-  const [VehicleToEn, setVehicleToEn] = useState(formData?.PlaceOfDeathVehicle?.setSelectVehicleToEn);
-  const [VehicleFromMl, setVehicleFromMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleFromMl);
-  const [VehicleToMl, setVehicleToMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleToMl);
-  const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsEn);  
-  const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsMl); 
-  const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.PlaceOfDeathVehicle?.setDeathVehicleWard);
-  const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalEn);
-  const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalMl);
+  // const [setDeathVehicleWard, setSelectedDeathVehicleWard] = useState(formData?.PlaceOfDeathVehicle?.setDeathVehicleWard);
+  
+  // To Place of Death page
+  // const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.PlaceOfDeathVehicle?.VehicleRegistrationNo);
+  // const [DriverLicenceNo, setDriverLicenceNo] = useState(formData?.PlaceOfDeathVehicle?.DriverLicenceNo);
+  // const [VehicleFromEn, setVehicleFromEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleFromEn);
+  // const [VehicleToEn, setVehicleToEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleToEn);
+  // const [VehicleFromMl, setVehicleFromMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleFromMl);
+  // const [VehicleToMl, setVehicleToMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleToMl);
+  // const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsEn);  
+  // const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsMl); 
+  // const [PlaceOfHalt, setPlaceOfHalt] = useState(formData?.PlaceOfDeathVehicle?.setSelectPlaceOfHalt);  
+  // const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalEn);
+  // const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeathVehiclPlaceOfHalte?.setAdmittedHospitalMl);
     
   // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
@@ -89,7 +94,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   function setSelectVehicleRegistrationNo(e) {
     setVehicleRegistrationNo(e.target.value);
   }
-  function setSelectDriverLicenceNo(e) {
+  function setSelectDriverLicenceNo (e) {
     setDriverLicenceNo(e.target.value);
   }
   
@@ -99,6 +104,10 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   function setSelectVehicleToEn(e) {
     setVehicleToEn(e.target.value);
   }
+  function setSelectPlaceOfHalt(e) {
+    setPlaceOfHalt(e.target.value);
+  }
+  
   function setSelectVehicleFromMl(e) {
     setVehicleFromMl(e.target.value);
   }
@@ -111,9 +120,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
   function setSelectVehicleOtherDetailsMl(e) {
     setVehicleOtherDetailsMl(e.target.value);
   }
-  function selectDeathVehicleWard(value) {
-    setSelectedDeathVehicleWard(value);
-  }
+  // function selectDeathVehicleWard(value) {
+  //   setSelectedDeathVehicleWard(value);
+  // }
   function selectAdmittedHospitalEn(value) {
     setSelectedAdmittedHospitalEn(value);
   }
@@ -133,19 +142,22 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
     // sessionStorage.setItem("DriverAge", DriverAge);
     // sessionStorage.setItem("DriverAadhar", DriverAadhar);
     // sessionStorage.setItem("VehicleType", VehicleType);
-    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);
-    sessionStorage.setItem("DriverLicenceNo", DriverLicenceNo);    
-    sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
-    sessionStorage.setItem("VehicleToEn", VehicleToEn);
-    sessionStorage.setItem("VehicleFromMl", VehicleFromMl);  
-    sessionStorage.setItem("VehicleToMl", VehicleToMl);
-    sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard.code);
-    sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn.code);
-    sessionStorage.setItem("setAdmittedHospitalMl", setAdmittedHospitalMl.code);    
-    sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn); 
-    sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsEn); 
-    
-    
+    // sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard.code);
+
+
+      // To Place of Death page
+
+    // sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);
+    // sessionStorage.setItem("DriverLicenceNo", DriverLicenceNo);    
+    // sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
+    // sessionStorage.setItem("VehicleToEn", VehicleToEn);
+    // sessionStorage.setItem("VehicleFromMl", VehicleFromMl);  
+    // sessionStorage.setItem("VehicleToMl", VehicleToMl);
+    // sessionStorage.setItem("PlaceOfHalt", PlaceOfHalt);  
+    // sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn.code);
+    // sessionStorage.setItem("setAdmittedHospitalMl", setAdmittedHospitalMl.code);    
+    // sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn); 
+    // sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsEn);   
     
     
     // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity.code);
@@ -156,17 +168,21 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
       // DriverMobileNo,
       // DriverAadhar,
       // VehicleType,
-      VehicleRegistrationNo,
-      DriverLicenceNo,
-      VehicleFromEn,
-      VehicleToEn,
-      VehicleFromMl,
-      VehicleToMl,
-      setDeathVehicleWard,
-      setAdmittedHospitalEn,
-      setAdmittedHospitalMl,
-      VehicleOtherDetailsEn,
-      VehicleOtherDetailsMl,
+      // setDeathVehicleWard,
+      
+         // To Place of Death page
+         
+      // VehicleRegistrationNo,
+      // DriverLicenceNo,
+      // VehicleFromEn,
+      // VehicleToEn,
+      // VehicleFromMl,
+      // VehicleToMl,
+      // PlaceOfHalt,     
+      // setAdmittedHospitalEn,
+      // setAdmittedHospitalMl,
+      // VehicleOtherDetailsEn,
+      // VehicleOtherDetailsMl,
      });
   };
   return (
@@ -200,7 +216,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
             />
         </div>
         <div className="col-md-6" > 
-        <CardLabel>{`${t("CR_DRIVER_LICENCE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+        <CardLabel>{`${t("CR_DRIVER_LICENCE_NO")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -211,7 +227,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectDriverLicenceNo}
                 disable={isEdit}
                 placeholder={`${t("CR_DRIVER_LICENCE_NO")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LICENCE_NO") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LICENCE_NO") })}
             />
         </div>
        </div> 
@@ -245,12 +261,12 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={VehicleToEn}
                 onChange={setSelectVehicleToEn}
                 disable={isEdit}
-                placeholder={`${t("CR_VEHICLE_TO-EN")}`}
+                placeholder={`${t("CR_VEHICLE_TO_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
             />
         </div>
         <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_FROM_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_FROM_ML")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -260,12 +276,12 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={VehicleFromMl}
                 onChange={setSelectVehicleFromMl}
                 disable={isEdit}
-                placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
-            />
+                placeholder={`${t("CR_VEHICLE_FROM_ML")}`}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
+                />
         </div>
         <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_TO_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_TO_ML")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -275,8 +291,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 value={VehicleToMl}
                 onChange={setSelectVehicleToMl}
                 disable={isEdit}
-                placeholder={`${t("CR_VEHICLE_TO-EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
+                placeholder={`${t("CR_VEHICLE_TO_ML")}`}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
             />
         </div>
     </div> 
@@ -386,8 +402,20 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
     <div className="row">  
     <div className="col-md-12" > 
         <div className="col-md-4" > 
-        <CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
-        <Dropdown
+        <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}</CardLabel>
+        <TextInput       
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PlaceOfHalt"
+                value={PlaceOfHalt}
+                onChange={setSelectPlaceOfHalt}
+                disable={isEdit}
+                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT") })}
+            />
+        {/* <Dropdown
                 t={t}
                 optionKey="code"
                 isMandatory={false}
@@ -396,7 +424,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData }) => {
                 select={selectDeathVehicleWard}
                 disabled={isEdit}
                 placeholder={`${t("CS_COMMON_WARD")}`}
-            />
+            /> */}
         </div>
         
         <div className="col-md-4" > 

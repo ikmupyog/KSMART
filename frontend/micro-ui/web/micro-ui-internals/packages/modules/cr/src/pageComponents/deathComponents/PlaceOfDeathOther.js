@@ -3,13 +3,27 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, BackBut
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherward, setSelectedDeathOtherward, setDeathOtherPlace, setSelectedDeathOtherPlace,PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn,PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl}) => {
+const PlaceOfDeathOther = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  setDeathOtherward,
+  setSelectedDeathOtherward,
+  setDeathOtherPlace,
+  setSelectedDeathOtherPlace,
+  PlaceOfDeathOtherDetailsEn,
+  setPlaceOfDeathOtherDetailsEn,
+  PlaceOfDeathOtherDetailsMl,
+  setPlaceOfDeathOtherDetailsMl,
+}) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
-  let validation = {};  
+  let validation = {};
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherDeathPlace");
- 
+  const [value, setValue] = useState();
+
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [setDeathOtherward, setSelectedDeathOtherward] = useState(formData?.PlaceOfDeathOther?.setDeathOtherward);
   // const [setDeathOtherPlace, setSelectedDeathOtherPlace] = useState(formData?.PlaceOfDeathOther?.setDeathOtherPlace);
@@ -17,7 +31,7 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherw
   // const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl);
 
   let naturetypecmbvalue = null;
- 
+
   let cmbOtherplace = [];
   otherplace &&
     otherplace["birth-death-service"] &&
@@ -31,9 +45,9 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherw
   //   setSelectedPlaceofActivity(value);
   // }
 
-  function selectDeathOtherPlace(value) {
-    setSelectedDeathOtherPlace(value);
-  }
+  // function selectDeathOtherPlace(value) {
+  //   setSelectedDeathOtherPlace(value);
+  // }
   function selectDeathOtherward(value) {
     setSelectedDeathOtherward(value);
   }
@@ -51,7 +65,6 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherw
   // }
 
   const goNext = () => {
-    
     // sessionStorage.setItem("setDeathOtherPlace", setDeathOtherPlace ? setDeathOtherPlace.code : null);
     // sessionStorage.setItem("setDeathOtherward", setDeathOtherward ? setDeathOtherward.code : null);
     // sessionStorage.setItem("PlaceOfDeathOtherDetailsEn", PlaceOfDeathOtherDetailsEn ? PlaceOfDeathOtherDetailsEn : null);
@@ -61,9 +74,13 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherw
       // setDeathOtherPlace,
       // setDeathOtherward,
       // PlaceOfDeathOtherDetailsEn,
-      // PlaceOfDeathOtherDetailsMl,      
+      // PlaceOfDeathOtherDetailsMl,
     });
   };
+  function selectDeathOtherPlace(value) {
+    setSelectedDeathOtherPlace(value);
+    setValue(value.code);
+  }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
@@ -94,10 +111,13 @@ const PlaceOfDeathOther = ({ config, onSelect, userType, formData,setDeathOtherw
                 placeholder={`${t("CR_OTHER_PLACE")}`}
               />
             </div>
-
-
             <div className="col-md-6">
-              <CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
+              {value === "OTHER_DEATH_PLACE_OUTSIDE_JURISDICTION" ? (
+                <CardLabel>{`${t("CS_COMMON_BURIAL_WARD")}`}</CardLabel>
+              ) : (
+                <CardLabel>{`${t("CS_COMMON_WARD")}`}</CardLabel>
+              )}
+
               <Dropdown
                 t={t}
                 optionKey="code"
