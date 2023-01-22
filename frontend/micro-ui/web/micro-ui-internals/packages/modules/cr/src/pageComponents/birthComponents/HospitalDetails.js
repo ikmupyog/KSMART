@@ -87,10 +87,20 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
     selectSignedOfficerDesignation(value);
   }
   function setSelectSignedOfficerOther(e) {
-    selectSignedOfficerNameOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      selectSignedOfficerNameOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+    }
   }
   function setSelectSignedOfficerOthersDesignation(e) {
-    selectSignedOfficerDesignationOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      selectSignedOfficerDesignationOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+    }
   }
   function setSelectSignedOfficerAadharNo(e) {
     setSignedOfficerAadharNo(e.target.value);
