@@ -47,13 +47,13 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [PermanentPostOfficeError, setPermanentPostOfficeError] = useState(formData?.AddressDetails?.PermanentPostOffice ? false : false);
   const [PermanentPincodeError, setPermanentPincodeError] = useState(formData?.AddressDetails?.PermanentPincode ? false : false);
 
-  const [OutSideIndiaAddressOneEnError, setOutSideIndiaAddressOneEnError] = useState(formData?.AddressDetails?.AdressEn ? false : false);
-  const [OutSideIndiaAddressOneMlError, setOutSideIndiaAddressOneMlError] = useState(formData?.AddressDetails?.AdressMl ? false : false);
-  const [OutSideIndiaAddressLocEnError, setOutSideIndiaAddressLocEnError] = useState(formData?.AddressDetails?.LocalityEn ? false : false);
-  const [OutSideIndiaAddressLocMlError, setOutSideIndiaAddressLocMlError] = useState(formData?.AddressDetails?.LocalityMl ? false : false);
-  const [OutSideIndiaAddressProvinceEnError, setOutSideIndiaAddressProvinceEnError] = useState(formData?.AddressDetails?.setProvinceEn ? false : false);
-  const [OutSideIndiaAddressProvinceMlError, setOutSideIndiaAddressProvinceMlError] = useState(formData?.AddressDetails?.setProvinceMl ? false : false);
-  const [OutSideIndiaAddressPostCodeError, setOutSideIndiaAddressPostCodeError] = useState(formData?.AddressDetails?.setPostCode ? false : false);
+  // const [OutSideIndiaAddressOneEnError, setOutSideIndiaAddressOneEnError] = useState(formData?.AddressDetails?.AdressEn ? false : false);
+  // const [OutSideIndiaAddressOneMlError, setOutSideIndiaAddressOneMlError] = useState(formData?.AddressDetails?.AdressMl ? false : false);
+  // const [OutSideIndiaAddressLocEnError, setOutSideIndiaAddressLocEnError] = useState(formData?.AddressDetails?.LocalityEn ? false : false);
+  // const [OutSideIndiaAddressLocMlError, setOutSideIndiaAddressLocMlError] = useState(formData?.AddressDetails?.LocalityMl ? false : false);
+  // const [OutSideIndiaAddressProvinceEnError, setOutSideIndiaAddressProvinceEnError] = useState(formData?.AddressDetails?.setProvinceEn ? false : false);
+  // const [OutSideIndiaAddressProvinceMlError, setOutSideIndiaAddressProvinceMlError] = useState(formData?.AddressDetails?.setProvinceMl ? false : false);
+  // const [OutSideIndiaAddressPostCodeError, setOutSideIndiaAddressPostCodeError] = useState(formData?.AddressDetails?.setPostCode ? false : false);
   const [OutSideIndiaAddressError, setOutSideIndiaAddressError] = useState(formData?.AddressDetails?.OutSideCountry ? false : false);
 
 
@@ -115,9 +115,17 @@ const Address = ({ config, onSelect, userType, formData }) => {
   const [ProvinceEn, setProvinceEn] = useState(formData?.AddressDetails?.ProvinceEn ? formData?.AddressDetails?.ProvinceEn : "");
   const [ProvinceMl, setProvinceMl] = useState(formData?.AddressDetails?.ProvinceMl ? formData?.AddressDetails?.ProvinceMl : "");
   const [PostCode, setPostCode] = useState(formData?.AddressDetails?.PostCode ? formData?.AddressDetails?.PostCode : "");
+  const [ResNoEn, setResNoEn] = useState(formData?.AddressDetails?.ResNoEn ? formData?.AddressDetails?.ResNoEn : "");
+  const [ResNoMl, setResNoMl] = useState(formData?.AddressDetails?.ResNoMl ? formData?.AddressDetails?.ResNoMl : "");
+  const [HouseNameEn, setHouseNameEn] = useState(formData?.AddressDetails?.HouseNameEn ? formData?.AddressDetails?.HouseNameEn : "");
+  const [HouseNameMl, setHouseNameMl] = useState(formData?.AddressDetails?.HouseNameMl ? formData?.AddressDetails?.HouseNameMl : "");
   const [OutSideCountry, setOutSideCountry] = useState(formData?.AddressDetails?.OutSideCountry ? formData?.AddressDetails?.OutSideCountry : null);
   const [selectedValueRadio, setSelectedValue] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
   const [valueRad, setValueRad] = useState(formData?.AddressDetails?.selectedValueRadio ? formData?.AddressDetails?.selectedValueRadio : "");
+
+  
+
+  
   // const [selectedValueRadio, setSelectedValue] = React.useState(null);
   let cmbPlace = [];
   let cmbTaluk = [];
@@ -473,30 +481,30 @@ const Address = ({ config, onSelect, userType, formData }) => {
     }
 
   }
-  function setSelectPresentStreetNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setPresentStreetNameEn(e.target.value);
-      if (isPrsentAddress) {
-        setPermanentStreetNameEn(PresentStreetNameEn);
-      }
-    }
+  // function setSelectPresentStreetNameEn(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setPresentStreetNameEn(e.target.value);
+  //     if (isPrsentAddress) {
+  //       setPermanentStreetNameEn(PresentStreetNameEn);
+  //     }
+  //   }
 
-  }
-  function setSelectPresentStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setPresentStreetNameMl(e.target.value);
-      if (isPrsentAddress) {
-        setPermanentStreetNameMl(PresentStreetNameMl);
-      }
-    }
+  // }
+  // function setSelectPresentStreetNameMl(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setPresentStreetNameMl(e.target.value);
+  //     if (isPrsentAddress) {
+  //       setPermanentStreetNameMl(PresentStreetNameMl);
+  //     }
+  //   }
 
-  }
+  // }
 
   //Permanent Address Function
   function setSelectPermanentCountry(value) {
@@ -620,22 +628,22 @@ const Address = ({ config, onSelect, userType, formData }) => {
       setPermanentLocalityNameMl(e.target.value);
     }
   }
-  function setSelectPermanentStreetNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setPermanentStreetNameEn(e.target.value);
-    }
-  }
-  function setSelectPermanentStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setPermanentStreetNameMl(e.target.value);
-    }
-  }
+  // function setSelectPermanentStreetNameEn(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setPermanentStreetNameEn(e.target.value);
+  //   }
+  // }
+  // function setSelectPermanentStreetNameMl(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setPermanentStreetNameMl(e.target.value);
+  //   }
+  // }
 
   function setSameAsPresent(e) {
 
@@ -655,8 +663,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
       setPermanentMainPlaceMl(PresentMainPlaceMl);
       setPermanentLocalityNameEn(PresentLocalityNameEn);
       setPermanentLocalityNameMl(PresentLocalityNameMl);
-      setPermanentStreetNameEn(PresentStreetNameEn);
-      setPermanentStreetNameMl(PresentStreetNameMl);
+      // setPermanentStreetNameEn(PresentStreetNameEn);
+      // setPermanentStreetNameMl(PresentStreetNameMl);
       setPermanentVillage(PresentVillage);
       setPermanentWardNo(PresentWardNo);
       setPermanentLBName(PresentLBName);
@@ -680,8 +688,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
       setPermanentMainPlaceMl("");
       setPermanentLocalityNameEn("");
       setPermanentLocalityNameMl("");
-      setPermanentStreetNameEn("");
-      setPermanentStreetNameMl("");
+      // setPermanentStreetNameEn("");
+      // setPermanentStreetNameMl("");
       setPermanentVillage("");
       setPermanentWardNo("");
       setPermanentLBName("");
@@ -761,39 +769,39 @@ const Address = ({ config, onSelect, userType, formData }) => {
       else {
         setPresentLBNameError(false);
       }
-      if (PresentVillage == null) {
-        validFlag = false;
-        setPresentVillageError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      }
-      else {
-        setPresentVillageError(false);
-      }
-      if (PresentTaluk == null) {
-        validFlag = false;
-        setPresentTalukError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      }
-      else {
-        setPresentTalukError(false);
-      }
-      if (PresentPostOffice == null) {
-        validFlag = false;
-        setPresentPostOfficeError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      }
-      else {
-        setPresentPostOfficeError(false);
-      }
+      // if (PresentVillage == null) {
+      //   validFlag = false;
+      //   setPresentVillageError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // }
+      // else {
+      //   setPresentVillageError(false);
+      // }
+      // if (PresentTaluk == null) {
+      //   validFlag = false;
+      //   setPresentTalukError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // }
+      // else {
+      //   setPresentTalukError(false);
+      // }
+      // if (PresentPostOffice == null) {
+      //   validFlag = false;
+      //   setPresentPostOfficeError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // }
+      // else {
+      //   setPresentPostOfficeError(false);
+      // }
       if (PresentPostOffice == null) {
         validFlag = false;
         setPresentPostOfficeError(true);
@@ -875,39 +883,39 @@ const Address = ({ config, onSelect, userType, formData }) => {
       else {
         setPermanentLBNameError(false);
       }
-      if (PermanentVillage == null) {
-        validFlag = false;
-        setPermanentVillageError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      }
-      else {
-        setPermanentVillageError(false);
-      }
-      if (PermanentTaluk == null) {
-        validFlag = false;
-        setPermanentTalukError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      }
-      else {
-        setPermanentTalukError(false);
-      }
-      if (PermanentPostOffice == null) {
-        validFlag = false;
-        setPermanentPostOfficeError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      }
-      else {
-        setPermanentPostOfficeError(false);
-      }
+      // if (PermanentVillage == null) {
+      //   validFlag = false;
+      //   setPermanentVillageError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // }
+      // else {
+      //   setPermanentVillageError(false);
+      // }
+      // if (PermanentTaluk == null) {
+      //   validFlag = false;
+      //   setPermanentTalukError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // }
+      // else {
+      //   setPermanentTalukError(false);
+      // }
+      // if (PermanentPostOffice == null) {
+      //   validFlag = false;
+      //   setPermanentPostOfficeError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // }
+      // else {
+      //   setPermanentPostOfficeError(false);
+      // }
       if (PermanentPostOffice == null) {
         validFlag = false;
         setPermanentPostOfficeError(true);
@@ -936,78 +944,78 @@ const Address = ({ config, onSelect, userType, formData }) => {
     }
     if (valueRad === "OIND") {
 
-      if (AdressEn == null || AdressEn == '' || AdressEn == undefined) {
-        validFlag = false;
-        setOutSideIndiaAddressOneEnError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else {
-        setOutSideIndiaAddressOneEnError(false);
-      }
-      if (AdressMl == null || AdressMl == '' || AdressMl == undefined) {
-        validFlag = false;
-        setOutSideIndiaAddressOneMlError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else {
-        setOutSideIndiaAddressOneMlError(false);
-      }
-      if (LocalityEn == null || LocalityEn == '' || LocalityEn == undefined) {
-        validFlag = false;
-        setOutSideIndiaAddressLocEnError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else {
-        setOutSideIndiaAddressLocEnError(false);
-      }
-      if (LocalityMl == null || LocalityMl == '' || LocalityMl == undefined) {
-        validFlag = false;
-        setOutSideIndiaAddressLocMlError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else {
-        setOutSideIndiaAddressLocMlError(false);
-      }
-      if (ProvinceEn == null || ProvinceEn == '' || ProvinceEn == undefined) {
-        validFlag = false;
-        setOutSideIndiaAddressProvinceEnError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else {
-        setOutSideIndiaAddressProvinceEnError(false);
-      }
-      if (ProvinceMl == null || ProvinceMl == '' || ProvinceMl == undefined) {
-        validFlag = false;
-        setOutSideIndiaAddressProvinceMlError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else {
-        setOutSideIndiaAddressProvinceMlError(false);
-      }
+      // if (AdressEn == null || AdressEn == '' || AdressEn == undefined) {
+      //   validFlag = false;
+      //   setOutSideIndiaAddressOneEnError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      //   // return false;
+      //   // window.alert("Username shouldn't exceed 10 characters")
+      // } else {
+      //   setOutSideIndiaAddressOneEnError(false);
+      // }
+      // if (AdressMl == null || AdressMl == '' || AdressMl == undefined) {
+      //   validFlag = false;
+      //   setOutSideIndiaAddressOneMlError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      //   // return false;
+      //   // window.alert("Username shouldn't exceed 10 characters")
+      // } else {
+      //   setOutSideIndiaAddressOneMlError(false);
+      // }
+      // if (LocalityEn == null || LocalityEn == '' || LocalityEn == undefined) {
+      //   validFlag = false;
+      //   setOutSideIndiaAddressLocEnError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      //   // return false;
+      //   // window.alert("Username shouldn't exceed 10 characters")
+      // } else {
+      //   setOutSideIndiaAddressLocEnError(false);
+      // }
+      // if (LocalityMl == null || LocalityMl == '' || LocalityMl == undefined) {
+      //   validFlag = false;
+      //   setOutSideIndiaAddressLocMlError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      //   // return false;
+      //   // window.alert("Username shouldn't exceed 10 characters")
+      // } else {
+      //   setOutSideIndiaAddressLocMlError(false);
+      // }
+      // if (ProvinceEn == null || ProvinceEn == '' || ProvinceEn == undefined) {
+      //   validFlag = false;
+      //   setOutSideIndiaAddressProvinceEnError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      //   // return false;
+      //   // window.alert("Username shouldn't exceed 10 characters")
+      // } else {
+      //   setOutSideIndiaAddressProvinceEnError(false);
+      // }
+      // if (ProvinceMl == null || ProvinceMl == '' || ProvinceMl == undefined) {
+      //   validFlag = false;
+      //   setOutSideIndiaAddressProvinceMlError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      //   // return false;
+      //   // window.alert("Username shouldn't exceed 10 characters")
+      // } else {
+      //   setOutSideIndiaAddressProvinceMlError(false);
+      // }
       if (OutSideCountry == null) {
         validFlag = false;
         setOutSideIndiaAddressError(true);
@@ -1034,10 +1042,14 @@ const Address = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn.ProvinceEn : null);
         sessionStorage.setItem("ProvinceMl", ProvinceMl ? ProvinceMl.ProvinceMl : null);
         sessionStorage.setItem("PostCode", PostCode ? PostCode.PostCode : null);
+        sessionStorage.setItem("ResNoEn", ResNoEn  ? ResNoEn  : null);
+        sessionStorage.setItem("ResNoMl", ResNoMl  ? ResNoMl  : null);
+        sessionStorage.setItem("HouseNameEn", HouseNameEn  ? HouseNameEn  : null);
+        sessionStorage.setItem("HouseNameMl", HouseNameMl  ? HouseNameMl  : null);
         sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.OutSideCountry : null);
 
         onSelect(config.key, {
-          AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl,PostCode, OutSideCountry,
+          AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl,PostCode, OutSideCountry,ResNoEn,ResNoMl,HouseNameEn,HouseNameMl,
           selectedValueRadio
 
         });
@@ -1050,15 +1062,15 @@ const Address = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("PresentSubNo", PresentSubNo ? PresentSubNo : null );
         sessionStorage.setItem("PresentDoorNo", PresentDoorNo ? PresentDoorNo : null);
         sessionStorage.setItem("PresentResNoEn", PresentResNoEn ? PresentResNoEn : null);
-        sessionStorage.setItem("PresentResNoEn", PresentResNoMl ? PresentResNoMl : null);
+        sessionStorage.setItem("PresentResNoMl", PresentResNoMl ? PresentResNoMl : null);
         sessionStorage.setItem("PresentHouseNameEn", PresentHouseNameEn ? PresentHouseNameEn : null);
         sessionStorage.setItem("PresentHouseNameMl", PresentHouseNameMl ? PresentHouseNameMl : null);
         sessionStorage.setItem("PresentMainPlaceEn", PresentMainPlaceEn ? PresentMainPlaceEn : null);
         sessionStorage.setItem("PresentMainPlaceMl", PresentMainPlaceMl ? PresentMainPlaceMl : null);
         sessionStorage.setItem("PresentLocalityNameEn", PresentLocalityNameEn ? PresentLocalityNameEn : null);
         sessionStorage.setItem("PresentLocalityNameMl", PresentLocalityNameMl ? PresentLocalityNameMl : null);
-        sessionStorage.setItem("PresentStreetNameEn", PresentStreetNameEn ? PresentStreetNameEn : null);
-        sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl ? PresentStreetNameMl : null);
+        // sessionStorage.setItem("PresentStreetNameEn", PresentStreetNameEn ? PresentStreetNameEn : null);
+        // sessionStorage.setItem("PresentStreetNameMl", PresentStreetNameMl ? PresentStreetNameMl : null);
         sessionStorage.setItem("PresentVillage", PresentVillage ? PresentVillage.code : null);
         sessionStorage.setItem("PresentWardNo", PresentWardNo.code);
         sessionStorage.setItem("PresentLBName", PresentLBName ? PresentLBName.code : null);
@@ -1079,8 +1091,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("PermanentMainPlaceMl", PermanentMainPlaceMl ? PermanentMainPlaceMl : null);
         sessionStorage.setItem("PermanentLocalityNameEn", PermanentLocalityNameEn ? PermanentLocalityNameEn : null);
         sessionStorage.setItem("PermanentLocalityNameMl", PermanentLocalityNameMl ? PermanentLocalityNameMl : null);
-        sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn ? PermanentStreetNameEn : null);
-        sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl ? PermanentStreetNameMl : null);
+        // sessionStorage.setItem("PermanentStreetNameEn", PermanentStreetNameEn ? PermanentStreetNameEn : null);
+        // sessionStorage.setItem("PermanentStreetNameMl", PermanentStreetNameMl ? PermanentStreetNameMl : null);
         sessionStorage.setItem("PermanentVillage", PermanentVillage ? PermanentVillage.code : null);
         sessionStorage.setItem("PermanentWardNo", PermanentWardNo ? PermanentWardNo .code : null );
         sessionStorage.setItem("PermanentLBName", PermanentLBName ? PermanentLBName.code : null);
@@ -1100,8 +1112,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
           PresentMainPlaceEn,
           PresentMainPlaceMl,
           PresentLocalityNameMl,
-          PresentStreetNameEn,
-          PresentStreetNameMl,
+          // PresentStreetNameEn,
+          // PresentStreetNameMl,
           PresentVillage,
           PresentLBName,
           PresentDistrict,
@@ -1119,8 +1131,8 @@ const Address = ({ config, onSelect, userType, formData }) => {
           PermanentMainPlaceEn,
           PermanentLocalityNameEn,
           PermanentLocalityNameMl,
-          PermanentStreetNameEn,
-          PermanentStreetNameMl,
+          // PermanentStreetNameEn,
+          // PermanentStreetNameMl,
 
           PermanentVillage,
           PermanentLBName,
@@ -1131,16 +1143,21 @@ const Address = ({ config, onSelect, userType, formData }) => {
           PermanentCountry,
           PermanentStateName,
           PermanentLBTypeName,
-          AdressEn,
-          AdressMl,
-          AdressEnB,
-          AdressMlB,
-          LocalityEn,
-          LocalityMl,
-          ProvinceEn,
-          ProvinceMl,
-          PostCode,
-          OutSideCountry,
+        //   AdressEn,
+        //   AdressMl,
+        //   AdressEnB,
+        //   AdressMlB,
+        //   LocalityEn,
+        //   LocalityMl,
+        //   ProvinceEn,
+        //   ProvinceMl,
+        //   PostCode,
+        //   OutSideCountry,
+        //   ResNoEn, 
+        //  ResNoMl,  
+        // HouseNameEn,    
+        // HouseNameMl,
+   
 
 
         });
@@ -1713,7 +1730,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
                     <div className="col-md-6">
                         <CardLabel>
                           {t("CR_LOCALITY_EN")}
-                         -
+                         
                         </CardLabel>
                         <TextInput
                           t={t}
@@ -1919,7 +1936,11 @@ const Address = ({ config, onSelect, userType, formData }) => {
               setProvinceMl={setProvinceMl} ProvinceMl={ProvinceMl}
               setPostCode={setPostCode} PostCode={PostCode}
               setOutSideCountry={setOutSideCountry} OutSideCountry={OutSideCountry}
-
+              setResNoEn={setResNoEn} ResNoEn={ResNoEn}
+              setResNoMl={setResNoMl} ResNoMl={ResNoMl}
+              setHouseNameEn={setHouseNameEn} HouseNameEn={HouseNameEn}
+              setHouseNameMl={setHouseNameMl} HouseNameMl={HouseNameMl}
+              
             />
           </div>)
         }
@@ -1930,17 +1951,19 @@ const Address = ({ config, onSelect, userType, formData }) => {
               // || PresentVillageError || PresentTalukError || PresentPincodeError
                || PermanentCountryError || PermanentStateNameError || PermanentDistrictError || PermanentLBTypeNameError || PermanentLBNameError  || PermanentPincodeError
               //  || PermanentVillageError || PermanentTalukError || PermanentPostOfficeError
-               || OutSideIndiaAddressOneEnError || OutSideIndiaAddressOneMlError || OutSideIndiaAddressLocEnError || OutSideIndiaAddressLocMlError || OutSideIndiaAddressProvinceEnError
-              || OutSideIndiaAddressProvinceMlError || OutSideIndiaAddressError
+              //  || OutSideIndiaAddressOneEnError || OutSideIndiaAddressOneMlError || OutSideIndiaAddressLocEnError || OutSideIndiaAddressLocMlError || OutSideIndiaAddressProvinceEnError
+              // || OutSideIndiaAddressProvinceMlError 
+              || OutSideIndiaAddressError
 
             }
             label={
               (PresentCountryError || PresentStateNameError || PresentDistrictError || PresentLBTypeNameError || PresentLBNameError || PresentPincodeError
-                 || PresentVillageError  || PresentTalukError || PresentPostOfficeError 
+                //  || PresentVillageError  || PresentTalukError || PresentPostOfficeError 
                   || PermanentCountryError || PermanentStateNameError || PermanentDistrictError || PermanentLBTypeNameError || PermanentLBNameError || PermanentPincodeError
                   // || PermanentVillageError || PermanentTalukError || PermanentPostOfficeError 
-                || OutSideIndiaAddressOneEnError || OutSideIndiaAddressOneMlError || OutSideIndiaAddressLocEnError || OutSideIndiaAddressLocMlError || OutSideIndiaAddressProvinceEnError
-                || OutSideIndiaAddressProvinceMlError || OutSideIndiaAddressError
+                // || OutSideIndiaAddressOneEnError || OutSideIndiaAddressOneMlError || OutSideIndiaAddressLocEnError || OutSideIndiaAddressLocMlError || OutSideIndiaAddressProvinceEnError
+                // || OutSideIndiaAddressProvinceMlError
+                 || OutSideIndiaAddressError
                 ?
                 (PresentCountryError ? t(`BIRTH_ERROR_PRESENT_COUNTRY_CHOOSE`) : PresentStateNameError ? t(`BIRTH_ERROR_PRESENT_STATE_CHOOSE`) : PresentDistrictError ? t(`BIRTH_ERROR_PRESENT_DISTRICT_CHOOSE`)
                   : PresentLBTypeNameError ? t(`BIRTH_ERROR_PRESENT_LBTYPE_CHOOSE`) : PresentLBNameError ? t(`BIRTH_ERROR_PRESENT_LBNAME_CHOOSE`) : PresentPincodeError ? t(`BIRTH_ERROR_PRESENT_PINCODE_CHOOSE`)
@@ -1950,12 +1973,12 @@ const Address = ({ config, onSelect, userType, formData }) => {
                           : PermanentLBNameError ? t(`BIRTH_ERROR_PERMANENT_LBNAME_CHOOSE`) : PermanentPincodeError ? t(`BIRTH_ERROR_PERMANENT_PINCODE_CHOOSE`)
                           //  : PermanentVillageError ? t(`BIRTH_ERROR_PERMANENT_VILLAGE_CHOOSE`) : PermanentTalukError ? t(`BIRTH_ERROR_PERMANENT_TALUK_CHOOSE`)
                           //   : PermanentPostOfficeError ? t(`BIRTH_ERROR_PERMANENT_POSTOFFICE_CHOOSE`) 
-                            : OutSideIndiaAddressOneEnError ? t(`BIRTH_ERROR_OUTSIDE_ADDR_ONE_EN_ERROR`)
-                            : OutSideIndiaAddressOneMlError ? t(`BIRTH_ERROR_OUTSIDE_ADDR_ONE_ML_ERROR`)
-                            : OutSideIndiaAddressLocEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                            : OutSideIndiaAddressLocMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                            : OutSideIndiaAddressProvinceEnError ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_EN_ERROR`)  
-                            : OutSideIndiaAddressProvinceMlError ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_ML_ERROR`)  
+                            // : OutSideIndiaAddressOneEnError ? t(`BIRTH_ERROR_OUTSIDE_ADDR_ONE_EN_ERROR`)
+                            // : OutSideIndiaAddressOneMlError ? t(`BIRTH_ERROR_OUTSIDE_ADDR_ONE_ML_ERROR`)
+                            // : OutSideIndiaAddressLocEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                            // : OutSideIndiaAddressLocMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                            // : OutSideIndiaAddressProvinceEnError ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_EN_ERROR`)  
+                            // : OutSideIndiaAddressProvinceMlError ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_ML_ERROR`)  
                             : OutSideIndiaAddressError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)
 
                                 : setToast(false)
