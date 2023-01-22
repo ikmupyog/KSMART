@@ -170,7 +170,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setMotherFirstNameEn(e.target.value);
+            setMotherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
         }
 
     }
@@ -179,7 +179,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setMotherMiddleNameEn(e.target.value);
+            setMotherMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
         }
     }
     function setSelectMotherLastNameEn(e) {
@@ -187,7 +187,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setMotherLastNameEn(e.target.value);
+            setMotherLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
         }
     }
     function setSelectMotherFirstNameMl(e) {
@@ -195,7 +195,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setMotherFirstNameMl(e.target.value);
+            setMotherFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
         }
     }
     function setSelectMotherMiddleNameMl(e) {
@@ -203,7 +203,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setMotherMiddleNameMl(e.target.value);
+            setMotherMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
         }
     }
     function setSelectMotherLastNameMl(e) {
@@ -211,7 +211,7 @@ const MotherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setMotherLastNameMl(e.target.value);
+            setMotherLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
         }
     }
     function setSelectMotherAadhar(e) {
