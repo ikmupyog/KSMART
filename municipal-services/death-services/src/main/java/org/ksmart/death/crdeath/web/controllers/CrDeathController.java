@@ -119,6 +119,7 @@ public class CrDeathController implements CrDeathResource  {
             List<CrDeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
 
         }
+        //Jasmine on 21.01.2023
         else if((status==CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  (applicationType==CrDeathConstants.APPLICATION_CORRECTION)){
 
             CrDeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);

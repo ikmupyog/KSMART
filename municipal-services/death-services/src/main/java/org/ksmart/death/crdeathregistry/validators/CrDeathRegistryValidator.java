@@ -23,8 +23,8 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Component;
 /**
-     * Creates CrDeathService
-     * Rakhi S IKM
+    * * Creates CrDeathRegistryValidator
+        *  Jasmine
      * on  04/12/2022
      */
 @Component
@@ -35,10 +35,8 @@ public class CrDeathRegistryValidator {
     //@Autowired
     public CrDeathRegistryValidator( CrDeathConfiguration config
                                       ) {
-       // this.repository = repository;
-        this.config = config;
-       // this.mdmsValidator = mdmsValidator;
 
+        this.config = config;
     }
 
      /**
@@ -63,7 +61,7 @@ public class CrDeathRegistryValidator {
 
         // mdmsValidator.validateMdmsData(request, mdmsData);
     }
-    //UPDATE
+    //UPDATE  Jasmine
     /**
      * Validate applicant personal update request.
      *
@@ -89,7 +87,7 @@ public class CrDeathRegistryValidator {
         }
     }
     //UPDATE END
-    //07/01/2023
+    //07/01/2023 Jasmine
     /**
      * Validates if the search parameters are valid
      * 

@@ -81,8 +81,7 @@ public class CrDeathRegistryService {
       
         //Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
           
-       // String id = request.getDeathCertificateDtls().get(0).getId();
-       // String ackNumber = request.getDeathCertificateDtls().get(0).getDeathACKNo();
+        //Jasmine on 21.01.2023
        String regNo = request.getDeathCertificateDtls().get(0).getRegistrationNo();
        String tenantId = request.getDeathCertificateDtls().get(0).getTenantId();
 

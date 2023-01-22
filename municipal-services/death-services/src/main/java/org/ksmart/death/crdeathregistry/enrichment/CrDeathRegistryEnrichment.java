@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
      * Creates CrDeathRegistryEnrichment for UUID ,Audit details and IDGeneration by Rakhi S IKM on 28.11.2022
-     * Create Registration Number and update that in death application based on application number and tenentId
+     * Create Registration Number and update that in death application based on application number and tenentId Jasmine on 
      */
 
 @Component
@@ -78,10 +78,12 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
                .forEach(deathdtls -> {
                 deathdtls.setId(UUID.randomUUID().toString());
                 deathdtls.setAuditDetails(auditDetails);
+                 // validation  on 19.01.2023 Jasmine
                 CrDeathRegistryStatistical  statisticalInfo =deathdtls.getStatisticalInfo();
                 if (statisticalInfo!=null){
                     statisticalInfo.setId(UUID.randomUUID().toString());
                 }    
+                // commented on 22.01.2023 to avoid duplicate encyption Jasmine
                 // CrDeathRegistryDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathdtls, "BndDetail", CrDeathRegistryDtl.class);
                 // deathdtls.setDeceasedAadharNumber(deathDtlEnc.getDeceasedAadharNumber());
                 // deathdtls.setInformantAadharNo(deathDtlEnc.getInformantAadharNo());
@@ -94,6 +96,7 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
                 CrDeathRegistryAddress  permanentAddress = deathdtls.getAddressInfo().getPermanentAddress();
                 CrDeathRegistryAddress  deathplaceAddress = deathdtls.getAddressInfo().getDeathplaceAddress();
                 CrDeathRegistryAddress  informantAddress = deathdtls.getAddressInfo().getInformantAddress();
+                //Validation on 20.01.2023 Jasmine
                 if (informantAddress!=null){
                     addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
                 }
