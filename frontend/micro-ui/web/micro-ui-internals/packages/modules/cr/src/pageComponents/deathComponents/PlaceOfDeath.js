@@ -285,6 +285,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
     sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl : null);
     // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("isNoAadhaar", isNoAadhaar ? isNoAadhaar : null);
+    
     sessionStorage.setItem("AadhaarNo", AadhaarNo ? AadhaarNo : null);
     // sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
     sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo : null);

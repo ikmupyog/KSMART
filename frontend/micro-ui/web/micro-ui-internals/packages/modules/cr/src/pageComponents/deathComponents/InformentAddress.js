@@ -88,12 +88,12 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
   //     cmbDistrict.push(ob);
   //   });
 
-  let cmbTitle = [];
-  title &&
-    title["common-masters"] &&
-    title["common-masters"].Title.map((ob) => {
-      cmbTitle.push(ob);
-    });
+  // let cmbTitle = [];
+  // title &&
+  //   title["common-masters"] &&
+  //   title["common-masters"].Title.map((ob) => {
+  //     cmbTitle.push(ob);
+  //   });
 
   const onSkip = () => onSelect();
 
@@ -309,7 +309,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
               placeholder={`${t("CR_TITLE_NAME_EN")}`}
             />
           </div> */}
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {t("CR_INFORMENT_NAME_EN")}
               <span className="mandatorycss">*</span>
@@ -327,7 +327,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {t("CR_INFORMENT_NAME_Ml")}
               <span className="mandatorycss">*</span>
@@ -356,6 +356,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
         <div className="row">
         <div className="col-md-12">
         <div style={{ pointerEvents: isChecked ? "none" : "all", opacity: isChecked ? 0.5 : 1 }}>
+        {isChecked ? null : (
         <div className="col-md-3">
             <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
             <TextInput
@@ -372,6 +373,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
             />
             
           </div>
+        )}
           </div>
           {/* <div className="col-md-3">
             <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
