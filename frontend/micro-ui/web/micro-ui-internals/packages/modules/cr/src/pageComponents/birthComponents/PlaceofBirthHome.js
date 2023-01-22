@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox,Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
+// import { sleep } from "react-query/types/core/utils";
 
 const PlaceofBirthHome = ({
   config,
@@ -51,20 +52,21 @@ const PlaceofBirthHome = ({
   AdrsHouseNameMl,
   setAdrsHouseNameMl,
   AdrsResNoMl,
-  setAdrsResNoMl,
+  setAdrsResNoMl,setLBCombo,LBCombo
   
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const tenantId = Digit.ULBService.getCurrentTenantId();
+  // const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+  console.log("localbodies" + LBCombo);
   // Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
@@ -72,6 +74,11 @@ const PlaceofBirthHome = ({
 
   //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderTenant, setIsInitialRenderTenant] = useState(true);
+  const [country, setcountrys] = useState(0);
+  const [states, setStates] = useState(0);
+  const [districts, setdistricts] = useState(0);
+  const [lbtypes, setlbtypes] = useState(0);
   const [lbs, setLbs] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [AdrsCountry, setAdrsCountry] = useState(formData?.BirthPlaceHomeDetails?.AdrsCountry);
@@ -146,11 +153,74 @@ const PlaceofBirthHome = ({
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
-  localbodies &&
-    localbodies["tenant"] &&
-    localbodies["tenant"].tenants.map((ob) => {
-      cmbLB.push(ob);
-    });
+    // localbodies &&
+    // localbodies["tenant"] &&
+    // localbodies["tenant"].tenants.map((ob) => {
+    //   cmbLB.push(ob);     
+    //   console.log("cmbLB" + localbodies); 
+    //   // setIsInitialRender(true);
+     
+    // });
+    
+    // useEffect(() => {
+
+    //   if (isInitialRender) {
+  
+    //     // console.log("AdrsDistrict" + districtid);
+    //     // sleep(setTimeout(1000));
+    //     // if (localbodies.length > 0) {
+    //     // console.log(localbodies);
+
+    //       // localbodies &&
+    //       // localbodies["tenant"] &&
+    //       // localbodies["tenant"].tenants.map((ob) => {
+    //       //   cmbLB.push(ob);
+    //       // });
+    //       // setIsInitialRender(false);
+    //       let currentLB = LBCombo.filter((LBCombo) => LBCombo.code === tenantId)
+    //       console.log("currentLB" + currentLB);
+    //       setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === AdrsDistrict.districtid));
+    //       setIsInitialRender(false);
+    //       // cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
+    //     }
+    //   // }
+    // }, [lbs, isInitialRender]);
+    // useEffect(() => {
+    //   if (isInitialRenderTenant) {
+    //     if (cmbLB.length > 0) {
+    //       console.log(cmbLB);
+    //       isInitialRenderTenant(false);
+    //       if (cmbCountry.length > 0) {
+    //         // cmbDesignations =[];
+    //         // cmbRegistrarNames =[];
+    //         let cmbRegistrarNames = cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
+    //         // console.log(cmbRegistrarNames);
+    //         // let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+    //         // // console.log(cmbRegistrarNames[0].registar);      
+    //         // let OtherRegistrar=[];
+    //         // OtherRegistrar = cmbRegistrarNames[0].registar;
+    //         // let CheckIfExists = OtherRegistrar.filter((OtherRegistrar) => OtherRegistrar.hospitalRegistar === "Others");
+    //         // if(CheckIfExists.length>0){
+              
+    //         // } else {
+    //         //   OtherRegistrar.push({
+    //         //     hospitalRegistar:'Others',
+    //         //     registarDesig:'',
+    //         //     registrationAadhaar:'',
+    //         //     registrationMobile:'',
+    //         //     registrationNo:''
+    //         //   })
+             
+    //         // }   
+    //         // setFilteredOfficerName(OtherRegistrar);
+    //         // setFilteredDesignation(OtherRegistrar);
+    //         // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
+    //         // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
+    //       }
+  
+    //     }
+    //   }
+    // }, [isInitialRenderTenant]);
   // let Zonal = [];
   // let cmbWardNo = [];
   // let cmbWardNoFinal = [];
@@ -217,7 +287,7 @@ const PlaceofBirthHome = ({
     setAdrsResNoEn(e.target.value);
   }
   function setSelectAdrsResNoMl(e) {
-    setAdrsResNoMl(e.target.value);
+    setAdrsResNoMl(e.target.value.replace(/^[a-zA-Z-.`' ]/ig,''));
   }
   function setSelectAdrsDoorNo(e) {
     setAdrsDoorNo(e.target.value);
@@ -229,7 +299,7 @@ const PlaceofBirthHome = ({
     setAdrsHouseNameEn(e.target.value);
   }
   function setSelectAdrsHouseNameMl(e) {
-    setAdrsHouseNameMl(e.target.value);
+    setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
   function setSelectAdrsInfomntName(e) {
     setAdrsInfomntName(e.target.value);
@@ -239,13 +309,13 @@ const PlaceofBirthHome = ({
     setAdrsMainPlaceEn(e.target.value);
   }
   function setSelectAdrsMainPlaceMl(e) {
-    setAdrsMainPlaceMl(e.target.value);
+    setAdrsMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
   function setSelectAdrsLocalityNameEn(e) {
     setAdrsLocalityNameEn(e.target.value);
   }
   function setSelectAdrsLocalityNameMl(e) {
-    setAdrsLocalityNameMl(e.target.value);
+    setAdrsLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
 
   function setSelectAdrsStreetNameEn(e) {
@@ -253,22 +323,13 @@ const PlaceofBirthHome = ({
   }
 
   function setSelectAdrsStreetNameMl(e) {
-    setAdrsStreetNameMl(e.target.value);
+    setAdrsStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
   // function setSelectWard(value) {
   //   setWardNo(value);
   // }
 
-  useEffect(() => {
-    if (isInitialRender) {
-      console.log("AdrsDistrict" + districtid);
-      console.log(localbodies);
-      if (AdrsDistrict) {
-        setIsInitialRender(false);
-        setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === AdrsDistrict.districtid));
-      }
-    }
-  }, [lbs, isInitialRender]);
+  
   const goNext = () => {
     // sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
     // sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
@@ -315,9 +376,9 @@ const PlaceofBirthHome = ({
     // });
   };
 
-  // if (isCountryLoading || isStateLoading  ||islocalbodiesLoading|| isPostOfficeLoading  || isDistrictLoading || isTalukLoading || isVillageLoading ) {
-  //   return <Loader></Loader>;
-  // }
+  if (isCountryLoading || isStateLoading  || isPostOfficeLoading  || isDistrictLoading || isTalukLoading || isVillageLoading ) {
+    return <Loader></Loader>;
+  }
 
   return (
     <React.Fragment>
@@ -764,7 +825,7 @@ const PlaceofBirthHome = ({
                 onChange={setSelectAdrsHouseNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
               />
             </div>
           </div>
