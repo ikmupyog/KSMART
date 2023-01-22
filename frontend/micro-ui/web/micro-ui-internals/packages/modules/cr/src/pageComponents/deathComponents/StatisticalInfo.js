@@ -78,32 +78,32 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   let cmbLB = [];
   Occupation &&
     Occupation["common-masters"] &&
-    Occupation["common-masters"].Occupation.map((ob) => {
+    Occupation["common-masters"]?.Occupation?.map((ob) => {
       cmbOccupationMain.push(ob);
     });
   State &&
     State["common-masters"] &&
-    State["common-masters"].State.map((ob) => {
+    State["common-masters"]?.State?.map((ob) => {
       cmbState.push(ob);
     });
   District &&
     District["common-masters"] &&
-    District["common-masters"].District.map((ob) => {
+    District["common-masters"]?.District?.map((ob) => {
       cmbDistrict.push(ob);
     });
   LBType &&
     LBType["common-masters"] &&
-    LBType["common-masters"].LBType.map((ob) => {
+    LBType["common-masters"]?.LBType?.map((ob) => {
       cmbLBType.push(ob);
     });
   Country &&
     Country["common-masters"] &&
-    Country["common-masters"].Country.map((ob) => {
+    Country["common-masters"]?.Country?.map((ob) => {
       cmbCountry.push(ob);
     });
   localbodies &&
     localbodies["tenant"] &&
-    localbodies["tenant"].tenants.map((ob) => {
+    localbodies["tenant"]?.tenants?.map((ob) => {
       cmbLB.push(ob);
     });
 

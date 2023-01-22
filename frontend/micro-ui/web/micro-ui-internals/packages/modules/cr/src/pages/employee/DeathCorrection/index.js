@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import { convertEpochToDateDMY, stringReplaceAll } from "../../../utils";
 import SearchFields from "./SearchFields";
 import MobileSearchApplication from "./MobileSearchApplication";
-import Deathcomp from "./DeathCorrectionroute";
+// import Deathcomp from "./DeathCorrectionroute";
 import { useTranslation } from "react-i18next";
 
 const DeathCorrection = ({ tenantId, onSubmit, data, count }) => {
@@ -30,6 +30,7 @@ const DeathCorrection = ({ tenantId, onSubmit, data, count }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
+  const [dataParams, setDataParams, clearDataParams] = Digit.Hooks.useSessionStorage("CR_DEATHCORRECTION_DATA", {});
 
   let config = [];
   let { data: newConfig, isLoading } = true;
@@ -37,6 +38,10 @@ const DeathCorrection = ({ tenantId, onSubmit, data, count }) => {
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
+  console.log('d',data);
+  // useEffect(()=>{
+  //   if(data)
+  // },[data])
   config.indexRoute = "information-death";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
@@ -143,6 +148,10 @@ const DeathCorrection = ({ tenantId, onSubmit, data, count }) => {
       RenewalPending: true,
     },
   });
+  const handleUpdate=(value)=>{
+    console.log('v',value);
+    sessionStorage.setItem("CR_DEATH_CORRECTIONS", JSON.stringify(value));
+  }
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
@@ -182,14 +191,17 @@ const DeathCorrection = ({ tenantId, onSubmit, data, count }) => {
   const columns = useMemo(
     () => [
       {
-        Header: t("DEATH_APPLICATION_NO"),
+        Header: t("DEATH_APPLICATION_NO2"),
         accessor: "deathApplicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
             <div>
-              <span className="link">
-                <Link to={`${path}/information-death/`}>{row.original["deathApplicationNo"]}</Link>
+              <span className="link" onClick={()=>handleUpdate(row?.original)}>
+              <Link to={`/digit-ui/employee/cr/death-flow/death-information`}>
+                 {row.original["deathApplicationNo"]}
+                  </Link>
+                {/* <Link to={`${path}/information-death/`}>{row.original["deathApplicationNo"]}</Link> */}
                 {/* <a href={`/information-death/`}>
                   {row.original["deathApplicationNo"]}
                 </a> */}
@@ -287,37 +299,7 @@ const DeathCorrection = ({ tenantId, onSubmit, data, count }) => {
         )}
       </div>
 
-      <Switch>
-        {config.map((routeObj, index) => {
-          const { component, texts, inputs, key, isSkipEnabled } = routeObj;
-          const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
-          return (
-            <Route path={`${match.path}/${routeObj.route}`} key={index}>
-              <Component
-                config={{ texts, inputs, key, isSkipEnabled }}
-                onSelect={handleSelect}
-                onSkip={handleSkip}
-                t={t}
-                formData={params}
-                onAdd={handleMultiple}
-                userType="employee"
-              />
-            </Route>  
-          );
-        })}
-        <Route path={`${match.path}/check`}>
-          <DeathCheckPage onSubmit={createProperty} value={params} />
-        </Route>
-        <Route path={`${match.path}/acknowledgement`}>
-          <DeathAcknowledgement data={params} onSuccess={onSuccess} />
-        </Route>
-        <Route path={`${path}`} exact>
-        </Route>
-        <PrivateRoute parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
-        
-        <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
-
-      </Switch>
+    
       {/* <DeathCrFlow path={path} /> */}
       {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
       {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}

@@ -65,15 +65,17 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [InformentNameMl, setInformentNameMl] = useState(formData?.PlaceOfDeath?.InformentNameMl ? formData?.PlaceOfDeath?.InformentNameMl : "");
   // const [setTitle, setSelectedTitle] = useState(formData?.PlaceOfDeath?.setTitle);
   const [AadhaarNo, setAadhaarNo] = useState(formData?.PlaceOfDeath?.AadhaarNo ?. formData?.PlaceOfDeath?.AadhaarNo);
-  const [setDeclaration, setSelectedDeclaration] = useState(formData?.PlaceOfDeath?.setDeclaration ? formData?.PlaceOfDeath?.setDeclaration : null);
+  // const [setDeclaration, setSelectedDeclaration] = useState(formData?.PlaceOfDeath?.setDeclaration ? formData?.PlaceOfDeath?.setDeclaration : null);
   const [InformentMobileNo, setInformentMobileNo] = useState(formData?.PlaceOfDeath?.InformentMobileNo ?. formData?.PlaceOfDeath?.InformentMobileNo);
   const [InformentEmail, setInformentEmail] = useState(formData?.PlaceOfDeath?.InformentEmail ? formData?.PlaceOfDeath?.InformentEmail :"" );
   const [isNoAadhaar, setIsNoAadhaar] = useState(formData?.PlaceOfDeath?.isNoAadhaar ? formData?.PlaceOfDeath?.isNoAadhaar : false);
   //Place of Death Vehicle
   const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.PlaceOfDeath?.VehicleRegistrationNo ? formData?.PlaceOfDeath?.VehicleRegistrationNo : "");
-  const [VehicleFromEn, setVehicleFromEn] = useState(formData?.PlaceOfDeath?.setVehicleFromEn ? formData?.PlaceOfDeath?.setVehicleFromEn : "");
-  const [VehicleToEn, setVehicleToEn] = useState(formData?.PlaceOfDeath?.setSelectVehicleToEn ? formData?.PlaceOfDeath?.setSelectVehicleToEn : "");
-  const [setVehicleHaltPlace, setSelectedVehicleHaltPlace] = useState(formData?.PlaceOfDeath?.VehicleHaltPlace ? formData?.PlaceOfDeath?.VehicleHaltPlace : null);
+  const [VehicleFromEn, setVehicleFromEn] = useState(formData?.PlaceOfDeath?.VehicleFromEn ? formData?.PlaceOfDeath?.VehicleFromEn : "");
+  const [VehicleToEn, setVehicleToEn] = useState(formData?.PlaceOfDeath?.VehicleToEn ? formData?.PlaceOfDeath?.VehicleToEn : "");
+  const [DriverLicenceNo, setDriverLicenceNo] = useState(formData?.PlaceOfDeath?.DriverLicenceNo ? formData?.PlaceOfDeath?.DriverLicenceNo :"");
+  // const [setVehicleHaltPlace, setSelectedVehicleHaltPlace] = useState(formData?.PlaceOfDeath?.VehicleHaltPlace ? formData?.PlaceOfDeath?.VehicleHaltPlace : null);
+  const [PlaceOfHalt, setPlaceOfHalt] = useState(formData?.PlaceOfDeath?.PlaceOfHalt ? formData?.PlaceOfDeath?.PlaceOfHalt : "");
   const [VehicleFromMl, setVehicleFromMl] = useState(formData?.PlaceOfDeath?.VehicleFromMl); 
   const [VehicleToMl, setVehicleToMl] = useState(formData?.PlaceOfDeath?.VehicleToMl);
   const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.PlaceOfDeath?.VehicleOtherDetailsEn);
@@ -172,7 +174,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
             InformentNameMl={InformentNameMl}
             // setTitle={setTitle}
             AadhaarNo={AadhaarNo}
-            setDeclaration={setDeclaration}
+            // setDeclaration={setDeclaration}
             InformentMobileNo={InformentMobileNo}
             AdrsVillage={AdrsVillage}
           />;
@@ -213,8 +215,10 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
             VehicleRegistrationNo={VehicleRegistrationNo}
             VehicleFromEn={VehicleFromEn}
             VehicleToEn={VehicleToEn}
+            DriverLicenceNo= {DriverLicenceNo}
             VehicleFromMl={VehicleFromMl}
-            setVehicleHaltPlace={setVehicleHaltPlace}
+            // setVehicleHaltPlace={setVehicleHaltPlace}
+            PlaceOfHalt ={PlaceOfHalt}
             VehicleToMl={VehicleToMl}
             VehicleOtherDetailsEn={VehicleOtherDetailsEn}
             VehicleOtherDetailsMl={VehicleOtherDetailsMl}
@@ -289,9 +293,11 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
     sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null);
     sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn : null);
     sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
+    sessionStorage.setItem("DriverLicenceNo", DriverLicenceNo ? DriverLicenceNo : null);    
+    sessionStorage.setItem("PlaceOfHalt", PlaceOfHalt ? PlaceOfHalt : null);    
     sessionStorage.setItem("VehicleFromMl", VehicleFromMl ? VehicleFromMl : null);
     sessionStorage.setItem("setVehicletype", setVehicletype ? setVehicletype.code : null);
-    sessionStorage.setItem("setVehicleHaltPlace", setVehicleHaltPlace ? setVehicleHaltPlace.code : null);
+    // sessionStorage.setItem("setVehicleHaltPlace", setVehicleHaltPlace ? setVehicleHaltPlace.code : null);
     sessionStorage.setItem("VehicleToMl", VehicleToMl ? VehicleToMl : null);
     // sessionStorage.setItem("setDeathVehicleWard", setDeathVehicleWard ? setDeathVehicleWard.code : null);
     sessionStorage.setItem("setAdmittedHospitalEn", setAdmittedHospitalEn ? setAdmittedHospitalEn.code : null);
@@ -299,6 +305,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
     sessionStorage.setItem("VehicleOtherDetailsEn", VehicleOtherDetailsEn ? VehicleOtherDetailsEn : null);
     sessionStorage.setItem("VehicleOtherDetailsMl", VehicleOtherDetailsMl ? VehicleOtherDetailsMl : null);
     // sessionStorage.setItem("VehicleType", VehicleType ? VehicleType : null);
+
     // Address from Birth
     sessionStorage.setItem("InformantAdrsCountry", InformantAdrsCountry ? InformantAdrsCountry.code : null);
     sessionStorage.setItem("InformantAdrsStateName", InformantAdrsStateName ? InformantAdrsStateName.code : null);
@@ -363,15 +370,17 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
       // setTitle,
       isNoAadhaar,
       AadhaarNo,
-      setDeclaration,
+      // setDeclaration,
       InformentMobileNo,
       InformentEmail,
       VehicleRegistrationNo,
       VehicleFromEn,
       VehicleToEn,
+      DriverLicenceNo,
+      PlaceOfHalt,
       VehicleFromMl,
       VehicleToMl,
-      setVehicleHaltPlace,
+      // setVehicleHaltPlace,
       setAdmittedHospitalEn,
       setAdmittedHospitalMl,
       VehicleOtherDetailsEn,
@@ -525,8 +534,8 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               // setSelectedTitle={setSelectedTitle}
               AadhaarNo={AadhaarNo}
               setAadhaarNo={setAadhaarNo}
-              setDeclaration={setDeclaration}
-              setSelectedDeclaration={setSelectedDeclaration}
+              // setDeclaration={setDeclaration}
+              // setSelectedDeclaration={setSelectedDeclaration}
               InformentMobileNo={InformentMobileNo}
               setInformentMobileNo={setInformentMobileNo}
               InformentEmail={InformentEmail}
@@ -581,13 +590,17 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               VehicleFromEn={VehicleFromEn}
               setVehicleToEn={setVehicleToEn}
               VehicleToEn={VehicleToEn}
+              PlaceOfHalt = {PlaceOfHalt}
+              setPlaceOfHalt={setPlaceOfHalt}
               setVehicleFromEn={setVehicleFromEn}
               VehicleFromMl={VehicleFromMl}
               setVehicleFromMl={setVehicleFromMl}
               VehicleToMl={VehicleToMl}
               setVehicleToMl={setVehicleToMl}
-              setVehicleHaltPlace={setVehicleHaltPlace}
-              setSelectedVehicleHaltPlace={setSelectedVehicleHaltPlace}
+              setDriverLicenceNo = {setDriverLicenceNo}
+              DriverLicenceNo = {DriverLicenceNo}
+              // setVehicleHaltPlace={setVehicleHaltPlace}
+              // setSelectedVehicleHaltPlace={setSelectedVehicleHaltPlace}
               VehicleOtherDetailsEn={VehicleOtherDetailsEn}
               setVehicleOtherDetailsEn={setVehicleOtherDetailsEn}
               setVehicletype={setVehicletype}
@@ -608,8 +621,8 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               // setSelectedTitle={setSelectedTitle}
               AadhaarNo={AadhaarNo}
               setAadhaarNo={setAadhaarNo}
-              setDeclaration={setDeclaration}
-              setSelectedDeclaration={setSelectedDeclaration}
+              // setDeclaration={setDeclaration}
+              // setSelectedDeclaration={setSelectedDeclaration}
               InformentMobileNo={InformentMobileNo}
               setInformentMobileNo={setInformentMobileNo}
               InformentEmail={InformentEmail}

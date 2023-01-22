@@ -14,27 +14,81 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
+  const RadioButton = ({ selected, handleChange }) => {
+    return (
+      <div className="statistical-radio">
+        <div>
+          <input
+            type="radio"
+            id="yes"
+            // name="answer"
+            value="1"
+            checked={selected === "1"}
+            onChange={handleChange}
+          />
+          <label htmlFor="yes">{t("CR_YES")}</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="no"
+            // name="answer"
+            value="0"
+            checked={selected === "0"}
+            onChange={handleChange}
+          />
+          <label htmlFor="no">{t("CR_NO")}</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="prob"
+            // name="answer"
+            value="prob"
+            checked={selected === "prob"}
+            onChange={handleChange}
+          />
+          <label htmlFor="prob">{t("CR_PROBABILY")}</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="unknown"
+            // name="answer"
+            value="unknown"
+            checked={selected === "unknown"}
+            onChange={handleChange}
+          />
+          <label htmlFor="unknown">{t("CR_UNKNOWN")}</label>
+        </div>
+      </div>
+    );
+  };
   const RadioButtons = ({ selected, handleChange }) => {
     return (
-      <div>
-        <input
-          type="radio"
-          id="yes"
-          // name="answer"
-          value="1"
-          checked={selected === "1"}
-          onChange={handleChange}
-        />
-        <label htmlFor="yes">Yes</label>
-        <input
-          type="radio"
-          id="no  "
-          // name="answer"
-          value="0"
-          checked={selected === "0"}
-          onChange={handleChange}
-        />
-        <label htmlFor="no">No</label>
+      <div className="statistical-radiop">
+        <div>
+          <input
+            type="radio"
+            id="yes"
+            // name="answer"
+            value="1"
+            checked={selected === "1"}
+            onChange={handleChange}
+          />
+          <label htmlFor="yes">{t("CR_YES")}</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="no"
+            // name="answer"
+            value="0"
+            checked={selected === "0"}
+            onChange={handleChange}
+          />
+          <label htmlFor="no">{t("CR_NO")}</label>
+        </div>
       </div>
     );
   };
@@ -108,11 +162,17 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   const [CauseOfDeath, setSelectedCauseOfDeath] = useState(formData?.StatisticalInfoContinue?.CauseOfDeath);
   // const [alcoholyears, setSelectedalcoholyears] = useState(formData?.StatisticalInfoContinue?.alcoholyears);
   const [answer, setAnswer] = useState("");
-  const [text, setText] = useState(formData?.StatisticalInfoContinue?.text?formData?.StatisticalInfoContinue?.text:"");
-  const [textPregnant, setTextPregnant] = useState(formData?.StatisticalInfoContinue?.textPregnant?formData?.StatisticalInfoContinue?.textPregnant:"");
-  const [textSmoke, setTextSmoke] = useState(formData?.StatisticalInfoContinue?.textSmoke?formData?.StatisticalInfoContinue?.textSmoke:"");
-  const [textTabacco, setTextTabacco] = useState(formData?.StatisticalInfoContinue?.textTabacco?formData?.StatisticalInfoContinue?.textTabacco:"");
-  const [textPanMasala, setTextPanMasala] = useState(formData?.StatisticalInfoContinue?.textPanMasala?formData?.StatisticalInfoContinue?.textPanMasala:"");
+  const [text, setText] = useState(formData?.StatisticalInfoContinue?.text ? formData?.StatisticalInfoContinue?.text : "");
+  const [textPregnant, setTextPregnant] = useState(
+    formData?.StatisticalInfoContinue?.textPregnant ? formData?.StatisticalInfoContinue?.textPregnant : ""
+  );
+  const [textSmoke, setTextSmoke] = useState(formData?.StatisticalInfoContinue?.textSmoke ? formData?.StatisticalInfoContinue?.textSmoke : "");
+  const [textTabacco, setTextTabacco] = useState(
+    formData?.StatisticalInfoContinue?.textTabacco ? formData?.StatisticalInfoContinue?.textTabacco : ""
+  );
+  const [textPanMasala, setTextPanMasala] = useState(
+    formData?.StatisticalInfoContinue?.textPanMasala ? formData?.StatisticalInfoContinue?.textPanMasala : ""
+  );
 
   let naturetypecmbvalue = null;
   let cmbAttention = [];
@@ -279,7 +339,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER_ML")}</CardLabel>
               <TextInput
                 t={t}
@@ -293,45 +353,25 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t(" ")}`}
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
               />
-            </div>
+            </div> */}
             <div className="col-md-6">
               <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
               {/* <div className="col-md-6 "> */}
               <RadioButtons
                 t={t}
-                // optionsKey="i18nKey"
+                optionsKey="i18nKey"
                 // onChange={setOptionkey}
+                option={options}
                 isMandatory={config.isMandatory}
                 selected={isPregnent}
                 onSelect={selectisPregnent}
                 handleChange={handleRadioChangeB}
               />
-              {isPregnent === "1" && (
-                <div className="col-md-4">
-                  <CardLabel>{t("CR_YEAR")}</CardLabel>
-                  <TextInput type="text" id="text" value={textPregnant} onChange={(e) => setTextPregnant(e.target.value)} />
-                </div>
-              )}
               {/* </div> */}
             </div>
-            <div>
-              {/* <RadioButtons
-                t={t}
-                optionsKey="i18nKey"
-                isMandatory={config.isMandatory}
-                options={menu}
-                selectedOption={isPregnent}
-                onSelect={selectisPregnent}
-
-              /> */}
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_SMOKE")}</CardLabel>
-              <RadioButtons
+              <RadioButton
                 t={t}
                 // optionsKey="i18nKey"
                 // onChange={setOptionkey}
@@ -359,43 +399,56 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 </div>
               )}
             </div>
-            <div className="col-md-6">
-              <CardLabel>{t("CR_HABITUALLY_CHEW_TOBACCO")}</CardLabel>
-              <RadioButtons
+            <div>
+              {/* <RadioButtons
                 t={t}
-                // optionsKey="i18nKey"
-                // onChange={setOptionkey}
+                optionsKey="i18nKey"
                 isMandatory={config.isMandatory}
-                selected={isTabacco}
-                onSelect={selectisTabacco}
-                handleChange={handleRadioChangeTabacco}
-              />
-              {isTabacco === "1" && (
-                <div>
-                  <CardLabel>{t("CR_YEAR")}</CardLabel>
-                  {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    // optionKey="i18nKey"
-                    name="textTabacco"
-                    value={textTabacco}
-                    onChange={(e) => setTextTabacco(e.target.value)}
-                    disable={isEdit}
-                    placeholder={`${t("CR_YEAR")}`}
-                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
-                  />
-                </div>
-              )}
+                options={menu}
+                selectedOption={isPregnent}
+                onSelect={selectisPregnent}
+
+              /> */}
             </div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
+              <CardLabel>{t("CR_HABITUALLY_CHEW_TOBACCO")}</CardLabel>
+              {/* <div className="statistical-flex"> */}
+                <RadioButton
+                  t={t}
+                  // optionsKey="i18nKey"
+                  // onChange={setOptionkey}
+                  isMandatory={config.isMandatory}
+                  selected={isTabacco}
+                  onSelect={selectisTabacco}
+                  handleChange={handleRadioChangeTabacco}
+                />
+                {isTabacco === "1" && (
+                  <div className="col-md-3">
+                    <CardLabel>{t("CR_YEAR")}</CardLabel>
+                    {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      // optionKey="i18nKey"
+                      name="textTabacco"
+                      value={textTabacco}
+                      onChange={(e) => setTextTabacco(e.target.value)}
+                      disable={isEdit}
+                      placeholder={`${t("CR_YEAR")}`}
+                      {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
+                    />
+                  </div>
+                )}
+              {/* </div> */}
+            </div>
+            <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>
-              <RadioButtons
+              <RadioButton
                 t={t}
                 // optionsKey="i18nKey"
                 isMandatory={config.isMandatory}
@@ -422,9 +475,13 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>
-              <RadioButtons
+              <RadioButton
                 t={t}
                 // optionsKey="i18nKey"
                 // onChange={setOptionkey}
