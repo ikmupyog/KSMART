@@ -4,6 +4,7 @@ import { useQueryClient } from "react-query";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 import ApplicationDetailsPDE from "../pages/employee/ApplicationDetailsPDE";
+import { extendWith } from "lodash";
 
 const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const [toast, setToast] = useState(false);
@@ -134,28 +135,45 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       ob.code === "2022-23" ? cmbPayYearTo.push(ob) : ""
     });
 
-function getYeardata(){
-  return cmbPayYearTo;
-}
+  function getYeardata(){
+    return cmbPayYearTo;
+  }
 
   let cmbPeriod = [];
   periodList &&
-    periodList["egf-master"] &&
-    periodList["egf-master"].FinancialPeriod.map((ob) => {
-      cmbPeriod.push(ob);
-    });
+  periodList["egf-master"] &&
+  periodList["egf-master"].FinancialPeriod.map((ob) => {
+    cmbPeriod.push(ob);
+  });
 
-  // const [FilteredLicToYear,setFilteredLicToYear] = useState(cmbPayYearTo);
-  // const [FilteredProfToYear,setFilteredProfToYear] = useState(cmbPayYearTo);
-  // const [FilteredRentToYear,setFilteredRentToYear] = useState(cmbPayYearTo);
 
-  // console.log("FilteredLicToYear");
-  // console.log(FilteredLicToYear);
-  // console.log(cmbPayYearTo);
+  const monthid = (new Date).getMonth();
+  let half = "";
+
+  if(((parseInt(monthid)+1) >= 4)&&((parseInt(monthid)+1) <= 9)){
+      half = "IHALF";
+  }
+  else{
+      half = "IIHALF";
+  }
+
+  
+
+  const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" ];
 
   const cmbptperiod = cmbPeriod.filter((doc) => doc.category.includes("CATEGORY_TAX"));
   const cmbrentperiod = cmbPeriod.filter((doc) => doc.category.includes("CATEGORY_RENT"));
 
+  const cmbpttoperiod = cmbPeriod.filter((doc) => doc.category.includes("CATEGORY_TAX") && doc.code.includes(half));
+  const cmbrenttoperiod = cmbPeriod.filter((doc) => doc.category.includes("CATEGORY_RENT") && doc.code.includes(monthNames[monthid]));
+
+  function getPtPeriod(){
+    return cmbpttoperiod;
+  }
+
+  function getRentPeriod(){
+    return cmbrenttoperiod;
+  }
 
   const [licArrear, setLicArrear] = useState(tldata[0]?.arrear ? tldata[0]?.arrear : "");
   const [licCurrent, setLicCurrent] = useState(tldata[0]?.current ? tldata[0]?.current : "");
@@ -168,14 +186,14 @@ function getYeardata(){
   const [profFromYear, setProfFromYear] = useState(profdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(profdata[0]?.fromYear))[0] : "");
   const [profFromPeriod, setProfFromPeriod] = useState(profdata[0]?.fromPeriod ? cmbptperiod.filter((period) => period.code.includes(profdata[0]?.fromPeriod))[0] : "");
   // const [profToYear, setProfToYear] = useState(profdata[0]?.toYear ? cmbPayProfYearTo.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
-  const [profToPeriod, setProfToPeriod] = useState(profdata[0]?.toPeriod ? cmbptperiod.filter((period) => period.code.includes(profdata[0]?.toPeriod))[0] : "");
+  const [profToPeriod, setProfToPeriod] = useState(profdata[0]?.toPeriod ? cmbpttoperiod.filter((period) => period.code.includes(profdata[0]?.toPeriod))[0] : "");
 
   const [rentArrear, setRentArrear] = useState(rentdata[0]?.arrear ? rentdata[0]?.arrear : "");
   const [rentCurrent, setRentCurrent] = useState(rentdata[0]?.current ? rentdata[0]?.current : "");
   const [rentFromYear, setRentFromYear] = useState(rentdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(rentdata[0]?.fromYear))[0] : "");
   const [rentFromMonth, setRentFromMonth] = useState(rentdata[0]?.fromPeriod ? cmbrentperiod.filter((month) => month.code.includes(rentdata[0]?.fromPeriod))[0] : "");
   // const [rentToYear, setRentToYear] = useState(rentdata[0]?.toYear ? cmbPayRentYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
-  const [rentToMonth, setRentToMonth] = useState(rentdata[0]?.toPeriod ? cmbrentperiod.filter((month) => month.code.includes(rentdata[0]?.toPeriod))[0] : "");
+  const [rentToMonth, setRentToMonth] = useState(rentdata[0]?.toPeriod ? cmbrenttoperiod.filter((month) => month.code.includes(rentdata[0]?.toPeriod))[0] : "");
 
   // useEffect(() => {
   //   if(isInitialRender===true){
@@ -210,9 +228,9 @@ function getYeardata(){
   //   }
   // },[isInitialRender]);
 
-  const [licToYear, setLicToYear] = useState(tldata[0]?.toYear ? FilteredLicToYear.filter((year) => year.code.includes(tldata[0]?.toYear))[0] : "");
-  const [profToYear, setProfToYear] = useState(profdata[0]?.toYear ? FilteredProfToYear.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
-  const [rentToYear, setRentToYear] = useState(rentdata[0]?.toYear ? FilteredRentToYear.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
+  const [licToYear, setLicToYear] = useState(tldata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(tldata[0]?.toYear))[0] : "");
+  const [profToYear, setProfToYear] = useState(profdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
+  const [rentToYear, setRentToYear] = useState(rentdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
 
   const setSelectBuildingcode = useCallback(e => {
     setBuildingCode(e.target.value);
@@ -316,13 +334,10 @@ function getYeardata(){
   const changesetrentCurrent = useCallback(e => {
     setRentCurrent(e.target.value);
   }, [rentCurrent]);
-
-  // function selectedsetrentPenal(e) {
-  //   setRentPenal(e.target.value);
-  // }
   function selectRentFromYear (value) {
     setRentFromYear(value);
     setRentToYear(getYeardata()[0]);
+    setRentToMonth(getRentPeriod()[0]);
   }
 
   const selectRentFromMonth = useCallback(value => {
@@ -341,11 +356,6 @@ function getYeardata(){
     setProfArrear(e.target.value);
   }, [profArrear]);
 
-
-  // function selectedsetProfCurrent(e) {
-  //   setProfCurrent(e.target.value);
-  // }
-
   const changesetProfCurrentFirst = useCallback(e => {
     setProfCurrentFirst(e.target.value);
   }, [profCurrentFirst]);
@@ -357,6 +367,7 @@ function getYeardata(){
   function selectProfFromYear (value) {
     setProfFromYear(value);
     setProfToYear(getYeardata()[0]);
+    setProfToPeriod(getPtPeriod()[0]);
   }
 
   const selectProfFromPeriod = useCallback(value => {
@@ -583,18 +594,13 @@ function getYeardata(){
   //   setPdeformdata(prevPostsData => ([...prevPostsData, formdata]));
   // }
   function validateData() {
-    // let flg=true;
-    // formState1.map((data) => {
-    //   combineddoorno = data.doorNo+data.doorNoSub;
-    //   flg= formState1.filter((d)=>d.doorNo+d.doorNoSub.includes(combineddoorno)) ? false : true ;
-    //   if(flg===false){
-    //     return flg;
-    //   }
-    // })
-
-    let flg = true;
-    // flg = formState1.filter((item,index) => (formState1.findIndex(data => data.doorNo === item.doorNo &&  data.doorNoSub === item.doorNoSub) != index &&
-    // (formState1.doorNo === item.doorNo &&  formState1.doorNoSub === item.doorNoSub)) ? "DN" : true);
+    let combineddoorno="";
+    let flg=true;
+    formState1.map((data) => {
+      combineddoorno = data.doorNo+data.doorNoSub;
+      const noOccurence = formState1.filter(d => d.doorNo+d.doorNoSub === combineddoorno).length;
+      flg = noOccurence > 1 ? "DN" : true;
+    })
     if (flg == true) {
       flg = capitalAmount > 1 ? true : "CA";
     }
@@ -620,8 +626,11 @@ function getYeardata(){
     let combineddoorno = "";
     let Tax = [];
     if (validateData() === "DN") {
+      setErrorMessage("Door No Duplication Found");
       setToast(true)
-      console.log("");
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
     else if (validateData() === "CA") {
       setErrorMessage("Capital Investment must be greater than 1 ");
@@ -1161,7 +1170,7 @@ function getYeardata(){
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_TO_PERIOD")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbptperiod} selected={profToPeriod} select={selectProfToPeriod}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_PERIOD") })} />
+                      <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbpttoperiod} selected={profToPeriod} select={selectProfToPeriod}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_PERIOD") })} />
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
@@ -1200,7 +1209,7 @@ function getYeardata(){
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrentperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
+                      <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrenttoperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
