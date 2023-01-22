@@ -28,6 +28,15 @@ const AddressOutsideIndia = ({
   setPostCode,
   OutSideCountry,
   setOutSideCountry,
+  ResNoEn,
+  setResNoEn,
+  ResNoMl,
+   setResNoMl,
+   HouseNameEn, 
+   setHouseNameEn,
+   HouseNameMl,
+    setHouseNameMl,
+
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -48,10 +57,10 @@ const AddressOutsideIndia = ({
   // const [ProvinceMl, setProvinceMl] = useState(formData?.AddressOutsideIndiaDetails?.ProvinceMl);
   // const [PostCode, setPostCode] = useState(formData?.AddressOutsideIndiaDetails?.PostCode);
   // const [OutSideCountry, setOutSideCountry] = useState(formData?.AddressOutsideIndiaDetails?.OutSideCountry);
-  const [ResNoEn, setResNoEn] = useState(formData?.AddressOutsideIndiaDetails?.ResNoEn);
-  const [ResNoMl, setResNoMl] = useState(formData?.AddressOutsideIndiaDetails?.ResNoMl);
-  const [HouseNameEn, setHouseNameEn] = useState(formData?.AddressOutsideIndiaDetails?.HouseNameEn);
-  const [HouseNameMl, setHouseNameMl] = useState(formData?.AddressOutsideIndiaDetails?.HouseNameMl);
+  // const [ResNoEn, setResNoEn] = useState(formData?.AddressOutsideIndiaDetails?.ResNoEn);
+  // const [ResNoMl, setResNoMl] = useState(formData?.AddressOutsideIndiaDetails?.ResNoMl);
+  // const [HouseNameEn, setHouseNameEn] = useState(formData?.AddressOutsideIndiaDetails?.HouseNameEn);
+  // const [HouseNameMl, setHouseNameMl] = useState(formData?.AddressOutsideIndiaDetails?.HouseNameMl);
 
  
   // const [CommencementDate, setCommencementDate] = useState();
@@ -123,7 +132,7 @@ const AddressOutsideIndia = ({
         setPostCode(e.target.value);
       }
     } else {
-      setSPostCode(e.target.value);
+      setPostCode(e.target.value);
     }
 
   }
@@ -142,10 +151,10 @@ const AddressOutsideIndia = ({
     // sessionStorage.setItem("ProvinceMl", ProvinceMl  ? ProvinceMl  : null);
     // sessionStorage.setItem("PostCode", PostCode  ? PostCode  : null);
     // sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.code : null);
-    sessionStorage.setItem("ResNoEn", ResNoEn  ? ResNoEn  : null);
-    sessionStorage.setItem("ResNoMl", ResNoMl  ? ResNoMl  : null);
-    sessionStorage.setItem("HouseNameEn", HouseNameEn  ? HouseNameEn  : null);
-    sessionStorage.setItem("HouseNameMl", HouseNameMl  ? HouseNameMl  : null);
+    // sessionStorage.setItem("ResNoEn", ResNoEn  ? ResNoEn  : null);
+    // sessionStorage.setItem("ResNoMl", ResNoMl  ? ResNoMl  : null);
+    // sessionStorage.setItem("HouseNameEn", HouseNameEn  ? HouseNameEn  : null);
+    // sessionStorage.setItem("HouseNameMl", HouseNameMl  ? HouseNameMl  : null);
     
 
     // onSelect(config.key, { AdressEn, AdressMl, AdressEnB, AdressMlB, LocalityEn, LocalityMl, ProvinceEn, ProvinceMl, OutSideCountry, });
@@ -176,7 +185,7 @@ const AddressOutsideIndia = ({
             <Dropdown
               t={t}
               optionKey="name"
-              isMandatory={false}
+              isMandatory={true}
               option={cmbCountry}
               selected={OutSideCountry}
               select={setSelectOutSideCountry}
@@ -193,7 +202,7 @@ const AddressOutsideIndia = ({
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_STATE_REGION_PROVINCE_EN")}
-                <span className="mandatorycss">*</span>
+        
               </CardLabel>
               <TextInput
                 t={t}
@@ -205,13 +214,13 @@ const AddressOutsideIndia = ({
                 onChange={setSelectProvinceEn}
                 disable={isEdit}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               />
             </div>
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_STATE_REGION_PROVINCE_ML")}
-                <span className="mandatorycss">*</span>
+              
               </CardLabel>
               <TextInput
                 t={t}
@@ -225,7 +234,7 @@ const AddressOutsideIndia = ({
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
+                  isRequired: false,
                   type: "text",
                   title: t("CR_INVALID_STATE_REGION_PROVINCE_ML"),
                 })}
@@ -240,7 +249,7 @@ const AddressOutsideIndia = ({
           <div className="col-md-6">
             <CardLabel>
               {t("CR_CITY_TOWN_EN")}
-              <span className="mandatorycss">*</span>
+            
             </CardLabel>
             <TextInput
               t={t}
@@ -252,13 +261,13 @@ const AddressOutsideIndia = ({
               onChange={setSelectAdressEn}
               disable={isEdit}
               placeholder={`${t("CR_CITY_TOWN_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
             />
           </div>
           <div className="col-md-6">
             <CardLabel>
               {t("CR_CITY_TOWN_ML")}
-              <span className="mandatorycss">*</span>
+             
             </CardLabel>
             <TextInput
               t={t}
@@ -270,7 +279,7 @@ const AddressOutsideIndia = ({
               onChange={setSelectAdressMl}
               disable={isEdit}
               placeholder={`${t("CR_CITY_TOWN_ML")}`}
-              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_ML") })}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_CITY_TOWN_ML") })}
             />
           </div>
         </div>
@@ -315,7 +324,7 @@ const AddressOutsideIndia = ({
           <div className="col-md-6">
             <CardLabel>
               {t("CR_LOCALITY_EN")}
-              <span className="mandatorycss">*</span>
+             
             </CardLabel>
             <TextInput
               t={t}
@@ -327,13 +336,13 @@ const AddressOutsideIndia = ({
               onChange={setSelectLocalityEn}
               disable={isEdit}
               placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-6">
             <CardLabel>
               {t("CR_LOCALITY_ML")}
-              <span className="mandatorycss">*</span>
+              
             </CardLabel>
             <TextInput
               t={t}
@@ -347,7 +356,7 @@ const AddressOutsideIndia = ({
               placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
+                isRequired: false,
                 type: "text",
                 title: t("CR_INVALID_LOCALITY_ML"),
               })}
@@ -385,7 +394,7 @@ const AddressOutsideIndia = ({
                 onChange={setSelectResNoMl}
                 placeholder={`${t("CR_RES_ASSOCIATION_NO_ML")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
+                {...(validation = { pattern:  "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$",  isRequired: false, type: "text", title: t("CR_INVALID_RES_ASSOCIATION_NO_ML") })}
               />
             </div>
           </div>
@@ -426,7 +435,7 @@ const AddressOutsideIndia = ({
                 onChange={setSelectHouseNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                {...(validation = { pattern:  "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
               />
             </div>
           </div>
