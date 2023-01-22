@@ -18,6 +18,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: Menu = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
 
@@ -233,19 +234,36 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [LBCombo, setLBCombo] = useState(null);
+
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let menu = [];
   let naturetype = null;
+  let cmbLB=[];
   Menu &&
     Menu["death-services"] &&
     Menu["death-services"].PlaceMaster.map((ob) => {
       menu.push(ob);
     });
+    localbodies &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants.map((ob) => {
+      cmbLB.push(ob);   
+      // setLBCombo(cmbLB);
+      // console.log("cmbLB" + localbodies); 
+      // setIsInitialRender(true);
+     
+    });  
+    console.log(localbodies);
   const onSkip = () => onSelect();
 
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
+    if(localbodies.length>0){
+      setLBCombo(localbodies);
+      console.log(LBCombo);
+    }
   }
 
   React.useEffect(() => {
@@ -324,6 +342,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             AdrsSubNo={AdrsSubNo}
             AdrsResNoEn={AdrsResNoEn}
             AdrsResNoMl={AdrsResNoMl}
+            LBCombo={LBCombo}
+            
           />;
         }
         if (naturetype === "HOME  || VEHICLE || PUBLIC_PLACES") {
@@ -375,8 +395,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       } else {
         setHospitalError(false);
       }
-      console.log(SignedOfficerName.hospitalRegistar);
-      if (SignedOfficerName.hospitalRegistar != "Others") {
+      if (HospitalName != null ) {
         if (SignedOfficerName == null) {
           setSignedOfficerError(true);
           validFlag = false;
@@ -397,7 +416,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         } else {
           setSignedOfficerDesgError(false);
         }
-      } else if (SignedOfficerName.hospitalRegistar === "Others") {
+      } else if (HospitalName != null && SignedOfficerName.hospitalRegistar === "Others") {
        
         if(SignedOfficerNameOther == null || SignedOfficerNameOther == "" || SignedOfficerNameOther == undefined ){
           setSignedOfficerError(true);
@@ -410,7 +429,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           setSignedOfficerError(false);
         } 
         if(SignedOfficerDesignationOther == null || SignedOfficerDesignationOther == "" || SignedOfficerDesignationOther == undefined ){
-          console.log(SignedOfficerName.hospitalRegistar);
           setSignedOfficerDesgError(true);
           validFlag = false;
           setToast(true);
@@ -431,6 +449,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         let MobileLen = SignedOfficerMobileNo;
         if (MobileLen.length != 0) {
           if (MobileLen.length > 10) {
+            setMobileError(false);
             setMobileLengthError(true);
             validFlag = false;
             setToast(true);
@@ -439,6 +458,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             }, 2000);
             return false;
           } else if (MobileLen.length < 10) {
+            setMobileError(false);
             setMobileLengthError(true);
             validFlag = false;
             setToast(true);
@@ -452,6 +472,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           }
         } else {
           setMobileError(true);
+          setMobileLengthError(false);
           validFlag = false;
           setToast(true);
           setTimeout(() => {
@@ -461,6 +482,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         }
       } else {
         setMobileError(true);
+        setMobileLengthError(false);
         validFlag = false;
         setToast(true);
         setTimeout(() => {
@@ -1313,7 +1335,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
 
     if (validFlag === true) {
       if (BirthPlace.code === "HOSPITAL") {
-        console.log("SignedOfficerOtherStatussave" + SignedOfficerOtherStatus);
         sessionStorage.removeItem("BirthPlace");
         sessionStorage.setItem("BirthPlace", BirthPlace.code);
         sessionStorage.setItem("HospitalName", HospitalName ? HospitalName.hospitalName : null);
@@ -2190,6 +2211,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
               AdrsResNoEn={AdrsResNoEn}
               setAdrsResNoMl={setAdrsResNoMl}
               AdrsResNoMl={AdrsResNoMl}
+              setLBCombo={setLBCombo}
+              LBCombo={LBCombo}
             />
             <InformantDetails
               setInfomantFirstNameEn={setInfomantFirstNameEn}
