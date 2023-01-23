@@ -461,10 +461,10 @@ public class TLQueryBuilder {
             preparedStmtList.add(criteria.getOwnerName().split("\\.")[0] + "%");
         }
 
-        if (criteria.getWardNo() != null) {
+        if (criteria.getWardId() != null) {
             addClauseIfRequired(preparedStmtList, builder);
-            builder.append("  tladdress.wardno = ? ");
-            preparedStmtList.add(criteria.getWardNo());
+            builder.append("  tladdress.wardid = ? ");
+            preparedStmtList.add(criteria.getWardId());
         }
 
         if (criteria.getDoorNo() != null) {
@@ -477,6 +477,12 @@ public class TLQueryBuilder {
             addClauseIfRequired(preparedStmtList, builder);
             builder.append("  tlstructplace.doorsub = ? ");
             preparedStmtList.add(criteria.getDoorNoSub());
+        }
+
+        if (criteria.getApplicationNumber() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.applicationnumber = ? ");
+            preparedStmtList.add(criteria.getApplicationNumber());
         }
         builder.append(" ORDER BY tl.id ,tltax.service");
         // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);

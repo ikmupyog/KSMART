@@ -106,6 +106,9 @@ public class TradeLicenseSearchCriteria {
     @JsonProperty("doorNoSub")
     private String doorNoSub = null;
 
+    @JsonProperty("wardId")
+    private Long wardId;
+
     public boolean isEmpty() {
         return (this.tenantId == null && this.status == null && this.applicationType == null && this.ids == null
                 && this.applicationNumber == null
