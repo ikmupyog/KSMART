@@ -1107,7 +1107,7 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
 
                         <div className="col-md-4">
                           <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="DoorNoBuild" value={field.doorNo} onChange={(e) => handleTextInputField1(index, e, "doorNo")}  {...(validation = { pattern: "^[0-9`' ]*$", isRequired: value3 === "LBBUILDING" ? false : true,  title: t("TL_INVALID_DOOR_NO") })} />
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="DoorNoBuild" value={field.doorNo} onChange={(e) => handleTextInputField1(index, e, "doorNo")}  {...(validation = { isRequired: value3 === "LBBUILDING" ? false : true,  title: t("TL_INVALID_DOOR_NO") })} />
                         </div>
                         <div className="col-md-4">
                           <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO_SUB")}`}</CardLabel>
@@ -1191,11 +1191,11 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type={"text"} name="licArrear" value={licArrear} onChange={changesetLicArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false,  title: t("TL_INVALID_ARREAR") })} />
+                      <TextInput t={t} isMandatory={false} type={"text"} name="licArrear" value={licArrear} onChange={changesetLicArrear} {...(validation = { isRequired: false,  title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type={"text"} name="licCurrent" value={licCurrent} onChange={changesetLicCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                      <TextInput t={t} isMandatory={false} type={"text"} name="licCurrent" value={licCurrent} onChange={changesetLicCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
                     </div>
                   </div>
                 </div>
@@ -1225,15 +1225,15 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
                     </div>
                     <div className="col-md-3" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" name="profArrear" value={profArrear} onChange={changesetProfArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false,  title: t("TL_INVALID_ARREAR") })} />
+                      <TextInput t={t} isMandatory={false} type="text" name="profArrear" value={profArrear} onChange={changesetProfArrear} {...(validation = { isRequired: false,  title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT_FIRST")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" name="profCurrentFirst" value={profCurrentFirst} onChange={changesetProfCurrentFirst} {...(validation = { pattern: "^([0-9])$", isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                      <TextInput t={t} isMandatory={false} type="text" name="profCurrentFirst" value={profCurrentFirst} onChange={changesetProfCurrentFirst} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT_SECOND")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" name="profCurrentSecond" value={profCurrentSecond} onChange={changesetProfCurrentSecond} {...(validation = { pattern: "^([0-9])$", isRequired: false,  title: t("TL_INVALID_PENAL") })} />
+                      <TextInput t={t} isMandatory={false} type="text" name="profCurrentSecond" value={profCurrentSecond} onChange={changesetProfCurrentSecond} {...(validation = { isRequired: false,  title: t("TL_INVALID_PENAL") })} />
                     </div>
                   </div>
                   <div className="row">
@@ -1264,11 +1264,11 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { pattern: "^([0-9])$", isRequired: false, title: t("TL_INVALID_ARREAR") })} />
+                      <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-2" >
                       <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { pattern: "^([0-9])$", isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                      <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
                     </div>
                   </div>
                 </div>
