@@ -71,7 +71,9 @@ public class CrDeathRegistryService {
         //IDGen call
         //enrichmentService.setIdgenIds(request);    
         enrichmentService.setRegistrationNumberDetails(request); 
-
+        //Rakhi S on 23.01.2023
+        enrichmentService.setCertificateNumberDetails(request);
+        
         producer.push(deathConfig.getSaveDeathRegistryTopic(), request);
 
         return request.getDeathCertificateDtls();

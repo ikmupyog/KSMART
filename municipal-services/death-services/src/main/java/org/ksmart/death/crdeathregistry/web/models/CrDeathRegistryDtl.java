@@ -480,4 +480,15 @@ public class CrDeathRegistryDtl {
    @JsonProperty("funcionUID")
    private String funcionUID ;
 
+   //RAkhi S on 23.01.2023
+   @Size(max = 64)
+   @JsonProperty("certificateNo")
+   private String certificateNo ;
+
+   @JsonProperty("certificateNoId")
+   private Long certificateNoId ;
+
+   @JsonProperty("certificateDate")
+   private Long certificateDate ;
+
 }

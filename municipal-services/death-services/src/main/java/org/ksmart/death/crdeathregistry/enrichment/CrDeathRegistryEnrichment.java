@@ -211,4 +211,59 @@ public class CrDeathRegistryEnrichment implements BaseEnrichment{
         // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
     }
+
+    //Certificate Number Creation by Rakhi S 23.01.2023
+    public void setCertificateNumberDetails(CrDeathRegistryRequest request) {
+        RequestInfo requestInfo = request.getRequestInfo();
+        int Year = Calendar.getInstance().get(Calendar.YEAR) ;
+        Long currentTime = Long.valueOf(System.currentTimeMillis());
+        String tenantId = requestInfo.getUserInfo().getTenantId();
+        List<Map<String, Object>> RegistrationNoDetails = repository.getDeathCertificate(tenantId, Year);
+        
+        request.getDeathCertificateDtls()
+                .forEach(deathdtls -> {    
+                    String certificateNo=null;
+                    Long certificateNoId=null;
+                    //Rakhi S on 23.01.2023 mdms call for tenand idgencode and lbtypecode
+                    Object mdmsData = util.mDMSCallRegNoFormating(request.getRequestInfo()
+                                        , request.getDeathCertificateDtls().get(0).getTenantId());
+
+                    Map<String,List<String>> masterData = getAttributeValues(mdmsData);
+
+                    String idgenCode = masterData.get(CrDeathRegistryConstants.TENANTS).toString();
+                    idgenCode = idgenCode.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    Object mdmsDataLBType = util.mDMSCallLBType(request.getRequestInfo()
+                                    , request.getDeathCertificateDtls().get(0).getTenantId());
+
+                    Map<String,List<String>> masterDataLBType = getAttributeValues(mdmsDataLBType);
+
+                    String lbType = masterDataLBType.get(CrDeathRegistryConstants.TENANTS).toString();
+                    lbType = lbType.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    String lbTypeCode = "";
+
+                    if(lbType.equals(CrDeathRegistryConstants.LB_TYPE_CORPORATION.toString())){
+                        lbTypeCode=CrDeathRegistryConstants.LB_TYPE_CORPORATION_CAPTION.toString();
+                    }
+                    else if(lbType.equals(CrDeathRegistryConstants.LB_TYPE_MUNICIPALITY.toString())){
+                        lbTypeCode=CrDeathRegistryConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
+                    }
+                    //end
+
+                    if (RegistrationNoDetails.size()>=1) {
+                        //RegistrationNo new format decision by Domain team created by Rakhi S                       
+                        certificateNo=String.valueOf("CT-"+RegistrationNoDetails.get(0).get("certNo"))+"-"+String.valueOf(Year)+"-"+deathdtls.getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+CrDeathRegistryConstants.STATE_CODE.toString();
+                        certificateNoId=Long.parseLong(String.valueOf(RegistrationNoDetails.get(0).get("certNo")));
+                    }
+                    else{
+                        certificateNo="CT-"+CrDeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+deathdtls.getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+CrDeathRegistryConstants.STATE_CODE.toString();
+                        certificateNoId=Long.parseLong(CrDeathRegistryConstants.REGISTRATION_NUMBER_FIRST);
+                    }
+
+                        deathdtls.setCertificateNo(certificateNo);
+                        deathdtls.setCertificateNoId(certificateNoId);
+                        deathdtls.setCertificateDate(currentTime);
+                });       
+    }  
 }
