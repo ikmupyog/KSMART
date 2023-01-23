@@ -18,7 +18,6 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [OfficerNames, setFilteredOfficerName] = useState(0);
   const [Designations, setFilteredDesignation] = useState(0);
-  console.log("SignedOfficerOtherStatus" + SignedOfficerOtherStatus)
   // const [SignedOfficerOtherStatus, setSignedOfficerOtherStatus] = useState(formData?.BirthPlace?.SignedOfficerName ? formData?.BirthPlace?.SignedOfficerName : "");
   // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
@@ -62,7 +61,7 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
            
           }   
           setFilteredOfficerName(OtherRegistrar);
-          setFilteredDesignation(OtherRegistrar);
+          setFilteredDesignation(cmbDesignations[0].registar);
           // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
           // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
         }
@@ -77,11 +76,10 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
     selectHospitalName(value);
     selectSignedOfficerName(null);
     selectSignedOfficerDesignation(null);
-    // setFilteredOfficerName(null);
-    // setFilteredDesignation(null);
+    setFilteredOfficerName(null);
+    setFilteredDesignation(null);
   }
   function setselectSignedOfficerName(value) {
-    console.log("value.hospitalRegistar" + value.hospitalRegistar);
     selectSignedOfficerName(value);
     setSignedOfficerOtherStatus(value.hospitalRegistar);
   }
@@ -89,10 +87,20 @@ const HospitalDetails = ({ config, onSelect, userType, formData, HospitalName, s
     selectSignedOfficerDesignation(value);
   }
   function setSelectSignedOfficerOther(e) {
-    selectSignedOfficerNameOther(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      selectSignedOfficerNameOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+    }
   }
   function setSelectSignedOfficerOthersDesignation(e) {
-    selectSignedOfficerDesignationOther(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      selectSignedOfficerDesignationOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+    }
   }
   function setSelectSignedOfficerAadharNo(e) {
     setSignedOfficerAadharNo(e.target.value);

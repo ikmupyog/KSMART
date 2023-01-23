@@ -12,7 +12,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
-  const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
+  // const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [TradeName, setTradeName] = useState(null);
@@ -50,8 +51,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
 
     let cmbhospital = [];
     hospital &&
-      hospital["birth-death-service"] &&
-      hospital["birth-death-service"].hospitalList.map((ob) => {
+      hospital["egov-location"] &&
+      hospital["egov-location"].hospitalList.map((ob) => {
         cmbhospital.push(ob);
       });
       let cmbLBType = [];
@@ -431,7 +432,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
         <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}</CardLabel>
         <Dropdown
                 t={t}
-                optionKey="code"
+                optionKey="hospitalName"
                 isMandatory={false}
                 option={cmbhospital}
                 selected={setAdmittedHospitalEn}
@@ -444,7 +445,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
         <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_ML")}`}</CardLabel>
         <Dropdown
                 t={t}
-                optionKey="code"
+                optionKey="hospitalNamelocal"
                 isMandatory={false}
                 option={cmbhospital}
                 selected={setAdmittedHospitalMl}

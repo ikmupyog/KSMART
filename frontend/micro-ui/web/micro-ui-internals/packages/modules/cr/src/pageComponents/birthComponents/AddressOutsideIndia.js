@@ -78,42 +78,87 @@ const AddressOutsideIndia = ({
   //   setSelectedPlaceofActivity(value);
   // }
   function setSelectAdressEn(e) {
-    setAdressEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+    setAdressEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+  }
+
   }
   function setSelectAdressEnB(e) {
-    setAdressEnB(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }    
+    setAdressEnB(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
   }
+  
   function setSelectAdressMlB(e) {
-    setAdressMlB(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }
+    setAdressMlB(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
   function setSelectAdressMl(e) {
-    setAdressMl(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }
+    setAdressMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
   function setSelectLocalityEn(e) {
-    setLocalityEn(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }    
+    setLocalityEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
   }
   function setSelectLocalityMl(e) {
-    setLocalityMl(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }    
+    setLocalityMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
   function setSelectResNoEn(e) {
-    setResNoEn(e.target.value);
+    if (e.target.value.length === 20) {
+      return false;      
+    } else {
+    setResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
   }
+}
   function setSelectResNoMl(e) {
-    setResNoMl(e.target.value);
+    if (e.target.value.length === 20) {
+      return false;      
+    } else {
+    setResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
+}
   function setSelectHouseNameEn(e) {
-    setHouseNameEn(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }  else {   
+    setHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
   }
+}
   function setSelectHouseNameMl(e) {
-    setHouseNameMl(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }  else {   
+    setHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
-   
+}
   function setSelectProvinceEn(e) {
-    setProvinceEn(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }  else {   
+    setProvinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
   }
+}
   function setSelectProvinceMl(e) {
-    setProvinceMl(e.target.value);
+    if (e.target.value.length===51){
+      return false;
+    }  else {   
+    setProvinceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
   }
+}
   function setSelectOutSideCountry(value) {
     setOutSideCountry(value);
     console.log("Country" + cmbCountry);

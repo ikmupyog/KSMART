@@ -29,6 +29,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [HospitalMobile, setHospitalMobile] = useState(formData?.PlaceOfDeath?.HospitalMobile ?. formData?.PlaceOfDeath?.HospitalMobile );
   const [OfficerName, setOfficerName] = useState(formData?.PlaceOfDeath?.OfficerName ? formData?.PlaceOfDeath?.OfficerName : "");
   const [OfficerDesignation, setOfficerDesignation] = useState(formData?.PlaceOfDeath?.OfficerDesignation ? formData?.PlaceOfDeath?.OfficerDesignation : "");
+  const [SignedOfficerOtherStatus, setSignedOfficerOtherStatus] = useState(formData?.PlaceOfDeath?.SignedOfficerOtherStatus ? formData?.PlaceOfDeath?.SignedOfficerOtherStatus : "");
 
   //DeathPlace Home
   const [AdrsCountry, setAdrsCountry] = useState(formData?.PlaceOfDeath?.AdrsCountry ? formData?.PlaceOfDeath?.AdrsCountry : null);
@@ -140,6 +141,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
             HospitalMobile={HospitalMobile}
             OfficerName={OfficerName}
             OfficerDesignation={OfficerDesignation}
+            SignedOfficerOtherStatus={SignedOfficerOtherStatus}
           />;
         }
         if (naturetype === "HOME") {
@@ -250,6 +252,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
     sessionStorage.setItem("HospitalMobile", HospitalMobile ? HospitalMobile : null);
     sessionStorage.setItem("OfficerName", OfficerName ? OfficerName : null);
     sessionStorage.setItem("OfficerDesignation", OfficerDesignation ? OfficerDesignation : null);
+    sessionStorage.setItem("SignedOfficerOtherStatus", SignedOfficerOtherStatus ? SignedOfficerOtherStatus : null);
     //Place of Death Home
     sessionStorage.setItem("AdrsCountry", AdrsCountry ? AdrsCountry.code : null);
     sessionStorage.setItem("AdrsStateName", AdrsStateName ? AdrsStateName.code : null);
@@ -285,6 +288,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
     sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl : null);
     // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     sessionStorage.setItem("isNoAadhaar", isNoAadhaar ? isNoAadhaar : null);
+    
     sessionStorage.setItem("AadhaarNo", AadhaarNo ? AadhaarNo : null);
     // sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
     sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo : null);
@@ -340,6 +344,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
       HospitalMobile,
       OfficerName,
       OfficerDesignation,
+      SignedOfficerOtherStatus,
       AdrsDoorNo,
       AdrsHouseNameEn,
       AdrsHouseNameMl,
@@ -458,6 +463,8 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               OfficerName={OfficerName}
               setOfficerDesignation={setOfficerDesignation}
               OfficerDesignation={OfficerDesignation}
+              setSignedOfficerOtherStatus={setSignedOfficerOtherStatus}
+              SignedOfficerOtherStatus={SignedOfficerOtherStatus}
             />
           </div>
         )}

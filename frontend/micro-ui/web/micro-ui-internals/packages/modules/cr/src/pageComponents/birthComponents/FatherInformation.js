@@ -78,7 +78,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherFirstNameEn(e.target.value);
+            setFatherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
         }
     }
     function setSelectFatherMiddleNameEn(e) {
@@ -86,7 +86,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherMiddleNameEn(e.target.value);
+            setFatherMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
         }
     }
     function setSelectFatherLastNameEn(e) {
@@ -94,7 +94,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherLastNameEn(e.target.value);
+            setFatherLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
         }
     }
     function setSelectFatherFirstNameMl(e) {
@@ -102,7 +102,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherFirstNameMl(e.target.value);
+            setFatherFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
         }
     }
     function setSelectFatherMiddleNameMl(e) {
@@ -110,7 +110,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherMiddleNameMl(e.target.value);
+            setFatherMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
         }
     }
     function setSelectFatherLastNameMl(e) {
@@ -118,7 +118,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
-            setFatherLastNameMl(e.target.value);
+            setFatherLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
         }
     }
     function setSelectFatherAadhar(e) {
@@ -411,7 +411,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                         </div>
                         <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="FatherMobile" value={FatherMobile}
-                                onChange={setSelectFatherMobile} disable={isFatherInfo} placeholder={`${t("CR_EMAIL")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
+                                onChange={setSelectFatherMobile} disable={isFatherInfo} placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
                         </div>
                     </div>
                 </div>

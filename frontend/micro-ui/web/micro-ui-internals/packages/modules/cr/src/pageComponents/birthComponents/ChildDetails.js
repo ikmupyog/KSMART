@@ -125,7 +125,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildFirstNameEn(e.target.value);
+      setChildFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
     }
   }
   function setSelectChildMiddleNameEn(e) {
@@ -133,7 +133,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildMiddleNameEn(e.target.value);
+      setChildMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
     }
   }
   function setSelectChildLastNameEn(e) {
@@ -141,7 +141,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildLastNameEn(e.target.value);
+      setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
     }
   }
   function setSelectChildFirstNameMl(e) {
@@ -149,7 +149,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildFirstNameMl(e.target.value);
+      setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
     }
   }
   function setSelectChildMiddleNameMl(e) {
@@ -157,7 +157,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildMiddleNameMl(e.target.value);
+      setChildMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
     }
   }
   function setSelectChildLastNameMl(e) {
@@ -165,7 +165,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildLastNameMl(e.target.value);
+      setChildLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
     }
   }
   // function setAdopted(e) {
@@ -292,7 +292,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 onChange={setselectChildDOB}
                 inputFormat="DD-MM-YYYY"
                 placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-                maxDate={new Date() || undefined}
+                {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
               />
             </div>
             <div className="col-md-2">
