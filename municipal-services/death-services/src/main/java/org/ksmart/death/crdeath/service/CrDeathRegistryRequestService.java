@@ -200,7 +200,7 @@ public class CrDeathRegistryRequestService {
 
     public CrDeathRegistryAddress createRegistryPermanentAddress(CrDeathDtlRequest deathrequest){
 
-        CrDeathAddress permanentAddress = deathrequest.getDeathCertificateDtls().get(0).getAddressInfo().getPresentAddress();
+        CrDeathAddress permanentAddress = deathrequest.getDeathCertificateDtls().get(0).getAddressInfo().getPermanentAddress();
         CrDeathRegistryAddress registryPermanentAddress = new CrDeathRegistryAddress();
         registryPermanentAddress.setAddrTypeId(permanentAddress.getAddrTypeId());
         registryPermanentAddress.setHouseNo(permanentAddress.getHouseNo());
