@@ -31,7 +31,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ApplicantPersonal {
 
     @Schema(type = "string", format = "uuid", description = "Applicant id") // NOPMD
@@ -42,6 +42,7 @@ public class ApplicantPersonal {
     @Schema(type = "string", description = "First name")
     @NotBlank(message = "First name is required")
     @Size(max = 64, message = "First name length cannot exceed 64 characters")
+    @Pattern(regexp = FMConstants.PATTERN_NAME, message = "Invalid first name")
     @JsonProperty("firstName")
     private String firstName;
 
@@ -53,6 +54,7 @@ public class ApplicantPersonal {
 
     @Schema(type = "string", description = "Last name")
     @Size(max = 64, message = "Last name length cannot exceed 64 characters")
+    @Pattern(regexp = FMConstants.PATTERN_NAME, message = "Invalid last name")
     @JsonProperty("lastName")
     private String lastName;
 
@@ -107,6 +109,7 @@ public class ApplicantPersonal {
 
     @Schema(type = "string", description = "Father first name")
     @Size(max = 64, message = "Father first name length cannot exceed 64 characters")
+    @Pattern(regexp = FMConstants.PATTERN_NAME, message = "Invalid father first name")
     @JsonProperty("fatherFirstName")
     private String fatherFirstName;
 
@@ -117,6 +120,7 @@ public class ApplicantPersonal {
 
     @Schema(type = "string", description = "Father last name")
     @Size(max = 64, message = "Father last name length cannot exceed 64 characters")
+    @Pattern(regexp = FMConstants.PATTERN_NAME, message = "Invalid father last name")
     @JsonProperty("fatherLastName")
     private String fatherLastName;
 
@@ -127,6 +131,7 @@ public class ApplicantPersonal {
 
     @Schema(type = "string", description = "Mother first name")
     @Size(max = 64, message = "Mother first name length cannot exceed 64 characters")
+    @Pattern(regexp = FMConstants.PATTERN_NAME, message = "Invalid mother first name")
     @JsonProperty("motherFirstName")
     private String motherFirstName;
 
@@ -137,6 +142,7 @@ public class ApplicantPersonal {
 
     @Schema(type = "string", description = "Mother last name")
     @Size(max = 64, message = "Mother last name length cannot exceed 64 characters")
+    @Pattern(regexp = FMConstants.PATTERN_NAME, message = "Invalid mother last name")
     @JsonProperty("motherLastName")
     private String motherLastName;
 

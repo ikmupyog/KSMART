@@ -7,31 +7,26 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @Slf4j
 public class ServiceRequestRepository {
 
-    private final ObjectMapper mapper;
-
+    // private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
 
-    // @Autowired
-    public ServiceRequestRepository(ObjectMapper mapper, RestTemplate restTemplate) {
-        this.mapper = mapper;
+    ServiceRequestRepository(/* final ObjectMapper mapper, */ final RestTemplate restTemplate) {
+        // this.objectMapper = mapper;
         this.restTemplate = restTemplate;
     }
 
-    public Object fetchResult(StringBuilder uri, Object request) {
+    public Object fetchResult(final StringBuilder uri, final Object request) {
         return fetchResult(uri, request, Map.class);
     }
 
-    public Object fetchResult(StringBuilder uri, Object request, Class<?> clazz) {
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    public Object fetchResult(final StringBuilder uri, final Object request, final Class<?> clazz) {
+        // objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         Object response = null;
         try {
             response = restTemplate.postForObject(uri.toString(), request, clazz);

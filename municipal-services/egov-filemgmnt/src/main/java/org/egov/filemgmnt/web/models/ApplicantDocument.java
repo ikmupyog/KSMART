@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ApplicantDocument {
 
     @Schema(type = "string", format = "uuid", description = "Applicant document id")

@@ -3,7 +3,6 @@ package org.egov.filemgmnt.web.models.user;
 import java.util.List;
 
 import org.egov.common.contract.response.ResponseInfo;
-import org.egov.filemgmnt.web.models.ApplicantPersonal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,14 +10,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class UserDetailResponse {
+public class FMUserResponse {
 
     @JsonProperty("responseInfo")
     private ResponseInfo responseInfo;
 
     @JsonProperty("user")
-    private List<ApplicantPersonal> user;
+    private List<FMUser> user;
 }

@@ -6,9 +6,11 @@ import org.springframework.stereotype.Component;
 public class FMConstants {
 
     // Patterns for constraint validations
+    public static final String PATTERN_NAME = "^[^\\\\$\\\"<>?\\\\\\\\~`!@#$%^()+={}\\\\[\\\\]*,:;“”‘’]*$";
     public static final String PATTERN_AADHAAR = "^[1-9][0-9]{11}$";
     public static final String PATTERN_MOBILE = "^[1-9][0-9]{9,14}$";
     public static final String PATTERN_TENANT = "^kl\\.[a-z]+$";
+    public static final String PATTERN_PINCODE = "^[1-9][0-9]{5}$";
 
     // Encryption / Decryption
     public static final String FM_APPLICANT_ENC_KEY = "FMDetail";

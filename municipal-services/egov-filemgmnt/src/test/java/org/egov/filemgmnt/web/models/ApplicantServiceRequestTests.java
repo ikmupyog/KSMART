@@ -13,6 +13,7 @@ import javax.validation.ValidatorFactory;
 
 import org.assertj.core.api.Assertions;
 import org.egov.common.contract.request.RequestInfo;
+import org.egov.common.contract.request.Role;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.TestConfig;
 import org.egov.filemgmnt.util.FMUtils;
@@ -45,6 +46,9 @@ class ApplicantServiceRequestTests {
                                                                                          .userInfo(User.builder()
                                                                                                        .uuid(UUID.randomUUID()
                                                                                                                  .toString())
+                                                                                                       .roles(Collections.singletonList(Role.builder()
+                                                                                                                                            .code("EMPLOYEE")
+                                                                                                                                            .build()))
                                                                                                        .build())
                                                                                          .build())
                                                                  .build();

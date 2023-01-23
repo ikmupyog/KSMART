@@ -23,6 +23,7 @@ import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
+import org.egov.filemgmnt.web.models.user.FMUser;
 //import org.egov.filemgmnt.web.models.certificates.CertificatePdfApplicationRequest;
 import org.egov.filemgmnt.workflow.WorkflowIntegrator;
 import org.egov.tracer.model.CustomException;
@@ -66,11 +67,11 @@ public class FileManagementService extends AbstractFileManagementService {
         // validate applicant personal
         final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();
 
-        ApplicantPersonal applicant = serviceDetail.getApplicant();
-        Assert.notNull(applicant, "Applicant personal must not be null");
+        final ApplicantPersonal applicantRaw = serviceDetail.getApplicant(); // non-encrypted version
+        Assert.notNull(applicantRaw, "Applicant personal must not be null");
 
-        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-        applicant = encrypt(applicant);
+        // encrypt PII information - aadhaarNumber, mobileNumber, emailId,...
+        final ApplicantPersonal applicant = encrypt(applicantRaw);
         serviceDetail.setApplicant(applicant);
 
         // check applicant personal exists or not
@@ -88,6 +89,8 @@ public class FileManagementService extends AbstractFileManagementService {
         enrichment.enrichCreate(request, Objects.nonNull(existingApplicant));
 
         // create/update user
+        final FMUser fmUser = createOrUpdateUser(request.getRequestInfo(), applicantRaw);
+        enrichment.enrichCreate(request, fmUser);
 
         // create applicant file service details and create/update applicant details
         producer.push(fmConfig.getSaveApplicantServiceTopic(), request);
@@ -95,11 +98,8 @@ public class FileManagementService extends AbstractFileManagementService {
         // create workflow
         wfIntegrator.callWorkFlow(request);
 
-        // decrypt PII information - aadhaarNumber, mobileNumber, emailId
-        applicant = decrypt(serviceDetail.getApplicant(), request.getRequestInfo());
-        serviceDetail.setApplicant(applicant);
-
-        return request.getApplicantServiceDetail();
+        // decrypt PII information - aadhaarNumber, mobileNumber, emailId,...
+        return decrypt(request.getApplicantServiceDetail(), request.getRequestInfo());
     }
 
     public ApplicantServiceDetail update(final ApplicantServiceRequest request) {
@@ -113,17 +113,17 @@ public class FileManagementService extends AbstractFileManagementService {
         }
 
         // validate applicant personal
-        ApplicantPersonal applicant = serviceDetail.getApplicant();
-        Assert.notNull(applicant, "Applicant personal must not be null.");
+        final ApplicantPersonal applicantRaw = serviceDetail.getApplicant(); // non-encrypted version
+        Assert.notNull(applicantRaw, "Applicant personal must not be null");
 
-        // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-        applicant = encrypt(applicant);
-        serviceDetail.setApplicant(applicant);
-
-        if (StringUtils.isBlank(applicant.getId())) {
+        if (StringUtils.isBlank(applicantRaw.getId())) {
             throw new CustomException(INVALID_UPDATE.getCode(),
                     "Applicant personal id is required for update request.");
         }
+
+        // encrypt PII information - aadhaarNumber, mobileNumber, emailId,...
+        final ApplicantPersonal applicant = encrypt(applicantRaw);
+        serviceDetail.setApplicant(applicant);
 
         final ApplicantPersonal existingApplicant = findApplicantPersonalByIdOrAadhaar(applicant);
         validator.validateApplicantPersonal(request, existingApplicant, false);
@@ -139,6 +139,7 @@ public class FileManagementService extends AbstractFileManagementService {
         enrichment.enrichUpdate(request, existingServiceDetail);
 
         // update user
+        createOrUpdateUser(request.getRequestInfo(), applicantRaw);
 
         // update applicant file service details along with applicant details
         producer.push(fmConfig.getUpdateApplicantServiceTopic(), request);
@@ -146,11 +147,8 @@ public class FileManagementService extends AbstractFileManagementService {
         // update workflow
         wfIntegrator.callWorkFlow(request);
 
-        // decrypt PII information - aadhaarNumber, mobileNumber, emailId
-        applicant = decrypt(serviceDetail.getApplicant(), request.getRequestInfo());
-        serviceDetail.setApplicant(applicant);
-
-        return request.getApplicantServiceDetail();
+        // decrypt PII information - aadhaarNumber, mobileNumber, emailId,...
+        return decrypt(request.getApplicantServiceDetail(), request.getRequestInfo());
     }
 
     private ApplicantServiceDetail findApplicantServiceDetailById(final ApplicantServiceDetail serviceDetail) {
@@ -159,49 +157,50 @@ public class FileManagementService extends AbstractFileManagementService {
                                                                                             .build();
         final List<ApplicantServiceDetail> serviceDetails = repository.searchApplicantServices(searchCriteria);
 
-        return CollectionUtils.isNotEmpty(serviceDetails) ? serviceDetails.get(0) : null;
+        return CollectionUtils.isNotEmpty(serviceDetails)
+                ? serviceDetails.get(0)
+                : null;
     }
 
     private ApplicantPersonal findApplicantPersonalByIdOrAadhaar(final ApplicantPersonal applicant) {
         final ApplicantSearchCriteria searchCriteria = buildApplicantSearchCriteria(applicant);
         final List<ApplicantPersonal> applicantPersonals = repository.searchApplicantPersonals(searchCriteria);
 
-        return CollectionUtils.isNotEmpty(applicantPersonals) ? applicantPersonals.get(0) : null;
+        return CollectionUtils.isNotEmpty(applicantPersonals)
+                ? applicantPersonals.get(0)
+                : null;
     }
 
     // Applicant services search
     public List<ApplicantServiceDetail> searchServices(final RequestInfo requestInfo,
                                                        final ApplicantServiceSearchCriteria searchCriteria) {
         // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-//        final ApplicantServiceSearchCriteria criteria = encrypt(searchCriteria);
+        final ApplicantServiceSearchCriteria criteria = encrypt(searchCriteria);
 
-        validator.validateSearchServices(requestInfo, searchCriteria);
-        final List<ApplicantServiceDetail> result = repository.searchApplicantServices(searchCriteria);
+        validator.validateSearchServices(requestInfo, criteria);
+        final List<ApplicantServiceDetail> result = repository.searchApplicantServices(criteria);
 
-        return result;
-//        return decryptServices(result, requestInfo);
+        return decryptServices(result, requestInfo);
     }
 
     // Applicant personal search
     public List<ApplicantPersonal> searchApplicants(final RequestInfo requestInfo,
                                                     final ApplicantSearchCriteria searchCriteria) {
         // encrypt PII information - aadhaarNumber, mobileNumber, emailId
-//        final ApplicantSearchCriteria criteria = encrypt(searchCriteria);
+        final ApplicantSearchCriteria criteria = encrypt(searchCriteria);
 
-        validator.validateSearchApplicants(requestInfo, searchCriteria);
-        final List<ApplicantPersonal> result = repository.searchApplicantPersonals(searchCriteria);
+        validator.validateSearchApplicants(requestInfo, criteria);
+        final List<ApplicantPersonal> result = repository.searchApplicantPersonals(criteria);
 
-        return result;
-//        return decryptApplicants(result, requestInfo);
+        return decryptApplicants(result, requestInfo);
     }
 
     public List<CertificateDetails> download(@Valid final ApplicantSearchCriteria criteria,
                                              final RequestInfo requestInfo) {
-        CertificateRequest request;
-        request = repository.getResidentialCertificate(criteria, requestInfo);
+        final CertificateRequest request = repository.getResidentialCertificate(criteria, requestInfo);
 
         if (log.isDebugEnabled()) {
-            log.debug("Pdf response " + request.getCertificateDetails());
+            log.debug("*** Pdf response: \n{}", request.getCertificateDetails());
         }
 
         producer.push(fmConfig.getSaveApplicantCertificateTopic(), request);

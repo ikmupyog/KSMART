@@ -89,7 +89,7 @@ public class ApplicantServiceDetail {
     @Schema(type = "string", description = "Comments")
 //    @NotBlank(message = "Comment is required")
     @Size(max = 128, message = "Comment length cannot exceed 128 characters")
-    @Html
+    @Html(message = "Comments may have unsafe html content")
     @JsonProperty("comments")
     private String comment;
 

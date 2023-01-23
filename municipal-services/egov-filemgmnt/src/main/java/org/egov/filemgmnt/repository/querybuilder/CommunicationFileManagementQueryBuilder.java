@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class CommunicationFileManagementQueryBuilder extends BaseQueryBuilder {
 
     private static final String QUERY = new StringBuilder().append(" id, subjecttypeid, senderid, priorityid, filestoreid")
-                                                           .append("     , details, createdby, createddate, lastmodifiedby, lastmodifieddate")
+                                                           .append("     , details, createdby, createddate, lastmodifiedby, lastmodifiedtime")
                                                            .append(" FROM eg_fm_communicationfile cf")
                                                            .toString();
 

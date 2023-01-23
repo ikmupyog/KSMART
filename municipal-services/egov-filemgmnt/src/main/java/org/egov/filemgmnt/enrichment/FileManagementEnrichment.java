@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.enrichment;
+package org.egov.filemgmnt.enrichment; // NOPMD
 
 import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
 
@@ -27,10 +27,12 @@ import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
+import org.egov.filemgmnt.web.models.user.FMUser;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 
 @Component
 public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
@@ -61,7 +63,9 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
     private void enrichExistingApplicantPersonal(final ApplicantPersonal applicant, final User userInfo,
                                                  final ApplicantPersonal existingApplicant, final boolean create) {
 
-        final String errorCode = create ? ErrorCodes.INVALID_CREATE.getCode() : ErrorCodes.INVALID_UPDATE.getCode();
+        final String errorCode = create
+                ? ErrorCodes.INVALID_CREATE.getCode()
+                : ErrorCodes.INVALID_UPDATE.getCode();
 
         final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
 
@@ -115,6 +119,8 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
                          documentAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
                          documentAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
                      } else {
+                         document.setId(UUID.randomUUID()
+                                            .toString());
                          document.setAuditDetails(buildAuditDetails(userInfo.getUuid(), Boolean.TRUE));
                      }
                  });
@@ -186,7 +192,8 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
             fileDetail.setComment(serviceDetail.getComment());
 
             final List<String> assigneeList = serviceDetail.getAssignees();
-            final String assignees = CollectionUtils.isNotEmpty(assigneeList) ? String.join(",", assigneeList)
+            final String assignees = CollectionUtils.isNotEmpty(assigneeList)
+                    ? String.join(",", assigneeList)
                     : StringUtils.EMPTY;
             fileDetail.setAssignees(assignees);
             fileDetail.setAuditDetails(auditDetails);
@@ -202,6 +209,37 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
         }
 
         setFileCode(request);
+    }
+
+    public void enrichCreate(final ApplicantServiceRequest request, final FMUser fmUser) {
+        Assert.notNull(fmUser, "FM User must not be null");
+
+        final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();
+        final ApplicantPersonal applicant = serviceDetail.getApplicant();
+
+        if (ObjectUtils.nullSafeEquals(applicant.getId(), fmUser.getUuid())) {
+            return;
+        }
+
+        // Set applicant personal id from fmUser
+        final String applicantId = fmUser.getUuid();
+
+        applicant.setId(applicantId);
+        applicant.getAddress()
+                 .setApplicantPersonalId(applicantId);
+        applicant.getDocuments()
+                 .forEach(doc -> doc.setApplicantPersonalId(applicantId));
+
+        serviceDetail.setApplicantPersonalId(applicantId);
+        serviceDetail.getFileDetail()
+                     .setApplicantPersonalId(applicantId);
+        serviceDetail.getServiceDocument()
+                     .setApplicantPersonalId(applicantId);
+
+        if (serviceDetail.getApplicantChild() != null) {
+            serviceDetail.getApplicantChild()
+                         .setApplicantPersonalId(applicantId);
+        }
     }
 
     private void setFileCode(final ApplicantServiceRequest request) {
@@ -272,7 +310,8 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
             fileDetail.setComment(serviceDetail.getComment());
 
             final List<String> assigneeList = serviceDetail.getAssignees();
-            final String assignees = CollectionUtils.isNotEmpty(assigneeList) ? String.join(",", assigneeList)
+            final String assignees = CollectionUtils.isNotEmpty(assigneeList)
+                    ? String.join(",", assigneeList)
                     : StringUtils.EMPTY;
             fileDetail.setAssignees(assignees);
         }

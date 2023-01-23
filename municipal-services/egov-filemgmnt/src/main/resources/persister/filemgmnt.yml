@@ -25,9 +25,9 @@ serviceMaps:
       jsonMaps:
       - jsonPath: $.ApplicantServiceDetail.applicant.id
 
-      - jsonPath: $.ApplicantServiceDetail.applicant.aadhaarNo 
+      - jsonPath: $.ApplicantServiceDetail.applicant.aadhaarNumber 
       
-      - jsonPath: $.ApplicantServiceDetail.applicant.email 
+      - jsonPath: $.ApplicantServiceDetail.applicant.emailId 
       
       - jsonPath: $.ApplicantServiceDetail.applicant.firstName 
       
@@ -39,7 +39,7 @@ serviceMaps:
       
       - jsonPath: $.ApplicantServiceDetail.applicant.title 
       
-      - jsonPath: $.ApplicantServiceDetail.applicant.mobileNo 
+      - jsonPath: $.ApplicantServiceDetail.applicant.mobileNumber 
       
       - jsonPath: $.ApplicantServiceDetail.applicant.tenantId
       
@@ -73,7 +73,7 @@ serviceMaps:
 
       - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.lastModifiedTime
 
-      - jsonPath: $.ApplicantServiceDetail.applicant.email 
+      - jsonPath: $.ApplicantServiceDetail.applicant.emailId 
       
       - jsonPath: $.ApplicantServiceDetail.applicant.firstName
       
@@ -81,7 +81,7 @@ serviceMaps:
 
       - jsonPath: $.ApplicantServiceDetail.applicant.title
       
-      - jsonPath: $.ApplicantServiceDetail.applicant.mobileNo 
+      - jsonPath: $.ApplicantServiceDetail.applicant.mobileNumber 
       
       - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.lastModifiedBy
 
@@ -91,7 +91,7 @@ serviceMaps:
          INSERT INTO eg_fm_applicantaddress_log 
          SELECT * FROM eg_fm_applicantaddress WHERE id = ?;
          
-      basePath: ApplicantServiceDetail.applicant.address.*
+      basePath: ApplicantServiceDetail.applicant.address
       jsonMaps:
       - jsonPath: $.ApplicantServiceDetail.applicant.address.id
         

@@ -42,7 +42,9 @@ public class FileManagementValidator { // NOPMD
     public void validateApplicantPersonal(final ApplicantServiceRequest request, // NOPMD
                                           final ApplicantPersonal existingApplicant, final boolean create) {
 
-        final String errorCode = create ? ErrorCodes.INVALID_CREATE.getCode() : ErrorCodes.INVALID_UPDATE.getCode();
+        final String errorCode = create
+                ? ErrorCodes.INVALID_CREATE.getCode()
+                : ErrorCodes.INVALID_UPDATE.getCode();
 
         final ApplicantPersonal applicant = request.getApplicantServiceDetail()
                                                    .getApplicant();
@@ -52,11 +54,16 @@ public class FileManagementValidator { // NOPMD
         if (StringUtils.isNotBlank(applicant.getId())) {
             if (existingApplicant == null) {
                 throw new CustomException(errorCode,
-                        "Invalid applicant personal id, id required for existing applicant personal.");
+                        "Invalid applicant personal id, id must be empty for new applicant personal.");
+            }
+
+            if (!ObjectUtils.nullSafeEquals(applicant.getId(), existingApplicant.getId())) {
+                throw new CustomException(errorCode, "Invalid applicant personal id for existing applicant personal.");
             }
 
             if (!ObjectUtils.nullSafeEquals(applicant.getAadhaarNumber(), existingApplicant.getAadhaarNumber())) {
-                throw new CustomException(errorCode, "Invalid applicant personal aadhaar number.");
+                throw new CustomException(errorCode,
+                        "Invalid applicant personal aadhaar number for existing applicant personal..");
             }
         } else if (StringUtils.isNotBlank(applicant.getAadhaarNumber()) && existingApplicant != null) {
             throw new CustomException(errorCode,

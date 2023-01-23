@@ -21,21 +21,19 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.egov.common.contract.request.RequestInfo;
-import org.egov.common.contract.request.Role;
-import org.egov.common.contract.request.User;
-import org.egov.filemgmnt.util.EncryptionUtil;
-import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.web.models.ApplicantAddress;
+import org.egov.filemgmnt.web.models.ApplicantDocument;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
-import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Disabled
@@ -45,52 +43,35 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class LearningTests {
 
-    @Autowired
-    private EncryptionUtil encUtil;
-
     @Test
-    void encryptDecrypt() {
-        ApplicantPersonal applicant = ApplicantPersonal.builder()
-                                                       .aadhaarNumber("1234567890")
-                                                       .address(ApplicantAddress.builder()
-                                                                                .id(UUID.randomUUID()
-                                                                                        .toString())
-                                                                                .build())
-                                                       .build();
-        try {
-            ApplicantPersonal result = encUtil.encryptObject(applicant,
-                                                             FMConstants.FM_APPLICANT_ENC_KEY,
-                                                             ApplicantPersonal.class);
+    void toBuilder() {
+        ApplicantPersonal usr = ApplicantPersonal.builder()
+                                                 .firstName("bsaradhy")
+                                                 .address(ApplicantAddress.builder()
+                                                                          .houseName("Gowreesham")
+                                                                          .build())
+                                                 .documents(Collections.singletonList(ApplicantDocument.builder()
+                                                                                                       .id(UUID.randomUUID()
+                                                                                                               .toString())
+                                                                                                       .build()))
+                                                 .build();
 
-            if (log.isDebugEnabled()) { // 9327|5gYTHHFoEUfKIlwkYXanjbRYYNB4hp3PIc0=
-                log.debug("*** Encrypted Value:\n{}", FMUtils.toJson(result));
-            }
+        ApplicantPersonal usr2 = usr.toBuilder()
+                                    .build();
+        usr2.getAddress()
+            .setHouseName("Tower2 (16E)");
 
-            ApplicantServiceDetail result2 = encUtil.decryptObject(ApplicantServiceDetail.builder()
-                                                                                         .applicant(result)
-                                                                                         .build(),
-                                                                   FMConstants.FM_APPLICANT_ENC_KEY,
-                                                                   ApplicantServiceDetail.class,
-                                                                   RequestInfo.builder()
-                                                                              .userInfo(User.builder()
-                                                                                            .roles(Collections.singletonList(Role.builder()
-                                                                                                                                 .code("EMPLOYEE")
-                                                                                                                                 .build()))
-                                                                                            .build())
-                                                                              .build());
-
-            if (log.isDebugEnabled()) {
-                log.debug("*** Decrypted Value:\n{}", FMUtils.toJson(result2));
-            }
-
-        } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error(e.getLocalizedMessage(), e);
-            }
-        }
+        log.info("*** Builder.toBuilder:: \nusr={} \nusr2={}", FMUtils.toJson(usr), FMUtils.toJson(usr2));
     }
 
-    @Disabled
+    @Data
+    @Builder(toBuilder = true)
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private static class DummyUser {
+        private String userName;
+    }
+
     @Test
     void regexPattern() {
         // ^KL-[1-9]{1}[0-9]*$
@@ -102,7 +83,6 @@ class LearningTests {
 
     }
 
-    @Disabled
     @Test
     void convertDateToLong() {
         LocalDateTime localDateTime = LocalDateTime.of(2022, 11, 13, 19, 10, 05);
@@ -116,7 +96,6 @@ class LearningTests {
 //        log.info("date={}, milliseconds={}", date, dateMillis);
     }
 
-    @Disabled
     @Test
     void dateToLongTest() {
         java.util.Date now = new java.util.Date();

@@ -2,6 +2,9 @@ package org.egov.filemgmnt.util;
 
 import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_SEARCH;
 
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -13,7 +16,10 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,8 +33,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FMUtils implements ApplicationContextAware {
 
-    public static final String TENANT_FORMAT = "^kl\\.[a-z]+$";
-
     private static ApplicationContext applicationContext;
 
     @Override
@@ -38,6 +42,10 @@ public class FMUtils implements ApplicationContextAware {
 
     public static ObjectMapper getObjectMapper() {
         return applicationContext.getBean(ObjectMapper.class);
+    }
+
+    public static <T> T getBean(final Class<T> clazz) {
+        return applicationContext.getBean(clazz);
     }
 
     public static String toJson(final Object obj) {
@@ -67,5 +75,20 @@ public class FMUtils implements ApplicationContextAware {
 
     public static boolean isValidFormat(final String regex, final String input) {
         return Pattern.matches(regex, input);
+    }
+
+    public static String loadResourceAsString(final String resourceName) {
+        final Resource resource = new ClassPathResource(resourceName);
+        String json = StringUtils.EMPTY;
+        try (Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
+            json = FileCopyUtils.copyToString(reader);
+
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Failed loading resource" + resourceName, e);
+            }
+        }
+
+        return json;
     }
 }

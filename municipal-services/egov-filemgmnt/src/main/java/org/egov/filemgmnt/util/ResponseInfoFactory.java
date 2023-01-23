@@ -29,7 +29,9 @@ public class ResponseInfoFactory {
                            .ts(ts)
                            .msgId(msgId)
                            .resMsgId(DEFAULT_RES_MSG_ID)
-                           .status(success ? "successful" : "failed")
+                           .status(success
+                                   ? "successful"
+                                   : "failed")
                            .build();
     }
 

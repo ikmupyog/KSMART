@@ -18,16 +18,16 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserSearchRequest {
+public class FMUserSearchRequest {
 
     @JsonProperty("RequestInfo")
     private RequestInfo requestInfo;
 
+    @JsonProperty("id")
+    private List<Long> id;
+
     @JsonProperty("uuid")
     private List<String> uuid;
-
-    @JsonProperty("id")
-    private List<String> id;
 
     @JsonProperty("userName")
     private String userName;
@@ -63,8 +63,8 @@ public class UserSearchRequest {
     @JsonProperty("pageNumber")
     private int pageNumber;
 
-    @JsonProperty("sort")
     @Builder.Default
+    @JsonProperty("sort")
     private List<String> sort = Collections.singletonList("name");
 
     @JsonProperty("userType")

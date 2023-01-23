@@ -2,6 +2,12 @@ package org.egov.filemgmnt.web.models;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.egov.filemgmnt.util.FMConstants;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +23,10 @@ import lombok.Setter;
 @Builder
 public class ApplicantServiceSearchCriteria {
 
+    @NotBlank(message = "Tenant identification number is required")
+    @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
+    @Pattern(regexp = FMConstants.PATTERN_TENANT,
+             message = "Invalid tenant identification number format, ex: kl.cochin")
     @JsonProperty("tenantId")
     private String tenantId;
 

@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class AuditDetails {
 
     @Schema(type = "string", format = "uuid", description = "Created by user id")

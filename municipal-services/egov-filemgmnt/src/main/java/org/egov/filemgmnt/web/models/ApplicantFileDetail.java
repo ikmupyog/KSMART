@@ -6,7 +6,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-import org.egov.filemgmnt.constraints.Html;
 import org.springframework.validation.annotation.Validated;
 
 //import org.hibernate.validator.constraints.SafeHtml;
@@ -114,7 +113,6 @@ public class ApplicantFileDetail {
     @Schema(type = "string", description = "Comments")
     // @NotBlank(message = "Comment is required")
     @Size(max = 128, message = "Comment length cannot exceed 128 characters")
-    @Html
     @JsonProperty("comments")
     private String comment;
 

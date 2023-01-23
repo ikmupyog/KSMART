@@ -17,14 +17,14 @@ class BaseQueryBuilder {
                                                                         .append("    , ap.fatherlastnamemal, ap.motherfirstnamemal, ap.motherlastnamemal")
                                                                         // applicant address columns
                                                                         .append("    , ad.id AS address_id, ad.buildingno, ad.housename, ad.street")
-                                                                        .append("    , ad.pincode, ad.postofficename, ad.createdby AS address_createdby, ad.createddate AS address_createdtime")
-                                                                        .append("    , ad.lastmodifiedby AS address_lastmodifiedby, ad.lastmodifieddate AS address_lastmodifiedtime")
+                                                                        .append("    , ad.pincode, ad.postofficename, ad.createdby AS address_createdby, ad.createdtime AS address_createdtime")
+                                                                        .append("    , ad.lastmodifiedby AS address_lastmodifiedby, ad.lastmodifiedtime AS address_lastmodifiedtime")
                                                                         .append("    , ad.residenceassociationno, ad.localplace, ad.mainplace, ad.wardno, ad.subno, ad.housenamemal, ad.village")
                                                                         .append("    , ad.taluk, ad.streetmal, ad.localplacemal, ad.mainplacemal")
                                                                         // applicant document columns
                                                                         .append("    , doc.id AS document_id, doc.documenttypeid, doc.documentnumber")
-                                                                        .append("    , doc.docexpirydate, doc.createdby AS document_createdby, doc.createddate AS document_createdtime")
-                                                                        .append("    , doc.lastmodifiedby AS document_lastmodifiedby, doc.lastmodifieddate AS document_lastmodifiedtime")
+                                                                        .append("    , doc.docexpirydate, doc.createdby AS document_createdby, doc.createdtime AS document_createdtime")
+                                                                        .append("    , doc.lastmodifiedby AS document_lastmodifiedby, doc.lastmodifiedtime AS document_lastmodifiedtime")
                                                                         .toString();
 
     void addDateRangeFilter(final String column, final Long startDate, final Long endDate, final StringBuilder query,

@@ -9,8 +9,8 @@ import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
 import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
-import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
+import org.egov.filemgmnt.web.models.user.FMUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 abstract class AbstractFileManagementService { // NOPMD
@@ -28,16 +28,10 @@ abstract class AbstractFileManagementService { // NOPMD
         this.userService = userService;
     }
 
-    // abstract methods
-    protected abstract ApplicantServiceDetail create(ApplicantServiceRequest request);
-
-    protected abstract ApplicantServiceDetail update(ApplicantServiceRequest request);
-
-    protected abstract List<ApplicantServiceDetail> searchServices(RequestInfo requestInfo,
-                                                                   ApplicantServiceSearchCriteria searchCriteria);
-
-    protected abstract List<ApplicantPersonal> searchApplicants(RequestInfo requestInfo,
-                                                                ApplicantSearchCriteria searchCriteria);
+    // create/update user service
+    protected FMUser createOrUpdateUser(final RequestInfo request, final ApplicantPersonal applicant) {
+        return userService.createOrUpdateUser(request, applicant);
+    }
 
     // encrypt / decrypt methods
     protected ApplicantPersonal encrypt(final ApplicantPersonal applicant) {
@@ -46,6 +40,14 @@ abstract class AbstractFileManagementService { // NOPMD
 
     protected ApplicantPersonal decrypt(final ApplicantPersonal applicant, final RequestInfo requestInfo) {
         return encUtil.decryptObject(applicant, FMConstants.FM_APPLICANT_ENC_KEY, ApplicantPersonal.class, requestInfo);
+    }
+
+    protected ApplicantServiceDetail decrypt(final ApplicantServiceDetail serviceDetail,
+                                             final RequestInfo requestInfo) {
+        return encUtil.decryptObject(serviceDetail,
+                                     FMConstants.FM_APPLICANT_ENC_KEY,
+                                     ApplicantServiceDetail.class,
+                                     requestInfo);
     }
 
     protected ApplicantSearchCriteria encrypt(final ApplicantSearchCriteria searchCriteria) {

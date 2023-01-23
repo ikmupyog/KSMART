@@ -262,7 +262,9 @@ public class FileManagementRepository {
         builder.append(fmConfig.getUrlShortnerEndpoint());
         String res = restTemplate.postForObject(builder.toString(), body, String.class);
 
-        return StringUtils.isEmpty(res) ? url : res;
+        return StringUtils.isEmpty(res)
+                ? url
+                : res;
     }
 
 }

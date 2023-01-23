@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.egov.filemgmnt.constraints.Html;
+import org.egov.filemgmnt.util.FMConstants;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,7 +24,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ApplicantAddress {
 
     @Schema(type = "string", format = "uuid", description = "Applicant address id")
@@ -49,6 +51,7 @@ public class ApplicantAddress {
     @Schema(type = "string", description = "House name")
     @NotBlank(message = "House name is required")
     @Size(max = 64, message = "House name length cannot exceed 64 characters")
+    @Html(message = "House name may have unsafe html content")
     @JsonProperty("houseName")
     private String houseName;
 
@@ -60,6 +63,7 @@ public class ApplicantAddress {
 
     @Schema(type = "string", description = "Street name")
     @Size(max = 64, message = "Street name length cannot exceed 64 characters")
+    @Html(message = "Street may have unsafe html content")
     @JsonProperty("street")
     private String street;
 
@@ -71,24 +75,27 @@ public class ApplicantAddress {
     @Schema(type = "string", description = "Pincode")
     @NotBlank(message = "Pincode is required")
     @Size(min = 6, max = 6, message = "Invalid pincode")
-    @Pattern(regexp = "^[1-9][0-9]{5}$", message = "Invalid pincode")
+    @Pattern(regexp = FMConstants.PATTERN_PINCODE, message = "Invalid pincode")
     @JsonProperty("pincode")
     private String pincode;
 
     @Schema(type = "string", description = "Postoffice name")
     @NotBlank(message = "Postoffice name is required")
     @Size(max = 64, message = "Postoffice name length cannot exceed 64 characters")
+    @Html(message = "Postoffice name may have unsafe html content")
     @JsonProperty("postOfficeName")
     private String postOfficeName;
 
     @Schema(type = "string", description = "Residence association number")
     @Size(max = 64, message = "Residence association number length cannot exceed 64 characters")
+    @Html(message = "Residence association number may have unsafe html content")
     @JsonProperty("residenceAssociationNo")
     private String residenceAssociationNo;
 
     @Schema(type = "string", description = "Local place")
     @NotBlank(message = "Local place is required")
     @Size(max = 64, message = "Local place length cannot exceed 64 characters")
+    @Html(message = "Local place may have unsafe html content")
     @JsonProperty("localPlace")
     private String localPlace;
 
@@ -101,6 +108,7 @@ public class ApplicantAddress {
     @Schema(type = "string", description = "Main place")
     @NotBlank(message = "Main place  is required")
     @Size(max = 64, message = "Main place length cannot exceed 64 characters")
+    @Html(message = "Main place may have unsafe html content")
     @JsonProperty("mainPlace")
     private String mainPlace;
 
@@ -118,6 +126,7 @@ public class ApplicantAddress {
 
     @Schema(type = "string", description = "Village number")
     @Size(max = 64, message = "Village number length cannot exceed 64 characters")
+    @Html(message = "Village may have unsafe html content")
     @JsonProperty("village")
     private String village;
 
