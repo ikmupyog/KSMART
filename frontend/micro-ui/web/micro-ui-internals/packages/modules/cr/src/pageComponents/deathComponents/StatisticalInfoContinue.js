@@ -338,7 +338,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
+          
             {/* <div className="col-md-6">
               <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER_ML")}</CardLabel>
               <TextInput
@@ -354,6 +354,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
               />
             </div> */}
+          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
               {/* <div className="col-md-6 "> */}
@@ -369,7 +370,30 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
               />
               {/* </div> */}
             </div>
-            <div className="col-md-6">
+            
+            <div>
+              {/* <RadioButtons
+                t={t}
+                optionsKey="i18nKey"
+                isMandatory={config.isMandatory}
+                options={menu}
+                selectedOption={isPregnent}
+                onSelect={selectisPregnent}
+
+              /> */}
+            </div>         
+            </div>
+        </div>
+      <div className="row">
+      <div className="col-md-12">
+         <div className="col-md-12">
+              <CardLabel>{t("CR_HABITS")}</CardLabel>              
+        </div>
+      </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_SMOKE")}</CardLabel>
               <RadioButton
                 t={t}
@@ -399,21 +423,6 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 </div>
               )}
             </div>
-            <div>
-              {/* <RadioButtons
-                t={t}
-                optionsKey="i18nKey"
-                isMandatory={config.isMandatory}
-                options={menu}
-                selectedOption={isPregnent}
-                onSelect={selectisPregnent}
-
-              /> */}
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_CHEW_TOBACCO")}</CardLabel>
               {/* <div className="statistical-flex"> */}
@@ -445,8 +454,12 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   </div>
                 )}
               {/* </div> */}
-            </div>
-            <div className="col-md-6">
+            </div>           
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12">
+        <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>
               <RadioButton
                 t={t}
@@ -472,14 +485,10 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_YEAR")}`}
                     {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
                   />
-                </div>
-              )}
-            </div>
-          </div>
+               </div>
+              )}           
         </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
+        <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>
               <RadioButton
                 t={t}
@@ -507,11 +516,11 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
                   />
                 </div>
-              )}
-            </div>
-          </div>
-          <div>{/* <RadioButtons selected={answer} handleChange={handleRadioChange} /> */}</div>
+              )}               
         </div>
+      </div>
+    </div>        
+        
       </FormStep>
     </React.Fragment>
   );

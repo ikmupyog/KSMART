@@ -4,24 +4,9 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const PlaceOfDeathHospital = ({
-  config,
-  onSelect,
-  userType,
-  formData,
-  SignedOfficerName,
-  selectSignedOfficerName,
-  HospitalName,
-  selectHospitalName,
-  setDesignation,
-  setSelectedDesignation,
-  HospitalAadhaar,
-  setHospitalAadhaar,
-  HospitalMobile,
-  setHospitalMobile,
-  OfficerName,
-  setOfficerName,
-  OfficerDesignation,
-  setOfficerDesignation,
+  config,  onSelect,  userType,  formData,  SignedOfficerName,  selectSignedOfficerName,  HospitalName,  selectHospitalName,  setDesignation,
+  setSelectedDesignation,  HospitalAadhaar,  setHospitalAadhaar,  HospitalMobile,  setHospitalMobile,  OfficerName,  setOfficerName,
+  OfficerDesignation,  setOfficerDesignation,SignedOfficerOtherStatus,setSignedOfficerOtherStatus,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
@@ -31,9 +16,10 @@ const PlaceOfDeathHospital = ({
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [OfficerNames, setFilteredOfficerName] = useState(0);
   const [Designations, setFilteredDesignation] = useState(0);
-  const [registrationMobile, setFilteredMobNo] = useState(0);
+  // const [registrationMobile, setFilteredMobNo] = useState(0);
+
   // const [isChecked, setIsChecked] = useState(formData?.HospitalDetails?.isChecked ? formData?.HospitalDetails?.isChecked : false);
-  const [isDrDetails, setisDrDetails] = useState(formData?.HospitalDetails?.isDrDetails ? formData?.HospitalDetails?.isDrDetails : false);
+      // const [isDrDetails, setisDrDetails] = useState(formData?.HospitalDetails?.isDrDetails ? formData?.HospitalDetails?.isDrDetails : false);
   // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.HospitalDetailsuseCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   // const [SignedOfficerName, selectSignedOfficerName] = useState(formData?.HospitalDetails?.SignedOfficerName);
   // const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
@@ -43,78 +29,46 @@ const PlaceOfDeathHospital = ({
   // const [HospitalMobile, setHospitalMobile] = useState(formData?.HospitalDetails?.HospitalMobile);
   // const [OfficerName, setOfficerName] = useState(formData?.HospitalDetails?.OfficerName);
   // const [OfficerDesignation, setOfficerDesignation] = useState(formData?.HospitalDetails?.OfficerDesignation);
-
-  // let cmbhospital = [];
-  // hospital &&
-  //   hospital["birth-death-service"] &&
-  //   hospital["birth-death-service"].hospitalList.map((ob) => {
-  //     cmbhospital.push(ob);
-  //   });
-              // let cmbhospital = [];
-              // hospitalData &&
-              //   hospitalData["egov-location"] &&
-              //   hospitalData["egov-location"].hospitalList.map((ob) => {
-              //     cmbhospital.push(ob);
-              //   });
-
-              // useEffect(() => {
-              //   if (isInitialRender) {
-              //     if (HospitalName) {
-              //       setIsInitialRender(false);
-              //       let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
-              //       let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
-              //       setFilteredOfficerName(cmbRegistrarNames[0].registar);
-              //       setFilteredDesignation(cmbDesignations[0].registar);
-              //       setFilteredMobNo(cmbMobNo[0].registar);        
-                    
-              //   }
-              // }, [OfficerNames, Designations, isInitialRender,registrationMobile,]);
-
+  // const [SignedOfficerOtherStatus, setSignedOfficerOtherStatus] = useState(formData?.HospitalDetails?.SignedOfficerOtherStatus ? formData?.HospitalDetails?.SignedOfficerOtherStatus : "");
   let cmbhospital = [];
   hospitalData &&
     hospitalData["egov-location"] &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    let cmbDesignations =[];
-    let cmbRegistrarNames =[];
     let OtherRegistrar =[];
   useEffect(() => {
     if (isInitialRender) {
       if (HospitalName) {
         setIsInitialRender(false);
-        setFilteredOfficerName(null);
-        setFilteredDesignation(null);
+        // setFilteredOfficerName(null);
+        // setFilteredDesignation(null);
         if (cmbhospital.length > 0) {
-          cmbDesignations =[];
-          cmbRegistrarNames =[];
-          cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+          // cmbDesignations =[];
+          // cmbRegistrarNames =[];
+          let cmbRegistrarNames = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);         
           // console.log(cmbRegistrarNames);
-          cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
+          let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
           // console.log(cmbRegistrarNames[0].registar);      
-          OtherRegistrar=[];
+          let OtherRegistrar=[];
           OtherRegistrar = cmbRegistrarNames[0].registar;
-          OtherRegistrar.push({
-            hospitalRegistar:'Others',
-            registarDesig:'',
-            registrationAadhaar:'',
-            registrationMobile:'',
-            registrationNo:''
-          })
-          console.log(OtherRegistrar) ;       
-
+          let CheckIfExists = OtherRegistrar.filter((OtherRegistrar) => OtherRegistrar.hospitalRegistar === "Others");
+          if(CheckIfExists.length>0){
+            
+          } else {
+            OtherRegistrar.push({
+              hospitalRegistar:'Others',
+              registarDesig:'',
+              registrationAadhaar:'',
+              registrationMobile:'',
+              registrationNo:''
+            })           
+          }   
           setFilteredOfficerName(OtherRegistrar);
           setFilteredDesignation(cmbDesignations[0].registar);
-          // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
-          // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
+        
         }
-
-      }
-      if (formData?.HospitalDetails?.isDrDetails != null) {
-        setIsInitialRender(false);
-        setisDrDetails(formData?.HospitalDetails?.isDrDetails);
-      }
-      
+      }     
     }
   }, [OfficerNames, Designations, isInitialRender]);
 
@@ -131,6 +85,8 @@ const PlaceOfDeathHospital = ({
   }
   function setselectSignedOfficerName(value) {
     selectSignedOfficerName(value);
+    setSignedOfficerOtherStatus(value.hospitalRegistar);
+
   }
   function selectDesignation(value) {
     setSelectedDesignation(value);
@@ -161,16 +117,19 @@ const PlaceOfDeathHospital = ({
   //     setChildLastNameMl("");
   //   }
   // }
-  function setDrDetails(e) {
-    if (e.target.checked === true) {
-      setisDrDetails(e.target.checked);
 
-    } else {
-      setisDrDetails(e.target.checked);
-      setOfficerName("");
-      setOfficerDesignation("");      
-    }
-  }
+
+
+  // function setDrDetails(e) {
+  //   if (e.target.checked === true) {
+  //     setisDrDetails(e.target.checked);
+
+  //   } else {
+  //     setisDrDetails(e.target.checked);
+  //     setOfficerName("");
+  //     setOfficerDesignation("");      
+  //   }
+  // }
   
   // function selectCommencementDate(value) {
   //   setCommencementDate(value);
@@ -232,6 +191,8 @@ const PlaceOfDeathHospital = ({
                 placeholder={`${t("CR_SIGNED_OFFICER")}`}
               />
             </div>
+            {SignedOfficerOtherStatus != "Others" && (
+              <div>
             <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
@@ -248,19 +209,23 @@ const PlaceOfDeathHospital = ({
                 placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
               />
             </div>
+            </div>
+            )}
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
           {/* <CheckBox label={t("CR_DR_UNAVAILABLE")} onChange={setChildName} value={isChildName} checked={isChildName} /> */}
-          <CheckBox label={t("CR_DR_UNAVAILABLE")}   onChange={setDrDetails} value={isDrDetails} checked={isDrDetails} />
+          {/* <CheckBox label={t("CR_DR_UNAVAILABLE")}   onChange={setDrDetails} value={isDrDetails} checked={isDrDetails} /> */}
           </div>
         </div>
        
         <div className="row">
   
           <div className="col-md-12">
-          {isDrDetails === true && (
+          {/* {isDrDetails === true && (
+            <div> */}
+          {SignedOfficerOtherStatus === "Others" && ( 
             <div>
             <div className="col-md-3">
 
@@ -294,7 +259,9 @@ const PlaceOfDeathHospital = ({
               />
             </div>
             </div>
-        )}
+            )} 
+            {/* </div>
+        )} */}
         
             <div className="col-md-3">
               <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
