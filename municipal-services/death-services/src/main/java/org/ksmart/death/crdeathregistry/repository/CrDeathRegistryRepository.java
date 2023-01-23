@@ -80,6 +80,7 @@ public class CrDeathRegistryRepository {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<CrDeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
+       // System.out.println("Output"+result);
         return result; // NOPMD
     }
     //UPDATE

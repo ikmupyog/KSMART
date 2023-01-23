@@ -83,6 +83,7 @@ public class CrDeathRegistryService {
           
         //Jasmine on 21.01.2023
        String regNo = request.getDeathCertificateDtls().get(0).getRegistrationNo();
+
        String tenantId = request.getDeathCertificateDtls().get(0).getTenantId();
 
         List<CrDeathRegistryDtl> searchResult = repository.getDeathApplication(CrDeathRegistryCriteria

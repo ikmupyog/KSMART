@@ -699,9 +699,11 @@ serviceMaps:
           vehicle_toplace_ml = ?, vehicle_toplace_en = ?, vehicle_number = ?, death_place_ward_id = ?, informant_age = ?, vehicle_driver_licenceno = ?, 
           death_signed_officer_designation = ?, death_place_officer_mobile = ?, death_place_officer_aadhaar = ?, deceased_idprooftype = ?, deceased_idproofno = ?,
           burial_district = ?,burial_lbtype = ?, burial_lbname = ?, burial_state = ?, vehicle_first_halt = ?, 
-          male_dependent_unavailable = ?, female_dependent_unavailable = ? , workflowcode = ?,businessservice = ?,action = ?,comment = ?,assignee = ?   where  ack_no = ?
+          male_dependent_unavailable = ?, female_dependent_unavailable = ? , workflowcode = ?,businessservice = ?,action = ?,comment = ?,assignee = ? ,
+          spouse_name_en = ? ,spouse_name_ml = ?,spouse_unavailable = ? ,spouse_type = ?,spouse_emailid = ?,spouse_aadhaar = ?,spouse_mobileno = ?, 
+          funcion_uid = ?,ack_no_id = ?, application_date = ? where  ack_no = ?
       #where id = ?
-      # registrationunit = ?, tenantid = ?,application_no = ?, file_no = ?, submitted_on = ?, 
+      # registrationunit = ?, tenantid = ?,application_no = ?, file_no = ?, submitted_on = ?,
       # death_place = ?, death_place_inst_type = ?, death_place_inst_id = ?,registration_no = ?,ack_no = ?
       #place_burial = ?, place_burial_institution_type = ?, place_burial_institution_name = ?, 
 
@@ -887,6 +889,26 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.assignuser
 
+      - jsonPath: $.deathCertificateDtls.*.spouseNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.spouseNameML
+
+      - jsonPath: $.deathCertificateDtls.*.spouseUnavailable
+
+      - jsonPath: $.deathCertificateDtls.*.spouseType
+
+      - jsonPath: $.deathCertificateDtls.*.spouseEmailid
+
+      - jsonPath: $.deathCertificateDtls.*.spouseAadhaar
+
+      - jsonPath: $.deathCertificateDtls.*.spouseMobileno
+
+      - jsonPath: $.deathCertificateDtls.*.funcionUID
+
+      - jsonPath: $.deathCertificateDtls.*.ackNoId
+
+      - jsonPath: $.deathCertificateDtls.*.applicationDate
+
       - jsonPath: $.deathCertificateDtls.*.deathACKNo
 
      #- jsonPath: $.deathCertificateDtls.*.deathApplicationNo
@@ -904,7 +926,8 @@ serviceMaps:
     - query: UPDATE public.eg_death_statistical_dtls  SET residencelocalbody = ?, residence_place_type = ?, residencedistrict = ?, residencestate = ?, religion = ?,
            religion_other = ?, occupation = ?, occupation_other = ?, medical_attention_type = ?, death_medically_certified = ?, death_cause_main = ?, death_cause_sub = ?, 
            death_cause_other = ?, death_during_delivery = ?, smoking_num_years = ?, tobacco_num_years = ?, arecanut_num_years = ?, alcohol_num_years = ?, 
-           lastmodifiedby = ?, lastmodifiedtime = ? ,nationality = ?, occupation_sub = ?, occupation_minor = ?, education_main = ?, education_sub = ?, residencelbtype  = ? WHERE death_dtl_id = ?
+           lastmodifiedby = ?, lastmodifiedtime = ? ,nationality = ?, occupation_sub = ?, occupation_minor = ?, education_main = ?, education_sub = ?, residencelbtype  = ? 
+           smoking_type = ?,tobacco_type = ?,arecanut_type = ?,alcohol_type = ? WHERE death_dtl_id = ?
      
       basePath: deathCertificateDtls.*.statisticalInfo
       jsonMaps:
@@ -959,6 +982,14 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.statisticalInfo.educationSub      
       
       - jsonPath: $.deathCertificateDtls.*.statisticalInfo.residenceLBType
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.smokingType
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.tobaccoType
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.arecanutType
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.alcoholType
 
       - jsonPath: $.deathCertificateDtls.*.id
 

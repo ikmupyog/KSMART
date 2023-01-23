@@ -94,7 +94,7 @@ public class CrDeathEnrichment implements BaseEnrichment{
                 if (informantAddress!=null){
                     addressInfo.getInformantAddress().setId(UUID.randomUUID().toString());
                 }
-               if(presentAddress!=null){
+                if(presentAddress!=null){
                     addressInfo.getPresentAddress().setId(UUID.randomUUID().toString());
                 }
                 if(permanentAddress!=null){

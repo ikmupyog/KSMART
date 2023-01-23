@@ -50,7 +50,7 @@ public class CrDeathValidator {
                     "Supports only single death application create request.");
         }
 //IMP:Have to enable after URI submission
-       // validateCommonFields( request);    
+        validateCommonFields( request);    
         
     }
     //Jasmine on 13.01.2022,17/01/2023,22/01/2023
@@ -412,7 +412,7 @@ public class CrDeathValidator {
                     "Death registration(s) not found in database.");
         }
   //IMP:Have to enable after URI submission
-       // validateCommonFields( request);
+        validateCommonFields( request);
     }
 //UPDATE END
 

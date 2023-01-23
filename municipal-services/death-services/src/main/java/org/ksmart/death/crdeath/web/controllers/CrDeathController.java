@@ -105,18 +105,23 @@ public class CrDeathController implements CrDeathResource  {
  
         List<CrDeathDtl> deathDetails = deathService.update(request);
 
-
-    
     //Jasmine on 18.01.2023
         String status=request.getDeathCertificateDtls().get(0).getApplicationStatus();
 
         String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();
+
+        if (!request.getDeathCertificateDtls().get(0).getApplicationStatus().equals(CrDeathConstants.WORKFLOW_STATUS_APPROVED)) {
+       
+
+
+        }
 
         if (request.getDeathCertificateDtls().get(0).getApplicationStatus().equals(CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCertificateDtls().get(0).getApplicationType().equals(CrDeathConstants.APPLICATION_NEW)){
          
             CrDeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
 
             List<CrDeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
+
 
         }
         //Jasmine on 21.01.2023
@@ -125,14 +130,15 @@ public class CrDeathController implements CrDeathResource  {
             CrDeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
 
             List<CrDeathRegistryDtl> registryDeathDetails =  deathRegistryService.update(registryRequest);                   
+       
         }
         CrDeathDtlResponse response = CrDeathDtlResponse
-                            .builder()
-                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-                            .deathCertificateDtls(deathDetails)
-                            .build();
-
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                        .deathCertificateDtls(deathDetails)
+                                        .build();
         return ResponseEntity.ok(response);
+   
     }
 
     // @Override
