@@ -63,7 +63,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     formData?.InformationDeath?.OccupationOthers ? formData?.InformationDeath?.OccupationOthers : ""
   );
   const [ischeckedAdhar , setisCheckedAdhar] = useState(formData?.InformationDeath?.ischeckedAdhar  ? formData?.InformationDeath?.ischeckedAdhar  : 0);
-  const [isInitialRender, setIsInitialRender] = useState(true);
+  // const [isInitialRender, setIsInitialRender] = useState(true);
+  
   // const [selectedValues,  ] = useState(
   //   formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : false
   // );
@@ -229,6 +230,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let cmbfilterReligion = [];
   let cmbfilterAgeUnit = [];
   useEffect(() => {
+    
     if (setNationality == null || setNationality == "") {
       if (stateId === "kl" && cmbNation.length > 0) {
         cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
@@ -247,15 +249,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         setSelectedAgeUnit(cmbfilterAgeUnit[0]);
       }
     }
-    if (isInitialRender) {
-      if (formData?.InformationDeath?.ischeckedAdhar  != null) {
-        setIsInitialRender(false);
-        setisCheckedAdhar(formData?.InformationDeath?.ischeckedAdhar );
-      }
-    }  
+    // if (isInitialRender) {
+    //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
+    //     setIsInitialRender(false);
+    //     setisCheckedAdhar(formData?.InformationDeath?.ischeckedAdhar );
+    //   }
+    // }  
 
 
-  },[isInitialRender]);
+  });
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
     sessionStorage.setItem("DeathTime", DeathTime ? DeathTime : null);
