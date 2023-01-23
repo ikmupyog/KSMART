@@ -539,5 +539,9 @@ private String assignuser;
 
     @JsonProperty("applicationDate")
     private Long applicationDate ;
+
+    //Rakhi S on 23.01.2023
+    @JsonProperty("otherVehicleType")
+    private Long otherVehicleType ;
     
 }
