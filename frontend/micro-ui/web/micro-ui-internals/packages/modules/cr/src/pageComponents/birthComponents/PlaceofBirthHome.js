@@ -80,6 +80,8 @@ const PlaceofBirthHome = ({
   const [lbtypes, setlbtypes] = useState(null);
   const [lbs, setLbs] = useState(null);
   const [lbsvalue, setLbsvalue] = useState(null);
+  const [isDisableStatus, setDisableStatus] = useState(true);
+
   // const [countries, setcountry] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [AdrsCountry, setAdrsCountry] = useState(formData?.BirthPlaceHomeDetails?.AdrsCountry);
@@ -162,81 +164,30 @@ const PlaceofBirthHome = ({
       // setIsInitialRender(true);
      
     });
-    
+    let currentLB =[];
+    let cmbFilterCountry =[];
+    let cmbFilterState =[];
+    let cmbFilterDistrict =[];
+    let cmbFilterLBtype =[];
     useEffect(() => {
 
       if (isInitialRender) {
-  
-        // console.log("AdrsDistrict" + districtid);
-        // sleep(setTimeout(1000));
         // if (localbodies.length > 0) {
-        console.log(localbodies);
-
-          // localbodies &&
-          // localbodies["tenant"] &&
-          // localbodies["tenant"].tenants.map((ob) => {
-          //   cmbLB.push(ob);
-          // });
-          // setIsInitialRender(false);
-          setLbs(null);
-          setcountrys(null);
-          setdistricts(null);
-          let currentLB =[];
           currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-          setLbs(currentLB);
-          // setLbsvalue(lbs);
-          console.log(currentLB[0].city.distCodeStr);
-          console.log("cmbDistrict" + cmbDistrict);
-          
-          setdistricts(cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr));
-
-          // console.log("currentLB" + currentLB.city.countrycode);
-          // if(cmbCountry.length>0){
-          //   setcountrys(cmbCountry.filter((cmbCountry) => cmbCountry.code === lbs.city.countrycode));
-          // }
-          // console.log("currentLB" + currentLB);
-          // setLbs(cmbLB);
+          setAdrsLBName(currentLB[0]);
+          cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+          setAdrsCountry(cmbFilterCountry[0]);
+          cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+          setAdrsStateName(cmbFilterState[0]);
+          cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
+          setAdrsDistrict(cmbFilterDistrict[0]);
+          cmbFilterLBtype = cmbLBType.filter((cmbLBType) => cmbLBType.code === currentLB[0].city.lbtypecode);
+          setAdrsLBTypeName(cmbFilterLBtype[0]);
           setIsInitialRender(false);
-          // cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
         }
       // }
-    }, [lbs,districts,countries, isInitialRender]);
-    // useEffect(() => {
-    //   if (isInitialRenderTenant) {
-    //     if (cmbLB.length > 0) {
-    //       console.log(cmbLB);
-    //       isInitialRenderTenant(false);
-    //       if (cmbCountry.length > 0) {
-    //         // cmbDesignations =[];
-    //         // cmbRegistrarNames =[];
-    //         let cmbRegistrarNames = cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
-    //         // console.log(cmbRegistrarNames);
-    //         // let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
-    //         // // console.log(cmbRegistrarNames[0].registar);      
-    //         // let OtherRegistrar=[];
-    //         // OtherRegistrar = cmbRegistrarNames[0].registar;
-    //         // let CheckIfExists = OtherRegistrar.filter((OtherRegistrar) => OtherRegistrar.hospitalRegistar === "Others");
-    //         // if(CheckIfExists.length>0){
-              
-    //         // } else {
-    //         //   OtherRegistrar.push({
-    //         //     hospitalRegistar:'Others',
-    //         //     registarDesig:'',
-    //         //     registrationAadhaar:'',
-    //         //     registrationMobile:'',
-    //         //     registrationNo:''
-    //         //   })
-             
-    //         // }   
-    //         // setFilteredOfficerName(OtherRegistrar);
-    //         // setFilteredDesignation(OtherRegistrar);
-    //         // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
-    //         // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
-    //       }
-  
-    //     }
-    //   }
-    // }, [isInitialRenderTenant]);
+    }, [Country,State,District,LBType,localbodies, isInitialRender]);
+    
   // let Zonal = [];
   // let cmbWardNo = [];
   // let cmbWardNoFinal = [];
@@ -272,9 +223,6 @@ const PlaceofBirthHome = ({
     setIsInitialRender(true);
     setAdrsDistrict(value);
     setAdrsLBName(null);
-    setLbs(null);
-    // setcountrys(null);
-    // setdistricts(null);
     districtid = value.districtid;
   }
   function setSelectAdrsLBTypeName(value) {
@@ -423,10 +371,10 @@ const PlaceofBirthHome = ({
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={countries}
+                option={cmbCountry}
                 selected={AdrsCountry}
                 select={setSelectAdrsCountry}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
             <div className="col-md-3">
@@ -441,7 +389,7 @@ const PlaceofBirthHome = ({
                 option={cmbState}
                 selected={AdrsStateName}
                 select={setSelectAdrsStateName}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
             <div className="col-md-3">
@@ -456,7 +404,7 @@ const PlaceofBirthHome = ({
                 option={cmbDistrict}
                 selected={AdrsDistrict}
                 select={setSelectAdrsDistrict}
-                disabled={isEdit}
+                disable={isDisableStatus}
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
             </div>
@@ -471,7 +419,7 @@ const PlaceofBirthHome = ({
                 option={cmbLBType}
                 selected={AdrsLBTypeName}
                 select={setSelectAdrsLBTypeName}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
           </div>
@@ -487,10 +435,10 @@ const PlaceofBirthHome = ({
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={lbs}
+                option={cmbLB}
                 selected={AdrsLBName}
                 select={setSelectAdrsLBName}
-                disabled={isEdit}
+                disable={isDisableStatus}
                 placeholder={`${t("CS_COMMON_LB_NAME")}`}
               />
             </div>
