@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea, Toast, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -23,6 +23,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
+  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: Menu = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
 
@@ -250,6 +252,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   let cmbCountry = [];
   let cmbState = [];
   let cmbLBType = [];
+  let cmbTaluk = [];
+  let cmbVillage = [];
   Menu &&
     Menu["death-services"] &&
     Menu["death-services"].PlaceMaster.map((ob) => {
@@ -260,25 +264,35 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
-    District &&
+  District &&
     District["common-masters"] &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
-    Country &&
+  Country &&
     Country["common-masters"] &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
-    State &&
+  State &&
     State["common-masters"] &&
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
-    LBType &&
+  LBType &&
     LBType["common-masters"] &&
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
+    });
+  Taluk &&
+    Taluk["common-masters"] &&
+    Taluk["common-masters"].Taluk.map((ob) => {
+      cmbTaluk.push(ob);
+    });
+  Village &&
+    Village["common-masters"] &&
+    Village["common-masters"].Village.map((ob) => {
+      cmbVillage.push(ob);
     });
   const onSkip = () => onSelect();
 
@@ -286,7 +300,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     selectBirthPlace(value);
     setValue(value.code);
     // setIsInitialRenderLB(true);
-    
+
   }
 
   React.useEffect(() => {
@@ -459,8 +473,8 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
             } else {
               setSignedOfficerDesgError(false);
             }
-          }          
-        }        
+          }
+        }
       }
       if (SignedOfficerMobileNo != null || SignedOfficerMobileNo != "") {
         let MobileLen = SignedOfficerMobileNo;

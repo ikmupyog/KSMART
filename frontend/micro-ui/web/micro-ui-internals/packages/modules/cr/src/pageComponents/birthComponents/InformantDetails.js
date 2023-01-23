@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton ,TextArea } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstNameEn, setInfomantFirstNameEn, InfomantAadhar, setInfomantAadhar, InfomantEmail, setInfomantEmail,
-    InfomantMobile, setInfomantMobile ,InformantAddressLineOne,setInformantAddressLineOne,InformantAddressLineTwo,setInformantAddressLineTwo,
+    InfomantMobile, setInfomantMobile, InformantAddressLineOne, setInformantAddressLineOne, InformantAddressLineTwo, setInformantAddressLineTwo,
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
@@ -22,13 +22,28 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
     const onSkip = () => onSelect();
 
     function setSelectInfomantFirstNameEn(e) {
-        setInfomantFirstNameEn(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setInfomantFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+        }
     }
     function setSelectInformantAddressLineOne(e) {
-        setInformantAddressLineOne(e.target.value);
+        if (e.target.value.length === 251) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setInformantAddressLineOne(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+        }
     }
     function setSelectInformantAddressLineTwo(e) {
-        setInformantAddressLineTwo(e.target.value);
+        if (e.target.value.length === 251) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setInformantAddressLineTwo(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+        }
     }
     function setSelectInfomantAadhar(e) {
         if (e.target.value.length != 0) {
@@ -46,7 +61,12 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
     }
 
     function setSelectInfomantEmail(e) {
-        setInfomantEmail(e.target.value);
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setInfomantEmail(e.target.value);
+        }
     }
     function setSelectInfomantMobile(e) {
         if (e.target.value.length != 0) {
@@ -71,7 +91,7 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
         // sessionStorage.setItem("InfomantMobile", InfomantMobile);   
         // sessionStorage.setItem("InformantAddressLineOne", InformantAddressLineOne);   
         // sessionStorage.setItem("InformantAddressLineTwo", InformantAddressLineTwo);   
-       
+
 
         // onSelect(config.key, {
         //     InfomantFirstNameEn,  InfomantAadhar,  InfomantEmail, InfomantMobile        });
@@ -99,44 +119,44 @@ const InformantDetails = ({ config, onSelect, userType, formData, InfomantFirstN
                             <TextInput t={t} isMandatory={false} type="email" optionKey="i18nKey" name="InfomantEmail" value={InfomantEmail} onChange={setSelectInfomantEmail} disable={isEdit} placeholder={`${t("CR_EMAIL")}`} {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })} />
                         </div>
                         <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="InfomantMobile" value={InfomantMobile} onChange={setSelectInfomantMobile} disable={isEdit} placeholder={`${t("CR_EMAIL")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
+                            <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="InfomantMobile" value={InfomantMobile} onChange={setSelectInfomantMobile} disable={isEdit} placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
                         </div>
                     </div>
                 </div>
                 <div className="row">
-         <div className="col-md-12" >
-         <div className="col-md-6" >
-          <CardLabel>{`${t("CR_ADDRESS_1_EN")}`}</CardLabel> 
-            <TextArea       
-            t={t}
-            isMandatory={true}
-            type={"text"}
-            optionKey="i18nKey"
-            name="InformantAddressLineOne"
-            value={InformantAddressLineOne}
-            onChange={setSelectInformantAddressLineOne}
-            disable={isEdit}
-            placeholder={`${t("CR_ADDRESS_1_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS_1_EN") })}
-            />
-        </div>
-         <div className="col-md-6" >
-         <CardLabel>{`${t("CR_ADDRESS_2_EN")}`}</CardLabel>
-            <TextArea       
-            t={t}
-            isMandatory={false}
-            type={"text"}
-            optionKey="i18nKey"
-            name="InformantAddressLineTwo"
-            value={InformantAddressLineTwo}
-            onChange={setSelectInformantAddressLineTwo}
-            disable={isEdit}
-            placeholder={`${t("CR_ADDRESS_2_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS_2_EN") })}
-            />
-        </div>
-      </div>  
-    </div>    
+                    <div className="col-md-12" >
+                        <div className="col-md-6" >
+                            <CardLabel>{`${t("CR_ADDRESS_1_EN")}`}</CardLabel>
+                            <TextArea
+                                t={t}
+                                isMandatory={true}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="InformantAddressLineOne"
+                                value={InformantAddressLineOne}
+                                onChange={setSelectInformantAddressLineOne}
+                                disable={isEdit}
+                                placeholder={`${t("CR_ADDRESS_1_EN")}`}
+                                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS_1_EN") })}
+                            />
+                        </div>
+                        <div className="col-md-6" >
+                            <CardLabel>{`${t("CR_ADDRESS_2_EN")}`}</CardLabel>
+                            <TextArea
+                                t={t}
+                                isMandatory={false}
+                                type={"text"}
+                                optionKey="i18nKey"
+                                name="InformantAddressLineTwo"
+                                value={InformantAddressLineTwo}
+                                onChange={setSelectInformantAddressLineTwo}
+                                disable={isEdit}
+                                placeholder={`${t("CR_ADDRESS_2_EN")}`}
+                                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS_2_EN") })}
+                            />
+                        </div>
+                    </div>
+                </div>
 
 
 

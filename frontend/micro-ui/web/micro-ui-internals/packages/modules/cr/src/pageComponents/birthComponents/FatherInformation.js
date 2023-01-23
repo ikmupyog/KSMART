@@ -156,7 +156,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
         }
     }
     function setSelectFatherEmail(e) {
-        if (e.target.value.length === 21) {
+        if (e.target.value.length === 51) {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {

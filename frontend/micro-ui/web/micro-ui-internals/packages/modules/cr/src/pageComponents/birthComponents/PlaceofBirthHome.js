@@ -73,13 +73,8 @@ const PlaceofBirthHome = ({
 
   //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderTenant, setIsInitialRenderTenant] = useState(true);
-  const [countries, setcountrys] = useState(null);
-  const [states, setStates] = useState(null);
-  const [districts, setdistricts] = useState(null);
-  const [lbtypes, setlbtypes] = useState(null);
-  const [lbs, setLbs] = useState(null);
-  const [lbsvalue, setLbsvalue] = useState(null);
+  const [Talukvalues, setLbsTalukvalue] = useState(null);
+  const [Villagevalues, setLbsVillagevalue] = useState(null);
   const [isDisableStatus, setDisableStatus] = useState(true);
 
   // const [countries, setcountry] = useState(0);
@@ -169,6 +164,8 @@ const PlaceofBirthHome = ({
   let cmbFilterState = [];
   let cmbFilterDistrict = [];
   let cmbFilterLBtype = [];
+  let cmbFilterTaluk = [];
+  let cmbFilterVillage = [];
   useEffect(() => {
 
     if (isInitialRender) {
@@ -183,10 +180,15 @@ const PlaceofBirthHome = ({
       setAdrsDistrict(cmbFilterDistrict[0]);
       cmbFilterLBtype = cmbLBType.filter((cmbLBType) => cmbLBType.code === currentLB[0].city.lbtypecode);
       setAdrsLBTypeName(cmbFilterLBtype[0]);
+      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
+      setLbsTalukvalue(cmbFilterTaluk);
+      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+      console.log(cmbFilterVillage);
+      setLbsVillagevalue(cmbFilterTaluk);
       setIsInitialRender(false);
     }
     // }
-  }, [Country, State, District, LBType, localbodies, isInitialRender]);
+  }, [Country, State, District, LBType, localbodies,Talukvalues,Villagevalues, isInitialRender]);
 
   // let Zonal = [];
   // let cmbWardNo = [];
@@ -251,7 +253,12 @@ const PlaceofBirthHome = ({
   //   setAdrsBuldingNo(e.target.value);
   // }
   function setSelectAdrsResNoEn(e) {
-    setAdrsResNoEn(e.target.value);
+    if (e.target.value.length === 21) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' ]/ig, ''));
+    }
   }
   function setSelectAdrsResNoMl(e) {
     if (e.target.value.length === 11) {
@@ -497,7 +504,7 @@ const PlaceofBirthHome = ({
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={cmbTaluk}
+                option={Talukvalues}
                 selected={AdrsTaluk}
                 select={setSelectAdrsTaluk}
                 disabled={isEdit}
@@ -513,7 +520,7 @@ const PlaceofBirthHome = ({
                 t={t}
                 optionKey="name"
                 isMandatory={true}
-                option={cmbVillage}
+                option={Villagevalues}
                 selected={AdrsVillage}
                 select={setSelectAdrsVillage}
                 disabled={isEdit}
