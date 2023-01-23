@@ -62,7 +62,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [OccupationOthers, setOccupationOthers] = useState(
     formData?.InformationDeath?.OccupationOthers ? formData?.InformationDeath?.OccupationOthers : ""
   );
-  const [checkedAdhar, setCheckedAdhar] = useState(formData?.InformationDeath?.checkedAdhar ? formData?.InformationDeath?.checkedAdhar : 0);
+  const [ischeckedAdhar , setisCheckedAdhar] = useState(formData?.InformationDeath?.ischeckedAdhar  ? formData?.InformationDeath?.ischeckedAdhar  : 0);
+  const [isInitialRender, setIsInitialRender] = useState(true);
   // const [selectedValues,  ] = useState(
   //   formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : false
   // );
@@ -165,7 +166,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     setIdNo(e.target.value);
   }
   function selectDeathDate(value) {
+
     setDeathDate(value);
+    
   }
   function selectFromDate(value) {
     setFromDate(value);
@@ -209,6 +212,18 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       cb(value);
     }
   };
+
+  function setCheckedAdhar(e) {
+    if (e.target.checked === true) {
+      setisCheckedAdhar(e.target.checked);
+
+    } else {
+      setisCheckedAdhar(e.target.checked);
+      setSelectedIdCombo("");
+      setIdNo("");    }
+  }
+
+
   const onSkip = () => onSelect();
   let cmbfilterNation = [];
   let cmbfilterReligion = [];
@@ -232,7 +247,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         setSelectedAgeUnit(cmbfilterAgeUnit[0]);
       }
     }
-  });
+    if (isInitialRender) {
+      if (formData?.InformationDeath?.ischeckedAdhar  != null) {
+        setIsInitialRender(false);
+        setisCheckedAdhar(formData?.InformationDeath?.ischeckedAdhar );
+      }
+    }  
+
+
+  },[isInitialRender]);
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
     sessionStorage.setItem("DeathTime", DeathTime ? DeathTime : null);
@@ -257,16 +280,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("CommencementDate", CommencementDate ? CommencementDate : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
-    sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     // sessionStorage.setItem("selectedValues", selectedValues ? selectedValues : true);
     sessionStorage.setItem("setOccupationMain", setOccupationMain ? setOccupationMain.code : null);
     sessionStorage.setItem("OccupationOthers", OccupationOthers ? OccupationOthers : null);
     sessionStorage.setItem("checked", checked ? checked : false);
     sessionStorage.setItem("checkedOcuupation", checkedOcuupation ? checkedOcuupation : false);
-    sessionStorage.setItem("checkedAdhar", checkedAdhar ? checkedAdhar : false);
+    sessionStorage.setItem("ischeckedAdhar ", ischeckedAdhar  ? ischeckedAdhar  : false);
 
     onSelect(config.key, {
-      checkedAdhar,
+      ischeckedAdhar ,
       checkedOcuupation,
       setIdCombo,
       DeathDate,
@@ -655,11 +677,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_ADHAR_NOT_AVAILABLE")} onChange={() => setCheckedAdhar((checkedAdhar) => !checkedAdhar)} value={checked} />
+            <CheckBox label={t("CR_ADHAR_NOT_AVAILABLE")} onChange={setCheckedAdhar} value={ischeckedAdhar } checked={ischeckedAdhar } />
+            {/* <CheckBox label={t("CR_ADHAR_NOT_AVAILABLE")} onChange={() => setCheckedAdhar((checkedAdhar) => !checkedAdhar)} value={checked} /> */}
             </div>
           </div>
         </div>
-        {checkedAdhar ? (
+        {ischeckedAdhar  === true && (
+        // {checkedAdhar ? (
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
@@ -693,7 +717,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-        ) : (
+       )}
+        {ischeckedAdhar  === false && (
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
