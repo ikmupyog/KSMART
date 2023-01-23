@@ -149,9 +149,9 @@ public class CrDeathMdmsUtil {
                     crDeathMasterDetails
                                .add(MasterDetail.builder().name(CrDeathConstants.DEATH_CAUSE_SUB).filter(filterCodeDeathCauseSub).build());
 
-        final String filterCodeMaleDependentType = "$.[?(@.active==true)].code";
-                               crDeathMasterDetails
-                                          .add(MasterDetail.builder().name(CrDeathConstants.MALE_DEPENDENT_TYPE).filter(filterCodeMaleDependentType).build());
+        // final String filterCodeMaleDependentType = "$.[?(@.active==true)].code";
+        //                        crDeathMasterDetails
+        //                                   .add(MasterDetail.builder().name(CrDeathConstants.MALE_DEPENDENT_TYPE).filter(filterCodeMaleDependentType).build());
        
 
         // final String filterCodeFemaleDependentType = "$.[?(@.active==true)].code";
