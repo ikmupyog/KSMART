@@ -232,7 +232,7 @@ public class CrDeathMdmsUtil {
             List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
             // filter to only get code field from master data            
-            final String filterCode = "$.[?(@.code=='"+tenantId+"')].idgencode";
+            final String filterCode = "$.[?(@.code=='"+tenantId+"')].city.idgencode";
             crDeathMasterDetails
             .add(MasterDetail.builder().name(CrDeathConstants.TENANTS).filter(filterCode).build());       
 
@@ -270,7 +270,7 @@ public class CrDeathMdmsUtil {
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
         // filter to only get code field from master data            
-        final String filterCode = "$.[?(@.code=='"+tenantId+"')].lbtypecode";
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')].city.lbtypecode";
         crDeathMasterDetails
         .add(MasterDetail.builder().name(CrDeathConstants.TENANTS).filter(filterCode).build());       
 

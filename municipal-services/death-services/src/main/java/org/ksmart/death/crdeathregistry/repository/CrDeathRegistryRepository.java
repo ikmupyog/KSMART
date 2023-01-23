@@ -646,5 +646,14 @@ public class CrDeathRegistryRepository {
 		}
 		
 	}
+//RAkhi S on 23.01.2023
+    public List<Map<String, Object>>  getDeathCertificate(String tenantId,int  Year) {
+        
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = queryBuilder.getDeathCertIdQuery(tenantId, Year,preparedStmtValues);
+        List<Map<String, Object>> regDetails= jdbcTemplate.queryForList(query,preparedStmtValues.toArray());
+        return regDetails; 
+     }
+
 
 }
