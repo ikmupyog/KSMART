@@ -303,7 +303,9 @@ const Address = ({ config, onSelect, userType, formData }) => {
     setPresentDistrict(value);
     setPresentLBName(null);
     setLbs(null);
+    console.log("value" + value);
     districtid = value.districtid;
+    console.log("districtid" + districtid);
     if (isPrsentAddress) {
       setPermanentDistrict(PresentDistrict);
     }
@@ -705,6 +707,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
     if (isInitialRender) {
       if (PresentDistrict) {
         setIsInitialRender(false);
+        console.log("PresentDistrict" + PresentDistrict);
         setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === PresentDistrict.districtid));
       }
     }

@@ -66,7 +66,6 @@ const PlaceofBirthHome = ({
   const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  console.log("localbodies" + LBCombo);
   // Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
@@ -75,11 +74,13 @@ const PlaceofBirthHome = ({
   //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderTenant, setIsInitialRenderTenant] = useState(true);
-  const [country, setcountrys] = useState(0);
-  const [states, setStates] = useState(0);
-  const [districts, setdistricts] = useState(0);
-  const [lbtypes, setlbtypes] = useState(0);
-  const [lbs, setLbs] = useState(0);
+  const [countries, setcountrys] = useState(null);
+  const [states, setStates] = useState(null);
+  const [districts, setdistricts] = useState(null);
+  const [lbtypes, setlbtypes] = useState(null);
+  const [lbs, setLbs] = useState(null);
+  const [lbsvalue, setLbsvalue] = useState(null);
+  // const [countries, setcountry] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [AdrsCountry, setAdrsCountry] = useState(formData?.BirthPlaceHomeDetails?.AdrsCountry);
   // const [AdrsStateName, setAdrsStateName] = useState(formData?.BirthPlaceHomeDetails?.AdrsStateName);
@@ -169,7 +170,7 @@ const PlaceofBirthHome = ({
         // console.log("AdrsDistrict" + districtid);
         // sleep(setTimeout(1000));
         // if (localbodies.length > 0) {
-        // console.log(localbodies);
+        console.log(localbodies);
 
           // localbodies &&
           // localbodies["tenant"] &&
@@ -177,14 +178,29 @@ const PlaceofBirthHome = ({
           //   cmbLB.push(ob);
           // });
           // setIsInitialRender(false);
-          // let currentLB = LBCombo.filter((LBCombo) => LBCombo.code === tenantId)
+          setLbs(null);
+          setcountrys(null);
+          setdistricts(null);
+          let currentLB =[];
+          currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+          setLbs(currentLB);
+          // setLbsvalue(lbs);
+          console.log(currentLB[0].city.distCodeStr);
+          console.log("cmbDistrict" + cmbDistrict);
+          
+          setdistricts(cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr));
+
+          // console.log("currentLB" + currentLB.city.countrycode);
+          // if(cmbCountry.length>0){
+          //   setcountrys(cmbCountry.filter((cmbCountry) => cmbCountry.code === lbs.city.countrycode));
+          // }
           // console.log("currentLB" + currentLB);
-          setLbs(cmbLB);
+          // setLbs(cmbLB);
           setIsInitialRender(false);
           // cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
         }
       // }
-    }, [lbs, isInitialRender]);
+    }, [lbs,districts,countries, isInitialRender]);
     // useEffect(() => {
     //   if (isInitialRenderTenant) {
     //     if (cmbLB.length > 0) {
@@ -257,6 +273,8 @@ const PlaceofBirthHome = ({
     setAdrsDistrict(value);
     setAdrsLBName(null);
     setLbs(null);
+    // setcountrys(null);
+    // setdistricts(null);
     districtid = value.districtid;
   }
   function setSelectAdrsLBTypeName(value) {
@@ -405,7 +423,7 @@ const PlaceofBirthHome = ({
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={cmbCountry}
+                option={countries}
                 selected={AdrsCountry}
                 select={setSelectAdrsCountry}
                 disabled={isEdit}
