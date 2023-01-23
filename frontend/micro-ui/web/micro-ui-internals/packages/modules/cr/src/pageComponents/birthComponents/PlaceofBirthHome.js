@@ -184,7 +184,7 @@ const PlaceofBirthHome = ({
       setLbsTalukvalue(cmbFilterTaluk);
       cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
       console.log(cmbFilterVillage);
-      setLbsVillagevalue(cmbFilterTaluk);
+      setLbsVillagevalue(cmbFilterVillage);
       setIsInitialRender(false);
     }
     // }
