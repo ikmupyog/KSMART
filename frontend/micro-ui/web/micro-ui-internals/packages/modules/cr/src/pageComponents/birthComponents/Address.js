@@ -372,23 +372,31 @@ const Address = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectPresentSubNo(e) {
+    if (e.target.value.length === 6) {
+      return false;
+    } else {
     setPresentSubNo(e.target.value);
     if (isPrsentAddress) {
       setPermanentSubNo(PresentSubNo);
     }
   }
+}
   function setSelectPresentDoorNo(e) {
+    if (e.target.value.length === 6) {
+      return false;
+    } else {
     setPresentDoorNo(e.target.value);
     if (isPrsentAddress) {
       setPermanentDoorNo(PresentDoorNo);
     }
   }
+}
   function setSelectPresentResNoEn(e) {
     if (e.target.value.length === 20) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentResNoEn(e.target.value);
+      setPresentResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
       if (isPrsentAddress) {
         setPermanentResNoEn(PresentResNoEn);
       }
@@ -400,7 +408,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentResNoMl(e.target.value);
+      setPresentResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
       if (isPrsentAddress) {
         setPermanentResNoMl(PresentResNoMl);
       }
@@ -413,7 +421,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentHouseNameEn(e.target.value);
+      setPresentHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
       if (isPrsentAddress) {
         setPermanentHouseNameEn(PresentHouseNameEn);
       }
@@ -425,7 +433,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentHouseNameMl(e.target.value);
+      setPresentHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
       if (isPrsentAddress) {
         setPermanentHouseNameMl(PresentHouseNameMl);
       }
@@ -438,7 +446,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentMainPlaceEn(e.target.value);
+      setPresentMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
       if (isPrsentAddress) {
         setPermanentMainPlaceEn(PresentMainPlaceEn);
       }
@@ -450,7 +458,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentMainPlaceMl(e.target.value);
+      setPresentMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
       if (isPrsentAddress) {
         setPermanentMainPlaceMl(PresentMainPlaceMl);
       }
@@ -462,7 +470,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentLocalityNameEn(e.target.value);
+      setPresentLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
       if (isPrsentAddress) {
         setPermanentLocalityNameEn(PresentLocalityNameEn);
       }
@@ -474,7 +482,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPresentLocalityNameMl(e.target.value);
+      setPresentLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
       if (isPrsentAddress) {
         setPermanentLocalityNameMl(PresentLocalityNameMl);
       }
@@ -557,17 +565,25 @@ const Address = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectPermanentSubNo(e) {
+    if (e.target.value.length === 6) {
+      return false;
+    } else {
     setPermanentSubNo(e.target.value);
   }
+}
   function setSelectPermanentDoorNo(e) {
+    if (e.target.value.length === 6) {
+      return false;
+    } else {
     setPermanentDoorNo(e.target.value);
   }
+}
   function setSelectPermanentResNoEn(e) {
     if (e.target.value.length === 20) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentResNoEn(e.target.value);
+      setPermanentResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
     }
   }
   function setSelectPermanentResNoMl(e) {
@@ -575,7 +591,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentResNoMl(e.target.value);
+      setPermanentResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
     }
   }
 
@@ -585,7 +601,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentHouseNameEn(e.target.value);
+      setPermanentHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
     }
   }
   function setSelectPermanentHouseNameMl(e) {
@@ -593,7 +609,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentHouseNameMl(e.target.value);
+      setPermanentHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
     }
   }
   function setSelectPermanentMainPlaceEn(e) {
@@ -601,7 +617,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentMainPlaceEn(e.target.value);
+      setPermanentMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
     }
   }
   function setSelectPermanentMainPlaceMl(e) {
@@ -609,7 +625,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentMainPlaceMl(e.target.value);
+      setPermanentMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
     }
   }
   function setSelectPermanentLocalityNameEn(e) {
@@ -617,7 +633,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentLocalityNameEn(e.target.value);
+      setPermanentLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
     }
   }
   function setSelectPermanentLocalityNameMl(e) {
@@ -625,7 +641,7 @@ const Address = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setPermanentLocalityNameMl(e.target.value);
+      setPermanentLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
     }
   }
   // function setSelectPermanentStreetNameEn(e) {
