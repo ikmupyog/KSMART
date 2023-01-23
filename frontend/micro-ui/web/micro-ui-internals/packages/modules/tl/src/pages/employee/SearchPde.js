@@ -16,7 +16,6 @@ const SearchPde = () => {
         const data = {
             ..._data
         }
-        console.log(_data);
 
         setPayload(Object.keys(data).filter( k => data[k] ).reduce( (acc, key) => ({...acc,  [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {} ))
     }
