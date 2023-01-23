@@ -792,6 +792,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 label={t("CR_OCCUPATION_DECEASED_NO")}
                 onChange={() => setCheckedOcuupation((checkedOcuupation) => !checkedOcuupation)}
                 value={checkedOcuupation}
+                checked={checkedOcuupation }
               />{" "}
             </div>
           </div>
