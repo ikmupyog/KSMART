@@ -59,7 +59,7 @@ const PlaceofBirthHome = ({
   const { t } = useTranslation();
   let validation = {};
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  // const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
@@ -153,38 +153,38 @@ const PlaceofBirthHome = ({
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
-    // localbodies &&
-    // localbodies["tenant"] &&
-    // localbodies["tenant"].tenants.map((ob) => {
-    //   cmbLB.push(ob);     
-    //   console.log("cmbLB" + localbodies); 
-    //   // setIsInitialRender(true);
+    localbodies &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants.map((ob) => {
+      cmbLB.push(ob);     
+      // console.log("cmbLB" + localbodies); 
+      // setIsInitialRender(true);
      
-    // });
+    });
     
-    // useEffect(() => {
+    useEffect(() => {
 
-    //   if (isInitialRender) {
+      if (isInitialRender) {
   
-    //     // console.log("AdrsDistrict" + districtid);
-    //     // sleep(setTimeout(1000));
-    //     // if (localbodies.length > 0) {
-    //     // console.log(localbodies);
+        // console.log("AdrsDistrict" + districtid);
+        // sleep(setTimeout(1000));
+        // if (localbodies.length > 0) {
+        // console.log(localbodies);
 
-    //       // localbodies &&
-    //       // localbodies["tenant"] &&
-    //       // localbodies["tenant"].tenants.map((ob) => {
-    //       //   cmbLB.push(ob);
-    //       // });
-    //       // setIsInitialRender(false);
-    //       let currentLB = LBCombo.filter((LBCombo) => LBCombo.code === tenantId)
-    //       console.log("currentLB" + currentLB);
-    //       setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === AdrsDistrict.districtid));
-    //       setIsInitialRender(false);
-    //       // cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
-    //     }
-    //   // }
-    // }, [lbs, isInitialRender]);
+          // localbodies &&
+          // localbodies["tenant"] &&
+          // localbodies["tenant"].tenants.map((ob) => {
+          //   cmbLB.push(ob);
+          // });
+          // setIsInitialRender(false);
+          // let currentLB = LBCombo.filter((LBCombo) => LBCombo.code === tenantId)
+          // console.log("currentLB" + currentLB);
+          setLbs(cmbLB);
+          setIsInitialRender(false);
+          // cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
+        }
+      // }
+    }, [lbs, isInitialRender]);
     // useEffect(() => {
     //   if (isInitialRenderTenant) {
     //     if (cmbLB.length > 0) {

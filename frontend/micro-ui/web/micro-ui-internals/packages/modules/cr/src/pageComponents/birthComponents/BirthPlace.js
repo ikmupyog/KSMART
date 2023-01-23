@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea, Toast, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
@@ -234,6 +234,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderLB, setIsInitialRenderLB] = useState(true);
   const [LBCombo, setLBCombo] = useState(null);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -249,22 +250,25 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     localbodies["tenant"] &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
-      // setLBCombo(cmbLB);
-      // console.log("cmbLB" + localbodies); 
-      // setIsInitialRender(true);
-
+      console.log(cmbLB);
     });
-  console.log(localbodies);
   const onSkip = () => onSelect();
 
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
-    if (localbodies.length > 0) {
-      setLBCombo(localbodies);
-      console.log(LBCombo);
-    }
+    // setIsInitialRenderLB(true);
+    
   }
+  // useEffect(() => {
+  //   if (isInitialRenderLB) {
+  //     // if (cmbLB.length > 0) {
+  //       setIsInitialRenderLB(false);
+  //       setLBCombo(cmbLB);
+  //       console.log("LBCombo" + LBCombo);
+  //     // }
+  //   }
+  // }, [isInitialRenderLB]);
 
   React.useEffect(() => {
     if (isInitialRender) {
@@ -394,8 +398,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
         }, 2000);
       } else {
         setHospitalError(false);
-      }
-      if (HospitalName != null) {
         if (SignedOfficerName == null) {
           setSignedOfficerError(true);
           validFlag = false;
@@ -405,47 +407,42 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
           }, 2000);
         } else {
           setSignedOfficerError(false);
-        }
-        if (SignedOfficerDesignation == null || SignedOfficerDesignation == "") {
-          setSignedOfficerDesgError(true);
-          validFlag = false;
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-        } else {
-          setSignedOfficerDesgError(false);
-        }
-      }
-      if (HospitalName != null && SignedOfficerName != null) {
-        if (HospitalName != null && SignedOfficerName.hospitalRegistar === "Others") {
-          if (SignedOfficerNameOther == null || SignedOfficerNameOther == "" || SignedOfficerNameOther == undefined) {
-            setSignedOfficerError(true);
-            validFlag = false;
-            setToast(true);
-            setTimeout(() => {
-              setToast(false);
-            }, 2000);
+          if (SignedOfficerName.hospitalRegistar === "Others") {
+            if (SignedOfficerNameOther == null || SignedOfficerNameOther == "" || SignedOfficerNameOther == undefined) {
+              setSignedOfficerError(true);
+              validFlag = false;
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 2000);
+            } else {
+              setSignedOfficerError(false);
+            }
+            if (SignedOfficerDesignationOther == null || SignedOfficerDesignationOther == "" || SignedOfficerDesignationOther == undefined) {
+              setSignedOfficerDesgError(true);
+              validFlag = false;
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 2000);
+            }
+            else {
+              setSignedOfficerDesgError(false);
+            }
           } else {
-            setSignedOfficerError(false);
-          }
-          if (SignedOfficerDesignationOther == null || SignedOfficerDesignationOther == "" || SignedOfficerDesignationOther == undefined) {
-            setSignedOfficerDesgError(true);
-            validFlag = false;
-            setToast(true);
-            setTimeout(() => {
-              setToast(false);
-            }, 2000);
-          }
-          else {
-            setSignedOfficerDesgError(false);
-          }
-        } else {
-          setSignedOfficerError(false);
-          setSignedOfficerDesgError(false);
-        }
+            if (SignedOfficerDesignation == null || SignedOfficerDesignation == "") {
+              setSignedOfficerDesgError(true);
+              validFlag = false;
+              setToast(true);
+              setTimeout(() => {
+                setToast(false);
+              }, 2000);
+            } else {
+              setSignedOfficerDesgError(false);
+            }
+          }          
+        }        
       }
-
       if (SignedOfficerMobileNo != null || SignedOfficerMobileNo != "") {
         let MobileLen = SignedOfficerMobileNo;
         if (MobileLen.length != 0) {
@@ -580,7 +577,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       }
       if (InstitutionAadhaar != null || InstitutionAadhaar != "") {
         let AdharLen = InstitutionAadhaar;
-        console.log("AdharLen" + AdharLen.length);
         if (AdharLen.length != 0) {
           if (AdharLen.length > 12) {
             setInstitutionAadharError(true);
@@ -1996,7 +1992,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
       }
     }
   };
-  if (isLoading) {
+  if (isLoading || islocalbodiesLoading) {
     return <Loader></Loader>;
   }
   return (

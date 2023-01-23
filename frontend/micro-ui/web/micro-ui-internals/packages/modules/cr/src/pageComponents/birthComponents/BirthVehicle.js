@@ -97,33 +97,74 @@ const BirthVehicle = ({ config, onSelect, userType, formData ,VehicleRegistratio
   //   setVehicleType(e.target.value);
   // }
   function setSelectVehicleRegistrationNo(e) {
+    if (e.target.value.length ===10) {
+      return false;
+    } else {  
     setVehicleRegistrationNo(e.target.value);
   }
+}
   // function setSelectDriverLicenceNo(e) {
   //   setDriverLicenceNo(e.target.value);
   // }
+
+  function setSelectMotherFirstNameEn(e) {  
+
+}
+
+
   
   function setSelectVehicleFromEn(e) {
-    setVehicleFromEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+    setVehicleFromEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
   }
+}
+
+  
   function setSelectVehicleToEn(e) {
-    setVehicleToEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+    setVehicleToEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
   }
+}
   function setSelectVehicleFromMl(e) {
-    setVehicleFromMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+    setVehicleFromMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+  }
   }
   function setSelectVehicleHaltPlace(e) {
+    if (e.target.value.length ===51) {
+      return false;
+    } else {  
     setVehicleHaltPlace(e.target.value);
-  }
+}
+}
 
   function setSelectVehicleToMl(e) {
-    setVehicleToMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+    setVehicleToMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+  }
   }
   function setSelectVehicleOtherDetailsEn(e) {
-    setVehicleOtherDetailsEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+    setVehicleOtherDetailsEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
   }
+  }
+
   function setSelectVehicleOtherDetailsMl(e) {
-    setVehicleOtherDetailsMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+    setVehicleOtherDetailsMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+    }
   }
   // function selectDeathVehicleWard(value) {
   //   setSelectedDeathVehicleWard(value);

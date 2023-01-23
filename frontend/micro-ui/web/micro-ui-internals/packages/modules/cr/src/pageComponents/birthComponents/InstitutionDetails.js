@@ -140,7 +140,7 @@ const InstitutionDetails = ({ config, onSelect, userType, formData, setInstituti
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
+              <Dropdown
                 t={t}
                 isMandatory={false}
                 type={"text"}
@@ -153,9 +153,10 @@ const InstitutionDetails = ({ config, onSelect, userType, formData, setInstituti
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
               />
             </div>
+ 
             <div className="col-md-6">
               <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
+              <Dropdown
                 t={t}
                 isMandatory={false}
                 type={"text"}
