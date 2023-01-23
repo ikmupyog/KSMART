@@ -288,15 +288,6 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
     // setIsInitialRenderLB(true);
     
   }
-  // useEffect(() => {
-  //   if (isInitialRenderLB) {
-  //     // if (cmbLB.length > 0) {
-  //       setIsInitialRenderLB(false);
-  //       setLBCombo(cmbLB);
-  //       console.log("LBCombo" + LBCombo);
-  //     // }
-  //   }
-  // }, [isInitialRenderLB]);
 
   React.useEffect(() => {
     if (isInitialRender) {
