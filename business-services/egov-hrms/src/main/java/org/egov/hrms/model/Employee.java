@@ -40,17 +40,25 @@
 
 package org.egov.hrms.model;
 
-import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.egov.hrms.web.contract.User;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Validated
 @AllArgsConstructor
@@ -83,10 +91,12 @@ public class Employee {
 
     private Long dateOfAppointment;
 
-    @Valid
-    @NotEmpty
-    @Size(min = 1,max = 50)
-    private List<Jurisdiction> jurisdictions = new ArrayList<>();
+
+
+	@Valid
+	@NotEmpty
+	@Size(min = 1, max = 50)
+	private List<Jurisdiction> jurisdictions = new ArrayList<>();
 
 
     @Valid

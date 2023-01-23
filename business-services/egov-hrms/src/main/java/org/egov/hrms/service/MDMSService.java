@@ -104,7 +104,9 @@ public class MDMSService {
 	 */
 	public MdmsResponse fetchMDMSDataLoc(RequestInfo requestInfo, String tenantId) {
 		StringBuilder uri = new StringBuilder();
+//		String stateLevelTenant = "kl";
 		MdmsCriteriaReq request = prepareMDMSRequestLoc(uri, requestInfo, tenantId);
+		System.out.println("request to mdms" + request);
 		MdmsResponse response = null;
 		try {
 			response = restTemplate.postForObject(uri.toString(), request, MdmsResponse.class);
