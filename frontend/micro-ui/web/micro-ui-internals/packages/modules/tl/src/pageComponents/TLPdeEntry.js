@@ -631,13 +631,18 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       formState1.map((data) => {
           if(searchReult){
               searchReult.filter((d)=>{
-                if((d?.tradeLicenseDetail?.structurePlace?.doorNo === data.doorNo)&&(d?.tradeLicenseDetail?.structurePlace?.doorNoSub === data.doorNoSub)&&(flg == true)){
-                    flg = "DExists";
+                if(d?.tradeLicenseDetail?.address.wardNo == WardNo.wardno){
+                  let doornos = d?.tradeLicenseDetail?.structurePlace;
+                  doornos.filter(doorno => {
+                    if((doorno.doorNo == data.doorNo)&&(doorno.doorNoSub == data.doorNoSub)&&(flg == true)){
+                      flg = "DExists";
+                    }
+                  });
                 }
-            });
-          }
-      });
-    }
+              });
+            }
+        });
+      }
     return flg;
   }
 
