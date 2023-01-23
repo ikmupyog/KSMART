@@ -176,7 +176,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
       <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_SPOUSE_UNAVAILABLE")} onChange={() => setisSpouseChecked(!isSpouseChecked)}  />
+              <CheckBox label={t("CR_SPOUSE_UNAVAILABLE")} onChange={() => setisSpouseChecked(!isSpouseChecked)} value={isSpouseChecked} checked={isSpouseChecked } />
             </div>
           </div>
         </div>
@@ -312,7 +312,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_FATHER_UNAVAILABLE")} onChange={() => setIsChecked(!isChecked)}  />
+              <CheckBox label={t("CR_FATHER_UNAVAILABLE")} onChange={() => setIsChecked(!isChecked)}  value={isChecked} checked={isChecked } />
             </div>
           </div>
         </div>
@@ -500,7 +500,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_MOTHER_UNAVAILABLE")} onChange={() => setIsCheckedMother(!isCheckedMother)} />
+              <CheckBox label={t("CR_MOTHER_UNAVAILABLE")} onChange={() => setIsCheckedMother(!isCheckedMother)} value={isCheckedMother} checked={isCheckedMother }/>
             </div>
           </div>
         </div>

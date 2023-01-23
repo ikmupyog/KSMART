@@ -8,7 +8,9 @@ import PlaceOfDeathHome from "../../pageComponents/deathComponents/PlaceOfDeathH
 import PlaceOfDeathVehicle from "../../pageComponents/deathComponents/PlaceOfDeathVehicle";
 import PlaceOfDeathOther from "../../pageComponents/deathComponents/PlaceOfDeathOther";
 import InformentAddress from "../../pageComponents/deathComponents/InformentAddress";
-import InformantAddress from "../birthComponents/InformantAddress";
+import Address from "../../pageComponents/deathComponents/Address";
+
+// import InformantAddress from "../birthComponents/InformantAddress";
 // import PlaceOfDeathOther from "../../pageComponents/deathComponents/PlaceOfDeathOther";
 
 const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
@@ -182,7 +184,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
           />;
         }
         if (naturetype === "HOME || VEHICLE") {
-          <InformantAddress
+          <Address
             InformantAdrsCountry={InformantAdrsCountry}
             InformantAdrsDistrict={InformantAdrsDistrict}
             InformantAdrsLBTypeName={InformantAdrsLBTypeName}
@@ -552,7 +554,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               selectedValues={selectedValues}
               setSelectedValues={setSelectedValues}
             />
-            <InformantAddress
+            <Address
               InformantAdrsCountry={InformantAdrsCountry}
               setInformantAdrsCountry={setInformantAdrsCountry}
               InformantAdrsStateName={InformantAdrsStateName}
@@ -637,7 +639,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               isNoAadhaar={isNoAadhaar}
               setIsNoAadhaar={setIsNoAadhaar}
             />
-            <InformantAddress
+            <Address
               InformantAdrsCountry={InformantAdrsCountry}
               setInformantAdrsCountry={setInformantAdrsCountry}
               InformantAdrsStateName={InformantAdrsStateName}
