@@ -286,15 +286,23 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     false
   );
 
-  const payload = {"wardno" : WardNo.code};
+  const payload = WardNo?.code ? {"wardno" : WardNo.code} :"";
   const config1 = {
     enabled: !!( payload && Object.keys(payload).length > 0 )
   }
-  
-  const {data: {Licenses: searchReult, Count: count} = {}, isLoading1 , isSuccess } = Digit.Hooks.tl.useSearchPde(
-    {tenantId, filters: payload, config1}
-  );
-  
+const mutationsearch=Digit.Hooks.tl.useSearchPde(
+  {tenantId, filters: payload, config1}
+);
+useEffect(()=>{
+  if(WardNo?.code !== undefined  && WardNo?.code !=="0" ){
+    if (mutationsearch?.error !== null) {
+      mutationsearch.mutate({tenantId, filters: payload, config1},{
+        onSuccess,
+      });
+    }
+  }
+},[mutationsearch])
+const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSuccess && !mutationsearch?.isError ? mutationsearch.data.Licenses :""
 
 
   // let workflowDetails = (isEdit) ? Digit.Hooks.useWorkflowDetails({
