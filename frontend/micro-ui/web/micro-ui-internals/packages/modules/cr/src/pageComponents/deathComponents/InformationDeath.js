@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, InputCard } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton,Toast, InputCard } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -62,7 +62,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [OccupationOthers, setOccupationOthers] = useState(
     formData?.InformationDeath?.OccupationOthers ? formData?.InformationDeath?.OccupationOthers : ""
   );
-  const [checkedAdhar, setCheckedAdhar] = useState(formData?.InformationDeath?.checkedAdhar ? formData?.InformationDeath?.checkedAdhar : 0);
+  const [ischeckedAdhar , setisCheckedAdhar] = useState(formData?.InformationDeath?.ischeckedAdhar  ? formData?.InformationDeath?.ischeckedAdhar  : 0);
+  // const [isInitialRender, setIsInitialRender] = useState(true);
+  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
+  const [toast, setToast] = useState(false);
+
+  // const [isInitialRender, setIsInitialRender] = useState(true);
+  
   // const [selectedValues,  ] = useState(
   //   formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : false
   // );
@@ -166,12 +172,61 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   }
   function selectDeathDate(value) {
     setDeathDate(value);
+    const today = new Date();
+    const birthDate = new Date(value);
+    if (birthDate.getTime() <= today.getTime()){
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - birthDate.getTime();
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+      console.log(Difference_In_DaysRounded);
+    } else {
+      setDeathDate(null);
+      setDOBError(true);      
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }
+    
   }
   function selectFromDate(value) {
     setFromDate(value);
+    const today = new Date();
+    const birthDate = new Date(value);
+    if (birthDate.getTime() <= today.getTime()){
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - birthDate.getTime();
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+      console.log(Difference_In_DaysRounded);
+    } else {
+      setFromDate(null);
+      setDOBError(true);      
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }
   }
   function selectToDate(value) {
     setToDate(value);
+    const today = new Date();
+    const birthDate = new Date(value);
+    if (birthDate.getTime() <= today.getTime()){
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - birthDate.getTime();
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+      console.log(Difference_In_DaysRounded);
+    } else {
+      setToDate(null);
+      setDOBError(true);      
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }
   }
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
@@ -193,6 +248,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     let age_in_ms = today - birthDate;
     let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
     setAgeofbirth(Math.floor(age_in_years));
+    setDeathDate(value);
+    if (birthDate.getTime() <= today.getTime()){
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - birthDate.getTime();
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+      console.log(Difference_In_DaysRounded);
+    } else {
+      setCommencementDate(null);
+      setDOBError(true);      
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }
   }
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
@@ -209,11 +279,24 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       cb(value);
     }
   };
+
+  function setCheckedAdhar(e) {
+    if (e.target.checked === true) {
+      setisCheckedAdhar(e.target.checked);
+
+    } else {
+      setisCheckedAdhar(e.target.checked);
+      setSelectedIdCombo("");
+      setIdNo("");    }
+  }
+
+
   const onSkip = () => onSelect();
   let cmbfilterNation = [];
   let cmbfilterReligion = [];
   let cmbfilterAgeUnit = [];
   useEffect(() => {
+    
     if (setNationality == null || setNationality == "") {
       if (stateId === "kl" && cmbNation.length > 0) {
         cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
@@ -232,6 +315,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         setSelectedAgeUnit(cmbfilterAgeUnit[0]);
       }
     }
+    // if (isInitialRender) {
+    //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
+    //     setIsInitialRender(false);
+    //     setisCheckedAdhar(formData?.InformationDeath?.ischeckedAdhar );
+    //   }
+    // }  
+
+
   });
   const goNext = () => {
     sessionStorage.setItem("DeathDate", DeathDate ? DeathDate : null);
@@ -257,16 +348,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("CommencementDate", CommencementDate ? CommencementDate : null);
     sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     sessionStorage.setItem("setAgeUnit", setAgeUnit ? setAgeUnit.code : null);
-    sessionStorage.setItem("setIdCombo", setIdCombo ? setIdCombo.code : null);
     // sessionStorage.setItem("selectedValues", selectedValues ? selectedValues : true);
     sessionStorage.setItem("setOccupationMain", setOccupationMain ? setOccupationMain.code : null);
     sessionStorage.setItem("OccupationOthers", OccupationOthers ? OccupationOthers : null);
     sessionStorage.setItem("checked", checked ? checked : false);
     sessionStorage.setItem("checkedOcuupation", checkedOcuupation ? checkedOcuupation : false);
-    sessionStorage.setItem("checkedAdhar", checkedAdhar ? checkedAdhar : false);
+    sessionStorage.setItem("ischeckedAdhar ", ischeckedAdhar  ? ischeckedAdhar  : false);
 
     onSelect(config.key, {
-      checkedAdhar,
+      ischeckedAdhar ,
       checkedOcuupation,
       setIdCombo,
       DeathDate,
@@ -655,11 +745,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CheckBox label={t("CR_ADHAR_NOT_AVAILABLE")} onChange={() => setCheckedAdhar((checkedAdhar) => !checkedAdhar)} value={checked} />
+            <CheckBox label={t("CR_ADHAR_NOT_AVAILABLE")} onChange={setCheckedAdhar} value={ischeckedAdhar } checked={ischeckedAdhar } />
+            {/* <CheckBox label={t("CR_ADHAR_NOT_AVAILABLE")} onChange={() => setCheckedAdhar((checkedAdhar) => !checkedAdhar)} value={checked} /> */}
             </div>
           </div>
         </div>
-        {checkedAdhar ? (
+        {ischeckedAdhar  === true && (
+        // {checkedAdhar ? (
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
@@ -693,7 +785,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-        ) : (
+       )}
+        {ischeckedAdhar  === false && (
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
@@ -767,6 +860,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 label={t("CR_OCCUPATION_DECEASED_NO")}
                 onChange={() => setCheckedOcuupation((checkedOcuupation) => !checkedOcuupation)}
                 value={checkedOcuupation}
+                checked={checkedOcuupation }
               />{" "}
             </div>
           </div>
@@ -809,6 +903,35 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
+        )}
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+
+        {toast && (
+          <Toast
+            error={
+              DOBError
+              // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+            }
+            label={
+              DOBError
+                ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+                // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
+                DOBError
+                  ? t(`CS_COMMON_INVALID_DATE`) : DOBError ? t(`CS_COMMON_INVALID_DATE`)
+                  : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                  // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+
+                  setToast(false)
+                : setToast(false)
+            }
+            onClose={() => setToast(false)}
+          />
         )}
       </FormStep>
     </React.Fragment>

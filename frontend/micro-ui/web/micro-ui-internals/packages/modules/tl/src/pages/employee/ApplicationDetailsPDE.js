@@ -107,6 +107,7 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
     );
   }
   const handleNewPage =event => {
+    queryClient.removeQueries("TL_SEARCH_PDE");
     event.preventDefault();
    // this.props.history.push('/pde-application');
     // navigate('/pde-application');
@@ -118,6 +119,7 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
   }
 
   const submitAction = async (data, nocData = false, isOBPS = {}) => {
+    queryClient.removeQueries("TL_SEARCH_PDE");
     setIsEnableLoader(true);
     if (typeof data?.customFunctionToExecute === "function") {
       data?.customFunctionToExecute({ ...data });

@@ -27,7 +27,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
         defaultValues: {
             offset: 0,
             limit: 10,
-            sortBy: "wardNo",
+            sortBy: "wardId",
             sortOrder: "DESC"
         }
     })
@@ -35,7 +35,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
     useEffect(() => {
       register("offset", 0)
       register("limit", 10)
-      register("sortBy", "wardNo")
+      register("sortBy", "wardId")
       register("sortOrder", "DESC")
     },[register])
 
@@ -67,7 +67,6 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
     const handleLinkClick = (finaldata) => {
       Digit.SessionStorage.set("PDE_CREATE_TRADE", finaldata);
     }
-
     //need to get from workflow
     const GetCell = (value) => <span className="cell-text">{value}</span>;
     const columns = useMemo( () => ([
