@@ -894,7 +894,7 @@ export const newConfig = [
         component: "PlaceOfDeathVehicle",
         texts: {
           headerCaption: "",
-          header: "CR_PLACE_OF_DEATH_VECHICLE",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -942,7 +942,7 @@ export const newConfig = [
         component: "StatisticalInfoContinue",
         texts: {
           headerCaption: "",
-          header: "CR_STATISTICAL_INFORMATION_CONTINUE",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -958,7 +958,7 @@ export const newConfig = [
         component: "ApplicantDetails",
         texts: {
           headerCaption: "",
-          header: "CR_APPLICANT_DETAILS",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -975,7 +975,7 @@ export const newConfig = [
         component: "GeneralRemarks",
         texts: {
           headerCaption: "",
-          header: "CR_GENERAL_REMARKS",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
