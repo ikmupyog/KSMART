@@ -17,7 +17,7 @@ import InstitutionDetails from "../src/pageComponents/birthComponents/Institutio
 import InstitutionAddress from "../src/pageComponents/birthComponents/InstitutionAddress";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
-import AddressPresent from "../src/pageComponents/birthComponents/AddressPresent";
+import AddressInsideIndia from "../src/pageComponents/birthComponents/AddressInsideIndia";
 import AddressSameAsAbove  from "../src/pageComponents/birthComponents/AddressSameAsAbove";
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
@@ -146,7 +146,7 @@ const componentsToRegister = {
   SearchDeathApplication,
   ChildDetails,
   AddressOne,
-  AddressPresent,
+  AddressInsideIndia,
   AddressSameAsAbove,
   AddressPermanent,
   MultipleBirth,

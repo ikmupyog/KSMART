@@ -40,7 +40,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
       ];
 
     const bussinesssector = useWatch({ control, name: "bussinesssector" });
-    const wardno = useWatch({ control, name: "wardno" });
+    const wardId = useWatch({ control, name: "wardId" });
 
 
 
@@ -58,6 +58,10 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     // })
 
     return <>
+        <SearchField>
+            <label>{t("TL_HOME_SEARCH_RESULTS_APP_NO_LABEL")}</label>
+            <TextInput name="applicationNumber" inputRef={register({})} />
+        </SearchField>
         <SearchField>
             <label>{`${t("TL_COMMON_TABLE_COL_TRD_NAME")}`}</label>
             <TextInput name="tradeName" inputRef={register({})} />
@@ -88,7 +92,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <Controller
            
                     control={control}
-                    name="wardno"
+                    name="wardId"
                     render={(props) => (
                         <Dropdown
                         selected={props.value}
@@ -114,15 +118,16 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
             <p onClick={() => {
                 reset({ 
+                    applicationNumber:"",
                     bussinesssector: "", 
                     ownerName: "", 
-                    wardno: "",
+                    wardId: "",
                     doorNo: "",
                     subNo: "",
                     tradeName: "",
                     offset: 0,
                     limit: 10,
-                    sortBy: "wardno",
+                    sortBy: "wardId",
                     sortOrder: "DESC"
                 });
                 previousPage();

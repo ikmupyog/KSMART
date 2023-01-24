@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox,Loader } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
@@ -52,8 +52,8 @@ const PlaceofBirthHome = ({
   AdrsHouseNameMl,
   setAdrsHouseNameMl,
   AdrsResNoMl,
-  setAdrsResNoMl,setLBCombo,LBCombo
-  
+  setAdrsResNoMl, setLBCombo, LBCombo
+
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -66,7 +66,6 @@ const PlaceofBirthHome = ({
   const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  console.log("localbodies" + LBCombo);
   // Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
@@ -74,12 +73,11 @@ const PlaceofBirthHome = ({
 
   //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderTenant, setIsInitialRenderTenant] = useState(true);
-  const [country, setcountrys] = useState(0);
-  const [states, setStates] = useState(0);
-  const [districts, setdistricts] = useState(0);
-  const [lbtypes, setlbtypes] = useState(0);
-  const [lbs, setLbs] = useState(0);
+  const [Talukvalues, setLbsTalukvalue] = useState(null);
+  const [Villagevalues, setLbsVillagevalue] = useState(null);
+  const [isDisableStatus, setDisableStatus] = useState(true);
+
+  // const [countries, setcountry] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [AdrsCountry, setAdrsCountry] = useState(formData?.BirthPlaceHomeDetails?.AdrsCountry);
   // const [AdrsStateName, setAdrsStateName] = useState(formData?.BirthPlaceHomeDetails?.AdrsStateName);
@@ -153,74 +151,45 @@ const PlaceofBirthHome = ({
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
-    localbodies &&
+  localbodies &&
     localbodies["tenant"] &&
     localbodies["tenant"].tenants.map((ob) => {
-      cmbLB.push(ob);     
+      cmbLB.push(ob);
       // console.log("cmbLB" + localbodies); 
       // setIsInitialRender(true);
-     
+
     });
-    
-    useEffect(() => {
+  let currentLB = [];
+  let cmbFilterCountry = [];
+  let cmbFilterState = [];
+  let cmbFilterDistrict = [];
+  let cmbFilterLBtype = [];
+  let cmbFilterTaluk = [];
+  let cmbFilterVillage = [];
+  useEffect(() => {
 
-      if (isInitialRender) {
-  
-        // console.log("AdrsDistrict" + districtid);
-        // sleep(setTimeout(1000));
-        // if (localbodies.length > 0) {
-        // console.log(localbodies);
+    if (isInitialRender) {
+      // if (localbodies.length > 0) {
+      currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+      setAdrsLBName(currentLB[0]);
+      cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+      setAdrsCountry(cmbFilterCountry[0]);
+      cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+      setAdrsStateName(cmbFilterState[0]);
+      cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
+      setAdrsDistrict(cmbFilterDistrict[0]);
+      cmbFilterLBtype = cmbLBType.filter((cmbLBType) => cmbLBType.code === currentLB[0].city.lbtypecode);
+      setAdrsLBTypeName(cmbFilterLBtype[0]);
+      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
+      setLbsTalukvalue(cmbFilterTaluk);
+      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+      console.log(cmbFilterVillage);
+      setLbsVillagevalue(cmbFilterVillage);
+      setIsInitialRender(false);
+    }
+    // }
+  }, [Country, State, District, LBType, localbodies,Talukvalues,Villagevalues, isInitialRender]);
 
-          // localbodies &&
-          // localbodies["tenant"] &&
-          // localbodies["tenant"].tenants.map((ob) => {
-          //   cmbLB.push(ob);
-          // });
-          // setIsInitialRender(false);
-          // let currentLB = LBCombo.filter((LBCombo) => LBCombo.code === tenantId)
-          // console.log("currentLB" + currentLB);
-          setLbs(cmbLB);
-          setIsInitialRender(false);
-          // cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
-        }
-      // }
-    }, [lbs, isInitialRender]);
-    // useEffect(() => {
-    //   if (isInitialRenderTenant) {
-    //     if (cmbLB.length > 0) {
-    //       console.log(cmbLB);
-    //       isInitialRenderTenant(false);
-    //       if (cmbCountry.length > 0) {
-    //         // cmbDesignations =[];
-    //         // cmbRegistrarNames =[];
-    //         let cmbRegistrarNames = cmbCountry.filter((cmbCountry) => cmbCountry.code === HospitalName.code);
-    //         // console.log(cmbRegistrarNames);
-    //         // let cmbDesignations = cmbhospital.filter((cmbhospital) => cmbhospital.code === HospitalName.code);
-    //         // // console.log(cmbRegistrarNames[0].registar);      
-    //         // let OtherRegistrar=[];
-    //         // OtherRegistrar = cmbRegistrarNames[0].registar;
-    //         // let CheckIfExists = OtherRegistrar.filter((OtherRegistrar) => OtherRegistrar.hospitalRegistar === "Others");
-    //         // if(CheckIfExists.length>0){
-              
-    //         // } else {
-    //         //   OtherRegistrar.push({
-    //         //     hospitalRegistar:'Others',
-    //         //     registarDesig:'',
-    //         //     registrationAadhaar:'',
-    //         //     registrationMobile:'',
-    //         //     registrationNo:''
-    //         //   })
-             
-    //         // }   
-    //         // setFilteredOfficerName(OtherRegistrar);
-    //         // setFilteredDesignation(OtherRegistrar);
-    //         // setSignedOfficerAadharNo(cmbDesignations[0].registar.registrationAadhaar);
-    //         // setSelectSignedOfficerMobileNo(cmbDesignations[0].registar.registrationMobile);
-    //       }
-  
-    //     }
-    //   }
-    // }, [isInitialRenderTenant]);
   // let Zonal = [];
   // let cmbWardNo = [];
   // let cmbWardNoFinal = [];
@@ -245,18 +214,15 @@ const PlaceofBirthHome = ({
   const onSkip = () => onSelect();
   function setSelectAdrsCountry(value) {
     setAdrsCountry(value);
-    console.log("Country" + cmbCountry);
   }
   function setSelectAdrsStateName(value) {
     setAdrsStateName(value);
-    console.log("StateName" + cmbState);
   }
 
   function setSelectAdrsDistrict(value) {
     setIsInitialRender(true);
     setAdrsDistrict(value);
     setAdrsLBName(null);
-    setLbs(null);
     districtid = value.districtid;
   }
   function setSelectAdrsLBTypeName(value) {
@@ -267,55 +233,108 @@ const PlaceofBirthHome = ({
   }
   function setSelectAdrsVillage(value) {
     setAdrsVillage(value);
-    console.log("Village" + cmbVillage);
   }
   function setSelectAdrsTaluk(value) {
     setAdrsTaluk(value);
-    console.log("Taluk" + cmbTaluk);
   }
 
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
   }
   function setSelectAdrsPincode(e) {
-    setAdrsPincode(e.target.value);
+    if (e.target.value.length === 7) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsPincode(e.target.value);
+    }
   }
   // function setSelectAdrsBuldingNo(e) {
   //   setAdrsBuldingNo(e.target.value);
   // }
   function setSelectAdrsResNoEn(e) {
-    setAdrsResNoEn(e.target.value);
+    if (e.target.value.length === 21) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' ]/ig, ''));
+    }
   }
   function setSelectAdrsResNoMl(e) {
-    setAdrsResNoMl(e.target.value.replace(/^[a-zA-Z-.`' ]/ig,''));
+    if (e.target.value.length === 11) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsResNoMl(e.target.value.replace(/^[a-zA-Z-.`' ]/ig, ''));
+    }
   }
   function setSelectAdrsDoorNo(e) {
-    setAdrsDoorNo(e.target.value);
+    if (e.target.value.length === 5) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsDoorNo(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
   function setSelectAdrsSubNo(e) {
-    setAdrsSubNo(e.target.value);
+    if (e.target.value.length === 5) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsSubNo(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
   function setSelectAdrsHouseNameEn(e) {
-    setAdrsHouseNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
   function setSelectAdrsHouseNameMl(e) {
-    setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
   }
   function setSelectAdrsInfomntName(e) {
     setAdrsInfomntName(e.target.value);
   }
 
   function setSelectAdrsMainPlaceEn(e) {
-    setAdrsMainPlaceEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
   function setSelectAdrsMainPlaceMl(e) {
-    setAdrsMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
   }
   function setSelectAdrsLocalityNameEn(e) {
-    setAdrsLocalityNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
   function setSelectAdrsLocalityNameMl(e) {
-    setAdrsLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
   }
 
   function setSelectAdrsStreetNameEn(e) {
@@ -323,13 +342,13 @@ const PlaceofBirthHome = ({
   }
 
   function setSelectAdrsStreetNameMl(e) {
-    setAdrsStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+    setAdrsStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
   }
   // function setSelectWard(value) {
   //   setWardNo(value);
   // }
 
-  
+
   const goNext = () => {
     // sessionStorage.setItem("AdrsCountry", AdrsCountry.code);
     // sessionStorage.setItem("AdrsStateName", AdrsStateName.code);
@@ -376,7 +395,7 @@ const PlaceofBirthHome = ({
     // });
   };
 
-  if (isCountryLoading || isStateLoading  || isPostOfficeLoading  || isDistrictLoading || isTalukLoading || isVillageLoading ) {
+  if (isCountryLoading || isStateLoading || isPostOfficeLoading || isDistrictLoading || isTalukLoading || isVillageLoading) {
     return <Loader></Loader>;
   }
 
@@ -408,7 +427,7 @@ const PlaceofBirthHome = ({
                 option={cmbCountry}
                 selected={AdrsCountry}
                 select={setSelectAdrsCountry}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
             <div className="col-md-3">
@@ -423,7 +442,7 @@ const PlaceofBirthHome = ({
                 option={cmbState}
                 selected={AdrsStateName}
                 select={setSelectAdrsStateName}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
             <div className="col-md-3">
@@ -438,7 +457,7 @@ const PlaceofBirthHome = ({
                 option={cmbDistrict}
                 selected={AdrsDistrict}
                 select={setSelectAdrsDistrict}
-                disabled={isEdit}
+                disable={isDisableStatus}
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
             </div>
@@ -453,7 +472,7 @@ const PlaceofBirthHome = ({
                 option={cmbLBType}
                 selected={AdrsLBTypeName}
                 select={setSelectAdrsLBTypeName}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
           </div>
@@ -469,23 +488,23 @@ const PlaceofBirthHome = ({
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={lbs}
+                option={cmbLB}
                 selected={AdrsLBName}
                 select={setSelectAdrsLBName}
-                disabled={isEdit}
+                disable={isDisableStatus}
                 placeholder={`${t("CS_COMMON_LB_NAME")}`}
               />
             </div>
             <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_TALUK")}
-              
+
               </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={cmbTaluk}
+                option={Talukvalues}
                 selected={AdrsTaluk}
                 select={setSelectAdrsTaluk}
                 disabled={isEdit}
@@ -495,13 +514,13 @@ const PlaceofBirthHome = ({
             <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_VILLAGE")}
-              
+
               </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
                 isMandatory={true}
-                option={cmbVillage}
+                option={Villagevalues}
                 selected={AdrsVillage}
                 select={setSelectAdrsVillage}
                 disabled={isEdit}
@@ -557,7 +576,7 @@ const PlaceofBirthHome = ({
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_MAIN_PLACE_EN")}
-             
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -575,7 +594,7 @@ const PlaceofBirthHome = ({
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_MAIN_PLACE_ML")}
-               
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -623,7 +642,7 @@ const PlaceofBirthHome = ({
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_LOCALITY_EN")}
-              
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -641,7 +660,7 @@ const PlaceofBirthHome = ({
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_LOCALITY_ML")}
-              
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -709,7 +728,7 @@ const PlaceofBirthHome = ({
             <div className="col-md-6">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
-               
+
               </CardLabel>
               <Dropdown
                 t={t}
@@ -794,7 +813,7 @@ const PlaceofBirthHome = ({
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_HOUSE_NAME_EN")}
-               
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -813,7 +832,7 @@ const PlaceofBirthHome = ({
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_HOUSE_NAME_ML")}
-              
+
               </CardLabel>
               <TextInput
                 t={t}
@@ -832,8 +851,8 @@ const PlaceofBirthHome = ({
         </div>
 
         <div className="row">
-          <div className="col-md-12">            
-           
+          <div className="col-md-12">
+
             <div className="col-md-3">
               <CardLabel>{t("CR_DOOR_NO")}</CardLabel>
               <TextInput
@@ -848,7 +867,7 @@ const PlaceofBirthHome = ({
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DOOR_NO") })}
               />
-              
+
             </div>
             <div className="col-md-3">
               <CardLabel>{t("CR_SUB_NO")}</CardLabel>
@@ -864,12 +883,12 @@ const PlaceofBirthHome = ({
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_SUB_NO") })}
               />
-              
+
             </div>
           </div>
         </div>
-     
-        
+
+
       </FormStep>
     </React.Fragment>
   );
