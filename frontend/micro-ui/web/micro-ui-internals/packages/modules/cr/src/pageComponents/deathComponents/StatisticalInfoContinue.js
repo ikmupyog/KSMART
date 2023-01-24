@@ -426,7 +426,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"text"}
+                    type={"number"}
                     // optionKey="i18nKey"
                     name="textSmoke"
                     value={textSmoke}
@@ -457,7 +457,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"text"}
+                      type={"number"}
                       // optionKey="i18nKey"
                       name="textTabacco"
                       value={textTabacco}
@@ -491,7 +491,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"text"}
+                    type={"number"}
                     // optionKey="i18nKey"
                     name="textPanMasala"
                     value={textPanMasala}
@@ -521,7 +521,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"text"}
+                    type={"number"}
                     // optionKey="i18nKey"
                     name="text"
                     value={text}

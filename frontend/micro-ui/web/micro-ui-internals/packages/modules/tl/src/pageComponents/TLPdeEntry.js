@@ -33,13 +33,33 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const stateId = Digit.ULBService.getStateId();
   const [selectedAction, setSelectedAction] = useState(null);
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const mutationyear = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialYear");
+  useEffect(()=>{
+    if (mutationyear?.error !== null) {
+      mutationyear.mutate(tenantId, "egf-master", "FinancialYear",{
+        onSuccess,
+      });
+    }
+  
+  },[mutationyear])
+
+  const yearListFrom=(mutationyear?.status==="success" &&  mutationyear?.isSuccess && !mutationyear?.isError)?mutationyear.data:"";
+  const yearListTo=(mutationyear?.status==="success" &&  mutationyear?.isSuccess && !mutationyear?.isError)?mutationyear.data:"";
+
+  const mutationperiod = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialPeriod");
+
+  useEffect(()=>{
+    if (mutationyear?.error !== null) {
+      mutationyear.mutate(tenantId, "egf-master", "FinancialPeriod",{
+        onSuccess,
+      });
+    }
+  
+  },[mutationperiod])
+
+  const periodList = (mutationperiod?.status==="success" &&  mutationperiod?.isSuccess && !mutationperiod?.isError)?mutationperiod.data:"";
 
   const [licensingInstitutionName, setLicensingInstitution] = useState(formData?.tradeName ? formData?.tradeName : "");
-  const { data: yearListFrom = {}, isLoadyearFrom } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialYear");
-  const { data: yearListTo = {}, isLoadyearTo } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialYear");
-  const { data: periodList = {}, isLoadPeriod } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialPeriod");
-
-
   const [PaidYear, setSelectedYear] = useState(formData.TradeDetails?.PaidYear);
   const [DoorNoBuild, setDoorNoBuild] = useState(formData.TradeDetails?.structurePlace?.doorNo);
   const [DoorSubBuild, setDoorSubBuild] = useState(formData.TradeDetails?.DoorSubBuild);
@@ -54,9 +74,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const [capitalAmount, setCapitalAmount] = useState(formData?.tradeLicenseDetail?.capitalInvestment ? formData?.tradeLicenseDetail?.capitalInvestment : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderRadio, setIsInitialRenderRadio] = useState(true);
-  const [value2, setValue2] = useState();
+  const [value2, setValue2] = useState(formData?.tradeLicenseDetail?.licenseeType ? formData?.tradeLicenseDetail?.licenseeType : "");
   const [value3, setValue3] = useState(formData?.tradeLicenseDetail?.address?.buildingType ? formData?.tradeLicenseDetail?.address?.buildingType : "");
-  // const [name, setName] = useState(formData?.tradeLicenseDetail?.ownersPde?.name || "");
   const [fields, setFeilds] = useState(
     (formData?.tradeLicenseDetail && formData?.tradeLicenseDetail?.ownersPde) || [{ name: "" }]
   );
@@ -95,6 +114,12 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
     cmbWardNoFinal.push(wardmst);
+  });
+
+  cmbWardNoFinal = cmbWardNoFinal.sort((a, b) => {
+    if (parseInt(a.wardno) >  parseInt(b.wardno)) { return 1; }
+    if (parseInt(b.wardno) > parseInt(a.wardno) ) { return -1; }
+    return 0;
   });
 
   const [WardNo, setWardNo] = useState(formData.tradeLicenseDetail?.address?.wardNo ? cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0] : "");
@@ -166,6 +191,9 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const cmbpttoperiod = cmbPeriod.filter((doc) => doc.category.includes("CATEGORY_TAX") && doc.code.includes(half));
   const cmbrenttoperiod = cmbPeriod.filter((doc) => doc.category.includes("CATEGORY_RENT") && doc.code.includes(monthNames[monthid]));
 
+
+  
+
   function getPtPeriod(){
     return cmbpttoperiod;
   }
@@ -173,63 +201,41 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   function getRentPeriod(){
     return cmbrenttoperiod;
   }
-
   const [licArrear, setLicArrear] = useState(tldata[0]?.arrear ? tldata[0]?.arrear : "");
   const [licCurrent, setLicCurrent] = useState(tldata[0]?.current ? tldata[0]?.current : "");
-  const [licFromYear, setLicFromYear] = useState(tldata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(tldata[0]?.fromYear))[0] : "");
-  // const [licToYear, setLicToYear] = useState(tldata[0]?.toYear ? cmbPayLicYearTo.filter((year) => year.code.includes(tldata[0]?.toYear))[0] : "");
-
   const [profArrear, setProfArrear] = useState(profdata[0]?.arrear ? profdata[0]?.arrear : "");
   const [profCurrentFirst, setProfCurrentFirst] = useState(profdata[0]?.current ? profdata[0]?.current : "");
   const [profCurrentSecond, setProfCurrentSecond] = useState(profdata[0]?.current2 ? profdata[0]?.current2 : "");
-  const [profFromYear, setProfFromYear] = useState(profdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(profdata[0]?.fromYear))[0] : "");
-  const [profFromPeriod, setProfFromPeriod] = useState(profdata[0]?.fromPeriod ? cmbptperiod.filter((period) => period.code.includes(profdata[0]?.fromPeriod))[0] : "");
-  // const [profToYear, setProfToYear] = useState(profdata[0]?.toYear ? cmbPayProfYearTo.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
-  const [profToPeriod, setProfToPeriod] = useState(profdata[0]?.toPeriod ? cmbpttoperiod.filter((period) => period.code.includes(profdata[0]?.toPeriod))[0] : "");
-
   const [rentArrear, setRentArrear] = useState(rentdata[0]?.arrear ? rentdata[0]?.arrear : "");
   const [rentCurrent, setRentCurrent] = useState(rentdata[0]?.current ? rentdata[0]?.current : "");
+
+  const [licFromYear, setLicFromYear] = useState(tldata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(tldata[0]?.fromYear))[0] : "");
+  const [licToYear, setLicToYear] = useState(tldata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(tldata[0]?.toYear))[0] : "");
+  const [profFromYear, setProfFromYear] = useState(profdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(profdata[0]?.fromYear))[0] : "");
+  const [profFromPeriod, setProfFromPeriod] = useState(profdata[0]?.fromPeriod ? cmbptperiod.filter((period) => period.code.includes(profdata[0]?.fromPeriod))[0] : "");
+  const [profToYear, setProfToYear] = useState(profdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
+  const [profToPeriod, setProfToPeriod] = useState(profdata[0]?.toPeriod ? cmbpttoperiod.filter((period) => period.code.includes(profdata[0]?.toPeriod))[0] : "");
   const [rentFromYear, setRentFromYear] = useState(rentdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(rentdata[0]?.fromYear))[0] : "");
   const [rentFromMonth, setRentFromMonth] = useState(rentdata[0]?.fromPeriod ? cmbrentperiod.filter((month) => month.code.includes(rentdata[0]?.fromPeriod))[0] : "");
-  // const [rentToYear, setRentToYear] = useState(rentdata[0]?.toYear ? cmbPayRentYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
+  const [rentToYear, setRentToYear] = useState(rentdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
   const [rentToMonth, setRentToMonth] = useState(rentdata[0]?.toPeriod ? cmbrenttoperiod.filter((month) => month.code.includes(rentdata[0]?.toPeriod))[0] : "");
 
-  // useEffect(() => {
-  //   if(isInitialRender===true){
-  //     if(licFromYear){
-  //       yearListTo &&
-  //       yearListTo["egf-master"] &&
-  //       yearListTo["egf-master"].FinancialYear.map( year => ( 
-  //         (parseInt(year.code.replace(/-/g, "")) >= parseInt(licFromYear.code.replace(/-/g, ""))) ? cmbPayLicYearTo.push(year) : ""
-  //       ));
+  if(mutationyear?.status==="success" &&  mutationyear?.isSuccess && !mutationyear?.isError && isInitialRender){
+    setLicFromYear(tldata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(tldata[0]?.fromYear))[0] : "");
+    setLicToYear(tldata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(tldata[0]?.toYear))[0] : "");
+    setProfFromYear(profdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(profdata[0]?.fromYear))[0] : "");
+    setProfToYear(profdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
+    setRentFromYear(rentdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(rentdata[0]?.fromYear))[0] : "");
+    setRentToYear(rentdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
+  }
 
-  //       setFilteredLicToYear(cmbPayLicYearTo);
-  //     }
-
-  //     if(profFromYear){
-  //       yearListTo &&
-  //       yearListTo["egf-master"] &&
-  //       yearListTo["egf-master"].FinancialYear.map( year => ( 
-  //         (parseInt(year.code.replace(/-/g, "")) >= parseInt(profFromYear.code.replace(/-/g, ""))) ? cmbPayProfYearTo.push(year) : ""
-  //       ));
-  //       setFilteredProfToYear(cmbPayProfYearTo);
-  //     }
-
-  //     if(rentFromYear){
-  //       yearListTo &&
-  //       yearListTo["egf-master"] &&
-  //       yearListTo["egf-master"].FinancialYear.map( year => ( 
-  //         (parseInt(year.code.replace(/-/g, "")) >= parseInt(rentFromYear.code.replace(/-/g, ""))) ? cmbPayRentYearTo.push(year) : ""
-  //       ));
-  //       setFilteredRentToYear(cmbPayRentYearTo);
-  //     }
-  //     setIsInitialRender(false);
-  //   }
-  // },[isInitialRender]);
-
-  const [licToYear, setLicToYear] = useState(tldata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(tldata[0]?.toYear))[0] : "");
-  const [profToYear, setProfToYear] = useState(profdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
-  const [rentToYear, setRentToYear] = useState(rentdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
+  if(mutationperiod?.status==="success" &&  mutationperiod?.isSuccess && !mutationperiod?.isError && isInitialRender){
+    setIsInitialRender(false);
+    setProfFromPeriod(profdata[0]?.fromPeriod ? cmbptperiod.filter((period) => period.code.includes(profdata[0]?.fromPeriod))[0] : "");
+    setProfToPeriod(profdata[0]?.toPeriod ? cmbpttoperiod.filter((period) => period.code.includes(profdata[0]?.toPeriod))[0] : "");
+    setRentFromMonth(rentdata[0]?.fromPeriod ? cmbrentperiod.filter((month) => month.code.includes(rentdata[0]?.fromPeriod))[0] : "");
+    setRentToMonth(rentdata[0]?.toPeriod ? cmbrenttoperiod.filter((month) => month.code.includes(rentdata[0]?.toPeriod))[0] : "");
+  }
 
   const setSelectBuildingcode = useCallback(e => {
     setBuildingCode(e.target.value);
@@ -400,11 +406,6 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
     setProfToPeriod(value);
   }, [profToPeriod]);
 
-  // const selectLicFromYear = useCallback(value => {
-  //   setLicFromYear(value);
-  //   setLicToYear(getYeardata()[0]);
-  // },[licFromYear,licToYear]);
-
   function selectLicFromYear(value) {
     setLicFromYear(value);
     setLicToYear(getYeardata()[0]);
@@ -431,30 +432,10 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
     }
   }, [licensingInstitutionName]);
 
-
-  // function selectedsetLicPenal(e) {
-  //   setLicPenal(e.target.value);
-  // }
-  // function selectedsetLicBelated(e) {
-  //   setLicBelated(e.target.value);
-  // }
-
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("TL_CREATE_TRADE");
   };
-
-
-
-  // useEffect(() => {
-
-  //   if (isInitialRenderRadio) {
-  //     if (LicenseeType) {
-  //       setIsInitialRenderRadio(false);
-  //       setValue2(LicenseeType.code);
-  //     }
-  //   }
-  // }, [isInitialRender]);
 
   const initFnEdit = () => {
     return fields;
@@ -477,8 +458,6 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
       {
         doorNo: "",
         doorNoSub: "",
-        // buildingcode:"",
-        // buildingname:"",
         stallNo: ""
       },
     ];
@@ -527,8 +506,6 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
           {
             doorNo: "",
             doorNoSub: "",
-            // buildingcode:"",
-            // buildingname:"",
             stallNo: ""
           },
         ];
@@ -572,7 +549,10 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
       dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 5 ? e.target.value.replace(/[^0-9.]/ig, '') : (e.target.value.replace(/[^0-9.]/ig, '')).substring(0, 5) } });
     if (key === "doorNoSub")
       dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 14 ? e.target.value : e.target.value.substring(0, 14) } });
-  }, [dispatch1]);
+    if (key === "stallNo")
+      dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
+  
+    }, [dispatch1]);
 
 
   // const convertToEditPDE = () => {
@@ -616,7 +596,6 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
     let flg=true;
     formState1.map((data) => {
       combineddoorno = data.doorNo+data.doorNoSub;
-      //const noOccurence = formState1.filter(d => d.doorNo+d.doorNoSub === combineddoorno).length;
       const noOccurence = formState1.filter(d => ((d.doorNo == data.doorNo) && (d.doorNoSub == data.doorNoSub))).length;
       flg = noOccurence > 1 ? "DN" : true;
     })
@@ -642,8 +621,14 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
                 if(d?.tradeLicenseDetail?.address.wardNo == WardNo.wardno){
                   let doornos = d?.tradeLicenseDetail?.structurePlace;
                   doornos.filter(doorno => {
-                    if((doorno.doorNo == data.doorNo)&&(doorno.doorNoSub == data.doorNoSub)&&(flg == true)){
-                      flg = "DExists";
+                    if(isEdit){
+                      const noOccurence = formState1.filter(d => ((doorno.doorNo == data.doorNo)&&(doorno.doorNoSub == data.doorNoSub))).length;
+                      if((noOccurence>1)&&(flg == true))flg = "DExists";
+                    }
+                    else{
+                      if((doorno.doorNo == data.doorNo)&&(doorno.doorNoSub == data.doorNoSub)&&(flg == true)){
+                        flg = "DExists";
+                      }
                     }
                   });
                 }
@@ -703,7 +688,7 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
       }, 2000);
     }
     else if (validateData() === "DExists") {
-      setErrorMessage("Doorno already  esists Please Check");
+      setErrorMessage("Doorno already  exists Please Check");
       setToast(true);
       setTimeout(() => {
         setToast(false);
@@ -750,8 +735,6 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
             toYear: profToYear.code,
             toPeriod: profToPeriod.code,
             arrear: profArrear === "" ? 0 : profArrear,
-            // current: profArrear,
-            // Penal: profPenal
             current: profCurrentFirst === "" ? 0 : profCurrentFirst,
             current2: profCurrentSecond === "" ? 0 : profCurrentSecond
           };
@@ -817,8 +800,7 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
         setPdeformdata(formdatatemp);
 
         try {
-          setIsInitialRender(false);
-          //  formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
+          // setIsInitialRender(false);
           if (isEdit) {
             mutation1.mutate(formdatatemp, {
               onSuccess,
@@ -866,14 +848,7 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
       }
     }
   }, [mutation1])
-  
-  // useEffect(() => {
-  //     if (mutation2?.error !== null) {
-  //       mutation2.mutate(searchOutNew, {
-  //         onSuccess,
-  //       });
-  //     }
-  // }, [mutation2])
+
   const onSkip = () => onSelect();
   // useEffect(() => {
   //   if (!mutation.isLoading && mutation.isSuccess && !mutation.isError && !mutation.isIdle) {
@@ -1086,7 +1061,7 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
                       <CardLabel>Building Code</CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="BuildingCode" value={BuildingCode} onChange={setSelectBuildingcode}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_CODE") })} />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-8">
                       <CardLabel>Building Name</CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="BuildingName" value={BuildingName} onChange={setSelectBuildingName}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_NAME") })} />
                     </div>
@@ -1117,7 +1092,7 @@ const searchReult=mutationsearch?.status==="success" &&  mutationsearch?.isSucce
                           <div className="row">
                             <div className="col-md-4">
                               <CardLabel>Stall No</CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="BuildingstallNo" value={fields1.stallNo} onChange={(e) => handleTextInputField1(index, e, "stallNo")}  {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_STALL_NO") })} />
+                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="BuildingstallNo" value={field.stallNo} onChange={(e) => handleTextInputField1(index, e, "stallNo")}  {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_STALL_NO") })} />
                             </div>
                           </div>
                         )}
