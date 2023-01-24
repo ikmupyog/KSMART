@@ -494,5 +494,23 @@ public class CrDeathRegistryDtl {
    @Size(max = 64)
    @JsonProperty("otherVehicleType")
    private String otherVehicleType ;
+
+   //RAkhi S on 24.01.2023
+   @Size(max = 64)
+   @JsonProperty("lbDistrictEn")
+   private String lbDistrictEn ;
+
+   @Size(max = 64)
+   @JsonProperty("lbTalukEn")
+   private String lbTalukEn ;
+
+   @Size(max = 64)
+   @JsonProperty("lbDistrictMl")
+   private String lbDistrictMl ;
+
+   @Size(max = 64)
+   @JsonProperty("lbTalukMl")
+   private String lbTalukMl ;
+
    
 }

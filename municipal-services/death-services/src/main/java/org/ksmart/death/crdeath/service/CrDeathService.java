@@ -66,9 +66,9 @@ public class CrDeathService {
 
           enrichmentService.enrichCreate(request);
 
-           enrichmentService.setIdgenIds(request);    
+        //    enrichmentService.setIdgenIds(request);    
 
-         // enrichmentService.setACKNumber(request); 
+          enrichmentService.setACKNumber(request); 
 
           workflowIntegrator.callWorkFlow(request);
 

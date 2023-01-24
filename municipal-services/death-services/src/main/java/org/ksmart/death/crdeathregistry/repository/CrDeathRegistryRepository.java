@@ -143,8 +143,67 @@ public class CrDeathRegistryRepository {
                  String lbName = masterData.get(CrDeathRegistryConstants.TENANTS).toString();
                  lbName = lbName.replaceAll("[\\[\\]\\(\\)]", "");
                  cert.setLocalBodyName(lbName);    
-                  
+                 
+                 //Rakhi S on 24.01.2023 
+                 Object mdmsDistrict = util.mDMSCallCertificateLBDistrict(pdfApplicationRequest.getRequestInfo()
+                            , cert.getTenantId());
+                 Map<String,List<String>> masterDataDistrict = getAttributeValuesVehicle(mdmsDistrict);
+
+                 String lbDistrictMaster = masterDataDistrict.get(CrDeathRegistryConstants.TENANTS).toString();
+                 lbDistrictMaster = lbDistrictMaster.replaceAll("[\\[\\]\\(\\)]", "");
                 
+                 Object mdmsDistrictEn = util.mDMSCallCertificateLBDistrictEn(pdfApplicationRequest.getRequestInfo()
+                                      , cert.getTenantId()
+                                      ,lbDistrictMaster);
+                 Map<String,List<String>> masterDataDistrictEn = getAttributeValues(mdmsDistrictEn);
+
+                 String lbDistrictEn = masterDataDistrictEn.get(CrDeathRegistryConstants.DISTRICT).toString();
+                 lbDistrictEn = lbDistrictEn.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 cert.setLbDistrictEn(lbDistrictEn);
+
+                 Object mdmsDistrictMl = util.mDMSCallCertificateLBDistrictMl(pdfApplicationRequest.getRequestInfo()
+                                        , cert.getTenantId()
+                                        ,lbDistrictMaster);
+
+                 Map<String,List<String>> masterDataDistrictMl = getAttributeValues(mdmsDistrictMl);
+
+                 String lbDistrictMl = masterDataDistrictMl.get(CrDeathRegistryConstants.DISTRICT).toString();
+                 lbDistrictMl = lbDistrictMl.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 cert.setLbDistrictMl(lbDistrictMl);
+
+
+                 Object mdmsTaluk = util.mDMSCallCertificateLBTaluk(pdfApplicationRequest.getRequestInfo()
+                            , cert.getTenantId());
+                 Map<String,List<String>> masterDataTaluk = getAttributeValuesVehicle(mdmsTaluk);
+
+                 String lbTalukMaster = masterDataTaluk.get(CrDeathRegistryConstants.TENANTS).toString();
+                 lbTalukMaster = lbTalukMaster.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 Object mdmsTalukEn = util.mDMSCallCertificateLBTalukEn(pdfApplicationRequest.getRequestInfo()
+                                      , cert.getTenantId()
+                                      ,lbTalukMaster);
+                 Map<String,List<String>> masterDataTalukEn = getAttributeValues(mdmsTalukEn);
+
+                 String lbTalukEn = masterDataTalukEn.get(CrDeathRegistryConstants.TALUK).toString();
+                 lbTalukEn = lbTalukEn.replaceAll("[\\[\\]\\(\\)]", "");
+
+                 cert.setLbTalukEn(lbTalukEn);
+
+                 Object mdmsTalukMl = util.mDMSCallCertificateLBTalukMl(pdfApplicationRequest.getRequestInfo()
+                                      , cert.getTenantId()
+                                      ,lbTalukMaster);
+
+                Map<String,List<String>> masterDataTalukMl = getAttributeValues(mdmsTalukMl);
+
+                String lbTalukMl = masterDataTalukMl.get(CrDeathRegistryConstants.TALUK).toString();
+                lbTalukMl = lbTalukMl.replaceAll("[\\[\\]\\(\\)]", "");
+
+                cert.setLbTalukMl(lbTalukMl);
+                     
+                 //End District and Taluk of LB
+
                  //RAkhi S on 07.01.2023 MDMS Call Malayalam fields 
                 Object mdmsDataMl = util.mDMSCallCertificateMl(pdfApplicationRequest.getRequestInfo()
                                 , cert.getTenantId()

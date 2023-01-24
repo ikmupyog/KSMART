@@ -149,7 +149,7 @@ public class CrDeathRegistryService {
 
      //Rakhi S IKM on 18.01.2022
      public List<DeathCertificate> searchCertificate(CrDeathRegistryCriteria criteria) {      
-      List<CrDeathRegistryDtl> obj = repository.getDeathApplication(criteria);
+      List<CrDeathRegistryDtl> obj = repository.getDeathApplication(criteria);     
       return repository.searchCertificate(obj.get(0).getId());
     }
     

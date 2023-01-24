@@ -101,7 +101,7 @@ public class CrDeathRegistryController {
                                                     @Valid @ModelAttribute CrDeathRegistryCriteria criteria){
 
     List<DeathCertificate> deathCertSearch = deathService.searchCertificate(criteria); 
-     
+        
     DeathCertResponse response ;
     if (null != deathCertSearch && !deathCertSearch.isEmpty()){
         if(deathCertSearch.get(0).getCounter()<=0){

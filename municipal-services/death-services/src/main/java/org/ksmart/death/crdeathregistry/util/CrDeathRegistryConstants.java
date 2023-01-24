@@ -98,4 +98,7 @@ public class CrDeathRegistryConstants {
      //rakhi s on 23.01.2023
      public static final String TENANT_EGOV_LOCATION= "egov-location";
      public static final String EGOV_LOCATION_JSONPATH = "$.MdmsRes.egov-location";
+
+     //RAkhi S on 24.01.2023
+     public static final String TALUK = "Taluk";
 }

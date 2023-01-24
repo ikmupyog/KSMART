@@ -964,4 +964,254 @@ public class CrDeathRegistryMdmsUtil {
        
         return crDeathModuleDtls;
     }
+    //RakhiS on 24.01.2023
+    public Object mDMSCallCertificateLBDistrict(RequestInfo requestInfo
+                        , String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestLBDistrict(requestInfo
+                                        , tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSRequestLBDistrict(RequestInfo requestInfo
+                            , String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantIdCertificateLBDistrict(tenantId);
+        
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);     
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+    private ModuleDetail getTenantIdCertificateLBDistrict(String tenantId) {
+
+        // master details for crDeath module
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+        // filter to only get code field from master data            
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')].city.distCodeStr";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.TENANTS).filter(filterCode).build());       
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(CrDeathRegistryConstants.TENANT_MODULE_NAME).build();
+
+       
+        return crDeathModuleDtls;
+    }
+
+    public Object mDMSCallCertificateLBDistrictEn(RequestInfo requestInfo
+                        , String tenantId
+                        , String lbDistrictMaster) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestLBDistrictEn(requestInfo
+                                        , tenantId
+                                        , lbDistrictMaster);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSRequestLBDistrictEn(RequestInfo requestInfo
+                            , String tenantId
+                            , String lbDistrictMaster) {
+        ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+        ModuleDetail commonMasterRequest = getcommonMasterDistrictEN(lbDistrictMaster); 
+        
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);    
+        moduleDetails.add(commonMasterRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                    .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+    private ModuleDetail  getcommonMasterDistrictEN(String lbDistrictMaster) {
+
+        // master details for crDeath module
+       List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+       // master details for death certificate              
+       final String districtfilterCode = "$.[?(@.code=='"+lbDistrictMaster+"')].name"; 
+       crDeathMasterDetails
+       .add(MasterDetail.builder().name(CrDeathRegistryConstants.DISTRICT).filter(districtfilterCode).build());       
+       
+       ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+       .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+
+       return (crDeathModuleDtls);
+}
+public Object mDMSCallCertificateLBDistrictMl(RequestInfo requestInfo
+                        , String tenantId
+                        , String lbDistrictMaster) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestLBDistrictMl(requestInfo
+                                        , tenantId
+                                        , lbDistrictMaster);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSRequestLBDistrictMl(RequestInfo requestInfo
+                        , String tenantId
+                        , String lbDistrictMaster) {
+                ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+                ModuleDetail commonMasterRequest = getcommonMasterDistrictMl(lbDistrictMaster); 
+
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                moduleDetails.add(tenantIdRequest);    
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                        .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+    }
+
+    private ModuleDetail  getcommonMasterDistrictMl(String lbDistrictMaster) {
+
+        // master details for crDeath module
+       List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+       // master details for death certificate              
+       final String districtfilterCode = "$.[?(@.code=='"+lbDistrictMaster+"')].namelocal"; 
+       crDeathMasterDetails
+       .add(MasterDetail.builder().name(CrDeathRegistryConstants.DISTRICT).filter(districtfilterCode).build());       
+       
+       ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+       .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+
+       return (crDeathModuleDtls);
+    }
+     public Object mDMSCallCertificateLBTaluk(RequestInfo requestInfo
+                                 , String tenantId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestLBTaluk(requestInfo
+                        , tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+      }
+      private MdmsCriteriaReq getMDMSRequestLBTaluk(RequestInfo requestInfo
+                                , String tenantId) {
+                ModuleDetail tenantIdRequest = getTenantIdCertificateLBTaluk(tenantId);
+
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                moduleDetails.add(tenantIdRequest);     
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                        .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+        private ModuleDetail getTenantIdCertificateLBTaluk(String tenantId) {
+
+                // master details for crDeath module
+                List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+        
+                // filter to only get code field from master data            
+                final String filterCode = "$.[?(@.code=='"+tenantId+"')].city.talukcode";
+                crDeathMasterDetails
+                        .add(MasterDetail.builder().name(CrDeathRegistryConstants.TENANTS).filter(filterCode).build());       
+        
+                ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                        .moduleName(CrDeathRegistryConstants.TENANT_MODULE_NAME).build();
+        
+               
+                return crDeathModuleDtls;
+        }
+        public Object mDMSCallCertificateLBTalukEn(RequestInfo requestInfo
+                        , String tenantId
+                        , String lbTalukMaster) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestLBTalukEn(requestInfo
+                                        , tenantId
+                                        , lbTalukMaster);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+        }
+        private MdmsCriteriaReq getMDMSRequestLBTalukEn(RequestInfo requestInfo
+                            , String tenantId
+                            , String lbTalukMaster) {
+                ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+                ModuleDetail commonMasterRequest = getcommonMasterTalukEN(lbTalukMaster); 
+                
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                moduleDetails.add(tenantIdRequest);    
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                                        .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                        .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+    }
+    private ModuleDetail  getcommonMasterTalukEN(String lbTalukMaster) {
+
+        // master details for crDeath module
+       List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+       // master details for death certificate              
+       final String districtfilterCode = "$.[?(@.code=='"+lbTalukMaster+"')].name"; 
+       crDeathMasterDetails
+       .add(MasterDetail.builder().name(CrDeathRegistryConstants.TALUK).filter(districtfilterCode).build());       
+       
+       ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+       .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+
+       return (crDeathModuleDtls);
+    }
+    public Object mDMSCallCertificateLBTalukMl(RequestInfo requestInfo
+                        , String tenantId
+                        , String lbTalukMaster) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestLBTalukMl(requestInfo
+                                        , tenantId
+                                        , lbTalukMaster);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+   }
+   private MdmsCriteriaReq getMDMSRequestLBTalukMl(RequestInfo requestInfo
+                        , String tenantId
+                        , String lbTalukMaster) {
+                ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+                ModuleDetail commonMasterRequest = getcommonMasterTalukMl(lbTalukMaster); 
+
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                moduleDetails.add(tenantIdRequest);    
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                        .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+
+        private ModuleDetail  getcommonMasterTalukMl(String lbTalukMaster) {
+
+                // master details for crDeath module
+               List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+               // master details for death certificate              
+               final String districtfilterCode = "$.[?(@.code=='"+lbTalukMaster+"')].namelocal"; 
+               crDeathMasterDetails
+               .add(MasterDetail.builder().name(CrDeathRegistryConstants.TALUK).filter(districtfilterCode).build());       
+               
+               ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+               .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+        
+               return (crDeathModuleDtls);
+        }
 }
