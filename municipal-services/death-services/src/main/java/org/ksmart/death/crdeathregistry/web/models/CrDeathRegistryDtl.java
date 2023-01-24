@@ -491,7 +491,8 @@ public class CrDeathRegistryDtl {
    @JsonProperty("certificateDate")
    private Long certificateDate ;
 
+   @Size(max = 64)
    @JsonProperty("otherVehicleType")
-   private Long otherVehicleType ;
-
+   private String otherVehicleType ;
+   
 }

@@ -50,7 +50,7 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
                                                   //Rakhi S on 21.01.2023
                                                   .append("      , dt.vehicle_first_halt,dt.male_dependent_unavailable,dt.female_dependent_unavailable,dt.spouse_name_en,dt.spouse_name_ml,dt.spouse_unavailable,dt.spouse_type,dt.spouse_emailid,dt.spouse_aadhaar,dt.spouse_mobileno,dt.funcion_uid")
                                                   //Rakhi S on 23.01.2023
-                                                  .append("      , dt.certificate_no")
+                                                  .append("      , dt.certificate_date,dt.certificate_no")
                                                   .append("      , stat.id statid, stat.death_dtl_id, stat.tenantid stattenantid, stat.residencelocalbody, stat.residence_place_type, stat.residencedistrict, stat.residencestate, stat.religion, stat.religion_other, stat.occupation, stat.occupation_other, stat.medical_attention_type")
                                                   .append("      , stat.death_medically_certified, stat.death_cause_main, stat.death_cause_sub, stat.death_cause_other, stat.death_during_delivery, stat.smoking_num_years, stat.tobacco_num_years, stat.arecanut_num_years, stat.alcohol_num_years")
                                                   .append("      , stat.createdby, stat.createdtime, stat.lastmodifiedby, stat.lastmodifiedtime, stat.nationality ,dt.deceased_idproofno ,dt.deceased_idprooftype,dt.burial_state,stat.occupation_sub, stat.occupation_minor, stat.education_main, stat.education_sub, stat.residencelbtype")
@@ -229,6 +229,7 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
          addFilter("dt.application_no", criteria.getDeathApplicationNo(), query, preparedStmtValues);  
          addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
          addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
+         addFilter("dt.certificate_no",criteria.getConsumerCode(), query, preparedStmtValues);
          addDateRangeFilter("dt.dateofdeath",
          criteria.getFromDate(),
          criteria.getToDate(),
@@ -251,8 +252,8 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
         }  
 
         //Rakhi S on 18.01.2023
-     private static final String CERTIFICATE_QUERY = new StringBuilder().append("SELECT ct.id, ct.deathcertificateno, ct.createdby, ct.createdtime, ct.deathdtlid, ct.filestoreid") 
-                                                            .append("      , ct.lastmodifiedtime, ct.lastmodifiedby, ct.status, ct.additionaldetail, ct.embeddedurl, ct.dateofissue, ct.counter") 
+     private static final String CERTIFICATE_QUERY = new StringBuilder().append("SELECT ct.id, ct.ack_no, ct.createdby, ct.createdtime, ct.deathdtlid, ct.filestoreid") 
+                                                            .append("      , ct.lastmodifiedtime, ct.lastmodifiedby, ct.status, ct.additionaldetail, ct.embeddedurl, ct.dateofissue, ct.counter, ct.certificate_no") 
                                                             .append(" FROM eg_death_cert_request ct ")                                                             
                                                       .toString();
 

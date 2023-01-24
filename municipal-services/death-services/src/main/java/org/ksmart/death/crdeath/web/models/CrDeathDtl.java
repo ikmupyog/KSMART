@@ -541,7 +541,8 @@ private String assignuser;
     private Long applicationDate ;
 
     //Rakhi S on 23.01.2023
+    @Size(max = 64)
     @JsonProperty("otherVehicleType")
-    private Long otherVehicleType ;
+    private String otherVehicleType ;
     
 }

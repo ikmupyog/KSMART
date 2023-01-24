@@ -42,12 +42,12 @@ serviceMaps:
             deceased_idprooftype, burial_state, vehicle_first_halt, male_dependent_unavailable, 
             female_dependent_unavailable,spouse_name_en,spouse_name_ml,spouse_unavailable,
             spouse_type,spouse_emailid,spouse_aadhaar,spouse_mobileno,
-            funcion_uid,certificate_no_id,certificate_no,certificate_date) VALUES (?, ?,
+            funcion_uid,certificate_no_id,certificate_no,certificate_date,other_vehicle_type) VALUES (?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?);
+            ?, ?, ?, ?, ?);
           basePath: deathCertificateDtls.*
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.id
@@ -149,6 +149,7 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.certificateNoId
             - jsonPath: $.deathCertificateDtls.*.certificateNo
             - jsonPath: $.deathCertificateDtls.*.certificateDate
+            - jsonPath: $.deathCertificateDtls.*.otherVehicleType
 
 
         - query: >-

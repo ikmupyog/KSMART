@@ -85,4 +85,7 @@ public class CrDeathRegistryCriteria {
         }
       }
     private SourceEnum source;
+
+    //Rakhi S on 24.01.2023 consumerCode as same as Certificateno
+    private String consumerCode;
 }

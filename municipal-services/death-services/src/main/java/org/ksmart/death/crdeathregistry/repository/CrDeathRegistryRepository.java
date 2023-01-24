@@ -127,7 +127,8 @@ public class CrDeathRegistryRepository {
 				deathCertPath = deathCertPath.replace("$gender",cert.getDeceasedGender().toString());
                 
                 // cert.setDeathACKNo("DR/CRT/01/2022");
-				deathCertPath = deathCertPath.replace("$deathcertificateno",cert.getDeathACKNo());
+				// deathCertPath = deathCertPath.replace("$deathcertificateno",cert.getDeathACKNo());
+                deathCertPath = deathCertPath.replace("$deathcertificateno",cert.getCertificateNo());
 
 				String finalPath = uiHost + deathCertPath;
                 //RAkhi S on 23.12.2022 MDMS Call
@@ -226,11 +227,11 @@ public class CrDeathRegistryRepository {
 
                 //Rakhi S on 16.12.2022
                 cert.setFullName(
-                                cert.getDeceasedFirstNameMl() + 
-                                cert.getDeceasedMiddleNameMl() + 
+                                cert.getDeceasedFirstNameMl() + " "+
+                                cert.getDeceasedMiddleNameMl() + " "+
                                 cert.getDeceasedLastNameMl() + " / " +
-                                cert.getDeceasedFirstNameEn() +
-                                cert.getDeceasedMiddleNameEn() +
+                                cert.getDeceasedFirstNameEn() +" "+
+                                cert.getDeceasedMiddleNameEn() +" "+
                                 cert.getDeceasedLastNameEn() );
 
                 cert.setGender(cert.getDeceasedGender());
@@ -318,7 +319,6 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPermanentAddress().getStateMl()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getCountryMl());
 
-                
                 //Rakhi S 13.01.2023 
                 // place of death HOME
                 if(CrDeathRegistryConstants.DEATH_PLACE_HOME.toString().equals(cert.getDeathPlace())){
@@ -381,6 +381,7 @@ public class CrDeathRegistryRepository {
                     cert.getAddressInfo().getDeathplaceAddress().getStateId()+ " "+
                     cert.getAddressInfo().getDeathplaceAddress().getCountryId());
                 }
+                
                 //Place of Death Hospital
                 else if(CrDeathRegistryConstants.DEATH_PLACE_HOSPITAL.toString().equals(cert.getDeathPlace())){
                      Object mdmsDataHospital = util.mDMSCallCertificateHospital(pdfApplicationRequest.getRequestInfo()     
@@ -572,8 +573,7 @@ public class CrDeathRegistryRepository {
     }
     //Rakhi S on 13.01.2023
     private Map<String, List<String>> getAttributeValuesHospital(Object mdmsdata){
-        List<String> modulepaths = Arrays.asList(CrDeathRegistryConstants.TENANT_JSONPATH, 
-        CrDeathRegistryConstants.BND_LIST_JSONPATH);
+        List<String> modulepaths = Arrays.asList(CrDeathRegistryConstants.EGOV_LOCATION_JSONPATH);
         final Map<String, List<String>> mdmsResMap = new HashMap<>();
        
         modulepaths.forEach(modulepath -> {

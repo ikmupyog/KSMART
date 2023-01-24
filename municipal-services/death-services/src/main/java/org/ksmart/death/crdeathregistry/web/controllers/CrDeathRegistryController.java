@@ -139,6 +139,26 @@ public class CrDeathRegistryController {
    
 
     }
+
+    //Rakhi S on 24.01.2023
+    @PostMapping(value = { "/crdeathregistry/_getfilestoreid"})
+    public ResponseEntity<DeathCertResponse> getfilestoreid(@RequestBody RequestInfoWrapper requestInfoWrapper,
+                                                       @Valid @ModelAttribute CrDeathRegistryCriteria criteria) {
+		
+        List<DeathCertificate> deathCert = deathService.searchCertificate(criteria);
+        DeathCertResponse response = DeathCertResponse.builder()
+                                    .filestoreId(deathCert.get(0).getFilestoreid())
+                                    .consumerCode(deathCert.get(0).getDeathcertificateno())
+                                    .tenantId(criteria.getTenantId())
+                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                                    .build();
+        // if(null!=deathCert.getFilestoreid()) {
+        // 	// deathCert.setDeathCertificateNo(criteria.getConsumerCode());
+        // 	// deathService.updateDownloadStatus(DeathCertRequest.builder().deathCertificate(deathCert).requestInfo(requestInfoWrapper.getRequestInfo()).build());
+        // }
+        // return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.ok(response);
+    }
         // System.out.println("hai");
         //    /********************************************* */
 

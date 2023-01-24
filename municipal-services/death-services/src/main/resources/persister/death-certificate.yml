@@ -7,14 +7,14 @@ serviceMaps:
       isTransaction: true
       queryMaps:
         - query: INSERT INTO public.eg_death_cert_request(
-                 id, deathcertificateno, createdby, createdtime, deathdtlid, filestoreid, lastmodifiedtime, lastmodifiedby, status, 
-                 embeddedurl, dateofissue, counter)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                 id, ack_no, createdby, createdtime, deathdtlid, filestoreid, lastmodifiedtime, lastmodifiedby, status, 
+                 embeddedurl, dateofissue, counter,certificate_no)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: deathCertificate
           jsonMaps:
             - jsonPath: $.deathCertificate.id
 
-            - jsonPath: $.deathCertificate.deathcertificateno
+            - jsonPath: $.deathCertificate.ackNo
 
             - jsonPath: $.deathCertificate.auditDetails.createdBy
 
@@ -38,18 +38,20 @@ serviceMaps:
 
             - jsonPath: $.deathCertificate.counter
 
+            - jsonPath: $.deathCertificate.deathcertificateno
+
         - query: INSERT INTO eg_death_cert_request_audit SELECT * FROM eg_death_cert_request WHERE id = ?;
           basePath: deathCertificate
           jsonMaps:
 
               - jsonPath: $.deathCertificate.id
         - query: UPDATE public.eg_death_cert_request
-                SET  deathcertificateno=?, createdby=?, createdtime=?, deathdtlid=?, filestoreid=?, lastmodifiedtime=?, lastmodifiedby=?, 
+                SET  ack_no=?, createdby=?, createdtime=?, deathdtlid=?, filestoreid=?, lastmodifiedtime=?, lastmodifiedby=?, 
                 status=?, embeddedurl=?, dateofissue=?
                  WHERE id=?;
           basePath: deathCertificate
           jsonMaps:
-            - jsonPath: $.deathCertificate.deathcertificateno
+            - jsonPath: $.deathCertificate.ackNo
 
             - jsonPath: $.deathCertificate.auditDetails.createdBy
 

@@ -73,7 +73,7 @@ public class CrDeathRegistryService {
         enrichmentService.setRegistrationNumberDetails(request); 
         //Rakhi S on 23.01.2023
         enrichmentService.setCertificateNumberDetails(request);
-        
+
         producer.push(deathConfig.getSaveDeathRegistryTopic(), request);
 
         return request.getDeathCertificateDtls();
@@ -129,9 +129,11 @@ public class CrDeathRegistryService {
         deathCertificate.setApplicationStatus(DeathCertificate.StatusEnum.FREE_DOWNLOAD);
         //Rakhi S on 21.12.2022
         deathCertificate.setId(UUID.randomUUID().toString());
-        deathCertificate.setDeathcertificateno(applicationRequest.getDeathCertificate().get(0).getDeathACKNo());
+        deathCertificate.setAckNo(applicationRequest.getDeathCertificate().get(0).getDeathACKNo());
         deathCertificate.setAuditDetails(applicationRequest.getDeathCertificate().get(0).getAuditDetails());
         deathCertificate.setCounter(1);
+        deathCertificate.setDeathcertificateno(applicationRequest.getDeathCertificate().get(0).getCertificateNo());
+        deathCertificate.setDateofissue(applicationRequest.getDeathCertificate().get(0).getCertificateDate());
         repository.save(deathCertRequest);
         return deathCertificate;
       }

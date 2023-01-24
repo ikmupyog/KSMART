@@ -15,7 +15,7 @@ public class CrDeathRegistryConstants {
 
     public static final String BND_MODULE_NAME = "birth-death-service";
     //Modified  by Rakhi S on 20.12.2022
-    public static final String HOSPITAL_LIST = "HospitalMaster";
+    public static final String HOSPITAL_LIST = "hospitalList";
     public static final String DEATH_PLACE = "DeathPlaceType";    
     //Rakhi S on 07.12.2022
     public static final String DEATH_CAUSE_MAIN = "DeathCause";
@@ -63,7 +63,7 @@ public class CrDeathRegistryConstants {
      public static final String FEMALE_DEPENDENT_EN = " (Mother)";  
 
      public static final String INSTITUTION_TYPE = "InstitutionType";
-     public static final String INSTITUTION_NAME = "Institution";
+     public static final String INSTITUTION_NAME = "institutionList";
      public static final String VEHICLE_TYPE = "VehicleType";
      public static final String OTHER_PLACE_TYPE = "OtherDeathPlace";
      public static final String VEHICLE_DEATH_CAPTION1 = "വാഹനത്തിൽ  യാത്രചെയ്യവേ ";
@@ -94,4 +94,8 @@ public class CrDeathRegistryConstants {
      public static final String LB_TYPE_MUNICIPALITY_CAPTION = "M";
      public static final String DEATH_REGNO_UID= "CRDRNR";
      public static final String STATE_CODE= "KL";
+
+     //rakhi s on 23.01.2023
+     public static final String TENANT_EGOV_LOCATION= "egov-location";
+     public static final String EGOV_LOCATION_JSONPATH = "$.MdmsRes.egov-location";
 }

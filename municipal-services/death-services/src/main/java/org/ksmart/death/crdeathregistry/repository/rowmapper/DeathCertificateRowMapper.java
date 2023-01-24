@@ -29,7 +29,8 @@ public class DeathCertificateRowMapper
                             .id(rs.getString("id"))
                             .deathDtlId(rs.getString("deathdtlid"))
                             .filestoreid(rs.getString("filestoreid"))
-                            .deathcertificateno(rs.getString("deathcertificateno"))   
+                            .ackNo(rs.getString("ack_no"))
+                            .deathcertificateno(rs.getString("certificate_no"))   
 							.counter(rs.getInt("counter"))                        
                             .build());
 		}
