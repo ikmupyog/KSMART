@@ -44,9 +44,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useCRcauseOfDeathsub = () => {
     return useQuery("CR_CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART", () => MdmsService.getCRcauseOfDeathsub(tenantId, moduleCode), config);
   };
-  const useCRcauseOfSpouseType = () => {
-    return useQuery("CR_SPOUSE", () => MdmsService.getCRcauseOfSpouseType(tenantId, moduleCode), config);
-  };  
+  // const useCRcauseOfSpouseType = () => {
+  //   return useQuery("CR_SPOUSE", () => MdmsService.getCRcauseOfSpouseType(tenantId, moduleCode), config);
+  // };  
   
   const useCROtherDeathPlace = () => {
     return useQuery("CR_RELIGION", () => MdmsService.getCROtherDeathPlace(tenantId, moduleCode), config);
@@ -280,8 +280,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
         return useCRcauseOfDeathsub();   
       case "OtherDeathPlace":
         return useCROtherDeathPlace();
-      case "SpouseType":
-        return useCRcauseOfSpouseType();   
+      // case "SpouseType":
+      //   return useCRcauseOfSpouseType();   
     case "Village":
       return useCRVillage();
     case "District":
