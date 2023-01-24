@@ -33,7 +33,7 @@ public class IdgenUtil {
     private String idGenPath;
 
     @Autowired
-    private ObjectMapper mapper;
+    private ObjectMapper objectMapper;
 
     @Autowired
     private ServiceRequestRepository restRepo;
@@ -54,13 +54,19 @@ public class IdgenUtil {
                                                                .requestInfo(requestInfo)
                                                                .build();
 
-        if (log.isDebugEnabled()) {
-            log.debug("*** Idgen requeset: \n{}", FMUtils.toJson(request));
+        final StringBuilder uri = new StringBuilder(idGenHost).append(idGenPath);
+
+        if (log.isInfoEnabled()) {
+            log.info("Idgen URI: {}", uri.toString());
+            log.info("Idgen requeset: \n{}", FMUtils.toJson(request));
         }
 
-        final StringBuilder uri = new StringBuilder(idGenHost).append(idGenPath);
-        final IdGenerationResponse response = mapper.convertValue(restRepo.fetchResult(uri, request),
-                                                                  IdGenerationResponse.class);
+        final IdGenerationResponse response = objectMapper.convertValue(restRepo.fetchResult(uri, request),
+                                                                        IdGenerationResponse.class);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Idgen response: \n{}", FMUtils.toJson(response));
+        }
 
         final List<IdResponse> idResponses = response.getIdResponses();
 

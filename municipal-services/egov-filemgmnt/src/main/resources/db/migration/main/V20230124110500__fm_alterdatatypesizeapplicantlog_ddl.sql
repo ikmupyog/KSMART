@@ -1,0 +1,1 @@
+ALTER TABLE eg_fm_applicantpersonal_log ALTER COLUMN aadhaarno TYPE varchar(60);

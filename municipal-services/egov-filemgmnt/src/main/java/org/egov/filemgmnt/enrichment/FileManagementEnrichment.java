@@ -41,8 +41,6 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
     private FMConfiguration fmConfig;
     @Autowired
     private IdgenUtil idgenUtil;
-//    @Autowired
-//    private EncryptionUtil encryptionUtil;
 
     public void enrichApplicantPersonal(final ApplicantServiceRequest request,
                                         final ApplicantPersonal existingApplicant, final boolean create) {

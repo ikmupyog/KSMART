@@ -10,7 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.egov.filemgmnt.util.FMConstants;
-import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.tracer.model.CustomException;
@@ -27,10 +26,6 @@ public class MdmsValidator {
 
     public void validateMdmsData(final ApplicantServiceRequest request, final Object mdmsData) {
 
-        if (log.isDebugEnabled()) {
-            log.debug("MDMS master data \n {}", FMUtils.toJson(mdmsData));
-        }
-
         final Map<String, Object> masterData = getFileManagementMasterData(mdmsData);
         validateFileManagementMasterData(masterData);
 
@@ -42,7 +37,7 @@ public class MdmsValidator {
 
         final String serviceCode = serviceDetail.getServiceCode();
         if (log.isDebugEnabled()) {
-            log.debug("Service code : \n{}", serviceCode);
+            log.debug("Mdms service code : {}", serviceCode);
         }
 
         if (CollectionUtils.isEmpty(subTypeCodes) || !subTypeCodes.contains(serviceCode)) {

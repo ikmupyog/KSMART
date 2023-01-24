@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +33,9 @@ class UserService {
     @Autowired
     private FMConfiguration fmConfig;
     @Autowired
-    private ServiceRequestRepository srRepository;
+    private ObjectMapper objectMapper;
+    @Autowired
+    private ServiceRequestRepository restRepo;
 
     protected FMUser createOrUpdateUser(final RequestInfo request, final ApplicantPersonal applicant) {
 
@@ -58,15 +62,12 @@ class UserService {
         final StringBuilder uri = new StringBuilder().append(fmConfig.getUserHost())
                                                      .append(fmConfig.getUserContextPath())
                                                      .append(fmConfig.getUserUpdateEndpoint());
-        final FMUserResponse result = (FMUserResponse) srRepository.fetchResult(uri, userRequest, FMUserResponse.class);
 
-        if (log.isDebugEnabled()) {
-            log.debug("*** User update response: \n {}", FMUtils.toJson(result));
-        }
+        final FMUserResponse response = userCall(uri, userRequest);
 
-        return Objects.nonNull(result) && CollectionUtils.isNotEmpty(result.getUser())
-                ? result.getUser()
-                        .get(0)
+        return Objects.nonNull(response) && CollectionUtils.isNotEmpty(response.getUser())
+                ? response.getUser()
+                          .get(0)
                 : null;
     }
 
@@ -79,15 +80,12 @@ class UserService {
         final StringBuilder uri = new StringBuilder().append(fmConfig.getUserHost())
                                                      .append(fmConfig.getUserContextPath())
                                                      .append(fmConfig.getUserCreateEndpoint());
-        final FMUserResponse result = (FMUserResponse) srRepository.fetchResult(uri, userRequest, FMUserResponse.class);
 
-        if (log.isDebugEnabled()) {
-            log.debug("*** User create response: \n {}", FMUtils.toJson(result));
-        }
+        final FMUserResponse response = userCall(uri, userRequest);
 
-        return Objects.nonNull(result) && CollectionUtils.isNotEmpty(result.getUser())
-                ? result.getUser()
-                        .get(0)
+        return Objects.nonNull(response) && CollectionUtils.isNotEmpty(response.getUser())
+                ? response.getUser()
+                          .get(0)
                 : null;
     }
 
@@ -104,7 +102,7 @@ class UserService {
 
     private FMUser buildUserForCreate(final ApplicantPersonal applicant) {
         final String name = StringUtils.isNotBlank(applicant.getLastName())
-                ? StringUtils.joinWith(", ", applicant.getFirstName(), applicant.getLastName())
+                ? StringUtils.joinWith(" ", applicant.getFirstName(), applicant.getLastName())
                 : applicant.getFirstName();
 
         final FMUser user = FMUser.builder()
@@ -113,7 +111,8 @@ class UserService {
                                   .emailId(applicant.getEmailId())
                                   .aadhaarNumber(applicant.getAadhaarNumber())
                                   .tenantId(applicant.getTenantId())
-                                  .dob(new java.util.Date(applicant.getDateOfBirth()))
+                                  .userName(applicant.getFirstName())
+                                  // .dob(new java.util.Date(applicant.getDateOfBirth()))
                                   .build();
 
         user.addRole(buildCitizenRole(applicant.getTenantId()));
@@ -125,24 +124,35 @@ class UserService {
         final FMUserSearchRequest searchRequest = FMUserSearchRequest.builder()
                                                                      .tenantId(applicant.getTenantId())
                                                                      .aadhaarNumber(applicant.getAadhaarNumber())
-                                                                     // .mobileNumber(applicant.getMobileNumber())
+                                                                     .mobileNumber(applicant.getMobileNumber())
                                                                      .requestInfo(request)
                                                                      .build();
 
         final StringBuilder uri = new StringBuilder().append(fmConfig.getUserHost())
                                                      .append(fmConfig.getUserSearchEndpoint());
-        final FMUserResponse result = (FMUserResponse) srRepository.fetchResult(uri,
-                                                                                searchRequest,
-                                                                                FMUserResponse.class);
 
-        if (log.isDebugEnabled()) {
-            log.debug("*** User search response: \n {}", FMUtils.toJson(result));
+        final FMUserResponse response = userCall(uri, searchRequest);
+
+        return Objects.nonNull(response) && CollectionUtils.isNotEmpty(response.getUser())
+                ? response.getUser()
+                          .get(0)
+                : null;
+    }
+
+    private <T> FMUserResponse userCall(final StringBuilder uri, final T request) {
+        if (log.isInfoEnabled()) {
+            log.info("User URI: {}", uri.toString());
+            log.info("User request: \n{}", FMUtils.toJson(request));
         }
 
-        return Objects.nonNull(result) && CollectionUtils.isNotEmpty(result.getUser())
-                ? result.getUser()
-                        .get(0)
-                : null;
+        final FMUserResponse response = objectMapper.convertValue(restRepo.fetchResult(uri, request),
+                                                                  FMUserResponse.class);
+
+        if (log.isDebugEnabled()) {
+            log.debug("User response: \n{}", FMUtils.toJson(response));
+        }
+
+        return response;
     }
 
     private Role buildCitizenRole(final String tenantId) {

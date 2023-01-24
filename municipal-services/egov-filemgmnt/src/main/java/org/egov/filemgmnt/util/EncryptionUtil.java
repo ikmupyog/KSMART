@@ -60,6 +60,11 @@ public class EncryptionUtil {
             if (encryptedObject == null) {
                 throw new CustomException("ENCRYPTION_NULL_ERROR", "Null object found on performing encryption");
             }
+
+            if (log.isDebugEnabled()) {
+                log.debug("Encryptor response: \n{}", FMUtils.toJson(encryptedObject));
+            }
+
             return encryptedObject;
         } catch (IOException | HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
             log.error("Error occurred while encrypting", e);
@@ -105,6 +110,11 @@ public class EncryptionUtil {
             if (objectIsList) {
                 decryptedObject = (P) ((List<E>) decryptedObject).get(0);
             }
+
+            if (log.isDebugEnabled()) {
+                log.debug("Decryptor response: \n{}", FMUtils.toJson(decryptedObject));
+            }
+
             return decryptedObject;
         } catch (IOException | HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
             log.error("Error occurred while decrypting", e);

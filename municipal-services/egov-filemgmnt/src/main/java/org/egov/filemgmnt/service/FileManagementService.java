@@ -14,6 +14,7 @@ import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.enrichment.FileManagementEnrichment;
 import org.egov.filemgmnt.kafka.Producer;
 import org.egov.filemgmnt.repository.FileManagementRepository;
+import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.MdmsUtil;
 import org.egov.filemgmnt.validators.FileManagementValidator;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
@@ -23,8 +24,6 @@ import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
-import org.egov.filemgmnt.web.models.user.FMUser;
-//import org.egov.filemgmnt.web.models.certificates.CertificatePdfApplicationRequest;
 import org.egov.filemgmnt.workflow.WorkflowIntegrator;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,8 +88,8 @@ public class FileManagementService extends AbstractFileManagementService {
         enrichment.enrichCreate(request, Objects.nonNull(existingApplicant));
 
         // create/update user
-        final FMUser fmUser = createOrUpdateUser(request.getRequestInfo(), applicantRaw);
-        enrichment.enrichCreate(request, fmUser);
+//        final FMUser fmUser = createOrUpdateUser(request.getRequestInfo(), applicantRaw);
+//        enrichment.enrichCreate(request, fmUser);
 
         // create applicant file service details and create/update applicant details
         producer.push(fmConfig.getSaveApplicantServiceTopic(), request);
@@ -139,7 +138,7 @@ public class FileManagementService extends AbstractFileManagementService {
         enrichment.enrichUpdate(request, existingServiceDetail);
 
         // update user
-        createOrUpdateUser(request.getRequestInfo(), applicantRaw);
+//        createOrUpdateUser(request.getRequestInfo(), applicantRaw);
 
         // update applicant file service details along with applicant details
         producer.push(fmConfig.getUpdateApplicantServiceTopic(), request);
@@ -200,7 +199,7 @@ public class FileManagementService extends AbstractFileManagementService {
         final CertificateRequest request = repository.getResidentialCertificate(criteria, requestInfo);
 
         if (log.isDebugEnabled()) {
-            log.debug("*** Pdf response: \n{}", request.getCertificateDetails());
+            log.debug("Pdf request: \n{}", FMUtils.toJson(request));
         }
 
         producer.push(fmConfig.getSaveApplicantCertificateTopic(), request);

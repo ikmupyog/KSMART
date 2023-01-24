@@ -42,6 +42,10 @@ public class FileManagementController implements FileManagementBaseController {
     @Override
     @PostMapping("/applicantservices/_create")
     public ResponseEntity<ApplicantServiceResponse> create(@RequestBody final ApplicantServiceRequest request) {
+        if (log.isDebugEnabled()) {
+            log.debug("FileServiceRequest-create:  \n{}", FMUtils.toJson(request));
+        }
+
         final ApplicantServiceDetail serviceDetail = fmService.create(request);
 
         return ResponseEntity.ok(ApplicantServiceResponse.builder()
@@ -55,7 +59,7 @@ public class FileManagementController implements FileManagementBaseController {
     @PutMapping("/applicantservices/_update")
     public ResponseEntity<ApplicantServiceResponse> update(@RequestBody final ApplicantServiceRequest request) {
         if (log.isDebugEnabled()) {
-            log.debug("FileServiceRequest:  %n{}", FMUtils.toJson(request));
+            log.debug("FileServiceRequest-update:  \n{}", FMUtils.toJson(request));
         }
 
         final ApplicantServiceDetail serviceDetail = fmService.update(request);
@@ -72,6 +76,10 @@ public class FileManagementController implements FileManagementBaseController {
     public ResponseEntity<ApplicantServiceSearchResponse> searchServices(@RequestBody final RequestInfoWrapper request,
                                                                          @ModelAttribute final ApplicantServiceSearchCriteria searchCriteria) {
 
+        if (log.isDebugEnabled()) {
+            log.debug("FileServiceRequest-search:  \n{}", FMUtils.toJson(searchCriteria));
+        }
+
         final List<ApplicantServiceDetail> result = fmService.searchServices(request.getRequestInfo(), searchCriteria);
 
         return ResponseEntity.ok(ApplicantServiceSearchResponse.builder()
@@ -85,6 +93,10 @@ public class FileManagementController implements FileManagementBaseController {
     @PostMapping("/applicantpersonals/_search")
     public ResponseEntity<ApplicantSearchResponse> searchApplicants(@RequestBody final RequestInfoWrapper request,
                                                                     @ModelAttribute final ApplicantSearchCriteria searchCriteria) {
+        if (log.isDebugEnabled()) {
+            log.debug("ApplicantPersonals-search:  \n{}", FMUtils.toJson(searchCriteria));
+        }
+
         final List<ApplicantPersonal> result = fmService.searchApplicants(request.getRequestInfo(), searchCriteria);
 
         return ResponseEntity.ok(ApplicantSearchResponse.builder()

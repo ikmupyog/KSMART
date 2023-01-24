@@ -1,9 +1,6 @@
 package org.egov.filemgmnt;
 
 import org.egov.encryption.config.EncryptionConfiguration;
-
-//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import org.egov.tracer.config.TracerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;

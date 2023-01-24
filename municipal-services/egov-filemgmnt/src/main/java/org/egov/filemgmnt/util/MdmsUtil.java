@@ -49,16 +49,22 @@ public class MdmsUtil {
     public Object mdmsCall(final RequestInfo requestInfo, final String tenantId) {
         final MdmsCriteriaReq mdmsCriteriaReq = getMdmsRequest(requestInfo, tenantId);
 
-        final String mdmsUri = String.format("%s%s", mdmsHost, mdmsUrl);
+        final String uri = String.format("%s%s", mdmsHost, mdmsUrl);
         Object result = null;
         try {
-            result = restTemplate.postForObject(mdmsUri, mdmsCriteriaReq, Map.class);
+
+            if (log.isInfoEnabled()) {
+                log.info("Mdms URI: {}", uri);
+                log.info("Mdms request: \n{}", FMUtils.toJson(mdmsCriteriaReq));
+            }
+
+            result = restTemplate.postForObject(uri, mdmsCriteriaReq, Map.class);
         } catch (Exception e) {
             log.error("Exception occurred while fetching category lists from mdms", e);
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("Mdms call result: %n{}", FMUtils.toJson(result));
+            log.debug("Mdms response: \n{}", FMUtils.toJson(result));
         }
         return result;
     }
