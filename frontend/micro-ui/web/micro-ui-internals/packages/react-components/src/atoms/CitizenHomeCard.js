@@ -1,7 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CitizenHomeCard = ({ header, links, state, Icon, Info, isInfo = false, styles }) => {
+const CitizenHomeCard = ({ header, links, state, Icon, Info, isInfo = false, styles,module }) => {
+
+  let tmpLinks =links
+  // let defaultLink =links
+  //  if (defaultLink ?.length>0 && window.location.href.includes('cr-death-home')){
+  //   tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-birth-home" )
+  // }else if(defaultLink ?.length>0 && window.location.href.includes('cr-birth-home')){
+  //   tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-death-home" )
+  // }
+  // else{
+  //   tmpLinks = links
+  // }
   return (
     <div className="CitizenHomeCard" style={styles ? styles : {}}>
       <div className="header">
@@ -10,8 +21,8 @@ const CitizenHomeCard = ({ header, links, state, Icon, Info, isInfo = false, sty
       </div>
 
       <div className="links">
-        {links.map((e, i) => (
-          <Link key={i} to={{ pathname: e.link, state: e.state }}>
+        {tmpLinks.map((e, i) => (
+          <Link key={i} to={{ pathname: e.link, state: e.state }}> 
             {e.i18nKey}
           </Link>
         ))}

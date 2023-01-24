@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton, TextArea, BackButton, Header } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import Timeline from "../../components/DRTimeline";
+import Timeline from "../../../components/DRTimeline";
 
 const DeathCertificate = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -39,7 +39,7 @@ const DeathCertificate = ({ config, onSelect, userType, formData }) => {
   //   setGeneralRemarks(e.target.value);
   // }
   const goNext = () => {
-    console.log("test");
+    // console.log("test");
     sessionStorage.setItem("GeneralRemarks", GeneralRemarks);
     onSelect(config.key, { GeneralRemarks });
   };
@@ -199,4 +199,4 @@ const DeathCertificate = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default DeathCertificate;
+export default DeathCertificate; 

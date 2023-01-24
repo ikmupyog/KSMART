@@ -427,7 +427,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee")  ? <Timeline currentStep={2} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">

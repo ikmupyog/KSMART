@@ -1,7 +1,7 @@
 import { BackButton } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import ErrorBoundary from "../../components/ErrorBoundaries";
 import { AppHome } from "../../components/Home";
 import TopBarSideBar from "../../components/TopBarSideBar";
@@ -32,6 +32,7 @@ const Home = ({
   sourceUrl,
   pathname,
 }) => {
+  const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();
   const { path } = useRouteMatch();
@@ -47,19 +48,53 @@ const Home = ({
     );
   });
 
-  const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage }, index) => {
+  const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage,...others }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
+    let crBirth = "cr-birth"
+    let Module_br = "Birth Certificate"
+    let Module_dr = "Death Certificate"
+    let crDeath = "cr-death"
+    // console.log(code);
     return (
-      <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
-        <div className="moduleLinkHomePage">
-          <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
-          <BackButton className="moduleLinkHomePageBackButton" />
-          <h1>{t("MODULE_" + code.toUpperCase())}</h1>
-        </div>
-          <div className="moduleLinkHomePageModuleLinks">
-            <Links key={index} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
-          </div>
-      </Route>
+      <React.Fragment>
+        {code === "CR" && location?.state?.module === crBirth ? (
+          <Route key={index} path={`${path}/${crBirth.toLowerCase()}-home`}>
+            <div className="moduleLinkHomePage">
+              <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+                <h1>{t(Module_br.toUpperCase())}</h1>
+            </div>
+            <div className="moduleLinkHomePageModuleLinks">
+              <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
+            </div>
+          </Route>
+        ) :
+         code === "CR" && location?.state?.module === crDeath ? (
+          <Route key={index} path={`${path}/${crDeath.toLowerCase()}-home`}>
+            <div className="moduleLinkHomePage">
+              <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+                <h1>{t(Module_dr.toUpperCase())}</h1>
+            </div>
+            <div className="moduleLinkHomePageModuleLinks">
+              <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
+            </div>
+          </Route>
+        ) :
+         (
+          <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
+            <div className="moduleLinkHomePage">
+              <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+              <h1>{t("MODULE_" + code.toUpperCase())}</h1>
+            </div>
+            <div className="moduleLinkHomePageModuleLinks">
+              <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
+            </div>
+          </Route>
+        )}
+
+      </React.Fragment>
     );
   });
 

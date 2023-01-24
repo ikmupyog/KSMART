@@ -70,9 +70,11 @@ import BirthCheckPage from "./pages/citizen/Create/CheckPage";
 import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
 import BirthAcknowledgement from "./pages/citizen/Create/BirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/Create/DeathAcknowledgement";
+import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
+import CitizenApp from "./pages/citizen";
 
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
@@ -88,7 +90,7 @@ export const CRModule = ({ stateCode, userType, tenants }) => {
   if (userType === "employee") {
     return <EmployeeApp path={path} url={url} userType={userType} />;
   }
-  // else return <CitizenApp />;
+  else return <CitizenApp />;
 };
 
 export const CRLinks = ({ matchPath, userType }) => {
@@ -98,16 +100,19 @@ export const CRLinks = ({ matchPath, userType }) => {
   useEffect(() => {
     clearParams();
   }, []);
-
+  
   const links = [
     {
-      link: `${matchPath}/birthcertificate`,
-      i18nKey: t("CR_DEATH_CERTIFICATE"),
+      link: `${matchPath}/create-birth-certificate`,
+      i18nKey: t("CR_BIRTH_CERTIFICATE"),
+      module:t("cr-birth-home")
     },
     {
-      link: `${matchPath}/tradelicence/new-application`,
-      i18nKey: t("CR_BIRTH_CERTIFICATE"),
+      link: `${matchPath}/create-death-certificate`,
+      i18nKey: t("CR_DEATH_CERTIFICATE"),
+      module:t("cr-death-home")
     },
+    
     // {
     //   link: `${matchPath}/tradelicence/renewal-list`,
     //   i18nKey: t("TL_RENEWAL_HEADER"),
@@ -193,6 +198,7 @@ const componentsToRegister = {
   DeathCheckPage,
   BirthAcknowledgement,
   DeathAcknowledgement,
+  BirthCertificate,
   TLResponse: Response,
 };
 
