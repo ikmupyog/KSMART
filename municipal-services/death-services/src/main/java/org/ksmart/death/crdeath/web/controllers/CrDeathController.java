@@ -125,7 +125,9 @@ public class CrDeathController implements CrDeathResource  {
 
         }
         //Jasmine on 21.01.2023
-        else if((status==CrDeathConstants.WORKFLOW_STATUS_APPROVED) &&  (applicationType==CrDeathConstants.APPLICATION_CORRECTION)){
+        System.out.println("status"+status +"Wstatus"+CrDeathConstants.WORKFLOW_STATUS_APPROVED);
+        System.out.println("applicationType"+applicationType +"Wstatus"+CrDeathConstants.APPLICATION_CORRECTION);
+       if((status.equals(CrDeathConstants.WORKFLOW_STATUS_APPROVED))&&  (applicationType.equals(CrDeathConstants.APPLICATION_CORRECTION))){
 
             CrDeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
 

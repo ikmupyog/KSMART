@@ -476,13 +476,13 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.addressInfo.burialAddress.houeNameEn
         - query: >-
             UPDATE eg_death_dtls SET registration_no = ? ,registration_date = ?
-            , registration_no_id = ?  WHERE application_no = ? AND tenantid = ?
+            , registration_no_id = ?  WHERE ack_no = ? AND tenantid = ?
           basePath: deathCertificateDtls.*
           jsonMaps:
             - jsonPath: $.deathCertificateDtls.*.registrationNo
             - jsonPath: $.deathCertificateDtls.*.registrationDate
             - jsonPath: $.deathCertificateDtls.*.registrationNoId
-            - jsonPath: $.deathCertificateDtls.*.deathApplicationNo
+            - jsonPath: $.deathCertificateDtls.*.deathACKNo
             - jsonPath: $.deathCertificateDtls.*.tenantId
     - version: 1
       description: >-
@@ -528,9 +528,9 @@ serviceMaps:
             death_place_officer_mobile = ?, death_place_officer_aadhaar = ?,
             deceased_idproofno = ?, deceased_idprooftype = ? ,burial_district = ?,burial_lbtype = ?, burial_lbname = ?,
             burial_state = ?, vehicle_first_halt = ?, male_dependent_unavailable = ?, 
-            female_dependent_unavailable = ?  spouse_name_en = ?,spouse_name_ml = ?,spouse_unavailable = ?,
-            spouse_type = ?,spouse_emailid = ?,spouse_aadhaar = ?,spouse_mobileno = ?,funcion_uid = ? where 
-             registration_no = ? and  tenantid = ?
+            female_dependent_unavailable = ? , spouse_name_en = ?,spouse_name_ml = ?,spouse_unavailable = ?,
+            spouse_type = ?,spouse_emailid = ?,spouse_aadhaar = ?,spouse_mobileno = ?,funcion_uid = ? ,ack_no = ? ,
+            application_no = ?, file_no = ? where  registration_no = ? and  tenantid = ?
         #   id = ?
         #  registrationunit = ?, tenantid = ?,application_no = ?, file_no = ?, submitted_on = ?,
         # death_place = ?, death_place_inst_type = ?, death_place_inst_id = ?,ack_no = ?, registration_no = ?
@@ -633,6 +633,9 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.spouseAadhaar
             - jsonPath: $.deathCertificateDtls.*.spouseMobileno
             - jsonPath: $.deathCertificateDtls.*.funcionUID
+            - jsonPath: $.deathCertificateDtls.*.deathACKNo
+            - jsonPath: $.deathCertificateDtls.*.deathApplicationNo
+            - jsonPath: $.deathCertificateDtls.*.fileNo
            # - jsonPath: $.deathCertificateDtls.*.id
             - jsonPath: $.deathCertificateDtls.*.registrationNo
             - jsonPath: $.deathCertificateDtls.*.tenantId

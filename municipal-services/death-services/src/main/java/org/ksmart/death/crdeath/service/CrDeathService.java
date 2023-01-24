@@ -66,9 +66,9 @@ public class CrDeathService {
 
           enrichmentService.enrichCreate(request);
 
-          // enrichmentService.setIdgenIds(request);    
+           enrichmentService.setIdgenIds(request);    
 
-          enrichmentService.setACKNumber(request); 
+         // enrichmentService.setACKNumber(request); 
 
           workflowIntegrator.callWorkFlow(request);
 
@@ -97,9 +97,18 @@ public class CrDeathService {
                                                   //.id(id)
                                                   .build());
 
+
         validatorService.validateUpdate(request, searchResult);
 
        // mdmsValidator.validateMDMSData(request,mdmsData);
+
+       CrDeathDtlRequest result = CrDeathDtlRequest
+                                .builder()
+                                .requestInfo(request.getRequestInfo())
+                                .deathCertificateDtls(searchResult)
+                                .build();
+
+       // System.out.println("result"+result);
 
         enrichmentService.enrichUpdate(request);
         
@@ -107,8 +116,7 @@ public class CrDeathService {
         
         producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
         
-
-        return request.getDeathCertificateDtls();
+        return result.getDeathCertificateDtls();
     }
 
                 /********************************************* */
