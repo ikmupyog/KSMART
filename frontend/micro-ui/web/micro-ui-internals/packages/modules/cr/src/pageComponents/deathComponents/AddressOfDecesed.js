@@ -223,23 +223,203 @@ const AddressOfDecesed = ({ config, onSelect, userType, formData }) => {
           <div className="radios">
             <div className="inside">
               <input type="radio" name="options" value="ILB" checked={selectedOption === "ILB"} onChange={handleOptionChange} />
-              <p>Inside Local Body</p>
+              <p>{t("ADDRESS_TYPE_INSIDE_LOCAL_BODY")}</p>
             </div>
             <div className="inside">
               <input type="radio" name="options" value="IK" checked={selectedOption === "IK"} onChange={handleOptionChange} />
-              <p>Inside Kerala</p>
+              <p>{t("ADDRESS_TYPE_INSIDE_KERALA")}</p>
             </div>
             <div className="inside">
               <input type="radio" name="options" value="IIN" checked={selectedOption === "IIN"} onChange={handleOptionChange} />
-              <p>Inside India</p>
+              <p>{t("ADDRESS_TYPE_INSIDE_INDIA")}</p>
             </div>
             <div className="inside">
               <input type="radio" name="options" value="OIN" checked={selectedOption === "OIN"} onChange={handleOptionChange} />
-              <p>Outside India</p>
+              <p>{t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}</p>
             </div>
           </div>
           <div>
             {selectedOption === "ILB" &&  (
+              <AdressInside
+                PresentCountry={PresentCountry}
+                setPresentCountry={setPresentCountry}
+                PresentStateName={PresentStateName}
+                setPresentStateName={setPresentStateName}
+                PresentDistrict={PresentDistrict}
+                setPresentDistrict={setPresentDistrict}
+                PresentLBTypeName={PresentLBTypeName}
+                setPresentLBTypeName={setPresentLBTypeName}
+                PresentLBName={PresentLBName}
+                setPresentLBName={setPresentLBName}
+                PresentTaluk={PresentTaluk}
+                setPresentTaluk={setPresentTaluk}
+                PresentPostOffice={PresentPostOffice}
+                setPresentPostOffice={setPresentPostOffice}
+                PresentPincode={PresentPincode}
+                setPresentPincode={setPresentPincode}
+                PresentHouseNameEn={PresentHouseNameEn}
+                setPresentHouseNameEn={setPresentHouseNameEn}
+                PresentHouseNameMl={PresentHouseNameMl}
+                setPresentHouseNameMl={setPresentHouseNameMl}
+                PresentDoorNo={PresentDoorNo}
+                setPresentDoorNo={setPresentDoorNo}
+                PresentResNo={PresentResNo}
+                setPresentResNo={setPresentResNo}
+                PresentMainPlaceEn={PresentMainPlaceEn}
+                setPresentMainPlaceEn={setPresentMainPlaceEn}
+                PresentMainPlaceMl={PresentMainPlaceMl}
+                setPresentMainPlaceMl={setPresentMainPlaceMl}
+                PresentLocalityNameEn={PresentLocalityNameEn}
+                setPresentLocalityNameEn={setPresentLocalityNameEn}
+                PresentLocalityNameMl={PresentLocalityNameMl}
+                setPresentLocalityNameMl={setPresentLocalityNameMl}
+                PresentStreetNameEn={PresentStreetNameEn}
+                setPresentStreetNameEn={setPresentStreetNameEn}
+                PresentStreetNameMl={PresentStreetNameMl}
+                setPresentStreetNameMl={setPresentStreetNameMl}
+                PresentCityEn={PresentCityEn}
+                setPresentCityEn={setPresentCityEn}
+                PresentCityMl={PresentCityMl}
+                setPresentCityMl={setPresentCityMl}
+                PresentVillage={PresentVillage}
+                setPresentVillage={setPresentVillage}
+                isPrsentAddress={isPrsentAddress}
+                setIsPrsentAddress={setIsPrsentAddress}
+                PermanentCountry={PermanentCountry}
+                setPermanentCountry={setPermanentCountry}
+                PermanentStateName={PermanentStateName}
+                setPermanentStateName={setPermanentStateName}
+                PermanentDistrict={PermanentDistrict}
+                setPermanentDistrict={setPermanentDistrict}
+                PermanentLBTypeName={PermanentLBTypeName}
+                setPermanentLBTypeName={setPermanentLBTypeName}
+                PermanentLBName={PermanentLBName}
+                setPermanentLBName={setPermanentLBName}
+                PermanentVillage={PermanentVillage}
+                setPermanentVillage={setPermanentVillage}
+                PermanentTaluk={PermanentTaluk}
+                setPermanentTaluk={setPermanentTaluk}
+                PermanentPostOffice={PermanentPostOffice}
+                setPermanentPostOffice={setPermanentPostOffice}
+                PermanentPincode={PermanentPincode}
+                setPermanentPincode={setPermanentPincode}
+                PermanentDoorNo={PermanentDoorNo}
+                setPermanentDoorNo={setPermanentDoorNo}
+                PermanentResNo={PermanentResNo}
+                setPermanentResNo={setPermanentResNo}
+                PermanentHouseNameEn={PermanentHouseNameEn}
+                setPermanentHouseNameEn={setPermanentHouseNameEn}
+                PermanentHouseNameMl={PermanentHouseNameMl}
+                setPermanentHouseNameMl={setPermanentHouseNameMl}
+                PermanentMainPlaceEn={PermanentMainPlaceEn}
+                setPermanentMainPlaceEn={setPermanentMainPlaceEn}
+                PermanentMainPlaceMl={PermanentMainPlaceMl}
+                setPermanentMainPlaceMl={setPermanentMainPlaceMl}
+                PermanentCityEn={PermanentCityEn}
+                setPermanentCityEn={setPermanentCityEn}
+                PermanentCityMl={PermanentCityMl}
+                setPermanentCityMl={setPermanentCityMl}
+                PermanentLocalityNameEn={PermanentLocalityNameEn}
+                setPermanentLocalityNameEn={setPermanentLocalityNameEn}
+                PermanentLocalityNameMl={PermanentLocalityNameMl}
+                setPermanentLocalityNameMl={setPermanentLocalityNameMl}
+                PermanentStreetNameEn={PermanentStreetNameEn}
+                setPermanentStreetNameEn={setPermanentStreetNameEn}
+                PermanentStreetNameMl={PermanentStreetNameMl}
+                setPermanentStreetNameMl={setPermanentStreetNameMl}
+              />
+            )}
+             {selectedOption === "IK" &&  (
+              <AdressInside
+                PresentCountry={PresentCountry}
+                setPresentCountry={setPresentCountry}
+                PresentStateName={PresentStateName}
+                setPresentStateName={setPresentStateName}
+                PresentDistrict={PresentDistrict}
+                setPresentDistrict={setPresentDistrict}
+                PresentLBTypeName={PresentLBTypeName}
+                setPresentLBTypeName={setPresentLBTypeName}
+                PresentLBName={PresentLBName}
+                setPresentLBName={setPresentLBName}
+                PresentTaluk={PresentTaluk}
+                setPresentTaluk={setPresentTaluk}
+                PresentPostOffice={PresentPostOffice}
+                setPresentPostOffice={setPresentPostOffice}
+                PresentPincode={PresentPincode}
+                setPresentPincode={setPresentPincode}
+                PresentHouseNameEn={PresentHouseNameEn}
+                setPresentHouseNameEn={setPresentHouseNameEn}
+                PresentHouseNameMl={PresentHouseNameMl}
+                setPresentHouseNameMl={setPresentHouseNameMl}
+                PresentDoorNo={PresentDoorNo}
+                setPresentDoorNo={setPresentDoorNo}
+                PresentResNo={PresentResNo}
+                setPresentResNo={setPresentResNo}
+                PresentMainPlaceEn={PresentMainPlaceEn}
+                setPresentMainPlaceEn={setPresentMainPlaceEn}
+                PresentMainPlaceMl={PresentMainPlaceMl}
+                setPresentMainPlaceMl={setPresentMainPlaceMl}
+                PresentLocalityNameEn={PresentLocalityNameEn}
+                setPresentLocalityNameEn={setPresentLocalityNameEn}
+                PresentLocalityNameMl={PresentLocalityNameMl}
+                setPresentLocalityNameMl={setPresentLocalityNameMl}
+                PresentStreetNameEn={PresentStreetNameEn}
+                setPresentStreetNameEn={setPresentStreetNameEn}
+                PresentStreetNameMl={PresentStreetNameMl}
+                setPresentStreetNameMl={setPresentStreetNameMl}
+                PresentCityEn={PresentCityEn}
+                setPresentCityEn={setPresentCityEn}
+                PresentCityMl={PresentCityMl}
+                setPresentCityMl={setPresentCityMl}
+                PresentVillage={PresentVillage}
+                setPresentVillage={setPresentVillage}
+                isPrsentAddress={isPrsentAddress}
+                setIsPrsentAddress={setIsPrsentAddress}
+                PermanentCountry={PermanentCountry}
+                setPermanentCountry={setPermanentCountry}
+                PermanentStateName={PermanentStateName}
+                setPermanentStateName={setPermanentStateName}
+                PermanentDistrict={PermanentDistrict}
+                setPermanentDistrict={setPermanentDistrict}
+                PermanentLBTypeName={PermanentLBTypeName}
+                setPermanentLBTypeName={setPermanentLBTypeName}
+                PermanentLBName={PermanentLBName}
+                setPermanentLBName={setPermanentLBName}
+                PermanentVillage={PermanentVillage}
+                setPermanentVillage={setPermanentVillage}
+                PermanentTaluk={PermanentTaluk}
+                setPermanentTaluk={setPermanentTaluk}
+                PermanentPostOffice={PermanentPostOffice}
+                setPermanentPostOffice={setPermanentPostOffice}
+                PermanentPincode={PermanentPincode}
+                setPermanentPincode={setPermanentPincode}
+                PermanentDoorNo={PermanentDoorNo}
+                setPermanentDoorNo={setPermanentDoorNo}
+                PermanentResNo={PermanentResNo}
+                setPermanentResNo={setPermanentResNo}
+                PermanentHouseNameEn={PermanentHouseNameEn}
+                setPermanentHouseNameEn={setPermanentHouseNameEn}
+                PermanentHouseNameMl={PermanentHouseNameMl}
+                setPermanentHouseNameMl={setPermanentHouseNameMl}
+                PermanentMainPlaceEn={PermanentMainPlaceEn}
+                setPermanentMainPlaceEn={setPermanentMainPlaceEn}
+                PermanentMainPlaceMl={PermanentMainPlaceMl}
+                setPermanentMainPlaceMl={setPermanentMainPlaceMl}
+                PermanentCityEn={PermanentCityEn}
+                setPermanentCityEn={setPermanentCityEn}
+                PermanentCityMl={PermanentCityMl}
+                setPermanentCityMl={setPermanentCityMl}
+                PermanentLocalityNameEn={PermanentLocalityNameEn}
+                setPermanentLocalityNameEn={setPermanentLocalityNameEn}
+                PermanentLocalityNameMl={PermanentLocalityNameMl}
+                setPermanentLocalityNameMl={setPermanentLocalityNameMl}
+                PermanentStreetNameEn={PermanentStreetNameEn}
+                setPermanentStreetNameEn={setPermanentStreetNameEn}
+                PermanentStreetNameMl={PermanentStreetNameMl}
+                setPermanentStreetNameMl={setPermanentStreetNameMl}
+              />
+            )}
+             {selectedOption === "IIN" &&  (
               <AdressInside
                 PresentCountry={PresentCountry}
                 setPresentCountry={setPresentCountry}
