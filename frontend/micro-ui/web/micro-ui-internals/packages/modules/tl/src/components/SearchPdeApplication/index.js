@@ -92,9 +92,14 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
             accessor: (row) => GetCell(row.tradeName),
         },
         {
-            Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+            Header: t("TL_LOCALIZATION_LICENSEE_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.ownersPde),
+            accessor: (row) => GetCell(row.tradeLicenseDetail.ownersPde.map(owner => owner.name+" ")),
+        },
+        {
+          Header: t("TL_DOOR_DETAILS"),
+          disableSortBy: true,
+          accessor: (row) => GetCell(row.tradeLicenseDetail.address.wardNo + " - " + row.tradeLicenseDetail.address.doorNo),
         },
         {
           Header: t("TL_LOCALIZATION_SECTOR"),
