@@ -203,7 +203,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     selected={setmaleDependent}
                     select={selectmaleDependent}
                     disabled={isEdit}
-                    placeholder={`${t("CR_MALE_DEPENDENT")}`}
+                    placeholder={`${t("CR_SPOUSE_TYPE")}`}
                   />
                 </div>
               </div>

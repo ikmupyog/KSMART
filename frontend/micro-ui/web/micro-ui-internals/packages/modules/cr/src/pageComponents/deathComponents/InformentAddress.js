@@ -1,22 +1,40 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, CheckBox } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn, setInformentNameEn,InformentNameMl, setInformentNameMl,
- AadhaarNo, setAadhaarNo, setSelectedDeclaration,InformentMobileNo, setInformentMobileNo,InformentEmail, setInformentEmail,isNoAadhaar, setIsNoAadhaar }) => {
+const InformentAddress = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  InformentNameEn,
+  setInformentNameEn,
+  InformentNameMl,
+  setInformentNameMl,
+  AadhaarNo,
+  setAadhaarNo,
+  setSelectedDeclaration,
+  InformentMobileNo,
+  setInformentMobileNo,
+  InformentEmail,
+  setInformentEmail,
+  isNoAadhaar,
+  setIsNoAadhaar,
+}) => {
   const stateId = Digit.ULBService.getStateId();
+  const [value, setValue] = useState(0);
   const [isChecked, setIsChecked] = useState(formData?.InformentAddress?.isChecked ? formData?.InformentAddress?.isChecked : false);
-//   const handleCheckboxChange = (event) => {
-//     setChecked((checked) => !checked); // toggle the checked state
-//     let newSelectedValues = [...selectedValues];
-//     if (event.target.checked) {
-//         newSelectedValues.push(event.target.value);
-//     } else {
-//         newSelectedValues = newSelectedValues.filter(value => value !== event.target.value);
-//     }
-//     setSelectedValues(newSelectedValues);
-// }
+  //   const handleCheckboxChange = (event) => {
+  //     setChecked((checked) => !checked); // toggle the checked state
+  //     let newSelectedValues = [...selectedValues];
+  //     if (event.target.checked) {
+  //         newSelectedValues.push(event.target.value);
+  //     } else {
+  //         newSelectedValues = newSelectedValues.filter(value => value !== event.target.value);
+  //     }
+  //     setSelectedValues(newSelectedValues);
+  // }
   const { t } = useTranslation();
   let validation = {};
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
@@ -31,7 +49,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
   // const [setVillage, setSelectedVillage] = useState(formData?.InformentAddress?.setVillage);
   // const [setTaluk, setSelectedTaluk] = useState(formData?.InformentAddress?.setTaluk);
   // const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict);
-  // const [StateName, setStateName] = useState(formData?.AddressDetails?.StateName); 
+  // const [StateName, setStateName] = useState(formData?.AddressDetails?.StateName);
   // const [BuildingNo, setBuildingNo] = useState(formData?.InformentAddress?.BuildingNo);
   // const [HouseNo, setHouseNo] = useState(formData?.InformentAddress?.HouseNo);
   // const [HouseNameEn, setHouseNameEn] = useState(formData?.InformentAddress?.HouseNameEn);
@@ -40,23 +58,23 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
   // const [StreetNameEn, setStreetNameEn] = useState(formData?.InformentAddress?.StreetNameEn);
   // const [Locality, setLocality] = useState(formData?.InformentAddress?.Locality);
   // const [LocalityMl, setLocalityMl] = useState(formData?.InformentAddress?.LocalityMl);
-  // const [MainPlaceEn, setMainPlaceEn] = useState(formData?.InformentAddress?.MainPlaceEn);  
+  // const [MainPlaceEn, setMainPlaceEn] = useState(formData?.InformentAddress?.MainPlaceEn);
   // const [MainPlaceMl, setMainPlaceMl] = useState(formData?.InformentAddress?.MainPlaceMl);
   // const [ViaEn, setViaEn] = useState(formData?.InformentAddress?.ViaEn);
   // const [ViaMl, setViaMl] = useState(formData?.InformentAddress?.ViaMl);
   // const [PinCode, setPinCode] = useState(formData?.InformentAddress?.PinCode);
   // const [setPostOffice, setSelectedPostOffice] = useState(formData?.InformentAddress?.setPostOffice);
   // const [PresentLBName, setPresentLBName] = useState(formData?.AddressDetails?.PresentLBName);
-   
-    // const [InformentAge, setInformentAge] = useState(formData?.InformentAddress?.InformentAge);
 
-    // Place of death Home and vehicle
+  // const [InformentAge, setInformentAge] = useState(formData?.InformentAddress?.InformentAge);
+
+  // Place of death Home and vehicle
   // const [InformentNameEn, setInformentNameEn] = useState(formData?.InformentAddress?.InformentNameEn);
   // const [InformentNameMl, setInformentNameMl] = useState(formData?.InformentAddress?.InformentNameMl);
-  // const [setTitle, setSelectedTitle] = useState(formData?.InformentAddress?.setTitle); 
+  // const [setTitle, setSelectedTitle] = useState(formData?.InformentAddress?.setTitle);
   // const [AadhaarNo, setAadhaarNo] = useState(formData?.InformentAddress?.AadhaarNo);
   // const [setDeclaration, setSelectedDeclaration] = useState(formData?.InformentAddress?.setDeclaration);
-  // const [InformentMobileNo, setInformentMobileNo] = useState(formData?.InformentAddress?.InformentMobileNo); 
+  // const [InformentMobileNo, setInformentMobileNo] = useState(formData?.InformentAddress?.InformentMobileNo);
   // const [InformentEmail, setInformentEmail] = useState(formData?.InformentAddress?.InformentEmail);
   // const [isNoAadhaar, setIsNoAadhaar] = useState(formData?.InformentAddress?.isNoAadhaar);
 
@@ -122,7 +140,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
   // function setSelectHouseNo(e) {
   //   setHouseNo(e.target.value);
   // }
-  
+
   // function setSelectLocality(e) {
   //   setLocality(e.target.value);
   // }
@@ -135,7 +153,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
   // function setSelectStreetNameEn(e) {
   //   setStreetNameEn(e.target.value);
   // }
-  
+
   // function setSelectMainPlaceEn(e) {
   //   setMainPlaceEn(e.target.value);
   // }
@@ -223,7 +241,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
     // sessionStorage.setItem("BuildingNo", BuildingNo);
     // sessionStorage.setItem("HouseNo", HouseNo);
     // sessionStorage.setItem("StreetNameEn", StreetNameEn);
-    // sessionStorage.setItem("StreetNameMl", StreetNameMl);    
+    // sessionStorage.setItem("StreetNameMl", StreetNameMl);
     // sessionStorage.setItem("HouseNameEn", HouseNameEn);
     // sessionStorage.setItem("HouseNameMl", HouseNameMl);
     // sessionStorage.setItem("Locality", Locality);
@@ -237,17 +255,14 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
     // sessionStorage.setItem("PresentLBName", null);
     // sessionStorage.setItem("InformentAge", InformentAge);
 
-
-
     // sessionStorage.setItem("InformentNameEn", InformentNameEn ? InformentNameEn:null);
-    // sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl:null); 
+    // sessionStorage.setItem("InformentNameMl", InformentNameMl ? InformentNameMl:null);
     // sessionStorage.setItem("setTitle", setTitle ? setTitle.code : null);
     // sessionStorage.setItem("isNoAadhaar", isNoAadhaar ? isNoAadhaar:null);
     // sessionStorage.setItem("AadhaarNo", AadhaarNo ? AadhaarNo : null);
     // sessionStorage.setItem("setDeclaration", setDeclaration ? setDeclaration.code : null);
     // sessionStorage.setItem("InformentMobileNo", InformentMobileNo ? InformentMobileNo :null );
     // sessionStorage.setItem("InformentEmail", InformentEmail ? InformentEmail :null);
-    
 
     onSelect(config.key, {
       // setVillage,
@@ -270,8 +285,6 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
       // setPostOffice,
       // PresentLBName,
       // InformentAge,
-
-
       // InformentNameEn,
       // InformentNameMl,
       // setTitle,
@@ -280,15 +293,13 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
       // setDeclaration,
       // InformentMobileNo,
       // InformentEmail,
-      
-      
     });
   };
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null} */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-      <div className="row">
+        <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMANT_DETAILS")}`}</span>
@@ -342,40 +353,51 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
               onChange={setSelectInformentNameMl}
               disable={isEdit}
               placeholder={`${t("CR_INFORMENT_NAME_Ml")}`}
-              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_FIRST_NAME_ML"),
+              })}
             />
           </div>
         </div>
 
         <div className="row">
           <div className="col-md-12">
-
-            <CheckBox label={t("CR_NO_AADHAAR")}   onChange={() => setIsChecked(!isChecked)} value={isChecked}  />
+            <CheckBox
+              label={t("CR_NO_AADHAAR")}
+              defaultChecked={isChecked}
+              defaultValue={value}
+              onChange={() => {
+                setIsChecked(!isChecked);
+                setValue(value === 0 ? 1 : 0);
+              }}
+            />
           </div>
         </div>
         <div className="row">
-        <div className="col-md-12">
-        <div style={{ pointerEvents: isChecked ? "none" : "all", opacity: isChecked ? 0.5 : 1 }}>
-        {isChecked ? null : (
-        <div className="col-md-3">
-            <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="AadhaarNo"
-              value={AadhaarNo}
-              onChange={setSelectAadhaarNo}
-              disable={isEdit}
-              placeholder={`${t("CS_COMMON_AADHAAR")}`}
-              {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-            />
-            
-          </div>
-        )}
-          </div>
-          {/* <div className="col-md-3">
+          <div className="col-md-12">
+            <div style={{ pointerEvents: isChecked ? "none" : "all", opacity: isChecked ? 0.5 : 1 }}>
+              {isChecked ? null : (
+                <div className="col-md-3">
+                  <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="AadhaarNo"
+                    value={AadhaarNo}
+                    onChange={setSelectAadhaarNo}
+                    disable={isEdit}
+                    placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
+              )}
+            </div>
+            {/* <div className="col-md-3">
             <CardLabel>{`${t("CR_DECLARATION")}`}</CardLabel>
             <Dropdown
               t={t}
@@ -397,22 +419,22 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
             disabled={isEdit} 
             />            
           </div> */}
-          <div className="col-md-3">
-            <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="InformentMobileNo"
-              value={InformentMobileNo}
-              onChange={setSelectInformentMobileNo}
-              disable={isEdit}
-              placeholder={`${t("CR_MOBILE_NO")}`}
-              {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
-            />
-          </div>
-          {/* <div className="col-md-3">
+            <div className="col-md-3">
+              <CardLabel>{t("CR_MOBILE_NO")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="InformentMobileNo"
+                value={InformentMobileNo}
+                onChange={setSelectInformentMobileNo}
+                disable={isEdit}
+                placeholder={`${t("CR_MOBILE_NO")}`}
+                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
+              />
+            </div>
+            {/* <div className="col-md-3">
             <CardLabel>{t("CR_AGE")}</CardLabel>
             <TextInput
               t={t}
@@ -427,7 +449,7 @@ const InformentAddress = ({ config, onSelect, userType, formData,InformentNameEn
               {...(validation = { pattern: "^([0-9]){3}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
             />
           </div> */}
-          <div className="col-md-3">
+            <div className="col-md-3">
               <CardLabel>{`${t("CR_EMAIL")}`}</CardLabel>
               <TextInput
                 t={t}

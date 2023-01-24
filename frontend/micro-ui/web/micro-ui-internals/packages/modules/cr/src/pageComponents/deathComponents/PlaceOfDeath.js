@@ -102,6 +102,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn] = useState(formData?.PlaceOfDeath?.InformantAdrsLocalityNameEn ? formData?.PlaceOfDeath?.InformantAdrsLocalityNameEn : "");
   const [InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn] = useState(formData?.PlaceOfDeath?.InformantAdrsStreetNameEn ? formData?.PlaceOfDeath?.InformantAdrsStreetNameEn : "");
   const [InformantAdrsVillage, setInformantAdrsVillage] = useState(formData?.PlaceOfDeath?.InformantAdrsVillage ? formData?.PlaceOfDeath?.InformantAdrsVillage : null);
+  
   // const [InfntWardNo, setInfntWardNo] = useState(formData.PlaceOfDeath?.InfntWardNo);
   const [selectedValues, setSelectedValues] = useState(formData ?. PlaceOfDeath?.selectedValues ? formData ?. PlaceOfDeath?.selectedValues : true);
 // Place of Death Other
