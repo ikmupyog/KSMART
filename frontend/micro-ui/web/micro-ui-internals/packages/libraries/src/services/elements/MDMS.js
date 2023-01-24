@@ -927,21 +927,21 @@ const getCROtherDeathPlacelist = (tenantId, moduleCode) => ({
     ],
   },
 });
-// const CRcauseOfSpouseTypelist = (tenantId, moduleCode) => ({
-//   details: {
-//     tenantId: tenantId,
-//     moduleDetails: [
-//       {
-//         moduleName: moduleCode,
-//         masterDetails: [
-//           {
-//             name: "SpouseType",
-//           },
-//         ],
-//       },
-//     ],
-//   },
-// });
+const getCRcauseOfSpouseTypelist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "SpouseType",
+          },
+        ],
+      },
+    ],
+  },
+});
 
 const getCRVillagelist = (tenantId, moduleCode) => ({
   details: {
@@ -2172,9 +2172,9 @@ export const MdmsService = {
   getCROtherDeathPlace: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCROtherDeathPlacelist(tenantId, moduleCode), moduleCode);
   },
-  // getCRcauseOfSpouseType: (tenantId, moduleCode) => {
-  //   return MdmsService.getDataByCriteria(tenantId, getCRcauseOfSpouseTypelist(tenantId, moduleCode), moduleCode);
-  // },
+  getCRcauseOfSpouseType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRcauseOfSpouseTypelist(tenantId, moduleCode), moduleCode);
+  },
     
   getCRVillage: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRVillagelist(tenantId, moduleCode), moduleCode);
