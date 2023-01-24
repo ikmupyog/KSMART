@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.ksmart.death.crdeath.web.models.CrDeathAddress;
+import org.ksmart.death.crdeath.web.models.CrDeathAddressInfo;
 import org.ksmart.death.crdeath.web.models.CrDeathDtl;
 import org.ksmart.death.crdeath.web.models.CrDeathDtlRequest;
 import org.ksmart.death.crdeath.web.models.CrDeathStatistical;
@@ -118,12 +119,25 @@ public class CrDeathRegistryRequestService {
             deathcertreading.setDeathACKNo(deathdet.getDeathACKNo());
             deathcertreading.setDeathApplicationNo(deathdet.getDeathApplicationNo());
             deathcertreading.setFileNo(deathdet.getFileNo());
-            deathcertreading.setStatisticalInfo(createRegistryStatisticalInfo(deathrequest));
+            if  (deathdet.getStatisticalInfo()!=null){
+                deathcertreading.setStatisticalInfo(createRegistryStatisticalInfo(deathrequest));
+            }
             CrDeathRegistryAddressInfo addressinfo=new CrDeathRegistryAddressInfo();
-            addressinfo.setPresentAddress(createRegistryPresentAddress(deathrequest));
-            addressinfo.setPermanentAddress(createRegistryPermanentAddress(deathrequest));
-            addressinfo.setDeathplaceAddress(createRegistryDeathPlaceAddress(deathrequest));
-            addressinfo.setInformantAddress(createRegistryInformantAddress(deathrequest));
+            CrDeathAddressInfo appAddressinfo = deathdet.getAddressInfo();
+            if (appAddressinfo.getPresentAddress()!=null){
+                addressinfo.setPresentAddress(createRegistryPresentAddress(deathrequest));
+            }
+            if (appAddressinfo.getPermanentAddress()!=null){
+                addressinfo.setPermanentAddress(createRegistryPermanentAddress(deathrequest));
+            }
+            if (appAddressinfo.getDeathplaceAddress()!=null){
+                addressinfo.setDeathplaceAddress(createRegistryDeathPlaceAddress(deathrequest));
+            }
+            if (appAddressinfo.getInformantAddress()!=null){
+
+                System.out.println("HI-INFORMANT"+addressinfo.getInformantAddress());
+                addressinfo.setInformantAddress(createRegistryInformantAddress(deathrequest));
+            }
             deathcertreading.setAddressInfo(addressinfo);
             deathRegistryDetails.add(deathcertreading);
         });
@@ -137,6 +151,7 @@ public class CrDeathRegistryRequestService {
     }
     public CrDeathRegistryStatistical createRegistryStatisticalInfo(CrDeathDtlRequest deathrequest){
 
+       
         CrDeathStatistical statisticalDtls = deathrequest.getDeathCertificateDtls().get(0).getStatisticalInfo();
         CrDeathRegistryStatistical registryStatisticalInfo = new CrDeathRegistryStatistical();
         registryStatisticalInfo.setResidenceLocalBody(statisticalDtls.getResidenceLocalBody());
@@ -163,12 +178,14 @@ public class CrDeathRegistryRequestService {
         registryStatisticalInfo.setArecanutNumYears(statisticalDtls.getArecanutNumYears()); 
         registryStatisticalInfo.setAlcoholNumYears(statisticalDtls.getAlcoholNumYears());
         return registryStatisticalInfo;
+        
     }
     public CrDeathRegistryAddress createRegistryPresentAddress(CrDeathDtlRequest deathrequest){
 
         CrDeathAddress presentAddress = deathrequest.getDeathCertificateDtls().get(0).getAddressInfo().getPresentAddress();
         System.out.println("presentAddress"+presentAddress);
         CrDeathRegistryAddress registryPresentAddress = new CrDeathRegistryAddress();
+        registryPresentAddress.setTenantId(presentAddress.getTenantId());
         registryPresentAddress.setAddrTypeId(presentAddress.getAddrTypeId());
         registryPresentAddress.setHouseNo(presentAddress.getHouseNo());
         registryPresentAddress.setResidenceAsscNo(presentAddress.getResidenceAsscNo());
@@ -200,8 +217,9 @@ public class CrDeathRegistryRequestService {
 
     public CrDeathRegistryAddress createRegistryPermanentAddress(CrDeathDtlRequest deathrequest){
 
-        CrDeathAddress permanentAddress = deathrequest.getDeathCertificateDtls().get(0).getAddressInfo().getPresentAddress();
+        CrDeathAddress permanentAddress = deathrequest.getDeathCertificateDtls().get(0).getAddressInfo().getPermanentAddress();
         CrDeathRegistryAddress registryPermanentAddress = new CrDeathRegistryAddress();
+        registryPermanentAddress.setTenantId(permanentAddress.getTenantId());
         registryPermanentAddress.setAddrTypeId(permanentAddress.getAddrTypeId());
         registryPermanentAddress.setHouseNo(permanentAddress.getHouseNo());
         registryPermanentAddress.setResidenceAsscNo(permanentAddress.getResidenceAsscNo());
@@ -235,6 +253,7 @@ public class CrDeathRegistryRequestService {
 
         CrDeathAddress deathplaceAddress = deathrequest.getDeathCertificateDtls().get(0).getAddressInfo().getDeathplaceAddress();
         CrDeathRegistryAddress registryDeathPlaceAddress = new CrDeathRegistryAddress();
+        registryDeathPlaceAddress.setTenantId(deathplaceAddress.getTenantId());
         registryDeathPlaceAddress.setAddrTypeId(deathplaceAddress.getAddrTypeId());
         registryDeathPlaceAddress.setHouseNo(deathplaceAddress.getHouseNo());
         registryDeathPlaceAddress.setResidenceAsscNo(deathplaceAddress.getResidenceAsscNo());
@@ -267,6 +286,7 @@ public class CrDeathRegistryRequestService {
 
         CrDeathAddress informantAddress = deathrequest.getDeathCertificateDtls().get(0).getAddressInfo().getInformantAddress();
         CrDeathRegistryAddress registryInformantAddress = new CrDeathRegistryAddress();
+        registryInformantAddress.setTenantId(informantAddress.getTenantId());
         registryInformantAddress.setAddrTypeId(informantAddress.getAddrTypeId());
         registryInformantAddress.setHouseNo(informantAddress.getHouseNo());
         registryInformantAddress.setResidenceAsscNo(informantAddress.getResidenceAsscNo());

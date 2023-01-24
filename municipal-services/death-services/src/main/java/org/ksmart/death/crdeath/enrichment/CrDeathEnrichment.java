@@ -194,7 +194,7 @@ public class CrDeathEnrichment implements BaseEnrichment{
                     lbTypeCode=CrDeathConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
                 }
                 //end
-
+                System.out.println("ackNo"+ackNoDetails);
                 if (ackNoDetails.size()>=1) {
                     //Ackno new format decision by Domain team created by Rakhi S                       
                     ackNo=String.valueOf(CrDeathConstants.ACK_NUMBER_CAPTION+"-"+ackNoDetails.get(0).get("ackno"))+"-"+String.valueOf(Year)+"-"+deathdtls.getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+CrDeathConstants.STATE_CODE.toString();

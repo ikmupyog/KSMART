@@ -703,7 +703,7 @@ serviceMaps:
           burial_district = ?,burial_lbtype = ?, burial_lbname = ?, burial_state = ?, vehicle_first_halt = ?, 
           male_dependent_unavailable = ?, female_dependent_unavailable = ? , workflowcode = ?,businessservice = ?,action = ?,comment = ?,assignee = ? ,
           spouse_name_en = ? ,spouse_name_ml = ?,spouse_unavailable = ? ,spouse_type = ?,spouse_emailid = ?,spouse_aadhaar = ?,spouse_mobileno = ?, 
-          funcion_uid = ?,ack_no_id = ?, application_date = ? where  ack_no = ?
+          funcion_uid = ?, application_date = ? where  ack_no = ?
       #where id = ?
       # registrationunit = ?, tenantid = ?,application_no = ?, file_no = ?, submitted_on = ?,
       # death_place = ?, death_place_inst_type = ?, death_place_inst_id = ?,registration_no = ?,ack_no = ?
@@ -907,8 +907,6 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.funcionUID
 
-      - jsonPath: $.deathCertificateDtls.*.ackNoId
-
       - jsonPath: $.deathCertificateDtls.*.applicationDate
 
       - jsonPath: $.deathCertificateDtls.*.deathACKNo
@@ -928,7 +926,7 @@ serviceMaps:
     - query: UPDATE public.eg_death_statistical_dtls  SET residencelocalbody = ?, residence_place_type = ?, residencedistrict = ?, residencestate = ?, religion = ?,
            religion_other = ?, occupation = ?, occupation_other = ?, medical_attention_type = ?, death_medically_certified = ?, death_cause_main = ?, death_cause_sub = ?, 
            death_cause_other = ?, death_during_delivery = ?, smoking_num_years = ?, tobacco_num_years = ?, arecanut_num_years = ?, alcohol_num_years = ?, 
-           lastmodifiedby = ?, lastmodifiedtime = ? ,nationality = ?, occupation_sub = ?, occupation_minor = ?, education_main = ?, education_sub = ?, residencelbtype  = ?, 
+           lastmodifiedby = ?, lastmodifiedtime = ? ,nationality = ?, occupation_sub = ?, occupation_minor = ?, education_main = ?, education_sub = ?, residencelbtype  = ? ,
            smoking_type = ?,tobacco_type = ?,arecanut_type = ?,alcohol_type = ? WHERE death_dtl_id = ?
      
       basePath: deathCertificateDtls.*.statisticalInfo
