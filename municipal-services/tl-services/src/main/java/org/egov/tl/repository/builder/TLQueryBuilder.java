@@ -118,7 +118,7 @@ public class TLQueryBuilder {
             +
             " tlstructplace.id as tlstructplace_id, tlstructplace.doorno as tlstructplace_doorno, tlstructplace.doorsub as doorsub,"
             +
-            " tlstructplace.vehicleno as stallno, tlstructplace.active as tlstructplace_active, tltax.id as tltax_id, tltax.active as tltax_active, "
+            " tlstructplace.stallno as stallno, tlstructplace.active as tlstructplace_active, tltax.id as tltax_id, tltax.active as tltax_active, "
             +
             " tltax.service, tltax.fromyear, tltax.fromperiod, tltax.toyear, tltax.toperiod, tltax.headcode, tltax.amount,firsthalfcur,secondhalfcur "
             +
