@@ -457,7 +457,7 @@ public class TLQueryBuilder {
 
         if (criteria.getOwnerName() != null) {
             addClauseIfRequired(preparedStmtList, builder);
-            builder.append("  eg_tl_owner_pde.ownername LIKE ? ");
+            builder.append("  LOWER(tlowner.ownername) LIKE LOWER(?) ");
             preparedStmtList.add(criteria.getOwnerName().split("\\.")[0] + "%");
         }
 
