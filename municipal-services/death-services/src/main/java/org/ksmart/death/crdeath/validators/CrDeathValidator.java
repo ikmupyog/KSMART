@@ -92,7 +92,11 @@ public class CrDeathValidator {
                     throw new CustomException("DECEASED AGE INVALID", "The deceased  age" +
                     deathdtls.getAge()+ " is invalid");
                 }
-                
+                if(StringUtils.isEmpty(deathdtls.getAgeUnit()) ){
+                    throw new CustomException("DECEASED AGE UNIT INVALID", "The deceased  age unit" +
+                    deathdtls.getAgeUnit()+ " is invalid");
+                }
+
                 if(deathdtls.getMaleDependentUnavailable().equals(CrDeathConstants.VALUE_FALSE)){
 
                     if(StringUtils.isEmpty(deathdtls.getMaleDependentNameEn()) || StringUtils.isEmpty(deathdtls.getMaleDependentNameMl()) ){
