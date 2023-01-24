@@ -156,7 +156,7 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
         }
     }
     function setSelectFatherEmail(e) {
-        if (e.target.value.length === 21) {
+        if (e.target.value.length === 51) {
             return false;
             // window.alert("Username shouldn't exceed 10 characters")
         } else {
@@ -221,7 +221,6 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
             setIsFatherInfo(e.target.checked);
         }
     }
-    // console.log(cmbNation);
     let validFlag = true;
     const goNext = () => {
         if (isFatherInfo === false) {
@@ -240,7 +239,6 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                 }
             }
             if (FatherMobile != null || FatherMobile != '' || FatherMobile != undefined) {
-                console.log(FatherMobile);
                 if (FatherMobileError) {
                     validFlag = false;
                     setFatherMobileError(true);
@@ -254,7 +252,6 @@ const FatherInformation = ({ config, onSelect, userType, formData }) => {
                     setFatherMobileError(false);
                 }
                 if (FatherFirstNameEn != null || FatherFirstNameEn != '' || FatherFirstNameEn != undefined) {
-                    console.log(FatherFirstNameEn);
                     if (FatherFirstNmeEnError) {
                         validFlag = false;
                         setFatherFirstNmeEnError(true);

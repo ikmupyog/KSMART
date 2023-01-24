@@ -490,18 +490,18 @@ export const newConfig = [
         hideInEmployee: false,
       },
       {
-        route: "present-address",
-        component: "AddressPresent",
+        route: "address-inside-india",
+        component: "AddressInsideIndia",
         texts: {
           headerCaption: "",
-          header: "Present Address",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },
         withoutLabel: true,
-        key: "AddressPresentDetails",
-        nextStep: "address-same-as-above",
+        key: "AddressInsideIndiaDetails",
+        nextStep: "statistical-information",
         type: "component",
         hideInEmployee: false,
       },
@@ -767,6 +767,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_LEGAL_INFORMATION",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
         },
@@ -782,6 +783,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -799,6 +801,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_ADDRESS_DECESED",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -814,6 +817,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_FAMILY_INFO",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -831,6 +835,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH_HOME",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -847,6 +852,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH_HOSPITAL",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -863,6 +869,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH_INSTITUTION",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -879,6 +886,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH_OTHER",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -895,6 +903,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH_VECHICLE",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -911,6 +920,7 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_INFORMANT_ADDRESS",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -943,13 +953,14 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_STATISTICAL_INFORMATION_CONTINUE",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },
         withoutLabel: true,
         key: "StatisticalInfoContinue",
-        nextStep: "applicant-details",
+        nextStep: "general-remarks",
         type: "component",
         hideInEmployee: true,
       },
@@ -959,13 +970,14 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_APPLICANT_DETAILS",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },
         withoutLabel: true,
         key: "ApplicantDetails",
-        nextStep: "general-remarks",
+        nextStep: "",
         type: "component",
         hideInEmployee: true,
       },      
@@ -976,7 +988,8 @@ export const newConfig = [
         texts: {
           headerCaption: "",
           // header: "CR_GENERAL_REMARKS",
-          cardText: "",
+          header: "",
+          cardText: "",          
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },

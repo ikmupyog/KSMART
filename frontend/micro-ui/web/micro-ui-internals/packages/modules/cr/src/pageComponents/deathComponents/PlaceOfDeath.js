@@ -19,6 +19,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMaster");
+  // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [PlaceOfDeath, selectPlaceOfDeath] = useState(formData?.PlaceOfDeath?.PlaceOfDeath);
   const [value, setValue] = useState();
