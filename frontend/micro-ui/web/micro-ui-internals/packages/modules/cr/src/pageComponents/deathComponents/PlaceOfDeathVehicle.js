@@ -18,7 +18,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [TradeName, setTradeName] = useState(null);
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-
+  const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
+  
   // const [DriverName, setDriverName] = useState(formData?.PlaceOfDeathVehicle?.DriverName);
   // const [DriverNameMl, setDriverNameMl] = useState(formData?.PlaceOfDeathVehicle?.DriverNameMl);
   // const [DriverMobileNo, setDriverMobileNo] = useState(formData?.PlaceOfDeathVehicle?.DriverMobileNo);
@@ -40,8 +41,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
   // const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsMl); 
   // const [PlaceOfHalt, setPlaceOfHalt] = useState(formData?.PlaceOfDeathVehicle?.setSelectPlaceOfHalt);  
   // const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalEn);
-  // const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeathVehiclPlaceOfHalte?.setAdmittedHospitalMl);
-    
+  // const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalMl);
+   
   // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   // let cmbPlace = [];
@@ -63,8 +64,13 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
       LBType["common-masters"].LBType.map((ob) => {
         cmbLBType.push(ob);
       });
-
-    
+      let cmbVehicle = [];
+      Vehicle &&
+      Vehicle["birth-death-service"] &&
+      Vehicle["birth-death-service"].VehicleType.map((ob) => {
+        cmbVehicle.push(ob);
+        });
+      
   const onSkip = () => onSelect();
 
   // function selectPlaceofactivity(value) {
@@ -133,7 +139,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
     setSelectedAdmittedHospitalEn(value);
   }
   function selectVehicleType(value) {
-    setSelectedVehicleType(value);
+    setSelectedVehicleType(value);    
   }
   
   function selectAdmittedHospitalMl(value) {
@@ -249,17 +255,18 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
         <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}</CardLabel>
         <Dropdown
                 t={t}
-                optionKey="hospitalName"
+                optionKey="name"
                 isMandatory={false}
-                option={cmbhospital}
+                option={cmbVehicle}
                 selected={setVehicleType}
                 select={selectVehicleType}
                 disabled={isEdit}
                 placeholder={`${t("CR_VEHICLE_TYPE")}`}
             />
         </div>
+       
     <div className="col-md-3" > 
-        <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}</CardLabel>
+        <CardLabel>{`${t("CR_VEHICLE_OTHER")}`}</CardLabel>
             <TextInput       
                 t={t}
                 isMandatory={false}
@@ -269,10 +276,11 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
                 value={VehicleTypeOther}
                 onChange={setSelectVehicleTypeOther}
                 disable={isEdit}
-                placeholder={`${t("CR_VEHICLE_TYPE")}`}
+                placeholder={`${t("CR_VEHICLE_OTHER")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TYPE") })}
             />
         </div>
+       
        </div> 
     </div> 
       <div className="row">    
