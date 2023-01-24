@@ -19,6 +19,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMaster");
+  // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
   const [PlaceOfDeath, selectPlaceOfDeath] = useState(formData?.PlaceOfDeath?.PlaceOfDeath);
   const [value, setValue] = useState();
@@ -102,6 +103,7 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const [InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn] = useState(formData?.PlaceOfDeath?.InformantAdrsLocalityNameEn ? formData?.PlaceOfDeath?.InformantAdrsLocalityNameEn : "");
   const [InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn] = useState(formData?.PlaceOfDeath?.InformantAdrsStreetNameEn ? formData?.PlaceOfDeath?.InformantAdrsStreetNameEn : "");
   const [InformantAdrsVillage, setInformantAdrsVillage] = useState(formData?.PlaceOfDeath?.InformantAdrsVillage ? formData?.PlaceOfDeath?.InformantAdrsVillage : null);
+  
   // const [InfntWardNo, setInfntWardNo] = useState(formData.PlaceOfDeath?.InfntWardNo);
   const [selectedValues, setSelectedValues] = useState(formData ?. PlaceOfDeath?.selectedValues ? formData ?. PlaceOfDeath?.selectedValues : true);
 // Place of Death Other

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Submenu from "./Submenu";
 import BirthCertificate from "./BirthCertificate";
 import CreateTradeLicence from "../Create";
-
+import Certifiicate from "./BirthCertificate"
 const SubDashboard = ({ parentUrl }) => {
   const { path } = useRouteMatch();
   const history = useHistory();
@@ -19,6 +19,8 @@ const onNext=()=>{
         <Route path={`${path}`} exact>
           <BirthCertificate parentUrl={path} handleNext={onNext}/>
         </Route>
+                <PrivateRoute parentRoute={path} path={`${path}/birthcertificate`} component={() => <Certifiicate parentUrl={path} handleNext={onNext}/>} />
+
         {/* <PrivateRoute parentRoute={path} path={`${path}/sub-type`} component={() => <SubType parentUrl={path} handleNext={onNext}/>} /> */}
         <React.Fragment>
         <BackButton>Back</BackButton>

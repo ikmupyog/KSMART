@@ -18,7 +18,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [TradeName, setTradeName] = useState(null);
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-
+  const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
+  
   // const [DriverName, setDriverName] = useState(formData?.PlaceOfDeathVehicle?.DriverName);
   // const [DriverNameMl, setDriverNameMl] = useState(formData?.PlaceOfDeathVehicle?.DriverNameMl);
   // const [DriverMobileNo, setDriverMobileNo] = useState(formData?.PlaceOfDeathVehicle?.DriverMobileNo);
@@ -30,6 +31,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
   // To Place of Death page
   // const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.PlaceOfDeathVehicle?.VehicleRegistrationNo);
   // const [DriverLicenceNo, setDriverLicenceNo] = useState(formData?.PlaceOfDeathVehicle?.DriverLicenceNo);
+  const [VehicleTypeOther, setVehicleTypeOther] = useState(formData?.PlaceOfDeathVehicle?.VehicleTypeOther);
+  const [setVehicleType, setSelectedVehicleType] = useState(formData?.PlaceOfDeathVehicle?.setVehicleType);
   // const [VehicleFromEn, setVehicleFromEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleFromEn);
   // const [VehicleToEn, setVehicleToEn] = useState(formData?.PlaceOfDeathVehicle?.VehicleToEn);
   // const [VehicleFromMl, setVehicleFromMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleFromMl);
@@ -38,8 +41,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
   // const [VehicleOtherDetailsMl, setVehicleOtherDetailsMl] = useState(formData?.PlaceOfDeathVehicle?.VehicleOtherDetailsMl); 
   // const [PlaceOfHalt, setPlaceOfHalt] = useState(formData?.PlaceOfDeathVehicle?.setSelectPlaceOfHalt);  
   // const [setAdmittedHospitalEn, setSelectedAdmittedHospitalEn] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalEn);
-  // const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeathVehiclPlaceOfHalte?.setAdmittedHospitalMl);
-    
+  // const [setAdmittedHospitalMl, setSelectedAdmittedHospitalMl] = useState(formData?.PlaceOfDeathVehicle?.setAdmittedHospitalMl);
+   
   // const [CommencementDate, setCommencementDate] = useState();
   let naturetypecmbvalue = null;
   // let cmbPlace = [];
@@ -61,8 +64,13 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
       LBType["common-masters"].LBType.map((ob) => {
         cmbLBType.push(ob);
       });
-
-    
+      let cmbVehicle = [];
+      Vehicle &&
+      Vehicle["birth-death-service"] &&
+      Vehicle["birth-death-service"].VehicleType.map((ob) => {
+        cmbVehicle.push(ob);
+        });
+      
   const onSkip = () => onSelect();
 
   // function selectPlaceofactivity(value) {
@@ -98,6 +106,9 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
   function setSelectDriverLicenceNo (e) {
     setDriverLicenceNo(e.target.value);
   }
+  function setSelectVehicleTypeOther (e) {
+    setVehicleTypeOther(e.target.value);
+  } 
   
   function setSelectVehicleFromEn(e) {
     setVehicleFromEn(e.target.value);
@@ -127,6 +138,10 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
   function selectAdmittedHospitalEn(value) {
     setSelectedAdmittedHospitalEn(value);
   }
+  function selectVehicleType(value) {
+    setSelectedVehicleType(value);    
+  }
+  
   function selectAdmittedHospitalMl(value) {
     setSelectedAdmittedHospitalMl(value);
   }
@@ -149,7 +164,10 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
       // To Place of Death page
 
     // sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo);
-    // sessionStorage.setItem("DriverLicenceNo", DriverLicenceNo);    
+    // sessionStorage.setItem("DriverLicenceNo", DriverLicenceNo);   
+    sessionStorage.setItem("VehicleTypeOther", VehicleTypeOther);
+    sessionStorage.setItem("setVehicleType", setVehicleType.code);
+    
     // sessionStorage.setItem("VehicleFromEn", VehicleFromEn);  
     // sessionStorage.setItem("VehicleToEn", VehicleToEn);
     // sessionStorage.setItem("VehicleFromMl", VehicleFromMl);  
@@ -175,6 +193,8 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
          
       // VehicleRegistrationNo,
       // DriverLicenceNo,
+      VehicleTypeOther,
+      setVehicleType,
       // VehicleFromEn,
       // VehicleToEn,
       // VehicleFromMl,
@@ -201,7 +221,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
     </div>
     <div className="row">    
        <div className="col-md-12" >         
-       <div className="col-md-6" > 
+       <div className="col-md-3" > 
         <CardLabel>{`${t("CR_VEHICLE_REGISTRATION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput       
                 t={t}
@@ -216,7 +236,7 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
             />
         </div>
-        <div className="col-md-6" > 
+        <div className="col-md-3" > 
         <CardLabel>{`${t("CR_DRIVER_LICENCE_NO")}`}</CardLabel>
             <TextInput       
                 t={t}
@@ -231,10 +251,39 @@ const PlaceOfDeathVehicle = ({ config, onSelect, userType, formData,VehicleRegis
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LICENCE_NO") })}
             />
         </div>
+        <div className="col-md-3" > 
+        <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}</CardLabel>
+        <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbVehicle}
+                selected={setVehicleType}
+                select={selectVehicleType}
+                disabled={isEdit}
+                placeholder={`${t("CR_VEHICLE_TYPE")}`}
+            />
+        </div>
+       
+    <div className="col-md-3" > 
+        <CardLabel>{`${t("CR_VEHICLE_OTHER")}`}</CardLabel>
+            <TextInput       
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="VehicleTypeOther"
+                value={VehicleTypeOther}
+                onChange={setSelectVehicleTypeOther}
+                disable={isEdit}
+                placeholder={`${t("CR_VEHICLE_OTHER")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TYPE") })}
+            />
+        </div>
+       
        </div> 
     </div> 
-
-    <div className="row">    
+      <div className="row">    
        <div className="col-md-12" >         
         <div className="col-md-3" > 
         <CardLabel>{`${t("CR_VEHICLE_FROM_EN")}`}<span className="mandatorycss">*</span></CardLabel>

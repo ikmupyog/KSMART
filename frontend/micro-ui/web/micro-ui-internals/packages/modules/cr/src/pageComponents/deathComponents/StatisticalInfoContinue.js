@@ -148,9 +148,11 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   };
   const { t } = useTranslation();
   let validation = {};
-  const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
+  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: attention = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MedicalAttentionType");
   const { data: deathmain = {}, isLoadingA } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCause");
+  const { data: deathsub = {}, isLoadingsub } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
+  
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setMedicalAttentionDeath, setSelectedMedicalAttentionDeath] = useState(formData?.StatisticalInfoContinue?.setMedicalAttentionDeath);
@@ -187,6 +189,12 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     deathmain["birth-death-service"].DeathCause.map((ob) => {
       cmbDeathmain.push(ob);
     });
+    let cmbDeathsub = [];
+  deathsub &&
+  deathsub["birth-death-service"] &&
+  deathsub["birth-death-service"].DeathCauseSub.map((ob) => {
+    cmbDeathsub.push(ob);
+    }); 
 
   const onSkip = () => onSelect();
   function selectisSmoke(value) {
@@ -274,9 +282,16 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1"> 
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DEATH_MORE_INFO")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -302,7 +317,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 selected={setDeathMedicallyCertified}
                 select={selectDeathMedicallyCertified}
                 disabled={isEdit}
-                placeholder={`${t(" ")}`}
+                placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
               />
             </div>
           </div>
@@ -319,7 +334,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 selected={setCauseOfDeathMain}
                 select={selectCauseOfDeathMain}
                 disabled={isEdit}
-                placeholder={`${t(" ")}`}
+                placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
               />
             </div>
             <div className="col-md-6">
@@ -328,11 +343,11 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={cmbDeathmain}
+                option={cmbDeathsub}
                 selected={setCauseOfDeathSub}
                 select={selectCauseOfDeathSub}
                 disabled={isEdit}
-                placeholder={`${t(" ")}`}
+                placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}`}
               />
             </div>
           </div>
@@ -411,7 +426,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"text"}
+                    type={"number"}
                     // optionKey="i18nKey"
                     name="textSmoke"
                     value={textSmoke}
@@ -436,13 +451,13 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   handleChange={handleRadioChangeTabacco}
                 />
                 {isTabacco === "1" && (
-                  <div className="col-md-3">
+                  <div className="col-md-4">
                     <CardLabel>{t("CR_YEAR")}</CardLabel>
                     {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"text"}
+                      type={"number"}
                       // optionKey="i18nKey"
                       name="textTabacco"
                       value={textTabacco}
@@ -476,7 +491,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"text"}
+                    type={"number"}
                     // optionKey="i18nKey"
                     name="textPanMasala"
                     value={textPanMasala}
@@ -506,7 +521,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"text"}
+                    type={"number"}
                     // optionKey="i18nKey"
                     name="text"
                     value={text}

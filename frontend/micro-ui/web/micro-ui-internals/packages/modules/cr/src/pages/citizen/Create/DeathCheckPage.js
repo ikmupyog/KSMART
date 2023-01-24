@@ -4,6 +4,7 @@ import {
   CardSubHeader,
   CardText,
   CitizenInfoLabel,
+  CheckBox,
   LinkButton,
   StatusTable,
   SubmitBar,
@@ -44,7 +45,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { InformationDeath, FamilyInformationDeath, PlaceOfDeathHome, PlaceOfDeath } = value;
+  const { InformationDeath, FamilyInformationDeath, AddressOfDecesed, PlaceOfDeath } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -70,7 +71,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
-        <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("Death Registration Summary")}</label>
+        {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_DEATH_SUMMARY")}</label> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -81,24 +82,69 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
         <StatusTable>
           <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_DEATH_DATE")}`}</CardLabel>
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_NAME_OF_DECEASED")}`}</CardLabel>
+              <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.FirstName)}</CardText>
+              </div>
             </div>
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
+              <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.Gender.value)}</CardText>
+              </div>
             </div>
           </div>
           <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(PlaceOfDeath.PlaceOfDeath.code)}</CardText>
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_PLACE_OF_DEATH")}`}</CardLabel>
+              <div className="col-md-6">
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(PlaceOfDeath.PlaceOfDeath.code)}</CardText>
+              </div>
             </div>
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_AGE_OF_BIRTH")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.Ageofbirth)}</CardText>
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_DEATH")}`}</CardLabel>
+              <div className="col-md-6">
+                <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.DeathDate)}</CardText>
+              </div>
             </div>
           </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_NAME_OF_MOTHER")}`}</CardLabel>
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FamilyInformationDeath.MotherNameEn)}</CardText>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_NAME_OF_FATHER")}`}</CardLabel>
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(FamilyInformationDeath.FatherOrHusbandNameEN)}</CardText>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_ADDRESS_DECESED")}`}</CardLabel>
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(AddressOfDecesed.PresentHouseNameEn)}</CardText>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOUSE_NAME_EN_PERMANENT")}`}</CardLabel>
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(AddressOfDecesed.PermanentHouseNameEn)}</CardText>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CheckBox label={t("ALL_ABOVE_DETAILS")}
+              //  onChange={() => setChecked((checked) => !checked)} value={checked}
+                />
+            </div>
+          </div>
+        </div>
           {/* <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
