@@ -4,8 +4,7 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInstitution,setSelectedInstitution,setInstitutionId,setSelectedInstitutionId,
-  SiginedOfficer,setSiginedOfficer,SiginedOfficerDesignation,setSiginedOfficerDesignation,InstitutionMobilNo,setInstitutionMobilNo,
-  InstitutionAadhaar,setInstitutionAadhaar}) => {
+  InstitutionMobilNo,setInstitutionMobilNo,  InstitutionAadhaar,setInstitutionAadhaar,SiginedOfficer, setSelectedSiginedOfficer,SiginedOfficerDesignation, setSelectedSiginedOfficerDesignation}) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -15,7 +14,10 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
   const { data: institutionid = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [setInstitution, setSelectedInstitution] = useState(formData?.PlaceOfDeathInstitution?.setInstitution);
-  // const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.PlaceOfDeathInstitution?.setInstitutionId);   
+  // const [setInstitutionId, setSelectedInstitutionId] = useState(formData?.PlaceOfDeathInstitution?.setInstitutionId); 
+    //  const [SiginedOfficer, setSelectedSiginedOfficer] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficer); 
+    //  const [SiginedOfficerDesignation, setSelectedSiginedOfficerDesignation] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficerDesignation); 
+   
   // const [SiginedOfficer, setSiginedOfficer] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficer);
   // const [SiginedOfficerDesignation, setSiginedOfficerDesignation] = useState(formData?.PlaceOfDeathInstitution?.SiginedOfficerDesignation);
   // const [InstitutionMobilNo, setInstitutionMobilNo] = useState(formData?.PlaceOfDeathInstitution?.InstitutionMobilNo);
@@ -43,14 +45,21 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
   }
   function selectInstitutionId(value) {
     setSelectedInstitutionId(value);
-  }  
+  } 
+  function setSelectSiginedOfficer(value) {
+    setSelectedSiginedOfficer(value);
+  } 
+  function setSelectSiginedOfficerDesignation(value) {
+    setSelectedSiginedOfficerDesignation(value);
+  }   
   
-  function setSelectSiginedOfficer(e) {
-    setSiginedOfficer(e.target.value);
-  }
-  function  setSelectSiginedOfficerDesignation(e) {
-    setSiginedOfficerDesignation(e.target.value);
-  }
+  
+  // function setSelectSiginedOfficer(e) {
+  //   setSiginedOfficer(e.target.value);
+  // }
+  // function  setSelectSiginedOfficerDesignation(e) {
+  //   setSiginedOfficerDesignation(e.target.value);
+  // }
   function  setSelectInstitutionMobilNo(e) {
     setInstitutionMobilNo(e.target.value);
   }
@@ -61,6 +70,9 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
   const goNext = () => {
     // sessionStorage.setItem("setInstitution", setInstitution.code);
     // sessionStorage.setItem("setInstitutionId", setInstitutionId.code);
+            // sessionStorage.setItem("SiginedOfficer", SiginedOfficer.code);
+            // sessionStorage.setItem("SiginedOfficerDesignation", SiginedOfficerDesignation.code);
+    
     // sessionStorage.setItem("setSiginedOfficer", SiginedOfficer);
     // sessionStorage.setItem("setSiginedOfficerDesignation", SiginedOfficerDesignation);
     // sessionStorage.setItem("setInstitutionMobilNo", InstitutionMobilNo);
@@ -68,6 +80,8 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
     // onSelect(config.key, { 
     //   setInstitution,
     //   setInstitutionId,
+    // SiginedOfficer,
+    // SiginedOfficerDesignation
     //   SiginedOfficer,
     //   SiginedOfficerDesignation,
     //   InstitutionMobilNo,
@@ -88,7 +102,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
         </div>
         <div className="row">
         <div className="col-md-12">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
@@ -101,7 +115,7 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
               placeholder={`${t("CR_INSTITUTION_TYPE")}`}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <CardLabel>{`${t("CR_INSTITUTION_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
@@ -114,41 +128,39 @@ const PlaceOfDeathInstitution = ({ config, onSelect, userType, formData,setInsti
               placeholder={`${t("CR_INSTITUTION_NAME")}`}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <CardLabel>{`${t("CR_SIGNED_OFFICER")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput
+            <Dropdown
               t={t}
+              optionKey="name"
               isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="SiginedOfficer"
-              value={SiginedOfficer}
-              onChange={setSelectSiginedOfficer}
-              disable={isEdit}
+              option={cmbInstitutionId}
+              selected={SiginedOfficer}
+              select={setSelectSiginedOfficer}
+              disabled={isEdit}
               placeholder={`${t("CR_SIGNED_OFFICER")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
-            />
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_NAME") })}
+              />  
+          </div>
+          <div className="col-md-3">
+            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
+            <Dropdown
+              optionKey="name"
+              isMandatory={false}
+              option={cmbInstitutionId}
+              selected={SiginedOfficerDesignation}
+              select={setSelectSiginedOfficerDesignation}
+              disabled={isEdit}
+              placeholder={`${t("CR_SIGNED_OFFICER")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
+              />
           </div>
         </div>
         </div>
         <div className="row">
           <div className="col-md-12">
           
-          <div className="col-md-4">
-            <CardLabel>{`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput
-              t={t}
-              isMandatory={false}
-              type={"text"}
-              optionKey="i18nKey"
-              name="SiginedOfficerDesignation"
-              value={SiginedOfficerDesignation}
-              onChange={setSelectSiginedOfficerDesignation}
-              disable={isEdit}
-              placeholder={`${t("CR_SIGNED_OFFICER_DESIGNATION")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_SIGNED_OFFICER_DESIG") })}
-            />
-          </div>
+          
           <div className="col-md-4">
             <CardLabel>{`${t("CR_MOBILE_NO")}`}</CardLabel>
             <TextInput
