@@ -296,3 +296,4 @@ function Jurisdiction({
     </div>
   );
 }
+export default Jurisdictions;
