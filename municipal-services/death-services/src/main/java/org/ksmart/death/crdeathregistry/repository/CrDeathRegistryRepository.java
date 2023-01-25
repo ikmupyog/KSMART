@@ -136,7 +136,8 @@ public class CrDeathRegistryRepository {
                                 , cert.getTenantId()
                                 , cert.getAddressInfo().getPresentAddress().getDistrictId()
                                 , cert.getAddressInfo().getPresentAddress().getStateId()
-                                , cert.getAddressInfo().getPresentAddress().getCountryId());
+                                , cert.getAddressInfo().getPresentAddress().getCountryId()
+                                , cert.getAddressInfo().getPresentAddress().getPostofficeId());
                 //Rakhi S on 24.12.2022
                  Map<String,List<String>> masterData = getAttributeValues(mdmsData);
 
@@ -209,7 +210,8 @@ public class CrDeathRegistryRepository {
                                 , cert.getTenantId()
                                 , cert.getAddressInfo().getPresentAddress().getDistrictId()
                                 , cert.getAddressInfo().getPresentAddress().getStateId()
-                                , cert.getAddressInfo().getPresentAddress().getCountryId());
+                                , cert.getAddressInfo().getPresentAddress().getCountryId()
+                                , cert.getAddressInfo().getPresentAddress().getPostofficeId());
                 Map<String,List<String>> masterDataMl = getAttributeValuesMl(mdmsDataMl);
 
                 String lbNameMl = masterDataMl.get(CrDeathRegistryConstants.TENANTS).toString();
@@ -228,8 +230,21 @@ public class CrDeathRegistryRepository {
 
                 String presentAddCountry = masterData.get(CrDeathRegistryConstants.COUNTRY).toString();
                 presentAddCountry = presentAddCountry.replaceAll("[\\[\\]\\(\\)]", "");
-                cert.getAddressInfo().getPresentAddress().setCountryId(presentAddCountry);               
+                cert.getAddressInfo().getPresentAddress().setCountryId(presentAddCountry);  
+                
+                //RAkhi S on 24.01.2023
 
+                String presentAddPO = masterData.get(CrDeathRegistryConstants.POSTOFFICE).toString();
+                presentAddPO = presentAddPO.replaceAll("[\\[\\]\\(\\)]", "");
+                if (null != presentAddPO && !presentAddPO.isEmpty()){
+                     cert.getAddressInfo().getPresentAddress().setPostofficeNameEn(presentAddPO);
+                }
+
+                String presentAddPOMl = masterDataMl.get(CrDeathRegistryConstants.POSTOFFICE).toString();
+                presentAddPOMl = presentAddPOMl.replaceAll("[\\[\\]\\(\\)]", "");
+                if (null != presentAddPOMl && !presentAddPOMl.isEmpty()){
+                     cert.getAddressInfo().getPresentAddress().setPostofficeNameMl(presentAddPOMl);
+                }
 
                 //RAkhi S on 11.01.2023 MDMS Call Malayalam
                 String presentAddDistrictMl = masterDataMl.get(CrDeathRegistryConstants.DISTRICT).toString();
@@ -344,6 +359,8 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPresentAddress().getStreetNameEn()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCityEn()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getLocalityEn()+ " "+
+                                            cert.getAddressInfo().getPresentAddress().getPostofficeNameEn()+ " "+"P O"+" - "+
+                                            cert.getAddressInfo().getPresentAddress().getPincode()+" "+
                                             cert.getAddressInfo().getPresentAddress().getDistrictId()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getStateId()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCountryId());  
@@ -354,6 +371,8 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPresentAddress().getStreetNameMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCityMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getLocalityMl()+ " "+
+                                            cert.getAddressInfo().getPresentAddress().getPostofficeNameMl()+ " "+"പി ഒ"+" - "+
+                                            cert.getAddressInfo().getPresentAddress().getPincode()+" "+
                                             cert.getAddressInfo().getPresentAddress().getDistrictMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getStateMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCountryMl());

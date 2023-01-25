@@ -131,9 +131,9 @@ public class CrDeathValidator {
                         throw new CustomException("WARD NAME INVALID", "The ward name " +
                         addressInfo.getDeathplaceAddress().getWardId() +" is invalid");  
                     } 
-                    if(StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getPostOfficeId())){
+                    if(StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getPostofficeId())){
                         throw new CustomException("POSTOFFICE INVALID", "The postoffice name " +
-                        addressInfo.getDeathplaceAddress().getPostOfficeId() +" is invalid");  
+                        addressInfo.getDeathplaceAddress().getPostofficeId() +" is invalid");  
                     } 
                     if(StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getDistrictId())){
                         throw new CustomException("DISTRICT NAME INVALID", "The District name " +
@@ -217,9 +217,9 @@ public class CrDeathValidator {
                         throw new CustomException("INFORMANT: WARD INVALID", "The ward name  " +
                         addressInfo.getInformantAddress().getWardId() +" is invalid");  
                     } 
-                    if(StringUtils.isEmpty(addressInfo.getInformantAddress().getPostOfficeId())){
+                    if(StringUtils.isEmpty(addressInfo.getInformantAddress().getPostofficeId())){
                         throw new CustomException("INFORMANT: POSTOFFICE INVALID", "The postoffice  " +
-                        addressInfo.getInformantAddress().getPostOfficeId() +" is invalid");  
+                        addressInfo.getInformantAddress().getPostofficeId() +" is invalid");  
                     } 
                     if(StringUtils.isEmpty(addressInfo.getInformantAddress().getDistrictId())){
                         throw new CustomException("INFORMANT :DISTRICT INVALID", "The District name " +
@@ -241,9 +241,9 @@ public class CrDeathValidator {
                     //     addressInfo.getPresentAddress().getCityEn()+" or "+addressInfo.getPresentAddress().getCityMl()+ " is invalid");  
                     // } 
 
-                    if(StringUtils.isEmpty(addressInfo.getPresentAddress().getPostOfficeId())){
+                    if(StringUtils.isEmpty(addressInfo.getPresentAddress().getPostofficeId())){
                         throw new CustomException("PRESENT ADDRESS:POSTOFFICE IS INVALID", "The postoffice name " +
-                        addressInfo.getPresentAddress().getPostOfficeId() +" is invalid");  
+                        addressInfo.getPresentAddress().getPostofficeId() +" is invalid");  
                     } 
                     if ((deathdtls.getAddressInfo().getPresentAddress().getLocationType()==CrDeathConstants.ADDRESS_INSIDE_LB) ){
                         if(StringUtils.isEmpty(addressInfo.getPresentAddress().getWardId())){
@@ -300,9 +300,9 @@ public class CrDeathValidator {
                     //     addressInfo.getPermanentAddress().getCityEn()+" or "+addressInfo.getPermanentAddress().getCityMl()+ " is invalid");  
                     // } 
 
-                    if(StringUtils.isEmpty(addressInfo.getPermanentAddress().getPostOfficeId()) ){
+                    if(StringUtils.isEmpty(addressInfo.getPermanentAddress().getPostofficeId()) ){
                         throw new CustomException("PERMANENT ADDRESS:POSTOFFICE IS INVALID", "The postoffice name " +
-                        addressInfo.getPermanentAddress().getPostOfficeId() +" is invalid");  
+                        addressInfo.getPermanentAddress().getPostofficeId() +" is invalid");  
                     } 
                     if ((deathdtls.getAddressInfo().getPermanentAddress().getLocationType()==CrDeathConstants.ADDRESS_INSIDE_LB) ){
                         if(StringUtils.isEmpty(addressInfo.getPermanentAddress().getWardId()) ){

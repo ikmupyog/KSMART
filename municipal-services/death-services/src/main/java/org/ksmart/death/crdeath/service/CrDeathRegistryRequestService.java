@@ -198,7 +198,7 @@ public class CrDeathRegistryRequestService {
         registryPresentAddress.setWardId(presentAddress.getWardId());
         registryPresentAddress.setTalukId(presentAddress.getTalukId());
         registryPresentAddress.setVillageId(presentAddress.getVillageId());
-        registryPresentAddress.setPostOfficeId(presentAddress.getPostOfficeId());
+        registryPresentAddress.setPostofficeId(presentAddress.getPostofficeId());
         registryPresentAddress.setPincode(presentAddress.getPincode());
         registryPresentAddress.setDistrictId(presentAddress.getDistrictId());
         registryPresentAddress.setStateId(presentAddress.getStateId());
@@ -232,7 +232,7 @@ public class CrDeathRegistryRequestService {
         registryPermanentAddress.setWardId(permanentAddress.getWardId());
         registryPermanentAddress.setTalukId(permanentAddress.getTalukId());
         registryPermanentAddress.setVillageId(permanentAddress.getVillageId());
-        registryPermanentAddress.setPostOfficeId(permanentAddress.getPostOfficeId());
+        registryPermanentAddress.setPostofficeId(permanentAddress.getPostofficeId());
         registryPermanentAddress.setPincode(permanentAddress.getPincode());
         registryPermanentAddress.setDistrictId(permanentAddress.getDistrictId());
         registryPermanentAddress.setStateId(permanentAddress.getStateId());
@@ -266,7 +266,7 @@ public class CrDeathRegistryRequestService {
         registryDeathPlaceAddress.setWardId(deathplaceAddress.getWardId());
         registryDeathPlaceAddress.setTalukId(deathplaceAddress.getTalukId());
         registryDeathPlaceAddress.setVillageId(deathplaceAddress.getVillageId());
-        registryDeathPlaceAddress.setPostOfficeId(deathplaceAddress.getPostOfficeId());
+        registryDeathPlaceAddress.setPostofficeId(deathplaceAddress.getPostofficeId());
         registryDeathPlaceAddress.setPincode(deathplaceAddress.getPincode());
         registryDeathPlaceAddress.setDistrictId(deathplaceAddress.getDistrictId());
         registryDeathPlaceAddress.setStateId(deathplaceAddress.getStateId());
@@ -299,7 +299,7 @@ public class CrDeathRegistryRequestService {
         registryInformantAddress.setWardId(informantAddress.getWardId());
         registryInformantAddress.setTalukId(informantAddress.getTalukId());
         registryInformantAddress.setVillageId(informantAddress.getVillageId());
-        registryInformantAddress.setPostOfficeId(informantAddress.getPostOfficeId());
+        registryInformantAddress.setPostofficeId(informantAddress.getPostofficeId());
         registryInformantAddress.setPincode(informantAddress.getPincode());
         registryInformantAddress.setDistrictId(informantAddress.getDistrictId());
         registryInformantAddress.setStateId(informantAddress.getStateId());
