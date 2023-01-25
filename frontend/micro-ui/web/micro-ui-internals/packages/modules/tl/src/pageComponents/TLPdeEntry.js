@@ -12,11 +12,14 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const approle = roletemp?.length > 0 ? true : false;
   const oprole=roletempop?.length > 0 ? true : false;
   let configstatus=true;
-  configstatus = formData?.status==="APPROVED" ? false :true;
+  let configstatusop=false;
+  configstatus = formData?.status==="APPROVED" ? false :true; 
   configstatus = formData?.status==="FORWARDED" && approle && configstatus ? true :false;
-  configstatus = formData?.status==="INITIATED" && oprole && !configstatus ? true :false
-
+  
+  configstatusop = (formData?.status==="INITIATED" || formData?.status===null) && oprole && !configstatus ? true :false
   configstatus = isEdit ? configstatus: true;
+  configstatusop=isEdit ?configstatusop:true;
+
   const [toast, setToast] = useState(false);
   const menusector = [
     { name: "Manufacturing Sector", code: "MANUFACTORING" },
@@ -60,8 +63,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const mutationperiod = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialPeriod");
 
   useEffect(() => {
-    if (mutationyear?.error !== null) {
-      mutationyear.mutate(tenantId, "egf-master", "FinancialPeriod", {
+    if (mutationperiod?.error !== null) {
+      mutationperiod.mutate(tenantId, "egf-master", "FinancialPeriod", {
         onSuccess,
       });
     }
@@ -118,7 +121,6 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
           cmbWardNo.push(...obward.children);
         });
       }
-
     });
 
   cmbWardNo.map((wardmst) => {
@@ -238,6 +240,29 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setProfToYear(profdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
     setRentFromYear(rentdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(rentdata[0]?.fromYear))[0] : "");
     setRentToYear(rentdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
+
+    setLicensingInstitution(formData?.tradeName ? formData?.tradeName : "");
+    setDoorNoBuild(formData.TradeDetails?.structurePlace?.doorNo);
+    setDoorSubBuild(formData.TradeDetails?.DoorSubBuild);
+    setBuildingCode(formData.tradeLicenseDetail?.address?.lbBuildingCode ? formData.tradeLicenseDetail?.address?.lbBuildingCode : "");
+    setBuildingName(formData.tradeLicenseDetail?.address.lbBuildingName ? formData.tradeLicenseDetail?.address.lbBuildingName : "");
+    setBuildingstallNo(formData.tradeLicenseDetail?.structurePlace?.stallNo ? formData.tradeLicenseDetail?.structurePlace?.stallNo : "");
+    setSector(formData?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec.code.includes(formData?.tradeLicenseDetail?.businessSector))[0] : "");
+    setLicenseeType(formData?.tradeLicenseDetail?.licenseeType ? menu.filter((lic) => lic.code.includes(formData?.tradeLicenseDetail?.licenseeType))[0] : "");
+    setBuildingType(formData?.tradeLicenseDetail?.address?.buildingType ? buildingtype.filter((type) => type.code.includes(formData?.tradeLicenseDetail?.address?.buildingType))[0] : "");
+    setCapitalAmount(formData?.tradeLicenseDetail?.capitalInvestment ? formData?.tradeLicenseDetail?.capitalInvestment : "");
+    setValue2(formData?.tradeLicenseDetail?.licenseeType ? formData?.tradeLicenseDetail?.licenseeType : "");
+    setValue3(formData?.tradeLicenseDetail?.address?.buildingType ? formData?.tradeLicenseDetail?.address?.buildingType : "");
+    setFeilds((formData?.tradeLicenseDetail && formData?.tradeLicenseDetail?.ownersPde) || [{ name: "" }]);
+    setFeilds1((formData?.tradeLicenseDetail && formData?.tradeLicenseDetail.structurePlace) || [{ doorNo: "", doorNoSub: "", stallNo: "" }]);
+    setWardNo(formData.tradeLicenseDetail?.address?.wardNo ? cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0] : "");
+    setLicArrear(tldata[0]?.arrear ? tldata[0]?.arrear : "");
+    setLicCurrent(tldata[0]?.current ? tldata[0]?.current : "");
+    setProfArrear(profdata[0]?.arrear ? profdata[0]?.arrear : "");
+    setProfCurrentFirst(profdata[0]?.current ? profdata[0]?.current : "");
+    setProfCurrentSecond(profdata[0]?.current2 ? profdata[0]?.current2 : "");
+    setRentArrear(rentdata[0]?.arrear ? rentdata[0]?.arrear : "");
+    setRentCurrent(rentdata[0]?.current ? rentdata[0]?.current : "");
   }
 
   if (mutationperiod?.status === "success" && mutationperiod?.isSuccess && !mutationperiod?.isError && isInitialRender) {
@@ -247,6 +272,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setRentFromMonth(rentdata[0]?.fromPeriod ? cmbrentperiod.filter((month) => month.code.includes(rentdata[0]?.fromPeriod))[0] : "");
     setRentToMonth(rentdata[0]?.toPeriod ? cmbrenttoperiod.filter((month) => month.code.includes(rentdata[0]?.toPeriod))[0] : "");
   }
+
+
 
   const setSelectBuildingcode = useCallback(e => {
     setBuildingCode(e.target.value);
@@ -927,7 +954,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   }
   if (!isEdit && !mutation.isLoading && mutation.isSuccess && !mutation.isError && !mutation.isIdle)
     return (
-      <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)}></ApplicationDetailsPDE>
+      <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} isNewentry={oprole}></ApplicationDetailsPDE>
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
@@ -946,7 +973,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     );
   if (isEdit && !mutation1.isLoading && mutation1.isSuccess && !mutation1.isError && !mutation1.isIdle)
     return (
-      <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)}></ApplicationDetailsPDE>
+      <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)} isNewentry={oprole}></ApplicationDetailsPDE>
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
@@ -967,7 +994,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     return (
       <React.Fragment>
         {isLoading ? (<Loader />) : (
-          <FormStep config={configstatus ? config  : "" } onSelect={goNext} onSkip={onSkip} t={t} >
+          <FormStep config={configstatus || configstatusop ? config  : "" } onSelect={goNext} onSkip={onSkip} t={t} >
             <div>
               <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", marginLeft: "50px" }} >
 
