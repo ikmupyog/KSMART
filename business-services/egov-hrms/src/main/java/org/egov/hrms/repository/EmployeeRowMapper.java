@@ -1,9 +1,25 @@
 package org.egov.hrms.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
-import org.egov.hrms.model.*;
+import org.egov.hrms.model.Assignment;
+import org.egov.hrms.model.AuditDetails;
+import org.egov.hrms.model.DeactivationDetails;
+import org.egov.hrms.model.DepartmentalTest;
+import org.egov.hrms.model.EducationalQualification;
+import org.egov.hrms.model.Employee;
+import org.egov.hrms.model.EmployeeDocument;
+import org.egov.hrms.model.Jurisdiction;
+import org.egov.hrms.model.JurisdictionChild;
+import org.egov.hrms.model.ReactivationDetails;
+import org.egov.hrms.model.ServiceHistory;
 import org.egov.hrms.model.enums.EmployeeDocumentReferenceType;
 import org.egov.hrms.web.contract.User;
 import org.egov.tracer.model.CustomException;
@@ -13,13 +29,9 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
@@ -46,6 +58,8 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
 						.jurisdictions(new ArrayList<Jurisdiction>()).assignments(new ArrayList<Assignment>()).user(new User())
 						.build();
 			}
+
+
 			addChildrenToEmployee(rs, currentEmployee);
 			employeeMap.put(currentid, currentEmployee);
 		}
@@ -104,6 +118,36 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
 		}
 	}
 	
+
+//	
+//	 private List<JurisdictionChild> getJurisdictionChild(final ResultSet rs) throws SQLException {
+//		 
+//		 List<JurisdictionChild> obj;
+//	        return JurisdictionChild.builder()
+//	                                       .wardCode(rs.getString("wardcode"))
+//	                                      
+//	                                       .build();
+//	    }
+//	 
+	public JurisdictionChild getApplicantDocument(final ResultSet rs) throws SQLException {
+		JurisdictionChild ch = JurisdictionChild.builder().wardCode(rs.getString("wardcode"))
+				.zoneCode(rs.getString("zonecode")).build();
+		return ch;
+	}
+
+	public List getJurisdictionChild(ResultSet rs) throws SQLException, DataAccessException { // NOPMD
+
+		List<JurisdictionChild> result = new ArrayList<>();
+
+		while (rs.next()) {
+
+			final JurisdictionChild child = getApplicantDocument(rs);
+
+		}
+
+		return result;
+	}
+
 	/**
 	 * Maps Jurisdictions inside a ResultSet to the Jurisdiction POJO inside employee object.
 	 * 
@@ -113,32 +157,106 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
 	public void setJurisdictions(ResultSet rs, Employee currentEmployee) {
 		try {
 			List<Jurisdiction> jurisdictions = new ArrayList<>();
+			List<JurisdictionChild> jurisdictionChilds = new ArrayList<>();
+			List<Employee> employees = new ArrayList<>();
+			employees.add(currentEmployee);
 			if(CollectionUtils.isEmpty(currentEmployee.getJurisdictions()))
 				jurisdictions = new ArrayList<Jurisdiction>();
 			else
 				jurisdictions = currentEmployee.getJurisdictions();
 			
 			List<String> ids = jurisdictions.stream().map(Jurisdiction::getId).collect(Collectors.toList());
-			Boolean isActive =  rs.getBoolean("jurisdiction_isactive") !=false;
-			if(isActive && !StringUtils.isEmpty(rs.getString("jurisdiction_uuid")) && !ids.contains(rs.getString("jurisdiction_uuid"))) {
+
+			List<JurisdictionChild> jurisdictionchild = new ArrayList<>();
+			if (!StringUtils.isEmpty(rs.getString("jurisdiction_uuid"))) {
+
 				AuditDetails auditDetails = AuditDetails.builder().createdBy(rs.getString("jurisdiction_createdby")).createdDate(rs.getLong("jurisdiction_createddate"))
 						.lastModifiedBy(rs.getString("jurisdiction_lastmodifiedby")).lastModifiedDate(rs.getLong("jurisdiction_lastmodifieddate")).build();
-				
-				Jurisdiction jurisdiction = Jurisdiction.builder().id(rs.getString("jurisdiction_uuid")).hierarchy(rs.getString("jurisdiction_hierarchy"))
+				Jurisdiction jurisdiction =new Jurisdiction();
+				if (!ids.contains(rs.getString("jurisdiction_uuid"))) {
+					jurisdiction = Jurisdiction.builder().id(rs.getString("jurisdiction_uuid"))
+							.hierarchy(rs.getString("jurisdiction_hierarchy"))
 						.boundary(rs.getString("jurisdiction_boundary")).boundaryType(rs.getString("jurisdiction_boundarytype"))
 						.tenantId(rs.getString("jurisdiction_tenantid"))
+						.jurisdictionChilds(new ArrayList<JurisdictionChild>())
 						.isActive(null == rs.getObject("jurisdiction_isactive")?true:rs.getBoolean("jurisdiction_isactive"))
-						.auditDetails(auditDetails).build();
-				
+							.auditDetails(auditDetails).build();
+
+					addChildrenToJurisdiction(rs, jurisdiction, jurisdiction.getId());
+					
+				} else {
+					for (int i = 0; i < currentEmployee.getJurisdictions().size(); i++) {
+						 jurisdiction = currentEmployee.getJurisdictions().get(i);
+
+						if (currentEmployee.getJurisdictions().get(i).getId()
+								.contains(rs.getString("jurisdiction_uuid"))) {
+
+							addChildrenToJurisdiction(rs, currentEmployee.getJurisdictions().get(i),
+									currentEmployee.getJurisdictions().get(i).getId());
+						}
+
+					}
+				}
 				jurisdictions.add(jurisdiction);
-			}
-			currentEmployee.setJurisdictions(jurisdictions);
-		}catch(Exception e) {
-			log.error("Error in row mapper while mapping Jurisdictions: ",e);
-			throw new CustomException("ROWMAPPER_ERROR","Error in row mapper while mapping Jurisdictions");
+				currentEmployee.setJurisdictions(jurisdictions);
+
+
 		}
+	} catch (Exception e) {
+				log.error("Error in row mapper while mapping Jurisdictions: ", e);
+				throw new CustomException("ROWMAPPER_ERROR", "Error in row mapper while mapping Jurisdictions");
+			}
 	}
 	
+
+	public void addChildrenToJurisdiction(ResultSet rs, Jurisdiction jurisdiction, String uuid) {
+
+		setJurisdictionChild(rs, jurisdiction, uuid);
+
+	}
+
+	public void setJurisdictionChild(ResultSet rs, Jurisdiction jurisdiction, String uuid) {
+		List<JurisdictionChild> jurisdictionChilds = new ArrayList<>();
+
+		List<String> idChilds = jurisdictionChilds.stream().map(JurisdictionChild::getId).collect(Collectors.toList());
+
+		if (CollectionUtils.isEmpty(jurisdiction.getJurisdictionChilds()))
+			jurisdictionChilds = new ArrayList<JurisdictionChild>();
+		else
+			jurisdictionChilds = jurisdiction.getJurisdictionChilds();
+		// JurisdictionChild jurisdictionChilds = new ArrayList<JurisdictionChild>();
+
+		try {
+			if (jurisdiction.getId().contains(rs.getString("juch_jurisdictionid"))) {
+			if (!idChilds.contains(rs.getString("juch_uuid"))) {
+
+					JurisdictionChild ch = JurisdictionChild.builder().id(rs.getString("juch_uuid"))
+							.jurisdictionId(rs.getString("juch_jurisdictionid"))
+							.wardCode(rs.getString("wardcode")).zoneCode(rs.getString("zonecode")).build();
+					jurisdictionChilds.add(ch);
+
+
+				}
+//			else {
+//				JurisdictionChild ch = JurisdictionChild.builder().id(rs.getString("juch_uuid"))
+//						.wardCode(rs.getString("wardcode")).zoneCode(rs.getString("zonecode")).build();
+//						jurisdictionChilds.add(ch);
+//					}
+				}
+
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		jurisdiction.setJurisdictionChilds(jurisdictionChilds);
+
+
+
+	}
+
 	/**
 	 * Maps EducationDetails inside a ResultSet to the EducationDetails POJO inside employee object.
 	 * 

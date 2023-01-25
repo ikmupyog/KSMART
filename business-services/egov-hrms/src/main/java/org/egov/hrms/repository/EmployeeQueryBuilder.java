@@ -1,5 +1,8 @@
 package org.egov.hrms.repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.egov.hrms.config.PropertiesManager;
 import org.egov.hrms.web.contract.EmployeeSearchCriteria;
@@ -7,11 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeQueryBuilder {
@@ -31,6 +29,8 @@ public class EmployeeQueryBuilder {
 	public String getEmployeeSearchQuery(EmployeeSearchCriteria criteria,List <Object> preparedStmtList ) {
 		StringBuilder builder = new StringBuilder(EmployeeQueries.HRMS_GET_EMPLOYEES);
 		addWhereClause(criteria, builder, preparedStmtList);
+		System.out.println("Query  :" + builder);
+		System.out.println("where  :" + preparedStmtList);
 		return paginationClause(criteria, builder);
 	}
 
@@ -71,6 +71,16 @@ public class EmployeeQueryBuilder {
 			builder.append(" and lower(employee.code) IN (").append(createQuery(codes)).append(")");
 			addToPreparedStatement(preparedStmtList, codes);
 		}
+
+		// enrter wad code filteration here
+		if (!CollectionUtils.isEmpty(criteria.getWardcodes())) {
+			builder.append(" and jurisdictionchild.wardcode  IN (").append(createQuery(criteria.getWardcodes()))
+					.append(")");
+			addToPreparedStatement(preparedStmtList, criteria.getWardcodes());
+		}
+
+		// end
+
 		if(!CollectionUtils.isEmpty(criteria.getIds())){
 			builder.append(" and employee.id IN (").append(createQuery(criteria.getIds())).append(")");
 			addToPreparedStatement(preparedStmtList, criteria.getIds());

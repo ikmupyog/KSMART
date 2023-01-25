@@ -36,11 +36,12 @@ public class EmployeeQueries {
 			+ "deact.createddate as deact_createddate, deact.lastmodifiedby as deact_lastmodifiedby, deact.lastmodifieddate as deact_lastmodifieddate, "
 			+ "react.uuid as react_uuid, react.reasonforreactivation as react_reasonforreactivation, react.effectivefrom as react_effectivefrom, react.ordernumber as react_ordernumber, "
 			+ "react.remarks as react_remarks, react.tenantid as react_tenantid, react.createdby as react_createdby, "
-			+ "react.createddate as react_createddate, react.lastmodifiedby as react_lastmodifiedby, react.lastmodifieddate as react_lastmodifieddate "
-			+ "FROM eg_hrms_employee employee LEFT JOIN eg_hrms_assignment assignment ON employee.uuid = assignment.employeeid LEFT JOIN eg_hrms_educationaldetails education "
+			+ "react.createddate as react_createddate, react.lastmodifiedby as react_lastmodifiedby, react.lastmodifieddate as react_lastmodifieddate,jurisdictionchild.wardcode,jurisdictionchild.zonecode , jurisdictionchild.uuid as juch_uuid, jurisdictionchild.jurisdictionid as juch_jurisdictionid "
+			+ " FROM eg_hrms_employee employee LEFT JOIN eg_hrms_assignment assignment ON employee.uuid = assignment.employeeid LEFT JOIN eg_hrms_educationaldetails education "
 			+ "ON employee.uuid = education.employeeid LEFT JOIN eg_hrms_departmentaltests depttest ON employee.uuid = depttest.employeeid LEFT JOIN eg_hrms_empdocuments docs "
 			+ "ON employee.uuid = docs.employeeid LEFT JOIN eg_hrms_servicehistory history ON employee.uuid = history.employeeid LEFT JOIN eg_hrms_jurisdiction jurisdiction "
-			+ "ON employee.uuid = jurisdiction.employeeid LEFT JOIN eg_hrms_deactivationdetails deact ON employee.uuid = deact.employeeid LEFT JOIN eg_hrms_reactivationdetails react "
+			+ "ON employee.uuid = jurisdiction.employeeid LEFT JOIN  eg_hrms_jurisdiction_child  jurisdictionchild   "
+			+ "ON jurisdiction.uuid = jurisdictionchild.jurisdictionid LEFT JOIN eg_hrms_deactivationdetails deact ON employee.uuid = deact.employeeid LEFT JOIN eg_hrms_reactivationdetails react "
 			+ "ON employee.uuid = react.employeeid WHERE ";
 
 	public static final String HRMS_PAGINATION_WRAPPER = "SELECT * FROM "

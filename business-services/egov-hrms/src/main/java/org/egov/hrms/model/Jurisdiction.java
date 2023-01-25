@@ -90,7 +90,14 @@ public class Jurisdiction {
     private String tenantId;
 
 	@NotEmpty
-	private List<JurisdictionChild> jurisdictionChild = new ArrayList<>();
+	private List<JurisdictionChild> jurisdictionChilds = new ArrayList<>();
+
+	public void addJurisdictionChild(final JurisdictionChild child) {
+		if (jurisdictionChilds == null) {
+			jurisdictionChilds = new ArrayList<>();
+		}
+		jurisdictionChilds.add(child);
+	}
 
     private AuditDetails auditDetails;
 
