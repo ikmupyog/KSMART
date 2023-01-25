@@ -11,7 +11,7 @@ import ApplicationDetailsActionBar from "../../../../templates/ApplicationDetail
 import ApplicationDetailsWarningPopup from "../../../../templates/ApplicationDetails/components/ApplicationDetailsWarningPopup";
 import ActionModal from "../../../../templates/ApplicationDetails/Modal";
 import ApplicationDetailsToast from "../../../../templates/ApplicationDetails/components/ApplicationDetailsToast";
-const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
+const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
   const history = useHistory();
   const [businessService, setBusinessService] = useState("PdeTL");
   const [displayMenu, setDisplayMenu] = useState(false);
@@ -182,7 +182,10 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
   return (
     <Card>
       <BannerPicker t={t} data={data.data} isSuccess={data.isSuccess} isLoading={(data.isIdle || data.isLoading)} />
-      <SubmitBar label="New Entry" onSubmit={handleNewPage} />
+      {isNewentry===true && (
+          <SubmitBar label="New Entry" onSubmit={handleNewPage} />
+      )}
+  
       <ApplicationDetailsActionBar
             workflowDetails={workflowDetails}
             displayMenu={displayMenu}
