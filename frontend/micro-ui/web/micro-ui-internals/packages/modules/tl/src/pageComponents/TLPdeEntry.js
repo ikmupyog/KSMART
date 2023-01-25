@@ -12,11 +12,15 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const approle = roletemp?.length > 0 ? true : false;
   const oprole=roletempop?.length > 0 ? true : false;
   let configstatus=true;
-  configstatus = formData?.status==="APPROVED" ? false :true;
+  let configstatusop=false;
+  configstatus = formData?.status==="APPROVED" ? false :true; 
   configstatus = formData?.status==="FORWARDED" && approle && configstatus ? true :false;
-  configstatus = formData?.status==="INITIATED" && oprole && !configstatus ? true :false
-
+  
+  configstatusop = (formData?.status==="INITIATED" || formData?.status===null) && oprole && !configstatus ? true :false
   configstatus = isEdit ? configstatus: true;
+  configstatusop=isEdit ?configstatusop:true;
+
+  const [flgEdit, setFlgEdit] = useState(false);
   const [toast, setToast] = useState(false);
   const menusector = [
     { name: "Manufacturing Sector", code: "MANUFACTORING" },
@@ -60,8 +64,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const mutationperiod = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egf-master", "FinancialPeriod");
 
   useEffect(() => {
-    if (mutationyear?.error !== null) {
-      mutationyear.mutate(tenantId, "egf-master", "FinancialPeriod", {
+    if (mutationperiod?.error !== null) {
+      mutationperiod.mutate(tenantId, "egf-master", "FinancialPeriod", {
         onSuccess,
       });
     }
@@ -118,7 +122,6 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
           cmbWardNo.push(...obward.children);
         });
       }
-
     });
 
   cmbWardNo.map((wardmst) => {
@@ -238,6 +241,29 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setProfToYear(profdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(profdata[0]?.toYear))[0] : "");
     setRentFromYear(rentdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(rentdata[0]?.fromYear))[0] : "");
     setRentToYear(rentdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
+
+    setLicensingInstitution(formData?.tradeName ? formData?.tradeName : "");
+    setDoorNoBuild(formData.TradeDetails?.structurePlace?.doorNo);
+    setDoorSubBuild(formData.TradeDetails?.DoorSubBuild);
+    setBuildingCode(formData.tradeLicenseDetail?.address?.lbBuildingCode ? formData.tradeLicenseDetail?.address?.lbBuildingCode : "");
+    setBuildingName(formData.tradeLicenseDetail?.address.lbBuildingName ? formData.tradeLicenseDetail?.address.lbBuildingName : "");
+    setBuildingstallNo(formData.tradeLicenseDetail?.structurePlace?.stallNo ? formData.tradeLicenseDetail?.structurePlace?.stallNo : "");
+    setSector(formData?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec.code.includes(formData?.tradeLicenseDetail?.businessSector))[0] : "");
+    setLicenseeType(formData?.tradeLicenseDetail?.licenseeType ? menu.filter((lic) => lic.code.includes(formData?.tradeLicenseDetail?.licenseeType))[0] : "");
+    setBuildingType(formData?.tradeLicenseDetail?.address?.buildingType ? buildingtype.filter((type) => type.code.includes(formData?.tradeLicenseDetail?.address?.buildingType))[0] : "");
+    setCapitalAmount(formData?.tradeLicenseDetail?.capitalInvestment ? formData?.tradeLicenseDetail?.capitalInvestment : "");
+    setValue2(formData?.tradeLicenseDetail?.licenseeType ? formData?.tradeLicenseDetail?.licenseeType : "");
+    setValue3(formData?.tradeLicenseDetail?.address?.buildingType ? formData?.tradeLicenseDetail?.address?.buildingType : "");
+    setFeilds((formData?.tradeLicenseDetail && formData?.tradeLicenseDetail?.ownersPde) || [{ name: "" }]);
+    setFeilds1((formData?.tradeLicenseDetail && formData?.tradeLicenseDetail.structurePlace) || [{ doorNo: "", doorNoSub: "", stallNo: "" }]);
+    setWardNo(formData.tradeLicenseDetail?.address?.wardNo ? cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0] : "");
+    setLicArrear(tldata[0]?.arrear ? tldata[0]?.arrear : "");
+    setLicCurrent(tldata[0]?.current ? tldata[0]?.current : "");
+    setProfArrear(profdata[0]?.arrear ? profdata[0]?.arrear : "");
+    setProfCurrentFirst(profdata[0]?.current ? profdata[0]?.current : "");
+    setProfCurrentSecond(profdata[0]?.current2 ? profdata[0]?.current2 : "");
+    setRentArrear(rentdata[0]?.arrear ? rentdata[0]?.arrear : "");
+    setRentCurrent(rentdata[0]?.current ? rentdata[0]?.current : "");
   }
 
   if (mutationperiod?.status === "success" && mutationperiod?.isSuccess && !mutationperiod?.isError && isInitialRender) {
@@ -248,22 +274,28 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setRentToMonth(rentdata[0]?.toPeriod ? cmbrenttoperiod.filter((month) => month.code.includes(rentdata[0]?.toPeriod))[0] : "");
   }
 
+
+
   const setSelectBuildingcode = useCallback(e => {
     setBuildingCode(e.target.value);
+    setFlgEdit(true);
   }, [BuildingCode]);
 
   const setSelectBuildingName = useCallback(e => {
     setBuildingName(e.target.value.replace(/[^A-Za-z0-9, ]/ig, ''));
-  }, [BuildingName]);
+    setFlgEdit(true);
+  }, [BuildingName,flgEdit]);
 
   const setSelectWard = useCallback(value => {
     setWardNo(value);
-  }, [WardNo]);
+    setFlgEdit(true);
+  }, [WardNo,flgEdit]);
 
   const selectLicenseeType = useCallback(value => {
     setLicenseeType(value);
     setValue2(value.code);
-  }, [value2]);
+    setFlgEdit(true);
+  }, [value2,flgEdit]);
 
   const selectBuildingType = useCallback(value => {
     setBuildingCode("");
@@ -274,19 +306,22 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       d.doorNoSub = "";
       d.stallNo = "";
     })
-
+    setFlgEdit(true);
     setBuildingType(value);
     setValue3(value.code);
+    
     setIsInitialRenderRadio(true);
-  }, [buildingtype]);
+  }, [buildingtype,flgEdit]);
 
   const selectSector = useCallback(value => {
     setSector(value);
-  }, [sector]);
+    setFlgEdit(true);
+  }, [sector,flgEdit]);
 
   const changesetCapitalAmount = useCallback(e => {
     setCapitalAmount(e.target.value.replace(/[^0-9.]/ig, ''));
-  }, [capitalAmount]);
+    setFlgEdit(true);
+  }, [capitalAmount,flgEdit]);
 
   const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
   let TradeCategoryMenu = [];
@@ -360,79 +395,97 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     let owners = [...fields];
     owners[i].name = value;
     setFeilds(owners);
-  }, [fields]);
+    setFlgEdit(true);
+  }, [fields,flgEdit]);
 
   const changesetrentArrear = useCallback(e => {
     setRentArrear(e.target.value.replace(/[^0-9.]/ig, ''))
-  }, [rentArrear]);
+    setFlgEdit(true);
+  }, [rentArrear,flgEdit]);
 
   const changesetrentCurrent = useCallback(e => {
     setRentCurrent(e.target.value.replace(/[^0-9.]/ig, ''));
-  }, [rentCurrent]);
+    setFlgEdit(true);
+  }, [rentCurrent,flgEdit]);
   function selectRentFromYear(value) {
     setRentFromYear(value);
     setRentToYear(getYeardata()[0]);
     setRentToMonth(getRentPeriod()[0]);
+    setFlgEdit(true);
   }
 
   const selectRentFromMonth = useCallback(value => {
     setRentFromMonth(value);
-  }, [rentFromMonth]);
+    setFlgEdit(true);
+  }, [rentFromMonth,flgEdit]);
 
   const selectRentToYear = useCallback(value => {
     setRentToYear(value);
-  }, [rentToYear]);
+    setFlgEdit(true);
+  }, [rentToYear,flgEdit]);
 
   const selectRentToMonth = useCallback(value => {
     setRentToMonth(value);
-  }, [rentToMonth]);
+    setFlgEdit(true);
+  }, [rentToMonth,flgEdit]);
 
   const changesetProfArrear = useCallback(e => {
     setProfArrear(e.target.value.replace(/[^0-9.]/ig, ''));
-  }, [profArrear]);
+    setFlgEdit(true);
+  }, [profArrear,flgEdit]);
 
   const changesetProfCurrentFirst = useCallback(e => {
     setProfCurrentFirst(e.target.value.replace(/[^0-9.]/ig, ''));
-  }, [profCurrentFirst]);
+    setFlgEdit(true);
+  }, [profCurrentFirst,flgEdit]);
 
   const changesetProfCurrentSecond = useCallback(e => {
     setProfCurrentSecond(e.target.value.replace(/[^0-9.]/ig, ''));
-  }, [profCurrentSecond]);
+    setFlgEdit(true);
+  }, [profCurrentSecond,flgEdit]);
 
   function selectProfFromYear(value) {
     setProfFromYear(value);
     setProfToYear(getYeardata()[0]);
     setProfToPeriod(getPtPeriod()[0]);
+    setFlgEdit(true);
   }
 
   const selectProfFromPeriod = useCallback(value => {
     setProfFromPeriod(value);
-  }, [profFromPeriod]);
+    setFlgEdit(true);
+  }, [profFromPeriod,flgEdit]);
 
   const selectProfToYear = useCallback(value => {
     setProfToYear(value);
-  }, [profToYear]);
+    setFlgEdit(true);
+  }, [profToYear,flgEdit]);
 
   const selectProfToPeriod = useCallback(value => {
     setProfToPeriod(value);
-  }, [profToPeriod]);
+    setFlgEdit(true);
+  }, [profToPeriod,flgEdit]);
 
   function selectLicFromYear(value) {
     setLicFromYear(value);
     setLicToYear(getYeardata()[0]);
+    setFlgEdit(true);
   }
 
   const selectLicToYear = useCallback(value => {
     setLicToYear(value);
-  }, [licToYear]);
+    setFlgEdit(true);
+  }, [licToYear,flgEdit]);
 
   const changesetLicArrear = useCallback(e => {
     setLicArrear(e.target.value.replace(/[^0-9.]/ig, ''));
-  }, [licArrear]);
+    setFlgEdit(true);
+  }, [licArrear,flgEdit]);
 
   const changesetLicCurrent = useCallback(e => {
     setLicCurrent(e.target.value.replace(/[^0-9.]/ig, ''));
-  }, [licCurrent]);
+    setFlgEdit(true);
+  }, [licCurrent,flgEdit]);
 
   const setSelectLicensingInstitutionName = useCallback(e => {
     if (e.target.value.trim().length > 0) {
@@ -441,7 +494,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     else {
       setLicensingInstitution(e.target.value.replace(/[ ]/ig, ''));
     }
-  }, [licensingInstitutionName]);
+    setFlgEdit(true);
+  }, [licensingInstitutionName,flgEdit]);
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
@@ -562,7 +616,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 14 ? e.target.value : e.target.value.substring(0, 14) } });
     if (key === "stallNo")
       dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
-
+    setFlgEdit(true);
   }, [dispatch1]);
 
 
@@ -652,6 +706,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
 
   const goNext = (e) => {
+    console.log(flgEdit); 
     setToast(false)
     let tenantId1 = tenantId;
     let combineddoorno = "";
@@ -927,7 +982,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   }
   if (!isEdit && !mutation.isLoading && mutation.isSuccess && !mutation.isError && !mutation.isIdle)
     return (
-      <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)}></ApplicationDetailsPDE>
+      <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} isNewentry={oprole}></ApplicationDetailsPDE>
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
@@ -946,7 +1001,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     );
   if (isEdit && !mutation1.isLoading && mutation1.isSuccess && !mutation1.isError && !mutation1.isIdle)
     return (
-      <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)}></ApplicationDetailsPDE>
+      <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)} isNewentry={oprole}></ApplicationDetailsPDE>
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
@@ -967,7 +1022,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     return (
       <React.Fragment>
         {isLoading ? (<Loader />) : (
-          <FormStep config={configstatus ? config  : "" } onSelect={goNext} onSkip={onSkip} t={t} >
+          <FormStep config={configstatus || configstatusop ? config  : "" } onSelect={goNext} onSkip={onSkip} t={t} >
             <div>
               <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", marginLeft: "50px" }} >
 
@@ -1051,7 +1106,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 </div>
                 <div className="row">
                   <div className="col-md-7" ><CardLabel>{`${t("TL_LICENSING_INSTITUTION_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} name="licensingInstitutionName" value={licensingInstitutionName} onChange={setSelectLicensingInstitutionName} placeholder={`${t("TL_LICENSING_INSTITUTION_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_INSTITUTION_NAME") })} />
+                    <TextInput t={t} isMandatory={config.isMandatory} name="licensingInstitutionName" value={licensingInstitutionName} onChange={setSelectLicensingInstitutionName} placeholder={`${t("TL_LICENSING_INSTITUTION_NAME")}`} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_INSTITUTION_NAME") })} />
                   </div>
                 </div>
                 <div className="row">
@@ -1225,39 +1280,44 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   <div className="row">
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-md-12" > <CardLabel>{`${t("TL_LICENSE_PDE_RENT_DATA")}`}</CardLabel>
-                  </div>
-                </div>
-
-                <div style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
+                {value3 === "LBBUILDING" && (
+                <div>
                   <div className="row">
-                    <div className="col-md-2" >
-                      <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearFrom} selected={rentFromYear} select={selectRentFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
+                    <div className="col-md-12" > <CardLabel>{`${t("TL_LICENSE_PDE_RENT_DATA")}`}</CardLabel>
                     </div>
-                    <div className="col-md-2" >
-                      <CardLabel>{`${t("TL_LICENSE_PDE_FROM_MONTH")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrentperiod} selected={rentFromMonth} select={selectRentFromMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_MONTH") })} />
-                    </div>
-                    <div className="col-md-2" >
-                      <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
-                    </div>
-                    <div className="col-md-2" >
-                      <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>
-                      <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrenttoperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
-                    </div>
-                    <div className="col-md-2" >
-                      <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
-                    </div>
-                    <div className="col-md-2" >
-                      <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                  </div>
+
+                  <div id= "divRent" style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
+                    <div className="row">
+                      <div className="col-md-2" >
+                        <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
+                        <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearFrom} selected={rentFromYear} select={selectRentFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
+                      </div>
+                      <div className="col-md-2" >
+                        <CardLabel>{`${t("TL_LICENSE_PDE_FROM_MONTH")}`}</CardLabel>
+                        <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrentperiod} selected={rentFromMonth} select={selectRentFromMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_MONTH") })} />
+                      </div>
+                      <div className="col-md-2" >
+                        <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
+                        <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
+                      </div>
+                      <div className="col-md-2" >
+                        <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>
+                        <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrenttoperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
+                      </div>
+                      <div className="col-md-2" >
+                        <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
+                        <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
+                      </div>
+                      <div className="col-md-2" >
+                        <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
+                        <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                      </div>
                     </div>
                   </div>
                 </div>
+                )}
+
                 {/* <div style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
                   <div className="row">
                     {errorMessage && <div className="mandatorycss"> {errorMessage} </div>}
