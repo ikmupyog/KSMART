@@ -13,6 +13,7 @@ export const configTLApproverApplication = ({
   assigneeLabel,
   businessService,
 }) => {
+  console.log("hai bussiness service"+businessService);
   let checkCondtions = true;
   if (action?.action == "SENDBACKTOCITIZEN" || action?.action == "APPROVE") checkCondtions = false;
   if (action.isTerminateState) checkCondtions = false;
@@ -50,8 +51,8 @@ export const configTLApproverApplication = ({
             },
           },
           {
-            label: t("TL_APPROVAL_CHECKLIST_BUTTON_UP_FILE"),
-            populators: (
+            label: businessService==="PdeTL"? null: t("TL_APPROVAL_CHECKLIST_BUTTON_UP_FILE"),
+            populators:businessService==="PdeTL"? null: (
               <UploadFile
                 id={"workflow-doc"}
                 // accept=".jpg"
