@@ -1101,7 +1101,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 <div className="row">
                   <div className="col-md-7">
                     <CardLabel style={{ marginBottom: "30px" }} > {`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `}<span className="mandatorycss">*</span></CardLabel>
-                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "-8px", paddingLeft: "5px", height: "25px", display: "flex" }} {...(validation = { isRequired: true, type: "option", title: "Invalid Ownership Type" })} />
+                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ display: "flex", justifyContent: "space-between",width: "38%" }} {...(validation = { isRequired: true, type: "option", title: "Invalid Ownership Type" })} />
                   </div>
                 </div>
                 <div className="row">
@@ -1113,7 +1113,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   <div className="col-md-7">
                     {/* {`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `} */}
                     <CardLabel style={{ marginBottom: "30px" }}>Type of Building<span className="mandatorycss">*</span></CardLabel>
-                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={buildingtype} selectedOption={BuildingType} onSelect={selectBuildingType} style={{ marginTop: "-8px", paddingLeft: "5px", height: "25px", display: "flex" }} />
+                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={buildingtype} selectedOption={BuildingType} onSelect={selectBuildingType} style={{ display: "flex", justifyContent: "space-between",width: "48%"  }} />
                   </div>
                 </div>
                 <div className="row">
