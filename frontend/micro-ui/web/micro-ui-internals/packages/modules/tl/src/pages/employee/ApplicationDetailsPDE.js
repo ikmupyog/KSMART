@@ -147,7 +147,6 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading) => {
       }
     }
     if (mutate) {
-      console.log("mutate is there");
       setIsEnableLoader(true);
       mutate(data, {
         onError: (error, variables) => {
