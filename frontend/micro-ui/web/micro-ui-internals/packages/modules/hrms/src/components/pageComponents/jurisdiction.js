@@ -16,6 +16,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         boundaryType: null,
         boundary: null,
         roles: [],
+   
       },
     ]
   );
@@ -45,6 +46,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
       [...jurisdictionsData, ...inactiveJurisdictions].filter((value) => Object.keys(value).length !== 0)
     );
   }, [jurisdictions]);
+  
 
   const reviseIndexKeys = () => {
     setjurisdictions((prev) => prev.map((unit, index) => ({ ...unit, key: index })));
@@ -294,5 +296,3 @@ function Jurisdiction({
     </div>
   );
 }
-
-export default Jurisdictions;
