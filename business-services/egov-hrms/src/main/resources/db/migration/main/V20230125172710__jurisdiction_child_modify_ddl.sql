@@ -20,7 +20,3 @@ CREATE TABLE IF NOT EXISTS public.eg_hrms_jurisdiction_child
         ON DELETE CASCADE
 )
 
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_hrms_jurisdiction_child
-    OWNER to postgres;
