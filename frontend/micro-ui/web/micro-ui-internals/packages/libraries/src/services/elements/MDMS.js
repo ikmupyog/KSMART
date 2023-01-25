@@ -927,7 +927,38 @@ const getCROtherDeathPlacelist = (tenantId, moduleCode) => ({
     ],
   },
 });
-// const CRcauseOfSpouseTypelist = (tenantId, moduleCode) => ({
+const getCRcauseOfSpouseTypelist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "SpouseType",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRDeathVehicleTypelist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "VehicleType",
+          },
+        ],
+      },
+    ],
+  },
+});
+
+// const getCRplaceTypelist = (tenantId, moduleCode) => ({
 //   details: {
 //     tenantId: tenantId,
 //     moduleDetails: [
@@ -935,14 +966,13 @@ const getCROtherDeathPlacelist = (tenantId, moduleCode) => ({
 //         moduleName: moduleCode,
 //         masterDetails: [
 //           {
-//             name: "SpouseType",
+//             name: "PlaceMasterDeath",
 //           },
 //         ],
 //       },
 //     ],
 //   },
 // });
-
 const getCRVillagelist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2167,15 +2197,21 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getCRcauseOfDeathMainlist(tenantId, moduleCode), moduleCode);
   },
   getCRcauseOfDeathsub: (tenantId, moduleCode) => {
-    return MdmsService.getDataByCriteria(tenantId, getCRcauseOfDeathMainlist(tenantId, moduleCode), moduleCode);
+    return MdmsService.getDataByCriteria(tenantId, getCRcauseOfDeathsublist(tenantId, moduleCode), moduleCode);
   },
   getCROtherDeathPlace: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCROtherDeathPlacelist(tenantId, moduleCode), moduleCode);
   },
-  // getCRcauseOfSpouseType: (tenantId, moduleCode) => {
-  //   return MdmsService.getDataByCriteria(tenantId, getCRcauseOfSpouseTypelist(tenantId, moduleCode), moduleCode);
-  // },
-    
+  getCRcauseOfSpouseType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRcauseOfSpouseTypelist(tenantId, moduleCode), moduleCode);
+  },
+  getCRDeathVehicleType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRDeathVehicleTypelist(tenantId, moduleCode), moduleCode);
+  },
+  
+  // getCRplaceType: (tenantId, moduleCode) => {
+  //   return MdmsService.getDataByCriteria(tenantId, getCRplaceTypelist(tenantId, moduleCode), moduleCode);
+  // }, 
   getCRVillage: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRVillagelist(tenantId, moduleCode), moduleCode);
   },

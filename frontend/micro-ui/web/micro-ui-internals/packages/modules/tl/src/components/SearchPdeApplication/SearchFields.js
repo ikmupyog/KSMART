@@ -34,6 +34,12 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     cmbWardNoFinal.push(wardmst);
   });
 
+  cmbWardNoFinal = cmbWardNoFinal.sort((a, b) => {
+    if (parseInt(a.wardno) >  parseInt(b.wardno)) { return 1; }
+    if (parseInt(b.wardno) > parseInt(a.wardno) ) { return -1; }
+    return 0;
+  });
+
     const bussinesssectorlist = [
         { name: "Manufacturing Sector", code: "MANUFACTORING" },
         { name: "Service Sector", code: "SERVICE" },
@@ -66,7 +72,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <label>{`${t("TL_COMMON_TABLE_COL_TRD_NAME")}`}</label>
             <TextInput name="tradeName" inputRef={register({})} />
         </SearchField>
-        <SearchField>
+        {/* <SearchField>
             <label>{`${t("TL_LOCALIZATION_SECTOR")}`}</label>
             <Controller
                     control={control}
@@ -82,7 +88,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                         />
                     )}
                     />
-        </SearchField>
+        </SearchField> */}
         <SearchField>
             <label>{`${t("TL_LOCALIZATION_TRADE_OWNER_NAME")}`}</label>
             <TextInput  name="ownerName" inputRef={register({})}/>

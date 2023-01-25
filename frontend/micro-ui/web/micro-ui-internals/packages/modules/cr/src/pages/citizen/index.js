@@ -9,7 +9,10 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 // import { TLList } from "./Renewal";
 // import RenewTrade from "./Renewal/renewTrade";
 // import SearchTradeComponent from "./SearchTrade";
-import BirthCertificate from "./Certificate/BirthCertificate";
+// import BirthCertificate from "./Certificate/BirthCertificate";
+// import DeathCertificate from "./Certificate/DeathCertificate";
+import CreateBirthCertificate from "./Create";
+import CreateDeathCertificate from "./DeathReg"; 
 
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
@@ -43,8 +46,10 @@ const App = () => {
   return (
     <span className={"tl-citizen"}>
       <Switch>
-        <PrivateRoute path={`${path}/birthcertificate`} component={() => <BirthCertificate />} />
-
+        <PrivateRoute path={`${path}/create-death-certificate`} component={() => <CreateDeathCertificate parentUrl={path}/>} />
+        <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <CreateBirthCertificate parentUrl={path} />} />
+        {/* <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificate parentUrl={path}/>} />
+        <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificate parentUrl={path} />} /> */}
         {/* <AppContainer>
           <BackButton  style={{ position: "fixed", top: "55px" }}  isCommonPTPropertyScreen={isCommonPTPropertyScreen} isSuccessScreen={isSuccessScreen} getBackPageNumber={getBackPageNumber}>Back</BackButton>
           <PrivateRoute path={`${path}/tradelicence/new-application`} component={CreateTradeLicence} />
