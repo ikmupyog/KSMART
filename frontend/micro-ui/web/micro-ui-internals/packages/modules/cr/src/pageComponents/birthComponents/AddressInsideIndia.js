@@ -9,51 +9,42 @@ const AddressAdrsInsideIndia = ({
   onSelect,
   userType,
   formData,
-  // AdrsInsideIndiaCountry,
-  // setAdrsInsideIndiaCountry,
-  // AdrsInsideIndiaStateName,
-  // setAdrsInsideIndiaStateName,
-  // AdrsInsideIndiaDistrict,
-  // setAdrsInsideIndiaDistrict,
-  // AdrsInsideIndiaLBTypeName,
-  // setAdrsInsideIndiaLBTypeName,
-  // AdrsInsideIndiaTaluk,
-  // setAdrsInsideIndiaTaluk,
-  // AdrsInsideIndiaPostOffice,
-  // setAdrsInsideIndiaPostOffice,
-  // AdrsInsideIndiaPincode,
-  // setAdrsInsideIndiaPincode,
-  // AdrsInsideIndiaHouseNameEn,
-  // setAdrsInsideIndiaHouseNameEn,
-  // AdrsInsideIndiaResNoEn,
-  // setAdrsInsideIndiaResNoEn,
-  // AdrsInsideIndiaInfomntName,
-  // setAdrsInsideIndiaInfomntName,
-  // AdrsInsideIndiaDoorNo,
-  // setAdrsInsideIndiaDoorNo,
-  // AdrsInsideIndiaSubNo,
-  // setAdrsInsideIndiaSubNo,
-  // AdrsInsideIndiaMainPlaceEn,
-  // setAdrsInsideIndiaMainPlaceEn,
-  // AdrsInsideIndiaLocalityNameEn,
-  // setAdrsInsideIndiaLocalityNameEn,
-  // AdrsInsideIndiaStreetNameEn,
-  // setAdrsInsideIndiaStreetNameEn,
-  // AdrsInsideIndiaVillage,
-  // setAdrsInsideIndiaVillage,
-  // AdrsInsideIndiaLBName,
-  // setAdrsInsideIndiaLBName,
-  // AdrsInsideIndiaMainPlaceMl,
-  // setAdrsInsideIndiaMainPlaceMl,
-  // AdrsInsideIndiaLocalityNameMl,
-  // setAdrsInsideIndiaLocalityNameMl,
-  // AdrsInsideIndiaStreetNameMl,
-  // setAdrsInsideIndiaStreetNameMl,
-  // AdrsInsideIndiaHouseNameMl,
-  // setAdrsInsideIndiaHouseNameMl,
-  // AdrsInsideIndiaResNoMl,
-  // setAdrsInsideIndiaResNoMl,setLBCombo,LBCombo
-  
+  AdrsInsideIndiaCountry,
+  setAdrsInsideIndiaCountry,
+  AdrsInsideIndiaStateName,
+  setAdrsInsideIndiaStateName,
+  AdrsInsideIndiaDistrict,
+  setAdrsInsideIndiaDistrict,  
+  AdrsInsideIndiaTaluk,
+  setAdrsInsideIndiaTaluk,
+  AdrsInsideIndiaPostOffice,
+  setAdrsInsideIndiaPostOffice,
+  AdrsInsideIndiaPincode,
+  setAdrsInsideIndiaPincode,
+  AdrsInsideIndiaHouseNameEn,
+  setAdrsInsideIndiaHouseNameEn,
+  AdrsInsideIndiaHouseNameMl,
+  setAdrsInsideIndiaHouseNameMl,
+  AdrsInsideIndiaResNoEn,
+  setAdrsInsideIndiaResNoEn, 
+  AdrsInsideIndiaResNoMl, 
+  setAdrsInsideIndiaResNoMl,
+  AdrsInsideIndiaMainPlaceEn,
+  setAdrsInsideIndiaMainPlaceEn,
+  AdrsInsideIndiaLocalityNameEn,
+  setAdrsInsideIndiaLocalityNameEn,  
+  AdrsInsideIndiaVillage,
+  setAdrsInsideIndiaVillage, 
+  AdrsInsideIndiaMainPlaceMl,
+  setAdrsInsideIndiaMainPlaceMl,
+  AdrsInsideIndiaLocalityNameMl,
+  setAdrsInsideIndiaLocalityNameMl, 
+  AdrsInsideIndiaCityVilgeEn,
+  setAdrsInsideIndiaCityVilgeEn,
+  AdrsInsideIndiaCityVilgeMl,
+  setAdrsInsideIndiaCityVilgeMl,
+
+ 
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -70,9 +61,7 @@ const AddressAdrsInsideIndia = ({
   // Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-  // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-
-  //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
+ 
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderTenant, setIsInitialRenderTenant] = useState(true);
@@ -85,28 +74,26 @@ const AddressAdrsInsideIndia = ({
 
 
 
-  const [AdrsInsideIndiaCountry, setAdrsInsideIndiaCountry] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCountry ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCountry : null);
-  const [AdrsInsideIndiaStateName, setAdrsInsideIndiaStateName] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaStateName ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaStateName : null);
-  const [AdrsInsideIndiaDistrict, setAdrsInsideIndiaDistrict] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaDistrict ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaDistrict : null);
+  // const [AdrsInsideIndiaCountry, setAdrsInsideIndiaCountry] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCountry ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCountry : null);
+  // const [AdrsInsideIndiaStateName, setAdrsInsideIndiaStateName] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaStateName ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaStateName : null);
+  // const [AdrsInsideIndiaDistrict, setAdrsInsideIndiaDistrict] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaDistrict ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaDistrict : null);
+  // const [AdrsInsideIndiaTaluk, setAdrsInsideIndiaTaluk] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaTaluk ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaTaluk : null);
+  // const [AdrsInsideIndiaPostOffice, setAdrsInsideIndiaPostOffice] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPostOffice ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPostOffice : null);
+  // const [AdrsInsideIndiaPincode, setAdrsInsideIndiaPincode] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPincode ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPincode : null);
+  // const [AdrsInsideIndiaHouseNameEn, setAdrsInsideIndiaHouseNameEn] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaHouseNameEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaHouseNameEn : null);
+  // const [AdrsInsideIndiaHouseNameMl, setAdrsInsideIndiaHouseNameMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaHouseNameMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaHouseNameMl : null);
+  // const [AdrsInsideIndiaResNoEn, setAdrsInsideIndiaResNoEn] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaResNoEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaResNoEn : null);
+  // const [AdrsInsideIndiaResNoMl, setAdrsInsideIndiaResNoMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaResNoMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaResNoMl : null);
+  // const [AdrsInsideIndiaMainPlaceEn, setAdrsInsideIndiaMainPlaceEn] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaMainPlaceEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaMainPlaceEn : null);
+  // const [AdrsInsideIndiaMainPlaceMl, setAdrsInsideIndiaMainPlaceMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaMainPlaceMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaMainPlaceMl : null);
+  // const [AdrsInsideIndiaCityVilgeEn,  setAdrsInsideIndiaCityVilgeEn] = useState(formData?.AddressInsideIndiaDetails?. AdrsInsideIndiaCityVilgeEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCityVilgeEn : null);
+  // const [AdrsInsideIndiaCityVilgeMl, setAdrsInsideIndiaCityVilgeMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCityVilgeMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCityVilgeMl : null);  
+  // const [AdrsInsideIndiaLocalityNameEn, setAdrsInsideIndiaLocalityNameEn] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameEn : null);
+  // const [AdrsInsideIndiaLocalityNameMl, setAdrsInsideIndiaLocalityNameMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameMl : null);  
+  // const [AdrsInsideIndiaVillage, setAdrsInsideIndiaVillage] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaVillage ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaVillage : null);
 
-  const [AdrsInsideIndiaTaluk, setAdrsInsideIndiaTaluk] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaTaluk ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaTaluk : null);
-  const [AdrsInsideIndiaPostOffice, setAdrsInsideIndiaPostOffice] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPostOffice ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPostOffice : null);
-  const [AdrsInsideIndiaPincode, setAdrsInsideIndiaPincode] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPincode ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPincode : null);
-  const [AdrsInsideIndiaHouseNameEn, setAdrsInsideIndiaHouseNameEn] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaHouseNameEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaHouseNameEn : null);
-   const [AdrsInsideIndiaHouseNameMl, setAdrsInsideIndiaHouseNameMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaHouseNameMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaHouseNameMl : null);
+    // const [AdrsInsideIndiaPincodeError, setAdrsInsideIndiaPincodeError] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPincode ? false : false);
 
-  const [AdrsInsideIndiaResNoEn, setAdrsInsideIndiaResNoEn] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaResNoEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaResNoEn : null);
-  const [AdrsInsideIndiaResNoMl, setAdrsInsideIndiaResNoMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaResNoMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaResNoMl : null);
-  const [AdrsInsideIndiaMainPlaceEn, setAdrsInsideIndiaMainPlaceEn] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaMainPlaceEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaMainPlaceEn : null);
-   const [AdrsInsideIndiaMainPlaceMl, setAdrsInsideIndiaMainPlaceMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaMainPlaceMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaMainPlaceMl : null);
-   const [AdrsInsideIndiaCityVilgeEn,  setAdrsInsideIndiaCityVilgeEn] = useState(formData?.AddressInsideIndiaDetails?. AdrsInsideIndiaCityVilgeEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCityVilgeEn : null);
-   const [AdrsInsideIndiaCityVilgeMl, setAdrsInsideIndiaCityVilgeMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCityVilgeMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaCityVilgeMl : null);  
-  const [AdrsInsideIndiaLocalityNameEn, setAdrsInsideIndiaLocalityNameEn] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameEn ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameEn : null);
-   const [AdrsInsideIndiaLocalityNameMl, setAdrsInsideIndiaLocalityNameMl] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameMl ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaLocalityNameMl : null);  
-  const [AdrsInsideIndiaVillage, setAdrsInsideIndiaVillage] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaVillage ? formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaVillage : null);
-
-  
-  const [AdrsInsideIndiaPincodeError, setAdrsInsideIndiaPincodeError] = useState(formData?.AddressInsideIndiaDetails?.AdrsInsideIndiaPincode ? false : false);
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
     { i18nKey: "Village", code: "VILLAGE" },
@@ -193,29 +180,38 @@ let cmbfilterCountry = [];
   function setSelectAdrsInsideIndiaPostOffice(value) {
     setAdrsInsideIndiaPostOffice(value);
   }
-  function setSelectAdrsInsideIndiaPincode(e) {
-    setAdrsInsideIndiaPincode(e.target.value);
-  }
+  // function setSelectAdrsInsideIndiaPincode(e) {
+  //   setAdrsInsideIndiaPincode(e.target.value);
+  // }
   
   function setSelectAdrsInsideIndiaPincode(e) {
-    if (e.target.value.length != 0) {
-
-      if (e.target.value.length > 6) {
-        // setMotherAadhar(e.target.value);
-        setAdrsInsideIndiaPincodeError(true);
-        return false;
-      } else if (e.target.value.length < 6) {
-        setAdrsInsideIndiaPincodeError(true);
-        setAdrsInsideIndiaPincode(e.target.value);
-        return false;
-      }
-      else {
-        setAdrsInsideIndiaPincodeError(false);
-        setAdrsInsideIndiaPincode(e.target.value);
-        
-      }
+    if (e.target.value.length === 7) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsInsideIndiaPincode(e.target.value);
     }
   }
+
+  // function setSelectAdrsInsideIndiaPincode(e) {
+  //   if (e.target.value.length != 0) {
+
+  //     if (e.target.value.length > 6) {
+  //       // setMotherAadhar(e.target.value);
+  //       setAdrsInsideIndiaPincodeeError(true);
+  //       return false;
+  //     } else if (e.target.value.length < 6) {
+  //       setAdrsInsideIndiaPincodeeError(true);
+  //       setAdrsInsideIndiaPincode(e.target.value);
+  //       return false;
+  //     }
+  //     else {
+  //       setAdrsInsideIndiaPincodeeError(false);
+  //       setAdrsInsideIndiaPincode(e.target.value);
+        
+  //     }
+  //   }
+  // }
 
 
   function setSelectAdrsInsideIndiaResNoEn(e) {
@@ -307,66 +303,46 @@ let cmbfilterCountry = [];
  
   const goNext = () => {
 
-    if (AdrsInsideIndiaPincode != null || AdrsInsideIndiaPincode != '' || AdrsInsideIndiaPincode != undefined) {
-      if (AdrsInsideIndiaPincodeError) {
-        validFlag = false;
-        setAdrsInsideIndiaPincodeError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else {
-        setAdrsInsideIndiaPincodeError(false);
-      }
-    } 
+   
   
-    sessionStorage.setItem("AdrsInsideIndiaCountry", AdrsInsideIndiaCountry.code ? AdrsInsideIndiaCountry.code  : null );
-    sessionStorage.setItem("AdrsInsideIndiaStateName", AdrsInsideIndiaStateName.code ? AdrsInsideIndiaStateName.code  : null );
-    sessionStorage.setItem("AdrsInsideIndiaDistrict", AdrsInsideIndiaDistrict.code ? AdrsInsideIndiaDistrict.code  : null );
-    
-   
-    sessionStorage.setItem("AdrsInsideIndiaHouseNameEn", AdrsInsideIndiaHouseNameEn ? AdrsInsideIndiaHouseNameEn  : null );
-     sessionStorage.setItem("AdrsInsideIndiaHouseNameMl", AdrsInsideIndiaHouseNameMl ? AdrsInsideIndiaHouseNameMl  : null );
-    sessionStorage.setItem("AdrsInsideIndiaMainPlaceEn", AdrsInsideIndiaMainPlaceEn ? AdrsInsideIndiaMainPlaceEn  : null );
-     sessionStorage.setItem("AdrsInsideIndiaMainPlaceMl", AdrsInsideIndiaMainPlaceMl ? AdrsInsideIndiaMainPlaceMl  : null );
-     sessionStorage.setItem("AdrsInsideIndiaCityVilgeEn", AdrsInsideIndiaCityVilgeEn ? AdrsInsideIndiaCityVilgeEn  : null );
-     sessionStorage.setItem("AdrsInsideIndiaCityVilgeMl", AdrsInsideIndiaCityVilgeMl ? AdrsInsideIndiaCityVilgeMl  : null );     
-    sessionStorage.setItem("AdrsInsideIndiaLocalityNameEn", AdrsInsideIndiaLocalityNameEn ? AdrsInsideIndiaLocalityNameEn  : null );
-     sessionStorage.setItem("AdrsInsideIndiaLocalityNameMl", AdrsInsideIndiaLocalityNameMl ? AdrsInsideIndiaLocalityNameMl  : null );
-   
-    sessionStorage.setItem("AdrsInsideIndiaVillage", AdrsInsideIndiaVillage.code ? AdrsInsideIndiaVillage.code  : null );
-    sessionStorage.setItem("AdrsInsideIndiaResNoEn", AdrsInsideIndiaResNoEn ? AdrsInsideIndiaResNoEn  : null );
-    sessionStorage.setItem("AdrsInsideIndiaResNoMl", AdrsInsideIndiaResNoMl ? AdrsInsideIndiaResNoMl : null );
-   
-    sessionStorage.setItem("AdrsInsideIndiaTaluk", AdrsInsideIndiaTaluk.code ? AdrsInsideIndiaTaluk.code  : null );
-    sessionStorage.setItem("AdrsInsideIndiaPostOffice", AdrsInsideIndiaPostOffice.code ? AdrsInsideIndiaPostOffice.code  : null );
-    sessionStorage.setItem("AdrsInsideIndiaPincode", AdrsInsideIndiaPincode ? AdrsInsideIndiaPincode  : null );   
-    onSelect(config.key, {  
-      
-      
-      
-      AdrsInsideIndiaCountry,
-      AdrsInsideIndiaStateName,
-      AdrsInsideIndiaDistrict,
-      AdrsInsideIndiaTaluk,
-      AdrsInsideIndiaVillage,
-      AdrsInsideIndiaMainPlaceEn,
-      AdrsInsideIndiaMainPlaceMl,
-      AdrsInsideIndiaCityVilgeEn,
-      AdrsInsideIndiaCityVilgeMl,      
-      AdrsInsideIndiaLocalityNameEn,
-      AdrsInsideIndiaLocalityNameMl,    
+    //  sessionStorage.setItem("AdrsInsideIndiaCountry", AdrsInsideIndiaCountry.code ? AdrsInsideIndiaCountry.code  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaStateName", AdrsInsideIndiaStateName.code ? AdrsInsideIndiaStateName.code  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaDistrict", AdrsInsideIndiaDistrict.code ? AdrsInsideIndiaDistrict.code  : null );    
+    //  sessionStorage.setItem("AdrsInsideIndiaHouseNameEn", AdrsInsideIndiaHouseNameEn ? AdrsInsideIndiaHouseNameEn  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaHouseNameMl", AdrsInsideIndiaHouseNameMl ? AdrsInsideIndiaHouseNameMl  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaMainPlaceEn", AdrsInsideIndiaMainPlaceEn ? AdrsInsideIndiaMainPlaceEn  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaMainPlaceMl", AdrsInsideIndiaMainPlaceMl ? AdrsInsideIndiaMainPlaceMl  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaCityVilgeEn", AdrsInsideIndiaCityVilgeEn ? AdrsInsideIndiaCityVilgeEn  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaCityVilgeMl", AdrsInsideIndiaCityVilgeMl ? AdrsInsideIndiaCityVilgeMl  : null );     
+    //  sessionStorage.setItem("AdrsInsideIndiaLocalityNameEn", AdrsInsideIndiaLocalityNameEn ? AdrsInsideIndiaLocalityNameEn  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaLocalityNameMl", AdrsInsideIndiaLocalityNameMl ? AdrsInsideIndiaLocalityNameMl  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaVillage", AdrsInsideIndiaVillage.code ? AdrsInsideIndiaVillage.code  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaResNoEn", AdrsInsideIndiaResNoEn ? AdrsInsideIndiaResNoEn  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaResNoMl", AdrsInsideIndiaResNoMl ? AdrsInsideIndiaResNoMl : null );   
+    //  sessionStorage.setItem("AdrsInsideIndiaTaluk", AdrsInsideIndiaTaluk.code ? AdrsInsideIndiaTaluk.code  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaPostOffice", AdrsInsideIndiaPostOffice.code ? AdrsInsideIndiaPostOffice.code  : null );
+    //  sessionStorage.setItem("AdrsInsideIndiaPincode", AdrsInsideIndiaPincode ? AdrsInsideIndiaPincode  : null );   
+    // onSelect(config.key, {     
+            
+    //   AdrsInsideIndiaCountry,
+    //   AdrsInsideIndiaStateName,
+    //   AdrsInsideIndiaDistrict,
+    //   AdrsInsideIndiaTaluk,
+    //   AdrsInsideIndiaVillage,
+    //   AdrsInsideIndiaMainPlaceEn,
+    //   AdrsInsideIndiaMainPlaceMl,
+    //   AdrsInsideIndiaCityVilgeEn,
+    //   AdrsInsideIndiaCityVilgeMl,      
+    //   AdrsInsideIndiaLocalityNameEn,
+    //   AdrsInsideIndiaLocalityNameMl, 
+    //   AdrsInsideIndiaPostOffice,
+    //   AdrsInsideIndiaPincode,
+    //   AdrsInsideIndiaResNoEn,
+    //   AdrsInsideIndiaResNoMl,
+    //   AdrsInsideIndiaHouseNameEn,
+    //   AdrsInsideIndiaHouseNameMl,
      
-      AdrsInsideIndiaPostOffice,
-      AdrsInsideIndiaPincode,
-      AdrsInsideIndiaResNoEn,
-      AdrsInsideIndiaResNoMl,
-      AdrsInsideIndiaHouseNameEn,
-      AdrsInsideIndiaHouseNameMl,
-     
-    });
+    // });
   };
 
   if (isCountryLoading || isStateLoading  || isPostOfficeLoading  || isDistrictLoading || isTalukLoading || isVillageLoading ) {
@@ -434,10 +410,10 @@ let cmbfilterCountry = [];
                 disabled={isEdit}
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
-            </div>
-           
+            </div>           
           </div>
         </div>
+
         <div className="row">
           <div className="col-md-12">            
             <div className="col-md-6">
@@ -457,9 +433,7 @@ let cmbfilterCountry = [];
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>
-                {t("CR_TOWN_VILLAGE_EN")}
-              
+              <CardLabel>{t("CR_TOWN_VILLAGE_EN")}              
               </CardLabel>
               <Dropdown
                 t={t}
@@ -476,12 +450,9 @@ let cmbfilterCountry = [];
         </div>
 
         <div className="row">
-          <div className="col-md-12">
-          
+          <div className="col-md-12">          
             <div className="col-md-6">
-              <CardLabel>
-                {t("CR_CITY_VILLAGE_NAME_EN")}
-             
+              <CardLabel>{t("CR_CITY_VILLAGE_NAME_EN")}             
               </CardLabel>
               <TextInput
                 t={t}
@@ -519,12 +490,9 @@ let cmbfilterCountry = [];
 
 
         <div className="row">
-          <div className="col-md-12">
-          
+          <div className="col-md-12">          
             <div className="col-md-6">
-              <CardLabel>
-                {t("CR_MAIN_PLACE_EN")}
-             
+              <CardLabel>{t("CR_MAIN_PLACE_EN")}             
               </CardLabel>
               <TextInput
                 t={t}
@@ -540,9 +508,7 @@ let cmbfilterCountry = [];
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>
-                {t("CR_MAIN_PLACE_ML")}
-               
+              <CardLabel>{t("CR_MAIN_PLACE_ML")}              
               </CardLabel>
               <TextInput
                 t={t}
@@ -561,13 +527,9 @@ let cmbfilterCountry = [];
         </div>
 
         <div className="row">
-          <div className="col-md-12">          
-          
-           
-            <div className="col-md-6">
-              <CardLabel>
-                {t("CR_LOCALITY_EN")}
-              
+          <div className="col-md-12">    
+             <div className="col-md-6">
+              <CardLabel>{t("CR_LOCALITY_EN")}              
               </CardLabel>
               <TextInput
                 t={t}
@@ -583,9 +545,7 @@ let cmbfilterCountry = [];
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>
-                {t("CR_LOCALITY_ML")}
-              
+              <CardLabel>{t("CR_LOCALITY_ML")}              
               </CardLabel>
               <TextInput
                 t={t}
@@ -603,16 +563,10 @@ let cmbfilterCountry = [];
           </div>
         </div>
         
-
-       
-
         <div className="row">
-          <div className="col-md-12">
-          
+          <div className="col-md-12">          
             <div className="col-md-6">
-              <CardLabel>
-                {t("CS_COMMON_POST_OFFICE")}
-               
+              <CardLabel>{t("CS_COMMON_POST_OFFICE")}
               </CardLabel>
               <Dropdown
                 t={t}
@@ -692,10 +646,7 @@ let cmbfilterCountry = [];
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>
-                {t("CR_HOUSE_NAME_EN")}
-               
-              </CardLabel>
+              <CardLabel>{t("CR_HOUSE_NAME_EN")}</CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -731,27 +682,6 @@ let cmbfilterCountry = [];
           </div>
         </div>
 
-        {toast && (
-          <Toast
-            error={
-              AdrsInsideIndiaPincodeError
-
-            }
-            label={
-              (AdrsInsideIndiaPincodeError
-                ?
-                ( PresentPincodeError ? t(`BIRTH_ERROR_PRESENT_PINCODE_CHOOSE`)
-                    
-
-                                : setToast(false)
-                ) : setToast(false)
-              )
-            }
-
-            onClose={() => setToast(false)}
-          />
-        )
-        }{""}
      
         
       </FormStep>

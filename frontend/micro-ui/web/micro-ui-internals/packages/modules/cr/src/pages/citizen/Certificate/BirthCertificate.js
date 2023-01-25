@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton, TextArea,BackButton, Header } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import Timeline from "../../components/DRTimeline";
+import Timeline from "../../../components/DRTimeline";
 
 const BirthCertificate = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -33,7 +33,7 @@ const BirthCertificate = ({ config, onSelect, userType, formData }) => {
   }
   function selectSetMotherName(value) {
     setMotherName(value);
-  }KeyNo
+  }
   function selectSetFatherName(value) {
     setFatherName(value);
   }
@@ -64,9 +64,9 @@ const BirthCertificate = ({ config, onSelect, userType, formData }) => {
     cmbHospital.push(ob);
     });
 
-   function selectSetHospital(value) {
+   function selectSetHospitalName(value) {
     naturetypecmbvalue = value.code.substring(0, 4);
-    setHospital(value);
+    selectSetHospital(value);
   }
 
   return (
@@ -156,7 +156,7 @@ const BirthCertificate = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               option={cmbHospital}
               selected={setHospital}cmbGender
-              select={selectSetHospital}
+              select={selectSetHospitalName}
               disabled={isEdit}
               placeholder={`${t("BC_HOSPITAL_NAME")}`}
             />
