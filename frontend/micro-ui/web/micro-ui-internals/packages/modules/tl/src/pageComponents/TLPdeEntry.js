@@ -834,7 +834,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 licenseType: "PERMANENT",
                 tenantId: tenantId,
                 applicationNumber: (isEdit) ? formData?.applicationNumber : null,
-                status : (isEdit) ? formData?.status :null,
+                status: (isEdit) ? formData?.status : null,
                 tradeLicenseDetail: {
                   id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
                   channel: "PDE",
@@ -994,9 +994,14 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setSelectedAction(action);
     setDisplayMenu(false);
   }
-  if (!isEdit && !mutation.isLoading && mutation.isSuccess && !mutation.isError && !mutation.isIdle)
+  if (mutation.isLoading || mutation1.isLoading)
+    return (
+      <Loader />
+    );
+  else if (!isEdit && !mutation.isLoading && mutation.isSuccess && !mutation.isError && !mutation.isIdle)
     return (
       <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} isNewentry={oprole} isEdited={flgshowEdit}></ApplicationDetailsPDE>
+
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
