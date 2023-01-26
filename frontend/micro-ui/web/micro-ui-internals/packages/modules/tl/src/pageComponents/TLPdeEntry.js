@@ -11,16 +11,17 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEOPERATOR"));
   const approle = roletemp?.length > 0 ? true : false;
   const oprole=roletempop?.length > 0 ? true : false;
-  let configstatus=true;
-  let configstatusop=false;
+  let configstatus = true;
+  let configstatusop = false;
   configstatus = formData?.status==="APPROVED" ? false :true; 
   configstatus = formData?.status==="FORWARDED" && approle && configstatus ? true :false;
   
-  configstatusop = (formData?.status==="INITIATED" || formData?.status===null) && oprole && !configstatus ? true :false
+  configstatusop = (formData?.status==="INITIATED" ) && oprole && !configstatus ? true :false
   configstatus = isEdit ? configstatus: true;
   configstatusop=isEdit ?configstatusop:true;
 
   const [flgEdit, setFlgEdit] = useState(false);
+  const [flgshowEdit, setShowFlgEdit] = useState(true);
   const [toast, setToast] = useState(false);
   const menusector = [
     { name: "Manufacturing Sector", code: "MANUFACTORING" },
@@ -607,7 +608,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     else {
       dispatch({ type: "EDIT_CURRENT_OWNER_PROPERTY", payload: { index, key, value: e.target.value.replace(/[ ]/ig, '') } });
     }
-  }, [dispatch]);
+    setFlgEdit(true);
+  }, [dispatch,flgEdit]);
 
   const handleTextInputField1 = useCallback((index, e, key) => {
     if (key === "doorNo")
@@ -617,7 +619,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     if (key === "stallNo")
       dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
     setFlgEdit(true);
-  }, [dispatch1]);
+  }, [dispatch1,flgEdit]);
 
 
   // const convertToEditPDE = () => {
@@ -661,7 +663,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     let flg = true;
     formState1.map((data) => {
       combineddoorno = data.doorNo + data.doorNoSub;
-      const noOccurence = formState1.filter(d => ((d.doorNo == data.doorNo) && (d.doorNoSub == data.doorNoSub))).length;
+      const noOccurence = formState1.filter(d => ((d.doorNo === data.doorNo) && (d.doorNoSub === data.doorNoSub))).length;
       flg = noOccurence > 1 ? "DN" : true;
     })
     if (flg == true) {
@@ -687,7 +689,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
               let doornos = d?.tradeLicenseDetail?.structurePlace;
               doornos.filter(doorno => {
                 if (isEdit) {
-                  const noOccurence = formState1.filter(d => ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub == data.doorNoSub))).length;
+                  const noOccurence = formState1.filter(d => ((doorno.doorNo === d.doorNo) && (doorno.doorNoSub === d.doorNoSub))).length;
                   if ((noOccurence > 1) && (flg == true)) flg = "DExists";
                 }
                 else {
@@ -706,190 +708,195 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
 
   const goNext = (e) => {
-    console.log(flgEdit); 
     setToast(false)
     let tenantId1 = tenantId;
     let combineddoorno = "";
     let Tax = [];
-    if (validateData() === "DN") {
-      setErrorMessage("Door No Duplication Found");
-      setToast(true)
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "CA") {
-      setErrorMessage("Capital Investment must be greater than 1 ");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "LT") {
-      setErrorMessage("Select Ownership Type");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "WN") {
-      setErrorMessage("Select Ward No");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "BT") {
-      setErrorMessage("Select Building Type");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "BS") {
-      setErrorMessage("Select Bussiness Category");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "DExists") {
-      setErrorMessage("Doorno already  exists Please Check");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-
-
-    else {
-      if ((((licFromYear.id) && (licToYear.id) && (parseInt(licFromYear.code.replace(/-/g, "")) <= parseInt(licToYear.code.replace(/-/g, ""))))
-        || (!licFromYear) && (!licToYear))
-        && (((profFromYear.id) && (profToYear.id) && (parseInt(profFromYear?.code.replace(/-/g, "")) <= parseInt(profToYear.code.replace(/-/g, ""))))
-          || (!profFromYear) && (!profToYear))
-        && ((rentFromYear.id) && (rentToYear.id) && (parseInt(rentFromYear?.code.replace(/-/g, "")) <= parseInt(rentToYear.code.replace(/-/g, "")))
-          || ((!rentFromYear) && (!rentToYear)))) {
-        formState1.map((data) => {
-          combineddoorno = combineddoorno + data.doorNo +
-            (data.doorNoSub !== "" && data.doorNoSub !== null ? "/" + data.doorNoSub : "") +
-            (data.stallNo !== "" && data.stallNo !== null ? "(" + data.stallNo + ")" : "") + ",";
-        });
-        combineddoorno = combineddoorno.slice(0, -1)
-        if (licFromYear?.code !== undefined && licFromYear?.code !== null &&
-          licToYear?.code !== undefined && licToYear?.code !== null) {
-          let licencetax = {
-            service: "TL",
-            fromYear: licFromYear.code,
-            fromPeriod: "",
-            toYear: licToYear.code,
-            toPeriod: "",
-            arrear: licArrear === "" ? 0 : licArrear,
-            current: licCurrent === "" ? 0 : licCurrent,
-            current2: 0
-          };
-          Tax.push(licencetax);
-        }
-
-        if (profFromYear?.code !== undefined && profFromYear?.code !== null &&
-          profToYear?.code !== undefined && profToYear?.code !== null &&
-          profFromPeriod?.code !== undefined && profFromPeriod?.code !== null &&
-          profToPeriod?.code !== undefined && profToPeriod?.code !== null) {
-          let proftax = {
-            service: "PROFTAX",
-            fromYear: profFromYear.code,
-            fromPeriod: profFromPeriod.code,
-            toYear: profToYear.code,
-            toPeriod: profToPeriod.code,
-            arrear: profArrear === "" ? 0 : profArrear,
-            current: profCurrentFirst === "" ? 0 : profCurrentFirst,
-            current2: profCurrentSecond === "" ? 0 : profCurrentSecond
-          };
-          Tax.push(proftax);
-        }
-        if (rentFromYear?.code !== undefined && rentFromYear?.code !== null &&
-          rentToYear?.code !== undefined && rentToYear?.code !== null &&
-          rentFromMonth?.code !== undefined && rentFromMonth?.code !== null &&
-          rentToMonth?.code !== undefined && rentToMonth?.code !== null) {
-          let renttax = {
-            service: "RT.Municipal_Shops_Rent",
-            fromYear: rentFromYear.code,
-            fromPeriod: rentFromMonth.code,
-            toYear: rentToYear.code,
-            toPeriod: rentToMonth.code,
-            arrear: rentArrear === "" ? 0 : rentArrear,
-            current: rentCurrent === "" ? 0 : rentCurrent,
-            current2: 0
-          };
-          Tax.push(renttax);
-        }
-        let formdatatemp = {
-          Licenses: [
-            {
-              id: (isEdit) ? formData?.id : null,
-              action: "INITIATE",
-              applicationType: "RENEWAL",
-              financialYear: "2021-22",
-              licenseType: "PERMANENT",
-              tenantId: tenantId,
-              applicationNumber: (isEdit) ? formData?.applicationNumber : null,
-              tradeLicenseDetail: {
-                id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
-                channel: "PDE",
-                address: {
-                  id: (isEdit) ? formData?.tradeLicenseDetail?.address?.id : null,
-                  tenantId: tenantId,
-                  doorNo: combineddoorno, // formState1,
-                  zonalid: WardNo.zonecode,//formData.TradeDetails?.Zonal.code,
-                  wardid: WardNo.code,//formData.TradeDetails?.code,
-                  wardno: WardNo.wardno,//formData.TradeDetails?.wardno,
-                  circledivisionid: WardNo.zonecode,
-                  lbBuildingCode: BuildingCode === undefined ? "" : BuildingCode,
-                  lbBuildingName: BuildingName === undefined ? "" : BuildingName,
-                  buildingType: BuildingType.code
-                },
-                ownersPde: [
-                  ...formState
-                ],
-                structureType: "BUILDING",
-                structurePlace: [...formState1],
-                businessSector: sector.code,
-                capitalInvestment: capitalAmount,
-                //enterpriseType: Sector,
-                licenseeType: value2,
-                taxPde: Tax
-              },
-              tradeName: licensingInstitutionName,
-              workflowCode: "PdeTL"
-            }
-          ]
-        }
-        setPdeformdata(formdatatemp);
-
-        try {
-          // setIsInitialRender(false);
-          if (isEdit) {
-            mutation1.mutate(formdatatemp, {
-              onSuccess,
-
-            });
-          } else {
-            mutation.mutate(formdatatemp, {
-              onSuccess,
-
-            });
-          }
-        }
-        catch (err) {
-          console.log(err);
-        }
+    if(flgEdit === true){
+      if (validateData() === "DN") {
+        setErrorMessage("Door No Duplication Found");
+        setToast(true)
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
       }
-      else {
-        setErrorMessage("Year Mismatch Error");
+      else if (validateData() === "CA") {
+        setErrorMessage("Capital Investment must be greater than 1 ");
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
       }
+      else if (validateData() === "LT") {
+        setErrorMessage("Select Ownership Type");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+      else if (validateData() === "WN") {
+        setErrorMessage("Select Ward No");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+      else if (validateData() === "BT") {
+        setErrorMessage("Select Building Type");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+      else if (validateData() === "BS") {
+        setErrorMessage("Select Bussiness Category");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+      else if (validateData() === "DExists") {
+        setErrorMessage("Doorno already  exists Please Check");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+
+
+      else {
+        if ((((licFromYear.id) && (licToYear.id) && (parseInt(licFromYear.code.replace(/-/g, "")) <= parseInt(licToYear.code.replace(/-/g, ""))))
+          || (!licFromYear) && (!licToYear))
+          && (((profFromYear.id) && (profToYear.id) && (parseInt(profFromYear?.code.replace(/-/g, "")) <= parseInt(profToYear.code.replace(/-/g, ""))))
+            || (!profFromYear) && (!profToYear))
+          && ((rentFromYear.id) && (rentToYear.id) && (parseInt(rentFromYear?.code.replace(/-/g, "")) <= parseInt(rentToYear.code.replace(/-/g, "")))
+            || ((!rentFromYear) && (!rentToYear)))) {
+          formState1.map((data) => {
+            combineddoorno = combineddoorno + data.doorNo +
+              (data.doorNoSub !== "" && data.doorNoSub !== null ? "/" + data.doorNoSub : "") +
+              (data.stallNo !== "" && data.stallNo !== null ? "(" + data.stallNo + ")" : "") + ",";
+          });
+          combineddoorno = combineddoorno.slice(0, -1)
+          if (licFromYear?.code !== undefined && licFromYear?.code !== null &&
+            licToYear?.code !== undefined && licToYear?.code !== null) {
+            let licencetax = {
+              service: "TL",
+              fromYear: licFromYear.code,
+              fromPeriod: "",
+              toYear: licToYear.code,
+              toPeriod: "",
+              arrear: licArrear === "" ? 0 : licArrear,
+              current: licCurrent === "" ? 0 : licCurrent,
+              current2: 0
+            };
+            Tax.push(licencetax);
+          }
+
+          if (profFromYear?.code !== undefined && profFromYear?.code !== null &&
+            profToYear?.code !== undefined && profToYear?.code !== null &&
+            profFromPeriod?.code !== undefined && profFromPeriod?.code !== null &&
+            profToPeriod?.code !== undefined && profToPeriod?.code !== null) {
+            let proftax = {
+              service: "PROFTAX",
+              fromYear: profFromYear.code,
+              fromPeriod: profFromPeriod.code,
+              toYear: profToYear.code,
+              toPeriod: profToPeriod.code,
+              arrear: profArrear === "" ? 0 : profArrear,
+              current: profCurrentFirst === "" ? 0 : profCurrentFirst,
+              current2: profCurrentSecond === "" ? 0 : profCurrentSecond
+            };
+            Tax.push(proftax);
+          }
+          if (rentFromYear?.code !== undefined && rentFromYear?.code !== null &&
+            rentToYear?.code !== undefined && rentToYear?.code !== null &&
+            rentFromMonth?.code !== undefined && rentFromMonth?.code !== null &&
+            rentToMonth?.code !== undefined && rentToMonth?.code !== null) {
+            let renttax = {
+              service: "RT.Municipal_Shops_Rent",
+              fromYear: rentFromYear.code,
+              fromPeriod: rentFromMonth.code,
+              toYear: rentToYear.code,
+              toPeriod: rentToMonth.code,
+              arrear: rentArrear === "" ? 0 : rentArrear,
+              current: rentCurrent === "" ? 0 : rentCurrent,
+              current2: 0
+            };
+            Tax.push(renttax);
+          }
+          let formdatatemp = {
+            Licenses: [
+              {
+                id: (isEdit) ? formData?.id : null,
+                action: "INITIATE",
+                applicationType: "RENEWAL",
+                financialYear: "2021-22",
+                licenseType: "PERMANENT",
+                tenantId: tenantId,
+                applicationNumber: (isEdit) ? formData?.applicationNumber : null,
+                tradeLicenseDetail: {
+                  id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
+                  channel: "PDE",
+                  address: {
+                    id: (isEdit) ? formData?.tradeLicenseDetail?.address?.id : null,
+                    tenantId: tenantId,
+                    doorNo: combineddoorno, // formState1,
+                    zonalid: WardNo.zonecode,//formData.TradeDetails?.Zonal.code,
+                    wardid: WardNo.code,//formData.TradeDetails?.code,
+                    wardno: WardNo.wardno,//formData.TradeDetails?.wardno,
+                    circledivisionid: WardNo.zonecode,
+                    lbBuildingCode: BuildingCode === undefined ? "" : BuildingCode,
+                    lbBuildingName: BuildingName === undefined ? "" : BuildingName,
+                    buildingType: BuildingType.code
+                  },
+                  ownersPde: [
+                    ...formState
+                  ],
+                  structureType: "BUILDING",
+                  structurePlace: [...formState1],
+                  businessSector: sector.code,
+                  capitalInvestment: capitalAmount,
+                  //enterpriseType: Sector,
+                  licenseeType: value2,
+                  taxPde: Tax
+                },
+                tradeName: licensingInstitutionName,
+                workflowCode: "PdeTL"
+              }
+            ]
+          }
+          setPdeformdata(formdatatemp);
+
+          try {
+            // setIsInitialRender(false);
+            if (isEdit) {
+              mutation1.mutate(formdatatemp, {
+                onSuccess,
+
+              });
+            } else {
+              mutation.mutate(formdatatemp, {
+                onSuccess,
+
+              });
+            }
+          }
+          catch (err) {
+            console.log(err);
+          }
+        }
+        else {
+          setErrorMessage("Year Mismatch Error");
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        }
+      }
+      setShowFlgEdit(true);
+    }
+    else{
+        setShowFlgEdit(false);
     }
   }
 
@@ -982,7 +989,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   }
   if (!isEdit && !mutation.isLoading && mutation.isSuccess && !mutation.isError && !mutation.isIdle)
     return (
-      <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} isNewentry={oprole}></ApplicationDetailsPDE>
+      <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} isNewentry={oprole} isEdited={flgshowEdit}></ApplicationDetailsPDE>
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
@@ -999,9 +1006,28 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
       // </Card>
     );
-  if (isEdit && !mutation1.isLoading && mutation1.isSuccess && !mutation1.isError && !mutation1.isIdle)
+  else if (isEdit && !mutation1.isLoading && mutation1.isSuccess && !mutation1.isError && !mutation1.isIdle && flgshowEdit === true )
     return (
-      <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)} isNewentry={oprole}></ApplicationDetailsPDE>
+      <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)} isNewentry={oprole} isEdited={flgshowEdit}></ApplicationDetailsPDE>
+      // <Card>
+      // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
+      /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
+      /* <ApplicationDetailsActionBar
+          workflowDetails={workflowDetails}
+          displayMenu={displayMenu}
+          onActionSelect={onActionSelect}
+          setDisplayMenu={setDisplayMenu}
+          businessService={businessService}
+          forcedActionPrefix={forcedActionPrefix}
+          ActionBarStyle={ActionBarStyle}
+          MenuStyle={MenuStyle}
+        /> */
+
+      // </Card>
+    );
+  else if (isEdit && (flgshowEdit === false))
+    return (
+      <ApplicationDetailsPDE data={formData} isSuccess={true} isLoading={true} isNewentry={oprole} isEdited={flgshowEdit}></ApplicationDetailsPDE>
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */

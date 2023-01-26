@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
@@ -11,7 +11,7 @@ import ApplicationDetailsActionBar from "../../../../templates/ApplicationDetail
 import ApplicationDetailsWarningPopup from "../../../../templates/ApplicationDetails/components/ApplicationDetailsWarningPopup";
 import ActionModal from "../../../../templates/ApplicationDetails/Modal";
 import ApplicationDetailsToast from "../../../../templates/ApplicationDetails/components/ApplicationDetailsToast";
-const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
+const ApplicationDetailsPDE = ({data,isSuccess,isLoading,isNewentry,isEdited}) => {
   const history = useHistory();
   const [businessService, setBusinessService] = useState("PdeTL");
   const [displayMenu, setDisplayMenu] = useState(false);
@@ -22,7 +22,7 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
   const [isEnableLoader, setIsEnableLoader] = useState(false);
   const [isWarningPop, setWarningPopUp] = useState(false);
   const [showToast,setShowToast]=useState(false);
-    
+ 
   const closeToast = () => {
     setShowToast(null);
   };
@@ -35,13 +35,13 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
     mutate,
   } = Digit.Hooks.tl.useApplicationActions(tenantId,true);
 
-  let applicationNumber=data.data?.Licenses[0]?.applicationNumber;
+  let applicationNumber= isEdited ? data.data?.Licenses[0]?.applicationNumber : data?.applicationNumber
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
-    tenantId:  tenantId,
-    id: data.data?.Licenses[0]?.applicationNumber,
-    moduleCode: businessService,
-    role: "EMPLOYEE",
-  });
+      tenantId:  tenantId,
+      id: isEdited ? data.data?.Licenses[0]?.applicationNumber : data.data?.applicationNumber,
+      moduleCode: businessService,
+      role: "EMPLOYEE",
+    }); 
 
   useEffect(() => {
     if (showToast) {
@@ -100,10 +100,10 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
     return (
       <Banner
         message={t("CS_TRADE_APPLICATION_SUCCESS")}  ///{GetActionMessage(props)}
-        applicationNumber={props.data?.Licenses[0]?.applicationNumber}
+        applicationNumber= {((isEdited) ? props.data?.Licenses[0]?.applicationNumber : props.data?.applicationNumber)}
         info={props.isSuccess ? "Saved Success Fully" : ""}   //props.t("TL_REF_NO_LABEL") 
         successful={props.isSuccess}
-      />
+      />      
     );
   }
   const handleNewPage =event => {
@@ -180,7 +180,7 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
 
 
   return (
-    <Card>
+    <Card>   
       <BannerPicker t={t} data={data.data} isSuccess={data.isSuccess} isLoading={(data.isIdle || data.isLoading)} />
       {isNewentry===true && (
           <SubmitBar label="New Entry" onSubmit={handleNewPage} />

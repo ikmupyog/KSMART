@@ -68,7 +68,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
       Digit.SessionStorage.set("PDE_CREATE_TRADE", finaldata);
     }
     //need to get from workflow
-    const GetCell = (value) => <span className="cell-text">{value}</span>;
+    const GetCell = (value) => <span className="cell-text"  style={{wordBreak:"break-word"}}>{value}</span>;
     const columns = useMemo( () => ([
         {
           Header: t("TL_COMMON_TABLE_COL_APP_NO"),
@@ -101,6 +101,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
           disableSortBy: true,
           accessor: (row) => GetCell(row.tradeLicenseDetail.address.wardNo + " - " + row.tradeLicenseDetail.address.doorNo),
         },
+        
         {
           Header: t("TL_LOCALIZATION_SECTOR"),
           disableSortBy: true,
