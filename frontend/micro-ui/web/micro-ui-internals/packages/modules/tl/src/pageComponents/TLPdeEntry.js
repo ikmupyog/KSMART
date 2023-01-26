@@ -834,6 +834,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 licenseType: "PERMANENT",
                 tenantId: tenantId,
                 applicationNumber: (isEdit) ? formData?.applicationNumber : null,
+                status : (isEdit) ? formData?.status :null,
                 tradeLicenseDetail: {
                   id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
                   channel: "PDE",
