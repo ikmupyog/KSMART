@@ -10,15 +10,15 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEAPPROVER"));
   const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEOPERATOR"));
   const approle = roletemp?.length > 0 ? true : false;
-  const oprole=roletempop?.length > 0 ? true : false;
+  const oprole = roletempop?.length > 0 ? true : false;
   let configstatus = true;
   let configstatusop = false;
-  configstatus = formData?.status==="APPROVED" ? false :true; 
-  configstatus = formData?.status==="FORWARDED" && approle && configstatus ? true :false;
-  
-  configstatusop = (formData?.status==="INITIATED" ) && oprole && !configstatus ? true :false
-  configstatus = isEdit ? configstatus: true;
-  configstatusop=isEdit ?configstatusop:true;
+  configstatus = formData?.status === "APPROVED" ? false : true;
+  configstatus = formData?.status === "FORWARDED" && approle && configstatus ? true : false;
+
+  configstatusop = (formData?.status === "INITIATED") && oprole && !configstatus ? true : false
+  configstatus = isEdit ? configstatus : true;
+  configstatusop = isEdit ? configstatusop : true;
 
   const [flgEdit, setFlgEdit] = useState(false);
   const [flgshowEdit, setShowFlgEdit] = useState(true);
@@ -285,18 +285,18 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const setSelectBuildingName = useCallback(e => {
     setBuildingName(e.target.value.replace(/[^A-Za-z0-9, ]/ig, ''));
     setFlgEdit(true);
-  }, [BuildingName,flgEdit]);
+  }, [BuildingName, flgEdit]);
 
   const setSelectWard = useCallback(value => {
     setWardNo(value);
     setFlgEdit(true);
-  }, [WardNo,flgEdit]);
+  }, [WardNo, flgEdit]);
 
   const selectLicenseeType = useCallback(value => {
     setLicenseeType(value);
     setValue2(value.code);
     setFlgEdit(true);
-  }, [value2,flgEdit]);
+  }, [value2, flgEdit]);
 
   const selectBuildingType = useCallback(value => {
     setBuildingCode("");
@@ -310,19 +310,19 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setFlgEdit(true);
     setBuildingType(value);
     setValue3(value.code);
-    
+
     setIsInitialRenderRadio(true);
-  }, [buildingtype,flgEdit]);
+  }, [buildingtype, flgEdit]);
 
   const selectSector = useCallback(value => {
     setSector(value);
     setFlgEdit(true);
-  }, [sector,flgEdit]);
+  }, [sector, flgEdit]);
 
   const changesetCapitalAmount = useCallback(e => {
     setCapitalAmount(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [capitalAmount,flgEdit]);
+  }, [capitalAmount, flgEdit]);
 
   const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
   let TradeCategoryMenu = [];
@@ -397,17 +397,17 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     owners[i].name = value;
     setFeilds(owners);
     setFlgEdit(true);
-  }, [fields,flgEdit]);
+  }, [fields, flgEdit]);
 
   const changesetrentArrear = useCallback(e => {
     setRentArrear(e.target.value.replace(/[^0-9.]/ig, ''))
     setFlgEdit(true);
-  }, [rentArrear,flgEdit]);
+  }, [rentArrear, flgEdit]);
 
   const changesetrentCurrent = useCallback(e => {
     setRentCurrent(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [rentCurrent,flgEdit]);
+  }, [rentCurrent, flgEdit]);
   function selectRentFromYear(value) {
     setRentFromYear(value);
     setRentToYear(getYeardata()[0]);
@@ -418,32 +418,32 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const selectRentFromMonth = useCallback(value => {
     setRentFromMonth(value);
     setFlgEdit(true);
-  }, [rentFromMonth,flgEdit]);
+  }, [rentFromMonth, flgEdit]);
 
   const selectRentToYear = useCallback(value => {
     setRentToYear(value);
     setFlgEdit(true);
-  }, [rentToYear,flgEdit]);
+  }, [rentToYear, flgEdit]);
 
   const selectRentToMonth = useCallback(value => {
     setRentToMonth(value);
     setFlgEdit(true);
-  }, [rentToMonth,flgEdit]);
+  }, [rentToMonth, flgEdit]);
 
   const changesetProfArrear = useCallback(e => {
     setProfArrear(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [profArrear,flgEdit]);
+  }, [profArrear, flgEdit]);
 
   const changesetProfCurrentFirst = useCallback(e => {
     setProfCurrentFirst(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [profCurrentFirst,flgEdit]);
+  }, [profCurrentFirst, flgEdit]);
 
   const changesetProfCurrentSecond = useCallback(e => {
     setProfCurrentSecond(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [profCurrentSecond,flgEdit]);
+  }, [profCurrentSecond, flgEdit]);
 
   function selectProfFromYear(value) {
     setProfFromYear(value);
@@ -455,17 +455,17 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const selectProfFromPeriod = useCallback(value => {
     setProfFromPeriod(value);
     setFlgEdit(true);
-  }, [profFromPeriod,flgEdit]);
+  }, [profFromPeriod, flgEdit]);
 
   const selectProfToYear = useCallback(value => {
     setProfToYear(value);
     setFlgEdit(true);
-  }, [profToYear,flgEdit]);
+  }, [profToYear, flgEdit]);
 
   const selectProfToPeriod = useCallback(value => {
     setProfToPeriod(value);
     setFlgEdit(true);
-  }, [profToPeriod,flgEdit]);
+  }, [profToPeriod, flgEdit]);
 
   function selectLicFromYear(value) {
     setLicFromYear(value);
@@ -476,17 +476,17 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const selectLicToYear = useCallback(value => {
     setLicToYear(value);
     setFlgEdit(true);
-  }, [licToYear,flgEdit]);
+  }, [licToYear, flgEdit]);
 
   const changesetLicArrear = useCallback(e => {
     setLicArrear(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [licArrear,flgEdit]);
+  }, [licArrear, flgEdit]);
 
   const changesetLicCurrent = useCallback(e => {
     setLicCurrent(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [licCurrent,flgEdit]);
+  }, [licCurrent, flgEdit]);
 
   const setSelectLicensingInstitutionName = useCallback(e => {
     if (e.target.value.trim().length > 0) {
@@ -496,7 +496,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       setLicensingInstitution(e.target.value.replace(/[ ]/ig, ''));
     }
     setFlgEdit(true);
-  }, [licensingInstitutionName,flgEdit]);
+  }, [licensingInstitutionName, flgEdit]);
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
@@ -609,7 +609,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       dispatch({ type: "EDIT_CURRENT_OWNER_PROPERTY", payload: { index, key, value: e.target.value.replace(/[ ]/ig, '') } });
     }
     setFlgEdit(true);
-  }, [dispatch,flgEdit]);
+  }, [dispatch, flgEdit]);
 
   const handleTextInputField1 = useCallback((index, e, key) => {
     if (key === "doorNo")
@@ -619,7 +619,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     if (key === "stallNo")
       dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
     setFlgEdit(true);
-  }, [dispatch1,flgEdit]);
+  }, [dispatch1, flgEdit]);
 
 
   // const convertToEditPDE = () => {
@@ -712,7 +712,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     let tenantId1 = tenantId;
     let combineddoorno = "";
     let Tax = [];
-    if(flgEdit === true){
+    if (flgEdit === true) {
       if (validateData() === "DN") {
         setErrorMessage("Door No Duplication Found");
         setToast(true)
@@ -895,8 +895,14 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       }
       setShowFlgEdit(true);
     }
-    else{
-        setShowFlgEdit(false);
+    else {
+      if (formData?.tradeLicenseDetail?.owners === null) {
+        formData.tradeLicenseDetail["owners"] = [];
+      }
+      if (formData?.tradeLicenseDetail?.tradeUnits === null) {
+        formData.tradeLicenseDetail["tradeUnits"] = [];
+      }
+      setShowFlgEdit(false);
     }
   }
 
@@ -1006,7 +1012,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
       // </Card>
     );
-  else if (isEdit && !mutation1.isLoading && mutation1.isSuccess && !mutation1.isError && !mutation1.isIdle && flgshowEdit === true )
+  else if (isEdit && !mutation1.isLoading && mutation1.isSuccess && !mutation1.isError && !mutation1.isIdle && flgshowEdit === true)
     return (
       <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)} isNewentry={oprole} isEdited={flgshowEdit}></ApplicationDetailsPDE>
       // <Card>
@@ -1048,7 +1054,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     return (
       <React.Fragment>
         {isLoading ? (<Loader />) : (
-          <FormStep config={configstatus || configstatusop ? config  : "" } onSelect={goNext} onSkip={onSkip} t={t} >
+          <FormStep config={configstatus || configstatusop ? config : ""} onSelect={goNext} onSkip={onSkip} t={t} >
             <div>
               <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", marginLeft: "50px" }} >
 
@@ -1127,7 +1133,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 <div className="row">
                   <div className="col-md-7">
                     <CardLabel style={{ marginBottom: "30px" }} > {`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `}<span className="mandatorycss">*</span></CardLabel>
-                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ display: "flex", justifyContent: "space-between",width: "38%" }} {...(validation = { isRequired: true, type: "option", title: "Invalid Ownership Type" })} />
+                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ display: "flex", justifyContent: "space-between", width: "38%" }} {...(validation = { isRequired: true, type: "option", title: "Invalid Ownership Type" })} />
                   </div>
                 </div>
                 <div className="row">
@@ -1139,7 +1145,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   <div className="col-md-7">
                     {/* {`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `} */}
                     <CardLabel style={{ marginBottom: "30px" }}>Type of Building<span className="mandatorycss">*</span></CardLabel>
-                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={buildingtype} selectedOption={BuildingType} onSelect={selectBuildingType} style={{ display: "flex", justifyContent: "space-between",width: "48%"  }} />
+                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={buildingtype} selectedOption={BuildingType} onSelect={selectBuildingType} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
                   </div>
                 </div>
                 <div className="row">
@@ -1307,41 +1313,41 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   </div>
                 </div>
                 {value3 === "LBBUILDING" && (
-                <div>
-                  <div className="row">
-                    <div className="col-md-12" > <CardLabel>{`${t("TL_LICENSE_PDE_RENT_DATA")}`}</CardLabel>
-                    </div>
-                  </div>
-
-                  <div id= "divRent" style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
+                  <div>
                     <div className="row">
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
-                        <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearFrom} selected={rentFromYear} select={selectRentFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
+                      <div className="col-md-12" > <CardLabel>{`${t("TL_LICENSE_PDE_RENT_DATA")}`}</CardLabel>
                       </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_FROM_MONTH")}`}</CardLabel>
-                        <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrentperiod} selected={rentFromMonth} select={selectRentFromMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_MONTH") })} />
-                      </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
-                        <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
-                      </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>
-                        <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrenttoperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
-                      </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                        <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
-                      </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
-                        <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                    </div>
+
+                    <div id="divRent" style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
+                      <div className="row">
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
+                          <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearFrom} selected={rentFromYear} select={selectRentFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_FROM_MONTH")}`}</CardLabel>
+                          <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrentperiod} selected={rentFromMonth} select={selectRentFromMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_MONTH") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
+                          <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>
+                          <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrenttoperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
+                          <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
+                          <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 )}
 
                 {/* <div style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">

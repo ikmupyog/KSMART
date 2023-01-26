@@ -12,6 +12,8 @@ import ApplicationDetailsWarningPopup from "../../../../templates/ApplicationDet
 import ActionModal from "../../../../templates/ApplicationDetails/Modal";
 import ApplicationDetailsToast from "../../../../templates/ApplicationDetails/components/ApplicationDetailsToast";
 const ApplicationDetailsPDE = ({data,isSuccess,isLoading,isNewentry,isEdited}) => {
+
+  let applicationNumber= isEdited ? data?.Licenses[0]?.applicationNumber : data?.applicationNumber;
   const history = useHistory();
   const [businessService, setBusinessService] = useState("PdeTL");
   const [displayMenu, setDisplayMenu] = useState(false);
@@ -35,10 +37,10 @@ const ApplicationDetailsPDE = ({data,isSuccess,isLoading,isNewentry,isEdited}) =
     mutate,
   } = Digit.Hooks.tl.useApplicationActions(tenantId,true);
 
-  let applicationNumber= isEdited ? data.data?.Licenses[0]?.applicationNumber : data?.applicationNumber
+
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
       tenantId:  tenantId,
-      id: isEdited ? data.data?.Licenses[0]?.applicationNumber : data.data?.applicationNumber,
+      id: isEdited ? data?.Licenses[0]?.applicationNumber : data?.applicationNumber,
       moduleCode: businessService,
       role: "EMPLOYEE",
     }); 
@@ -101,7 +103,7 @@ const ApplicationDetailsPDE = ({data,isSuccess,isLoading,isNewentry,isEdited}) =
       <Banner
         message={t("CS_TRADE_APPLICATION_SUCCESS")}  ///{GetActionMessage(props)}
         applicationNumber= {((isEdited) ? props.data?.Licenses[0]?.applicationNumber : props.data?.applicationNumber)}
-        info={props.isSuccess ? "Saved Success Fully" : ""}   //props.t("TL_REF_NO_LABEL") 
+        // info={props.isSuccess ? "Saved Success Fully" : ""}   //props.t("TL_REF_NO_LABEL") 
         successful={props.isSuccess}
       />      
     );
@@ -181,7 +183,7 @@ const ApplicationDetailsPDE = ({data,isSuccess,isLoading,isNewentry,isEdited}) =
 
   return (
     <Card>   
-      <BannerPicker t={t} data={data.data} isSuccess={data.isSuccess} isLoading={(data.isIdle || data.isLoading)} />
+      <BannerPicker t={t} data={data} isSuccess={data.isSuccess} isLoading={(data.isIdle || data.isLoading)} />
       {isNewentry===true && (
           <SubmitBar label="New Entry" onSubmit={handleNewPage} />
       )}
@@ -204,8 +206,8 @@ const ApplicationDetailsPDE = ({data,isSuccess,isLoading,isNewentry,isEdited}) =
               tenantId={tenantId}
               // state={state}
               id={applicationNumber}
-              // applicationDetails={applicationDetails}
-               applicationData={data?.data?.Licenses[0]}
+              // applicationDetails={applicationDetails} isEdited ? data?.Licenses[0]?.applicationNumber : data?.applicationNumber
+               applicationData={isEdited ? data?.Licenses[0]:data }
               closeModal={closeModal}
               submitAction={submitAction}
               actionData={workflowDetails?.data?.timeline}
