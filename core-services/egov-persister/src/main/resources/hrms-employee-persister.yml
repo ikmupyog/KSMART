@@ -238,25 +238,29 @@ serviceMaps:
           basePath: Employees.*.jurisdictions.*.jurisdictionChilds.*
           jsonMaps:
 
-              - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.id
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.id
 
-              - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.parentJurisdictionId
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.parentJurisdictionId
 
-              - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.zoneCode
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.zoneCode
 
-              - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.wardCode
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.wardCode
 
-              - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.tenantId
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.tenantId
 
-              - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.isActive
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.isActive
 
-              - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.createdBy
+            - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.createdBy
 
-              - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.createdDate
+            - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.createdDate
 
-              - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.lastModifiedBy
+            - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.lastModifiedBy
 
-              - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.lastModifiedDate
+            - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.lastModifiedDate
+
+
+
+
 
     - version: 1.0
       name: hrms
@@ -502,13 +506,13 @@ serviceMaps:
           basePath: Employees.*.jurisdictions.*.jurisdictionChilds.*
           jsonMaps:
 
-            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.id
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChild.*.id
 
-            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.parentJurisdictionId
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChild.*.parentJurisdictionId
 
-            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.zoneCode
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChild.*.zoneCode
 
-            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.wardCode
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChild.*.wardCode
 
             - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.createdBy
 
