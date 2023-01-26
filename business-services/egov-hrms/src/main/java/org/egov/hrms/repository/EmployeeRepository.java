@@ -64,7 +64,6 @@ public class EmployeeRepository {
 			log.error("Exception while making the db call: ",e);
 			log.error("query; "+query);
 		}
-		System.out.println("employees  :" + employees);
 		return employees;
 	}
 

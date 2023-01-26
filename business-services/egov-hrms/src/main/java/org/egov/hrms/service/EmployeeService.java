@@ -285,19 +285,15 @@ public class EmployeeService {
 		employee.getJurisdictions().stream().forEach(jurisdiction -> {
 			jurisdiction.setId(UUID.randomUUID().toString());
 			jurisdiction.setAuditDetails(auditDetails);
-//			List<JurisdictionChild> child = jurisdiction.getJurisdictionChild();
-//			child.get(0).setJurisdictionId(jurisdiction.getId());
-//			child.get(0).setParentJurisdictionId(jurisdiction.getId());
-//			child.get(0).setId(UUID.randomUUID().toString());
-//			child.get(0).setAuditDetails(auditDetails);
 
 			jurisdiction.getJurisdictionChilds().forEach(child -> {
 				child.setJurisdictionId(jurisdiction.getId());
 				child.setParentJurisdictionId(jurisdiction.getId());
+				child.setTenantId(jurisdiction.getTenantId());
+				child.setIsActive(true);
 				child.setId(UUID.randomUUID().toString());
 				child.setAuditDetails(auditDetails);
 			});
-
 			if(null == jurisdiction.getIsActive())
 				jurisdiction.setIsActive(true);
 		});

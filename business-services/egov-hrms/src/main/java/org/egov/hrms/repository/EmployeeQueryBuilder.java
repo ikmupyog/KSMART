@@ -29,8 +29,6 @@ public class EmployeeQueryBuilder {
 	public String getEmployeeSearchQuery(EmployeeSearchCriteria criteria,List <Object> preparedStmtList ) {
 		StringBuilder builder = new StringBuilder(EmployeeQueries.HRMS_GET_EMPLOYEES);
 		addWhereClause(criteria, builder, preparedStmtList);
-		System.out.println("Query  :" + builder);
-		System.out.println("where  :" + preparedStmtList);
 		return paginationClause(criteria, builder);
 	}
 
