@@ -237,12 +237,20 @@ public class CrDeathRegistryRepository {
                 String presentAddPO = masterData.get(CrDeathRegistryConstants.POSTOFFICE).toString();
                 presentAddPO = presentAddPO.replaceAll("[\\[\\]\\(\\)]", "");
                 if (null != presentAddPO && !presentAddPO.isEmpty()){
+                     presentAddPO=presentAddPO+" "+CrDeathRegistryConstants.PO_EN;
+                    if(cert.getAddressInfo().getPresentAddress().getPincode() != 0){
+                        presentAddPO = presentAddPO+" "+cert.getAddressInfo().getPresentAddress().getPincode();
+                    }
                      cert.getAddressInfo().getPresentAddress().setPostofficeNameEn(presentAddPO);
                 }
 
                 String presentAddPOMl = masterDataMl.get(CrDeathRegistryConstants.POSTOFFICE).toString();
                 presentAddPOMl = presentAddPOMl.replaceAll("[\\[\\]\\(\\)]", "");
                 if (null != presentAddPOMl && !presentAddPOMl.isEmpty()){
+                    presentAddPOMl=presentAddPOMl+" "+CrDeathRegistryConstants.PO_ML;
+                    if(cert.getAddressInfo().getPresentAddress().getPincode() != 0){
+                        presentAddPOMl = presentAddPOMl+" "+cert.getAddressInfo().getPresentAddress().getPincode();
+                    }
                      cert.getAddressInfo().getPresentAddress().setPostofficeNameMl(presentAddPOMl);
                 }
 
@@ -265,14 +273,16 @@ public class CrDeathRegistryRepository {
                                 , cert.getTenantId()                           
                                 , cert.getAddressInfo().getPermanentAddress().getDistrictId()
                                 , cert.getAddressInfo().getPermanentAddress().getStateId()
-                                , cert.getAddressInfo().getPermanentAddress().getCountryId());
+                                , cert.getAddressInfo().getPermanentAddress().getCountryId()
+                                , cert.getAddressInfo().getPermanentAddress().getPostofficeId());
                 Map<String,List<String>> masterDataPermanent = getAttributeValues(mdmsDataPermanent);
 
                 Object mdmsDataPermanentMl = util.mDMSCallCertificatePMl(pdfApplicationRequest.getRequestInfo()     
                                 , cert.getTenantId()                           
                                 , cert.getAddressInfo().getPermanentAddress().getDistrictId()
                                 , cert.getAddressInfo().getPermanentAddress().getStateId()
-                                , cert.getAddressInfo().getPermanentAddress().getCountryId());
+                                , cert.getAddressInfo().getPermanentAddress().getCountryId()
+                                , cert.getAddressInfo().getPermanentAddress().getPostofficeId());
                 Map<String,List<String>> masterDataPermanentMl = getAttributeValues(mdmsDataPermanentMl);
 
                 String permanentAddDistrict = masterDataPermanent.get(CrDeathRegistryConstants.DISTRICT).toString();
@@ -298,6 +308,27 @@ public class CrDeathRegistryRepository {
                 String permanentAddCountryMl = masterDataPermanentMl.get(CrDeathRegistryConstants.COUNTRY).toString();
                 permanentAddCountryMl = permanentAddCountryMl.replaceAll("[\\[\\]\\(\\)]", "");
                 cert.getAddressInfo().getPermanentAddress().setCountryMl(permanentAddCountryMl);
+
+                String permanentAddPO = masterDataPermanent.get(CrDeathRegistryConstants.POSTOFFICE).toString();
+                permanentAddPO = permanentAddPO.replaceAll("[\\[\\]\\(\\)]", "");
+
+                if (null != permanentAddPO && !permanentAddPO.isEmpty()){
+                    permanentAddPO=permanentAddPO+" "+CrDeathRegistryConstants.PO_EN;
+                   if(cert.getAddressInfo().getPermanentAddress().getPincode() != 0){
+                    permanentAddPO = permanentAddPO+" "+cert.getAddressInfo().getPermanentAddress().getPincode();
+                   }
+                    cert.getAddressInfo().getPermanentAddress().setPostofficeNameEn(permanentAddPO);
+               }
+               String permanentAddPOMl = masterDataPermanentMl.get(CrDeathRegistryConstants.POSTOFFICE).toString();
+               permanentAddPOMl = permanentAddPOMl.replaceAll("[\\[\\]\\(\\)]", "");
+
+               if (null != permanentAddPOMl && !permanentAddPOMl.isEmpty()){
+                permanentAddPOMl=permanentAddPOMl+" "+CrDeathRegistryConstants.PO_ML;
+                if(cert.getAddressInfo().getPermanentAddress().getPincode() != 0){
+                    permanentAddPOMl = permanentAddPOMl+" "+cert.getAddressInfo().getPermanentAddress().getPincode();
+                }
+                 cert.getAddressInfo().getPermanentAddress().setPostofficeNameMl(permanentAddPOMl);
+              }
 
                 //RAkhi S on 25.01.2023
                 if(cert.getDeceasedFirstNameMl()!=null){}
@@ -338,17 +369,24 @@ public class CrDeathRegistryRepository {
                 //Rakhi S on 21.01.2023
                 String spouseMl = "";
                 String spouseEn = "";    
-                
-                if(cert.getSpouseType().equals(CrDeathRegistryConstants.WIFE.toString())){
-                    spouseMl = CrDeathRegistryConstants.WIFE_ML.toString();
-                    spouseEn = CrDeathRegistryConstants.WIFE_EN.toString();
-                }
-                else if(cert.getSpouseType().equals(CrDeathRegistryConstants.HUSBAND.toString())){
-                    spouseMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
-                    spouseEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
-                }
-                cert.setSpouseName(cert.getSpouseNameMl()+ spouseMl+" / "+
+
+                if(cert.getSpouseType()!=null){
+                    if(cert.getSpouseType().equals(CrDeathRegistryConstants.WIFE.toString())){
+                        spouseMl = CrDeathRegistryConstants.WIFE_ML.toString();
+                        spouseEn = CrDeathRegistryConstants.WIFE_EN.toString();
+                    }
+                    else if(cert.getSpouseType().equals(CrDeathRegistryConstants.HUSBAND.toString())){
+                        spouseMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
+                        spouseEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
+                    }
+               
+                    cert.setSpouseName(cert.getSpouseNameMl()+ spouseMl+" / "+
                     cert.getSpouseNameEn()+ spouseEn);
+                }
+                else{
+                    cert.setSpouseName(CrDeathRegistryConstants.NOT_RECORDED_ML+" / "+
+                    CrDeathRegistryConstants.NOT_RECORDED_EN);
+                }
                 // if(cert.getFemaleDependentTitle()!=null){
                 // cert.setMotherName(cert.getFemaleDependentTitle()+" "+
                 //                     cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
@@ -379,6 +417,113 @@ public class CrDeathRegistryRepository {
                                             cert.getMaleDependentNameEn()+ maleDependentEn);
                 // }
 
+                if(cert.getAddressInfo().getPresentAddress().getResidenceAsscNo() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setResidenceAsscNo("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getHouseNo() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setHouseNo("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getHoueNameEn() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setHoueNameEn("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getHoueNameMl() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setHoueNameMl("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getStreetNameEn() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setStreetNameEn("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getStreetNameMl() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setStreetNameMl("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getCityEn() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setCityEn("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getCityMl() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setCityMl("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getLocalityEn() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setLocalityEn("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getLocalityMl() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setLocalityMl("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getPostofficeNameEn() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setPostofficeNameEn("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getPostofficeNameMl() != null){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setPostofficeNameMl("");
+                }
+                if(cert.getAddressInfo().getPresentAddress().getPincode() != 0){}// && cert.getAddressInfo().getPresentAddress().getPincode() != 0){}
+                else{
+                    cert.getAddressInfo().getPresentAddress().setPincode(0);
+                }
+
+                //permanant
+                if(cert.getAddressInfo().getPermanentAddress().getResidenceAsscNo() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setResidenceAsscNo("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getHouseNo() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setHouseNo("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getHoueNameEn() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setHoueNameEn("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getHoueNameMl() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setHoueNameMl("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getStreetNameEn() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setStreetNameEn("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getStreetNameMl() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setStreetNameMl("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getCityEn() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setCityEn("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getCityMl() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setCityMl("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getLocalityEn() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setLocalityEn("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getLocalityMl() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setLocalityMl("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getPostofficeNameEn() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setPostofficeNameEn("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getPostofficeNameMl() != null){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setPostofficeNameMl("");
+                }
+                if(cert.getAddressInfo().getPermanentAddress().getPincode() != 0){}
+                else{
+                    cert.getAddressInfo().getPermanentAddress().setPincode(0);
+                }
+                //end
                 cert.setPresentAddressFullEn(cert.getAddressInfo().getPresentAddress().getResidenceAsscNo() + " "+
                                             cert.getAddressInfo().getPresentAddress().getHouseNo()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getHoueNameEn()+ " "+
@@ -386,8 +531,8 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPresentAddress().getCityEn()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getLocalityEn()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getPostofficeNameEn()+ " "+
-                                            CrDeathRegistryConstants.PO_EN +" - "+
-                                            cert.getAddressInfo().getPresentAddress().getPincode()+" "+
+                                            // CrDeathRegistryConstants.PO_EN +" - "+
+                                            // cert.getAddressInfo().getPresentAddress().getPincode()+" "+
                                             cert.getAddressInfo().getPresentAddress().getDistrictId()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getStateId()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCountryId());  
@@ -398,8 +543,8 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPresentAddress().getStreetNameMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCityMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getLocalityMl()+ " "+
-                                            cert.getAddressInfo().getPresentAddress().getPostofficeNameMl()+ " "+"പി ഒ"+" - "+
-                                            cert.getAddressInfo().getPresentAddress().getPincode()+" "+
+                                            // cert.getAddressInfo().getPresentAddress().getPostofficeNameMl()+ " "+"പി ഒ"+" - "+
+                                            // cert.getAddressInfo().getPresentAddress().getPincode()+" "+
                                             cert.getAddressInfo().getPresentAddress().getDistrictMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getStateMl()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCountryMl());
@@ -410,9 +555,10 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPermanentAddress().getStreetNameEn()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getCityEn()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getLocalityEn()+ " "+
+                                            cert.getAddressInfo().getPermanentAddress().getPostofficeNameEn()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getDistrictId()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getStateId()+ " "+
-                                            cert.getAddressInfo().getPermanentAddress().getCountryId());  
+                                            cert.getAddressInfo().getPermanentAddress().getCountryId());
 
                 cert.setPermanentAddressFullMl(cert.getAddressInfo().getPermanentAddress().getResidenceAsscNo() + " "+
                                             cert.getAddressInfo().getPermanentAddress().getHouseNo()+ " "+
@@ -423,7 +569,6 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPermanentAddress().getDistrictMl()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getStateMl()+ " "+
                                             cert.getAddressInfo().getPermanentAddress().getCountryMl());
-
                 //Rakhi S 13.01.2023 
                 // place of death HOME
                 if(CrDeathRegistryConstants.DEATH_PLACE_HOME.toString().equals(cert.getDeathPlace())){

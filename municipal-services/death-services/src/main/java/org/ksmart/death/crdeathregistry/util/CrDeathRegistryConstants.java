@@ -105,4 +105,7 @@ public class CrDeathRegistryConstants {
      public static final String PO_EN = "P O";
      public static final String PO_ML = "പി ഒ";
 
+     public static final String NOT_RECORDED_EN = "Not Recorded";
+     public static final String NOT_RECORDED_ML = "രേഖപ്പെടുത്തിയിട്ടില്ല";
+
 }
