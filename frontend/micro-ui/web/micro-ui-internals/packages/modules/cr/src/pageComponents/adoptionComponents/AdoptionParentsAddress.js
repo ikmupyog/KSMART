@@ -46,11 +46,6 @@ const AdoptionParentsAddress = ({ config, onSelect, userType, formData }) => {
   const [PermanentTalukError, setPermanentTalukError] = useState(formData?.AddressDetails?.PermanentTaluk ? false : false);
   const [PermanentPostOfficeError, setPermanentPostOfficeError] = useState(formData?.AddressDetails?.PermanentPostOffice ? false : false);
   const [PermanentPincodeError, setPermanentPincodeError] = useState(formData?.AddressDetails?.PermanentPincode ? false : false);
-
-  
-
-
-
   const [PresentCountry, setPresentCountry] = useState(formData?.AddressDetails?.PresentCountry ? formData?.AddressDetails?.PresentCountry : null);
   const [PresentStateName, setPresentStateName] = useState(formData?.AddressDetails?.PresentStateName ? formData?.AddressDetails?.PresentStateName : null);
   const [PresentDistrict, setPresentDistrict] = useState(formData?.AddressDetails?.PresentDistrict ? formData?.AddressDetails?.PresentDistrict : null);
@@ -988,8 +983,8 @@ const AdoptionParentsAddress = ({ config, onSelect, userType, formData }) => {
   }
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
        
