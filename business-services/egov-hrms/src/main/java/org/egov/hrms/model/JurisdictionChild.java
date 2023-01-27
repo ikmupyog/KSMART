@@ -35,10 +35,10 @@ public class JurisdictionChild {
 	@SafeHtml
 	private String tenantId;
 
-	@SafeHtml
-	@NotNull
-	@Size(max = 256)
-	private String zoneCode;
+//	@SafeHtml
+//	@NotNull
+//	@Size(max = 256)
+//	private String zoneCode;
 
 	@SafeHtml
 	@NotNull

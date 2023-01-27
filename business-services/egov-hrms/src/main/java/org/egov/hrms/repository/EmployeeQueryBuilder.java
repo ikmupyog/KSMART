@@ -79,6 +79,15 @@ public class EmployeeQueryBuilder {
 
 		// end
 
+		// enrter role code filteration here
+		if (!CollectionUtils.isEmpty(criteria.getRolecodes())) {
+			builder.append(" and jurisdiction.rolecode  IN (").append(createQuery(criteria.getRolecodes()))
+					.append(")");
+			addToPreparedStatement(preparedStmtList, criteria.getRolecodes());
+		}
+
+		// end
+
 		if(!CollectionUtils.isEmpty(criteria.getIds())){
 			builder.append(" and employee.id IN (").append(createQuery(criteria.getIds())).append(")");
 			addToPreparedStatement(preparedStmtList, criteria.getIds());

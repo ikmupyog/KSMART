@@ -44,6 +44,8 @@ public class EmployeeRepository {
 	 * @return
 	 */
 	public List<Employee> fetchEmployees(EmployeeSearchCriteria criteria, RequestInfo requestInfo){
+
+		System.out.println(" query Req Role" + criteria.getRolecodes());
 		List<Employee> employees = new ArrayList<>();
 		List<Object> preparedStmtList = new ArrayList<>();
 		if(hrmsUtils.isAssignmentSearchReqd(criteria)) {
@@ -64,6 +66,8 @@ public class EmployeeRepository {
 			log.error("Exception while making the db call: ",e);
 			log.error("query; "+query);
 		}
+		System.out.println("query  :" + query);
+		System.out.println("where  :" + preparedStmtList);
 		return employees;
 	}
 

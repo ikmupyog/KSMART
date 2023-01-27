@@ -120,7 +120,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
 
     public JurisdictionChild getApplicantDocument(final ResultSet rs) throws SQLException {
         JurisdictionChild ch = JurisdictionChild.builder().wardCode(rs.getString("wardcode"))
-                .zoneCode(rs.getString("zonecode")).build();
+				.build();
         return ch;
     }
 
@@ -155,6 +155,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                         .hierarchy(rs.getString("jurisdiction_hierarchy"))
                         .boundary(rs.getString("jurisdiction_boundary")).boundaryType(rs.getString("jurisdiction_boundarytype"))
                         .tenantId(rs.getString("jurisdiction_tenantid"))
+						.roleCode(rs.getString("jurisdiction_role")).zoneCode(rs.getString("jurisdiction_zone"))
                         .jurisdictionChilds(new ArrayList<JurisdictionChild>())
                         .isActive(null == rs.getObject("jurisdiction_isactive") ? true : rs.getBoolean("jurisdiction_isactive"))
                         .auditDetails(auditDetails).build();
@@ -196,8 +197,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
             if (!StringUtils.isEmpty(rs.getString("juch_uuid")) && !idChilds.contains(rs.getString("juch_uuid"))) {
                 JurisdictionChild ch = JurisdictionChild.builder().id(rs.getString("juch_uuid"))
                         .jurisdictionId(rs.getString("juch_jurisdictionid"))
-                        .wardCode(rs.getString("wardcode"))
-                        .zoneCode(rs.getString("zonecode"))
+						.wardCode(rs.getString("wardcode"))
                         .tenantId(rs.getString("juch_tenantid"))
                         .isActive(rs.getBoolean("juch_isactive")).build();
                 jurisdictionChilds.add(ch);

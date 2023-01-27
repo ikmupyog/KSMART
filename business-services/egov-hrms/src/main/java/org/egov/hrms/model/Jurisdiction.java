@@ -88,6 +88,9 @@ public class Jurisdiction {
     @SafeHtml
     private String tenantId;
 
+	private String roleCode;
+
+	private String zoneCode;
 
 	private List<JurisdictionChild> jurisdictionChilds = new ArrayList<>();
 
