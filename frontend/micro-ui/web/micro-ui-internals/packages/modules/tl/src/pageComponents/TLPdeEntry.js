@@ -355,7 +355,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       }
     }
   }, [mutationsearch])
-  const searchReult = mutationsearch?.status === "success" && mutationsearch?.isSuccess && !mutationsearch?.isError ? mutationsearch.data.Licenses : ""
+  const searchResult = mutationsearch?.status === "success" && mutationsearch?.isSuccess && !mutationsearch?.isError ? mutationsearch.data.Licenses : ""
 
 
   // let workflowDetails = (isEdit) ? Digit.Hooks.useWorkflowDetails({
@@ -683,26 +683,25 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     }
     if (flg == true) {
       formState1.map((data) => {
-        if (searchReult) {
-          searchReult.filter((d) => {
+        let noOccurence = 0;
+        if (searchResult) {
+          searchResult.map((d) => {
             if (d?.tradeLicenseDetail?.address.wardNo == WardNo.wardno) {
               let doornos = d?.tradeLicenseDetail?.structurePlace;
-              doornos.filter(doorno => {
                 if (isEdit) {
-                  const noOccurence = formState1.filter(d => ((doorno.doorNo === d.doorNo) && (doorno.doorNoSub === d.doorNoSub))).length;
-                  if ((noOccurence > 1) && (flg == true)) flg = "DExists";
+                  noOccurence =  doornos.filter((doorno) =>((doorno.doorNo == data.doorNo) && (doorno.doorNoSub.toUpperCase() == data.doorNoSub.toUpperCase())) ? doorno : "" ).length;
+                  if ((noOccurence > 1) && (flg == true)) {flg = "DExists";}
                 }
                 else {
-                  if ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub == data.doorNoSub) && (flg == true)) {
-                    flg = "DExists";
-                  }
+                  noOccurence = doornos.filter(doorno => ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub.toUpperCase() == data.doorNoSub.toUpperCase())) ? doorno : "" ).length;
+                  if ((noOccurence > 0) && (flg == true)) {flg = "DExists";}
                 }
-              });
             }
           });
         }
       });
     }
+
     return flg;
   }
 
