@@ -179,6 +179,8 @@ public class TLConstants {
 
         public static final String COMMON_MASTERS_MODULE = "common-masters";
 
+        public static final String TENANTS_MODULE = "tenant";
+
         // mdms master names
 
         public static final String OWNERSHIP_CATEGORY = "OwnerShipCategory";
@@ -190,6 +192,10 @@ public class TLConstants {
         public static final String STRUCTURE_TYPE = "StructureType";
 
         public static final String STRUCTURE_PLACE_TYPE = "TradeStructureSubtype";
+
+        public static final String TENANTS = "tenants";
+
+        public static final String IDGEN = "idgencode";
 
         // mdms path codes
 
@@ -208,6 +214,10 @@ public class TLConstants {
         public static final String REMINDER_JSONPATH = "$.MdmsRes.TradeLicense.ReminderPeriods";
 
         public static final String REMINDER_PERIODS = "ReminderPeriods";
+
+        public static final String TENANTS_JSONPATH = "$.MdmsRes.tenant.tenants";
+
+        public static final String TENANTS_JSONPATH1 = "$.MdmsRes.tenant.tenants.*.code";
 
         // FINANCIAL YEAR
 
@@ -407,7 +417,25 @@ public class TLConstants {
 
         public static final String RT_Municipal_Shops_Rent_CUR = "431400101";
 
-        public static final String PENAL = "140200200";
+        public static final String PROFTAX_PENAL = "140200200";
+
+        public static final String LB_TYPE_CORPORATION = "LB_TYPE_CORPORATION";
+
+        public static final String LB_TYPE_MUNICIPALITY = "LB_TYPE_MUNICIPALITY";
+
+        public static final String LB_TYPE_CORPORATION_CAPTION = "C";
+
+        public static final String LB_TYPE_MUNICIPALITY_CAPTION = "M";
+
+        public static final String APP_NUMBER_CAPTION = "AP";
+
+        public static final String STATE_CODE = "KL";
+
+        public static final String FUN_MODULE_PDE = "BFIFPD";
+
+        public static final String REG_UNIT_CAPTION = "RG";
+
+        public static final String FUN_MODULE_NEWL = "BFIFLN";
 
         public TLConstants() {
         }

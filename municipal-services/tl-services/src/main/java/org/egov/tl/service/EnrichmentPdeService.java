@@ -3,8 +3,10 @@ package org.egov.tl.service;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tl.config.TLConfiguration;
 import org.egov.tl.repository.IdGenRepository;
+import org.egov.tl.repository.TLRepository;
 import org.egov.tl.util.TLConstants;
 import org.egov.tl.util.TradeUtil;
+import org.egov.tl.validator.MDMSValidator;
 import org.egov.tl.web.models.*;
 import org.egov.tl.web.models.Idgen.IdResponse;
 import org.egov.tl.web.models.user.UserDetailResponse;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import com.jayway.jsonpath.JsonPath;
+import org.egov.tl.util.IDGenerator;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,16 +32,23 @@ public class EnrichmentPdeService {
     private BoundaryService boundaryService;
     private UserService userService;
     private WorkflowService workflowService;
+    private TLRepository tlrepository;
+    private TradeUtil util;
+    private IDGenerator idGen;
 
     @Autowired
     public EnrichmentPdeService(IdGenRepository idGenRepository, TLConfiguration config, TradeUtil tradeUtil,
-            BoundaryService boundaryService, UserService userService, WorkflowService workflowService) {
+            BoundaryService boundaryService, UserService userService, WorkflowService workflowService,
+            TLRepository tlrepository, TradeUtil util, IDGenerator idGen) {
         this.idGenRepository = idGenRepository;
         this.config = config;
         this.tradeUtil = tradeUtil;
         this.boundaryService = boundaryService;
         this.userService = userService;
         this.workflowService = workflowService;
+        this.tlrepository = tlrepository;
+        this.util = util;
+        this.idGen = idGen;
     }
 
     /**
@@ -77,13 +87,6 @@ public class EnrichmentPdeService {
                             tradeLicense.setValidTo(taxPeriods.get(TLConstants.MDMS_ENDDATE));
                         tradeLicense.setValidFrom(taxPeriods.get(TLConstants.MDMS_STARTDATE));
                     }
-                    // if
-                    // (!CollectionUtils.isEmpty(tradeLicense.getTradeLicenseDetail().getAccessories()))
-                    // tradeLicense.getTradeLicenseDetail().getAccessories().forEach(accessory -> {
-                    // accessory.setTenantId(tradeLicense.getTenantId());
-                    // accessory.setId(UUID.randomUUID().toString());
-                    // accessory.setActive(true);
-                    // });
                     break;
             }
             tradeLicense.getTradeLicenseDetail().getAddress().setTenantId(tradeLicense.getTenantId());
@@ -91,13 +94,13 @@ public class EnrichmentPdeService {
             InstitutionMaster ins = new InstitutionMaster();
             ins.setTenantId(tradeLicense.getTenantId());
             ins.setId(UUID.randomUUID().toString());
-            ins.setInstitutionId(UUID.randomUUID().toString());
+            ins.setInstitutionId(null);
             ins.setInstitutionName(tradeLicense.getTradeName());
-            ins.setActive(true);
+            ins.setActive(false);
             tradeLicense.getTradeLicenseDetail().setInstitutionMaster(ins);
 
             tradeLicense.getTradeLicenseDetail()
-                    .setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitutionMaster().getInstitutionId());
+                    .setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitutionMaster().getId());
 
             tradeLicense.getTradeLicenseDetail().getStructurePlace().forEach(structurePlace -> {
                 structurePlace.setTenantId(tradeLicense.getTenantId());
@@ -163,35 +166,14 @@ public class EnrichmentPdeService {
             });
             if (taxPdelist.size() > 0)
                 tradeLicense.getTradeLicenseDetail().setTaxPdefinal(taxPdelist);
-            // if (tradeLicense.getAction().equalsIgnoreCase(ACTION_APPLY)) {
-            // tradeLicense.getTradeLicenseDetail().getApplicationDocuments().forEach(document
-            // -> {
-            // document.setId(UUID.randomUUID().toString());
-            // document.setActive(true);
-            // });
-            // }
-
-            // if (tradeLicense.getApplicationType() != null
-            // &&
-            // tradeLicense.getApplicationType().toString().equals(TLConstants.APPLICATION_TYPE_RENEWAL))
-            // {
-            // if (tradeLicense.getAction().equalsIgnoreCase(ACTION_APPLY)
-            // || tradeLicense.getAction().equalsIgnoreCase(TLConstants.TL_ACTION_INITIATE))
-            // {
-            // tradeLicense.getTradeLicenseDetail().getApplicationDocuments().forEach(document
-            // -> {
-            // document.setId(UUID.randomUUID().toString());
-            // document.setActive(true);
-            // });
-            // }
-
-            // }
-
+            tradeLicense.setApplicationNumber(
+                    idGen.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_PDE,
+                            TLConstants.APP_NUMBER_CAPTION));
             if (requestInfo.getUserInfo().getType().equalsIgnoreCase("CITIZEN"))
                 tradeLicense.setAccountId(requestInfo.getUserInfo().getUuid());
 
         });
-        setIdgenPdeIds(tradeLicenseRequest);
+        // setIdgenPdeIds(tradeLicenseRequest);
         setStatusForCreate(tradeLicenseRequest);
         String businessService = tradeLicenseRequest.getLicenses().isEmpty() ? null
                 : tradeLicenseRequest.getLicenses().get(0).getBusinessService();

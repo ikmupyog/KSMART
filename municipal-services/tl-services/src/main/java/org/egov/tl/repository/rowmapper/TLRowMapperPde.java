@@ -134,6 +134,19 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     .lastModifiedTime(rs.getLong("tld_createdTime"))
                     .build();
 
+            InstitutionMaster institutionMaster = InstitutionMaster.builder()
+                    .id(rs.getString("inst_id"))
+                    .tenantId(tenantId)
+                    .institutionId(rs.getString("instmaster_instid"))
+                    .institutionName(rs.getString("institutionname"))
+                    .institutionNameLocal(rs.getString("institutionnamelocal"))
+                    .gstNumber(rs.getString("gstnumber"))
+                    .panNumber(rs.getString("pannumber"))
+                    .address(rs.getString("address"))
+                    .email(rs.getString("email"))
+                    .contactno(rs.getString("contactno"))
+                    .build();
+
             // try {
             TradeLicenseDetail tradeLicenseDetail = TradeLicenseDetail.builder()
                     .surveyNo(rs.getString("surveyno"))
@@ -147,6 +160,8 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     .capitalInvestment(rs.getDouble("capitalinvestment"))
                     .enterpriseType(rs.getString("enterprisetype"))
                     .licenseeType(rs.getString("licenseetype"))
+                    .institutionId(rs.getString("tld_institutionid"))
+                    .institutionMaster(institutionMaster)
                     .build();
 
             tradeLicense.setTradeLicenseDetail(tradeLicenseDetail);

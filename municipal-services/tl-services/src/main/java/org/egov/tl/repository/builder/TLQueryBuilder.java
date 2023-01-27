@@ -114,13 +114,13 @@ public class TLQueryBuilder {
             +
             "tlowner.id as tlowner_id,tlowner.active as useractive,"
             +
-            "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as tld_createdTime, "
+            "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as tld_createdTime, tld.institutionid as tld_institutionid, "
             +
             " tlstructplace.id as tlstructplace_id, tlstructplace.doorno as tlstructplace_doorno, tlstructplace.doorsub as doorsub,"
             +
             " tlstructplace.stallno as stallno, tlstructplace.active as tlstructplace_active, tltax.id as tltax_id, tltax.active as tltax_active, "
             +
-            " tltax.service, tltax.fromyear, tltax.fromperiod, tltax.toyear, tltax.toperiod, tltax.headcode, tltax.amount,firsthalfcur,secondhalfcur "
+            " tltax.service, tltax.fromyear, tltax.fromperiod, tltax.toyear, tltax.toperiod, tltax.headcode, tltax.amount,firsthalfcur,secondhalfcur, inst.id as inst_id, inst.institutionid as instmaster_instid, inst.* "
             +
             " FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
@@ -132,7 +132,9 @@ public class TLQueryBuilder {
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_structureplacedetail tlstructplace ON tlstructplace.tradelicensedetailid = tld.id "
             + LEFT_OUTER_JOIN_STRING
-            + "eg_tl_taxdetails_pde tltax ON tltax.tradelicensedetailid = tld.id";
+            + "eg_tl_taxdetails_pde tltax ON tltax.tradelicensedetailid = tld.id "
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_institution inst ON inst.id = tld.institutionid ";
 
     public String getTLSearchQuery(TradeLicenseSearchCriteria criteria, List<Object> preparedStmtList,
             boolean isCount) {
@@ -494,6 +496,11 @@ public class TLQueryBuilder {
         else {
             return addCountWrapper(builder.toString());
         }
+    }
+
+    public String getNextIDQuery() {
+        StringBuilder query = new StringBuilder("select fn_next_id(?,?,?,?)");
+        return query.toString();
     }
 
 }
