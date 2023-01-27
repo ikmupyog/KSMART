@@ -299,6 +299,32 @@ public class CrDeathRegistryRepository {
                 permanentAddCountryMl = permanentAddCountryMl.replaceAll("[\\[\\]\\(\\)]", "");
                 cert.getAddressInfo().getPermanentAddress().setCountryMl(permanentAddCountryMl);
 
+                //RAkhi S on 25.01.2023
+                if(cert.getDeceasedFirstNameMl()!=null){}
+                else {               
+                    cert.setDeceasedFirstNameMl("");
+                }
+                if(cert.getDeceasedMiddleNameMl()!=null){}
+                else {               
+                    cert.setDeceasedMiddleNameMl("");
+                }
+                if(cert.getDeceasedLastNameMl()!=null){}
+                else {               
+                    cert.setDeceasedLastNameMl("");
+                }
+
+                if(cert.getDeceasedFirstNameEn()!=null){}
+                else {               
+                    cert.setDeceasedFirstNameEn("");
+                }
+                if(cert.getDeceasedMiddleNameEn()!=null){}
+                else {               
+                    cert.setDeceasedMiddleNameEn("");
+                }
+                if(cert.getDeceasedLastNameEn()!=null){}
+                else {               
+                    cert.setDeceasedLastNameEn("");
+                }
                 //Rakhi S on 16.12.2022
                 cert.setFullName(
                                 cert.getDeceasedFirstNameMl() + " "+
@@ -359,7 +385,8 @@ public class CrDeathRegistryRepository {
                                             cert.getAddressInfo().getPresentAddress().getStreetNameEn()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getCityEn()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getLocalityEn()+ " "+
-                                            cert.getAddressInfo().getPresentAddress().getPostofficeNameEn()+ " "+"P O"+" - "+
+                                            cert.getAddressInfo().getPresentAddress().getPostofficeNameEn()+ " "+
+                                            CrDeathRegistryConstants.PO_EN +" - "+
                                             cert.getAddressInfo().getPresentAddress().getPincode()+" "+
                                             cert.getAddressInfo().getPresentAddress().getDistrictId()+ " "+
                                             cert.getAddressInfo().getPresentAddress().getStateId()+ " "+

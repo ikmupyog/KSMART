@@ -102,4 +102,7 @@ public class CrDeathRegistryConstants {
      //RAkhi S on 24.01.2023
      public static final String TALUK = "Taluk";
      public static final String POSTOFFICE = "PostOffice";
+     public static final String PO_EN = "P O";
+     public static final String PO_ML = "പി ഒ";
+
 }
