@@ -200,21 +200,20 @@ public class EmployeeService {
 		if(userChecked)
 			criteria.setTenantId(null);
         List <Employee> employees = new ArrayList<>();
+		System.out.println("mob" + criteria.getPhone());
 
-
-        if(!((!CollectionUtils.isEmpty(criteria.getRoles()) || !CollectionUtils.isEmpty(criteria.getNames()) || !StringUtils.isEmpty(criteria.getPhone())) && CollectionUtils.isEmpty(criteria.getUuids())))
-
-//        changes add wardcode in creteria
-
-
-			if (!((!CollectionUtils.isEmpty(criteria.getRoles()) || !CollectionUtils.isEmpty(criteria.getNames())
-					|| !StringUtils.isEmpty(criteria.getPhone()) || !CollectionUtils.isEmpty(criteria.getRolecodes())
-					|| CollectionUtils.isEmpty(criteria.getWardcodes()))
-					&& CollectionUtils.isEmpty(criteria.getUuids())))
-
-				System.out.println(" query Req Role1" + criteria.getRolecodes());
-
-            employees = repository.fetchEmployees(criteria, requestInfo);
+		if (!((!CollectionUtils.isEmpty(criteria.getRoles()) || !CollectionUtils.isEmpty(criteria.getNames())
+				|| !CollectionUtils.isEmpty(criteria.getRolecodes())
+				|| !StringUtils.isEmpty(criteria.getPhone()) || !CollectionUtils.isEmpty(criteria.getWardcodes()))
+				&& CollectionUtils.isEmpty(criteria.getUuids())))
+        	 employees = repository.fetchEmployees(criteria, requestInfo);
+        	//		{
+//			System.out.println("mob1" + criteria.getPhone());
+//			if (!((!CollectionUtils.isEmpty(criteria.getRoles()) || !CollectionUtils.isEmpty(criteria.getNames())
+//					|| !StringUtils.isEmpty(criteria.getPhone()) || CollectionUtils.isEmpty(criteria.getWardcodes()))
+//					&& CollectionUtils.isEmpty(criteria.getUuids())))
+           
+//	}
         List<String> uuids = employees.stream().map(Employee :: getUuid).collect(Collectors.toList());
 		if(!CollectionUtils.isEmpty(uuids)){
             Map<String, Object> UserSearchCriteria = new HashMap<>();
