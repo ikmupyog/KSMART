@@ -30,7 +30,7 @@ import InformantAddress from "../src/pageComponents/birthComponents/InformantAdd
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
-import AdoptionFatherInformation from "../src/pageComponents/adoptionComponents/AdoptionFatherInformation";
+import AdoptiveParentsDetails from "../src/pageComponents/adoptionComponents/AdoptiveParentsDetails";
 import AdoptionDetails from "../src/pageComponents/adoptionComponents/AdoptionDetails";
 import BirthMotherInformation from "../src/pageComponents/adoptionComponents/BirthMotherInformation";
 import BirthFatherInformation from "../src/pageComponents/adoptionComponents/BirthFatherInformation";
@@ -165,7 +165,7 @@ const componentsToRegister = {
   // SearchRegistry,
   AdoptionDetails,
   AdoptionMotherInformation,
-  AdoptionFatherInformation,
+  AdoptiveParentsDetails,
   BirthMotherInformation,
   BirthFatherInformation,
   BirthParentsAddress,  
