@@ -28,20 +28,20 @@ const TLCard = () => {
 
 
     let links = [
-        {
-            count: isLoading ? "-" : inboxData?.totalCount,
-            label: t("ES_COMMON_INBOX"),
-            link: `/digit-ui/employee/tl/inbox`,
-        },
+        // {
+        //     count: isLoading ? "-" : inboxData?.totalCount,
+        //     label: t("ES_COMMON_INBOX"),
+        //     link: `/digit-ui/employee/tl/inbox`,
+        // },
         {
             label: t("TL_NEW_APPLICATION"),
             link: "/digit-ui/employee/tl/new-application",
             role: "TL_CEMP"
         },
-        {
-            label: t("TL_SEARCH_APPLICATIONS"),
-            link: `/digit-ui/employee/tl/search/application`
-        },
+        // {
+        //     label: t("TL_SEARCH_APPLICATIONS"),
+        //     link: `/digit-ui/employee/tl/search/application`
+        // },
         {
             label: t("TL_SEARCH_LICENSE"),
             link: `/digit-ui/employee/tl/search/license`,
@@ -84,15 +84,15 @@ const TLCard = () => {
         Icon: <CaseIcon />,
         moduleName: t("TL_COMMON_TL"),
         kpis: [
-            {
-                count: isLoading ? "-" : inboxData?.totalCount,
-                label: t("TOTAL_TL"),
-                link: `/digit-ui/employee/tl/inbox`
-            },
-            {
-                label: t("TOTAL_NEARING_SLA"),
-                link: `/digit-ui/employee/tl/inbox`
-            }
+            // {
+            //     count: isLoading ? "-" : inboxData?.totalCount,
+            //     label: t("TOTAL_TL"),
+            //     link: `/digit-ui/employee/tl/inbox`
+            // },
+            // {
+            //     label: t("TOTAL_NEARING_SLA"),
+            //     link: `/digit-ui/employee/tl/inbox`
+            // }
         ],
         links: links
     }

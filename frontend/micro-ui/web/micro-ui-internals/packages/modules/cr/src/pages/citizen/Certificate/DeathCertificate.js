@@ -24,16 +24,16 @@ const DeathCertificate = ({ config, onSelect, userType, formData }) => {
   const [GeneralRemarks, setGeneralRemarks] = useState(formData?.GeneralRemarks?.GeneralRemarks);
   let naturetypecmbvalue = null;
   let menu = [];
-  // Menu &&
-  //   Menu.map((genderDetails) => {
-  //     menu.push({ i18nKey: `DC_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
-  //   });
-  // let cmbhospital = [];
-  // hospital &&
-  //   hospital["birth-death-service"] &&
-  //   hospital["birth-death-service"].hospitalList.map((ob) => {
-  //     cmbhospital.push(ob);
-  //   });
+  Menu &&
+    Menu.map((genderDetails) => {
+      menu.push({ i18nKey: `DC_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+    });
+  let cmbhospital = [];
+  hospital &&
+    hospital["birth-death-service"] &&
+    hospital["birth-death-service"].hospitalList.map((ob) => {
+      cmbhospital.push(ob);
+    });
   const onSkip = () => onSelect();
   // function setSelectGeneralRemarks(e) {
   //   setGeneralRemarks(e.target.value);
@@ -165,7 +165,7 @@ const DeathCertificate = ({ config, onSelect, userType, formData }) => {
                 t={t}
                 optionKey="hospitalName"
                 isMandatory={false}
-                // option={cmbhospital}
+                option={cmbhospital}
                 selected={HospitalName}
                 select={setselectHospitalName}
                 placeholder={`${t("CD_HOSPITAL")}`}

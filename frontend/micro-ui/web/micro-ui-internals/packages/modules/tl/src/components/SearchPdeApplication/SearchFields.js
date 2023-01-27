@@ -18,16 +18,16 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
-      //  console.log(ob);
-      // if(ob?.boundary){
-      Zonal.push(...ob.boundary.children);
-      ob.boundary.children.map((obward) => {
-        cmbWardNo.push(...obward.children);
-      });
-      // }
-
+      if (ob?.hierarchyType.code === "REVENUE") {
+        Zonal.push(...ob.boundary.children);
+        ob.boundary.children.map((obward) => {
+          cmbWardNo.push(...obward.children);
+        });
+      }
     });
-  //console.log(Zonal);
+
+    
+
   cmbWardNo.map((wardmst) => {
     wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
