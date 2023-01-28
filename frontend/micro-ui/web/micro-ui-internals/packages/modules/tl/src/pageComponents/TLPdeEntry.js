@@ -6,6 +6,8 @@ import orderBy from "lodash/orderBy";
 import ApplicationDetailsPDE from "../pages/employee/ApplicationDetailsPDE";
 
 const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
+  const tenantId = Digit.ULBService.getCurrentTenantId();
+  const { uuid: uuid } = Digit.UserService.getUser().info;
   const { roles: userRoles } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEAPPROVER"));
   const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEOPERATOR"));
@@ -13,6 +15,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const oprole = roletempop?.length > 0 ? true : false;
   let configstatus = true;
   let configstatusop = false;
+
   configstatus = formData?.status === "APPROVED" ? false : true;
   configstatus = formData?.status === "FORWARDED" && approle && configstatus ? true : false;
 
@@ -45,7 +48,6 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const [businessService, setBusinessService] = useState("PdeTL");
   const [displayMenu, setDisplayMenu] = useState(false);
   const [pdeformdata, setPdeformdata] = useState("");
-  const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
   const [selectedAction, setSelectedAction] = useState(null);
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
@@ -136,6 +138,55 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     if (parseInt(b.wardno) > parseInt(a.wardno)) { return -1; }
     return 0;
   });
+  const roleall = [];
+  roleall.push(...roletemp);
+  roleall.push(...roletempop);
+  userRoles;
+  const rolecombine = [];
+  roleall?.map?.((e) => {
+    rolecombine.push(e.code);
+  });
+  const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
+    tenantId,
+    {
+      roles: rolecombine?.map?.((e) => ({ code: e })),
+      isActive: true,
+      uuids: uuid
+    }
+    // { enabled: !action?.isTerminateState }
+  );
+
+  const operatorwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("TL_PDEOPERATOR"));
+  const appwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("TL_PDEAPPROVER"));
+
+  const operatorward = [];
+  const appward = [];
+  operatorwardtemp?.map((ob) => {
+    operatorward.push(...ob.jurisdictionChilds);
+
+  });
+  appwardtemp?.map((ob) => {
+    appward.push(...ob.jurisdictionChilds);
+
+  });
+
+
+
+  const finaloperatorward = [];
+  operatorward.map((temp) => {
+    finaloperatorward.push(...cmbWardNoFinal?.filter((doc) => doc.code === temp.wardCode));
+  })
+  const finalapproverward = [];
+  appward.map((temp) => {
+    finalapproverward.push(...cmbWardNoFinal?.filter((doc) => doc.code === temp.wardCode));
+  })
+  const finalward = [];
+
+  finalward.push(...finaloperatorward);
+  finalward.push(...finalapproverward);
+  
+  if (finalward.length > 0)
+    cmbWardNoFinal = isEdit ? finalward : finaloperatorward;
 
   const [WardNo, setWardNo] = useState(formData.tradeLicenseDetail?.address?.wardNo ? cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0] : "");
   const selWard = cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0];
@@ -688,14 +739,14 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
           searchResult.map((d) => {
             if (d?.tradeLicenseDetail?.address.wardNo == WardNo.wardno) {
               let doornos = d?.tradeLicenseDetail?.structurePlace;
-                if (isEdit) {
-                  noOccurence =  doornos.filter((doorno) =>((doorno.doorNo == data.doorNo) && (doorno.doorNoSub.toUpperCase() == data.doorNoSub.toUpperCase())) ? doorno : "" ).length;
-                  if ((noOccurence > 1) && (flg == true)) {flg = "DExists";}
-                }
-                else {
-                  noOccurence = doornos.filter(doorno => ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub.toUpperCase() == data.doorNoSub.toUpperCase())) ? doorno : "" ).length;
-                  if ((noOccurence > 0) && (flg == true)) {flg = "DExists";}
-                }
+              if (isEdit) {
+                noOccurence = doornos.filter((doorno) => ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub.toUpperCase() == data.doorNoSub.toUpperCase())) ? doorno : "").length;
+                if ((noOccurence > 1) && (flg == true)) { flg = "DExists"; }
+              }
+              else {
+                noOccurence = doornos.filter(doorno => ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub.toUpperCase() == data.doorNoSub.toUpperCase())) ? doorno : "").length;
+                if ((noOccurence > 0) && (flg == true)) { flg = "DExists"; }
+              }
             }
           });
         }
