@@ -79,7 +79,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   const reviseIndexKeys = () => {
     setjurisdictions((prev) => prev.map((unit, index) => ({ ...unit, key: index })));
   };
-
+  
   const handleAddUnit = () => {
     setjurisdictions((prev) => [
       ...prev,
@@ -87,11 +87,11 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         key: prev.length + 1,
         hierarchy: null,
         boundaryType: null,
-        boundary: null,
+        boundary: jurisdictions[0].boundary,
         roleCode:null,
         zoneCode:null,
         roles: [],
-        boundary:[],
+        // boundary:[],
         jurisdictionChilds:[],
        
       },
@@ -223,7 +223,7 @@ function Jurisdiction({
   const [WardNo, setWardNo] = useState(formData.Jurisdictions?.WardNo);
   const [wards, setFilterWard] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
-
+  const [isDisableStatus, setIsDisableStatus] = useState(true);
 
   let ZonalA = [];
   let cmbInfntWardNo = [];
@@ -422,7 +422,7 @@ function Jurisdiction({
             className="form-field"
             isMandatory={true}
             selected={jurisdiction?.boundary}
-            disable={Boundary?.length === 0}
+            disable={isDisableStatus}
             //disable={true}
             option={Boundary}       
             select={selectedboundary}
@@ -462,7 +462,7 @@ function Jurisdiction({
         <LabelFieldPair>
         <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
         <div className="form-field">        
-            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Zonal} 
+            <Dropdown t={t} optionKey="name" isRequired="false"  option={cmbZonal[0]} selected={Zonal} 
             select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
         </LabelFieldPair>
 
