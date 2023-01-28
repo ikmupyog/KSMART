@@ -19,39 +19,67 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         hierarchy: null,
         boundaryType: null,
         boundary: null,
-        roles: [],  
-        TenantBoundary:[],
-             },
+        tenantId:null,
+        roleCode:null,
+        zoneCode:null,
+        // roles: [],  
+        // jurisdictionChilds:[],
+      },
     ]
   );
 
  
   useEffect(() => {
     const jurisdictionsData = jurisdictions?.map((jurisdiction) => {
+      
       let res = {
         id: jurisdiction?.id,
         hierarchy: jurisdiction?.hierarchy?.code,
         boundaryType: jurisdiction?.boundaryType?.label,
         boundary: jurisdiction?.boundary?.code,
         tenantId: jurisdiction?.boundary?.code,
+        roleCode: jurisdiction?.role?.code,
+        zoneCode:jurisdiction?.zoneCode?.code,
         auditDetails: jurisdiction?.auditDetails,
-        TenantBoundary:jurisdiction?.TenantBoundary,
+        
       };
       res = cleanup(res);
-      if (jurisdiction?.roles) {
-        res["roles"] = jurisdiction?.roles.map((ele) => {
-          delete ele.description;
-          return ele;
-        });
-      }
-      return res;
-      //Maya
+      // console.log(jurisdiction?.role);
+      // if (jurisdiction?.roles) {
+      //   res["roles"] = jurisdiction?.roles.map((ele) => {
+      //     delete ele.description;
+      //     console.log(ele);
+      //     return ele;
+      //   });
+      // }
+       //Maya
+       let jurisdictionChildsTemp = [];
       if (jurisdiction?.TenantBoundary) {
-        res["TenantBoundary"] = jurisdiction?.TenantBoundary.map((ele) => {
-          delete ele.description;
+        
+        jurisdictionChildsTemp = jurisdiction?.TenantBoundary.map((ele) => {
+          // console.log(ele);
+          // delete ele.localnamecmb;
+          // delete ele.namecmb;
+          // delete ele.boundaryNum;
+          // delete ele.children;
+          // delete ele.id;
+          // delete ele.label;
+          // delete ele.latitude;
+          // delete ele.localname;          
+          // delete ele.longitude;
+          // delete ele.name;          
+          // delete ele.wardno;
+          // delete ele.zonecode;
+          // console.log(res["jurisdictionChilds"]);
           return ele;
         });
       }
+      if(jurisdictionChildsTemp.length>0){
+        res["jurisdictionChilds"] = jurisdictionChildsTemp.map((ele) => {
+         return ele;
+        });
+      }
+      console.log(res);
       return res;
     });
    
@@ -75,9 +103,11 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         hierarchy: null,
         boundaryType: null,
         boundary: null,
+        roleCode:null,
+        zoneCode:null,
         roles: [],
         boundary:[],
-        TenantBoundary:[],
+        jurisdictionChilds:[],
        
       },
     ]);
@@ -90,6 +120,8 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         boundaryType: unit?.boundaryType?.label,
         boundary: unit?.boundary?.code,
         tenantId: unit?.boundary?.code,
+        roleCode:null,
+        zoneCode:null,
         auditDetails: unit?.auditDetails,
         isdeleted: true,
         isActive: false,
@@ -103,7 +135,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
       }
       //Maya
       if (unit?.TenantBoundary) {
-        res["TenantBoundary"] = unit?.TenantBoundary.map((ele) => {
+        res["jurisdictionChilds"] = unit?.TenantBoundary.map((ele) => {
           delete ele.description;
           return ele;
         });
@@ -214,7 +246,6 @@ function Jurisdiction({
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
-      console.log(ob);
       if (ob?.hierarchyType.code==="REVENUE") {
         ZonalA.push(...ob.boundary.children);
         ob.boundary.children.map((obward) => {
@@ -222,7 +253,6 @@ function Jurisdiction({
         });
       }
     });
-  console.log(ZonalA);
   cmbInfntWardNo.map((wardmst) => {
     wardmst.localnamecmb = wardmst.InfntWardNo + " ( " + wardmst.localname + " )";
     wardmst.namecmb = wardmst.InfntWardNo + " ( " + wardmst.name + " )";
@@ -235,12 +265,12 @@ function Jurisdiction({
   boundaryList["egov-location"].TenantBoundary.map((ob) => {    
     cmbZonal.push(ob.boundary.children);
   });
-  function setSelectZonalOffice(e) {
-    setIsInitialRender(true);
-    setZonal(e);
-    setWardNo(null);
-    setFilterWard(null);
-  }
+  // function setSelectZonalOffice(e) {
+  //   setIsInitialRender(true);
+  //   setZonal(e);
+  //   setWardNo(null);
+  //   setFilterWard(null);
+  // }
   function setSelectWard(e) {
     setWardNo(e);
   }
@@ -284,6 +314,14 @@ function Jurisdiction({
 
   const selectedboundary = (value) => {
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, boundary: value } : item)));
+  };
+//Jetheesh
+  const setSelectZonalOffice = (value) => {
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, zoneCode: value } : item)));
+    setZonal(value);
+    setIsInitialRender(true);
+    setWardNo(null);
+    setFilterWard(null);
   };
 
 //lekshmy
