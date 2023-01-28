@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader } from "@egovernments/digit-ui-react-components";
 // import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -13,19 +13,21 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
   const { t } = useTranslation();
   let validation = {};
   const tenantId = Digit.ULBService.getCurrentTenantId(); 
-  const { data: Country = {},isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const { data: State = {},isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-  const { data: PostOffice = {},isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Taluk = {},isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-  const { data: Village = {},isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: District = {},isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: localbodies={}, islocalbodiesLoading } = Digit.Hooks.useTenants();
+  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+  const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+  const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+  const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
 
   //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [lbs, setLbs] = useState(0);
+  const [isInitialRender, setIsInitialRender] = useState(true); 
+  const [Talukvalues, setLbsTalukvalue] = useState(null);
+  const [Villagevalues, setLbsVillagevalue] = useState(null);
+  const [isDisableStatus, setDisableStatus] = useState(true);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   // const [AdrsCountry, setAdrsCountry] = useState(formData?.PlaceOfDeathHome?.AdrsCountry);
@@ -51,17 +53,26 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
   // const [AdrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.PlaceOfDeathHome?.AdrsStreetNameMl);
   // const [AdrsVillage, setAdrsVillage] = useState(formData?.PlaceOfDeathHome?.AdrsVillage);
   // const [WardNo, setWardNo] = useState(formData.PlaceOfDeathHome?.wardno);
-
+  let currentLB = [];
   let cmbCountry = [];
   let cmbState = [];
+  let cmbPlace = [];
   let cmbTaluk = [];
   let cmbVillage = [];
   let cmbDistrict = [];
   let cmbPostOffice = [];
   let districtid = null;
   let cmbLBType = [];
+  let cmbLB = [];
 
-  console.log("Taluk" + Taluk);
+  let cmbFilterCountry = [];
+  let cmbFilterState = [];
+  let cmbFilterDistrict = [];
+  let cmbFilterLBtype = [];
+  let cmbFilterTaluk = [];
+  let cmbFilterVillage = [];
+  
+  // console.log("Taluk" + Taluk);
   Taluk &&
     Taluk["common-masters"] &&
     Taluk["common-masters"].Taluk.map((ob) => {
@@ -72,7 +83,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
-  PostOffice &&
+    District &&
     District["common-masters"] &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
@@ -99,6 +110,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
+    localbodies &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants.map((ob) => {
+      cmbLB.push(ob);
+    });
   // let Zonal = [];
   // let cmbWardNo = [];
   // let cmbWardNoFinal = [];
@@ -119,22 +135,44 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
   //   wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
   //   cmbWardNoFinal.push(wardmst);
   // });
+  useEffect(() => {
+
+    if (isInitialRender) {
+      // if (localbodies.length > 0) {
+      currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+      setAdrsLBName(currentLB[0]);
+      cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+      setAdrsCountry(cmbFilterCountry[0]);
+      cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+      setAdrsStateName(cmbFilterState[0]);
+      cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
+      setAdrsDistrict(cmbFilterDistrict[0]);
+      cmbFilterLBtype = cmbLBType.filter((cmbLBType) => cmbLBType.code === currentLB[0].city.lbtypecode);
+      setAdrsLBTypeName(cmbFilterLBtype[0]);
+      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
+      setLbsTalukvalue(cmbFilterTaluk);
+      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+      console.log(cmbFilterVillage);
+      setLbsVillagevalue(cmbFilterVillage);
+      setIsInitialRender(false);
+    }
+    // }
+  }, [Country, State, District, LBType, localbodies,Talukvalues,Villagevalues, isInitialRender]);
 
   const onSkip = () => onSelect();
   function setSelectAdrsCountry(value) {
     setAdrsCountry(value);
-    console.log("Country" + cmbCountry);
+   
   }
   function setSelectAdrsStateName(value) {
     setAdrsStateName(value);
-    console.log("StateName" + cmbState);
+    // console.log("StateName" + cmbState);
   }
 
   function setSelectAdrsDistrict(value) {
     setIsInitialRender(true);
     setAdrsDistrict(value);
-    setAdrsLBName(null);
-    setLbs(null);
+    setAdrsLBName(null);   
     districtid = value.districtid;
   }
   function setSelectAdrsLBTypeName(value) {
@@ -145,48 +183,95 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
   }
   function setSelectAdrsVillage(value) {
     setAdrsVillage(value);
-    console.log("Village" + cmbVillage);
+    // console.log("Village" + cmbVillage);
   }
   function setSelectAdrsTaluk(value) {
     setAdrsTaluk(value);
-    console.log("Taluk" + cmbTaluk);
+    // console.log("Taluk" + cmbTaluk);
   }
 
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
   }
   function setSelectAdrsPincode(e) {
-    setAdrsPincode(e.target.value);
+    if (e.target.value.length === 7) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsPincode(e.target.value);
+    }
   }
   // function setSelectAdrsBuldingNo(e) {
   //   setAdrsBuldingNo(e.target.value);
   // }
-  function setSelectAdrsResNo(e) {
-    setAdrsResNo(e.target.value);
+  function setSelectAdrsResNo(e) {   
+    if (e.target.value.length === 21) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsResNo(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' ]/ig, ''));
+    }
+
+
   }
   function setSelectAdrsDoorNo(e) {
-    setAdrsDoorNo(e.target.value);
+    if (e.target.value.length === 5) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsDoorNo(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
   function setSelectAdrsHouseNameEn(e) {
-    setAdrsHouseNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
    function setSelectAdrsHouseNameMl(e) {
-    setAdrsHouseNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
 
     }
     function setSelectAdrsMainPlaceEn(e) {
-    setAdrsMainPlaceEn(e.target.value);
+      if (e.target.value.length === 51) {
+        return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+      } else {
+        setAdrsMainPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+      }
   }
    function setSelectAdrsMainPlaceMl(e) {
-    setAdrsMainPlaceMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsMainPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
 
     }
 
   function setSelectAdrsLocalityNameEn(e) {
-    setAdrsLocalityNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
   }
    function setSelectAdrsLocalityNameMl(e) {
-    setAdrsLocalityNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setAdrsLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
 
     }
     // function setSelectAdrsCityEn(e) {
@@ -201,23 +286,14 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
     setAdrsStreetNameEn(e.target.value);
    }
 
-   function setSelectAdrsStreetNameMl(e) {
-    setAdrsStreetNameMl(e.target.value);
+   function setSelectAdrsStreetNameMl(e) {    
+    setAdrsStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
-  function setSelectWard(value) {
-    setWardNo(value);
-  }
+  // function setSelectWard(value) {
+  //   setWardNo(value);
+  // }
 
-  useEffect(() => {
-    if (isInitialRender) {
-      console.log("AdrsDistrict" + districtid);
-      console.log(localbodies);
-      if (AdrsDistrict) {
-        setIsInitialRender(false);
-        setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === AdrsDistrict.districtid));
-      }
-    }
-  }, [lbs, isInitialRender]);
+  
   const goNext = () => {
     // sessionStorage.setItem("AdrsCountry", AdrsCountry ?AdrsCountry.code : null);
     // sessionStorage.setItem("AdrsStateName", AdrsStateName? AdrsStateName.code : null);
@@ -269,13 +345,9 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
     // });
   };
 
-
- 
-
-  if (isLoaded || isCountryLoading || isStateLoading  ||islocalbodiesLoading|| isPostOfficeLoading  || isDistrictLoading || isTalukLoading || isVillageLoading ) {
+  if (isCountryLoading || isStateLoading || isPostOfficeLoading || isDistrictLoading || isTalukLoading || isVillageLoading) {
     return <Loader></Loader>;
   }
- 
 
   return (
     <React.Fragment>
@@ -305,7 +377,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
                 option={cmbCountry}
                 selected={AdrsCountry}
                 select={setSelectAdrsCountry}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
             <div className="col-md-3">
@@ -320,7 +392,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
                 option={cmbState}
                 selected={AdrsStateName}
                 select={setSelectAdrsStateName}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
             <div className="col-md-3">
@@ -335,8 +407,8 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
                 option={cmbDistrict}
                 selected={AdrsDistrict}
                 select={setSelectAdrsDistrict}
-                disabled={isEdit}
-                placeholder={`${t("CS_COMMON_DISTRICT")}`}
+                disable={isDisableStatus}
+                // placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
             </div>
 
@@ -349,7 +421,7 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
                 option={cmbLBType}
                 selected={AdrsLBTypeName}
                 select={setSelectAdrsLBTypeName}
-                disabled={isEdit}
+                disable={isDisableStatus}
               />
             </div>
           </div>
@@ -366,11 +438,11 @@ const PlaceOfDeathHome = ({ config, onSelect, userType, formData, AdrsCountry,se
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={lbs}
+                option={cmbLB}
                 selected={AdrsLBName}
                 select={setSelectAdrsLBName}
-                disabled={isEdit}
-                placeholder={`${t("CS_COMMON_LB_NAME")}`}
+                disable={isDisableStatus}
+                // placeholder={`${t("CS_COMMON_LB_NAME")}`}
               />
             </div>
             <div className="col-md-3">
