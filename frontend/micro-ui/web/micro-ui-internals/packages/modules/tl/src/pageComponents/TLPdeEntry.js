@@ -10,17 +10,18 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEAPPROVER"));
   const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEOPERATOR"));
   const approle = roletemp?.length > 0 ? true : false;
-  const oprole=roletempop?.length > 0 ? true : false;
-  let configstatus=true;
-  let configstatusop=false;
-  configstatus = formData?.status==="APPROVED" ? false :true; 
-  configstatus = formData?.status==="FORWARDED" && approle && configstatus ? true :false;
-  
-  configstatusop = (formData?.status==="INITIATED" || formData?.status===null) && oprole && !configstatus ? true :false
-  configstatus = isEdit ? configstatus: true;
-  configstatusop=isEdit ?configstatusop:true;
+  const oprole = roletempop?.length > 0 ? true : false;
+  let configstatus = true;
+  let configstatusop = false;
+  configstatus = formData?.status === "APPROVED" ? false : true;
+  configstatus = formData?.status === "FORWARDED" && approle && configstatus ? true : false;
+
+  configstatusop = (formData?.status === "INITIATED") && oprole && !configstatus ? true : false
+  configstatus = isEdit ? configstatus : true;
+  configstatusop = isEdit ? configstatusop : true;
 
   const [flgEdit, setFlgEdit] = useState(false);
+  const [flgshowEdit, setShowFlgEdit] = useState(true);
   const [toast, setToast] = useState(false);
   const menusector = [
     { name: "Manufacturing Sector", code: "MANUFACTORING" },
@@ -284,18 +285,18 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const setSelectBuildingName = useCallback(e => {
     setBuildingName(e.target.value.replace(/[^A-Za-z0-9, ]/ig, ''));
     setFlgEdit(true);
-  }, [BuildingName,flgEdit]);
+  }, [BuildingName, flgEdit]);
 
   const setSelectWard = useCallback(value => {
     setWardNo(value);
     setFlgEdit(true);
-  }, [WardNo,flgEdit]);
+  }, [WardNo, flgEdit]);
 
   const selectLicenseeType = useCallback(value => {
     setLicenseeType(value);
     setValue2(value.code);
     setFlgEdit(true);
-  }, [value2,flgEdit]);
+  }, [value2, flgEdit]);
 
   const selectBuildingType = useCallback(value => {
     setBuildingCode("");
@@ -309,19 +310,19 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setFlgEdit(true);
     setBuildingType(value);
     setValue3(value.code);
-    
+
     setIsInitialRenderRadio(true);
-  }, [buildingtype,flgEdit]);
+  }, [buildingtype, flgEdit]);
 
   const selectSector = useCallback(value => {
     setSector(value);
     setFlgEdit(true);
-  }, [sector,flgEdit]);
+  }, [sector, flgEdit]);
 
   const changesetCapitalAmount = useCallback(e => {
     setCapitalAmount(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [capitalAmount,flgEdit]);
+  }, [capitalAmount, flgEdit]);
 
   const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
   let TradeCategoryMenu = [];
@@ -354,7 +355,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       }
     }
   }, [mutationsearch])
-  const searchReult = mutationsearch?.status === "success" && mutationsearch?.isSuccess && !mutationsearch?.isError ? mutationsearch.data.Licenses : ""
+  const searchResult = mutationsearch?.status === "success" && mutationsearch?.isSuccess && !mutationsearch?.isError ? mutationsearch.data.Licenses : ""
 
 
   // let workflowDetails = (isEdit) ? Digit.Hooks.useWorkflowDetails({
@@ -396,17 +397,17 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     owners[i].name = value;
     setFeilds(owners);
     setFlgEdit(true);
-  }, [fields,flgEdit]);
+  }, [fields, flgEdit]);
 
   const changesetrentArrear = useCallback(e => {
     setRentArrear(e.target.value.replace(/[^0-9.]/ig, ''))
     setFlgEdit(true);
-  }, [rentArrear,flgEdit]);
+  }, [rentArrear, flgEdit]);
 
   const changesetrentCurrent = useCallback(e => {
     setRentCurrent(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [rentCurrent,flgEdit]);
+  }, [rentCurrent, flgEdit]);
   function selectRentFromYear(value) {
     setRentFromYear(value);
     setRentToYear(getYeardata()[0]);
@@ -417,32 +418,32 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const selectRentFromMonth = useCallback(value => {
     setRentFromMonth(value);
     setFlgEdit(true);
-  }, [rentFromMonth,flgEdit]);
+  }, [rentFromMonth, flgEdit]);
 
   const selectRentToYear = useCallback(value => {
     setRentToYear(value);
     setFlgEdit(true);
-  }, [rentToYear,flgEdit]);
+  }, [rentToYear, flgEdit]);
 
   const selectRentToMonth = useCallback(value => {
     setRentToMonth(value);
     setFlgEdit(true);
-  }, [rentToMonth,flgEdit]);
+  }, [rentToMonth, flgEdit]);
 
   const changesetProfArrear = useCallback(e => {
     setProfArrear(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [profArrear,flgEdit]);
+  }, [profArrear, flgEdit]);
 
   const changesetProfCurrentFirst = useCallback(e => {
     setProfCurrentFirst(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [profCurrentFirst,flgEdit]);
+  }, [profCurrentFirst, flgEdit]);
 
   const changesetProfCurrentSecond = useCallback(e => {
     setProfCurrentSecond(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [profCurrentSecond,flgEdit]);
+  }, [profCurrentSecond, flgEdit]);
 
   function selectProfFromYear(value) {
     setProfFromYear(value);
@@ -454,17 +455,17 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const selectProfFromPeriod = useCallback(value => {
     setProfFromPeriod(value);
     setFlgEdit(true);
-  }, [profFromPeriod,flgEdit]);
+  }, [profFromPeriod, flgEdit]);
 
   const selectProfToYear = useCallback(value => {
     setProfToYear(value);
     setFlgEdit(true);
-  }, [profToYear,flgEdit]);
+  }, [profToYear, flgEdit]);
 
   const selectProfToPeriod = useCallback(value => {
     setProfToPeriod(value);
     setFlgEdit(true);
-  }, [profToPeriod,flgEdit]);
+  }, [profToPeriod, flgEdit]);
 
   function selectLicFromYear(value) {
     setLicFromYear(value);
@@ -475,17 +476,17 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const selectLicToYear = useCallback(value => {
     setLicToYear(value);
     setFlgEdit(true);
-  }, [licToYear,flgEdit]);
+  }, [licToYear, flgEdit]);
 
   const changesetLicArrear = useCallback(e => {
     setLicArrear(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [licArrear,flgEdit]);
+  }, [licArrear, flgEdit]);
 
   const changesetLicCurrent = useCallback(e => {
     setLicCurrent(e.target.value.replace(/[^0-9.]/ig, ''));
     setFlgEdit(true);
-  }, [licCurrent,flgEdit]);
+  }, [licCurrent, flgEdit]);
 
   const setSelectLicensingInstitutionName = useCallback(e => {
     if (e.target.value.trim().length > 0) {
@@ -495,7 +496,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
       setLicensingInstitution(e.target.value.replace(/[ ]/ig, ''));
     }
     setFlgEdit(true);
-  }, [licensingInstitutionName,flgEdit]);
+  }, [licensingInstitutionName, flgEdit]);
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
@@ -607,7 +608,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     else {
       dispatch({ type: "EDIT_CURRENT_OWNER_PROPERTY", payload: { index, key, value: e.target.value.replace(/[ ]/ig, '') } });
     }
-  }, [dispatch]);
+    setFlgEdit(true);
+  }, [dispatch, flgEdit]);
 
   const handleTextInputField1 = useCallback((index, e, key) => {
     if (key === "doorNo")
@@ -617,7 +619,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     if (key === "stallNo")
       dispatch1({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
     setFlgEdit(true);
-  }, [dispatch1]);
+  }, [dispatch1, flgEdit]);
 
 
   // const convertToEditPDE = () => {
@@ -661,7 +663,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     let flg = true;
     formState1.map((data) => {
       combineddoorno = data.doorNo + data.doorNoSub;
-      const noOccurence = formState1.filter(d => ((d.doorNo == data.doorNo) && (d.doorNoSub == data.doorNoSub))).length;
+      const noOccurence = formState1.filter(d => ((d.doorNo === data.doorNo) && (d.doorNoSub === data.doorNoSub))).length;
       flg = noOccurence > 1 ? "DN" : true;
     })
     if (flg == true) {
@@ -681,215 +683,226 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     }
     if (flg == true) {
       formState1.map((data) => {
-        if (searchReult) {
-          searchReult.filter((d) => {
+        let noOccurence = 0;
+        if (searchResult) {
+          searchResult.map((d) => {
             if (d?.tradeLicenseDetail?.address.wardNo == WardNo.wardno) {
               let doornos = d?.tradeLicenseDetail?.structurePlace;
-              doornos.filter(doorno => {
                 if (isEdit) {
-                  const noOccurence = formState1.filter(d => ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub == data.doorNoSub))).length;
-                  if ((noOccurence > 1) && (flg == true)) flg = "DExists";
+                  noOccurence =  doornos.filter((doorno) =>((doorno.doorNo == data.doorNo) && (doorno.doorNoSub.toUpperCase() == data.doorNoSub.toUpperCase())) ? doorno : "" ).length;
+                  if ((noOccurence > 1) && (flg == true)) {flg = "DExists";}
                 }
                 else {
-                  if ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub == data.doorNoSub) && (flg == true)) {
-                    flg = "DExists";
-                  }
+                  noOccurence = doornos.filter(doorno => ((doorno.doorNo == data.doorNo) && (doorno.doorNoSub.toUpperCase() == data.doorNoSub.toUpperCase())) ? doorno : "" ).length;
+                  if ((noOccurence > 0) && (flg == true)) {flg = "DExists";}
                 }
-              });
             }
           });
         }
       });
     }
+
     return flg;
   }
 
 
   const goNext = (e) => {
-    console.log(flgEdit); 
     setToast(false)
     let tenantId1 = tenantId;
     let combineddoorno = "";
     let Tax = [];
-    if (validateData() === "DN") {
-      setErrorMessage("Door No Duplication Found");
-      setToast(true)
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "CA") {
-      setErrorMessage("Capital Investment must be greater than 1 ");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "LT") {
-      setErrorMessage("Select Ownership Type");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "WN") {
-      setErrorMessage("Select Ward No");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "BT") {
-      setErrorMessage("Select Building Type");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "BS") {
-      setErrorMessage("Select Bussiness Category");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    else if (validateData() === "DExists") {
-      setErrorMessage("Doorno already  exists Please Check");
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-
-
-    else {
-      if ((((licFromYear.id) && (licToYear.id) && (parseInt(licFromYear.code.replace(/-/g, "")) <= parseInt(licToYear.code.replace(/-/g, ""))))
-        || (!licFromYear) && (!licToYear))
-        && (((profFromYear.id) && (profToYear.id) && (parseInt(profFromYear?.code.replace(/-/g, "")) <= parseInt(profToYear.code.replace(/-/g, ""))))
-          || (!profFromYear) && (!profToYear))
-        && ((rentFromYear.id) && (rentToYear.id) && (parseInt(rentFromYear?.code.replace(/-/g, "")) <= parseInt(rentToYear.code.replace(/-/g, "")))
-          || ((!rentFromYear) && (!rentToYear)))) {
-        formState1.map((data) => {
-          combineddoorno = combineddoorno + data.doorNo +
-            (data.doorNoSub !== "" && data.doorNoSub !== null ? "/" + data.doorNoSub : "") +
-            (data.stallNo !== "" && data.stallNo !== null ? "(" + data.stallNo + ")" : "") + ",";
-        });
-        combineddoorno = combineddoorno.slice(0, -1)
-        if (licFromYear?.code !== undefined && licFromYear?.code !== null &&
-          licToYear?.code !== undefined && licToYear?.code !== null) {
-          let licencetax = {
-            service: "TL",
-            fromYear: licFromYear.code,
-            fromPeriod: "",
-            toYear: licToYear.code,
-            toPeriod: "",
-            arrear: licArrear === "" ? 0 : licArrear,
-            current: licCurrent === "" ? 0 : licCurrent,
-            current2: 0
-          };
-          Tax.push(licencetax);
-        }
-
-        if (profFromYear?.code !== undefined && profFromYear?.code !== null &&
-          profToYear?.code !== undefined && profToYear?.code !== null &&
-          profFromPeriod?.code !== undefined && profFromPeriod?.code !== null &&
-          profToPeriod?.code !== undefined && profToPeriod?.code !== null) {
-          let proftax = {
-            service: "PROFTAX",
-            fromYear: profFromYear.code,
-            fromPeriod: profFromPeriod.code,
-            toYear: profToYear.code,
-            toPeriod: profToPeriod.code,
-            arrear: profArrear === "" ? 0 : profArrear,
-            current: profCurrentFirst === "" ? 0 : profCurrentFirst,
-            current2: profCurrentSecond === "" ? 0 : profCurrentSecond
-          };
-          Tax.push(proftax);
-        }
-        if (rentFromYear?.code !== undefined && rentFromYear?.code !== null &&
-          rentToYear?.code !== undefined && rentToYear?.code !== null &&
-          rentFromMonth?.code !== undefined && rentFromMonth?.code !== null &&
-          rentToMonth?.code !== undefined && rentToMonth?.code !== null) {
-          let renttax = {
-            service: "RT.Municipal_Shops_Rent",
-            fromYear: rentFromYear.code,
-            fromPeriod: rentFromMonth.code,
-            toYear: rentToYear.code,
-            toPeriod: rentToMonth.code,
-            arrear: rentArrear === "" ? 0 : rentArrear,
-            current: rentCurrent === "" ? 0 : rentCurrent,
-            current2: 0
-          };
-          Tax.push(renttax);
-        }
-        let formdatatemp = {
-          Licenses: [
-            {
-              id: (isEdit) ? formData?.id : null,
-              action: "INITIATE",
-              applicationType: "RENEWAL",
-              financialYear: "2021-22",
-              licenseType: "PERMANENT",
-              tenantId: tenantId,
-              applicationNumber: (isEdit) ? formData?.applicationNumber : null,
-              tradeLicenseDetail: {
-                id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
-                channel: "PDE",
-                address: {
-                  id: (isEdit) ? formData?.tradeLicenseDetail?.address?.id : null,
-                  tenantId: tenantId,
-                  doorNo: combineddoorno, // formState1,
-                  zonalid: WardNo.zonecode,//formData.TradeDetails?.Zonal.code,
-                  wardid: WardNo.code,//formData.TradeDetails?.code,
-                  wardno: WardNo.wardno,//formData.TradeDetails?.wardno,
-                  circledivisionid: WardNo.zonecode,
-                  lbBuildingCode: BuildingCode === undefined ? "" : BuildingCode,
-                  lbBuildingName: BuildingName === undefined ? "" : BuildingName,
-                  buildingType: BuildingType.code
-                },
-                ownersPde: [
-                  ...formState
-                ],
-                structureType: "BUILDING",
-                structurePlace: [...formState1],
-                businessSector: sector.code,
-                capitalInvestment: capitalAmount,
-                //enterpriseType: Sector,
-                licenseeType: value2,
-                taxPde: Tax
-              },
-              tradeName: licensingInstitutionName,
-              workflowCode: "PdeTL"
-            }
-          ]
-        }
-        setPdeformdata(formdatatemp);
-
-        try {
-          // setIsInitialRender(false);
-          if (isEdit) {
-            mutation1.mutate(formdatatemp, {
-              onSuccess,
-
-            });
-          } else {
-            mutation.mutate(formdatatemp, {
-              onSuccess,
-
-            });
-          }
-        }
-        catch (err) {
-          console.log(err);
-        }
+    if (flgEdit === true) {
+      if (validateData() === "DN") {
+        setErrorMessage("Door No Duplication Found");
+        setToast(true)
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
       }
-      else {
-        setErrorMessage("Year Mismatch Error");
+      else if (validateData() === "CA") {
+        setErrorMessage("Capital Investment must be greater than 1 ");
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
       }
+      else if (validateData() === "LT") {
+        setErrorMessage("Select Ownership Type");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+      else if (validateData() === "WN") {
+        setErrorMessage("Select Ward No");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+      else if (validateData() === "BT") {
+        setErrorMessage("Select Building Type");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+      else if (validateData() === "BS") {
+        setErrorMessage("Select Bussiness Category");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+      else if (validateData() === "DExists") {
+        setErrorMessage("Doorno already  exists Please Check");
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      }
+
+
+      else {
+        if ((((licFromYear.id) && (licToYear.id) && (parseInt(licFromYear.code.replace(/-/g, "")) <= parseInt(licToYear.code.replace(/-/g, ""))))
+          || (!licFromYear) && (!licToYear))
+          && (((profFromYear.id) && (profToYear.id) && (parseInt(profFromYear?.code.replace(/-/g, "")) <= parseInt(profToYear.code.replace(/-/g, ""))))
+            || (!profFromYear) && (!profToYear))
+          && ((rentFromYear.id) && (rentToYear.id) && (parseInt(rentFromYear?.code.replace(/-/g, "")) <= parseInt(rentToYear.code.replace(/-/g, "")))
+            || ((!rentFromYear) && (!rentToYear)))) {
+          formState1.map((data) => {
+            combineddoorno = combineddoorno + data.doorNo +
+              (data.doorNoSub !== "" && data.doorNoSub !== null ? "/" + data.doorNoSub : "") +
+              (data.stallNo !== "" && data.stallNo !== null ? "(" + data.stallNo + ")" : "") + ",";
+          });
+          combineddoorno = combineddoorno.slice(0, -1)
+          if (licFromYear?.code !== undefined && licFromYear?.code !== null &&
+            licToYear?.code !== undefined && licToYear?.code !== null) {
+            let licencetax = {
+              service: "TL",
+              fromYear: licFromYear.code,
+              fromPeriod: "",
+              toYear: licToYear.code,
+              toPeriod: "",
+              arrear: licArrear === "" ? 0 : licArrear,
+              current: licCurrent === "" ? 0 : licCurrent,
+              current2: 0
+            };
+            Tax.push(licencetax);
+          }
+
+          if (profFromYear?.code !== undefined && profFromYear?.code !== null &&
+            profToYear?.code !== undefined && profToYear?.code !== null &&
+            profFromPeriod?.code !== undefined && profFromPeriod?.code !== null &&
+            profToPeriod?.code !== undefined && profToPeriod?.code !== null) {
+            let proftax = {
+              service: "PROFTAX",
+              fromYear: profFromYear.code,
+              fromPeriod: profFromPeriod.code,
+              toYear: profToYear.code,
+              toPeriod: profToPeriod.code,
+              arrear: profArrear === "" ? 0 : profArrear,
+              current: profCurrentFirst === "" ? 0 : profCurrentFirst,
+              current2: profCurrentSecond === "" ? 0 : profCurrentSecond
+            };
+            Tax.push(proftax);
+          }
+          if (rentFromYear?.code !== undefined && rentFromYear?.code !== null &&
+            rentToYear?.code !== undefined && rentToYear?.code !== null &&
+            rentFromMonth?.code !== undefined && rentFromMonth?.code !== null &&
+            rentToMonth?.code !== undefined && rentToMonth?.code !== null) {
+            let renttax = {
+              service: "RT.Municipal_Shops_Rent",
+              fromYear: rentFromYear.code,
+              fromPeriod: rentFromMonth.code,
+              toYear: rentToYear.code,
+              toPeriod: rentToMonth.code,
+              arrear: rentArrear === "" ? 0 : rentArrear,
+              current: rentCurrent === "" ? 0 : rentCurrent,
+              current2: 0
+            };
+            Tax.push(renttax);
+          }
+          let formdatatemp = {
+            Licenses: [
+              {
+                id: (isEdit) ? formData?.id : null,
+                action: "INITIATE",
+                applicationType: "RENEWAL",
+                financialYear: "2021-22",
+                licenseType: "PERMANENT",
+                tenantId: tenantId,
+                applicationNumber: (isEdit) ? formData?.applicationNumber : null,
+                status: (isEdit) ? formData?.status : null,
+                tradeLicenseDetail: {
+                  id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
+                  channel: "PDE",
+                  address: {
+                    id: (isEdit) ? formData?.tradeLicenseDetail?.address?.id : null,
+                    tenantId: tenantId,
+                    doorNo: combineddoorno, // formState1,
+                    zonalid: WardNo.zonecode,//formData.TradeDetails?.Zonal.code,
+                    wardid: WardNo.code,//formData.TradeDetails?.code,
+                    wardno: WardNo.wardno,//formData.TradeDetails?.wardno,
+                    circledivisionid: WardNo.zonecode,
+                    lbBuildingCode: BuildingCode === undefined ? "" : BuildingCode,
+                    lbBuildingName: BuildingName === undefined ? "" : BuildingName,
+                    buildingType: BuildingType.code
+                  },
+                  ownersPde: [
+                    ...formState
+                  ],
+                  structureType: "BUILDING",
+                  structurePlace: [...formState1],
+                  businessSector: sector.code,
+                  capitalInvestment: capitalAmount,
+                  //enterpriseType: Sector,
+                  licenseeType: value2,
+                  taxPde: Tax
+                },
+                tradeName: licensingInstitutionName,
+                workflowCode: "PdeTL"
+              }
+            ]
+          }
+          setPdeformdata(formdatatemp);
+
+          try {
+            // setIsInitialRender(false);
+            if (isEdit) {
+              mutation1.mutate(formdatatemp, {
+                onSuccess,
+
+              });
+            } else {
+              mutation.mutate(formdatatemp, {
+                onSuccess,
+
+              });
+            }
+          }
+          catch (err) {
+            console.log(err);
+          }
+        }
+        else {
+          setErrorMessage("Year Mismatch Error");
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        }
+      }
+      setShowFlgEdit(true);
+    }
+    else {
+      if (formData?.tradeLicenseDetail?.owners === null) {
+        formData.tradeLicenseDetail["owners"] = [];
+      }
+      if (formData?.tradeLicenseDetail?.tradeUnits === null) {
+        formData.tradeLicenseDetail["tradeUnits"] = [];
+      }
+      setShowFlgEdit(false);
     }
   }
 
@@ -980,9 +993,14 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setSelectedAction(action);
     setDisplayMenu(false);
   }
-  if (!isEdit && !mutation.isLoading && mutation.isSuccess && !mutation.isError && !mutation.isIdle)
+  if (mutation.isLoading || mutation1.isLoading)
     return (
-      <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} isNewentry={oprole}></ApplicationDetailsPDE>
+      <Loader />
+    );
+  else if (!isEdit && !mutation.isLoading && mutation.isSuccess && !mutation.isError && !mutation.isIdle)
+    return (
+      <ApplicationDetailsPDE data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} isNewentry={oprole} isEdited={flgshowEdit}></ApplicationDetailsPDE>
+
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
@@ -999,9 +1017,28 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
       // </Card>
     );
-  if (isEdit && !mutation1.isLoading && mutation1.isSuccess && !mutation1.isError && !mutation1.isIdle)
+  else if (isEdit && !mutation1.isLoading && mutation1.isSuccess && !mutation1.isError && !mutation1.isIdle && flgshowEdit === true)
     return (
-      <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)} isNewentry={oprole}></ApplicationDetailsPDE>
+      <ApplicationDetailsPDE data={mutation1.data} isSuccess={mutation1.isSuccess} isLoading={(mutation1.isIdle || mutation1.isLoading)} isNewentry={oprole} isEdited={flgshowEdit}></ApplicationDetailsPDE>
+      // <Card>
+      // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
+      /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
+      /* <ApplicationDetailsActionBar
+          workflowDetails={workflowDetails}
+          displayMenu={displayMenu}
+          onActionSelect={onActionSelect}
+          setDisplayMenu={setDisplayMenu}
+          businessService={businessService}
+          forcedActionPrefix={forcedActionPrefix}
+          ActionBarStyle={ActionBarStyle}
+          MenuStyle={MenuStyle}
+        /> */
+
+      // </Card>
+    );
+  else if (isEdit && (flgshowEdit === false))
+    return (
+      <ApplicationDetailsPDE data={formData} isSuccess={true} isLoading={true} isNewentry={oprole} isEdited={flgshowEdit}></ApplicationDetailsPDE>
       // <Card>
       // <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
       /* <SubmitBar label="New Entry" onSubmit={handleNewPage} /> */
@@ -1022,7 +1059,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     return (
       <React.Fragment>
         {isLoading ? (<Loader />) : (
-          <FormStep config={configstatus || configstatusop ? config  : "" } onSelect={goNext} onSkip={onSkip} t={t} >
+          <FormStep config={configstatus || configstatusop ? config : ""} onSelect={goNext} onSkip={onSkip} t={t} >
             <div>
               <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", marginLeft: "50px" }} >
 
@@ -1101,7 +1138,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 <div className="row">
                   <div className="col-md-7">
                     <CardLabel style={{ marginBottom: "30px" }} > {`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `}<span className="mandatorycss">*</span></CardLabel>
-                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ display: "flex", justifyContent: "space-between",width: "38%" }} {...(validation = { isRequired: true, type: "option", title: "Invalid Ownership Type" })} />
+                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ display: "flex", justifyContent: "space-between", width: "38%" }} {...(validation = { isRequired: true, type: "option", title: "Invalid Ownership Type" })} />
                   </div>
                 </div>
                 <div className="row">
@@ -1113,7 +1150,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   <div className="col-md-7">
                     {/* {`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `} */}
                     <CardLabel style={{ marginBottom: "30px" }}>Type of Building<span className="mandatorycss">*</span></CardLabel>
-                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={buildingtype} selectedOption={BuildingType} onSelect={selectBuildingType} style={{ display: "flex", justifyContent: "space-between",width: "48%"  }} />
+                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={buildingtype} selectedOption={BuildingType} onSelect={selectBuildingType} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
                   </div>
                 </div>
                 <div className="row">
@@ -1281,41 +1318,41 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   </div>
                 </div>
                 {value3 === "LBBUILDING" && (
-                <div>
-                  <div className="row">
-                    <div className="col-md-12" > <CardLabel>{`${t("TL_LICENSE_PDE_RENT_DATA")}`}</CardLabel>
-                    </div>
-                  </div>
-
-                  <div id= "divRent" style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
+                  <div>
                     <div className="row">
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
-                        <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearFrom} selected={rentFromYear} select={selectRentFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
+                      <div className="col-md-12" > <CardLabel>{`${t("TL_LICENSE_PDE_RENT_DATA")}`}</CardLabel>
                       </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_FROM_MONTH")}`}</CardLabel>
-                        <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrentperiod} selected={rentFromMonth} select={selectRentFromMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_MONTH") })} />
-                      </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
-                        <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
-                      </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>
-                        <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrenttoperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
-                      </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
-                        <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
-                      </div>
-                      <div className="col-md-2" >
-                        <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
-                        <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                    </div>
+
+                    <div id="divRent" style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">
+                      <div className="row">
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_FROM_YEAR")}`}</CardLabel>
+                          <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearFrom} selected={rentFromYear} select={selectRentFromYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_YEAR") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_FROM_MONTH")}`}</CardLabel>
+                          <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrentperiod} selected={rentFromMonth} select={selectRentFromMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_FROM_MONTH") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_TO_YEAR")}`}</CardLabel>
+                          <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={rentToYear} select={selectRentToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_TO_MONTH")}`}</CardLabel>
+                          <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrenttoperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_ARREAR")}`}</CardLabel>
+                          <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
+                        </div>
+                        <div className="col-md-2" >
+                          <CardLabel>{`${t("TL_LICENSE_PDE_CURRENT")}`}</CardLabel>
+                          <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 )}
 
                 {/* <div style={{ border: "solid", borderRadius: "5px", padding: "5px", paddingTop: "5px", marginTop: "5px", borderColor: "#f3f3f3", background: "#FAFAFA", }} className="col-md-12">

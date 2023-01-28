@@ -20,14 +20,15 @@ const mystyle = {
   color:"#2B2F3E",
   marginBottom:".5rem",
   lineHieght:"1.5rem"
+
  };
 
-const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
+const SearchRegistryDeath = ({tenantId, t, onSubmit, data, count }) => {
     const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
         defaultValues: {
             offset: 0,
             limit: 10,
-            sortBy: "wardId",
+            sortBy: "commencementDate",
             sortOrder: "DESC"
         }
     })
@@ -35,7 +36,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
     useEffect(() => {
       register("offset", 0)
       register("limit", 10)
-      register("sortBy", "wardId")
+      register("sortBy", "commencementDate")
       register("sortOrder", "DESC")
     },[register])
 
@@ -64,62 +65,73 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
     if (isMobile) {
       return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }}/>
     }
-    const handleLinkClick = (finaldata) => {
-      Digit.SessionStorage.set("PDE_CREATE_TRADE", finaldata);
-    }
+
     //need to get from workflow
-    const GetCell = (value) => <span className="cell-text"  style={{wordBreak:"break-word"}}>{value}</span>;
+    const GetCell = (value) => <span className="cell-text">{value}</span>;
     const columns = useMemo( () => ([
         {
-          Header: t("TL_COMMON_TABLE_COL_APP_NO"),
-          accessor: "applicationNo",
+          Header: t("CR_COMMON_COL_APP_NO"),
+          accessor: "deathApplicationNo",
           disableSortBy: true,
           Cell: ({ row }) => {
             return (
               <div>
                 <span className="link">
-                  <Link onClick={event => handleLinkClick(row.original)} to={{pathname:`/digit-ui/employee/tl/pde-editapplication`}}>
-                    {row.original["applicationNumber"]}
-                  </Link>
+                  {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
+                    {row.original.deathApplicationNo}
+                  </Link> */}
+                   {row.original.deathApplicationNo}
                 </span>
               </div>
             );
           },
         },
         {
-            Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+            Header: t("CR_COMMON_COL_APP_DATE"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.tradeName),
+            accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
         },
         {
-            Header: t("TL_LOCALIZATION_LICENSEE_NAME"),
+          Header: t("CR_COMMON_COL_DOD"),
+          disableSortBy: true,
+          accessor: (row) => GetCell(row.dateOfDeath ? convertEpochToDateDMY(row.dateOfDeath) : ""),
+      },
+        // {
+        //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+        //     disableSortBy: true,
+        //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+        // },
+        {
+            Header: t("CR_COMMON_DECEASED_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.tradeLicenseDetail.ownersPde.map(owner => owner.name+" ")),
+            accessor: (row) => GetCell(row.deceasedFirstNameEn + row.deceasedMiddleNameEn + row.deceasedLastNameEn  || "-"),
         },
         {
-          Header: t("TL_DOOR_DETAILS"),
+          Header: t("CR_COMMON_DEATH_PLACE"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.tradeLicenseDetail.address.wardNo + " - " + row.tradeLicenseDetail.address.doorNo),
+          accessor: (row) => GetCell(row.deathPlace || "-"),
         },
-        
-        {
-          Header: t("TL_LOCALIZATION_SECTOR"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.tradeLicenseDetail.businessSector),
-        },
-        {
-          Header: t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.status),
-        },
-        
-
+        // {
+        //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+        //   disableSortBy: true,
+        //   accessor: (row) => GetCell(row.tradeName || ""),
+        // },
+        // {
+        //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+        //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+        //   disableSortBy: true,
+        // },
+        // {
+        //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+        //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+        //   disableSortBy: true,
+        // }
       ]), [] )
 
     return <React.Fragment>
                 
                 <div style={mystyle}>
-                <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
+                <h1 style={hstyle}>{t("DEATH CERTIFICATE")}</h1>
                   <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
                   <SearchFields {...{register, control, reset, tenantId, t}} />
 
@@ -166,4 +178,4 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
         </React.Fragment>
 }
 
-export default SearchPdeApplication
+export default SearchRegistryDeath

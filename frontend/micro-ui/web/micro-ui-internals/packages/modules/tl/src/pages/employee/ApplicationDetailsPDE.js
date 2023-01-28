@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import cloneDeep from "lodash/cloneDeep";
-import { useParams,useHistory } from "react-router-dom";
-import { Header ,Banner, Card,SubmitBar} from "@egovernments/digit-ui-react-components";
+import { useParams, useHistory } from "react-router-dom";
+import { Header, Banner, Card, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 import ApplicationDetailsActionBar from "../../../../templates/ApplicationDetails/components/ApplicationDetailsActionBar";
 import ApplicationDetailsWarningPopup from "../../../../templates/ApplicationDetails/components/ApplicationDetailsWarningPopup";
 import ActionModal from "../../../../templates/ApplicationDetails/Modal";
 import ApplicationDetailsToast from "../../../../templates/ApplicationDetails/components/ApplicationDetailsToast";
-const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
+const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdited }) => {
+  const [loadpage, setLoadpage] = useState(false);
+  let applicationNumber = isEdited ? data?.Licenses[0]?.applicationNumber : data?.applicationNumber;
   const history = useHistory();
   const [businessService, setBusinessService] = useState("PdeTL");
   const [displayMenu, setDisplayMenu] = useState(false);
@@ -21,8 +23,8 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
   const [showModal, setShowModal] = useState(false);
   const [isEnableLoader, setIsEnableLoader] = useState(false);
   const [isWarningPop, setWarningPopUp] = useState(false);
-  const [showToast,setShowToast]=useState(false);
-    
+  const [showToast, setShowToast] = useState(false);
+
   const closeToast = () => {
     setShowToast(null);
   };
@@ -33,12 +35,11 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.tl.useApplicationActions(tenantId,true);
+  } = Digit.Hooks.tl.useApplicationActions(tenantId, true);
 
-  let applicationNumber=data.data?.Licenses[0]?.applicationNumber;
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
-    tenantId:  tenantId,
-    id: data.data?.Licenses[0]?.applicationNumber,
+    tenantId: tenantId,
+    id: isEdited ? data?.Licenses[0]?.applicationNumber : data?.applicationNumber,
     moduleCode: businessService,
     role: "EMPLOYEE",
   });
@@ -52,6 +53,9 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
     if (workflowDetails?.data?.applicationBusinessService) {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
+    if (!workflowDetails.isLoading) {
+      setLoadpage(true);
+    }
   }, [workflowDetails.data]);
 
   if (workflowDetails?.data?.processInstances?.length > 0) {
@@ -63,12 +67,12 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      if(data.action == "RESUBMIT") {
+      if (data.action == "RESUBMIT") {
         data.redirectionUrl = {
           pathname: `/digit-ui/employee/tl/edit-application-details/${applicationNumber}`,
           state: applicationDetails
         },
-        data.tenantId = stateId
+          data.tenantId = stateId
       }
     })
   }
@@ -100,19 +104,20 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
     return (
       <Banner
         message={t("CS_TRADE_APPLICATION_SUCCESS")}  ///{GetActionMessage(props)}
-        applicationNumber={props.data?.Licenses[0]?.applicationNumber}
-        info={props.isSuccess ? "Saved Success Fully" : ""}   //props.t("TL_REF_NO_LABEL") 
+        applicationNumber={((isEdited) ? props.data?.Licenses[0]?.applicationNumber : props.data?.applicationNumber)}
+        // info={props.isSuccess ? "Saved Success Fully" : ""}   //props.t("TL_REF_NO_LABEL") 
         successful={props.isSuccess}
       />
     );
   }
-  const handleNewPage =event => {
+  const handleNewPage = event => {
     queryClient.removeQueries("TL_SEARCH_PDE");
     event.preventDefault();
-   // this.props.history.push('/pde-application');
+    // this.props.history.push('/pde-application');
     // navigate('/pde-application');
-    const isEdit=false;
-    history.push(`/digit-ui/employee/tl/pde-application/pde-details`, {isEdit
+    const isEdit = false;
+    history.push(`/digit-ui/employee/tl/pde-application/pde-details`, {
+      isEdit
       // paymentAmount,
       // tenantId: billDetails.tenantId,
     });
@@ -178,53 +183,61 @@ const ApplicationDetailsPDE = (data,isSuccess,isLoading,isNewentry) => {
     closeModal();
   };
 
-
+  // if (loadpage)
+  //   return (
+  //     <Loader />
+  //   );
+  // else
   return (
     <Card>
-      <BannerPicker t={t} data={data.data} isSuccess={data.isSuccess} isLoading={(data.isIdle || data.isLoading)} />
-      {isNewentry===true && (
-          <SubmitBar label="New Entry" onSubmit={handleNewPage} />
+      <BannerPicker t={t} data={data} isSuccess={data.isSuccess} isLoading={(data.isIdle || data.isLoading)} />
+      {isNewentry === true && loadpage===true   && (
+        <SubmitBar label="New Entry" onSubmit={handleNewPage} />
       )}
-  
-      <ApplicationDetailsActionBar
-            workflowDetails={workflowDetails}
-            displayMenu={displayMenu}
-            onActionSelect={onActionSelect}
-            setDisplayMenu={setDisplayMenu}
-            businessService={businessService}
-            mutate={mutate}
-            // forcedActionPrefix={forcedActionPrefix}
-            // ActionBarStyle={ActionBarStyle}
-            // MenuStyle={MenuStyle}
-          />
-          {showModal ? (
-            <ActionModal
-              t={t}
-              action={selectedAction}
-              tenantId={tenantId}
-              // state={state}
-              id={applicationNumber}
-              // applicationDetails={applicationDetails}
-               applicationData={data?.data?.Licenses[0]}
-              closeModal={closeModal}
-              submitAction={submitAction}
-              actionData={workflowDetails?.data?.timeline}
-              businessService={businessService}
-              workflowDetails={workflowDetails}
-              moduleCode="TL"
-            />
-          ) : null}
-           {isWarningPop ? (
-            <ApplicationDetailsWarningPopup
-              action={selectedAction}
-              workflowDetails={workflowDetails}
-              businessService={businessService}
-              isWarningPop={isWarningPop}
-              closeWarningPopup={closeWarningPopup}
-            />
-          ) : null}
-           <ApplicationDetailsToast t={t} showToast={showToast} closeToast={closeToast} businessService={businessService} />
-      </Card>
+      {
+        loadpage ? (
+        <ApplicationDetailsActionBar
+          workflowDetails={workflowDetails}
+          displayMenu={displayMenu}
+          onActionSelect={onActionSelect}
+          setDisplayMenu={setDisplayMenu}
+          businessService={businessService}
+          mutate={mutate}
+        // forcedActionPrefix={forcedActionPrefix}
+        // ActionBarStyle={ActionBarStyle}
+        // MenuStyle={MenuStyle}
+        />
+        ) : (<Loader />)
+      }
+
+      {showModal ? (
+        <ActionModal
+          t={t}
+          action={selectedAction}
+          tenantId={tenantId}
+          // state={state}
+          id={applicationNumber}
+          // applicationDetails={applicationDetails} isEdited ? data?.Licenses[0]?.applicationNumber : data?.applicationNumber
+          applicationData={isEdited ? data?.Licenses[0] : data}
+          closeModal={closeModal}
+          submitAction={submitAction}
+          actionData={workflowDetails?.data?.timeline}
+          businessService={businessService}
+          workflowDetails={workflowDetails}
+          moduleCode="TL"
+        />
+      ) : null}
+      {isWarningPop ? (
+        <ApplicationDetailsWarningPopup
+          action={selectedAction}
+          workflowDetails={workflowDetails}
+          businessService={businessService}
+          isWarningPop={isWarningPop}
+          closeWarningPopup={closeWarningPopup}
+        />
+      ) : null}
+      <ApplicationDetailsToast t={t} showToast={showToast} closeToast={closeToast} businessService={businessService} />
+    </Card>
   );
 };
 
