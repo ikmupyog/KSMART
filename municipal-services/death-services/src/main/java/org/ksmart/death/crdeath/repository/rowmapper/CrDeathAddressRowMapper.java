@@ -25,7 +25,7 @@ interface CrDeathAddressRowMapper {
                             .wardId(rs.getString(prefix +"ward_id"))
                             .talukId(rs.getString(prefix +"taluk_id"))
                             .villageId(rs.getString(prefix +"village_id"))
-                            .postOfficeId(rs.getString(prefix +"postoffice_id"))
+                            .postofficeId(rs.getString(prefix +"postoffice_id"))
                             .pincode(rs.getLong(prefix +"pincode"))
                             .districtId(rs.getString(prefix +"district_id"))
                             .stateId(rs.getString(prefix +"state_id"))

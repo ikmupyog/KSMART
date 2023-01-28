@@ -137,7 +137,14 @@ public class CrDeathRegistryService {
         deathCertificate.setAuditDetails(applicationRequest.getDeathCertificate().get(0).getAuditDetails());
         deathCertificate.setCounter(1);
         deathCertificate.setDeathcertificateno(applicationRequest.getDeathCertificate().get(0).getCertificateNo());
-        deathCertificate.setDateofissue(applicationRequest.getDeathCertificate().get(0).getCertificateDate());
+        if(applicationRequest.getDeathCertificate().get(0).getCertificateDate()!=null){
+             deathCertificate.setDateofissue(applicationRequest.getDeathCertificate().get(0).getCertificateDate());
+        }
+        else
+        {
+          Long currentTime = Long.valueOf(System.currentTimeMillis());
+          deathCertificate.setDateofissue(currentTime);
+        }
         repository.save(deathCertRequest);
         return deathCertificate;
       }

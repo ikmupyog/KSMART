@@ -69,8 +69,8 @@ public class CrDeathRegistryAddress {
     @JsonProperty("villageId")
     private String villageId ;
 
-    @JsonProperty("postOfficeId")
-    private String postOfficeId ;
+    @JsonProperty("postofficeId")
+    private String postofficeId ;
 
     @JsonProperty("pincode")
     private long pincode ;

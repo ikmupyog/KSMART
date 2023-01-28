@@ -101,4 +101,11 @@ public class CrDeathRegistryConstants {
 
      //RAkhi S on 24.01.2023
      public static final String TALUK = "Taluk";
+     public static final String POSTOFFICE = "PostOffice";
+     public static final String PO_EN = "P O";
+     public static final String PO_ML = "പി ഒ";
+
+     public static final String NOT_RECORDED_EN = "Not Recorded";
+     public static final String NOT_RECORDED_ML = "രേഖപ്പെടുത്തിയിട്ടില്ല";
+
 }
