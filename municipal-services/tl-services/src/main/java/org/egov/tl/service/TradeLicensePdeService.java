@@ -140,6 +140,7 @@ public class TradeLicensePdeService {
             String serviceFromPath, HttpHeaders headers) {
         List<TradeLicense> licenses;
         // allow mobileNumber based search by citizen if interserviceCall
+        criteria.setUserId(requestInfo.getUserInfo().getUuid());
         boolean isInterServiceCall = isInterServiceCall(headers);
         criteria.setBusinessService(serviceFromPath);
         licenses = repository.getLicensesPde(criteria);
