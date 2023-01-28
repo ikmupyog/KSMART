@@ -372,7 +372,121 @@ public class CrDeathValidator {
                     }  
                 }
 
-            } //DECEASED IDENTIFIED END
+            } 
+            //DECEASED UNIDENTIFIED BEGIN
+            if (deathdtls.getDeceasedUnIdentified().equals(CrDeathConstants.VALUE_FALSE)){
+                                //DEATH_PLACE_HOME
+                if (deathdtls.getDeathPlace()==CrDeathConstants.DEATH_PLACE_HOME){
+                    
+                    if(StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getHoueNameEn()) || StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getHoueNameMl())){
+                        throw new CustomException("HOUSE NAME IS INVALID", "The House name " +
+                        addressInfo.getDeathplaceAddress().getHoueNameEn()+" or "+addressInfo.getDeathplaceAddress().getHoueNameMl()+ " is invalid");  
+                    } 
+                    // if(StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getCityEn()) || StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getCityMl())){
+                    //     throw new CustomException("CITY  IS INVALID", "The city name " +
+                    //     addressInfo.getDeathplaceAddress().getCityEn()+" or "+addressInfo.getDeathplaceAddress().getCityMl()+ " is invalid");  
+                    // } 
+                    if(StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getWardId()) ){
+                        throw new CustomException("WARD NAME INVALID", "The ward name " +
+                        addressInfo.getDeathplaceAddress().getWardId() +" is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getPostOfficeId())){
+                        throw new CustomException("POSTOFFICE INVALID", "The postoffice name " +
+                        addressInfo.getDeathplaceAddress().getPostOfficeId() +" is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(addressInfo.getDeathplaceAddress().getDistrictId())){
+                        throw new CustomException("DISTRICT NAME INVALID", "The District name " +
+                        addressInfo.getDeathplaceAddress().getDistrictId() +" is invalid");  
+                    } 
+                }
+                //DEATH_PLACE_HOSPITAL
+                if (deathdtls.getDeathPlace()==CrDeathConstants.DEATH_PLACE_HOSPITAL){
+                
+                    if(StringUtils.isEmpty(deathdtls.getDeathPlaceType()) ){
+                        throw new CustomException("HOSPITAL NAME INVALID", "The Hospital name " +deathdtls.getDeathPlaceType()
+                        + " is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(deathdtls.getDeathPlaceOfficerName())){
+                        throw new CustomException("SIGNED OFFICER NAME INVALID", "The name of Signed authority   " +deathdtls.getDeathPlaceOfficerName()
+                        + " is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(deathdtls.getDeathSignedOfficerDesignation())){
+                        throw new CustomException("SIGNED OFFICER DESIGNATION  INVALID", "The designation of Signed authority  " +deathdtls.getDeathPlaceOfficerName()
+                        + " is invalid");  
+                    } 
+                }
+                //DEATH_PLACE_INSTITUTION
+                if (deathdtls.getDeathPlace()==CrDeathConstants.DEATH_PLACE_INSTITUTION){
+                
+                    if(StringUtils.isEmpty(deathdtls.getDeathPlaceType())){
+                        throw new CustomException("INSTITUTION TYPE  INVALID", "The institution type " +deathdtls.getDeathPlaceType()
+                        + " is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(deathdtls.getDeathPlaceInstId())){
+                        throw new CustomException("INSTITUTION  NAME INVALID", "The institution name  " +deathdtls.getDeathPlaceInstId()
+                        + " is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(deathdtls.getDeathPlaceOfficerName())){
+                        throw new CustomException("SIGNED OFFICER NAME INVALID", "The name of Signed authority " +deathdtls.getDeathPlaceOfficerName()
+                        + " is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(deathdtls.getDeathSignedOfficerDesignation())){
+                        throw new CustomException("SIGNED OFFICER DESIGNATION INVALID", "The designation of Signed authority  " +deathdtls.getDeathPlaceOfficerName()
+                        + " is invalid");  
+                    } 
+
+                }
+                //DEATH_PLACE_VEHICLE
+                if (deathdtls.getDeathPlace()==CrDeathConstants.DEATH_PLACE_VEHICLE){
+    
+                    //Vehicle type
+                    if(StringUtils.isEmpty(deathdtls.getDeathPlaceType())){
+                        throw new CustomException("VEHICLE TYPE INVALID", "The Vehicle type " +deathdtls.getDeathPlaceType()
+                        + " is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(deathdtls.getVehicleNumber())){
+                        throw new CustomException("VEHICLE  NUMBER INVALID", "The Vehicle number " +deathdtls.getVehicleNumber()
+                        + " is invalid");  
+                    }  
+                    if(StringUtils.isEmpty(deathdtls.getVehicleFirstHalt())){
+                        throw new CustomException("VEHICLE  FIRST HALT INVALID", "The Vehicle first halt " +deathdtls.getVehicleNumber()
+                        + " is invalid");  
+                    }
+                    if(StringUtils.isEmpty(deathdtls.getVehicleFromplaceMl())|| StringUtils.isEmpty(deathdtls.getVehicleFromplaceEn())){
+                        throw new CustomException("VEHICLE FROM PLACE INVALID", "The Vehicle from  place " +deathdtls.getVehicleFromplaceMl()
+                    + " or " + deathdtls.getVehicleFromplaceEn()+  " is invalid");  
+                    }
+                    if(StringUtils.isEmpty(deathdtls.getVehicleToPlaceEn())|| StringUtils.isEmpty(deathdtls.getVehicleToPlaceMl())){
+                        throw new CustomException("VEHICLE TO PLACE INVALID", "The Vehicle to place " +deathdtls.getVehicleToPlaceEn()
+                    + " or " + deathdtls.getVehicleToPlaceMl()+  " is invalid");  
+                    }
+                    if(StringUtils.isEmpty(deathdtls.getInformantNameEn())|| StringUtils.isEmpty(deathdtls.getInformantNameMl())){
+                        throw new CustomException("INFORMANT :NAME INVALID", "The informant name " +deathdtls.getVehicleNumber()
+                        + " is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(addressInfo.getInformantAddress().getHoueNameEn())||StringUtils.isEmpty( addressInfo.getInformantAddress().getHoueNameMl())){
+                        throw new CustomException("INFORMANT :HOUSE NAME INVALID", "The House name  of informant " +
+                        addressInfo.getInformantAddress().getHoueNameEn()+" or "+addressInfo.getInformantAddress().getHoueNameMl()+ " is invalid");  
+                    } 
+                    // if(StringUtils.isEmpty(addressInfo.getInformantAddress().getCityEn())|| StringUtils.isEmpty(addressInfo.getInformantAddress().getCityMl())){
+                    //     throw new CustomException("INFORMANT: CITY IS INVALID", "The city name " +
+                    //     addressInfo.getInformantAddress().getCityEn()+" or "+addressInfo.getInformantAddress().getCityMl()+ " is invalid");  
+                    // } 
+                    if(StringUtils.isEmpty(addressInfo.getInformantAddress().getWardId())){
+                        throw new CustomException("INFORMANT: WARD INVALID", "The ward name  " +
+                        addressInfo.getInformantAddress().getWardId() +" is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(addressInfo.getInformantAddress().getPostOfficeId())){
+                        throw new CustomException("INFORMANT: POSTOFFICE INVALID", "The postoffice  " +
+                        addressInfo.getInformantAddress().getPostOfficeId() +" is invalid");  
+                    } 
+                    if(StringUtils.isEmpty(addressInfo.getInformantAddress().getDistrictId())){
+                        throw new CustomException("INFORMANT :DISTRICT INVALID", "The District name " +
+                        addressInfo.getInformantAddress().getDistrictId() +" is invalid");  
+                    } 
+                }
+
+            }
       
         });
     }
