@@ -174,8 +174,8 @@ const CreateEmployee = ({userType}) => {
     }
     for (let i = 0; i < formData?.Jurisdictions?.length; i++) {
       let key = formData?.Jurisdictions[i];
-      if (!(key?.boundary  && key?.hierarchy && key?.tenantId && key?.roles?.length > 0)) {
-        // && key?.boundaryType
+      if (!(key?.boundary  && key?.hierarchy && key?.tenantId )) {
+        // && key?.boundaryType && key?.roles?.length > 0
         setcheck(false);
         break;
       } else {
@@ -409,7 +409,7 @@ const CreateEmployee = ({userType}) => {
         config={config}
         onSubmit={onSubmit}
         onFormValueChange={onFormValueChange}
-        isDisabled={canSubmit}
+        isDisabled={!canSubmit}
         label={t("HR_COMMON_BUTTON_SUBMIT")}
       />
       {/* {showToast && (
