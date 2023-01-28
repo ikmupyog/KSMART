@@ -30,24 +30,24 @@ import io.swagger.annotations.ApiModel;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class  TradeLicense   {
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("id")
-        private String id = null;
+public class TradeLicense {
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("id")
+  private String id = null;
 
-        @NotNull
-        @SafeHtml
-        @Size(max=64)
-        @JsonProperty("tenantId")
-        private String tenantId = null;
+  @NotNull
+  @SafeHtml
+  @Size(max = 64)
+  @JsonProperty("tenantId")
+  private String tenantId = null;
 
-              /**
+  /**
    * Unique Identifier of the Trade License (UUID)
    */
   public enum LicenseTypeEnum {
     TEMPORARY("TEMPORARY"),
-    
+
     PERMANENT("PERMANENT");
 
     private String value;
@@ -73,150 +73,157 @@ public class  TradeLicense   {
     }
   }
 
+  public enum ApplicationTypeEnum {
+    NEW(TLConstants.APPLICATION_TYPE_NEW),
 
-    public enum ApplicationTypeEnum {
-        NEW(TLConstants.APPLICATION_TYPE_NEW),
+    RENEWAL(TLConstants.APPLICATION_TYPE_RENEWAL);
 
-        RENEWAL(TLConstants.APPLICATION_TYPE_RENEWAL);
+    private String value;
 
-        private String value;
-
-        ApplicationTypeEnum(String value) {
-            this.value = value;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return String.valueOf(value);
-        }
-
-        @JsonCreator
-        public static ApplicationTypeEnum fromValue(String text) {
-            for (ApplicationTypeEnum b : ApplicationTypeEnum.values()) {
-                if (String.valueOf(b.value).equals(text)) {
-                    return b;
-                }
-            }
-            return null;
-        }
+    ApplicationTypeEnum(String value) {
+      this.value = value;
     }
 
-        @SafeHtml
-        @JsonProperty("businessService")
-        private String businessService = "TL";
+    @Override
+    @JsonValue
+    public String toString() {
+      return String.valueOf(value);
+    }
 
-        @JsonProperty("licenseType")
-        private LicenseTypeEnum licenseType = null;
+    @JsonCreator
+    public static ApplicationTypeEnum fromValue(String text) {
+      for (ApplicationTypeEnum b : ApplicationTypeEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }
 
-        @JsonProperty("applicationType")
-        private ApplicationTypeEnum applicationType = null;
+  @SafeHtml
+  @JsonProperty("businessService")
+  private String businessService = "TL";
 
-        @SafeHtml
-        @JsonProperty("workflowCode")
-        private String workflowCode = null;
+  @JsonProperty("licenseType")
+  private LicenseTypeEnum licenseType = null;
 
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("licenseNumber")
-        private String licenseNumber = null;
+  @JsonProperty("applicationType")
+  private ApplicationTypeEnum applicationType = null;
 
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("applicationNumber")
-        private String applicationNumber;
+  @SafeHtml
+  @JsonProperty("workflowCode")
+  private String workflowCode = null;
 
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("oldLicenseNumber")
-        private String oldLicenseNumber = null;
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("licenseNumber")
+  private String licenseNumber = null;
 
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("applicationNumber")
+  private String applicationNumber;
 
-        @Size(max=256)
-        @SafeHtml
-        @JsonProperty("propertyId")
-        private String propertyId = null;
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("oldLicenseNumber")
+  private String oldLicenseNumber = null;
 
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("oldPropertyId")
-        private String oldPropertyId = null;
+  @Size(max = 256)
+  @SafeHtml
+  @JsonProperty("propertyId")
+  private String propertyId = null;
 
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("accountId")
-        private String accountId = null;
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("oldPropertyId")
+  private String oldPropertyId = null;
 
-        @Size(max=256)
-        @SafeHtml
-        @JsonProperty("tradeName")
-        private String tradeName = null;
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("accountId")
+  private String accountId = null;
 
-        @JsonProperty("applicationDate")
-        private Long applicationDate = null;
+  @Size(max = 256)
+  @SafeHtml
+  @JsonProperty("tradeName")
+  private String tradeName = null;
 
-        @JsonProperty("commencementDate")
-        private Long commencementDate = null;
+  @JsonProperty("applicationDate")
+  private Long applicationDate = null;
 
-        @JsonProperty("issuedDate")
-        private Long issuedDate = null;
+  @JsonProperty("commencementDate")
+  private Long commencementDate = null;
 
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("financialYear")
-        private String financialYear = null;
+  @JsonProperty("issuedDate")
+  private Long issuedDate = null;
 
-        @JsonProperty("validFrom")
-        private Long validFrom = null;
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("financialYear")
+  private String financialYear = null;
 
-        @JsonProperty("validTo")
-        private Long validTo = null;
+  @JsonProperty("validFrom")
+  private Long validFrom = null;
 
-              /**
-   * 1. Perform action to change the state of the trade license. 2. INITIATE, if application is getting submitted without required document. 3. APPLY, if application is getting submitted with application documents, in that case api will validate all the required application document. 4. APPROVE action is only applicable for specific role, that role has to be configurable at service level. Employee can approve a application only if application is in APPLIED state and Licesance fees is paid.
+  @JsonProperty("validTo")
+  private Long validTo = null;
+
+  /**
+   * 1. Perform action to change the state of the trade license. 2. INITIATE, if
+   * application is getting submitted without required document. 3. APPLY, if
+   * application is getting submitted with application documents, in that case api
+   * will validate all the required application document. 4. APPROVE action is
+   * only applicable for specific role, that role has to be configurable at
+   * service level. Employee can approve a application only if application is in
+   * APPLIED state and Licesance fees is paid.
    */
 
-        @NotNull
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("action")
-        private String action = null;
+  @NotNull
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("action")
+  private String action = null;
 
-        @JsonProperty("assignee")
-        private List<String> assignee = null;
+  @JsonProperty("assignee")
+  private List<String> assignee = null;
 
-        @Valid
-        @JsonProperty("wfDocuments")
-        private List<Document> wfDocuments;
+  @Valid
+  @JsonProperty("wfDocuments")
+  private List<Document> wfDocuments;
 
-        @Size(max=64)
-        @SafeHtml
-        @JsonProperty("status")
-        private String status = null;
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("status")
+  private String status = null;
 
-        @Valid
-        @NotNull
-        @JsonProperty("tradeLicenseDetail")
-        private TradeLicenseDetail tradeLicenseDetail = null;
+  @Valid
+  @NotNull
+  @JsonProperty("tradeLicenseDetail")
+  private TradeLicenseDetail tradeLicenseDetail = null;
 
-        @JsonProperty("calculation")
-        private Calculation calculation;
+  @JsonProperty("calculation")
+  private Calculation calculation;
 
-        @JsonProperty("auditDetails")
-        private AuditDetails auditDetails = null;
+  @JsonProperty("auditDetails")
+  private AuditDetails auditDetails = null;
 
-        @Size(max=128)
-        @SafeHtml
-        private String comment;
+  @Size(max = 128)
+  @SafeHtml
+  private String comment;
 
-        @SafeHtml
-        @JsonProperty("fileStoreId")
-        private String fileStoreId = null;
+  @SafeHtml
+  @JsonProperty("fileStoreId")
+  private String fileStoreId = null;
 
-        @Size(max=400)
-        @SafeHtml
-        @JsonProperty("licenseUnitNameMal")
-        private String licenseUnitNameMal = null;
+  @Size(max = 400)
+  @SafeHtml
+  @JsonProperty("licenseUnitNameMal")
+  private String licenseUnitNameMal = null;
+
+  @Size(max = 128)
+  @JsonProperty("assignUser")
+  private String assignUser = null;
 
 }
-

@@ -192,6 +192,7 @@ public class TradeLicensePdeService {
      */
     public List<TradeLicense> updatewf(TradeLicenseRequest tradeLicenseRequest, String businessServicefromPath) {
         TradeLicense licence = tradeLicenseRequest.getLicenses().get(0);
+        RequestInfo requestInfo = tradeLicenseRequest.getRequestInfo();
         TradeLicense.ApplicationTypeEnum applicationType = licence.getApplicationType();
         List<TradeLicense> licenceResponse = null;
         if (businessServicefromPath == null)
@@ -213,6 +214,14 @@ public class TradeLicensePdeService {
                     .setInstitutionId(null);
             tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getInstitutionMaster().setActive(false);
             tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().setLicenseUnitId(null);
+        }
+        if (!CollectionUtils.isEmpty(tradeLicenseRequest.getLicenses().get(0).getAssignee())) {
+            tradeLicenseRequest.getLicenses().get(0).getAssignee().forEach(assignee -> {
+                tradeLicenseRequest.getLicenses().get(0)
+                        .setAssignUser(assignee);
+            });
+        } else {
+            tradeLicenseRequest.getLicenses().get(0).setAssignUser(requestInfo.getUserInfo().getUuid());
         }
         String businessServiceName = null;
         switch (businessServicefromPath) {

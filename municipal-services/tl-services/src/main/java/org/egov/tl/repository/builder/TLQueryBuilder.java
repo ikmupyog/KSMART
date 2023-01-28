@@ -486,6 +486,12 @@ public class TLQueryBuilder {
             builder.append("  tl.applicationnumber = ? ");
             preparedStmtList.add(criteria.getApplicationNumber());
         }
+
+        if (criteria.getApplicationstatus() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.status = ? ");
+            preparedStmtList.add(criteria.getApplicationstatus());
+        }
         builder.append(" ORDER BY tl.id ,tltax.service");
         // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);
 
