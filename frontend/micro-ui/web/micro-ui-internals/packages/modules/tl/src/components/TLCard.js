@@ -80,6 +80,8 @@ const TLCard = () => {
     ]
 
     links = links.filter(link => link.role ? checkForEmployee(link.role) : true);
+    let linksfinal = links.reduce((ac,a) => ac.find(x=> x.label === a.label) ? [...ac] : [...ac,a],[]);
+ 
     const propsForModuleCard = {
         Icon: <CaseIcon />,
         moduleName: t("TL_COMMON_TL"),
@@ -94,7 +96,7 @@ const TLCard = () => {
             //     link: `/digit-ui/employee/tl/inbox`
             // }
         ],
-        links: links
+        links: linksfinal
     }
     return <EmployeeModuleCard {...propsForModuleCard} />
 };

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton, TextArea, BackButton, Header } from "@egovernments/digit-ui-react-components";
+import React, { useEffect, useState } from "react";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton, TextArea, SubmitBar, BackButton, Header } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import Timeline from "../../../components/DRTimeline";
 
-const DeathCertificate = ({ config, onSelect, userType, formData }) => {
+const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => {
   const stateId = Digit.ULBService.getStateId();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   let validation = {};
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -19,6 +20,7 @@ const DeathCertificate = ({ config, onSelect, userType, formData }) => {
   const [HospitalName, selectHospitalName] = useState(formData?.HospitalDetails?.HospitalName);
   const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
   const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
+  const [payloadData, setPayloadData] = useState({});
 
 
   const [GeneralRemarks, setGeneralRemarks] = useState(formData?.GeneralRemarks?.GeneralRemarks);
@@ -43,7 +45,20 @@ const DeathCertificate = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("GeneralRemarks", GeneralRemarks);
     onSelect(config.key, { GeneralRemarks });
   };
-
+  const handleSearch =()=>{
+    console.log('loged');
+    let payload ={
+      tenantId:"kl.cochin",
+      id:"10f2381d-48a4-4ce3-8ad7-c4199a45b677"
+  }
+  setPayloadData(payload)
+    const config = {
+      enabled: !!(payload && Object.keys(payload).length > 0)
+     
+    }
+    onSubmit(payloadData)
+   
+  }
   function setSelectWifeOrMotherName(e) {
     setWifeOrMotherName(e.target.value);
   }
@@ -122,78 +137,84 @@ const DeathCertificate = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-4">
-              <CardLabel>
-                {t("DC_NAME_MOTHER_OR_WIFE")}
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="WifeorMotherName"
-                value={WifeorMotherName}
-                onChange={setSelectWifeOrMotherName}
-                disable={isEdit}
-                placeholder={`${t("DC_NAME_MOTHER_OR_WIFE")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_OR_WIFE") })}
-              />
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("DC_NAME_MOTHER_OR_WIFE")}
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="WifeorMotherName"
+                  value={WifeorMotherName}
+                  onChange={setSelectWifeOrMotherName}
+                  disable={isEdit}
+                  placeholder={`${t("DC_NAME_MOTHER_OR_WIFE")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_OR_WIFE") })}
+                />
+              </div>
+              <div>
+                <div className="col-md-4">
+                  <CardLabel>
+                    {t("DC_NAME_FATHER_OR_HUSBAND")}
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="HusbandorfatherName"
+                    value={HusbandorfatherName}
+                    onChange={setSelectHusbandorfatherName}
+                    disable={isEdit}
+                    placeholder={`${t("DC_NAME_FATHER_OR_HUSBAND")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_FATHER_OR_HUSBAND") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <CardLabel>{`${t("CD_HOSPITAL")}`}</CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="hospitalName"
+                    isMandatory={false}
+                    option={cmbhospital}
+                    selected={HospitalName}
+                    select={setselectHospitalName}
+                    placeholder={`${t("CD_HOSPITAL")}`}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          <div></div>
           <div className="row">
-            <div className="col-md-4">
-              <CardLabel>
-                {t("DC_NAME_FATHER_OR_HUSBAND")}
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="HusbandorfatherName"
-                value={HusbandorfatherName}
-                onChange={setSelectHusbandorfatherName}
-                disable={isEdit}
-                placeholder={`${t("DC_NAME_FATHER_OR_HUSBAND")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_FATHER_OR_HUSBAND") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>{`${t("CD_HOSPITAL")}`}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="hospitalName"
-                isMandatory={false}
-                option={cmbhospital}
-                selected={HospitalName}
-                select={setselectHospitalName}
-                placeholder={`${t("CD_HOSPITAL")}`}
-              />
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("DC_REGISTRATION_NUMBER")}
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="RegistrationNumber"
+                  value={RegistrationNumber}
+                  onChange={setSelectRegistrationNumber}
+                  disable={isEdit}
+                  placeholder={`${t("DC_REGISTRATION_NUMBER")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
+                />
+              </div>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-4">
-              <CardLabel>
-                {t("DC_REGISTRATION_NUMBER")}
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="RegistrationNumber"
-                value={RegistrationNumber}
-                onChange={setSelectRegistrationNumber}
-                disable={isEdit}
-                placeholder={`${t("DC_REGISTRATION_NUMBER")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
-              />
+            <div className="col-md-12">
+              <SubmitBar label={t("ES_COMMON_SEARCH")} onSubmit={()=>handleSearch()}/>
             </div>
           </div>
         </div>
-
-
 
       </FormStep>
     </React.Fragment>

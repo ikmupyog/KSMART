@@ -58,6 +58,7 @@ import StatisticalInfoContinue from "./pageComponents/deathComponents/Statistica
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
+import SearchRegistryDeath from "./components/SearchRegistryDeath"
 import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails";
 import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
@@ -148,6 +149,7 @@ const componentsToRegister = {
   CRApplicationDeathDetails,
   CRSearch,
   SearchCrApplication, 
+  SearchRegistryDeath,
   SearchDeathApplication,
   ChildDetails,
   AddressOne,
