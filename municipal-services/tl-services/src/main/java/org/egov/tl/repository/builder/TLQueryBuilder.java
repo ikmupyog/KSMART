@@ -440,7 +440,8 @@ public class TLQueryBuilder {
         }
         if (criteria.getUserId() != null) {
             addClauseIfRequired(preparedStmtList, builder);
-            builder.append(" tl.createdby=? OR  tl.assignee=? ");
+            builder.append(" (tl.createdby=? OR  tl.assignee=?) ");
+            preparedStmtList.add(criteria.getUserId());
             preparedStmtList.add(criteria.getUserId());
         }
         List<String> ids = criteria.getIds();
