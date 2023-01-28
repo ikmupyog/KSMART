@@ -23,12 +23,14 @@ const CloseBtn = (props) => {
   );
 };
 
-const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction, actionData, applicationData, businessService, moduleCode }) => {
+const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction, actionData, applicationData, businessService, moduleCode,wardcodes }) => {
   const { data: approverData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
     tenantId,
     {
       roles: action?.assigneeRoles?.map?.((e) => ({ code: e })),
       isActive: true,
+      rolecodes: businessService==="PdeTL"? action?.assigneeRoles?.map?.((e) => (e)).join(","):null,
+      wardcodes: businessService==="PdeTL"? wardcodes?wardcodes:null :null
     },
     { enabled: !action?.isTerminateState }
   );

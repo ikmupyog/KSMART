@@ -151,7 +151,8 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     {
       roles: rolecombine?.map?.((e) => ({ code: e })),
       isActive: true,
-      uuids: uuid
+      uuids: uuid,
+      rolecodes: rolecombine?.map?.((e) => (e)).join(",")
     }
     // { enabled: !action?.isTerminateState }
   );
@@ -186,7 +187,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   finalward.push(...finalapproverward);
   
   if (finalward.length > 0)
-    cmbWardNoFinal = isEdit ? finalward : finaloperatorward;
+    cmbWardNoFinal = isEdit && formData?.status !== "INITIATED" ? finalward : finaloperatorward;
 
   const [WardNo, setWardNo] = useState(formData.tradeLicenseDetail?.address?.wardNo ? cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0] : "");
   const selWard = cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0];
