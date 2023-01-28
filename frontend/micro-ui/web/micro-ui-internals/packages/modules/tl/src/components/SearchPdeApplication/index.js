@@ -23,7 +23,7 @@ const mystyle = {
  };
 
 const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
-    const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
+    const { register, control, handleSubmit, setValue, getValues, reset,pageChange } = useForm({
         defaultValues: {
             offset: 0,
             limit: 10,
@@ -47,16 +47,16 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
 
     function onPageSizeChange(e){
         setValue("limit",Number(e.target.value))
-        handleSubmit(onSubmit)()
+        handleSubmit(pageChange)()
     }
 
     function nextPage () {
         setValue("offset", getValues("offset") + getValues("limit"))
-        handleSubmit(onSubmit)()
+        handleSubmit(pageChange)()
     }
     function previousPage () {
         setValue("offset", getValues("offset") - getValues("limit") )
-        handleSubmit(onSubmit)()
+        handleSubmit(pageChange)()
     }
 
     const isMobile = window.Digit.Utils.browser.isMobile();
