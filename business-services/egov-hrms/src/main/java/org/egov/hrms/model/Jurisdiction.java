@@ -81,7 +81,6 @@ public class Jurisdiction {
     private String boundary;
 
     @SafeHtml
-    @NotNull
     @Size(max=256)
     private String boundaryType;
 
