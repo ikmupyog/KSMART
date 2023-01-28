@@ -370,18 +370,20 @@ public class CrDeathRegistryRepository {
                 String spouseMl = "";
                 String spouseEn = "";    
 
-                if(cert.getSpouseType()!=null){
-                    if(cert.getSpouseType().equals(CrDeathRegistryConstants.WIFE.toString())){
-                        spouseMl = CrDeathRegistryConstants.WIFE_ML.toString();
-                        spouseEn = CrDeathRegistryConstants.WIFE_EN.toString();
-                    }
-                    else if(cert.getSpouseType().equals(CrDeathRegistryConstants.HUSBAND.toString())){
-                        spouseMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
-                        spouseEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
-                    }
-               
-                    cert.setSpouseName(cert.getSpouseNameMl()+ spouseMl+" / "+
-                    cert.getSpouseNameEn()+ spouseEn);
+                if(cert.getSpouseUnavailable()!=1){
+                    // if(cert.getSpouseType()!=null){
+                        if(cert.getSpouseType().equals(CrDeathRegistryConstants.WIFE.toString())){
+                            spouseMl = CrDeathRegistryConstants.WIFE_ML.toString();
+                            spouseEn = CrDeathRegistryConstants.WIFE_EN.toString();
+                        }
+                        else if(cert.getSpouseType().equals(CrDeathRegistryConstants.HUSBAND.toString())){
+                            spouseMl = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_ML.toString();
+                            spouseEn = CrDeathRegistryConstants.MALE_DEPENDENT_HUSBAND_EN.toString();
+                        }
+                
+                        cert.setSpouseName(cert.getSpouseNameMl()+ spouseMl+" / "+
+                        cert.getSpouseNameEn()+ spouseEn);
+                    // }
                 }
                 else{
                     cert.setSpouseName(CrDeathRegistryConstants.NOT_RECORDED_ML+" / "+
@@ -393,8 +395,14 @@ public class CrDeathRegistryRepository {
                 //                     cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString());  
                 // }
                 // else{
-                    cert.setMotherName(cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
-                    cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString()); 
+                    if(cert.getFemaleDependentUnavailable() != 1){
+                        cert.setMotherName(cert.getFemaleDependentNameMl()+CrDeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
+                        cert.getFemaleDependentNameEn()+CrDeathRegistryConstants.FEMALE_DEPENDENT_EN.toString()); 
+                    }
+                    else{
+                        cert.setMotherName(CrDeathRegistryConstants.NOT_RECORDED_ML+" / "+
+                        CrDeathRegistryConstants.NOT_RECORDED_EN);
+                    }
                 // }     
                 String maleDependentMl = "";
                 String maleDependentEn = "";    
@@ -413,8 +421,15 @@ public class CrDeathRegistryRepository {
                 //                             cert.getMaleDependentNameEn() + maleDependentEn);
                 // }
                 // else{
+                if(cert.getMaleDependentUnavailable() != 1){
                     cert.setMaledependentname(cert.getMaleDependentNameMl()+ maleDependentMl+" / "+
                                             cert.getMaleDependentNameEn()+ maleDependentEn);
+                }
+                else{
+                    cert.setMaledependentname(CrDeathRegistryConstants.NOT_RECORDED_ML+" / "+
+                    CrDeathRegistryConstants.NOT_RECORDED_EN);
+                }
+
                 // }
 
                 if(cert.getAddressInfo().getPresentAddress().getResidenceAsscNo() != null){}
@@ -818,6 +833,8 @@ public class CrDeathRegistryRepository {
                 cert.setDeceasedGender(CrDeathRegistryConstants.TRANSGENDER_CAPTION.toString());
                }
 
+            //    System.out.println("getCertificateDate"+cert.getCertificateDate());
+                cert.setCertificateDate(cert.getCertificateDate());
                 cert.setRegistrationDate(cert.getRegistrationDate());
                 cert.setLocalBodyName(cert.getLocalBodyName());
                 cert.setEmbeddedUrl(getShortenedUrl(finalPath));

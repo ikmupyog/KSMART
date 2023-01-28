@@ -125,6 +125,13 @@ public class CrDeathRegistryService {
           List<CrDeathRegistryDtl> deathDtls = repository.getDeathApplication(criteria);     
 
         DeathPdfApplicationRequest applicationRequest = DeathPdfApplicationRequest.builder().requestInfo(requestInfo).deathCertificate(deathDtls).build();
+        if(applicationRequest.getDeathCertificate().get(0).getCertificateDate()!=0){
+          // applicationRequest.getDeathCertificate().get(0).setDateofissue(applicationRequest.getDeathCertificate().get(0).getCertificateDate());
+        }
+        else{
+          Long currentTime = Long.valueOf(System.currentTimeMillis());
+          applicationRequest.getDeathCertificate().get(0).setCertificateDate(currentTime);          
+        }
         DeathPdfResp pdfResp = repository.saveDeathCertPdf(applicationRequest);
         //Rakhi S on 19.12.2022
         deathCertificate.setEmbeddedUrl(applicationRequest.getDeathCertificate().get(0).getEmbeddedUrl());
@@ -137,7 +144,7 @@ public class CrDeathRegistryService {
         deathCertificate.setAuditDetails(applicationRequest.getDeathCertificate().get(0).getAuditDetails());
         deathCertificate.setCounter(1);
         deathCertificate.setDeathcertificateno(applicationRequest.getDeathCertificate().get(0).getCertificateNo());
-        if(applicationRequest.getDeathCertificate().get(0).getCertificateDate()!=null){
+        if(applicationRequest.getDeathCertificate().get(0).getCertificateDate()!=0){
              deathCertificate.setDateofissue(applicationRequest.getDeathCertificate().get(0).getCertificateDate());
         }
         else
