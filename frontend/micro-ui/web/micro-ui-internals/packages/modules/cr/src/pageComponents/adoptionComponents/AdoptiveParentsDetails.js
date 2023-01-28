@@ -20,13 +20,12 @@ const AdoptiveParentsDetails = ({ config, onSelect, userType, formData }) => {
   const [AdoptedMotherFirstNameEn, setAdoptedMotherFirstNameEn] = useState(formData?.AdoptionParentsDetails?.AdoptedMotherFirstNameEn ? formData?.AdoptionParentsDetails?.AdoptedMotherFirstNameEn : "");
   const [AdoptedMotherMiddleNameEn, setAdoptedMotherMiddleNameEn] = useState(formData?.AdoptionParentsDetails?.AdoptedMotherMiddleNameEn ? formData?.AdoptionParentsDetails?.AdoptedMotherMiddleNameEn : "");
   const [AdoptedMotherLastNameEn, setAdoptedMotherLastNameEn] = useState(formData?.AdoptionParentsDetails?.AdoptedMotherLastNameEn ? formData?.AdoptionParentsDetails?.AdoptedMotherLastNameEn : "");
-  const [Religion, setReligion] = useState(formData?.StatisticalInfoDetails?.Religion ? formData?.StatisticalInfoDetails?.Religion : null);
+  const [Religion, setReligion] = useState(formData?.AdoptionParentsDetails?.Religion ? formData?.AdoptionParentsDetails?.Religion : null);
   const [AdoptedFatherEducation, setAdoptedFatherEducation] = useState(formData?.AdoptionParentsDetails?.AdoptedFatherEducation ? formData?.AdoptionParentsDetails?.AdoptedFatherEducation : null);
   const [AdoptedFatherProfession, setAdoptedFatherProfession] = useState(formData?.AdoptionParentsDetails?.AdoptedFatherProfession ? formData?.AdoptionParentsDetails?.AdoptedFatherProfession : null);
   const [AdoptedMotherEducation, setAdoptedMotherEducation] = useState(formData?.AdoptionParentsDetails?.AdoptedMotherEducation ? formData?.AdoptionParentsDetails?.AdoptedMotherEducation : null);
   const [AdoptedMotherProfession, setAdoptedMotherProfession] = useState(formData?.AdoptionParentsDetails?.AdoptedMotherProfession ? formData?.AdoptionParentsDetails?.AdoptedMotherProfession : null);
-  const [ReligionStError, setReligionStError] = useState(formData?.StatisticalInfoDetails?.Religion ? false : false);
-
+  
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
 
@@ -37,6 +36,8 @@ const AdoptiveParentsDetails = ({ config, onSelect, userType, formData }) => {
   const [AdoptedFatherProfError, setAdoptedFatherProfError] = useState(formData?.AdoptionParentsDetails?.AdoptedFatherProfession ? false : false);
   const [AdoptedMotherEduError, setAdoptedMotherEduError] = useState(formData?.AdoptionParentsDetails?.AdoptedMotherEducation ? false : false);
   const [AdoptedMotherProfError, setAdoptedMotherProfError] = useState(formData?.AdoptionParentsDetails?.AdoptedMotherProfession ? false : false);
+  const [ReligiError, setReligiError] = useState(formData?.StatisticalInfoDetails?.Religion ? false : false);
+
   let cmbQualification = [];
   Qualification &&
       Qualification["birth-death-service"] &&
@@ -207,13 +208,13 @@ function setSelectReligion(value) {
                 }
                 if (Religion == null || Religion == "" || Religion == undefined) {
                     validFlag = false;
-                    setReligionStError(true);
+                    setReligiError(true);
                     setToast(true);
                     setTimeout(() => {
                       setToast(false);
                     }, 2000);
                   } else {
-                    setReligionStError(false);
+                    setReligiError(false);
                   }
               }
           
@@ -237,7 +238,7 @@ function setSelectReligion(value) {
           });
       }
   }
-  if (isQualificationLoading || isQualificationSubLoading || isProfessionLoading ||   isReligionListLoading) {
+  if (isQualificationLoading || isQualificationSubLoading || isProfessionLoading ||  isReligionListLoading) {
       return <Loader></Loader>;
   }
   return (
@@ -336,6 +337,7 @@ function setSelectReligion(value) {
                 option={cmbReligion}
                 selected={Religion}
                 select={setSelectReligion}
+                disable={isEdit}
                 placeholder={`${t("CR_ADOPTIVE_FAMILY_RELIGION")}`}
               />
             </div>
@@ -347,17 +349,17 @@ function setSelectReligion(value) {
               {toast && (
                     <Toast
                         error={
-                            AdoptedFatherFirstNmeEnError || AdoptedMotherFirstNmeEnError || AdoptedFatherEduError || AdoptedFatherProfError  || AdoptedMotherEduError || AdoptedMotherProfError ||  ReligionStError
+                            AdoptedFatherFirstNmeEnError || AdoptedMotherFirstNmeEnError || AdoptedFatherEduError || AdoptedFatherProfError  || AdoptedMotherEduError || AdoptedMotherProfError ||  ReligiError
                             // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
 
                         }
                         label={
-                            ( AdoptedFatherFirstNmeEnError  || AdoptedMotherFirstNmeEnError || AdoptedFatherEduError || AdoptedFatherProfError  || AdoptedMotherEduError || AdoptedMotherProfError ||  ReligionStError
+                            ( AdoptedFatherFirstNmeEnError  || AdoptedMotherFirstNmeEnError || AdoptedFatherEduError || AdoptedFatherProfError  || AdoptedMotherEduError || AdoptedMotherProfError ||  ReligiError
                                 //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
                                 // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError 
                                 ?
                                 ( AdoptedFatherFirstNmeEnError ? t(`CR_INVALID_ADOPTIVE_FATHER_FIRST_NAME_EN`) : AdoptedMotherFirstNmeEnError ? t(`CR_INVALID_ADOPTIVE_MOTHER_FIRST_NAME_EN`)  : AdoptedFatherEduError ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`) : AdoptedFatherProfError ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`) : AdoptedMotherEduError ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`) 
-                                : AdoptedMotherProfError ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`) :  ReligionStError ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
+                                : AdoptedMotherProfError ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`) :  ReligiError ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
                                 
                                     // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
                                     // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)

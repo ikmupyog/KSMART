@@ -150,6 +150,12 @@ const CreateEmployee = ({userType}) => {
         boundary: {
           code: tenantId
         },
+        tenantId:null,
+        roleCode:null,
+        zoneCode:null,
+        jurisdictionChilds:[{
+          wardCode:null
+        }],
         roles: [],
       }]
   }
@@ -168,7 +174,8 @@ const CreateEmployee = ({userType}) => {
     }
     for (let i = 0; i < formData?.Jurisdictions?.length; i++) {
       let key = formData?.Jurisdictions[i];
-      if (!(key?.boundary && key?.boundaryType && key?.hierarchy && key?.tenantId && key?.roles?.length > 0)) {
+      if (!(key?.boundary  && key?.hierarchy && key?.tenantId && key?.roles?.length > 0)) {
+        // && key?.boundaryType
         setcheck(false);
         break;
       } else {
@@ -215,27 +222,48 @@ const CreateEmployee = ({userType}) => {
 
 
   const onSubmit = (data) => {
+    console.log(data);
     if (data.Jurisdictions.filter(juris => juris.tenantId == tenantId).length == 0) {
       // setShowToast({ key: true, label: "ERR_BASE_TENANT_MANDATORY" });
       showToast("error", t("ERR_BASE_TENANT_MANDATORY"), 5000);
       return;
     }
-    if (!Object.values(data.Jurisdictions.reduce((acc, sum) => {
-      if (sum && sum?.tenantId) {
-        acc[sum.tenantId] = acc[sum.tenantId] ? acc[sum.tenantId] + 1 : 1;
-      }
-      return acc;
-    }, {})).every(s => s == 1)) {
-      // setShowToast({ key: true, label: "ERR_INVALID_JURISDICTION" });
-      showToast("error", t("ERR_INVALID_JURISDICTION"), 5000);
-      return;
-    }
+    // if (!Object.values(data.Jurisdictions.reduce((acc, sum) => {
+    //   if (sum && sum?.tenantId) {
+    //     acc[sum.tenantId] = acc[sum.tenantId] ? acc[sum.tenantId] + 1 : 1;
+    //   }
+    //   return acc;
+    // }, {})).every(s => s == 1)) {
+    //   // setShowToast({ key: true, label: "ERR_INVALID_JURISDICTION" });
+    //   showToast("error", t("ERR_INVALID_JURISDICTION"), 5000);
+    //   return;
+    // }
     let roles = data?.Jurisdictions?.map((ele) => {
       return ele.roles?.map((item) => {
         item["tenantId"] = ele.boundary;
         return item;
       });
     });
+    let jurisdictionChilds = data?.Jurisdictions?.map((ele) => {
+      return ele.jurisdictionChilds?.map((item) => {
+        item["wardCode"] = item.code;
+          delete item.localnamecmb;
+          delete item.namecmb;
+          delete item.boundaryNum;
+          delete item.children;
+          delete item.id;
+          delete item.label;
+          delete item.latitude;
+          delete item.localname;          
+          delete item.longitude;
+          delete item.name;          
+          delete item.wardno;
+          delete item.zonecode;
+          delete item.code;
+        return item;
+      });
+    });
+    console.log(jurisdictionChilds);
 
     const mappedroles = [].concat.apply([], roles);
     let Employees = [
@@ -379,7 +407,7 @@ const CreateEmployee = ({userType}) => {
         config={config}
         onSubmit={onSubmit}
         onFormValueChange={onFormValueChange}
-        isDisabled={!canSubmit}
+        isDisabled={canSubmit}
         label={t("HR_COMMON_BUTTON_SUBMIT")}
       />
       {/* {showToast && (

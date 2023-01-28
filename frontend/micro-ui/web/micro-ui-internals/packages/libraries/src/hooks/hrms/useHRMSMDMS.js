@@ -12,12 +12,17 @@ const useHrmsMDMS = (tenantId, moduleCode, type, config = {}) => {
   const useHrmsEmployeeReasons = () => {
     return useQuery(["HRMS_EMP_REASON", tenantId], () => MdmsService.getHrmsEmployeeReason(tenantId, moduleCode, type), config);
   };
+  const useZonalOffice = () => {
+    return useQuery("TL_ZONAL_OFFICE", () => MdmsService.getTLZonalOffice(tenantId, moduleCode, type), config);
+  };
 
   switch (type) {
     case "HRMSRolesandDesignation":
       return useHrmsRolesandDesignations();
     case "EmployeeType":
       return useHrmsEmployeeTypes();
+      case "boundary-data":
+        return useZonalOffice();
     case "DeactivationReason":
       return useHrmsEmployeeReasons();
   }

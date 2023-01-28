@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton , DatePicker,RadioButtons,LabelFieldPair,CheckBox} from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton , DatePicker,RadioButtons,LabelFieldPair,CheckBox ,Toast} from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/ADTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -12,39 +12,37 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
     const [isInitialRenderRadio, setIsInitialRenderRadio] = useState(true);
-    const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-    
+    const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");    
     
     const [ AdoptionAgencyName, setAdoptionAgencyName] = useState(formData?.AdoptionDetails?. AdoptionAgencyName);
     const [ AdoptionAgencyAddress , setAdoptionAgencyAddress ] = useState(formData?.AdoptionDetails?. AdoptionAgencyAddress );  
     
     const [selectedValueRadio, setSelectedValue] = useState(formData?.AdoptionDetails?.selectedValueRadio ? formData?.AdoptionDetails?.selectedValueRadio : "");
   const [valueRad, setValueRad] = useState(formData?.AdoptionDetails?.selectedValueRadio ? formData?.AdoptionDetails?.selectedValueRadio : "");
-
-
-
-  
+  const [toast, setToast] = useState(false);
   const [AdoptiveFirstNameEn, setAdoptiveFirstNameEn] = useState(formData?.AdoptionDetails?.AdoptiveFirstNameEn ? formData?.AdoptionDetails?.AdoptiveFirstNameEn : "");
   const [AdoptiveMiddleNameEn, setAdoptiveMiddleNameEn] = useState(formData?.AdoptionDetails?.AdoptiveMiddleNameEn ? formData?.AdoptionDetails?.AdoptiveMiddleNameEn : ""  );
   const [AdoptiveLastNameEn, setAdoptiveLastNameEn] = useState(formData?.AdoptionDetails?.AdoptiveLastNameEn ? formData?.AdoptionDetails?.AdoptiveLastNameEn : "");
   const [AdoptiveFirstNameMl, setAdoptiveFirstNameMl] = useState(formData?.AdoptionDetails?.AdoptiveFirstNameMl ? formData?.AdoptionDetails?.AdoptiveFirstNameMl : "");
   const [AdoptiveMiddleNameMl, setAdoptiveMiddleNameMl] = useState(formData?.AdoptionDetails?.AdoptiveMiddleNameMl ? formData?.AdoptionDetails?.AdoptiveMiddleNameMl : "" );
   const [AdoptiveLastNameMl, setAdoptiveLastNameMl] = useState(formData?.AdoptionDetails?.AdoptiveLastNameMl ? formData?.AdoptionDetails?.AdoptiveLastNameMl : "");
-  const [AdoptiveDOB, setAdoptiveDOB] = useState(formData?.AdoptiveDetails?.AdoptiveDOB ? formData?.AdoptiveDetails?.AdoptiveDOB : "");
-  const [Gender, selectGender] = useState(formData?.AdoptiveDetails?.Gender);
+  const [AdoptiveDOB, setAdoptiveDOB] = useState(formData?.AdoptiveDetails?.AdoptiveDOB ? formData?.AdoptionDetails?.AdoptiveDOB : "");
+  const [Gender, selectGender] = useState(formData?.AdoptiveDetails?.Gender ? formData?.AdoptionDetails?.Gender : "");
   const [AdoptiveBirthPlace, setAdoptiveBirthPlace] = useState(formData?.AdoptionDetails?.setAdoptiveBirthPlace);   
   const [AdoptionDeedNo, setAdoptionDeedNo] = useState(formData?.AdoptionDetails?.AdoptionDeedNo);
   const [AdoptionIssuingAthority, setAdoptionIssuingAthority] = useState(formData?.AdoptionDetails?.AdoptionIssuingAthority);   
   const [AdoptionOrderDate, setAdoptionOrderDate] = useState(formData?.AdoptionDetails?.AdoptionOrderDate);
   const [ AdoptionContactName, setAdoptionContactName] = useState(formData?.AdoptionDetails?. AdoptionContactName);
-  const [AdoptiveAadharHIde, setAdoptiveAadharHIde] = useState(formData?.AdoptiveDetails?.AdoptiveAadharNo ? true : false); 
+  // const [AdoptiveAadharHIde, setAdoptiveAadharHIde] = useState(formData?.AdoptiveDetails?.AdoptiveAadharNo ? true : false); 
   const [AdoptiveAadharNo, setAdoptiveAadharNo] = useState(formData?.AdoptionDetails?.AdoptiveAadharNo ? formData?.AdoptionDetails?.AdoptiveAadharNo : "");
   const [ContactMobile, setContactMobile] = useState(formData?.AdoptionDetails?.ContactMobile ? formData?.AdoptionDetails?.ContactMobile : "");
   const [ContactMobileError, setContactMobileError] = useState(formData?.AdoptionDetails?.ContactMobile ? false : false);
   const [AadharError, setAadharError] = useState(formData?.AdoptionDetails?.AdoptiveAadharNo ? false : false);
   const [isDob, setIsDob] = useState(formData?.AdoptionDetails?.isDob ? formData?.AdoptionDetails?.isDob : false);
   const [isAdoptAgency, setIsAdoptAgency] = useState(formData?.AdoptionDetails?.isAdoptAgency ? formData?.AdoptionDetails?.isAdoptAgency : false);
-  isAdoptAgency
+  const [DOBError, setDOBError] = useState(formData?.AdoptionDetails?.AdoptiveDOB ? false : false);
+  const [GendError, setGendError] = useState(formData?.AdoptionDetails?.Gender ? false : false);
+ 
   const [access, setAccess] = React.useState(true);
   let menu = [];
   Menu &&
@@ -86,7 +84,7 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
         if (isInitialRender) {
           if (formData?.AdoptionDetails?.isAdoptAgency != null) {
             setIsInitialRender(false);
-            setIsDob(formData?.AdoptionDetails?.isAdoptAgency);
+            setIsAdoptAgency(formData?.AdoptionDetails?.isAdoptAgency);
           }
         }
       }, [isInitialRender]);
@@ -100,6 +98,9 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
     function setselectAdoptionOrderDate(value) {
         setAdoptionOrderDate(value);
     }
+    function setselectAdoptiveDOB(value) {
+      setAdoptiveDOB(value);
+  }
     function setSelectAdoptionAgencyName(e) {
         if (e.target.value.length === 51) {
             return false;
@@ -149,7 +150,7 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
           if (e.target.value.length > 12) {
             // setAdoptiveAadharNo(e.target.value);
             setAadharError(true);
-            return false;
+            // return false;
             // const limit = 12;
             // setAdoptiveAadharNo(e.target.value.slice(0, limit));
             // window.alert("Username shouldn't exceed 10 characters")
@@ -168,6 +169,9 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
           return true;
         }
       }
+
+    
+
 
       function setSelectContactMobile(e) {
         if (e.target.value.length != 0) {
@@ -247,7 +251,7 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
           return false;
           // window.alert("Username shouldn't exceed 10 characters")
         } else {
-          setAdoptiveBirthPlace(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+          setAdoptiveBirthPlace(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
         }
       }
       
@@ -262,12 +266,12 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
           let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
           let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
           console.log(Difference_In_DaysRounded);
-          if (Difference_In_DaysRounded >= 180) {
-            setAdoptiveAadharHIde(true);
-          } else {
-            setAdoptiveAadharHIde(false);
-            setAdoptiveAadharNo("");
-          }
+          // if (Difference_In_DaysRounded >= 180) {
+          //   setAdoptiveAadharHIde(true);
+          // } else {
+          //   setAdoptiveAadharHIde(false);
+          //   setAdoptiveAadharNo("");
+          // }
         } else {
           setAdoptiveDOB(null);
           setDOBError(true);      
@@ -310,7 +314,7 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
       
           } else {
             setIsDob(e.target.checked);
-            setAdoptionOrderDate("");
+            setAdoptiveDOB("");
             selectGender("");
             setAdoptiveBirthPlace("");
             setAdoptionDeedNo("");
@@ -338,11 +342,25 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
         let validFlag = true;
 
     const goNext = () => {
+     
+    //   if (Gender == null || Gender == '' || Gender == undefined) {
+    //     validFlag = false;
+    //     setGendError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //         setToast(false);
+    //     }, 2000);
+
+    // } else {
+    //   setGendError(false);
+    // }
+
+
       sessionStorage.setItem("selectedValueRadio", selectedValueRadio ? selectedValueRadio.code : null);
         if (validFlag === true) {
             if (valueRad === "YES") {
-
-              sessionStorage.setItem("isDob", isDob ? isDob  : null);  
+ 
+              // sessionStorage.setItem("isDob", isDob ? isDob  : null);  
               sessionStorage.setItem("isAdoptAgency", isAdoptAgency ? isAdoptAgency  : null);  
                 sessionStorage.setItem("AdoptiveAadharNo", AdoptiveAadharNo ? AdoptiveAadharNo.AdoptiveAadharNo : null);
                 sessionStorage.setItem("AdoptiveFirstNameEn", AdoptiveFirstNameEn ? AdoptiveFirstNameEn.AdoptiveFirstNameEn : null);
@@ -351,13 +369,13 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
                 sessionStorage.setItem("AdoptiveFirstNameMl", AdoptiveFirstNameMl ? AdoptiveFirstNameMl.AdoptiveFirstNameMl : null);
                 sessionStorage.setItem("AdoptiveMiddleNameMl", AdoptiveMiddleNameMl ? AdoptiveMiddleNameMl.AdoptiveMiddleNameMl : null);
                 sessionStorage.setItem("AdoptiveLastNameMl", AdoptiveLastNameMl ? AdoptiveLastNameMl.AdoptiveLastNameMl : null);
-                sessionStorage.setItem("AdoptiveDOB", AdoptiveDOB ? AdoptiveDOB.AdoptiveDOB : null);    
-                sessionStorage.setItem("Gender", Gender ? Gender.Gender : null);
+                // sessionStorage.setItem("AdoptiveDOB", AdoptiveDOB ? AdoptiveDOB.AdoptiveDOB : null);    
+                sessionStorage.setItem("Gender", Gender ? Gender.code : null);
                 sessionStorage.setItem("AdoptiveBirthPlace", AdoptiveBirthPlace ? AdoptiveBirthPlace.AdoptiveBirthPlace : null); 
-                
+                sessionStorage.setItem("AdoptiveDOB", AdoptiveDOB ? AdoptiveDOB : null);
                 sessionStorage.setItem("AdoptionDeedNo", AdoptionDeedNo ? AdoptionDeedNo.AdoptionDeedNo : null);          
                 sessionStorage.setItem("AdoptionIssuingAthority", AdoptionIssuingAthority ? AdoptionIssuingAthority.AdoptionIssuingAthority : null);        
-                sessionStorage.setItem("AdoptionOrderDate", AdoptionOrderDate ? AdoptionOrderDate.AdoptionOrderDate : null);
+                sessionStorage.setItem("AdoptionOrderDate", AdoptionOrderDate ? AdoptionOrderDate : null);
                 sessionStorage.setItem("AdoptionAgencyName", AdoptionAgencyName ? AdoptionAgencyName.AdoptionAgencyName : null);
                 sessionStorage.setItem("AdoptionAgencyAddress", AdoptionAgencyAddress ? AdoptionAgencyAddress.AdoptionAgencyAddress : null);    
                 sessionStorage.setItem("AdoptionContactName", AdoptionContactName ? AdoptionContactName.AdoptionContactName : null);  
@@ -379,10 +397,9 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("AdoptiveFirstNameMl", AdoptiveFirstNameMl ? AdoptiveFirstNameMl.AdoptiveFirstNameMl : null);
         sessionStorage.setItem("AdoptiveMiddleNameMl", AdoptiveMiddleNameMl ? AdoptiveMiddleNameMl.AdoptiveMiddleNameMl : null);
         sessionStorage.setItem("AdoptiveLastNameMl", AdoptiveLastNameMl ? AdoptiveLastNameMl.AdoptiveLastNameMl : null);
-        sessionStorage.setItem("AdoptiveDOB", AdoptiveDOB ? AdoptiveDOB.AdoptiveDOB : null);    
-        sessionStorage.setItem("Gender", Gender ? Gender.Gender : null);
-        sessionStorage.setItem("AdoptiveBirthPlace", AdoptiveBirthPlace ? AdoptiveBirthPlace.AdoptiveBirthPlace : null); 
-        
+        sessionStorage.setItem("AdoptiveDOB", AdoptiveDOB ? AdoptiveDOB : null);
+        sessionStorage.setItem("Gender", Gender ? Gender.code : null);
+        sessionStorage.setItem("AdoptiveBirthPlace", AdoptiveBirthPlace ? AdoptiveBirthPlace.AdoptiveBirthPlace : null);         
         sessionStorage.setItem("AdoptionDeedNo", AdoptionDeedNo ? AdoptionDeedNo.AdoptionDeedNo : null);          
         sessionStorage.setItem("AdoptionIssuingAthority", AdoptionIssuingAthority ? AdoptionIssuingAthority.AdoptionIssuingAthority : null);        
         sessionStorage.setItem("AdoptionOrderDate", AdoptionOrderDate ? AdoptionOrderDate.AdoptionOrderDate : null);
@@ -394,7 +411,7 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
         onSelect(config.key, {
           selectedValueRadio, AdoptiveAadharNo, AdoptiveFirstNameEn,AdoptiveMiddleNameEn, AdoptiveLastNameEn,AdoptiveFirstNameMl, AdoptiveMiddleNameMl,AdoptiveLastNameMl,
              AdoptiveDOB, Gender,AdoptiveBirthPlace, AdoptionDeedNo,AdoptionIssuingAthority, AdoptionOrderDate, AdoptionAgencyName, AdoptionAgencyAddress ,
-             AdoptionContactName,ContactMobile,isDob,
+             AdoptionContactName,ContactMobile,isDob,isAdoptAgency,
            
         });
     }
@@ -450,9 +467,199 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
 
 
 
-               
+                <div className="row">
+                    <div className="col-md-12" >
+                   <div className="col-md-6">
+                <CardLabel>{`${t("CR_ADOPTIVE_CHILD_AADHAAR")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"number"}
+                  optionKey="i18nKey"
+                  name="AdoptiveAadharNo"
+                  value={AdoptiveAadharNo}
+                  onChange={setSelectAdoptiveAadharNo}
+                  placeholder={`${t("CR_ADOPTIVE_CHILD_AADHAAR")}`}
+                  inputProps={{
+                    maxLength: 12,
+                  }}
+                  {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                />
+              </div>
+          </div>
+        </div>
 
-                {/* <div className="row">
+
+        <div className="row">
+        <div className="col-md-12">
+              <div className="col-md-4">                
+                <CardLabel>
+                  {`${t("CR_ADOPTIVE_FIRST_NAME_EN")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="AdoptiveFirstNameEn"
+                  value={AdoptiveFirstNameEn}
+                  onChange={setSelectAdoptiveFirstNameEn}
+                  //  onChange={(e,v) => this.updateTextField(e,v)}
+                  // disable={isAdoptiveName}
+                  placeholder={`${t("CR_ADOPTIVE_FIRST_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADOPTIVE_FIRST_NAME_EN") })}
+                />
+              </div>
+              <div className="col-md-4">
+               
+                <CardLabel>{`${t("CR_ADOPTIVE_MIDDLE_NAME_EN")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="AdoptiveMiddleNameEn"
+                  value={AdoptiveMiddleNameEn}
+                  onChange={setSelectAdoptiveMiddleNameEn}
+                  // disable={isAdoptiveName}
+                  placeholder={`${t("CR_ADOPTIVE_MIDDLE_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADOPTIVE_MIDDLE_NAME_EN") })}
+                />
+              </div>
+              <div className="col-md-4">
+              
+                <CardLabel>{`${t("CR_ADOPTIVE_LAST_NAME_EN")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="AdoptiveLastNameEn"
+                  value={AdoptiveLastNameEn}
+                  onChange={setSelectAdoptiveLastNameEn}
+                  // disable={isAdoptiveName}
+                  placeholder={`${t("CR_ADOPTIVE_LAST_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADOPTIVE_LAST_NAME_EN") })}
+                />
+              </div>
+            </div>
+            </div>
+
+
+            <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-4">
+                
+                <CardLabel>
+                  {`${t("CR_ADOPTIVE_FIRST_NAME_ML")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="AdoptiveFirstNameMl"
+                  value={AdoptiveFirstNameMl}
+                  onChange={setSelectAdoptiveFirstNameMl}
+                  // disable={isAdoptiveName}
+                  placeholder={`${t("CR_ADOPTIVE_FIRST_NAME_ML")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: true,
+                    type: "text",
+                    title: t("CR_INVALID_ADOPTIVE_FIRST_NAME_ML"),
+                  })}
+                />
+              </div>
+              <div className="col-md-4">
+               
+                <CardLabel>{`${t("CR_ADOPTIVE_MIDDLE_NAME_ML")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="AdoptiveMiddleNameMl"
+                  value={AdoptiveMiddleNameMl}
+                  onChange={setSelectAdoptiveMiddleNameMl}
+                  // disable={isAdoptiveName}
+                  placeholder={`${t("CR_ADOPTIVE_MIDDLE_NAME_ML")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: false,
+                    type: "text",
+                    title: t("CR_INVALID_ADOPTIVE_MIDDLE_NAME_ML"),
+                  })}
+                />
+              </div>
+              <div className="col-md-4">
+              
+                <CardLabel>{`${t("CR_ADOPTIVE_LAST_NAME_ML")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="AdoptiveLastNameMl"
+                  value={AdoptiveLastNameMl}
+                  onChange={setSelectAdoptiveLastNameMl}
+                  // disable={isAdoptiveName}
+                  placeholder={`${t("CR_ADOPTIVE_LAST_NAME_ML")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: false,
+                    type: "text",
+                    title: t("CR_INVALID_ADOPTIVE_LAST_NAME_ML"),
+                  })}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+          <div className="col-md-12">
+          <div className="col-md-4">
+<CardLabel>
+  {t("CR_DATE_OF_BIRTH_TIME")}
+  <span className="mandatorycss">*</span>
+</CardLabel>
+<DatePicker
+  date={AdoptiveDOB}
+  name="AdoptiveDOB"
+  onChange={setselectAdoptiveDOB}
+ 
+  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
+  {...(validation = {pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, title: t("CR_INVALID_DATE_OF_BIRTH") })}
+/>
+</div>
+           
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_GENDER")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={true}
+                option={menu}
+                selected={Gender}
+                select={setselectGender}
+                // disable={isDob} 
+                placeholder={`${t("CR_GENDER")}`}
+                {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+              />
+            </div>
+            <div className="col-md-4" ><CardLabel>{`${t("CR_ADOPTION_PLACE_OF_BIRTH")}`}</CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptiveBirthPlace" value={AdoptiveBirthPlace} onChange={setSelectAdoptiveBirthPlace} disable={isEdit} placeholder={`${t("CR_ADOPTION_PLACE_OF_BIRTH")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text",  })} />
+                        </div>
+            </div>
+            </div>                    
+             
+
+                <div className="row">
                     <div className="col-md-12" >
                         
                         <div className="col-md-4" ><CardLabel>{`${t("CR_ADOPTION_DEED_ORDER_NO")}`}</CardLabel>
@@ -464,66 +671,72 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
                     </div>
 
                     <div className="col-md-4" ><CardLabel>{`${t("CR_ADOPTION_ISSUING_AUTHORITY")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptionIssuingAthority" value={AdoptionIssuingAthority} onChange={setSelectAdoptionIssuingAthority} disable={isEdit} placeholder={`${t("CR_ADOPTION_ISSUING_AUTHORITY")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text",  })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptionIssuingAthority" value={AdoptionIssuingAthority} onChange={setSelectAdoptionIssuingAthority} disable={isEdit} placeholder={`${t("CR_ADOPTION_ISSUING_AUTHORITY")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADOPTION_PLACE_OF_BIRTH"),  })} />
                         </div>
                     </div>
                 </div>
+               
+
+               
+        
+<div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CheckBox label={t("CR_ADOPTION_AVAILABLE_THROUGH_AGENCY_FRIENDS")} onChange={setAdoptAgency} value={isAdoptAgency} checked={isAdoptAgency} />
+            </div>
+          </div>
+        </div>
+        {isAdoptAgency === true && (
+          <div>
+            
+
+
                 <div className="row">
                     <div className="col-md-12" >
 
-                        <div className="col-md-6" ><CardLabel>{`${t("CR_ADOPTION_AGENCY_NAME_EN")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptionAgencyName" value={AdoptionAgencyName} onChange={setSelectAdoptionAgencyName} disable={isEdit} placeholder={`${t("CR_ADOPTION_AGENCY_NAME_EN")}`} {...(validation =  { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text",  })}/>
+                        <div className="col-md-3" ><CardLabel>{`${t("CR_ADOPTION_AGENCY_NAME_EN")}`}</CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptionAgencyName" value={AdoptionAgencyName} onChange={setSelectAdoptionAgencyName} 
+                            // disable={isEdit} 
+                            placeholder={`${t("CR_ADOPTION_AGENCY_NAME_EN")}`} {...(validation =  { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADOPTION_AGENCY_NAME_EN"),  })}/>
                         </div>
-                        <div className="col-md-6" ><CardLabel>{`${t("CR_ADOPTION_AGENCY_ADDRESS_EN")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptionAgencyAddress" value={AdoptionAgencyAddress} onChange={setSelectAdoptionAgencyAddress} disable={isEdit} placeholder={`${t("CR_ADOPTION_AGENCY_ADDRESS_EN")}`} {...(validation =  { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text",  })} />
+                        <div className="col-md-3" ><CardLabel>{`${t("CR_ADOPTION_AGENCY_ADDRESS_EN")}`}</CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptionAgencyAddress" value={AdoptionAgencyAddress} onChange={setSelectAdoptionAgencyAddress} 
+                            // disable={isEdit} 
+                            placeholder={`${t("CR_ADOPTION_AGENCY_ADDRESS_EN")}`} {...(validation =  { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADOPTION_AGENCY_ADDRESS_EN"),  })} />
+                        </div>
+                        <div className="col-md-3" ><CardLabel>{`${t("CR_ADOPTION_CONTACT_NAME")}`}</CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptionContactName" value={AdoptionContactName} onChange={setSelectAdoptionContactName} 
+                            // disable={isEdit} 
+                            placeholder={`${t("CR_ADOPTION_CONTACT_NAME")}`} {...(validation =  { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADOPTION_CONTACT_NAME"),  })}/>
+                        </div>
+                        <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="ContactMobile" value={ContactMobile}
+                                onChange={setSelectContactMobile} disable={isEdit} placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
                         </div>
                     </div>
-                 </div> */}
                  </div>
                  </div>
-   )}
-
-<div className="row">
-          {(valueRad === "NO"  ) && (
-            <div id="div-1">
-              <div className="col-md-12">
-
-
-              <div className="row">
-                          <div className="col-md-12">
-                            <h1 className="headingh1">
-                              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADOPTION_REGISTRATION_NOT_REGISTERED_BIRTH")}`}</span>{" "}
-                            </h1>
-                          </div>
-                        </div>
-
-
-                        </div>
-
+        )}
              
                  </div>
-               
+                 </div>
    )}
-        
-
-        </div>
-
 
 
                  
                  
-                  {(valueRad === "YES" || valueRad === "NO" ) && (
+                  {( valueRad === "NO" ) && (
                     <div id="div-1">
                       <div className="col-md-12">
         
         
-                        {/* <div className="row">
+                         <div className="row">
                           <div className="col-md-12">
                             <h1 className="headingh1">
                               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADOPTION_REGISTRATION_NOT_REGISTERED_BIRTH")}`}</span>{" "}
                             </h1>
                           </div>
-                        </div> */}
+                        </div> 
 
                         <div className="row">
                     <div className="col-md-12" >
@@ -711,6 +924,8 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_BIRTH") })}
               />
             </div>
+
+            
            
             <div className="col-md-4">
               <CardLabel>
@@ -725,11 +940,12 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
                 selected={Gender}
                 select={setselectGender}
                 placeholder={`${t("CR_GENDER")}`}
+                //  disable={isEdit}
                 {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
               />
             </div>
             <div className="col-md-4" ><CardLabel>{`${t("CR_ADOPTION_PLACE_OF_BIRTH")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptiveBirthPlace" value={AdoptiveBirthPlace} onChange={setSelectAdoptiveBirthPlace} disable={isEdit} placeholder={`${t("CR_ADOPTION_PLACE_OF_BIRTH")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text",  })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="AdoptiveBirthPlace" value={AdoptiveBirthPlace} onChange={setSelectAdoptiveBirthPlace} placeholder={`${t("CR_ADOPTION_PLACE_OF_BIRTH")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text",  })} />
                         </div>
             </div>
             </div>                    
@@ -743,7 +959,7 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
                         </div>
 
                         <div className="col-md-4" ><CardLabel>{t("CR_ADOPTION_ORDER_DATE")}</CardLabel>
-                        <DatePicker date={AdoptionOrderDate} name="AdoptionOrderDate" onChange={setselectAdoptionOrderDate} placeholder={`${t("CR_ADOPTION_ORDER_DATE")}`}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, type: "text",  })}/>
+                        <DatePicker date={AdoptionOrderDate} name="AdoptionOrderDate" onChange={setselectAdoptionOrderDate}   disable={isEdit} placeholder={`${t("CR_ADOPTION_ORDER_DATE")}`}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, type: "text",  })}/>
                     </div>
 
                     <div className="col-md-4" ><CardLabel>{`${t("CR_ADOPTION_ISSUING_AUTHORITY")}`}</CardLabel>
@@ -805,6 +1021,29 @@ const AdoptionDetails = ({ config, onSelect, userType, formData }) => {
                  </div> 
                  </div> 
                )}
+                 {toast && (
+          <Toast
+            error={
+              AadharError || DOBError || GendError || ContactMobileError
+              // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+            }
+            label={
+              AadharError || DOBError || GendError || ContactMobileError
+                ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+                // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
+                AadharError
+                  ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`) : GendError ? t('BIRTH_ERROR_GENDER_CHOOSE')
+                  : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                  // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+
+                  setToast(false)
+                : setToast(false)
+            }
+            onClose={() => setToast(false)}
+          />
+        )}
+        {""}
+
                </div> 
             </FormStep>
         </React.Fragment>
