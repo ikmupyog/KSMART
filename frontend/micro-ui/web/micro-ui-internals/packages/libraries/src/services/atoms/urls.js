@@ -117,14 +117,14 @@ const Urls = {
     search: "/death-services/v1/crdeathdetails/_search",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/death-services/v1/crdeathdetails/_update",
-    registry_search:"/birth-services/cr/registry/_search",  
+    registry_search: "/death-services/v1/crdeathregistry/_search",
   },
   crbirth: {
     create: "/death-services/v1/crdeathdetails/_create",
     search: "/death-services/v1/crdeathdetails/_search",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/death-services/v1/crdeathdetails/_update",
-    registry_search_birth:"/death-services/v1/crdeathregistry/_search"    
+    registry_search_birth: "/birth-services/cr/registry/_search",  
   },
   dfm: {
     create: "/filemgmnt/v1/applicantpersonals/_create",
