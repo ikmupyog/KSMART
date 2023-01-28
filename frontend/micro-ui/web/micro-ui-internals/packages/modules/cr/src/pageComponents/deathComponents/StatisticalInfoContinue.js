@@ -230,9 +230,9 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   // function selectFemaleDeathPregnant(value) {
   //   setSelectedFemaleDeathPregnant(value);
   // }
-  function setSelectCauseOfDeath(e) {
-    setSelectedCauseOfDeath(e.target.value);
-  }
+  // function setSelectCauseOfDeath(e) {
+  //   setSelectedCauseOfDeath(e.target.value);
+  // }
   // function setSelectalcoholyears(e) {
   //   setSelectedalcoholyears(e.target.value);
   // }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
@@ -18,6 +18,14 @@ const PlaceOfDeath = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+  const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+  const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
+  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+ 
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMaster");
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   // const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
@@ -114,6 +122,12 @@ const [setDeathOtherward, setSelectedDeathOtherward] = useState(formData?.PlaceO
 const [setDeathOtherPlace, setSelectedDeathOtherPlace] = useState(formData?.PlaceOfDeathOther?.setDeathOtherPlace);
 const [PlaceOfDeathOtherDetailsEn, setPlaceOfDeathOtherDetailsEn] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsEn);
 const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(formData?.PlaceOfDeathOther?.PlaceOfDeathOtherDetailsMl);
+ 
+// const [value, setValue] = useState();
+ 
+  const [isInitialRenderLB, setIsInitialRenderLB] = useState(true);
+  // const [LBCombo, setLBCombo] = useState(null);
+  const [LBDistrictCombo, setLBDistrictCombo] = useState(null);
   const [value1, setValue1] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
   let naturetype = null;
@@ -123,7 +137,52 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
     place["common-masters"].PlaceMaster.map((ob) => {
       cmbPlace.push(ob);
     });
-  console.log(cmbPlace);
+   
+    let cmbLB = [];
+    let cmbDistrict = [];
+    let cmbCountry = [];
+    let cmbState = [];
+    let cmbLBType = [];
+    let cmbTaluk = [];
+    let cmbVillage = [];
+    
+    localbodies &&
+      localbodies["tenant"] &&
+      localbodies["tenant"].tenants.map((ob) => {
+        cmbLB.push(ob);
+      });
+    District &&
+      District["common-masters"] &&
+      District["common-masters"].District.map((ob) => {
+        cmbDistrict.push(ob);
+      });
+    Country &&
+      Country["common-masters"] &&
+      Country["common-masters"].Country.map((ob) => {
+        cmbCountry.push(ob);
+      });
+    State &&
+      State["common-masters"] &&
+      State["common-masters"].State.map((ob) => {
+        cmbState.push(ob);
+      });
+    LBType &&
+      LBType["common-masters"] &&
+      LBType["common-masters"].LBType.map((ob) => {
+        cmbLBType.push(ob);
+      });
+    Taluk &&
+      Taluk["common-masters"] &&
+      Taluk["common-masters"].Taluk.map((ob) => {
+        cmbTaluk.push(ob);
+      });
+    Village &&
+      Village["common-masters"] &&
+      Village["common-masters"].Village.map((ob) => {
+        cmbVillage.push(ob);
+      });
+  // console.log(cmbPlace);
+  
 
   const onSkip = () => onSelect();
 
@@ -157,7 +216,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
             AdrsStateName={AdrsStateName}
             AdrsDistrict={AdrsDistrict}
             AdrsLBTypeName={AdrsLBTypeName}
-            AdrsLBName={AdrsLBTypeName}
+            AdrsLBName={AdrsLBName}
             AdrsTaluk={AdrsTaluk}
             AdrsPostOffice={AdrsPostOffice}
             AdrsPincode={AdrsPincode}
@@ -507,7 +566,7 @@ const [PlaceOfDeathOtherDetailsMl, setPlaceOfDeathOtherDetailsMl] = useState(for
               setAdrsDistrict={setAdrsDistrict}
               AdrsLBTypeName={AdrsLBTypeName}
               setAdrsLBTypeName={setAdrsLBTypeName}
-              AdrsLBName={AdrsLBTypeName}
+              AdrsLBName={AdrsLBName}
               setAdrsLBName={setAdrsLBName}
               AdrsTaluk={AdrsTaluk}
               setAdrsTaluk={setAdrsTaluk}
