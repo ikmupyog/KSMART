@@ -58,13 +58,6 @@ const DeathCertificateSearch = ({ path }) => {
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
-      <DeathCertificate
-        t={t}
-        tenantId={tenantId}
-        onSubmit={onSubmit}
-        data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""}
-        count={count}
-      />
       <BirthCertificate
         t={t}
         tenantId={tenantId}

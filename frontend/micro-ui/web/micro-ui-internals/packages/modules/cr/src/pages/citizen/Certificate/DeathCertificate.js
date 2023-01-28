@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, NewRadioButton, TextArea, SubmitBar, BackButton, Header } from "@egovernments/digit-ui-react-components";
+import {
+  FormStep,
+  CardLabel,
+  TextInput,
+  Dropdown,
+  DatePicker,
+  NewRadioButton,
+  TextArea,
+  SubmitBar,
+  BackButton,
+  Header,
+} from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import Timeline from "../../../components/DRTimeline";
 
-const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => {
+const DeathCertificate = ({ config, onSelect, userType, formData, onSubmit }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
@@ -11,7 +22,6 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
-
 
   const [Name, setName] = useState(formData?.ApplicantDetails?.Name);
   const [WifeorMotherName, setWifeOrMotherName] = useState(formData?.ApplicantDetails?.WifeorMotherName);
@@ -21,7 +31,6 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
   const [DeathDate, setDeathDate] = useState(formData?.InformationDeath?.DeathDate);
   const [Gender, selectGender] = useState(formData?.InformationDeath?.Gender);
   const [payloadData, setPayloadData] = useState({});
-
 
   const [GeneralRemarks, setGeneralRemarks] = useState(formData?.GeneralRemarks?.GeneralRemarks);
   let naturetypecmbvalue = null;
@@ -45,20 +54,18 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
     sessionStorage.setItem("GeneralRemarks", GeneralRemarks);
     onSelect(config.key, { GeneralRemarks });
   };
-  const handleSearch =()=>{
-    console.log('loged');
-    let payload ={
-      tenantId:"kl.cochin",
-      id:"10f2381d-48a4-4ce3-8ad7-c4199a45b677"
-  }
-  setPayloadData(payload)
+  const handleSearch = () => {
+    console.log("loged");
+    let payload = {
+      tenantId: "kl.cochin",
+      id: "10f2381d-48a4-4ce3-8ad7-c4199a45b677",
+    };
+    setPayloadData(payload);
     const config = {
-      enabled: !!(payload && Object.keys(payload).length > 0)
-     
-    }
-    onSubmit(payloadData)
-   
-  }
+      enabled: !!(payload && Object.keys(payload).length > 0),
+    };
+    onSubmit(payloadData);
+  };
   function setSelectWifeOrMotherName(e) {
     setWifeOrMotherName(e.target.value);
   }
@@ -85,18 +92,18 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
     <React.Fragment>
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <Header className="cr-header">DEATH CERTIFICATE</Header>
         <div>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
                 <CardLabel>
-                  <span className="mandatorycss">*</span>{t("DC_NAME_DECEASED")}
+                  <span className="mandatorycss">*</span>
+                  {t("DC_NAME_DECEASED")}
                 </CardLabel>
 
                 <TextInput
-
                   t={t}
                   isMandatory={true}
                   type={"text"}
@@ -110,19 +117,30 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel><span className="mandatorycss">*</span>
-                  {t("DC_DATE_DEATH")}</CardLabel>
+                <CardLabel>
+                  <span className="mandatorycss">*</span>
+                  {t("DC_DATE_DEATH")}
+                </CardLabel>
                 <span>
                   <DatePicker
-                    date={DeathDate} name="DeathDate" onChange={selectDeathDate}
-                    {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, type: "text", title: t("CR_INVALID_DATE") })} />
-
+                    date={DeathDate}
+                    name="DeathDate"
+                    onChange={selectDeathDate}
+                    {...(validation = {
+                      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_DATE"),
+                    })}
+                  />
                 </span>
               </div>
               <div className="col-md-4">
-                <CardLabel><span className="mandatorycss">*</span>{t("DC_GENDER")} </CardLabel>
+                <CardLabel>
+                  <span className="mandatorycss">*</span>
+                  {t("DC_GENDER")}{" "}
+                </CardLabel>
                 <Dropdown
-
                   t={t}
                   optionKey="code"
                   isMandatory={true}
@@ -139,9 +157,7 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
-                <CardLabel>
-                  {t("DC_NAME_MOTHER_OR_WIFE")}
-                </CardLabel>
+                <CardLabel>{t("DC_NAME_MOTHER_OR_WIFE")}</CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -157,9 +173,7 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
               </div>
               <div>
                 <div className="col-md-4">
-                  <CardLabel>
-                    {t("DC_NAME_FATHER_OR_HUSBAND")}
-                  </CardLabel>
+                  <CardLabel>{t("DC_NAME_FATHER_OR_HUSBAND")}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -170,7 +184,12 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
                     onChange={setSelectHusbandorfatherName}
                     disable={isEdit}
                     placeholder={`${t("DC_NAME_FATHER_OR_HUSBAND")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_FATHER_OR_HUSBAND") })}
+                    {...(validation = {
+                      pattern: "^[a-zA-Z-.`' ]*$",
+                      isRequired: false,
+                      type: "text",
+                      title: t("DC_INVALID_NAME_FATHER_OR_HUSBAND"),
+                    })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -191,9 +210,7 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
-                <CardLabel>
-                  {t("DC_REGISTRATION_NUMBER")}
-                </CardLabel>
+                <CardLabel>{t("DC_REGISTRATION_NUMBER")}</CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -211,13 +228,12 @@ const DeathCertificate = ({ config, onSelect, userType, formData,onSubmit }) => 
           </div>
           <div className="row">
             <div className="col-md-12">
-              <SubmitBar label={t("ES_COMMON_SEARCH")} onSubmit={()=>handleSearch()}/>
+              <SubmitBar label={t("ES_COMMON_SEARCH")} onSubmit={() => handleSearch()} />
             </div>
           </div>
         </div>
-
       </FormStep>
     </React.Fragment>
   );
 };
-export default DeathCertificate; 
+export default DeathCertificate;
