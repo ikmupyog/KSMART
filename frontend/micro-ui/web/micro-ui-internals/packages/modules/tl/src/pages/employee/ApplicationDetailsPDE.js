@@ -36,7 +36,8 @@ const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdite
     error: updateError,
     mutate,
   } = Digit.Hooks.tl.useApplicationActions(tenantId, true);
-
+ const wardcodes= isEdited ? data?.Licenses[0]?.tradeLicenseDetail?.address?.wardId : data?.tradeLicenseDetail?.address?.wardId;
+ console.log("ward No "+wardcodes );
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: tenantId,
     id: isEdited ? data?.Licenses[0]?.applicationNumber : data?.applicationNumber,
@@ -225,6 +226,7 @@ const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdite
           businessService={businessService}
           workflowDetails={workflowDetails}
           moduleCode="TL"
+          wardcodes={wardcodes}
         />
       ) : null}
       {isWarningPop ? (

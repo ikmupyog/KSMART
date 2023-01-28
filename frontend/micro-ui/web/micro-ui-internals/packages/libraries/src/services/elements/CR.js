@@ -32,6 +32,15 @@ export const CRService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
+    CRRegistrySearchBirth: ({  tenantId, filters }) =>
+    Request({
+      url: Urls. crbirth.registry_search_birth,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
   CRsearch: ({ tenantId, filters }) =>
      Request({
       url: Urls.cr.search,

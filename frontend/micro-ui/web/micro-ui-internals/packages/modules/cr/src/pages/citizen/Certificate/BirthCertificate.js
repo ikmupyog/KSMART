@@ -7,14 +7,17 @@ import {
   DatePicker,
   NewRadioButton,
   TextArea,
+  SubmitBar,
   BackButton,
   Header,
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import Timeline from "../../../components/DRTimeline";
 
-const BirthCertificate = ({ config, onSelect, userType, formData }) => {
+const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) => {
   const stateId = Digit.ULBService.getStateId();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
+
   const { t } = useTranslation();
   let validation = {};
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
@@ -29,6 +32,7 @@ const BirthCertificate = ({ config, onSelect, userType, formData }) => {
   const [FatherName, setFatherName] = useState(formData?.BirthCertificate?.FatherName);
   const [setHospital, selectSetHospital] = useState(formData?.BirthCertificate?.setHospital);
   const [RegistrationNo, setRegistrationNo] = useState(formData?.BirthCertificate?.RegistrationNo);
+  const [payloadData, setPayloadData] = useState({});
 
   let naturetypecmbvalue = null;
   const onSkip = () => onSelect();
@@ -53,7 +57,18 @@ const BirthCertificate = ({ config, onSelect, userType, formData }) => {
   function selectSetRegistrationNo(value) {
     setRegistrationNo(value);
   }
-
+  const handleSearch = () => {
+    console.log("loged");
+    let payload = {
+      tenantId: "kl.cochin",
+      id: "10f2381d-48a4-4ce3-8ad7-c4199a45b677",
+    };
+    setPayloadData(payload);
+    const config = {
+      enabled: !!(payload && Object.keys(payload).length > 0),
+    };
+    onSubmit(payloadData);
+  };
   let cmbGender = [];
   gender &&
     gender["common-masters"] &&
@@ -83,7 +98,7 @@ const BirthCertificate = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <Header>BIRTH_CERTIFICATE</Header>
+        <Header className="cr-header">BIRTH_CERTIFICATE</Header>
         <div>
           <div className="row">
             <div className="col-md-12">
@@ -184,6 +199,7 @@ const BirthCertificate = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           <div className="row">
+          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>{t("BC_REGISTRATION_NO")}</CardLabel>
               <TextInput
@@ -196,6 +212,12 @@ const BirthCertificate = ({ config, onSelect, userType, formData }) => {
                 disable={isEdit}
                 placeholder={`${t("BC_REGISTRATION_NO")}`}
               />
+            </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <SubmitBar label={t("ES_COMMON_SEARCH")} onSubmit={() => handleSearch()} />
             </div>
           </div>
         </div>
