@@ -6,12 +6,12 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
 const SearchPde = () => {
+
     const { variant } = useParams();
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [payload, setPayload] = useState({})
     const queryClient = useQueryClient();
-
     const { roles: userRoles } = Digit.UserService.getUser().info;
     const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEAPPROVER"));
     const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEOPERATOR"));
@@ -21,7 +21,14 @@ const SearchPde = () => {
 
     const Search = Digit.ComponentRegistryService.getComponent("SearchPdeApplication");
 
-    function onSubmit(_data) {
+    function onSubmit(_data,pageflag) {
+        if(!pageflag){
+            _data.offset=_data.offset
+        }else{
+            _data.offset=0;
+            _data.sortBy="wardId",
+            _data.sortOrder= "DESC"
+        }
         queryClient.removeQueries("TL_SEARCH_PDE");
         const data = {
             ..._data
@@ -32,16 +39,6 @@ const SearchPde = () => {
 
     const config = {
         enabled: !!(payload && Object.keys(payload).length > 0)
-    }
-    function pageChange(_data) {
-        console.log(JSON.stringify(_data));
-        queryClient.removeQueries("TL_SEARCH_PDE");
-        const data = {
-            ..._data
-        }
-
-        setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
-
     }
     const { data: { Licenses: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.tl.useSearchPde({ tenantId, filters: payload, config })
 
@@ -77,7 +74,7 @@ const SearchPde = () => {
     }
 
     sortedData = sortedData?.length > 0 ? sortedData : searchReult;
-    return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} onPageChage={pageChange} data={!isLoading && isSuccess ? (sortedData?.length > 0 ? sortedData : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    return <Search t={t} tenantId={tenantId} onSubmit={onSubmit}  data={!isLoading && isSuccess ? (sortedData?.length > 0 ? sortedData : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     //return <div>hai</div>
 }
 
