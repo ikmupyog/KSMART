@@ -77,7 +77,6 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
             <label> {t("DC_NAME_MOTHER_OR_WIFE")}</label>
             <TextInput name="WifeorMotherName" inputRef={register({})} placeholder={`${t("DC_NAME_MOTHER_OR_WIFE")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_OR_WIFE") })} />
-
         </SearchField>
 
         <SearchField>

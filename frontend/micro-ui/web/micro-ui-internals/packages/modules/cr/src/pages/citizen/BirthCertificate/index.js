@@ -54,10 +54,11 @@ const DeathCertificateSearch = ({ path }) => {
     data: { deathCertificateDtls: searchReult, Count: count } = {},
     isLoading,
     isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearch({ tenantId, filters: payload, config });
+  } = Digit.Hooks.cr.useRegistrySearchBirth({ tenantId, filters: payload, config });
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
+     
       <BirthCertificate
         t={t}
         tenantId={tenantId}

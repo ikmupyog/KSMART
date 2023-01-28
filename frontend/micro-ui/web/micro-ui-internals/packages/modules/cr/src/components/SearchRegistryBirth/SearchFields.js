@@ -210,17 +210,17 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           onClick={() => {
             reset({
               id: "",
-              DeceasedName: "",
-              DeathDate: "",
-              Gender: "",
-              WifeorMotherName: "",
-              HusbandorfatherName: "",
-              HospitalName: "",
-              RegistrationNumber: "",
-              offset: 0,
-              limit: 10,
-              sortBy: "dateofreport",
-              sortOrder: "DESC",
+            //   DeceasedName: "",
+            //   DeathDate: "",
+            //   Gender: "",
+            //   WifeorMotherName: "",
+            //   HusbandorfatherName: "",
+            //   HospitalName: "",
+            //   RegistrationNumber: "",
+            //   offset: 0,
+            //   limit: 10,
+            //   sortBy: "dateofreport",
+            //   sortOrder: "DESC",
             });
             previousPage();
           }}
