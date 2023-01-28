@@ -23,6 +23,15 @@ export const CRService = {
       params: details,
       auth: true,
     }),
+  CRRegistrySearch: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.crdeath.registry_search,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
   CRsearch: ({ tenantId, filters }) =>
      Request({
       url: Urls.cr.search,
