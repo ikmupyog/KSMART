@@ -23,7 +23,7 @@ const mystyle = {
  };
 
 const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
-    const { register, control, handleSubmit, setValue, getValues, reset,pageChange } = useForm({
+    const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
         defaultValues: {
             offset: 0,
             limit: 10,
@@ -47,16 +47,16 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
 
     function onPageSizeChange(e){
         setValue("limit",Number(e.target.value))
-        handleSubmit(pageChange)()
+        handleSubmit(onSubmit)(false)
     }
 
     function nextPage () {
         setValue("offset", getValues("offset") + getValues("limit"))
-        handleSubmit(pageChange)()
+        handleSubmit(onSubmit)(false)
     }
     function previousPage () {
         setValue("offset", getValues("offset") - getValues("limit") )
-        handleSubmit(pageChange)()
+        handleSubmit(onSubmit)(false)
     }
 
     const isMobile = window.Digit.Utils.browser.isMobile();
@@ -120,7 +120,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
                 
                 <div style={mystyle}>
                 <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
-                  <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
+                  <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit} id="true">
                   <SearchFields {...{register, control, reset, tenantId, t}} />
 
                   
