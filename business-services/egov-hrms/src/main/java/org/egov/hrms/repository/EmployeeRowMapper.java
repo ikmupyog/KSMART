@@ -161,7 +161,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                         .auditDetails(auditDetails).build();
                 jurisdictions.add(jurisdiction);
 
-            } else {
+			}
                 currentEmployee.getJurisdictions().forEach(child -> {
                     try {
                         if (child.getId().contains(rs.getString("jurisdiction_uuid"))) {
@@ -171,7 +171,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                         throw new RuntimeException(e);
                     }
                 });
-            }
+
             currentEmployee.setJurisdictions(jurisdictions);
         } catch (Exception e) {
             log.error("Error in row mapper while mapping Jurisdictions: ", e);
