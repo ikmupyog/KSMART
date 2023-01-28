@@ -533,12 +533,14 @@ public class CrDeathRegistryMdmsUtil {
                                 , String tenantId   
                                 , String deathplaceAddressDistrict
                                 , String deathplaceAddressState
-                                , String deathplaceAddressCountry) {
+                                , String deathplaceAddressCountry
+                                , String deathplaceAddressPO) {
                 MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateHome(requestInfo   
                                                 , tenantId
                                                 , deathplaceAddressDistrict
                                                 , deathplaceAddressState
-                                                , deathplaceAddressCountry);
+                                                , deathplaceAddressCountry
+                                                , deathplaceAddressPO);
                 Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
                 return result;
        }
@@ -546,14 +548,16 @@ public class CrDeathRegistryMdmsUtil {
                             , String tenantId                       
                             , String deathplaceAddressDistrict
                             , String deathplaceAddressState
-                            , String deathplaceAddressCountry) {
+                            , String deathplaceAddressCountry
+                            , String deathplaceAddressPO) {
 
         ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
         List<ModuleDetail> commonMasterRequest = getcommonMasterRequestHome(
                                  tenantId
                                 ,deathplaceAddressDistrict
                                 ,deathplaceAddressState
-                                ,deathplaceAddressCountry);       
+                                ,deathplaceAddressCountry
+                                ,deathplaceAddressPO);       
 
         
         List<ModuleDetail> moduleDetails = new LinkedList<>();
@@ -572,7 +576,8 @@ public class CrDeathRegistryMdmsUtil {
     private List<ModuleDetail> getcommonMasterRequestHome( String tenantId
                                         , String deathplaceAddressDistrict
                                         , String deathplaceAddressState
-                                        , String deathplaceAddressCountry) {
+                                        , String deathplaceAddressCountry
+                                        , String deathplaceAddressPO) {
 
         // master details for death certificate
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
@@ -588,6 +593,10 @@ public class CrDeathRegistryMdmsUtil {
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(CrDeathRegistryConstants.COUNTRY).filter(perAddrfilterCodeCountry).build()); 
 
+        final String filterCodePostOffice = "$.[?(@.code=='"+deathplaceAddressPO+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.POSTOFFICE).filter(filterCodePostOffice).build()); 
+
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
 
@@ -598,12 +607,14 @@ public class CrDeathRegistryMdmsUtil {
                                 , String tenantId   
                                 , String deathplaceAddressDistrict
                                 , String deathplaceAddressState
-                                , String deathplaceAddressCountry) {
+                                , String deathplaceAddressCountry
+                                , String deathplaceAddressPO) {
         MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateHomeMl(requestInfo   
                         , tenantId
                         , deathplaceAddressDistrict
                         , deathplaceAddressState
-                        , deathplaceAddressCountry);
+                        , deathplaceAddressCountry
+                        , deathplaceAddressPO);
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
         return result;
     }
@@ -611,14 +622,16 @@ public class CrDeathRegistryMdmsUtil {
                                 , String tenantId                       
                                 , String deathplaceAddressDistrict
                                 , String deathplaceAddressState
-                                , String deathplaceAddressCountry) {
+                                , String deathplaceAddressCountry
+                                , String deathplaceAddressPO) {
 
         ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
         List<ModuleDetail> commonMasterRequest = getcommonMasterRequestHomeMl(
                                         tenantId
                                         ,deathplaceAddressDistrict
                                         ,deathplaceAddressState
-                                        ,deathplaceAddressCountry);       
+                                        ,deathplaceAddressCountry
+                                        ,deathplaceAddressPO);       
 
 
                 List<ModuleDetail> moduleDetails = new LinkedList<>();
@@ -637,7 +650,8 @@ public class CrDeathRegistryMdmsUtil {
         private List<ModuleDetail> getcommonMasterRequestHomeMl( String tenantId
                                         , String deathplaceAddressDistrict
                                         , String deathplaceAddressState
-                                        , String deathplaceAddressCountry) {
+                                        , String deathplaceAddressCountry
+                                        , String deathplaceAddressPO) {
 
                 // master details for death certificate
                 List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
@@ -652,6 +666,10 @@ public class CrDeathRegistryMdmsUtil {
                 final String perAddrfilterCodeCountry = "$.[?(@.code=='"+deathplaceAddressCountry+"')].namelocal"; 
                 crDeathMasterDetails
                 .add(MasterDetail.builder().name(CrDeathRegistryConstants.COUNTRY).filter(perAddrfilterCodeCountry).build()); 
+
+                String filterCodePostOffice = "$.[?(@.code=='"+deathplaceAddressPO+"')].namelocal";
+                crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathRegistryConstants.POSTOFFICE).filter(filterCodePostOffice).build()); 
 
                 ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
@@ -1250,5 +1268,47 @@ public Object mDMSCallCertificateLBDistrictMl(RequestInfo requestInfo
                .moduleName(CrDeathRegistryConstants.COMMON_MASTERS_MODULE).build();
         
                return (crDeathModuleDtls);
+        }
+
+        //Rakhi S on 28.01.2023
+        public Object mDMSCallCertificateOtherMl(RequestInfo requestInfo  
+                                , String deathPlaceType) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateOtherMl(requestInfo   
+                        , deathPlaceType);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+    private MdmsCriteriaReq getMDMSRequestCertificateOtherMl(RequestInfo requestInfo   
+                               , String deathPlaceType) {
+
+                ModuleDetail tenantIdRequest = getdeathPlaceTypeMl(deathPlaceType);
+                        
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                moduleDetails.add(tenantIdRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+        private ModuleDetail getdeathPlaceTypeMl(String deathPlaceType) {
+
+                // master details for crDeath module
+                List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+        
+                // filter to only get code field from master data            
+                final String filterCode = "$.[?(@.code=='"+deathPlaceType+"')].namelocal";
+                crDeathMasterDetails
+                        .add(MasterDetail.builder().name(CrDeathRegistryConstants.OTHER_PLACE_TYPE).filter(filterCode).build());       
+        
+                ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                        .moduleName(CrDeathRegistryConstants.BND_MODULE_NAME).build();
+        
+               
+                return crDeathModuleDtls;
         }
 }

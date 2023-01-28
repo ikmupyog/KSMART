@@ -51,7 +51,7 @@ public class CrDeathRegistryConstants {
      public static final String  DEATH_PLACE_HOSPITAL = "HOSPITAL";
      public static final String  DEATH_PLACE_INSTITUTION = "INSTITUTION";
      public static final String  DEATH_PLACE_VEHICLE = "VEHICLE";
-     public static final String  DEATH_PLACE_OTHER_PLACES = "OTHER_PLACES";
+     public static final String  DEATH_PLACE_OTHER_PLACES = "PUBLIC_PLACES";
 
      public static final String MALE_DEPENDENT_FATHER ="MALE_DEPENDENT_FATHER";
      public static final String MALE_DEPENDENT_HUSBAND ="MALE_DEPENDENT_HUSBAND";
