@@ -45,8 +45,15 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
         { name: "Service Sector", code: "SERVICE" },
       ];
 
+    const applnStatus = [
+      { name: "Initiated", code: "INITIATED" },
+      { name: "Forwarded", code: "FORWARDED" },
+      { name: "Approved", code: "APPROVED" }
+    ];
+
     const bussinesssector = useWatch({ control, name: "bussinesssector" });
     const wardId = useWatch({ control, name: "wardId" });
+    const applicationstatus = useWatch({ control, name: "applicationstatus" });
 
 
 
@@ -64,6 +71,42 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     // })
 
     return <>
+      <SearchField>
+            <label>{`${t("TL_LOCALIZATION_WARD_NO")}`}</label>
+            <Controller
+           
+                    control={control}
+                    name="wardId"
+                    render={(props) => (
+                        <Dropdown
+                        selected={props.value}
+                        select={props.onChange}
+                        onBlur={props.onBlur}
+                        option={cmbWardNoFinal}
+                        optionKey="namecmb"
+                        t={t}
+                        />
+                    )}
+                    />
+        </SearchField>
+        <SearchField>
+            <label>{`${t("TL_LOCALIZATION_APPLNSTATUS")}`}</label>
+            <Controller
+           
+                    control={control}
+                    name="applicationstatus"
+                    render={(props) => (
+                        <Dropdown
+                        selected={props.value}
+                        select={props.onChange}
+                        onBlur={props.onBlur}
+                        option={applnStatus}
+                        optionKey="name"
+                        t={t}
+                        />
+                    )}
+                    />
+        </SearchField>
         <SearchField>
             <label>{t("TL_HOME_SEARCH_RESULTS_APP_NO_LABEL")}</label>
             <TextInput name="applicationNumber" inputRef={register({})} />
@@ -93,24 +136,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <label>{`${t("TL_LOCALIZATION_TRADE_OWNER_NAME")}`}</label>
             <TextInput  name="ownerName" inputRef={register({})}/>
         </SearchField>
-        <SearchField>
-            <label>{`${t("TL_LOCALIZATION_WARD_NO")}`}</label>
-            <Controller
-           
-                    control={control}
-                    name="wardId"
-                    render={(props) => (
-                        <Dropdown
-                        selected={props.value}
-                        select={props.onChange}
-                        onBlur={props.onBlur}
-                        option={cmbWardNoFinal}
-                        optionKey="namecmb"
-                        t={t}
-                        />
-                    )}
-                    />
-        </SearchField>
+        
         <SearchField>
             <label>{t("TL_LOCALIZATION_DOOR_NO")}</label>
             <TextInput  name="doorNo" inputRef={register({})}/>
