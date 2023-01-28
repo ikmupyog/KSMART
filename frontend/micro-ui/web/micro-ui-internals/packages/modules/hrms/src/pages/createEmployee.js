@@ -222,7 +222,6 @@ const CreateEmployee = ({userType}) => {
 
 
   const onSubmit = (data) => {
-    console.log(data);
     if (data.Jurisdictions.filter(juris => juris.tenantId == tenantId).length == 0) {
       // setShowToast({ key: true, label: "ERR_BASE_TENANT_MANDATORY" });
       showToast("error", t("ERR_BASE_TENANT_MANDATORY"), 5000);
@@ -238,12 +237,15 @@ const CreateEmployee = ({userType}) => {
     //   showToast("error", t("ERR_INVALID_JURISDICTION"), 5000);
     //   return;
     // }
-    let roles = data?.Jurisdictions?.map((ele) => {
-      return ele.roles?.map((item) => {
-        item["tenantId"] = ele.boundary;
-        return item;
-      });
-    });
+    // console.log(data?.Jurisdictions[0].roles);
+    // let roles = data?.Jurisdictions?.map((ele) => {
+    //   return ele.roles?.map((item) => {
+    //     item["tenantId"] = ele.boundary;
+    //     return item;
+    //   });
+    // });
+    let roles = data?.Jurisdictions[0].roles;
+    // roles.push({"tenantId":tenantId});
     let jurisdictionChilds = data?.Jurisdictions?.map((ele) => {
       return ele.jurisdictionChilds?.map((item) => {
         item["wardCode"] = item.code;
@@ -263,9 +265,9 @@ const CreateEmployee = ({userType}) => {
         return item;
       });
     });
-    console.log(jurisdictionChilds);
+    const mappedroles = [].concat.apply(roles);
+    // const mappedroles = roles;
 
-    const mappedroles = [].concat.apply([], roles);
     let Employees = [
       {
         tenantId: tenantId,

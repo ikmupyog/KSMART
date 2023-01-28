@@ -22,8 +22,8 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         tenantId:null,
         roleCode:null,
         zoneCode:null,
-        // roles: [],  
-        // jurisdictionChilds:[],
+        roles: [],  
+        jurisdictionChilds:[],
       },
     ]
   );
@@ -44,33 +44,19 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         
       };
       res = cleanup(res);
-      // console.log(jurisdiction?.role);
-      // if (jurisdiction?.roles) {
-      //   res["roles"] = jurisdiction?.roles.map((ele) => {
-      //     delete ele.description;
-      //     console.log(ele);
-      //     return ele;
-      //   });
-      // }
+      if (jurisdiction?.role) {
+        res["roles"] = jurisdiction?.role;
+        // res["roles"] = jurisdiction?.role.map((ele) => {
+        //   delete ele.description;
+        //   console.log(ele);
+        //   return ele;
+        // });
+      }
        //Maya
        let jurisdictionChildsTemp = [];
       if (jurisdiction?.TenantBoundary) {
         
         jurisdictionChildsTemp = jurisdiction?.TenantBoundary.map((ele) => {
-          // console.log(ele);
-          // delete ele.localnamecmb;
-          // delete ele.namecmb;
-          // delete ele.boundaryNum;
-          // delete ele.children;
-          // delete ele.id;
-          // delete ele.label;
-          // delete ele.latitude;
-          // delete ele.localname;          
-          // delete ele.longitude;
-          // delete ele.name;          
-          // delete ele.wardno;
-          // delete ele.zonecode;
-          // console.log(res["jurisdictionChilds"]);
           return ele;
         });
       }
@@ -79,7 +65,6 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
          return ele;
         });
       }
-      console.log(res);
       return res;
     });
    
