@@ -438,6 +438,11 @@ public class TLQueryBuilder {
             builder.append(" tl.tenantid=? ");
             preparedStmtList.add(criteria.getTenantId());
         }
+        if (criteria.getUserId() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" tl.createdby=? OR  tl.assignee=? ");
+            preparedStmtList.add(criteria.getUserId());
+        }
         List<String> ids = criteria.getIds();
         if (!CollectionUtils.isEmpty(ids)) {
             addClauseIfRequired(preparedStmtList, builder);

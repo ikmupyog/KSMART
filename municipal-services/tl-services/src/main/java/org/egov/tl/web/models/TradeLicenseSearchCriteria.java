@@ -113,6 +113,10 @@ public class TradeLicenseSearchCriteria {
     @JsonProperty("applicationstatus")
     private String applicationstatus = null;
 
+    @Size(max = 64)
+    @JsonProperty("userId")
+    private String userId = null;
+
     public boolean isEmpty() {
         return (this.tenantId == null && this.status == null && this.applicationType == null && this.ids == null
                 && this.applicationNumber == null
