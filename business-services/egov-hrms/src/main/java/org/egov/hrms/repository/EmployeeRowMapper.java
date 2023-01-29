@@ -162,7 +162,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                 jurisdictions.add(jurisdiction);
 
 			}
-                currentEmployee.getJurisdictions().forEach(child -> {
+            jurisdictions.forEach(child -> {
                     try {
                         if (child.getId().contains(rs.getString("jurisdiction_uuid"))) {
                             addChildrenToJurisdiction(rs, child);
