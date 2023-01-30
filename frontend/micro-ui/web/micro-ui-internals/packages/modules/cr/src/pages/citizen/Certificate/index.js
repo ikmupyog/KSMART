@@ -36,11 +36,11 @@ const DeathCertificateSearch = ({path}) => {
     const {data: {deathCertificateDtls: searchReult, Count: count} = {}, isLoading , isSuccess } = Digit.Hooks.cr.useRegistrySearch({tenantId, filters: payload, config})
     let payloadData ={id: isSuccess && searchReult[0]?.id, source:"sms"} 
     let registryPayload =Object.keys(payloadData).filter( k => payloadData[k] ).reduce( (acc, key) => ({...acc,  [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {} )
-    const {data: {filestoreId} = {}, } = Digit.Hooks.cr.useResistryDownload({tenantId, filters: registryPayload, config})
+    const {data: {filestoreId: storeId} = {} } = Digit.Hooks.cr.useResistryDownload({tenantId, filters: registryPayload, config})
     return  (
         <React.Fragment>
              <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
-            <DeathCertificate t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} filestoreId={filestoreId} isSuccess={isSuccess} isLoading={isLoading} count={count}/>
+            <DeathCertificate t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} filestoreId={storeId} isSuccess={isSuccess} isLoading={isLoading} count={count}/>
         </React.Fragment>
     )
    

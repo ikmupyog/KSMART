@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect } from "react"
+import React, { useCallback,useState, useMemo, useEffect } from "react"
 import { useForm, Controller } from "react-hook-form";
 import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
@@ -31,6 +31,7 @@ const registyBtnStyle ={
 }
 
 const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSuccess,isLoading,count }) => {
+  const [FileData,setFileData] = useState([])
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -118,6 +119,24 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
       disableSortBy: true,
       accessor: (row) => GetCell(row.deathPlace || "-"),
     },
+    {
+      Header: t("Download Certificate"),
+      disableSortBy: true,
+      Cell: ({ row }) => {
+        // console.log('row',row?.original);
+        return (
+          <div>
+           {
+           row.original?.filestoreId && row.original?.isSuccess === true  ?
+           <span className="link" onClick={()=>downloadDocument(row?.original?.filestoreId)}>
+           Download
+         </span>:<Loader/> 
+          }
+          </div>
+        );
+      },
+    },
+
     // {
     //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
     //   disableSortBy: true,
@@ -134,7 +153,14 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
     //   disableSortBy: true,
     // }
   ]), [])
-
+  let tmpData = data
+  useEffect(()=>{
+    if(filestoreId && isSuccess === true ){
+      tmpData[0] ={...data[0],filestoreId,isSuccess}
+    }
+    setFileData(tmpData)
+   
+  },[filestoreId])
   return <React.Fragment>
 
     <div style={mystyle}>
@@ -148,9 +174,9 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
 
     </div>
 
-    {data?.display ? <Card style={{ marginTop: 20 }}>
+    {FileData?.display ? <Card style={{ marginTop: 20 }}>
       {
-        t(data.display)
+        t(FileData.display)
           .split("\\n")
           .map((text, index) => (
             <p key={index} style={{ textAlign: "center" }}>
@@ -159,13 +185,13 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
           ))
       }
     </Card>
-      :  isLoading ?<Loader/>:data !== "" && <React.Fragment> 
-       {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
+      : (isLoading && !FileData === true) ? <Loader/>:FileData !== "" && <React.Fragment> 
+       {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
         <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
-       </div>:<Loader/>}
+       </div>:<Loader/>} */}
         <Table
         t={t}
-        data={data}
+        data={FileData?FileData:data}
         totalRecords={count}
         columns={columns}
         getCellProps={(cellInfo) => {
