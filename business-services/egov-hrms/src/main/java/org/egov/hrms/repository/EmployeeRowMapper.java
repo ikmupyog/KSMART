@@ -144,14 +144,13 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
 
             List<String> ids = jurisdictions.stream().map(Jurisdiction::getId).collect(Collectors.toList());
 
-            List<JurisdictionChild> jurisdictionchild = new ArrayList<>();
             if (!StringUtils.isEmpty(rs.getString("jurisdiction_uuid")) && (!ids.contains(rs.getString("jurisdiction_uuid")))) {
 
                 AuditDetails auditDetails = AuditDetails.builder().createdBy(rs.getString("jurisdiction_createdby")).createdDate(rs.getLong("jurisdiction_createddate"))
                         .lastModifiedBy(rs.getString("jurisdiction_lastmodifiedby")).lastModifiedDate(rs.getLong("jurisdiction_lastmodifieddate")).build();
-                Jurisdiction jurisdiction = new Jurisdiction();
+                //Jurisdiction jurisdiction = new Jurisdiction();
 
-                jurisdiction = Jurisdiction.builder().id(rs.getString("jurisdiction_uuid"))
+                Jurisdiction jurisdiction = Jurisdiction.builder().id(rs.getString("jurisdiction_uuid"))
                         .hierarchy(rs.getString("jurisdiction_hierarchy"))
                         .boundary(rs.getString("jurisdiction_boundary")).boundaryType(rs.getString("jurisdiction_boundarytype"))
                         .tenantId(rs.getString("jurisdiction_tenantid"))
@@ -162,9 +161,11 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                 jurisdictions.add(jurisdiction);
 
 			}
+
 			currentEmployee.setJurisdictions(jurisdictions);
                 currentEmployee.getJurisdictions().forEach(child -> {
-                    try {
+
+					try {
                         if (child.getId().contains(rs.getString("jurisdiction_uuid"))) {
                             addChildrenToJurisdiction(rs, child);
                         }
@@ -172,8 +173,6 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                         throw new RuntimeException(e);
                     }
                 });
-
-
         } catch (Exception e) {
             log.error("Error in row mapper while mapping Jurisdictions: ", e);
             throw new CustomException("ROWMAPPER_ERROR", "Error in row mapper while mapping Jurisdictions");
