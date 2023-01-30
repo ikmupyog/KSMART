@@ -102,5 +102,6 @@ public class CrDeathRegistryCriteria {
     @JsonProperty("deceasedGender")
     private String deceasedGender;
 
-
+    @JsonProperty("hospital")
+    private String hospital;
 }

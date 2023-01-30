@@ -234,6 +234,7 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
          addFilter("dt.female_dependent_name_en",criteria.getDeceasedMotherName(), query, preparedStmtValues);
          addFilter("dt.spouse_name_en",criteria.getDeceasedHusbandWifeName(), query, preparedStmtValues);
          addFilter("dt.deceased_gender",criteria.getDeceasedGender(), query, preparedStmtValues);
+         addFilter("dt.death_place",criteria.getHospital(), query, preparedStmtValues);
          addDateRangeFilter("dt.dateofdeath",
          criteria.getFromDate(),
          criteria.getToDate(),
