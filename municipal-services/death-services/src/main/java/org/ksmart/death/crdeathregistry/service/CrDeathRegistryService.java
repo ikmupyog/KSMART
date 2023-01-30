@@ -110,7 +110,7 @@ public class CrDeathRegistryService {
       }
     //Search  
      public List<CrDeathRegistryDtl> search(CrDeathRegistryCriteria criteria, RequestInfo requestInfo) {
-	      validatorService.validateSearch(requestInfo, criteria);
+	      // validatorService.validateSearch(requestInfo, criteria);
 		    return repository.getDeathApplication(criteria);
      }
      
