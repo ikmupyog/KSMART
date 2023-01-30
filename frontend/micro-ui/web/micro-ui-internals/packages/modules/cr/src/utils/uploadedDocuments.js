@@ -85,6 +85,7 @@ export const downloadDocument = async (filestoreId, title) => {
 export const isNestedArray = (documents) => {
   if (!documents || !documents.length) return false;
   if (Array.isArray(documents) && documents.length) {
+    console.log(documents);
     const firstItem = Array.isArray(documents[0]);
     if (firstItem) {
       return true;

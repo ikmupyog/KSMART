@@ -135,6 +135,7 @@ import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
 import useRegistrySearch from "./cr/useRegistrySearch";
 import useResistryDownload from "./cr/useResistryDownload";
+import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 
 import useSearchDeath  from "./cr/useSearchDeath";
@@ -335,6 +336,7 @@ const cr = {
   useSearch: useCRSearch,
   useRegistrySearch,
   useResistryDownload,
+  useResistryDownloadBirth,
   useRegistrySearchBirth,
   useSearchDeath ,
   useApplicationDetail: useCRApplicationDetail,
