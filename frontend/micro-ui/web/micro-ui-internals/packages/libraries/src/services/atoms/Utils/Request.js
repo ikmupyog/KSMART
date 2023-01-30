@@ -20,6 +20,7 @@ Axios.interceptors.response.use(
 );
 
 const requestInfo = () => ({
+  // authToken: "677312f2-51ac-4821-a2e7-4463ff960cbb"
   authToken: Digit.UserService.getUser()?.access_token || null,
 });
 
@@ -28,6 +29,13 @@ const authHeaders = () => ({
 });
 
 const userServiceData = () => ({ userInfo: Digit.UserService.getUser()?.info });
+
+const userServiceDataInfo = () => ({ userInfo:{
+  tenantId: Digit.UserService.getUser()?.info?.tenantId,
+  uuid: Digit.UserService.getUser()?.info?.uuid
+} }); 
+const userServiceAction = () => ({ action : "_download",ver: ".01",ts: "",did: "1",
+key: "", });
 
 window.Digit = window.Digit || {};
 window.Digit = { ...window.Digit, RequestCache: window.Digit.RequestCache || {} };
@@ -41,6 +49,8 @@ export const Request = async ({
   auth,
   urlParams = {},
   userService,
+  userDownloadInfo,
+  userInfo,
   locale = true,
   authHeader = false,
   setTimeParam = true,
@@ -59,6 +69,12 @@ export const Request = async ({
     }
     if (userService) {
       data.RequestInfo = { ...data.RequestInfo, ...userServiceData() };
+    }
+    if (userInfo) {
+      data.RequestInfo = {...data.RequestInfo, ...userServiceDataInfo() }
+    }
+    if (userDownloadInfo) {
+      data.RequestInfo = {...data.RequestInfo, ...userServiceAction() }
     }
     if (locale) {
       data.RequestInfo = { ...data.RequestInfo, msgId: `${ts}|${Digit.StoreData.getCurrentLanguage()}` };

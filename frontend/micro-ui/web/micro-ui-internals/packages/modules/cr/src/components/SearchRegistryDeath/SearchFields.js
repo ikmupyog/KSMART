@@ -36,8 +36,16 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
 
     return <>
         <SearchField>
-            <label>{t("Registry ID")}</label>
-            <TextInput name="id" inputRef={register({})} />
+            <label><span className="mandatorycss">*</span> {t("Registry ID")}</label>
+            <TextInput name="id" inputRef={register({})} 
+             placeholder={`${t("Registry ID")}`}
+             {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_REGISTRY_ID") })}/>
+        </SearchField>
+        <SearchField>
+            <label> <span className="mandatorycss">*</span> {t("Aknowledgement Number")}</label>
+            <TextInput name="deathACKNo" inputRef={register({})}
+                placeholder={`${t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
         </SearchField>
         <SearchField>
             <label> <span className="mandatorycss">*</span>{t(" DC_NAME_DECEASED")}</label>
@@ -110,12 +118,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                 placeholder={`${t("DC_REGISTRATION_NUMBER")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
         </SearchField> */}
-        <SearchField>
-            <label>  {t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}</label>
-            <TextInput name="deathACKNo" inputRef={register({})}
-                placeholder={`${t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
-        </SearchField>
+        
 
         {/* {applicationTypesLoading ? <Loader/> : <SearchField> 
             <label>{t("CR_SEARCH_APPLICATION_TYPE")}</label>

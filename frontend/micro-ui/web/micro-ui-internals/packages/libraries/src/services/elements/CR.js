@@ -32,6 +32,18 @@ export const CRService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
+    CRResistryDownload: (tenantId, id, source ) =>
+    Request({
+      url: Urls.crdeath.registry_download,
+      data: {},
+      useCache: false,
+      method: "POST",
+      params: { tenantId, id, source },
+      auth: true,
+      locale: true,
+      userInfo: true,
+      userDownloadInfo: true,
+    }),
     CRRegistrySearchBirth: ({  tenantId, filters }) =>
     Request({
       url: Urls. crbirth.registry_search_birth,
