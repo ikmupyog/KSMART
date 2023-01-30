@@ -237,7 +237,7 @@ serviceMaps:
 
             - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.lastModifiedDate
 
-        - query: INSERT INTO eg_hrms_jurisdiction_child ( uuid,jurisdictionid, wardcode, tenantid, isactive, createdby,createddate,lastmodifiedby,lastmodifieddate) VALUES (?,?,?,?,?,?,?,?,?);
+        - query: INSERT INTO eg_hrms_jurisdiction_child ( uuid,jurisdictionid, wardcode,wardlabel, tenantid, isactive, createdby,createddate,lastmodifiedby,lastmodifieddate) VALUES (?,?,?,?,?,?,?,?,?,?);
 
           basePath: Employees.*.jurisdictions.*.jurisdictionChilds.*
           jsonMaps:
@@ -247,6 +247,8 @@ serviceMaps:
             - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.parentJurisdictionId
 
             - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.wardCode
+            
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.wardLabel
 
             - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.tenantId
 
@@ -476,7 +478,7 @@ serviceMaps:
             - jsonPath: $.Employees.*.serviceHistory.*.auditDetails.lastModifiedDate
 
 
-        - query: INSERT INTO eg_hrms_jurisdiction (uuid, employeeid, hierarchy, boundarytype, boundary, tenantid, isActive, createdby, createddate, lastmodifiedby, lastModifiedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        - query: INSERT INTO eg_hrms_jurisdiction (uuid, employeeid, hierarchy, boundarytype, boundary, tenantid, isActive,rolecode,zonecode, createdby, createddate, lastmodifiedby, lastModifiedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
           basePath: Employees.*.jurisdictions.*
           jsonMaps:
@@ -494,6 +496,10 @@ serviceMaps:
             - jsonPath: $.Employees[*][?({id} in @.jurisdictions[*].id)].tenantId
 
             - jsonPath: $.Employees.*.jurisdictions.*.isActive
+            
+            - jsonPath: $.Employees.*.jurisdictions.*.roleCode
+            
+            - jsonPath: $.Employees.*.jurisdictions.*.zoneCode
 
             - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.createdBy
 
@@ -503,18 +509,22 @@ serviceMaps:
 
             - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.lastModifiedDate
 
-        - query: INSERT INTO eg_hrms_jurisdiction_child ( uuid,jurisdictionid,zonecode, wardcode,createdby,createddate,lastmodifiedby,lastmodifieddate) VALUES (?,?,?,?,?,?,?,?);
+        - query: INSERT INTO eg_hrms_jurisdiction_child ( uuid,jurisdictionid, wardcode,wardlabel, tenantid, isactive, createdby,createddate,lastmodifiedby,lastmodifieddate) VALUES (?,?,?,?,?,?,?,?,?,?);
 
           basePath: Employees.*.jurisdictions.*.jurisdictionChilds.*
           jsonMaps:
 
-            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChild.*.id
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.id
 
-            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChild.*.parentJurisdictionId
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.parentJurisdictionId
 
-            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChild.*.zoneCode
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.wardCode
+            
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.wardLabel
 
-            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChild.*.wardCode
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.tenantId
+
+            - jsonPath: $.Employees.*.jurisdictions.*.jurisdictionChilds.*.isActive
 
             - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.createdBy
 
@@ -523,6 +533,8 @@ serviceMaps:
             - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.lastModifiedBy
 
             - jsonPath: $.Employees.*.jurisdictions.*.auditDetails.lastModifiedDate
+
+
 
         - query: INSERT INTO eg_hrms_deactivationdetails(uuid, employeeid, reasonfordeactivation, effectivefrom, ordernumber, remarks, tenantid, createdby, createddate, lastmodifiedby, lastModifiedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 

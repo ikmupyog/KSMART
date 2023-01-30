@@ -199,4 +199,10 @@ public class ErrorConstants {
 	public static final String HRMS_INVALID_SEARCH_CITIZEN_CODE = "ERR_HRMS_INVALID_SEARCH_CITIZEN";
 	public static final String HRMS_INVALID_SEARCH_CITIZEN_MSG = "Citizen are not allowed to access employee search with Ids.";
 
+	public static final String HRMS_EMPLOYEE_NULL_WARD_LABEL = "ERR_HRMS_WARD_NULL_LABEL";
+	public static final String HRMS_EMPLOYEE_NULL_WARD_LABEL_MSG = "Ward Label in an HRMS request should not be null.";
+
+	public static final String HRMS_EMPLOYEE_NULL_WARD_CODE = "ERR_HRMS_WARD_NULL_CODE";
+	public static final String HRMS_EMPLOYEE_NULL_WARD_CODE_MSG = "Ward Code in an HRMS request should not be null.";
+
 }

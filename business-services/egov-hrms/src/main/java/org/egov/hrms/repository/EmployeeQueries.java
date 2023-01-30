@@ -36,7 +36,7 @@ public class EmployeeQueries {
 			+ "deact.createddate as deact_createddate, deact.lastmodifiedby as deact_lastmodifiedby, deact.lastmodifieddate as deact_lastmodifieddate, "
 			+ "react.uuid as react_uuid, react.reasonforreactivation as react_reasonforreactivation, react.effectivefrom as react_effectivefrom, react.ordernumber as react_ordernumber, "
 			+ "react.remarks as react_remarks, react.tenantid as react_tenantid, react.createdby as react_createdby, "
-			+ "react.createddate as react_createddate, react.lastmodifiedby as react_lastmodifiedby, react.lastmodifieddate as react_lastmodifieddate,jurisdictionchild.wardcode,"
+			+ "react.createddate as react_createddate, react.lastmodifiedby as react_lastmodifiedby, react.lastmodifieddate as react_lastmodifieddate,jurisdictionchild.wardcode,jurisdictionchild.wardlabel,"
 			+ " jurisdictionchild.uuid as juch_uuid, jurisdictionchild.jurisdictionid as juch_jurisdictionid, jurisdictionchild.tenantid as juch_tenantid, jurisdictionchild.isactive as juch_isactive "
 			+ " FROM eg_hrms_employee employee LEFT JOIN eg_hrms_assignment assignment ON employee.uuid = assignment.employeeid LEFT JOIN eg_hrms_educationaldetails education "
 			+ "ON employee.uuid = education.employeeid LEFT JOIN eg_hrms_departmentaltests depttest ON employee.uuid = depttest.employeeid LEFT JOIN eg_hrms_empdocuments docs "

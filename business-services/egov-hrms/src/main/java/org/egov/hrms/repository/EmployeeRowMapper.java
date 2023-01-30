@@ -199,6 +199,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                 JurisdictionChild ch = JurisdictionChild.builder().id(rs.getString("juch_uuid"))
                         .jurisdictionId(rs.getString("juch_jurisdictionid"))
 						.wardCode(rs.getString("wardcode"))
+						.wardLabel(rs.getString("wardlabel"))
                         .tenantId(rs.getString("juch_tenantid"))
                         .isActive(rs.getBoolean("juch_isactive")).build();
                 jurisdictionChilds.add(ch);

@@ -46,6 +46,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.validation.annotation.Validated;
 
@@ -91,6 +92,7 @@ public class Jurisdiction {
 
 	private String zoneCode;
 
+	@NotEmpty
 	private List<JurisdictionChild> jurisdictionChilds = new ArrayList<>();
 
 	public void addJurisdictionChild(final JurisdictionChild child) {

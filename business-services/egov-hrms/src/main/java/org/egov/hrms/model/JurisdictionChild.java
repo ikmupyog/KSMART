@@ -49,6 +49,13 @@ public class JurisdictionChild {
 	@Size(max = 256)
 	private String wardCode;
 
+	@SafeHtml
+	@NotNull
+	@NotBlank
+	@NotEmpty
+	@Size(max = 256)
+	private String wardLabel;
+
 
 	private AuditDetails auditDetails;
 
