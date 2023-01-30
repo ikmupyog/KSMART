@@ -18,7 +18,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   configstatus = formData?.status === "APPROVED" ? false : true;
   configstatus = formData?.status === "FORWARDED" && approle && configstatus ? true : false;
 
-  configstatusop = (formData?.status === "INITIATED") && oprole && !configstatus ? true : false
+  configstatusop = (formData?.status === "INITIATED") && oprole && !configstatus ? true : false;
   configstatus = isEdit ? configstatus : true;
   configstatusop = isEdit ? configstatusop : true;
 
@@ -584,6 +584,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
 
   const reducer = (state, action) => {
+    setFlgEdit(true);
     switch (action.type) {
       case "ADD_NEW_OWNER":
         return [
@@ -618,6 +619,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   };
   const [formState, dispatch] = isEdit ? useReducer(reducer, storedOwnerData, initFnEdit) : useReducer(reducer, storedOwnerData, initFn);
   const reducer1 = (state1, action) => {
+    setFlgEdit(true);
     switch (action.type) {
       case "ADD_NEW_DOOR":
         return [
@@ -1126,7 +1128,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 </div>
                 {isEdit && (
                   <div className="row">
-                    <div className="col-md-3" ><CardLabel>Application No</CardLabel></div>
+                    <div className="col-md-3" ><CardLabel>{`${t("TL_APPLICATION_NO")}`}</CardLabel></div>
                     <div className="col-md-4" >
                       <CardLabel>{formData?.applicationNumber}</CardLabel>
                     </div>
@@ -1146,7 +1148,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                         background: "#FAFAFA",
                       }} className="col-md-7">
                         {/* <CardLabel>{`${t("TL_LICENSE_NAME_LICENSEE")}`}<span className="mandatorycss">*</span></CardLabel> */}
-                        <CardLabel>Name of Licensee<span className="mandatorycss">*</span></CardLabel>
+                        <CardLabel>{`${t("TL_LICENSE_NAME_LICENSEE")}`}<span className="mandatorycss">*</span></CardLabel>
                         <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="name" value={field.name} onChange={(e) => handleTextInputField(index, e, "name")} placeholder={`${t("TL_LICENSEE_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
 
 
@@ -1202,7 +1204,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 <div className="row">
                   <div className="col-md-7">
                     {/* {`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `} */}
-                    <CardLabel style={{ marginBottom: "30px" }}>Type of Building<span className="mandatorycss">*</span></CardLabel>
+                    <CardLabel style={{ marginBottom: "30px" }}>{`${t("TL_TYPE_BUILDING")}`}<span className="mandatorycss">*</span></CardLabel>
                     <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={buildingtype} selectedOption={BuildingType} onSelect={selectBuildingType} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
                   </div>
                 </div>
@@ -1214,11 +1216,11 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 {value3 === "LBBUILDING" && (
                   <div className="col-md-7">
                     <div className="col-md-4">
-                      <CardLabel>Building Code</CardLabel>
+                      <CardLabel>{`${t("TL_BUILDING_CODE")}`}</CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="BuildingCode" value={BuildingCode} onChange={setSelectBuildingcode}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_CODE") })} />
                     </div>
                     <div className="col-md-8">
-                      <CardLabel>Building Name</CardLabel>
+                      <CardLabel>{`${t("TL_BUILDING_NAME")}`}</CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="BuildingName" value={BuildingName} onChange={setSelectBuildingName}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_NAME") })} />
                     </div>
                   </div>
