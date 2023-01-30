@@ -162,6 +162,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                 jurisdictions.add(jurisdiction);
 
 			}
+			currentEmployee.setJurisdictions(jurisdictions);
                 currentEmployee.getJurisdictions().forEach(child -> {
                     try {
                         if (child.getId().contains(rs.getString("jurisdiction_uuid"))) {
@@ -172,7 +173,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
                     }
                 });
 
-            currentEmployee.setJurisdictions(jurisdictions);
+
         } catch (Exception e) {
             log.error("Error in row mapper while mapping Jurisdictions: ", e);
             throw new CustomException("ROWMAPPER_ERROR", "Error in row mapper while mapping Jurisdictions");
@@ -191,6 +192,7 @@ public class EmployeeRowMapper implements ResultSetExtractor<List<Employee>> {
             jurisdictionChilds = new ArrayList<JurisdictionChild>();
         else
             jurisdictionChilds = jurisdiction.getJurisdictionChilds();
+
         List<String> idChilds = jurisdictionChilds.stream().map(JurisdictionChild::getId).collect(Collectors.toList());
         try {
 
