@@ -238,16 +238,16 @@ function Jurisdiction({
         });
       }
     });
-  cmbInfntWardNo.map((wardmst) => {
-    wardmst.localnamecmb = wardmst.InfntWardNo + " ( " + wardmst.localname + " )";
-    wardmst.namecmb = wardmst.InfntWardNo + " ( " + wardmst.name + " )";
-    cmbInfntWardNoFinal.push(wardmst);
-  });
+  // cmbInfntWardNo.map((wardmst) => {
+  //   wardmst.localnamecmb = wardmst.InfntWardNo + " ( " + wardmst.localname + " )";
+  //   wardmst.namecmb = wardmst.InfntWardNo + " ( " + wardmst.name + " )";
+  //   cmbInfntWardNoFinal.push(wardmst);
+  // });
   
   let cmbZonal = [];
   boundaryList &&
   boundaryList["egov-location"] &&
-  boundaryList["egov-location"].TenantBoundary.map((ob) => {    
+  boundaryList["egov-location"].TenantBoundary.map((ob) => { 
     cmbZonal.push(ob.boundary.children);
   });
   // function setSelectZonalOffice(e) {
@@ -260,13 +260,13 @@ function Jurisdiction({
     setWardNo(e);
   }
   useEffect(() => {
-    
-    if (isInitialRender) {
+    // if (isInitialRender) {
       if(Zonal){
-        setIsInitialRender(false);
-        setFilterWard(Zonal.children)
+       
+        // setIsInitialRender(false);
+        setFilterWard(Zonal.children);
       }
-    }
+    // }
   }, [wards,isInitialRender]);
 
   useEffect(() => {
@@ -485,7 +485,7 @@ function Jurisdiction({
               //isMandatory={true}
               defaultUnit="Selected"
               selected={jurisdiction?.TenantBoundary}
-              options={cmbInfntWardNoFinal}
+              options={wards}
               onSelect={selectward}
               optionsKey="name"
               t={t}
