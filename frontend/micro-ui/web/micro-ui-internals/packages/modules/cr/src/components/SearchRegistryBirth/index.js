@@ -1,12 +1,13 @@
 import React, { useCallback, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
 import MobileSearchApplication from "./MobileSearchApplication";
 import { useTranslation } from "react-i18next";
 import { Route, Switch, useLocation, useRouteMatch, useHistory } from "react-router-dom";
+import { downloadDocument } from "../../utils/uploadedDocuments";
 
 const mystyle = {
   bgOpacity: "1",
@@ -23,8 +24,14 @@ const hstyle = {
   marginBottom: ".5rem",
   lineHieght: "1.5rem",
 };
+const registyBtnStyle ={
+  display: "flex",
+  justifyContent: "flex-end",
+  marginRight: "15px",
+  marginBottom: "15px",
+}
 
-const SearchRegistryBirth = ({ tenantId, onSubmit, data, count }) => {
+const SearchRegistryBirth = ({ tenantId, onSubmit, data, filestoreId, isSuccess, isLoading, count }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -52,6 +59,7 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, count }) => {
     setValue("limit", Number(e.target.value));
     handleSubmit(onSubmit)();
   }
+  
 
   function nextPage() {
     setValue("offset", getValues("offset") + getValues("limit"));
@@ -73,8 +81,8 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, count }) => {
   const columns = useMemo(
     () => [
       {
-        Header: t("CR_COMMON_COL_APP_NO"),
-        accessor: "deathApplicationNo",
+        Header: t("CR_RGISTRATION_NUMBER"),
+        accessor: "birthApplicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
@@ -83,11 +91,16 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, count }) => {
                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
                     {row.original.deathApplicationNo}
                   </Link> */}
-                {row.original.deathApplicationNo}
+                {row.original.registrationno}
               </span>
             </div>
           );
         },
+      },
+      {
+        Header: t("CR_COMMON_CHILD_NAME"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.fullName ? convertEpochToDateDMY(row.fullName) : "-"),
       },
       {
         Header: t("CR_COMMON_COL_APP_DATE"),
@@ -95,9 +108,9 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, count }) => {
         accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
       },
       {
-        Header: t("CR_COMMON_COL_DOD"),
+        Header: t("CR_COMMON_COL_DOB"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.dateOfDeath ? convertEpochToDateDMY(row.dateOfDeath) : ""),
+        accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.dateofbirth) : "-"),
       },
       // {
       //     Header: t("TL_APPLICATION_TYPE_LABEL"),
@@ -105,14 +118,14 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, count }) => {
       //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
       // },
       {
-        Header: t("CR_COMMON_DECEASED_NAME"),
+        Header: t("CR_COMMON_MOTHER_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.deceasedFirstNameEn + row.deceasedMiddleNameEn + row.deceasedLastNameEn || "-"),
+        accessor: (row) => GetCell(row.firstname_en || "-"),
       },
       {
-        Header: t("CR_COMMON_DEATH_PLACE"),
+        Header: t("CR_COMMON_GENDER"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.deathPlace || "-"),
+        accessor: (row) => GetCell(row.gender || "-"),
       },
       // {
       //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
@@ -152,31 +165,42 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, count }) => {
               </p>
             ))}
         </Card>
+      ) : isLoading ? (
+        <Loader />
       ) : (
         data !== "" && (
-          <Table
-            t={t}
-            data={data}
-            totalRecords={count}
-            columns={columns}
-            getCellProps={(cellInfo) => {
-              return {
-                style: {
-                  minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
-                  padding: "20px 18px",
-                  fontSize: "16px",
-                },
-              };
-            }}
-            onPageSizeChange={onPageSizeChange}
-            currentPage={getValues("offset") / getValues("limit")}
-            onNextPage={nextPage}
-            onPrevPage={previousPage}
-            pageSizeLimit={getValues("limit")}
-            onSort={onSort}
-            disableSort={false}
-            sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
-          />
+          <React.Fragment>
+            {filestoreId && isSuccess === true ? (
+              <div style={registyBtnStyle}>
+                <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
+              </div>
+            ) : (
+              <Loader />
+            )}
+            <Table
+              t={t}
+              data={data}
+              totalRecords={count}
+              columns={columns}
+              getCellProps={(cellInfo) => {
+                return {
+                  style: {
+                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+                    padding: "20px 18px",
+                    fontSize: "16px",
+                  },
+                };
+              }}
+              onPageSizeChange={onPageSizeChange}
+              currentPage={getValues("offset") / getValues("limit")}
+              onNextPage={nextPage}
+              onPrevPage={previousPage}
+              pageSizeLimit={getValues("limit")}
+              onSort={onSort}
+              disableSort={false}
+              sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
+            />
+          </React.Fragment>
         )
       )}
     </React.Fragment>

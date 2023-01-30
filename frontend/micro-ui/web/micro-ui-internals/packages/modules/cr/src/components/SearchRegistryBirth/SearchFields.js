@@ -10,9 +10,22 @@ const mystyle = {
 let validation = {};
 
 const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
-  const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId);
+  // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId);
   const { t } = useTranslation();
-
+  const stateId = Digit.ULBService.getStateId();
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  let cmbhospital = [];
+  hospitalData &&
+    hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList.map((ob) => {
+      cmbhospital.push(ob);
+    });
+  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  let menu = [];
+  Menu &&
+    Menu.map((genderDetails) => {
+      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+    });
   const applicationType = useWatch({ control, name: "applicationType" });
 
   let businessServices = [];
@@ -20,20 +33,20 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
   else if (applicationType && applicationType?.code === "NEW") businessServices = ["NewTL"];
   else businessServices = ["EDITRENEWAL", "DIRECTRENEWAL", "NewTL"];
 
-  const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({ businessServices, tenantId }, {});
+  // const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({ businessServices, tenantId }, {});
   let applicationStatuses = [];
 
-  statusData &&
-    statusData?.otherRoleStates?.map((status) => {
-      let found = applicationStatuses.length > 0 ? applicationStatuses?.some((el) => el?.code === status.applicationStatus) : false;
-      if (!found) applicationStatuses.push({ code: status?.applicationStatus, i18nKey: `WF_NEWTL_${status?.applicationStatus}` });
-    });
+  // statusData &&
+  //   statusData?.otherRoleStates?.map((status) => {
+  //     let found = applicationStatuses.length > 0 ? applicationStatuses?.some((el) => el?.code === status.applicationStatus) : false;
+  //     if (!found) applicationStatuses.push({ code: status?.applicationStatus, i18nKey: `WF_NEWTL_${status?.applicationStatus}` });
+  //   });
 
-  statusData &&
-    statusData?.userRoleStates?.map((status) => {
-      let found = applicationStatuses.length > 0 ? applicationStatuses?.some((el) => el?.code === status.applicationStatus) : false;
-      if (!found) applicationStatuses.push({ code: status?.applicationStatus, i18nKey: `WF_NEWTL_${status?.applicationStatus}` });
-    });
+  // statusData &&
+  //   statusData?.userRoleStates?.map((status) => {
+  //     let found = applicationStatuses.length > 0 ? applicationStatuses?.some((el) => el?.code === status.applicationStatus) : false;
+  //     if (!found) applicationStatuses.push({ code: status?.applicationStatus, i18nKey: `WF_NEWTL_${status?.applicationStatus}` });
+  //   });
 
   return (
     <>
@@ -58,7 +71,7 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
         <label>
           {" "}
           <span className="mandatorycss">*</span>
-          {t("DC_DATE_DEATH")}
+          {t("CR_DATE_OF_BIRTH_TIME")}
         </label>
         <Controller
           render={(props) => (
@@ -85,8 +98,8 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
               selected={props.value}
               select={props.onChange}
               onBlur={props.onBlur}
-              option={applicationStatuses}
-              optionKey="i18nKey"
+              option={menu}
+              optionKey="code"
               t={t}
               placeholder={`${t("DC_GENDER")}`}
               {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
@@ -95,7 +108,11 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
         />
       </SearchField>
       <SearchField>
-        <label> {t("BC_MOTHER_NAME")}</label>
+        <label>
+          {" "}
+          <span className="mandatorycss">*</span>
+          {t("BC_MOTHER_NAME")}
+        </label>
         <TextInput
           name="WifeorMotherName"
           inputRef={register({})}
@@ -123,8 +140,8 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
               selected={props.value}
               select={props.onChange}
               onBlur={props.onBlur}
-              option={applicationTypes}
-              optionKey="i18nKey"
+              option={cmbhospital}
+              optionKey="code"
               t={t}
               placeholder={`${t("CD_HOSPITAL")}`}
             />
@@ -210,17 +227,17 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           onClick={() => {
             reset({
               id: "",
-            //   DeceasedName: "",
-            //   DeathDate: "",
-            //   Gender: "",
-            //   WifeorMotherName: "",
-            //   HusbandorfatherName: "",
-            //   HospitalName: "",
-            //   RegistrationNumber: "",
-            //   offset: 0,
-            //   limit: 10,
-            //   sortBy: "dateofreport",
-            //   sortOrder: "DESC",
+              //   DeceasedName: "",
+              //   DeathDate: "",
+              //   Gender: "",
+              //   WifeorMotherName: "",
+              //   HusbandorfatherName: "",
+              //   HospitalName: "",
+              //   RegistrationNumber: "",
+              //   offset: 0,
+              //   limit: 10,
+              //   sortBy: "dateofreport",
+              //   sortOrder: "DESC",
             });
             previousPage();
           }}

@@ -125,6 +125,7 @@ const Urls = {
     search: "/death-services/v1/crdeathdetails/_search",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/death-services/v1/crdeathdetails/_update",
+    registry_download: "/birth-services/cr/registry/_download",
     registry_search_birth: "/birth-services/cr/registry/_search",  
   },
   dfm: {
