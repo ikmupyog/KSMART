@@ -244,6 +244,7 @@ const CreateEmployee = ({userType}) => {
     //     return item;
     //   });
     // });
+    
     let roles = data?.Jurisdictions[0].roles;
     // roles.push({"tenantId":tenantId});
     let jurisdictionChilds = data?.Jurisdictions?.map((ele) => {

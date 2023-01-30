@@ -28,7 +28,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
     ]
   );
 
- 
+  let rolesCollect =[];
   useEffect(() => {
     const jurisdictionsData = jurisdictions?.map((jurisdiction) => {
       
@@ -44,13 +44,17 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         
       };
       res = cleanup(res);
-      if (jurisdiction?.role) {
-        res["roles"] = jurisdiction?.role;
-        // res["roles"] = jurisdiction?.role.map((ele) => {
+      if (jurisdiction?.role) {        
+        rolesCollect.push(jurisdiction?.role);        
+        res["roles"] = rolesCollect;
+        // if(rolesCollect.length>0){
+        //   res["roles"] = jurisdiction?.role.map((ele) => {
         //   delete ele.description;
         //   console.log(ele);
         //   return ele;
         // });
+        // }
+        
       }
        //Maya
        let jurisdictionChildsTemp = [];
