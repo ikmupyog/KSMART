@@ -7,8 +7,7 @@ import ApplicationDetailsPDE from "../pages/employee/ApplicationDetailsPDE";
 
 const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { uuid: uuid } = Digit.UserService.getUser().info;
-  const { roles: userRoles } = Digit.UserService.getUser().info;
+  const { roles: userRoles,uuid: uuid  } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEAPPROVER"));
   const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEOPERATOR"));
   const approle = roletemp?.length > 0 ? true : false;
@@ -133,15 +132,10 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     cmbWardNoFinal.push(wardmst);
   });
 
-  cmbWardNoFinal = cmbWardNoFinal.sort((a, b) => {
-    if (parseInt(a.wardno) > parseInt(b.wardno)) { return 1; }
-    if (parseInt(b.wardno) > parseInt(a.wardno)) { return -1; }
-    return 0;
-  });
+
   const roleall = [];
   roleall.push(...roletemp);
   roleall.push(...roletempop);
-  userRoles;
   const rolecombine = [];
   roleall?.map?.((e) => {
     rolecombine.push(e.code);
@@ -185,10 +179,17 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
   finalward.push(...finaloperatorward);
   finalward.push(...finalapproverward);
-  
-  if (finalward.length > 0)
-    cmbWardNoFinal = isEdit && formData?.status !== "INITIATED" ? finalward : finaloperatorward;
 
+  let finalwardred=finalward?.reduce((ac,a) => ac.find(x=> x.code === a.code) ? [...ac] : [...ac,a],[]);
+  
+  if (finalwardred.length > 0)
+    cmbWardNoFinal = isEdit && formData?.status !== "INITIATED" ? finalwardred : finaloperatorward;
+
+  cmbWardNoFinal = cmbWardNoFinal.sort((a, b) => {
+      if (parseInt(a.wardno) > parseInt(b.wardno)) { return 1; }
+      if (parseInt(b.wardno) > parseInt(a.wardno)) { return -1; }
+      return 0;
+    });
   const [WardNo, setWardNo] = useState(formData.tradeLicenseDetail?.address?.wardNo ? cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0] : "");
   const selWard = cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0];
 
