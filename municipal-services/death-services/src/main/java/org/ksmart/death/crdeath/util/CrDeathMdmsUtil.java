@@ -46,14 +46,14 @@ public class CrDeathMdmsUtil {
 
     private MdmsCriteriaReq getMDMSRequest(RequestInfo requestInfo, String tenantId) {
         ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
-        ModuleDetail GenderTypeRequest = getGenderTypeRequest();
+        ModuleDetail commomMasterRequest = getGenderTypeRequest();
         List<ModuleDetail> BNDListRequest = getBNDListRequest();
         // ModuleDetail DeathPlaceRequest = getDeathPlaceRequest();
 
 
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);
-        moduleDetails.add(GenderTypeRequest);
+        moduleDetails.add(commomMasterRequest);
         moduleDetails.addAll(BNDListRequest);
         // moduleDetails.add(DeathPlaceRequest);
 
@@ -108,13 +108,18 @@ public class CrDeathMdmsUtil {
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
         // filter to only get code field from master data    
-        final String filterCode = "$.[?(@.active==true)].code";
+        final String filterCodeGender = "$.[?(@.active==true)].code";
         crDeathMasterDetails
-                .add(MasterDetail.builder().name(CrDeathConstants.GENDERTYPE).filter(filterCode).build());
+                .add(MasterDetail.builder().name(CrDeathConstants.GENDERTYPE).filter(filterCodeGender).build());
+
+        //Rakhi S on 30.01.2023
+        final String filterCodeDeathPlace = "$.[?(@.active==true)].code";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(CrDeathConstants.DEATH_PLACE_LIST).filter(filterCodeDeathPlace).build());
        
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
-                .moduleName(CrDeathConstants.GENDER_MODULE_NAME).build();
+                .moduleName(CrDeathConstants.COMMON_MASTER_MODULE_NAME).build();
 
        
         return crDeathModuleDtls;
@@ -131,15 +136,7 @@ public class CrDeathMdmsUtil {
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
         // filter to only get code field from master data 
-         //Modified by Rakhi S on 20.12.2022      
-        final String filterCode = "$.[?(@.active==true)].code";
-        crDeathMasterDetails
-                .add(MasterDetail.builder().name(CrDeathConstants.HOSPITAL_LIST).filter(filterCode).build());
 
-
-        final String filterCodePlaceMaster = "$.[?(@.active==true)].code";
-         crDeathMasterDetails
-                    .add(MasterDetail.builder().name(CrDeathConstants.DEATH_PLACE).filter(filterCodePlaceMaster).build());
         //Rakhi S on 07.12.2022 DeathCause main validation
         final String filterCodeDeathCauseMain = "$.[?(@.active==true)].code";
          crDeathMasterDetails
@@ -166,9 +163,9 @@ public class CrDeathMdmsUtil {
                                            crDeathMasterDetails
                                                      .add(MasterDetail.builder().name(CrDeathConstants.MEDICAL_ATTENTION_TYPE).filter(filterCodeMedicalAttention).build());
 
-        final String filterCodeProfession = "$.[?(@.active==true)].code";
-                                           crDeathMasterDetails
-                                                        .add(MasterDetail.builder().name(CrDeathConstants.PROFESSION).filter(filterCodeProfession).build());
+        // final String filterCodeProfession = "$.[?(@.active==true)].code";
+        //                                    crDeathMasterDetails
+        //                                                 .add(MasterDetail.builder().name(CrDeathConstants.PROFESSION).filter(filterCodeProfession).build());
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(CrDeathConstants.BND_MODULE_NAME).build();

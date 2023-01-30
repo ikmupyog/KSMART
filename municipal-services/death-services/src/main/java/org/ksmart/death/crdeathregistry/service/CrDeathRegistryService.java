@@ -64,7 +64,7 @@ public class CrDeathRegistryService {
        // RAkhi S IKM validate mdms data       
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
  
-       // mdmsValidator.validateMDMSData(request,mdmsData);
+      //  mdmsValidator.validateMDMSData(request,mdmsData);
 
         // enrich request
         enrichmentService.enrichCreate(request);

@@ -46,14 +46,14 @@ public class CrDeathRegistryMdmsUtil {
 
     private MdmsCriteriaReq getMDMSRequest(RequestInfo requestInfo, String tenantId) {
         ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
-        List<ModuleDetail> GenderTypeRequest = getGenderTypeRequest();
+        List<ModuleDetail> commonMasterRequest = getGenderTypeRequest();
         List<ModuleDetail> BNDListRequest = getBNDListRequest();
         // ModuleDetail DeathPlaceRequest = getDeathPlaceRequest();
 
         
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);
-        moduleDetails.addAll(GenderTypeRequest);
+        moduleDetails.addAll(commonMasterRequest);
         moduleDetails.addAll(BNDListRequest);
         // moduleDetails.add(DeathPlaceRequest);
 
@@ -114,11 +114,11 @@ public class CrDeathRegistryMdmsUtil {
 
         final String filterCodePlaceMaster = "$.[?(@.active==true)].code";
                 crDeathMasterDetails
-                           .add(MasterDetail.builder().name(CrDeathRegistryConstants.DEATH_PLACE).filter(filterCodePlaceMaster).build());
+                           .add(MasterDetail.builder().name(CrDeathRegistryConstants.DEATH_PLACE_LIST).filter(filterCodePlaceMaster).build());
        
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
-                .moduleName(CrDeathRegistryConstants.GENDER_MODULE_NAME).build();
+                .moduleName(CrDeathRegistryConstants.COMMON_MASTER_MODULE_NAME).build();
               
          return Arrays.asList(crDeathModuleDtls);
     }
@@ -134,16 +134,7 @@ public class CrDeathRegistryMdmsUtil {
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
         // filter to only get code field from master data  
-        //Modified by Rakhi S on 20.12.2022   
-        final String filterCode = "$.[?(@.active==true)].code";
-        crDeathMasterDetails
-                .add(MasterDetail.builder().name(CrDeathRegistryConstants.HOSPITAL_LIST).filter(filterCode).build());
-
-
-        // final String filterCodePlaceMaster = "$.[?(@.active==true)].code";
-        //  crDeathMasterDetails
-        //             .add(MasterDetail.builder().name(CrDeathRegistryConstants.DEATH_PLACE).filter(filterCodePlaceMaster).build());
-        //Rakhi S on 07.12.2022 DeathCause main validation
+        //Rakhi S on 20.12.2022   
         final String filterCodeDeathCauseMain = "$.[?(@.active==true)].code";
          crDeathMasterDetails
                     .add(MasterDetail.builder().name(CrDeathRegistryConstants.DEATH_CAUSE_MAIN).filter(filterCodeDeathCauseMain).build());
@@ -152,9 +143,9 @@ public class CrDeathRegistryMdmsUtil {
                     crDeathMasterDetails
                                .add(MasterDetail.builder().name(CrDeathRegistryConstants.DEATH_CAUSE_SUB).filter(filterCodeDeathCauseSub).build());
 
-        final String filterCodeMaleDependentType = "$.[?(@.active==true)].code";
-                               crDeathMasterDetails
-                                          .add(MasterDetail.builder().name(CrDeathRegistryConstants.MALE_DEPENDENT_TYPE).filter(filterCodeMaleDependentType).build());
+        // final String filterCodeMaleDependentType = "$.[?(@.active==true)].code";
+        //                        crDeathMasterDetails
+        //                                   .add(MasterDetail.builder().name(CrDeathRegistryConstants.MALE_DEPENDENT_TYPE).filter(filterCodeMaleDependentType).build());
        
 
         // final String filterCodeFemaleDependentType = "$.[?(@.active==true)].code";
@@ -169,9 +160,9 @@ public class CrDeathRegistryMdmsUtil {
                                            crDeathMasterDetails
                                                      .add(MasterDetail.builder().name(CrDeathRegistryConstants.MEDICAL_ATTENTION_TYPE).filter(filterCodeMedicalAttention).build());
 
-        final String filterCodeProfession = "$.[?(@.active==true)].code";
-                                           crDeathMasterDetails
-                                                        .add(MasterDetail.builder().name(CrDeathRegistryConstants.PROFESSION).filter(filterCodeProfession).build());
+        // final String filterCodeProfession = "$.[?(@.active==true)].code";
+        //                                    crDeathMasterDetails
+        //                                                 .add(MasterDetail.builder().name(CrDeathRegistryConstants.PROFESSION).filter(filterCodeProfession).build());
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(CrDeathRegistryConstants.BND_MODULE_NAME).build();
