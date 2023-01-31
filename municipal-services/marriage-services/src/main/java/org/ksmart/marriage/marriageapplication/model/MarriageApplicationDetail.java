@@ -2,9 +2,9 @@ package org.ksmart.marriage.marriageapplication.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.ksmart.marriage.marriageapplication.model.birth.*;
-import org.ksmart.marriage.common.model.AuditDetails;
-import org.ksmart.marriage.common.model.Document;
+import org.ksmart.marriage.marriageapplication.model.marriage.*;
+//import org.ksmart.marriage.common.model.AuditDetails;
+//import org.ksmart.marriage.common.model.Document;
 
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BirthApplicationDetail {
+public class MarriageApplicationDetail {
     @Size(max = 64)
     @JsonProperty("id")
     private String id;
@@ -156,33 +156,33 @@ public class BirthApplicationDetail {
     private String comment;
 
 
-    @JsonProperty("wfDocuments")
-    private List<Document>  wfDocuments;
+    //@JsonProperty("wfDocuments")
+    //private List<Document>  wfDocuments;
 
     @Size(max = 64)
     @JsonProperty("status")
     private String status;
 
     @JsonProperty("birthPlace")
-    private BirthPlace birthPlace;
+    private MarriagePlace birthPlace;
 
     @JsonProperty("birthFather")
-    private BirthFatherInfo birthFatherInfo;
+    private MarriageFatherInfo birthFatherInfo;
 
     @JsonProperty("birthMother")
-    private BirthMotherInfo birthMotherInfo;
+    private MarriageMotherInfo birthMotherInfo;
 
     @JsonProperty("birthPermanent")
-    private BirthPermanentAddress birthPermanentAddress;
+    private MarriagePermanentAddress birthPermanentAddress;
 
     @JsonProperty("birthPresent")
-    private BirthPresentAddress birthPresentAddress;
+    private MarriagePresentAddress birthPresentAddress;
 
     @JsonProperty("birthStatistical")
-    private BirthStatisticalInformation birthStatisticalInformation;
+    private MarriageStatisticalInformation birthStatisticalInformation;
 
-    @JsonProperty("auditDetails")
-    private AuditDetails auditDetails;
+    //@JsonProperty("auditDetails")
+    //private AuditDetails auditDetails;
 
 
 

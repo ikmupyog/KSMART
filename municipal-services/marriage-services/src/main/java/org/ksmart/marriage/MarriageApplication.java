@@ -33,7 +33,7 @@ public class MarriageApplication {
 
     public Docket apis()
     {
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("org.ksmart.birth")).build();
+        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("org.ksmart.marriage")).build();
 
     }
 	@Bean

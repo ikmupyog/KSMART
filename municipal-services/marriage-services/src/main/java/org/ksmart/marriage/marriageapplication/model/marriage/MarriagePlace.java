@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BirthPlace {
+public class MarriagePlace {
     @Size(max = 64)
     @JsonProperty("id")
     private String id;

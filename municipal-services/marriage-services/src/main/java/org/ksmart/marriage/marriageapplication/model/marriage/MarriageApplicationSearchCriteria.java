@@ -12,7 +12,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BirthApplicationSearchCriteria {
+public class MarriageApplicationSearchCriteria {
 
     @JsonProperty("tenantId")
     private String tenantId;

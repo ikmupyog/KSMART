@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.egov.common.contract.response.ResponseInfo;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
-import org.ksmart.marriage.marriageregistry.model.BirthCertificate;
+//import org.ksmart.marriage.marriageregistry.model.BirthCertificate;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -19,7 +19,7 @@ import java.util.List;
 @Builder
 
 
-public class BirthApplicationResponse {
+public class MarriageApplicationResponse {
 
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
@@ -28,15 +28,15 @@ public class BirthApplicationResponse {
     @Valid
     private List<MarriageApplicationDetail> birthDetails;
 
-    @JsonProperty("BirthCertificate")
-    @Valid
-    private BirthCertificate birthCertificate;
+//    @JsonProperty("BirthCertificate")
+//    @Valid
+   // private BirthCertificate birthCertificate;
 
 
     @JsonProperty("Count")
     private int count;
 
-    public BirthApplicationResponse addBirthApplication(MarriageApplicationDetail birthDetail) {
+    public MarriageApplicationResponse addBirthApplication(MarriageApplicationDetail birthDetail) {
         if (birthDetails == null) {
             birthDetails = new ArrayList<>();
         }
