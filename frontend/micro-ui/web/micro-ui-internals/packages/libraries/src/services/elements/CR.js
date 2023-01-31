@@ -44,26 +44,26 @@ export const CRService = {
       userInfo: true,
       userDownloadInfo: true,
     }),
-    CRResistryDownloadBirth: (tenantId, id, source ) =>
+    CRResistryDownloadBirth: ( id, source ) =>
     Request({
       url: Urls.crbirth.registry_download,
       data: {},
       useCache: false,
       method: "POST",
-      params: { tenantId, id, source },
+      params: { id, source },
       auth: true,
       locale: true,
       userInfo: true,
       userDownloadInfo: true,
     }),
-    CRRegistrySearchBirth: ({  tenantId, filters }) =>
+    CRRegistrySearchBirth: ({   filters }) =>
     Request({
       url: Urls. crbirth.registry_search_birth,
       useCache: false,
       method: "POST",
       auth: true,
       userService: false,
-      params: { tenantId, ...filters },
+      params: { ...filters },
     }),
   CRsearch: ({ tenantId, filters }) =>
      Request({

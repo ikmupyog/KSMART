@@ -16,14 +16,13 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import DeathCertificate from "../../../components/SearchRegistryDeath";
 // import BirthCertificate from "./BirthCertificate";
 import BirthCertificate from "../../../components/SearchRegistryBirth";
 
-const DeathCertificateSearch = ({ path }) => {
+const BirthCertificateSearch = ({ path }) => {
   const { variant } = useParams();
   const { t } = useTranslation();
-  const tenantId = Digit.ULBService.getCurrentTenantId();
+  // const tenantId = Digit.ULBService.getCurrentTenantId();
   const [payload, setPayload] = useState({});
 
   const Search = Digit.ComponentRegistryService.getComponent(variant === "license" ? "SearchLicense" : "SearchDfmApplication");
@@ -46,21 +45,25 @@ const DeathCertificateSearch = ({ path }) => {
     );
   }
 
+ 
   const config = {
     enabled: !!(payload && Object.keys(payload).length > 0),
   };
 
+
+ 
   const {
     data: { RegisterBirthDetails: searchReult, Count: count } = {},
     isLoading,
     isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearchBirth({  filters: payload, config });
+  } = Digit.Hooks.cr.useRegistrySearchBirth({filters: payload, config });
   console.log(searchReult);
   let payloadData = { id: isSuccess && searchReult[0]?.id, source: "sms" };
   let registryPayload = Object.keys(payloadData)
     .filter((k) => payloadData[k])
     .reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
-  const { data: { filestoreId } = {} } = Digit.Hooks.cr.useResistryDownloadBirth({ tenantId, filters: registryPayload, config });
+  const { data:  { filestoreId: storeId } = {} } = Digit.Hooks.cr.useResistryDownloadBirth({  filters: registryPayload, config });
+
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
@@ -68,14 +71,13 @@ const DeathCertificateSearch = ({ path }) => {
         t={t}
         onSubmit={onSubmit}
         data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""}
-        count={count}
-        filestoreId={filestoreId}
+        filestoreId={storeId}
         isSuccess={isSuccess}
         isLoading={isLoading}
-
+        count={count}
       />
     </React.Fragment>
   );
 };
 
-export default DeathCertificateSearch;
+export default BirthCertificateSearch;
