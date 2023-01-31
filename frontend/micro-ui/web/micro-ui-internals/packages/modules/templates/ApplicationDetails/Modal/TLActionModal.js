@@ -1,4 +1,4 @@
-import { Loader, Modal, FormComposer } from "@egovernments/digit-ui-react-components";
+import { Loader, Modal, FormComposer, Toast } from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect } from "react";
 
 import { configTLApproverApplication } from "../config";
@@ -47,6 +47,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     }
   );
 
+  const [toast, setToast] = useState(false);
   const [config, setConfig] = useState({});
   const [defaultValues, setDefaultValues] = useState({});
   const [approvers, setApprovers] = useState([]);
@@ -111,9 +112,25 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
           ]
         : null,
     };
-    submitAction({
-      Licenses: [applicationData],
-    });
+    if((action?.action != "APPROVE")&&(action?.applicationStatus != "APPROVED")){
+      if(selectedApprover?.uuid)
+      submitAction({
+        Licenses: [applicationData],
+      });
+      else{
+        setError(t("Please select Assignee"));
+        setToast(true)
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+      }
+    }
+    else{
+      submitAction({
+        Licenses: [applicationData],
+      });
+    }
+    
   }
 
   useEffect(() => {
@@ -159,6 +176,15 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
           // isDisabled={!action.showFinancialYearsModal ? PTALoading || (!action?.isTerminateState && !selectedApprover?.uuid) : !selectedFinancialYear}
         />
       )}
+      <div>
+          {toast && (
+            <Toast
+              error={toast}
+              label={error}
+              onClose={() => setToast(false)}
+            />
+          )}{""}
+        </div>
     </Modal>
   ) : (
     <Loader />
