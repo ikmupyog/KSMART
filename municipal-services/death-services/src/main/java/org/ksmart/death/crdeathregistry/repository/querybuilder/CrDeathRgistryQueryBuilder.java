@@ -287,4 +287,4 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
       return query.toString();
       }  
 
-     }
+  }

@@ -78,6 +78,8 @@ public class CrDeathRegistryConfiguration {
     @Value("${persister.save.deathcertificate.topic}")
     private String saveDeathTopic;
 
-
+    //Rakhi S on 31.01.2023
+    @Value("${persister.update.deathcertificate.topic}")
+    private String updateDeathCertificateTopic;
 
 }

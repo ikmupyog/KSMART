@@ -1020,6 +1020,8 @@ public class CrDeathRegistryRepository {
         List<Map<String, Object>> regDetails= jdbcTemplate.queryForList(query,preparedStmtValues.toArray());
         return regDetails; 
      }
-
+  public void updateCertificate(DeathCertRequest deathCertRequest) {
+        producer.push(config.getUpdateDeathCertificateTopic(), deathCertRequest);
+  }
 
 }
