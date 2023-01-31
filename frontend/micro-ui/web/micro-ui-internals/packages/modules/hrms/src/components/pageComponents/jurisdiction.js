@@ -1,4 +1,4 @@
-import { CardLabel, Dropdown, LabelFieldPair, Loader, RemoveableTag ,MultiSelectDropdown} from "@egovernments/digit-ui-react-components";
+import { CardLabel, Dropdown, LabelFieldPair, Loader, RemoveableTag, MultiSelectDropdown } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import cleanup from "../Utils/cleanup";
 // import MultiSelectDropdown from "./Multiselect";
@@ -9,8 +9,8 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   const { data: data = {}, isLoading } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "egov-hrms", "HRMSRolesandDesignation") || {};
   //Maya
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "/egov-location", "boundary-data");
-  
-    
+
+
   const [jurisdictions, setjurisdictions] = useState(
     formData?.Jurisdictions || [
       {
@@ -19,19 +19,19 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         hierarchy: null,
         boundaryType: null,
         boundary: null,
-        tenantId:null,
-        roleCode:null,
-        zoneCode:null,
-        roles: [],  
-        jurisdictionChilds:[],
+        tenantId: null,
+        roleCode: null,
+        zoneCode: null,
+        roles: [],
+        jurisdictionChilds: [],
       },
     ]
   );
 
-  let rolesCollect =[];
+  let rolesCollect = [];
   useEffect(() => {
     const jurisdictionsData = jurisdictions?.map((jurisdiction) => {
-      
+
       let res = {
         id: jurisdiction?.id,
         hierarchy: jurisdiction?.hierarchy?.code,
@@ -39,13 +39,13 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         boundary: jurisdiction?.boundary?.code,
         tenantId: jurisdiction?.boundary?.code,
         roleCode: jurisdiction?.role?.code,
-        zoneCode:jurisdiction?.zoneCode?.code,
+        zoneCode: jurisdiction?.zoneCode?.code,
         auditDetails: jurisdiction?.auditDetails,
-        
+
       };
       res = cleanup(res);
-      if (jurisdiction?.role) {        
-        rolesCollect.push(jurisdiction?.role);        
+      if (jurisdiction?.role) {
+        rolesCollect.push(jurisdiction?.role);
         res["roles"] = rolesCollect;
         // if(rolesCollect.length>0){
         //   res["roles"] = jurisdiction?.role.map((ele) => {
@@ -54,36 +54,36 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         //   return ele;
         // });
         // }
-        
+
       }
-       //Maya
-       let jurisdictionChildsTemp = [];
+      //Maya
+      let jurisdictionChildsTemp = [];
       if (jurisdiction?.TenantBoundary) {
-        
+
         jurisdictionChildsTemp = jurisdiction?.TenantBoundary.map((ele) => {
           return ele;
         });
       }
-      if(jurisdictionChildsTemp.length>0){
+      if (jurisdictionChildsTemp.length > 0) {
         res["jurisdictionChilds"] = jurisdictionChildsTemp.map((ele) => {
-         return ele;
+          return ele;
         });
       }
       return res;
     });
-   
-      
+
+
     onSelect(
       config.key,
       [...jurisdictionsData, ...inactiveJurisdictions].filter((value) => Object.keys(value).length !== 0)
     );
   }, [jurisdictions]);
-  
+
 
   const reviseIndexKeys = () => {
     setjurisdictions((prev) => prev.map((unit, index) => ({ ...unit, key: index })));
   };
-  
+
   const handleAddUnit = () => {
     setjurisdictions((prev) => [
       ...prev,
@@ -92,12 +92,12 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         hierarchy: null,
         boundaryType: null,
         boundary: jurisdictions[0].boundary,
-        roleCode:null,
-        zoneCode:null,
+        roleCode: null,
+        zoneCode: null,
         roles: [],
         // boundary:[],
-        jurisdictionChilds:[],
-       
+        jurisdictionChilds: [],
+
       },
     ]);
   };
@@ -109,8 +109,8 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         boundaryType: unit?.boundaryType?.label,
         boundary: unit?.boundary?.code,
         tenantId: unit?.boundary?.code,
-        roleCode:null,
-        zoneCode:null,
+        roleCode: null,
+        zoneCode: null,
         auditDetails: unit?.auditDetails,
         isdeleted: true,
         isActive: false,
@@ -129,8 +129,8 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
           return ele;
         });
       }
-      
-           
+
+
       setInactiveJurisdictions([...inactiveJurisdictions, res]);
     }
     setjurisdictions((prev) => prev.filter((el) => el.key !== unit.key));
@@ -152,13 +152,13 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   }
 
   function getroledata() {
-    return data?.MdmsRes?.["ACCESSCONTROL-ROLES"].roles.map(role => { return { code: role.code, name: role?.name ? role?.name : " " , labelKey: 'ACCESSCONTROL_ROLES_ROLES_' + role.code } });
+    return data?.MdmsRes?.["ACCESSCONTROL-ROLES"].roles.map(role => { return { code: role.code, name: role?.name ? role?.name : " ", labelKey: 'ACCESSCONTROL_ROLES_ROLES_' + role.code } });
   }
   //Maya
   function getwarddata() {
-    return  boundaryList && boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary.map((ob) =>  { return { code: ob.code, name: ob?.name ? ob?.name : " " , name: 'egov-location' + ob.code } });
+    return boundaryList && boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary.map((ob) => { return { code: ob.code, name: ob?.name ? ob?.name : " ", name: 'egov-location' + ob.code } });
   }
-  
+
   if (isLoading) {
     return <Loader />;
   }
@@ -222,11 +222,16 @@ function Jurisdiction({
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [BoundaryType, selectBoundaryType] = useState([]);
   const [Boundary, selectboundary] = useState([]);
+  const [SetHierarchy, selectSetHierarchy] = useState([]);
   const { data: boundaryList = {}, isLoadingBoundary } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [Zonal, setZonal] = useState(formData.Jurisdictions?.Zonal);
   const [WardNo, setWardNo] = useState(formData.Jurisdictions?.WardNo);
   const [wards, setFilterWard] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderBoundaryType, setIsInitialRenderBoundaryType] = useState(true);
+  const [isInitialRenderBoundaryType1, setIsInitialRenderBoundaryType1] = useState(true);
+  const [isInitialRenderBoundaryType2, setIsInitialRenderBoundaryType2] = useState(true);
+  const [isInitialRenderHierarchy, setIsInitialRenderHierarchy] = useState(true);
   const [isDisableStatus, setIsDisableStatus] = useState(true);
 
   let ZonalA = [];
@@ -235,7 +240,7 @@ function Jurisdiction({
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
-      if (ob?.hierarchyType.code==="REVENUE") {
+      if (ob?.hierarchyType.code === "REVENUE") {
         ZonalA.push(...ob.boundary.children);
         ob.boundary.children.map((obward) => {
           cmbInfntWardNo.push(...obward.children);
@@ -247,13 +252,13 @@ function Jurisdiction({
   //   wardmst.namecmb = wardmst.InfntWardNo + " ( " + wardmst.name + " )";
   //   cmbInfntWardNoFinal.push(wardmst);
   // });
-  
+
   let cmbZonal = [];
   boundaryList &&
-  boundaryList["egov-location"] &&
-  boundaryList["egov-location"].TenantBoundary.map((ob) => { 
-    cmbZonal.push(ob.boundary.children);
-  });
+    boundaryList["egov-location"] &&
+    boundaryList["egov-location"].TenantBoundary.map((ob) => {
+      cmbZonal.push(ob.boundary.children);
+    });
   // function setSelectZonalOffice(e) {
   //   setIsInitialRender(true);
   //   setZonal(e);
@@ -264,34 +269,58 @@ function Jurisdiction({
     setWardNo(e);
   }
   useEffect(() => {
-    // if (isInitialRender) {
-      if(Zonal){
-       
-        // setIsInitialRender(false);
-        setFilterWard(Zonal.children);
-      }
-    // }
-  }, [wards,isInitialRender]);
+    // console.log("isInitialRender" + isInitialRender);
+    if (isInitialRender) {
+    if (Zonal) {
+      // setIsInitialRender(false);
+      setFilterWard(Zonal.children);
+    } else {
+      // console.log("else" );
+      setFilterWard([]);
+      // setIsInitialRender(false);
+
+    }
+    }
+  }, [wards]);
 
   useEffect(() => {
-    selectBoundaryType(
-      data?.MdmsRes?.["egov-location"]["TenantBoundary"]
-        .filter((ele) => {
-          return ele?.hierarchyType?.code == jurisdiction?.hierarchy?.code;
-        })
-        .map((item) => { return { ...item.boundary, i18text: Digit.Utils.locale.convertToLocale(item.boundary.label, 'EGOV_LOCATION_BOUNDARYTYPE') } })
-    );
-  }, [jurisdiction?.hierarchy, data?.MdmsRes]);
+    if (isInitialRenderBoundaryType) {
+      selectBoundaryType(
+        data?.MdmsRes?.["egov-location"]["TenantBoundary"]
+          .filter((ele) => {
+            return ele?.hierarchyType?.code == jurisdiction?.hierarchy?.code;
+          })
+          .map((item) => { return { ...item.boundary, i18text: Digit.Utils.locale.convertToLocale(item.boundary.label, 'EGOV_LOCATION_BOUNDARYTYPE') } })
+      );
+      setIsInitialRenderBoundaryType(false);
+    }
+  }, [jurisdiction?.hierarchy, data?.MdmsRes, isInitialRenderBoundaryType]);
   const tenant = Digit.ULBService.getCurrentTenantId();
   useEffect(() => {
-    selectboundary(data?.MdmsRes?.tenant?.tenants.filter(city => city.code != Digit.ULBService.getStateId()).map(city => { return { ...city, i18text: Digit.Utils.locale.getCityLocale(city.code) } }));
-  }, [jurisdiction?.boundaryType, data?.MdmsRes]);
+    if (isInitialRenderBoundaryType1) {
+      selectboundary(data?.MdmsRes?.tenant?.tenants.filter(city => city.code != Digit.ULBService.getStateId()).map(city => { return { ...city, i18text: Digit.Utils.locale.getCityLocale(city.code) } }));
+      setIsInitialRenderBoundaryType1(false);
+    }
+  }, [jurisdiction?.boundaryType, data?.MdmsRes, isInitialRenderBoundaryType1]);
 
   useEffect(() => {
-    if (Boundary?.length > 0) {
-      selectedboundary(Boundary?.filter((ele) => ele.code == jurisdiction?.boundary?.code)[0]);
+    if (isInitialRenderBoundaryType2) {
+      if (Boundary?.length > 0) {
+        selectedboundary(Boundary?.filter((ele) => ele.code == jurisdiction?.boundary?.code)[0]);
+        setIsInitialRenderBoundaryType2(false);
+      }
     }
-  }, [Boundary]);
+  }, [Boundary, isInitialRenderBoundaryType2]);
+
+  useEffect(() => {
+    if (isInitialRenderHierarchy) {
+      if (data?.MdmsRes?.["egov-location"]["TenantBoundary"].map((ele) => ele.hierarchyType).length > 0) {
+        gethierarchylistdata(data?.MdmsRes?.["egov-location"]["TenantBoundary"].map((ele) => ele.hierarchyType)[0]);
+        selectHierarchy(data?.MdmsRes?.["egov-location"]["TenantBoundary"].map((ele) => ele.hierarchyType)[0]);
+        setIsInitialRenderHierarchy(false);
+      }
+    }
+  }, [SetHierarchy, gethierarchylistdata(hierarchylist), isInitialRenderHierarchy]);
 
   const selectHierarchy = (value) => {
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, hierarchy: value } : item)));
@@ -304,7 +333,7 @@ function Jurisdiction({
   const selectedboundary = (value) => {
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, boundary: value } : item)));
   };
-//Jetheesh
+  //Jetheesh
   const setSelectZonalOffice = (value) => {
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, zoneCode: value } : item)));
     setZonal(value);
@@ -313,7 +342,7 @@ function Jurisdiction({
     setFilterWard(null);
   };
 
-//lekshmy
+  //lekshmy
   const selectrolenew = (value) => {
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, role: value } : item)));
   };
@@ -333,7 +362,7 @@ function Jurisdiction({
     //   res.push(ob?.[1]);
     // });
 
-    res?.forEach(resData => {resData.labelKey = 'ACCESSCONTROL_ROLES_ROLES_' + resData.code})
+    res?.forEach(resData => { resData.labelKey = 'ACCESSCONTROL_ROLES_ROLES_' + resData.code })
 
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, roles: res } : item)));
   };
@@ -346,8 +375,10 @@ function Jurisdiction({
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, roles: afterRemove } : item)));
 
   };
-         //Maya
+  //Maya
   const selectward = (e, boundaryList) => {
+    // setIsInitialRender(true);
+    // setFilterWard(null);
     // const index = jurisdiction?.roles.filter((ele) => ele.code == data.code);
     // let res = null;
     // if (index.length) {
@@ -356,13 +387,16 @@ function Jurisdiction({
     // } else {
     //   res = [{ ...data }, ...jurisdiction?.roles];
     // }
+    // if (jurisdiction?.TenantBoundary) {
     let res = [];
     e && e?.map((ob) => {
       res.push(ob?.[1]);
     });
-     let tenantcode=tenantId.replace('.','_').toUpperCase();
-    res?.forEach(resData => {resData.name =tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno})
+    let tenantcode = tenantId.replace('.', '_').toUpperCase();
+    // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
+    res?.forEach(resData => { resData.name = tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res } : item)));
+    // }
   };
 
 
@@ -373,7 +407,7 @@ function Jurisdiction({
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: afterRemove } : item)));
 
   };
-  
+
   return (
     <div key={jurisdiction?.keys} style={{ marginBottom: "16px" }}>
       <div style={{ border: "1px solid #E3E3E3", padding: "16px", marginTop: "8px" }}>
@@ -395,19 +429,19 @@ function Jurisdiction({
 
 
         <LabelFieldPair>
-          <CardLabel isMandatory={true} className="card-label-smaller">{`${t("HR_HIERARCHY_LABEL")} * `}</CardLabel>
+          <CardLabel isMandatory={true} className="card-label-smaller">{`${t("HR_HIERARCHY_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
           <Dropdown
             className="form-field"
             selected={jurisdiction?.hierarchy}
-            disable={false}
+            disable={isDisableStatus}
             isMandatory={true}
-            option={gethierarchylistdata(hierarchylist) || []}
+            option={gethierarchylistdata(hierarchylist)}
             select={selectHierarchy}
             optionKey="code"
             t={t}
           />
         </LabelFieldPair>
-         {/* <LabelFieldPair>
+        {/* <LabelFieldPair>
           <CardLabel className="card-label-smaller">{`${t("HR_BOUNDARY_TYPE_LABEL")} * `}</CardLabel>
           <Dropdown
             className="form-field"
@@ -421,14 +455,14 @@ function Jurisdiction({
           />
         </LabelFieldPair>  */}
         <LabelFieldPair>
-          <CardLabel className="card-label-smaller">{`${t("HR_BOUNDARY_LABEL")} * `}</CardLabel>
+          <CardLabel className="card-label-smaller">{`${t("HR_BOUNDARY_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
           <Dropdown
             className="form-field"
             isMandatory={true}
             selected={jurisdiction?.boundary}
             disable={isDisableStatus}
             //disable={true}
-            option={Boundary}       
+            option={Boundary}
             select={selectedboundary}
             optionKey="i18text"
             t={t}
@@ -464,10 +498,10 @@ function Jurisdiction({
         </LabelFieldPair> */}
 
         <LabelFieldPair>
-        <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-        <div className="form-field">        
-            <Dropdown t={t} optionKey="name" isRequired="false"  option={cmbZonal[0]} selected={Zonal} 
-            select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
+          <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Zonal}
+              select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
         </LabelFieldPair>
 
         {/* <LabelFieldPair>
@@ -479,10 +513,10 @@ function Jurisdiction({
             </div>
         
         </LabelFieldPair> */}
-        
+
 
         <LabelFieldPair>
-          <CardLabel className="card-label-smaller">{t("TL_LOCALIZATION_WARD_NO")} *</CardLabel>
+          <CardLabel className="card-label-smaller">{t("TL_LOCALIZATION_WARD_NO")} <span className="mandatorycss">*</span></CardLabel>
           <div className="form-field">
             <MultiSelectDropdown
               className="form-field"
@@ -496,7 +530,7 @@ function Jurisdiction({
               placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`}
             />
             <div className="tag-container">
-            
+
               {jurisdiction?.TenantBoundary?.length > 0 &&
                 jurisdiction?.TenantBoundary.map((value, index) => {
                   return <RemoveableTag key={index} text={`${t(value["name"]).slice(0, 22)} ...`} onClick={() => onRemoved(index, value)} />;
@@ -506,12 +540,12 @@ function Jurisdiction({
         </LabelFieldPair>
 
         <LabelFieldPair>
-        <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
-        <div className="form-field">        
+          <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
             <Dropdown t={t} optionKey="labelKey" isRequired="false" option={getroledata(roleoption)} selected={jurisdiction?.roles}
-            select={selectrolenew} placeholder={`${t("HR_COMMON_TABLE_COL_ROLE")}`} /></div>
+              select={selectrolenew} placeholder={`${t("HR_COMMON_TABLE_COL_ROLE")}`} /></div>
         </LabelFieldPair>
-        
+
 
         {/* <LabelFieldPair>
           <CardLabel className="card-label-smaller">{t("HR_COMMON_TABLE_COL_ROLE")} *</CardLabel>

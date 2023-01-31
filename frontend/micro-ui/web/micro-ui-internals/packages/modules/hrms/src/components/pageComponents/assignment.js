@@ -142,6 +142,15 @@ function Assignment({
   setCurrentAssiginmentDate,
   currentassignemtDate,
 }) {
+  
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     setIsInitialRender(false);
+  //     setCurrentAssiginmentDate(new Date());
+  //     console.log("currentassignemtDate" + currentassignemtDate);
+  //   }
+  // }, [currentassignemtDate, isInitialRender]);
   const selectDepartment = (value) => {
     setassignments((pre) => pre.map((item) => (item.key === assignment.key ? { ...item, department: value } : item)));
   };
