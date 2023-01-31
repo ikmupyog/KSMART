@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect } from "react";
+import React, { useCallback, useMemo, useEffect,useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
@@ -24,14 +24,16 @@ const hstyle = {
   marginBottom: ".5rem",
   lineHieght: "1.5rem",
 };
-const registyBtnStyle ={
+const registyBtnStyle = {
   display: "flex",
   justifyContent: "flex-end",
   marginRight: "15px",
   marginBottom: "15px",
-}
+};
 
-const SearchRegistryBirth = ({ tenantId, onSubmit, data, filestoreId, isSuccess, isLoading, count }) => {
+const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoading, count }) => {
+  const [FileData, setFileData] = useState([]);
+
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -59,7 +61,6 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, filestoreId, isSuccess,
     setValue("limit", Number(e.target.value));
     handleSubmit(onSubmit)();
   }
-  
 
   function nextPage() {
     setValue("offset", getValues("offset") + getValues("limit"));
@@ -73,7 +74,7 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, filestoreId, isSuccess,
   const isMobile = window.Digit.Utils.browser.isMobile();
 
   if (isMobile) {
-    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
+    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit,  data, onSubmit }} />;
   }
 
   //need to get from workflow
@@ -127,6 +128,24 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, filestoreId, isSuccess,
         disableSortBy: true,
         accessor: (row) => GetCell(row.gender || "-"),
       },
+      {
+        Header: t("Download Certificate"),
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          // console.log('row',row?.original);
+          return (
+            <div>
+              {row.original?.filestoreId && row.original?.isSuccess === true ? (
+                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
+                  Download
+                </span>
+              ) : (
+                <Loader />
+              )}
+            </div>
+          );
+        },
+      },
       // {
       //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
       //   disableSortBy: true,
@@ -146,18 +165,24 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, filestoreId, isSuccess,
     []
   );
 
+  let tmpData = data;
+  useEffect(() => {
+    if (filestoreId && isSuccess === true) {
+      tmpData[0] = { ...data[0], filestoreId, isSuccess };
+    }
+    setFileData(tmpData);
+  }, [filestoreId]);
   return (
     <React.Fragment>
       <div style={mystyle}>
         <h1 style={hstyle}>{t("BIRTH CERTIFICATE")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, t }} />
+          <SearchFields {...{ register, control, reset, previousPage, t }} />
         </SearchForm>
       </div>
-
-      {data?.display ? (
+      {FileData?.display ? (
         <Card style={{ marginTop: 20 }}>
-          {t(data.display)
+          {t(FileData.display)
             .split("\\n")
             .map((text, index) => (
               <p key={index} style={{ textAlign: "center" }}>
@@ -165,21 +190,17 @@ const SearchRegistryBirth = ({ tenantId, onSubmit, data, filestoreId, isSuccess,
               </p>
             ))}
         </Card>
-      ) : isLoading ? (
+      ) : isLoading && !FileData === true ? (
         <Loader />
       ) : (
-        data !== "" && (
+        FileData !== "" && (
           <React.Fragment>
-            {filestoreId && isSuccess === true ? (
-              <div style={registyBtnStyle}>
-                <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
-              </div>
-            ) : (
-              <Loader />
-            )}
+            {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
+        <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
+       </div>:<Loader/>} */}
             <Table
               t={t}
-              data={data}
+              data={FileData ? FileData : data}
               totalRecords={count}
               columns={columns}
               getCellProps={(cellInfo) => {
