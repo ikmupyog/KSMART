@@ -567,7 +567,8 @@ public class EmployeeService {
 			});
 
 		}
-
+		employee.setAuditDetails(auditDetails);
+		employee.setIsActive(true);
 
 	}
 
