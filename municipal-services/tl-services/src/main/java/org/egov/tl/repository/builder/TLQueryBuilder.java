@@ -430,8 +430,15 @@ public class TLQueryBuilder {
 
         StringBuilder builder = new StringBuilder(QUERYPDE);
         addClauseIfRequired(preparedStmtList, builder);
-        builder.append("  tl.workflowcode = ? ");
+        builder.append("  ((tl.workflowcode = ?) ");
         preparedStmtList.add("PdeTL");
+
+        builder.append(" OR (tl.workflowcode = ? AND (tl.status=? OR tl.status=? OR tl.status=? OR tl.status=?))) ");
+        preparedStmtList.add("RenewalTL");
+        preparedStmtList.add("MIGRATED");
+        preparedStmtList.add("INITIATED");
+        preparedStmtList.add("FORWARDED");
+        preparedStmtList.add("APPROVED");
 
         if (criteria.getTenantId() != null) {
             addClauseIfRequired(preparedStmtList, builder);
