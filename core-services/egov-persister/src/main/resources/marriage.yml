@@ -47,7 +47,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.remarks_ml
 
-            - jsonPath: $.MarriageDetails.*.
+            - jsonPath: $.MarriageDetails.*.aadharno
 
             - jsonPath: $.MarriageDetails.*.esign_user_code
 
@@ -83,8 +83,17 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastmodifiedby
 
-        - query: UPDATE public.eg_marriage_details
-                 dateofreport=?, dateofmarriage=?, firstname_bride_en=?, firstname_bride_ml=?, middlename_bride_en=?, middlename_bride_ml=?, lastname_bride_en=?, lastname_bride_ml=?, firstname_groom_en=?, firstname_groom_ml=?, middlename_groom_en=?, middlename_groom_ml=?, lastname_groom_en=?, lastname_groom_ml=?, tenantid=?, remarks_en=?, remarks_ml=?, aadharno=?, esign_user_code=?, esign_user_desig_code=?, applicationtype=?, businessservice=?, workflowcode=?, fm_fileno=?, file_date=?, file_status=?, applicationno=?, registrationno=?, registration_date=?, action=?, status=?, createdtime=?, createdby=?, lastmodifiedtime=?, lastmodifiedby=?
+
+
+    - version: 1.0
+      description: Persists update marriage details in cr_marriage  table
+      fromTopic: update-marriage-application-topic
+      isTransaction: true
+      queryMaps:
+
+        - query: UPDATE public.eg_marriage_details SET dateofreport=?, dateofmarriage=?, firstname_bride_en=?, firstname_bride_ml=?, middlename_bride_en=?, middlename_bride_ml=?, lastname_bride_en=?, lastname_bride_ml=?, firstname_groom_en=?, firstname_groom_ml=?, 
+                 middlename_groom_en=?, middlename_groom_ml=?, lastname_groom_en=?, lastname_groom_ml=?, tenantid=?, remarks_en=?, remarks_ml=?, aadharno=?, esign_user_code=?, esign_user_desig_code=?, applicationtype=?, businessservice=?, workflowcode=?, fm_fileno=?, 
+                 file_date=?, file_status=?, applicationno=?, registrationno=?, registration_date=?, action=?, status=?, createdtime=?, createdby=?, lastmodifiedtime=?, lastmodifiedby=?
                  WHERE id=?;
           basePath: MarriageDetails.*
           jsonMaps:
@@ -123,7 +132,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.remarks_ml
 
-            - jsonPath: $.MarriageDetails.*.
+            - jsonPath: $.MarriageDetails.*.aadharno
 
             - jsonPath: $.MarriageDetails.*.esign_user_code
 

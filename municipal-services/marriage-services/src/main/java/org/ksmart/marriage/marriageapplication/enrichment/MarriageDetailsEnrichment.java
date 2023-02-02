@@ -27,6 +27,16 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
           
         });
 
+
+    }
+    public void enrichUpdate(MarriageDetailsRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+
+        request.getMarriageDetails()
+                .forEach(birth -> birth.setAuditDetails(auditDetails));
     }
 
 }

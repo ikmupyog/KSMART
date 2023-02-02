@@ -14,9 +14,9 @@ public class MarriageApplicationConfiguration {
 
 
     @Value("${persister.save.marriage.application.topic}")
-    private String SaveMarriageApplicationTopic;
+    private String saveMarriageApplicationTopic;
 
 
     @Value("${persister.update.marriage.application.topic}")
-    private String UpdateMarriageApplicationTopic;
+    private String updateMarriageApplicationTopic;
 }

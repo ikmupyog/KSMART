@@ -43,7 +43,7 @@ public class MarriageApplicationRepository {
     }
 
     public List<MarriageApplicationDetail> updateMarriageDetails(MarriageDetailsRequest request) {
-        marriageDetailsEnrichment.enrichCreate(request);
+        marriageDetailsEnrichment.enrichUpdate(request);
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
         return request.getMarriageDetails();
     }
