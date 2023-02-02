@@ -2,6 +2,7 @@ package org.ksmart.marriage.marriageapplication.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.*;
 //import org.ksmart.marriage.common.model.AuditDetails;
 //import org.ksmart.marriage.common.model.Document;
@@ -22,47 +23,65 @@ public class MarriageApplicationDetail {
     @JsonProperty("dateofreport")
     private Long dateOfReport;
 
-    @JsonProperty("dateofbirth")
-    private Long dateOfBirth;
+    @JsonProperty("dateofmarriage")
+    private Long dateOfMarriage;
 
-    @JsonProperty("timeofbirth")
-    private Long timeOfBirth;
 
-    @Size(max = 20)
-    @JsonProperty("am_pm")
-    private String ampm;
 
     @Size(max = 1000)
-    @JsonProperty("firstname_en")
+    @JsonProperty("firstname_bride_en")
     private String firstNameEn;
 
     @Size(max = 1000)
-    @JsonProperty("firstname_ml")
+    @JsonProperty("firstname_bride_ml")
     private String firstNameMl;
 
     @Size(max = 1000)
-    @JsonProperty("middlename_en")
+    @JsonProperty("middlename_bride_en")
     private String middleNameEn;
 
     @Size(max = 1000)
-    @JsonProperty("middlename_ml")
+    @JsonProperty("middlename_bride_ml")
     private String middleNameMl;
 
     @Size(max = 1000)
-    @JsonProperty("lastname_en")
+    @JsonProperty("lastname_bride_en")
     private String lastNameEn;
 
     @Size(max = 1000)
-    @JsonProperty("lastname_ml")
+    @JsonProperty("lastname_bride_ml")
     private String lastNameMl;
+
+
+
+    @Size(max = 1000)
+    @JsonProperty("firstname_groom_en")
+    private String firstNameGroomEn;
+
+    @Size(max = 1000)
+    @JsonProperty("firstname_groom_ml")
+    private String firstNameGroomMl;
+
+    @Size(max = 1000)
+    @JsonProperty("middlename_groom_en")
+    private String middleNameGroomEn;
+
+    @Size(max = 1000)
+    @JsonProperty("middlename_groom_ml")
+    private String middleNameGroomMl;
+
+    @Size(max = 1000)
+    @JsonProperty("lastname_groom_en")
+    private String lastNameGroomEn;
+
+    @Size(max = 1000)
+    @JsonProperty("lastname_groom_ml")
+    private String lastNameGroomMl;
+
 
     @Size(max = 64)
     @JsonProperty("tenantid")
     private String tenantId;
-
-    @Size(max = 1000)
-    @JsonProperty("gender")
-    private String gender;
 
     @Size(max = 2500)
     @JsonProperty("remarks_en")
@@ -84,37 +103,7 @@ public class MarriageApplicationDetail {
     @JsonProperty("esign_user_desig_code")
     private String esignUserDesigCode;
 
-     @JsonProperty("is_adopted")
-    private Boolean isAdopted;
 
-    @JsonProperty("is_abandoned")
-    private Boolean isAbandoned;
-
-    @JsonProperty("is_multiple_birth")
-    private Boolean isMultipleBirth;
-
-    @JsonProperty("is_father_info_missing")
-    private Boolean isFatherInfoMissing;
-
-    @JsonProperty("is_mother_info_missing")
-    private Boolean isMotherInfoMissing;
-
-    @JsonProperty("no_of_alive_birth")
-    private Integer noOfAliveBirth;
-
-    @Size(max = 64)
-    @JsonProperty("multiplebirthdetid")
-    private String multipleBirthDetailsIid;
-
-    @JsonProperty("is_born_outside")
-    private Boolean isBornOutside;
-
-    @Size(max = 64)
-    @JsonProperty("ot_passportno")
-    private String passportNo;
-
-    @JsonProperty("ot_dateofarrival")
-    private Long dateOfArrival;
 
     @Size(max = 64)
     @JsonProperty("applicationtype")
@@ -134,6 +123,8 @@ public class MarriageApplicationDetail {
 
     @JsonProperty("file_date")
     private Long fileDate;
+    @JsonProperty("file_status")
+    private Long fileStatus;
 
     @Size(max = 64)
     @JsonProperty("applicationno")
@@ -150,10 +141,7 @@ public class MarriageApplicationDetail {
     @JsonProperty("action")
     private String action;
 
-    @JsonProperty("assignee")
-    private List<String> assignee;
 
-    private String comment;
 
 
     //@JsonProperty("wfDocuments")
@@ -163,23 +151,9 @@ public class MarriageApplicationDetail {
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("birthPlace")
-    private MarriagePlace birthPlace;
 
-    @JsonProperty("birthFather")
-    private MarriageFatherInfo birthFatherInfo;
-
-    @JsonProperty("birthMother")
-    private MarriageMotherInfo birthMotherInfo;
-
-    @JsonProperty("birthPermanent")
-    private MarriagePermanentAddress birthPermanentAddress;
-
-    @JsonProperty("birthPresent")
-    private MarriagePresentAddress birthPresentAddress;
-
-    @JsonProperty("birthStatistical")
-    private MarriageStatisticalInformation birthStatisticalInformation;
+    @JsonProperty("auditDetails")
+    private AuditDetails auditDetails;
 
     //@JsonProperty("auditDetails")
     //private AuditDetails auditDetails;

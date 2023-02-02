@@ -2,6 +2,7 @@ package org.ksmart.marriage.marriageapplication.model.marriage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.response.ResponseInfo;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
 //import org.ksmart.marriage.marriageregistry.model.BirthCertificate;
@@ -26,7 +27,7 @@ public class MarriageApplicationResponse {
 
     @JsonProperty("BirthDetails")
     @Valid
-    private List<MarriageApplicationDetail> birthDetails;
+    private List<MarriageApplicationDetail> marriageApplicationDetailsDetails;
 
 //    @JsonProperty("BirthCertificate")
 //    @Valid
@@ -37,10 +38,12 @@ public class MarriageApplicationResponse {
     private int count;
 
     public MarriageApplicationResponse addBirthApplication(MarriageApplicationDetail birthDetail) {
-        if (birthDetails == null) {
-            birthDetails = new ArrayList<>();
+        if (marriageApplicationDetailsDetails == null) {
+            marriageApplicationDetailsDetails = new ArrayList<>();
         }
-        birthDetails.add(birthDetail);
+        marriageApplicationDetailsDetails.add(birthDetail);
         return this;
     }
+
+
 }
