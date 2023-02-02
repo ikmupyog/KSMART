@@ -430,6 +430,22 @@ public class EmployeeService {
 					jurisdiction.getAuditDetails().setLastModifiedDate(new Date().getTime());
 				}
 			}
+
+			jurisdiction.getJurisdictionChilds().forEach(child -> {
+				if (child.getId() == null) {
+					child.setJurisdictionId(jurisdiction.getId());
+					child.setParentJurisdictionId(jurisdiction.getId());
+					child.setTenantId(jurisdiction.getTenantId());
+					child.setIsActive(true);
+					child.setId(UUID.randomUUID().toString());
+					child.setAuditDetails(auditDetails);
+				} else {
+
+
+					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+					child.getAuditDetails().setLastModifiedDate(new Date().getTime());
+				}
+			});
 		});
 		employee.getAssignments().stream().forEach(assignment -> {
 			if(assignment.getId()==null) {
