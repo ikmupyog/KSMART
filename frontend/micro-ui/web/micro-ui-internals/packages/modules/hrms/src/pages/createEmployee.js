@@ -249,7 +249,6 @@ const CreateEmployee = ({userType}) => {
     // roles.push({"tenantId":tenantId});
     let jurisdictionChilds = data?.Jurisdictions?.map((ele) => {
       return ele.jurisdictionChilds?.map((item) => {
-        console.log(item);
         item["wardCode"] = item.code;
         item["wardLabel"] = item.name;
           delete item.localnamecmb;

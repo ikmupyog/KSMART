@@ -61,7 +61,7 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           {t("BC_CHILD_NAME")}
         </label>
         <TextInput
-          name="deceasedFirstNameEn"
+          name="fullName"
           inputRef={register({})}
           placeholder={`${t("BC_CHILD_NAME")}`}
           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })}
@@ -81,7 +81,7 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
               {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_INVALID_DATE") })}
             />
           )}
-          name="DeathDate"
+          name="dateofbirth"
           control={control}
         />
       </SearchField>
@@ -227,6 +227,11 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           onClick={() => {
             reset({
               id: "",
+              fullName:"",
+              dateofbirth:"",
+              gender:"",
+              mother_fullname:"",
+              hospitalid:"",
               //   DeceasedName: "",
               //   DeathDate: "",
               //   Gender: "",
