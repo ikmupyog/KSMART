@@ -1,7 +1,11 @@
-import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup, Dropdown } from "@egovernments/digit-ui-react-components";
+import { CardLabel, CardLabelDesc, FormStep, UploadFile, FormInputGroup, RemoveableTag,Dropdown } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
 
+const containerStyle ={
+  display: "flex",
+  flexWrap: "unset",
+}
 const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
 
   const [termsCheck, setTermsCheck] = useState(false);
@@ -16,7 +20,9 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
   const [uploadedFile, setUploadedFile] = useState(formData?.DocumentDet?.fileStoreId || null);
   const [file, setFile] = useState(formData?.DocumentDet?.OwnerPhotoProof);
   const [error, setError] = useState(null);
-  console.log(formData);
+  const [fileLimit, setFileLimit] = useState(0);
+  const [uploadFiles, setUploadFiles] = useState([]);
+  // console.log(formData);
   let cmbDocumentType = [];
   DocumentType &&
     DocumentType["common-masters"] &&
@@ -27,21 +33,22 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
   function setSelectedDocumentTypeList(value) {
     setDocumentTypeList(value);
   }
+  // console.log('upload', uploadFiles);
   const handleChange = (text, type) => {
-    let tempData = { ...documentDetails };
-    if (type === "documentType") {
-      tempData.documentType = text;
-      setDocumentDetails(tempData);
-    }
-    if (type === "checkbox") {
-      setTermsCheck(text);
-      if (documentDetails.fileStoreId && documentDetails.documentType?.code) {
-        setFileCheck(true);
-      }
-      if (!text) {
-        setFileCheck(false);
-      }
-    }
+    // let tempData = { ...documentDetails };
+    // if (type === "documentType") {
+    //   tempData.documentType = text;
+    //   setDocumentDetails(tempData);
+    // }
+    // if (type === "checkbox") {
+    //   setTermsCheck(text);
+    //   if (documentDetails.fileStoreId && documentDetails.documentType?.code) {
+    //     setFileCheck(true);
+    //   }
+    //   if (!text) {
+    //     setFileCheck(false);
+    //   }
+    // }
   };
   const handleSubmit = () => {
     let fileStoreId = uploadedFile;
@@ -66,16 +73,20 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
   const onSkip = () => onSelect();
 
   function selectfile(e) {
+    let uploadDocuments = []
     setUploadedFile(null);
-    setFile(e.target.files[0]);
+    // console.log(e.target.files[0]);
+    uploadDocuments.push(e.target.files[0])
+    setFile((file) => [...file, uploadDocuments]);
+    // setFile(e.target.files[0]);
   }
+
 
   useEffect(() => {
     (async () => {
       setError(null);
-      if (file&& file?.type) {
-        if(!(acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`)))
-        {
+      if (file && file?.type) {
+        if (!(acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`))) {
           setError(t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"));
         }
         else if (file.size >= 2000000) {
@@ -94,6 +105,34 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
       }
     })();
   }, [file]);
+
+  const handleFileEvent = (e) => {
+    const chooseFiles = Array.prototype.slice.call(e.target.files)
+    handleUploadFiles(chooseFiles)
+  }
+  const handleUploadFiles = (files) => {
+    const uploaded = [...uploadFiles]
+    let limitExceed = false
+    files.some((file) => {
+      if (uploaded.findIndex((f) => f.name === file.name) === -1) {
+        uploaded.push(file)
+      }
+      if (uploaded.length === 5) setFileLimit(true)
+      if (uploaded.length > 5) {
+        setFileLimit(false)
+        limitExceed = true
+        return true;
+      }
+    })
+    if (!limitExceed) setUploadFiles(uploaded)
+  }
+  const onRemoved = (index, key) => {
+    let afterRemove = uploadFiles?.filter((value, i) => {
+      return i !== index;
+    });
+    setUploadFiles(afterRemove);
+  };
+  // console.log(afterRemove);
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
@@ -123,19 +162,27 @@ const DFMEmployeeDocumentDetails = ({ t, config, onSelect, userType, formData })
               />
             </div>
 
-            <div className="col-md-4">
+            <div className="col-md-8">
               <CardLabel>{`${t("DFM_ATTACH_DOCUMENT")}`}</CardLabel>
               <UploadFile
                 id={"tl-doc"}
                 extraStyleName={"propertyCreate"}
                 accept=".jpg,.png,.pdf"
-                onUpload={selectfile}
+                onUpload={handleFileEvent}
+                // onUpload={selectfile}
                 onDelete={() => {
                   setUploadedFile(null);
                 }}
                 message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                 error={error}
               />
+              <div className="tag-container" style={containerStyle}>
+
+                {uploadFiles?.length > 0 &&
+                  uploadFiles?.map((value, index) => {
+                    return <RemoveableTag key={index} text={`${t(value["name"]).slice(0, 22)} ...`} onClick={() => onRemoved(index, value)} />;
+                  })}
+              </div>
               {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
               <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
             </div>

@@ -11,8 +11,8 @@ const getAction = (flow) => {
     default: actions = [
       'Applicant Basic Details',
       'Address Details',
-      'Service Details',
       'Document Details',
+      'Service Details',
     ]
     // default: actions = [
     //   'TL_COMMON_TR_DETAILS',

@@ -7,6 +7,7 @@ import {
   FormStep,
   UploadFile,
   FormInputGroup,
+  CheckBox,
 } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/DFMTimeline";
@@ -21,7 +22,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
 
   const [dropdownValue, setDropdownValue] = useState(formData?.owners?.documents?.ProofOfIdentity?.documentType || null);
-  //let dropdownData = [];
+  //let dropdownData = []; { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
   const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
@@ -43,7 +44,13 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
   const [ResidenceDurationMon, setResidenceDurationMon] = useState(formData?.ServiceDet?.ResidenceDurationMon);
   // const [ResidenceDuration, setResidenceDuration] = useState(formData?.ServiceDet?.ResidenceDuration);
   const [ServiceDetailsTxt, setServiceDetailsTxt] = useState(formData?.ServiceDet?.ServiceDetailsTxt);
-  console.log("s", boundaryList);
+  const [TypeOfOccupation, setTypeOfOccupation] = useState(formData?.ServiceDet?.TypeOfOccupation);
+  const [TypeOfRelation, setTypeOfRelation] = useState(formData?.ServiceDet?.TypeOfRelation);
+  const [DoorNo, setDoorNo] = useState(formData?.ServiceDet?.DoorNo);
+  const [Name, setName] = useState(formData?.ServiceDet?.Name);
+  const [Address, setAddress] = useState(formData?.ServiceDet?.Address);
+  const [isCheckboxSelected, setIsheckboxSelected] = useState(formData?.ServiceDet?.isCheckboxSelected);
+  // console.log("s", boundaryList);
 
   let cmbPostOffice = [];
   PostOffice &&
@@ -71,6 +78,18 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
     cmbWardNoFinal.push(wardmst);
   });
+
+  useEffect(()=>{
+    if(TypeOfOccupation?.name === "Own"){
+      setDoorNo(formData?.AddressDet?.DoorNo)
+      setName(formData?.ApplicantDetails?.FirstName)
+      setAddress(formData?.AddressDet?.HouseName +" "+formData?.AddressDet?.LocalPlace+" "+" "+formData?.AddressDet?.MainPlace+" "+formData?.AddressDet?.PostOfficeList?.name+" "+formData?.AddressDet?.Pincode)
+    }else if(TypeOfOccupation?.name === "Rental"){
+      setDoorNo('')
+      setName('')
+      setAddress('')
+    }
+  },[TypeOfOccupation])
 
   function setSelectedWardNo(e) {
     setWardNo(e);
@@ -117,6 +136,33 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
   function setSelectWard(e) {
     setWardNo(e);
   }
+  function setSelectedTypeOfOccupation(e) {
+    setTypeOfOccupation(e);
+  }
+  function setSelectedTypeOfRelation(e) {
+    setTypeOfRelation(e);
+  }
+  function setSelectedDoorNo(e) {
+    setDoorNo(e.target.value);
+  }
+  function setSelectedAddress(e) {
+    setAddress(e.target.value);
+  }
+  function setSelectedName(e) {
+    setName(e.target.value);
+  }
+  function setSelectedCheck(e) {
+    setIsheckboxSelected(!isCheckboxSelected);
+    if(e.target.checked){    
+      setDoorNo(formData?.AddressDet?.DoorNo)
+      setName(formData?.ApplicantDetails?.FirstName)
+      setAddress(formData?.AddressDet?.HouseName +" "+formData?.AddressDet?.PostOfficeList.name+" "+formData?.AddressDet?.LocalPlace+" "+formData?.AddressDet?.Pincode)  
+    }else{
+      setDoorNo('')
+      setName('')
+      setAddress('')
+    }
+  }
 
   const onSkip = () => onSelect();
   const goNext = () => {
@@ -132,6 +178,12 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
     sessionStorage.setItem("ResidenceDurationYr", ResidenceDurationYr);
     sessionStorage.setItem("ResidenceDurationMon", ResidenceDurationMon);
     sessionStorage.setItem("ServiceDetailsTxt", ServiceDetailsTxt);
+    sessionStorage.setItem("TypeOfOccupation", TypeOfOccupation);
+    sessionStorage.setItem("TypeOfRelation", TypeOfRelation);
+    sessionStorage.setItem("Name", Name);
+    sessionStorage.setItem("DoorNo", DoorNo);
+    sessionStorage.setItem("Address", Address);
+    sessionStorage.setItem("isCheckboxSelected", isCheckboxSelected);
     onSelect(config.key, {
       BuldingNo,
       // WardNo,
@@ -145,6 +197,12 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
       ResidenceDurationYr,
       ResidenceDurationMon,
       ServiceDetailsTxt,
+      TypeOfOccupation,
+      TypeOfRelation,
+      Name,
+      DoorNo,
+      Address,
+      isCheckboxSelected,
     });
   };
 
@@ -203,7 +261,47 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     {...(validation = { isRequired: true, title: t("TL_INVALID_WARD_NO") })}
                   />
                 </div> */}
-                <div className="col-md-4">
+                   <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("Type of Occupation")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={config.isMandatory}
+                    option={[
+                      {name:'Own',value:'own'},
+                      {name:'Rental',value:'rental'},
+                      {name:'Relative',value:'relative'}
+                    ]}
+                    selected={TypeOfOccupation}
+                    placeholder={`${t("DFM_TYPE_OF_OCCUPATION")}`}
+                    select={setSelectedTypeOfOccupation}
+                  />
+                </div>
+                {TypeOfOccupation?.name === "Relative" && (
+                    <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("Type Of Relation ")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <Dropdown
+                      t={t}
+                      optionKey="name"
+                      isMandatory={config.isMandatory}
+                      option={[
+                        {name:'Spouse',value:'spouse'},
+                        {name:'Father',value:'father'},
+                        {name:'Son',value:'son'}
+                      ]}
+                      selected={TypeOfRelation}
+                      placeholder={`${t("DFM_TYPE_OF_OCCUPATION")}`}
+                      select={setSelectedTypeOfRelation}
+                    />
+                  </div>
+                )}
+                {/* <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_NAME_OCCUPIER")}
                     <span className="mandatorycss">*</span>
@@ -236,8 +334,92 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     placeholder={`${t("DFM_NAME_OCCUPIER_MAL")}`}
                     {...(validation = { isRequired: true, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER_MAL") })}
                   />
+                </div> */}
+               
+
+                {/* <div className="col-md-4" ><CardLabel>{t("DFM_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="WardNo"
+             value={WardNo} 
+             onChange={setSelectedWardNo}  placeholder={`${t("DFM_WARD_NO")}`}   {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_WARD_NO") })} />
+          </div> */}
+              </div>
+            </div>
+            {TypeOfOccupation?.name === "Relative" && ( <React.Fragment>
+            <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-12">
+                <CheckBox label={t("Same As Applicant Details")} onChange={setSelectedCheck} value={isCheckboxSelected} checked={isCheckboxSelected} />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                </h1>
+              </div>
+            </div>
+            </React.Fragment>  )}
+
+          <div className="row">
+            <div className="col-md-12">
+            <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("DFM_DOOR_NUMBER")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="DoorNo"
+                    value={DoorNo}
+                    onChange={setSelectedDoorNo}
+                    placeholder={`${t("DFM_DOOR_NUMBER")}`}
+                    {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_DOOR_NUMBER") })}
+                  />
                 </div>
                 <div className="col-md-4">
+                  <CardLabel>
+                    {t("Name")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="name"
+                    value={Name}
+                    onChange={setSelectedName}
+                    placeholder={`${t("DFM_NAME")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_NAME") })}
+                  />
+                </div>
+
+            <div className="col-md-4">
+                  <CardLabel>
+                    {`${t("DFM_ADDRESS")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextArea
+                    t={t}
+                    isMandatory={true}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="ServiceDetailsTxt"
+                    value={Address}
+                    onChange={setSelectedAddress}
+                    placeholder={`${t("DFM_ADDRESS")}`}
+                  />
+                </div>
+            </div>
+          </div>
+
+            <div className="row">
+              <div className="col-md-12">
+              {/* <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_OWNER_NAME")}
                     <span className="mandatorycss">*</span>
@@ -254,16 +436,6 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_NAME") })}
                   />
                 </div>
-
-                {/* <div className="col-md-4" ><CardLabel>{t("DFM_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="WardNo"
-             value={WardNo} 
-             onChange={setSelectedWardNo}  placeholder={`${t("DFM_WARD_NO")}`}   {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("DFM_INVALID_WARD_NO") })} />
-          </div> */}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
                 <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_OWNER_NAME_MAL")}
@@ -280,7 +452,8 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     placeholder={`${t("DFM_OWNER_NAME_MAL")}`}
                     {...(validation = { isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_NAME_MAL") })}
                   />
-                </div>
+                </div> */}
+
                 {/* <div className="col-md-4">
                   <CardLabel>
                     {`${t("DFM_OWNER_ADDRESS")}`}
@@ -313,7 +486,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     placeholder={`${t("DFM_OWNER_ADDRESS_MAL")}`}
                   />
                 </div> */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <CardLabel>
                     {`${t("DFM_OWNER_MOBILE_NO")}`}
                     <span className="mandatorycss">*</span>
@@ -329,8 +502,15 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     placeholder={`${t("DFM_OWNER_MOBILE_NO")}`}
                     {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_MOBILE_NO") })}
                   />
-                </div>
-                <div className="col-md-4">
+                </div> */}
+              
+               
+              </div>
+            </div>
+            
+            <div className="row">
+              <div className="col-md-12">
+              <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_DURATION_RESIDENCE")}
                     <span className="mandatorycss">*</span>
@@ -362,7 +542,7 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     <label>Months</label>
                   </div>
                 </div>
-                <div className="col-md-4">
+              <div className="col-md-4">
                   <CardLabel>
                     {`${t("DFM_DETAILS")}`}
                     <span className="mandatorycss">*</span>
@@ -378,18 +558,9 @@ const DFMEmployeeServiceDetails = ({ t, config, onSelect, userType, formData }) 
                     placeholder={`${t("DFM_DETAILS")}`}
                   />
                 </div>
+               
               </div>
             </div>
-            
-            {/* <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-4" ><CardLabel>{t("DFM_BUILDING_NO")}</CardLabel>
-            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuldingNo"
-             value={BuldingNo} 
-             onChange={setSelectedBuldingNo}  placeholder={`${t("DFM_BUILDING_NO")}`}   {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DFM_INVALID_BUILDING_NO") })} />
-          </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </FormStep>

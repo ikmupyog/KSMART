@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 const CitizenHomeCard = ({ header, links, state, Icon, Info, isInfo = false, styles,module }) => {
 
   let tmpLinks 
-  let defaultLink =links
-   if (defaultLink ?.length>0 && window.location.href.includes('cr-death-home')){
-    tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-birth-home" )
-  }else if(defaultLink ?.length>0 && window.location.href.includes('cr-birth-home')){
-    tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-death-home" )
-  }
-  else{
+  // let defaultLink =links
+  //  if (defaultLink ?.length>0 && window.location.href.includes('cr-home')){
+  //   tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-home" )
+  // }else if(defaultLink ?.length>0 && window.location.href.includes('cr-home')){
+  //   tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-home" )
+  // }
+  // else{
     tmpLinks = links
-  }
+  // }
   return (
     <div className="CitizenHomeCard" style={styles ? styles : {}}>
       <div className="header">

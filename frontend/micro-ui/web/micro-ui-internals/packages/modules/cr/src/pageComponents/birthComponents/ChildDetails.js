@@ -10,6 +10,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  // const [ChildDOB, setChildDOB] = useState(isEdit ? (formData?.ChildDetails?.ChildDOB):(formData?.ChildDetails?.ChildDOB ? formData?.ChildDetails?.ChildDOB : ""));
   const [ChildDOB, setChildDOB] = useState(formData?.ChildDetails?.ChildDOB ? formData?.ChildDetails?.ChildDOB : "");
   const [Gender, selectGender] = useState(formData?.ChildDetails?.Gender);
   const [ChildAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.ChildAadharNo ? formData?.ChildDetails?.ChildAadharNo : "");
