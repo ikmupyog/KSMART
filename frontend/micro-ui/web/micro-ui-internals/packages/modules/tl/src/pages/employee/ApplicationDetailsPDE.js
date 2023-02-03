@@ -12,6 +12,8 @@ import ApplicationDetailsWarningPopup from "../../../../templates/ApplicationDet
 import ActionModal from "../../../../templates/ApplicationDetails/Modal";
 import ApplicationDetailsToast from "../../../../templates/ApplicationDetails/components/ApplicationDetailsToast";
 const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdited }) => {
+  const { uuid: uuid } = Digit.UserService.getUser().info;
+  const [actionbar, setActionbar] = useState(false);
   const [loadpage, setLoadpage] = useState(false);
   let applicationNumber = isEdited ? data?.Licenses[0]?.applicationNumber : data?.applicationNumber;
   const history = useHistory();
@@ -36,6 +38,7 @@ const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdite
     error: updateError,
     mutate,
   } = Digit.Hooks.tl.useApplicationActions(tenantId, true);
+  const wardcodes = isEdited ? data?.Licenses[0]?.tradeLicenseDetail?.address?.wardId : data?.tradeLicenseDetail?.address?.wardId;
 
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: tenantId,
@@ -43,6 +46,8 @@ const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdite
     moduleCode: businessService,
     role: "EMPLOYEE",
   });
+
+
 
   useEffect(() => {
     if (showToast) {
@@ -55,6 +60,17 @@ const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdite
     }
     if (!workflowDetails.isLoading) {
       setLoadpage(true);
+      if (workflowDetails?.data?.processInstances?.length > 0) {
+        if (workflowDetails?.data?.processInstances[0]?.assignes?.length > 0) {
+          if (workflowDetails?.data?.processInstances[0]?.assignes[0]?.uuid !== uuid)
+            setActionbar(false);
+          else
+            setActionbar(true);
+        } else if (workflowDetails?.data?.processInstances[0]?.assignes == null) {
+          setActionbar(true);
+        }
+    
+      }
     }
   }, [workflowDetails.data]);
 
@@ -182,32 +198,26 @@ const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdite
 
     closeModal();
   };
-
-  // if (loadpage)
-  //   return (
-  //     <Loader />
-  //   );
-  // else
   return (
     <Card>
       <BannerPicker t={t} data={data} isSuccess={data.isSuccess} isLoading={(data.isIdle || data.isLoading)} />
-      {isNewentry === true && loadpage===true   && (
+      {isNewentry === true && loadpage === true && (
         <SubmitBar label="New Entry" onSubmit={handleNewPage} />
       )}
       {
-        loadpage ? (
-        <ApplicationDetailsActionBar
-          workflowDetails={workflowDetails}
-          displayMenu={displayMenu}
-          onActionSelect={onActionSelect}
-          setDisplayMenu={setDisplayMenu}
-          businessService={businessService}
-          mutate={mutate}
-        // forcedActionPrefix={forcedActionPrefix}
-        // ActionBarStyle={ActionBarStyle}
-        // MenuStyle={MenuStyle}
-        />
-        ) : (<Loader />)
+        loadpage && actionbar  ? (
+          <ApplicationDetailsActionBar
+            workflowDetails={workflowDetails}
+            displayMenu={displayMenu}
+            onActionSelect={onActionSelect}
+            setDisplayMenu={setDisplayMenu}
+            businessService={businessService}
+            mutate={mutate}
+          // forcedActionPrefix={forcedActionPrefix}
+          // ActionBarStyle={ActionBarStyle}
+          // MenuStyle={MenuStyle}
+          />
+        ) : actionbar ? (<Loader />) : ("")
       }
 
       {showModal ? (
@@ -225,6 +235,7 @@ const ApplicationDetailsPDE = ({ data, isSuccess, isLoading, isNewentry, isEdite
           businessService={businessService}
           workflowDetails={workflowDetails}
           moduleCode="TL"
+          wardcodes={wardcodes}
         />
       ) : null}
       {isWarningPop ? (

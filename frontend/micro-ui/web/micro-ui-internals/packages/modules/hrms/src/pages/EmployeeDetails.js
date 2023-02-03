@@ -20,7 +20,14 @@ const Details = () => {
   const [errorInfo, setErrorInfo, clearError] = Digit.Hooks.useSessionStorage("EMPLOYEE_HRMS_ERROR_DATA", false);
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("EMPLOYEE_HRMS_MUTATION_HAPPENED", false);
   const [successData, setsuccessData, clearSuccessData] = Digit.Hooks.useSessionStorage("EMPLOYEE_HRMS_MUTATION_SUCCESS_DATA", false);
-
+  const { data: boundaryList = {}, isLoadingBoundary } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "cochin/egov-location", "boundary-data");
+ 
+  let cmbZonal = [];
+  boundaryList &&
+    boundaryList["egov-location"] &&
+    boundaryList["egov-location"].TenantBoundary.map((ob) => {
+      cmbZonal.push(ob.boundary.children);
+    });
   useEffect(() => {
     setMutationHappened(false);
     clearSuccessData();
@@ -144,7 +151,8 @@ const Details = () => {
             ) : null}
 
             {data?.Employees?.[0]?.jurisdictions?.length > 0
-              ? data?.Employees?.[0]?.jurisdictions.map((element, index) => {
+              ? data?.Employees?.[0]?.jurisdictions?.map((element, index) => {
+                let Czonal =cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == element?.zoneCode)
                 return (
                   <StatusTable
                     key={index}
@@ -165,6 +173,14 @@ const Details = () => {
                     <Row label={t("HR_BOUNDARY_TYPE_LABEL")} text={t(Digit.Utils.locale.convertToLocale(element?.boundaryType, 'EGOV_LOCATION_BOUNDARYTYPE'))} textStyle={{ whiteSpace: "pre" }} />
                     <Row label={t("HR_BOUNDARY_LABEL")} text={t(element?.boundary)} />
                     <Row
+                      label={t("TL_LOCALIZATION_ZONAL_OFFICE")}
+                      text={Czonal&& Czonal[0].name}
+                    />
+                    <Row
+                      label={t("HR_WARD_LABEL")}
+                      text={element?.jurisdictionChilds?.map((wards) => t(wards?.wardLabel))}
+                    />
+                    <Row
                       label={t("HR_ROLE_LABEL")}
                       text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
                     />
@@ -175,7 +191,7 @@ const Details = () => {
             {data?.Employees?.[0]?.assignments.length > 0 ? (
               <CardSubHeader className="card-section-header">{t("HR_ASSIGN_DET_HEADER")}</CardSubHeader>
             ) : null}
-            {data?.Employees?.[0]?.assignments.map((element, index) => (
+            {data?.Employees?.[0]?.assignments?.map((element, index) => (
               <StatusTable
                 key={index}
                 style={{

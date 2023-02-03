@@ -150,6 +150,12 @@ const CreateEmployee = ({userType}) => {
         boundary: {
           code: tenantId
         },
+        tenantId:null,
+        roleCode:null,
+        zoneCode:null,
+        jurisdictionChilds:[{
+          wardCode:null
+        }],
         roles: [],
       }]
   }
@@ -168,7 +174,8 @@ const CreateEmployee = ({userType}) => {
     }
     for (let i = 0; i < formData?.Jurisdictions?.length; i++) {
       let key = formData?.Jurisdictions[i];
-      if (!(key?.boundary && key?.boundaryType && key?.hierarchy && key?.tenantId && key?.roles?.length > 0)) {
+      if (!(key?.boundary  && key?.hierarchy && key?.tenantId )) {
+        // && key?.boundaryType && key?.roles?.length > 0
         setcheck(false);
         break;
       } else {
@@ -220,24 +227,49 @@ const CreateEmployee = ({userType}) => {
       showToast("error", t("ERR_BASE_TENANT_MANDATORY"), 5000);
       return;
     }
-    if (!Object.values(data.Jurisdictions.reduce((acc, sum) => {
-      if (sum && sum?.tenantId) {
-        acc[sum.tenantId] = acc[sum.tenantId] ? acc[sum.tenantId] + 1 : 1;
-      }
-      return acc;
-    }, {})).every(s => s == 1)) {
-      // setShowToast({ key: true, label: "ERR_INVALID_JURISDICTION" });
-      showToast("error", t("ERR_INVALID_JURISDICTION"), 5000);
-      return;
-    }
-    let roles = data?.Jurisdictions?.map((ele) => {
-      return ele.roles?.map((item) => {
-        item["tenantId"] = ele.boundary;
+    // if (!Object.values(data.Jurisdictions.reduce((acc, sum) => {
+    //   if (sum && sum?.tenantId) {
+    //     acc[sum.tenantId] = acc[sum.tenantId] ? acc[sum.tenantId] + 1 : 1;
+    //   }
+    //   return acc;
+    // }, {})).every(s => s == 1)) {
+    //   // setShowToast({ key: true, label: "ERR_INVALID_JURISDICTION" });
+    //   showToast("error", t("ERR_INVALID_JURISDICTION"), 5000);
+    //   return;
+    // }
+    // console.log(data?.Jurisdictions[0].roles);
+    // let roles = data?.Jurisdictions?.map((ele) => {
+    //   return ele.roles?.map((item) => {
+    //     item["tenantId"] = ele.boundary;
+    //     return item;
+    //   });
+    // });
+    
+    let roles = data?.Jurisdictions[0].roles;
+    // roles.push({"tenantId":tenantId});
+    let jurisdictionChilds = data?.Jurisdictions?.map((ele) => {
+      return ele.jurisdictionChilds?.map((item) => {
+        item["wardCode"] = item.code;
+        item["wardLabel"] = item.name;
+          delete item.localnamecmb;
+          delete item.namecmb;
+          delete item.boundaryNum;
+          delete item.children;
+          delete item.id;
+          delete item.label;
+          delete item.latitude;
+          delete item.localname;          
+          delete item.longitude;
+          delete item.name;          
+          delete item.wardno;
+          delete item.zonecode;
+          delete item.code;
         return item;
       });
     });
+    const mappedroles = [].concat.apply(roles);
+    // const mappedroles = roles;
 
-    const mappedroles = [].concat.apply([], roles);
     let Employees = [
       {
         tenantId: tenantId,

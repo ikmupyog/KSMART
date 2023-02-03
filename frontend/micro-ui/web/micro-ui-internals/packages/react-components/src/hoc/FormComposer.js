@@ -29,7 +29,8 @@ export const FormComposer = (props) => {
     defaultValues: props.defaultValues,
   });
   const { t } = useTranslation();
-  const formData = watch();
+  let formData = watch();
+   formData ={...formData,Jurisdictions:props.defaultValues?.Jurisdictions} 
 
   useEffect(() => {
     props.getFormAccessors && props.getFormAccessors({ setValue, getValues });
@@ -39,7 +40,7 @@ export const FormComposer = (props) => {
     props.onSubmit(data);
   }
 
-  function onSecondayActionClick(data) {
+  function onSecondayActionClick(data) { 
     props.onSecondayActionClick();
   }
 

@@ -1,4 +1,4 @@
-import { Loader, Modal, FormComposer } from "@egovernments/digit-ui-react-components";
+import { Loader, Modal, FormComposer, Toast } from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect } from "react";
 
 import { configTLApproverApplication } from "../config";
@@ -23,12 +23,14 @@ const CloseBtn = (props) => {
   );
 };
 
-const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction, actionData, applicationData, businessService, moduleCode }) => {
+const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction, actionData, applicationData, businessService, moduleCode,wardcodes }) => {
   const { data: approverData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
     tenantId,
     {
       roles: action?.assigneeRoles?.map?.((e) => ({ code: e })),
       isActive: true,
+      rolecodes: businessService==="PdeTL"? action?.assigneeRoles?.map?.((e) => (e)).join(","):null,
+      wardcodes: businessService==="PdeTL"? wardcodes?wardcodes:null :null
     },
     { enabled: !action?.isTerminateState }
   );
@@ -45,6 +47,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     }
   );
 
+  const [toast, setToast] = useState(false);
   const [config, setConfig] = useState({});
   const [defaultValues, setDefaultValues] = useState({});
   const [approvers, setApprovers] = useState([]);
@@ -109,9 +112,25 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
           ]
         : null,
     };
-    submitAction({
-      Licenses: [applicationData],
-    });
+    if((action?.action != "APPROVE")&&(action?.applicationStatus != "APPROVED")){
+      if(selectedApprover?.uuid)
+      submitAction({
+        Licenses: [applicationData],
+      });
+      else{
+        setError(t("Please select Assignee"));
+        setToast(true)
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+      }
+    }
+    else{
+      submitAction({
+        Licenses: [applicationData],
+      });
+    }
+    
   }
 
   useEffect(() => {
@@ -157,6 +176,15 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
           // isDisabled={!action.showFinancialYearsModal ? PTALoading || (!action?.isTerminateState && !selectedApprover?.uuid) : !selectedFinancialYear}
         />
       )}
+      <div>
+          {toast && (
+            <Toast
+              error={toast}
+              label={error}
+              onClose={() => setToast(false)}
+            />
+          )}{""}
+        </div>
     </Modal>
   ) : (
     <Loader />

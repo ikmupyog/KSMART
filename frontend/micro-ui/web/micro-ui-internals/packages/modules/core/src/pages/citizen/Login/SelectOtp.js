@@ -52,7 +52,7 @@ const SelectOtp = ({ config, otp, onOtpChange, onResend, onSelect, t, error, use
           </div>
           <div style={{ justifyContent: "space-between !important" }} >
 
-             {/*<span style={{ marginRight: "60%" }} >2022&copy;K-Smart</span>&nbsp;
+             {/*<span style={{ marginRight: "60%" }} >2023&copy;K-Smart</span>&nbsp;
             <span  >
               <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
               <a className="text-white text-link" href="#">Privacy</a>

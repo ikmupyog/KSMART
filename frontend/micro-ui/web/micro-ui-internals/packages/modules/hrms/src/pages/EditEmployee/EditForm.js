@@ -78,7 +78,8 @@ const EditForm = ({ tenantId, data }) => {
           code: ele.hierarchy,
           name: ele.hierarchy,
         },
-        boundaryType: { label: ele.boundaryType, i18text:`EGOV_LOCATION_BOUNDARYTYPE_${ele.boundaryType.toUpperCase()}` },
+        boundaryType: null,
+        // { label: ele.boundaryType, i18text:`EGOV_LOCATION_BOUNDARYTYPE_${ele.boundaryType.toUpperCase()}` },
         boundary: { code: ele.boundary },
         roles: data?.user?.roles.filter((item) => item.tenantId == ele.boundary),
       });
@@ -119,7 +120,8 @@ const EditForm = ({ tenantId, data }) => {
 
     for (let i = 0; i < formData?.Jurisdictions?.length; i++) {
       let key = formData?.Jurisdictions[i];
-      if (!(key?.boundary && key?.boundaryType && key?.hierarchy && key?.tenantId && key?.roles?.length > 0)) {
+      if (!(key?.boundary && key?.hierarchy && key?.tenantId )) {
+        // && key?.boundaryType && key?.roles?.length > 0
         setcheck(false);
         break;
       } else {
@@ -164,15 +166,15 @@ const EditForm = ({ tenantId, data }) => {
       setShowToast({ key: true, label: "ERR_BASE_TENANT_MANDATORY" });
       return;
     }
-    if (!Object.values(input.Jurisdictions.reduce((acc, sum) => {
-      if (sum && sum?.tenantId) {
-        acc[sum.tenantId] = acc[sum.tenantId] ? acc[sum.tenantId] + 1 : 1;
-      }
-      return acc;
-    }, {})).every(s => s == 1)) {
-      setShowToast({ key: true, label: "ERR_INVALID_JURISDICTION" });
-      return;
-    }
+    // if (!Object.values(input.Jurisdictions.reduce((acc, sum) => {
+    //   if (sum && sum?.tenantId) {
+    //     acc[sum.tenantId] = acc[sum.tenantId] ? acc[sum.tenantId] + 1 : 1;
+    //   }
+    //   return acc;
+    // }, {})).every(s => s == 1)) {
+    //   setShowToast({ key: true, label: "ERR_INVALID_JURISDICTION" });
+    //   return;
+    // }
     let roles = input?.Jurisdictions?.map((ele) => {
       return ele.roles?.map((item) => {
         item["tenantId"] = ele.boundary;
@@ -219,7 +221,7 @@ const EditForm = ({ tenantId, data }) => {
         })}
         fieldStyle={{ marginRight: 0 }}
         onSubmit={onSubmit}
-        defaultValues={defaultValues}
+        defaultValues={defaultValues} 
         onFormValueChange={onFormValueChange}
       /> {showToast && (
         <Toast

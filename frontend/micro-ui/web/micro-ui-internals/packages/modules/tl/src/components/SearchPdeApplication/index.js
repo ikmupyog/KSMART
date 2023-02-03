@@ -47,16 +47,16 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
 
     function onPageSizeChange(e){
         setValue("limit",Number(e.target.value))
-        handleSubmit(onSubmit)()
+        handleSubmit(onSubmit)(false)
     }
 
     function nextPage () {
         setValue("offset", getValues("offset") + getValues("limit"))
-        handleSubmit(onSubmit)()
+        handleSubmit(onSubmit)(false)
     }
     function previousPage () {
         setValue("offset", getValues("offset") - getValues("limit") )
-        handleSubmit(onSubmit)()
+        handleSubmit(onSubmit)(false)
     }
 
     const isMobile = window.Digit.Utils.browser.isMobile();
@@ -120,7 +120,7 @@ const SearchPdeApplication = ({tenantId, t, onSubmit, data, count }) => {
                 
                 <div style={mystyle}>
                 <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
-                  <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
+                  <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit} id="true">
                   <SearchFields {...{register, control, reset, tenantId, t}} />
 
                   

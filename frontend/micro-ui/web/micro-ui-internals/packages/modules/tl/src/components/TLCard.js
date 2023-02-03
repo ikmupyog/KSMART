@@ -48,12 +48,12 @@ const TLCard = () => {
             role: "TL_CEMP"
         },
         {
-            label: t("Past Data Entry - PDE"),
+            label: t("TL_NEW_PDE_APPLICATION"),
             link: `/digit-ui/employee/tl/pde-application`,
             role: "TL_PDEOPERATOR"
         },
         {
-            label: t("Search PDE Application"),
+            label: t("TL_SEARCH_PDE_APPLICATION"),
             link: `/digit-ui/employee/tl/pde-search`,
             role: "TL_PDEOPERATOR"
         },
@@ -63,7 +63,7 @@ const TLCard = () => {
         //     role: "TL_PDEAPPROVER"
         // },
         {
-            label: t("Search PDE Application"),
+            label: t("TL_SEARCH_PDE_APPLICATION"),
             link: `/digit-ui/employee/tl/pde-search`,
             role: "TL_PDEAPPROVER"
         }
@@ -80,6 +80,8 @@ const TLCard = () => {
     ]
 
     links = links.filter(link => link.role ? checkForEmployee(link.role) : true);
+    let linksfinal = links.reduce((ac,a) => ac.find(x=> x.label === a.label) ? [...ac] : [...ac,a],[]);
+ 
     const propsForModuleCard = {
         Icon: <CaseIcon />,
         moduleName: t("TL_COMMON_TL"),
@@ -94,7 +96,7 @@ const TLCard = () => {
             //     link: `/digit-ui/employee/tl/inbox`
             // }
         ],
-        links: links
+        links: linksfinal
     }
     return <EmployeeModuleCard {...propsForModuleCard} />
 };
