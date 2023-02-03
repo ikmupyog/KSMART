@@ -68,9 +68,9 @@ import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/Death
 import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/BirthRegistration/CheckPage";
-import DeathCheckPage from "./pages/citizen/BirthRegistration/DeathCheckPage";
+import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
-import DeathAcknowledgement from "./pages/citizen/BirthRegistration/DeathAcknowledgement";
+import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
 
