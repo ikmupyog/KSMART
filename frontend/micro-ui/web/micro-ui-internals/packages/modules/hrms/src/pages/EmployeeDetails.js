@@ -152,10 +152,10 @@ const Details = () => {
 
             {data?.Employees?.[0]?.jurisdictions?.length > 0
               ? data?.Employees?.[0]?.jurisdictions?.map((element, index) => {
-                console.log(data,element);
+                // console.log(data,element);
                 let Czonal =cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == element?.zoneCode)
                 let Croles= data?.Employees?.[0]?.user.roles.filter((ele) => ele.code == element?.roleCode)
-                console.log(Croles);
+                // console.log(Croles);
                 return (
                   <StatusTable
                     key={index}

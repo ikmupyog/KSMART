@@ -233,6 +233,7 @@ function Jurisdiction({
   const [isInitialRenderBoundaryType2, setIsInitialRenderBoundaryType2] = useState(true);
   const [isInitialRenderHierarchy, setIsInitialRenderHierarchy] = useState(true);
   const [isDisableStatus, setIsDisableStatus] = useState(true);
+  const [rolesData, setRolesData] = useState([]);
 
   let ZonalA = [];
   let cmbInfntWardNo = [];
@@ -314,6 +315,10 @@ function Jurisdiction({
         // setWardNo(null);
         // setFilterWard(null);
       }
+  },[])
+  useEffect(()=>{
+    let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode)
+    setRolesData(Croles)
   },[])
 
   useEffect(() => {
@@ -449,7 +454,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
 
 // console.log(jurisdiction);
 //  let Croles= formData?.Jurisdictions[0].roles.filter((ele) => ele.code  ==  roleCode.roleCode)
- let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode)
+
   return (
     <div key={jurisdiction?.keys} style={{ marginBottom: "16px" }}>
       <div style={{ border: "1px solid #E3E3E3", padding: "16px", marginTop: "8px" }}>
@@ -585,7 +590,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
         <LabelFieldPair>
           <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
           <div className="form-field">
-            <Dropdown t={t} optionKey="name" isRequired="false" option={getroledata(roleoption)} selected={Croles && Croles[0]}
+            <Dropdown t={t} optionKey="name" isRequired="false" option={getroledata(roleoption)} selected={rolesData && rolesData[0]}
               select={selectrolenew} placeholder={`${t("HR_COMMON_TABLE_COL_ROLE")}`} /></div>
         </LabelFieldPair>
 
