@@ -1,12 +1,17 @@
 import React, { useState } from "react"
-import { TextInput, Label, SubmitBar, LinkLabel, ActionBar, CloseSvg, DatePicker, CardLabelError, SearchForm, SearchField, Dropdown } from "@egovernments/digit-ui-react-components";
+import { TextInput, Label, SubmitBar, LinkLabel, ActionBar, CloseSvg, DatePicker, CardLabelError, SearchForm, SearchField, Dropdown, Toast } from "@egovernments/digit-ui-react-components";
 import { useForm, Controller } from "react-hook-form";
 import { useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const SearchPde = () => {
+const SearchPde = (searchdata) => {
 
+console.log(searchdata);
+   const[searchdatacat,setSearchdatacat]=useState(searchdata);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [wardmandatory, setWardmandatory] = useState(true);
+    const [toast, setToast] = useState(false);
     const { variant } = useParams();
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -21,13 +26,26 @@ const SearchPde = () => {
 
     const Search = Digit.ComponentRegistryService.getComponent("SearchPdeApplication");
 
-    function onSubmit(_data,pageflag) {
-        if(!pageflag){
-            _data.offset=_data.offset
-        }else{
-            _data.offset=0;
-            _data.sortBy="wardId",
-            _data.sortOrder= "DESC"
+    function onSubmit(_data, pageflag) {
+        console.log(_data?.wardId);
+        console.log("searchcriteria" + JSON.stringify(_data));
+        setSearchdatacat(_data);
+        if (_data?.wardId === undefined || _data?.wardId === null || _data?.wardId === 0) {
+            setWardmandatory(false);
+            setErrorMessage("Please select ward no");
+            setToast(true)
+            setTimeout(() => {
+                setToast(false);
+            }, 2000);
+        }
+        else
+            setWardmandatory(true);
+        if (!pageflag) {
+            _data.offset = _data.offset
+        } else {
+            _data.offset = 0;
+            _data.sortBy = "wardId",
+                _data.sortOrder = "DESC"
         }
         queryClient.removeQueries("TL_SEARCH_PDE");
         const data = {
@@ -74,8 +92,21 @@ const SearchPde = () => {
     }
 
     sortedData = sortedData?.length > 0 ? sortedData : searchReult;
-    return <Search t={t} tenantId={tenantId} onSubmit={onSubmit}  data={!isLoading && isSuccess ? (sortedData?.length > 0 ? sortedData : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
-    //return <div>hai</div>
+    if (wardmandatory)
+    return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (sortedData?.length > 0 ? sortedData : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    else
+        return (
+            <div>
+                <SearchPde searchdata={searchdatacat}></SearchPde>
+                {toast && (
+                    <Toast
+                        error={toast}
+                        label={errorMessage}
+                        onClose={() => setToast(false)}
+                    />
+                )}{""}
+            </div>
+        )
 }
 
 export default SearchPde
