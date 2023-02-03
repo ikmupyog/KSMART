@@ -287,9 +287,19 @@ function Jurisdiction({
     if(jurisdiction?.jurisdictionChilds?.length>0 && jurisdiction?.jurisdictionChilds[0]?.id){
       // console.log('k',jurisdiction,wards );
       let Cward =jurisdiction?.jurisdictionChilds
+      let result = Cward.map(a => a.wardCode);
       Cward.forEach((ele)=>{ele.name = ele.wardLabel})
-     
-      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: Cward} : item)));
+      let tmpBoundary =[]
+      let tmpBoundaryArr
+      for(let i=0;i<result?.length;i++){
+       tmpBoundaryArr= wards?.length>0 && wards.filter((ele) => ele.code == result[i])
+       let tenantcode = tenantId.replace('.', '_').toUpperCase();
+    // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
+    tmpBoundaryArr?.length>0 && tmpBoundaryArr ?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
+       tmpBoundary.push(tmpBoundaryArr[0])
+      }
+    
+      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: tmpBoundary?.l>0?tmpBoundary:Cward} : item)));
       }
   },[jurisdiction?.jurisdictionChilds[0]?.id,wards])
 
@@ -416,13 +426,9 @@ function Jurisdiction({
       res.push(ob?.[1]);
     });
     let tenantcode = tenantId.replace('.', '_').toUpperCase();
-    // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
+    // res?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
     res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
-    // console.log('k1',res,jurisdiction);
-    // let tmpData =jurisdiction.jurisdictionChilds.concat(res)
-    // console.log();
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
-    // }
   };
 
 
