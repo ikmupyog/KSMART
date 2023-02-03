@@ -83,7 +83,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
     if(TypeOfOccupation?.name === "Own"){
       setDoorNo(formData?.AddressDet?.DoorNo)
       setName(formData?.ApplicantDetails?.FirstName)
-      setAddress(formData?.AddressDet?.HouseName +" "+formData?.AddressDet?.PostOfficeList.name+" "+formData?.AddressDet?.LocalPlace+" "+formData?.AddressDet?.Pincode)
+      setAddress(formData?.AddressDet?.HouseName +" "+formData?.AddressDet?.LocalPlace+" "+" "+formData?.AddressDet?.MainPlace+" "+formData?.AddressDet?.PostOfficeList?.name+" "+formData?.AddressDet?.Pincode)
     }else if(TypeOfOccupation?.name === "Rental"){
       setDoorNo('')
       setName('')
@@ -301,7 +301,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                     />
                   </div>
                 )}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_NAME_OCCUPIER")}
                     <span className="mandatorycss">*</span>
@@ -334,7 +334,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                     placeholder={`${t("DFM_NAME_OCCUPIER_MAL")}`}
                     {...(validation = { isRequired: true, type: "text", title: t("DFM_INVALID_NAME_OCCUPIER_MAL") })}
                   />
-                </div>
+                </div> */}
                
 
                 {/* <div className="col-md-4" ><CardLabel>{t("DFM_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
@@ -419,7 +419,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
 
             <div className="row">
               <div className="col-md-12">
-              <div className="col-md-4">
+              {/* <div className="col-md-4">
                   <CardLabel>
                     {t("DFM_OWNER_NAME")}
                     <span className="mandatorycss">*</span>
@@ -452,7 +452,8 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                     placeholder={`${t("DFM_OWNER_NAME_MAL")}`}
                     {...(validation = { isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_NAME_MAL") })}
                   />
-                </div>
+                </div> */}
+
                 {/* <div className="col-md-4">
                   <CardLabel>
                     {`${t("DFM_OWNER_ADDRESS")}`}
@@ -485,7 +486,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                     placeholder={`${t("DFM_OWNER_ADDRESS_MAL")}`}
                   />
                 </div> */}
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <CardLabel>
                     {`${t("DFM_OWNER_MOBILE_NO")}`}
                     <span className="mandatorycss">*</span>
@@ -501,7 +502,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                     placeholder={`${t("DFM_OWNER_MOBILE_NO")}`}
                     {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "text", title: t("DFM_INVALID_OWNER_MOBILE_NO") })}
                   />
-                </div>
+                </div> */}
               
                
               </div>

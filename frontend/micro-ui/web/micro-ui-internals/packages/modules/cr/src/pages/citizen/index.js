@@ -9,6 +9,8 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 // import { TLList } from "./Renewal";
 // import RenewTrade from "./Renewal/renewTrade";
 // import SearchTradeComponent from "./SearchTrade";
+import ChildDetails from "../../pageComponents/birthComponents/ChildDetails";
+import InformationDeath from "../../pageComponents/deathComponents/InformationDeath";
 import BirthCertificateSearch from "./BirthCertificate";
 import DeathCertificate from "./Certificate/DeathCertificate";
 import DeathCertificateSearch from "./Certificate";
@@ -49,6 +51,8 @@ const App = () => {
       <Switch>
         {/* <PrivateRoute path={`${path}/create-death-certificate`} component={() => <CreateDeathCertificate parentUrl={path}/>} /> */}
         {/* <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <CreateBirthCertificate parentUrl={path} />} /> */}
+        <PrivateRoute parentRoute={path} path={`${path}/cr-birth-creation`} component={() => <ChildDetails parentUrl={path} />} /> 
+        <PrivateRoute parentRoute={path} path={`${path}/cr-death-creation`} component={() => <InformationDeath parentUrl={path} />} /> 
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         {/* <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificate parentUrl={path}/>} />  */}
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 

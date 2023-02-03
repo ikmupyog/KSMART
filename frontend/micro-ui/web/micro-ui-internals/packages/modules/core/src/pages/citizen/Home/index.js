@@ -60,6 +60,16 @@ const Home = () => {
       //     onClick: () => history.push("/digit-ui/citizen")
       // },
       {
+        name: t("Civil Registration"),
+        Icon: <OBPSIcon />,
+        // onClick: () => history.push("/citizen/birth-common/"),
+        // onClick: () => history.push("/digit-ui/citizen/cr-home"),
+        onClick: () => history.push({
+          pathname: '/digit-ui/citizen/cr-home',
+          state: { module: "cr-home" }
+        }),
+      },
+      {
         name: t("ACTION_TEST_BIRTH"),
         Icon: <OBPSIcon />,
         // onClick: () => history.push("/citizen/birth-common/"),
