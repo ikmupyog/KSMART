@@ -283,6 +283,29 @@ function Jurisdiction({
     }
   }, [wards]);
 
+  useEffect(()=>{
+    if(jurisdiction?.jurisdictionChilds?.length>0 && jurisdiction?.jurisdictionChilds[0]?.id){
+      // console.log('k',jurisdiction,wards );
+      let Cward =jurisdiction?.jurisdictionChilds
+      Cward.forEach((ele)=>{ele.name = ele.wardLabel})
+     
+      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: Cward} : item)));
+      }
+  },[jurisdiction?.jurisdictionChilds[0]?.id,wards])
+
+  useEffect(()=>{
+      let Czonal=  cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == jurisdiction?.zoneCode)
+        if(  cmbZonal?.length>0&& cmbZonal[0]){
+        cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == jurisdiction?.zoneCode)
+        // console.log(Czonal);
+        setSelectZonalOffice(Czonal[0])
+        // setZonal(Czonal);
+        // setIsInitialRender(true);
+        // setWardNo(null);
+        // setFilterWard(null);
+      }
+  },[cmbZonal&& cmbZonal[0]])
+
   useEffect(() => {
     if (isInitialRenderBoundaryType) {
       selectBoundaryType(
@@ -394,8 +417,11 @@ function Jurisdiction({
     });
     let tenantcode = tenantId.replace('.', '_').toUpperCase();
     // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
-    res?.forEach(resData => { resData.name = tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res } : item)));
+    res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
+    // console.log('k1',res,jurisdiction);
+    // let tmpData =jurisdiction.jurisdictionChilds.concat(res)
+    // console.log();
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
     // }
   };
 
@@ -409,10 +435,15 @@ function Jurisdiction({
   };
 
 let Czonal =cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == jurisdiction?.zoneCode)
+// console.log('z',Czonal);
 let tenantcode = tenantId.replace('.', '_').toUpperCase();
-    
-let Cward = jurisdiction.jurisdictionChilds
-Cward.forEach((ele)=>{ele.name = ele.wardLabel})
+
+// let Cward = jurisdiction.jurisdictionChilds
+// Cward.forEach((ele)=>{ele.name = ele.wardLabel})
+
+// console.log(jurisdiction);
+//  let Croles= formData?.Jurisdictions[0].roles.filter((ele) => ele.code  ==  roleCode.roleCode)
+ let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode)
   return (
     <div key={jurisdiction?.keys} style={{ marginBottom: "16px" }}>
       <div style={{ border: "1px solid #E3E3E3", padding: "16px", marginTop: "8px" }}>
@@ -505,7 +536,7 @@ Cward.forEach((ele)=>{ele.name = ele.wardLabel})
         <LabelFieldPair>
           <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
           <div className="form-field">
-            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Czonal && Czonal[0]}
+            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Czonal?.length>0 ? Czonal[0]:Zonal}
               select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
         </LabelFieldPair>
 
@@ -527,7 +558,8 @@ Cward.forEach((ele)=>{ele.name = ele.wardLabel})
               className="form-field"
               //isMandatory={true}
               defaultUnit="Selected"
-              selected={jurisdiction?.jurisdictionChilds}
+              selected ={jurisdiction?.TenantBoundary}
+              // selected={jurisdiction?.jurisdictionChilds?.length>0?jurisdiction?.jurisdictionChilds:jurisdictions}
               options={wards}
               onSelect={selectward}
               optionsKey="name"
@@ -547,7 +579,7 @@ Cward.forEach((ele)=>{ele.name = ele.wardLabel})
         <LabelFieldPair>
           <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
           <div className="form-field">
-            <Dropdown t={t} optionKey="name" isRequired="false" option={getroledata(roleoption)} selected={jurisdiction?.roles?.length>0?jurisdiction?.roles[0]:jurisdiction?.roles}
+            <Dropdown t={t} optionKey="name" isRequired="false" option={getroledata(roleoption)} selected={Croles && Croles[0]}
               select={selectrolenew} placeholder={`${t("HR_COMMON_TABLE_COL_ROLE")}`} /></div>
         </LabelFieldPair>
 
