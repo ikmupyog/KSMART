@@ -153,6 +153,7 @@ const Details = () => {
             {data?.Employees?.[0]?.jurisdictions?.length > 0
               ? data?.Employees?.[0]?.jurisdictions?.map((element, index) => {
                 let Czonal =cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == element?.zoneCode)
+                let Croles= data?.Employees?.[0]?.user.roles.filter((ele) => ele.code == element?.roleCode)
                 return (
                   <StatusTable
                     key={index}
@@ -182,7 +183,8 @@ const Details = () => {
                     />
                     <Row
                       label={t("HR_ROLE_LABEL")}
-                      text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
+                      text={Croles && Croles[0].name}
+                      // text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
                     />
                   </StatusTable>
                 );
