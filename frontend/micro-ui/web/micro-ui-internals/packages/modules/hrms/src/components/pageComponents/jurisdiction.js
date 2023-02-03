@@ -295,13 +295,13 @@ function Jurisdiction({
        tmpBoundaryArr= wards?.length>0 && wards.filter((ele) => ele.code == result[i])
        let tenantcode = tenantId.replace('.', '_').toUpperCase();
     // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
-    tmpBoundaryArr?.length>0 && tmpBoundaryArr ?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
+    tmpBoundaryArr?.length>0 && tmpBoundaryArr ?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData?.wardno })
        tmpBoundary.push(tmpBoundaryArr[0])
       }
     
       setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: tmpBoundary?.l>0?tmpBoundary:Cward} : item)));
       }
-  },[jurisdiction?.jurisdictionChilds[0]?.id,wards])
+  },[])
 
   useEffect(()=>{
       let Czonal=  cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == jurisdiction?.zoneCode)
@@ -314,7 +314,7 @@ function Jurisdiction({
         // setWardNo(null);
         // setFilterWard(null);
       }
-  },[cmbZonal&& cmbZonal[0]])
+  },[])
 
   useEffect(() => {
     if (isInitialRenderBoundaryType) {
@@ -368,7 +368,7 @@ function Jurisdiction({
   };
   //Jetheesh
   const setSelectZonalOffice = (value) => {
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, zoneCode: value } : item)));
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary:[],zoneCode: value } : item)));
     setZonal(value);
     setIsInitialRender(true);
     setWardNo(null);
