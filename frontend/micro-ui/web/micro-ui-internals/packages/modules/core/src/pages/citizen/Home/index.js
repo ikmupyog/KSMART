@@ -68,27 +68,27 @@ const Home = () => {
         //   // state: { module: "cr-home" }
         // }),
       },
-      {
-        name: t("ACTION_TEST_BIRTH"),
-        Icon: <OBPSIcon />,
-        // onClick: () => history.push("/citizen/birth-common/"),
-        // onClick: () => history.push("/digit-ui/citizen/cr-home"),
-        onClick: () => history.push({
-          pathname: '/digit-ui/citizen/cr-birth-home',
-          state: { module: "cr-birth" }
-        }),
-      },
-      {
-        name: t("ACTION_TEST_DEATH"),
-        Icon: <DropIcon />,
-        // onClick: () => history.push("/citizen/death-citizen/home"),
-        // onClick: () => history.push("/digit-ui/citizen/cr-death-home"),
-        onClick: () => history.push({
-          pathname: '/digit-ui/citizen/cr-death-home',
-          state: { module: "cr-death" }
-        }),
+      // {
+      //   name: t("ACTION_TEST_BIRTH"),
+      //   Icon: <OBPSIcon />,
+      //   // onClick: () => history.push("/citizen/birth-common/"),
+      //   // onClick: () => history.push("/digit-ui/citizen/cr-home"),
+      //   onClick: () => history.push({
+      //     pathname: '/digit-ui/citizen/cr-birth-home',
+      //     state: { module: "cr-birth" }
+      //   }),
+      // },
+      // {
+      //   name: t("ACTION_TEST_DEATH"),
+      //   Icon: <DropIcon />,
+      //   // onClick: () => history.push("/citizen/death-citizen/home"),
+      //   // onClick: () => history.push("/digit-ui/citizen/cr-death-home"),
+      //   onClick: () => history.push({
+      //     pathname: '/digit-ui/citizen/cr-death-home',
+      //     state: { module: "cr-death" }
+      //   }),
 
-      },
+      // },
       {
         name: t("File Management"),
         Icon: <EditIcon className="fill-path-primary-main" />,
