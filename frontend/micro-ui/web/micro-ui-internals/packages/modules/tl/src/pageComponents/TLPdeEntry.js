@@ -7,12 +7,12 @@ import ApplicationDetailsPDE from "../pages/employee/ApplicationDetailsPDE";
 
 const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
-const [formdatasearch,setFormdatasearch]=useState();
-  const [payloadDoor,setPayloadDoor]=useState([]);
-  const [payloadDoorinit,setPayloadDoorinit]=useState( {"wardId":"0"});
- 
+  const [formdatasearch, setFormdatasearch] = useState();
+  const [payloadDoor, setPayloadDoor] = useState([]);
+  const [payloadDoorinit, setPayloadDoorinit] = useState({ "wardId": "0" });
+
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { roles: userRoles,uuid: uuid  } = Digit.UserService.getUser().info;
+  const { roles: userRoles, uuid: uuid } = Digit.UserService.getUser().info;
   const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEAPPROVER"));
   const roletempop = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("TL_PDEOPERATOR"));
   const approle = roletemp?.length > 0 ? true : false;
@@ -29,7 +29,7 @@ const [formdatasearch,setFormdatasearch]=useState();
 
   const [flgEdit, setFlgEdit] = useState(false);
   const [flgCheck, setFlgCheck] = useState(false);
-  
+
   const [flgshowEdit, setShowFlgEdit] = useState(true);
   const [toast, setToast] = useState(false);
   const menusector = [
@@ -187,16 +187,16 @@ const [formdatasearch,setFormdatasearch]=useState();
   finalward.push(...finaloperatorward);
   finalward.push(...finalapproverward);
 
-  let finalwardred=finalward?.reduce((ac,a) => ac.find(x=> x.code === a.code) ? [...ac] : [...ac,a],[]);
-  
+  let finalwardred = finalward?.reduce((ac, a) => ac.find(x => x.code === a.code) ? [...ac] : [...ac, a], []);
+
   if (finalwardred.length > 0)
     cmbWardNoFinal = isEdit && formData?.status !== "INITIATED" ? finalwardred : finaloperatorward;
 
   cmbWardNoFinal = cmbWardNoFinal.sort((a, b) => {
-      if (parseInt(a.wardno) > parseInt(b.wardno)) { return 1; }
-      if (parseInt(b.wardno) > parseInt(a.wardno)) { return -1; }
-      return 0;
-    });
+    if (parseInt(a.wardno) > parseInt(b.wardno)) { return 1; }
+    if (parseInt(b.wardno) > parseInt(a.wardno)) { return -1; }
+    return 0;
+  });
   const [WardNo, setWardNo] = useState(formData.tradeLicenseDetail?.address?.wardNo ? cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0] : "");
   const selWard = cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0];
 
@@ -399,7 +399,7 @@ const [formdatasearch,setFormdatasearch]=useState();
     false
   );
 
-  const payload = WardNo?.code ? { "wardId": WardNo.code} : {"wardId":"0"};
+  const payload = WardNo?.code ? { "wardId": WardNo.code } : { "wardId": "0" };
   const config1 = {
     enabled: !!(payload && Object.keys(payload).length > 0)
   }
@@ -625,9 +625,9 @@ const [formdatasearch,setFormdatasearch]=useState();
     }
   };
   let data1 = [];
-  let configDoor="";
+  let configDoor = "";
 
-  const mutationsearchDoor = Digit.Hooks.tl.useSearchPde({ tenantId, filters: (payloadDoor.length===undefined ) ?payloadDoor: payloadDoorinit, configDoor });
+  const mutationsearchDoor = Digit.Hooks.tl.useSearchPde({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, configDoor });
   let searchResultDoor = "";
 
   const [formState, dispatch] = isEdit ? useReducer(reducer, storedOwnerData, initFnEdit) : useReducer(reducer, storedOwnerData, initFn);
@@ -668,38 +668,38 @@ const [formdatasearch,setFormdatasearch]=useState();
         });
       case "CHECK_DOOR":
         queryClient.removeQueries("TL_SEARCH_PDE");
-        data1["wardId"] = WardNo?.code ? WardNo.code : "" ;
-          state1.map((data, __index) => {
-            data1["doorNo"] = data?.doorNo ?  data.doorNo  : "";
-            data1["subNo"] =  data?.doorNoSub ?  data.doorNoSub : "";
-              configDoor = {
-                enabled: !!(data && Object.keys(data).length > 0)
-              }
-              data1 = {
-                ...data1
-               }
-              setPayloadDoor(Object.keys(data1).filter(k => data1[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data1[key] === "object" ? data1[key].code : data1[key] }), {}));
-              // mutationsearchDoor.mutate({ tenantId, filters: payloadDoor, configDoor }, {
-              //   onSuccess,
-              // });
+        data1["wardId"] = WardNo?.code ? WardNo.code : "";
+        state1.map((data, __index) => {
+          data1["doorNo"] = data?.doorNo ? data.doorNo : "";
+          data1["subNo"] = data?.doorNoSub ? data.doorNoSub : "";
+          configDoor = {
+            enabled: !!(data && Object.keys(data).length > 0)
+          }
+          data1 = {
+            ...data1
+          }
+          setPayloadDoor(Object.keys(data1).filter(k => data1[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data1[key] === "object" ? data1[key].code : data1[key] }), {}));
+          // mutationsearchDoor.mutate({ tenantId, filters: payloadDoor, configDoor }, {
+          //   onSuccess,
+          // });
 
-              searchResultDoor = mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError ? mutationsearchDoor.data.Licenses : "";
-              if(searchResultDoor?.length === 1){
-                formData = (mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError) ? mutationsearchDoor.data : "";
-                setFlgCheck(true);
-              }
-            });
-          return [
-            ...state1
-          ];
- 
+          searchResultDoor = mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError ? mutationsearchDoor.data.Licenses : "";
+          if (searchResultDoor?.length === 1) {
+            formData = (mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError) ? mutationsearchDoor.data : "";
+            setFlgCheck(true);
+          }
+        });
+        return [
+          ...state1
+        ];
+
     }
   };
 
   useEffect(() => {
-   
-    if (payloadDoor.length===undefined) {
-      if(mutationsearchDoor!==undefined){
+
+    if (payloadDoor.length === undefined) {
+      if (mutationsearchDoor !== undefined) {
         if (mutationsearchDoor?.error !== null) {
           mutationsearchDoor.mutate({ tenantId, filters: payloadDoor, configDoor }, {
             onSuccess,
@@ -711,19 +711,19 @@ const [formdatasearch,setFormdatasearch]=useState();
   }, [mutationsearchDoor])
 
 
-useEffect(()=>{
-  if(mutationsearchDoor?.isSuccess && !flgCheck){
-   if(mutationsearchDoor?.data?.Licenses?.length===1){
-    setFlgCheck(true);
-    setFormdatasearch((mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError) ? mutationsearchDoor.data.Licenses[0] : "");
-   }
-  //  else{
-  //   setFlgCheck(false);
-  //   setFormdatasearch("");
-  //  }
-    
-  }
-},[mutationsearchDoor,flgCheck,formdatasearch])
+  useEffect(() => {
+    if (mutationsearchDoor?.isSuccess && !flgCheck) {
+      if (mutationsearchDoor?.data?.Licenses?.length === 1) {
+        setFlgCheck(true);
+        setFormdatasearch((mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError) ? mutationsearchDoor.data.Licenses[0] : "");
+      }
+      //  else{
+      //   setFlgCheck(false);
+      //   setFormdatasearch("");
+      //  }
+
+    }
+  }, [mutationsearchDoor, flgCheck, formdatasearch])
 
 
   const [formState1, dispatch1] = isEdit ? useReducer(reducer1, storedDoorData, initFnEdit1) : useReducer(reducer1, storedDoorData, initFn1);
@@ -1182,11 +1182,11 @@ useEffect(()=>{
 
       // </Card>
     );
-  else if(flgCheck === true)
-  return (
- <TLPdeEntry formData={formdatasearch} isEdit={true} t={t} config={config} onSelect={onSelect}></TLPdeEntry>
-  );
-  
+  else if (flgCheck === true)
+    return (
+      <TLPdeEntry formData={formdatasearch} isEdit={true} t={t} config={config} onSelect={onSelect}></TLPdeEntry>
+    );
+
   else
     return (
       <React.Fragment>
@@ -1211,28 +1211,28 @@ useEffect(()=>{
                     </div>
                   </div>
                 )}
-
-
                 <div className="row">
-                  <div className="col-md-7" ><CardLabel>{`${t("TL_LOCALIZATION_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={WardNo} select={setSelectWard}  {...(validation = { isRequired: true, title: t("TL_INVALID_WARD_NO") })} />
-                  </div>
-                </div>
-             <div className="row">
                   <div className="col-md-7">
                     {/* {`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `} */}
                     <CardLabel style={{ marginBottom: "30px" }}>{`${t("TL_TYPE_BUILDING")}`}<span className="mandatorycss">*</span></CardLabel>
                     <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={buildingtype} selectedOption={BuildingType} onSelect={selectBuildingType} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
                   </div>
                 </div>
+
+                <div className="row">
+                  <div className="col-md-7" ><CardLabel>{`${t("TL_LOCALIZATION_WARD_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <Dropdown t={t} optionKey="namecmb" isMandatory={config.isMandatory} option={cmbWardNoFinal} selected={WardNo} select={setSelectWard}  {...(validation = { isRequired: true, title: t("TL_INVALID_WARD_NO") })} />
+                  </div>
+                </div>
+
                 {formState1.map((field, index) => {
                   return (
                     <div className="row" key={`${field}-${index}`}>
                       <div style={{
                         border: "solid",
                         borderRadius: "25px",
-                      //  padding: "25px",
-                      //  paddingTop: "25px",
+                        //  padding: "25px",
+                        //  paddingTop: "25px",
                         marginTop: "5px",
                         borderColor: "#f3f3f3",
                         background: "#FAFAFA",
@@ -1255,7 +1255,7 @@ useEffect(()=>{
                           </div>
                         )}
                         <div className="col-md-2">
-                        <CardLabel>.</CardLabel>
+                          <CardLabel>.</CardLabel>
                           <LinkButton
                             label={
                               <div>
@@ -1292,12 +1292,12 @@ useEffect(()=>{
                   <div className="col-md-7" >
                     <div style={{ justifyContent: "right", display: "flex", paddingBottom: "15px", color: "#FF8C00" }}>
                       <div className="col-md-3">
-                        <button type="button" style={{ paddingTop: "10px" }} onClick={(e) => dispatch1({ type: "CHECK_DOOR"})}>
+                        <button type="button" style={{ paddingTop: "10px" }} onClick={(e) => dispatch1({ type: "CHECK_DOOR" })}>
                           {`${t("TL_CHECK_DOOR_LABEL")}`}
                         </button>
                       </div>
                       <div className="col-md-3">
-                          &nbsp;
+                        &nbsp;
                       </div>
                       <div className="col-md-3">
                         <button type="button" style={{ paddingTop: "10px" }} onClick={() => dispatch1({ type: "ADD_NEW_DOOR" })}>
@@ -1322,37 +1322,37 @@ useEffect(()=>{
                       }} className="col-md-7">
                         {/* <CardLabel>{`${t("TL_LICENSE_NAME_LICENSEE")}`}<span className="mandatorycss">*</span></CardLabel> */}
                         <div className="col-md-10">
-                        <CardLabel>{`${t("TL_LICENSE_NAME_LICENSEE")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="name" value={field.name} onChange={(e) => handleTextInputField(index, e, "name")} placeholder={`${t("TL_LICENSEE_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
-</div>
+                          <CardLabel>{`${t("TL_LICENSE_NAME_LICENSEE")}`}<span className="mandatorycss">*</span></CardLabel>
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="name" value={field.name} onChange={(e) => handleTextInputField(index, e, "name")} placeholder={`${t("TL_LICENSEE_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
+                        </div>
                         <div className="col-md-1">
-                        <CardLabel>.</CardLabel>
-                        <LinkButton
-                          label={
-                            <div>
-                              <span>
-                                <svg
-                                  style={{ float: "right", position: "relative", bottom: "5px" }}
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M1 16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4H1V16ZM14 1H10.5L9.5 0H4.5L3.5 1H0V3H14V1Z"
-                                    fill={!(formState.length == 1) ? "#494848" : "#FAFAFA"}
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                            
-                          }
-                       
-                          style={{ width: "100px", display: "inline" }}
-                          onClick={(e) => dispatch({ type: "REMOVE_THIS_OWNER", payload: { index } })}
-                        />
-   </div>
+                          <CardLabel>.</CardLabel>
+                          <LinkButton
+                            label={
+                              <div>
+                                <span>
+                                  <svg
+                                    style={{ float: "right", position: "relative", bottom: "5px" }}
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M1 16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4H1V16ZM14 1H10.5L9.5 0H4.5L3.5 1H0V3H14V1Z"
+                                      fill={!(formState.length == 1) ? "#494848" : "#FAFAFA"}
+                                    />
+                                  </svg>
+                                </span>
+                              </div>
+
+                            }
+
+                            style={{ width: "100px", display: "inline" }}
+                            onClick={(e) => dispatch({ type: "REMOVE_THIS_OWNER", payload: { index } })}
+                          />
+                        </div>
                       </div>
                     </div>
                   );
@@ -1378,8 +1378,8 @@ useEffect(()=>{
                     <TextInput t={t} isMandatory={config.isMandatory} name="licensingInstitutionName" value={licensingInstitutionName} onChange={setSelectLicensingInstitutionName} placeholder={`${t("TL_LICENSING_INSTITUTION_NAME")}`} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_INSTITUTION_NAME") })} />
                   </div>
                 </div>
-   
-                
+
+
                 {value3 === "LBBUILDING" && (
                   <div className="col-md-7">
                     <div className="col-md-4">
@@ -1392,7 +1392,7 @@ useEffect(()=>{
                     </div>
                   </div>
                 )}
-               
+
                 {/* <div style="justify-content: center; display: flex; padding-bottom: 15px; color: rgb(255, 140, 0);"><button type="button" style="padding-top: 10px;">Add More Licensee</button></div> */}
                 <div className="row">
                   <div className="col-md-7" ><CardLabel>{`${t("TL_LOCALIZATION_SECTOR")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -1400,8 +1400,8 @@ useEffect(()=>{
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-7" > 
-                  <CardLabel style={{display:"inline-block"}}>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}&nbsp;(<svg style={{display:"inline-block"}} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)<span className="mandatorycss"> *</span></CardLabel>
+                  <div className="col-md-7" >
+                    <CardLabel style={{ display: "inline-block" }}>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)<span className="mandatorycss"> *</span></CardLabel>
                     <TextInput t={t} type={"text"} isMandatory={config.isMandatory} name="capitalAmount" value={capitalAmount} onChange={changesetCapitalAmount} {...(validation = { isRequired: true, title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
                   </div>
                 </div>
@@ -1421,11 +1421,11 @@ useEffect(()=>{
                       <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbPayYearTo} selected={licToYear} select={selectLicToYear}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_YEAR") })} />
                     </div>
                     <div className="col-md-3" >
-                      <CardLabel style={{display:"inline-block"}}>{`${t("TL_LICENSE_PDE_ARREAR")}`}&nbsp;(<svg style={{display:"inline-block"}} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
+                      <CardLabel style={{ display: "inline-block" }}>{`${t("TL_LICENSE_PDE_ARREAR")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
                       <TextInput t={t} isMandatory={false} type={"text"} name="licArrear" value={licArrear} onChange={changesetLicArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-3" >
-                      <CardLabel style={{display:"inline-block"}}>{`${t("TL_LICENSE_PDE_CURRENT")}`}&nbsp;(<svg style={{display:"inline-block"}} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
+                      <CardLabel style={{ display: "inline-block" }}>{`${t("TL_LICENSE_PDE_CURRENT")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
                       <TextInput t={t} isMandatory={false} type={"text"} name="licCurrent" value={licCurrent} onChange={changesetLicCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
                     </div>
                   </div>
@@ -1455,15 +1455,15 @@ useEffect(()=>{
                       <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbpttoperiod} selected={profToPeriod} select={selectProfToPeriod}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_PERIOD") })} />
                     </div>
                     <div className="col-md-2" >
-                      <CardLabel style={{display:"inline-block"}}>{`${t("TL_LICENSE_PDE_ARREAR")}`}&nbsp;(<svg style={{display:"inline-block"}} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
+                      <CardLabel style={{ display: "inline-block" }}>{`${t("TL_LICENSE_PDE_ARREAR")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
                       <TextInput t={t} isMandatory={false} type="text" name="profArrear" value={profArrear} onChange={changesetProfArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
                     </div>
                     <div className="col-md-2" >
-                      <CardLabel style={{display:"inline-block"}}>{`${t("TL_LICENSE_PDE_CURRENT_FIRST")}`}&nbsp;(<svg style={{display:"inline-block"}} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
+                      <CardLabel style={{ display: "inline-block" }}>{`${t("TL_LICENSE_PDE_CURRENT_FIRST")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
                       <TextInput t={t} isMandatory={false} type="text" name="profCurrentFirst" value={profCurrentFirst} onChange={changesetProfCurrentFirst} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
                     </div>
                     <div className="col-md-3" >
-                      <CardLabel style={{display:"inline-block"}}>{`${t("TL_LICENSE_PDE_CURRENT_SECOND")}`}&nbsp;(<svg style={{display:"inline-block"}} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
+                      <CardLabel style={{ display: "inline-block" }}>{`${t("TL_LICENSE_PDE_CURRENT_SECOND")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
                       <TextInput t={t} isMandatory={false} type="text" name="profCurrentSecond" value={profCurrentSecond} onChange={changesetProfCurrentSecond} {...(validation = { isRequired: false, title: t("TL_INVALID_PENAL") })} />
                     </div>
                   </div>
@@ -1496,11 +1496,11 @@ useEffect(()=>{
                           <Dropdown t={t} optionKey="description" isMandatory={false} option={cmbrenttoperiod} selected={rentToMonth} select={selectRentToMonth}  {...(validation = { isRequired: false, title: t("TL_INVALID_TO_MONTH") })} />
                         </div>
                         <div className="col-md-2" >
-                          <CardLabel style={{display:"inline-block"}}>{`${t("TL_LICENSE_PDE_ARREAR")}`}&nbsp;(<svg style={{display:"inline-block"}} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
+                          <CardLabel style={{ display: "inline-block" }}>{`${t("TL_LICENSE_PDE_ARREAR")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
                           <TextInput t={t} isMandatory={false} type="text" name="rentArrear" value={rentArrear} onChange={changesetrentArrear} {...(validation = { isRequired: false, title: t("TL_INVALID_ARREAR") })} />
                         </div>
                         <div className="col-md-2" >
-                          <CardLabel style={{display:"inline-block"}}>{`${t("TL_LICENSE_PDE_CURRENT")}`}&nbsp;(<svg style={{display:"inline-block"}} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="21" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
+                          <CardLabel style={{ display: "inline-block" }}>{`${t("TL_LICENSE_PDE_CURRENT")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="21" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)</CardLabel>
                           <TextInput t={t} isMandatory={false} type="text" name="rentCurrent" value={rentCurrent} onChange={changesetrentCurrent} {...(validation = { isRequired: false, title: t("TL_INVALID_CURRENT") })} />
                         </div>
                       </div>
