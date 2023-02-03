@@ -24,7 +24,7 @@ import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
 import InformantDetails from "../src/pageComponents/birthComponents/InformantDetails";
 import InformantAddress from "../src/pageComponents/birthComponents/InformantAddress";
-
+import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 
 
 
@@ -67,11 +67,13 @@ import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
 import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/DeathCorrectionroute";
 import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
-import BirthCheckPage from "./pages/citizen/Create/CheckPage";
-import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
-import BirthAcknowledgement from "./pages/citizen/Create/BirthAcknowledgement";
-import DeathAcknowledgement from "./pages/citizen/Create/DeathAcknowledgement";
+import BirthCheckPage from "./pages/citizen/BirthRegistration/CheckPage";
+import DeathCheckPage from "./pages/citizen/BirthRegistration/DeathCheckPage";
+import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
+import DeathAcknowledgement from "./pages/citizen/BirthRegistration/DeathAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
+import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
+
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
@@ -113,7 +115,7 @@ export const CRLinks = ({ matchPath, userType }) => {
     },
     {
       link: `${matchPath}/create-death-certificate`,
-      i18nKey: t("CR_DEATH_CERTIFICATE"),
+      i18nKey: t("Marriage Registration"),
     },
     {
       link: `${matchPath}/create-birth-certificate`,
@@ -171,7 +173,7 @@ const componentsToRegister = {
   InstitutionAddress,
   InformantDetails,
   InformantAddress,
-
+  CRCreateBirthRegistration : CreateBirthRegistration,
   
  //////////////////
   // SearchRegistry,
@@ -211,6 +213,7 @@ const componentsToRegister = {
   BirthAcknowledgement,
   DeathAcknowledgement,
   BirthCertificate,
+  CRCreateDeathRegistration : CreateDeathRegistration,
   TLResponse: Response,
 };
 
