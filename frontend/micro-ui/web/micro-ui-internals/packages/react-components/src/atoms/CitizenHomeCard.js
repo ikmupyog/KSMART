@@ -5,10 +5,10 @@ const CitizenHomeCard = ({ header, links, state, Icon, Info, isInfo = false, sty
 
   let tmpLinks 
   let defaultLink =links
-   if (defaultLink ?.length>0 && window.location.href.includes('cr-death-home')){
-    tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-birth-home" )
-  }else if(defaultLink ?.length>0 && window.location.href.includes('cr-birth-home')){
-    tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-death-home" )
+   if (defaultLink ?.length>0 && window.location.href.includes('cr-home')){
+    tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-home" )
+  }else if(defaultLink ?.length>0 && window.location.href.includes('cr-home')){
+    tmpLinks = defaultLink.filter((item)=>  item.module !== "cr-home" )
   }
   else{
     tmpLinks = links
