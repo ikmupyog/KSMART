@@ -25,7 +25,9 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: Menu = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "death-services", "PlaceMaster");
+  // const { data: Menu = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+
+  const { data: Menu = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [BirthPlace, selectBirthPlace] = useState(formData?.BirthPlace?.BirthPlace);
 
   const [toast, setToast] = useState(false);
@@ -254,11 +256,20 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   let cmbLBType = [];
   let cmbTaluk = [];
   let cmbVillage = [];
+
+  // Menu &&
+  // Menu["birth-death-service"] &&
+  // Menu["birth-death-service"].PlaceMaster.map((ob) => {
+  //   menu.push(ob);
+  // });
+
   Menu &&
-    Menu["death-services"] &&
-    Menu["death-services"].PlaceMaster.map((ob) => {
-      menu.push(ob);
-    });
+  Menu["birth-death-service"] &&
+  Menu["birth-death-service"].PlaceMaster.map((ob) => {
+    menu.push(ob);
+  });
+
+
   localbodies &&
     localbodies["tenant"] &&
     localbodies["tenant"].tenants.map((ob) => {
