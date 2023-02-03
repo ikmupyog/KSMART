@@ -408,6 +408,11 @@ function Jurisdiction({
 
   };
 
+let Czonal =cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == jurisdiction?.zoneCode)
+let tenantcode = tenantId.replace('.', '_').toUpperCase();
+    
+let Cward = jurisdiction.jurisdictionChilds
+Cward.forEach((ele)=>{ele.name = ele.wardLabel})
   return (
     <div key={jurisdiction?.keys} style={{ marginBottom: "16px" }}>
       <div style={{ border: "1px solid #E3E3E3", padding: "16px", marginTop: "8px" }}>
@@ -500,7 +505,7 @@ function Jurisdiction({
         <LabelFieldPair>
           <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
           <div className="form-field">
-            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Zonal}
+            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Czonal && Czonal[0]}
               select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
         </LabelFieldPair>
 
@@ -522,7 +527,7 @@ function Jurisdiction({
               className="form-field"
               //isMandatory={true}
               defaultUnit="Selected"
-              selected={jurisdiction?.TenantBoundary}
+              selected={jurisdiction?.jurisdictionChilds}
               options={wards}
               onSelect={selectward}
               optionsKey="name"
@@ -542,7 +547,7 @@ function Jurisdiction({
         <LabelFieldPair>
           <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
           <div className="form-field">
-            <Dropdown t={t} optionKey="labelKey" isRequired="false" option={getroledata(roleoption)} selected={jurisdiction?.roles}
+            <Dropdown t={t} optionKey="name" isRequired="false" option={getroledata(roleoption)} selected={jurisdiction?.roles?.length>0?jurisdiction?.roles[0]:jurisdiction?.roles}
               select={selectrolenew} placeholder={`${t("HR_COMMON_TABLE_COL_ROLE")}`} /></div>
         </LabelFieldPair>
 
