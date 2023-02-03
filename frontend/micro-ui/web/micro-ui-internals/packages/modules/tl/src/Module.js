@@ -64,6 +64,7 @@ import PdeApplication from "./pages/employee/PdeApplication";
 import TLPdeEntry from "./pageComponents/TLPdeEntry";
 import SearchPde from "./pages/employee/SearchPde";
 import SearchPdeApplication from "./components/SearchPdeApplication";
+import TLLicenseUnitDet from "./pageComponents/TLLicenseUnitDet";
 
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -166,7 +167,8 @@ const componentsToRegister = {
   TLCreatePdeApplication  : PdeApplication,
   TLPdeEntry,
   TLSearchPde:SearchPde,
-  SearchPdeApplication
+  SearchPdeApplication,
+  TLLicenseUnitDet
 };
 
 export const initTLComponents = () => {

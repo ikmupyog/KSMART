@@ -852,6 +852,32 @@ export const newConfig = [
         hideInEmployee: true,
       },
     ]
+  },
+
+  {
+    head: "New IFTE & OS License Application",
+    body: [
+      {
+        //if want to input index in url just pul @0 after route name owner-ship-details@0
+        type: "component",
+        route: "license-unit-det",
+        isMandatory: true,
+        component: "TLLicenseUnitDet",
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "licenseentry",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+      }
+    ]
   }
+
+
+
+
+
   
 ];
