@@ -133,7 +133,7 @@ const CrFlowApp = ({ parentUrl }) => {
               t={t}
               formData={params}
               onAdd={handleMultiple}
-              userType="employee"
+              userType="citizen"
             />
            </Route>  
           
@@ -148,9 +148,9 @@ const CrFlowApp = ({ parentUrl }) => {
       {/* <Route path={`${path}`} exact>
               <CrFlow  path={path}/>
              </Route> */}
-      <Route path={`${path}`} exact>
+      {/* <Route path={`${path}`} exact>
           <ChildDetails parentUrl={path} />
-             </Route>
+             </Route> */}
              {/* <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <ChildDetails parentUrl={path} />} /> */}
          
       </Switch>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast,SubmitBar } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -269,9 +269,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   }
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/employee") ? <Timeline /> : null}      
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ChildDOB || !Gender}>
         <div className="row">
           <div className="col-md-12">
@@ -486,7 +486,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             <CheckBox label={t("CR_MULTIPLE_BIRTH")} onChange={setMultipleBirth} value={isMultipleBirth} checked={isMultipleBirth} />
           </div>
         </div> */}
-
+        {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} goNext={goNext} /> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="">

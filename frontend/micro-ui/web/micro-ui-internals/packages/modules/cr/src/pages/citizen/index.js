@@ -1,36 +1,22 @@
 import { AppContainer, BackButton, PrivateRoute } from "@egovernments/digit-ui-react-components";
 import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-// import TradeLicense from "../../pageComponents/TradeLicense";
-// import MyApplications from "../../pages/citizen/Applications/Application";
-// import ApplicationDetails from "../../pages/citizen/Applications/ApplicationDetails";
-// import CreateTradeLicence from "./Create";
-// import EditTrade from "./EditTrade";
-// import { TLList } from "./Renewal";
-// import RenewTrade from "./Renewal/renewTrade";
-// import SearchTradeComponent from "./SearchTrade";
+import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
 import ChildDetails from "../../pageComponents/birthComponents/ChildDetails";
 import InformationDeath from "../../pageComponents/deathComponents/InformationDeath";
 import BirthCertificateSearch from "./BirthCertificate";
 import DeathCertificate from "./Certificate/DeathCertificate";
 import DeathCertificateSearch from "./Certificate";
+import { useTranslation } from "react-i18next";
+import { newConfig as newConfigCR } from "../../config/config";
 // import CreateBirthCertificate from "./Create";
 // import CreateDeathCertificate from "./DeathReg"; 
 
 const App = () => {
+  console.log("Jetheesh");
   const { path, url, ...match } = useRouteMatch();
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
 
-  // const ApplicationDetails = Digit.ComponentRegistryService.getComponent("TLApplicationDetails");
-  // const CreateTradeLicence = Digit?.ComponentRegistryService?.getComponent('TLCreateTradeLicence');
-  // const EditTrade = Digit?.ComponentRegistryService?.getComponent('TLEditTrade');
-  // const RenewTrade = Digit?.ComponentRegistryService?.getComponent('TLRenewTrade');
-  // const TradeLicense = Digit?.ComponentRegistryService?.getComponent('TradeLicense');
-  // const TLList = Digit?.ComponentRegistryService?.getComponent('TLList');
-  // const SearchTradeComponent = Digit?.ComponentRegistryService?.getComponent('TLSearchTradeComponent');
-  // const MyApplications = Digit?.ComponentRegistryService?.getComponent('MyApplications');
-  // // const BirthCertificate = Digit?.ComponentRegistryService?.getComponent('BirthCertificate');
 
   const getBackPageNumber = () => {
     let goBacktoFromProperty = -1;
@@ -46,9 +32,137 @@ const App = () => {
     return goBacktoFromProperty;
   };
 
+  const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const history = useHistory();
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_TRADE", {});
+
+  const stateId = Digit.ULBService.getStateId();
+  // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
+  let config = [];
+  let { data: newConfig, isLoading } = true;
+  newConfig = newConfigCR;
+  newConfig?.forEach((obj) => {
+    config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
+  });
+  // config.indexRoute = "child-details";
+  const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
+    let currentPath = pathname.split("/").pop(),
+      nextPage;
+    let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
+    let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
+    // if (typeof nextStep == "object" && nextStep != null) {
+    //   if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
+    //   {
+    //     nextStep = "property-details";
+    //   }
+    //   if (
+    //     nextStep[sessionStorage.getItem("isAccessories")] &&
+    //     (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
+    //       nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
+    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
+    //       nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
+    //   ) {
+    //     nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
+    //   } else if (
+    //     nextStep[sessionStorage.getItem("StructureType")] &&
+    //     (nextStep[sessionStorage.getItem("StructureType")] === "Building-type" ||
+    //       nextStep[sessionStorage.getItem("StructureType")] === "vehicle-type")
+    //   ) {
+    //     nextStep = `${nextStep[sessionStorage.getItem("setPlaceofActivity")]}`;
+    //     nextStep = `${nextStep[sessionStorage.getItem("StructureType")]}`;
+    //   } else if (
+    //     nextStep[sessionStorage.getItem("KnowProperty")] &&
+    //     (nextStep[sessionStorage.getItem("KnowProperty")] === "search-property" ||
+    //       nextStep[sessionStorage.getItem("KnowProperty")] === "create-property")
+    //   ) {
+    //       if(nextStep[sessionStorage.getItem("KnowProperty")] === "create-property" && !enableCreate)
+    //       {
+    //         nextStep = `map`;
+    //       }
+    //       else{
+    //      nextStep = `${nextStep[sessionStorage.getItem("KnowProperty")]}`;
+    //       }
+    //   }
+    // }
+    // if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
+    // { 
+    //   nextStep = "property-details";
+    // }
+    // let redirectWithHistory = history.push;
+    // if (skipStep) {
+    //   redirectWithHistory = history.replace;
+    // }
+    // if (isAddMultiple) {
+    //   nextStep = key;
+    // }
+    // if (nextStep === null) {
+    //   return redirectWithHistory(`${match.path}/check`);
+    // }
+    // if(isPTCreateSkip && nextStep === "acknowledge-create-property")
+    // {
+    //   nextStep = "map";
+    // }
+    let redirectWithHistory = history.push;
+    if (skipStep) {
+      redirectWithHistory = history.replace;
+    }
+    if (isAddMultiple) {
+      nextStep = key;
+    }
+    if (nextStep === null) {
+      return redirectWithHistory(`${match.path}/check`);
+    }
+    nextPage = `${match.path}/${nextStep}`;
+    redirectWithHistory(nextPage);
+  };
+
+  function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
+    setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
+    if(key === "isSkip" && data === true)
+    {
+      goNext(skipStep, index, isAddMultiple, key, true);
+    }
+    else
+    {
+      goNext(skipStep, index, isAddMultiple, key);
+    }
+  }
+  const createProperty = async () => {
+    history.push(`${match.path}/acknowledgement`);
+  };
+  
+  const onSuccess = () => {
+    sessionStorage.removeItem("CurrentFinancialYear");
+    queryClient.invalidateQueries("CR_CREATE_BIRTH");
+  };
+  const handleSkip = () => {};
+  const handleMultiple = () => {};
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
+  const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
+
   return (
     <span className={"tl-citizen"}>
+      <React.Fragment>
       <Switch>
+      {config.map((routeObj, index) => {
+        const { component, texts, inputs, key, isSkipEnabled } = routeObj;
+        const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
+        return (
+          <Route path={`${match.path}/${routeObj.route}`} key={index}>
+            <Component
+              config={{ texts, inputs, key, isSkipEnabled }}
+              onSelect={handleSelect}
+              onSkip={handleSkip}
+              t={t}
+              formData={params}
+              onAdd={handleMultiple}
+              userType="citizen"
+            />
+           </Route>  
+          
+        );
+      })}
         {/* <PrivateRoute path={`${path}/create-death-certificate`} component={() => <CreateDeathCertificate parentUrl={path}/>} /> */}
         {/* <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <CreateBirthCertificate parentUrl={path} />} /> */}
         <PrivateRoute parentRoute={path} path={`${path}/cr-birth-creation`} component={() => <ChildDetails parentUrl={path} />} /> 
@@ -56,20 +170,9 @@ const App = () => {
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         {/* <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificate parentUrl={path}/>} />  */}
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
-        {/* <AppContainer>
-          <BackButton  style={{ position: "fixed", top: "55px" }}  isCommonPTPropertyScreen={isCommonPTPropertyScreen} isSuccessScreen={isSuccessScreen} getBackPageNumber={getBackPageNumber}>Back</BackButton>
-          <PrivateRoute path={`${path}/tradelicence/new-application`} component={CreateTradeLicence} />
-
-          <PrivateRoute path={`${path}/tradelicence/edit-application/:id/:tenantId`} component={EditTrade} />
-          <PrivateRoute path={`${path}/tradelicence/renew-trade/:id/:tenantId`} component={RenewTrade} />
-          <PrivateRoute path={`${path}/tradelicence/my-application`} component={MyApplications} />
-          <PrivateRoute path={`${path}/tradelicence/my-bills`} component={() => <MyApplications view="bills" />} />
-          <PrivateRoute path={`${path}/tradelicence/tl-info`} component={TradeLicense} />
-          <PrivateRoute path={`${path}/tradelicence/application/:id/:tenantId`} component={ApplicationDetails} />
-          <PrivateRoute path={`${path}/tradelicence/renewal-list`} component={TLList} />
-          <PrivateRoute path={`${path}/tradelicence/trade-search`} component={SearchTradeComponent} />
-        </AppContainer> */}
+       
       </Switch>
+      </React.Fragment>
     </span>
   );
 };

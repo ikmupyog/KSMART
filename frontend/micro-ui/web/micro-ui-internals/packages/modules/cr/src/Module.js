@@ -106,27 +106,22 @@ export const CRLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/cr-birth-creation`,
       i18nKey: t("Birth Registration"),
-      module:t("cr-home")
     },
     {
       link: `${matchPath}/cr-death-creation`,
       i18nKey: t("Death Registration"),
-      module:t("cr-home")
     },
     {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
-      module:t("cr-home")
     },
     {
       link: `${matchPath}/create-birth-certificate`,
       i18nKey: t("CR_BIRTH_CERTIFICATE"),
-      module:t("cr-home")
     },
     {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
-      module:t("cr-home")
     },
     
     // {
