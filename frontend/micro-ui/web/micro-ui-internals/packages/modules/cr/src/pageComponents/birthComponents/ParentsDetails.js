@@ -391,98 +391,98 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                 }
 
 
-                if (FatherEducation == null || FatherEducation == '' || FatherEducation == undefined) {
-                    validFlag = false;
-                    setFatherEduError(true);
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
+                // if (FatherEducation == null || FatherEducation == '' || FatherEducation == undefined) {
+                //     validFlag = false;
+                //     setFatherEduError(true);
+                //     setToast(true);
+                //     setTimeout(() => {
+                //         setToast(false);
+                //     }, 2000);
 
-                } else {
-                    setFatherEduError(false);
-                }
-                if (FatherProfession == null || FatherProfession == '' || FatherProfession == undefined) {
-                    validFlag = false;
-                    setFatherProfError(true);
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setFatherProfError(false);
-                }
+                // } else {
+                //     setFatherEduError(false);
+                // }
+                // if (FatherProfession == null || FatherProfession == '' || FatherProfession == undefined) {
+                //     validFlag = false;
+                //     setFatherProfError(true);
+                //     setToast(true);
+                //     setTimeout(() => {
+                //         setToast(false);
+                //     }, 2000);
+                // } else {
+                //     setFatherProfError(false);
+                // }
             }
 
-            if (MotherMarriageBirth != null || MotherMarriageBirth != '' || MotherMarriageBirth != undefined) {
-                if (MotherMarriageBirthError) {
-                    validFlag = false;
-                    setMotherMarriageBirthError(true);
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                    // return false;
-                    // window.alert("Username shouldn't exceed 10 characters")
-                } else {
-                    setMotherMarriageBirthError(false);
-                }
-            }
-            if (MotherEducation == null || MotherEducation == '' || MotherEducation == undefined) {
-                validFlag = false;
-                setMotherEducationError(true);
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
+            // if (MotherMarriageBirth != null || MotherMarriageBirth != '' || MotherMarriageBirth != undefined) {
+            //     if (MotherMarriageBirthError) {
+            //         validFlag = false;
+            //         setMotherMarriageBirthError(true);
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //         // return false;
+            //         // window.alert("Username shouldn't exceed 10 characters")
+            //     } else {
+            //         setMotherMarriageBirthError(false);
+            //     }
+            // }
+            // if (MotherEducation == null || MotherEducation == '' || MotherEducation == undefined) {
+            //     validFlag = false;
+            //     setMotherEducationError(true);
+            //     setToast(true);
+            //     setTimeout(() => {
+            //         setToast(false);
+            //     }, 2000);
 
-            } else {
-                setMotherEducationError(false);
-            }
-            if (MotherProfession == null || MotherProfession == '' || MotherProfession == undefined) {
-                validFlag = false;
-                setMotherProfessionError(true);
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setMotherProfessionError(false);
-            }
-            if (MotherNationality == null || MotherNationality == '' || MotherNationality == undefined) {
-                validFlag = false;
-                setMotherNationalityError(true);
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setMotherNationalityError(false);
-            }
-            if (Religion == null || Religion == "" || Religion == undefined) {
-                validFlag = false;
-                setReligionStError(true);
-                setToast(true);
-                setTimeout(() => {
-                  setToast(false);
-                }, 2000);
-              } else {
-                setReligionStError(false);
-              }
+            // } else {
+            //     setMotherEducationError(false);
+            // }
+            // if (MotherProfession == null || MotherProfession == '' || MotherProfession == undefined) {
+            //     validFlag = false;
+            //     setMotherProfessionError(true);
+            //     setToast(true);
+            //     setTimeout(() => {
+            //         setToast(false);
+            //     }, 2000);
+            // } else {
+            //     setMotherProfessionError(false);
+            // }
+            // if (MotherNationality == null || MotherNationality == '' || MotherNationality == undefined) {
+            //     validFlag = false;
+            //     setMotherNationalityError(true);
+            //     setToast(true);
+            //     setTimeout(() => {
+            //         setToast(false);
+            //     }, 2000);
+            // } else {
+            //     setMotherNationalityError(false);
+            // }
+            // if (Religion == null || Religion == "" || Religion == undefined) {
+            //     validFlag = false;
+            //     setReligionStError(true);
+            //     setToast(true);
+            //     setTimeout(() => {
+            //       setToast(false);
+            //     }, 2000);
+            //   } else {
+            //     setReligionStError(false);
+            //   }
           
            
-            if (OrderofChildren != null || OrderofChildren != '' || OrderofChildren != undefined) {
-                if (OrderofChildrenError) {
-                    validFlag = false;
-                    setOrderofChildrenError(true);
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setOrderofChildrenError(false);
-                }
-            }
+            // if (OrderofChildren != null || OrderofChildren != '' || OrderofChildren != undefined) {
+            //     if (OrderofChildrenError) {
+            //         validFlag = false;
+            //         setOrderofChildrenError(true);
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setOrderofChildrenError(false);
+            //     }
+            // }
             if (FatherMobile != null || FatherMobile != '' || FatherMobile != undefined) {
                 if (FatherMobileError) {
                     validFlag = false;
@@ -624,7 +624,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                         <div className="row">
                             <div className="col-md-12" >
                             <div className="col-md-4" >
-                                    <CardLabel>{`${t("CR_NATIONALITY")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <CardLabel>{`${t("CR_NATIONALITY")}`}</CardLabel>
                                     <Dropdown
                                         t={t}
                                         optionKey="nationalityname"
@@ -652,7 +652,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                                 </div>
                                 
                                 <div className="col-md-4" >
-                                    <CardLabel>{`${t("CR_MOTHER_AGE_BIRTH")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <CardLabel>{`${t("CR_MOTHER_AGE_BIRTH")}`}</CardLabel>
                                     <TextInput
                                         t={t}
                                         isMandatory={false}
@@ -662,7 +662,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                                         value={MotherMarriageBirth}
                                         onChange={setSelectMotherMarriageBirth}
                                         disable={isMotherInfo} placeholder={`${t("CR_MOTHER_AGE_BIRTH")}`}
-                                        {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_BIRTH") })}
+                                        {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: false, title: t("CR_INVALID_MOTHER_AGE_BIRTH") })}
                                     />
                                 </div>
                             </div>
@@ -670,7 +670,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                         <div className="row">
                             <div className="col-md-12" >
                             <div className="col-md-4" >
-                                    <CardLabel>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <CardLabel>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}</CardLabel>
                                     <TextInput
                                         t={t}
                                         isMandatory={false}
@@ -680,11 +680,11 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                                         value={OrderofChildren}
                                         onChange={setSelectOrderofChildren}
                                         disable={isMotherInfo} placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
-                                        {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
+                                        {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                                     />
                                 </div>
                                 <div className="col-md-4" >
-                                    <CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <CardLabel>{`${t("CR_EDUCATION")}`}</CardLabel>
                                     <Dropdown
                                         t={t}
                                         optionKey="name"
@@ -696,7 +696,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                                     />
                                 </div>
                                 <div className="col-md-4" >
-                                    <CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
+                                    <CardLabel>{`${t("CR_PROFESSIONAL")}`}</CardLabel>
                                     <Dropdown
                                         t={t}
                                         optionKey="name"
@@ -765,12 +765,12 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                                 disable={isFatherInfo}
                             />
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbQualification} selected={FatherEducation}
+                        <div className="col-md-4" ><CardLabel>{`${t("CR_EDUCATION")}`}</CardLabel>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbQualification} selected={FatherEducation}
                                 select={setSelectFatherEducation} disable={isFatherInfo} />
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbProfession} selected={FatherProfession}
+                        <div className="col-md-4" ><CardLabel>{`${t("CR_PROFESSIONAL")}`}</CardLabel>
+                            <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbProfession} selected={FatherProfession}
                                 select={setSelectFatherProfession} disable={isFatherInfo} />
                         </div>
                         </div>
@@ -789,7 +789,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                 <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_RELIGION")}`}
-                <span className="mandatorycss">*</span>
+                
               </CardLabel>
               <Dropdown
                 t={t}
@@ -801,14 +801,15 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_RELIGION")}`}
               />
             </div>
+            <div className="col-md-4" ><CardLabel>{`${t("CR_PARENTS_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="FatherMobile" value={FatherMobile}
+                                onChange={setSelectFatherMobile} disable={isFatherInfo} placeholder={`${t("CR_PARENTS_CONTACT_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_PARENTS_CONTACT_NO") })} />
+                        </div>
             <div className="col-md-4" ><CardLabel>{`${t("CR_PARENTS_EMAIL")}`}</CardLabel>
                             <TextInput t={t} isMandatory={false} type="email" optionKey="i18nKey" name="FatherEmail" value={FatherEmail}
                                 onChange={setSelectFatherEmail} disable={isFatherInfo} placeholder={`${t("CR_PARENTS_EMAIL")}`} {...(validation = { isRequired: false, title: t("CR_INVALID_PARENTS_EMAIL") })} />
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("CR_PARENTS_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"number"} optionKey="i18nKey" name="FatherMobile" value={FatherMobile}
-                                onChange={setSelectFatherMobile} disable={isFatherInfo} placeholder={`${t("CR_PARENTS_CONTACT_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_PARENTS_CONTACT_NO") })} />
-                        </div>
+                        
           </div>
         </div>
 
