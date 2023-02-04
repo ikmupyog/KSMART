@@ -30,7 +30,16 @@ export const FormComposer = (props) => {
   });
   const { t } = useTranslation();
   let formData = watch();
-   formData ={...formData,Jurisdictions:props.defaultValues?.Jurisdictions} 
+  if(props.defaultValues?.Jurisdictions?.length>0){
+    for (let i = 0; i < props.defaultValues?.Jurisdictions?.length; i++) {
+      let key = props.defaultValues?.Jurisdictions[i];
+      if ((key?.boundary  && key?.hierarchy && key?.tenantId && key?.roles?.length>0 &&key?.zoneCode)) {
+        // && key?.boundaryType && key?.roles?.length > 0
+        formData ={...formData,Jurisdictions:props.defaultValues?.Jurisdictions} 
+      } 
+    } 
+  }
+  //  formData ={...formData,Jurisdictions:props.defaultValues?.Jurisdictions} 
 
   useEffect(() => {
     props.getFormAccessors && props.getFormAccessors({ setValue, getValues });
