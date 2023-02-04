@@ -1,5 +1,5 @@
 import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSelect, TextInput, TextArea, DatePicker, LabelFieldPair } from "@egovernments/digit-ui-react-components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
 import { sortDropdownNames } from "../utils/index";
@@ -272,7 +272,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       {isLoading ? (<Loader />) : (
-        <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} isDisabled={!fields[0].tradecategory || !fields[0].tradetype || !fields[0].tradesubtype} >
+        <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}  >
           {fields.map((field, index) => {
             return (
               <div>
@@ -341,15 +341,15 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                 </div>
                 <div className="row">    {/* {`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`} */}
                   <div className="col-md-2" ><CardLabel>Capital Investment<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={false}  optionKey="i18nKey" name="CapitalAmount"  placeholder="Capital Investment Range" {...(validation = { pattern: "^([0-9])$", isRequired: true, type: "number", title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
+                    <TextInput t={t} isMandatory={false}  optionKey="i18nKey" name="CapitalAmount"  placeholder="Capital Investment Range" {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
                   </div>
                   <div className="col-md-2" >{/* {`${t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL")}`} */}
                       <CardLabel>Date of Commencement<span className="mandatorycss">*</span></CardLabel>
-                      <DatePicker  name="CommencementDate" placeholder="Date of Commencement" disabled={isEdit} {...(validation = {  isRequired: true, title: t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL") })} />
+                      <DatePicker isMandatory={false} name="CommencementDate" placeholder="Date of Commencement" disabled={isEdit} {...(validation = {  isRequired: false, title: t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL") })} />
                   </div>
                   <div className="col-md-2" > {/* {`${t("TL_LICENSE_PERIOD")}`} */}                 
                     <CardLabel>Desired Period of License<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicensePeriod" placeholder="Desired Period of License"   disable={isEdit} {...(validation = { pattern: "^[0-9]*$", isRequired: true, type: "number", title: t("TL_INVALID_LICENSE_PERIOD") })} />
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicensePeriod" placeholder="Desired Period of License"   disable={isEdit} {...(validation = { pattern: "^[0-9]*$", isRequired: false, type: "number", title: t("TL_INVALID_LICENSE_PERIOD") })} />
                   </div>
                   <div className="col-md-1" >
                     <CardLabel>&nbsp;</CardLabel>
@@ -366,10 +366,10 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                 </div>
                 <div className="row">    {/* {`${t("TL_LICENSING_UNIT_NAME")}`} */}
                   <div className="col-md-3" ><CardLabel>{`${t("TL_LICENSING_UNIT_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicenseUnitName"   disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicenseUnitName"   disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
                   </div>
                   <div className="col-md-3" ><CardLabel>{`${t("TL_LICENSING_UNIT_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicenseUnitNameMal"  disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME_ML")}`} {...(validation = {  isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="LicenseUnitNameMal"  disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME_ML")}`} {...(validation = {  isRequired: false, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
                   </div>
                   <div className="col-md-3" ><CardLabel>{`${t("TL_CONTACT_NO")}`}</CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="MobileNo" disable={isEdit} placeholder={`${t("TL_CONTACT_NO")}`} {...(validation = { pattern: "^[0-9]*$",type: "text", isRequired: false, title: t("TL_INVALID_MOBILE_NO") })} />
@@ -401,16 +401,16 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                       <div> 
                         <div className="row">
                           <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo" disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo" disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
                           </div>
                           <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo" disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo" disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
                           </div>
                           <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo" disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo" disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
                           </div>
                           <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_PARTITION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PartitionNo" disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_PARTITION_NO") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="PartitionNo" disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_PARTITION_NO") })} />
                           </div>
                         </div>
                       </div>)}
@@ -418,13 +418,13 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                       <div> 
                         <div className="row">
                           <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo"  disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BlockNo"  disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
                           </div>
                           <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo"  disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SurveyNo"  disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
                           </div>
                           <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo"  disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="SubDivNo"  disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
                           </div>
                         </div>
                       </div>)}
@@ -434,7 +434,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row"> 
                       <div className="col-md-4" ><CardLabel>Locality<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Locality" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Locality" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
                       </div>
                       <div className="col-md-4" ><CardLabel>Street / Road</CardLabel>
                         <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Street" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
@@ -445,7 +445,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row"> 
                       <div className="col-md-4" ><CardLabel>Building Name<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuildingName" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuildingName" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
                       </div>
                       <div className="col-md-4" ><CardLabel>Pincode</CardLabel>
                         <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Pincode" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
@@ -465,7 +465,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row"> 
                       <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DoorNoBuild" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DoorNoBuild" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
                       </div>
                       <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO_SUB")}`}</CardLabel>
                         <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DoorSubBuild" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
@@ -480,7 +480,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row"> 
                       <div className="col-md-4" ><CardLabel>Locality<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Locality" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Locality" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
                       </div>
                       <div className="col-md-4" ><CardLabel>Street / Road</CardLabel>
                         <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Street" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
@@ -491,7 +491,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row"> 
                       <div className="col-md-4" ><CardLabel>Building Name<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuildingName" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="BuildingName" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
                       </div>
                       <div className="col-md-4" ><CardLabel>Pincode</CardLabel>
                         <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Pincode" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
@@ -509,7 +509,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row">
                       <div className="col-md-12" ><CardLabel>{`${t("TL_VECHICLE_NO")}`}</CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="VechicleNo"  disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_VECHICLE_NO") })} /> 
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="VechicleNo"  disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_VECHICLE_NO") })} /> 
                       </div>    
                     </div>
                     <div className="row">
@@ -518,7 +518,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row"> 
                       <div className="col-md-6" ><CardLabel>Service Area<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ServiceArea" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ServiceArea" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
                       </div>
                       <div className="col-md-6" ><CardLabel>Designated Public Place</CardLabel>
                         <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Street" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
@@ -535,14 +535,14 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="row">
                       <div className="col-md-12" ><CardLabel>{`${t("TL_VESSEL_NO")}*`}</CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="VesselNo" disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_VESSEL_NO") })} /> </div>    </div>
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="VesselNo" disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_VESSEL_NO") })} /> </div>    </div>
                         <div className="row">
                       <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>Location and Address of Licensing Unit</span> </h1>
                       </div>
                     </div>
                     <div className="row"> 
                       <div className="col-md-4" ><CardLabel>Waterbody<span className="mandatorycss">*</span></CardLabel>
-                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Waterbody" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                        <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Waterbody" disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
                       </div>
                       <div className="col-md-4" ><CardLabel>Service Area / Location</CardLabel>
                         <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ServiceArea" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
