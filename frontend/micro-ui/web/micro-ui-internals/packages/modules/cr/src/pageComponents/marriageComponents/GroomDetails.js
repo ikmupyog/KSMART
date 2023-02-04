@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast,SubmitBar } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 // import { TimePicker } from '@material-ui/pickers';
 
-const ChildDetails = ({ config, onSelect, userType, formData }) => {
+const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -521,4 +521,4 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default ChildDetails;
+export default GroomDetails;

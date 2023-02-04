@@ -1054,6 +1054,46 @@ export const newConfig = [
     ]
   },
   {
+    head: "Marriage Routing",
+    body: [
+      {
+        type: "component",
+        route: "groom-details",
+        isMandatory: true,
+        component: "GroomDetails",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "GroomKeyDetails",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: "place-of-death",
+      },
+      {
+        route: "place-of-death",
+        isMandatory: true,
+        component: "PlaceOfDeath",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "PlaceOfDeath",
+        nextStep: "address-of-decesed",
+        type: "component",
+        hideInEmployee: true,
+      },
+    ]
+  },
+  {
     head: "ES_NEW_APPLICATION_OWNERSHIP_DETAILS",
     body: [
       {

@@ -72,8 +72,10 @@ import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
 import BirthCheckPage from "./pages/citizen/BirthRegistration/CheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
+import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
+import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
 
@@ -82,6 +84,8 @@ import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
 import CitizenApp from "./pages/citizen";
 
+import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
+import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -117,7 +121,7 @@ export const CRLinks = ({ matchPath, userType }) => {
       i18nKey: t("Death Registration"),
     },
     {
-      link: `${matchPath}/create-death-certificate`,
+      link: `${matchPath}/cr-marriage-creation`,
       i18nKey: t("Marriage Registration"),
     },
     {
@@ -139,7 +143,9 @@ export const CRLinks = ({ matchPath, userType }) => {
     // },
   ];
 
-  return <CitizenHomeCard header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />;
+  return (
+    <CitizenHomeCard style={{display: "flex",justifyContent: "space-evenly"}} header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />
+  )
 };
 
 const componentsToRegister = {
@@ -216,11 +222,15 @@ const componentsToRegister = {
   GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,
+  MarriageCheckPage,
   BirthAcknowledgement,
   DeathAcknowledgement,
+  MarriageAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration : CreateDeathRegistration,
   TLResponse: Response,
+  CRCreateMarriageRegistration : CreateMarriageRegistration,
+  GroomDetails,
 };
 
 export const initCRComponents = () => {
