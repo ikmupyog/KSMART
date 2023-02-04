@@ -28,7 +28,7 @@ public class CertificateRequest {
     @JsonProperty("CertificateDetails")
     private List<CertificateDetails> certificateDetails;
 
-    public CertificateRequest addCertificateDetails(CertificateDetails certificateDetail) {
+    public CertificateRequest addCertificateDetails(final CertificateDetails certificateDetail) {
         if (certificateDetails == null) {
             certificateDetails = new ArrayList<>();
         }

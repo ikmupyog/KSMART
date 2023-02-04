@@ -21,14 +21,18 @@ public class ServiceRequestRepository {
     }
 
     public Object fetchResult(final StringBuilder uri, final Object request) {
-        Object response = null;
+        return fetchResult(uri, request, Map.class);
+    }
+
+    public <T> T fetchResult(final StringBuilder uri, final Object request, final Class<T> clazz) {
+        T response = null;
         try {
             if (log.isInfoEnabled()) {
                 log.info("URI: {}", uri.toString());
                 log.info("Request: \n{}", FMUtils.toJson(request));
             }
 
-            response = restTemplate.postForObject(uri.toString(), request, Map.class);
+            response = restTemplate.postForObject(uri.toString(), request, clazz);
         } catch (HttpClientErrorException e) {
             log.error("External Service threw an Exception: ", e);
             throw new ServiceCallException(e.getResponseBodyAsString());
@@ -38,4 +42,5 @@ public class ServiceRequestRepository {
 
         return response;
     }
+
 }

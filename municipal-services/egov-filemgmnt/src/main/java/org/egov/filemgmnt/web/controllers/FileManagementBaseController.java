@@ -10,6 +10,7 @@ import org.egov.filemgmnt.web.models.ApplicantServiceResponse;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchResponse;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
+import org.egov.filemgmnt.web.models.certificate.CertificateResponse;
 import org.egov.tracer.model.ErrorRes;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -183,4 +184,7 @@ interface FileManagementBaseController {
                                                        schema = @Schema(implementation = ErrorRes.class))) })
     ResponseEntity<ApplicantSearchResponse> searchApplicants(@Valid RequestInfoWrapper request,
                                                              @Valid ApplicantSearchCriteria searchCriteria);
+
+    ResponseEntity<CertificateResponse> downloadCertificate(@Valid RequestInfoWrapper request,
+                                                            @Valid ApplicantServiceSearchCriteria searchCriteria);
 }

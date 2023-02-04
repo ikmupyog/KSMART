@@ -50,13 +50,15 @@ public class FileManagementService extends AbstractFileManagementService {
     private final FileManagementValidator validator;
     private final FileManagementEnrichment enrichment;
     private final FileManagementRepository repository;
+    private final ResidentialCertificateService certService;
 
     FileManagementService(final FileManagementValidator validator, final FileManagementEnrichment enrichment,
-                          final FileManagementRepository repository) {
+                          final FileManagementRepository repository, final ResidentialCertificateService certService) {
         super();
         this.validator = validator;
         this.enrichment = enrichment;
         this.repository = repository;
+        this.certService = certService;
     }
 
     public ApplicantServiceDetail create(final ApplicantServiceRequest request) {
@@ -192,6 +194,20 @@ public class FileManagementService extends AbstractFileManagementService {
         final List<ApplicantPersonal> result = repository.searchApplicantPersonals(criteria);
 
         return decryptApplicants(result, requestInfo);
+    }
+
+    // Residential certificate download
+    public List<CertificateDetails> downloadCertificate(final RequestInfo requestInfo,
+                                                        final ApplicantServiceSearchCriteria searchCriteria) {
+        final CertificateRequest request = certService.creteCertificateRequest(searchCriteria, requestInfo);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Certificate request: \n{}", FMUtils.toJson(request));
+        }
+
+        producer.push(fmConfig.getSaveApplicantCertificateTopic(), request);
+
+        return request.getCertificateDetails();
     }
 
     public List<CertificateDetails> download(@Valid final ApplicantSearchCriteria criteria,

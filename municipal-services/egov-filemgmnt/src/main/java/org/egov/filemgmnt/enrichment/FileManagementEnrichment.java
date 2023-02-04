@@ -247,11 +247,11 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
 
         final String tenantId = applicant.getTenantId();
 
-        final List<String> filecodes = getFileCodes(requestInfo,
-                                                    tenantId,
-                                                    fmConfig.getFilemgmntFileCodeName(),
-                                                    fmConfig.getFilemgmntFileCodeFormat(),
-                                                    1);
+        final List<String> filecodes = generateIds(requestInfo,
+                                                   tenantId,
+                                                   fmConfig.getFilemgmntFileCodeName(),
+                                                   fmConfig.getFilemgmntFileCodeFormat(),
+                                                   1);
         validateFileCodes(filecodes, 1);
 
         final ApplicantFileDetail fileDetail = request.getApplicantServiceDetail()
@@ -327,11 +327,6 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
         }
     }
 
-    private List<String> getFileCodes(final RequestInfo requestInfo, final String tenantId, final String idKey,
-                                      final String idformat, final int count) {
-        return idgenUtil.getIdList(requestInfo, tenantId, idKey, idformat, count);
-    }
-
     private void validateFileCodes(final List<String> fileCodes, final int count) {
         if (CollectionUtils.isEmpty(fileCodes)) {
             throw new CustomException(IDGEN_ERROR.getCode(), "No file code(s) returned from idgen service");
@@ -355,8 +350,8 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
                                   .toString());
                    cert.setAuditDetails(auditDetails);
                });
-        setCertificateNumber(request);
 
+        setCertificateNumber(request);
     }
 
     private void setCertificateNumber(final CertificateRequest request) {
@@ -366,23 +361,21 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
         final String tenantId = certDetails.get(0)
                                            .getTenantId();
 
-        final List<String> certNumbers = getCertificateNums(requestInfo,
-                                                            tenantId,
-                                                            fmConfig.getFilemgmntFileCodeName(),
-                                                            fmConfig.getFilemgmntFileCodeFormat(),
-                                                            certDetails.size());
+        final List<String> certNumbers = generateIds(requestInfo,
+                                                     tenantId,
+                                                     fmConfig.getFilemgmntFileCodeName(),
+                                                     fmConfig.getFilemgmntFileCodeFormat(),
+                                                     certDetails.size());
 
         final ListIterator<String> itr = certNumbers.listIterator();
 
         request.getCertificateDetails()
-               .forEach(cert -> {
-                   cert.setCertificateNo(itr.next());
-               });
+               .forEach(cert -> cert.setCertificateNo(itr.next()));
+
     }
 
-    private List<String> getCertificateNums(final RequestInfo requestInfo, final String tenantId, final String idKey,
-                                            final String idformat, final int count) {
+    private List<String> generateIds(final RequestInfo requestInfo, final String tenantId, final String idKey,
+                                     final String idformat, final int count) {
         return idgenUtil.getIdList(requestInfo, tenantId, idKey, idformat, count);
     }
-
 }

@@ -15,12 +15,12 @@ import org.egov.filemgmnt.repository.rowmapper.ApplicantPersonalRowMapper;
 import org.egov.filemgmnt.repository.rowmapper.ApplicantServiceRowMapper;
 import org.egov.filemgmnt.util.FMConstants;
 import org.egov.filemgmnt.util.MdmsUtil;
+import org.egov.filemgmnt.web.enums.CertificateStatus;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
 import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
-import org.egov.filemgmnt.web.models.certificate.CertificateDetails.StatusEnum;
 import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
 import org.egov.filemgmnt.web.models.certificate.EgovPdfResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,9 +71,9 @@ public class FileManagementRepository {
 
     }
 
-    public List<ApplicantServiceDetail> searchApplicantServices(final ApplicantServiceSearchCriteria criteria) {
+    public List<ApplicantServiceDetail> searchApplicantServices(final ApplicantServiceSearchCriteria searchCriteria) {
         final List<Object> preparedStmtValues = new ArrayList<>();
-        final String query = serviceQueryBuilder.getServiceDetailsSearchQuery(criteria,
+        final String query = serviceQueryBuilder.getServiceDetailsSearchQuery(searchCriteria,
                                                                               preparedStmtValues,
                                                                               Boolean.FALSE);
 
@@ -166,7 +166,7 @@ public class FileManagementRepository {
         result.setFilestoreIds(res.getFilestoreIds());
         certificate.setFilestoreId(result.getFilestoreIds()
                                          .get(0));
-        certificate.setCertificateStatus(StatusEnum.FREE_DOWNLOAD);
+        certificate.setCertificateStatus(CertificateStatus.FREE_DOWNLOAD);
         list.add(certificate);
 
         CertificateRequest certReq = CertificateRequest.builder()
@@ -188,69 +188,62 @@ public class FileManagementRepository {
                                      String lbAddressWithPinCode, String tenant) {
 
         JSONArray array = new JSONArray();
-//        JSONObject obj = new JSONObject();
-//
-////        obj.put("embeddedUrl", embeddedUrl);
-//        obj.put(FMConstants.ID,
-//                searchResult.get(0)
-//                            .getId());
+        JSONObject obj = new JSONObject();
+
+//        obj.put("embeddedUrl", embeddedUrl);
+        ApplicantPersonal applicant = searchResult.get(0);
+        obj.put(FMConstants.ID, applicant.getId());
 //        obj.put(FMConstants.BUILDINGNO,
-//                searchResult.get(0)
-//                            .getApplicantChild()
-//                            .getBuildingNumber());
-//        String durationYr = searchResult.get(0)
-//                                        .getApplicantChild()
-//                                        .getDurationOfResidenceInYears();
+//                applicant.getApplicantChild()
+//                         .getBuildingNumber());
+//        String durationYr = applicant.getApplicantChild()
+//                                     .getDurationOfResidenceInYears();
 //
-//        String durationMnth = searchResult.get(0)
-//                                          .getApplicantChild()
-//                                          .getDurationOfResidenceInMonths();
+//        String durationMnth = applicant.getApplicantChild()
+//                                       .getDurationOfResidenceInMonths();
 //        obj.put(FMConstants.DURATIONYR, durationYr);
 //        obj.put(FMConstants.DURATIONMNTH, durationMnth);
-//        obj.put(FMConstants.WARDNO,
-//                searchResult.get(0)
-//                            .getApplicantAddress()
-//                            .getWardNo());
-//        obj.put(FMConstants.TENANT, tenant);
-//        obj.put("lbName", null);
-//        obj.put("lbAddressWithPinCode", lbAddressWithPinCode);
-//
-//        String name = searchResult.get(0)
-//                                  .getFirstName()
-//                + searchResult.get(0)
-//                              .getLastName();
-//        obj.put(FMConstants.NAME, name);
-//
+
+        obj.put(FMConstants.BUILDINGNO, "");
+        obj.put(FMConstants.DURATIONYR, "34");
+        obj.put(FMConstants.DURATIONMNTH, "2");
+
+        obj.put(FMConstants.WARDNO,
+                applicant.getAddress()
+                         .getWardNo());
+        obj.put(FMConstants.TENANT, tenant);
+        obj.put("lbName", null);
+        obj.put("lbAddressWithPinCode", lbAddressWithPinCode);
+
+        String name = applicant.getFirstName() + applicant.getLastName();
+        obj.put(FMConstants.NAME, name);
+
 //        obj.put(FMConstants.OWNERNAME,
-//                searchResult.get(0)
-//                            .getApplicantChild()
-//                            .getOwnerNameMal());
+//                applicant.getApplicantChild()
+//                         .getOwnerNameMal());
 //
 //        obj.put(FMConstants.OWNERADDRESS,
-//                searchResult.get(0)
-//                            .getApplicantChild()
-//                            .getOwnerAddressMal());
-//
-//        String subNo = searchResult.get(0)
-//                                   .getApplicantAddress()
-//                                   .getSubNo();
-//
-//        String address = searchResult.get(0)
-//                                     .getApplicantAddress()
-//                                     .getBuildingNo()
-//                + (StringUtils.isEmpty(subNo)) + '/' + searchResult.get(0)
-//                                                                   .getApplicantAddress()
-//                                                                   .getHouseName()
-//                + '/' + searchResult.get(0)
-//                                    .getApplicantAddress()
-//                                    .getLocalPlace()
-//                + '/' + searchResult.get(0)
-//                                    .getApplicantAddress()
-//                                    .getMainPlace();
-//
-//        obj.put(FMConstants.ADDRESS, address);
-//
-//        array.add(obj);
+//                applicant.getApplicantChild()
+//                         .getOwnerAddressMal());
+
+        obj.put(FMConstants.OWNERNAME, "");
+        obj.put(FMConstants.OWNERADDRESS, "");
+
+        String subNo = applicant.getAddress()
+                                .getSubNo();
+
+        String address = applicant.getAddress()
+                                  .getBuildingNo()
+                + (StringUtils.isEmpty(subNo)) + '/' + applicant.getAddress()
+                                                                .getHouseName()
+                + '/' + applicant.getAddress()
+                                 .getLocalPlace()
+                + '/' + applicant.getAddress()
+                                 .getMainPlace();
+
+        obj.put(FMConstants.ADDRESS, address);
+
+        array.add(obj);
 
         return array;
     }

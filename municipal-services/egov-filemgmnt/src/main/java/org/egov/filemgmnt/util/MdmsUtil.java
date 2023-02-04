@@ -1,6 +1,5 @@
 package org.egov.filemgmnt.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -136,11 +135,11 @@ public class MdmsUtil {
 
         final List<ModuleDetail> tenantIdRequest = getTenantIdtAddressRequest(tenantId);
 
-        final List<ModuleDetail> moduleDetails = new LinkedList<>();
-        moduleDetails.addAll(tenantIdRequest);
+//        final List<ModuleDetail> moduleDetails = new LinkedList<>();
+//        moduleDetails.addAll(tenantIdRequest);
 
         final MdmsCriteria mdmsCriteria = MdmsCriteria.builder()
-                                                      .moduleDetails(moduleDetails)
+                                                      .moduleDetails(tenantIdRequest)
                                                       .tenantId(tenantId)
                                                       .build();
 
@@ -150,7 +149,7 @@ public class MdmsUtil {
                                                                .build();
 
         if (log.isDebugEnabled()) {
-            log.debug("Mdms certificate office address request: %n{}", FMUtils.toJson(mdmsCriteriaReq));
+            log.debug("Mdms certificate office address request: \n{}", FMUtils.toJson(mdmsCriteriaReq));
         }
 
         return mdmsCriteriaReq;
@@ -160,16 +159,14 @@ public class MdmsUtil {
     private List<ModuleDetail> getTenantIdtAddressRequest(final String tenantId) {
         final String address = "$.[?(@.code=='" + tenantId + "')].address";
 
-        final List<MasterDetail> fmMasterDetails = new ArrayList<>();
-        fmMasterDetails.add(MasterDetail.builder()
-                                        .name(FMConstants.TENANTS)
-                                        .filter(address)
-                                        .build());
-
+        final List<MasterDetail> fmMasterDetails = Collections.singletonList(MasterDetail.builder()
+                                                                                         .name(FMConstants.TENANTS)
+                                                                                         .filter(address)
+                                                                                         .build());
         final ModuleDetail masterModule = ModuleDetail.builder()
                                                       .masterDetails(fmMasterDetails)
                                                       .moduleName(FMConstants.TENANT_MODULE_NAME)
                                                       .build();
-        return Arrays.asList(masterModule);
+        return Collections.singletonList(masterModule);
     }
 }
