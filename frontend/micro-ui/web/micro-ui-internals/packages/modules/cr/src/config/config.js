@@ -341,6 +341,25 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
+
+
+
+      {
+        route: "parents-details",
+        component: "ParentsDetails",
+        texts: {
+          headerCaption: "",
+          header: "Parents Details",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "ParentsDetails",
+        type: "component",
+        nextStep: "mother-informations",
+        hideInEmployee: false,
+      },
       {
         route: "place-of-birth-Home",
         component: "PlaceofBirthHome",

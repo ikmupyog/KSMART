@@ -24,6 +24,7 @@ import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
 import InformantDetails from "../src/pageComponents/birthComponents/InformantDetails";
 import InformantAddress from "../src/pageComponents/birthComponents/InformantAddress";
+import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 
 
 
@@ -176,7 +177,7 @@ const componentsToRegister = {
   InstitutionAddress,
   InformantDetails,
   InformantAddress,
-
+  ParentsDetails,
   
  //////////////////
   // SearchRegistry,
