@@ -25,7 +25,7 @@ import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideI
 import InformantDetails from "../src/pageComponents/birthComponents/InformantDetails";
 import InformantAddress from "../src/pageComponents/birthComponents/InformantAddress";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
-
+import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -179,7 +179,7 @@ const componentsToRegister = {
   InformantDetails,
   InformantAddress,
   CRCreateBirthRegistration : CreateBirthRegistration,
-  
+  ParentsDetails,
  //////////////////
   // SearchRegistry,
   AdoptionDetails,
