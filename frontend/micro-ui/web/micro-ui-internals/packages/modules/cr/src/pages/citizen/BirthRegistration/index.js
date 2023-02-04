@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
+import { Route, Switch, useRouteMatch,useLocation,useHistory,Redirect } from "react-router-dom";
 import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-// import CrFlow from "./CrFlow";
 import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
-const CrFlowApp = ({ parentUrl }) => {
+const CreateBirthRegistration = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
@@ -133,7 +132,7 @@ const CrFlowApp = ({ parentUrl }) => {
               t={t}
               formData={params}
               onAdd={handleMultiple}
-              userType="employee"
+              userType="citizen"
             />
            </Route>  
           
@@ -145,17 +144,12 @@ const CrFlowApp = ({ parentUrl }) => {
       <Route path={`${match.path}/acknowledgement`}>
         <BirthAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
-      {/* <Route path={`${path}`} exact>
-              <CrFlow  path={path}/>
-             </Route> */}
-      <Route path={`${path}`} exact>
-          <ChildDetails parentUrl={path} />
-             </Route>
-             {/* <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <ChildDetails parentUrl={path} />} /> */}
-         
+      <Route>
+        <Redirect to={`${match.path}/${config.indexRoute}`} />
+      </Route>
       </Switch>
     </React.Fragment>
   );
 };
 
-export default CrFlowApp;
+export default CreateBirthRegistration;

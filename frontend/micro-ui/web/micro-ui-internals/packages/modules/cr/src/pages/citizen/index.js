@@ -1,19 +1,14 @@
 import { AppContainer, BackButton, PrivateRoute } from "@egovernments/digit-ui-react-components";
 import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-// import TradeLicense from "../../pageComponents/TradeLicense";
-// import MyApplications from "../../pages/citizen/Applications/Application";
-// import ApplicationDetails from "../../pages/citizen/Applications/ApplicationDetails";
-// import CreateTradeLicence from "./Create";
-// import EditTrade from "./EditTrade";
-// import { TLList } from "./Renewal";
-// import RenewTrade from "./Renewal/renewTrade";
-// import SearchTradeComponent from "./SearchTrade";
+import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
 import ChildDetails from "../../pageComponents/birthComponents/ChildDetails";
 import InformationDeath from "../../pageComponents/deathComponents/InformationDeath";
 import BirthCertificateSearch from "./BirthCertificate";
 import DeathCertificate from "./Certificate/DeathCertificate";
 import DeathCertificateSearch from "./Certificate";
+import { useTranslation } from "react-i18next";
+import { newConfig as newConfigCR } from "../../config/config";
+import CrCitizenFlowApp from "./BirthRegistration";
 // import CreateBirthCertificate from "./Create";
 // import CreateDeathCertificate from "./DeathReg"; 
 
@@ -22,15 +17,9 @@ const App = () => {
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
 
-  // const ApplicationDetails = Digit.ComponentRegistryService.getComponent("TLApplicationDetails");
-  // const CreateTradeLicence = Digit?.ComponentRegistryService?.getComponent('TLCreateTradeLicence');
-  // const EditTrade = Digit?.ComponentRegistryService?.getComponent('TLEditTrade');
-  // const RenewTrade = Digit?.ComponentRegistryService?.getComponent('TLRenewTrade');
-  // const TradeLicense = Digit?.ComponentRegistryService?.getComponent('TradeLicense');
-  // const TLList = Digit?.ComponentRegistryService?.getComponent('TLList');
-  // const SearchTradeComponent = Digit?.ComponentRegistryService?.getComponent('TLSearchTradeComponent');
-  // const MyApplications = Digit?.ComponentRegistryService?.getComponent('MyApplications');
-  // // const BirthCertificate = Digit?.ComponentRegistryService?.getComponent('BirthCertificate');
+  const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
+  const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathRegistration');
+
 
   const getBackPageNumber = () => {
     let goBacktoFromProperty = -1;
@@ -46,29 +35,16 @@ const App = () => {
     return goBacktoFromProperty;
   };
 
+
   return (
     <span className={"tl-citizen"}>
       <Switch>
-        {/* <PrivateRoute path={`${path}/create-death-certificate`} component={() => <CreateDeathCertificate parentUrl={path}/>} /> */}
-        {/* <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <CreateBirthCertificate parentUrl={path} />} /> */}
-        <PrivateRoute parentRoute={path} path={`${path}/cr-birth-creation`} component={() => <ChildDetails parentUrl={path} />} /> 
-        <PrivateRoute parentRoute={path} path={`${path}/cr-death-creation`} component={() => <InformationDeath parentUrl={path} />} /> 
+      <AppContainer>
+        <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
+        <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
-        {/* <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificate parentUrl={path}/>} />  */}
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
-        {/* <AppContainer>
-          <BackButton  style={{ position: "fixed", top: "55px" }}  isCommonPTPropertyScreen={isCommonPTPropertyScreen} isSuccessScreen={isSuccessScreen} getBackPageNumber={getBackPageNumber}>Back</BackButton>
-          <PrivateRoute path={`${path}/tradelicence/new-application`} component={CreateTradeLicence} />
-
-          <PrivateRoute path={`${path}/tradelicence/edit-application/:id/:tenantId`} component={EditTrade} />
-          <PrivateRoute path={`${path}/tradelicence/renew-trade/:id/:tenantId`} component={RenewTrade} />
-          <PrivateRoute path={`${path}/tradelicence/my-application`} component={MyApplications} />
-          <PrivateRoute path={`${path}/tradelicence/my-bills`} component={() => <MyApplications view="bills" />} />
-          <PrivateRoute path={`${path}/tradelicence/tl-info`} component={TradeLicense} />
-          <PrivateRoute path={`${path}/tradelicence/application/:id/:tenantId`} component={ApplicationDetails} />
-          <PrivateRoute path={`${path}/tradelicence/renewal-list`} component={TLList} />
-          <PrivateRoute path={`${path}/tradelicence/trade-search`} component={SearchTradeComponent} />
-        </AppContainer> */}
+       </AppContainer>
       </Switch>
     </span>
   );
