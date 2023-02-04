@@ -242,6 +242,7 @@ export const newConfig = [
         key: "ChildDetails",
         withoutLabel: true,
         nextStep: "birth-place",
+        hideInEmployee: false,
       },
       
       {
