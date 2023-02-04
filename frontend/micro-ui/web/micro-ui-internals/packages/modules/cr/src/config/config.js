@@ -278,6 +278,8 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
+
+
       {
         route: "birthaddress",
         component: "Address",
@@ -343,8 +345,39 @@ export const newConfig = [
         hideInEmployee: true,
       },
 
-
-
+{
+        route: "birthplace-hospital",
+        component: "BirthPlaceHospital",
+        texts: {
+          headerCaption: "",
+          header: "Hospital Details",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BirthPlaceHospitalDetails",
+        nextStep: "parents-details",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
+        route: "birthplace-institution",
+        component: "BirthPlaceInstitution",
+        texts: {
+          headerCaption: "",
+          header: "Institution Details",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BirthPlaceInstitutionDetails",
+        nextStep: "parents-details",
+        type: "component",
+        hideInEmployee: false,
+      },
+      
       {
         route: "parents-details",
         component: "ParentsDetails",

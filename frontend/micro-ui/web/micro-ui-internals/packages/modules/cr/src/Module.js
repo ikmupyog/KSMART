@@ -26,6 +26,9 @@ import InformantDetails from "../src/pageComponents/birthComponents/InformantDet
 import InformantAddress from "../src/pageComponents/birthComponents/InformantAddress";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
+import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
+import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPlaceInstitution";
+
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -175,6 +178,9 @@ const componentsToRegister = {
   InformantAddress,
   CRCreateBirthRegistration : CreateBirthRegistration,
   ParentsDetails,
+  BirthPlaceHospital,
+  BirthPlaceInstitution,
+
  //////////////////
   // SearchRegistry,
   AdoptionDetails,
