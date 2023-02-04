@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment,useEffect } from "react";
 import { ButtonSelector, CardText, FormStep, LinkButton, OTPInput, CardLabelError, Card } from "@egovernments/digit-ui-react-components";
 import useInterval from "../../../hooks/useInterval";
 import Background from "../../../components/Background";
@@ -33,42 +33,63 @@ const SelectOtp = ({ config, otp, onOtpChange, onResend, onSelect, t, error, use
       </Fragment>
     )
   }
+  const [screenSize, getDimension] = useState({
+    dynamicWidth: window.innerWidth,
+    dynamicHeight: window.innerHeight
+  });
+  const setDimension = () => {
+    getDimension({
+      dynamicWidth: window.innerWidth,
+      dynamicHeight: window.innerHeight
+    })
+  }
 
+  useEffect(() => {
+    window.addEventListener('resize', setDimension);
+
+    return (() => {
+      window.removeEventListener('resize', setDimension);
+    })
+  }, [screenSize])
   return (
     <Background>
-      <div className="leftdiv">
-        <div className="leftflex" >
-          <h1 className="logostyle">
-            {/* <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{ maxWidth: "450px" }} /> */}
+      {screenSize.dynamicWidth > 1250 && (
+        <Card className="bannerCard removeBottomMargin hidden-md hidden-xs" style={{ margin: "0 auto", backgroundColor: "#6e80e5" }}>
+          <div style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%", width: "100%" }}>
 
-          </h1>
-          <div style={{ textAlign: "center", margin: "0 auto" }}>
-            <div>
-              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/citizenlogin.png" alt="No Image"
-                style={{ maxWidth: "450px", marginLeft: "80px", marginRight: "80px" }} />
-              <label style={{ fontSize: "32px", marginBottom: "20px !important" }}>{`${t("Povide Your One Time Password")}`}</label><br></br>
-              {/* <label style={{ fontSize: "17px", marginTop: "20px !important" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label> */}
-            </div>
-          </div>
-          <div style={{ justifyContent: "space-between !important" }} >
+            <div className="language-button-container hidden-md hidden-xs"  >
+              <h1 className="logostyle">
+                {/* <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{ maxWidth: "450px" }} /> */}
 
-             {/*<span style={{ marginRight: "60%" }} >2023&copy;K-Smart</span>&nbsp;
+              </h1>
+              <div style={{ textAlign: "center", margin: "0 auto" }}>
+                <div>
+                  <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/citizenlogin.png" alt="No Image"
+                    style={{ maxWidth: "490px", marginLeft: "80px", marginRight: "80px" }} />
+                  <label style={{ fontSize: "25px", marginBottom: "20px !important" }}>{`${t("Provide Your One Time Password")}`}</label><br></br>
+                  {/* <label style={{ fontSize: "17px", marginTop: "20px !important" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label> */}
+                </div>
+              </div>
+              <div style={{ justifyContent: "space-between !important" }} >
+
+                {/*<span style={{ marginRight: "60%" }} >2023&copy;K-Smart</span>&nbsp;
             <span  >
               <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
               <a className="text-white text-link" href="#">Privacy</a>
-            </span>*/}
+            </span> */}
 
-          </div> 
-        </div>
-      </div>
-      <Card className="bannerCard removeBottomMargin" style={{ margin: "0 auto" }}>
-        <div style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%", width: "100%" }}>
+              </div>
+            </div>
+          </div>
+        </Card>)}
+      <Card className="bannerCard removeBottomMargin" style={{ margin: "0 auto",width: "40%"  }}>
+        <div style={{ justifyContent: "space-around", marginBottom: "24px", padding: "0 5%", }}>
 
           <div className="language-button-container"  >
             <div>
               <div style={{ textAlign: "center", margin: "0 auto" }}>
                 <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/mail.png" alt="No Image"
-                  style={{ maxWidth: "100px", marginLeft: "180px", marginRight: "180px" }} />
+                  style={{ maxWidth: "100px", marginLeft: "121px", marginRight: "121px" }} />
 
                 <label style={{ fontSize: "25px", marginBottom: "20px !important" }}>{`${t("CS_LOGIN_OTP")}`}</label><br></br>
                 <label style={{ fontSize: "15px", marginTop: "20px !important" }}>{`${t("CS_LOGIN_OTP_TEXT")}`}{`${t("CORE_COMMON_MOBILE_NUMBER")}`}</label>

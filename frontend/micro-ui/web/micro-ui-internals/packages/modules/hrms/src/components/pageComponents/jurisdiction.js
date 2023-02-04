@@ -233,6 +233,7 @@ function Jurisdiction({
   const [isInitialRenderBoundaryType2, setIsInitialRenderBoundaryType2] = useState(true);
   const [isInitialRenderHierarchy, setIsInitialRenderHierarchy] = useState(true);
   const [isDisableStatus, setIsDisableStatus] = useState(true);
+  const [rolesData, setRolesData] = useState([]);
 
   let ZonalA = [];
   let cmbInfntWardNo = [];
@@ -287,11 +288,21 @@ function Jurisdiction({
     if(jurisdiction?.jurisdictionChilds?.length>0 && jurisdiction?.jurisdictionChilds[0]?.id){
       // console.log('k',jurisdiction,wards );
       let Cward =jurisdiction?.jurisdictionChilds
+      let result = Cward.map(a => a.wardCode);
       Cward.forEach((ele)=>{ele.name = ele.wardLabel})
-     
-      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: Cward} : item)));
+      let tmpBoundary =[]
+      let tmpBoundaryArr
+      for(let i=0;i<result?.length;i++){
+       tmpBoundaryArr= wards?.length>0 && wards.filter((ele) => ele.code == result[i])
+       let tenantcode = tenantId.replace('.', '_').toUpperCase();
+    // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
+    tmpBoundaryArr?.length>0 && tmpBoundaryArr ?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData?.wardno })
+       tmpBoundary.push(tmpBoundaryArr[0])
       }
-  },[jurisdiction?.jurisdictionChilds[0]?.id,wards])
+    
+      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: tmpBoundary?.l>0?tmpBoundary:Cward} : item)));
+      }
+  },[])
 
   useEffect(()=>{
       let Czonal=  cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == jurisdiction?.zoneCode)
@@ -304,7 +315,11 @@ function Jurisdiction({
         // setWardNo(null);
         // setFilterWard(null);
       }
-  },[cmbZonal&& cmbZonal[0]])
+  },[])
+  useEffect(()=>{
+    let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode)
+    setRolesData(Croles)
+  },[])
 
   useEffect(() => {
     if (isInitialRenderBoundaryType) {
@@ -358,7 +373,7 @@ function Jurisdiction({
   };
   //Jetheesh
   const setSelectZonalOffice = (value) => {
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, zoneCode: value } : item)));
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary:[],zoneCode: value } : item)));
     setZonal(value);
     setIsInitialRender(true);
     setWardNo(null);
@@ -416,13 +431,9 @@ function Jurisdiction({
       res.push(ob?.[1]);
     });
     let tenantcode = tenantId.replace('.', '_').toUpperCase();
-    // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
+    // res?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
     res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
-    // console.log('k1',res,jurisdiction);
-    // let tmpData =jurisdiction.jurisdictionChilds.concat(res)
-    // console.log();
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
-    // }
   };
 
 
@@ -443,7 +454,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
 
 // console.log(jurisdiction);
 //  let Croles= formData?.Jurisdictions[0].roles.filter((ele) => ele.code  ==  roleCode.roleCode)
- let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode)
+
   return (
     <div key={jurisdiction?.keys} style={{ marginBottom: "16px" }}>
       <div style={{ border: "1px solid #E3E3E3", padding: "16px", marginTop: "8px" }}>
@@ -579,7 +590,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
         <LabelFieldPair>
           <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
           <div className="form-field">
-            <Dropdown t={t} optionKey="name" isRequired="false" option={getroledata(roleoption)} selected={Croles && Croles[0]}
+            <Dropdown t={t} optionKey="name" isRequired="false" option={getroledata(roleoption)} selected={rolesData && rolesData[0]}
               select={selectrolenew} placeholder={`${t("HR_COMMON_TABLE_COL_ROLE")}`} /></div>
         </LabelFieldPair>
 

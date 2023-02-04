@@ -24,8 +24,8 @@ import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
 import InformantDetails from "../src/pageComponents/birthComponents/InformantDetails";
 import InformantAddress from "../src/pageComponents/birthComponents/InformantAddress";
-
-
+import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
+import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -67,11 +67,13 @@ import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
 import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/DeathCorrectionroute";
 import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
-import BirthCheckPage from "./pages/citizen/Create/CheckPage";
-import DeathCheckPage from "./pages/citizen/Create/DeathCheckPage";
-import BirthAcknowledgement from "./pages/citizen/Create/BirthAcknowledgement";
-import DeathAcknowledgement from "./pages/citizen/Create/DeathAcknowledgement";
+import BirthCheckPage from "./pages/citizen/BirthRegistration/CheckPage";
+import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
+import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
+import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
+import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
+
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
@@ -113,7 +115,7 @@ export const CRLinks = ({ matchPath, userType }) => {
     },
     {
       link: `${matchPath}/create-death-certificate`,
-      i18nKey: t("CR_DEATH_CERTIFICATE"),
+      i18nKey: t("Marriage Registration"),
     },
     {
       link: `${matchPath}/create-birth-certificate`,
@@ -171,8 +173,8 @@ const componentsToRegister = {
   InstitutionAddress,
   InformantDetails,
   InformantAddress,
-
-  
+  CRCreateBirthRegistration : CreateBirthRegistration,
+  ParentsDetails,
  //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -211,6 +213,7 @@ const componentsToRegister = {
   BirthAcknowledgement,
   DeathAcknowledgement,
   BirthCertificate,
+  CRCreateDeathRegistration : CreateDeathRegistration,
   TLResponse: Response,
 };
 
