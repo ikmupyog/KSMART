@@ -46,7 +46,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
                 <div>
                   <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/citizenlogin.png" alt="No Image"
                     style={{ maxWidth: "490px", marginLeft: "80px", marginRight: "80px" }} />
-                  <label style={{ fontSize: "32px", marginBottom: "20px !important" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label><br></br>
+                  <label style={{ fontSize: "25px", marginBottom: "20px !important" }}>{`${t("CS_LOGIN_PROVIDE_MOBILE_NUMBER")}`}</label><br></br>
                   {/* <label style={{ fontSize: "17px", marginTop: "20px !important" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label> */}
                 </div>
               </div>
