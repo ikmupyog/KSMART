@@ -1,0 +1,1 @@
+ALTER TABLE eg_hrms_jurisdiction ALTER COLUMN boundarytype DROP NOT NULL;

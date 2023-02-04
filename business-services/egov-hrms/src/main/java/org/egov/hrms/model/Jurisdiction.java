@@ -82,15 +82,25 @@ public class Jurisdiction {
     private String boundary;
 
     @SafeHtml
-    @NotNull
     @Size(max=256)
     private String boundaryType;
 
     @SafeHtml
     private String tenantId;
 
+	private String roleCode;
+
+	private String zoneCode;
+
 	@NotEmpty
-	private List<JurisdictionChild> jurisdictionChild = new ArrayList<>();
+	private List<JurisdictionChild> jurisdictionChilds = new ArrayList<>();
+
+	public void addJurisdictionChild(final JurisdictionChild child) {
+		if (jurisdictionChilds == null) {
+			jurisdictionChilds = new ArrayList<>();
+		}
+		jurisdictionChilds.add(child);
+	}
 
     private AuditDetails auditDetails;
 

@@ -179,6 +179,8 @@ public class EmployeeValidator {
 		validateDataUniqueness(employees,errorMap);
         validateUserMobile(employees,errorMap,request.getRequestInfo());
         validateUserName(employees,errorMap,request.getRequestInfo());
+		validateWardCodes(employees, errorMap);
+		validateWardLabels(employees, errorMap);
 	}
 
 	/**
@@ -197,13 +199,45 @@ public class EmployeeValidator {
 				mobileNos.add(employee.getUser().getMobileNumber());
 			if(null != employee.getCode()){
 				if (codes.contains(employee.getCode()))
-					errorMap.put(ErrorConstants.HRMS_BULK_CREATE_DUPLICATE_EMPCODE_CODE,ErrorConstants.HRMS_BULK_CREATE_DUPLICATE_EMPCODE_MSG);
+					errorMap.put(ErrorConstants.HRMS_EMPLOYEE_NULL_WARD_LABEL,
+							ErrorConstants.HRMS_BULK_CREATE_DUPLICATE_EMPCODE_MSG);
 				else
 					codes.add(employee.getCode());
 			}
 		});
 	}
+	
+	private void validateWardLabels(List<Employee> employees, Map<String, String> errorMap) {
+		employees.forEach(employee -> {
+			
+			employee.getJurisdictions().forEach(child ->{
+				child.getJurisdictionChilds().forEach(childJurisdiction ->{
+					if(StringUtils.isEmpty(childJurisdiction.getWardLabel())) {
+						errorMap.put(ErrorConstants.HRMS_EMPLOYEE_NULL_WARD_LABEL,
+								ErrorConstants.HRMS_EMPLOYEE_NULL_WARD_LABEL_MSG);
+					}
+				});
+			});
+			
+		});
+		
+	}
 
+	private void validateWardCodes(List<Employee> employees, Map<String, String> errorMap) {
+		employees.forEach(employee -> {
+
+			employee.getJurisdictions().forEach(child -> {
+				child.getJurisdictionChilds().forEach(childJurisdiction -> {
+					if (StringUtils.isEmpty(childJurisdiction.getWardCode())) {
+						errorMap.put(ErrorConstants.HRMS_EMPLOYEE_NULL_WARD_CODE,
+								ErrorConstants.HRMS_EMPLOYEE_NULL_WARD_CODE_MSG);
+					}
+				});
+			});
+
+		});
+
+	}
 	/**
 	 * Checks if the mobile number used in the request is duplicate.
 	 * 
@@ -483,15 +517,16 @@ public class EmployeeValidator {
 		}
 		for(Jurisdiction jurisdiction: employee.getJurisdictions()) {
 				String hierarchy_type_path = String.format(HRMSConstants.HRMS_TENANTBOUNDARY_HIERARCHY_JSONPATH,jurisdiction.getBoundary());
-				String boundary_type_path = String.format(HRMSConstants.HRMS_TENANTBOUNDARY_BOUNDARY_TYPE_JSONPATH,jurisdiction.getHierarchy(),jurisdiction.getBoundary());
+//				String boundary_type_path = String.format(HRMSConstants.HRMS_TENANTBOUNDARY_BOUNDARY_TYPE_JSONPATH,jurisdiction.getHierarchy(),jurisdiction.getBoundary());
 				String boundary_value_path = String.format(HRMSConstants.HRMS_TENANTBOUNDARY_BOUNDARY_VALUE_JSONPATH,jurisdiction.getHierarchy(),jurisdiction.getBoundary());
 				List<String>  hierarchyTypes = JsonPath.read(boundaryMap,hierarchy_type_path);
-				List <String> boundaryTypes = JsonPath.read(boundaryMap,boundary_type_path);
+//				List <String> boundaryTypes = JsonPath.read(boundaryMap,boundary_type_path);
 				List <String> boundaryValues = JsonPath.read(boundaryMap,boundary_value_path);
 				if(!hierarchyTypes.contains(jurisdiction.getHierarchy()))
 					errorMap.put(ErrorConstants.HRMS_INVALID_JURISDICTION_HEIRARCHY_CODE, ErrorConstants.HRMS_INVALID_JURISDICTION_HEIRARCHY_MSG);
-				if(!boundaryTypes.contains(jurisdiction.getBoundaryType()))
-					errorMap.put(ErrorConstants.HRMS_INVALID_JURISDICTION_BOUNDARY_TYPE_CODE, ErrorConstants.HRMS_INVALID_JURISDICTION_BOUNDARY_TYPE_MSG);
+//				if (!boundaryTypes.contains(jurisdiction.getBoundaryType()))
+//					errorMap.put(ErrorConstants.HRMS_INVALID_JURISDICTION_BOUNDARY_TYPE_CODE,
+//							ErrorConstants.HRMS_INVALID_JURISDICTION_BOUNDARY_TYPE_MSG);
 				if(!boundaryValues.contains(jurisdiction.getBoundary()))
 					errorMap.put(ErrorConstants.HRMS_INVALID_JURISDICTION_BOUNDARY_CODE, ErrorConstants.HRMS_INVALID_JURISDICTION_BOUNDARY_MSG);
 			}

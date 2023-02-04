@@ -55,7 +55,6 @@ import org.egov.common.contract.response.ResponseInfo;
 import org.egov.hrms.config.PropertiesManager;
 import org.egov.hrms.model.AuditDetails;
 import org.egov.hrms.model.Employee;
-import org.egov.hrms.model.JurisdictionChild;
 import org.egov.hrms.model.enums.UserType;
 import org.egov.hrms.producer.HRMSProducer;
 import org.egov.hrms.repository.EmployeeRepository;
@@ -201,8 +200,20 @@ public class EmployeeService {
 		if(userChecked)
 			criteria.setTenantId(null);
         List <Employee> employees = new ArrayList<>();
-        if(!((!CollectionUtils.isEmpty(criteria.getRoles()) || !CollectionUtils.isEmpty(criteria.getNames()) || !StringUtils.isEmpty(criteria.getPhone())) && CollectionUtils.isEmpty(criteria.getUuids())))
-            employees = repository.fetchEmployees(criteria, requestInfo);
+		System.out.println("mob" + criteria.getPhone());
+
+		if (!((!CollectionUtils.isEmpty(criteria.getRoles()) || !CollectionUtils.isEmpty(criteria.getNames())
+				|| !CollectionUtils.isEmpty(criteria.getRolecodes())
+				|| !StringUtils.isEmpty(criteria.getPhone()) || !CollectionUtils.isEmpty(criteria.getWardcodes()))
+				&& CollectionUtils.isEmpty(criteria.getUuids())))
+        	 employees = repository.fetchEmployees(criteria, requestInfo);
+        	//		{
+//			System.out.println("mob1" + criteria.getPhone());
+//			if (!((!CollectionUtils.isEmpty(criteria.getRoles()) || !CollectionUtils.isEmpty(criteria.getNames())
+//					|| !StringUtils.isEmpty(criteria.getPhone()) || CollectionUtils.isEmpty(criteria.getWardcodes()))
+//					&& CollectionUtils.isEmpty(criteria.getUuids())))
+           
+//	}
         List<String> uuids = employees.stream().map(Employee :: getUuid).collect(Collectors.toList());
 		if(!CollectionUtils.isEmpty(uuids)){
             Map<String, Object> UserSearchCriteria = new HashMap<>();
@@ -280,12 +291,15 @@ public class EmployeeService {
 		employee.getJurisdictions().stream().forEach(jurisdiction -> {
 			jurisdiction.setId(UUID.randomUUID().toString());
 			jurisdiction.setAuditDetails(auditDetails);
-			List<JurisdictionChild> child = jurisdiction.getJurisdictionChild();
-			child.get(0).setJurisdictionId(jurisdiction.getId());
-			child.get(0).setParentJurisdictionId(jurisdiction.getId());
-			child.get(0).setId(UUID.randomUUID().toString());
-			child.get(0).setAuditDetails(auditDetails);
 
+			jurisdiction.getJurisdictionChilds().forEach(child -> {
+				child.setJurisdictionId(jurisdiction.getId());
+				child.setParentJurisdictionId(jurisdiction.getId());
+				child.setTenantId(jurisdiction.getTenantId());
+				child.setIsActive(true);
+				child.setId(UUID.randomUUID().toString());
+				child.setAuditDetails(auditDetails);
+			});
 			if(null == jurisdiction.getIsActive())
 				jurisdiction.setIsActive(true);
 		});
@@ -416,6 +430,22 @@ public class EmployeeService {
 					jurisdiction.getAuditDetails().setLastModifiedDate(new Date().getTime());
 				}
 			}
+
+			jurisdiction.getJurisdictionChilds().forEach(child -> {
+				if (child.getId() == null) {
+					child.setJurisdictionId(jurisdiction.getId());
+					child.setParentJurisdictionId(jurisdiction.getId());
+					child.setTenantId(jurisdiction.getTenantId());
+					child.setIsActive(true);
+					child.setId(UUID.randomUUID().toString());
+					child.setAuditDetails(auditDetails);
+				} else {
+
+
+					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+					child.getAuditDetails().setLastModifiedDate(new Date().getTime());
+				}
+			});
 		});
 		employee.getAssignments().stream().forEach(assignment -> {
 			if(assignment.getId()==null) {
@@ -553,7 +583,8 @@ public class EmployeeService {
 			});
 
 		}
-
+		employee.setAuditDetails(auditDetails);
+		employee.setIsActive(true);
 
 	}
 

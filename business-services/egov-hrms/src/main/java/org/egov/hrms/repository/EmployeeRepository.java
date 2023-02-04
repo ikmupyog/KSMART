@@ -7,16 +7,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.egov.common.contract.request.RequestInfo;
+import org.egov.hrms.model.Employee;
 import org.egov.hrms.utils.HRMSUtils;
 import org.egov.hrms.web.contract.EmployeeSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import lombok.extern.slf4j.Slf4j;
-
-import org.egov.hrms.model.Employee;
-import org.springframework.util.CollectionUtils;
 
 @Repository
 @Slf4j
@@ -45,6 +44,7 @@ public class EmployeeRepository {
 	 * @return
 	 */
 	public List<Employee> fetchEmployees(EmployeeSearchCriteria criteria, RequestInfo requestInfo){
+
 		List<Employee> employees = new ArrayList<>();
 		List<Object> preparedStmtList = new ArrayList<>();
 		if(hrmsUtils.isAssignmentSearchReqd(criteria)) {
