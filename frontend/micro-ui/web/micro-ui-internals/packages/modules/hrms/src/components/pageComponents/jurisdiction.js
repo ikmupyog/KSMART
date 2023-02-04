@@ -285,24 +285,37 @@ function Jurisdiction({
   }, [wards]);
 
   useEffect(()=>{
-    if(jurisdiction?.jurisdictionChilds?.length>0 && jurisdiction?.jurisdictionChilds[0]?.id){
+    if(jurisdiction?.jurisdictionChilds?.length>0 && jurisdiction?.jurisdictionChilds[0]?.id && wards?.length>0){
       // console.log('k',jurisdiction,wards );
       let Cward =jurisdiction?.jurisdictionChilds
+      // console.log('Cward',Cward);
       let result = Cward.map(a => a.wardCode);
-      Cward.forEach((ele)=>{ele.name = ele.wardLabel})
+      Cward.forEach((ele)=>{ele.name = ele?.wardLabel})
       let tmpBoundary =[]
       let tmpBoundaryArr
-      for(let i=0;i<result?.length;i++){
-       tmpBoundaryArr= wards?.length>0 && wards.filter((ele) => ele.code == result[i])
-       let tenantcode = tenantId.replace('.', '_').toUpperCase();
-    // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
-    tmpBoundaryArr?.length>0 && tmpBoundaryArr ?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData?.wardno })
-       tmpBoundary.push(tmpBoundaryArr[0])
+      if(wards?.length>0){
+        for(let i=0;i<result?.length;i++){
+          tmpBoundaryArr= wards?.length>0 && wards.filter((ele) => ele.code == result[i])
+         //  console.log('temt-ward-arr',);
+          let tenantcode = tenantId.replace('.', '_').toUpperCase();
+       // res?.forEach(resData => {resData.name =resData.wardno + ' (' + tenantcode+'_'+jurisdiction?.hierarchy?.code+'_'+resData.wardno + ')' })
+       tmpBoundaryArr?.length>0 && tmpBoundaryArr ?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData?.wardno })
+          tmpBoundary.push(tmpBoundaryArr[0])
+         }
       }
-    
-      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: tmpBoundary?.l>0?tmpBoundary:Cward} : item)));
+      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: tmpBoundary?.length>0?tmpBoundary:Cward} : item)));
       }
-  },[])
+  },[wards?.length>0])
+  useEffect(()=>{
+    if(jurisdiction?.TenantBoundary?.length>0){
+      jurisdiction?.TenantBoundary.map(item=> {
+        if(item === undefined){
+          setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: [] } : item)));
+        }
+      })
+
+    }
+  })
 
   useEffect(()=>{
       let Czonal=  cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == jurisdiction?.zoneCode)
@@ -373,7 +386,7 @@ function Jurisdiction({
   };
   //Jetheesh
   const setSelectZonalOffice = (value) => {
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary:[],zoneCode: value } : item)));
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item ,TenantBoundary:[] ,zoneCode: value } : item)));
     setZonal(value);
     setIsInitialRender(true);
     setWardNo(null);
@@ -432,7 +445,7 @@ function Jurisdiction({
     });
     let tenantcode = tenantId.replace('.', '_').toUpperCase();
     // res?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
-    res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
+    res?.length>0 && res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
   };
 
@@ -571,7 +584,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
               defaultUnit="Selected"
               selected ={jurisdiction?.TenantBoundary}
               // selected={jurisdiction?.jurisdictionChilds?.length>0?jurisdiction?.jurisdictionChilds:jurisdictions}
-              options={wards}
+              options={wards && wards}
               onSelect={selectward}
               optionsKey="name"
               t={t}
@@ -581,7 +594,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
 
               {jurisdiction?.TenantBoundary?.length > 0 &&
                 jurisdiction?.TenantBoundary.map((value, index) => {
-                  return <RemoveableTag key={index} text={`${t(value["name"]).slice(0, 22)} ...`} onClick={() => onRemoved(index, value)} />;
+                  return <RemoveableTag key={index} text={`${t(value && value["name"]).slice(0, 22)} ...`} onClick={() => onRemoved(index, value)} />;
                 })}
             </div>
           </div>

@@ -19,6 +19,7 @@ const App = () => {
 
   const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
   const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathRegistration');
+  const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
 
 
   const getBackPageNumber = () => {
@@ -42,6 +43,7 @@ const App = () => {
       <AppContainer>
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
+        <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
        </AppContainer>

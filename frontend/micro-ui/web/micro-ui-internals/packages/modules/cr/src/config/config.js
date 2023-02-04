@@ -278,6 +278,8 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
+
+
       {
         route: "birthaddress",
         component: "Address",
@@ -343,8 +345,39 @@ export const newConfig = [
         hideInEmployee: true,
       },
 
-
-
+{
+        route: "birthplace-hospital",
+        component: "BirthPlaceHospital",
+        texts: {
+          headerCaption: "",
+          header: "Hospital Details",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BirthPlaceHospitalDetails",
+        nextStep: "parents-details",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
+        route: "birthplace-institution",
+        component: "BirthPlaceInstitution",
+        texts: {
+          headerCaption: "",
+          header: "Institution Details",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BirthPlaceInstitutionDetails",
+        nextStep: "parents-details",
+        type: "component",
+        hideInEmployee: false,
+      },
+      
       {
         route: "parents-details",
         component: "ParentsDetails",
@@ -1015,6 +1048,46 @@ export const newConfig = [
         withoutLabel: true,
         key: "GeneralRemarks",
         nextStep: null,
+        type: "component",
+        hideInEmployee: true,
+      },
+    ]
+  },
+  {
+    head: "Marriage Routing",
+    body: [
+      {
+        type: "component",
+        route: "groom-details",
+        isMandatory: true,
+        component: "GroomDetails",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "GroomKeyDetails",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: "place-of-death",
+      },
+      {
+        route: "place-of-death",
+        isMandatory: true,
+        component: "PlaceOfDeath",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "PlaceOfDeath",
+        nextStep: "address-of-decesed",
         type: "component",
         hideInEmployee: true,
       },

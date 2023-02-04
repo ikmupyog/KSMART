@@ -108,7 +108,7 @@ const EditForm = ({ tenantId, data }) => {
     const name = formData?.SelectEmployeeName?.employeeName || '';
     const address = formData?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress || '';
     const validEmail = email.length == 0 ? true : email.match(Digit.Utils.getPattern('Email'));
-    return validEmail && name.match(Digit.Utils.getPattern('Name')) && address.match(Digit.Utils.getPattern('Address'));
+    return validEmail && name?.match(Digit.Utils.getPattern('Name')) && address.match(Digit.Utils.getPattern('Address'));
   }
 
   const onFormValueChange = (setValue = true, formData) => {
@@ -193,7 +193,7 @@ const EditForm = ({ tenantId, data }) => {
     requestdata.user.mobileNumber = input?.SelectEmployeePhoneNumber?.mobileNumber;
     requestdata["user"]["name"] = input?.SelectEmployeeName?.employeeName;
     requestdata.user.correspondenceAddress = input?.SelectEmployeeCorrespondenceAddress?.correspondenceAddress;
-    requestdata.user.roles = roles.filter(role=>role&&role.name);
+    requestdata.user.roles = roles.filter(role=>role&&role?.name);
     let Employees = [requestdata];
 
     /* use customiseUpdateFormData hook to make some chnages to the Employee object */

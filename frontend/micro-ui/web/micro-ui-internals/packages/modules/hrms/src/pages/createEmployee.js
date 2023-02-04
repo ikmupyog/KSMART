@@ -204,8 +204,10 @@ const CreateEmployee = ({userType}) => {
       formData?.SelectEmployeeGender?.gender.code &&
       formData?.SelectEmployeeName?.employeeName &&
       formData?.SelectEmployeeType?.code &&
-      formData?.SelectEmployeePhoneNumber?.mobileNumber &&
-      checkfield &&
+      formData?.SelectEmployeePhoneNumber?.mobileNumber 
+      &&
+      checkfield 
+      &&
       setassigncheck &&
       phonecheck &&
       checkMailNameNum(formData)
