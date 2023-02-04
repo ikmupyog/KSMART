@@ -82,6 +82,7 @@ import EmployeeApp from "./pages/employee";
 import CitizenApp from "./pages/citizen";
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
+import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -223,6 +224,7 @@ const componentsToRegister = {
   CRCreateDeathRegistration : CreateDeathRegistration,
   TLResponse: Response,
   CRCreateMarriageRegistration : CreateMarriageRegistration,
+  GroomDetails,
 };
 
 export const initCRComponents = () => {
