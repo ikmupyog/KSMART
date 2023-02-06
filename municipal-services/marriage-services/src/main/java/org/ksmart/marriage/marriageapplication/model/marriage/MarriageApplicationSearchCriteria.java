@@ -18,39 +18,10 @@ public class MarriageApplicationSearchCriteria {
     private String tenantId;
 
     @JsonProperty("id")
-    private String id; // birthapplicant id
+    private String id;
 
     @JsonProperty("applicationNo")
     private String applicationNo;
 
-    @JsonProperty("registrationNo")
-    private String registrationNo;
 
-    @JsonProperty("fileCode")
-    private String fileCode;
-
-    @JsonProperty("fromDate")
-    private Long fromDate; // report date
-
-    @JsonProperty("toDate")
-    private Long toDate; // report date
-
-    @JsonProperty("fromDateFile")
-    private Long fromDateFile; // file date
-
-    @JsonProperty("toDateFile")
-    private Long toDateFile; // file date
-
-    @JsonProperty("aadhaarNo")
-    private String aadhaarNo;
-
-    @JsonProperty("offset")
-    private Integer offset;
-
-    @JsonProperty("limit")
-    private Integer limit;
-
-    @JsonProperty("dateOfBirth")
-    @Valid
-    private String dateOfBirth;
 }

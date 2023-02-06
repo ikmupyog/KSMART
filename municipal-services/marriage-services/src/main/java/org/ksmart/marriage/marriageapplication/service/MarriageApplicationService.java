@@ -3,6 +3,7 @@ package org.ksmart.marriage.marriageapplication.service;
 import lombok.extern.slf4j.Slf4j;
 
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
+import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,9 @@ public class MarriageApplicationService {
 
     public List<MarriageApplicationDetail> updateMarriageDetails(MarriageDetailsRequest request) {
         return repository.updateMarriageDetails(request);
+    }
+
+    public List<MarriageApplicationDetail> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
+        return repository.searchMarriageDetails(criteria);
     }
 }

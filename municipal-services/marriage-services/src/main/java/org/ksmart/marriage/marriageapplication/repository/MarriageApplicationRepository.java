@@ -8,11 +8,15 @@ import org.ksmart.marriage.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
 //import org.ksmart.marriage.common.producer.MarriageProducer;
+import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.repository.querybuilder.MarriageApplicationQueryBuilder;
+import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageApplicationRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -23,15 +27,19 @@ public class MarriageApplicationRepository {
     private final MarriageApplicationConfiguration marriageApplicationConfiguration;
 
     private final MarriageDetailsEnrichment marriageDetailsEnrichment;
+    private final MarriageApplicationQueryBuilder marriageQueryBuilder;
+    private final MarriageApplicationRowMapper marriageApplicationRowMapper;
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public MarriageApplicationRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration, JdbcTemplate jdbcTemplate, MarriageDetailsEnrichment marriageDetailsEnrichment) {
+    public MarriageApplicationRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration, JdbcTemplate jdbcTemplate, MarriageDetailsEnrichment marriageDetailsEnrichment, MarriageApplicationQueryBuilder marriageQueryBuilder, MarriageApplicationRowMapper marriageApplicationRowMapper) {
         this.producer = producer;
         this.marriageApplicationConfiguration = marriageApplicationConfiguration;
         this.marriageDetailsEnrichment = marriageDetailsEnrichment;
         this.jdbcTemplate = jdbcTemplate;
 
+        this.marriageQueryBuilder = marriageQueryBuilder;
+        this.marriageApplicationRowMapper = marriageApplicationRowMapper;
     }
 
 
@@ -46,6 +54,13 @@ public class MarriageApplicationRepository {
         marriageDetailsEnrichment.enrichUpdate(request);
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
         return request.getMarriageDetails();
+    }
+
+    public List<MarriageApplicationDetail> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = marriageQueryBuilder.getBirthApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<MarriageApplicationDetail> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
+        return result;
     }
 
     //private final org.ksmart.birth.common.producer.MarriageProducer producer;

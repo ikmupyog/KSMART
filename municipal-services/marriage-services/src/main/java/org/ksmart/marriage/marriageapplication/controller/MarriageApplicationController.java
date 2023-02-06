@@ -4,16 +4,15 @@ package org.ksmart.marriage.marriageapplication.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationResponse;
+import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.service.MarriageApplicationService;
 import org.ksmart.marriage.utils.ResponseInfoFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 //import org.ksmart.marriage.marriageregistry.model.BirthCertificate;
 //import org.ksmart.marriage.marriageregistry.model.RegisterBirthDetail;
@@ -41,7 +40,7 @@ public class MarriageApplicationController {
     public ResponseEntity<MarriageApplicationResponse> saveMarriageDetails(@RequestBody MarriageDetailsRequest request) {
         List<MarriageApplicationDetail> marriageDetails=crMarriageService.saveMarriageDetails(request);
         MarriageApplicationResponse response= MarriageApplicationResponse.builder()
-                                                                  .marriageApplicationDetailsDetails(marriageDetails)
+                                                                  .marriageApplicationDetails(marriageDetails)
                                                                   .responseInfo(
                                                                  responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),true))
 
@@ -50,8 +49,20 @@ public class MarriageApplicationController {
     }
     @PostMapping(value = { "/_update"})
     public ResponseEntity<?> updateMarriageDetails(@RequestBody MarriageDetailsRequest request) {
-        List<MarriageApplicationDetail> birthDetails = crMarriageService.updateMarriageDetails(request);
-        return new ResponseEntity<>(birthDetails, HttpStatus.OK);
+        List<MarriageApplicationDetail> marriageDetails = crMarriageService.updateMarriageDetails(request);
+        return new ResponseEntity<>(marriageDetails, HttpStatus.OK);
+    }
+
+    @PostMapping(value = { "/_search"})
+    public ResponseEntity<MarriageApplicationResponse> listByHospitalId(@RequestBody MarriageDetailsRequest request,
+                                                                     @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
+        List<MarriageApplicationDetail> marriageDetailsDetails = crMarriageService.searchMarriageDetails(criteria);
+        MarriageApplicationResponse response = MarriageApplicationResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .marriageApplicationDetails(marriageDetailsDetails)
+                .build();
+        return ResponseEntity.ok(response);
     }
 //    @PostMapping(value = {"/_update"})
 //    public ResponseEntity<MarriageApplicationResponse> updateBirthDetails(@RequestBody MarriageDetailsRequest request) {
@@ -102,6 +113,7 @@ public class MarriageApplicationController {
 //        }
 //        return new ResponseEntity<>(response, HttpStatus.OK);
 //    }
+
 
 
 }
