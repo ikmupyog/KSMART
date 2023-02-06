@@ -905,6 +905,14 @@ serviceMaps:
             - jsonPath: $.deathCertificateDtls.*.addressInfo.parentdeathDtlId
             - jsonPath: >-
                 $.deathCertificateDtls.*.addressInfo.deathplaceAddress.addrTypeId
+
+        - query: >-
+            UPDATE public.eg_death_cert_request
+            SET counter=0  WHERE  deathdtlid = ?
+              
+          basePath: deathCertificateDtls.*
+          jsonMaps:
+            - jsonPath: $.deathCertificateDtls.*.id 
         # - query: >-
         #     UPDATE public.eg_death_address_registry SET house_no = ?,
         #     residence_assc_no = ?, streetname_en = ?, streetname_ml = ?,
