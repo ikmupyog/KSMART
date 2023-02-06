@@ -230,6 +230,11 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
          addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
          addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
          addFilter("dt.certificate_no",criteria.getConsumerCode(), query, preparedStmtValues);
+         addFilter("dt.male_dependent_name_en",criteria.getDeceasedFatherName(), query, preparedStmtValues);
+         addFilter("dt.female_dependent_name_en",criteria.getDeceasedMotherName(), query, preparedStmtValues);
+         addFilter("dt.spouse_name_en",criteria.getDeceasedHusbandWifeName(), query, preparedStmtValues);
+         addFilter("dt.deceased_gender",criteria.getDeceasedGender(), query, preparedStmtValues);
+         addFilter("dt.death_place",criteria.getHospital(), query, preparedStmtValues);
          addDateRangeFilter("dt.dateofdeath",
          criteria.getFromDate(),
          criteria.getToDate(),
@@ -282,4 +287,4 @@ public class CrDeathRgistryQueryBuilder extends BaseQueryBuilder {
       return query.toString();
       }  
 
-     }
+  }

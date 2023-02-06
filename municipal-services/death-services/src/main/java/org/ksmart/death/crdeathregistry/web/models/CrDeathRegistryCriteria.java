@@ -88,4 +88,20 @@ public class CrDeathRegistryCriteria {
 
     //Rakhi S on 24.01.2023 consumerCode as same as Certificateno
     private String consumerCode;
+
+    //Rakhi S on 30.01.2023
+    @JsonProperty("deceasedFatherName")
+    private String deceasedFatherName;
+
+    @JsonProperty("deceasedMotherName")
+    private String deceasedMotherName;
+
+    @JsonProperty("deceasedHusbandWifeName")
+    private String deceasedHusbandWifeName;
+
+    @JsonProperty("deceasedGender")
+    private String deceasedGender;
+
+    @JsonProperty("hospital")
+    private String hospital;
 }

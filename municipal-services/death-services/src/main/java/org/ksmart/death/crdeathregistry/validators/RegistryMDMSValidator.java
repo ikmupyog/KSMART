@@ -29,46 +29,42 @@ public class RegistryMDMSValidator {
         Map<String,List<String>> masterData = getAttributeValues(mdmsdata);
         
         String[] masterArray = {CrDeathRegistryConstants.TENANTS,CrDeathRegistryConstants.GENDERTYPE
-                            ,CrDeathRegistryConstants.HOSPITAL_LIST,CrDeathRegistryConstants.DEATH_PLACE};
+                            ,CrDeathRegistryConstants.DEATH_PLACE_LIST};
         validateIfMasterPresent(masterArray,masterData);
 
         if(!masterData.get(CrDeathRegistryConstants.TENANTS)
                 .contains(request.getDeathCertificateDtls().get(0).getTenantId()))
         errorMap.put("INVALID TENAND ID", "The tenand id  "+ request.getDeathCertificateDtls().get(0).getTenantId() +
                     " does not exists");
+                    
+        if(request.getDeathCertificateDtls().get(0).getDeceasedGender() != null) {
+            if(!masterData.get(CrDeathRegistryConstants.GENDERTYPE)
+                    .contains(request.getDeathCertificateDtls().get(0).getDeceasedGender()))
+            errorMap.put("INVALID GENDER TYPE", "The gender of the deceased " +
+                        request.getDeathCertificateDtls().get(0).getDeceasedGender()+ " is invalid");
+        }
 
-         System.out.println("genderMAster"+masterData.get(CrDeathRegistryConstants.GENDERTYPE).contains(request.getDeathCertificateDtls().get(0).getDeceasedGender()));
-
-        if(!masterData.get(CrDeathRegistryConstants.GENDERTYPE)
-                .contains(request.getDeathCertificateDtls().get(0).getDeceasedGender()))
-        errorMap.put("INVALID GENDER TYPE", "The gender of the deceased " +
-                    request.getDeathCertificateDtls().get(0).getDeceasedGender()+ " is invalid");
-
-        // if(!masterData.get(CrDeathRegistryConstants.HOSPITAL_LIST)
-        //             .contains(request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName()))
-        //     errorMap.put("HOSPITAL DETAILS INVALID", "The deceased hospital details " +
-        //                 request.getDeathCertificateDtls().get(0).getDeathPlaceOfficeName()+ " is invalid");
-
-        if(!masterData.get(CrDeathRegistryConstants.DEATH_PLACE)
+        if(!masterData.get(CrDeathRegistryConstants.DEATH_PLACE_LIST)
                         .contains(request.getDeathCertificateDtls().get(0).getDeathPlace()))
             errorMap.put("DEATH PLACE DETAILS INVALID", "The deceased death place details " +
                             request.getDeathCertificateDtls().get(0).getDeathPlace()+ " is invalid");
-        //RAkhi S on 07.12.2022 
-        System.out.println("datacheckDeathCause: "+request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseMain());
-        if(!masterData.get(CrDeathRegistryConstants.DEATH_CAUSE_MAIN)
-                        .contains(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseMain()))
-            errorMap.put("DEATH CAUSE MAIN INVALID", "The deceased death cause main details " +
-                            request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseMain()+ " is invalid");
-                            
-        if(!masterData.get(CrDeathRegistryConstants.DEATH_CAUSE_SUB)
-                            .contains(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseSub()))
-                errorMap.put("DEATH CAUSE SUB INVALID", "The deceased death cause sub details " +
-                                request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseSub()+ " is invalid");
-
-        if(!masterData.get(CrDeathRegistryConstants.MALE_DEPENDENT_TYPE)
-                                .contains(request.getDeathCertificateDtls().get(0).getMaleDependentType()))
-                    errorMap.put("MALE DEPENDENT INVALID", "The deceased father/husband details " +
-                                    request.getDeathCertificateDtls().get(0).getMaleDependentType()+ " is invalid");
+        //RAkhi S on 07.12.2022  
+        if(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseMain() != null) {       
+            if(!masterData.get(CrDeathRegistryConstants.DEATH_CAUSE_MAIN)
+                            .contains(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseMain()))
+                errorMap.put("DEATH CAUSE MAIN INVALID", "The deceased death cause main details " +
+                                request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseMain()+ " is invalid");
+        }    
+        if(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseSub() != null) {
+            if(!masterData.get(CrDeathRegistryConstants.DEATH_CAUSE_SUB)
+                                .contains(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseSub()))
+                    errorMap.put("DEATH CAUSE SUB INVALID", "The deceased death cause sub details " +
+                                    request.getDeathCertificateDtls().get(0).getStatisticalInfo().getDeathCauseSub()+ " is invalid");
+        }
+        // if(!masterData.get(CrDeathRegistryConstants.MALE_DEPENDENT_TYPE)
+        //                         .contains(request.getDeathCertificateDtls().get(0).getMaleDependentType()))
+        //             errorMap.put("MALE DEPENDENT INVALID", "The deceased father/husband details " +
+        //                             request.getDeathCertificateDtls().get(0).getMaleDependentType()+ " is invalid");
 
 
         // if(request.getDeathCertificateDtls().get(0).getFemaleDependentType() != null) {
@@ -79,10 +75,12 @@ public class RegistryMDMSValidator {
 
         // }
 
-        if(!masterData.get(CrDeathRegistryConstants.AGE_UNIT)
-                                    .contains(request.getDeathCertificateDtls().get(0).getAgeUnit()))
-                        errorMap.put("AGE UNIT INVALID", "The deceased age unit details " +
-            request.getDeathCertificateDtls().get(0).getAgeUnit()+ " is invalid");
+        if(request.getDeathCertificateDtls().get(0).getAgeUnit() != null) {
+            if(!masterData.get(CrDeathRegistryConstants.AGE_UNIT)
+                                        .contains(request.getDeathCertificateDtls().get(0).getAgeUnit()))
+                            errorMap.put("AGE UNIT INVALID", "The deceased age unit details " +
+                request.getDeathCertificateDtls().get(0).getAgeUnit()+ " is invalid");
+        }
 
         if(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getMedicalAttentionType() != null) {
             if(!masterData.get(CrDeathRegistryConstants.MEDICAL_ATTENTION_TYPE)
@@ -91,12 +89,12 @@ public class RegistryMDMSValidator {
                 request.getDeathCertificateDtls().get(0).getStatisticalInfo().getMedicalAttentionType()+ " is invalid");
         }
 
-        if(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getOccupation() != null) {
-            if(!masterData.get(CrDeathRegistryConstants.PROFESSION)
-                                    .contains(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getOccupation()))
-                        errorMap.put("OCCUPATION INVALID", "The deceased occupation  details " +
-                request.getDeathCertificateDtls().get(0).getStatisticalInfo().getOccupation()+ " is invalid");
-        }
+        // if(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getOccupation() != null) {
+        //     if(!masterData.get(CrDeathRegistryConstants.PROFESSION)
+        //                             .contains(request.getDeathCertificateDtls().get(0).getStatisticalInfo().getOccupation()))
+        //                 errorMap.put("OCCUPATION INVALID", "The deceased occupation  details " +
+        //         request.getDeathCertificateDtls().get(0).getStatisticalInfo().getOccupation()+ " is invalid");
+        // }
         if(!CollectionUtils.isEmpty(errorMap))
             throw new CustomException(errorMap);
 

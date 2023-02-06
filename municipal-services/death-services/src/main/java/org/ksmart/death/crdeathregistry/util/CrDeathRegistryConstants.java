@@ -11,7 +11,7 @@ public class CrDeathRegistryConstants {
     public static final String TENANT_MODULE_NAME = "tenant";    
 
     public static final String GENDERTYPE = "GenderType";
-    public static final String GENDER_MODULE_NAME = "common-masters";
+    public static final String COMMON_MASTER_MODULE_NAME = "common-masters";
 
     public static final String BND_MODULE_NAME = "birth-death-service";
     //Modified  by Rakhi S on 20.12.2022
@@ -83,8 +83,8 @@ public class CrDeathRegistryConstants {
      public static final String TRANSGENDER_CAPTION ="Transgender";
 
      //RAkhi S on 21.01.2023
-     public static final String HUSBAND ="HUSBAND";
-     public static final String WIFE ="WIFE";
+     public static final String HUSBAND ="SPOUSE_TYPE_HUSBAND";
+     public static final String WIFE ="SPOUSE_TYPE_WIFE";
      public static final String WIFE_ML = " (ഭാര്യ) ";
      public static final String WIFE_EN  = " (Wife) ";
 
@@ -108,4 +108,5 @@ public class CrDeathRegistryConstants {
      public static final String NOT_RECORDED_EN = "Not Recorded";
      public static final String NOT_RECORDED_ML = "രേഖപ്പെടുത്തിയിട്ടില്ല";
 
+     public static final String DEATH_PLACE_LIST = "PlaceMasterDeath";
 }

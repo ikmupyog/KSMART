@@ -11,7 +11,7 @@ public class CrDeathConstants {
     public static final String TENANT_MODULE_NAME = "tenant";    
 
     public static final String GENDERTYPE = "GenderType";
-    public static final String GENDER_MODULE_NAME = "common-masters";
+    public static final String COMMON_MASTER_MODULE_NAME = "common-masters";
 
     public static final String BND_MODULE_NAME = "birth-death-service";
     //Modified  by Rakhi S on 20.12.2022
@@ -120,5 +120,5 @@ public class CrDeathConstants {
     public static final String ACK_NUMBER_FIRST = "1";
     public static final String ACK_NUMBER_CAPTION = "AK";
 
-
+    public static final String DEATH_PLACE_LIST = "PlaceMasterDeath";
 }
