@@ -47,6 +47,9 @@ public class DeathInformantDtls {
     @JsonProperty("DeathSignedOfficerDesignation")
     private String deathSignedOfficerDesignation ;
 
+    @JsonProperty("InformantMobileNo")
+    private String informantMobileNo ;
+
     @JsonProperty("InformantAddrId")
     private String informantAddrId;
 
