@@ -10,7 +10,8 @@ import lombok.Setter;
 import lombok.ToString;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
-
+import java.util.List;
+import javax.swing.text.Document;
 /*
      * Creates main model class  
      * Jasmine on 4.02.2023      
@@ -43,10 +44,15 @@ public class DeathDtl {
     private DeathInformantDtls deathInformantDtls;
 
     @JsonProperty("auditDetails")
-    private AuditDetails  auditDetails;
+    private AuditDetails  deathAuditDetails;
 
     @JsonProperty("workflowDetails")
     private DeathWorkFlowDtls  deathWorkFlowDtls;
+
+   // @Valid
+    @JsonProperty("wfDocuments")
+    private List<Document> wfDocuments;
+
 
 
 }

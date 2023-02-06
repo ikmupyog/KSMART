@@ -82,6 +82,10 @@ public class DeathBasicInfo {
     private String  vehicleToPlaceEn ;
 
     @Schema(type = "string", description= " " )
+    @JsonProperty("VehicleToPlaceMl")
+    private String  vehicleToPlaceMl ;
+
+    @Schema(type = "string", description= " " )
     @JsonProperty("VehicleFirstHaltEn")
     private String  vehicleFirstHaltEn ;
 
@@ -111,7 +115,7 @@ public class DeathBasicInfo {
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceRemarksEn")
-    private String  DeathPlaceRemarksEn ;
+    private String  deathPlaceRemarksEn ;
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceRemarksMl")
@@ -127,7 +131,7 @@ public class DeathBasicInfo {
 
     @Schema(type = "string", description= " " )
     @JsonProperty("PlaceOfBurialMl")
-    private String  PlaceOfBurialMl ;
+    private String  placeOfBurialMl ;
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceLocalityEn")
@@ -166,7 +170,7 @@ public class DeathBasicInfo {
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeCountryId")
-    private String  DeathPlaceHomeCountryId ;
+    private String  deathPlaceHomeCountryId ;
 
 
     @Schema(type = "string", description= " " )

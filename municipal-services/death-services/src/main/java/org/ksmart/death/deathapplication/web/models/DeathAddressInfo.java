@@ -45,7 +45,7 @@ public class DeathAddressInfo {
     private String presentAddrStateId ;
 
     @JsonProperty("PresentAddrDistrictId")
-    private String PresentAddrDistrictId;
+    private String presentAddrDistrictId;
 
     @JsonProperty("PresentAddrTalukId")
     private String presentAddrTalukId ;

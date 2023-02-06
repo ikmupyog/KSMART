@@ -13,7 +13,7 @@ import lombok.Setter;
 //@Schema(description = "Collection of audit related fields used by most models")
 /**
      * Creates Audit details Model 
-     * Rakhi S IKM
+     * Jasmine 06.02.2023
      * 
      */
 

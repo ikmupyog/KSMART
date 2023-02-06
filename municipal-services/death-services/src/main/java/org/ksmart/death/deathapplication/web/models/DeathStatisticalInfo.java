@@ -69,22 +69,22 @@ public class DeathStatisticalInfo {
     private String deathCauseSubCustom;
 
     @JsonProperty("DeathCauseSubInterval")
-    private String deathCauseSubInterval;
+    private Integer deathCauseSubInterval;
 
     @JsonProperty("DeathCauseSubTimeUnit")
-    private Integer deathCauseSubTimeUnit;
+    private String deathCauseSubTimeUnit;
 
     @JsonProperty("DeathCauseSub2")
-    private Integer deathCauseSub2;
+    private String deathCauseSub2;
 
     @JsonProperty("DeathCauseSubCustom2")
-    private Integer deathCauseSubCustom2;
+    private String deathCauseSubCustom2;
 
     @JsonProperty("DeathCauseSubInterval2")
     private Integer deathCauseSubInterval2;
 
     @JsonProperty("DeathCauseSubTimeUnit2")
-    private Integer deathCauseSubTimeUnit2;
+    private String deathCauseSubTimeUnit2;
 
     @JsonProperty("DeathCauseOther")
     private String deathCauseOther;
@@ -93,16 +93,16 @@ public class DeathStatisticalInfo {
     private String isdeceasedPregnant;
 
     @JsonProperty("IsDelivery")
-    private String isDelivery;
+    private Boolean isDelivery;
 
     @JsonProperty("DeathDuringDelivery")
     private String deathDuringDelivery;
 
     @JsonProperty("SmokingType")
-    private String smokingType;
+    private Integer smokingType;
 
     @JsonProperty("TobaccoType")
-    private String tobaccoType;
+    private Integer tobaccoType;
 
     @JsonProperty("AlcoholType")
     private Integer alcoholType;
