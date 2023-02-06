@@ -5,7 +5,22 @@ import Timeline from "../components/TLTimeline";
 import { sortDropdownNames } from "../utils/index";
 
 const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
+  const stateId = Digit.ULBService.getStateId();
+  //const { data: type = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TypeOfUnit");
+  const { data: type = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "NatureOfInstitution");
 
+  // let cmbtype = [];
+  // type &&
+  // type["TradeLicense"] &&
+  // type["TradeLicense"].TypeOfUnit.map((ob) => {
+  //   cmbtype.push(ob);
+  // });
+  let cmbPlace = [];
+  type &&
+  type["TradeLicense"] &&
+  type["TradeLicense"].NatureOfInstitution.map((ob) => {
+        cmbPlace.push(ob);
+    });
   const [licenseeType, setLicenseeType] = useState(formData?.TradeDetails?.LicenseeType ? formData?.TradeDetails?.LicenseeType : { i18nKey: "TL_COMMON_INDIVIDUAL", code: "INDIVIDUAL" });
 
   const menu = [
@@ -13,6 +28,11 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
     { i18nKey: "TL_COMMON_JOINT_PARTNERSHIP", code: "JOINT_PARTNERSHIP" },
     { i18nKey: "TL_COMMON_INSTITUTION", code: "INSTITUTION" },
   ];
+
+  const comenu = [
+    { i18nKey: "TL_CO_SO", code: "S/O" },
+    { i18nKey: "TL_CO_DO", code: "D/O" },
+  ]
   const storedAppData = null;
   const storedOwnerData = null;
   const initapplicant = () => {
@@ -110,12 +130,12 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
 
 
   const goNext = () => {
-    let units = fields;
-    // formData.TradeDetails.Units;    
-    let unitsdata;
+    // let units = fields;
+    // // formData.TradeDetails.Units;    
+    // let unitsdata;
 
-    unitsdata = { ...units, units: fields };
-    onSelect(config.key, unitsdata);
+    // unitsdata = { ...units, units: fields };
+    // onSelect(config.key, unitsdata);
   };
 
   const onSkip = () => onSelect();
@@ -178,13 +198,19 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appnamemal" value={field.appnamemal} />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appconame" value={field.appconame} />
+                      <CardLabel>S/O or D/O<span className="mandatorycss">*</span></CardLabel>
+                      <div className="col-md-4">
+                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} />
+                      </div>
+                      <div className="col-md-8">
+                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appconame" value={field.appconame} />
+                      </div>
+
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>{`${t("TL_LOCALIZATION_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appmobileno" value={field.appmobileno} />
                     </div>
                     <div className="col-md-3">
@@ -192,25 +218,25 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appemail" value={field.appemail} />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>Locality<span className="mandatorycss">*</span></CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applocality" value={field.applocality} />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphouseno" value={field.apphouseno} />
+                      <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appstreet" value={field.appstreet} />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>House Name<span className="mandatorycss">*</span></CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphousename" value={field.apphousename} />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>Post Office<span className="mandatorycss">*</span></CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appponame" value={field.appponame} />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>Pincode<span className="mandatorycss">*</span></CardLabel>
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appincode" value={field.appincode} />
                     </div>
 
@@ -267,7 +293,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-3">
                 <CardLabel>{`${t("TL_INSTITUTION_TYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="owneraadhaarno" />
+                <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={cmbPlace} />
               </div>
               <div className="col-md-3">
                 <CardLabel>{`${t("TL_LICENSING_INSTITUTION_ID")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -305,61 +331,62 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
               </div>
             </div>
             <div className="row">
-            <div className="row">
+              <div className="row">
 
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appaadhaarno" />
+                <div className="col-md-3">
+                  <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appaadhaarno" />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appnameeng" />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appnamemal" />
+                </div>
+                <div className="col-md-3">
+                      <CardLabel>S/O or D/O<span className="mandatorycss">*</span></CardLabel>
+                      <div className="col-md-4">
+                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} />
+                      </div>
+                      <div className="col-md-8">
+                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appconame" />
+                      </div>
+                  </div>
               </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appnameeng" />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appnamemal" />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appconame" />
-              </div>
-            </div>
 
-            <div className="row">
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appmobileno" />
+              <div className="row">
+                <div className="col-md-3">
+                  <CardLabel>{`${t("TL_LOCALIZATION_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appmobileno" />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appemail" />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>Locality<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applocality" />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>House Name<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphousename" />
+                </div>
               </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appemail" />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applocality" />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphouseno" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphousename" />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appponame" />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appincode" />
-              </div>
-              <div className="col-md-3">
+              <div className="row">
+
+                <div className="col-md-3">
+                  <CardLabel>Postoffice<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appponame" />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>Pincode<span className="mandatorycss">*</span></CardLabel>
+                  <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appincode" />
+                </div>
+  
               </div>
             </div>
-</div>
           </div>
 
         )
@@ -396,35 +423,30 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownernameeng" value={field.ownernameeng} />
                   </div>
                   <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appmobileno" value={field.appmobileno} />
                   </div>
                   <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <CardLabel>Locality<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applocality" value={field.applocality} />
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphouseno" value={field.apphouseno} />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphousename" value={field.apphousename} />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                <div className="col-md-3">
+                    <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appstreet" value={field.appstreet} />
                   </div>
                   <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <CardLabel>House Name<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphousename" value={field.apphousename} />
+                  </div>
+           
+                  <div className="col-md-3">
+                    <CardLabel>Postoffice<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appponame" value={field.appponame} />
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                  <div className="col-md-1">
+                    <CardLabel>Pincode<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appincode" value={field.appincode} />
                   </div>
                   {ownerState.length === (index + 1) && (
@@ -451,8 +473,6 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                       />
                     </div>
                   )}
-
-
                 </div>
               </div>
             </div>

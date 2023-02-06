@@ -887,6 +887,22 @@ export const newConfig = [
         isCreateEnabled: true,
         withoutLabel: true,
         hideInEmployee: true,
+        nextStep: 'license-declaration-det',
+      },
+      ,
+      {
+        type: "component",
+        route: "license-declaration-det",
+        isMandatory: true,
+        component: "TLDeclarationDet",
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "licenseentry",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
       }
     ]
   }
