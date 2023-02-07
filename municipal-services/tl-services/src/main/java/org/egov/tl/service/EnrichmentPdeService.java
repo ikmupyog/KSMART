@@ -91,16 +91,16 @@ public class EnrichmentPdeService {
             }
             tradeLicense.getTradeLicenseDetail().getAddress().setTenantId(tradeLicense.getTenantId());
             tradeLicense.getTradeLicenseDetail().getAddress().setId(UUID.randomUUID().toString());
-            InstitutionMaster ins = new InstitutionMaster();
+            EstablishmentUnit ins = new EstablishmentUnit();
             ins.setTenantId(tradeLicense.getTenantId());
             ins.setId(UUID.randomUUID().toString());
-            ins.setInstitutionId(null);
-            ins.setInstitutionName(tradeLicense.getTradeName());
+            ins.setEstablishmentUnitId(null);
+            ins.setEstablishmentUnitName(tradeLicense.getTradeName());
             ins.setActive(false);
-            tradeLicense.getTradeLicenseDetail().setInstitutionMaster(ins);
+            tradeLicense.getTradeLicenseDetail().setEstablishmentUnit(ins);
 
             tradeLicense.getTradeLicenseDetail()
-                    .setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitutionMaster().getId());
+                    .setEstablishmentUnitId(tradeLicense.getTradeLicenseDetail().getEstablishmentUnit().getId());
 
             tradeLicense.getTradeLicenseDetail().getStructurePlace().forEach(structurePlace -> {
                 structurePlace.setTenantId(tradeLicense.getTenantId());
@@ -426,10 +426,10 @@ public class EnrichmentPdeService {
             // businessService)) {
             tradeLicense.getTradeLicenseDetail().setAuditDetails(auditDetails);
 
-            InstitutionMaster ins = new InstitutionMaster();
-            ins.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitutionId());
-            ins.setInstitutionName(tradeLicense.getTradeName());
-            tradeLicense.getTradeLicenseDetail().setInstitutionMaster(ins);
+            EstablishmentUnit ins = new EstablishmentUnit();
+            ins.setEstablishmentUnitId(tradeLicense.getTradeLicenseDetail().getEstablishmentUnitId());
+            ins.setEstablishmentUnitName(tradeLicense.getTradeName());
+            tradeLicense.getTradeLicenseDetail().setEstablishmentUnit(ins);
 
             tradeLicense.getTradeLicenseDetail().getStructurePlace().forEach(structurePlace -> {
                 structurePlace.setTenantId(tradeLicense.getTenantId());

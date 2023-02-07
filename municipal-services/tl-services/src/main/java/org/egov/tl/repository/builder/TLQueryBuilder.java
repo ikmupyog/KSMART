@@ -114,13 +114,13 @@ public class TLQueryBuilder {
             +
             "tlowner.id as tlowner_id,tlowner.active as useractive,"
             +
-            "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as tld_createdTime, tld.institutionid as tld_institutionid, "
+            "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as tld_createdTime, tld.establishmentunitid as tld_establishmentunitid, "
             +
             " tlstructplace.id as tlstructplace_id, tlstructplace.doorno as tlstructplace_doorno, tlstructplace.doorsub as doorsub,"
             +
             " tlstructplace.stallno as stallno, tlstructplace.active as tlstructplace_active, tltax.id as tltax_id, tltax.active as tltax_active, "
             +
-            " tltax.service, tltax.fromyear, tltax.fromperiod, tltax.toyear, tltax.toperiod, tltax.headcode, tltax.amount,firsthalfcur,secondhalfcur, inst.id as inst_id, inst.institutionid as instmaster_instid, inst.* "
+            " tltax.service, tltax.fromyear, tltax.fromperiod, tltax.toyear, tltax.toperiod, tltax.headcode, tltax.amount,firsthalfcur,secondhalfcur, unit.id as unit_id, unit.establishmentunitid as unit_estunitid, unit.* "
             +
             " FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
@@ -134,7 +134,7 @@ public class TLQueryBuilder {
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_taxdetails_pde tltax ON tltax.tradelicensedetailid = tld.id "
             + LEFT_OUTER_JOIN_STRING
-            + "eg_institution inst ON inst.id = tld.institutionid ";
+            + "eg_establishmentunit unit ON unit.id = tld.establishmentunitid ";
 
     public String getTLSearchQuery(TradeLicenseSearchCriteria criteria, List<Object> preparedStmtList,
             boolean isCount) {
@@ -429,6 +429,7 @@ public class TLQueryBuilder {
             boolean isCount) {
 
         StringBuilder builder = new StringBuilder(QUERYPDE);
+        String QUERYDOOR;
         addClauseIfRequired(preparedStmtList, builder);
         builder.append("  ((tl.workflowcode = ?) ");
         preparedStmtList.add("PdeTL");
@@ -472,7 +473,9 @@ public class TLQueryBuilder {
 
         if (criteria.getOwnerName() != null) {
             addClauseIfRequired(preparedStmtList, builder);
-            builder.append("  LOWER(tlowner.ownername) LIKE LOWER(?) ");
+            builder.append(
+                    "  tlowner.tradelicensedetailid=(select distinct tradelicensedetailid from eg_tl_owner_pde where tradelicensedetailid=tld.id and LOWER(ownername) LIKE LOWER(?) ) ");
+            // builder.append(" LOWER(tlowner.ownername) LIKE LOWER(?) ");
             preparedStmtList.add(criteria.getOwnerName().split("\\.")[0] + "%");
         }
 
@@ -483,15 +486,18 @@ public class TLQueryBuilder {
         }
 
         if (criteria.getDoorNo() != null) {
-            addClauseIfRequired(preparedStmtList, builder);
-            builder.append("  tlstructplace.doorno = ? ");
-            preparedStmtList.add(criteria.getDoorNo());
-        }
 
-        if (criteria.getDoorNoSub() != null) {
             addClauseIfRequired(preparedStmtList, builder);
-            builder.append("  tlstructplace.doorsub = ? ");
-            preparedStmtList.add(criteria.getDoorNoSub());
+            if (criteria.getDoorNoSub() != null) {
+                builder.append(
+                        "  tlstructplace.tradelicensedetailid = (select distinct tradelicensedetailid from eg_tl_structureplacedetail where tradelicensedetailid=tld.id and doorno=? and doorsub=?) ");
+                preparedStmtList.add(criteria.getDoorNo());
+                preparedStmtList.add(criteria.getDoorNoSub());
+            } else {
+                builder.append(
+                        "  tlstructplace.tradelicensedetailid = (select distinct tradelicensedetailid from eg_tl_structureplacedetail where tradelicensedetailid=tld.id and doorno=?) ");
+                preparedStmtList.add(criteria.getDoorNo());
+            }
         }
 
         if (criteria.getApplicationNumber() != null) {

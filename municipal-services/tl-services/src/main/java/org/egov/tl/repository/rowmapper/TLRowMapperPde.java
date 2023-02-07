@@ -113,8 +113,7 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
         String tenantId = tradeLicense.getTenantId();
         String tradeLicenseDetailId = rs.getString("tld_id");
         if (tradeLicense.getTradeLicenseDetail() == null) {
-            Address address = Address.builder().addressId(rs.getString("addressId"))
-                    .pincode(rs.getString("pincode"))
+            Address address = Address.builder().pincode(rs.getString("pincode"))
                     .id(rs.getString("tl_ad_id"))
                     .doorNo(rs.getString("doorno"))
                     .street(rs.getString("street"))
@@ -124,7 +123,6 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     .wardNo(rs.getString("wardno") == null ? null : Integer.parseInt(rs.getString("wardno")))
                     .lbBuildingCode(rs.getString("lbbuildingcode"))
                     .lbBuildingName(rs.getString("lbbuildingname"))
-                    .buildingType(rs.getString("buildingtype"))
                     .build();
 
             AuditDetails auditdetails = AuditDetails.builder()
@@ -134,12 +132,12 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     .lastModifiedTime(rs.getLong("tld_createdTime"))
                     .build();
 
-            InstitutionMaster institutionMaster = InstitutionMaster.builder()
-                    .id(rs.getString("inst_id"))
+            EstablishmentUnit institutionMaster = EstablishmentUnit.builder()
+                    .id(rs.getString("unit_id"))
                     .tenantId(tenantId)
-                    .institutionId(rs.getString("instmaster_instid"))
-                    .institutionName(rs.getString("institutionname"))
-                    .institutionNameLocal(rs.getString("institutionnamelocal"))
+                    .establishmentUnitId(rs.getString("unit_estunitid"))
+                    .establishmentUnitName(rs.getString("establishmentunitname"))
+                    .establishmentUnitNameLocal(rs.getString("establishmentunitnamelocal"))
                     .gstNumber(rs.getString("gstnumber"))
                     .panNumber(rs.getString("pannumber"))
                     .address(rs.getString("address"))
@@ -149,9 +147,7 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
 
             // try {
             TradeLicenseDetail tradeLicenseDetail = TradeLicenseDetail.builder()
-                    .surveyNo(rs.getString("surveyno"))
                     .channel(TradeLicenseDetail.ChannelEnum.fromValue(rs.getString("channel")))
-                    .subOwnerShipCategory(rs.getString("subownershipcategory"))
                     .id(tradeLicenseDetailId)
                     .address(address)
                     .auditDetails(auditdetails)
@@ -160,8 +156,9 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                     .capitalInvestment(rs.getDouble("capitalinvestment"))
                     .enterpriseType(rs.getString("enterprisetype"))
                     .licenseeType(rs.getString("licenseetype"))
-                    .institutionId(rs.getString("tld_institutionid"))
-                    .institutionMaster(institutionMaster)
+                    .establishmentUnitId(rs.getString("tld_establishmentunitid"))
+                    .establishmentUnit(institutionMaster)
+                    .ownershipCategory(rs.getString("ownershipcategory"))
                     .build();
 
             tradeLicense.setTradeLicenseDetail(tradeLicenseDetail);

@@ -58,6 +58,11 @@ public class TradeLicenseDetail {
 
   @Size(max = 64)
   @SafeHtml
+  @JsonProperty("ownershipCategory")
+  private String ownershipCategory = null;
+
+  @Size(max = 64)
+  @SafeHtml
   @JsonProperty("structureType")
   private String structureType;
 
@@ -215,13 +220,13 @@ public class TradeLicenseDetail {
 
   List<TaxPde> taxPdefinal = new ArrayList<>();
 
-  @JsonProperty("institutionMaster")
-  private InstitutionMaster institutionMaster;
+  @JsonProperty("establishmentUnit")
+  private EstablishmentUnit establishmentUnit;
 
   @Size(max = 64)
   @SafeHtml
-  @JsonProperty("institutionId")
-  private String institutionId = null;
+  @JsonProperty("establishmentUnitId")
+  private String establishmentUnitId = null;
 
   public TradeLicenseDetail addOwnersItem(OwnerInfo ownersItem) {
     if (this.owners == null)
