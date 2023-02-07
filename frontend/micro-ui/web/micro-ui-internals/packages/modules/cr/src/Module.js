@@ -28,7 +28,7 @@ import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
 import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPlaceInstitution";
-import BirthPlaceHome from "../src/pageComponents/birthComponents/BirthPlaceHome";
+
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -78,7 +78,7 @@ import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowl
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
-
+import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
@@ -186,7 +186,6 @@ const componentsToRegister = {
   ParentsDetails,
   BirthPlaceHospital,
   BirthPlaceInstitution,
-  BirthPlaceHome,
 
  //////////////////
   // SearchRegistry,
@@ -219,6 +218,7 @@ const componentsToRegister = {
   StatisticalInfo,
   StatisticalInfoContinue,
   ApplicantDetails,
+  InsideIndia,
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
