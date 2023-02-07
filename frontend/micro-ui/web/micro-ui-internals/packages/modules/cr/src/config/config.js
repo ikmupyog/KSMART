@@ -983,6 +983,41 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
+        route: "hospital",
+        component: "Hospital",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH_HOSPITAL",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "Hospital",
+        nextStep: "address-of-decesed",
+        type: "component",
+        hideInEmployee: true,
+      },
+      {
+        route: "institution",
+        component: "Institution",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH_INSTITUTION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "Institution",
+        nextStep: "address-of-decesed",
+        type: "component",
+        hideInEmployee: true,
+      },
+      
+      {
         route: "Informant-Details",
         component: "InformentAddress",
         texts: {

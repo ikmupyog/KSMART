@@ -78,6 +78,8 @@ import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowl
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
+import Hospital from "./pageComponents/deathComponents/Hospital";
+import Institution from "./pageComponents/deathComponents/Institution";
 
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
@@ -219,6 +221,8 @@ const componentsToRegister = {
   StatisticalInfo,
   StatisticalInfoContinue,
   ApplicantDetails,
+  Hospital,
+  Institution,
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
