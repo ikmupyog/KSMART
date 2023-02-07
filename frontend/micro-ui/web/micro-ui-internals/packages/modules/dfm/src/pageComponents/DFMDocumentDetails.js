@@ -135,7 +135,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
   // console.log(afterRemove);
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
 
       <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t} >
 
@@ -188,7 +188,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
               <div className="Common_terms_checkbox">
@@ -201,7 +201,7 @@ const DFMDocumentDetails = ({ t, config, onSelect, userType, formData }) => {
               <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
             </div>
           </div>
-        </div>
+        </div> */}
       </FormStep>
     </React.Fragment>
   );

@@ -208,7 +208,7 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep
         config={config}
         onSelect={goNext}
@@ -560,6 +560,20 @@ const DFMServiceDetails = ({ t, config, onSelect, userType, formData }) => {
                 </div>
                
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <div className="Common_terms_checkbox">
+                <div className="input-checkbox">
+                  <input className="" type="checkbox" onClick={(e) => handleChange(e.target.checked, "checkbox")} />
+                  <label>{`${t("DFM_DECLARE_LABEL")}`}</label>
+                </div>
+              </div>
+              {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
+              <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
             </div>
           </div>
         </div>

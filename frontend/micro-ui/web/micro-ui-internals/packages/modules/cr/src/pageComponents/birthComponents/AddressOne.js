@@ -1,255 +1,161 @@
-import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, TextArea, NewRadioButton } from "@egovernments/digit-ui-react-components";
+import React, { useState, useEffect } from "react";
+import {
+  FormStep,
+  CardLabel,
+  TextInput,
+  Dropdown,
+  BackButton,
+  CheckBox,
+  Toast,
+  LabelFieldPair,
+  RadioButtons,
+} from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
-import Address from "./Address"
-import AddressOutsideIndia from "./AddressOutsideIndia";
-const AddressOne = ({ config, onSelect, userType, formData }) => {
+
+const Address = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
-  const [checked, setChecked] = useState(false);
+  const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: Occupation = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
-  const { data: Country = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const { data: State = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-  const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  // const { data: LBType, isLoading } = Digit.Hooks.useTenants();
-  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  // const [setReligion, setSelectedReligion] = useState(formData?.AddressOneDetails?.setReligion);
-  const [setPlaceType, setSelectedPlaceType] = useState(formData?.AddressOneDetails?.setPlaceType);
-  const [setOccupationMain, setSelectedOccupationMain] = useState(formData?.AddressOneDetails?.setOccupationMain);
-  const [setStateName, setSelectedStateName] = useState(formData?.AddressOneDetails?.setStateName);
-  const [setCountry, setSelectedCountry] = useState(formData?.AddressOneDetails?.setCountry);
-  const [setDistrict, setSelectedDistrict] = useState(formData?.AddressOneDetails?.setDistrict);
-  const [setLBType, setSelectedLBType] = useState(formData?.AddressOneDetails?.setLBType);
-  const [setLBName, setSelectedLBName] = useState(formData?.AddressOneDetails?.setLBName);
-  const [LocalityMl, setLocalityMl] = useState(formData?.AddressOneDetails?.LocalityMl);
-  const [CityMl, setCityMl] = useState(formData?.AddressOneDetails?.CityMl);
-  const [OccupationOthers, setOccupationOthers] = useState(formData?.AddressOneDetails?.OccupationOthers);
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const cmbUrbanRural = [
-    { i18nKey: "Urban", code: "URBAN" },
-    { i18nKey: "Rural", code: "RURAL" },
-  ];
-  const onSkip = () => onSelect();
-  // function selectReligion(value) {
-  //   setSelectedReligion(value);
-  // }
-  function selectPlaceType(value) {
-    setSelectedPlaceType(value);
-  }
-  function selectOccupationMain(value) {
-    setSelectedOccupationMain(value);
-  }
+  const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
 
-  function SelectOccupationOthers(e) {
-    setOccupationOthers(e.target.value);
-  }
-  function SelectLocalityMl(e) {
-    setLocalityMl(e.target.value);
-  }
-  function SelectCityMl(e) {
-    setCityMl(e.target.value);
-  }
+  const [toast, setToast] = useState(false);
+  const [PresentCountryError, setPresentCountryError] = useState(formData?.AddressDetails?.PresentCountry ? false : false);
+  const [PresentStateNameError, setPresentStateNameError] = useState(formData?.AddressDetails?.PresentStateName ? false : false);
 
-  function SelectCountry(value) {
-    setSelectedCountry(value);
-  }
-  function SelectStateName(value) {
-    setSelectedStateName(value);
-  }
-  function SelectDistrict(value) {
-    setSelectedDistrict(value);
-  }
-  function SelectLBType(value) {
-    setSelectedLBType(value);
-  }
-  function SelectLBName(value) {
-    setSelectedLBName(value);
-  }
+  const [PresentCountry, setPresentCountry] = useState(formData?.AddressDetails?.PresentCountry ? formData?.AddressDetails?.PresentCountry : null);
+  const [PresentStateName, setPresentStateName] = useState(
+    formData?.AddressDetails?.PresentStateName ? formData?.AddressDetails?.PresentStateName : null
+  );
 
-  let cmbOccupationMain = [];
-  let cmbState = [];
-  let cmbDistrict = [];
-  let cmbLBType = [];
   let cmbCountry = [];
+  let cmbState = [];
 
-  Occupation &&
-    Occupation["common-masters"] &&
-    Occupation["common-masters"].Occupation.map((ob) => {
-      cmbOccupationMain.push(ob);
-    });
-  State &&
-    State["common-masters"] &&
-    State["common-masters"].State.map((ob) => {
-      cmbState.push(ob);
-    });
-  District &&
-    District["common-masters"] &&
-    District["common-masters"].District.map((ob) => {
-      cmbDistrict.push(ob);
-    });
-  LBType &&
-    LBType["common-masters"] &&
-    LBType["common-masters"].LBType.map((ob) => {
-      cmbLBType.push(ob);
-    });
   Country &&
     Country["common-masters"] &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
-  // useEffect(() => {
-  //   if (isInitialRender) {
-  //   console.log("District" + districtid);
-  //   console.log(localbodies);
-  //   setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === District.districtid));
-  //   }
-  //   }, [lbs, isInitialRender]);
-  const [selectedValue, setSelectedValue] = React.useState(null);
 
-  const goNext = () => {
-    // sessionStorage.setItem("PlaceOfActivity", setPlaceofActivity ? setPlaceofActivity.code : null);
-    // sessionStorage.setItem("Religion", setReligion ? setReligion.code : null);
-    sessionStorage.setItem("Country", setCountry ? setCountry.code : null);
-    sessionStorage.setItem("StateName", setStateName ? setStateName.code : null);
-    sessionStorage.setItem("District", setDistrict ? setDistrict.code : null);
-    sessionStorage.setItem("LBType", setLBType ? setLBType.code : null);
-    sessionStorage.setItem("LBName", setLBName ? setLBName.code : null);
-    sessionStorage.setItem("OccupationMain", setOccupationMain ? setOccupationMain.code : null);
-    sessionStorage.setItem("PlaceType", setPlaceType ? setPlaceType.code : null);
-    sessionStorage.setItem("OccupationOthers", OccupationOthers);
-    sessionStorage.setItem("CityMl", CityMl);
-    sessionStorage.setItem("LocalityMl", LocalityMl);
-
-    onSelect(config.key, {
-      // setPlaceofActivity,
-      // setReligion,
-      setOccupationMain,
-      OccupationOthers,
-      setPlaceType,
-      setCountry,
-      setStateName,
-      setDistrict,
-      setLBType,
-      setLBName,
-      LocalityMl,
-      CityMl,
+  State &&
+    State["common-masters"] &&
+    State["common-masters"].State.map((ob) => {
+      cmbState.push(ob);
     });
+
+  let cmbfilterCountry = [];
+  let cmbfilterState = [];
+
+  useEffect(() => {
+    if (cmbCountry.length > 0) {
+      cmbfilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.name.includes("India"));
+      setPresentCountry(cmbfilterCountry[0]);
+    }
+    if (cmbState.length > 0) {
+      cmbfilterState = cmbState.filter((cmbState) => cmbState.name.includes("Kerala"));
+      setPresentStateName(cmbfilterState[0]);
+    }
+  }, [Country, State]);
+
+  const onSkip = () => onSelect();
+
+  function setSelectPresentCountry(value) {
+    setPresentCountry(value);
+  }
+  function setSelectPresentStateName(value) {
+    setPresentStateName(value);
+  }
+
+  let validFlag = true;
+  const goNext = () => {
+    if (PresentCountry == null) {
+      validFlag = false;
+      setPresentCountryError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setPresentCountryError(false);
+    }
+    if (PresentStateName == null) {
+      validFlag = false;
+      setPresentStateNameError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setPresentStateNameError(false);
+    }
+
+    if (validFlag === true) {
+      sessionStorage.setItem("PresentCountry", PresentCountry ? PresentCountry.code : null);
+      sessionStorage.setItem("PresentStateName", PresentStateName ? PresentStateName.code : null);
+
+      onSelect(config.key, {
+        PresentCountry,
+        PresentStateName,
+      });
+    }
   };
+
+  if (isCountryLoading || isStateLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <React.Fragment>
-      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_ADDRESS")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARANT_ADDRESS_TIME_OF_BIRTH")}`}</span>{" "}
             </h1>
           </div>
         </div>
+
         <div className="row">
-          <div className="col-md-12">         
-           
-            <div className="radios">
-              <div className="radiobuttons">
-                <input
-                  className="radio-margin"
-                  type="radio"
-                  name="radio-group"
-                  id="radio-1"
-                  value="1"
-                  checked={selectedValue === "1"}
-                  onChange={(e) => setSelectedValue(e.target.value)}
-                />
-                <label htmlFor="radio-1">CR_INSIDE_LOCAL_BODY</label>
-              </div>
-              <div className="radiobuttons">
-                <input
-                  className="radio-margin"
-                  type="radio"
-                  name="radio-group"
-                  id="radio-2"
-                  value="2"
-                  checked={selectedValue === "2"}
-                  onChange={(e) => setSelectedValue(e.target.value)}
-                />
-                <label htmlFor="radio-2">CR_INSIDE_KERALA</label>
-              </div>
-              <div className="radiobuttons">
-                {" "}
-                <input
-                  className="radio-margin"
-                  type="radio"
-                  name="radio-group"
-                  id="radio-3"
-                  value="3"
-                  checked={selectedValue === "3"}
-                  onChange={(e) => setSelectedValue(e.target.value)}
-                />
-                <label htmlFor="radio-3">CR_INSIDE_INDIA</label>
-              </div>
-              <div className="radiobuttons">
-                <input
-                  className="radio-margin"
-                  type="radio"
-                  name="radio-group"
-                  id="radio-4"
-                  value="4"
-                  checked={selectedValue === "4"}
-                  onChange={(e) => setSelectedValue(e.target.value)}
-                />
-                <label htmlFor="radio-4">CR_OUTSIDE_INDIA</label>
-              </div>
+          <div className="col-md-12">
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CS_COMMON_COUNTRY")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbCountry} selected={PresentCountry} select={setSelectPresentCountry} />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CS_COMMON_STATE")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbState} selected={PresentStateName} select={setSelectPresentStateName} />
             </div>
           </div>
         </div>
 
-      
-
-        <div className="row">
-          {selectedValue === "1" && (
-            <div id="div-1">
-              <div className="col-md-12">
-              <Address />
-            </div>
-            </div>
-          )}
-          {selectedValue === "2" && (
-            <div id="div-2">
-              <div className="col-md-12">
-               
-                  
-                <Address />           
-              
-              </div>
-            </div>
-          )}
-
-
-          {selectedValue === "3" && (
-            <div id="div-3">
-              <div className="col-md-12">
-              <Address />                  
-                 
-                </div>              
-             
-              </div>           
-          )}
-
-
-          {selectedValue === "4" && (
-            <div id="div-4">
-              <div className="col-md-12">
-              <AddressOutsideIndia />  
-              </div>
-            </div>
-          )}
-         
-        </div>
-
+        {toast && (
+          <Toast
+            error={PresentCountryError || PresentStateNameError}
+            label={
+              PresentCountryError || PresentStateNameError
+                ? PresentCountryError
+                  ? t(`BIRTH_ERROR_PRESENT_COUNTRY_CHOOSE`)
+                  : PresentStateNameError
+                  ? t(`BIRTH_ERROR_PRESENT_STATE_CHOOSE`)
+                  : setToast(false)
+                : setToast(false)
+            }
+            onClose={() => setToast(false)}
+          />
+        )}
+        {""}
       </FormStep>
     </React.Fragment>
   );
 };
-export default AddressOne;
+export default Address;
