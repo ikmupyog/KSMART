@@ -3,14 +3,17 @@ package org.ksmart.death.deathapplication.web.controllers;
 import java.util.List;
 import javax.validation.Valid;
 
+import org.ksmart.death.common.contract.RequestInfoWrapper;
 import org.ksmart.death.deathapplication.service.DeathApplnService;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtlResponse;
+import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.ksmart.death.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +50,22 @@ public class DeathApplnController {
     public ResponseEntity<DeathDtlResponse> create(@Valid @RequestBody DeathDtlRequest request) {
 
         List<DeathDtl> deathDetails = deathService.create(request);
+
+        DeathDtlResponse response = DeathDtlResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                        .deathCertificateDtls(deathDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
+    }
+
+   // @Override
+     //Jasmine  on 06.02.2023 - Death search Controller 
+    @PostMapping("/deathdetails/_searchdeath")
+    public ResponseEntity<DeathDtlResponse> search(@RequestBody RequestInfoWrapper request,
+                                                            @ModelAttribute DeathSearchCriteria criteria) {
+
+        List<DeathDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
 
         DeathDtlResponse response = DeathDtlResponse
                                         .builder()
