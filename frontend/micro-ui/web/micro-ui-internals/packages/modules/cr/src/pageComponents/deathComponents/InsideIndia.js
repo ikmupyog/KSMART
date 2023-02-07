@@ -75,32 +75,32 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
   let cmbFilterCountry = [];
   let currentLB = [];
 
-  useEffect(() => {
-    if (isInitialRender) {
-      // if (localbodies.length > 0) {
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     // if (localbodies.length > 0) {
 
-      cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-      setPresentCountry(cmbFilterCountry[0]);
-      //   cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-      //   setAdrsStateName(cmbFilterState[0]);
-      //   cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
-      //   setAdrsDistrict(cmbFilterDistrict[0]);
-      //   cmbFilterLBtype = cmbLBType.filter((cmbLBType) => cmbLBType.code === currentLB[0].city.lbtypecode);
-      //   setAdrsLBTypeName(cmbFilterLBtype[0]);
-      //   cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
-      //   setLbsTalukvalue(cmbFilterTaluk);
-      //   cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-      //   console.log(cmbFilterVillage);
-      //   setLbsVillagevalue(cmbFilterVillage);
-      //   setIsInitialRender(false);
-    }
-    // }
-  }, [
-    Country,
-    ,
-    // State, District, LBType, localbodies,Talukvalues,Villagevalues
-    isInitialRender,
-  ]);
+  //     cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+  //     setPresentCountry(cmbFilterCountry[0]);
+  //     //   cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+  //     //   setAdrsStateName(cmbFilterState[0]);
+  //     //   cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
+  //     //   setAdrsDistrict(cmbFilterDistrict[0]);
+  //     //   cmbFilterLBtype = cmbLBType.filter((cmbLBType) => cmbLBType.code === currentLB[0].city.lbtypecode);
+  //     //   setAdrsLBTypeName(cmbFilterLBtype[0]);
+  //     //   cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
+  //     //   setLbsTalukvalue(cmbFilterTaluk);
+  //     //   cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+  //     //   console.log(cmbFilterVillage);
+  //     //   setLbsVillagevalue(cmbFilterVillage);
+  //     //   setIsInitialRender(false);
+  //   }
+  //   // }
+  // }, [
+  //   Country,
+  //   ,
+  //   // State, District, LBType, localbodies,Talukvalues,Villagevalues
+  //   isInitialRender,
+  // ]);
   let cmbTaluk = [];
   let cmbVillage = [];
   let cmbDistrict = [];
