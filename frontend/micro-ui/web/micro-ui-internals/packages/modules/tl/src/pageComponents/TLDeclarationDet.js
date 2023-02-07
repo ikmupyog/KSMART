@@ -5,7 +5,6 @@ import Timeline from "../components/TLTimeline";
 
 const TLDeclarationDet = ({ t, config, onSelect, formData }) => {
 
-  console.log("selected data"+JSON.stringify(formData));
   const [documents, setdocuments] = useState();
   const isEdit = window.location.href.includes("/edit-application/")||window.location.href.includes("renew-trade");
   let validation = {};

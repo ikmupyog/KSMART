@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Timeline from "../components/TLTimeline";
 
 const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
-  console.log(JSON.stringify(formData));
   let documentList = [
     "OWNERIDPROOF",
     "OWNERSHIPPROOF",
@@ -129,12 +128,13 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
         </div>
         <div className="row"><div className="col-md-12" ><CardLabel>{`${t("TL_LICENSE_DECLARATION_MSG_ONE")}`}</CardLabel></div> 
         </div>
+        <div className="row"><div className="col-md-12" ><CardLabel>{`${t("TL_LICENSE_DECLARATION_MSG_FOUR")}`}</CardLabel></div> 
+        </div>
         <div className="row"><div className="col-md-12" ><CardLabel>{`${t("TL_LICENSE_DECLARATION_MSG_TWO")}`}</CardLabel></div> 
         </div>
         <div className="row"><div className="col-md-12" ><CardLabel>{`${t("TL_LICENSE_DECLARATION_MSG_THREE")}`}</CardLabel></div> 
         </div>
-        <div className="row"><div className="col-md-12" ><CardLabel>{`${t("TL_LICENSE_DECLARATION_MSG_FOUR")}`}</CardLabel></div> 
-        </div>
+      
 
 
       </FormStep>
