@@ -119,6 +119,15 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
   const useTLFinancialYear = () => {
     return useQuery("TL_TRADE_FINANCIAL_YEAR", () => MdmsService.getTLFinancialYear(tenantId, moduleCode, type), config);
   };
+  const useTLDistrict = () => {
+    return useQuery("TL_DISTRICT", () => MdmsService.getTLDistrict(tenantId, moduleCode, type), config);
+  };
+  const useTLLBType = () => {
+    return useQuery("TL_LBTYPE", () => MdmsService.getTLLBType(tenantId, moduleCode, type), config);
+  };
+  const useTLLocalbody = () => {
+    return useQuery("TL_LOCALBODY", () => MdmsService.getTLLocalbody(tenantId, moduleCode, type), config);
+  };
   const _default = () => {
     return useQuery([tenantId, moduleCode, type], () => MdmsService.getMultipleTypes(tenantId, moduleCode, type), config);
   };
@@ -154,6 +163,12 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
       return useTradeOwnershipSubType();
     case "FinancialPeriod":
       return useTLFinancialPeriod();
+    case "District":
+      return useTLDistrict();
+    case "LBType":
+        return useTLLBType();
+    case "Localbody" :
+      return useTLLocalbody();
     default:
       return _default();
   }

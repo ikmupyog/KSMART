@@ -3,19 +3,21 @@ import { CardLabel, DatePicker, TextInput } from "@egovernments/digit-ui-react-c
 import { FormStep, RadioOrSelect, RadioButtons } from "@egovernments/digit-ui-react-components";
 import Timeline from "../components/TLTimeline";
 
-const TLDeclarationDet = ({ t, config, onSelect, userType, formData }) => {
-  const [documents, setdocuments] = useState(formData.owners?.documents);
+const TLDeclarationDet = ({ t, config, onSelect, formData }) => {
+
+  console.log("selected data"+JSON.stringify(formData));
+  const [documents, setdocuments] = useState();
   const isEdit = window.location.href.includes("/edit-application/")||window.location.href.includes("renew-trade");
   let validation = {};
   const onSkip = () => onSelect();
 
   function goNext() {
-    onSelect(config.key, {  });
+    onSelect(config.key, {formData});
   }
   return (
     <React.Fragment>
-    {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-    {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+    {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+    {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
 
     <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">    
