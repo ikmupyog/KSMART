@@ -1,4 +1,4 @@
-package org.ksmart.death.deathapplication.web.models;
+package org.ksmart.death.deathregistry.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.Setter;
 /**
      * Creates 
      * Jasmine
-     * on  06/03/2023
+     * on  07/03/2023
      */
     
 @Getter
@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DeathSearchCriteria {
+public class DeathRegistryCriteria {
     
     @JsonProperty("TenantId")
     private String tenantId;
@@ -32,11 +32,11 @@ public class DeathSearchCriteria {
     private Long DateOfDeath;
 
 
-    @JsonProperty("registrationNo")
+    @JsonProperty("RegistrationNo")
     private String registrationNo;
 
-    // @JsonProperty("deathApplicationNo")
-    // private String deathApplicationNo;
+    @JsonProperty("DeathApplicationNo")
+    private String deathApplicationNo;
 
     @JsonProperty("DeathACKNo")
     private String deathACKNo;

@@ -26,8 +26,8 @@ import org.egov.common.contract.request.RequestInfo;
 @Service
 public class DeathApplnService {
 
-   //  private final DeathProducer producer;
-   //  private final DeathConfiguration deathConfig;
+     private final DeathProducer producer;
+    // private final DeathConfiguration deathConfig;
    //  private final DeathEnrichment enrichmentService;
    //  private final DeathMdmsUtil util;
    //  private final WorkflowIntegrator workflowIntegrator;
@@ -36,13 +36,13 @@ public class DeathApplnService {
      private final DeathApplnRepository repository;
 
      @Autowired
-     DeathApplnService(DeathApplnRepository repository){
+     DeathApplnService(DeathApplnRepository repository ,DeathProducer producer){
           
-     // DeathProducer producer,DeathConfiguration deathConfig,
+     //,DeathConfiguration deathConfig
      //             DeathEnrichment enrichmentService,DeathMdmsUtil util,MDMSValidator mdmsValidator,
      //             DeathApplnValidator validatorService,,WorkflowIntegrator workflowIntegrator){
-       //  this.producer = producer;
-        // this.deathConfig = deathConfig;
+         this.producer = producer;
+       //  this.deathConfig = deathConfig;
       //   this.workflowIntegrator = workflowIntegrator;
        //  this.enrichmentService = enrichmentService;
        //  this.util = util;
@@ -60,5 +60,36 @@ public class DeathApplnService {
     public List<DeathDtl> search(DeathSearchCriteria criteria, RequestInfo requestInfo) {
      return repository.getDeathApplication(criteria);
      }
+     //Jasmine 07.02.2023
+     public List<DeathDtl> update(DeathDtlRequest request) {
+      
+          String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
+  
+          List<DeathDtl> searchResult = repository.getDeathApplication(DeathSearchCriteria
+                                                    .builder()
+                                                    .deathACKNo(ackNumber)
+                                                    //.id(id)
+                                                    .build());
+          //validatorService.validateUpdate(request, searchResult);
+  
+         // mdmsValidator.validateMDMSData(request,mdmsData);
+  
+         DeathDtlRequest result = DeathDtlRequest
+                                  .builder()
+                                  .requestInfo(request.getRequestInfo())
+                                  .deathCertificateDtls(searchResult)
+                                  .build();
+  
+  
+         // enrichmentService.enrichUpdate(request);
+          
+        //  workflowIntegrator.callWorkFlow(request);
+          
+        //  producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+          
+          return result.getDeathCertificateDtls();
+      }
+
+
     
 }

@@ -75,4 +75,24 @@ public class DeathApplnController {
         return ResponseEntity.ok(response);
     }
     
+    //Jasmine on 07.02.2023
+    
+    @PostMapping("/deathdetails/_updatedeath")
+
+    public ResponseEntity<DeathDtlResponse> update(@RequestBody DeathDtlRequest request) {
+ 
+        List<DeathDtl> deathDetails = deathService.update(request);
+
+        String status=request.getDeathCertificateDtls().get(0).getDeathWorkFlowDtls().getApplicationStatus();
+
+        String applicationType =request.getDeathCertificateDtls().get(0).getDeathWorkFlowDtls().getApplicationType();
+
+        DeathDtlResponse response = DeathDtlResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                        .deathCertificateDtls(deathDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
+    
+}
 }
