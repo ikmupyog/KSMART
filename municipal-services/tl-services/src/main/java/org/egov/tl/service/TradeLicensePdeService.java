@@ -205,15 +205,15 @@ public class TradeLicensePdeService {
         if (tradeLicenseRequest.getLicenses().get(0).getAction().equals("APPROVE")) {
             IDGenerated = idGenerator.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_NEWL,
                     TLConstants.REG_UNIT_CAPTION);
-            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getInstitutionMaster()
-                    .setInstitutionId(IDGenerated);
-            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getInstitutionMaster().setActive(true);
+            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getEstablishmentUnit()
+                    .setEstablishmentUnitId(IDGenerated);
+            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getEstablishmentUnit().setActive(true);
             tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().setLicenseUnitId(
                     IDGenerated);
         } else {
-            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getInstitutionMaster()
-                    .setInstitutionId(null);
-            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getInstitutionMaster().setActive(false);
+            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getEstablishmentUnit()
+                    .setEstablishmentUnitId(null);
+            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getEstablishmentUnit().setActive(false);
             tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().setLicenseUnitId(null);
         }
         if (!CollectionUtils.isEmpty(tradeLicenseRequest.getLicenses().get(0).getAssignee())) {
