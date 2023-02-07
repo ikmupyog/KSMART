@@ -10,9 +10,9 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   let validation = {};
   const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
   const { data: institutionid = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
-  const [Institution, setInstitution] = useState(formData?.InstitutionDetails?.Institution);
-  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InstitutionDetails?.Institution);
-  const [InstitutionId, setInstitutionId] = useState(formData?.InstitutionDetails?.InstitutionId);
+  const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
+  const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   

@@ -377,13 +377,29 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
+      {
+        route: "birthplace-Home",
+        component: "BirthPlaceHome",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BirthPlaceHomeDetails",
+        nextStep: "parents-details",
+        type: "component",
+        hideInEmployee: false,
+      },
       
       {
         route: "parents-details",
         component: "ParentsDetails",
         texts: {
           headerCaption: "",
-          header: "Parents Details",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
