@@ -729,6 +729,43 @@ const getTLFinancialYearList = (tenantId, moduleCode, type) => ({
     ],
   },
 });
+const getTLDistrict = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "District", filter: `[?(@.statecode == "kl")]` }],
+      },
+    ],
+  },
+});
+const getTLLBType = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "LBType", filter: `[?((@.code == "LB_TYPE_MUNICIPALITY") || (@.code == "LB_TYPE_CORPORATION"))]` }],
+      },
+    ],
+  },
+});
+const getTLLocalbody = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "tenants", filter: `[?(@.city.statecode == "kl")]` }],
+      },
+    ],
+  },
+});
+
 
 const getPTFloorList = (tenantId, moduleCode, type) => ({
   type,
@@ -2391,6 +2428,15 @@ export const MdmsService = {
   },
   getTLFinancialYear: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLFinancialYearList(tenantId, moduleCode), moduleCode);
+  },
+  getTLDistrict : (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLDistrict(tenantId, moduleCode), moduleCode);
+  },
+  getTLLBType : (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLLBType(tenantId, moduleCode), moduleCode);
+  },
+  getTLLocalbody  : (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLLocalbody(tenantId, moduleCode), moduleCode);
   },
   getFloorList: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getPTFloorList(tenantId, moduleCode, type), moduleCode);
