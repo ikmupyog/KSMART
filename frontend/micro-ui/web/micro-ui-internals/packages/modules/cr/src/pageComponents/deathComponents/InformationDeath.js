@@ -31,7 +31,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: AgeUnitvalue = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade"); 
   const { data: OccupationMain = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
-  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMaster");
+  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
 
   const [DateOfDeath, setDateOfDeath] = useState(formData?.InformationDeath?.DateOfDeath ? formData?.InformationDeath?.DateOfDeath : "");
   const [TimeOfDeath, setTimeOfDeath] = useState(formData?.InformationDeath?.TimeOfDeath ? formData?.InformationDeath?.TimeOfDeath : "");
@@ -105,7 +105,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let cmbPlace = [];
   place &&
     place["common-masters"] &&
-    place["common-masters"].PlaceMaster.map((ob) => {
+    place["common-masters"].PlaceMasterDeath.map((ob) => {
       cmbPlace.push(ob);
     });
   function selectReligion(value) {
