@@ -1,24 +1,36 @@
-import { CardLabel, Dropdown, FormStep, LinkButton, RadioButtons, TextInput, TextArea, LabelFieldPair } from "@egovernments/digit-ui-react-components";
+import { CardLabel, Dropdown, FormStep, LinkButton, RadioButtons, TextInput, TextArea, LabelFieldPair, Toast } from "@egovernments/digit-ui-react-components";
 import React, { useState, useReducer, useCallback } from "react";
-import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
 // import { sortDropdownNames } from "../utils/index";
 
 const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
-
+  const [toast, setToast] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   let validation = {};
   const stateId = Digit.ULBService.getStateId();
-
   /** Institution type details */
   const { data: type = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "NatureOfInstitution");
-  const [natureOfInstitution, setNatureOfInstitution] = useState(formData?.TradeDetails?.institution?.natureOfInstitution);
-  const [name, setName] = useState();
+  const [initialrender, setInitialrender] = useState(false);
+  let cmbtype = [];
+  type &&
+    type["TradeLicense"] &&
+    type["TradeLicense"].NatureOfInstitution.map((ob) => {
+      cmbtype.push(ob);
+    });
+  const [natureOfInstitution, setNatureOfInstitution] = useState(formData?.TradeDetails?.institution?.natureOfInstitution ?
+    cmbtype.filter(obj => obj.code === formData?.TradeDetails?.institution?.natureOfInstitution)[0] : "");
+  if (cmbtype.length > 0) {
+    if (!initialrender) {
+      setNatureOfInstitution(formData?.TradeDetails?.institution?.natureOfInstitution ?
+        cmbtype.filter(obj => obj.code === formData?.TradeDetails?.institution?.natureOfInstitution)[0] : "");
+      setInitialrender(true);
+    }
+  }
   const [contactNo, setContactNo] = useState(formData?.TradeDetails?.institution?.contactNo);
   const [email, setEmail] = useState(formData?.TradeDetails?.institution?.email);
   const [address, setAddress] = useState(formData?.TradeDetails?.institution?.address);
   const [institutionName, setInstitutionName] = useState(formData?.TradeDetails?.institution?.institutionName);
   const [organisationregistrationno, setOrganisationregistrationno] = useState(formData?.TradeDetails?.institution?.organisationregistrationno);
-  const [designation, setDesignation] = useState();
   const [licenseUnitId, setLicenseUnitId] = useState(formData?.TradeDetails?.institution?.licenseUnitId);
   /*** institution end */
 
@@ -31,19 +43,17 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
 
 
 
-  let cmbtype = [];
-  type &&
-    type["TradeLicense"] &&
-    type["TradeLicense"].NatureOfInstitution.map((ob) => {
-      cmbtype.push(ob);
-    });
-  const [licenseeType, setLicenseeType] = useState(formData?.TradeDetails?.licenseeType ? formData?.TradeDetails?.licenseeType : { i18nKey: "TL_COMMON_INDIVIDUAL", code: "INDIVIDUAL" });
+
 
   const menu = [
     { i18nKey: "TL_COMMON_INDIVIDUAL", code: "INDIVIDUAL" },
     { i18nKey: "TL_COMMON_JOINT_PARTNERSHIP", code: "JOINT_PARTNERSHIP" },
     { i18nKey: "TL_COMMON_INSTITUTION", code: "INSTITUTION" },
   ];
+
+  const [LicenseeType, setLicenseeType] = useState(formData?.TradeDetails?.licenseeType ?
+    menu?.filter(obj => obj.code === formData?.TradeDetails?.licenseeType)[0]
+    : { i18nKey: "TL_COMMON_INDIVIDUAL", code: "INDIVIDUAL" });
 
   const comenu = [
     { i18nKey: "TL_CO_SO", code: "S/O" },
@@ -168,13 +178,21 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
 
 
   const [appState, dispatchapplicant] = formData?.TradeDetails?.applicant?.length > 0 ? useReducer(reducer, storedAppData, initapplicantedit) : useReducer(reducer, storedAppData, initapplicant);
-  const [ownerState, disptachowner] = formData?.TradeDetails?.owners?.length > 0 ? useReducer(reducerowner, storedOwnerData, initowneredit) :useReducer(reducerowner, storedOwnerData, initowner);
-  
+  const [ownerState, disptachowner] = formData?.TradeDetails?.owners?.length > 0 ? useReducer(reducerowner, storedOwnerData, initowneredit) : useReducer(reducerowner, storedOwnerData, initowner);
+
   function selectLicenseeType(value) {
+    if (value.code !== "JOINT_PARTNERSHIP" && appState.length > 1) {
+      setErrorMessage("Multiple Applicant Found Remove....");
+      setToast(true)
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    }else
     setLicenseeType(value);
   }
 
   function selectLicensingInstitutionType(value) {
+    console.log(value);
     setNatureOfInstitution(value);
   }
 
@@ -187,20 +205,20 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
   }, [dispatchapplicant]);
 
   const handleAppSelectField = useCallback((index, e, key) => {
-    appState[index].careOf = e;
+    appState[index].careOf = e.code;
     // careOf.slice(index,0,e);
   }, [dispatchapplicant, appState]);
 
 
   const goNext = () => {
-    console.log(JSON.stringify(appState));
     let applicant = appState;
     let owners = ownerState;
     let institution = {
       "institutionName": institutionName, contactNo: contactNo,
-      organisationregistrationno: organisationregistrationno, address: address, natureOfInstitution: natureOfInstitution,
+      organisationregistrationno: organisationregistrationno, address: address, natureOfInstitution: natureOfInstitution.code,
       email: email, licenseUnitId: licenseUnitId
     };
+    let licenseeType = LicenseeType.code;
     onSelect(config.key, { applicant, owners, institution, licenseeType });
   };
 
@@ -213,7 +231,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
       <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}  >
 
         <div className="row">
-          <div className="col-md-12" > <header className="card-header">New IFTE & OS License Application</header>
+          <div className="col-md-12" ><header className="card-header">New IFTE & OS License Application</header>
           </div>
         </div>
         <div className="row">
@@ -225,12 +243,13 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <LabelFieldPair style={{ display: "flex" }}><CardLabel style={{ fontSize: "17px", width: "none !important" }}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
-              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={licenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" }} />
+            <LabelFieldPair style={{ display: "flex", }}>
+              <CardLabel style={{ fontSize: "17px", width: "none !important" }}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
+              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex"}} />
             </LabelFieldPair>
           </div>
         </div>
-        {(licenseeType.code === "INDIVIDUAL" || licenseeType.code === "JOINT_PARTNERSHIP") && (
+        {(LicenseeType.code === "INDIVIDUAL" || LicenseeType.code === "JOINT_PARTNERSHIP") && (
 
           appState.map((field, index) => {
             return (
@@ -260,7 +279,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                     <div className="col-md-3">
                       <CardLabel>S/O or D/O<span className="mandatorycss">*</span></CardLabel>
                       <div className="col-md-4">
-                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} name="careOf" selected={field.careOf} select={e => handleAppSelectField(index, e, "careOf")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
+                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} name="careOf" selected={comenu.filter(obj => obj.code === field.careOf)[0]} select={e => handleAppSelectField(index, e, "careOf")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
                         {/* selected={careOf[index]} select={e => handleAppSelectField(index, e, "careOf")} */}
                       </div>
                       <div className="col-md-8">
@@ -301,7 +320,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="pincode" value={field.pincode} onChange={e => handleAppInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode")} />
                     </div>
 
-                    {licenseeType.code === "JOINT_PARTNERSHIP" && (
+                    {LicenseeType.code === "JOINT_PARTNERSHIP" && (
                       <div>
                         {appState.length === (index + 1) && (
                           <div className="col-md-1">
@@ -340,7 +359,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
 
         )}
 
-        {licenseeType.code === "INSTITUTION" && (
+        {LicenseeType.code === "INSTITUTION" && (
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-12">
@@ -395,7 +414,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
 
             {appState.map((field, index) => {
               return (
-                <div className="row">
+                <div className="row" key={index}>
                   <div className="row">
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -412,7 +431,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                     <div className="col-md-3">
                       <CardLabel>S/O or D/O<span className="mandatorycss">*</span></CardLabel>
                       <div className="col-md-4">
-                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} selected={field.careOf} select={e => handleAppSelectField(index, e, "careOf")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
+                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} selected={comenu.filter(obj => obj.code === field.careOf)[0]} select={e => handleAppSelectField(index, e, "careOf")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
                       </div>
                       <div className="col-md-8">
                         <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="careOfName" value={field.careOfName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "careOfName")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
@@ -552,7 +571,15 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
         })
 
         }
-
+        <div>
+          {toast && (
+            <Toast
+              error={toast}
+              label={errorMessage}
+              onClose={() => setToast(false)}
+            />
+          )}{""}
+        </div>
 
       </FormStep>
 
