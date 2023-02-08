@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import lombok.extern.slf4j.Slf4j;
 /**
      * Creates DeathController 
@@ -45,7 +49,7 @@ public class DeathApplnController {
     // @Override
     @PostMapping("/deathdetails/_createdeath")
     public ResponseEntity<DeathDtlResponse> create(@Valid @RequestBody DeathDtlRequest request) {
-
+       
         List<DeathDtl> deathDetails = deathService.create(request);
 
         DeathDtlResponse response = DeathDtlResponse
@@ -55,5 +59,19 @@ public class DeathApplnController {
                                         .build();
         return ResponseEntity.ok(response);
     }
+      // System.out.println("hai");
+           /********************************************* */
+
+    //        try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
+
+    
+    /********************************************** */
     
 }

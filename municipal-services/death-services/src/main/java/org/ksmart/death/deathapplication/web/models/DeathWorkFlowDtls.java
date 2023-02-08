@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
+
 import javax.validation.constraints.Size;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
@@ -42,7 +45,7 @@ public class DeathWorkFlowDtls {
     private String action;
 
     @JsonProperty("assignee")
-    private String assignee;
+    private List<String> assignee;
 
     @JsonProperty("workflowcode")
     private String workflowcode;
@@ -50,7 +53,7 @@ public class DeathWorkFlowDtls {
     @JsonProperty("funcionUID")
     private String funcionUID;
 
-    public void setStatus(String s) {
-    }
+    // public void setStatus(String s) {
+    // }
 
 }
