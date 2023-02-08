@@ -344,7 +344,7 @@ public class DeathBasicInfo {
 
     @Schema(type = "Integer", description= "ack no id" )
     @JsonProperty("ackNoID")
-    private Integer  ackNoID ;
+    private Long  ackNoID ;
 
     @Schema(type = "Long",description = "Death Application Date  ")
     @JsonProperty("ApplicationDate")

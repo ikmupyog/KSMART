@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import org.ksmart.death.deathapplication.config.DeathConfiguration;
 import org.ksmart.death.deathapplication.enrichment.DeathEnrichment;
 import org.ksmart.death.deathapplication.kafka.producer.DeathProducer;
@@ -27,6 +31,8 @@ import org.egov.common.contract.request.RequestInfo;
 public class DeathApplnService {
 
      private final DeathProducer producer;
+     //Rakhi S ikm on 08.02.2023
+     private final DeathEnrichment enrichmentService;
     // private final DeathConfiguration deathConfig;
    //  private final DeathEnrichment enrichmentService;
    //  private final DeathMdmsUtil util;
@@ -36,7 +42,8 @@ public class DeathApplnService {
      private final DeathApplnRepository repository;
 
      @Autowired
-     DeathApplnService(DeathApplnRepository repository ,DeathProducer producer){
+     DeathApplnService(DeathApplnRepository repository ,DeathProducer producer
+                         ,DeathEnrichment enrichmentService){
           
      //,DeathConfiguration deathConfig
      //             DeathEnrichment enrichmentService,DeathMdmsUtil util,MDMSValidator mdmsValidator,
@@ -48,11 +55,14 @@ public class DeathApplnService {
        //  this.util = util;
        //  this.mdmsValidator = mdmsValidator;
        //  this.validatorService = validatorService;
+         this.enrichmentService = enrichmentService;
          this.repository = repository;
      }
 
      //RAkhi S ikm  on 06.02.2023
      public List<DeathDtl> create(DeathDtlRequest request) {
+          enrichmentService.enrichCreate(request);
+          enrichmentService.setACKNumber(request); 
           return request.getDeathCertificateDtls();
      }
 
@@ -88,8 +98,18 @@ public class DeathApplnService {
         //  producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
           
           return result.getDeathCertificateDtls();
-      }
-
-
-    
+      }    
 }
+             /********************************************* */
+
+     //         try {
+     //           ObjectMapper mapper = new ObjectMapper();
+     //           Object obj = request;
+     //           mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+     //           System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
+     // }catch(Exception e) {
+     //      //   log.error("Exception while fetching from searcher: ",e);
+     // }
+
+
+/********************************************** */

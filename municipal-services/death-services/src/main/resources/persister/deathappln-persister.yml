@@ -67,10 +67,10 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.workflowDetails.applicationStatus
 
       - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
+      
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
 
       - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
-
-      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
 
       - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
 
@@ -106,11 +106,11 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeceasedIdproofType
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.applicationNo
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathApplicationNo
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.fileNo
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.fileNo
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.ackNo
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathACKNo
 
       - jsonPath: $.deathCertificateDtls.*.workflowDetails.workflowcode
 
@@ -152,7 +152,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.ackNoID
 
-      - jsonPath: $.deathCertificateDtls.*.InformationDeath.applicationDate
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.ApplicationDate
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathPlaceLocalityEn
 

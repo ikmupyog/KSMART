@@ -38,5 +38,13 @@ public class DeathApplnRepository {
         List<DeathDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
         return result; 
     }
+     //Rakhi S on 08.02.2023
+     public List<Map<String, Object>>  getDeathACKDetails(String tenantId,int  Year) {
+        
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = queryBuilder.getDeathAckNoIdQuery(tenantId, Year,preparedStmtValues);
+        List<Map<String, Object>> ackDetails= jdbcTemplate.queryForList(query,preparedStmtValues.toArray());
+        return ackDetails; 
+     }
     
 }

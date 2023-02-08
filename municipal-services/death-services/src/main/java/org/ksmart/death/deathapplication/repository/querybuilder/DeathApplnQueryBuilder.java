@@ -164,6 +164,20 @@ StringBuilder query = new StringBuilder(QUERY);
                         // query,
                         // preparedStmtValues);
                         return query.toString();
-}    
+}   
+
+ //Rakhi S on 08.02.2023  
+ private static final String ACKNOQUERY = new StringBuilder()
+            .append("Select A.ackNo , A.applnYear , A.tenantId from ")
+            .append("(SELECT MAX(COALESCE(ack_no_id,0))+1 as ackNo,EXTRACT(year from to_timestamp( application_date/1000)::date ) AS applnYear ")
+            .append(",tenantId FROM eg_death_dtls dt group by applnYear,tenantId )A ") 
+            .toString();
+
+public String getDeathAckNoIdQuery(@NotNull String tenantId ,int Year ,@NotNull List<Object> preparedStmtValues) {
+            StringBuilder query = new StringBuilder(ACKNOQUERY);
+            addFilter("A.tenantId",tenantId , query, preparedStmtValues);
+            addFilter("A.applnYear", Year, query, preparedStmtValues);                                          
+            return query.toString();
+}  
     
 }
