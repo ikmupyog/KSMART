@@ -12,7 +12,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData
   // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
   const [toast, setToast] = useState(false);
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");  
+  // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");  
   const [publicPlaceType, setpublicPlaceType] = useState(formData?.BirthPlacePublicPlaceDetails?.publicPlaceType? formData?.BirthPlacePublicPlaceDetails?.publicPlaceType : "");  
   const [localityNameEn, setlocalityNameEn] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameEn? formData?.BirthPlacePublicPlaceDetails?.localityNameEn : "");  
   const [localityNameMl, setlocalityNameMl] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameMl? formData?.BirthPlacePublicPlaceDetails?.localityNameMl : "");  
@@ -21,8 +21,8 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData
   const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.BirthPlacePublicPlaceDetails?.publicPlaceDecpEn ? formData?.BirthPlacePublicPlaceDetails?.publicPlaceDecpEn : "");  
  
   const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.BirthPlacePublicPlaceDetails?.publicPlaceType ? false : false);
-  const [localityNameEnError, setlocalityNameEnError] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameEn ? false : false);
-  const [localityNameMlError, setlocalityNameMlError] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameMl ? false : false  );
+  const [localNameEnError, setlocalNameEnError] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameEn ? false : false);
+  const [localNameMlError, setlocalNameMlError] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameMl ? false : false  );
   // const [streetNameEnError, setstreetNameEnError] = useState(formData?.BirthPlacePublicPlaceDetails?.streetNameEn ? false : false); 
 
   // const [streetNameMlError, setstreetNameMlError] = useState(formData?.BirthPlacePublicPlaceDetails?.streetNameMl ? false : false);
@@ -88,24 +88,24 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData
 
     if (localityNameEn == null || localityNameEn == "" || localityNameEn == undefined) {
       validFlag = false;
-      setlocalityNameEnError(true);
+      setlocalNameEnError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setlocalityNameEnError(false);
+      setlocalNameEnError(false);
     }
 
     if (localityNameMl == null || localityNameMl == "" || localityNameMl == undefined) {
       validFlag = false;
-      setlocalityNameMlError(true);
+      setlocalNameMlError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setlocalityNameMlError(false);
+      setlocalNameMlError(false);
     }
     if (publicPlaceType == null || publicPlaceType == "" || publicPlaceType == undefined) {
       validFlag = false;
@@ -280,24 +280,24 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData
           <Toast
             error={
               placeTypepEnError ||
-              localityNameEnError ||             
-              localityNameMlError         
+              localNameEnError ||             
+              localNameMlError         
              
               
               
             }
             label={
               placeTypepEnError ||
-              localityNameEnError ||             
-              localityNameMlError           
+              localNameEnError ||             
+              localNameMlError           
             
                 ?
                 placeTypepEnError
                   ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                  : localityNameEnError
+                  : localNameEnError
                   ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
                   
-                  : localityNameMlError
+                  : localNameMlError
                   ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
                  
                   :  

@@ -9,6 +9,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData }) => {
   let validation = {};
  
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [OfficerNames, setFilteredOfficerName] = useState(0);
   const [Designations, setFilteredDesignation] = useState(0);
@@ -41,6 +42,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData }) => {
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
+    let cmbVehicle = [];
+    Vehicle &&
+    Vehicle["birth-death-service"] &&
+    Vehicle["birth-death-service"].VehicleType.map((ob) => {
+      cmbVehicle.push(ob);
+      });
     useEffect(() => {
           if (isInitialRender) {
         if(setadmittedHospitalEn){
@@ -239,7 +246,7 @@ function setSelectVehicleHaltPlaceMl(e) {
        <div className="col-md-12" >         
        <div className="col-md-3" > 
         <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
-            <TextInput       
+            {/* <TextInput       
                 t={t}
                 isMandatory={true}
                 type={"text"}
@@ -250,7 +257,19 @@ function setSelectVehicleHaltPlaceMl(e) {
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_TYPE")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TYPE") })}
+            /> */}
+
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={true}
+                option={cmbVehicle}
+                selected={vehicleType}
+                select={setSelectVehicleType}
+                disabled={isEdit}
+                placeholder={`${t("CR_VEHICLE_TYPE")}`}
             />
+
         </div>
        <div className="col-md-3" > 
         <CardLabel>{`${t("CR_VEHICLE_REGISTRATION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
