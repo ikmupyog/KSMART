@@ -1,4 +1,4 @@
-package org.ksmart.death.deathapplication.web.models;
+package org.ksmart.death.deathregistry.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 /*
      * Creates main model class  
-     * Jasmine on 4.02.2023      
+     * Jasmine on 7.02.2023      
 */
 @Schema(name = "Death Registration Request", description = "An Object holds the  informant details of death ")
 @Validated
@@ -23,7 +23,7 @@ import org.springframework.validation.annotation.Validated;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DeathInformantDtls {
+public class DeathRegistryInformantDtls {
 
     @Size(max = 64)
     @JsonProperty("InitiatorRelation")

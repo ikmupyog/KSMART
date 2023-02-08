@@ -1,4 +1,4 @@
-package org.ksmart.death.deathapplication.web.models;
+package org.ksmart.death.deathregistry.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.text.Document;
 /*
      * Creates main model class  
-     * Jasmine on 4.02.2023      
+     * Jasmine on 7.02.2023      
 */
 
 @Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
@@ -25,33 +25,33 @@ import javax.swing.text.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DeathDtl {
+public class DeathRegistryDtl {
 
 
      @JsonProperty("InformationDeath")
-     private DeathBasicInfo deathBasicInfo;
+     private DeathRegistryBasicInfo deathBasicInfo;
 
     @JsonProperty("addressOfDeceased")
-    private DeathAddressInfo deathAddressInfo;    
+    private DeathRegistryAddressInfo deathAddressInfo;    
 
     @JsonProperty("familyInformationDeath")
-    private DeathFamilyInfo deathFamilyInfo;
+    private DeathRegistryFamilyInfo deathFamilyInfo;
 
     @JsonProperty("statisticalInfo")
-    private DeathStatisticalInfo  deathStatisticalInfo;
+    private DeathRegistryStatisticalInfo  deathStatisticalInfo;
 
     @JsonProperty("informantDetails")
-    private DeathInformantDtls deathInformantDtls;
+    private DeathRegistryInformantDtls deathInformantDtls;
 
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
 
-    @JsonProperty("workflowDetails")
-    private DeathWorkFlowDtls  deathWorkFlowDtls;
+//     @JsonProperty("workflowDetails")
+//     private DeathWorkFlowDtls  deathWorkFlowDtls;
 
    // @Valid
-    @JsonProperty("wfDocuments")
-    private List<Document> wfDocuments;
+//     @JsonProperty("wfDocuments")
+//     private List<Document> wfDocuments;
 
 
 

@@ -1,4 +1,4 @@
-package org.ksmart.death.deathapplication.web.models;
+package org.ksmart.death.deathregistry.web.models;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +20,7 @@ import lombok.Builder;
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-public class DeathAddressInfo {
+public class DeathRegistryAddressInfo {
 
     @Size(max = 64)
     @JsonProperty("PresentAddrId")

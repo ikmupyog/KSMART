@@ -1,5 +1,4 @@
-package org.ksmart.death.deathapplication.kafka.producer;
-
+package org.ksmart.death.deathregistry.kafka.producer;
 
 import org.egov.tracer.kafka.CustomKafkaTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +6,12 @@ import org.springframework.stereotype.Service;
 
 /**
      * Creates CrDeathProducer for kafka push 
-     * Jasmine 06.02.2023
+     * Rakhi S IKM
      * 
      */
 
 @Service
-public class DeathProducer {
+public class DeathRegistryProducer {
     @Autowired
     private CustomKafkaTemplate<String, Object> kafkaTemplate;
 

@@ -1,4 +1,4 @@
-package org.ksmart.death.deathapplication.web.models;
+package org.ksmart.death.deathregistry.web.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 //import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -13,7 +13,7 @@ import lombok.Setter;
 //@Schema(description = "Collection of audit related fields used by most models")
 /**
      * Creates Audit details Model 
-     * Jasmine 06.02.2023
+     * Jasmine 07.02.2023
      * 
      */
 
