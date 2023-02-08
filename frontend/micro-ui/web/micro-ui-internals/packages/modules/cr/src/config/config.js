@@ -278,7 +278,39 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
+      {
+        route: "address-birth",
+        component: "AddressBirth",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressBirthDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: false,
+      },
 
+      {
+        route: "address-insidekerala",
+        component: "AddressInsideKerala",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressInsideKeralaDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: false,
+      },
 
       {
         route: "birthaddress",
@@ -571,6 +603,23 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
+      {
+        route: "addressbrith-outside-india",
+        component: "AddressBrOutsideIndia",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressBrOutsideIndiaDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: true,
+      },
+
 
       {
         route: "address-one",
@@ -604,19 +653,22 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
+
+
+
       {
-        route: "address-same-as-above",
-        component: "AddressSameAsAbove",
+        route: "address-outsidekerala",
+        component: "AddressOutsideKerala",
         texts: {
           headerCaption: "",
-          header: "Address",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },
         withoutLabel: true,
-        key: "AddressSameAsAboveDetails",
-        nextStep: "permanent-address",
+        key: "AddressOutsideKeralaDetails",
+        nextStep: "null",
         type: "component",
         hideInEmployee: false,
       },
