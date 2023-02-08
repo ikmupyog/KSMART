@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast,SubmitBar } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -10,17 +10,17 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
+  const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   // const [ChildDOB, setChildDOB] = useState(isEdit ? (formData?.ChildDetails?.ChildDOB):(formData?.ChildDetails?.ChildDOB ? formData?.ChildDetails?.ChildDOB : ""));
   const [ChildDOB, setChildDOB] = useState(formData?.ChildDetails?.ChildDOB ? formData?.ChildDetails?.ChildDOB : "");
   const [Gender, selectGender] = useState(formData?.ChildDetails?.Gender);
   const [ChildAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.ChildAadharNo ? formData?.ChildDetails?.ChildAadharNo : "");
   const [ChildFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.ChildFirstNameEn ? formData?.ChildDetails?.ChildFirstNameEn : "");
-  const [ChildMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.ChildMiddleNameEn ? formData?.ChildDetails?.ChildMiddleNameEn : ""
-  );
+  const [ChildMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.ChildMiddleNameEn ? formData?.ChildDetails?.ChildMiddleNameEn : "");
   const [ChildLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.ChildLastNameEn ? formData?.ChildDetails?.ChildLastNameEn : "");
   const [ChildFirstNameMl, setChildFirstNameMl] = useState(formData?.ChildDetails?.ChildFirstNameMl ? formData?.ChildDetails?.ChildFirstNameMl : "");
-  const [ChildMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.ChildMiddleNameMl ? formData?.ChildDetails?.ChildMiddleNameMl : ""
-  );
+  const [ChildMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.ChildMiddleNameMl ? formData?.ChildDetails?.ChildMiddleNameMl : "");
   const [ChildLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.ChildLastNameMl ? formData?.ChildDetails?.ChildLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tripStartTime, setTripStartTime] = useState(formData?.ChildDetails?.tripStartTime ? formData?.ChildDetails?.tripStartTime : "");
@@ -29,6 +29,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [AadharError, setAadharError] = useState(formData?.ChildDetails?.ChildAadharNo ? false : false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.ChildAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
+  const [PregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.PregnancyDuration ? formData?.ChildDetails?.PregnancyDuration : null);
+  const [MedicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.MedicalAttensionSub ? formData?.ChildDetails?.MedicalAttensionSub : null);
+  const [DeliveryMethod, setDeliveryMethod] = useState(formData?.ChildDetails?.DeliveryMethod ? formData?.ChildDetails?.DeliveryMethod : null);
 
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
@@ -42,11 +45,47 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   // let currentDate = new Date().toJSON().slice(0, 10);
   const [access, setAccess] = React.useState(true);
   let menu = [];
+  let cmbAttDeliverySub = [];
+  let cmbDeliveryMethod = [];
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
-
+  AttentionOfDelivery &&
+    AttentionOfDelivery["birth-death-service"] &&
+    AttentionOfDelivery["birth-death-service"].AttentionOfDelivery.map((ob) => {
+      cmbAttDeliverySub.push(ob);
+    });
+  DeliveryMethodList &&
+    DeliveryMethodList["birth-death-service"] &&
+    DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
+      cmbDeliveryMethod.push(ob);
+    });
+  const cmbPregWeek = [
+    { i18nKey: "20", code: "20" },
+    { i18nKey: "21", code: "21" },
+    { i18nKey: "22", code: "22" },
+    { i18nKey: "22", code: "22" },
+    { i18nKey: "23", code: "23" },
+    { i18nKey: "25", code: "25" },
+    { i18nKey: "26", code: "26" },
+    { i18nKey: "27", code: "27" },
+    { i18nKey: "28", code: "28" },
+    { i18nKey: "29", code: "29" },
+    { i18nKey: "30", code: "30" },
+    { i18nKey: "31", code: "31" },
+    { i18nKey: "32", code: "32" },
+    { i18nKey: "33", code: "33" },
+    { i18nKey: "34", code: "34" },
+    { i18nKey: "35", code: "35" },
+    { i18nKey: "36", code: "36" },
+    { i18nKey: "37", code: "37" },
+    { i18nKey: "38", code: "38" },
+    { i18nKey: "39", code: "39" },
+    { i18nKey: "40", code: "40" },
+    { i18nKey: "41", code: "41" },
+    { i18nKey: "42", code: "42" },
+  ];
   const onSkip = () => onSelect();
 
   useEffect(() => {
@@ -89,7 +128,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     setChildDOB(value);
     const today = new Date();
     const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()){
+    if (birthDate.getTime() <= today.getTime()) {
 
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
@@ -104,7 +143,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       }
     } else {
       setChildDOB(null);
-      setDOBError(true);      
+      setDOBError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
@@ -124,7 +163,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setChildFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectChildMiddleNameEn(e) {
@@ -132,7 +171,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setChildMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectChildLastNameEn(e) {
@@ -140,7 +179,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig,''));
+      setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
   function setSelectChildFirstNameMl(e) {
@@ -148,7 +187,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
   }
   function setSelectChildMiddleNameMl(e) {
@@ -156,7 +195,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setChildMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
   }
   function setSelectChildLastNameMl(e) {
@@ -164,8 +203,14 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig,''));
+      setChildLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
+  }
+  function setSelectPregnancyDuration(value) {
+    setPregnancyDuration(value);
+  }
+  function setSelectMedicalAttensionSub(value) {
+    setMedicalAttensionSub(value);
   }
   // function setAdopted(e) {
   //   if (e.target.checked == true) {
@@ -220,6 +265,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       setChildLastNameMl("");
     }
   }
+  function setSelectDeliveryMethod(value) {
+    setDeliveryMethod(value);
+  }
   let validFlag = true;
   const goNext = () => {
     if (AadharError) {
@@ -262,20 +310,52 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       });
     }
   };
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+    } else {
+      return null;
+    }
+  };
+
+  const convertEpochFormateToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${day}/${month}/${year}`;
+    } else {
+      return null;
+    }
+  };
   if (isLoading) {
     return <Loader></Loader>;
   }
+  console.log(convertEpochToDate(new Date()));
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
-      {window.location.href.includes("/employee") ? <Timeline /> : null}      
+      {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ChildDOB || !Gender}>
         <div className="row">
           <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
-            </h1>
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
+              </h1>
+            </div>
           </div>
         </div>
         <div className="row">
@@ -288,6 +368,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               <DatePicker
                 date={ChildDOB}
                 name="ChildDOB"
+                max={ChildDOB ? ChildDOB : convertEpochToDate(new Date())}
+                min={ChildDOB ? ChildDOB : convertEpochToDate("1900-01-01")}
                 onChange={setselectChildDOB}
                 inputFormat="DD-MM-YYYY"
                 placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
@@ -334,7 +416,15 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               </div>)}
           </div>
         </div>
-
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Child Details")}`}</span>{" "}
+              </h1>
+            </div>
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -344,133 +434,137 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         {isChildName === true && (
           <div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
                   <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_CHILD")}`}</span>{" "}
                 </h1>
               </div>
+            </div> */}
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {`${t("CR_FIRST_NAME_EN")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="ChildFirstNameEn"
+                    value={ChildFirstNameEn}
+                    onChange={setSelectChildFirstNameEn}
+                    //  onChange={(e,v) => this.updateTextField(e,v)}
+                    // disable={isChildName}
+                    placeholder={`${t("CR_FIRST_NAME_EN")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="ChildMiddleNameEn"
+                    value={ChildMiddleNameEn}
+                    onChange={setSelectChildMiddleNameEn}
+                    // disable={isChildName}
+                    placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="ChildLastNameEn"
+                    value={ChildLastNameEn}
+                    onChange={setSelectChildLastNameEn}
+                    // disable={isChildName}
+                    placeholder={`${t("CR_LAST_NAME_EN")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                  />
+                </div>
+              </div>
             </div>
             <div className="row">
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_FIRST_NAME_EN")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="ChildFirstNameEn"
-                  value={ChildFirstNameEn}
-                  onChange={setSelectChildFirstNameEn}
-                  //  onChange={(e,v) => this.updateTextField(e,v)}
-                  // disable={isChildName}
-                  placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                />
-              </div>
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="ChildMiddleNameEn"
-                  value={ChildMiddleNameEn}
-                  onChange={setSelectChildMiddleNameEn}
-                  // disable={isChildName}
-                  placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
-                />
-              </div>
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="ChildLastNameEn"
-                  value={ChildLastNameEn}
-                  onChange={setSelectChildLastNameEn}
-                  // disable={isChildName}
-                  placeholder={`${t("CR_LAST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_FIRST_NAME_ML")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="ChildFirstNameMl"
-                  value={ChildFirstNameMl}
-                  onChange={setSelectChildFirstNameMl}
-                  // disable={isChildName}
-                  placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                  {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: true,
-                    type: "text",
-                    title: t("CR_INVALID_FIRST_NAME_ML"),
-                  })}
-                />
-              </div>
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="ChildMiddleNameMl"
-                  value={ChildMiddleNameMl}
-                  onChange={setSelectChildMiddleNameMl}
-                  // disable={isChildName}
-                  placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                  {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: false,
-                    type: "text",
-                    title: t("CR_INVALID_MIDDLE_NAME_ML"),
-                  })}
-                />
-              </div>
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="ChildLastNameMl"
-                  value={ChildLastNameMl}
-                  onChange={setSelectChildLastNameMl}
-                  // disable={isChildName}
-                  placeholder={`${t("CR_LAST_NAME_ML")}`}
-                  {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: false,
-                    type: "text",
-                    title: t("CR_INVALID_LAST_NAME_ML"),
-                  })}
-                />
+              <div className="col-md-12">
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {`${t("CR_FIRST_NAME_ML")}`}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="ChildFirstNameMl"
+                    value={ChildFirstNameMl}
+                    onChange={setSelectChildFirstNameMl}
+                    // disable={isChildName}
+                    placeholder={`${t("CR_FIRST_NAME_ML")}`}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_FIRST_NAME_ML"),
+                    })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="ChildMiddleNameMl"
+                    value={ChildMiddleNameMl}
+                    onChange={setSelectChildMiddleNameMl}
+                    // disable={isChildName}
+                    placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                      isRequired: false,
+                      type: "text",
+                      title: t("CR_INVALID_MIDDLE_NAME_ML"),
+                    })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="ChildLastNameMl"
+                    value={ChildLastNameMl}
+                    onChange={setSelectChildLastNameMl}
+                    // disable={isChildName}
+                    placeholder={`${t("CR_LAST_NAME_ML")}`}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                      isRequired: false,
+                      type: "text",
+                      title: t("CR_INVALID_LAST_NAME_ML"),
+                    })}
+                  />
+                </div>
               </div>
             </div>
           </div>)}
@@ -484,15 +578,62 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             <CheckBox label={t("CR_MULTIPLE_BIRTH")} onChange={setMultipleBirth} value={isMultipleBirth} checked={isMultipleBirth} />
           </div>
         </div> */}
-        {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} goNext={goNext} /> */}
         <div className="row">
           <div className="col-md-12">
-            <h1 className="">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
-            </h1>
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Additional Birth Information")}`}</span>{" "}
+              </h1>
+            </div>
           </div>
         </div>
-
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbAttDeliverySub}
+                selected={MedicalAttensionSub}
+                select={setSelectMedicalAttensionSub}
+                placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_PREGNANCY_DURATION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="i18nKey"
+                isMandatory={false}
+                option={cmbPregWeek}
+                selected={PregnancyDuration}
+                select={setSelectPregnancyDuration}
+                placeholder={`${t("CR_PREGNANCY_DURATION")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_DELIVERY_METHOD")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbDeliveryMethod}
+                selected={DeliveryMethod}
+                select={setSelectDeliveryMethod}
+                placeholder={`${t("CR_DELIVERY_METHORD")}`}
+              />
+            </div>
+          </div>
+        </div>
         {toast && (
           <Toast
             error={
@@ -505,10 +646,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
                 AadharError
                   ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                  : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                  // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+                    : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
 
-                  setToast(false)
+                    setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
