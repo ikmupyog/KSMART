@@ -50,7 +50,7 @@ public class DeathRegistryController {
     }
 
         //Update Jasmine 07.02.2023
-        @PostMapping("/deathregistry/_updatedeathregistry")
+        @PostMapping("/deathregistry/_updatedeath")
 
         public ResponseEntity<DeathRegistryResponse> update(@RequestBody DeathRegistryRequest request) {
     
@@ -65,7 +65,7 @@ public class DeathRegistryController {
         }
     
         //Search  Jasmine 08.02.2023
-        @PostMapping("/deathregistry/_searchdeathregistry")
+        @PostMapping("/deathregistry/_searchdeath")
     
         public ResponseEntity<DeathRegistryResponse> search(@RequestBody RequestInfoWrapper request,
                                                               @ModelAttribute DeathRegistryCriteria criteria) {
