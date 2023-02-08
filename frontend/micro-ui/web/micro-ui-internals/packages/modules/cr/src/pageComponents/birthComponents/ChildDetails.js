@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import BirthPlaceHospital from "../../pageComponents/birthComponents/BirthPlaceHospital";
 
-const childDetails = ({ config, onSelect, userType, formData }) => {
+const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -14,43 +14,43 @@ const childDetails = ({ config, onSelect, userType, formData }) => {
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
 
-  // const [childDOB, setChildDOB] = useState(isEdit ? (formData?.childDetails?.childDOB):(formData?.childDetails?.childDOB ? formData?.childDetails?.childDOB : ""));
-  const [childDOB, setChildDOB] = useState(formData?.childDetails?.childDOB ? formData?.childDetails?.childDOB : "");
-  const [gender, selectGender] = useState(formData?.childDetails?.gender);
-  const [childAadharNo, setChildAadharNo] = useState(formData?.childDetails?.childAadharNo ? formData?.childDetails?.childAadharNo : "");
-  const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.childDetails?.childFirstNameEn ? formData?.childDetails?.childFirstNameEn : "");
-  const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.childDetails?.childMiddleNameEn ? formData?.childDetails?.childMiddleNameEn : "");
-  const [childLastNameEn, setChildLastNameEn] = useState(formData?.childDetails?.childLastNameEn ? formData?.childDetails?.childLastNameEn : "");
-  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.childDetails?.childFirstNameMl ? formData?.childDetails?.childFirstNameMl : "");
-  const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.childDetails?.childMiddleNameMl ? formData?.childDetails?.childMiddleNameMl : "");
-  const [childLastNameMl, setChildLastNameMl] = useState(formData?.childDetails?.childLastNameMl ? formData?.childDetails?.childLastNameMl : "");
+  // const [childDOB, setChildDOB] = useState(isEdit ? (formData?.ChildDetails?.childDOB):(formData?.ChildDetails?.childDOB ? formData?.ChildDetails?.childDOB : ""));
+  const [childDOB, setChildDOB] = useState(formData?.ChildDetails?.childDOB ? formData?.ChildDetails?.childDOB : "");
+  const [gender, selectGender] = useState(formData?.ChildDetails?.gender);
+  const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
+  const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
+  const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
+  const [childLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.childLastNameEn ? formData?.ChildDetails?.childLastNameEn : "");
+  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.ChildDetails?.childFirstNameMl ? formData?.ChildDetails?.childFirstNameMl : "");
+  const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.childMiddleNameMl ? formData?.ChildDetails?.childMiddleNameMl : "");
+  const [childLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.childLastNameMl ? formData?.ChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
-  const [birthDateTime, setbirthDateTime] = useState(formData?.childDetails?.birthDateTime ? formData?.childDetails?.birthDateTime : "");
-  const [isChildName, setIsChildName] = useState(formData?.childDetails?.isChildName ? formData?.childDetails?.isChildName : false);
+  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : "");
+  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
 
-  const [birthPlace, selectBirthPlace] = useState(formData?.birthPlace?.birthPlace);
+  const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace ? formData?.ChildDetails?.birthPlace : null);
   const [value, setValue] = useState();
-  const [hospitalName, selectHospitalName] = useState(formData?.BirthPlaceHospitalDetails?.hospitalName ? formData?.BirthPlaceHospitalDetails?.hospitalName : null);
-  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.BirthPlaceHospitalDetails?.hospitalNameMl ? formData?.BirthPlaceHospitalDetails?.hospitalNameMl : null);
+  const [hospitalName, selectHospitalName] = useState(formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null);
+  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl ? formData?.ChildDetails?.hospitalNameMl : null);
 
-  const [pregnancyDuration, setPregnancyDuration] = useState(formData?.childDetails?.pregnancyDuration ? formData?.childDetails?.pregnancyDuration : null);
-  const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.childDetails?.medicalAttensionSub ? formData?.childDetails?.medicalAttensionSub : null);
-  const [deliveryMethods, setDeliveryMethod] = useState(formData?.childDetails?.deliveryMethods ? formData?.childDetails?.deliveryMethods : null);
-  const [birthWeight, setBirthWeight] = useState(formData?.childDetails?.birthWeight ? formData?.childDetails?.birthWeight : null);
+  const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : null);
+  const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.medicalAttensionSub ? formData?.ChildDetails?.medicalAttensionSub : null);
+  const [deliveryMethods, setDeliveryMethod] = useState(formData?.ChildDetails?.deliveryMethods ? formData?.ChildDetails?.deliveryMethods : null);
+  const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
 
   const [toast, setToast] = useState(false);
-  const [AadharError, setAadharError] = useState(formData?.childDetails?.childAadharNo ? false : false);
-  const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.childDetails?.childAadharNo ? true : false);
-  const [DOBError, setDOBError] = useState(formData?.childDetails?.childDOB ? false : false);
+  const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
+  const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
+  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.childDOB ? false : false);
   const [HospitalError, setHospitalError] = useState(formData?.BirthPlace?.hospitalName ? false : false);
   const [BirthWeightError, setBirthWeightError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub ? false : false);
 
-  // const [isAdopted, setIsAdopted] = useState(formData?.childDetails?.isAdopted);
-  // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.childDetails?.isMultipleBirth);
-  // const [isBornOutSide, setIsBornOutSide] = useState(formData?.childDetails?.isBornOutSide);
-  // const [ChildPassportNo, setChildPassportNo] = useState(formData?.childDetails?.ChildPassportNo);
-  // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.childDetails?.ChildArrivalDate);
+  // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
+  // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
+  // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
+  // const [ChildPassportNo, setChildPassportNo] = useState(formData?.ChildDetails?.ChildPassportNo);
+  // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.ChildDetails?.ChildArrivalDate);
 
   // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // disable future dates
@@ -110,9 +110,9 @@ const childDetails = ({ config, onSelect, userType, formData }) => {
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.childDetails?.isChildName != null) {
+      if (formData?.ChildDetails?.isChildName != null) {
         setIsInitialRender(false);
-        setIsChildName(formData?.childDetails?.isChildName);
+        setIsChildName(formData?.ChildDetails?.isChildName);
       }
     }
   }, [isInitialRender]);
@@ -120,10 +120,12 @@ const childDetails = ({ config, onSelect, userType, formData }) => {
 
   React.useEffect(() => {
     if (isInitialRenderPlace) {
+      console.log("birthPlace");
       if (birthPlace) {
         setIsInitialRenderPlace(false);
         placeOfBirth = birthPlace.code;
         setValue(placeOfBirth);
+        console.log(placeOfBirth);
         // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(placeOfBirth)));
         if (placeOfBirth === "HOSPITAL") {
           <BirthPlaceHospital
@@ -404,7 +406,7 @@ const childDetails = ({ config, onSelect, userType, formData }) => {
     setValue(value.code);
   }
   function setSelectBirthWeight(e) {
-    if (e.target.value.length === 4) {
+    if (e.target.value.length === 5) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -432,8 +434,6 @@ const childDetails = ({ config, onSelect, userType, formData }) => {
       setTimeout(() => {
         setToast(false);
       }, 2000);
-      // return false;
-      // window.alert("Username shouldn't exceed 10 characters")
     } else {
       setAadharError(false);
     }
@@ -452,7 +452,7 @@ const childDetails = ({ config, onSelect, userType, formData }) => {
     }
     if (birthWeight != null) {
       let BirthWeightCheck = birthWeight;
-      if (BirthWeightCheck <= 0 || BirthWeightCheck > 10) {
+      if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
         validFlag = false;
         setBirthWeightError(true);
         setToast(true);
@@ -527,7 +527,6 @@ const childDetails = ({ config, onSelect, userType, formData }) => {
   if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
     return <Loader></Loader>;
   }
-  console.log(convertEpochToDate(new Date()));
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -889,4 +888,4 @@ const childDetails = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default childDetails;
+export default ChildDetails;
