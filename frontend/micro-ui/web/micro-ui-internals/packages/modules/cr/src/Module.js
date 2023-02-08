@@ -78,7 +78,7 @@ import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowl
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
-
+import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
@@ -218,6 +218,7 @@ const componentsToRegister = {
   StatisticalInfo,
   StatisticalInfoContinue,
   ApplicantDetails,
+  InsideIndia,
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,

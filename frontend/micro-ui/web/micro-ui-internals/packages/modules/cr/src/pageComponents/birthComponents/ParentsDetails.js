@@ -586,15 +586,15 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {/* isDisabled={!MotherFirstNameEn} */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1"></h1>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-md-12">
             {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
-            <CheckBox label={t("Mother Information Missing")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
+            <CheckBox label={t("CR_MOTHER_INFORMATION_MISSING")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
           </div>
         </div>
         {isMotherInfo === false && (
@@ -768,7 +768,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("Father Information Missing")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
+            <CheckBox label={t("CR_FATHER_INFORMATION_MISSING")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
           </div>
         </div>
 
@@ -990,7 +990,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                   OrderofChildrenError
                   ? t(`BIRTH_ERROR_ORDER_OF_CHILDREN`)
                   : FatherFirstNmeEnError
-                  ? t(`CR_INVALID_FIRST_NAME_EN`)
+                  ? t(`CR_INVALID_FATHER_NAME_EN`)
                   : FatherEduError
                   ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`)
                   : FatherProfError

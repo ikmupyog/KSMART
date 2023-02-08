@@ -867,7 +867,7 @@ export const newConfig = [
           header: "",     ///"TL_TRADE_UNITS_HEADER",
           submitBarLabel: "CS_COMMON_NEXT",
         },
-        key: "licenseentry",
+        key: "TradeDetails",
         isCreateEnabled: true,
         withoutLabel: true,
         hideInEmployee: true,
@@ -883,10 +883,43 @@ export const newConfig = [
           header: "",     ///"TL_TRADE_UNITS_HEADER",
           submitBarLabel: "CS_COMMON_NEXT",
         },
-        key: "licenseentry",
+        key: "TradeDetails",
         isCreateEnabled: true,
         withoutLabel: true,
         hideInEmployee: true,
+        nextStep: 'license-doc-det',
+      },     
+      
+      {
+        type: "component",
+        route: "license-doc-det",
+        isMandatory: true,
+        component: "TLDocumentUpload",
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep:"license-declaration-det"
+      },
+
+      {
+        type: "component",
+        route: "license-declaration-det",
+        isMandatory: true,
+        component: "TLDeclarationDet",
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep:null
       }
     ]
   }
