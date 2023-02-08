@@ -53,6 +53,9 @@ public class DeathWorkFlowDtls {
     @JsonProperty("funcionUID")
     private String funcionUID;
 
+    @JsonProperty("Comment")
+    private String comment;
+
     // public void setStatus(String s) {
     // }
 

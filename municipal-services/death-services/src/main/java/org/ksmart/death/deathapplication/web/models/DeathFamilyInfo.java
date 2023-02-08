@@ -64,7 +64,18 @@ public class DeathFamilyInfo {
     
     @JsonProperty("FamilyEmailId")
     private String familyEmailId;
+
+    //Rakhi S on 08.02.2023
+    @Size(max = 12)
+    @JsonProperty("SpouseAadhaar")
+    private String spouseAadhaar;
     
-    
+    @Size(max = 12)
+    @JsonProperty("FatherAadharNo")
+    private String fatherAadharNo;
+
+    @Size(max = 12)
+    @JsonProperty("MotherAadharNo")
+    private String MotherAadharNo;
     
 }

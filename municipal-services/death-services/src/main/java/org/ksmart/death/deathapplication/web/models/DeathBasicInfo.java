@@ -333,5 +333,25 @@ public class DeathBasicInfo {
     @JsonProperty("DeathACKNo")
     private String deathACKNo = null;
 
+    //Rakhi S on 08.02.2023
+    @Schema(type = "Long",description = "Death registration date ")
+    @JsonProperty("RegistrationDate")
+    private Long registrationDate ;
+
+    @Schema(type = "Integer", description= "registration no id" )
+    @JsonProperty("registrationNoID")
+    private Integer  registrationNoID ;
+
+    @Schema(type = "Integer", description= "ack no id" )
+    @JsonProperty("ackNoID")
+    private Integer  ackNoID ;
+
+    @Schema(type = "Long",description = "Death Application Date  ")
+    @JsonProperty("ApplicationDate")
+    private Long applicationDate ;
+
+    @Size(max = 64)
+    @JsonProperty("fileNo")
+    private String fileNo = null;
     
 }

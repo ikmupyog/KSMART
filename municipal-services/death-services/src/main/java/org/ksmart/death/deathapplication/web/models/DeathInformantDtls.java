@@ -130,5 +130,10 @@ public class DeathInformantDtls {
 
     @JsonProperty("DocumentFileStoreId")
     private String documentFileStoreId ;
-    
+
+    //Rakhi s on 08.02.2023
+    @Schema(type = "Integer" ,description = "Informant aadhar submitted(0/1)")
+    @JsonProperty("InformantAadharSubmitted")
+    private Integer  informantAadharSubmitted ;   
+       
 }
