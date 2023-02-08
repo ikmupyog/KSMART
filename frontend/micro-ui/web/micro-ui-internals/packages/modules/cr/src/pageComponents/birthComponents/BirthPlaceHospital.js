@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
+// import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, HospitalName, HospitalNameMl,
+const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
   selectHospitalNameMl,
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -39,13 +39,15 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
     // onSelect(config.key, { HospitalName, HospitalNameMl
     // });
   };
-
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null} */}
       {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!HospitalName}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -65,7 +67,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
                 optionKey="hospitalName"
                 isMandatory={false}
                 option={cmbhospital}
-                selected={HospitalName}
+                selected={hospitalName}
                 select={setselectHospitalName}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
@@ -80,7 +82,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
                 optionKey="hospitalNamelocal"
                 isMandatory={false}
                 option={cmbhospital}
-                selected={HospitalNameMl}
+                selected={hospitalNameMl}
                 select={setselectHospitalNameMl}
                 placeholder={`${t("CR_HOSPITAL_ML")}`}
               />

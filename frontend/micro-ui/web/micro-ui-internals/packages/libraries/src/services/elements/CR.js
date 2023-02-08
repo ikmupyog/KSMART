@@ -30,7 +30,7 @@ export const CRService = {
       method: "POST",
       auth: true,
       userService: false,
-      params: { tenantId, ...filters },
+      params: {...filters },
     }),
     CRResistryDownload: (tenantId, id, source ) =>
     Request({
@@ -38,7 +38,7 @@ export const CRService = {
       data: {},
       useCache: false,
       method: "POST",
-      params: { tenantId, id, source },
+      params: { id, source },
       auth: true,
       locale: true,
       userInfo: true,
