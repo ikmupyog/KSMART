@@ -28,8 +28,8 @@ import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
 import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPlaceInstitution";
-
-
+import BirthPlaceHome from "../src/pageComponents/birthComponents/BirthPlaceHome";
+import BirthPlaceVehicle from "../src/pageComponents/birthComponents/BirthPlaceVehicle";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
@@ -186,7 +186,7 @@ const componentsToRegister = {
   ParentsDetails,
   BirthPlaceHospital,
   BirthPlaceInstitution,
-
+  BirthPlaceHome,
  //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -197,7 +197,7 @@ const componentsToRegister = {
   BirthParentsAddress,  
   AdoptionStatisticalInformation,  
  AdoptionParentsAddress,
-
+ BirthPlaceVehicle,
 
 
   //////////////////

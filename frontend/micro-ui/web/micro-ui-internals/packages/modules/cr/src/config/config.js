@@ -377,7 +377,38 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-      
+      {
+        route: "birthplace-home",
+        component: "BirthPlaceHome",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BirthPlaceHomeDetails",
+        nextStep: "parents-details",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
+        route: "birthPlace-vehicle",
+        component: "BirthPlaceVehicle",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BirthPlaceVehicleDetails",
+        nextStep: "parents-details",
+        type: "component",
+        hideInEmployee: false,
+      },
       {
         route: "parents-details",
         component: "ParentsDetails",
@@ -395,7 +426,7 @@ export const newConfig = [
         hideInEmployee: false,
       },
       {
-        route: "place-of-birth-Home",
+        route: "place-of-birth-home",
         component: "PlaceofBirthHome",
         texts: {
           headerCaption: "",
