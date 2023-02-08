@@ -57,3 +57,17 @@ ALTER TABLE eg_death_dtls_registry_log add column IF NOT EXISTS death_place_rema
 ALTER TABLE eg_death_dtls_registry_log add column IF NOT EXISTS death_place_remarks_ml character varying(500);
 ALTER TABLE eg_death_dtls_registry_log add column IF NOT EXISTS place_of_burial_en character varying(200);
 ALTER TABLE eg_death_dtls_registry_log add column IF NOT EXISTS place_of_burial_ml character varying(200);
+
+
+
+ALTER TABLE eg_death_address_dtls RENAME COLUMN houename_en  TO housename_en;
+ALTER TABLE eg_death_address_dtls RENAME COLUMN houename_ml  TO housename_ml;  
+ 
+ALTER TABLE eg_death_address_dtls_log RENAME COLUMN houename_en  TO housename_en;
+ALTER TABLE eg_death_address_dtls_log RENAME COLUMN houename_ml  TO housename_ml;  
+
+ALTER TABLE eg_death_address_registry RENAME COLUMN houename_en  TO housename_en;
+ALTER TABLE eg_death_address_registry RENAME COLUMN houename_ml  TO housename_ml;  
+ 
+ALTER TABLE eg_death_address_registry_log RENAME COLUMN houename_en  TO housename_en;
+ALTER TABLE eg_death_address_registry_log RENAME COLUMN houename_ml  TO housename_ml;  
