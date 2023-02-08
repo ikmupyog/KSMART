@@ -33,7 +33,7 @@ public class DeathApplnService {
      private final DeathProducer producer;
      //Rakhi S ikm on 08.02.2023
      private final DeathEnrichment enrichmentService;
-    // private final DeathConfiguration deathConfig;
+     private final DeathConfiguration deathConfig;
    //  private final DeathEnrichment enrichmentService;
    //  private final DeathMdmsUtil util;
    //  private final WorkflowIntegrator workflowIntegrator;
@@ -41,20 +41,23 @@ public class DeathApplnService {
   //   private final DeathApplnValidator validatorService;
      private final DeathApplnRepository repository;
 
+     //Rakhi S ikm on 08.02.2023
      @Autowired
      DeathApplnService(DeathApplnRepository repository ,DeathProducer producer
-                         ,DeathEnrichment enrichmentService){
+                         ,DeathEnrichment enrichmentService,DeathConfiguration deathConfig){
           
      //,DeathConfiguration deathConfig
      //             DeathEnrichment enrichmentService,DeathMdmsUtil util,MDMSValidator mdmsValidator,
      //             DeathApplnValidator validatorService,,WorkflowIntegrator workflowIntegrator){
-         this.producer = producer;
+
        //  this.deathConfig = deathConfig;
       //   this.workflowIntegrator = workflowIntegrator;
        //  this.enrichmentService = enrichmentService;
        //  this.util = util;
        //  this.mdmsValidator = mdmsValidator;
        //  this.validatorService = validatorService;
+         this.producer = producer;
+         this.deathConfig = deathConfig;
          this.enrichmentService = enrichmentService;
          this.repository = repository;
      }
@@ -63,6 +66,7 @@ public class DeathApplnService {
      public List<DeathDtl> create(DeathDtlRequest request) {
           enrichmentService.enrichCreate(request);
           enrichmentService.setACKNumber(request); 
+          producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           return request.getDeathCertificateDtls();
      }
 
