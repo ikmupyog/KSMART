@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 // import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -39,7 +39,9 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
     // onSelect(config.key, { HospitalName, HospitalNameMl
     // });
   };
-
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}

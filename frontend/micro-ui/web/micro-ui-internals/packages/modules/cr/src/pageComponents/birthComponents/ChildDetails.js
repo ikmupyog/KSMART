@@ -4,6 +4,7 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import BirthPlaceHospital from "../../pageComponents/birthComponents/BirthPlaceHospital";
+import BirthPlaceInstitution from "../../pageComponents/birthComponents/BirthPlaceInstitution";
 
 const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -34,6 +35,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [hospitalName, selectHospitalName] = useState(formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null);
   const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl ? formData?.ChildDetails?.hospitalNameMl : null);
 
+  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution ? formData?.ChildDetails?.institution : null);
+  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl ? formData?.ChildDetails?.institutionIdMl : null);
+  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId ? formData?.ChildDetails?.institutionId : null);
+
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : null);
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.medicalAttensionSub ? formData?.ChildDetails?.medicalAttensionSub : null);
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.ChildDetails?.deliveryMethods ? formData?.ChildDetails?.deliveryMethods : null);
@@ -43,8 +48,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.childDOB ? false : false);
-  const [HospitalError, setHospitalError] = useState(formData?.BirthPlace?.hospitalName ? false : false);
-  const [BirthWeightError, setBirthWeightError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub ? false : false);
+  const [HospitalError, setHospitalError] = useState(formData?.ChildDetails?.hospitalName ? false : false);
+  const [InstitutionError, setInstitutionError] = useState(formData?.ChildDetails?.institution ? false : false);
+  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.ChildDetails?.institutionId ? false : false);
+  const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.DeliveryMethodSub ? false : false);
 
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
@@ -62,6 +69,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   let cmbPlaceMaster = [];
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
+  let hospitalCode = "";
+  let institutionTypeCode = "";
+  let institutionNameCode = "";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -120,12 +130,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
 
   React.useEffect(() => {
     if (isInitialRenderPlace) {
-      console.log("birthPlace");
       if (birthPlace) {
         setIsInitialRenderPlace(false);
         placeOfBirth = birthPlace.code;
         setValue(placeOfBirth);
-        console.log(placeOfBirth);
         // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(placeOfBirth)));
         if (placeOfBirth === "HOSPITAL") {
           <BirthPlaceHospital
@@ -134,14 +142,11 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           />;
         }
         if (placeOfBirth === "INSTITUTION") {
-          // <InstitutionDetails
-          //   setInstitution={setInstitution}
-          //   setInstitutionId={setInstitutionId}
-          //   SiginedOfficer={SiginedOfficer}
-          //   SiginedOfficerDesignation={SiginedOfficerDesignation}
-          //   InstitutionMobilNo={InstitutionMobilNo}
-          //   InstitutionAadhaar={InstitutionAadhaar}
-          // />;
+          <BirthPlaceInstitution
+            institution={institution}
+            institutionIdMl={institutionIdMl}
+            institutionId={institutionId}
+          />;
         }
         if (placeOfBirth === "VEHICLE") {
           // <BirthVehicle
@@ -425,7 +430,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   let validFlag = true;
-  let hospitalCode = "";
   const goNext = () => {
     if (AadharError) {
       validFlag = false;
@@ -448,6 +452,29 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       } else {
         hospitalCode = hospitalName.code;
         setHospitalError(false);
+      }
+    } else if (birthPlace.code === "INSTITUTION") {
+      if (institution == null) {
+        setInstitutionError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        institutionTypeCode = institution.code;
+        setInstitutionError(false);
+        if (institutionId == null || institutionIdMl == null) {
+          setInstitutionNameError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          institutionNameCode = institution.code;
+          setInstitutionNameError(false);
+        }
       }
     }
     if (birthWeight != null) {
@@ -482,6 +509,11 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
       sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
       sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
+      sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
+      sessionStorage.setItem("institution", institution ? institution.name : null);
+      sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
+      sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
+      sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
       sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
       sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
       sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
@@ -491,6 +523,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         childDOB, birthDateTime, gender, childAadharNo,
         isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
+        institutionTypeCode, institution,institutionNameCode, institutionId, institutionIdMl,
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods
       });
     }
@@ -631,6 +664,19 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         )}
+        {value === "INSTITUTION" && (
+          <div>
+            <BirthPlaceInstitution
+              institution={institution}
+              institutionIdMl={institutionIdMl}
+              institutionId={institutionId}
+              setInstitution={setInstitution}
+              setInstitutionIdMl={setInstitutionIdMl}
+              setInstitutionId={setInstitutionId}
+            />
+          </div>
+        )}
+
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-12">
@@ -866,16 +912,18 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         {toast && (
           <Toast
             error={
-              AadharError || DOBError || HospitalError || BirthWeightError
+              AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError || BirthWeightError
             }
             label={
-              AadharError || DOBError || HospitalError || BirthWeightError
+              AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError || BirthWeightError
                 ?
                 AadharError
                   ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
                     : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
-                      : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                        : setToast(false)
+                      : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                      : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
+                        : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                          : setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
