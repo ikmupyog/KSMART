@@ -3,10 +3,11 @@ package org.ksmart.death.deathregistry.service;
 import java.util.List;
 import java.util.UUID;
 
-
+import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
 import org.ksmart.death.deathregistry.kafka.producer.DeathRegistryProducer;
+import org.ksmart.death.deathregistry.repository.DeathRegistryRepository;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
@@ -26,8 +27,9 @@ public class DeathRegistryService {
 
      private final DeathRegistryProducer producer;
      private final DeathRegistryConfiguration deathConfig;
+     private final DeathRegistryRepository repository;
     // private final CrDeathRegistryEnrichment enrichmentService;
-    // private final CrDeathRegistryRepository repository;
+   
     // private final CrDeathRegistryMdmsUtil util;
     // private final RegistryMDMSValidator mdmsValidator;
     // private final CrDeathRegistryValidator validatorService;
@@ -35,21 +37,22 @@ public class DeathRegistryService {
     @Autowired
     DeathRegistryService(
       
-     DeathRegistryProducer producer,DeathRegistryConfiguration deathConfig){
-    // CrDeathRegistryEnrichment enrichmentService ,CrDeathRegistryRepository repository ,
+     DeathRegistryProducer producer,DeathRegistryConfiguration deathConfig ,DeathRegistryRepository repository ){
+    // CrDeathRegistryEnrichment enrichmentService ,,
     // CrDeathRegistryMdmsUtil util,RegistryMDMSValidator mdmsValidator,
     // CrDeathRegistryValidator validatorService){
          this.producer = producer;
          this.deathConfig = deathConfig;
+         this.repository=repository;
     //     this.enrichmentService = enrichmentService;
-    //     this.repository=repository;
+    
     //     this.util=util;
     //     this.mdmsValidator=mdmsValidator;
     //     this.validatorService=validatorService;
     }
 
 
-      //UPDATE BEGIN Jasmine
+      //UPDATE BEGIN Jasmine 7.03.2023
       public List<DeathRegistryDtl> update(DeathRegistryRequest request) {
 
        String regNo = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getRegistrationNo();
@@ -66,11 +69,11 @@ public class DeathRegistryService {
 
         return request.getDeathCertificateDtls();
       }
-    //Search  
-    //  public List<DeathRegistryDtl> search(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
+    //Search  Jasmine 08.03.2023
+     public List<DeathRegistryDtl> search(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
 
-		//     return repository.getDeathApplication(criteria);
-    //  }
+		    return repository.getDeathApplication(criteria);
+     }
 
     
 }

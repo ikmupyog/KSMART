@@ -64,20 +64,20 @@ public class DeathRegistryController {
             return ResponseEntity.ok(response);
         }
     
-        //Search  Jasmine 07.02.2023
-        // @PostMapping("/deathregistry/_searchdeathregistry")
+        //Search  Jasmine 08.02.2023
+        @PostMapping("/deathregistry/_searchdeathregistry")
     
-        // public ResponseEntity<DeathRegistryResponse> search(@RequestBody RequestInfoWrapper request,
-        //                                                       @ModelAttribute DeathRegistryCriteria criteria) {
+        public ResponseEntity<DeathRegistryResponse> search(@RequestBody RequestInfoWrapper request,
+                                                              @ModelAttribute DeathRegistryCriteria criteria) {
     
-        //     List<DeathRegistryDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
+            List<DeathRegistryDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
     
-        //     DeathRegistryResponse response = DeathRegistryResponse
-        //                                         .builder()
-        //                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
-        //                                         .deathCertificateDtls(deathDetails)
-        //                                         .build();
-        //     return ResponseEntity.ok(response);
-        // }
+            DeathRegistryResponse response = DeathRegistryResponse
+                                                .builder()
+                                                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                                .deathCertificateDtls(deathDetails)
+                                                .build();
+            return ResponseEntity.ok(response);
+        }
     
 }
