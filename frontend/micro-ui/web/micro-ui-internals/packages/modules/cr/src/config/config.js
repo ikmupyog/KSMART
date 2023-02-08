@@ -442,6 +442,22 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
+        route: "birthplace-publicplace",
+        component: "BirthPlacePublicPlace",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BirthPlacePublicPlaceDetails",
+        nextStep: "parents-details",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
         route: "mother-details",
         component: "MotherInformation",
         texts: {
