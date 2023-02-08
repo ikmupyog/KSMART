@@ -35,7 +35,7 @@ import AddressInsideKerala from "../src/pageComponents/birthComponents/AddressIn
 import AddressBirth from "../src/pageComponents/birthComponents/AddressBirth";
 import AddressOutsideKerala from "../src/pageComponents/birthComponents/AddressOutsideKerala";
 import AddressBrOutsideIndia from "../src/pageComponents/birthComponents/AddressBrOutsideIndia";
-
+import InformarHospitalInstitution from "../src/pageComponents/birthComponents/InformarHospitalInstitution";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -199,7 +199,7 @@ const componentsToRegister = {
   AddressBirth,
   AddressOutsideKerala,
   AddressBrOutsideIndia,
-
+  InformarHospitalInstitution,
  //////////////////
   // SearchRegistry,
   AdoptionDetails,

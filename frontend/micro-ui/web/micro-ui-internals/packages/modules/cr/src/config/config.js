@@ -768,6 +768,22 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },  
+      {
+        route: "informar-details",
+        component: "InformarHospitalInstitution",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "InformarHosInstDetails",
+        nextStep: "",
+        type: "component",
+        hideInEmployee: true,
+      },  
     ],
   },
 
