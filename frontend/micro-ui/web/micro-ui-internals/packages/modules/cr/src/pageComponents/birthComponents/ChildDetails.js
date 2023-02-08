@@ -3,53 +3,73 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackBut
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
-// import { TimePicker } from '@material-ui/pickers';
+import BirthPlaceHospital from "../../pageComponents/birthComponents/BirthPlaceHospital";
 
-const ChildDetails = ({ config, onSelect, userType, formData }) => {
+const childDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
-  // const [ChildDOB, setChildDOB] = useState(isEdit ? (formData?.ChildDetails?.ChildDOB):(formData?.ChildDetails?.ChildDOB ? formData?.ChildDetails?.ChildDOB : ""));
-  const [ChildDOB, setChildDOB] = useState(formData?.ChildDetails?.ChildDOB ? formData?.ChildDetails?.ChildDOB : "");
-  const [Gender, selectGender] = useState(formData?.ChildDetails?.Gender);
-  const [ChildAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.ChildAadharNo ? formData?.ChildDetails?.ChildAadharNo : "");
-  const [ChildFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.ChildFirstNameEn ? formData?.ChildDetails?.ChildFirstNameEn : "");
-  const [ChildMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.ChildMiddleNameEn ? formData?.ChildDetails?.ChildMiddleNameEn : "");
-  const [ChildLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.ChildLastNameEn ? formData?.ChildDetails?.ChildLastNameEn : "");
-  const [ChildFirstNameMl, setChildFirstNameMl] = useState(formData?.ChildDetails?.ChildFirstNameMl ? formData?.ChildDetails?.ChildFirstNameMl : "");
-  const [ChildMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.ChildMiddleNameMl ? formData?.ChildDetails?.ChildMiddleNameMl : "");
-  const [ChildLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.ChildLastNameMl ? formData?.ChildDetails?.ChildLastNameMl : "");
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [tripStartTime, setTripStartTime] = useState(formData?.ChildDetails?.tripStartTime ? formData?.ChildDetails?.tripStartTime : "");
-  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
-  const [toast, setToast] = useState(false);
-  const [AadharError, setAadharError] = useState(formData?.ChildDetails?.ChildAadharNo ? false : false);
-  const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.ChildAadharNo ? true : false);
-  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
-  const [PregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.PregnancyDuration ? formData?.ChildDetails?.PregnancyDuration : null);
-  const [MedicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.MedicalAttensionSub ? formData?.ChildDetails?.MedicalAttensionSub : null);
-  const [DeliveryMethod, setDeliveryMethod] = useState(formData?.ChildDetails?.DeliveryMethod ? formData?.ChildDetails?.DeliveryMethod : null);
+  const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
 
-  // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
-  // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
-  // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
-  // const [ChildPassportNo, setChildPassportNo] = useState(formData?.ChildDetails?.ChildPassportNo);
-  // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.ChildDetails?.ChildArrivalDate);
+  // const [childDOB, setChildDOB] = useState(isEdit ? (formData?.childDetails?.childDOB):(formData?.childDetails?.childDOB ? formData?.childDetails?.childDOB : ""));
+  const [childDOB, setChildDOB] = useState(formData?.childDetails?.childDOB ? formData?.childDetails?.childDOB : "");
+  const [gender, selectGender] = useState(formData?.childDetails?.gender);
+  const [childAadharNo, setChildAadharNo] = useState(formData?.childDetails?.childAadharNo ? formData?.childDetails?.childAadharNo : "");
+  const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.childDetails?.childFirstNameEn ? formData?.childDetails?.childFirstNameEn : "");
+  const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.childDetails?.childMiddleNameEn ? formData?.childDetails?.childMiddleNameEn : "");
+  const [childLastNameEn, setChildLastNameEn] = useState(formData?.childDetails?.childLastNameEn ? formData?.childDetails?.childLastNameEn : "");
+  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.childDetails?.childFirstNameMl ? formData?.childDetails?.childFirstNameMl : "");
+  const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.childDetails?.childMiddleNameMl ? formData?.childDetails?.childMiddleNameMl : "");
+  const [childLastNameMl, setChildLastNameMl] = useState(formData?.childDetails?.childLastNameMl ? formData?.childDetails?.childLastNameMl : "");
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
+  const [birthDateTime, setbirthDateTime] = useState(formData?.childDetails?.birthDateTime ? formData?.childDetails?.birthDateTime : "");
+  const [isChildName, setIsChildName] = useState(formData?.childDetails?.isChildName ? formData?.childDetails?.isChildName : false);
+
+  const [birthPlace, selectBirthPlace] = useState(formData?.birthPlace?.birthPlace);
+  const [value, setValue] = useState();
+  const [hospitalName, selectHospitalName] = useState(formData?.BirthPlaceHospitalDetails?.hospitalName ? formData?.BirthPlaceHospitalDetails?.hospitalName : null);
+  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.BirthPlaceHospitalDetails?.hospitalNameMl ? formData?.BirthPlaceHospitalDetails?.hospitalNameMl : null);
+
+  const [pregnancyDuration, setPregnancyDuration] = useState(formData?.childDetails?.pregnancyDuration ? formData?.childDetails?.pregnancyDuration : null);
+  const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.childDetails?.medicalAttensionSub ? formData?.childDetails?.medicalAttensionSub : null);
+  const [deliveryMethods, setDeliveryMethod] = useState(formData?.childDetails?.deliveryMethods ? formData?.childDetails?.deliveryMethods : null);
+  const [birthWeight, setBirthWeight] = useState(formData?.childDetails?.birthWeight ? formData?.childDetails?.birthWeight : null);
+
+  const [toast, setToast] = useState(false);
+  const [AadharError, setAadharError] = useState(formData?.childDetails?.childAadharNo ? false : false);
+  const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.childDetails?.childAadharNo ? true : false);
+  const [DOBError, setDOBError] = useState(formData?.childDetails?.childDOB ? false : false);
+  const [HospitalError, setHospitalError] = useState(formData?.BirthPlace?.hospitalName ? false : false);
+  const [BirthWeightError, setBirthWeightError] = useState(formData?.StatisticalInfoDetails?.DeliveryMethodSub ? false : false);
+
+  // const [isAdopted, setIsAdopted] = useState(formData?.childDetails?.isAdopted);
+  // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.childDetails?.isMultipleBirth);
+  // const [isBornOutSide, setIsBornOutSide] = useState(formData?.childDetails?.isBornOutSide);
+  // const [ChildPassportNo, setChildPassportNo] = useState(formData?.childDetails?.ChildPassportNo);
+  // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.childDetails?.ChildArrivalDate);
 
   // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // disable future dates
   // const maxDate = new Date();
   // let currentDate = new Date().toJSON().slice(0, 10);
   const [access, setAccess] = React.useState(true);
+  let placeOfBirth = null;
   let menu = [];
+  let cmbPlaceMaster = [];
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+    });
+  PlaeceMaster &&
+    PlaeceMaster["birth-death-service"] &&
+    PlaeceMaster["birth-death-service"].PlaceMaster.map((ob) => {
+      cmbPlaceMaster.push(ob);
     });
   AttentionOfDelivery &&
     AttentionOfDelivery["birth-death-service"] &&
@@ -90,12 +110,123 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.ChildDetails?.isChildName != null) {
+      if (formData?.childDetails?.isChildName != null) {
         setIsInitialRender(false);
-        setIsChildName(formData?.ChildDetails?.isChildName);
+        setIsChildName(formData?.childDetails?.isChildName);
       }
     }
   }, [isInitialRender]);
+
+
+  React.useEffect(() => {
+    if (isInitialRenderPlace) {
+      if (birthPlace) {
+        setIsInitialRenderPlace(false);
+        placeOfBirth = birthPlace.code;
+        setValue(placeOfBirth);
+        // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(placeOfBirth)));
+        if (placeOfBirth === "HOSPITAL") {
+          <BirthPlaceHospital
+            hospitalName={hospitalName}
+            hospitalNameMl={hospitalNameMl}
+          />;
+        }
+        if (placeOfBirth === "INSTITUTION") {
+          // <InstitutionDetails
+          //   setInstitution={setInstitution}
+          //   setInstitutionId={setInstitutionId}
+          //   SiginedOfficer={SiginedOfficer}
+          //   SiginedOfficerDesignation={SiginedOfficerDesignation}
+          //   InstitutionMobilNo={InstitutionMobilNo}
+          //   InstitutionAadhaar={InstitutionAadhaar}
+          // />;
+        }
+        if (placeOfBirth === "VEHICLE") {
+          // <BirthVehicle
+          //   VehicleRegistrationNo={VehicleRegistrationNo}
+          //   VehicleFromEn={VehicleFromEn}
+          //   VehicleToEn={VehicleToEn}
+          //   VehicleFromMl={VehicleFromMl}
+          //   VehicleHaltPlace={VehicleHaltPlace}
+          //   VehicleToMl={VehicleToMl}
+          //   VehicleOtherDetailsEn={VehicleOtherDetailsEn}
+          //   VehicleOtherDetailsMl={VehicleOtherDetailsMl}
+          //   setAdmittedHospitalEn={setAdmittedHospitalEn}
+          //   setAdmittedHospitalMl={setAdmittedHospitalMl}
+          // />;
+        }
+
+        if (placeOfBirth === "PUBLIC_PLACES") {
+          // <PublicPlace
+          //   setPublicPlaceType={setPublicPlaceType}
+          // // AdrsInfontName={AdrsInfontName}
+          // // AdrsPublicPlace={AdrsPublicPlace}
+          // // PublicPlaceDesption={PublicPlaceDesption}
+          // />;
+        }
+
+        if (placeOfBirth === "HOME") {
+          // <PlaceofBirthHome
+          //   AdrsCountry={AdrsCountry}
+          //   AdrsStateName={AdrsStateName}
+          //   AdrsDistrict={AdrsDistrict}
+          //   AdrsLBTypeName={AdrsLBTypeName}
+          //   AdrsLBName={AdrsLBName}
+          //   AdrsTaluk={AdrsTaluk}
+          //   AdrsVillage={AdrsVillage}
+          //   AdrsPostOffice={AdrsPostOffice}
+          //   AdrsPincode={AdrsPincode}
+          //   AdrsMainPlaceEn={AdrsMainPlaceEn}
+          //   AdrsMainPlaceMl={AdrsMainPlaceMl}
+          //   AdrsLocalityNameEn={AdrsLocalityNameEn}
+          //   AdrsLocalityNameMl={AdrsLocalityNameMl}
+          //   AdrsStreetNameEn={AdrsStreetNameEn}
+          //   AdrsStreetNameMl={AdrsStreetNameMl}
+          //   AdrsHouseNameEn={AdrsHouseNameEn}
+          //   AdrsHouseNameMl={AdrsHouseNameMl}
+          //   AdrsDoorNo={AdrsDoorNo}
+          //   AdrsSubNo={AdrsSubNo}
+          //   AdrsResNoEn={AdrsResNoEn}
+          //   AdrsResNoMl={AdrsResNoMl}
+          //   LBCombo={LBCombo}
+
+          // />;
+        }
+        if (placeOfBirth === "HOME  || VEHICLE || PUBLIC_PLACES") {
+          // <InformantDetails
+          //   InfomantFirstNameEn={InfomantFirstNameEn}
+          //   InfomantAadhar={InfomantAadhar}
+          //   InfomantEmail={InfomantEmail}
+          //   InfomantMobile={InfomantMobile}
+          //   InformantAddressLineOne={InformantAddressLineOne}
+          //   InformantAddressLineTwo={InformantAddressLineTwo}
+          // />;
+        }
+
+        // if (placeOfBirth === "HOME || VEHICLE") {
+        //   <InformantAddress
+        //     InformantAdrsCountry={InformantAdrsCountry}
+        //     InformantAdrsStateName={InformantAdrsStateName}
+        //     InformantAdrsDistrict={InformantAdrsDistrict}
+        //     InformantAdrsLBTypeName={InformantAdrsLBTypeName}
+        //     InformantAdrsLBName={InformantAdrsLBName}
+        //     InformantAdrsTaluk={InformantAdrsTaluk}
+        //     InformantAdrsVillage={InformantAdrsVillage}
+        //     InformantAdrsPostOffice={InformantAdrsPostOffice}
+        //     InformantAdrsPincode={InformantAdrsPincode}
+        //     InformantAdrsMainPlaceEn={InformantAdrsMainPlaceEn}
+        //     InformantAdrsLocalityNameEn={InformantAdrsLocalityNameEn}
+        //     InformantAdrsStreetNameEn={InformantAdrsStreetNameEn}
+        //     InformantAdrsHouseNameEn={InformantAdrsHouseNameEn}
+        //     InformantAdrsDoorNo={InformantAdrsDoorNo}
+        //     InformantAdrsResNo={InformantAdrsResNo}
+
+        //   />
+
+        // }
+      }
+    }
+  }, [isInitialRenderPlace]);
 
   function setselectGender(value) {
     selectGender(value);
@@ -134,8 +265,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
-      console.log(Difference_In_DaysRounded);
-      if (Difference_In_DaysRounded >= 180) {
+      // console.log(Difference_In_DaysRounded);
+      if (Difference_In_DaysRounded >= 365) {
         setChildAadharHIde(true);
       } else {
         setChildAadharHIde(false);
@@ -248,7 +379,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      setTripStartTime(value);
+      setbirthDateTime(value);
     }
   };
   function setChildName(e) {
@@ -268,7 +399,31 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   function setSelectDeliveryMethod(value) {
     setDeliveryMethod(value);
   }
+  function setselectBirthPlace(value) {
+    selectBirthPlace(value);
+    setValue(value.code);
+  }
+  function setSelectBirthWeight(e) {
+    if (e.target.value.length === 4) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setBirthWeight(e.target.value);
+      // if(e.target.value <= 0 || e.target.value > 10 ){
+      //   setBirthWeightError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //   setToast(false);
+      // }, 3000);
+      // } else {
+      //   setBirthWeightError(false);
+      //   setBirthWeight(e.target.value);        
+      // }
+
+    }
+  }
   let validFlag = true;
+  let hospitalCode = "";
   const goNext = () => {
     if (AadharError) {
       validFlag = false;
@@ -282,31 +437,61 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setAadharError(false);
     }
+    if (birthPlace.code === "HOSPITAL") {
+      if (hospitalName == null || hospitalNameMl === null) {
+        setHospitalError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        hospitalCode = hospitalName.code;
+        setHospitalError(false);
+      }
+    }
+    if (birthWeight != null) {
+      let BirthWeightCheck = birthWeight;
+      if (BirthWeightCheck <= 0 || BirthWeightCheck > 10) {
+        validFlag = false;
+        setBirthWeightError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setBirthWeightError(false);
+      }
+    }
+    else {
+      setBirthWeightError(false);
+    }
     if (validFlag == true) {
-      sessionStorage.setItem("ChildDOB", ChildDOB ? ChildDOB : null);
-      sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
-      sessionStorage.setItem("Gender", Gender ? Gender.code : null);
-      sessionStorage.setItem("ChildAadharNo", ChildAadharNo ? ChildAadharNo : null);
-      sessionStorage.setItem("ChildFirstNameEn", ChildFirstNameEn ? ChildFirstNameEn : null);
-      sessionStorage.setItem("ChildMiddleNameEn", ChildMiddleNameEn ? ChildMiddleNameEn : null);
-      sessionStorage.setItem("ChildLastNameEn", ChildLastNameEn ? ChildLastNameEn : null);
-      sessionStorage.setItem("ChildFirstNameMl", ChildFirstNameMl ? ChildFirstNameMl : null);
-      sessionStorage.setItem("ChildMiddleNameMl", ChildMiddleNameMl ? ChildMiddleNameMl : null);
-      sessionStorage.setItem("ChildLastNameMl", ChildLastNameMl ? ChildLastNameMl : null);
+      sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
+      sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
+      sessionStorage.setItem("gender", gender ? gender.code : null);
+      sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
+      sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
+      sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
+      sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
+      sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
+      sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
+      sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
       sessionStorage.setItem("isChildName", isChildName);
-      // sessionStorage.setItem("isMotherInfo", isMotherInfo);
+      sessionStorage.setItem("birthPlace", birthPlace.code);
+      sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
+      sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
+      sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
+      sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
+      sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
+      sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
+      sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
+
       onSelect(config.key, {
-        ChildDOB,
-        tripStartTime,
-        Gender,
-        ChildAadharNo,
-        ChildFirstNameEn,
-        ChildMiddleNameEn,
-        ChildLastNameEn,
-        ChildFirstNameMl,
-        ChildMiddleNameMl,
-        ChildLastNameMl,
-        isChildName,
+        childDOB, birthDateTime, gender, childAadharNo,
+        isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
+        birthPlace, hospitalCode, hospitalName, hospitalNameMl,
+        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods
       });
     }
   };
@@ -339,7 +524,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return null;
     }
   };
-  if (isLoading) {
+  if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
     return <Loader></Loader>;
   }
   console.log(convertEpochToDate(new Date()));
@@ -348,7 +533,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!ChildDOB || !Gender}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !birthPlace}>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-12">
@@ -366,10 +551,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <DatePicker
-                date={ChildDOB}
-                name="ChildDOB"
-                max={ChildDOB ? ChildDOB : convertEpochToDate(new Date())}
-                min={ChildDOB ? ChildDOB : convertEpochToDate("1900-01-01")}
+                date={childDOB}
+                name="childDOB"
+                max={childDOB ? childDOB : convertEpochToDate(new Date())}
+                min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                 onChange={setselectChildDOB}
                 inputFormat="DD-MM-YYYY"
                 placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
@@ -378,19 +563,16 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="col-md-2">
               <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-              <CustomTimePicker name="tripStartTime" onChange={(val) => handleTimeChange(val, setTripStartTime)} value={tripStartTime} />
+              <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
             </div>
             <div className="col-md-2">
-              <CardLabel>
-                {`${t("CR_GENDER")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
+              <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="code"
                 isMandatory={true}
                 option={menu}
-                selected={Gender}
+                selected={gender}
                 select={setselectGender}
                 placeholder={`${t("CR_GENDER")}`}
                 {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
@@ -404,8 +586,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                   isMandatory={false}
                   type={"number"}
                   optionKey="i18nKey"
-                  name="ChildAadharNo"
-                  value={ChildAadharNo}
+                  name="childAadharNo"
+                  value={childAadharNo}
                   onChange={setSelectChildAadharNo}
                   placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                   inputProps={{
@@ -418,9 +600,43 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_PLACE_OF_BIRTH")}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={false}
+                option={cmbPlaceMaster}
+                selected={birthPlace}
+                select={setselectBirthPlace}
+                placeholder={`${t("CR_BIRTH_PLACE")}`}
+              />
+            </div>
+          </div>
+        </div>
+        {value === "HOSPITAL" && (
+          <div>
+            <BirthPlaceHospital
+              selectHospitalName={selectHospitalName}
+              hospitalName={hospitalName}
+              hospitalNameMl={hospitalNameMl}
+              selectHospitalNameMl={selectHospitalNameMl}
+            />
+          </div>
+        )}
+        <div className="row">
+          <div className="col-md-12">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Child Details")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
               </h1>
             </div>
           </div>
@@ -454,8 +670,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="ChildFirstNameEn"
-                    value={ChildFirstNameEn}
+                    name="childFirstNameEn"
+                    value={childFirstNameEn}
                     onChange={setSelectChildFirstNameEn}
                     //  onChange={(e,v) => this.updateTextField(e,v)}
                     // disable={isChildName}
@@ -471,8 +687,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="ChildMiddleNameEn"
-                    value={ChildMiddleNameEn}
+                    name="childMiddleNameEn"
+                    value={childMiddleNameEn}
                     onChange={setSelectChildMiddleNameEn}
                     // disable={isChildName}
                     placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
@@ -487,8 +703,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="ChildLastNameEn"
-                    value={ChildLastNameEn}
+                    name="childLastNameEn"
+                    value={childLastNameEn}
                     onChange={setSelectChildLastNameEn}
                     // disable={isChildName}
                     placeholder={`${t("CR_LAST_NAME_EN")}`}
@@ -510,8 +726,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="ChildFirstNameMl"
-                    value={ChildFirstNameMl}
+                    name="childFirstNameMl"
+                    value={childFirstNameMl}
                     onChange={setSelectChildFirstNameMl}
                     // disable={isChildName}
                     placeholder={`${t("CR_FIRST_NAME_ML")}`}
@@ -531,8 +747,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="ChildMiddleNameMl"
-                    value={ChildMiddleNameMl}
+                    name="childMiddleNameMl"
+                    value={childMiddleNameMl}
                     onChange={setSelectChildMiddleNameMl}
                     // disable={isChildName}
                     placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -552,8 +768,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="ChildLastNameMl"
-                    value={ChildLastNameMl}
+                    name="childLastNameMl"
+                    value={childLastNameMl}
                     onChange={setSelectChildLastNameMl}
                     // disable={isChildName}
                     placeholder={`${t("CR_LAST_NAME_ML")}`}
@@ -582,14 +798,14 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("Additional Birth Information")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
               </h1>
             </div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}</CardLabel>
               <Dropdown
@@ -597,39 +813,53 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 optionKey="name"
                 isMandatory={false}
                 option={cmbAttDeliverySub}
-                selected={MedicalAttensionSub}
+                selected={medicalAttensionSub}
                 select={setSelectMedicalAttensionSub}
                 placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_PREGNANCY_DURATION")}`}
-                <span className="mandatorycss">*</span>
               </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="i18nKey"
                 isMandatory={false}
                 option={cmbPregWeek}
-                selected={PregnancyDuration}
+                selected={pregnancyDuration}
                 select={setSelectPregnancyDuration}
                 placeholder={`${t("CR_PREGNANCY_DURATION")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
-                {`${t("CR_DELIVERY_METHOD")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
+                {`${t("CR_DELIVERY_METHOD")}`}</CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
                 isMandatory={false}
                 option={cmbDeliveryMethod}
-                selected={DeliveryMethod}
+                selected={deliveryMethods}
                 select={setSelectDeliveryMethod}
-                placeholder={`${t("CR_DELIVERY_METHORD")}`}
+                placeholder={`${t("CR_DELIVERY_METHOD")}`}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_BIRTH_WEIGHT")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"number"}
+                optionKey="i18nKey"
+                name="birthWeight"
+                value={birthWeight}
+                onChange={setSelectBirthWeight}
+                placeholder={`${t("CR_BIRTH_WEIGHT")}`}
+                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "number", title: t("CR_INVALID_BIRTH_WEIGHT") })}
               />
             </div>
           </div>
@@ -637,19 +867,16 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         {toast && (
           <Toast
             error={
-              AadharError || DOBError
-              // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+              AadharError || DOBError || HospitalError || BirthWeightError
             }
             label={
-              AadharError || DOBError
-                ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-                // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
+              AadharError || DOBError || HospitalError || BirthWeightError
+                ?
                 AadharError
                   ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                    : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
-
-                    setToast(false)
+                    : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                      : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                        : setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
@@ -662,4 +889,4 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default ChildDetails;
+export default childDetails;
