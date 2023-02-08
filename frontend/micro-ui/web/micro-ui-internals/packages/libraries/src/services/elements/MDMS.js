@@ -765,7 +765,18 @@ const getTLLocalbody = (tenantId, moduleCode, type) => ({
     ],
   },
 });
-
+const getTLPostOffice = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "PostOffice", filter: `[?(@.active == true)]` }],
+      },
+    ],
+  },
+});
 
 const getPTFloorList = (tenantId, moduleCode, type) => ({
   type,
@@ -2437,6 +2448,9 @@ export const MdmsService = {
   },
   getTLLocalbody  : (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLLocalbody(tenantId, moduleCode), moduleCode);
+  },
+  getTLPostOffice : (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLPostOffice(tenantId, moduleCode), moduleCode);
   },
   getFloorList: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getPTFloorList(tenantId, moduleCode, type), moduleCode);
