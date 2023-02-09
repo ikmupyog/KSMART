@@ -353,5 +353,11 @@ public class DeathBasicInfo {
     @Size(max = 64)
     @JsonProperty("fileNo")
     private String fileNo = null;
+
+    //Jasmine 9.02.2023
+    @JsonProperty("auditDetails")
+    private AuditDetails  deathAuditDetails;
+
+
     
 }

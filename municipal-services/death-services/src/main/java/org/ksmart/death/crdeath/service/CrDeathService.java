@@ -71,7 +71,7 @@ public class CrDeathService {
 
           enrichmentService.setACKNumber(request); 
 
-          workflowIntegrator.callWorkFlow(request);
+        // CrworkflowIntegrator.callWorkFlow(request);
 
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
 
@@ -113,7 +113,7 @@ public class CrDeathService {
 
         enrichmentService.enrichUpdate(request);
         
-        workflowIntegrator.callWorkFlow(request);
+        //workflowIntegrator.callWorkFlow(request);
         
         producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
         

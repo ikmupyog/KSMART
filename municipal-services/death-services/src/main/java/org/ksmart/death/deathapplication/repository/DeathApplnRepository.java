@@ -32,7 +32,9 @@ public class DeathApplnRepository {
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
     }
+     //Jasmine on 07.02.2023
     public List<DeathDtl> getDeathApplication(DeathSearchCriteria criteria) {
+        
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<DeathDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);

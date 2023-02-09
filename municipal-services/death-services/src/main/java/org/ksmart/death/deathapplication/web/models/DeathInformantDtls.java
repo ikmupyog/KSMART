@@ -135,5 +135,9 @@ public class DeathInformantDtls {
     @Schema(type = "Integer" ,description = "Informant aadhar submitted(0/1)")
     @JsonProperty("InformantAadharSubmitted")
     private Integer  informantAadharSubmitted ;   
+
+    //Jasmine 9.02.2023
+    @JsonProperty("auditDetails")
+    private AuditDetails  deathAuditDetails;
        
 }

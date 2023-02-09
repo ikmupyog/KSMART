@@ -43,4 +43,10 @@ public class DeathSearchCriteria {
 
     @JsonProperty("DeceasedFirstNameEn")
     private String deceasedFirstNameEn;
+
+    @JsonProperty("DeathPlaceType")
+    private String hospitalName;
+
+    @JsonProperty("DeathPlaceInstId")
+    private String deathPlaceInstId;
 }
