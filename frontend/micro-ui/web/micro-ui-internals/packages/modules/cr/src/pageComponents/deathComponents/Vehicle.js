@@ -12,17 +12,16 @@ const Vehicle = ({ config, onSelect, userType, formData}) => {
   let validation = {};
   // const tenantId = Digit.ULBService.getCurrentTenantId();
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
 
   
-
-  const [VehicleRegistrationNo, setVehicleRegistrationNo] = useState(formData?.Vehicle?.VehicleRegistrationNo);
-  const [setVehicleType, setSelectedVehicleType] = useState(formData?.Vehicle?.setVehicleType);
-  const [VehicleFromEn, setVehicleFromEn] = useState(formData?.Vehicle?.VehicleFromEn);
-  const [VehicleToEn, setVehicleToEn] = useState(formData?.Vehicle?.VehicleToEn);
+  const [DeathPlaceType, setSelectedDeathPlaceType] = useState(formData?.Vehicle?.DeathPlaceType);
+  const [VehicleNumber, setVehicleNumber] = useState(formData?.Vehicle?.VehicleNumber); 
+  const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.Vehicle?.VehicleFromplaceEn);
+  const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.Vehicle?.VehicleToPlaceEn);
   const [VehicleFromMl, setVehicleFromMl] = useState(formData?.Vehicle?.VehicleFromMl);
   const [VehicleToMl, setVehicleToMl] = useState(formData?.Vehicle?.VehicleToMl);
   const [VehicleOtherDetailsEn, setVehicleOtherDetailsEn] = useState(formData?.Vehicle?.VehicleOtherDetailsEn);  
@@ -76,18 +75,17 @@ const Vehicle = ({ config, onSelect, userType, formData}) => {
       
   const onSkip = () => onSelect();
 
-  
-  function setSelectVehicleRegistrationNo(e) {
-    setVehicleRegistrationNo(e.target.value);
+  function selectDeathPlaceType(value) {
+    setSelectedDeathPlaceType(value);    
+  }  
+  function setSelectVehicleNumber(e) {
+    setVehicleNumber(e.target.value);
   }
-  
-  
-  
-  function setSelectVehicleFromEn(e) {
-    setVehicleFromEn(e.target.value);
+  function setSelectVehicleFromplaceEn(e) {
+    setVehicleFromplaceEn(e.target.value);
   }
-  function setSelectVehicleToEn(e) {
-    setVehicleToEn(e.target.value);
+  function setSelectVehicleToPlaceEn(e) {
+    setVehicleToPlaceEn(e.target.value);
   }
   function setSelectPlaceOfHalt(e) {
     setPlaceOfHalt(e.target.value);
@@ -112,16 +110,14 @@ const Vehicle = ({ config, onSelect, userType, formData}) => {
   function selectAdmittedHospitalEn(value) {
     setSelectedAdmittedHospitalEn(value);
   }
-  function selectVehicleType(value) {
-    setSelectedVehicleType(value);    
-  }
+  
 
   const goNext = () => {  
-    
-    sessionStorage.setItem("VehicleRegistrationNo", VehicleRegistrationNo ? VehicleRegistrationNo : null );   
-    sessionStorage.setItem("setVehicleType", setVehicleType ? setVehicleType.code : null);    
-    sessionStorage.setItem("VehicleFromEn", VehicleFromEn ? VehicleFromEn :null);  
-    sessionStorage.setItem("VehicleToEn", VehicleToEn ? VehicleToEn : null);
+    sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null); 
+    sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null );   
+       
+    sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn :null);  
+    sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
     sessionStorage.setItem("VehicleFromMl", VehicleFromMl ? VehicleFromMl : null);  
     sessionStorage.setItem("VehicleToMl", VehicleToMl ? VehicleToMl : null );
     sessionStorage.setItem("PlaceOfHalt", PlaceOfHalt ? PlaceOfHalt :null );  
@@ -132,11 +128,10 @@ const Vehicle = ({ config, onSelect, userType, formData}) => {
       
     onSelect(config.key, {
    
-         
-      VehicleRegistrationNo,      
-      setVehicleType,
-      VehicleFromEn,
-      VehicleToEn,
+      DeathPlaceType,    
+      VehicleNumber,
+      VehicleFromplaceEn,
+      VehicleToPlaceEn,
       VehicleFromMl,
       VehicleToMl,
       PlaceOfHalt, 
@@ -162,8 +157,8 @@ const Vehicle = ({ config, onSelect, userType, formData}) => {
                 optionKey="name"
                 isMandatory={false}
                 option={cmbVehicle}
-                selected={setVehicleType}
-                select={selectVehicleType}
+                selected={DeathPlaceType}
+                select={selectDeathPlaceType}
                 disabled={isEdit}
                 placeholder={`${t("CR_VEHICLE_TYPE")}`}
             />
@@ -175,9 +170,9 @@ const Vehicle = ({ config, onSelect, userType, formData}) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="VehicleRegistrationNo"
-                value={VehicleRegistrationNo}
-                onChange={setSelectVehicleRegistrationNo}
+                name="VehicleNumber"
+                value={VehicleNumber}
+                onChange={setSelectVehicleNumber}
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
@@ -194,9 +189,9 @@ const Vehicle = ({ config, onSelect, userType, formData}) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="VehicleFromEn"
-                value={VehicleFromEn}
-                onChange={setSelectVehicleFromEn}
+                name="VehicleFromplaceEn"
+                value={VehicleFromplaceEn}
+                onChange={setSelectVehicleFromplaceEn}
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
@@ -209,9 +204,9 @@ const Vehicle = ({ config, onSelect, userType, formData}) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="VehicleToEn"
-                value={VehicleToEn}
-                onChange={setSelectVehicleToEn}
+                name="VehicleToPlaceEn"
+                value={VehicleToPlaceEn}
+                onChange={setSelectVehicleToPlaceEn}
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_TO_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}

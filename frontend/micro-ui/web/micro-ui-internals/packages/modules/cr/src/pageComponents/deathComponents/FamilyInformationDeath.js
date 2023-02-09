@@ -124,8 +124,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
       }
     }
   }
-  function setSelectFamilyEmailId(value) {
-    setFamilyEmailId(value);
+  function setSelectFamilyEmailId(e) {
+    setFamilyEmailId(e.target.value);
   }
   function setSelectSpouseType(value) {
     setSpouseType(value);
@@ -529,7 +529,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectFamilyEmailId}
                 disable={isEdit}
                 placeholder={`${t("CR_EMAIL_ID")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "email", title: t("CR_INVALID_EMAIL_ID") })}
+                {...(validation = {isRequired: false, type: "email", title: t("CR_INVALID_EMAIL_ID") })}
               />
             </div>
           </div>
