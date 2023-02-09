@@ -56,7 +56,6 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_HOSPITAL_EN")}`}
@@ -87,8 +86,6 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
                 placeholder={`${t("CR_HOSPITAL_ML")}`}
               />
             </div>
-          </div>
-
         </div>
 
       </FormStep>
