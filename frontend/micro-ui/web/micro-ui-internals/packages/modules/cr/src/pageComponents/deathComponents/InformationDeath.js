@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import Hospital from "./Hospital";
 import Institution from "./Institution";
+import DeathPlaceHome from "./DeathPlaceHome";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
@@ -58,7 +59,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType);
 // Institution
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(formData?.InformationDeath?.DeathPlaceInstId); 
- 
+ // Home
+ const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepostofficeId);
+  const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepincode);
+  const [DeathPlaceHomehoueNameEn, setDeathPlaceHomehoueNameEn] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameEn);
+  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl);
+  const [DeathPlaceHomelocalityEn, setDeathPlaceHomelocalityEn] = useState(formData?.DeathPlaceHome?.DeathPlaceHomelocalityEn);
+  const [DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomelocalityMl);
+  const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameEn);
+  const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameMl);
+
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
@@ -243,6 +253,19 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           DeathPlaceInstId={DeathPlaceInstId}          
           />;
         }
+        if (naturetype === "HOME") {
+          <DeathPlaceHomepincode         
+          DeathPlaceType={DeathPlaceType} 
+          DeathPlaceHomepostofficeId= {DeathPlaceHomepostofficeId}
+          DeathPlaceHomepincode={DeathPlaceHomepincode} 
+          DeathPlaceHomehoueNameEn = {DeathPlaceHomehoueNameEn}
+          DeathPlaceHomehoueNameMl = {DeathPlaceHomehoueNameMl}
+          DeathPlaceHomelocalityEn = {DeathPlaceHomelocalityEn} 
+          DeathPlaceHomelocalityMl = {DeathPlaceHomelocalityMl}
+          DeathPlaceHomestreetNameEn = {DeathPlaceHomestreetNameEn}
+          DeathPlaceHomestreetNameMl = {DeathPlaceHomestreetNameMl}      
+          />;
+        }
       }}
     });
       const goNext = () => {
@@ -284,8 +307,19 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
           sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ?DeathPlaceInstId.code : null);
           
-        }    
-     
+        } 
+        if (DeathPlace.code === "INSTITUTION") { 
+        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn  : null);
+        sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl  ? DeathPlaceHomehoueNameMl  : null);
+        sessionStorage.setItem("DeathPlaceHomelocalityEn", DeathPlaceHomelocalityEn  ? DeathPlaceHomelocalityEn  : null);
+        sessionStorage.setItem("DeathPlaceHomelocalityMl", DeathPlaceHomelocalityMl  ? DeathPlaceHomelocalityMl  : null);
+        sessionStorage.setItem("DeathPlaceHomestreetNameEn", DeathPlaceHomestreetNameEn  ? DeathPlaceHomestreetNameEn  : null);
+        sessionStorage.setItem("DeathPlaceHomestreetNameMl", DeathPlaceHomestreetNameMl  ? DeathPlaceHomestreetNameMl  : null);
+        sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId  ? DeathPlaceHomepostofficeId.code  : null);
+        sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode  ? DeathPlaceHomepincode .code  : null);
+        
+      } 
     onSelect(config.key, {      
       DateOfDeath,
       TimeOfDeath,
@@ -312,6 +346,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceType, 
       
       DeathPlaceInstId,
+
+      DeathPlaceHomehoueNameEn,
+      DeathPlaceHomehoueNameMl,
+      DeathPlaceHomelocalityEn,
+      DeathPlaceHomelocalityMl,
+      DeathPlaceHomestreetNameEn,
+      DeathPlaceHomestreetNameMl,
+      DeathPlaceHomepostofficeId,
+      DeathPlaceHomepincode 
     });
   
   };
@@ -392,12 +435,33 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             selectDeathPlaceType={selectDeathPlaceType}
             DeathPlaceType={DeathPlaceType}   
             DeathPlaceInstId= {DeathPlaceInstId} 
-            setSelectedDeathPlaceInstId  = {setSelectedDeathPlaceInstId}
-
+            setSelectedDeathPlaceInstId  = {setSelectedDeathPlaceInstId}          
+            />
+          </div>          
+        )}
+        {value === "HOME" && (
+          <div>
+            <DeathPlaceHome           
+            DeathPlaceHomepostofficeId= {DeathPlaceHomepostofficeId}
+            setDeathPlaceHomepostofficeId = {setDeathPlaceHomepostofficeId}
+            DeathPlaceHomepincode= {DeathPlaceHomepincode} 
+            setDeathPlaceHomepincode = {setDeathPlaceHomepincode}
+            DeathPlaceHomehoueNameEn = {DeathPlaceHomehoueNameEn}
+            setDeathPlaceHomehoueNameEn = {setDeathPlaceHomehoueNameEn}
+            DeathPlaceHomehoueNameMl = {DeathPlaceHomehoueNameMl} 
+            setDeathPlaceHomehoueNameMl = {setDeathPlaceHomehoueNameMl}
+            DeathPlaceHomelocalityEn = {DeathPlaceHomelocalityEn} 
+            setDeathPlaceHomelocalityEn = {setDeathPlaceHomelocalityEn}
+            DeathPlaceHomelocalityMl = {DeathPlaceHomelocalityMl}
+            setDeathPlaceHomelocalityMl = {setDeathPlaceHomelocalityMl}
+            DeathPlaceHomestreetNameEn = {DeathPlaceHomestreetNameEn} 
+            setDeathPlaceHomestreetNameEn = {setDeathPlaceHomestreetNameEn}
+            DeathPlaceHomestreetNameMl = {DeathPlaceHomestreetNameMl} 
+            setDeathPlaceHomestreetNameMl = {setDeathPlaceHomestreetNameMl}
             />
           </div>
+          
         )}
-        
         
         <div className="row">
           <div className="col-md-12">
