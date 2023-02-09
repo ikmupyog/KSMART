@@ -3,12 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernme
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-<<<<<<< HEAD
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl, selectHospitalNameMl }) => {
-=======
-const BirthPlaceHospital = ({ config, onSelect, userType, formData
-}) => {
->>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   const { t } = useTranslation();
@@ -38,26 +33,12 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData
   function setselectHospitalNameMl(value) {   
     selectHospitalNameMl(value);    
   }
-<<<<<<< HEAD
 
   const goNext = () => {
     // sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
     // sessionStorage.setItem("HospitalNameMl", HospitalNameMl.hospitalName);
     // onSelect(config.key, { HospitalName, HospitalNameMl
     // });
-=======
- 
-
-  const goNext = () => {
-    
-    sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
-    sessionStorage.setItem("HospitalNameMl", HospitalNameMl.hospitalName);
-
-    onSelect(config.key, { HospitalName, HospitalNameMl
-    });
-   
-    
->>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
   };
   
   return (
@@ -74,10 +55,6 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData
           </div>
         </div>
         <div className="row">
-<<<<<<< HEAD
-=======
-        <div className="col-md-12">
->>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
           <div className="col-md-4">
             <CardLabel>
               {`${t("CR_HOSPITAL_EN")}`}
@@ -88,19 +65,11 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData
               optionKey="hospitalName"
               isMandatory={false}
               option={cmbhospital}
-<<<<<<< HEAD
               selected={hospitalName}
               select={setselectHospitalName}
               placeholder={`${t("CR_HOSPITAL_EN")}`}
             />
           </div>
-=======
-              selected={HospitalName}
-              select={setselectHospitalName}
-              placeholder={`${t("CR_HOSPITAL_EN")}`}
-            />
-          </div>     
->>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
           <div className="col-md-4">
             <CardLabel>
               {`${t("CR_HOSPITAL_ML")}`}
@@ -108,7 +77,6 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData
             </CardLabel>
             <Dropdown
               t={t}
-<<<<<<< HEAD
               optionKey="hospitalNamelocal"
               isMandatory={false}
               option={cmbhospital}
@@ -118,20 +86,6 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData
             />
           </div>
         </div>
-=======
-              optionKey="hospitalName"
-              isMandatory={false}
-              option={cmbhospital}
-              selected={HospitalNameMl}
-              select={setselectHospitalNameMl}
-              placeholder={`${t("CR_HOSPITAL_ML")}`}
-            />
-          </div>     
-          </div>  
-           
-        </div>
-       
->>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
       </FormStep>
     </React.Fragment>
   );
