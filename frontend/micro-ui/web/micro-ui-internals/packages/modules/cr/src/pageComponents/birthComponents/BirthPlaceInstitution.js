@@ -65,7 +65,6 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,institutio
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
@@ -102,7 +101,6 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,institutio
                 placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}
               />
             </div>
-          </div>
         </div>
         
        

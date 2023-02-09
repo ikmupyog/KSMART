@@ -66,6 +66,8 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData, adrsPostOffice,
 
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
+    console.log(value);
+    setAdrsPincode(value.pincode);
   }
   // function setSelectAdrsPincode(e) {
   //   if (e.target.value.length === 7) {
@@ -141,6 +143,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData, adrsPostOffice,
     }
   }
   function setSelectWard(value) {
+    console.log(value);
     setWardNo(value);
   }
   let validFlag = true;
@@ -236,7 +239,6 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData, adrsPostOffice,
         </div>
 
         <div className="row">
-          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
@@ -289,10 +291,8 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData, adrsPostOffice,
                 })}
               />
             </div>
-          </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_LOCALITY_EN")}
@@ -330,11 +330,9 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData, adrsPostOffice,
                 })}
               />
             </div>
-          </div>
         </div>
 
         <div className="row">
-          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
               <TextInput
@@ -366,10 +364,8 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData, adrsPostOffice,
                 })}
               />
             </div>
-          </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_HOUSE_NAME_EN")}
@@ -407,7 +403,6 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData, adrsPostOffice,
                 })}
               />
             </div>
-          </div>
         </div>
       </FormStep>
     </React.Fragment>
