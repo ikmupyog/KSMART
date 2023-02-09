@@ -12,7 +12,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
     formData?.FamilyInformationDeath?.SpouseUnavailable ? formData?.FamilyInformationDeath?.SpouseUnavailable : false
   );
-  const [SpouseType, setSpouseType] = useState(formData?.FamilyInformationDeath?.SpouseType);
+  const [SpouseType, setSpouseType] = useState(formData?.FamilyInformationDeath?.SpouseType ? formData?.FamilyInformationDeath?.SpouseType : null);
   const [SpouseNameEN, setSpouseNameEN] = useState(
     formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
   );
@@ -202,6 +202,10 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MotherUnavailable", MotherUnavailable);
     sessionStorage.setItem("SpouseUnavailable", SpouseUnavailable);
 
+    sessionStorage.setItem("FamilyMobileNo", FamilyMobileNo);
+    sessionStorage.setItem("FamilyEmailId", FamilyEmailId);
+
+
     onSelect(config.key, {
       SpouseType,
       SpouseNameEN,
@@ -216,11 +220,23 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
       FatherUnavailable,
       MotherUnavailable,
       SpouseUnavailable,
+      FamilyMobileNo,
+      FamilyEmailId,
     });
+  };
+  const [inputValue, setInputValue] = useState("");
+
+  const handleBlur = (event) => {
+    const value = event.target.value;
+    if (value.length > 12) {
+      setInputValue(value.slice(0, 12));
+    } else {
+      setInputValue(value);
+    }
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
@@ -261,7 +277,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CR_SPOUSE_TYPE")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -501,7 +517,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectFamilyMobileNo}
                 disable={isEdit}
                 placeholder={`${t("CR_FAMILY_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "number", title: t("CR_INVALID_PHONE_NO") })}
+                {...(validation = { pattern: "^[0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PHONE_NO") })}
               />
             </div>
             <div className="col-md-4">
@@ -519,7 +535,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectFamilyEmailId}
                 disable={isEdit}
                 placeholder={`${t("CR_EMAIL_ID")}`}
-                {...(validation = {isRequired: false, type: "email", title: t("CR_INVALID_EMAIL_ID") })}
+                {...(validation = { isRequired: false, type: "email", title: t("CR_INVALID_EMAIL_ID") })}
               />
             </div>
           </div>
