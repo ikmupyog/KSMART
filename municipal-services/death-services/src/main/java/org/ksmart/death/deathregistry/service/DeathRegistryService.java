@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
+import org.ksmart.death.deathregistry.enrichment.DeathRegistryEnrichment;
 import org.ksmart.death.deathregistry.kafka.producer.DeathRegistryProducer;
 import org.ksmart.death.deathregistry.repository.DeathRegistryRepository;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
      * Creates CrDeathService
      * Jasmine IKM
      * on 07.02.2023
+     * DeathRegistryService create Rakhi S on 09.02.2023
      */
  @Service
  
@@ -28,29 +30,46 @@ public class DeathRegistryService {
      private final DeathRegistryProducer producer;
      private final DeathRegistryConfiguration deathConfig;
      private final DeathRegistryRepository repository;
-    // private final CrDeathRegistryEnrichment enrichmentService;
+     private final DeathRegistryEnrichment enrichmentService;
    
     // private final CrDeathRegistryMdmsUtil util;
     // private final RegistryMDMSValidator mdmsValidator;
     // private final CrDeathRegistryValidator validatorService;
 
     @Autowired
-    DeathRegistryService(
-      
-     DeathRegistryProducer producer,DeathRegistryConfiguration deathConfig ,DeathRegistryRepository repository ){
-    // CrDeathRegistryEnrichment enrichmentService ,,
+    DeathRegistryService(DeathRegistryProducer producer,DeathRegistryConfiguration deathConfig 
+                                        ,DeathRegistryRepository repository,
+                                        DeathRegistryEnrichment enrichmentService ){
+    //  ,,
     // CrDeathRegistryMdmsUtil util,RegistryMDMSValidator mdmsValidator,
     // CrDeathRegistryValidator validatorService){
          this.producer = producer;
          this.deathConfig = deathConfig;
          this.repository=repository;
-    //     this.enrichmentService = enrichmentService;
+         this.enrichmentService = enrichmentService;
     
     //     this.util=util;
     //     this.mdmsValidator=mdmsValidator;
     //     this.validatorService=validatorService;
     }
+    //Rakhi S ikm on 09.02.2023
+    public List<DeathRegistryDtl> create(DeathRegistryRequest request) {
+      // RAkhi S IKM validate mdms data       
+     //  Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
+     //  mdmsValidator.validateMDMSData(request,mdmsData);
 
+       // enrich request
+       enrichmentService.enrichCreate(request);
+       //IDGen call
+       //enrichmentService.setIdgenIds(request);    
+     //   enrichmentService.setRegistrationNumberDetails(request); 
+       //Rakhi S on 23.01.2023
+     //   enrichmentService.setCertificateNumberDetails(request);
+
+       producer.push(deathConfig.getSaveDeathRegistryTopic(), request);
+
+       return request.getDeathCertificateDtls();
+   }
 
       //UPDATE BEGIN Jasmine 7.03.2023
       public List<DeathRegistryDtl> update(DeathRegistryRequest request) {
