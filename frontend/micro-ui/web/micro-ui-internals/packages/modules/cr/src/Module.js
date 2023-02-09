@@ -64,6 +64,11 @@ import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVe
 import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
+import Hospital from "./pageComponents/deathComponents/Hospital";
+import Institution from "./pageComponents/deathComponents/Institution";
+import DeathPlaceHome from "./pageComponents/deathComponents/DeathPlaceHome";
+import Vehicle from "./pageComponents/deathComponents/Vehicle";
+
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
@@ -232,6 +237,12 @@ const componentsToRegister = {
   StatisticalInfoContinue,
   ApplicantDetails,
   InsideIndia,
+  Hospital,
+  Institution,
+  DeathPlaceHome,
+  Vehicle,
+
+
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
