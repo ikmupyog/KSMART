@@ -158,6 +158,18 @@ ALTER TABLE eg_death_statistical_registry_log add column IF NOT EXISTS death_cau
 ALTER TABLE eg_death_statistical_registry_log add column IF NOT EXISTS deceased_pregnant character varying(200);
 ALTER TABLE eg_death_statistical_registry_log add column IF NOT EXISTS is_delivery character varying(200);
 
+ALTER TABLE eg_death_statistical_dtls ALTER death_medically_certified TYPE bool USING
+(death_medically_certified::int::bool);
+
+ALTER TABLE eg_death_statistical_dtls_log ALTER death_medically_certified TYPE bool USING
+(death_medically_certified::int::bool);
+
+ALTER TABLE eg_death_statistical_registry ALTER death_medically_certified TYPE bool USING
+(death_medically_certified::int::bool);
+
+ALTER TABLE eg_death_statistical_registry_log ALTER death_medically_certified TYPE bool USING
+(death_medically_certified::int::bool);
+
 
 
 
