@@ -210,7 +210,7 @@ public class DeathBasicInfo {
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomePincode")
-    private String deathPlaceHomePincode  ;
+    private Long deathPlaceHomePincode  ;
 
 
     @Schema(type = "string", description= " " )
