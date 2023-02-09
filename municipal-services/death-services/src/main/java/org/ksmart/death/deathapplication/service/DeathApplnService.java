@@ -38,23 +38,23 @@ public class DeathApplnService {
    //  private final DeathMdmsUtil util;
    //  private final WorkflowIntegrator workflowIntegrator;
    //  private final MDMSValidator mdmsValidator;
-  //   private final DeathApplnValidator validatorService;
+     private final DeathApplnValidator validatorService;
      private final DeathApplnRepository repository;
 
      @Autowired
      DeathApplnService(DeathApplnRepository repository ,DeathProducer producer
-                         ,DeathEnrichment enrichmentService){
+                         ,DeathEnrichment enrichmentService,DeathApplnValidator validatorService){
           
      //,DeathConfiguration deathConfig
      //             DeathEnrichment enrichmentService,DeathMdmsUtil util,MDMSValidator mdmsValidator,
-     //             DeathApplnValidator validatorService,,WorkflowIntegrator workflowIntegrator){
+     //             ,,WorkflowIntegrator workflowIntegrator){
          this.producer = producer;
        //  this.deathConfig = deathConfig;
       //   this.workflowIntegrator = workflowIntegrator;
        //  this.enrichmentService = enrichmentService;
        //  this.util = util;
        //  this.mdmsValidator = mdmsValidator;
-       //  this.validatorService = validatorService;
+         this.validatorService = validatorService;
          this.enrichmentService = enrichmentService;
          this.repository = repository;
      }
@@ -80,7 +80,7 @@ public class DeathApplnService {
                                                     .deathACKNo(ackNumber)
                                                     //.id(id)
                                                     .build());
-          //validatorService.validateUpdate(request, searchResult);
+          validatorService.validateUpdate(request, searchResult);
   
          // mdmsValidator.validateMDMSData(request,mdmsData);
   
@@ -91,7 +91,7 @@ public class DeathApplnService {
                                   .build();
   
   
-         // enrichmentService.enrichUpdate(request);
+          enrichmentService.enrichUpdate(request);
           
         //  workflowIntegrator.callWorkFlow(request);
           

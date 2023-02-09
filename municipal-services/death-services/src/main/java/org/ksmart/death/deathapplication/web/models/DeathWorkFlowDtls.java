@@ -56,7 +56,9 @@ public class DeathWorkFlowDtls {
     @JsonProperty("Comment")
     private String comment;
 
-    // public void setStatus(String s) {
-    // }
+    private String assignuser;
+
+    public void setStatus(String s) {
+    }
 
 }

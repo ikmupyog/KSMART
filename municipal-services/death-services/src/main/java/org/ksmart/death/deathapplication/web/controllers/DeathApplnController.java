@@ -62,6 +62,20 @@ public class DeathApplnController {
                                         .build();
         return ResponseEntity.ok(response);
     }
+      // System.out.println("hai");
+           /********************************************* */
+
+    //        try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
+
+    
+    /********************************************** */
 
    // @Override
      //Jasmine  on 06.02.2023 - Death search Controller 
@@ -97,6 +111,7 @@ public class DeathApplnController {
                                         .deathCertificateDtls(deathDetails)
                                         .build();
         return ResponseEntity.ok(response);
+
     
 }
 }
