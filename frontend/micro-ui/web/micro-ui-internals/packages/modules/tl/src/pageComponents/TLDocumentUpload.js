@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Timeline from "../components/TLTimeline";
 
 const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
-  console.log(JSON.stringify(formData));
   let documentList = [
     { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" },
     { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership" },
