@@ -271,7 +271,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CR_SPOUSE_TYPE")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
