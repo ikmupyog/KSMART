@@ -26,7 +26,7 @@ public class DeathStatisticalRowMapper implements ResultSetExtractor  , BaseRowM
                            // .isAutopsyPerformed(rs.getString(""))
                            // .isAutopsyCompleted(rs.getString(""))
                            // .mannerOfDeath(rs.getString(""))
-                            .deathMedicallyCertified(rs.getString("death_medically_certified"))
+                            .deathMedicallyCertified(rs.getBoolean("death_medically_certified"))
                             .deathCauseMain(rs.getString("death_cause_main"))
                            // .deathCauseMainCustom(rs.getString(""))
                            // .deathCauseMainInterval(rs.getString(""))

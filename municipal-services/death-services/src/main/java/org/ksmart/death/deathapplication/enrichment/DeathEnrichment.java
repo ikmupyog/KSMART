@@ -61,6 +61,7 @@ public class DeathEnrichment implements BaseEnrichment{
                 //Rakhi S on 09.02.2023
                 deathdtls.getDeathAddressInfo().setPresentAddrId(UUID.randomUUID().toString());
                 deathdtls.getDeathAddressInfo().setPermanentAddrId(UUID.randomUUID().toString());
+                deathdtls.getDeathStatisticalInfo().setStatisticalId(UUID.randomUUID().toString());
             });
       
         }  

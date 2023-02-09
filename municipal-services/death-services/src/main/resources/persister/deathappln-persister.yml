@@ -287,6 +287,83 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrLbType
 
       - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrPostalCode
+
+    - query: INSERT INTO public.eg_death_statistical_dtls(id, death_dtl_id, tenantid, religion, occupation, medical_attention_type, death_medically_certified, death_cause_main, death_cause_sub, death_cause_other, death_during_delivery, createdby, createdtime, lastmodifiedby, lastmodifiedtime, nationality,  smoking_type, tobacco_type,  alcohol_type, autopsy_performed, autopsy_completed, manner_of_death, death_cause_main_custom, death_cause_main_interval, death_cause_main_timeunit, death_cause_sub_custom, death_cause_sub_interval, death_cause_sub_timeunit, death_cause_sub2, death_cause_sub2_custom, death_cause_sub2_interval, death_cause_sub2_timeunit, deceased_pregnant, is_delivery)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathCertificateDtls.*
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.StatisticalId
+      
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Religion
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Occupation
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.MedicalAttentionType
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathMedicallyCertified
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseMain
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseSub
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseOther
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathDuringDelivery
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
+      
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Nationality
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.SmokingType
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.TobaccoType
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.AlcoholType
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.IsAutopsyPerformed
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.IsAutopsyCompleted
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.MannerOfDeath
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseMainCustom
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseMainInterval
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseMainTimeUnit
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseSubCustom
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseSubInterval
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseSubTimeUnit
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseSub2
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseSubCustom2
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseSubInterval2
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.DeathCauseSubTimeUnit2
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.IsdeceasedPregnant
+
+      - jsonPath: $.deathCertificateDtls.*.statisticalInfo.IsDelivery
+
+
+
   # UPDATE 
   - version: 1.0
     description: Persists death reporting form details in eg_death_dtls,eg_death_statistical_dtls,eg_death_address_dtls  table
