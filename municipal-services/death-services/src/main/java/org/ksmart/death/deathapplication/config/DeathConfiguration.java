@@ -27,5 +27,9 @@ public class DeathConfiguration {
  
      @Value("${egov.mdms.search.endpoint}")
      private String mdmsEndPoint;
+
+     //Persister Config
+     @Value("${persister.save.deathappln.topic}")
+     private String saveDeathDetailsTopic;
      
 }

@@ -16,7 +16,7 @@ public class  DeathFamilyInfoRowMapper   implements ResultSetExtractor  , BaseRo
 
       public DeathFamilyInfo extractData(ResultSet rs) throws SQLException, DataAccessException { // STATISTICAL
         return DeathFamilyInfo.builder()
-                            .spouseUnavailable(rs.getString("spouse_unavailable"))
+                            .spouseUnavailable(rs.getInt("spouse_unavailable"))
                             .spouseType(rs.getString("spouse_type"))
                             .spouseNameEn(rs.getString("spouse_name_en"))
                             .spouseNameML(rs.getString("spouse_name_ml"))

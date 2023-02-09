@@ -243,9 +243,9 @@ public class DeathBasicInfo {
     private String deathPlaceHomeHoueNameMl  ;
 
 
-    @Schema(type = "string", description= " " )
+    @Schema(type = "Boolean", description= " " )
     @JsonProperty("DeceasedAadharNotAvailable")
-    private String deceasedAadharNotAvailable  ;
+    private Boolean deceasedAadharNotAvailable  ;
 
 
     @Schema(type = "string", description= " " )
@@ -292,9 +292,9 @@ public class DeathBasicInfo {
     private String deceasedLastNameMl  ;
 
 
-    @Schema(type = "string", description= " " )
+    @Schema(type = "Integer", description= " " )
     @JsonProperty("Age")
-    private String age  ;
+    private Integer age  ;
 
 
     @Schema(type = "string", description= " " )

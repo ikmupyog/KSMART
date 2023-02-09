@@ -78,7 +78,7 @@ public class DeathBasicInfoRowMapper  implements ResultSetExtractor  , BaseRowMa
                               .deceasedFirstNameMl(rs.getString("deceased_firstname_ml"))
                               .deceasedMiddleNameMl(rs.getString("deceased_middlename_ml"))
                               .deceasedLastNameMl(rs.getString("deceased_lastname_ml"))
-                              .age(rs.getString("age"))
+                              .age(rs.getInt("age"))
                               .ageUnit(rs.getString("age_unit"))
                               .deceasedGender(rs.getString("deceased_gender"))
                               .nationality(rs.getString("nationality"))
