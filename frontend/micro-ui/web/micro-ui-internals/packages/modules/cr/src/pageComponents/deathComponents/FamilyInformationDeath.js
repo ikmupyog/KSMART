@@ -218,16 +218,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
       SpouseUnavailable,
     });
   };
-  const [inputValue, setInputValue] = useState("");
-
-  const handleBlur = (event) => {
-    const value = event.target.value;
-    if (value.length > 12) {
-      setInputValue(value.slice(0, 12));
-    } else {
-      setInputValue(value);
-    }
-  };
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}

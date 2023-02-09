@@ -29,13 +29,6 @@ import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
 import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPlaceInstitution";
 import BirthPlaceHome from "../src/pageComponents/birthComponents/BirthPlaceHome";
-import BirthPlaceVehicle from "../src/pageComponents/birthComponents/BirthPlaceVehicle";
-import BirthPlacePublicPlace from "../src/pageComponents/birthComponents/BirthPlacePublicPlace";
-import AddressInsideKerala from "../src/pageComponents/birthComponents/AddressInsideKerala";
-import AddressBirth from "../src/pageComponents/birthComponents/AddressBirth";
-import AddressOutsideKerala from "../src/pageComponents/birthComponents/AddressOutsideKerala";
-import AddressBrOutsideIndia from "../src/pageComponents/birthComponents/AddressBrOutsideIndia";
-import InformarHospitalInstitution from "../src/pageComponents/birthComponents/InformarHospitalInstitution";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -199,12 +192,7 @@ const componentsToRegister = {
   BirthPlaceHospital,
   BirthPlaceInstitution,
   BirthPlaceHome,
-  BirthPlacePublicPlace,
-  AddressInsideKerala,
-  AddressBirth,
-  AddressOutsideKerala,
-  AddressBrOutsideIndia,
-  InformarHospitalInstitution,
+
  //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -236,13 +224,6 @@ const componentsToRegister = {
   StatisticalInfo,
   StatisticalInfoContinue,
   ApplicantDetails,
-  InsideIndia,
-  Hospital,
-  Institution,
-  DeathPlaceHome,
-  Vehicle,
-
-
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,

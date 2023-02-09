@@ -442,7 +442,7 @@ export const newConfig = [
         hideInEmployee: false,
       },
       {
-        route: "birthplace-home",
+        route: "birthplace-Home",
         component: "BirthPlaceHome",
         texts: {
           headerCaption: "",
@@ -457,12 +457,13 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
+      
       {
         route: "birthPlace-vehicle",
         component: "BirthPlaceVehicle",
         texts: {
           headerCaption: "",
-          header: "",
+          header: "Parents Details",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
@@ -1050,8 +1051,8 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "FamilyInformationDeath",
-        nextStep: null,
+        key: "PlaceOfDeath",
+        nextStep: "address-of-decesed",
         type: "component",
         hideInEmployee: false,
       },
