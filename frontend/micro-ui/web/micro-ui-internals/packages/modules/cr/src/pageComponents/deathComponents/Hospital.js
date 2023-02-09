@@ -8,7 +8,6 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
   // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.HospitalDetails?.DeathPlaceType);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-
   let cmbhospital = [];
   hospitalData &&
     hospitalData["egov-location"] &&

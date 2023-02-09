@@ -27,7 +27,7 @@ function TLDocument({ value = {} }) {
   if (isLoading) {
     return <Loader />;
   }
-
+  
   return (
     <div style={{ marginTop: "19px" }}>
       <React.Fragment>

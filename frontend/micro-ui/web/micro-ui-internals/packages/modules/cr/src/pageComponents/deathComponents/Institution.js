@@ -88,6 +88,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
         </div>
         </div>
         
+        
       </FormStep>
     </React.Fragment>
   );

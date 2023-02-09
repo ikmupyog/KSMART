@@ -77,11 +77,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlace, setselectDeathPlace] = useState(formData?.InformationDeath?.DeathPlace);
   //Hospital Intitution vehicle {type}
   const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType);
-  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
-    formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
-  );
-  // Home
-  const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepostofficeId);
+// Institution
+  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(formData?.InformationDeath?.DeathPlaceInstId); 
+ // Home
+ const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepostofficeId);
   const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepincode);
   const [DeathPlaceHomehoueNameEn, setDeathPlaceHomehoueNameEn] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameEn);
   const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl);
@@ -281,58 +280,60 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             DeathPlaceHomestreetNameMl={DeathPlaceHomestreetNameMl}
           />;
         }
-      }
-    }
-  });
-  const goNext = () => {
-    sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
-    sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
-    sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
-    sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
-    sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
-    sessionStorage.setItem("DeceasedFirstNameMl", DeceasedFirstNameMl ? DeceasedFirstNameMl : null);
-    sessionStorage.setItem("DeceasedMiddleNameMl", DeceasedMiddleNameMl ? DeceasedMiddleNameMl : null);
-    sessionStorage.setItem("DeceasedLastNameMl", DeceasedLastNameMl ? DeceasedLastNameMl : null);
-    sessionStorage.setItem("Age", Age ? Age : null);
-    sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
-    sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
-    sessionStorage.setItem("Nationality", Nationality ? Nationality.code : null);
-    sessionStorage.setItem("Religion", Religion ? Religion.code : null);
-    sessionStorage.setItem("DeceasedGender", DeceasedGender ? DeceasedGender.code : null);
-    sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
-    sessionStorage.setItem("Age", Age ? Age.code : null);
-    sessionStorage.setItem("AgeUnit", AgeUnit ? AgeUnit.code : null);
-    // sessionStorage.setItem("checked", checked ? checked : false);
-    sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
-    sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
-    sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
-
-    sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-    sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
+      }}
+    });
+      const goNext = () => {
+      sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
+      sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
+      sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
+      sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
+      sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
+      sessionStorage.setItem("DeceasedFirstNameMl", DeceasedFirstNameMl ? DeceasedFirstNameMl : null);
+      sessionStorage.setItem("DeceasedMiddleNameMl", DeceasedMiddleNameMl ? DeceasedMiddleNameMl : null);
+      sessionStorage.setItem("DeceasedLastNameMl", DeceasedLastNameMl ? DeceasedLastNameMl : null);
+      sessionStorage.setItem("Age", Age ? Age : null);
+      sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
+      sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);   
+      sessionStorage.setItem("Nationality", Nationality ? Nationality.code : null);
+      sessionStorage.setItem("Religion", Religion ? Religion.code : null);   
+      sessionStorage.setItem("DeceasedGender", DeceasedGender ? DeceasedGender.code : null);
+      sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
+      sessionStorage.setItem("AgeUnit", AgeUnit ? AgeUnit.code : null);  
+      // sessionStorage.setItem("checked", checked ? checked : false);    
+      sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
+      sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
+      sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
+      
+      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ?DeathPlaceInstId.code : null);
     // if (validFlag === true) {
 
     if (DeathPlace.code === "HOSPITAL") {
       //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.removeItem("DeathPlaceInstId");
-    }
-    if (DeathPlace.code === "INSTITUTION") {
-      //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-    }
-    if (DeathPlace.code === "INSTITUTION") {
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn : null);
-      sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl ? DeathPlaceHomehoueNameMl : null);
-      sessionStorage.setItem("DeathPlaceHomelocalityEn", DeathPlaceHomelocalityEn ? DeathPlaceHomelocalityEn : null);
-      sessionStorage.setItem("DeathPlaceHomelocalityMl", DeathPlaceHomelocalityMl ? DeathPlaceHomelocalityMl : null);
-      sessionStorage.setItem("DeathPlaceHomestreetNameEn", DeathPlaceHomestreetNameEn ? DeathPlaceHomestreetNameEn : null);
-      sessionStorage.setItem("DeathPlaceHomestreetNameMl", DeathPlaceHomestreetNameMl ? DeathPlaceHomestreetNameMl : null);
-      sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId ? DeathPlaceHomepostofficeId.code : null);
-      sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
-    }
-    onSelect(config.key, {
+        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.removeItem("DeathPlaceInstId");
+
+      }    
+      if (DeathPlace.code === "INSTITUTION") {
+       
+        //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
+          sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+          sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ?DeathPlaceInstId.code : null);
+          
+        } 
+        if (DeathPlace.code === "INSTITUTION") { 
+        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn  : null);
+        sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl  ? DeathPlaceHomehoueNameMl  : null);
+        sessionStorage.setItem("DeathPlaceHomelocalityEn", DeathPlaceHomelocalityEn  ? DeathPlaceHomelocalityEn  : null);
+        sessionStorage.setItem("DeathPlaceHomelocalityMl", DeathPlaceHomelocalityMl  ? DeathPlaceHomelocalityMl  : null);
+        sessionStorage.setItem("DeathPlaceHomestreetNameEn", DeathPlaceHomestreetNameEn  ? DeathPlaceHomestreetNameEn  : null);
+        sessionStorage.setItem("DeathPlaceHomestreetNameMl", DeathPlaceHomestreetNameMl  ? DeathPlaceHomestreetNameMl  : null);
+        sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId  ? DeathPlaceHomepostofficeId.code  : null);
+        sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode  ? DeathPlaceHomepincode .code  : null);
+        
+      } 
+    onSelect(config.key, {      
       DateOfDeath,
       TimeOfDeath,
       DeceasedFirstNameEn,
@@ -364,7 +365,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceHomestreetNameEn,
       DeathPlaceHomestreetNameMl,
       DeathPlaceHomepostofficeId,
-      DeathPlaceHomepincode,
+      DeathPlaceHomepincode 
     });
   };
   return (
@@ -387,33 +388,29 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CardLabel>
-                  {t("CR_DATE_OF_DEATH")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <DatePicker
-                  date={DateOfDeath}
-                  name="DateOfDeath"
-                  inputFormat="DD-MM-YYYY"
-                  placeholder={`${t("CR_DATE_OF_DEATH")}`}
-                  onChange={selectDateOfDeath}
-                  {...(validation = {
-                    pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                    isRequired: true,
-                    type: "text",
-                    title: t("CR_INVALID_DATE"),
-                  })}
-                />
+             <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-6">
+                  <CardLabel>
+                    {t("CR_DATE_OF_DEATH")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>               
+                  <DatePicker
+                    date={DateOfDeath}
+                    name="DateOfDeath"
+                    inputFormat="DD-MM-YYYY"
+                    placeholder={`${t("CR_DATE_OF_DEATH")}`}
+                    onChange={selectDateOfDeath}
+                    {...(validation = {pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",isRequired: true, type: "text",title: t("CR_INVALID_DATE"),
+                    })}
+                  />
+                </div>
+                <div className="col-md-2">
+                  <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
+                  <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setTimeOfDeath)} value={TimeOfDeath} />
+                </div>
               </div>
-              <div className="col-md-2">
-                <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-                <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setTimeOfDeath)} value={TimeOfDeath} />
-              </div>
-            </div>
-          </div>
+            </div>          
         </div>
         <div className="row">
           <div className="col-md-12">
@@ -426,11 +423,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
+              <CardLabel>{t("CR_PLACE_OF_DEATH")} <span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="code"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbPlace}
                 selected={DeathPlace}
                 select={selectDeathPlace}
@@ -477,7 +474,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         )}
-
+        
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -725,11 +722,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-2">
-              <CardLabel>{t("CR_NATIONALITY")}</CardLabel>
+              <CardLabel>{t("CR_NATIONALITY")} <span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="nationalityname"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbNation}
                 selected={Nationality}
                 select={selectNationality}
@@ -738,11 +735,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-2">
-              <CardLabel>{t("CS_COMMON_RELIGION")}</CardLabel>
+              <CardLabel>{t("CS_COMMON_RELIGION")} <span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbReligion}
                 selected={Religion}
                 select={selectReligion}
