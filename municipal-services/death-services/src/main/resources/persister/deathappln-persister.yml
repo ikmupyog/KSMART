@@ -183,7 +183,7 @@ serviceMaps:
       basePath: deathCertificateDtls.*
       jsonMaps:
       - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrId
-      
+
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
@@ -231,6 +231,62 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrLbType
 
       - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrPostalCode
+
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathCertificateDtls.*
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrId
+      
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrAddrTypeId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrStreetNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrStreetNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrLocalityEn
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrLocalityMl
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrWardId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrTalukId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrVillageId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrPostofficeId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrPincode
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrDistrictId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrStateId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrCountryId
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
+      
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrLocationType
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrHoueNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrHoueNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrLbType
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrPostalCode
   # UPDATE 
   - version: 1.0
     description: Persists death reporting form details in eg_death_dtls,eg_death_statistical_dtls,eg_death_address_dtls  table

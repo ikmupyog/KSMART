@@ -49,7 +49,7 @@ public class DeathAddressRowMapper  implements ResultSetExtractor  , BaseRowMapp
                           //  .permanentAddrLbType(rs.getString(""))
                             .permanentAddrWardId(rs.getString("R_ward_id"))
                             .permanentAddrPostofficeId(rs.getString("R_postoffice_id"))
-                            .permanentAddrPincode(rs.getString("R_pincode"))
+                            .permanentAddrPincode(rs.getLong("R_pincode"))
                             .permanentAddrLocalityEn(rs.getString("R_locality_en"))
                             .permanentAddrLocalityMl(rs.getString("R_locality_ml"))
                             .permanentAddrStreetNameEn(rs.getString("R_streetname_en"))
