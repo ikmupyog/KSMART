@@ -306,8 +306,14 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     // formData.TradeDetails.Units;    
     let unitsdata;
 
-    unitsdata = { ...units, units: fields };
-    onSelect(config.key, unitsdata);
+   
+    let structureType = structureType.code;
+    let structurePlaceSubtype = structurePlaceSubtype.code;
+    let ownershipCategory = ownershipCategory.code;
+    
+    onSelect(config.key, {address,tradeUnits,structurePlace,tradeName,licenseUnitNameLocal,desiredLicensePeriod,
+      capitalInvestment,structureType,structurePlaceSubtype,businessActivityDesc,noOfEmployees,ownershipCategory,
+      commencementDate,businessSector});
   };
 
   const onSkip = () => onSelect();
