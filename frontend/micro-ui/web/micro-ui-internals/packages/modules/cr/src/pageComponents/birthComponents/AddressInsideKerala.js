@@ -18,7 +18,8 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
  console.log(Country);
  const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
- const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+//  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+ const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
  const [WardNo, setWardNo] = useState(formData.AddressInsideKeralaDetails?.wardno);
 //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
  const [isInitialRender, setIsInitialRender] = useState(true);
@@ -79,21 +80,20 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
  boundaryList &&
    boundaryList["egov-location"] &&
    boundaryList["egov-location"].TenantBoundary.map((ob) => {
-     //  console.log(ob);
-     // if(ob?.boundary){
-     Zonal.push(...ob.boundary.children);
-     ob.boundary.children.map((obward) => {
-       cmbWardNo.push(...obward.children);
-     });
-     // }
-
+     if (ob?.hierarchyType.code === "REVENUE") {
+       Zonal.push(...ob.boundary.children);
+       ob.boundary.children.map((obward) => {
+         cmbWardNo.push(...obward.children);
+       });
+     }
    });
- //console.log(Zonal);
+
  cmbWardNo.map((wardmst) => {
    wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
    wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
    cmbWardNoFinal.push(wardmst);
  });
+
 
 
 
@@ -212,7 +212,7 @@ function setSelectinsideKeralaPincode(e) {
  <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!insideKeralaDistrict}>
 
  <div className="row">
- <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span> </h1>
+ <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span> </h1>
  </div>
  </div>
 
