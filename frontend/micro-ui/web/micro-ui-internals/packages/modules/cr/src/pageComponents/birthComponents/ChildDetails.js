@@ -448,7 +448,46 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         }
       }
     } else if (birthPlace.code === "HOME") {
-      if (adrsLocalityNameEn == null || adrsLocalityNameEn == "" || adrsLocalityNameEn == undefined) {
+      if (adrsPostOffice === null) {
+        validFlag = false;
+        setAdsHomePostOfficeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAdsHomePostOfficeError(false);
+      }
+      if (adrsPincode === null || adrsPincode === "" || adrsPincode === undefined) {
+        validFlag = false;
+        setAdsHomePincodeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAdsHomePincodeError(false);
+        if (adrsPincode != 0) {
+          if (adrsPincode.length > 6) {
+            validFlag = false;
+            setAdsHomePincodeError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else if (adrsPincode.length < 6) {
+            validFlag = false;
+            setAdsHomePincodeError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else {
+            setAdsHomePincodeError(false);
+          }
+        }
+      }
+      if (adrsLocalityNameEn === null || adrsLocalityNameEn === "" || adrsLocalityNameEn === undefined) {
         validFlag = false;
         setAdsHomeLocalityNameEnError(true);
         setToast(true);

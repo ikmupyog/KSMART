@@ -66,6 +66,8 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData, adrsPostOffice,
 
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
+    console.log(value);
+    setAdrsPincode(value.pincode);
   }
   // function setSelectAdrsPincode(e) {
   //   if (e.target.value.length === 7) {
