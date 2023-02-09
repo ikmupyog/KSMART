@@ -624,6 +624,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
           tradeLicenseDetail: {
             id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
             channel: "CITIZEN",
+            businessSector: businessSector,
             capitalInvestment:capitalInvestment,
             structureType: structureType,
             structurePlaceSubtype: structurePlaceSubtype,
