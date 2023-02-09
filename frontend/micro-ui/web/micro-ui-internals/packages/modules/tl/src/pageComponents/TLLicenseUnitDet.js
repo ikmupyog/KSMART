@@ -603,46 +603,14 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
             "stallNo": stallNo,
     }
 
-    let tradeName = tradeName;
-    let licenseUnitNameLocal = licenseUnitNameLocal;
-    let desiredLicensePeriod = desiredLicensePeriod;
-    let capitalInvestment = capitalInvestment;
+   
     let structureType = structureType.code;
     let structurePlaceSubtype = structurePlaceSubtype.code;
-    let businessActivityDesc =businessActivityDesc;
-    let noOfEmployees = noOfEmployees;
     let ownershipCategory = ownershipCategory.code;
-
-    let formdatatemp = {
-      Licenses: [
-        {
-          id: (isEdit) ? formData?.id : null,
-          tenantId: tenantId,
-          commencementDate: commencementDate,
-          applicationNumber: (isEdit) ? formData?.applicationNumber : null,
-          status: (isEdit) ? formData?.status : null,
-          tradeLicenseDetail: {
-            id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
-            channel: "CITIZEN",
-            businessSector: businessSector,
-            capitalInvestment:capitalInvestment,
-            structureType: structureType,
-            structurePlaceSubtype: structurePlaceSubtype,
-            businessActivityDesc: businessActivityDesc,
-            noOfEmployees: noOfEmployees,
-            ownershipCategory: ownershipCategory,
-            address: address,
-            tradeUnits: tradeUnits
-          },
-          tradeName: tradeName,
-          licenseUnitNameLocal : licenseUnitNameLocal,
-          desiredLicensePeriod : desiredLicensePeriod,
-          capitalInvestment: capitalAmount,
-        }
-      ]
-    }
-
-    onSelect(config.key, formdatatemp);
+    
+    onSelect(config.key, {address,tradeUnits,structurePlace,tradeName,licenseUnitNameLocal,desiredLicensePeriod,
+      capitalInvestment,structureType,structurePlaceSubtype,businessActivityDesc,noOfEmployees,ownershipCategory,
+      commencementDate,businessSector});
   };
 
   const onSkip = () => onSelect();
