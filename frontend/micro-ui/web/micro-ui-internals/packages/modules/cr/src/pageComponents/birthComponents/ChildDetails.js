@@ -997,15 +997,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
             <div className="col-md-6">
               <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName} value={isChildName} checked={isChildName} />
             </div>
