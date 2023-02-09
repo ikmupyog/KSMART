@@ -57,6 +57,11 @@ import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVe
 import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
+import Hospital from "./pageComponents/deathComponents/Hospital";
+import Institution from "./pageComponents/deathComponents/Institution";
+import DeathPlaceHome from "./pageComponents/deathComponents/DeathPlaceHome";
+import Vehicle from "./pageComponents/deathComponents/Vehicle";
+
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
@@ -78,7 +83,7 @@ import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowl
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
-
+import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
@@ -198,7 +203,7 @@ const componentsToRegister = {
   BirthParentsAddress,  
   AdoptionStatisticalInformation,  
  AdoptionParentsAddress,
-
+ BirthPlaceVehicle,
 
 
   //////////////////

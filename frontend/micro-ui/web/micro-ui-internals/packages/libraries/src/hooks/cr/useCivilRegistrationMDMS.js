@@ -54,6 +54,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   // const useCRplaceType = () => {
   //   return useQuery("CR_DEATH_PLACE_TYPE", () => MdmsService.getCRplaceType(tenantId, moduleCode), config);
   // }; 
+  const useDeathPlaceType = () => {
+    return useQuery("CR_DEATHPLACE", () => MdmsService.getDeathPlaceType(tenantId, moduleCode), config);
+  };
+  
   const useCROtherDeathPlace = () => {
     return useQuery("CR_RELIGION", () => MdmsService.getCROtherDeathPlace(tenantId, moduleCode), config);
   };
@@ -286,6 +290,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
         return useCRcauseOfDeathsub();   
     case "OtherDeathPlace":
         return useCROtherDeathPlace();
+        case "PlaceMasterDeath":
+          return useDeathPlaceType();
+        
     case "SpouseType":
         return useCRcauseOfSpouseType();  
     // case "PlaceMasterDeath":
@@ -328,7 +335,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRReligion();
     case "InstitutionType":
       return useCRInstitution();
-    case "Institution":
+    case "institution":
       return useCRInstitutionId();
     case "OtherBithPlace":
       return useCROtherPlace();

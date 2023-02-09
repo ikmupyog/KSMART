@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
+// import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const BirthPlaceHospital = ({ config, onSelect, userType, formData
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  console.log(tenantId);
   const { t } = useTranslation();
   let validation = {};
-  // const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "hospitalList");
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [OfficerNames, setFilteredOfficerName] = useState(0);
-  const [Designations, setFilteredDesignation] = useState(0);
- 
- 
-  const [HospitalName, selectHospitalName] = useState(formData?.BirthPlaceHospitalDetails?.HospitalName);
-  const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.BirthPlaceHospitalDetails?.HospitalNameMl);
-  
+  // const [HospitalName, selectHospitalName] = useState(formData?.BirthPlaceHospitalDetails?.HospitalName);
+  // const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.BirthPlaceHospitalDetails?.HospitalNameMl);
+
   let cmbhospital = [];
   hospitalData &&
     hospitalData["egov-location"] &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
- 
+
   const onSkip = () => onSelect();
 
-  function setselectHospitalName(value) {   
-    selectHospitalName(value);    
+  function setselectHospitalName(value) {
+    selectHospitalName(value);
   }
-  function setselectHospitalNameMl(value) {   
-    selectHospitalNameMl(value);    
+  function setselectHospitalNameMl(value) {
+    selectHospitalNameMl(value);
   }
  
 
@@ -46,13 +41,15 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData
    
     
   };
-  
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null} */}
       {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!HospitalName}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">

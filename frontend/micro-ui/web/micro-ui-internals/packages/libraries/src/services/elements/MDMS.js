@@ -1345,10 +1345,10 @@ const getCRInstitutionIdList = (tenantId, moduleCode) => ({
     tenantId: tenantId,
     moduleDetails: [
       {
-        moduleName: "egov-location",
+        moduleName: moduleCode,
         masterDetails: [
           {
-            name: "institutionList",
+            name: "Institution",
           },
         ],
       },
@@ -2545,5 +2545,5 @@ export const MdmsService = {
   },
   getTLFinancePeriod: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getFinancialPeriod(tenantId, moduleCode), moduleCode);
-  },  
+  },
 };

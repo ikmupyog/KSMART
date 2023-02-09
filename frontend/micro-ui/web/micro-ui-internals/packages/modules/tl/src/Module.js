@@ -65,8 +65,8 @@ import TLPdeEntry from "./pageComponents/TLPdeEntry";
 import SearchPde from "./pages/employee/SearchPde";
 import SearchPdeApplication from "./components/SearchPdeApplication";
 import TLLicenseUnitDet from "./pageComponents/TLLicenseUnitDet";
-import TLLicenseApplicantDet from "./pageComponents/TLLicenseApplicantDet"
-import TLDeclarationDet from "./pageComponents/TLDeclarationDet"
+import TLLicenseApplicantDet from "./pageComponents/TLLicenseApplicantDet";
+import TLDocumentUpload from "./pageComponents/TLDocumentUpload";
 
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -172,9 +172,8 @@ const componentsToRegister = {
   SearchPdeApplication,
   TLLicenseUnitDet,
   TLLicenseApplicantDet,
-  TLDeclarationDet
+  TLDocumentUpload
 };
-
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {
     Digit.ComponentRegistryService.setComponent(key, value);

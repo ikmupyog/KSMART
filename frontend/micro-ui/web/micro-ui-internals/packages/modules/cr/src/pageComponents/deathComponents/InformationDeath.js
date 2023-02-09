@@ -15,14 +15,7 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
-  // const [dob, setDob] = useState("");
-  // const calculateAge = (value) => {
-  //   const today = new Date();
-  //   const birthDate = new Date(value);
-  //   let age_in_ms = today - birthDate;
-  //   let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
-  //   setAgeofbirth(Math.floor(age_in_years));
-  // };
+
 
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
@@ -30,8 +23,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let validation = {};
 
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  // const { data: title = {}, istitleLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Title");
+  const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType"); 
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
   const { data: AgeUnit = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
@@ -77,25 +69,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
-  // const handleClick = () => {
-  //   setValue(checked ? 0 : 1);
-  //   setChecked((prev) => !prev)
-  // }
-  // const [isInitialRender, setIsInitialRender] = useState(true);
-
-  // const [selectedValues,  ] = useState(
-  //   formData?.InformationDeath?.selectedValues ? formData?.InformationDeath?.selectedValues : false
-  // );
-  // const handleCheckboxChange = (event) => {
-  //   setChecked((checked) => !checked); // toggle the checked state
-  //   let newSelectedValues = [...selectedValues];
-  //   if (event.target.checked) {
-  //     newSelectedValues.push(event.target.value);
-  //   } else {
-  //     newSelectedValues = newSelectedValues.filter((value) => value !== event.target.value);
-  //   }
-  //   setSelectedValues(newSelectedValues);
-  // };
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  
   let naturetypecmbvalue = null;
   const maxDate = new Date();
   let menu = [];
@@ -109,12 +84,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     Nation["common-masters"].Country.map((ob) => {
       cmbNation.push(ob);
     });
-  // let cmbTitle = [];
-  // title &&
-  //   title["common-masters"] &&
-  //   title["common-masters"].Title.map((ob) => {
-  //     cmbTitle.push(ob);
-  //   });
+ 
   let cmbReligion = [];
   religion &&
     religion["common-masters"] &&
@@ -128,178 +98,106 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       cmbDocumentType.push(ob);
     });
   let cmbAgeUnit = [];
-  AgeUnit &&
-    AgeUnit["birth-death-service"] &&
-    AgeUnit["birth-death-service"].AgeUnit.map((ob) => {
+  AgeUnitvalue &&
+  AgeUnitvalue["birth-death-service"] &&
+  AgeUnitvalue["birth-death-service"].AgeUnit.map((ob) => {
       cmbAgeUnit.push(ob);
     });
   let cmbOccupationMain = [];
-  Occupation &&
-    Occupation["common-masters"] &&
-    Occupation["common-masters"].Occupation.map((ob) => {
+  OccupationMain &&
+  OccupationMain["common-masters"] &&
+  OccupationMain["common-masters"]?.Occupation?.map((ob) => {
       cmbOccupationMain.push(ob);
     });
-
+  let cmbPlace = [];
+  place &&
+    place["common-masters"] &&
+    place["common-masters"].PlaceMasterDeath.map((ob) => {
+      cmbPlace.push(ob);
+    });
   function selectReligion(value) {
     setSelectedReligion(value);
   }
-  // function selectTitle(value) {
-  //   setSelectedTitle(value);
-  // }
-  // function selectTitleB(value) {
-  //   setSelectedTitleB(value);
-  // }
   function selectNationality(value) {
     setSelectedNationality(value);
   }
-  function selectGender(value) {
-    console.log("gender" + value);
-    setselectedGender(value);
+  function selectDeceasedGender(value) {
+    // console.log("gender" + value);
+    setselectedDeceasedGender(value);
   }
-  function setSelectMlLastName(e) {
-    setMlLastName(e.target.value);
+  function setSelectDeceasedLastNameMl(e) {
+    setDeceasedLastNameMl(e.target.value);
   }
-  function setSelectMlMiddleName(e) {
-    setMlMiddleName(e.target.value);
+  function setSelectDeceasedMiddleNameMl(e) {
+    setDeceasedMiddleNameMl(e.target.value);
   }
-  function setSelectMLFirstName(e) {
-    setMLFirstName(e.target.value);
+  function setSelectDeceasedFirstNameMl(e) {
+    setDeceasedFirstNameMl(e.target.value);
   }
-  function setSelectFirstName(e) {
-    setFirstName(e.target.value);
+  function setSelectDeceasedFirstNameEn(e) {
+    setDeceasedFirstNameEn(e.target.value);
   }
-  function setSelectMiddleName(e) {
-    setMiddleName(e.target.value);
+  function setSelectDeceasedMiddleNameEn(e) {
+    setDeceasedMiddleNameEn(e.target.value);
   }
-  function setSelectLastName(e) {
-    setLastName(e.target.value);
+  function setSelectDeceasedLastNameEn(e) {
+    setDeceasedLastNameEn(e.target.value);
   }
-  function setSelectAgeofbirth(e) {
-    setAgeofbirth(e.target.value);
+  function setSelectAge(e) {
+    setAge(e.target.value);
   }
-  function setSelectAdharNo(e) {
-    setAdharNo(e.target.value);
+  function setSelectDeceasedAadharNumber(e) {
+    setDeceasedAadharNumber(e.target.value);
   }
-  function setSelectIdNo(e) {
-    console.log("Test" + e);
-    setIdNo(e.target.value);
+  function setSelectDeceasedIdproofNo(e) {
+    // console.log("Test" + e);
+    setDeceasedIdproofNo(e.target.value);
   }
-  function selectDeathDate(value) {
-    setDeathDate(value);
+  function selectOccupation(value) {
+    setSelectedOccupation(value);
+  }
+  function selectDeathPlace(value) {
+    setselectDeathPlace(value);
+    setValue(value.code);
+  }
+  function selectDateOfDeath(value) {
+    setDateOfDeath(value);
     const today = new Date();
     const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()) {
-      // To calculate the time difference of two dates
+    if (birthDate.getTime() <= today.getTime()) {      
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       console.log(Difference_In_DaysRounded);
     } else {
-      setDeathDate(null);
+      setDateOfDeath(null);
       setDOBError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 3000);
     }
-  }
-  function selectFromDate(value) {
-    setFromDate(value);
-    const today = new Date();
-    const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()) {
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      console.log(Difference_In_DaysRounded);
-    } else {
-      setFromDate(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
-  }
-  function selectToDate(value) {
-    setToDate(value);
-    const today = new Date();
-    const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()) {
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      console.log(Difference_In_DaysRounded);
-    } else {
-      setToDate(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
-  }
+  }  
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
   }
-  function selectIdCombo(value) {
-    setSelectedIdCombo(value);
-  }
-  function selectOccupationMain(value) {
-    setSelectedOccupationMain(value);
-  }
-
-  function SelectOccupationOthers(e) {
-    setOccupationOthers(e.target.value);
-  }
-  function calculateAge(value) {
-    setCommencementDate(value);
-    const today = new Date();
-    const birthDate = new Date(value);
-    let age_in_ms = today - birthDate;
-    let age_in_years = age_in_ms / (1000 * 60 * 60 * 24 * 365);
-    setAgeofbirth(Math.floor(age_in_years));
-    setDeathDate(value);
-    if (birthDate.getTime() <= today.getTime()) {
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      console.log(Difference_In_DaysRounded);
-    } else {
-      setCommencementDate(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
-  }
+  function selectDeceasedIdproofType(value) {
+    setSelectedDeceasedIdproofType(value);
+  }  
+ 
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
     }
-  };
-  const handleFromTimeChange = (value, cb) => {
-    if (typeof value === "string") {
-      cb(value);
-    }
-  };
-  const handleToTimeChange = (value, cb) => {
-    if (typeof value === "string") {
-      cb(value);
-    }
-  };
+  }; 
 
   function setCheckedAdhar(e) {
     if (e.target.checked === true) {
-      setisCheckedAdhar(e.target.checked);
+      setDeceasedAadharNotAvailable(e.target.checked);
     } else {
-      setisCheckedAdhar(e.target.checked);
-      setSelectedIdCombo("");
-      setIdNo("");
+      setDeceasedAadharNotAvailable(e.target.checked);
+      setSelectedDeceasedIdproofType("");
+      setDeceasedIdproofNo("");
     }
   }
 
@@ -307,25 +205,28 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let cmbfilterNation = [];
   let cmbfilterReligion = [];
   let cmbfilterAgeUnit = [];
+  let naturetype = null;
+  // let isInitialRender =[];
   useEffect(() => {
-    if (setNationality == null || setNationality == "") {
+    if (Nationality == null || Nationality == "") {
       if (stateId === "kl" && cmbNation.length > 0) {
         cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
         setSelectedNationality(cmbfilterNation[0]);
       }
     }
-    if (setReligion == null || setReligion == "") {
+    if (Religion == null || Religion == "") {
       if (stateId === "kl" && cmbReligion.length > 0) {
         cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
         setSelectedReligion(cmbfilterReligion[0]);
       }
     }
-    if (setAgeUnit == null || setAgeUnit == "") {
+    if (AgeUnit == null || AgeUnit == "") {
       if (stateId === "kl" && cmbAgeUnit.length > 0) {
         cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes("Years"));
         setSelectedAgeUnit(cmbfilterAgeUnit[0]);
       }
     }
+    
     // if (isInitialRender) {
     //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
     //     setIsInitialRender(false);
@@ -396,12 +297,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       setOccupationMain,
       OccupationOthers,
     });
+  
   };
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee")  ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathDate || !Gender ||!FirstName||!MLFirstName||!Ageofbirth}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DateOfDeath ||!TimeOfDeath  || !DeceasedGender ||!DeceasedFirstNameEn||!DeceasedFirstNameMl||!Age}>
         {/* //    isDisabled={!CommencementDate} */}
         <div className="row">
           <div className="col-md-12">
@@ -409,43 +311,22 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DATE_OF_DEATH")}`}</span>
             </h1>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CheckBox
-                label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}
-                defaultChecked={checked}
-                defaultValue={value}
-                onChange={() => {
-                  setChecked(!checked);
-                  setValue(value === 0 ? 1 : 0);
-                }}
-              />
-            </div>
-            <div className="col-md-6">
-              <CheckBox label={t("CR_UNCLAIMED_DEAD_BODY")} />
-            </div>
-          </div>
-        </div>
+        </div>        
         <div>
-          {checked ? (
-            <div className="row">
+             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <CardLabel>
-                    {t("CR_FROM_DATE")}
+                    {t("CR_DATE_OF_DEATH")}
                     <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  </CardLabel>               
                   <DatePicker
-                    date={FromDate}
-                    name="FromDate"
-                    onChange={selectFromDate}
-                    {...(validation = {
-                      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                      isRequired: true,
-                      type: "text",
-                      title: t("CR_INVALID_DATE"),
+                    date={DateOfDeath}
+                    name="DateOfDeath"
+                    inputFormat="DD-MM-YYYY"
+                    placeholder={`${t("CR_DATE_OF_DEATH")}`}
+                    onChange={selectDateOfDeath}
+                    {...(validation = {pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",isRequired: true, type: "text",title: t("CR_INVALID_DATE"),
                     })}
                   />
                 </div>
@@ -510,26 +391,80 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_DECEASED")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_LEGAL_INFORMATION")}`}</span>
             </h1>
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CheckBox label={t("CR_ADHAR_NOT_AVAILABLE")} onChange={setCheckedAdhar} value={DeceasedAadharNotAvailable} checked={DeceasedAadharNotAvailable} />
+            </div>
+          </div>
+        </div>
+        {DeceasedAadharNotAvailable === true && (
+          // {checkedAdhar ? (
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDocumentType}
+                  selected={DeceasedIdproofType}
+                  select={selectDeceasedIdproofType}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
+                  // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
+                />
+              </div>
+              <div className="col-md-6">
+                <CardLabel>{t("CR_ID_NO")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="DeceasedIdproofNo"
+                  value={DeceasedIdproofNo}
+                  onChange={setSelectDeceasedIdproofNo}
+                  disable={isEdit}
+                  placeholder={`${t("CR_ID_NO")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+        {DeceasedAadharNotAvailable === false && (
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{t("CR_AADHAR_OF_DECEASED")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type="number"
+                  max="12"
+                  optionKey="i18nKey"
+                  name="DeceasedAadharNumber"
+                  value={DeceasedAadharNumber}
+                  onChange={setSelectDeceasedAadharNumber}
+                  disable={isEdit}
+                  placeholder={`${t("CR_AADHAR_OF_DECEASED")}`}
+                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                />
+              </div>
+            </div>
+          </div>
+        )}    
+       
 
         <div className="row">
           <div className="col-md-12">
-            {/* <div className="col-md-3">
-              <CardLabel>{`${t("CR_TITLE_NAME_EN")}`}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbTitle}
-                selected={setTitle}
-                select={selectTitle}
-                disabled={isEdit}
-                placeholder={`${t("CR_TITLE_NAME_EN")}`}
-              />
-            </div> */}
+           
             <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span>
@@ -539,9 +474,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="FirstName"
-                value={FirstName}
-                onChange={setSelectFirstName}
+                name="DeceasedFirstNameEn"
+                value={DeceasedFirstNameEn}
+                onChange={setSelectDeceasedFirstNameEn}
                 disable={isEdit}
                 placeholder={`${t("CR_FIRST_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -554,9 +489,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="MiddleName"
-                value={MiddleName}
-                onChange={setSelectMiddleName}
+                name="DeceasedMiddleNameEn"
+                value={DeceasedMiddleNameEn}
+                onChange={setSelectDeceasedMiddleNameEn}
                 disable={isEdit}
                 placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
@@ -569,9 +504,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="LastName"
-                value={LastName}
-                onChange={setSelectLastName}
+                name="DeceasedLastNameEn"
+                value={DeceasedLastNameEn}
+                onChange={setSelectDeceasedLastNameEn}
                 disable={isEdit}
                 placeholder={`${t("CR_LAST_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
@@ -580,20 +515,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
-            {/* <div className="col-md-3">
-              <CardLabel>{`${t("CR_TITLE_NAME_ML")}`}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="namelocal"
-                isMandatory={false}
-                option={cmbTitle}
-                selected={setTitleB}
-                select={selectTitleB}
-                disabled={isEdit}
-                placeholder={`${t("CR_TITLE_NAME_ML")}`}
-              />
-            </div> */}
+          <div className="col-md-12">           
             <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_FIRST_NAME_ML")}`}
@@ -604,9 +526,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="MLFirstName"
-                value={MLFirstName}
-                onChange={setSelectMLFirstName}
+                name="DeceasedFirstNameMl"
+                value={DeceasedFirstNameMl}
+                onChange={setSelectDeceasedFirstNameMl}
                 disable={isEdit}
                 placeholder={`${t("CR_FIRST_NAME_ML")}`}
                 {...(validation = {
@@ -624,9 +546,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="MlMiddleName"
-                value={MlMiddleName}
-                onChange={setSelectMlMiddleName}
+                name="DeceasedMiddleNameMl"
+                value={DeceasedMiddleNameMl}
+                onChange={setSelectDeceasedMiddleNameMl}
                 disable={isEdit}
                 placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                 {...(validation = {
@@ -644,9 +566,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="MlLastName"
-                value={MlLastName}
-                onChange={setSelectMlLastName}
+                name="DeceasedLastNameMl"
+                value={DeceasedLastNameMl}
+                onChange={setSelectDeceasedLastNameMl}
                 disable={isEdit}
                 placeholder={`${t("CR_LAST_NAME_ML")}`}
                 {...(validation = {
@@ -659,79 +581,23 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
+        
         <div className="row">
           <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_LEGAL_INFORMATION")}`}</span>
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={false}
-                option={menu}
-                selected={Gender}
-                select={selectGender}
-                disabled={isEdit}
-                placeholder={`${t("CR_GENDER")}`}
-                {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>{`${t("CR_DATE_OF_BIRTH_DECEASED")}`}</CardLabel>
-              {/* date={CommencementDate} */}
-              {/* <DatePicker date={CommencementDate} name="CommencementDate" onChange={selectCommencementDate} placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`} /> */}
-              <DatePicker
-                t={t}
-                isMandatory={false}
-                optionKey="i18nKey"
-                className="employee-card-input"
-                type="date"
-                name="CommencementDate"
-                inputFormat="DD/MM/YYYY"
-                date={CommencementDate}
-                minDate={new Date("1900-31-01")}
-                maxDate={maxDate}
-                onChange={calculateAge}
-                placeholder={`${t("CR_DATE_OF_BIRTH_DECEASED")}`}
-              />
-            </div>
-            <div className="col-md-2">
+          <div className="col-md-2">
               <CardLabel>
                 {`${t("CR_AGE_OF_BIRTH")}`}
                 <span className="mandatorycss">*</span>{" "}
               </CardLabel>
               <input
                 className="employee-card-input"
-                name="Ageofbirth"
+                name="Age"
                 type="number"
-                onChange={setSelectAgeofbirth}
-                value={Ageofbirth}
+                onChange={setSelectAge}
+                value={Age}
                 placeholder={`${t("CR_AGE_OF_BIRTH")}`}
                 {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
-              />
-
-              {/* <TextInput
-              
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="Ageofbirth"
-                value={Ageofbirth}
-                onChange={setSelectAgeofbirth}
-                disable={isEdit}
-                placeholder={`${t("CR_AGE_OF_BIRTH")}`}
-                {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
-                // {...(validation = { pattern: "^([0-9]){2}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AGE") })}
-              /> */}
+              />              
             </div>
             <div className="col-md-2">
               <CardLabel>
@@ -743,7 +609,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 optionKey="name"
                 isMandatory={false}
                 option={cmbAgeUnit}
-                selected={setAgeUnit}
+                selected={AgeUnit}
                 select={selectAgeUnit}
                 disabled={isEdit}
                 placeholder={`${t("CR_AGE_UNIT")}`}
@@ -840,9 +706,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="nationalityname"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbNation}
-                selected={setNationality}
+                selected={Nationality}
                 select={selectNationality}
                 disabled={isEdit}
                 placeholder={`${t("CR_NATIONALITY")}`}
@@ -853,38 +719,24 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbReligion}
-                selected={setReligion}
+                selected={Religion}
                 select={selectReligion}
                 disabled={isEdit}
                 placeholder={`${t("CS_COMMON_RELIGION")}`}
               />
-            </div>
+            </div>           
           </div>
-        </div>
+        </div>  
         {/* <div className="row">
           <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OCCUPATION_DECEASED")}`}</span>
-            </h1>
+            <CheckBox label={t("CR_OCCUPATION_DECEASED_NO")} onChange={() => setChecked((checked) => !checked)} value={checked} />
           </div>
         </div> */}
         <div className="row">
+          {/* {checked ? null : ( */}
           <div className="col-md-12">
-            <div className="col-md-6">
-              <CheckBox
-                label={t("CR_OCCUPATION_DECEASED_NO")}
-                onChange={() => setCheckedOcuupation((checkedOcuupation) => !checkedOcuupation)}
-                value={checkedOcuupation}
-                checked={checkedOcuupation}
-              />{" "}
-            </div>
-          </div>
-        </div>
-        {checkedOcuupation ? null : (
-          <div className="row">
-            <div className="col-md-12">
               <div className="col-md-6">
                 <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
                 <Dropdown
@@ -892,43 +744,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                   optionKey="name"
                   isMandatory={false}
                   option={cmbOccupationMain}
-                  selected={setOccupationMain}
-                  select={selectOccupationMain}
+                  selected={Occupation}
+                  select={selectOccupation}
                   disabled={isEdit}
                   placeholder={`${t("CR_OCCUPATION_MAIN_LEVEL")}`}
                 />
-              </div>
-              <div className="col-md-6">
-                <CardLabel>{t("CR_OCCUPATION_OTHER_ML")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="OccupationOthers"
-                  value={OccupationOthers}
-                  onChange={SelectOccupationOthers}
-                  disable={isEdit}
-                  placeholder={`${t("CR_OCCUPATION_OTHER_ML")}`}
-                  {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: false,
-                    type: "text",
-                    title: t("CR_INVALID_OCCUPATION_OTHER_ML"),
-                  })}
-                />
-              </div>
+              </div>              
             </div>
-          </div>
-        )}
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
-
+          {/* )} */}
+        </div>   
+     
         {toast && (
           <Toast
             error={
