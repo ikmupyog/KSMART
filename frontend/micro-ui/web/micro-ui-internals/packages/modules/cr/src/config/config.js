@@ -241,10 +241,42 @@ export const newConfig = [
         },
         key: "ChildDetails",
         withoutLabel: true,
-        nextStep: "birth-place",
+        nextStep: "parents-details",
         hideInEmployee: false,
       },
-      
+      {
+        route: "parents-details",
+        component: "ParentsDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "ParentsDetails",
+        type: "component",
+        nextStep: "address-birth",
+        hideInEmployee: false,
+      },
+      {
+        route: "address-birth",
+        component: "AddressBirth",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressBirthDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: false,
+      },
+
       {
         route: "birth-place",
         component: "BirthPlace",
@@ -441,22 +473,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-      {
-        route: "parents-details",
-        component: "ParentsDetails",
-        texts: {
-          headerCaption: "",
-          header: "Parents Details",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "ParentsDetails",
-        type: "component",
-        nextStep: "mother-informations",
-        hideInEmployee: false,
-      },
+     
       {
         route: "place-of-birth-home",
         component: "PlaceofBirthHome",
@@ -858,6 +875,12 @@ export const newConfig = [
       }, 
     ],
   },
+
+
+
+
+
+
 
 
   {

@@ -587,11 +587,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {/* isDisabled={!motherFirstNameEn} */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-        {/* <div className="row">
+      <div className="row">
           <div className="col-md-12">
-            <h1 className="headingh1"></h1>
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_DETAILS")}`}</span>{" "}
+            </h1>
           </div>
-        </div> */}
+        </div>
         <div className="row">
           <div className="col-md-12">
             {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
