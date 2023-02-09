@@ -113,7 +113,7 @@ const Urls = {
     update: "/birth-services/cr/birth/_update",    
   },
   crdeath: {
-    create: "/death-services/v1/crdeathdetails/_create",
+    create: "/death-services/v1/deathdetails/_createdeath ",
     search: "/death-services/v1/crdeathdetails/_search",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/death-services/v1/crdeathdetails/_update",
