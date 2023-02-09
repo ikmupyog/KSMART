@@ -138,7 +138,7 @@ const CheckPage = ({ onSubmit, value }) => {
           </div>
         </div>
         <StatusTable >
-          {TradeDetails?.applicant.map((applicant, index) => (
+          {TradeDetails?.owners.map((applicant, index) => (
             <div>
               <div className="row" key={index}>
                 <div className="col-md-12">
@@ -146,19 +146,19 @@ const CheckPage = ({ onSubmit, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSEE_AADHAR_NO")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.aadhaarNumber}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.aadhaarNumber}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSEE_NAME")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.name}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.name}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSEE_NAME")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.applicantNameLocal}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.applicantNameLocal}</CardText>
                   </div>
                 </div>
               </div>
@@ -168,19 +168,19 @@ const CheckPage = ({ onSubmit, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Care Of</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.careOf} &nbsp&nbsp {owners.careOfName}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.careOf} &nbsp&nbsp {applicant.careOfName}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>House Name</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.houseName}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.houseName}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Street</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.street}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.street}</CardText>
                   </div>
                 </div>
               </div>
@@ -190,19 +190,19 @@ const CheckPage = ({ onSubmit, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Locality</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.locality}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.locality}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>PostOffice</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.postOffice} - {owners.pincode}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.postOffice} - {applicant.pincode}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_MOBILE_NO")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.mobileNumber}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.mobileNumber}</CardText>
                   </div>
 
                 </div>
@@ -214,7 +214,7 @@ const CheckPage = ({ onSubmit, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.emailId}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.emailId}</CardText>
                   </div>
                   {TradeDetails?.licenseeType === "INSTITUTION" && (
                     <div>
@@ -222,7 +222,7 @@ const CheckPage = ({ onSubmit, value }) => {
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSEE_DESIGNATION")}`}</CardText>
                       </div>
                       <div className="col-md-2">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owners.designation}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.designation}</CardText>
                       </div>
                     </div>
                   )}
@@ -241,7 +241,7 @@ const CheckPage = ({ onSubmit, value }) => {
           </div>
         </div>
         <StatusTable>
-          {TradeDetails?.owners.map((owner, index) => (
+          {TradeDetails?.ownerspremise.map((owner, index) => (
             <div>
               <div className="row" key={index}>
                 <div className="col-md-12">
@@ -249,13 +249,13 @@ const CheckPage = ({ onSubmit, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSEE_AADHAR_NO")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owner.aadhaarNumber}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owner.owneraadhaarNo}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSEE_NAME")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owner.name}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owner.ownerName}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>House Name</CardText>
@@ -293,7 +293,7 @@ const CheckPage = ({ onSubmit, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_MOBILE_NO")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owner.mobileNumber}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{owner.ownerContactNo}</CardText>
                   </div>
                   <div className="col-md-2">
                     {<ActionButton jumpTo={`${routeLink}/license-applicant-det`} />}
@@ -303,6 +303,11 @@ const CheckPage = ({ onSubmit, value }) => {
             </div>
           ))}
         </StatusTable>
+        <div className="row">
+          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_DOCUMENT_DETAIL")}`}</span></h1>
+          </div>
+        </div>
+
         <StatusTable>
           <div className="row">
             <div className="col-md-12">
