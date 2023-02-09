@@ -155,8 +155,8 @@ StringBuilder query = new StringBuilder(QUERY);
 
                         addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
                         addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
-                      //  addFilter("dt.application_no", criteria.getA(), query, preparedStmtValues);  
-                      //  addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
+                      // addFilter("dt.application_no", criteria.getA(), query, preparedStmtValues);  
+                        addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
                         addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
                         // addDateRangeFilter("dt.dateofdeath",
                         // criteria.getFromDate(),

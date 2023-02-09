@@ -72,19 +72,22 @@ public class DeathApplnService {
           return request.getDeathCertificateDtls();
      }
 
-    //Jasmine 06.02.2023
+    //Jasmine Search 06.02.2023
     public List<DeathDtl> search(DeathSearchCriteria criteria, RequestInfo requestInfo) {
-     return repository.getDeathApplication(criteria);
+          return repository.getDeathApplication(criteria);
      }
-     //Jasmine 07.02.2023
+
+     //Jasmine  Update 07.02.2023
      public List<DeathDtl> update(DeathDtlRequest request) {
       
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
+          System.out.println("ackNo"+ackNumber);
           List<DeathDtl> searchResult = repository.getDeathApplication(DeathSearchCriteria
                                                     .builder()
                                                     .deathACKNo(ackNumber)
                                                     //.id(id)
                                                     .build());
+         // System.out.println("searchResult"+searchResult);
           validatorService.validateUpdate(request, searchResult);
          // mdmsValidator.validateMDMSData(request,mdmsData);
          DeathDtlRequest result = DeathDtlRequest
@@ -94,10 +97,10 @@ public class DeathApplnService {
                                   .build();
           //Jasmine 09.02.2023                        
           enrichmentService.enrichUpdate(request);
-          workflowIntegrator.callWorkFlow(request);
+        //  workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
           return result.getDeathCertificateDtls();
-      }    
+     }    
 }
              /********************************************* */
 
