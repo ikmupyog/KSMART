@@ -7,7 +7,7 @@ import java.util.Collections;
 import org.apache.commons.collections4.CollectionUtils;
 
 import org.ksmart.death.deathapplication.config.DeathConfiguration;
-import org.ksmart.death.deathapplication.repository.DeathRepository;
+import org.ksmart.death.deathapplication.repository.DeathApplnRepository;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.ksmart.death.deathapplication.util.DeathConstants;
@@ -36,9 +36,9 @@ public class WorkflowIntegrator {
 
     private   final DeathConfiguration bndConfig;
     private   final RestTemplate restTemplate;
-    private final DeathRepository repository;
+    private final DeathApplnRepository repository;
     @Autowired
-    public WorkflowIntegrator(RestTemplate restTemplate, DeathConfiguration bndConfig ,DeathRepository repository) {
+    public WorkflowIntegrator(RestTemplate restTemplate, DeathConfiguration bndConfig ,DeathApplnRepository repository) {
         this.restTemplate = restTemplate;
         this.bndConfig = bndConfig; 
         this.repository=repository;

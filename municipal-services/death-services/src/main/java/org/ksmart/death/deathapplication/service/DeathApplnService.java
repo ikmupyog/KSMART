@@ -80,29 +80,22 @@ public class DeathApplnService {
      public List<DeathDtl> update(DeathDtlRequest request) {
       
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
-  
           List<DeathDtl> searchResult = repository.getDeathApplication(DeathSearchCriteria
                                                     .builder()
                                                     .deathACKNo(ackNumber)
                                                     //.id(id)
                                                     .build());
           validatorService.validateUpdate(request, searchResult);
-  
          // mdmsValidator.validateMDMSData(request,mdmsData);
-  
          DeathDtlRequest result = DeathDtlRequest
                                   .builder()
                                   .requestInfo(request.getRequestInfo())
                                   .deathCertificateDtls(searchResult)
                                   .build();
-  
-  
+          //Jasmine 09.02.2023                        
           enrichmentService.enrichUpdate(request);
-          
           workflowIntegrator.callWorkFlow(request);
-          
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
-          
           return result.getDeathCertificateDtls();
       }    
 }
