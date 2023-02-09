@@ -513,22 +513,22 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                   </div>
                   <div className="col-md-3">
                     <CardLabel>Locality<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applocality" value={field.applocality} />
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerlocality" value={field.locality} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")}/>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-3">
                     <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appstreet" value={field.appstreet} />
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerstreet" value={field.street}  onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "street")}/>
                   </div>
                   <div className="col-md-3">
                     <CardLabel>House Name<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphousename" value={field.apphousename} />
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerhousename" value={field.houseName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName")}/>
                   </div>
 
                   <div className="col-md-3">
                     <CardLabel>Postoffice<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appponame" value={field.appponame} />
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownername" value={field.postOffice} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice")}/>
                   </div>
                   <div className="col-md-1">
                     <CardLabel>Pincode</CardLabel>
