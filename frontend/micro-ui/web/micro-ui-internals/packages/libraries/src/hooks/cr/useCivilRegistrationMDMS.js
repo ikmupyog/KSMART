@@ -335,7 +335,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRReligion();
     case "InstitutionType":
       return useCRInstitution();
-    case "institution":
+    case "Institution":
       return useCRInstitutionId();
     case "OtherBithPlace":
       return useCROtherPlace();

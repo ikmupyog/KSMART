@@ -15,7 +15,6 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import Hospital from "./Hospital";
 import Institution from "./Institution";
-import DeathPlaceHome from "./DeathPlaceHome";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
@@ -59,6 +58,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType);
 // Institution
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(formData?.InformationDeath?.DeathPlaceInstId); 
+<<<<<<< HEAD
  // Home
  const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId);
   const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode);
@@ -79,6 +79,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.InformationDeath?.VehicleHospitalEn);
   const [GeneralRemarks, setGeneralRemarks] = useState(formData?.InformationDeath?.GeneralRemarks);
 
+=======
+ 
+>>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
@@ -263,6 +266,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           DeathPlaceInstId={DeathPlaceInstId}          
           />;
         }
+<<<<<<< HEAD
         if (naturetype === "HOME") {
           <DeathPlaceHomepincode         
           DeathPlaceType={DeathPlaceType} 
@@ -292,6 +296,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         }
         
 
+=======
+>>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
       }}
     });
       const goNext = () => {
@@ -333,6 +339,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
           sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ?DeathPlaceInstId.code : null);
           
+<<<<<<< HEAD
         } 
         if (DeathPlace.code === "INSTITUTION") { 
         sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
@@ -358,6 +365,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
       sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
       }
+=======
+        }    
+     
+>>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
     onSelect(config.key, {      
       DateOfDeath,
       TimeOfDeath,
@@ -384,6 +395,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceType, 
       
       DeathPlaceInstId,
+<<<<<<< HEAD
 
       DeathPlaceHomehoueNameEn,
       DeathPlaceHomehoueNameMl,
@@ -404,6 +416,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       VehicleFirstHaltMl,
       VehicleHospitalEn,
       GeneralRemarks,
+=======
+>>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
     });
   
   };
@@ -484,34 +498,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             selectDeathPlaceType={selectDeathPlaceType}
             DeathPlaceType={DeathPlaceType}   
             DeathPlaceInstId= {DeathPlaceInstId} 
-            setSelectedDeathPlaceInstId  = {setSelectedDeathPlaceInstId}          
-            />
-          </div>          
-        )}
-        {value === "HOME" && (
-          <div>
-            <DeathPlaceHome           
-            DeathPlaceHomepostofficeId= {DeathPlaceHomepostofficeId}
-            setDeathPlaceHomepostofficeId = {setDeathPlaceHomepostofficeId}
-            DeathPlaceHomepincode= {DeathPlaceHomepincode} 
-            setDeathPlaceHomepincode = {setDeathPlaceHomepincode}
-            DeathPlaceHomehoueNameEn = {DeathPlaceHomehoueNameEn}
-            setDeathPlaceHomehoueNameEn = {setDeathPlaceHomehoueNameEn}
-            DeathPlaceHomehoueNameMl = {DeathPlaceHomehoueNameMl} 
-            setDeathPlaceHomehoueNameMl = {setDeathPlaceHomehoueNameMl}
-            DeathPlaceHomelocalityEn = {DeathPlaceHomelocalityEn} 
-            setDeathPlaceHomelocalityEn = {setDeathPlaceHomelocalityEn}
-            DeathPlaceHomelocalityMl = {DeathPlaceHomelocalityMl}
-            setDeathPlaceHomelocalityMl = {setDeathPlaceHomelocalityMl}
-            DeathPlaceHomestreetNameEn = {DeathPlaceHomestreetNameEn} 
-            setDeathPlaceHomestreetNameEn = {setDeathPlaceHomestreetNameEn}
-            DeathPlaceHomestreetNameMl = {DeathPlaceHomestreetNameMl} 
-            setDeathPlaceHomestreetNameMl = {setDeathPlaceHomestreetNameMl}
+            setSelectedDeathPlaceInstId  = {setSelectedDeathPlaceInstId}
+
             />
           </div>
-          
         )}
         
+<<<<<<< HEAD
         {value === "VEHICLE" && (
           <div>
           <Vehicle        
@@ -529,6 +522,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         </div>
           )}
 
+=======
+        
+>>>>>>> 9ccfd0d4cac1643e056426e511e5d3f9fdc5b2d9
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">

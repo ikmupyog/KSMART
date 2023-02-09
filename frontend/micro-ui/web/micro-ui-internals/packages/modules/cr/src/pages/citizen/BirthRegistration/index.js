@@ -11,7 +11,7 @@ const CreateBirthRegistration = ({ parentUrl }) => {
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_TRADE", {});
 
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});

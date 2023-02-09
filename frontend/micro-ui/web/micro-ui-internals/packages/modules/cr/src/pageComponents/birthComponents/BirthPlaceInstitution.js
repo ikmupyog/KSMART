@@ -1,31 +1,34 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, Dropdown,Loader } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton } from "@egovernments/digit-ui-react-components";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const BirthPlaceInstitution = ({ config, onSelect, userType, formData,institution ,setInstitution,institutionIdMl,setInstitutionIdMl,
-  institutionId,setInstitutionId
+const BirthPlaceInstitution = ({ config, onSelect, userType, formData, 
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
-  // const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
-  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
+  const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
+  const { data: institutionid = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
+  const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
+  const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
 
-  // const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
-  // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
-  // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
-  let cmbInstitution = [];  
-  institutionList &&
-  institutionList["birth-death-service"] &&
-  institutionList["birth-death-service"].InstitutionType.map((ob) => {
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  
+  let naturetypecmbvalue = null;
+
+  let cmbInstitution = [];
+  institution &&
+    institution["birth-death-service"] &&
+    institution["birth-death-service"].InstitutionType.map((ob) => {
       cmbInstitution.push(ob);
     });
   ///institution-id
   let cmbInstitutionId = [];
-  institutionidList &&
-  institutionidList["egov-location"] &&
-  institutionidList["egov-location"].institutionList.map((ob) => {
+  institutionid &&
+    institutionid["birth-death-service"] &&
+    institutionid["birth-death-service"].Institution.map((ob) => {
       cmbInstitutionId.push(ob);
     });
 
@@ -42,21 +45,21 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,institutio
   }
 
  
-  const goNext = () => {    
-    // console.log('clicked');
-    // sessionStorage.setItem("Institution", Institution.code);
-    // sessionStorage.setItem("InstitutionId", InstitutionId.code);
+  const goNext = () => {
+    
+    console.log('clicked');
+    sessionStorage.setItem("Institution", Institution.code);
+    sessionStorage.setItem("InstitutionId", InstitutionId.code);
    
-    // onSelect(config.key, { 
-    //   Institution, InstitutionId     
-    // });
+    onSelect(config.key, { 
+      Institution, InstitutionId     
+    });
   };
-  if (isinstitutionLoad || isinstitutionidLoad) {
-    return <Loader></Loader>;
-  }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!institution}>
+      {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null} */}
+      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!Institution}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -65,6 +68,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,institutio
           </div>
         </div>
         <div className="row">
+          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
@@ -72,8 +76,9 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,institutio
                 optionKey="name"
                 isMandatory={true}
                 option={cmbInstitution}
-                selected={institution}
-                select={setselectInstitution}
+                selected={Institution}
+                select={setInstitution}
+                disabled={isEdit}
                 placeholder={`${t("CR_INSTITUTION_TYPE")}`}
               />
             </div>
@@ -81,11 +86,12 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,institutio
               <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}</CardLabel>
               <Dropdown
                 t={t}
-                optionKey="institutionName"
+                optionKey="name"
                 isMandatory={true}
                 option={cmbInstitutionId}
-                selected={institutionId}
-                select={setselectInstitutionId}
+                selected={InstitutionId}
+                select={setInstitutionId}
+                disabled={isEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
               />
             </div>
@@ -93,14 +99,16 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,institutio
               <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}</CardLabel>
               <Dropdown
                 t={t}
-                optionKey="institutionNamelocal"
+                optionKey="name"
                 isMandatory={true}
                 option={cmbInstitutionId}
-                selected={institutionIdMl}
-                select={setselectInstitutionIdMl}
+                selected={InstitutionIdMl}
+                select={setInstitutionIdMl}
+                disabled={isEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}
               />
             </div>
+          </div>
         </div>
         
        
