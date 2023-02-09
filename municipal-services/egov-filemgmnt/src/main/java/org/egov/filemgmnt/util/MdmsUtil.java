@@ -51,30 +51,39 @@ public class MdmsUtil {
         final String uri = String.format("%s%s", mdmsHost, mdmsUrl);
         Object result = null;
         try {
-
             if (log.isInfoEnabled()) {
                 log.info("Mdms URI: {}", uri);
                 log.info("Mdms request: \n{}", FMUtils.toJson(mdmsCriteriaReq));
             }
 
             result = restTemplate.postForObject(uri, mdmsCriteriaReq, Map.class);
+
+            if (log.isDebugEnabled()) {
+                log.debug("Mdms response: \n{}", FMUtils.toJson(result));
+            }
         } catch (Exception e) {
             log.error("Exception occurred while fetching category lists from mdms", e);
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Mdms response: \n{}", FMUtils.toJson(result));
-        }
         return result;
     }
 
-    public Object mdmsCallCertificateOfficeAddress(final RequestInfo requestInfo, final String tenantId) {
-        final MdmsCriteriaReq mdmsCriteriaReq = getMdmsCertificateOfficeAddressRequest(requestInfo, tenantId);
+    public Object mdmsCallForOfficeAddress(final RequestInfo requestInfo, final String tenantId) {
+        final MdmsCriteriaReq mdmsCriteriaReq = getMdmsOfficeAddressRequest(requestInfo, tenantId);
 
         final String mdmsUri = String.format("%s%s", mdmsHost, mdmsUrl);
         Object result = null;
         try {
+            if (log.isInfoEnabled()) {
+                log.info("Mdms URI: {}", mdmsUri);
+                log.info("Mdms request: \n{}", FMUtils.toJson(mdmsCriteriaReq));
+            }
+
             result = restTemplate.postForObject(mdmsUri, mdmsCriteriaReq, Map.class);
+
+            if (log.isDebugEnabled()) {
+                log.debug("Mdms response: \n{}", FMUtils.toJson(result));
+            }
         } catch (Exception e) {
             log.error("Exception occurred while fetching category lists from mdms", e);
         }
@@ -130,29 +139,18 @@ public class MdmsUtil {
         return mdmsResMap;
     }
 
-    private MdmsCriteriaReq getMdmsCertificateOfficeAddressRequest(final RequestInfo requestInfo,
-                                                                   final String tenantId) {
-
+    private MdmsCriteriaReq getMdmsOfficeAddressRequest(final RequestInfo requestInfo, final String tenantId) {
         final List<ModuleDetail> tenantIdRequest = getTenantIdtAddressRequest(tenantId);
-
-//        final List<ModuleDetail> moduleDetails = new LinkedList<>();
-//        moduleDetails.addAll(tenantIdRequest);
 
         final MdmsCriteria mdmsCriteria = MdmsCriteria.builder()
                                                       .moduleDetails(tenantIdRequest)
                                                       .tenantId(tenantId)
                                                       .build();
 
-        final MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder()
-                                                               .mdmsCriteria(mdmsCriteria)
-                                                               .requestInfo(requestInfo)
-                                                               .build();
-
-        if (log.isDebugEnabled()) {
-            log.debug("Mdms certificate office address request: \n{}", FMUtils.toJson(mdmsCriteriaReq));
-        }
-
-        return mdmsCriteriaReq;
+        return MdmsCriteriaReq.builder()
+                              .mdmsCriteria(mdmsCriteria)
+                              .requestInfo(requestInfo)
+                              .build();
 
     }
 

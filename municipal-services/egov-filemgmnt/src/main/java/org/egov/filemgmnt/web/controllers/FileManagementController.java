@@ -120,6 +120,8 @@ public class FileManagementController implements FileManagementBaseController {
                                                     .build());
     }
 
+    @Deprecated
+    @Override
     @PostMapping("/applicantpersonals/_download") // value = { "/applicantpersonals/_download" }
     public ResponseEntity<CertificateResponse> download(@RequestBody final RequestInfoWrapper request,
                                                         @ModelAttribute final ApplicantSearchCriteria criteria) {

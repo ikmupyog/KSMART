@@ -71,6 +71,6 @@ public class FMConstants {
     public static final String OWNERADDRESS = "ownerAddress";
     public static final String NAME = "name";
     public static final String ADDRESS = "address";
-    public static final String PDFREQUESTARRAYKEY = "ResidetialCertificate";
+    public static final String PDFREQUESTARRAYKEY = "ResidentialCertificate";
 
 }

@@ -28,12 +28,13 @@ import org.egov.filemgmnt.web.models.certificate.ResidentialCertificate;
 import org.egov.filemgmnt.web.models.certificate.ResidentialCertificateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class ResidentialCertificateService {
+public class CertificateService {
 
     @Autowired
     private FMConfiguration fmConfig;
@@ -45,8 +46,7 @@ public class ResidentialCertificateService {
     private final FileManagementRepository repository;
     private final FileManagementEnrichment enrichment;
 
-    ResidentialCertificateService(final FileManagementRepository repository,
-                                  final FileManagementEnrichment enrichment) {
+    CertificateService(final FileManagementRepository repository, final FileManagementEnrichment enrichment) {
         this.repository = repository;
         this.enrichment = enrichment;
     }
@@ -54,6 +54,7 @@ public class ResidentialCertificateService {
     public CertificateRequest creteCertificateRequest(final ApplicantServiceSearchCriteria searchCriteria,
                                                       final RequestInfo requestInfo) {
         final ApplicantServiceDetail serviceDetail = findApplicantServiceDetail(searchCriteria);
+        Assert.notNull(serviceDetail, "Applicant service detail must not be null.");
 
         // Embededd URL for QR-CODE
         final String embeddedUrl = buildEmbeddedUrl(serviceDetail);
@@ -83,16 +84,18 @@ public class ResidentialCertificateService {
         final ResidentialCertificateRequest pdfRequest = buildResidentialCertificateRequest(serviceDetail,
                                                                                             requestInfo,
                                                                                             null,
-                                                                                            lbAddressWithPinCode);
+                                                                                            lbAddressWithPinCode,
+                                                                                            embeddedUrl);
 
         final EgovPdfResponse pdfResponse = restRepo.fetchResult(pdfFinalPath, pdfRequest, EgovPdfResponse.class);
 
         // 3. certificate details
         final CertificateDetails certificate = CertificateDetails.builder()
-                                                                 .applicantPersonalId(serviceDetail.getApplicantPersonalId())
                                                                  .tenantId(serviceDetail.getApplicant()
                                                                                         .getTenantId())
                                                                  .bussinessService(serviceDetail.getBusinessService())
+                                                                 .applicantPersonalId(serviceDetail.getApplicantPersonalId())
+                                                                 .serviceDetailsId(serviceDetail.getId())
                                                                  // .auditDetails(serviceDetail.getAuditDetails())
                                                                  .filestoreId(pdfResponse.getFilestoreIds()
                                                                                          .get(0))
@@ -110,23 +113,26 @@ public class ResidentialCertificateService {
     private ResidentialCertificateRequest buildResidentialCertificateRequest(final ApplicantServiceDetail serviceDetail,
                                                                              final RequestInfo requestInfo,
                                                                              final String lbName,
-                                                                             final String lbAddress) {
+                                                                             final String lbAddress,
+                                                                             final String embeddedUrl) {
         return ResidentialCertificateRequest.builder()
                                             .requestInfo(requestInfo)
-                                            .residentialCertificate(buildResidentialCertificateDetails(serviceDetail,
-                                                                                                       lbName,
-                                                                                                       lbAddress))
+                                            .residentialCertificates(Collections.singletonList(buildResidentialCertificateDetails(serviceDetail,
+                                                                                                                                  lbName,
+                                                                                                                                  lbAddress,
+                                                                                                                                  embeddedUrl)))
                                             .build();
     }
 
     private ResidentialCertificate buildResidentialCertificateDetails(final ApplicantServiceDetail serviceDetail,
-                                                                      final String lbName, final String lbAddress) {
+                                                                      final String lbName, final String lbAddress,
+                                                                      final String embeddedUrl) {
         final ApplicantPersonal applicant = serviceDetail.getApplicant();
         final ApplicantChild details = serviceDetail.getApplicantChild();
         final ApplicantAddress address = applicant.getAddress();
 
         final String applicantName = applicant.getFirstName() + (StringUtils.isNotBlank(applicant.getLastName())
-                ? applicant.getLastName()
+                ? " " + applicant.getLastName()
                 : "");
         final String applicantAddress = Arrays.asList(address.getBuildingNo(),
                                                       address.getSubNo(),
@@ -137,8 +143,8 @@ public class ResidentialCertificateService {
                                               .filter(StringUtils::isNotBlank)
                                               .collect(Collectors.joining("/"));
         return ResidentialCertificate.builder()
-                                     // .embeddedUrl(null)
-                                     .id(applicant.getId())
+                                     .embeddedUrl(embeddedUrl)
+                                     .id(serviceDetail.getId())
                                      .buildingNo(details.getBuildingNumber())
                                      .durationYear(details.getDurationOfResidenceInYears())
                                      .durationMonth(details.getDurationOfResidenceInMonths())
@@ -162,20 +168,19 @@ public class ResidentialCertificateService {
     }
 
     private String getLbAddressWithPinCode(final RequestInfo requestInfo, final String tenantId) {
-        final Object mdmsData = mdmsUtil.mdmsCallCertificateOfficeAddress(requestInfo, tenantId);
+        final Object mdmsData = mdmsUtil.mdmsCallForOfficeAddress(requestInfo, tenantId);
         final Map<String, List<String>> masterData = mdmsUtil.getAttributeValues(mdmsData);
         return masterData.get(FMConstants.TENANTS)
                          .toString()
-                         .replaceAll("[^a-zA-Z0-9]", " ");
+                         .replaceAll("[^a-zA-Z0-9]", " ")
+                         .trim();
     }
 
     private String buildEmbeddedUrl(final ApplicantServiceDetail serviceDetail) {
         final String uiHostCert = fmConfig.getUiAppHost();
 
         String resCertPath = fmConfig.getResidentialCertLink();
-        resCertPath = resCertPath.replace("$id",
-                                          serviceDetail.getApplicant()
-                                                       .getId());
+        resCertPath = resCertPath.replace("$id", serviceDetail.getId());
         resCertPath = resCertPath.replace("$tenantId",
                                           serviceDetail.getApplicant()
                                                        .getTenantId());

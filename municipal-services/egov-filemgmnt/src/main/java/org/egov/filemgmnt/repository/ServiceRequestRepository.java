@@ -33,6 +33,10 @@ public class ServiceRequestRepository {
             }
 
             response = restTemplate.postForObject(uri.toString(), request, clazz);
+
+            if (log.isInfoEnabled()) {
+                log.info("Response: \n{}", FMUtils.toJson(response));
+            }
         } catch (HttpClientErrorException e) {
             log.error("External Service threw an Exception: ", e);
             throw new ServiceCallException(e.getResponseBodyAsString());

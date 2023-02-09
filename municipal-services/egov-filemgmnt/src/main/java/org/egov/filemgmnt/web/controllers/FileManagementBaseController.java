@@ -185,6 +185,49 @@ interface FileManagementBaseController {
     ResponseEntity<ApplicantSearchResponse> searchApplicants(@Valid RequestInfoWrapper request,
                                                              @Valid ApplicantSearchCriteria searchCriteria);
 
+    @Operation(summary = "Download applicant service certificate with the given query parameters.",
+               description = "",
+               requestBody = @RequestBody(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                             schema = @Schema(implementation = RequestInfoWrapper.class)),
+                                          required = true),
+               parameters = {
+                       @Parameter(in = ParameterIn.QUERY,
+                                  name = "tenantId",
+                                  required = true,
+                                  allowEmptyValue = false,
+                                  description = "Tenant identification number",
+                                  schema = @Schema(type = "string",
+                                                   pattern = FMConstants.PATTERN_TENANT,
+                                                   accessMode = Schema.AccessMode.READ_ONLY)),
+                       @Parameter(in = ParameterIn.QUERY,
+                                  name = "serviceDetailId",
+                                  required = true,
+                                  allowEmptyValue = false,
+                                  description = "Applicant service detail id",
+                                  schema = @Schema(type = "string",
+                                                   format = "uuid",
+                                                   accessMode = Schema.AccessMode.READ_ONLY)),
+                       @Parameter(in = ParameterIn.QUERY,
+                                  name = "applicantId",
+                                  required = false,
+                                  allowEmptyValue = true,
+                                  description = "Applicant personal id",
+                                  schema = @Schema(type = "string",
+                                                   format = "uuid",
+                                                   accessMode = Schema.AccessMode.READ_ONLY)), },
+               responses = {
+                       @ApiResponse(responseCode = "200",
+                                    description = "Applicant certificate retrieved successfully",
+                                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                       schema = @Schema(implementation = CertificateResponse.class))),
+                       @ApiResponse(responseCode = "400",
+                                    description = "Bad applicant certificate download request",
+                                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                       schema = @Schema(implementation = ErrorRes.class))) })
     ResponseEntity<CertificateResponse> downloadCertificate(@Valid RequestInfoWrapper request,
                                                             @Valid ApplicantServiceSearchCriteria searchCriteria);
+
+    @Operation(deprecated = true, hidden = true)
+    ResponseEntity<CertificateResponse> download(@Valid RequestInfoWrapper request,
+                                                 @Valid ApplicantSearchCriteria criteria);
 }

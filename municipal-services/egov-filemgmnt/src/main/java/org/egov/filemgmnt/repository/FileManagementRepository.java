@@ -28,10 +28,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
+import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 
 @Repository
+@Slf4j
 public class FileManagementRepository {
 
     @Autowired
@@ -42,6 +44,8 @@ public class FileManagementRepository {
     private RestTemplate restTemplate;
     @Autowired
     private MdmsUtil mdmsUtil;
+    @Autowired
+    private ServiceRequestRepository restRepo;
 
     private final ApplicantPersonalQueryBuilder applicantQueryBuilder;
     private final ApplicantPersonalRowMapper applicantRowMapper;
@@ -80,6 +84,7 @@ public class FileManagementRepository {
         return jdbcTemplate.query(query, preparedStmtValues.toArray(), serviceRowMapper);
     }
 
+    @Deprecated
     @SuppressWarnings("unchecked")
     public CertificateRequest getResidentialCertificate(final ApplicantSearchCriteria criteria,
                                                         final RequestInfo requestInfo) {
@@ -112,22 +117,21 @@ public class FileManagementRepository {
 //                                                      .getFileCode());
 
         final String finalPath = uiHostCert + resCertPath;
-
+        log.debug("Final url, {}", finalPath);
         final String embeddedUrl = getShortenedUrl(finalPath);
-
+        log.debug("Embedded url, {}", embeddedUrl);
         // END
 
         // LB name and Address fetch from tanantId
-        Object mdmsData = mdmsUtil.mdmsCallCertificateOfficeAddress(requestInfo, tenantId);
+        Object mdmsData = mdmsUtil.mdmsCallForOfficeAddress(requestInfo, tenantId);
 
         Map<String, List<String>> masterData = mdmsUtil.getAttributeValues(mdmsData);
 
         String lbAddressWithPinCode = masterData.get(FMConstants.TENANTS)
                                                 .toString();
 
-        System.out.println("master name :" + lbAddressWithPinCode);
-
         lbAddressWithPinCode = lbAddressWithPinCode.replaceAll("[^a-zA-Z0-9]", " ");
+        System.out.println("master name :" + lbAddressWithPinCode);
 
         // PDF Service call start
 
@@ -150,8 +154,11 @@ public class FileManagementRepository {
         pdfRequest.put(FMConstants.PDFREQUESTARRAYKEY,
                        getPdfCertArray(searchResult, embeddedUrl, lbAddressWithPinCode, criteria.getTenantId()));
 
-        System.out.println("request Param " + pdfRequest);
-        EgovPdfResponse res = restTemplate.postForObject(pdfFinalPath, pdfRequest, EgovPdfResponse.class);
+        // log.debug("PDF Request: \n{}", FMUtils.toJson(pdfRequest));
+        // EgovPdfResponse res = restTemplate.postForObject(pdfFinalPath, pdfRequest,
+        // EgovPdfResponse.class);
+        // log.debug("PDF Response: \n{}", FMUtils.toJson(res));
+        EgovPdfResponse res = restRepo.fetchResult(new StringBuilder(pdfFinalPath), pdfRequest, EgovPdfResponse.class);
         CertificateDetails certificate = new CertificateDetails();
         List<CertificateDetails> list = new ArrayList<>();
         EgovPdfResponse result = new EgovPdfResponse();
@@ -184,13 +191,14 @@ public class FileManagementRepository {
     // inputs : search result of id
     // output : json array Certificate details
 
+    @Deprecated
     public JSONArray getPdfCertArray(List<ApplicantPersonal> searchResult, String embeddedUrl,
                                      String lbAddressWithPinCode, String tenant) {
 
         JSONArray array = new JSONArray();
         JSONObject obj = new JSONObject();
 
-//        obj.put("embeddedUrl", embeddedUrl);
+        obj.put("embeddedUrl", embeddedUrl);
         ApplicantPersonal applicant = searchResult.get(0);
         obj.put(FMConstants.ID, applicant.getId());
 //        obj.put(FMConstants.BUILDINGNO,
@@ -212,7 +220,7 @@ public class FileManagementRepository {
                 applicant.getAddress()
                          .getWardNo());
         obj.put(FMConstants.TENANT, tenant);
-        obj.put("lbName", null);
+        obj.put("lbName", "");
         obj.put("lbAddressWithPinCode", lbAddressWithPinCode);
 
         String name = applicant.getFirstName() + applicant.getLastName();
@@ -248,6 +256,7 @@ public class FileManagementRepository {
         return array;
     }
 
+    @Deprecated
     public String getShortenedUrl(String url) {
         HashMap<String, String> body = new HashMap<>();
         body.put("url", url);

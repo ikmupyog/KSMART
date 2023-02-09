@@ -36,14 +36,15 @@ services:
     depends_on:
       - zookeeper
     healthcheck:
-      test: curl -v localhost:9093 || exit 0
-      start_period: 20s
+      #test: curl -v localhost:9093 || exit 0
+      test: sh /opt/bitnami/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9093
+      start_period: 10s
       interval: 5s
       timeout: 3s
       retries: 2
   persister:
     container_name: persister
-    image: 'egovio/egov-persister:v1.1.4-1715164454-22' 
+    image: 'ikmkerala/egov-persister:v1.1.4-1367130fc4-1'
     pull_policy: missing
     restart: 'on-failure'
     ports:
@@ -65,7 +66,7 @@ services:
         condition: service_healthy 
   workflowv2:
     container_name: workflowv2
-    image: 'egovio/egov-workflow-v2:v1.2.1-dc9ffb98f8-2'
+    image: 'ikmkerala/egov-workflow-v2:v1.2.1-5dbbcb807b-1'
     pull_policy: missing
     restart: 'on-failure'
     ports:
@@ -82,7 +83,7 @@ services:
       - persister
   encryptor:
     container_name: encryptor
-    image: 'egovio/egov-enc-service:v1.1.2-dc9ffb98f8-2'
+    image: 'ikmkerala/egov-enc-service:v1.1.2-5dbbcb807b-1'
     pull_policy: missing
     restart: 'on-failure'
     ports:
@@ -117,9 +118,15 @@ services:
       - ksmart
     depends_on:
       - persister
+    healthcheck:
+      test: curl -i minio:9000/minio/health/live || exit 0
+      start_period: 20s
+      interval: 5s
+      timeout: 3s
+      retries: 2
   filestore:
     container_name: filestore
-    image: 'egovio/egov-filestore:v1.2.4-72f8a8f87b-10'
+    image: 'ikmkerala/egov-filestore:v1.2.4-5dbbcb807b-1'
     pull_policy: missing
     restart: 'on-failure'
     ports:
@@ -128,19 +135,21 @@ services:
       - ./dev.env
     environment:
       - SERVER_PORT=8083
-      - MINIO_URL=http://localhost:9001
+      - MINIO_URL=http://minio:9000
       - AWS_KEY=minioadmin
       - AWS_SECRETKEY=minioadmin
       - FIXED_BUCKETNAME=filestore
+      - MINIO_SOURCE=minio
 #    extra_hosts:
 #      - 'host.docker.internal:host-gateway'
     networks:
       - ksmart
     depends_on:
-      - persister
+      minio:
+        condition: service_healthy
   pdfservice:
     container_name: pdfservice
-    image: 'egovio/pdf-service:v1.1.6-96b24b0d72-83'
+    image: 'ikmkerala/pdf-service:birth-services-5f3e05e5d6-10' 
     pull_policy: missing
     restart: 'on-failure'
     ports:
@@ -155,8 +164,10 @@ services:
       - DB_PASSWORD=123
       - DATA_CONFIG_URLS=file:///residential-certificate-config.json
       - FORMAT_CONFIG_URLS=file:///residential-certificate-format.json
-      - EGOV_FILESTORE_SERVICE_HOST=filestore:8083
+      - EGOV_FILESTORE_SERVICE_HOST=http://filestore:8083
       - EGOV_EXTERNAL_HOST=https://ksmart-dev.lsgkerala.gov.in
+      - EGOV_LOCALISATION_HOST=https://ksmart-dev.lsgkerala.gov.in
+      - DEFAULT_LOCALISATION_LOCALE=en_IN
       - DEFAULT_LOCALISATION_TENANT=kl
 #    extra_hosts:
 #      - 'host.docker.internal:host-gateway'
@@ -167,6 +178,7 @@ services:
       - ksmart
     depends_on:
       - persister
+      - filestore
 
 networks:
   ksmart:
@@ -192,3 +204,5 @@ networks:
 #-Dspring.datasource.username=postgres 
 #-Dspring.datasource.password=123
 #-Dspring.kafka.bootstrap-servers=localhost:9092
+
+# https://medium.com/@kainikhil/nodejs-how-to-generate-and-properly-serve-pdf-6835737d118e#d8e5

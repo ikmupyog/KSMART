@@ -1,5 +1,7 @@
 package org.egov.filemgmnt.web.models.certificate;
 
+import java.util.List;
+
 import org.egov.common.contract.request.RequestInfo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,6 +25,6 @@ public class ResidentialCertificateRequest {
     private RequestInfo requestInfo;
 
     @JsonProperty("ResidentialCertificate")
-    private ResidentialCertificate residentialCertificate;
+    private List<ResidentialCertificate> residentialCertificates;
 
 }

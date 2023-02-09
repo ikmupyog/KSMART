@@ -29,7 +29,7 @@ public class CertificateDetails {
     @JsonProperty("id")
     private String id;
 
-    @Schema(type = "string", description = "Tenant identification number")
+    @Schema(type = "string", description = "Tenant identification number", example = "kl.cochin")
     @NotBlank(message = "Tenant identification number is required")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
     @Pattern(regexp = FMConstants.PATTERN_TENANT,
@@ -57,6 +57,11 @@ public class CertificateDetails {
     @Size(max = 64, message = "Applicant personal id length cannot exceed 64 characters")
     @JsonProperty("applicantPersonalId")
     private String applicantPersonalId;
+
+    @Schema(type = "string", description = "Service details id")
+    @Size(max = 64, message = "Service details id length cannot exceed 64 characters")
+    @JsonProperty("serviceDetailsId")
+    private String serviceDetailsId;
 
     @Schema(type = "string", format = "uuid", description = "File store id")
     @Size(max = 64)
