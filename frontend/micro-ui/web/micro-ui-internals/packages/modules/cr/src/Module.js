@@ -31,6 +31,10 @@ import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPl
 import BirthPlaceHome from "../src/pageComponents/birthComponents/BirthPlaceHome";
 import BirthPlaceVehicle from "../src/pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../src/pageComponents/birthComponents/BirthPlacePublicPlace";
+import AddressBirth from "../src/pageComponents/birthComponents/AddressBirth";
+import AddressBrOutsideIndia from "../src/pageComponents/birthComponents/AddressBrOutsideIndia";
+import AddressInsideKerala from "../src/pageComponents/birthComponents/AddressInsideKerala";
+import AddressOutsideKerala from "../src/pageComponents/birthComponents/AddressOutsideKerala";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -196,6 +200,10 @@ const componentsToRegister = {
   BirthPlaceHome,
   BirthPlacePublicPlace,
   BirthPlaceVehicle,
+  AddressBirth,
+  AddressBrOutsideIndia,
+  AddressInsideKerala,
+  AddressOutsideKerala,
 
   //////////////////
   // SearchRegistry,
@@ -238,6 +246,7 @@ const componentsToRegister = {
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
   TLResponse: Response,
+  //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
 };
