@@ -8,10 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 import java.util.List;
+import javax.swing.text.Document;
+import javax.validation.Valid;
 
 import javax.validation.constraints.Size;
+import org.ksmart.death.crdeath.constraints.Html;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 /*
@@ -45,7 +47,7 @@ public class DeathWorkFlowDtls {
     private String action;
 
     @JsonProperty("assignee")
-    private List<String> assignee;
+    private List<String> assignees;
 
     @JsonProperty("workflowcode")
     private String workflowcode;
@@ -53,10 +55,15 @@ public class DeathWorkFlowDtls {
     @JsonProperty("funcionUID")
     private String funcionUID;
 
-    @JsonProperty("Comment")
+    private String assignuser;
+
+    @Size(max = 128)
+    @Html
     private String comment;
 
-    private String assignuser;
+    @Valid
+    @JsonProperty("wfDocuments")
+    private List<Document> wfDocuments;
 
     public void setStatus(String s) {
     }

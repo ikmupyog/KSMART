@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.Collections;
 import org.apache.commons.collections4.CollectionUtils;
 
-import org.ksmart.death.deathapplication.config.DeathConfiguration;
-import org.ksmart.death.deathapplication.repository.DeathRepository;
-import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
-import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
-import org.ksmart.death.deathapplication.util.DeathConstants;
+import org.ksmart.death.crdeath.config.CrDeathConfiguration;
+import org.ksmart.death.crdeath.repository.CrDeathRepository;
+import org.ksmart.death.crdeath.web.models.CrDeathDtlRequest;
+import org.ksmart.death.crdeath.web.models.CrDeathSearchCriteria;
+import org.ksmart.death.crdeath.util.CrDeathConstants;
 
 import org.egov.tracer.model.CustomException;
-import org.ksmart.death.deathapplication.web.models.DeathDtl;
+import org.ksmart.death.crdeath.web.models.CrDeathDtl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +30,15 @@ import net.minidev.json.JSONObject;
 
 @Service
 @Slf4j
-public class WorkflowIntegrator {
+public class CrWorkflowIntegrator {
 
 
 
-    private   final DeathConfiguration bndConfig;
+    private   final CrDeathConfiguration bndConfig;
     private   final RestTemplate restTemplate;
-    private final DeathRepository repository;
+    private final CrDeathRepository repository;
     @Autowired
-    public WorkflowIntegrator(RestTemplate restTemplate, DeathConfiguration bndConfig ,DeathRepository repository) {
+    public CrWorkflowIntegrator(RestTemplate restTemplate, CrDeathConfiguration bndConfig ,CrDeathRepository repository) {
         this.restTemplate = restTemplate;
         this.bndConfig = bndConfig; 
         this.repository=repository;
@@ -55,7 +55,7 @@ public class WorkflowIntegrator {
      *
      * @param request the {@link CrDeathDtlRequest}
      */
-    public  void callWorkFlow(DeathDtlRequest request) {
+    public  void callWorkFlow(CrDeathDtlRequest request) {
 
       
         // List<CrDeathDtl> currentFile = request.getDeathCertificateDtls();     
@@ -96,15 +96,15 @@ public class WorkflowIntegrator {
 //             }
 //         }
       
-        List<DeathDtl> currentFile = request.getDeathCertificateDtls();     
+        List<CrDeathDtl> currentFile = request.getDeathCertificateDtls();     
         JSONArray array = new JSONArray();
-        for (DeathDtl deathDtl : request.getDeathCertificateDtls()) {
-            String  businessServiceFromMDMS=deathDtl.getDeathWorkFlowDtls().getBusinessService();
+        for (CrDeathDtl deathDtl : request.getDeathCertificateDtls()) {
+            String  businessServiceFromMDMS=deathDtl.getBusinessService();
             if (businessServiceFromMDMS == null) {
-            businessServiceFromMDMS = DeathConstants.BUSINESS_SERVICE_BND;
+            businessServiceFromMDMS = CrDeathConstants.BUSINESS_SERVICE_BND;
         }
-            if (businessServiceFromMDMS.equals(DeathConstants.BUSINESS_SERVICE_BND) || !request.getDeathCertificateDtls()
-           .get(0).getDeathWorkFlowDtls().getAction().equalsIgnoreCase(DeathConstants.TRIGGER_NOWORKFLOW)) {
+            if (businessServiceFromMDMS.equals(CrDeathConstants.BUSINESS_SERVICE_BND) || !request.getDeathCertificateDtls()
+                    .get(0).getAction().equalsIgnoreCase(CrDeathConstants.TRIGGER_NOWORKFLOW)) {
 
                 JSONObject obj = new JSONObject();
                  System.out.println("businessServiceFromMDMS"+businessServiceFromMDMS);    
@@ -116,28 +116,28 @@ public class WorkflowIntegrator {
                 // }
                 currentFile
                 .forEach(deathdtls -> {
-                obj.put(DeathConstants.BUSINESSIDKEY, deathdtls.getDeathBasicInfo().getDeathACKNo());
-                obj.put(DeathConstants.TENANTIDKEY, deathdtls.getDeathBasicInfo().getTenantId());
-                obj.put(DeathConstants.BUSINESSSERVICEKEY, deathdtls.getDeathWorkFlowDtls().getWorkflowcode());
-                List<Map<String, String>> uuidMaps = buildUUIDList(deathdtls.getDeathWorkFlowDtls().getAssignees());
+                obj.put(CrDeathConstants.BUSINESSIDKEY, deathdtls.getDeathACKNo());
+                obj.put(CrDeathConstants.TENANTIDKEY, deathdtls.getTenantId());
+                obj.put(CrDeathConstants.BUSINESSSERVICEKEY, deathdtls.getWorkflowCode());
+                List<Map<String, String>> uuidMaps = buildUUIDList(deathdtls.getAssignees());
                // System.out.println("uuidMaps"+uuidMaps);
                 if (CollectionUtils.isNotEmpty(uuidMaps)) {
-                    obj.put(DeathConstants.ASSIGNEEKEY, uuidMaps.get(0).get("uuid"));
+                    obj.put(CrDeathConstants.ASSIGNEEKEY, uuidMaps.get(0).get("uuid"));
                 }
             });
 
-                obj.put(DeathConstants.MODULENAMEKEY, DeathConstants.BNDMODULENAMEVALUE);
-                obj.put(DeathConstants.ACTIONKEY, deathDtl.getDeathWorkFlowDtls().getAction());
-                obj.put(DeathConstants.COMMENTKEY, deathDtl.getDeathWorkFlowDtls().getComment());
-                obj.put(DeathConstants.DOCUMENTSKEY, deathDtl.getDeathWorkFlowDtls().getWfDocuments());
+                obj.put(CrDeathConstants.MODULENAMEKEY, CrDeathConstants.BNDMODULENAMEVALUE);
+                obj.put(CrDeathConstants.ACTIONKEY, deathDtl.getAction());
+                obj.put(CrDeathConstants.COMMENTKEY, deathDtl.getComment());
+                obj.put(CrDeathConstants.DOCUMENTSKEY, deathDtl.getWfDocuments());
                 array.add(obj);
             }
         }
 
         if (!CollectionUtils.isEmpty(array)) {
             JSONObject workFlowRequest = new JSONObject();
-            workFlowRequest.put(DeathConstants.REQUESTINFOKEY, request.getRequestInfo());
-            workFlowRequest.put(DeathConstants.WORKFLOWREQUESTARRAYKEY, array);
+            workFlowRequest.put(CrDeathConstants.REQUESTINFOKEY, request.getRequestInfo());
+            workFlowRequest.put(CrDeathConstants.WORKFLOWREQUESTARRAYKEY, array);
             String response = null;
             System.out.println("workflow Check  :" + workFlowRequest);
             log.info("workflow integrator request " + workFlowRequest);
@@ -173,19 +173,19 @@ public class WorkflowIntegrator {
              */
             System.out.println("response Check  :" + response);
             DocumentContext responseContext = JsonPath.parse(response);
-            List<Map<String, Object>> responseArray = responseContext.read(DeathConstants.PROCESSINSTANCESJOSNKEY);
+            List<Map<String, Object>> responseArray = responseContext.read(CrDeathConstants.PROCESSINSTANCESJOSNKEY);
             Map<String, String> idStatusMap = new HashMap<>();
             responseArray.forEach(object -> {
 
                 DocumentContext instanceContext = JsonPath.parse(object);
-                idStatusMap.put(instanceContext.read(DeathConstants.BUSINESSIDJOSNKEY),
-                        instanceContext.read(DeathConstants.STATUSJSONKEY));
+                idStatusMap.put(instanceContext.read(CrDeathConstants.BUSINESSIDJOSNKEY),
+                        instanceContext.read(CrDeathConstants.STATUSJSONKEY));
             });
             
             // setting the status back to TL object from wf response
 
                   request.getDeathCertificateDtls().forEach(
-                    bndObj -> bndObj.getDeathWorkFlowDtls().setApplicationStatus(idStatusMap.get(bndObj.getDeathBasicInfo().getDeathACKNo())));
+                    bndObj -> bndObj.setApplicationStatus(idStatusMap.get(bndObj.getDeathACKNo())));
 
         }
 
@@ -196,7 +196,7 @@ public class WorkflowIntegrator {
 
         if (CollectionUtils.isNotEmpty(assignees)) {
 
-            assignees.forEach(assignee -> result.add(Collections.singletonMap(DeathConstants.UUIDKEY, assignee)));
+            assignees.forEach(assignee -> result.add(Collections.singletonMap(CrDeathConstants.UUIDKEY, assignee)));
         }
 
         return result;

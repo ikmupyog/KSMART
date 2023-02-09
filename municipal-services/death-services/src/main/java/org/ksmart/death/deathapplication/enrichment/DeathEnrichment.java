@@ -152,7 +152,7 @@ public class DeathEnrichment implements BaseEnrichment{
                     deathDtls.getDeathFamilyInfo().setMotherAadharNo(deathDtlEnc.getDeathFamilyInfo().getMotherAadharNo());
                     deathDtls.getDeathFamilyInfo().setSpouseAadhaar(deathDtlEnc.getDeathFamilyInfo().getSpouseAadhaar());
                     deathDtls.setDeathAuditDetails(auditDetails);
-                    deathDtls.getDeathWorkFlowDtls().setAssignuser(deathDtls.getDeathWorkFlowDtls().getAssignee().get(0));
+                    deathDtls.getDeathWorkFlowDtls().setAssignuser(deathDtls.getDeathWorkFlowDtls().getAssignees().get(0));
                     } );
         
         }//UPDATE END

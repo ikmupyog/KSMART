@@ -36,7 +36,7 @@ public class DeathApplnService {
      private final DeathConfiguration deathConfig;
    //  private final DeathEnrichment enrichmentService;
    //  private final DeathMdmsUtil util;
-   //  private final WorkflowIntegrator workflowIntegrator;
+     private final WorkflowIntegrator workflowIntegrator;
    //  private final MDMSValidator mdmsValidator;
      private final DeathApplnValidator validatorService;
      private final DeathApplnRepository repository;
@@ -44,14 +44,15 @@ public class DeathApplnService {
      //Rakhi S ikm on 08.02.2023
      @Autowired
      DeathApplnService(DeathApplnRepository repository ,DeathProducer producer
-                         ,DeathEnrichment enrichmentService,DeathApplnValidator validatorService,DeathConfiguration deathConfig){
+                         ,DeathEnrichment enrichmentService,DeathApplnValidator validatorService,DeathConfiguration deathConfig
+                         ,WorkflowIntegrator workflowIntegrator){
           
      //,DeathConfiguration deathConfig
      //             DeathEnrichment enrichmentService,DeathMdmsUtil util,MDMSValidator mdmsValidator,
-     //             ,,WorkflowIntegrator workflowIntegrator){
+     //             ,,){
 
        //  this.deathConfig = deathConfig;
-      //   this.workflowIntegrator = workflowIntegrator;
+      //   
        //  this.enrichmentService = enrichmentService;
        //  this.util = util;
        //  this.mdmsValidator = mdmsValidator;
@@ -60,6 +61,7 @@ public class DeathApplnService {
          this.deathConfig = deathConfig;
          this.enrichmentService = enrichmentService;
          this.repository = repository;
+         this.workflowIntegrator = workflowIntegrator;
      }
 
      //RAkhi S ikm  on 06.02.2023
@@ -97,9 +99,9 @@ public class DeathApplnService {
   
           enrichmentService.enrichUpdate(request);
           
-        //  workflowIntegrator.callWorkFlow(request);
+          workflowIntegrator.callWorkFlow(request);
           
-        //  producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+          producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
           
           return result.getDeathCertificateDtls();
       }    

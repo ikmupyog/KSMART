@@ -31,5 +31,15 @@ public class DeathConfiguration {
      //Persister Config
      @Value("${persister.save.deathappln.topic}")
      private String saveDeathDetailsTopic;
+
+     @Value("${persister.update.deathappln.topic}")
+     private String updateDeathDetailsTopic;
+
+     //Jasmine 09.02.2023
+     @Value("${egov.workflow.host}")
+     private String wfHost;
+ 
+     @Value("${egov.workflow.path}")
+     private String wfTransitionPath;
      
 }
