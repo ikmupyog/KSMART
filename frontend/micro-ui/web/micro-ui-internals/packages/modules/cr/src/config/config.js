@@ -311,23 +311,6 @@ export const newConfig = [
         hideInEmployee: false,
       },
       {
-        route: "address-birth",
-        component: "AddressBirth",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "AddressBirthDetails",
-        nextStep: "null",
-        type: "component",
-        hideInEmployee: false,
-      },
-
-      {
         route: "address-insidekerala",
         component: "AddressInsideKerala",
         texts: {
@@ -409,7 +392,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
 
-{
+      {
         route: "birthplace-hospital",
         component: "BirthPlaceHospital",
         texts: {
@@ -457,7 +440,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-      
+
       {
         route: "birthPlace-vehicle",
         component: "BirthPlaceVehicle",
@@ -474,7 +457,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-     
+
       {
         route: "place-of-birth-home",
         component: "PlaceofBirthHome",
@@ -705,7 +688,7 @@ export const newConfig = [
         nextStep: "father-informations",
         type: "component",
         hideInEmployee: false,
-      },  
+      },
       {
         route: "multiple-birth",
         component: "MultipleBirth",
@@ -721,7 +704,7 @@ export const newConfig = [
         nextStep: "hospital-details",
         type: "component",
         hideInEmployee: false,
-      },    
+      },
       {
         route: "born-outside-india",
         component: "BornOutsideIndia",
@@ -737,7 +720,7 @@ export const newConfig = [
         nextStep: "hospital-details",
         type: "component",
         hideInEmployee: false,
-      }, 
+      },
       {
         route: "other-country-details",
         component: "OtherCountry",
@@ -753,7 +736,7 @@ export const newConfig = [
         nextStep: "father-informations",
         type: "component",
         hideInEmployee: false,
-      }, 
+      },
       {
         route: "informant-details",
         component: "InformantDetails",
@@ -769,7 +752,7 @@ export const newConfig = [
         nextStep: "",
         type: "component",
         hideInEmployee: true,
-      },  
+      },
       {
         route: "informant-address",
         component: "InformantAddress",
@@ -785,7 +768,7 @@ export const newConfig = [
         nextStep: "",
         type: "component",
         hideInEmployee: true,
-      },  
+      },
       {
         route: "informar-details",
         component: "InformarHospitalInstitution",
@@ -801,7 +784,7 @@ export const newConfig = [
         nextStep: "",
         type: "component",
         hideInEmployee: true,
-      }, 
+      },
       {
         route: "hospital",
         isMandatory: true,
@@ -873,7 +856,7 @@ export const newConfig = [
         nextStep: "place-of-death",
         type: "component",
         hideInEmployee: true,
-      }, 
+      },
     ],
   },
 
@@ -903,8 +886,8 @@ export const newConfig = [
         hideInEmployee: false,
         nextStep: "adopted-Parents-information",
       },
-     
-      
+
+
       // {
       //   route: "adopted-mother-information",
       //   component: "AdoptionMotherInformation",
@@ -921,7 +904,7 @@ export const newConfig = [
       //   nextStep: "adopted-father-information",
       // },    
 
- 
+
       {
         route: "adopted-Parents-information",
         component: "AdoptiveParentsDetails",
@@ -952,7 +935,7 @@ export const newConfig = [
         hideInEmployee: false,
         nextStep: "birth-mother-information",
       },
-      
+
       // {
       //   route: "birth-mother-information",
       //   component: "BirthMotherInformation",
@@ -998,7 +981,7 @@ export const newConfig = [
       //   hideInEmployee: false,
       //   nextStep: "adoption-statistical-information",
       // },
-     
+
       // {
       //   route: "adoption-statistical-information",
       //   component: "AdoptionStatisticalInformation",
@@ -1090,7 +1073,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
-     
+
       {
         route: "place-death-home",
         component: "PlaceOfDeathHome",
@@ -1242,8 +1225,8 @@ export const newConfig = [
         nextStep: "",
         type: "component",
         hideInEmployee: true,
-      },      
-     
+      },
+
       {
         route: "general-remarks",
         component: "GeneralRemarks",
@@ -1251,7 +1234,7 @@ export const newConfig = [
           headerCaption: "",
           // header: "CR_GENERAL_REMARKS",
           header: "",
-          cardText: "",          
+          cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },

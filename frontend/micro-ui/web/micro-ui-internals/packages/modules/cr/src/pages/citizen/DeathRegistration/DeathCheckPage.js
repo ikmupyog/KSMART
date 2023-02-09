@@ -82,19 +82,33 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
         <StatusTable>
           <div className="row">
             <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_DATE_OF_DEATH")}`}</CardLabel>
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.DateOfDeath)}</CardText>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_PLACE_OF_DEATH")}`}</CardLabel>
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.DeathPlace.code)}</CardText>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_NAME_OF_DECEASED")}`}</CardLabel>
               <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.FirstName)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.DeceasedFirstNameEn)}</CardText>
               </div>
             </div>
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_GENDER")}`}</CardLabel>
               <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.Gender.value)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(InformationDeath.DeceasedGender.value)}</CardText>
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_PLACE_OF_DEATH")}`}</CardLabel>
               <div className="col-md-6">
@@ -135,7 +149,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(AddressOfDecesed.PermanentHouseNameEn)}</CardText>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">

@@ -11,8 +11,8 @@ const getAction = (flow) => {
     default: actions = [
       'CR_LEGAL_INFORMATION',
       'CR_PLACE_OF_DEATH',
-      'CR_ADDRESS_DECESED',
-      'CR_FAMILY_INFO',           
+      'CR_FAMILY_INFO',  
+      'CR_ADDRESS_DECESED',         
       'CR_STATISTICAL_INFORMATION',
       // 'CR_APPLICANT_DETAILS',
       'CR_SUMMARY',

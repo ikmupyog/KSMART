@@ -1,4 +1,4 @@
-import {  CitizenHomeCard, CaseIcon} from "@egovernments/digit-ui-react-components";
+import { CitizenHomeCard, CaseIcon } from "@egovernments/digit-ui-react-components";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
@@ -18,7 +18,7 @@ import InstitutionAddress from "../src/pageComponents/birthComponents/Institutio
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
 import AddressInsideIndia from "../src/pageComponents/birthComponents/AddressInsideIndia";
-import AddressSameAsAbove  from "../src/pageComponents/birthComponents/AddressSameAsAbove";
+import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSameAsAbove";
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
@@ -29,6 +29,12 @@ import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
 import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPlaceInstitution";
 import BirthPlaceHome from "../src/pageComponents/birthComponents/BirthPlaceHome";
+import BirthPlaceVehicle from "../src/pageComponents/birthComponents/BirthPlaceVehicle";
+import BirthPlacePublicPlace from "../src/pageComponents/birthComponents/BirthPlacePublicPlace";
+import AddressBirth from "../src/pageComponents/birthComponents/AddressBirth";
+import AddressBrOutsideIndia from "../src/pageComponents/birthComponents/AddressBrOutsideIndia";
+import AddressInsideKerala from "../src/pageComponents/birthComponents/AddressInsideKerala";
+import AddressOutsideKerala from "../src/pageComponents/birthComponents/AddressOutsideKerala";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -115,7 +121,7 @@ export const CRLinks = ({ matchPath, userType }) => {
   useEffect(() => {
     clearParams();
   }, []);
-  
+
   const links = [
     {
       link: `${matchPath}/cr-birth-creation`,
@@ -137,7 +143,7 @@ export const CRLinks = ({ matchPath, userType }) => {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
     },
-    
+
     // {
     //   link: `${matchPath}/tradelicence/renewal-list`,
     //   i18nKey: t("TL_RENEWAL_HEADER"),
@@ -149,7 +155,7 @@ export const CRLinks = ({ matchPath, userType }) => {
   ];
 
   return (
-    <CitizenHomeCard style={{display: "flex",justifyContent: "space-evenly"}} header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />
+    <CitizenHomeCard style={{ display: "flex", justifyContent: "space-evenly" }} header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />
   )
 };
 
@@ -174,7 +180,7 @@ const componentsToRegister = {
   CRApplicationDetails,
   CRApplicationDeathDetails,
   CRSearch,
-  SearchCrApplication, 
+  SearchCrApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
   ChildDetails,
@@ -187,23 +193,28 @@ const componentsToRegister = {
   InstitutionAddress,
   InformantDetails,
   InformantAddress,
-  CRCreateBirthRegistration : CreateBirthRegistration,
+  CRCreateBirthRegistration: CreateBirthRegistration,
   ParentsDetails,
   BirthPlaceHospital,
   BirthPlaceInstitution,
   BirthPlaceHome,
+  BirthPlacePublicPlace,
+  BirthPlaceVehicle,
+  AddressBirth,
+  AddressBrOutsideIndia,
+  AddressInsideKerala,
+  AddressOutsideKerala,
 
- //////////////////
+  //////////////////
   // SearchRegistry,
   AdoptionDetails,
   AdoptionMotherInformation,
   AdoptiveParentsDetails,
   BirthMotherInformation,
   BirthFatherInformation,
-  BirthParentsAddress,  
-  AdoptionStatisticalInformation,  
- AdoptionParentsAddress,
- BirthPlaceVehicle,
+  BirthParentsAddress,
+  AdoptionStatisticalInformation,
+  AdoptionParentsAddress,
 
 
   //////////////////
@@ -233,9 +244,10 @@ const componentsToRegister = {
   DeathAcknowledgement,
   MarriageAcknowledgement,
   BirthCertificate,
-  CRCreateDeathRegistration : CreateDeathRegistration,
+  CRCreateDeathRegistration: CreateDeathRegistration,
   TLResponse: Response,
-  CRCreateMarriageRegistration : CreateMarriageRegistration,
+  //Marriage
+  CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
 };
 

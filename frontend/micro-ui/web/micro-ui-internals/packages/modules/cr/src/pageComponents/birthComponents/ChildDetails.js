@@ -7,6 +7,7 @@ import BirthPlaceHospital from "../../pageComponents/birthComponents/BirthPlaceH
 import BirthPlaceInstitution from "../../pageComponents/birthComponents/BirthPlaceInstitution";
 import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome";
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
+import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 
 const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -62,6 +63,13 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? formData?.ChildDetails?.vehicleDesDetailsEn : "");
   const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");
 
+  const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType ? formData?.ChildDetails?.publicPlaceType : "");
+  const [localityNameEn, setlocalityNameEn] = useState(formData?.ChildDetails?.localityNameEn ? formData?.ChildDetails?.localityNameEn : "");
+  const [localityNameMl, setlocalityNameMl] = useState(formData?.ChildDetails?.localityNameMl ? formData?.ChildDetails?.localityNameMl : "");
+  const [streetNameEn, setstreetNameEn] = useState(formData?.ChildDetails?.streetNameEn ? formData?.ChildDetails?.streetNameEn : "");
+  const [streetNameMl, setstreetNameMl] = useState(formData?.ChildDetails?.streetNameMl ? formData?.ChildDetails?.streetNameMl : "");
+  const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.ChildDetails?.publicPlaceDecpEn ? formData?.ChildDetails?.publicPlaceDecpEn : "");
+
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : null);
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.medicalAttensionSub ? formData?.ChildDetails?.medicalAttensionSub : null);
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.ChildDetails?.deliveryMethods ? formData?.ChildDetails?.deliveryMethods : null);
@@ -87,6 +95,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [vehiHaltPlaceMlError, setvehiHaltPlaceMlError] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? false : false);
   const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? false : false);
   const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? false : false);
+  const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.ChildDetails?.publicPlaceType ? false : false);
+  const [localNameEnError, setlocalNameEnError] = useState(formData?.ChildDetails?.localityNameEn ? false : false);
+  const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
   const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.DeliveryMethodSub ? false : false);
 
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
@@ -216,12 +227,15 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         }
 
         if (placeOfBirth === "PUBLIC_PLACES") {
-          // <PublicPlace
-          //   setPublicPlaceType={setPublicPlaceType}
-          // // AdrsInfontName={AdrsInfontName}
-          // // AdrsPublicPlace={AdrsPublicPlace}
-          // // PublicPlaceDesption={PublicPlaceDesption}
-          // />;
+          <BirthPlacePublicPlace
+            publicPlaceType={publicPlaceType}
+            wardNo={wardNo}
+            localityNameEn={localityNameEn}
+            localityNameMl={localityNameMl}
+            streetNameEn={streetNameEn}
+            streetNameMl={streetNameMl}
+            publicPlaceDecpEn={publicPlaceDecpEn}
+          />;
         }
 
       }
@@ -478,9 +492,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           setToast(false);
         }, 2000);
       } else {
-        wardNameEn=wardNo.name;
-        wardNameMl=wardNo.localname;
-        wardNumber=wardNo.wardno;
+        wardNameEn = wardNo.name;
+        wardNameMl = wardNo.localname;
+        wardNumber = wardNo.wardno;
         setAdsWardError(false);
       }
       if (adrsPostOffice === null) {
@@ -623,8 +637,51 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       } else {
         setadmittedHospitalEnError(false);
       }
+    } else if (birthPlace.code === "PUBLIC_PLACES") {
+      if (wardNo === null) {
+        validFlag = false;
+        setAdsWardError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        wardNameEn = wardNo.name;
+        wardNameMl = wardNo.localname;
+        wardNumber = wardNo.wardno;
+        setAdsWardError(false);
+      }
+      if (localityNameEn == null || localityNameEn == "" || localityNameEn == undefined) {
+        validFlag = false;
+        setlocalNameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setlocalNameEnError(false);
+      }
+      if (localityNameMl == null || localityNameMl == "" || localityNameMl == undefined) {
+        validFlag = false;
+        setlocalNameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setlocalNameMlError(false);
+      }
+      if (publicPlaceType == null || publicPlaceType == "" || publicPlaceType == undefined) {
+        validFlag = false;
+        setplaceTypepEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setplaceTypepEnError(false);
+      }
     }
-
     if (birthWeight != null) {
       let BirthWeightCheck = birthWeight;
       if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
@@ -684,6 +741,12 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
       sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
       sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
+      sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
+      sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
+      sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
+      sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
+      sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
+      sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
       sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
       sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
       sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
@@ -694,9 +757,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
         institutionTypeCode, institution, institutionNameCode, institutionId, institutionIdMl,
-        wardNo,wardNameEn,wardNameMl,wardNumber, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl, adrsPostOffice, adrsPincode,
+        wardNo, wardNameEn, wardNameMl, wardNumber, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl, adrsPostOffice, adrsPincode,
         vehicleType, vehicleHaltPlace, vehicleHaltPlaceMl, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
+        publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods
       });
     }
@@ -901,7 +965,27 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         )}
+        {value === "PUBLIC_PLACES" && (
+          <div>
+            <BirthPlacePublicPlace
+              publicPlaceType={publicPlaceType}
+              localityNameEn={localityNameEn}
+              localityNameMl={localityNameMl}
+              streetNameEn={streetNameEn}
+              streetNameMl={streetNameMl}
+              wardNo={wardNo}
+              publicPlaceDecpEn={publicPlaceDecpEn}
+              setpublicPlaceType={setpublicPlaceType}
+              setlocalityNameEn={setlocalityNameEn}
+              setlocalityNameMl={setlocalityNameMl}
+              setstreetNameEn={setstreetNameEn}
+              setstreetNameMl={setstreetNameMl}
+              setpublicPlaceDecpEn={setpublicPlaceDecpEn}
+              setWardNo={setWardNo}
 
+            />
+          </div>
+        )}
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-12">
@@ -1149,6 +1233,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               vehicleHaltPlaceError ||
               vehiHaltPlaceMlError ||
               admittedHospitalEnError || vehiDesDetailsEnError ||
+              placeTypepEnError || localNameEnError || localNameMlError ||
               BirthWeightError
             }
             label={
@@ -1164,6 +1249,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 vehicleHaltPlaceError ||
                 vehiHaltPlaceMlError ||
                 admittedHospitalEnError || vehiDesDetailsEnError ||
+                placeTypepEnError || localNameEnError || localNameMlError ||
                 BirthWeightError
                 ?
                 AadharError
@@ -1171,21 +1257,24 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                     : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
                       : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
                         : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
-                        : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                          : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                            : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                              : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                  : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                    : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                                      : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
-                                        : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
-                                          : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
-                                            : vehiHaltPlaceMlError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_ML_CHOOSE`)
-                                              : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
-                                                : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
-                                                  : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                                                    : setToast(false)
+                          : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                            : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                              : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                                : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                  : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                    : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                      : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                                        : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
+                                          : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
+                                            : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
+                                              : vehiHaltPlaceMlError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_ML_CHOOSE`)
+                                                : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                                                  : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                                                    : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                                                      : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                        : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                          : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                                                            : setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
