@@ -129,7 +129,7 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
     return useQuery("TL_LOCALBODY", () => MdmsService.getTLLocalbody(tenantId, moduleCode, type), config);
   };
   const useTLPostOffice = () => {
-    return useQuery("TL_POSTOFFICE", () => MdmsService.getTLPostOffice(tenantId, moduleCode, type), config);
+    return useQuery("TL_POSTOFFICE", () => MdmsService.getCRPostOffice(tenantId, moduleCode, type), config);
   }
   const _default = () => {
     return useQuery([tenantId, moduleCode, type], () => MdmsService.getMultipleTypes(tenantId, moduleCode, type), config);
