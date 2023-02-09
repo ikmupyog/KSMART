@@ -2545,5 +2545,5 @@ export const MdmsService = {
   },
   getTLFinancePeriod: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getFinancialPeriod(tenantId, moduleCode), moduleCode);
-  },
+  },  
 };
