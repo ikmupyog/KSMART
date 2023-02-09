@@ -3,7 +3,8 @@ import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/
 // import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const BirthPlaceHospital = ({ config, onSelect, userType, formData
+const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
+  selectHospitalNameMl,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCitizenCurrentTenant();
@@ -29,17 +30,14 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
   }
- 
+
 
   const goNext = () => {
-    
-    sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
-    sessionStorage.setItem("HospitalNameMl", HospitalNameMl.hospitalName);
+    // sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
+    // sessionStorage.setItem("HospitalNameMl", HospitalNameMl.hospitalName);
 
-    onSelect(config.key, { HospitalName, HospitalNameMl
-    });
-   
-    
+    // onSelect(config.key, { HospitalName, HospitalNameMl
+    // });
   };
   if (isLoading) {
     return <Loader></Loader>;
@@ -58,41 +56,38 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData
           </div>
         </div>
         <div className="row">
-        <div className="col-md-12">
-          <div className="col-md-4">
-            <CardLabel>
-              {`${t("CR_HOSPITAL_EN")}`}
-              {/* <span className="mandatorycss">*</span> */}
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="hospitalName"
-              isMandatory={false}
-              option={cmbhospital}
-              selected={HospitalName}
-              select={setselectHospitalName}
-              placeholder={`${t("CR_HOSPITAL_EN")}`}
-            />
-          </div>     
-          <div className="col-md-4">
-            <CardLabel>
-              {`${t("CR_HOSPITAL_ML")}`}
-              {/* <span className="mandatorycss">*</span> */}
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="hospitalName"
-              isMandatory={false}
-              option={cmbhospital}
-              selected={HospitalNameMl}
-              select={setselectHospitalNameMl}
-              placeholder={`${t("CR_HOSPITAL_ML")}`}
-            />
-          </div>     
-          </div>  
-           
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_HOSPITAL_EN")}`}
+                {/* <span className="mandatorycss">*</span> */}
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="hospitalName"
+                isMandatory={false}
+                option={cmbhospital}
+                selected={hospitalName}
+                select={setselectHospitalName}
+                placeholder={`${t("CR_HOSPITAL_EN")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_HOSPITAL_ML")}`}
+                {/* <span className="mandatorycss">*</span> */}
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="hospitalNamelocal"
+                isMandatory={false}
+                option={cmbhospital}
+                selected={hospitalNameMl}
+                select={setselectHospitalNameMl}
+                placeholder={`${t("CR_HOSPITAL_ML")}`}
+              />
+            </div>
         </div>
-       
+
       </FormStep>
     </React.Fragment>
   );
