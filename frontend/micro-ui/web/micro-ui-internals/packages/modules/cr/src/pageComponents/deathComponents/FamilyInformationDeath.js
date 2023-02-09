@@ -228,6 +228,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
       setInputValue(value);
     }
   };
+  
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}

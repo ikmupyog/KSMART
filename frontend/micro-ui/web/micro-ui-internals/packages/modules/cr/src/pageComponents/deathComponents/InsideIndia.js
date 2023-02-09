@@ -125,6 +125,7 @@ const AddressInside = ({ config, onSelect, userType, formData }) => {
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
+    
   PostOffice &&
     PostOffice["common-masters"] &&
     PostOffice["common-masters"].PostOffice.map((ob) => {

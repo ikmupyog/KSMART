@@ -41,6 +41,7 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
     }
     // console.log(ownersdoc.documents["OwnerPhotoProof"].name);
 
+    
 
     onSelect(config.key, ownersdoc);
   };

@@ -260,6 +260,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               />
             </div>
         </div>
+        
 
       </FormStep>
     </React.Fragment>

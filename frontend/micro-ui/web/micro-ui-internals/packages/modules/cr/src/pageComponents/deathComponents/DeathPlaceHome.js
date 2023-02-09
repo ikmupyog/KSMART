@@ -17,7 +17,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
   // Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-
+  
   const [toast, setToast] = useState(false);
   // const [countries, setcountry] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
