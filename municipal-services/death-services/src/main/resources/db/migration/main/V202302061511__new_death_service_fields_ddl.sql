@@ -71,3 +71,15 @@ ALTER TABLE eg_death_address_registry RENAME COLUMN houename_ml  TO housename_ml
  
 ALTER TABLE eg_death_address_registry_log RENAME COLUMN houename_en  TO housename_en;
 ALTER TABLE eg_death_address_registry_log RENAME COLUMN houename_ml  TO housename_ml;  
+
+ALTER TABLE eg_death_address_dtls add column IF NOT EXISTS lbtype character varying(200);
+ALTER TABLE eg_death_address_dtls_log add column IF NOT EXISTS lbtype character varying(200);
+
+ALTER TABLE eg_death_address_dtls add column IF NOT EXISTS postal_code character varying(200);
+ALTER TABLE eg_death_address_dtls_log add column IF NOT EXISTS postal_code character varying(200);
+
+ALTER TABLE eg_death_address_registry add column IF NOT EXISTS lbtype character varying(200);
+ALTER TABLE eg_death_address_registry_log add column IF NOT EXISTS lbtype character varying(200);
+
+ALTER TABLE eg_death_address_registry add column IF NOT EXISTS postal_code character varying(200);
+ALTER TABLE eg_death_address_registry_log add column IF NOT EXISTS postal_code character varying(200);

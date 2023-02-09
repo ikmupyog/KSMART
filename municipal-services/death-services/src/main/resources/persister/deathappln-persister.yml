@@ -174,18 +174,60 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.PlaceOfBurialEn
 
-      - jsonPath: $.deathCertificateDtls.*.InformationDeath.PlaceOfBurialMl
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.PlaceOfBurialMl    
 
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
 
+      basePath: deathCertificateDtls.*
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrId
 
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrTypeId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrStreetNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrStreetNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrLocalityEn
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrLocalityMl
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrWardId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrTalukId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrVillageId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrPostofficeId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrPincode
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrDistrictId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrStateId
+
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrCountryId
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
       
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
 
-      
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
 
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
 
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrLocationType
 
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrHoueNameMl
 
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrHoueNameEn
 
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrLbType
 
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PresentAddrPostalCode

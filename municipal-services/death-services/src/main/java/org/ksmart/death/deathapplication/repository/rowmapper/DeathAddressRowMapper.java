@@ -30,7 +30,7 @@ public class DeathAddressRowMapper  implements ResultSetExtractor  , BaseRowMapp
                           //  .presentAddrLbType(rs.getString(""))
                             .presentAddrWardId(rs.getString("P_ward_id"))
                             .presentAddrPostofficeId(rs.getString("P_postoffice_id"))
-                            .presentAddrPincode(rs.getString("P_pincode"))
+                            .presentAddrPincode(rs.getLong("P_pincode"))
                             .presentAddrLocalityEn(rs.getString("P_locality_en"))
                             .presentAddrLocalityMl(rs.getString("P_locality_ml"))
                             .presentAddrStreetNameEn(rs.getString("P_streetname_en"))
