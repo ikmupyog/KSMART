@@ -19,11 +19,15 @@ function TLDocument({ value = {} }) {
   );
   let documents = window.location.href.includes("/tl/tradelicence/application/") ? value?.tradeLicenseDetail?.applicationDocuments : [];
   if(value?.workflowDocs) documents = value?.workflowDocs;
-  if(value?.owners?.documents["ProofOfIdentity"]) documents.push(value.owners.documents["ProofOfIdentity"]);
-  if(value?.owners?.documents["ProofOfOwnership"]) documents.push(value.owners.documents["ProofOfOwnership"]);
-  if(value?.owners?.documents["OwnerPhotoProof"]) documents.push(value.owners.documents["OwnerPhotoProof"]);
+  if(value?.owners?.documents){
+    if(value?.owners?.documents["ProofOfIdentity"]) documents.push(value.owners.documents["ProofOfIdentity"]);
+    if(value?.owners?.documents["ProofOfOwnership"]) documents.push(value.owners.documents["ProofOfOwnership"]);
+    if(value?.owners?.documents["OwnerPhotoProof"]) documents.push(value.owners.documents["OwnerPhotoProof"]);
+  }
+  value?.ownersdoc.map((obj)=>{
+    documents.push(obj);
+  });
   
-
   if (isLoading) {
     return <Loader />;
   }
@@ -35,7 +39,7 @@ function TLDocument({ value = {} }) {
           {documents?.map((document, index) => {
             let documentLink = pdfDownloadLink(data.pdfFiles, document?.fileStoreId);
             return (
-              <a target="_" href={documentLink} style={{ minWidth: "100px",marginRight:"10px" }} key={index}>
+              <a target="_blank" href={documentLink} style={{ minWidth: "100px",marginRight:"10px" }} key={index}>
                 <PDFSvg width={85} height={100} style={{ background: "#f6f6f6", padding: "8px" }} />
                 <p style={{ marginTop: "8px",textAlign:"center" }}>{value?.workflowDocs ? t(`${document?.documentType}`) : t(`TL_${document?.documentType}_LABEL`)}</p>
               </a>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Timeline from "../components/TLTimeline";
 
 const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
+  console.log(JSON.stringify(formData));
   let documentList = [
     { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" },
     { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership" },
@@ -25,24 +26,25 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
   const docs = Documentsob?.PropertyTax?.Documents;
   const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
   const handleSubmit = () => {
-    let ownersdoc = formData?.ownersdoc ? formData?.ownersdoc : [];
+    let ownersdoc = formData?.ownersdoc;
     if (uploadedFiles.length > 0) {
-      uploadedFiles.map((element) => {
-        let fileDetails = element.file;
-        fileDetails.documentType = element.documentType;
-        fileDetails.fileStoreId = element.fileStoreId;
-        if (ownersdoc && ownersdoc.documents) {
-          ownersdoc.documents[element.description] = fileDetails;
-        } else {
-          ownersdoc["documents"] = [];
-          ownersdoc.documents[element.description] = fileDetails;
-        }
-      }, [ownersdoc]);
+      ownersdoc = uploadedFiles
+      // uploadedFiles.map((element) => {
+      //   let fileDetails = element.file;
+      //   fileDetails.documentType = element.documentType;
+      //   fileDetails.fileStoreId = element.fileStoreId;
+      //   if (ownersdoc && ownersdoc.documents) {
+      //     ownersdoc.documents[element.description] = fileDetails;
+      //   } else {
+      //     ownersdoc["documents"] = [];
+      //     ownersdoc.documents[element.description] = fileDetails;
+      //   }
+      // }, [ownersdoc]);
     }
     // console.log(ownersdoc.documents["OwnerPhotoProof"].name);
 
-
-    onSelect(config.key, ownersdoc);
+    let ownersdocs = { ownersdoc: ownersdoc }
+    onSelect(config.key, ownersdocs);
   };
   const onSkip = () => onSelect();
 
@@ -75,7 +77,10 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
           try {
             const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
-              const temp = { "documentType": docuploadedId, "description": docuploadedName, "fileStoreId": response?.data?.files[0]?.fileStoreId, "file": file };
+              const temp = {
+                "documentType": docuploadedId, "description": docuploadedName,
+                "fileStoreId": response?.data?.files[0]?.fileStoreId, "name": file.name, "type": file.type, "size": file.size
+              };
               uploadedFiles.push(temp);
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
             } else {
@@ -103,7 +108,7 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
         <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
         {
           documentList.map((doc, index, arr) => (
-            <div className="row">
+            <div className="row" key={doc.code}>
               <div className="col-md-12">
                 <div className="col-md-3">
                   <span>
@@ -117,7 +122,6 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
                     onUpload={selectfile}
-                    //  onDelete={onDelete}
                     onDelete={() => {
                       onDeleteown(doc.code);
                       setUploadedFile(null);
