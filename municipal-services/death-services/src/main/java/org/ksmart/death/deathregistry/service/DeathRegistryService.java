@@ -61,12 +61,13 @@ public class DeathRegistryService {
        // enrich request
        enrichmentService.enrichCreate(request);
        //IDGen call
-       //enrichmentService.setIdgenIds(request);    
-     //   enrichmentService.setRegistrationNumberDetails(request); 
+       //enrichmentService.setIdgenIds(request);  
+       //Rakhi S on 10.02.2023  
+       enrichmentService.setRegistrationNumberDetails(request); 
        //Rakhi S on 23.01.2023
      //   enrichmentService.setCertificateNumberDetails(request);
 
-       producer.push(deathConfig.getSaveDeathRegistryTopic(), request);
+      //  producer.push(deathConfig.getSaveDeathRegistryDetailsTopic(), request);
 
        return request.getDeathCertificateDtls();
    }

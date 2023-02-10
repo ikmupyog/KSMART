@@ -12,9 +12,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Component
+//Config  RAkhi S ikm on 10.02.2023
 public class DeathRegistryConfiguration {
    
-      //Persister Config
+      //Persister Config  RAkhi S ikm on 10.02.2023    
+    @Value("${persister.save.deathregistry.topic}")
+    private String saveDeathRegistryDetailsTopic;
+
     @Value("${persister.save.crdeathregistry.topic}")
     private String saveDeathRegistryTopic;
 

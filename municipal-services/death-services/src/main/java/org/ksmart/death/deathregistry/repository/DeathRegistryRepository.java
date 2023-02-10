@@ -38,5 +38,14 @@ public class DeathRegistryRepository {
         List<DeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
         return result; 
     }
+    //Rakhi S on 10.02.2023
+    public List<Map<String, Object>>  getDeathRegDetails(String tenantId,int  Year) {
+        
+        List<Object> preparedStmtValues = new ArrayList<>();
+       String query = queryBuilder.getDeathRegNoIdQuery(tenantId, Year,preparedStmtValues);
+        List<Map<String, Object>> regDetails= jdbcTemplate.queryForList(query,preparedStmtValues.toArray());
+        return regDetails; 
+     }
+
     
 }

@@ -165,5 +165,20 @@ StringBuilder query = new StringBuilder(QUERY);
                         // preparedStmtValues);
                         return query.toString();
 }    
+
+//RAkhi S on 10.02.2023
+private static final String REGNOQUERY = new StringBuilder()
+                    .append("Select A.regNo , A.regYear , A.tenantId from ")
+                    .append("(SELECT MAX(COALESCE(registration_no_id,0))+1 as regNo,EXTRACT(year from to_timestamp( registration_date/1000)::date ) AS regYear ")
+                    .append(",tenantId FROM eg_death_dtls_registry dt group by regYear,tenantId )A ") 
+                    .toString();
+
+//RAkhi S on 10.02.2023
+public String getDeathRegNoIdQuery(@NotNull String tenantId ,int Year ,@NotNull List<Object> preparedStmtValues) {
+      StringBuilder query = new StringBuilder(REGNOQUERY);
+      addFilter("A.tenantId",tenantId , query, preparedStmtValues);
+      addFilter("A.regYear", Year, query, preparedStmtValues);                                          
+      return query.toString();
+}  
     
 }
