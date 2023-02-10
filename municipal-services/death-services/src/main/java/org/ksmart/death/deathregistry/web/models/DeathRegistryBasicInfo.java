@@ -339,11 +339,11 @@ public class DeathRegistryBasicInfo {
     @JsonProperty("RegistrationDate")
     private Long registrationDate ;
 
-    @Schema(type = "Integer", description= "registration no id" )
+    @Schema(type = "Long", description= "registration no id" )
     @JsonProperty("registrationNoID")
-    private Integer  registrationNoID ;
+    private Long  registrationNoID ;
 
-    @Schema(type = "Integer", description= "ack no id" )
+    @Schema(type = "Long", description= "ack no id" )
     @JsonProperty("ackNoID")
     private Long  ackNoID ;
 
@@ -358,6 +358,20 @@ public class DeathRegistryBasicInfo {
     //Jasmine 9.02.2023
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
+
+    //Rakhi S on 10.02.2023
+    @Schema(type = "String",description = "certificateNo ")
+    @JsonProperty("certificateNo")
+    private String certificateNo ;
+
+    @Schema(type = "Long", description= "certificate no id" )
+    @JsonProperty("certificateNoId")
+    private Long  certificateNoId ;
+
+    @Schema(type = "Long", description= "certificate Date" )
+    @JsonProperty("certificateDate")
+    private Long  certificateDate ;
+
     // @Schema(type = "string", format = "uuid", description = "death registration request id")
     // @Size(max = 64)
     // @JsonProperty("Id")

@@ -46,8 +46,8 @@ public class DeathRegistryDtl {
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
 
-//     @JsonProperty("workflowDetails")
-//     private DeathWorkFlowDtls  deathWorkFlowDtls;
+    @JsonProperty("workflowDetails")
+    private DeathWorkFlowDtls  deathWorkFlowDtls;
 
    // @Valid
 //     @JsonProperty("wfDocuments")
