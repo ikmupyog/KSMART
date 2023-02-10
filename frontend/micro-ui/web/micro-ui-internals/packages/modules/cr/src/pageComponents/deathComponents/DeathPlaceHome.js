@@ -70,16 +70,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
 
   function setSelectDeathPlaceHomepostofficeId(value) {
     setDeathPlaceHomepostofficeId(value);
+    setDeathPlaceHomepincode(value.pincode);
   }
-  // function setSelectDeathPlaceHomepincode(e) {
-  //   if (e.target.value.length === 7) {
-  //     return false;
-
-  //   } else {
-  //     setDeathPlaceHomepincode(e.target.value);
-  //   }
-  // }
-
   function setSelectDeathPlaceHomepincode(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 6) {

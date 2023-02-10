@@ -17,6 +17,7 @@ import Hospital from "./Hospital";
 import Institution from "./Institution";
 import DeathPlaceHome from "./DeathPlaceHome";
 import DeathPlaceVehicle from "./DeathPlaceVehicle";
+import DeathPublicPlace from "./DeathPublicPlace";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
@@ -76,7 +77,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [AgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.AgeUnit ? formData?.InformationDeath?.AgeUnit : null);
   const [Occupation, setSelectedOccupation] = useState(formData?.InformationDeath?.Occupation);
   const [DeathPlace, setselectDeathPlace] = useState(formData?.InformationDeath?.DeathPlace);
-  //Hospital Intitution vehicle {type}
+  //Hospital, Intitution, vehicle, Public Place {DeathPlaceType}
   const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType);
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
@@ -90,8 +91,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn);
   const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl);
   const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl);
-  //Vehicle home{DeathPlaceWardId}
-  // const [DeathPlaceType, setSelectedDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType);
+  //Vehicle home{DeathPlaceWardId} Public place {GeneralRemarks, DeathPlaceWardId}
+  // 
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
   const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.InformationDeath?.VehicleFromplaceEn);
   const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.InformationDeath?.VehicleToPlaceEn);
@@ -102,6 +103,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.InformationDeath?.VehicleFirstHaltMl);
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.InformationDeath?.VehicleHospitalEn);
   const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.InformationDeath?.DeathPlaceWardId);
+//Public Place
+
+  const [DeathPlaceLocalityEn, setDeathPlaceLocalityEn] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn? formData?.InformationDeath?.DeathPlaceLocalityEn : "");  
+  const [DeathPlaceLocalityMl, setDeathPlaceLocalityMl] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl? formData?.InformationDeath?.DeathPlaceLocalityMl : "");  
+  const [DeathPlaceStreetEn, setDeathPlaceStreetEn] = useState(formData?.InformationDeath?.DeathPlaceStreetEn? formData?.InformationDeath?.DeathPlaceStreetEn : "");  
+  const [DeathPlaceStreetMl, setDeathPlaceStreetMl] = useState(formData?.InformationDeath?.DeathPlaceStreetMl ? formData?.InformationDeath?.DeathPlaceStreetMl : "");  
+ 
 
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [toast, setToast] = useState(false);
@@ -311,6 +319,18 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             VehicleToPlaceMl={VehicleToPlaceMl}
           />;
         }
+        if (naturetype === "PUBLIC_PLACES") {
+          <DeathPublicPlace          
+            DeathPlaceType={DeathPlaceType}
+            DeathPlaceLocalityEn={DeathPlaceLocalityEn}
+            DeathPlaceLocalityMl={DeathPlaceLocalityMl}
+            DeathPlaceStreetEn={DeathPlaceStreetEn}          
+            DeathPlaceStreetMl={DeathPlaceStreetMl}         
+            DeathPlaceWardId={DeathPlaceWardId}
+            GeneralRemarks={GeneralRemarks}
+            
+          />;
+        }
       }
     }
   });
@@ -377,6 +397,18 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     
 
     }
+    if (DeathPlace.code === "PUBLIC_PLACES") {
+      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      sessionStorage.setItem("DeathPlaceLocalityEn", DeathPlaceLocalityEn ? DeathPlaceLocalityEn : null);
+      sessionStorage.setItem("DeathPlaceLocalityMl", DeathPlaceLocalityMl ? DeathPlaceLocalityMl : null);
+      sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
+      sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
+      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);    
+
+      
+  
+      }
     onSelect(config.key, {
       DateOfDeath,
       TimeOfDeath,
@@ -420,7 +452,14 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       VehicleFirstHaltMl,
       VehicleHospitalEn,
       GeneralRemarks,
-      DeathPlaceWardId
+      DeathPlaceWardId,
+      DeathPlaceType,
+      DeathPlaceLocalityEn, 
+      DeathPlaceLocalityMl, 
+      DeathPlaceStreetEn, 
+      DeathPlaceStreetMl, 
+      GeneralRemarks,
+      DeathPlaceWardId ,
 
     });
   };
@@ -563,8 +602,29 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             setVehicleToPlaceMl={setVehicleToPlaceMl}
               
             />
-          </div>
+          </div>         
         )}
+         {value === "PUBLIC_PLACES" && (
+            <div>
+              <DeathPublicPlace             
+               DeathPlaceType={DeathPlaceType}
+               selectDeathPlaceType={selectDeathPlaceType}
+               DeathPlaceLocalityEn={DeathPlaceLocalityEn}
+               setDeathPlaceLocalityEn={setDeathPlaceLocalityEn}
+               DeathPlaceLocalityMl={DeathPlaceLocalityMl}
+               setDeathPlaceLocalityMl={setDeathPlaceLocalityMl}
+               DeathPlaceStreetEn={DeathPlaceStreetEn}  
+               setDeathPlaceStreetEn={setDeathPlaceStreetEn}        
+               DeathPlaceStreetMl={DeathPlaceStreetMl} 
+               setDeathPlaceStreetMl={setDeathPlaceStreetMl}        
+               DeathPlaceWardId={DeathPlaceWardId}
+               setDeathPlaceWardId={setDeathPlaceWardId}
+               GeneralRemarks={GeneralRemarks}
+               setGeneralRemarks={setGeneralRemarks}
+                
+              />
+            </div>
+              )}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
