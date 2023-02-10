@@ -32,6 +32,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const { data: OccupationMain = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
+  const { data: institutionType = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
 
   const [DateOfDeath, setDateOfDeath] = useState(formData?.InformationDeath?.DateOfDeath ? formData?.InformationDeath?.DateOfDeath : "");
   const [TimeOfDeath, setTimeOfDeath] = useState(formData?.InformationDeath?.TimeOfDeath ? formData?.InformationDeath?.TimeOfDeath : "");
@@ -102,7 +103,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.InformationDeath?.VehicleFirstHaltMl);
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.InformationDeath?.VehicleHospitalEn);
   const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.InformationDeath?.DeathPlaceWardId);
-
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
@@ -151,6 +151,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     place["common-masters"] &&
     place["common-masters"].PlaceMasterDeath.map((ob) => {
       cmbPlace.push(ob);
+    });
+    let cmbinstitutionType = [];
+    institutionType &&
+    institutionType["birth-death-service"] &&
+    institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+      cmbinstitutionType.push(ob);
     });
   function selectReligion(value) {
     setSelectedReligion(value);
