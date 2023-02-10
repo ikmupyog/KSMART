@@ -67,6 +67,7 @@ import Hospital from "./pageComponents/deathComponents/Hospital";
 import Institution from "./pageComponents/deathComponents/Institution";
 import DeathPlaceHome from "./pageComponents/deathComponents/DeathPlaceHome";
 import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicle";
+import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
@@ -239,6 +240,7 @@ const componentsToRegister = {
   DeathPlaceHome,
   Institution,
   Hospital,
+  DeathPublicPlace,
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
