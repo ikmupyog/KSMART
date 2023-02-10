@@ -26,7 +26,7 @@ public class DeathRegistryStatisticalRowMapper implements ResultSetExtractor  , 
                            // .isAutopsyPerformed(rs.getString(""))
                            // .isAutopsyCompleted(rs.getString(""))
                            // .mannerOfDeath(rs.getString(""))
-                            .deathMedicallyCertified(rs.getString("death_medically_certified"))
+                            .deathMedicallyCertified(rs.getBoolean("death_medically_certified"))
                             .deathCauseMain(rs.getString("death_cause_main"))
                            // .deathCauseMainCustom(rs.getString(""))
                            // .deathCauseMainInterval(rs.getString(""))
@@ -43,9 +43,9 @@ public class DeathRegistryStatisticalRowMapper implements ResultSetExtractor  , 
                            // .isdeceasedPregnant(rs.getString(""))
                            // .isDelivery(rs.getBoolean(""))
                             .deathDuringDelivery(rs.getString("death_during_delivery"))
-                            .smokingType(rs.getInt("smoking_type"))
-                            .tobaccoType(rs.getInt("tobacco_type"))
-                            .alcoholType(rs.getInt("alcohol_type"))
+                            .smokingType(rs.getString("smoking_type"))
+                            .tobaccoType(rs.getString("tobacco_type"))
+                            .alcoholType(rs.getString("alcohol_type"))
                             .build();
     }
 
