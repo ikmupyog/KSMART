@@ -148,12 +148,12 @@ public class DeathEnrichment implements BaseEnrichment{
         
             request.getDeathCertificateDtls()
                     .forEach(deathDtls -> {
-                    // DeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathDtls, "BndDetail", DeathDtl.class);
-                    // deathDtls.getDeathBasicInfo().setDeceasedAadharNumber(deathDtlEnc.getDeathBasicInfo().getDeceasedAadharNumber());
-                    // deathDtls.getDeathInformantDtls().setInformantAadharNo(deathDtlEnc.getDeathInformantDtls().getInformantAadharNo());
-                    // deathDtls.getDeathFamilyInfo().setFatherAadharNo(deathDtlEnc.getDeathFamilyInfo().getFatherAadharNo());
-                    // deathDtls.getDeathFamilyInfo().setMotherAadharNo(deathDtlEnc.getDeathFamilyInfo().getMotherAadharNo());
-                    // deathDtls.getDeathFamilyInfo().setSpouseAadhaar(deathDtlEnc.getDeathFamilyInfo().getSpouseAadhaar());
+                    DeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathDtls, "BndDetail", DeathDtl.class);
+                    deathDtls.getDeathBasicInfo().setDeceasedAadharNumber(deathDtlEnc.getDeathBasicInfo().getDeceasedAadharNumber());
+                    deathDtls.getDeathInformantDtls().setInformantAadharNo(deathDtlEnc.getDeathInformantDtls().getInformantAadharNo());
+                    deathDtls.getDeathFamilyInfo().setFatherAadharNo(deathDtlEnc.getDeathFamilyInfo().getFatherAadharNo());
+                    deathDtls.getDeathFamilyInfo().setMotherAadharNo(deathDtlEnc.getDeathFamilyInfo().getMotherAadharNo());
+                    deathDtls.getDeathFamilyInfo().setSpouseAadhaar(deathDtlEnc.getDeathFamilyInfo().getSpouseAadhaar());
                     deathDtls.setDeathAuditDetails(auditDetails);
                   //  deathDtls.getDeathWorkFlowDtls().setAssignuser(deathDtls.getDeathWorkFlowDtls().getAssignees().get(0));
                     } );
