@@ -174,11 +174,26 @@ private static final String REGNOQUERY = new StringBuilder()
                     .toString();
 
 //RAkhi S on 10.02.2023
-public String getDeathRegNoIdQuery(@NotNull String tenantId ,int Year ,@NotNull List<Object> preparedStmtValues) {
+  public String getDeathRegNoIdQuery(@NotNull String tenantId ,int Year ,@NotNull List<Object> preparedStmtValues) {
       StringBuilder query = new StringBuilder(REGNOQUERY);
       addFilter("A.tenantId",tenantId , query, preparedStmtValues);
       addFilter("A.regYear", Year, query, preparedStmtValues);                                          
       return query.toString();
-}  
+  }  
+
+ //Certificate no query RAkhi s on 10.02.2023
+
+  private static final String CERTNOQUERY = new StringBuilder()
+                  .append("Select A.certNo , A.certYear , A.tenantId from ")
+                  .append("(SELECT MAX(COALESCE(certificate_no_id,0))+1 as certNo,EXTRACT(year from to_timestamp( certificate_date/1000)::date ) AS certYear ")
+                  .append(",tenantId FROM eg_death_dtls_registry dt group by certYear,tenantId )A ") 
+                  .toString();
+
+  public String getDeathCertIdQuery(@NotNull String tenantId ,int Year ,@NotNull List<Object> preparedStmtValues) { 
+      StringBuilder query = new StringBuilder(CERTNOQUERY);
+      addFilter("A.tenantId",tenantId , query, preparedStmtValues);
+      addFilter("A.certYear", Year, query, preparedStmtValues);                                          
+      return query.toString();
+  }  
     
 }

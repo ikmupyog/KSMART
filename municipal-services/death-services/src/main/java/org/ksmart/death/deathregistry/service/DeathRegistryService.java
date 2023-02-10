@@ -64,11 +64,8 @@ public class DeathRegistryService {
        //enrichmentService.setIdgenIds(request);  
        //Rakhi S on 10.02.2023  
        enrichmentService.setRegistrationNumberDetails(request); 
-       //Rakhi S on 23.01.2023
-     //   enrichmentService.setCertificateNumberDetails(request);
-
-      //  producer.push(deathConfig.getSaveDeathRegistryDetailsTopic(), request);
-
+       enrichmentService.setCertificateNumberDetails(request);
+       producer.push(deathConfig.getSaveDeathRegistryDetailsTopic(), request);
        return request.getDeathCertificateDtls();
    }
 
