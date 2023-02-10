@@ -327,7 +327,7 @@ export const newConfig = [
         hideInEmployee: false,
       },
       {
-        route: "address-outsidekerala",
+        route: "address-outside-kerala",
         component: "AddressOutsideKerala",
         texts: {
           headerCaption: "",
