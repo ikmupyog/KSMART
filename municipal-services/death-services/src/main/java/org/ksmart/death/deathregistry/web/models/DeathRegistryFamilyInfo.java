@@ -26,9 +26,9 @@ import org.springframework.validation.annotation.Validated;
 @Builder
 public class DeathRegistryFamilyInfo {
 
-    @Size(max = 64)
+
     @JsonProperty("SpouseUnavailable")
-    private String spouseUnavailable ;
+    private Integer spouseUnavailable ;
 
     @JsonProperty("SpouseType")
     private String spouseType ;
@@ -40,7 +40,7 @@ public class DeathRegistryFamilyInfo {
     private String spouseNameML ;
 
     @JsonProperty("FatherUnavailable")
-    private String fatherUnavailable ;
+    private Integer fatherUnavailable ;
 
     @JsonProperty("FatherNameEn")
     private String fatherNameEn ;
@@ -49,7 +49,7 @@ public class DeathRegistryFamilyInfo {
     private String fatherNameMl ;
 
     @JsonProperty("MotherUnavailable")
-    private String motherUnavailable;
+    private Integer motherUnavailable;
     
     @JsonProperty("MotherNameEn")
     private String motherNameEn;
@@ -64,7 +64,18 @@ public class DeathRegistryFamilyInfo {
     
     @JsonProperty("FamilyEmailId")
     private String familyEmailId;
+
+    //Rakhi S on 08.02.2023
+    @Size(max = 12)
+    @JsonProperty("SpouseAadhaar")
+    private String spouseAadhaar;
     
-    
-    
+    @Size(max = 12)
+    @JsonProperty("FatherAadharNo")
+    private String fatherAadharNo;
+
+    @Size(max = 12)
+    @JsonProperty("MotherAadharNo")
+    private String MotherAadharNo;
+      
 }
