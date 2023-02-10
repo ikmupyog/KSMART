@@ -15,8 +15,10 @@ import org.ksmart.death.deathapplication.util.DeathConstants;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.web.models.AuditDetails;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
+import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathAddressInfo;
+import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
 import org.ksmart.death.common.contract.EncryptionDecryptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,7 +64,17 @@ public class DeathEnrichment implements BaseEnrichment{
                 //Rakhi S on 09.02.2023
                 deathdtls.getDeathAddressInfo().setPresentAddrId(UUID.randomUUID().toString());
                 deathdtls.getDeathAddressInfo().setPermanentAddrId(UUID.randomUUID().toString());
-                deathdtls.getDeathStatisticalInfo().setStatisticalId(UUID.randomUUID().toString());
+                deathdtls.getDeathStatisticalInfo().setStatisticalId(UUID.randomUUID().toString());                        
+                //Ecryption Jasmine 10.02.2023
+                DeathBasicInfo deathBasicDtls = request.getDeathCertificateDtls().get(0).getDeathBasicInfo();
+                DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
+                deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
+                DeathFamilyInfo deathFamilyDtls =request.getDeathCertificateDtls().get(0).getDeathFamilyInfo() ;
+                DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
+                deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
+                deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
+                deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+
             });
       
         }  
@@ -147,18 +159,20 @@ public class DeathEnrichment implements BaseEnrichment{
             RequestInfo requestInfo = request.getRequestInfo();
             User userInfo = requestInfo.getUserInfo();
             AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-        
-            request.getDeathCertificateDtls()
-                    .forEach(deathDtls -> {
-                    DeathDtl deathDtlEnc = encryptionDecryptionUtil.encryptObject(deathDtls, "BndDetail", DeathDtl.class);
-                    deathDtls.getDeathBasicInfo().setDeceasedAadharNumber(deathDtlEnc.getDeathBasicInfo().getDeceasedAadharNumber());
-                    deathDtls.getDeathInformantDtls().setInformantAadharNo(deathDtlEnc.getDeathInformantDtls().getInformantAadharNo());
-                    deathDtls.getDeathFamilyInfo().setFatherAadharNo(deathDtlEnc.getDeathFamilyInfo().getFatherAadharNo());
-                    deathDtls.getDeathFamilyInfo().setMotherAadharNo(deathDtlEnc.getDeathFamilyInfo().getMotherAadharNo());
-                    deathDtls.getDeathFamilyInfo().setSpouseAadhaar(deathDtlEnc.getDeathFamilyInfo().getSpouseAadhaar());
-                    deathDtls.setDeathAuditDetails(auditDetails);
-                  //  deathDtls.getDeathWorkFlowDtls().setAssignuser(deathDtls.getDeathWorkFlowDtls().getAssignees().get(0));
+//Jasmine 10.02.2023
+             request.getDeathCertificateDtls()
+                     .forEach(deathDtls -> {
+                        DeathBasicInfo deathBasicDtls = request.getDeathCertificateDtls().get(0).getDeathBasicInfo();
+                        DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
+                        deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
+                        DeathFamilyInfo deathFamilyDtls =request.getDeathCertificateDtls().get(0).getDeathFamilyInfo() ;
+                        DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
+                        deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
+                        deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
+                        deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+                        deathDtls.setDeathAuditDetails(auditDetails);
                     } );
+                   // 
 
 
         
