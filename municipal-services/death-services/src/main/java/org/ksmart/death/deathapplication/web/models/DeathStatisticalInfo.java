@@ -48,7 +48,7 @@ public class DeathStatisticalInfo {
     private String mannerOfDeath;
 
     @JsonProperty("DeathMedicallyCertified")
-    private String deathMedicallyCertified;
+    private Boolean deathMedicallyCertified;
 
     @JsonProperty("DeathCauseMain")
     private String deathCauseMain;

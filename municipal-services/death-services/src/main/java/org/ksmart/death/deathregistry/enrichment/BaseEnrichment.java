@@ -1,6 +1,6 @@
 package org.ksmart.death.deathregistry.enrichment;
 
-import org.ksmart.death.crdeathregistry.web.models.AuditDetails;
+import org.ksmart.death.deathregistry.web.models.AuditDetails;
 
 interface BaseEnrichment {
 

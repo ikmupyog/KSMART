@@ -29,7 +29,7 @@ import java.util.List;
 /**
      * Creates DeathRegistryController 
      * Jasmine 06/02/2023
-     * 
+     * Death Registry Create Rakhi S ikm on 09.02.2023
      */
 
     @Slf4j
@@ -48,7 +48,20 @@ public class DeathRegistryController {
 
         this.deathService = deathService;
     }
+    //Rakhi S on 09.02.2023 - Death Registry Create Controller 
+    @PostMapping("/crdeathregistry/_createdeath")
 
+    public ResponseEntity<DeathRegistryResponse> create(@Valid @RequestBody DeathRegistryRequest request) {
+ 
+        List<DeathRegistryDtl> deathDetails = deathService.create(request);
+
+        DeathRegistryResponse response = DeathRegistryResponse
+                                            .builder()
+                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                            .deathCertificateDtls(deathDetails)
+                                            .build();
+        return ResponseEntity.ok(response);
+    }
         //Update Jasmine 07.02.2023
         @PostMapping("/deathregistry/_updatedeath")
 
