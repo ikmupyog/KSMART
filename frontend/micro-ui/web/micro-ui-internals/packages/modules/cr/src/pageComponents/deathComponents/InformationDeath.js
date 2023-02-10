@@ -90,7 +90,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn);
   const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl);
   const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl);
-  //Vehicle
+  //Vehicle home{DeathPlaceWardId}
   // const [DeathPlaceType, setSelectedDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType);
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
   const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.InformationDeath?.VehicleFromplaceEn);
@@ -283,6 +283,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
+            DeathPlaceWardId={DeathPlaceWardId}
             DeathPlaceType={DeathPlaceType}
             DeathPlaceHomepostofficeId={DeathPlaceHomepostofficeId}
             DeathPlaceHomepincode={DeathPlaceHomepincode}
@@ -350,6 +351,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
     }
     if (DeathPlace.code === "HOME") {
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
       sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
       sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn : null);
       sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl ? DeathPlaceHomehoueNameMl : null);
@@ -513,6 +515,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         {value === "HOME" && (
           <div>
             <DeathPlaceHome
+              DeathPlaceWardId={DeathPlaceWardId}
+              setDeathPlaceWardId={setDeathPlaceWardId}
               DeathPlaceHomepostofficeId={DeathPlaceHomepostofficeId}
               setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
               DeathPlaceHomepincode={DeathPlaceHomepincode}
