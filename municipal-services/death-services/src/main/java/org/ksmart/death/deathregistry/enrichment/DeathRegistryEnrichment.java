@@ -74,6 +74,10 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
                .forEach(deathdtls -> {
                 deathdtls.getDeathBasicInfo().setId(UUID.randomUUID().toString());
                 deathdtls.setDeathAuditDetails(auditDetails);                 
+                //Rakhi S on 10.02.2023
+                deathdtls.getDeathAddressInfo().setPresentAddrId(UUID.randomUUID().toString());
+                deathdtls.getDeathAddressInfo().setPermanentAddrId(UUID.randomUUID().toString());
+                deathdtls.getDeathStatisticalInfo().setStatisticalId(UUID.randomUUID().toString());
             });
     }
     //Registration Number Creation by Rakhi S ikm on 10.02.2023
