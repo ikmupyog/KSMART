@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId,DeathPlaceHomepincode, 
   setDeathPlaceHomepincode,DeathPlaceHomehoueNameEn, setDeathPlaceHomehoueNameEn,DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl,DeathPlaceHomelocalityEn, 
   setDeathPlaceHomelocalityEn,DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl,DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn,
-  DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl}) => {
+  DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl,DeathPlaceWardId, setDeathPlaceWardId}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -16,8 +16,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   // Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-  
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
   const [toast, setToast] = useState(false);
   // const [countries, setcountry] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -30,9 +29,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
   // const [DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomelocalityMl);
   // const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameEn);
   // const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameMl);
-  
-  // const [DeathPlaceHomewardId, setDeathPlaceHomewardId] = useState(formData.DeathPlaceHome?.DeathPlaceHomewardId);
-
+  // const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.DeathPlaceHome?.DeathPlaceWardId);
+ 
   const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepostofficeId ? false : false);
   const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepincode ? false : false);
   const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameEn ? false : false);
@@ -49,41 +47,31 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
       cmbPostOffice.push(ob);
     });
 
-  // let Zonal = [];
-  // let cmbWardNo = [];
-  // let cmbWardNoFinal = [];
-  // boundaryList &&
-  //   boundaryList["egov-location"] &&
-  //   boundaryList["egov-location"].TenantBoundary.map((ob) => {
-  //     //  console.log(ob);
-  //     // if(ob?.boundary){
-  //     Zonal.push(...ob.boundary.children);
-  //     ob.boundary.children.map((obward) => {
-  //       cmbWardNo.push(...obward.children);
-  //     });
-  //     // }
-  //   });
-  // //console.log(Zonal);
-  // cmbWardNo.map((wardmst) => {
-  //   wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
-  //   wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
-  //   cmbWardNoFinal.push(wardmst);
-  // });
-
+    let Zonal = [];
+    let cmbWardNo = [];
+    let cmbWardNoFinal = [];
+    boundaryList &&
+      boundaryList["egov-location"] &&
+      boundaryList["egov-location"].TenantBoundary.map((ob) => {
+        if (ob?.hierarchyType.code === "REVENUE") {
+          Zonal.push(...ob.boundary.children);
+          ob.boundary.children.map((obward) => {
+            cmbWardNo.push(...obward.children);
+          });
+        }
+      });
+  
+    cmbWardNo.map((wardmst) => {
+      wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+      wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+      cmbWardNoFinal.push(wardmst);
+    });
   const onSkip = () => onSelect();
 
   function setSelectDeathPlaceHomepostofficeId(value) {
     setDeathPlaceHomepostofficeId(value);
+    setDeathPlaceHomepincode(value.pincode);
   }
-  // function setSelectDeathPlaceHomepincode(e) {
-  //   if (e.target.value.length === 7) {
-  //     return false;
-
-  //   } else {
-  //     setDeathPlaceHomepincode(e.target.value);
-  //   }
-  // }
-
   function setSelectDeathPlaceHomepincode(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 6) {
@@ -153,9 +141,9 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
       setDeathPlaceHomestreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
     }
   }
-  // function setSelectDeathPlaceHomewardId(value) {
-  //   setDeathPlaceHomewardId(value);
-  // }
+  function setSelectDeathPlaceWardId(value) {
+    setDeathPlaceWardId(value);
+  }
   let validFlag = true;
 
   const goNext = () => {
@@ -214,8 +202,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
       // sessionStorage.setItem("DeathPlaceHomestreetNameMl", DeathPlaceHomestreetNameMl  ? DeathPlaceHomestreetNameMl  : null);
       // sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId  ? DeathPlaceHomepostofficeId.code  : null);
       // sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode  ? DeathPlaceHomepincode .code  : null);
-     
-      // sessionStorage.setItem(" DeathPlaceHomewardId",  DeathPlaceHomewardId.code);
+      // sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
 
       onSelect(config.key, {
         // DeathPlaceHomehoueNameEn,
@@ -225,7 +212,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
         // DeathPlaceHomestreetNameEn,
         // DeathPlaceHomestreetNameMl,
         // DeathPlaceHomepostofficeId,
-        // DeathPlaceHomepincode       
+        // DeathPlaceHomepincode ,
+        // DeathPlaceWardId,    
       });
     }
   };
@@ -243,7 +231,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
         
         <div className="row">
           <div className="col-md-12">
-            {/* <div className="col-md-4">
+          <div className="col-md-4">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
                 <span className="mandatorycss">*</span>
@@ -251,13 +239,12 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                isMandatory={config.isMandatory}
                 option={cmbWardNoFinal}
-                selected={DeathPlaceHomewardId}
-                select={setSelectDeathPlaceHomewardId}
+                selected={DeathPlaceWardId}
+                select={setSelectDeathPlaceWardId}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
-            </div>   */}
+            </div>    
             <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
