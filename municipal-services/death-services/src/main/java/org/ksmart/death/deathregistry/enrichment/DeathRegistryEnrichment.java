@@ -126,7 +126,7 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
                     }
 
                         deathdtls.getDeathWorkFlowDtls().setRegistrationNo(registrationNo);
-                        deathdtls.getDeathBasicInfo().setRegistrationNoId(registrationNoId);
+                        deathdtls.getDeathBasicInfo().setRegistrationNoID(registrationNoId);
                         deathdtls.getDeathBasicInfo().setRegistrationDate(currentTime);
                 });     
     }  
