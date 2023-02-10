@@ -62,7 +62,400 @@ const CheckPage = ({ onSubmit, value }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       <Card>
+        <div>
+          <div className="row">
+            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LB_DET_LABEL")}`}</span></h1>
+            </div>
+          </div>
+          <StatusTable >
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_DISTRICT")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LB_TYPE_LABEL")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LB_NAME_LABEL")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_WARD_NO")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                </div>
+              </div>
+            </div>
+          </StatusTable>
+        </div>
 
+        <div>
+          <div className="row">
+            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}`}</span></h1>
+            </div>
+          </div>
+          <StatusTable >
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_SECTOR")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSE_PERIOD")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NO_EMPLOYEES")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                </div>
+              </div>
+            </div>
+          </StatusTable>
+        </div>
+        <div>
+          <div className="row">
+            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_PLACE_ACTIVITY")}`}</span></h1>
+            </div>
+          </div>
+          <StatusTable >
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSING_UNIT_NAME")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSING_UNIT_NAME_ML")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_CONTACT_NO")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_STRUCTURE_TYPE_HEADER")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_STRUCTURE_SUB_TYPE_HEADER")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_OWNERSHIP_TYPE")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                </div>
+              </div>
+            </div>
+            {TradeDetails.structureType === "LAND" && (
+              <div>
+                {TradeDetails?.structurePlace.map((structure, index) => (
+                  <div className="row" key={index}>
+                    <div className="col-md-12">
+                      {structure.isResurveyed && (
+                        <div>
+                          <div className="col-md-2">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}</CardText>
+                          </div>
+                          <div className="col-md-1">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                          </div>
+                        </div>
+                      )}
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                      </div>
+                      <div className="col-md-2">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_PARTITION_NO")}`}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {TradeDetails.structureType === "BUILDING" && (
+              <div>
+                {TradeDetails?.structurePlace.map((structure, index) => (
+                  <div className="row" key={index}>
+                    <div className="col-md-12">
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_DOOR_NO")}`}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_DOOR_NO_SUB")}`}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                      </div>
+                      {structure.ownershipCategory === "LBBUILDING" && (
+                        <div>
+                          <div className="col-md-1">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_STALL_NO")}`}</CardText>
+                          </div>
+                          <div className="col-md-1">
+                            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {TradeDetails.structureType === "VEHICLE" && (
+              <div>
+                {TradeDetails?.structurePlace.map((structure, index) => (
+                  <div className="row" key={index}>
+                    <div className="col-md-12">
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_VECHICLE_NO")}`}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {TradeDetails.structureType === "WATER" && (
+              <div>
+                {TradeDetails?.structurePlace.map((structure, index) => (
+                  <div className="row" key={index}>
+                    <div className="col-md-12">
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_VESSEL_NO")}`}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {TradeDetails.structureType === "DESIGNATEDPLACE" && (
+              <div>
+                {TradeDetails?.structurePlace.map((structure, index) => (
+                  <div className="row" key={index}>
+                    <div className="col-md-12">
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_DESIGNATED_PLACE")}`}</CardText>
+                      </div>
+                      <div className="col-md-1">
+                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </StatusTable>
+        </div>
+
+        <div>
+          <div className="row">
+            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_PLACE_ACTIVITY")}`}</span></h1>
+            </div>
+          </div>
+          {(TradeDetails.structureType === "BUILDING" || TradeDetails.structureType === "LAND") && (
+            <StatusTable>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALITY")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_STREET_NAME")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_LAND_MARK")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_BUILDING_NAME")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_PIN")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_POSTOFFICE")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                  </div>
+                </div>
+              </div>
+            </StatusTable>
+          )}
+          {TradeDetails.structureType === "VEHICLE" && (
+            <StatusTable>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_SERVICE_AREA")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_DESIGNATED_PLACE")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  </div>
+                </div>
+              </div>
+            </StatusTable>
+          )}
+          {TradeDetails.structureType === "WATER" && (
+            <StatusTable>
+              <div className="row">
+                <div className="col-md-12">
+                <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_WATER_BODY")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_SERVICE_AREA")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_DESIGNATED_PLACE")}`}</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  </div>
+                </div>
+              </div>
+            </StatusTable>
+          )}
+        </div>
         {TradeDetails?.licenseeType === "INSTITUTION" && (
           <div>
             <div className="row">
