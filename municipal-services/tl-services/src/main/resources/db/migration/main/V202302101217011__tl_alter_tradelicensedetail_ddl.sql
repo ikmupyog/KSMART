@@ -1,0 +1,2 @@
+ALTER TABLE eg_tl_tradelicensedetail
+	RENAME COLUMN subownershipcategory TO ownershipcategory;
