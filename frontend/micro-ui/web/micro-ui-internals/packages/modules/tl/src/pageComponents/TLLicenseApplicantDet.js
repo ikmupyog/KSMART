@@ -187,7 +187,6 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
   }
 
   function selectLicensingInstitutionType(value) {
-    console.log(value);
     setNatureOfInstitution(value);
   }
 
