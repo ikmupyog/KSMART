@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -8,19 +8,19 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { data: Country = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const { data: State = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-  const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-  const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  console.log("Country");
-  console.log(Country);
+  const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+  const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+
+  // const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: localbodies, isLoading } = Digit.Hooks.useTenants();
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
+  const [toast, setToast] = useState(false);
+  //  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [WardNo, setWardNo] = useState(formData.AddressInsideKeralaDetails?.wardno);
-  //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
+
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -28,6 +28,7 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
   const [insideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaLBTypeName);
   const [insideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaLBName);
   const [insideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaTaluk);
+  const [insideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaVillage);
   const [insideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaPostOffice);
   const [insideKeralaPincode, setinsideKeralaPincode] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaPincode);
   const [insideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaHouseNameEn);
@@ -36,7 +37,6 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
   const [insideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaLocalityNameMl);
   const [insideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaStreetNameEn);
   const [insideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaStreetNameMl);
-  const [insideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AddressInsideKeralaDetails?.insideKeralaVillage);
 
   let cmbPlace = [];
   let cmbTaluk = [];
@@ -119,32 +119,75 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
 
   function setSelectinsideKeralaPostOffice(value) {
     setinsideKeralaPostOffice(value);
+    console.log(value);
+    setinsideKeralaPostOffice(value.pincode);
   }
   function setSelectinsideKeralaPincode(e) {
-    setinsideKeralaPincode(e.target.value);
+    if (e.target.value.length != 0) {
+      if (e.target.value.length > 6) {
+        return false;
+      } else if (e.target.value.length < 6) {
+        setinsideKeralaPincode(e.target.value);
+        return false;
+      } else {
+        setinsideKeralaPincode(e.target.value);
+        return true;
+      }
+    }
   }
-
   function setSelectinsideKeralaHouseNameEn(e) {
-    setinsideKeralaHouseNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setinsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
   }
   function setSelectinsideKeralaHouseNameMl(e) {
-    setinsideKeralaHouseNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setinsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    }
   }
 
   function setSelectinsideKeralaLocalityNameEn(e) {
-    setinsideKeralaLocalityNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setinsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
   }
+
   function setSelectinsideKeralaLocalityNameMl(e) {
-    setinsideKeralaLocalityNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setinsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    }
   }
 
   function setSelectinsideKeralaStreetNameEn(e) {
-    setinsideKeralaStreetNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setinsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
   }
 
   function setSelectinsideKeralaStreetNameMl(e) {
-    setinsideKeralaStreetNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setinsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    }
   }
+
   function setSelectWard(value) {
     setWardNo(value);
   }
@@ -162,19 +205,19 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
   const goNext = () => {
     //  sessionStorage.setItem("insideKeralaLBTypeName", insideKeralaLBTypeName.code);
 
-    sessionStorage.setItem("insideKeralaHouseNameEn", insideKeralaHouseNameEn);
-    sessionStorage.setItem("insideKeralaHouseNameMl", insideKeralaHouseNameMl);
-
-    sessionStorage.setItem("insideKeralaLocalityNameEn", insideKeralaLocalityNameEn);
-    sessionStorage.setItem("insideKeralaLocalityNameMl", insideKeralaLocalityNameMl);
-    sessionStorage.setItem("insideKeralaStreetNameEn", insideKeralaStreetNameEn);
-    sessionStorage.setItem("insideKeralaStreetNameMl", insideKeralaStreetNameMl);
-    sessionStorage.setItem("insideKeralaVillage", insideKeralaVillage.code);
-    sessionStorage.setItem("insideKeralaLBName", null);
-    sessionStorage.setItem("insideKeralaDistrict", insideKeralaDistrict.code);
-    sessionStorage.setItem("insideKeralaTaluk", insideKeralaTaluk.code);
-    sessionStorage.setItem("insideKeralaPostOffice", insideKeralaPostOffice.code);
-    sessionStorage.setItem("insideKeralaPincode", insideKeralaPincode.code);
+    sessionStorage.setItem("insideKeralaHouseNameEn", insideKeralaHouseNameEn ? insideKeralaHouseNameEn : null);
+    sessionStorage.setItem("insideKeralaHouseNameMl", insideKeralaHouseNameMl ? insideKeralaHouseNameMl : null);
+    sessionStorage.setItem("insideKeralaLocalityNameEn", insideKeralaLocalityNameEn ? insideKeralaLocalityNameEn : null);
+    sessionStorage.setItem("insideKeralaLocalityNameMl", insideKeralaLocalityNameMl ? insideKeralaLocalityNameMl : null);
+    sessionStorage.setItem("insideKeralaStreetNameEn", insideKeralaStreetNameEn ? insideKeralaStreetNameEn : null);
+    sessionStorage.setItem("insideKeralaStreetNameMl", insideKeralaStreetNameMl ? insideKeralaStreetNameMl : null);
+    sessionStorage.setItem("insideKeralaVillage", insideKeralaVillage ? insideKeralaVillage.code : null);
+    sessionStorage.setItem("insideKeralaLBName", insideKeralaLBName ? insideKeralaLBName : null);
+    sessionStorage.setItem("insideKeralaDistrict", insideKeralaDistrict ? insideKeralaDistrict.code : null);
+    sessionStorage.setItem("insideKeralaTaluk", insideKeralaTaluk ? insideKeralaTaluk.code : null);
+    sessionStorage.setItem("insideKeralaPostOffice", insideKeralaPostOffice ? insideKeralaPostOffice.code : null);
+    sessionStorage.setItem("insideKeralaPincode", insideKeralaPincode ? insideKeralaPincode.code : null);
+    sessionStorage.setItem("insideKeralaPincode", WardNo ? WardNo.code : null);
 
     onSelect(config.key, {
       insideKeralaLBName,
@@ -189,21 +232,26 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
       insideKeralaHouseNameMl,
       insideKeralaPincode,
       insideKeralaPostOffice,
+      WardNo,
     });
   };
+
+  if (isLoading || isPostOfficeLoading || isDistrictLoading || isTalukLoading || isVillageLoading || isWardLoaded) {
+    return <Loader></Loader>;
+  }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
  {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!insideKeralaDistrict}>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
             </h1>
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-md-12">
@@ -315,7 +363,7 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="insideKeralaLocalityNameEn"
@@ -348,7 +396,7 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="insideKeralaHouseNameEn"
@@ -370,7 +418,7 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="insideKeralaLocalityNameMl"
@@ -378,7 +426,12 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectinsideKeralaLocalityNameMl}
                 disable={isEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_LOCALITY_ML"),
+                })}
               />
             </div>
             <div className="col-md-4">
@@ -393,7 +446,12 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectinsideKeralaStreetNameMl}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_ML") })}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                  isRequired: false,
+                  type: "text",
+                  title: t("CR_INVALID_STREET_NAME_ML"),
+                })}
               />
             </div>
             <div className="col-md-4">
@@ -403,7 +461,7 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="insideKeralaHouseNameMl"
@@ -411,7 +469,12 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectinsideKeralaHouseNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_ML") })}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_HOUSE_NAME_ML"),
+                })}
               />
             </div>
           </div>
@@ -427,7 +490,7 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbPostOffice}
                 selected={insideKeralaPostOffice}
                 select={setSelectinsideKeralaPostOffice}
@@ -442,7 +505,7 @@ const AddressInsideKerala = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="insideKeralaPincode"
