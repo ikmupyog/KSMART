@@ -1,35 +1,34 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton,TextArea } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-import { isNull } from "lodash";
 
-const Vehicle = ({ config, onSelect, userType, formData }) => {
-  console.log(formData);
+const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType, selectDeathPlaceType,VehicleNumber, setVehicleNumber,
+  VehicleFromplaceEn, setVehicleFromplaceEn,VehicleToPlaceEn, setVehicleToPlaceEn,GeneralRemarks, setGeneralRemarks,VehicleFirstHaltEn, setVehicleFirstHaltEn,
+  VehicleFirstHaltMl, setVehicleFirstHaltMl,VehicleHospitalEn, setSelectedVehicleHospitalEn,DeathPlaceWardId, setDeathPlaceWardId,VehicleFromplaceMl, setVehicleFromplaceMl,VehicleToPlaceMl, setVehicleToPlaceMl}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  // const tenantId = Digit.ULBService.getCurrentTenantId();
+
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-  const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
+  // const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-
-  const [DeathPlaceType, setSelectedDeathPlaceType] = useState(formData?.Vehicle?.DeathPlaceType);
-  const [VehicleNumber, setVehicleNumber] = useState(formData?.Vehicle?.VehicleNumber);
-  const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.Vehicle?.VehicleFromplaceEn);
-  const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.Vehicle?.VehicleToPlaceEn);
-  const [VehicleFromplaceMl, setVehicleFromplaceMl] = useState(formData?.Vehicle?.VehicleFromplaceMl);
-  const [VehicleToPlaceMl, setVehicleToPlaceMl] = useState(formData?.Vehicle?.VehicleToPlaceMl);
-  const [GeneralRemarks, setGeneralRemarks] = useState(formData?.Vehicle?.GeneralRemarks);
-  const [VehicleFirstHaltEn, setVehicleFirstHaltEn] = useState(formData?.Vehicle?.VehicleFirstHaltEn);
-  const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.Vehicle?.VehicleFirstHaltMl);
-  const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.Vehicle?.VehicleHospitalEn);
-
+  
+  // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.DeathPlaceVehicle?.DeathPlaceType);
+  // const [VehicleNumber, setVehicleNumber] = useState(formData?.DeathPlaceVehicle?.VehicleNumber);
+  // const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.DeathPlaceVehicle?.VehicleFromplaceEn);
+  // const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.DeathPlaceVehicle?.VehicleToPlaceEn);
+  // const [VehicleFromplaceMl, setVehicleFromplaceMl] = useState(formData?.DeathPlaceVehicle?.VehicleFromplaceMl);
+  // const [VehicleToPlaceMl, setVehicleToPlaceMl] = useState(formData?.DeathPlaceVehicle?.VehicleToPlaceMl);
+  // const [GeneralRemarks, setGeneralRemarks] = useState(formData?.DeathPlaceVehicle?.GeneralRemarks);
+  // const [VehicleFirstHaltEn, setVehicleFirstHaltEn] = useState(formData?.DeathPlaceVehicle?.VehicleFirstHaltEn);
+  // const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.DeathPlaceVehicle?.VehicleFirstHaltMl);
+  // const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.DeathPlaceVehicle?.VehicleHospitalEn);
   // const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.Vehicle?.DeathPlaceWardId);
 
-  let naturetypecmbvalue = null;
+  // let naturetypecmbvalue = null;
 
   let cmbhospital = [];
   hospital &&
@@ -37,43 +36,41 @@ const Vehicle = ({ config, onSelect, userType, formData }) => {
     hospital["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-  let cmbLBType = [];
-  LBType &&
-    LBType["common-masters"] &&
-    LBType["common-masters"].LBType.map((ob) => {
-      cmbLBType.push(ob);
-    });
+  // let cmbLBType = [];
+  // LBType &&
+  //   LBType["common-masters"] &&
+  //   LBType["common-masters"].LBType.map((ob) => {
+  //     cmbLBType.push(ob);
+  //   });
   let cmbVehicle = [];
   Vehicle &&
     Vehicle["birth-death-service"] &&
     Vehicle["birth-death-service"].VehicleType.map((ob) => {
       cmbVehicle.push(ob);
     });
-  // let Zonal = [];
-  // let cmbWardNo = [];
-  // let cmbWardNoFinal = [];
-  // boundaryList &&
-  //   boundaryList["egov-location"] &&
-  //   boundaryList["egov-location"].TenantBoundary.map((ob) => {
-  //     //  console.log(ob);
-  //     // if(ob?.boundary){
-  //     Zonal.push(...ob.boundary.children);
-  //     ob.boundary.children.map((obward) => {
-  //       cmbWardNo.push(...obward.children);
-  //     });
-  //     // }
-  //   });
-  // //console.log(Zonal);
-  // cmbWardNo.map((wardmst) => {
-  //   wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
-  //   wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
-  //   cmbWardNoFinal.push(wardmst);
-  // });
-
+    let Zonal = [];
+    let cmbWardNo = [];
+    let cmbWardNoFinal = [];
+    boundaryList &&
+      boundaryList["egov-location"] &&
+      boundaryList["egov-location"].TenantBoundary.map((ob) => {
+        if (ob?.hierarchyType.code === "REVENUE") {
+          Zonal.push(...ob.boundary.children);
+          ob.boundary.children.map((obward) => {
+            cmbWardNo.push(...obward.children);
+          });
+        }
+      });
+  
+    cmbWardNo.map((wardmst) => {
+      wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+      wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+      cmbWardNoFinal.push(wardmst);
+    });
   const onSkip = () => onSelect();
 
-  function selectDeathPlaceType(value) {
-    setSelectedDeathPlaceType(value);
+  function setselectDeathPlaceType(value) {
+    selectDeathPlaceType(value);
   }
   function setSelectVehicleNumber(e) {
     setVehicleNumber(e.target.value);
@@ -101,39 +98,40 @@ const Vehicle = ({ config, onSelect, userType, formData }) => {
     setGeneralRemarks(e.target.value);
   }
 
-  //  function setSelectDeathPlaceWardId(value) {
-  //     setDeathPlaceWardId(value);
-  //   }
+   function setSelectDeathPlaceWardId(value) {
+      setDeathPlaceWardId(value);
+    }
+    
+    
   function selectVehicleHospitalEn(value) {
     setSelectedVehicleHospitalEn(value);
   }
 
   const goNext = () => {
-    sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-    sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
-    sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
-    sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
-    sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
-    sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
-    sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
-    sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
-    sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
-    sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-
+    // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+    // sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
+    // sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
+    // sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
+    // sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
+    // sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
+    // sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
+    // sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
+    // sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
+    // sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
     // sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
+    
 
     onSelect(config.key, {
-      DeathPlaceType,
-      VehicleNumber,
-      VehicleFromplaceEn,
-      VehicleToPlaceEn,
-      VehicleFromplaceMl,
-      VehicleToPlaceMl,
-      VehicleFirstHaltEn,
-      VehicleFirstHaltMl,
-      VehicleHospitalEn,
-      GeneralRemarks,
-
+      // DeathPlaceType,
+      // VehicleNumber,
+      // VehicleFromplaceEn,
+      // VehicleToPlaceEn,
+      // VehicleFromplaceMl,
+      // VehicleToPlaceMl,
+      // VehicleFirstHaltEn,
+      // VehicleFirstHaltMl,
+      // VehicleHospitalEn,
+      // GeneralRemarks,
       // DeathPlaceWardId
     });
   };
@@ -155,7 +153,7 @@ const Vehicle = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 option={cmbVehicle}
                 selected={DeathPlaceType}
-                select={selectDeathPlaceType}
+                select={setselectDeathPlaceType}
                 disabled={isEdit}
                 placeholder={`${t("CR_VEHICLE_TYPE")}`}
               />
@@ -311,7 +309,7 @@ const Vehicle = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_ADMITTED_HOSPITAL_EN")}`}
               />
             </div>
-            {/* <div className="col-md-3">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
                 <span className="mandatorycss">*</span>
@@ -319,13 +317,12 @@ const Vehicle = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="namecmb"
-                isMandatory={config.isMandatory}
                 option={cmbWardNoFinal}
                 selected={DeathPlaceWardId}
                 select={setSelectDeathPlaceWardId}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
-            </div>         */}
+            </div>        
           </div>
         </div>
         <div className="row">
@@ -354,4 +351,4 @@ const Vehicle = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default Vehicle;
+export default DeathPlaceVehicle;
