@@ -129,7 +129,7 @@ const Urls = {
     registry_search_birth: "/birth-services/cr/registry/_search",  
   },
   dfm: {
-    create: "/filemgmnt/v1/applicantpersonals/_create",
+    create: "/filemgmnt/v1/applicantservices/_create",
     search: "/filemgmnt/v1/applicantpersonals/_search",
     download_pdf: "/egov-pdf/download/dfm/",
     update: "/filemgmnt/v1/applicantpersonals/_update",
