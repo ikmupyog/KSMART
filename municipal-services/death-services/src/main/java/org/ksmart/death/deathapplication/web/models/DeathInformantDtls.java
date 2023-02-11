@@ -25,18 +25,19 @@ import org.springframework.validation.annotation.Validated;
 @Builder
 public class DeathInformantDtls {
 
-    @Size(max = 64)
-    @JsonProperty("InitiatorRelation")
-    private String initiatorRelation ;
+    // @Size(max = 64)
+    // @JsonProperty("InitiatorRelation")
+    // private String initiatorRelation ;
 
-    @JsonProperty("InitiatorAadhaar")
-    private String initiatorAadhaar ;
+    // @JsonProperty("InitiatorAadhaar")
+    // private String initiatorAadhaar ;
 
-    @JsonProperty("InitiatorName")
-    private String initiatorName ;
+    // @JsonProperty("InitiatorName")
+    // private String initiatorName ;
 
-    @JsonProperty("InitiatorMobile")
-    private String initiatorMobile ;
+    // @JsonProperty("InitiatorMobile")
+    // private String initiatorMobile ;
+    
 
     @JsonProperty("InformantAadharNo")
     private String informantAadharNo ;
@@ -128,13 +129,16 @@ public class DeathInformantDtls {
     @JsonProperty("DocumentType")
     private String documentType ;
 
+    @JsonProperty("DocumentUserType")
+    private String documentUserType ;
+
     @JsonProperty("DocumentFileStoreId")
     private String documentFileStoreId ;
 
     //Rakhi s on 08.02.2023
-    @Schema(type = "Integer" ,description = "Informant aadhar submitted(0/1)")
+    @Schema(type = "boolean" ,description = "Informant aadhar submitted(0/1)")
     @JsonProperty("InformantAadharSubmitted")
-    private Integer  informantAadharSubmitted ;   
+    private boolean  informantAadharSubmitted ;   
 
     //Jasmine 9.02.2023
     @JsonProperty("auditDetails")

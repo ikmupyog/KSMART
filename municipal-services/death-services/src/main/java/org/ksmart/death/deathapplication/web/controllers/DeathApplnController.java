@@ -101,9 +101,9 @@ public class DeathApplnController {
  
         List<DeathDtl> deathDetails = deathService.update(request);
 
-        String status=request.getDeathCertificateDtls().get(0).getDeathWorkFlowDtls().getApplicationStatus();
+        String status=request.getDeathCertificateDtls().get(0).getApplicationStatus();
 
-        String applicationType =request.getDeathCertificateDtls().get(0).getDeathWorkFlowDtls().getApplicationType();
+        String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();
 
         DeathDtlResponse response = DeathDtlResponse
                                         .builder()

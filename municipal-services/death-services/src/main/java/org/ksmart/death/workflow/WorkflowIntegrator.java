@@ -99,12 +99,12 @@ public class WorkflowIntegrator {
         List<DeathDtl> currentFile = request.getDeathCertificateDtls();     
         JSONArray array = new JSONArray();
         for (DeathDtl deathDtl : request.getDeathCertificateDtls()) {
-            String  businessServiceFromMDMS=deathDtl.getDeathWorkFlowDtls().getBusinessService();
+            String  businessServiceFromMDMS=deathDtl.getBusinessService();
             if (businessServiceFromMDMS == null) {
             businessServiceFromMDMS = DeathConstants.BUSINESS_SERVICE_BND;
         }
             if (businessServiceFromMDMS.equals(DeathConstants.BUSINESS_SERVICE_BND) || !request.getDeathCertificateDtls()
-           .get(0).getDeathWorkFlowDtls().getAction().equalsIgnoreCase(DeathConstants.TRIGGER_NOWORKFLOW)) {
+           .get(0).getAction().equalsIgnoreCase(DeathConstants.TRIGGER_NOWORKFLOW)) {
 
                 JSONObject obj = new JSONObject();
                  System.out.println("businessServiceFromMDMS"+businessServiceFromMDMS);    
@@ -118,8 +118,8 @@ public class WorkflowIntegrator {
                 .forEach(deathdtls -> {
                 obj.put(DeathConstants.BUSINESSIDKEY, deathdtls.getDeathBasicInfo().getDeathACKNo());
                 obj.put(DeathConstants.TENANTIDKEY, deathdtls.getDeathBasicInfo().getTenantId());
-                obj.put(DeathConstants.BUSINESSSERVICEKEY, deathdtls.getDeathWorkFlowDtls().getWorkflowcode());
-                List<Map<String, String>> uuidMaps = buildUUIDList(deathdtls.getDeathWorkFlowDtls().getAssignees());
+                obj.put(DeathConstants.BUSINESSSERVICEKEY, deathdtls.getWorkflowcode());
+                List<Map<String, String>> uuidMaps = buildUUIDList(deathdtls.getAssignees());
                // System.out.println("uuidMaps"+uuidMaps);
                 if (CollectionUtils.isNotEmpty(uuidMaps)) {
                     obj.put(DeathConstants.ASSIGNEEKEY, uuidMaps.get(0).get("uuid"));
@@ -127,9 +127,9 @@ public class WorkflowIntegrator {
             });
 
                 obj.put(DeathConstants.MODULENAMEKEY, DeathConstants.BNDMODULENAMEVALUE);
-                obj.put(DeathConstants.ACTIONKEY, deathDtl.getDeathWorkFlowDtls().getAction());
-                obj.put(DeathConstants.COMMENTKEY, deathDtl.getDeathWorkFlowDtls().getComment());
-                obj.put(DeathConstants.DOCUMENTSKEY, deathDtl.getDeathWorkFlowDtls().getWfDocuments());
+                obj.put(DeathConstants.ACTIONKEY, deathDtl.getAction());
+                obj.put(DeathConstants.COMMENTKEY, deathDtl.getComment());
+                obj.put(DeathConstants.DOCUMENTSKEY, deathDtl.getWfDocuments());
                 array.add(obj);
             }
         }
@@ -185,7 +185,7 @@ public class WorkflowIntegrator {
             // setting the status back to TL object from wf response
 
                   request.getDeathCertificateDtls().forEach(
-                    bndObj -> bndObj.getDeathWorkFlowDtls().setApplicationStatus(idStatusMap.get(bndObj.getDeathBasicInfo().getDeathACKNo())));
+                    bndObj -> bndObj.setApplicationStatus(idStatusMap.get(bndObj.getDeathBasicInfo().getDeathACKNo())));
 
         }
 
