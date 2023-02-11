@@ -35,6 +35,9 @@ import AddressBirth from "../src/pageComponents/birthComponents/AddressBirth";
 import AddressBrOutsideIndia from "../src/pageComponents/birthComponents/AddressBrOutsideIndia";
 import AddressInsideKerala from "../src/pageComponents/birthComponents/AddressInsideKerala";
 import AddressOutsideKerala from "../src/pageComponents/birthComponents/AddressOutsideKerala";
+import AddressPermanentOutsideKerala from "../src/pageComponents/birthComponents/AddressPermanentOutsideKerala";
+import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/AddressPermanentInsideKerala";
+import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -204,8 +207,10 @@ const componentsToRegister = {
   AddressBirth,
   AddressBrOutsideIndia,
   AddressInsideKerala,
-  AddressOutsideKerala,
-
+  AddressOutsideKerala,   
+  AddressPermanentOutsideKerala,
+  AddressPermanentOutsideIndia,
+  AddressPermanentInsideKerala,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
