@@ -390,28 +390,23 @@ export const newConfig = [
         nextStep: "null",
         type: "component",
         hideInEmployee: true,
-      },
-
-
-
-      // {
-      //   route: "address-inside-india",
-      //   component: "AddressInsideIndia",
-      //   texts: {
-      //     headerCaption: "",
-      //     header: "",
-      //     cardText: "",
-      //     submitBarLabel: "CS_COMMON_NEXT",
-      //     skipText: "",
-      //   },
-      //   withoutLabel: true,
-      //   key: "AddressInsideIndiaDetails",
-      //   nextStep: "statistical-information",
-      //   type: "component",
-      //   hideInEmployee: false,
-      // },
-
-
+      },   
+      {
+        route: "informer-details",
+        component: "InformarHospitalInstitution",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "InformarHosInstDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: true,
+      },   
 
       
    
