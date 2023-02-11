@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Timeline from "../components/TLTimeline";
 
 const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
+  //console.log(JSON.stringify(formData?.TradeDetails?.ownersdoc));
   let documentList = [
     { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" },
     { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership" },
@@ -125,6 +126,8 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
                       onDeleteown(doc.code);
                       setUploadedFile(null);
                     }}
+                 
+
                     message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                     error={error}
                   />

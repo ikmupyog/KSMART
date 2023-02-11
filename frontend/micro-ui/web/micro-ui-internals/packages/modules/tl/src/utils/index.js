@@ -245,51 +245,52 @@ export const getaccessories = (data) => {
   return tradeaccessories;
 };
 
-export const gettradeupdateaccessories = (data) => {
-  let TLaccessories = [];
-  const isEditRenew = window.location.href.includes("renew-trade");
-  if(data?.TradeDetails?.isAccessories?.i18nKey.includes("NO"))
-  {
-    data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
-      TLaccessories.push({...oldunit,active:false});
-    })
-  }
-  else{
-  data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
-    data.TradeDetails.accessories.map((newunit) => {
-      if(oldunit.id === newunit.id)
-      {
-        if (oldunit.accessoryCategory !== newunit.accessory.code)
-        {
-          oldunit.accessoryCategory = newunit.accessory.code;
-          TLaccessories.push(oldunit);
-        }
-        else
-        {
-          let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id):false;
-          if(!found)TLaccessories.push(oldunit);
-        }
+// export const gettradeupdateaccessories = (data) => {
+//   let TLaccessories = [];
+//   const isEditRenew = window.location.href.includes("renew-trade");
+//   if(data?.TradeDetails?.isAccessories?.i18nKey.includes("NO"))
+//   {
+//     data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
+//       TLaccessories.push({...oldunit,active:false});
+//     })
+//   }
+//   else{
+//   data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
+//     data.TradeDetails.accessories.map((newunit) => {
+//       if(oldunit.id === newunit.id)
+//       {
+//         if (oldunit.accessoryCategory !== newunit.accessory.code)
+//         {
+//           oldunit.accessoryCategory = newunit.accessory.code;
+//           TLaccessories.push(oldunit);
+//         }
+//         else
+//         {
+//           let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id):false;
+//           if(!found)TLaccessories.push(oldunit);
+//         }
 
-      }
-      else
-      {
-        if(!isEditRenew){
-          let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id):false;
-          if(!found)TLaccessories.push({...oldunit,active:false});
-        }
+//       }
+//       else
+//       {
+//         if(!isEditRenew){
+//           let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id):false;
+//           if(!found)TLaccessories.push({...oldunit,active:false});
+//         }
         
-      }
-    })
-  })
-  data.TradeDetails.accessories.map((ob) => {
-    if(!ob.id)
-    {
-      TLaccessories.push({ uom: ob.unit, accessoryCategory: ob.accessory.code, uomValue: ob.uom ? ob.uom : null, count: ob.accessorycount });
-    }
-  })
-}
-  return TLaccessories;
-}
+//       }
+//     })
+//   })
+//   data.TradeDetails.accessories.map((ob) => {
+//     if(!ob.id)
+//     {
+//       TLaccessories.push({ uom: ob.unit, accessoryCategory: ob.accessory.code, uomValue: ob.uom ? ob.uom : null, count: ob.accessorycount });
+//     }
+//   })
+// }
+//   return TLaccessories;
+// }
+
 
 export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
@@ -318,65 +319,33 @@ export const convertToTrade = (data = {}) => {
             email:data?.TradeDetails?.EmailID,
           },
           applicationDocuments: null,
-          owners: [
-            {
-              mobileNumber: data?.address?.IndividualMobNo,
-              name: data?.address?.IndividualName,
-              fatherOrHusbandName: null,
-              dob: null,
-              gender: null,
-              permanentAddress: data?.address?.IndividualAddress,
-              emailId: data?.address?.IndividualEmailID,
-              aadhaarNumber: data?.address?.IndividualAadharNo,
-              ownerType: data?.address?.OwnProperty.code =="YES" ? "OWN" :"RENT",
-              consentAgreementPlace: data?.address?.OwnerConsentPlace,
-              consentAgreementDate: Date.parse(data?.address?.OwnerConsentDateStart),
-              consentAgreementEndDate: Date.parse(data?.address?.OwnerConsentDateEnd),
-            }
-          ],
+          owners: data?.TradeDetails?.tradeLicenseDetail?.owners,
+
           structureType: data?.TradeDetails?.StructureType.maincode,
-          institution: {
-            name:data?.address?.IndividualName,
-            type:"CITIZEN",
-            designation:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.address?.IndividualDesignation:null,
-            active:true,
-            instituionName:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.LicensingInstitutionName:null,
-            contactNo:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.InstitutionMobileNo:null,
-            organisationregistrationno:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.LicensingInstitutionID:null,
-            address:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.LicensingInstitutionAddress:null,
-            natureOfInstitution:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.LicensingInstitutionType.code:null,
-            email:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.InstitutionEmailID:null,            
-          },
+
+          institution:data?.TradeDetails?.tradeLicenseDetail?.institution,
           tradeUnits: [
             {
               tradeType: data?.TradeDetails[0]?.tradesubtype.code,
             }
           ],
-          structurePlace: [
-            {
-              isResurveyed:data?.TradeDetails?.setPlaceofActivity.code =="LAND" && data?.TradeDetails?.ResurveyedLand =="YES" ? false:true,
-              blockNo: data?.TradeDetails?.setPlaceofActivity.code =="LAND" ? data?.TradeDetails?.BlockNo:null,
-              surveyNo: data?.TradeDetails?.setPlaceofActivity.code =="LAND" ? data?.TradeDetails?.SurveyNo:null,
-              subDivisionNo: data?.TradeDetails?.setPlaceofActivity.code =="LAND" ? data?.TradeDetails?.SubDivNo:null,
-              partitionNo: data?.TradeDetails?.setPlaceofActivity.code =="LAND" ? data?.TradeDetails?.PartitionNo:null,
-              doorNo: data?.TradeDetails?.setPlaceofActivity.code =="BUILDING" ? data.TradeDetails.DoorNoBuild:null,
-              doorNoSub: data?.TradeDetails?.setPlaceofActivity.code =="BUILDING" ? data.TradeDetails.DoorSubBuild:null,
-              vehicleNo: data?.TradeDetails?.setPlaceofActivity.code =="VEHICLE" ? data.TradeDetails.VechicleNo:null,
-              vesselNo: data?.TradeDetails?.setPlaceofActivity.code =="WATER" ? data.TradeDetails.VesselNo:null,
-            }
-          ],
-          businessSector: data?.TradeDetails?.setSector.code, 
-          capitalInvestment: data?.TradeDetails?.CapitalAmount,
+          structurePlace:data?.TradeDetails?.tradeLicenseDetail?.structurePlace,
+          businessSector:data?.TradeDetails?.tradeLicenseDetail?.businessSector.code, 
+          capitalInvestment: data?.TradeDetails?.tradeLicenseDetail?.capitalInvestment,
+
           enterpriseType: data?.TradeDetails?.enterpriseType,
-          licenseUnitType: data?.TradeDetails?.LicensingUnitType.code,
-          licenseUnitId: data?.TradeDetails?.LicenseUnitID,
-          structurePlaceSubType: data?.TradeDetails?.StructureType.code,
-          customDetailType: data?.TradeDetails[0]?.units?.unit,
-          businessActivityDesc:data?.TradeDetails[0]?.units?.uom,
-          licenseeType:data?.TradeDetails?.LicenseeType.code
+         // licenseUnitType: data?.TradeDetails?.LicensingUnitType.code,
+         // licenseUnitId: data?.TradeDetails?.LicenseUnitID,
+          //structurePlaceSubType: data?.TradeDetails?.StructureType.code,
+        //  customDetailType: data?.TradeDetails[0]?.units?.unit,
+          businessActivityDesc:data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc, 
+          licenseeType:data?.TradeDetails?.tradeLicenseDetail?.licenseeType,
+          noOfEmployees:data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees,
+          ownershipCategory:data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory?.code
         },
         
-        tradeName: data?.TradeDetails?.LicenseUnitName,
+        tradeName: data?.TradeDetails?.tradeName,
+        licenseUnitNameLocal:data?.TradeDetails?.licenseUnitNameLocal,
         wfDocuments: [],
         applicationDocuments: [],
         workflowCode: "NewTL",
@@ -586,7 +555,7 @@ export const convertToEditTrade = (data, fy = []) => {
         tradeLicenseDetail: {
           address: data.tradeLicenseDetail.address,
           applicationDocuments: data.tradeLicenseDetail.applicationDocuments,
-          accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
+      //    accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
           owners: isDirectrenewal ? data.tradeLicenseDetail.owners : gettradeownerarray(data),
           structureType: isDirectrenewal ? data.tradeLicenseDetail.structureType : (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
@@ -643,7 +612,7 @@ export const convertToResubmitTrade = (data) => {
         tradeLicenseDetail: {
           address: data.tradeLicenseDetail.address,
           applicationDocuments: getEditTradeDocumentUpdate(data),
-          accessories: gettradeupdateaccessories(data),
+      //    accessories: gettradeupdateaccessories(data),
           owners: gettradeownerarray(data),
           structureType: (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
