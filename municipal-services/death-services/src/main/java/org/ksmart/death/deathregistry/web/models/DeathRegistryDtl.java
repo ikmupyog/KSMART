@@ -46,13 +46,28 @@ public class DeathRegistryDtl {
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
 
-    @JsonProperty("workflowDetails")
-    private DeathWorkFlowDtls  deathWorkFlowDtls;
+    @JsonProperty("applicationType")
+    private String applicationType;
 
-   // @Valid
-//     @JsonProperty("wfDocuments")
-//     private List<Document> wfDocuments;
+    @JsonProperty("applicationStatus")
+    private String applicationStatus;
 
+    @JsonProperty("businessService")
+    private String businessService;
 
+    @JsonProperty("action")
+    private String action;
 
+    @JsonProperty("assignee")
+    private List<String> assignees;
+
+    @JsonProperty("workflowcode")
+    private String workflowcode;
+
+    private String assignuser;
+    private String comment;
+    @JsonProperty("wfDocuments")
+    private List<Document> wfDocuments;
+    public void setStatus(String s) {
+    }
 }

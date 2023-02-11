@@ -129,7 +129,7 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
                         registrationNoId=Long.parseLong(DeathRegistryConstants.REGISTRATION_NUMBER_FIRST);
                     }
 
-                        deathdtls.getDeathWorkFlowDtls().setRegistrationNo(registrationNo);
+                        deathdtls.getDeathBasicInfo().setRegistrationNo(registrationNo);
                         deathdtls.getDeathBasicInfo().setRegistrationNoID(registrationNoId);
                         deathdtls.getDeathBasicInfo().setRegistrationDate(currentTime);
                 });     
@@ -196,11 +196,11 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
 
                     if (RegistrationNoDetails.size()>=1) {
                         //RegistrationNo new format decision by Domain team created by Rakhi S                       
-                        certificateNo=String.valueOf("CT-"+RegistrationNoDetails.get(0).get("certNo"))+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathWorkFlowDtls().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathRegistryConstants.STATE_CODE.toString();
+                        certificateNo=String.valueOf("CT-"+RegistrationNoDetails.get(0).get("certNo"))+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathBasicInfo().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathRegistryConstants.STATE_CODE.toString();
                         certificateNoId=Long.parseLong(String.valueOf(RegistrationNoDetails.get(0).get("certNo")));
                     }
                     else{
-                        certificateNo="CT-"+DeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathWorkFlowDtls().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathRegistryConstants.STATE_CODE.toString();
+                        certificateNo="CT-"+DeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathBasicInfo().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathRegistryConstants.STATE_CODE.toString();
                         certificateNoId=Long.parseLong(DeathRegistryConstants.REGISTRATION_NUMBER_FIRST);
                     }
 

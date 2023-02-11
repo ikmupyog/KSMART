@@ -323,10 +323,6 @@ public class DeathRegistryBasicInfo {
     private String  occupation ;
 
     @Size(max = 64)
-    @JsonProperty("RegistrationNo")
-    private String  registrationNo ;
-
-    @Size(max = 64)
     @JsonProperty("DeathApplicationNo")
     private String deathApplicationNo = null;
 
@@ -421,6 +417,13 @@ public class DeathRegistryBasicInfo {
     private String placeofDeath ;
     private String deathPlaceOtherMl ;
     private String deathPlaceOtherEn ;
+
+    @JsonProperty("registrationNo")
+    private String registrationNo ; 
+
+    @JsonProperty("funcionUID")
+    private String funcionUID;
+
     // @Schema(type = "string", format = "uuid", description = "death registration request id")
     // @Size(max = 64)
     // @JsonProperty("Id")

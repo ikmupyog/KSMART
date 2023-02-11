@@ -64,7 +64,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.GeneralRemarks
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.applicationStatus
+      - jsonPath: $.deathCertificateDtls.*.applicationStatus
 
       - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
       
@@ -74,7 +74,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.registrationNo
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.registrationNo
 
       - jsonPath: $.deathCertificateDtls.*.familyInformationDeath.FatherNameEn
 
@@ -112,19 +112,19 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathACKNo
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.workflowcode
+      - jsonPath: $.deathCertificateDtls.*.workflowcode
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.businessService
+      - jsonPath: $.deathCertificateDtls.*.businessService
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.action
+      - jsonPath: $.deathCertificateDtls.*.action
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.Comment
+      - jsonPath: $.deathCertificateDtls.*.Comment
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.RegistrationDate
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.registrationNoID
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.applicationType
+      - jsonPath: $.deathCertificateDtls.*.applicationType
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeceasedIdproofNo
 
@@ -146,7 +146,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.familyInformationDeath.SpouseType
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.funcionUID
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.funcionUID
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.ackNoID
 
@@ -524,7 +524,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.familyInformationDeath.SpouseType
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.funcionUID 
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.funcionUID 
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathPlaceLocalityEn
 

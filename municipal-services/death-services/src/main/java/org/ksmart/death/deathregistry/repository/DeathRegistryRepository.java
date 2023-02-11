@@ -90,7 +90,7 @@ public class DeathRegistryRepository {
 				String deathCertPath = config.getDeathCertLink();
 				deathCertPath = deathCertPath.replace("$id",cert.getDeathBasicInfo().getId());
 				deathCertPath = deathCertPath.replace("$tenantId",cert.getDeathBasicInfo().getTenantId());
-				deathCertPath = deathCertPath.replace("$regNo",cert.getDeathWorkFlowDtls().getRegistrationNo());
+				deathCertPath = deathCertPath.replace("$regNo",cert.getDeathBasicInfo().getRegistrationNo());
 				deathCertPath = deathCertPath.replace("$dateofdeath",format.format(cert.getDeathBasicInfo().getDateOfDeath()));
 				deathCertPath = deathCertPath.replace("$gender",cert.getDeathBasicInfo().getDeceasedGender().toString());             
                 deathCertPath = deathCertPath.replace("$deathcertificateno",cert.getDeathBasicInfo().getCertificateNo());

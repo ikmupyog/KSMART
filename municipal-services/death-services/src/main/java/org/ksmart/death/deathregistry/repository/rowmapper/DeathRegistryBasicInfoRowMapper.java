@@ -74,6 +74,9 @@ public class DeathRegistryBasicInfoRowMapper  implements ResultSetExtractor  , B
           .nationality(rs.getString("nationality"))
           .religion(rs.getString("religion"))
           .occupation(rs.getString("occupation"))
+          //Rakhi S on 11.02.2023
+          .certificateNo(rs.getString("certificate_no"))
+          .certificateDate(rs.getLong("certificate_date"))
           .build();
       }   
 }

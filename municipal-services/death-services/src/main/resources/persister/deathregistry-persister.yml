@@ -64,7 +64,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.GeneralRemarks
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.applicationStatus
+      - jsonPath: $.deathCertificateDtls.*.applicationStatus
 
       - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
       
@@ -74,7 +74,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.registrationNo
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.registrationNo
 
       - jsonPath: $.deathCertificateDtls.*.familyInformationDeath.FatherNameEn
 
@@ -136,7 +136,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.familyInformationDeath.SpouseType
 
-      - jsonPath: $.deathCertificateDtls.*.workflowDetails.funcionUID
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.funcionUID
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathPlaceLocalityEn
 
