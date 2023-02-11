@@ -800,7 +800,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "death-Place-vehicle",
+        route: "death-place-vehicle",
         isMandatory: true,
         component: "DeathPlaceVehicle",
         texts: {
@@ -818,7 +818,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "death-Public-Place",
+        route: "death-public-place",
         isMandatory: true,
         component: "DeathPublicPlace",
         texts: {
@@ -830,11 +830,29 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "DeathPublicPlace",
         nextStep: "place-of-death",
         type: "component",
         hideInEmployee: true,
       },
+      {
+        route: "death-outside-jurisdiction",
+        isMandatory: true,
+        component: "DeathOutsideJurisdiction",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "DeathOutsideJurisdiction",
+        nextStep: "place-of-death",
+        type: "component",
+        hideInEmployee: true,
+      },
+      
       // {
       //   route: "statistical-info",
       //   component: "StatisticalInfo",
