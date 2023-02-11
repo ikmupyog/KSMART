@@ -46,16 +46,6 @@ public class TradeLicenseDetail {
   @Size(max = 64)
   private String id;
 
-  @JsonProperty("surveyNo")
-  @SafeHtml
-  @Size(max = 64)
-  private String surveyNo = null;
-
-  @Size(max = 64)
-  @SafeHtml
-  @JsonProperty("subOwnerShipCategory")
-  private String subOwnerShipCategory = null;
-
   @Size(max = 64)
   @SafeHtml
   @JsonProperty("ownershipCategory")
@@ -66,27 +56,8 @@ public class TradeLicenseDetail {
   @JsonProperty("structureType")
   private String structureType;
 
-  @JsonProperty("operationalArea")
-  private Double operationalArea;
-
   @JsonProperty("noOfEmployees")
   private Integer noOfEmployees;
-
-  @JsonProperty("adhocExemption")
-  private BigDecimal adhocExemption;
-
-  @JsonProperty("adhocPenalty")
-  private BigDecimal adhocPenalty;
-
-  @Size(max = 1024)
-  @SafeHtml
-  @JsonProperty("adhocExemptionReason")
-  private String adhocExemptionReason;
-
-  @Size(max = 1024)
-  @SafeHtml
-  @JsonProperty("adhocPenaltyReason")
-  private String adhocPenaltyReason;
 
   @NotNull
   @JsonProperty("owners")
@@ -141,10 +112,6 @@ public class TradeLicenseDetail {
   @Valid
   private List<TradeUnit> tradeUnits = new ArrayList<>();
 
-  @JsonProperty("accessories")
-  @Valid
-  private List<Accessory> accessories = null;
-
   @JsonProperty("applicationDocuments")
   @Valid
   private List<Document> applicationDocuments = null;
@@ -153,16 +120,13 @@ public class TradeLicenseDetail {
   @Valid
   private List<Document> verificationDocuments = null;
 
-  @JsonProperty("additionalDetail")
-  private JsonNode additionalDetail = null;
-
   @Valid
   @JsonProperty("institution")
   private Institution institution = null;
 
   @JsonProperty("structurePlace")
   @Valid
-  private List<StructurePlace> structurePlace = null;
+  private List<StructurePlace> structurePlace = new ArrayList<>();
 
   @Size(max = 64)
   @SafeHtml
@@ -179,23 +143,8 @@ public class TradeLicenseDetail {
 
   @Size(max = 64)
   @SafeHtml
-  @JsonProperty("licenseUnitType")
-  private String licenseUnitType;
-
-  @Size(max = 64)
-  @SafeHtml
-  @JsonProperty("licenseUnitId")
-  private String licenseUnitId;
-
-  @Size(max = 64)
-  @SafeHtml
   @JsonProperty("structurePlaceSubtype")
   private String structurePlaceSubtype;
-
-  @Size(max = 300)
-  @SafeHtml
-  @JsonProperty("customDetailType")
-  private String customDetailType = null;
 
   @Size(max = 1024)
   @SafeHtml
@@ -228,6 +177,10 @@ public class TradeLicenseDetail {
   @JsonProperty("establishmentUnitId")
   private String establishmentUnitId = null;
 
+  @JsonProperty("ownerspremise")
+  @Valid
+  private List<OwnerPremise> ownerspremise = new ArrayList<>();
+
   public TradeLicenseDetail addOwnersItem(OwnerInfo ownersItem) {
     if (this.owners == null)
       this.owners = new ArrayList<>();
@@ -241,15 +194,6 @@ public class TradeLicenseDetail {
       this.tradeUnits = new ArrayList<>();
     if (!this.tradeUnits.contains(tradeUnitsItem))
       this.tradeUnits.add(tradeUnitsItem);
-    return this;
-  }
-
-  public TradeLicenseDetail addAccessoriesItem(Accessory accessoriesItem) {
-    if (this.accessories == null) {
-      this.accessories = new ArrayList<>();
-    }
-    if (!this.accessories.contains(accessoriesItem))
-      this.accessories.add(accessoriesItem);
     return this;
   }
 

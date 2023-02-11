@@ -25,14 +25,14 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class TradeUnit   {
+public class TradeUnit {
 
-        @Size(max=64)
+        @Size(max = 64)
         @SafeHtml
         @JsonProperty("id")
         private String id;
 
-        @Size(max=64)
+        @Size(max = 64)
         @SafeHtml
         @JsonProperty("tenantId")
         private String tenantId = null;
@@ -40,24 +40,22 @@ public class TradeUnit   {
         @JsonProperty("active")
         private Boolean active;
 
-        @Size(max=64)
+        @Size(max = 64)
         @SafeHtml
-        @JsonProperty("tradeType")
-        private String tradeType = null;
+        @JsonProperty("businessCategory")
+        private String businessCategory = null;
 
-        @Size(max=64)
+        @Size(max = 64)
         @SafeHtml
-        @JsonProperty("uom")
-        private String uom = null;
+        @JsonProperty("businessType")
+        private String businessType = null;
 
-        @Size(max=64)
+        @Size(max = 64)
         @SafeHtml
-        @JsonProperty("uomValue")
-        private String uomValue = null;
+        @JsonProperty("businessSubtype")
+        private String businessSubtype = null;
 
         @JsonProperty("auditDetails")
         private AuditDetails auditDetails = null;
 
-
 }
-

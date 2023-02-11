@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import com.jayway.jsonpath.JsonPath;
+import org.egov.tl.util.IDGenerator;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,16 +30,19 @@ public class EnrichmentService {
     private BoundaryService boundaryService;
     private UserService userService;
     private WorkflowService workflowService;
+    private IDGenerator idGen;
 
     @Autowired
     public EnrichmentService(IdGenRepository idGenRepository, TLConfiguration config, TradeUtil tradeUtil,
-            BoundaryService boundaryService, UserService userService, WorkflowService workflowService) {
+            BoundaryService boundaryService, UserService userService, WorkflowService workflowService,
+            IDGenerator idGen) {
         this.idGenRepository = idGenRepository;
         this.config = config;
         this.tradeUtil = tradeUtil;
         this.boundaryService = boundaryService;
         this.userService = userService;
         this.workflowService = workflowService;
+        this.idGen = idGen;
     }
 
     /**
@@ -77,12 +81,6 @@ public class EnrichmentService {
                             tradeLicense.setValidTo(taxPeriods.get(TLConstants.MDMS_ENDDATE));
                         tradeLicense.setValidFrom(taxPeriods.get(TLConstants.MDMS_STARTDATE));
                     }
-                    if (!CollectionUtils.isEmpty(tradeLicense.getTradeLicenseDetail().getAccessories()))
-                        tradeLicense.getTradeLicenseDetail().getAccessories().forEach(accessory -> {
-                            accessory.setTenantId(tradeLicense.getTenantId());
-                            accessory.setId(UUID.randomUUID().toString());
-                            accessory.setActive(true);
-                        });
                     break;
             }
             tradeLicense.getTradeLicenseDetail().getAddress().setTenantId(tradeLicense.getTenantId());
@@ -127,22 +125,29 @@ public class EnrichmentService {
                     });
             });
 
+            tradeLicense.getTradeLicenseDetail().getOwnerspremise().forEach(ownerPremise -> {
+                ownerPremise.setTenantId(tradeLicense.getTenantId());
+                ownerPremise.setId(UUID.randomUUID().toString());
+                ownerPremise.setActive(true);
+            });
+
             // if
             // (tradeLicense.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional()))
-            // {
+            // {ownerPremise
             tradeLicense.getTradeLicenseDetail().getInstitution().setId(UUID.randomUUID().toString());
             tradeLicense.getTradeLicenseDetail().getInstitution().setActive(true);
             tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
-            tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
-                owner.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitution().getId());
-            });
             // }
+
+            tradeLicense.setApplicationNumber(
+                    idGen.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_LNEW,
+                            TLConstants.APP_NUMBER_CAPTION));
 
             if (requestInfo.getUserInfo().getType().equalsIgnoreCase("CITIZEN"))
                 tradeLicense.setAccountId(requestInfo.getUserInfo().getUuid());
 
         });
-        setIdgenIds(tradeLicenseRequest);
+        // setIdgenIds(tradeLicenseRequest);
         setStatusForCreate(tradeLicenseRequest);
         String businessService = tradeLicenseRequest.getLicenses().isEmpty() ? null
                 : tradeLicenseRequest.getLicenses().get(0).getBusinessService();
@@ -393,15 +398,6 @@ public class EnrichmentService {
                     && (tradeLicense.getStatus().equalsIgnoreCase(STATUS_INITIATED)))
                     || workflowService.isStateUpdatable(tradeLicense.getStatus(), businessService)) {
                 tradeLicense.getTradeLicenseDetail().setAuditDetails(auditDetails);
-                if (!CollectionUtils.isEmpty(tradeLicense.getTradeLicenseDetail().getAccessories())) {
-                    tradeLicense.getTradeLicenseDetail().getAccessories().forEach(accessory -> {
-                        if (accessory.getId() == null) {
-                            accessory.setTenantId(tradeLicense.getTenantId());
-                            accessory.setId(UUID.randomUUID().toString());
-                            accessory.setActive(true);
-                        }
-                    });
-                }
 
                 tradeLicense.getTradeLicenseDetail().getTradeUnits().forEach(tradeUnit -> {
                     if (tradeUnit.getId() == null) {
@@ -429,9 +425,6 @@ public class EnrichmentService {
                 tradeLicense.getTradeLicenseDetail().getInstitution().setId(UUID.randomUUID().toString());
                 tradeLicense.getTradeLicenseDetail().getInstitution().setActive(true);
                 tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
-                tradeLicense.getTradeLicenseDetail().getOwners().forEach(owner -> {
-                    owner.setInstitutionId(tradeLicense.getTradeLicenseDetail().getInstitution().getId());
-                });
                 // }
 
                 if (!CollectionUtils.isEmpty(tradeLicense.getTradeLicenseDetail().getApplicationDocuments())) {
@@ -515,7 +508,7 @@ public class EnrichmentService {
                         // license.setValidFrom(time);
                         if (mdmsData != null && businessService.equalsIgnoreCase(businessService_BPA)) {
                             String jsonPath = TLConstants.validityPeriodMap.replace("{}",
-                                    license.getTradeLicenseDetail().getTradeUnits().get(0).getTradeType());
+                                    license.getTradeLicenseDetail().getTradeUnits().get(0).getBusinessSubtype());
                             List<Integer> res = JsonPath.read(mdmsData, jsonPath);
                             Calendar calendar = Calendar.getInstance();
                             calendar.add(Calendar.YEAR, res.get(0));
@@ -571,7 +564,8 @@ public class EnrichmentService {
                 // enrichBoundary(new TradeLicenseRequest(requestInfo, licenses));
                 break;
         }
-        UserDetailResponse userDetailResponse = userService.getUser(searchCriteria, requestInfo);
+        UserDetailResponse userDetailResponse = userService.getUser(searchCriteria,
+                requestInfo);
         enrichOwner(userDetailResponse, licenses);
         return licenses;
     }

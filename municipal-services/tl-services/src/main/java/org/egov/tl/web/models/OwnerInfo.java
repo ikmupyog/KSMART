@@ -5,9 +5,12 @@ import java.util.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import lombok.*;
 import org.egov.common.contract.request.Role;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -16,6 +19,7 @@ import javax.validation.constraints.*;
 /**
  * OwnerInfo
  */
+@ApiModel(description = "A Object holds the details of the Applicant")
 @Validated
 @javax.annotation.Generated(value = "org.egov.codegen.SpringBootCodegen", date = "2018-09-18T17:06:11.263+05:30")
 
@@ -25,22 +29,6 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 public class OwnerInfo extends User {
 
-        @JsonProperty("isPrimaryOwner")
-        private Boolean isPrimaryOwner;
-
-        @JsonProperty("ownerShipPercentage")
-        private Double ownerShipPercentage;
-
-        @Size(max = 64)
-        @SafeHtml
-        @JsonProperty("ownerType")
-        private String ownerType;
-
-        @Size(max = 64)
-        @SafeHtml
-        @JsonProperty("institutionId")
-        private String institutionId;
-
         @JsonProperty("documents")
         @Valid
         private List<Document> documents;
@@ -48,47 +36,50 @@ public class OwnerInfo extends User {
         @JsonProperty("userActive")
         private Boolean userActive;
 
-        public enum RelationshipEnum {
-                FATHER("FATHER"),
+        @Size(max = 64)
+        @SafeHtml
+        @JsonProperty("nameLocal ")
+        private String applicantNameLocal = null;
 
-                HUSBAND("HUSBAND");
+        @Size(max = 64)
+        @SafeHtml
+        @JsonProperty("careOf")
+        private String careOf = null;
 
-                private String value;
+        @Size(max = 64)
+        @SafeHtml
+        @JsonProperty("careOfName")
+        private String careOfName = null;
 
-                RelationshipEnum(String value) {
-                        this.value = value;
-                }
+        @Size(max = 64)
+        @SafeHtml
+        @JsonProperty("designation")
+        private String designation = null;
 
-                @Override
-                @JsonValue
-                public String toString() {
-                        return String.valueOf(value);
-                }
+        @Size(max = 64)
+        @SafeHtml
+        @JsonProperty("houseName")
+        private String houseName = null;
 
-                @JsonCreator
-                public static RelationshipEnum fromValue(String text) {
-                        for (RelationshipEnum b : RelationshipEnum.values()) {
-                                if (String.valueOf(b.value).equalsIgnoreCase(text)) {
-                                        return b;
-                                }
-                        }
-                        return null;
-                }
-        }
+        @Size(max = 64)
+        @SafeHtml
+        @JsonProperty("street")
+        private String street = null;
 
-        @JsonProperty("relationship")
-        private RelationshipEnum relationship;
+        @Size(max = 64)
+        @SafeHtml
+        @JsonProperty("locality")
+        private String locality = null;
 
         @Size(max = 150)
         @SafeHtml
-        @JsonProperty("consentAgreementPlace")
-        private String consentAgreementPlace;
+        @JsonProperty("postOffice")
+        private String postOffice = null;
 
-        @JsonProperty("consentAgreementDate")
-        private Long consentAgreementDate;
-
-        @JsonProperty("consentAgreementEndDate")
-        private Long consentAgreementEndDate;
+        @Size(max = 150)
+        @SafeHtml
+        @JsonProperty("pincode")
+        private String pincode = null;
 
         @Builder
         public OwnerInfo(Long id, String uuid, String userName, String password, String salutation, String name,
@@ -100,26 +91,25 @@ public class OwnerInfo extends User {
                         List<Role> roles, String fatherOrHusbandName, String bloodGroup,
                         String identificationMark, String photo, String createdBy, Long createdDate,
                         String lastModifiedBy, Long lastModifiedDate, String otpReference, String tenantId,
-                        Boolean isPrimaryOwner, Double ownerShipPercentage, String ownerType,
-                        String institutionId, List<Document> documents, RelationshipEnum relationship,
-                        Boolean userActive, String consentAgreementPlace, Long consentAgreementDate,
-                        Long consentAgreementEndDate) {
+                        List<Document> documents, Boolean userActive, String houseName, String street,
+                        String locality, String postOffice, String pincode, String designation, String careOf,
+                        String careOfName) {
                 super(id, uuid, userName, password, salutation, name, gender, mobileNumber, emailId, altContactNumber,
                                 pan, aadhaarNumber, permanentAddress, permanentCity, permanentPincode,
                                 correspondenceCity, correspondencePincode, correspondenceAddress, active, dob,
                                 pwdExpiryDate, locale, type, signature, accountLocked, roles, fatherOrHusbandName,
                                 bloodGroup, identificationMark, photo, createdBy, createdDate, lastModifiedBy,
                                 lastModifiedDate, otpReference, tenantId);
-                this.isPrimaryOwner = isPrimaryOwner;
-                this.ownerShipPercentage = ownerShipPercentage;
-                this.ownerType = ownerType;
-                this.userActive = userActive;
-                this.relationship = relationship;
-                this.institutionId = institutionId;
                 this.documents = documents;
-                this.consentAgreementPlace = consentAgreementPlace;
-                this.consentAgreementDate = consentAgreementDate;
-                this.consentAgreementEndDate = consentAgreementEndDate;
+                this.userActive = userActive;
+                this.houseName = houseName;
+                this.street = street;
+                this.locality = locality;
+                this.postOffice = postOffice;
+                this.pincode = pincode;
+                this.designation = designation;
+                this.careOf = careOf;
+                this.careOfName = careOfName;
         }
 
         public OwnerInfo addDocumentsItem(Document documentsItem) {

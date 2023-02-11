@@ -33,7 +33,6 @@ import java.util.Map;
 
 import static org.egov.tl.util.TLConstants.*;
 
-
 @Service
 @Slf4j
 public class PaymentUpdateService {
@@ -58,9 +57,10 @@ public class PaymentUpdateService {
 	private Boolean pickWFServiceNameFromTradeTypeOnly;
 
 	@Autowired
-	public PaymentUpdateService(TradeLicenseService tradeLicenseService, TLConfiguration config, TLRepository repository,
-								WorkflowIntegrator wfIntegrator, EnrichmentService enrichmentService, ObjectMapper mapper,
-								WorkflowService workflowService,TradeUtil util) {
+	public PaymentUpdateService(TradeLicenseService tradeLicenseService, TLConfiguration config,
+			TLRepository repository,
+			WorkflowIntegrator wfIntegrator, EnrichmentService enrichmentService, ObjectMapper mapper,
+			WorkflowService workflowService, TradeUtil util) {
 		this.tradeLicenseService = tradeLicenseService;
 		this.config = config;
 		this.repository = repository;
@@ -70,9 +70,6 @@ public class PaymentUpdateService {
 		this.workflowService = workflowService;
 		this.util = util;
 	}
-
-
-
 
 	final String tenantId = "tenantId";
 
@@ -88,17 +85,19 @@ public class PaymentUpdateService {
 	public void process(HashMap<String, Object> record) {
 
 		try {
-			PaymentRequest paymentRequest = mapper.convertValue(record,PaymentRequest.class);
+			PaymentRequest paymentRequest = mapper.convertValue(record, PaymentRequest.class);
 			RequestInfo requestInfo = paymentRequest.getRequestInfo();
 			List<PaymentDetail> paymentDetails = paymentRequest.getPayment().getPaymentDetails();
 			String tenantId = paymentRequest.getPayment().getTenantId();
-			for(PaymentDetail paymentDetail : paymentDetails){
-				if (paymentDetail.getBusinessService().equalsIgnoreCase(businessService_TL) || paymentDetail.getBusinessService().equalsIgnoreCase(businessService_BPA)) {
+			for (PaymentDetail paymentDetail : paymentDetails) {
+				if (paymentDetail.getBusinessService().equalsIgnoreCase(businessService_TL)
+						|| paymentDetail.getBusinessService().equalsIgnoreCase(businessService_BPA)) {
 					TradeLicenseSearchCriteria searchCriteria = new TradeLicenseSearchCriteria();
 					searchCriteria.setTenantId(tenantId);
 					searchCriteria.setApplicationNumber(paymentDetail.getBill().getConsumerCode());
 					searchCriteria.setBusinessService(paymentDetail.getBusinessService());
-					List<TradeLicense> licenses = tradeLicenseService.getLicensesWithOwnerInfo(searchCriteria, requestInfo);
+					List<TradeLicense> licenses = tradeLicenseService.getLicensesWithOwnerInfo(searchCriteria,
+							requestInfo);
 					String wfbusinessServiceName = null;
 					switch (paymentDetail.getBusinessService()) {
 						case businessService_TL:
@@ -106,14 +105,15 @@ public class PaymentUpdateService {
 							break;
 
 						case businessService_BPA:
-							String tradeType = licenses.get(0).getTradeLicenseDetail().getTradeUnits().get(0).getTradeType();
+							String tradeType = licenses.get(0).getTradeLicenseDetail().getTradeUnits().get(0)
+									.getBusinessSubtype();
 							if (pickWFServiceNameFromTradeTypeOnly)
 								tradeType = tradeType.split("\\.")[0];
 							wfbusinessServiceName = tradeType;
 							break;
 					}
-				BusinessService businessService = workflowService.getBusinessService(licenses.get(0).getTenantId(), requestInfo,wfbusinessServiceName);
-
+					BusinessService businessService = workflowService.getBusinessService(licenses.get(0).getTenantId(),
+							requestInfo, wfbusinessServiceName);
 
 					if (CollectionUtils.isEmpty(licenses))
 						throw new CustomException("INVALID RECEIPT",
@@ -144,15 +144,16 @@ public class PaymentUpdateService {
 							endStates = util.getBPAEndState(updateRequest);
 							break;
 					}
-					enrichmentService.postStatusEnrichment(updateRequest,endStates,null);
+					enrichmentService.postStatusEnrichment(updateRequest, endStates, null);
 
 					/*
 					 * calling repository to update the object in TL tables
 					 */
-					Map<String,Boolean> idToIsStateUpdatableMap = util.getIdToIsStateUpdatableMap(businessService,licenses);
-					repository.update(updateRequest,idToIsStateUpdatableMap);
+					Map<String, Boolean> idToIsStateUpdatableMap = util.getIdToIsStateUpdatableMap(businessService,
+							licenses);
+					repository.update(updateRequest, idToIsStateUpdatableMap);
+				}
 			}
-		 }
 		} catch (Exception e) {
 			log.error("KAFKA_PROCESS_ERROR", e);
 		}
@@ -168,8 +169,10 @@ public class PaymentUpdateService {
 	private Map<String, String> enrichValMap(DocumentContext context) {
 		Map<String, String> valMap = new HashMap<>();
 		try {
-			valMap.put(businessService, context.read("$.Payments.*.paymentDetails[?(@.businessService=='TL')].businessService"));
-			valMap.put(consumerCode, context.read("$.Payments.*.paymentDetails[?(@.businessService=='TL')].bill.consumerCode"));
+			valMap.put(businessService,
+					context.read("$.Payments.*.paymentDetails[?(@.businessService=='TL')].businessService"));
+			valMap.put(consumerCode,
+					context.read("$.Payments.*.paymentDetails[?(@.businessService=='TL')].bill.consumerCode"));
 			valMap.put(tenantId, context.read("$.Payments[0].tenantId"));
 		} catch (Exception e) {
 			throw new CustomException("PAYMENT ERROR", "Unable to fetch values from payment");

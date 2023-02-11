@@ -27,6 +27,7 @@ import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 
 import static org.egov.tl.util.TLConstants.*;
+
 @Service
 @Slf4j
 public class WorkflowIntegrator {
@@ -88,15 +89,17 @@ public class WorkflowIntegrator {
 	public void callWorkFlow(TradeLicenseRequest tradeLicenseRequest) {
 		TradeLicense currentLicense = tradeLicenseRequest.getLicenses().get(0);
 		String wfTenantId = currentLicense.getTenantId();
-		String businessServiceFromMDMS = tradeLicenseRequest.getLicenses().isEmpty()?null:currentLicense.getBusinessService();
+		String businessServiceFromMDMS = tradeLicenseRequest.getLicenses().isEmpty() ? null
+				: currentLicense.getBusinessService();
 		if (businessServiceFromMDMS == null)
 			businessServiceFromMDMS = businessService_TL;
 		JSONArray array = new JSONArray();
 		for (TradeLicense license : tradeLicenseRequest.getLicenses()) {
-			if((businessServiceFromMDMS.equals(businessService_TL))||(!license.getAction().equalsIgnoreCase(TRIGGER_NOWORKFLOW))) {
+			if ((businessServiceFromMDMS.equals(businessService_TL))
+					|| (!license.getAction().equalsIgnoreCase(TRIGGER_NOWORKFLOW))) {
 				JSONObject obj = new JSONObject();
 				List<Map<String, String>> uuidmaps = new LinkedList<>();
-				if(!CollectionUtils.isEmpty(license.getAssignee())){
+				if (!CollectionUtils.isEmpty(license.getAssignee())) {
 
 					// Adding assignes to processInstance
 					license.getAssignee().forEach(assignee -> {
@@ -107,19 +110,18 @@ public class WorkflowIntegrator {
 				}
 				obj.put(BUSINESSIDKEY, license.getApplicationNumber());
 				obj.put(TENANTIDKEY, wfTenantId);
-				switch(businessServiceFromMDMS)
-				{
-				//TLR Changes
+				switch (businessServiceFromMDMS) {
+					// TLR Changes
 					case businessService_TL:
 						obj.put(BUSINESSSERVICEKEY, currentLicense.getWorkflowCode());
 						obj.put(MODULENAMEKEY, TLMODULENAMEVALUE);
 						break;
 
 					case businessService_BPA:
-						String tradeType = tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getTradeUnits().get(0).getTradeType();
-						if(pickWFServiceNameFromTradeTypeOnly)
-						{
-							tradeType=tradeType.split("\\.")[0];
+						String tradeType = tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail()
+								.getTradeUnits().get(0).getBusinessSubtype();
+						if (pickWFServiceNameFromTradeTypeOnly) {
+							tradeType = tradeType.split("\\.")[0];
 						}
 						obj.put(BUSINESSSERVICEKEY, tradeType);
 						obj.put(MODULENAMEKEY, BPAMODULENAMEVALUE);
@@ -133,14 +135,14 @@ public class WorkflowIntegrator {
 				array.add(obj);
 			}
 		}
-		if(!array.isEmpty())
-		{
+		if (!array.isEmpty()) {
 			JSONObject workFlowRequest = new JSONObject();
 			workFlowRequest.put(REQUESTINFOKEY, tradeLicenseRequest.getRequestInfo());
 			workFlowRequest.put(WORKFLOWREQUESTARRAYKEY, array);
 			String response = null;
 			try {
-				response = rest.postForObject(config.getWfHost().concat(config.getWfTransitionPath()), workFlowRequest, String.class);
+				response = rest.postForObject(config.getWfHost().concat(config.getWfTransitionPath()), workFlowRequest,
+						String.class);
 			} catch (HttpClientErrorException e) {
 
 				/*

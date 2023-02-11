@@ -76,7 +76,7 @@ public class TLValidator {
         switch (businessService) {
             case businessService_TL:
                 valideDates(request, mdmsData);
-                propertyValidator.validateProperty(request);
+                // propertyValidator.validateProperty(request);
                 validateTLSpecificNotNullFields(request);
                 break;
 
@@ -127,23 +127,29 @@ public class TLValidator {
 
     private void validateBPASpecificValidations(TradeLicenseRequest request) {
 
-        request.getLicenses().forEach(license -> {
-            Map<String, String> errorMap = new HashMap<>();
-            if (license.getTradeLicenseDetail().getSubOwnerShipCategory().contains("INSTITUTION")) {
-                if (license.getTradeLicenseDetail().getInstitution().getContactNo() == null)
-                    errorMap.put("NULL_INSTITUTIONCONTACTNO", " Institution Contact No cannot be null");
-                if (license.getTradeLicenseDetail().getInstitution().getName() == null)
-                    errorMap.put("NULL_AUTHORISEDPERSONNAME", " Authorised person name can not be null");
-                if (license.getTradeLicenseDetail().getInstitution().getInstituionName() == null)
-                    errorMap.put("NULL_INSTITUTIONNAME", " Institute name can not be null");
-                if (license.getTradeLicenseDetail().getInstitution().getAddress() == null)
-                    errorMap.put("NULL_ADDRESS", " Institute address can not be null");
-                if (license.getTradeLicenseDetail().getTradeUnits().size() > 1)
-                    errorMap.put("NOTALLOWED_TRADEUNITS", " More than one tradeunit not supported in BPA");
-                if (!errorMap.isEmpty())
-                    throw new CustomException(errorMap);
-            }
-        });
+        // request.getLicenses().forEach(license -> {
+        // Map<String, String> errorMap = new HashMap<>();
+        // if
+        // (license.getTradeLicenseDetail().getSubOwnerShipCategory().contains("INSTITUTION"))
+        // {
+        // if (license.getTradeLicenseDetail().getInstitution().getContactNo() == null)
+        // errorMap.put("NULL_INSTITUTIONCONTACTNO", " Institution Contact No cannot be
+        // null");
+        // if (license.getTradeLicenseDetail().getInstitution().getName() == null)
+        // errorMap.put("NULL_AUTHORISEDPERSONNAME", " Authorised person name can not be
+        // null");
+        // if (license.getTradeLicenseDetail().getInstitution().getInstituionName() ==
+        // null)
+        // errorMap.put("NULL_INSTITUTIONNAME", " Institute name can not be null");
+        // if (license.getTradeLicenseDetail().getInstitution().getAddress() == null)
+        // errorMap.put("NULL_ADDRESS", " Institute address can not be null");
+        // if (license.getTradeLicenseDetail().getTradeUnits().size() > 1)
+        // errorMap.put("NOTALLOWED_TRADEUNITS", " More than one tradeunit not supported
+        // in BPA");
+        // if (!errorMap.isEmpty())
+        // throw new CustomException(errorMap);
+        // }
+        // });
 
         request.getLicenses().forEach(license -> {
             license.getTradeLicenseDetail().getOwners().forEach(
@@ -219,23 +225,23 @@ public class TLValidator {
      * 
      * @param request The input TradeLicenseRequest Object
      */
-    private void validateInstitution(TradeLicenseRequest request) {
-        List<TradeLicense> licenses = request.getLicenses();
-        licenses.forEach(license -> {
-            if (license.getTradeLicenseDetail().getInstitution() != null &&
-                    !license.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional()))
-                throw new CustomException("INVALID REQUEST",
-                        "The institution object should be null for ownershipCategory "
-                                + license.getTradeLicenseDetail().getSubOwnerShipCategory());
+    // private void validateInstitution(TradeLicenseRequest request) {
+    // List<TradeLicense> licenses = request.getLicenses();
+    // licenses.forEach(license -> {
+    // if (license.getTradeLicenseDetail().getInstitution() != null &&
+    // !license.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional()))
+    // throw new CustomException("INVALID REQUEST",
+    // "The institution object should be null for ownershipCategory "
+    // + license.getTradeLicenseDetail().getSubOwnerShipCategory());
 
-            if (license.getTradeLicenseDetail().getInstitution() == null &&
-                    license.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional()))
-                throw new CustomException("INVALID REQUEST",
-                        "The institution object cannot be null for ownershipCategory "
-                                + license.getTradeLicenseDetail().getSubOwnerShipCategory());
+    // if (license.getTradeLicenseDetail().getInstitution() == null &&
+    // license.getTradeLicenseDetail().getSubOwnerShipCategory().contains(config.getInstitutional()))
+    // throw new CustomException("INVALID REQUEST",
+    // "The institution object cannot be null for ownershipCategory "
+    // + license.getTradeLicenseDetail().getSubOwnerShipCategory());
 
-        });
-    }
+    // });
+    // }
 
     /**
      * Validates the fromDate and toDate of the request
@@ -344,7 +350,7 @@ public class TLValidator {
         switch (businessService) {
             case businessService_TL:
                 valideDates(request, mdmsData);
-                propertyValidator.validateProperty(request);
+                // propertyValidator.validateProperty(request);
                 validateTLSpecificNotNullFields(request);
                 break;
 
@@ -417,22 +423,6 @@ public class TLValidator {
             });
         }
         return tradeUnitIds;
-    }
-
-    /**
-     * Returns the list of ids of all accessories as list for the given tradelicense
-     * 
-     * @param license TradeLicense whose accessoryIds are to be extracted
-     * @return list od accessoryIds
-     */
-    private List<String> getAccessoryIds(TradeLicense license) {
-        List<String> accessoryIds = new LinkedList<>();
-        if (!CollectionUtils.isEmpty(license.getTradeLicenseDetail().getAccessories())) {
-            license.getTradeLicenseDetail().getAccessories().forEach(accessory -> {
-                accessoryIds.add(accessory.getId());
-            });
-        }
-        return accessoryIds;
     }
 
     /**
@@ -555,7 +545,6 @@ public class TLValidator {
                         "The id " + license.getTradeLicenseDetail().getAddress().getId() + " does not exist");
 
             compareIdList(getTradeUnitIds(searchedLicense), getTradeUnitIds(license), errorMap);
-            compareIdList(getAccessoryIds(searchedLicense), getAccessoryIds(license), errorMap);
             compareIdList(getOwnerIds(searchedLicense), getOwnerIds(license), errorMap);
             compareIdList(getOwnerDocIds(searchedLicense), getOwnerDocIds(license), errorMap);
             compareIdList(getApplicationDocIds(searchedLicense), getApplicationDocIds(license), errorMap);

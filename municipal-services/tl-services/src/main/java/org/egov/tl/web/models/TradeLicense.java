@@ -10,6 +10,7 @@ import lombok.*;
 import org.egov.tl.util.TLConstants;
 import org.egov.tl.web.models.calculation.Calculation;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -130,16 +131,6 @@ public class TradeLicense {
   @JsonProperty("oldLicenseNumber")
   private String oldLicenseNumber = null;
 
-  @Size(max = 256)
-  @SafeHtml
-  @JsonProperty("propertyId")
-  private String propertyId = null;
-
-  @Size(max = 64)
-  @SafeHtml
-  @JsonProperty("oldPropertyId")
-  private String oldPropertyId = null;
-
   @Size(max = 64)
   @SafeHtml
   @JsonProperty("accountId")
@@ -147,8 +138,8 @@ public class TradeLicense {
 
   @Size(max = 256)
   @SafeHtml
-  @JsonProperty("tradeName")
-  private String tradeName = null;
+  @JsonProperty("licenseUnitName")
+  private String licenseUnitName = null;
 
   @JsonProperty("applicationDate")
   private Long applicationDate = null;
@@ -219,11 +210,15 @@ public class TradeLicense {
 
   @Size(max = 400)
   @SafeHtml
-  @JsonProperty("licenseUnitNameMal")
-  private String licenseUnitNameMal = null;
+  @JsonProperty("licenseUnitNameLocal")
+  private String licenseUnitNameLocal = null;
 
   @Size(max = 128)
   @JsonProperty("assignUser")
   private String assignUser = null;
+
+  @Range(min = 1, max = 5)
+  @JsonProperty("desiredLicensePeriod")
+  private Integer desiredLicensePeriod = 0;
 
 }

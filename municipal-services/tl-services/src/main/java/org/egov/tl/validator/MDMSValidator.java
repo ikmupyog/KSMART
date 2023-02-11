@@ -85,52 +85,12 @@ public class MDMSValidator {
                     // + "' does not exists");
 
                     license.getTradeLicenseDetail().getTradeUnits().forEach(unit -> {
-                        if (!tradeTypeUomMap.containsKey(unit.getTradeType()))
+                        if (!tradeTypeUomMap.containsKey(unit.getBusinessSubtype()))
                             errorMap.put("INVALID TRADETYPE",
-                                    "The Trade type '" + unit.getTradeType() + "' does not exists");
+                                    "The Trade type '" + unit.getBusinessSubtype() + "' does not exists");
 
-                        if (unit.getUom() != null) {
-                            if (!unit.getUom().equalsIgnoreCase(tradeTypeUomMap.get(unit.getTradeType())))
-                                errorMap.put("INVALID UOM", "The UOM: " + unit.getUom()
-                                        + " is not valid for tradeType: " + unit.getTradeType());
-                            else if (unit.getUom().equalsIgnoreCase(tradeTypeUomMap.get(unit.getTradeType()))
-                                    && unit.getUomValue() == null)
-                                throw new CustomException("INVALID UOMVALUE", "The uomValue cannot be null");
-                        }
-
-                        else if (unit.getUom() == null) {
-                            if (tradeTypeUomMap.get(unit.getTradeType()) != null)
-                                errorMap.put("INVALID UOM",
-                                        "The UOM cannot be null for tradeType: " + unit.getTradeType());
-                        }
                     });
 
-                    if (!CollectionUtils.isEmpty(license.getTradeLicenseDetail().getAccessories())) {
-                        license.getTradeLicenseDetail().getAccessories().forEach(accessory -> {
-                            if (!accessoryeUomMap.containsKey(accessory.getAccessoryCategory()))
-                                errorMap.put("INVALID ACCESORRYCATEGORY",
-                                        "The Accessory Category '" + accessory.getAccessoryCategory()
-                                                + "' does not exists");
-
-                            if (accessory.getUom() != null) {
-                                if (!accessory.getUom()
-                                        .equalsIgnoreCase(accessoryeUomMap.get(accessory.getAccessoryCategory())))
-                                    errorMap.put("INVALID UOM",
-                                            "The UOM: " + accessory.getUom() + " is not valid for accessoryCategory: "
-                                                    + accessory.getAccessoryCategory());
-                                else if (accessory.getUom()
-                                        .equalsIgnoreCase(accessoryeUomMap.get(accessory.getAccessoryCategory()))
-                                        && accessory.getUomValue() == null)
-                                    throw new CustomException("INVALID UOMVALUE", "The uomValue cannot be null");
-                            }
-
-                            else if (accessory.getUom() == null) {
-                                if (accessoryeUomMap.get(accessory.getAccessoryCategory()) != null)
-                                    errorMap.put("INVALID UOM", "The UOM cannot be null for tradeType: "
-                                            + accessory.getAccessoryCategory());
-                            }
-                        });
-                    }
                     if (licenseRequest.getLicenses().get(0).getTradeLicenseDetail()
                             .getLicenseeType().equals("INSTITUTION")) {
                         if (!masterData.get(TLConstants.NATURE_INSTITUTION)
@@ -145,9 +105,9 @@ public class MDMSValidator {
 
                 case businessService_BPA:
                     license.getTradeLicenseDetail().getTradeUnits().forEach(unit -> {
-                        if (!tradeTypeUomMap.containsKey(unit.getTradeType()))
+                        if (!tradeTypeUomMap.containsKey(unit.getBusinessSubtype()))
                             errorMap.put("INVALID TRADETYPE",
-                                    "The Trade type '" + unit.getTradeType() + "' does not exist");
+                                    "The Trade type '" + unit.getBusinessSubtype() + "' does not exist");
                     });
                     break;
             }

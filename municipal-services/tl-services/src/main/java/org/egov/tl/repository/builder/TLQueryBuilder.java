@@ -53,9 +53,9 @@ public class TLQueryBuilder {
             "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as " +
             "tld_createdTime, "
             +
-            "tlunit.id as tl_un_id,tlunit.tradeType as tl_un_tradeType,tlunit.uom as tl_un_uom,tlunit.active as tl_un_active,"
+            "tlunit.id as tl_un_id,tlunit.businesssubtype as tl_un_businesssubtype,tlunit.businesscategory as tl_un_businesscategory,tlunit.active as tl_un_active,"
             +
-            "tlunit.uomvalue as tl_un_uomvalue, "
+            "tlunit.businesstype as tl_un_businesstype, "
             +
             "tlapldoc.id as tl_ap_doc_id,tlapldoc.documenttype as tl_ap_doc_documenttype,tlapldoc.filestoreid as tl_ap_doc_filestoreid,tlapldoc.active as tl_ap_doc_active,"
             +
@@ -65,17 +65,17 @@ public class TLQueryBuilder {
             +
             "tlownerdoc.documenttype as ownerdocType,tlownerdoc.filestoreid as ownerfileStoreId,tlownerdoc.documentuid as ownerdocuid,tlownerdoc.active as ownerdocactive,"
             +
-            " tlinsti.id as instiid,tlinsti.name as authorisedpersonname,tlinsti.type as institutiontype,tlinsti.tenantid as institenantId,tlinsti.active as instiactive, "
+            " tlinsti.id as instiid, tlinsti.tenantid as institenantId,tlinsti.active as instiactive, "
             +
-            " tlinsti.instituionname as instiinstituionname, tlinsti.contactno as insticontactno, tlinsti.organisationregistrationno as instiorganisationregistrationno, tlinsti.address as instiaddress, "
+            " tlinsti.institutionname as instiinstitutionname, tlinsti.contactno as insticontactno, tlinsti.organisationregistrationno as instiorganisationregistrationno, tlinsti.address as instiaddress, "
             +
-            " tlinsti.natureofinstitution as natureofinstitution, tlinsti.email as instiemail, "
+            " tlinsti.natureofinstitution as natureofinstitution, tlinsti.email as instiemail, tlinsti.licenseunitid as inst_licenseunitid, "
             +
             " tlstructplace.id as tlstructplace_id, tlstructplace.blockno as blockno, tlstructplace.surveyno as surveyno, tlstructplace.subdivisionno as subdivisionno, "
             +
             " tlstructplace.partitionno as partitionno, tlstructplace.doorno as tlstructplace_doorno, tlstructplace.doorsub as doorsub, "
             +
-            " tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active, tlstructplace.isresurveyed AS isresurveyed FROM eg_tl_tradelicense tl"
+            " tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active, tlstructplace.isresurveyed AS isresurveyed, tlstructplace.stallno as stallno FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_tradelicensedetail tld ON tld.tradelicenseid = tl.id"
             + LEFT_OUTER_JOIN_STRING
@@ -271,7 +271,7 @@ public class TLQueryBuilder {
 
             if (criteria.getTradeType() != null) {
                 addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tlunit.tradetype LIKE ? ");
+                builder.append("  tlunit.businesssubtype LIKE ? ");
                 preparedStmtList.add(criteria.getTradeType().split("\\.")[0] + "%");
             }
 

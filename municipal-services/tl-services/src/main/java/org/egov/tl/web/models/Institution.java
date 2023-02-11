@@ -26,28 +26,13 @@ public class Institution {
   @JsonProperty("tenantId")
   private String tenantId;
 
-  @Size(max = 64)
-  @SafeHtml
-  @JsonProperty("name")
-  private String name;
-
-  @Size(max = 64)
-  @SafeHtml
-  @JsonProperty("type")
-  private String type;
-
-  @Size(max = 64)
-  @SafeHtml
-  @JsonProperty("designation")
-  private String designation;
-
   @JsonProperty("active")
   private Boolean active;
 
   @Size(max = 256)
   @SafeHtml
-  @JsonProperty("instituionName")
-  private String instituionName;
+  @JsonProperty("institutionName")
+  private String institutionName;
 
   @Size(max = 64)
   @SafeHtml
@@ -73,4 +58,9 @@ public class Institution {
   @SafeHtml
   @JsonProperty("email")
   private String email;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("licenseUnitId")
+  private String licenseUnitId = null;
 }

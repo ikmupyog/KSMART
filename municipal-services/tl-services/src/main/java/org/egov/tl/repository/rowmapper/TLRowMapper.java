@@ -67,12 +67,12 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .action(rs.getString("action"))
                         .status(rs.getString("status"))
                         .tenantId(tenantId)
-                        .tradeName(rs.getString("tradeName"))
-                        .propertyId(rs.getString("propertyid"))
-                        .oldPropertyId(rs.getString("oldpropertyid"))
+                        .licenseUnitName(rs.getString("tradeName"))
                         .businessService(rs.getString("businessservice"))
                         .fileStoreId(rs.getString("tl_fileStoreId"))
-                        .licenseUnitNameMal(rs.getString("licenseunitnamemal"))
+                        .licenseUnitNameLocal(rs.getString("licenseunitnamelocal"))
+                        .assignUser(rs.getString("assignee"))
+                        .desiredLicensePeriod(rs.getInt("desiredlicenseperiod"))
                         .id(id)
                         .build();
 
@@ -99,13 +99,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
             Double latitude = (Double) rs.getObject("latitude");
             Double longitude = (Double) rs.getObject("longitude");
 
-            Address address = Address.builder().addressId(rs.getString("addressId"))
-                    .addressLine1(rs.getString("addressLine1"))
-                    .addressLine2(rs.getString("addressLine2"))
-                    .addressNumber(rs.getString("addressNumber"))
-                    .buildingName(rs.getString("buildingName"))
-                    .city(rs.getString("city"))
-                    .detail(rs.getString("detail"))
+            Address address = Address.builder().buildingName(rs.getString("buildingName"))
                     .id(rs.getString("tl_ad_id"))
                     .landmark(rs.getString("landmark"))
                     .latitude(latitude)
@@ -115,12 +109,9 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .doorNo(rs.getString("doorno"))
                     .street(rs.getString("street"))
                     .tenantId(tenantId)
-                    .type(rs.getString("type"))
                     .zonalId(rs.getString("zonalid") == null ? null : Long.parseLong(rs.getString("zonalid")))
                     .wardId(rs.getString("wardid") == null ? null : Long.parseLong(rs.getString("wardid")))
                     .wardNo(rs.getString("wardno") == null ? null : Integer.parseInt(rs.getString("wardno")))
-                    // .circleDivisionId(rs.getString("circledivisionid") == null ? null
-                    // : Long.parseLong(rs.getString("circledivisionid")))
                     .contactNo(rs.getString("contactno"))
                     .email(rs.getString("email"))
                     .build();
@@ -130,16 +121,17 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                 institution = Institution.builder()
                         .id(rs.getString("instiid"))
                         .tenantId(rs.getString("institenantId"))
-                        .name(rs.getString("name"))
-                        .type(rs.getString("institutionType"))
-                        .designation(rs.getString("designation"))
+                        // .name(rs.getString("name"))
+                        // .type(rs.getString("institutionType"))
+                        // .designation(rs.getString("designation"))
                         .active(rs.getBoolean("instiactive"))
                         .contactNo(rs.getString("insticontactno"))
-                        .instituionName(rs.getString("instiinstituionname"))
+                        .institutionName(rs.getString("instiinstitutionname"))
                         .organisationRegistrationNo(rs.getString("instiorganisationregistrationno"))
                         .address(rs.getString("address"))
                         .natureOfInstitution(rs.getString("natureofinstitution"))
                         .email(rs.getString("email"))
+                        .licenseUnitId(rs.getString("inst_licenseunitid"))
                         .build();
             }
 
@@ -150,53 +142,32 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .lastModifiedTime(rs.getLong("tld_createdTime"))
                     .build();
 
-            Double operationalArea = (Double) rs.getObject("operationalArea");
             Integer noOfEmployees = (Integer) rs.getObject("noOfEmployees");
-            PGobject pgObj = (PGobject) rs.getObject("additionaldetail");
-            try {
-                TradeLicenseDetail tradeLicenseDetail = TradeLicenseDetail.builder()
-                        .surveyNo(rs.getString("surveyno"))
-                        .channel(TradeLicenseDetail.ChannelEnum.fromValue(rs.getString("channel")))
-                        .subOwnerShipCategory(rs.getString("subownershipcategory"))
-                        .id(tradeLicenseDetailId)
-                        .address(address)
-                        .auditDetails(auditdetails)
-                        .structureType(rs.getString("structureType"))
-                        .operationalArea(operationalArea)
-                        .noOfEmployees(noOfEmployees)
-                        .adhocExemption(rs.getBigDecimal("adhocExemption"))
-                        .adhocPenalty(rs.getBigDecimal("adhocPenalty"))
-                        .adhocExemptionReason(rs.getString("adhocExemptionReason"))
-                        .adhocPenaltyReason(rs.getString("adhocPenaltyReason"))
-                        .institution(institution)
-                        .businessSector(rs.getString("businesssector"))
-                        .capitalInvestment(rs.getDouble("capitalinvestment"))
-                        .enterpriseType(rs.getString("enterprisetype"))
-                        .licenseUnitType(rs.getString("licenseunittype"))
-                        .licenseUnitId(rs.getString("licenseunitid"))
-                        .structurePlaceSubtype(rs.getString("structureplacesubtype"))
-                        .customDetailType(rs.getString("customdetailtype"))
-                        .businessActivityDesc(rs.getString("businessactivitydesc"))
-                        .licenseeType(rs.getString("licenseetype"))
-                        .build();
 
-                if (pgObj != null) {
-                    JsonNode additionalDetail = mapper.readTree(pgObj.getValue());
-                    tradeLicenseDetail.setAdditionalDetail(additionalDetail);
-                }
+            TradeLicenseDetail tradeLicenseDetail = TradeLicenseDetail.builder()
+                    .channel(TradeLicenseDetail.ChannelEnum.fromValue(rs.getString("channel")))
+                    .id(tradeLicenseDetailId)
+                    .address(address)
+                    .auditDetails(auditdetails)
+                    .structureType(rs.getString("structureType"))
+                    .noOfEmployees(noOfEmployees)
+                    .institution(institution)
+                    .businessSector(rs.getString("businesssector"))
+                    .capitalInvestment(rs.getDouble("capitalinvestment"))
+                    .enterpriseType(rs.getString("enterprisetype"))
+                    .structurePlaceSubtype(rs.getString("structureplacesubtype"))
+                    .businessActivityDesc(rs.getString("businessactivitydesc"))
+                    .licenseeType(rs.getString("licenseetype"))
+                    .build();
 
-                tradeLicense.setTradeLicenseDetail(tradeLicenseDetail);
-            } catch (IOException e) {
-                throw new CustomException("PARSING ERROR", "The additionalDetail json cannot be parsed");
-            }
+            tradeLicense.setTradeLicenseDetail(tradeLicenseDetail);
+
         }
 
         if (rs.getString("tl_un_id") != null && rs.getBoolean("tl_un_active")) {
             TradeUnit tradeUnit = TradeUnit.builder()
-                    .tradeType(rs.getString("tl_un_tradeType"))
-                    .uom(rs.getString("tl_un_uom"))
+                    .businessSubtype(rs.getString("tl_un_businesssubtype"))
                     .id(rs.getString("tl_un_id"))
-                    .uomValue(rs.getString("tl_un_uomvalue"))
                     .tenantId(tenantId)
                     .active(rs.getBoolean("tl_un_active"))
                     .build();
@@ -227,28 +198,14 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                 .active(rs.getBoolean("ownerdocactive"))
                 .build();
 
-        Boolean isPrimaryOwner = (Boolean) rs.getObject("isprimaryowner");
-        Double ownerShipPercentage = (Double) rs.getObject("ownershippercentage");
-
         if (rs.getBoolean("useractive") && rs.getString("tlowner_uuid") != null) {
             OwnerInfo owner = OwnerInfo.builder()
                     .uuid(rs.getString("tlowner_uuid"))
-                    .isPrimaryOwner(isPrimaryOwner)
-                    .ownerType(rs.getString("ownerType"))
-                    .ownerShipPercentage(ownerShipPercentage)
-                    .relationship(OwnerInfo.RelationshipEnum.fromValue(rs.getString("relationship")))
                     .userActive(rs.getBoolean("useractive"))
-                    .institutionId(rs.getString("institutionid"))
                     .name(rs.getString("ownername"))
                     .aadhaarNumber(rs.getString("aadharno"))
                     .permanentAddress(rs.getString("address"))
                     .emailId(rs.getString("email"))
-                    .consentAgreementPlace(rs.getString("consentagreementplace"))
-                    // .consentAgreementDate(rs.getString("consentagreementdate") == null ? null
-                    // : Long.parseLong(rs.getString("consentagreementdate")))
-                    // .consentAgreementEndDate(rs.getString("consentagreementenddate") == null ?
-                    // null
-                    // : Long.parseLong(rs.getString("consentagreementenddate")))
                     .build();
             tradeLicense.getTradeLicenseDetail().addOwnersItem(owner);
         }
