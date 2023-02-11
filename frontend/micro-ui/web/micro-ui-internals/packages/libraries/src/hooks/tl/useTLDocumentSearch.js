@@ -12,7 +12,6 @@ const useTLDocumentSearch = (data1 = {}, config = {}) => {
     if (data1?.value?.owners?.documents["ProofOfOwnership"]?.fileStoreId) filesArray.push(data1.value.owners.documents["ProofOfOwnership"].fileStoreId);
   
   }
-console.log(JSON.stringify( data1));
   data1?.value?.ownersdoc?.map((obj)=>{
     filesArray.push(obj.fileStoreId);
   });
