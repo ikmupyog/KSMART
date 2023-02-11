@@ -10,8 +10,15 @@ import lombok.Setter;
 import lombok.ToString;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
+import org.ksmart.death.crdeath.constraints.Html;
 import java.util.List;
 import javax.swing.text.Document;
+import javax.validation.Valid;
+
+import javax.validation.constraints.Size;
+
+// import io.swagger.v3.oas.annotations.media.Schema;
+
 /*
      * Creates main model class  
      * Jasmine on 4.02.2023      
@@ -46,12 +53,39 @@ public class DeathDtl {
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
 
-    @JsonProperty("workflowDetails")
-    private DeathWorkFlowDtls  deathWorkFlowDtls;
 
-   // @Valid
+//Jasmine 11.02.2023
+    @Size(max = 64)
+    @JsonProperty("applicationType")
+    private String applicationType;
+
+    @JsonProperty("applicationStatus")
+    private String applicationStatus;
+
+    @JsonProperty("businessService")
+    private String businessService;
+
+    @JsonProperty("action")
+    private String action;
+
+    @JsonProperty("assignee")
+    private List<String> assignees;
+
+    @JsonProperty("workflowcode")
+    private String workflowcode;
+
+    private String assignuser;
+
+    @Size(max = 128)
+    @Html
+    private String comment;
+
+    @Valid
     @JsonProperty("wfDocuments")
     private List<Document> wfDocuments;
+
+    public void setStatus(String s) {
+    }
 
 
 

@@ -25,18 +25,18 @@ import org.springframework.validation.annotation.Validated;
 @Builder
 public class DeathRegistryInformantDtls {
 
-    @Size(max = 64)
-    @JsonProperty("InitiatorRelation")
-    private String initiatorRelation ;
+    // @Size(max = 64)
+    // @JsonProperty("InitiatorRelation")
+    // private String initiatorRelation ;
 
-    @JsonProperty("InitiatorAadhaar")
-    private String initiatorAadhaar ;
+    // @JsonProperty("InitiatorAadhaar")
+    // private String initiatorAadhaar ;
 
-    @JsonProperty("InitiatorName")
-    private String initiatorName ;
+    // @JsonProperty("InitiatorName")
+    // private String initiatorName ;
 
-    @JsonProperty("InitiatorMobile")
-    private String initiatorMobile ;
+    // @JsonProperty("InitiatorMobile")
+    // private String initiatorMobile ;
 
     @JsonProperty("InformantAadharNo")
     private String informantAadharNo ;
@@ -127,6 +127,9 @@ public class DeathRegistryInformantDtls {
 
     @JsonProperty("DocumentType")
     private String documentType ;
+
+    @JsonProperty("DocumentUserType")
+    private String documentUserType ;
 
     @JsonProperty("DocumentFileStoreId")
     private String documentFileStoreId ;

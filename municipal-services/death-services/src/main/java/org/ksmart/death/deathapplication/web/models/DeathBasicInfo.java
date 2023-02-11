@@ -358,6 +358,14 @@ public class DeathBasicInfo {
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
 
+    //Jasmine 11.02.2023
+
+
+    @JsonProperty("funcionUID")
+    private String funcionUID;
+
+
+
 
     
 }

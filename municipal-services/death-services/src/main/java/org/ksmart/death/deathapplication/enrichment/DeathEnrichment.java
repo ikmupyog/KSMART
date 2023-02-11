@@ -118,11 +118,11 @@ public class DeathEnrichment implements BaseEnrichment{
             System.out.println("ackNo"+ackNoDetails);
             if (ackNoDetails.size()>=1) {
                 //Ackno new format decision by Domain team created by Rakhi S                       
-                ackNo=String.valueOf(DeathConstants.ACK_NUMBER_CAPTION+"-"+ackNoDetails.get(0).get("ackno"))+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathWorkFlowDtls().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathConstants.STATE_CODE.toString();
+                ackNo=String.valueOf(DeathConstants.ACK_NUMBER_CAPTION+"-"+ackNoDetails.get(0).get("ackno"))+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathBasicInfo().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathConstants.STATE_CODE.toString();
                 ackNoId=Long.parseLong(String.valueOf(ackNoDetails.get(0).get("ackno")));
             }
             else{
-                ackNo=DeathConstants.ACK_NUMBER_CAPTION+"-"+DeathConstants.ACK_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathWorkFlowDtls().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathConstants.STATE_CODE.toString();
+                ackNo=DeathConstants.ACK_NUMBER_CAPTION+"-"+DeathConstants.ACK_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathBasicInfo().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathConstants.STATE_CODE.toString();
                 ackNoId=Long.parseLong(DeathConstants.ACK_NUMBER_FIRST);
             }
 
