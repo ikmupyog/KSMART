@@ -60,7 +60,7 @@ public class DeathFamilyInfo {
     
     
     @JsonProperty("FamilyMobileNo")
-    private String familyMobileNo;
+    private Long familyMobileNo;
     
     @JsonProperty("FamilyEmailId")
     private String familyEmailId;
