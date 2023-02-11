@@ -276,9 +276,24 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-
-      
-      
+      {
+        route: "address-permanent",
+        component: "AddressPermanent",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressPermanentDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: false,
+      },
+    
+    
       {
         route: "address-insidekerala",
         component: "AddressInsideKerala",
@@ -295,26 +310,55 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-
-     
       {
-        route: "father-informations",
-        component: "FatherInformation",
+        route: "address-permanent-insidekerala",
+        component: "AddressPermanentInsideKerala",
         texts: {
           headerCaption: "",
-          header: "Father's Information",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },
         withoutLabel: true,
-        key: "FatherInfoDetails",
+        key: "AddressPermntInsideKeralaDetails",
+        nextStep: "null",
         type: "component",
-        nextStep: "mother-informations",
+        hideInEmployee: false,
+      },
+      {
+        route: "address-outside-kerala",
+        component: "AddressOutsideKerala",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressOutsideKeralaDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
+        route: "address-permanent-outside-kerala",
+        component: "AddressPermanentOutsideKerala",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressPermanentOutsideKeralaDetails",
+        nextStep: "null",
+        type: "component",
         hideInEmployee: false,
       },
      
-   
       {
         route: "addressbrith-outside-india",
         component: "AddressBrOutsideIndia",
@@ -331,11 +375,9 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
-
-
       {
-        route: "address-inside-india",
-        component: "AddressInsideIndia",
+        route: "address-permanent-outside-india",
+        component: "AddressPermanentOutsideIndia",
         texts: {
           headerCaption: "",
           header: "",
@@ -344,30 +386,34 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "AddressInsideIndiaDetails",
-        nextStep: "statistical-information",
-        type: "component",
-        hideInEmployee: false,
-      },
-
-
-
-      {
-        route: "address-outsidekerala",
-        component: "AddressOutsideKerala",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "AddressOutsideKeralaDetails",
+        key: "AddressPermanentOutsideIndiaDetails",
         nextStep: "null",
         type: "component",
-        hideInEmployee: false,
+        hideInEmployee: true,
       },
+
+
+
+      // {
+      //   route: "address-inside-india",
+      //   component: "AddressInsideIndia",
+      //   texts: {
+      //     headerCaption: "",
+      //     header: "",
+      //     cardText: "",
+      //     submitBarLabel: "CS_COMMON_NEXT",
+      //     skipText: "",
+      //   },
+      //   withoutLabel: true,
+      //   key: "AddressInsideIndiaDetails",
+      //   nextStep: "statistical-information",
+      //   type: "component",
+      //   hideInEmployee: false,
+      // },
+
+
+
+      
    
       {
         route: "multiple-birth",
