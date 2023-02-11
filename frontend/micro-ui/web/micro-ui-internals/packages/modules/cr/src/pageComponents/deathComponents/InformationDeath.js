@@ -18,6 +18,7 @@ import Institution from "./Institution";
 import DeathPlaceHome from "./DeathPlaceHome";
 import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
+import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
@@ -91,7 +92,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn);
   const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl);
   const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl);
-  //Vehicle home{DeathPlaceWardId} Public place {GeneralRemarks, DeathPlaceWardId}
+  //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
   // 
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
   const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.InformationDeath?.VehicleFromplaceEn);
@@ -110,6 +111,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceStreetEn, setDeathPlaceStreetEn] = useState(formData?.InformationDeath?.DeathPlaceStreetEn? formData?.InformationDeath?.DeathPlaceStreetEn : "");  
   const [DeathPlaceStreetMl, setDeathPlaceStreetMl] = useState(formData?.InformationDeath?.DeathPlaceStreetMl ? formData?.InformationDeath?.DeathPlaceStreetMl : "");  
  
+//DeathOutsideJurisdiction
+  const [DeathPlaceCountry, setSelectDeathPlaceCountry] = useState(formData?.InformationDeath?.DeathPlaceCountry);
+  const [DeathPlaceState, SelectDeathPlaceState] = useState(formData?.InformationDeath?.DeathPlaceState);
+  const [DeathPlaceDistrict, SelectDeathPlaceDistrict] = useState(formData?.InformationDeath?.DeathPlaceDistrict); 
+  const [DeathPlaceCity, SelectDeathPlaceCity] = useState(formData?.InformationDeath?.DeathPlaceCity); 
+  const [DeathPlaceRemarksEn, SelectDeathPlaceRemarksEn] = useState(formData?.InformationDeath?.DeathPlaceRemarksEn); 
+  const [DeathPlaceRemarksMl, SelectDeathPlaceRemarksMl] = useState(formData?.InformationDeath?.DeathPlaceRemarksMl);  
+  const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn); 
+  const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl); 
 
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [toast, setToast] = useState(false);
@@ -331,6 +341,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             
           />;
         }
+        if (naturetype === "OUTSIDE_JURISDICTION") {
+          <DeathOutsideJurisdiction                  
+  DeathPlaceCountry={DeathPlaceCountry}
+  DeathPlaceState={DeathPlaceState}
+  DeathPlaceDistrict={DeathPlaceDistrict}
+  DeathPlaceCity={DeathPlaceCity}          
+  DeathPlaceRemarksEn={DeathPlaceRemarksEn}         
+  DeathPlaceRemarksMl={DeathPlaceRemarksMl}  
+  PlaceOfBurialMl={PlaceOfBurialMl}
+  PlaceOfBurialEn={PlaceOfBurialEn}
+  GeneralRemarks={GeneralRemarks}
+  DeathPlaceWardId={DeathPlaceWardId}
+            
+          />;
+        }
       }
     }
   });
@@ -404,11 +429,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
       sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
       sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);    
-
-      
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);     
   
       }
+    if (DeathPlace.code === "OUTSIDE_JURISDICTION") {
+      sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code  : null);
+      sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code  : null);
+      sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code  : null);    
+      sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity  : null);
+      sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn  : null);
+      sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl  : null);
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
+      sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn  : null);
+      sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl  : null);
+      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);    
+    }
     onSelect(config.key, {
       DateOfDeath,
       TimeOfDeath,
@@ -457,9 +492,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceLocalityEn, 
       DeathPlaceLocalityMl, 
       DeathPlaceStreetEn, 
-      DeathPlaceStreetMl, 
-      GeneralRemarks,
-      DeathPlaceWardId ,
+      DeathPlaceStreetMl,            
+      DeathPlaceCountry,
+      DeathPlaceState,
+      DeathPlaceDistrict,
+      DeathPlaceCity,
+      DeathPlaceRemarksEn,
+      DeathPlaceRemarksMl,      
+      PlaceOfBurialMl,
+      PlaceOfBurialEn,
+      
 
     });
   };
@@ -625,6 +667,33 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
               )}
+              {value === "OUTSIDE_JURISDICTION" && (
+            <div>
+              <DeathOutsideJurisdiction             
+               DeathPlaceCountry={DeathPlaceCountry}
+               setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
+               DeathPlaceState={DeathPlaceState}
+               SelectDeathPlaceState={SelectDeathPlaceState}
+               DeathPlaceDistrict={DeathPlaceDistrict}
+               SelectDeathPlaceDistrict={SelectDeathPlaceDistrict}
+               DeathPlaceCity={DeathPlaceCity} 
+               SelectDeathPlaceCity={SelectDeathPlaceCity}         
+               DeathPlaceRemarksEn={DeathPlaceRemarksEn}
+               SelectDeathPlaceRemarksEn={SelectDeathPlaceRemarksEn}         
+               DeathPlaceRemarksMl={DeathPlaceRemarksMl}  
+               SelectDeathPlaceRemarksMl={SelectDeathPlaceRemarksMl} 
+               PlaceOfBurialMl={PlaceOfBurialMl}
+               SelectPlaceOfBurialMl={SelectPlaceOfBurialMl}
+               PlaceOfBurialEn={PlaceOfBurialEn}
+               SelectPlaceOfBurialEn={SelectPlaceOfBurialEn}
+               GeneralRemarks={GeneralRemarks}
+               setGeneralRemarks={setGeneralRemarks}
+               DeathPlaceWardId={DeathPlaceWardId}
+              setDeathPlaceWardId={setDeathPlaceWardId}              
+              />
+            </div>
+              )}
+              
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -855,7 +924,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_AGE_UNIT")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-2">
               <CardLabel>
                 {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
               </CardLabel>
@@ -897,6 +966,19 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_RELIGION")}`}
               />
             </div>
+            <div className="col-md-2">
+              <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbOccupationMain}
+                selected={Occupation}
+                select={selectOccupation}
+                disabled={isEdit}
+                placeholder={`${t("CR_OCCUPATION_MAIN_LEVEL")}`}
+              />
+            </div>
           </div>
         </div>
         {/* <div className="row">
@@ -904,8 +986,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <CheckBox label={t("CR_OCCUPATION_DECEASED_NO")} onChange={() => setChecked((checked) => !checked)} value={checked} />
           </div>
         </div> */}
-        <div className="row">
-          {/* {checked ? null : ( */}
+        {/* <div className="row">
+          {checked ? null : (
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}<span className="mandatorycss">*</span></CardLabel>
@@ -921,8 +1003,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
           </div>
-          {/* )} */}
-        </div>
+           )}
+        </div> */}
 
         {toast && (
           <Toast

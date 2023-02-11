@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton,TextAre
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType, setDeathPlaceType,VehicleNumber, setVehicleNumber,
+const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType, selectDeathPlaceType,VehicleNumber, setVehicleNumber,
   VehicleFromplaceEn, setVehicleFromplaceEn,VehicleToPlaceEn, setVehicleToPlaceEn,GeneralRemarks, setGeneralRemarks,VehicleFirstHaltEn, setVehicleFirstHaltEn,
   VehicleFirstHaltMl, setVehicleFirstHaltMl,VehicleHospitalEn, setSelectedVehicleHospitalEn,DeathPlaceWardId, setDeathPlaceWardId,VehicleFromplaceMl, setVehicleFromplaceMl,VehicleToPlaceMl, setVehicleToPlaceMl}) => {
   const stateId = Digit.ULBService.getStateId();
@@ -16,7 +16,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   
-  // const [DeathPlaceType, setDeathPlaceType] = useState(formData?.DeathPlaceVehicle?.DeathPlaceType);
+  // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.DeathPlaceVehicle?.DeathPlaceType);
   // const [VehicleNumber, setVehicleNumber] = useState(formData?.DeathPlaceVehicle?.VehicleNumber);
   // const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.DeathPlaceVehicle?.VehicleFromplaceEn);
   // const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.DeathPlaceVehicle?.VehicleToPlaceEn);
@@ -70,7 +70,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
   const onSkip = () => onSelect();
 
   function setselectDeathPlaceType(value) {
-    setDeathPlaceType(value);
+    selectDeathPlaceType(value);
   }
   function setSelectVehicleNumber(e) {
     setVehicleNumber(e.target.value);
@@ -142,7 +142,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_VEHICLE_TYPE")}`}
                 <span className="mandatorycss">*</span>
@@ -158,7 +158,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                 placeholder={`${t("CR_VEHICLE_TYPE")}`}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_VEHICLE_REGISTRATION_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -174,6 +174,47 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                 disable={isEdit}
                 placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="VehicleFirstHaltEn"
+                value={VehicleFirstHaltEn}
+                onChange={setSelectVehicleFirstHaltEn}
+                disable={isEdit}
+                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT") })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="VehicleFirstHaltMl"
+                value={VehicleFirstHaltMl}
+                onChange={setSelectVehicleFirstHaltMl}
+                disable={isEdit}
+                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_ML"),
+                })}
               />
             </div>
           </div>
@@ -255,47 +296,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="VehicleFirstHaltEn"
-                value={VehicleFirstHaltEn}
-                onChange={setSelectVehicleFirstHaltEn}
-                disable={isEdit}
-                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT") })}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="VehicleFirstHaltMl"
-                value={VehicleFirstHaltMl}
-                onChange={setSelectVehicleFirstHaltMl}
-                disable={isEdit}
-                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
-                  type: "text",
-                  title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_ML"),
-                })}
-              />
-            </div>
+            
             <div className="col-md-3">
               <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}</CardLabel>
               <Dropdown
@@ -323,10 +324,6 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>        
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
                 {`${t("CR_OTHER_DETAILS_EN")}`}
@@ -347,6 +344,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
             </div>
           </div>
         </div>
+       
       </FormStep>
     </React.Fragment>
   );

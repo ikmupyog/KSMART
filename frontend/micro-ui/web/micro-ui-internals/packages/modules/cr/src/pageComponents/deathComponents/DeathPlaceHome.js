@@ -231,7 +231,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
         
         <div className="row">
           <div className="col-md-12">
-          <div className="col-md-4">
+          <div className="col-md-2">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
                 <span className="mandatorycss">*</span>
@@ -245,7 +245,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>    
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -261,7 +261,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-1">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
                 <span className="mandatorycss">*</span>
@@ -286,11 +286,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 })}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_LOCALITY_EN")}
                 <span className="mandatorycss">*</span>
@@ -308,45 +304,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
             </div>
-            <div className="col-md-4">
-              <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="DeathPlaceHomestreetNameEn"
-                value={DeathPlaceHomestreetNameEn}
-                onChange={setSelectDeathPlaceHomestreetNameEn}
-                placeholder={`${t("CR_STREET_NAME_EN")}`}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CR_HOUSE_NAME_EN")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="DeathPlaceHomehoueNameEn"
-                value={DeathPlaceHomehoueNameEn}
-                onChange={setSelectDeathPlaceHomehoueNameEn}
-                placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_LOCALITY_ML")}
                 <span className="mandatorycss">*</span>
@@ -369,7 +327,27 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 })}
               />
             </div>
-            <div className="col-md-4">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            
+            <div className="col-md-3">
+              <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="DeathPlaceHomestreetNameEn"
+                value={DeathPlaceHomestreetNameEn}
+                onChange={setSelectDeathPlaceHomestreetNameEn}
+                placeholder={`${t("CR_STREET_NAME_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-3">
               <CardLabel>{t("CR_STREET_NAME_ML")} </CardLabel>
               <TextInput
                 t={t}
@@ -389,7 +367,25 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 })}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_HOUSE_NAME_EN")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={true}
+                type={"text"}
+                optionKey="i18nKey"
+                name="DeathPlaceHomehoueNameEn"
+                value={DeathPlaceHomehoueNameEn}
+                onChange={setSelectDeathPlaceHomehoueNameEn}
+                placeholder={`${t("CR_HOUSE_NAME_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_HOUSE_NAME_ML")}
                 <span className="mandatorycss">*</span>
@@ -413,7 +409,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
               />
             </div>
           </div>
-        </div>
+        </div>       
         {toast && (
           <Toast
             error={
@@ -422,8 +418,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
               AdsHomeLocalityNameEnError ||
               AdsHomeLocalityNameMlError ||
               AdsHomeHouseNameEnError || AdsHomeHouseNameMlError
-             
-              
              
             }
             label={
