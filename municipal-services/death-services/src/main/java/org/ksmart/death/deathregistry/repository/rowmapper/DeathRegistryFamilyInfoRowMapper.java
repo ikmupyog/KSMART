@@ -20,14 +20,14 @@ public class  DeathRegistryFamilyInfoRowMapper   implements ResultSetExtractor  
                             .spouseType(rs.getString("spouse_type"))
                             .spouseNameEn(rs.getString("spouse_name_en"))
                             .spouseNameML(rs.getString("spouse_name_ml"))
-                           // .fatherUnavailable(rs.getString(""))
+                            .fatherUnavailable(rs.getInt("male_dependent_unavailable"))
                             .fatherNameEn(rs.getString("male_dependent_name_en"))
                             .fatherNameMl(rs.getString("male_dependent_name_ml"))
-                           // .motherUnavailable(rs.getString(""))
+                            .motherUnavailable(rs.getInt("female_dependent_unavailable"))
                             .motherNameEn(rs.getString("female_dependent_name_en"))
                             .motherNameMl(rs.getString("female_dependent_name_ml"))
-                           // .familyMobileNo(rs.getString(""))
-                           // .familyEmailId(rs.getString(""))
+                            .familyMobileNo(rs.getLong("family_mobile_no"))
+                            .familyEmailId(rs.getString("family_email"))
                             .build();
                     }
                 

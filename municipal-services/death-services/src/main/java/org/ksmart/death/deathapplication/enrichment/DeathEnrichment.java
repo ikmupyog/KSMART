@@ -65,7 +65,7 @@ public class DeathEnrichment implements BaseEnrichment{
                 deathdtls.getDeathAddressInfo().setPresentAddrId(UUID.randomUUID().toString());
                 deathdtls.getDeathAddressInfo().setPermanentAddrId(UUID.randomUUID().toString());
                 deathdtls.getDeathStatisticalInfo().setStatisticalId(UUID.randomUUID().toString());                        
-                //Ecryption Jasmine 10.02.2023
+                //Encryption Jasmine 10.02.2023
                 DeathBasicInfo deathBasicDtls = request.getDeathCertificateDtls().get(0).getDeathBasicInfo();
                 DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
                 deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
@@ -76,9 +76,7 @@ public class DeathEnrichment implements BaseEnrichment{
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
 
             });
-      
         }  
-
     //Rakhi S on 08.02.2023 ACK no formating
     public void setACKNumber(DeathDtlRequest request) {
         RequestInfo requestInfo = request.getRequestInfo();
@@ -171,10 +169,6 @@ public class DeathEnrichment implements BaseEnrichment{
                         deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
                         deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
                         deathDtls.setDeathAuditDetails(auditDetails);
-                    } );
-                   // 
-
-
-        
+                    } );        
         }//UPDATE END
 }
