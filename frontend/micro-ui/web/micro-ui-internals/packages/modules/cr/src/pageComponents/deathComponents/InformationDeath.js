@@ -91,7 +91,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl);
   const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn);
   const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl);
-  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl);
+  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl);
   //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
   // 
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
@@ -476,7 +476,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceHomestreetNameMl,
       DeathPlaceHomepostofficeId,
       DeathPlaceHomepincode,
-
       DeathPlaceType,
       VehicleNumber,
       VehicleFromplaceEn,

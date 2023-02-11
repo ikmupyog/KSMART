@@ -164,7 +164,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
             <CardLabel>{t("CS_COMMON_COUNTRY")}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown t={t} 
             optionKey="name" 
-            isMandatory={true} 
+            isMandatory={false} 
             option={cmbNation} 
             selected={DeathPlaceCountry} 
             select={selectDeathPlaceCountry} 
@@ -180,7 +180,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={true}
+                isMandatory={false}
                 option={cmbState}
                 selected={DeathPlaceState}
                 select={setSelectDeathPlaceState}
@@ -195,7 +195,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={true}
+                isMandatory={false}
                 option={cmbDistrict}
                 selected={DeathPlaceDistrict}
                 select={setSelectDeathPlaceDistrict}
@@ -215,7 +215,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceCity"
@@ -233,7 +233,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceRemarksEn"
@@ -251,7 +251,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceRemarksMl"
@@ -294,7 +294,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="PlaceOfBurialEn"
@@ -312,7 +312,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="PlaceOfBurialMl"
