@@ -340,7 +340,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRInstitution();
     case "institution":
       return useCRInstitutionId();
-    case "Instituts":
+    case "InstitutionTypePlaceOfEvent":
       return useCRInstitutionPlaceOfEvent();
     case "OtherBithPlace":
       return useCROtherPlace();

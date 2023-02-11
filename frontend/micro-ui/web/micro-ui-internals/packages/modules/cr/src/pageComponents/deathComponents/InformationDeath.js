@@ -32,7 +32,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const { data: OccupationMain = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
-  const { data: institutionType = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
 
   const [DateOfDeath, setDateOfDeath] = useState(formData?.InformationDeath?.DateOfDeath ? formData?.InformationDeath?.DateOfDeath : "");
   const [TimeOfDeath, setTimeOfDeath] = useState(formData?.InformationDeath?.TimeOfDeath ? formData?.InformationDeath?.TimeOfDeath : "");
@@ -66,7 +65,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeceasedLastNameMl, setDeceasedLastNameMl] = useState(
     formData?.InformationDeath?.DeceasedLastNameMl ? formData?.InformationDeath?.DeceasedLastNameMl : ""
   );
-  const [Age, setAge] = useState(formData?.InformationDeath?.Age? formData?.InformationDeath?.Age : "");
+  const [Age, setAge] = useState(formData?.InformationDeath?.Age ? formData?.InformationDeath?.Age : "");
   const [DeceasedGender, setselectedDeceasedGender] = useState(formData?.InformationDeath?.DeceasedGender);
   const [Nationality, setSelectedNationality] = useState(formData?.InformationDeath?.Nationality);
   const [Religion, setSelectedReligion] = useState(formData?.InformationDeath?.Religion);
@@ -78,7 +77,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [Occupation, setSelectedOccupation] = useState(formData?.InformationDeath?.Occupation);
   const [DeathPlace, setselectDeathPlace] = useState(formData?.InformationDeath?.DeathPlace);
   //Hospital Intitution vehicle {type}
-  const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType);
+  const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType ?formData?.InformationDeath?.DeathPlaceType  : null );
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
@@ -152,12 +151,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     place["common-masters"].PlaceMasterDeath.map((ob) => {
       cmbPlace.push(ob);
     });
-    let cmbinstitutionType = [];
-    institutionType &&
-    institutionType["birth-death-service"] &&
-    institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
-      cmbinstitutionType.push(ob);
-    });
+
+
   function selectReligion(value) {
     setSelectedReligion(value);
   }
@@ -302,7 +297,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         }
         if (naturetype === "VEHICLE") {
           <DeathPlaceVehicle
-          
             DeathPlaceType={DeathPlaceType}
             VehicleNumber={VehicleNumber}
             VehicleFromplaceEn={VehicleFromplaceEn}
@@ -312,7 +306,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             VehicleFirstHaltMl={VehicleFirstHaltMl}
             VehicleHospitalEn={VehicleHospitalEn}
             DeathPlaceWardId={DeathPlaceWardId}
-            VehicleFromplaceMl ={VehicleFromplaceMl}
+            VehicleFromplaceMl={VehicleFromplaceMl}
             VehicleToPlaceMl={VehicleToPlaceMl}
           />;
         }
@@ -367,19 +361,17 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
     }
     if (DeathPlace.code === "VEHICLE") {
-    sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-    sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
-    sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
-    sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
-    sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
-    sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
-    sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
-    sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
-    sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
-    sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-    sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
-    
-
+      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
+      sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
+      sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
+      sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
+      sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
+      sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
+      sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
+      sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
+      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
     }
     onSelect(config.key, {
       DateOfDeath,
@@ -424,8 +416,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       VehicleFirstHaltMl,
       VehicleHospitalEn,
       GeneralRemarks,
-      DeathPlaceWardId
-
+      DeathPlaceWardId,
     });
   };
   return (
@@ -470,7 +461,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
               <div className="col-md-2">
-                <CardLabel>{t("CR_TIME_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>
+                  {t("CR_TIME_OF_DEATH")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
                 <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setTimeOfDeath)} value={TimeOfDeath} />
               </div>
             </div>
@@ -487,7 +481,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_PLACE_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {t("CR_PLACE_OF_DEATH")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="code"
@@ -541,29 +538,28 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         {value === "VEHICLE" && (
           <div>
             <DeathPlaceVehicle
-            DeathPlaceType={DeathPlaceType}
-            selectDeathPlaceType={selectDeathPlaceType}
-            VehicleNumber={VehicleNumber}
-            setVehicleNumber= {setVehicleNumber}
-            VehicleFromplaceEn= {VehicleFromplaceEn}            
-            setVehicleFromplaceEn= {setVehicleFromplaceEn}
-            VehicleToPlaceEn= {VehicleToPlaceEn}
-            setVehicleToPlaceEn={setVehicleToPlaceEn}
-            GeneralRemarks={GeneralRemarks} 
-            setGeneralRemarks={setGeneralRemarks}
-            VehicleFirstHaltEn={VehicleFirstHaltEn}
-            setVehicleFirstHaltEn={setVehicleFirstHaltEn}
-            VehicleFirstHaltMl={VehicleFirstHaltMl}
-            setVehicleFirstHaltMl={setVehicleFirstHaltMl}
-            VehicleHospitalEn={VehicleHospitalEn} 
-            setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
-            DeathPlaceWardId={DeathPlaceWardId}
-            setDeathPlaceWardId={setDeathPlaceWardId}
-            VehicleFromplaceMl={VehicleFromplaceMl}
-            setVehicleFromplaceMl={setVehicleFromplaceMl}
-            VehicleToPlaceMl={VehicleToPlaceMl}
-            setVehicleToPlaceMl={setVehicleToPlaceMl}
-              
+              DeathPlaceType={DeathPlaceType}
+              selectDeathPlaceType={selectDeathPlaceType}
+              VehicleNumber={VehicleNumber}
+              setVehicleNumber={setVehicleNumber}
+              VehicleFromplaceEn={VehicleFromplaceEn}
+              setVehicleFromplaceEn={setVehicleFromplaceEn}
+              VehicleToPlaceEn={VehicleToPlaceEn}
+              setVehicleToPlaceEn={setVehicleToPlaceEn}
+              GeneralRemarks={GeneralRemarks}
+              setGeneralRemarks={setGeneralRemarks}
+              VehicleFirstHaltEn={VehicleFirstHaltEn}
+              setVehicleFirstHaltEn={setVehicleFirstHaltEn}
+              VehicleFirstHaltMl={VehicleFirstHaltMl}
+              setVehicleFirstHaltMl={setVehicleFirstHaltMl}
+              VehicleHospitalEn={VehicleHospitalEn}
+              setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
+              DeathPlaceWardId={DeathPlaceWardId}
+              setDeathPlaceWardId={setDeathPlaceWardId}
+              VehicleFromplaceMl={VehicleFromplaceMl}
+              setVehicleFromplaceMl={setVehicleFromplaceMl}
+              VehicleToPlaceMl={VehicleToPlaceMl}
+              setVehicleToPlaceMl={setVehicleToPlaceMl}
             />
           </div>
         )}
@@ -814,7 +810,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-2">
-              <CardLabel>{t("CR_NATIONALITY")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {t("CR_NATIONALITY")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="nationalityname"
@@ -827,7 +826,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-2">
-              <CardLabel>{t("CS_COMMON_RELIGION")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {t("CS_COMMON_RELIGION")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
@@ -850,7 +852,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           {/* {checked ? null : ( */}
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {t("CR_OCCUPATION_MAIN_LEVEL")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"

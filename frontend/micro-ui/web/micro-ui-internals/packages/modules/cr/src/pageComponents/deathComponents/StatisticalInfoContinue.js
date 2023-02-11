@@ -152,7 +152,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
   const { data: attention = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MedicalAttentionType");
   const { data: deathmain = {}, isLoadingA } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCause");
   const { data: deathsub = {}, isLoadingsub } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
-  
+
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const [setMedicalAttentionDeath, setSelectedMedicalAttentionDeath] = useState(formData?.StatisticalInfoContinue?.setMedicalAttentionDeath);
@@ -189,12 +189,12 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
     deathmain["birth-death-service"].DeathCause.map((ob) => {
       cmbDeathmain.push(ob);
     });
-    let cmbDeathsub = [];
+  let cmbDeathsub = [];
   deathsub &&
-  deathsub["birth-death-service"] &&
-  deathsub["birth-death-service"].DeathCauseSub.map((ob) => {
-    cmbDeathsub.push(ob);
-    }); 
+    deathsub["birth-death-service"] &&
+    deathsub["birth-death-service"].DeathCauseSub.map((ob) => {
+      cmbDeathsub.push(ob);
+    });
 
   const onSkip = () => onSelect();
   function selectisSmoke(value) {
@@ -285,9 +285,9 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-      <div className="row">
+        <div className="row">
           <div className="col-md-12">
-            <h1 className="headingh1"> 
+            <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DEATH_MORE_INFO")}`}</span>{" "}
             </h1>
           </div>
@@ -307,54 +307,243 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_MEDICAL_ATTENTION_DEATH")}`}
               />
             </div>
-            <div className="col-md-6">
-              <CardLabel>{t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED")}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={false}
-                option={menub}
-                selected={setDeathMedicallyCertified}
-                select={selectDeathMedicallyCertified}
-                disabled={isEdit}
-                placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+            <div>
+              <div className="row">
+                <div className="col-md-12">
+                  <h1 className="headingh1">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CAUSE_OF_DEATH")}`}</span>{" "}
+                  </h1>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <CardLabel>{t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={false}
+                  option={menub}
+                  selected={setDeathMedicallyCertified}
+                  select={selectDeathMedicallyCertified}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_IMMEDIATE_CAUSE")}`}</span>{" "}
+              </h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-3">
+                <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDeathmain}
+                  selected={setCauseOfDeathMain}
+                  select={selectCauseOfDeathMain}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}`}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDeathsub}
+                  selected={setCauseOfDeathSub}
+                  select={selectCauseOfDeathSub}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}`}
+                />
+              </div>
+              {/* <div className="col-md-3">
+              <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER")}</CardLabel>
+              <TextInput
+                // t={t}
+                // isMandatory={false}
+                // type={"text"}
+                // // optionKey="i18nKey"
+                // name="CauseOfDeath"
+                // value={CauseOfDeath}
+                // // onChange={setSelectCauseOfDeath}
+                // disable={isEdit}
+                // placeholder={`${t(" ")}`}
+                // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
               />
+            </div> */}
+              <div className="col-md-3">
+                <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
+                <TextInput
+                // t={t}
+                // isMandatory={false}
+                // type={"text"}
+                // // optionKey="i18nKey"
+                // name="CauseOfDeath"
+                // value={CauseOfDeath}
+                // // onChange={setSelectCauseOfDeath}
+                // disable={isEdit}
+                // placeholder={`${t(" ")}`}
+                // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={false}
+                  option={menub}
+                  selected={setDeathMedicallyCertified}
+                  select={selectDeathMedicallyCertified}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_UNDERLYING_CAUSE")}`}</span>{" "}
+              </h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-3">
+                <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDeathmain}
+                  selected={setCauseOfDeathMain}
+                  select={selectCauseOfDeathMain}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDeathsub}
+                  selected={setCauseOfDeathSub}
+                  select={selectCauseOfDeathSub}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}`}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
+                <TextInput
+                // t={t}
+                // isMandatory={false}
+                // type={"text"}
+                // // optionKey="i18nKey"
+                // name="CauseOfDeath"
+                // value={CauseOfDeath}
+                // // onChange={setSelectCauseOfDeath}
+                // disable={isEdit}
+                // placeholder={`${t(" ")}`}
+                // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={false}
+                  option={menub}
+                  selected={setDeathMedicallyCertified}
+                  select={selectDeathMedicallyCertified}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OTHER_SIGNIFICANT")}`}</span>{" "}
+              </h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-3">
+                <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDeathmain}
+                  selected={setCauseOfDeathMain}
+                  select={selectCauseOfDeathMain}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDeathsub}
+                  selected={setCauseOfDeathSub}
+                  select={selectCauseOfDeathSub}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}`}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
+                <TextInput
+                // t={t}
+                // isMandatory={false}
+                // type={"text"}
+                // // optionKey="i18nKey"
+                // name="CauseOfDeath"
+                // value={CauseOfDeath}
+                // // onChange={setSelectCauseOfDeath}
+                // disable={isEdit}
+                // placeholder={`${t(" ")}`}
+                // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={false}
+                  option={menub}
+                  selected={setDeathMedicallyCertified}
+                  select={selectDeathMedicallyCertified}
+                  disabled={isEdit}
+                  placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                />
+              </div>
             </div>
           </div>
         </div>
+
         <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbDeathmain}
-                selected={setCauseOfDeathMain}
-                select={selectCauseOfDeathMain}
-                disabled={isEdit}
-                placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
-              />
-            </div>
-            <div className="col-md-6">
-              <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbDeathsub}
-                selected={setCauseOfDeathSub}
-                select={selectCauseOfDeathSub}
-                disabled={isEdit}
-                placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}`}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          
-            {/* <div className="col-md-6">
+          {/* <div className="col-md-6">
               <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER_ML")}</CardLabel>
               <TextInput
                 t={t}
@@ -385,7 +574,7 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
               />
               {/* </div> */}
             </div>
-            
+
             <div>
               {/* <RadioButtons
                 t={t}
@@ -396,19 +585,19 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                 onSelect={selectisPregnent}
 
               /> */}
-            </div>         
             </div>
+          </div>
         </div>
-      <div className="row">
-      <div className="col-md-12">
-         <div className="col-md-12">
-              <CardLabel>{t("CR_HABITS")}</CardLabel>              
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CardLabel>{t("CR_HABITS")}</CardLabel>
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12">
-          <div className="col-md-6">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_SMOKE")}</CardLabel>
               <RadioButton
                 t={t}
@@ -441,40 +630,40 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_CHEW_TOBACCO")}</CardLabel>
               {/* <div className="statistical-flex"> */}
-                <RadioButton
-                  t={t}
-                  // optionsKey="i18nKey"
-                  // onChange={setOptionkey}
-                  isMandatory={config.isMandatory}
-                  selected={isTabacco}
-                  onSelect={selectisTabacco}
-                  handleChange={handleRadioChangeTabacco}
-                />
-                {isTabacco === "1" && (
-                  <div className="col-md-4">
-                    <CardLabel>{t("CR_YEAR")}</CardLabel>
-                    {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"number"}
-                      // optionKey="i18nKey"
-                      name="textTabacco"
-                      value={textTabacco}
-                      onChange={(e) => setTextTabacco(e.target.value)}
-                      disable={isEdit}
-                      placeholder={`${t("CR_YEAR")}`}
-                      {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
-                    />
-                  </div>
-                )}
+              <RadioButton
+                t={t}
+                // optionsKey="i18nKey"
+                // onChange={setOptionkey}
+                isMandatory={config.isMandatory}
+                selected={isTabacco}
+                onSelect={selectisTabacco}
+                handleChange={handleRadioChangeTabacco}
+              />
+              {isTabacco === "1" && (
+                <div className="col-md-4">
+                  <CardLabel>{t("CR_YEAR")}</CardLabel>
+                  {/* <TextInput type="text" id="text" value={textTabacco} onChange={(e) => setTextTabacco(e.target.value)} /> */}
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"number"}
+                    // optionKey="i18nKey"
+                    name="textTabacco"
+                    value={textTabacco}
+                    onChange={(e) => setTextTabacco(e.target.value)}
+                    disable={isEdit}
+                    placeholder={`${t("CR_YEAR")}`}
+                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
+                  />
+                </div>
+              )}
               {/* </div> */}
-            </div>           
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12">
-        <div className="col-md-6">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_CHEW_ARECANUT_PAN_MASALA")}</CardLabel>
               <RadioButton
                 t={t}
@@ -500,10 +689,10 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_YEAR")}`}
                     {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
                   />
-               </div>
-              )}           
-        </div>
-        <div className="col-md-6">
+                </div>
+              )}
+            </div>
+            <div className="col-md-6">
               <CardLabel>{t("CR_HABITUALLY_DRINK_ALCOHOL")}</CardLabel>
               <RadioButton
                 t={t}
@@ -531,11 +720,10 @@ const StatisticalInfoContinue = ({ config, onSelect, userType, formData }) => {
                     {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
                   />
                 </div>
-              )}               
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>        
-        
       </FormStep>
     </React.Fragment>
   );
