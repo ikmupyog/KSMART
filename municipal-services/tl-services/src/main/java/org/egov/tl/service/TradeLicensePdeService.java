@@ -170,7 +170,7 @@ public class TradeLicensePdeService {
 
             case businessService_BPA:
                 String tradeType = tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getTradeUnits()
-                        .get(0).getTradeType();
+                        .get(0).getBusinessSubtype();
                 if (pickWFServiceNameFromTradeTypeOnly)
                     tradeType = tradeType.split("\\.")[0];
                 businessServiceName = tradeType;
@@ -208,13 +208,12 @@ public class TradeLicensePdeService {
             tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getEstablishmentUnit()
                     .setEstablishmentUnitId(IDGenerated);
             tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getEstablishmentUnit().setActive(true);
-            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().setLicenseUnitId(
-                    IDGenerated);
+            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().setEstablishmentUnitId(IDGenerated);
         } else {
             tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getEstablishmentUnit()
                     .setEstablishmentUnitId(null);
             tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getEstablishmentUnit().setActive(false);
-            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().setLicenseUnitId(null);
+            tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().setEstablishmentUnitId(null);
         }
         if (!CollectionUtils.isEmpty(tradeLicenseRequest.getLicenses().get(0).getAssignee())) {
             tradeLicenseRequest.getLicenses().get(0).getAssignee().forEach(assignee -> {
@@ -232,7 +231,7 @@ public class TradeLicensePdeService {
 
             case businessService_BPA:
                 String tradeType = tradeLicenseRequest.getLicenses().get(0).getTradeLicenseDetail().getTradeUnits()
-                        .get(0).getTradeType();
+                        .get(0).getBusinessSubtype();
                 if (pickWFServiceNameFromTradeTypeOnly)
                     tradeType = tradeType.split("\\.")[0];
                 businessServiceName = tradeType;

@@ -95,7 +95,7 @@ public class EnrichmentPdeService {
             ins.setTenantId(tradeLicense.getTenantId());
             ins.setId(UUID.randomUUID().toString());
             ins.setEstablishmentUnitId(null);
-            ins.setEstablishmentUnitName(tradeLicense.getTradeName());
+            ins.setEstablishmentUnitName(tradeLicense.getLicenseUnitName());
             ins.setActive(false);
             tradeLicense.getTradeLicenseDetail().setEstablishmentUnit(ins);
 
@@ -428,7 +428,7 @@ public class EnrichmentPdeService {
 
             EstablishmentUnit ins = new EstablishmentUnit();
             ins.setEstablishmentUnitId(tradeLicense.getTradeLicenseDetail().getEstablishmentUnitId());
-            ins.setEstablishmentUnitName(tradeLicense.getTradeName());
+            ins.setEstablishmentUnitName(tradeLicense.getLicenseUnitName());
             tradeLicense.getTradeLicenseDetail().setEstablishmentUnit(ins);
 
             tradeLicense.getTradeLicenseDetail().getStructurePlace().forEach(structurePlace -> {
@@ -561,7 +561,7 @@ public class EnrichmentPdeService {
                         // license.setValidFrom(time);
                         if (mdmsData != null && businessService.equalsIgnoreCase(businessService_BPA)) {
                             String jsonPath = TLConstants.validityPeriodMap.replace("{}",
-                                    license.getTradeLicenseDetail().getTradeUnits().get(0).getTradeType());
+                                    license.getTradeLicenseDetail().getTradeUnits().get(0).getBusinessSubtype());
                             List<Integer> res = JsonPath.read(mdmsData, jsonPath);
                             Calendar calendar = Calendar.getInstance();
                             calendar.add(Calendar.YEAR, res.get(0));

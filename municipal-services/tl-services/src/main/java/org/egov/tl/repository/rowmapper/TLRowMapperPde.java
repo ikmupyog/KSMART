@@ -66,7 +66,7 @@ public class TLRowMapperPde implements ResultSetExtractor<List<TradeLicense>> {
                         .action(rs.getString("action"))
                         .status(rs.getString("status"))
                         .tenantId(tenantId)
-                        .tradeName(rs.getString("tradeName"))
+                        .licenseUnitName(rs.getString("tradeName"))
                         .businessService(rs.getString("businessservice"))
                         .id(id)
                         .build();
