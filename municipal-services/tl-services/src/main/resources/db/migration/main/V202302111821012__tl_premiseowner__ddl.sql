@@ -9,7 +9,7 @@ CREATE TABLE eg_tl_premiseowner(
 	postoffice character varying(150),
 	pincode character varying(10),
 	aadhaarNo character varying(20),
-	contactno character varying(15)
+	contactno character varying(15),
     active boolean,
     createdBy character varying(64),
     lastModifiedBy character varying(64),
