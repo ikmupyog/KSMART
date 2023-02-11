@@ -9,6 +9,8 @@ import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryResponse;
+import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertResponse;
+import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
 import org.ksmart.death.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ import java.util.List;
 /**
      * Creates DeathRegistryController 
      * Jasmine 06/02/2023
-     * Death Registry Create Rakhi S ikm on 09.02.2023
+     * Death Registry Create, Death Certificate download Rakhi S ikm on 09.02.2023
      */
 
     @Slf4j
@@ -92,5 +94,50 @@ public class DeathRegistryController {
                                                 .build();
             return ResponseEntity.ok(response);
         }
+
+    //Certificate Download by Rakhi S on 10.02.2023
+    @PostMapping("/deathregistry/_downloaddeath")
+    public ResponseEntity<DeathCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
+                                                    @Valid @ModelAttribute DeathRegistryCriteria criteria){
+
+    // List<DeathCertificate> deathCertSearch = deathService.searchCertificate(criteria); 
+        
+    DeathCertResponse response ;
+    // if (null != deathCertSearch && !deathCertSearch.isEmpty()){
+    //     if(deathCertSearch.get(0).getCounter()<=0){
+           DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
+        
+            response = DeathCertResponse
+                                        .builder()
+                                        .filestoreId(deathCert.getFilestoreid())
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                                        .build();
+            return ResponseEntity.ok(response);
+    //       }
+    
+    //       else{
+    //             response = DeathCertResponse
+    //                         .builder()
+    //                         .filestoreId(deathCertSearch.get(0).getFilestoreid())
+    //                         .consumerCode(deathCertSearch.get(0).getDeathcertificateno())
+    //                         // .tenantId(deathCertSearch.get(0).getTenantId())
+    //                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+    //                         .build();
+    //          return ResponseEntity.ok(response);
+    //       }
+    // }
+    // else{
+    //     DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
+        
+    //         response = DeathCertResponse
+    //                                     .builder()
+    //                                     .filestoreId(deathCert.getFilestoreid())
+    //                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+    //                                     .build();
+    //         return ResponseEntity.ok(response);
+    // }
+   
+
+    }
     
 }

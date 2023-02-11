@@ -372,6 +372,55 @@ public class DeathRegistryBasicInfo {
     @JsonProperty("certificateDate")
     private Long  certificateDate ;
 
+    //RAkhi S on 10.02.2023
+
+    private String embeddedUrl;   
+
+    private String fullName;
+
+    private String motherName;
+
+    private String maledependentname;
+
+    private String gender;
+
+    private String presentAddressFullMl;
+
+    private String presentAddressFullEn;
+
+    private String permanentAddressFullMl;
+
+    private String permanentAddressFullEn;
+
+    private String localBodyName;
+
+    private Long dateofissue;
+
+    @Size(max = 64)
+    @JsonProperty("lbDistrictEn")
+    private String lbDistrictEn ;
+
+    @Size(max = 64)
+    @JsonProperty("lbTalukEn")
+    private String lbTalukEn ;
+
+    @Size(max = 64)
+    @JsonProperty("lbDistrictMl")
+    private String lbDistrictMl ;
+
+    @Size(max = 64)
+    @JsonProperty("lbTalukMl")
+    private String lbTalukMl ;
+
+    private String localBodyNameMl;
+    private String deathPlaceHomeCountryMl ;
+    private String deathPlaceHomeStateMl ;
+    private String deathPlaceHomeDistrictMl ;
+    private String deathPlaceHomePostOfficeEn ;
+    private String deathPlaceHomePostOfficeMl ;
+    private String placeofDeath ;
+    private String deathPlaceOtherMl ;
+    private String deathPlaceOtherEn ;
     // @Schema(type = "string", format = "uuid", description = "death registration request id")
     // @Size(max = 64)
     // @JsonProperty("Id")

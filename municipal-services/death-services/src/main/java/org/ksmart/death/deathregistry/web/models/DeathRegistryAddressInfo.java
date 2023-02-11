@@ -148,5 +148,80 @@ public class DeathRegistryAddressInfo {
 
     @JsonProperty("PermanentAddrPostalCode")
     private String permanentAddrPostalCode ;
+
+    
+     //RAkhi S on 11.02.2023
+    @JsonProperty("PresentAddrTalukNameEn")
+    private String presentAddrTalukNameEn ;
+
+    @JsonProperty("PresentAddrTalukNameMl")
+    private String presentAddrTalukNameMl ;
+
+    @JsonProperty("PresentAddrVillageNameEn")
+    private String presentAddrVillageNameEn ;
+
+    @JsonProperty("PresentAddrVillageNameMl")
+    private String presentAddrVillageNameMl ;
+
+    @JsonProperty("PresentAddrPostofficeNameEn")
+    private String presentAddrPostofficeNameEn ;
+
+    @JsonProperty("PresentAddrPostofficeNameMl")
+    private String presentAddrPostofficeNameMl ;
+ 
+    private String presentAddrDistrictMl;
+
+    private String presentAddrStateMl;
+
+    private String presentAddrcountryMl;
+
+    @JsonProperty("PermanentAddrTalukNameEn")
+    private String permanentAddrTalukNameEn ;
+
+    @JsonProperty("PermanentAddrTalukNameMl")
+    private String permanentAddrTalukNameMl ;
+
+    @JsonProperty("PermanentAddrVillageNameEn")
+    private String permanentAddrVillageNameEn ;
+
+    @JsonProperty("PermanentAddrVillageNameMl")
+    private String permanentAddrVillageNameMl ;
+
+    @JsonProperty("PermanentAddrPostofficeNameEn")
+    private String permanentAddrPostofficeNameEn ;
+
+    @JsonProperty("PermanentAddrPostofficeNameMl")
+    private String permanentAddrPostofficeNameMl ;
+ 
+    private String permanentAddrDistrictMl;
+
+    private String permanentAddrStateMl;
+
+    private String permanentAddrcountryMl;
+
+    @JsonProperty("PresentAddrResidenceAsscNo")
+    private String presentAddrResidenceAsscNo ;
+
+    @JsonProperty("PermanentAddrResidenceAsscNo")
+    private String permanentAddrResidenceAsscNo ;
+    
+
+    @JsonProperty("PresentAddrHouseNo")
+    private String presentAddrHouseNo ;
+
+    @JsonProperty("PermanentAddrHouseNo")
+    private String permanentAddrHouseNo ;
+    
+    @JsonProperty("PresentAddrCityEn")
+    private String presentAddrCityEn ;
+
+    @JsonProperty("PermanentAddrCityEn")
+    private String permanentAddrCityEn;
+
+    @JsonProperty("PresentAddrCityMl")
+    private String presentAddrCityMl ;
+
+    @JsonProperty("PermanentAddrCityMl")
+    private String permanentAddrCityMl;
     
 }

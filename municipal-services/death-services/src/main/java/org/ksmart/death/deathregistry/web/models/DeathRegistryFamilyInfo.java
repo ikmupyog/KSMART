@@ -77,5 +77,12 @@ public class DeathRegistryFamilyInfo {
     @Size(max = 12)
     @JsonProperty("MotherAadharNo")
     private String MotherAadharNo;
+
+    //Rakhi S on 11.02.2023
+    private String spouseName;
+
+    private String motherName;
+
+    private String fatherName;
       
 }
