@@ -5,7 +5,6 @@ import Timeline from "../components/TLTimeline";
 
 const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
   const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
-  console.log(JSON.stringify(formData));
   const [valflag, setValflag] = useState(false);
   const [initialrender, setInitialrender] = useState(false);
   const [toast, setToast] = useState(false);
@@ -219,7 +218,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
       "institutionName": institutionName, "contactNo": contactNo,
       "organisationregistrationno": organisationregistrationno, "address": insaddress, "natureOfInstitution": natureOfInstitution.code,
       "email": email, "licenseUnitId": licenseUnitId
-    } :null;
+    } :{};
     let licenseeType = LicenseeType.code;
     let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;
     let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
