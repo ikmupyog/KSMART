@@ -78,7 +78,8 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
 			   .append("dt.death_home_housename_ml,")
          //Rakhi S on 11.02.2023
          .append("dt.certificate_no,")
-         .append("dt.certificate_date")
+         .append("dt.certificate_date,")
+         .append("dt.registration_date")
          .append(" ,presentaddress.death_dtl_id  as P_death_dtl_id") 
          .append(" ,presentaddress.tenantid as P_tenantid") 
          .append(" ,presentaddress.addr_typeid as P_addr_typeid") 

@@ -112,7 +112,7 @@ public class DeathRegistryService {
         else{
           Long currentTime = Long.valueOf(System.currentTimeMillis());
           applicationRequest.getDeathCertificate().get(0).getDeathBasicInfo().setCertificateDate(currentTime);          
-        }
+        }       
         DeathPdfResp pdfResp = repository.saveDeathCertPdf(applicationRequest);
         deathCertificate.setEmbeddedUrl(applicationRequest.getDeathCertificate().get(0).getDeathBasicInfo().getEmbeddedUrl());
         deathCertificate.setDateofissue(applicationRequest.getDeathCertificate().get(0).getDeathBasicInfo().getDateofissue());

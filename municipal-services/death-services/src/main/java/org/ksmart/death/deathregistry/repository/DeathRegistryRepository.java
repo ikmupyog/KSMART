@@ -24,6 +24,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.util.StringUtils;
 import org.apache.commons.collections4.CollectionUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jayway.jsonpath.JsonPath;
 
 import lombok.extern.slf4j.Slf4j;
@@ -88,14 +91,19 @@ public class DeathRegistryRepository {
 			pdfApplicationRequest.getDeathCertificate().forEach(cert-> {
 				String uiHost = config.getUiAppHost();
 				String deathCertPath = config.getDeathCertLink();
+
 				deathCertPath = deathCertPath.replace("$id",cert.getDeathBasicInfo().getId());
 				deathCertPath = deathCertPath.replace("$tenantId",cert.getDeathBasicInfo().getTenantId());
 				deathCertPath = deathCertPath.replace("$regNo",cert.getDeathBasicInfo().getRegistrationNo());
+                // System.out.println("regNo:"+cert.getDeathBasicInfo().getRegistrationNo());
+                // deathCertPath = deathCertPath.replace("$regNo","RG-109-2023-CRDRNR-C-KOCHI-KL");
+                // System.out.println("regNo1:"+deathCertPath);
 				deathCertPath = deathCertPath.replace("$dateofdeath",format.format(cert.getDeathBasicInfo().getDateOfDeath()));
 				deathCertPath = deathCertPath.replace("$gender",cert.getDeathBasicInfo().getDeceasedGender().toString());             
                 deathCertPath = deathCertPath.replace("$deathcertificateno",cert.getDeathBasicInfo().getCertificateNo());
 
 				String finalPath = uiHost + deathCertPath;
+                System.out.println("finalPath:"+finalPath);
                 //RAkhi S on 10.02.2023 MDMS Call
                 Object mdmsData = util.mDMSCallCertificate(pdfApplicationRequest.getRequestInfo()
                                 , cert.getDeathBasicInfo().getTenantId()
@@ -775,14 +783,14 @@ public class DeathRegistryRepository {
             DeathPdfApplicationRequest req = DeathPdfApplicationRequest.builder().deathCertificate(pdfApplicationRequest.getDeathCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
                  /********************************************* */
 
-        //   try {
-        //       ObjectMapper mapper = new ObjectMapper();
-        //       Object obj = req;
-        //       mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        //     System.out.println("pdfrequest: "+ mapper.writeValueAsString(obj));
-        //       }catch(Exception e) {
-        //         // log.error("Exception while fetching from searcher: ",e);
-        //       }
+          try {
+              ObjectMapper mapper = new ObjectMapper();
+              Object obj = req;
+              mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            System.out.println("pdfrequest: "+ mapper.writeValueAsString(obj));
+              }catch(Exception e) {
+                // log.error("Exception while fetching from searcher: ",e);
+              }
 
 
               /********************************************** */
