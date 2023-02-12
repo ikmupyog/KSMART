@@ -256,7 +256,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
-      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrAddrTypeId
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrTypeId
 
       - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrStreetNameEn
 
