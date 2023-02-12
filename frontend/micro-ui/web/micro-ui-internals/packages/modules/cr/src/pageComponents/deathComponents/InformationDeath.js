@@ -91,7 +91,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl);
   const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn);
   const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl);
-  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl);
+  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl);
   //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
   // 
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
@@ -476,7 +476,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceHomestreetNameMl,
       DeathPlaceHomepostofficeId,
       DeathPlaceHomepincode,
-
       DeathPlaceType,
       VehicleNumber,
       VehicleFromplaceEn,
@@ -705,7 +704,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             <div className="col-md-6">
               <CheckBox
-                label={t("CR_ADHAR_NOT_AVAILABLE")}
+                label={t("CR_AADHAR_NOT_AVAILABLE")}
                 onChange={setCheckedAdhar}
                 value={DeceasedAadharNotAvailable}
                 checked={DeceasedAadharNotAvailable}
@@ -753,7 +752,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
-                <CardLabel>{t("CR_AADHAR_OF_DECEASED")}</CardLabel>
+                <CardLabel>{t("CR_AADHAR")}</CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -764,7 +763,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                   value={DeceasedAadharNumber}
                   onChange={setSelectDeceasedAadharNumber}
                   disable={isEdit}
-                  placeholder={`${t("CR_AADHAR_OF_DECEASED")}`}
+                  placeholder={`${t("CR_AADHAR")}`}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
@@ -895,7 +894,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             <div className="col-md-2">
               <CardLabel>
-                {`${t("CR_AGE_OF_BIRTH")}`}
+                {`${t("CR_AGE")}`}
                 <span className="mandatorycss">*</span>{" "}
               </CardLabel>
               <input
@@ -904,7 +903,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 type="number"
                 onChange={setSelectAge}
                 value={Age}
-                placeholder={`${t("CR_AGE_OF_BIRTH")}`}
+                placeholder={`${t("CR_AGE")}`}
                 {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
               />
             </div>
@@ -937,7 +936,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 select={selectDeceasedGender}
                 disabled={isEdit}
                 placeholder={`${t("CR_GENDER")}`}
-                {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
+                // {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
               />
             </div>
             <div className="col-md-2">
@@ -967,7 +966,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-2">
-              <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
+              <CardLabel>{t("CR_PROFESSIONAL")}</CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
@@ -976,7 +975,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 selected={Occupation}
                 select={selectOccupation}
                 disabled={isEdit}
-                placeholder={`${t("CR_OCCUPATION_MAIN_LEVEL")}`}
+                placeholder={`${t("CR_PROFESSIONAL")}`}
               />
             </div>
           </div>
@@ -1009,21 +1008,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         {toast && (
           <Toast
             error={
-              DOBError
-              // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+              DOBError              
             }
             label={
               DOBError
-                ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-                  // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
-                  DOBError
-                  ? t(`CS_COMMON_INVALID_DATE`)
+                ? DOBError
+                  ? t(`CR_INVALID_DATE`)
                   : DOBError
-                  ? t(`CS_COMMON_INVALID_DATE`)
-                  : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
-
-                    setToast(false)
+                  ? t(`CR_INVALID_DATE`)
+                  :  setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
