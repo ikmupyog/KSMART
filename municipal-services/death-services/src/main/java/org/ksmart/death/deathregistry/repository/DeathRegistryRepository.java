@@ -589,54 +589,54 @@ public class DeathRegistryRepository {
                 //end
                 cert.getDeathBasicInfo().setPresentAddressFullEn(cert.getDeathAddressInfo().getPresentAddrResidenceAsscNo() + " "+
                                             cert.getDeathAddressInfo().getPresentAddrHouseNo()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrHoueNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrStreetNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrLocalityEn()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrCityEn()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrPostofficeNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrVillageNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrTalukNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrDistrictId()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrStateId()+ " "+
+                                            cert.getDeathAddressInfo().getPresentAddrHoueNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrStreetNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrLocalityEn()+ ", "+
+                                            // cert.getDeathAddressInfo().getPresentAddrCityEn()+ " ,"+
+                                            cert.getDeathAddressInfo().getPresentAddrPostofficeNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrVillageNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrTalukNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrDistrictId()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrStateId()+ ", "+
                                             cert.getDeathAddressInfo().getPresentAddrCountryId());  
 
                 cert.getDeathBasicInfo().setPresentAddressFullMl(cert.getDeathAddressInfo().getPresentAddrHouseNo() + " "+
                                             cert.getDeathAddressInfo().getPresentAddrHouseNo()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrHoueNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrStreetNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrLocalityMl()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrCityMl()+ " "+                                            
-                                            cert.getDeathAddressInfo().getPresentAddrPostofficeNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrVillageNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrTalukNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrDistrictMl()+ " "+
-                                            cert.getDeathAddressInfo().getPresentAddrStateMl()+ " "+
+                                            cert.getDeathAddressInfo().getPresentAddrHoueNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrStreetNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrLocalityMl()+ ", "+
+                                            // cert.getDeathAddressInfo().getPresentAddrCityMl()+ " ,"+                                            
+                                            cert.getDeathAddressInfo().getPresentAddrPostofficeNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrVillageNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrTalukNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrDistrictMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPresentAddrStateMl()+ ", "+
                                             cert.getDeathAddressInfo().getPresentAddrcountryMl());
                                             
                 cert.getDeathBasicInfo().setPermanentAddressFullEn(cert.getDeathAddressInfo().getPermanentAddrResidenceAsscNo() + " "+
                                             cert.getDeathAddressInfo().getPermanentAddrHouseNo()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrHoueNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrStreetNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrLocalityEn()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrCityEn()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrPostofficeNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrVillageNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrTalukNameEn()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrDistrictId()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrStateId()+ " "+
+                                            cert.getDeathAddressInfo().getPermanentAddrHoueNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrStreetNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrLocalityEn()+ ", "+
+                                            // cert.getDeathAddressInfo().getPermanentAddrCityEn()+ " ,"+
+                                            cert.getDeathAddressInfo().getPermanentAddrPostofficeNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrVillageNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrTalukNameEn()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrDistrictId()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrStateId()+ ", "+
                                             cert.getDeathAddressInfo().getPermanentAddrCountryId());
 
                 cert.getDeathBasicInfo().setPermanentAddressFullMl(cert.getDeathAddressInfo().getPermanentAddrResidenceAsscNo()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrHouseNo()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrHoueNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrStreetNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrLocalityMl()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrCityMl() +" "+
-                                            cert.getDeathAddressInfo().getPermanentAddrPostofficeNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrVillageNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrTalukNameMl()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrDistrictMl()+ " "+
-                                            cert.getDeathAddressInfo().getPermanentAddrStateMl()+ " "+
+                                            cert.getDeathAddressInfo().getPermanentAddrHoueNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrStreetNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrLocalityMl()+ ", "+
+                                            // cert.getDeathAddressInfo().getPermanentAddrCityMl() +" ,"+
+                                            cert.getDeathAddressInfo().getPermanentAddrPostofficeNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrVillageNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrTalukNameMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrDistrictMl()+ ", "+
+                                            cert.getDeathAddressInfo().getPermanentAddrStateMl()+ ", "+
                                             cert.getDeathAddressInfo().getPermanentAddrcountryMl());
                 //Rakhi S 11.02.2023
                 // place of death HOME
