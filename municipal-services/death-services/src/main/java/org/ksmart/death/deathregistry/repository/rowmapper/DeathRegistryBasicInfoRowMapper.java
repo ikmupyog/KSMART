@@ -79,6 +79,7 @@ public class DeathRegistryBasicInfoRowMapper  implements ResultSetExtractor  , B
           .certificateDate(rs.getLong("certificate_date"))
           .registrationNo(rs.getString("registration_no"))
           .registrationDate(rs.getLong("registration_date"))
+          .deathACKNo(rs.getString("ack_no"))
           .build();
       }   
 }

@@ -254,4 +254,18 @@ private static final String REGNOQUERY = new StringBuilder()
       return query.toString();
   }  
     
+  //Rakhi S on 12.02.2023
+  private static final String CERTIFICATE_QUERY = new StringBuilder().append("SELECT ct.id, ct.ack_no, ct.createdby, ct.createdtime, ct.deathdtlid, ct.filestoreid") 
+       .append("      , ct.lastmodifiedtime, ct.lastmodifiedby, ct.status, ct.additionaldetail, ct.embeddedurl, ct.dateofissue, ct.counter, ct.certificate_no") 
+       .append(" FROM eg_death_cert_request ct ")                                                             
+       .toString();
+
+  public String getDeathCertificateSearchQuery(@NotNull String id,
+                      @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+          StringBuilder query = new StringBuilder(CERTIFICATE_QUERY);
+
+          addFilter("ct.deathdtlid", id, query, preparedStmtValues);      
+        return query.toString();                                              
+    }   
+
 }
