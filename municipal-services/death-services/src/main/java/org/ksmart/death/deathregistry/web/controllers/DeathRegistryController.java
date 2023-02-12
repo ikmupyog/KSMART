@@ -100,11 +100,11 @@ public class DeathRegistryController {
     public ResponseEntity<DeathCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
                                                     @Valid @ModelAttribute DeathRegistryCriteria criteria){
 
-    // List<DeathCertificate> deathCertSearch = deathService.searchCertificate(criteria); 
+    List<DeathCertificate> deathCertSearch = deathService.searchCertificate(criteria); 
         
     DeathCertResponse response ;
-    // if (null != deathCertSearch && !deathCertSearch.isEmpty()){
-    //     if(deathCertSearch.get(0).getCounter()<=0){
+    if (null != deathCertSearch && !deathCertSearch.isEmpty()){
+        if(deathCertSearch.get(0).getCounter()<=0){
            DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
         
             response = DeathCertResponse
@@ -113,29 +113,29 @@ public class DeathRegistryController {
                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
                                         .build();
             return ResponseEntity.ok(response);
-    //       }
+          }
     
-    //       else{
-    //             response = DeathCertResponse
-    //                         .builder()
-    //                         .filestoreId(deathCertSearch.get(0).getFilestoreid())
-    //                         .consumerCode(deathCertSearch.get(0).getDeathcertificateno())
-    //                         // .tenantId(deathCertSearch.get(0).getTenantId())
-    //                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
-    //                         .build();
-    //          return ResponseEntity.ok(response);
-    //       }
-    // }
-    // else{
-    //     DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
+          else{
+                response = DeathCertResponse
+                            .builder()
+                            .filestoreId(deathCertSearch.get(0).getFilestoreid())
+                            .consumerCode(deathCertSearch.get(0).getDeathcertificateno())
+                            // .tenantId(deathCertSearch.get(0).getTenantId())
+                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                            .build();
+             return ResponseEntity.ok(response);
+          }
+    }
+    else{
+        DeathCertificate deathCert = deathService.download(criteria,requestInfoWrapper.getRequestInfo());
         
-    //         response = DeathCertResponse
-    //                                     .builder()
-    //                                     .filestoreId(deathCert.getFilestoreid())
-    //                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
-    //                                     .build();
-    //         return ResponseEntity.ok(response);
-    // }
+            response = DeathCertResponse
+                                        .builder()
+                                        .filestoreId(deathCert.getFilestoreid())
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                                        .build();
+            return ResponseEntity.ok(response);
+    }
    
 
     }

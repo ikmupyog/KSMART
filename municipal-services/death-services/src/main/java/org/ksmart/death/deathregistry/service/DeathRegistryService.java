@@ -130,15 +130,16 @@ public class DeathRegistryService {
           Long currentTime = Long.valueOf(System.currentTimeMillis());
           deathCertificate.setDateofissue(currentTime);
         }
-        // List<DeathCertificate> deathCertSearch = repository.searchCertificate(applicationRequest.getDeathCertificate().get(0).getDeathBasicInfo().getId());
+        //Rakhi S on 12.02.2023
+        List<DeathCertificate> deathCertSearch = repository.searchCertificate(applicationRequest.getDeathCertificate().get(0).getDeathBasicInfo().getId());
         
-        // if (null != deathCertSearch && !deathCertSearch.isEmpty()){
-        //   repository.updateCertificate(deathCertRequest);
-        // }
-        // else{
-        //   deathCertificate.setId(UUID.randomUUID().toString());
-        //   repository.save(deathCertRequest);
-        // }
+        if (null != deathCertSearch && !deathCertSearch.isEmpty()){
+          repository.updateCertificate(deathCertRequest);
+        }
+        else{
+            deathCertificate.setId(UUID.randomUUID().toString());         
+            repository.save(deathCertRequest);
+        }
         return deathCertificate;
       }
       catch(Exception e) {
@@ -146,5 +147,10 @@ public class DeathRegistryService {
           throw new CustomException("DOWNLOAD_ERROR","Error in Downloading Certificate");
     }
  }
+  //Rakhi S IKM on 12.02.2023
+  public List<DeathCertificate> searchCertificate(DeathRegistryCriteria criteria) {      
+    List<DeathRegistryDtl> obj = repository.getDeathApplication(criteria);     
+    return repository.searchCertificate(obj.get(0).getDeathBasicInfo().getId());
+  }
     
 }

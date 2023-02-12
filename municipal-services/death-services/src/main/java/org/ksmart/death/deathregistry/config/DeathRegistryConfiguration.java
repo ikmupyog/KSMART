@@ -78,11 +78,10 @@ public class DeathRegistryConfiguration {
     @Value("${egov.state.level.tenant.id}")
     private String egovStateLevelTenant;
 
-    //Rakhi S on 27.12.2022 
+    //Rakhi S on 12.02.2023
     @Value("${persister.save.deathcertificate.topic}")
     private String saveDeathTopic;
 
-    //Rakhi S on 31.01.2023
     @Value("${persister.update.deathcertificate.topic}")
     private String updateDeathCertificateTopic;
 

@@ -9,13 +9,16 @@ import java.util.Map;
 
 import org.egov.tracer.model.CustomException;
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
+import org.ksmart.death.deathregistry.kafka.producer.DeathRegistryProducer;
 import org.ksmart.death.deathregistry.repository.querybuilder.DeathRegistryQueryBuilder;
+import org.ksmart.death.deathregistry.repository.rowmapper.DeathCertificateRegistryRowMapper;
 import org.ksmart.death.deathregistry.repository.rowmapper.DeathRegistryRowMapper;
 import org.ksmart.death.deathregistry.util.DeathRegistryConstants;
 import org.ksmart.death.deathregistry.util.DeathRegistryMdmsUtil;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertRequest;
+import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfApplicationRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfResp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
      * Creates repository
      * Jasmine 
-     * Certificate Download , Query mapping Rakhi S ikm on 11.02.2023
+     * DeathRegistryRepository : Certificate Download , Query mapping Rakhi S ikm on 10.02.2023
      */
 @Slf4j
 @Repository
@@ -54,11 +57,20 @@ public class DeathRegistryRepository {
     @Autowired
     private RestTemplate restTemplate;
 
+    //RAkhi S on 12.02.2023    
+    private final DeathRegistryProducer producer;
+    private final DeathCertificateRegistryRowMapper deathCertRowMapper;
+
     @Autowired
-    DeathRegistryRepository(JdbcTemplate jdbcTemplate, DeathRegistryQueryBuilder queryBuilder,DeathRegistryRowMapper rowMapper) {
+    DeathRegistryRepository(JdbcTemplate jdbcTemplate, DeathRegistryQueryBuilder queryBuilder
+                                ,DeathRegistryRowMapper rowMapper
+                                ,DeathRegistryProducer producer
+                                ,DeathCertificateRegistryRowMapper deathCertRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
+        this.producer = producer;
+        this.deathCertRowMapper = deathCertRowMapper;
     }
     public List<DeathRegistryDtl> getDeathApplication(DeathRegistryCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
@@ -940,7 +952,7 @@ public class DeathRegistryRepository {
 
     //Rakhi S IKM on 11.02.2023
     public void save(DeathCertRequest deathCertRequest) {
-  	    // producer.push(config.getSaveDeathTopic(), deathCertRequest);
+  	    producer.push(config.getSaveDeathTopic(), deathCertRequest);
 	}
     //Rakhi S ikm on 11.02.2023
     private Map<String, List<String>> getAttributeValues(Object mdmsdata){
@@ -1039,6 +1051,28 @@ public class DeathRegistryRepository {
         // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
     }
+     //Rakhi S on 12.02.2023
+     public List<DeathCertificate> searchCertificate(String id) {
+		try {
 
+            List<Object> preparedStmtValues = new ArrayList<>();
+            String queryCert = queryBuilder.getDeathCertificateSearchQuery(id, preparedStmtValues, Boolean.FALSE);
+            List<DeathCertificate> deathCerts = jdbcTemplate.query(queryCert, preparedStmtValues.toArray(), deathCertRowMapper);
+			if (null != deathCerts && !deathCerts.isEmpty()) {				
+                return deathCerts;
+			}
+            else{
+                return deathCerts;
+            }
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new CustomException("invalid_data","Invalid Data");
+		}
+		
+	}
+    //Rakhi S ikm on 12.02.2023
+    public void updateCertificate(DeathCertRequest deathCertRequest) {
+        producer.push(config.getUpdateDeathCertificateTopic(), deathCertRequest);
+  }
     
 }
