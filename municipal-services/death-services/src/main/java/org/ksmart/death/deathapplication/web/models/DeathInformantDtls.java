@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 /*
      * Creates main model class  
-     * Jasmine on 4.02.2023      
+     * Jasmine on 11.02.2023      
 */
 @Schema(name = "Death Registration Request", description = "An Object holds the  informant details of death ")
 @Validated
