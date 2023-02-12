@@ -206,7 +206,7 @@ public class DeathRegistryRequestService {
         registryAddress.setPermanentAddrId(deathAddress.getPermanentAddrId());
         registryAddress.setPermanentAddrDeathDtlId(deathAddress.getPermanentAddrDeathDtlId());
         registryAddress.setPermanentAddrTenantId(deathAddress.getPermanentAddrTenantId());
-        registryAddress.setPermanentAddrAddrTypeId(deathAddress.getPermanentAddrAddrTypeId());
+      //  registryAddress.setPermanentAddrTypeId(deathAddress.getPermanentAddrTypeId());
         registryAddress.setPermanentAddrCountryId(deathAddress.getPermanentAddrCountryId());
         registryAddress.setPermanentAddrStateId(deathAddress.getPermanentAddrStateId());
         registryAddress.setPermanentAddrDistrictId(deathAddress.getPermanentAddrDistrictId());

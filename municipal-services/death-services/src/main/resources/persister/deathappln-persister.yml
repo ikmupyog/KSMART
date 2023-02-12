@@ -8,8 +8,12 @@ serviceMaps:
     isTransaction: true
     queryMaps:
 
-    - query: INSERT INTO public.eg_death_dtls(id, registrationunit, tenantid, dateofdeath, time_of_death, timeofdeath_unit, death_place, death_place_inst_type, death_place_inst_id, deceased_firstname_en, deceased_firstname_ml, deceased_middlename_en, deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml, deceased_aadhar_unavailable, deceased_aadhar_number, deceased_gender, age, age_unit, informant_name_en, informant_aadhar_submitted, informant_aadhar_no, informant_mobile_no, general_remarks, status, created_by, createdtime, lastmodifiedby, lastmodifiedtime, registration_no, male_dependent_name_en, male_dependent_name_ml, male_dependent_aadharno, female_dependent_name_en, female_dependent_name_ml, female_dependent_aadharno,  vehicle_hospital_en, vehicle_fromplace_ml, vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, death_place_ward_id, death_signed_officer_designation, deceased_idprooftype, application_no, file_no, ack_no, workflowcode, businessservice, action, comment, registration_date, registration_no_id, appl_type, deceased_idproofno, vehicle_first_halt, vehicle_first_halt_ml, male_dependent_unavailable, female_dependent_unavailable, spouse_name_en, spouse_name_ml, spouse_unavailable, spouse_aadhaar, spouse_type, funcion_uid, ack_no_id, application_date, death_place_locality_en, death_place_locality_ml, death_place_street_en, death_place_street_ml, death_place_country, death_place_state, death_place_district, death_place_city, death_place_remarks_en, death_place_remarks_ml, place_of_burial_en, place_of_burial_ml, death_home_locality_en, death_home_locality_ml, death_home_street_en, death_home_street_ml, death_home_housename_en, death_home_housename_ml, death_home_postoffice_id, death_home_pincode, death_home_ward, death_home_taluk_id)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+
+    - query: INSERT INTO public.eg_death_dtls(id, registrationunit, tenantid, dateofdeath, time_of_death, timeofdeath_unit, death_place, death_place_inst_type, death_place_inst_id, deceased_firstname_en, deceased_firstname_ml, deceased_middlename_en, deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml, deceased_aadhar_unavailable, deceased_aadhar_number, deceased_gender, age, age_unit, informant_name_en, informant_aadhar_submitted, informant_aadhar_no, informant_mobile_no, general_remarks, status, created_by, createdtime, lastmodifiedby, lastmodifiedtime, registration_no, male_dependent_name_en, male_dependent_name_ml, male_dependent_aadharno, female_dependent_name_en, female_dependent_name_ml, female_dependent_aadharno,  vehicle_hospital_en, vehicle_fromplace_ml, vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, death_place_ward_id, death_signed_officer_designation, deceased_idprooftype, application_no, file_no, ack_no, workflowcode, businessservice, action, comment, registration_date, registration_no_id, appl_type, deceased_idproofno, vehicle_first_halt, vehicle_first_halt_ml, male_dependent_unavailable, female_dependent_unavailable, spouse_name_en, spouse_name_ml, spouse_unavailable, spouse_aadhaar, spouse_type, funcion_uid, ack_no_id, application_date, death_place_locality_en, death_place_locality_ml, death_place_street_en, death_place_street_ml, death_place_country, death_place_state, death_place_district, death_place_city, death_place_remarks_en, death_place_remarks_ml, place_of_burial_en, place_of_burial_ml, death_home_locality_en, death_home_locality_ml, death_home_street_en, death_home_street_ml, death_home_housename_en, 
+          death_home_housename_ml, death_home_postoffice_id, death_home_pincode, death_home_ward, death_home_taluk_id,
+          family_mobile_no ,family_email ,initiator_relation,initiator_name,initiator_aadhar_submitted,initiator_aadhar_no,initiator_mobile_no , assignee)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?);
      
 
       basePath: deathCertificateDtls.*
@@ -196,6 +200,22 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathPlaceHomeTalukId
 
+      - jsonPath: $.deathCertificateDtls.*.familyInformationDeath.FamilyMobileNo
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.FamilyEmailId   
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorRelation
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorName
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAadhaarSubmitted
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAadhaar
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorMobile      
+
+      - jsonPath: $.deathCertificateDtls.*.assignuser 
+
 
     - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
@@ -265,7 +285,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
-      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrAddrTypeId
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrTypeId
 
       - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrStreetNameEn
 
@@ -382,8 +402,118 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.statisticalInfo.IsdeceasedPregnant
 
       - jsonPath: $.deathCertificateDtls.*.statisticalInfo.IsDelivery
+#Jasmine 12.02.2023
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
 
+      basePath: deathCertificateDtls.*
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrId
+      
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrTypeId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrStreetNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrStreetNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrLocalityEn
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrLocalityMl
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrWardId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrTalukId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrVillageId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrPostofficeId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrPincode
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrDistrictId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrStateId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrCountryId
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
+      
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrLocationType
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrHoueNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrHoueNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrLbType
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrPostalCode      
+
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathCertificateDtls.*
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrId
+      
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrTypeId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrStreetNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrStreetNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrLocalityEn
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrLocalityMl
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrWardId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrTalukId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrVillageId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrPostofficeId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrPincode
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrDistrictId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrStateId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrCountryId
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
+      
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrLocationType
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrHoueNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrHoueNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrLbType
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrPostalCode
 
   # UPDATE 
   - version: 1.0
@@ -629,7 +759,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
-      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrAddrTypeId
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrTypeId
 
     - query: UPDATE public.eg_death_address_dtls SET streetname_en = ? , streetname_ml = ? , locality_en = ? , 
         locality_ml = ? , ward_id = ? , taluk_id = ? , village_id = ? , postoffice_id = ? , pincode = ? , 
@@ -683,7 +813,7 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
-      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrAddrTypeId  
+      - jsonPath: $.deathCertificateDtls.*.addressOfDeceased.PermanentAddrTypeId  
 
     - query: INSERT INTO public.eg_death_statistical_dtls_log SELECT * FROM  public.eg_death_statistical_dtls WHERE death_dtl_id = ?;
      

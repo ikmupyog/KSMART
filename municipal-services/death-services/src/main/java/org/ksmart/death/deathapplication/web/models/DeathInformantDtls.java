@@ -59,8 +59,8 @@ public class DeathInformantDtls {
     @JsonProperty("InformantAddrTenantId")
     private String informantAddrTenantId ;
 
-    @JsonProperty("InformantAddrAddrTypeId")
-    private String informantAddrAddrTypeId ;
+    @JsonProperty("InformantAddrTypeId")
+    private String informantAddrTypeId ;
 
     @JsonProperty("InformantAddrLocationType")
     private String informantAddrLocationType ;
@@ -90,7 +90,7 @@ public class DeathInformantDtls {
     private String informantAddrPostofficeId ;
 
     @JsonProperty("InformantAddrPincode")
-    private String informantAddrPincode ;
+    private Long informantAddrPincode ;
 
     @JsonProperty("InformantAddrLocalityEn")
     private String informantAddrLocalityEn ;
@@ -111,7 +111,7 @@ public class DeathInformantDtls {
     private String informantAddrHoueNameMl ;
 
     @JsonProperty("InformantAddrPostalCode")
-    private String informantAddrPostalCode ;
+    private Long informantAddrPostalCode ;
 
     @JsonProperty("DocumentId")
     private String documentId ;

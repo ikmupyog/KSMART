@@ -95,8 +95,8 @@ public class DeathAddressInfo {
     @JsonProperty("PermanentAddrTenantId")
     private String permanentAddrTenantId ;
 
-    @JsonProperty("PermanentAddrAddrTypeId")
-    private String permanentAddrAddrTypeId ;
+    @JsonProperty("PermanentAddrTypeId")
+    private String permanentAddrTypeId ;
 
     @JsonProperty("PermanentAddrLocationType")
     private String permanentAddrLocationType ;
