@@ -18,6 +18,7 @@ import Institution from "./Institution";
 import DeathPlaceHome from "./DeathPlaceHome";
 import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
+import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
@@ -90,8 +91,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl);
   const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn);
   const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl);
-  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl);
-  //Vehicle home{DeathPlaceWardId} Public place {GeneralRemarks, DeathPlaceWardId}
+  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl);
+  //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
   // 
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
   const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.InformationDeath?.VehicleFromplaceEn);
@@ -110,6 +111,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceStreetEn, setDeathPlaceStreetEn] = useState(formData?.InformationDeath?.DeathPlaceStreetEn? formData?.InformationDeath?.DeathPlaceStreetEn : "");  
   const [DeathPlaceStreetMl, setDeathPlaceStreetMl] = useState(formData?.InformationDeath?.DeathPlaceStreetMl ? formData?.InformationDeath?.DeathPlaceStreetMl : "");  
  
+//DeathOutsideJurisdiction
+  const [DeathPlaceCountry, setSelectDeathPlaceCountry] = useState(formData?.InformationDeath?.DeathPlaceCountry);
+  const [DeathPlaceState, SelectDeathPlaceState] = useState(formData?.InformationDeath?.DeathPlaceState);
+  const [DeathPlaceDistrict, SelectDeathPlaceDistrict] = useState(formData?.InformationDeath?.DeathPlaceDistrict); 
+  const [DeathPlaceCity, SelectDeathPlaceCity] = useState(formData?.InformationDeath?.DeathPlaceCity); 
+  const [DeathPlaceRemarksEn, SelectDeathPlaceRemarksEn] = useState(formData?.InformationDeath?.DeathPlaceRemarksEn); 
+  const [DeathPlaceRemarksMl, SelectDeathPlaceRemarksMl] = useState(formData?.InformationDeath?.DeathPlaceRemarksMl);  
+  const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn); 
+  const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl); 
 
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [toast, setToast] = useState(false);
@@ -331,6 +341,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             
           />;
         }
+        if (naturetype === "OUTSIDE_JURISDICTION") {
+          <DeathOutsideJurisdiction                  
+  DeathPlaceCountry={DeathPlaceCountry}
+  DeathPlaceState={DeathPlaceState}
+  DeathPlaceDistrict={DeathPlaceDistrict}
+  DeathPlaceCity={DeathPlaceCity}          
+  DeathPlaceRemarksEn={DeathPlaceRemarksEn}         
+  DeathPlaceRemarksMl={DeathPlaceRemarksMl}  
+  PlaceOfBurialMl={PlaceOfBurialMl}
+  PlaceOfBurialEn={PlaceOfBurialEn}
+  GeneralRemarks={GeneralRemarks}
+  DeathPlaceWardId={DeathPlaceWardId}
+            
+          />;
+        }
       }
     }
   });
@@ -404,11 +429,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
       sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
       sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);    
-
-      
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);     
   
       }
+    if (DeathPlace.code === "OUTSIDE_JURISDICTION") {
+      sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code  : null);
+      sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code  : null);
+      sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code  : null);    
+      sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity  : null);
+      sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn  : null);
+      sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl  : null);
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
+      sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn  : null);
+      sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl  : null);
+      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);    
+    }
     onSelect(config.key, {
       DateOfDeath,
       TimeOfDeath,
@@ -441,7 +476,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceHomestreetNameMl,
       DeathPlaceHomepostofficeId,
       DeathPlaceHomepincode,
-
       DeathPlaceType,
       VehicleNumber,
       VehicleFromplaceEn,
@@ -457,9 +491,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceLocalityEn, 
       DeathPlaceLocalityMl, 
       DeathPlaceStreetEn, 
-      DeathPlaceStreetMl, 
-      GeneralRemarks,
-      DeathPlaceWardId ,
+      DeathPlaceStreetMl,            
+      DeathPlaceCountry,
+      DeathPlaceState,
+      DeathPlaceDistrict,
+      DeathPlaceCity,
+      DeathPlaceRemarksEn,
+      DeathPlaceRemarksMl,      
+      PlaceOfBurialMl,
+      PlaceOfBurialEn,
+      
 
     });
   };
@@ -625,6 +666,33 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
               )}
+              {value === "OUTSIDE_JURISDICTION" && (
+            <div>
+              <DeathOutsideJurisdiction             
+               DeathPlaceCountry={DeathPlaceCountry}
+               setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
+               DeathPlaceState={DeathPlaceState}
+               SelectDeathPlaceState={SelectDeathPlaceState}
+               DeathPlaceDistrict={DeathPlaceDistrict}
+               SelectDeathPlaceDistrict={SelectDeathPlaceDistrict}
+               DeathPlaceCity={DeathPlaceCity} 
+               SelectDeathPlaceCity={SelectDeathPlaceCity}         
+               DeathPlaceRemarksEn={DeathPlaceRemarksEn}
+               SelectDeathPlaceRemarksEn={SelectDeathPlaceRemarksEn}         
+               DeathPlaceRemarksMl={DeathPlaceRemarksMl}  
+               SelectDeathPlaceRemarksMl={SelectDeathPlaceRemarksMl} 
+               PlaceOfBurialMl={PlaceOfBurialMl}
+               SelectPlaceOfBurialMl={SelectPlaceOfBurialMl}
+               PlaceOfBurialEn={PlaceOfBurialEn}
+               SelectPlaceOfBurialEn={SelectPlaceOfBurialEn}
+               GeneralRemarks={GeneralRemarks}
+               setGeneralRemarks={setGeneralRemarks}
+               DeathPlaceWardId={DeathPlaceWardId}
+              setDeathPlaceWardId={setDeathPlaceWardId}              
+              />
+            </div>
+              )}
+              
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -636,7 +704,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             <div className="col-md-6">
               <CheckBox
-                label={t("CR_ADHAR_NOT_AVAILABLE")}
+                label={t("CR_AADHAR_NOT_AVAILABLE")}
                 onChange={setCheckedAdhar}
                 value={DeceasedAadharNotAvailable}
                 checked={DeceasedAadharNotAvailable}
@@ -684,7 +752,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
-                <CardLabel>{t("CR_AADHAR_OF_DECEASED")}</CardLabel>
+                <CardLabel>{t("CR_AADHAR")}</CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -695,7 +763,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                   value={DeceasedAadharNumber}
                   onChange={setSelectDeceasedAadharNumber}
                   disable={isEdit}
-                  placeholder={`${t("CR_AADHAR_OF_DECEASED")}`}
+                  placeholder={`${t("CR_AADHAR")}`}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
@@ -826,7 +894,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             <div className="col-md-2">
               <CardLabel>
-                {`${t("CR_AGE_OF_BIRTH")}`}
+                {`${t("CR_AGE")}`}
                 <span className="mandatorycss">*</span>{" "}
               </CardLabel>
               <input
@@ -835,7 +903,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 type="number"
                 onChange={setSelectAge}
                 value={Age}
-                placeholder={`${t("CR_AGE_OF_BIRTH")}`}
+                placeholder={`${t("CR_AGE")}`}
                 {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
               />
             </div>
@@ -855,7 +923,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_AGE_UNIT")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-2">
               <CardLabel>
                 {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
               </CardLabel>
@@ -868,7 +936,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 select={selectDeceasedGender}
                 disabled={isEdit}
                 placeholder={`${t("CR_GENDER")}`}
-                {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
+                // {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
               />
             </div>
             <div className="col-md-2">
@@ -897,6 +965,19 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CS_COMMON_RELIGION")}`}
               />
             </div>
+            <div className="col-md-2">
+              <CardLabel>{t("CR_PROFESSIONAL")}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbOccupationMain}
+                selected={Occupation}
+                select={selectOccupation}
+                disabled={isEdit}
+                placeholder={`${t("CR_PROFESSIONAL")}`}
+              />
+            </div>
           </div>
         </div>
         {/* <div className="row">
@@ -904,8 +985,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
             <CheckBox label={t("CR_OCCUPATION_DECEASED_NO")} onChange={() => setChecked((checked) => !checked)} value={checked} />
           </div>
         </div> */}
-        <div className="row">
-          {/* {checked ? null : ( */}
+        {/* <div className="row">
+          {checked ? null : (
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}<span className="mandatorycss">*</span></CardLabel>
@@ -921,27 +1002,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
           </div>
-          {/* )} */}
-        </div>
+           )}
+        </div> */}
 
         {toast && (
           <Toast
             error={
-              DOBError
-              // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+              DOBError              
             }
             label={
               DOBError
-                ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-                  // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
-                  DOBError
-                  ? t(`CS_COMMON_INVALID_DATE`)
+                ? DOBError
+                  ? t(`CR_INVALID_DATE`)
                   : DOBError
-                  ? t(`CS_COMMON_INVALID_DATE`)
-                  : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
-
-                    setToast(false)
+                  ? t(`CR_INVALID_DATE`)
+                  :  setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}

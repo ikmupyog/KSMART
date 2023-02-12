@@ -68,8 +68,9 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
       let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
       data.tenantId = tenantId1;
       if (!resubmit) {
+
         let formdata = !isEdit ? convertToTrade(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "TL") : []);
-        formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
+        formdata.Licenses[0].tenantId = "kl.cochin"; //formdata?.Licenses[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
           mutation.mutate(formdata, {
@@ -90,14 +91,6 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
             })
           }
         }
-
-        // !isEdit ? mutation.mutate(formdata, {
-        //   onSuccess,
-        // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
-        //   onSuccess,
-        // }) :mutation1.mutate(formdata, {
-        //   onSuccess,
-        // }));
       } else {
         let formdata = convertToResubmitTrade(data);
         formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
