@@ -221,7 +221,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function selectMedicalAttentionDeath(value) {
-    selectMedicalAttentionDeath(value);
+    setMedicalAttentionType(value);
     setValue(value.code);
   }
   function selectIsAutopsyPerformed(value) {
@@ -435,7 +435,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           {/*  INSTITUTION */}
-          {value === "Institution" && (
+          {value === "MEDICAL_ATTENTION_TYPE_INSTITUTION" && (
             <div>
               <div className="row">
                 <div className="col-md-12">
@@ -666,6 +666,19 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
               />
             </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
+              {/* <div className="col-md-6 "> */}
+              <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={false}
+                option={menub}
+                selected={IsdeceasedPregnant}
+                onSelect={selectIsdeceasedPregnant}
+                disabled={isEdit}
+              />
+            </div>
           </div>
         </div>
         {/* <div className="col-md-6">
@@ -685,24 +698,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
             </div> */}
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
-              {/* <div className="col-md-6 "> */}
-              <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={false}
-                option={menub}
-                selected={IsdeceasedPregnant}
-                onSelect={selectIsdeceasedPregnant}
-                disabled={isEdit}
-              />
-              {/* </div> */}
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
+           
             <div className="col-md-6">
               <CardLabel>{t("CR_WAS_THERE")}</CardLabel>
               <Dropdown
@@ -729,6 +725,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
         </div>
+        
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-12">

@@ -966,11 +966,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-2">
-<<<<<<< HEAD
-              <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}</CardLabel>
-=======
               <CardLabel>{t("CR_PROFESSIONAL")}</CardLabel>
->>>>>>> d6729ebb783f3188e9b34e1c7e9b4ae8af9d0bc7
               <Dropdown
                 t={t}
                 optionKey="name"
@@ -979,11 +975,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 selected={Occupation}
                 select={selectOccupation}
                 disabled={isEdit}
-<<<<<<< HEAD
-                placeholder={`${t("CR_OCCUPATION_MAIN_LEVEL")}`}
-=======
                 placeholder={`${t("CR_PROFESSIONAL")}`}
->>>>>>> d6729ebb783f3188e9b34e1c7e9b4ae8af9d0bc7
               />
             </div>
           </div>

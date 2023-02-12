@@ -742,7 +742,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "FamilyInformationDeath",
-        nextStep: "statistical-info-continue",
+        nextStep: "statistical-info",
         type: "component",
         hideInEmployee: true,
       },
