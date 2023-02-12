@@ -111,7 +111,7 @@ public class DeathInformantDtls {
     private String informantAddrHoueNameMl ;
 
     @JsonProperty("InformantAddrPostalCode")
-    private Long informantAddrPostalCode ;
+    private String informantAddrPostalCode ;
 
     @JsonProperty("DocumentId")
     private String documentId ;

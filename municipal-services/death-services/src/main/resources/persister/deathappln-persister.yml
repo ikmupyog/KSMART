@@ -893,7 +893,147 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
-      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId          
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId   
+
+    - query: INSERT INTO public.eg_death_address_dtls_log SELECT * FROM  public.eg_death_address_dtls WHERE death_dtl_id = ? 
+             AND tenantid = ? AND addr_typeid = ?;
+     
+      basePath: deathCertificateDtls.*.addressInfo
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrTypeId   
+
+
+    - query: UPDATE public.eg_death_address_dtls  SET   streetname_en = ? , streetname_ml = ? , locality_en = ? , 
+          locality_ml = ? , ward_id = ? , taluk_id = ? , village_id = ? , postoffice_id = ? ,  pincode = ? , 
+          district_id = ? , state_id = ? , country_id = ? , createdby = ? , createdtime = ? , lastmodifiedby = ? , 
+          lastmodifiedtime = ? , location_type = ? , housename_ml = ? , housename_en = ? , lbtype = ? , 
+          postal_code  = ? WHERE death_dtl_id = ? , tenantid = ? , addr_typeid  = ? 
+     
+
+      basePath: deathCertificateDtls.*
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrId
+      
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrStreetNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrStreetNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrLocalityEn
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrLocalityMl
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrWardId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrTalukId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrVillageId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrPostofficeId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrPincode
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrDistrictId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrStateId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrCountryId
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
+      
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrLocationType
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrHoueNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrHoueNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrLbType
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrPostalCode  
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrTypeId 
+
+
+    - query: INSERT INTO public.eg_death_address_dtls_log SELECT * FROM  public.eg_death_address_dtls WHERE death_dtl_id = ? 
+             AND tenantid = ? AND addr_typeid = ?;
+     
+      basePath: deathCertificateDtls.*.addressInfo
+      jsonMaps:
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrTypeId    
+
+    - query: UPDATE public.eg_death_address_dtls SET  streetname_en = ? , streetname_ml = ? ,  locality_en = ? ,
+         locality_ml = ? , ward_id = ? , taluk_id = ? , village_id = ? , postoffice_id = ? , pincode = ? , district_id = ? ,  
+         state_id = ? , country_id = ? , createdby = ? , createdtime = ? , lastmodifiedby = ? , lastmodifiedtime = ? , 
+         location_type = ? , housename_ml = ? , housename_en = ? , lbtype = ? , postal_code = ? WHERE death_dtl_id = ? , tenantid = ? , addr_typeid = ? 
+        
+
+      basePath: deathCertificateDtls.* 
+      jsonMaps:
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrStreetNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrStreetNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrLocalityEn
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrLocalityMl
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrWardId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrTalukId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrVillageId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrPostofficeId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrPincode
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrDistrictId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrStateId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrCountryId
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdBy
+      
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.createdTime
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCertificateDtls.*.auditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrLocationType
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrHoueNameMl
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrHoueNameEn
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrLbType
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrPostalCode
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrTypeId             
 
 
 
