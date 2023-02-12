@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton,CheckBox, TextArea
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
+const InitiatorDetails = ({ config, onSelect, userType, formData,
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
@@ -11,21 +11,24 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
 
     const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
     
-    const [isDeclarationInfo, setIsDeclarationInfo] = useState(formData?.InformarHosInstDetails?.isDeclarationInfo ? formData?.InformarHosInstDetails?.isDeclarationInfo : false);
-    const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.InformarHosInstDetails?.infomantFirstNameEn  ? formData?.InformarHosInstDetails?.infomantFirstNameEn : "");
-    const [infomantAadhar, setinfomantAadhar] = useState(formData?.InformarHosInstDetails?.infomantAadhar ? formData?.InformarHosInstDetails?.infomantAadhar : "");
+    const [isDeclarationInfo, setIsDeclarationInfo] = useState(formData?.InitiatorinfoDetails?.isDeclarationInfo ? formData?.InitiatorinfoDetails?.isDeclarationInfo : false);
+    const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : false);
+    const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation  ? formData?.InitiatorinfoDetails?.relation : "");
+    const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.InitiatorinfoDetails?.infomantFirstNameEn  ? formData?.InitiatorinfoDetails?.infomantFirstNameEn : "");
+    const [infomantAadhar, setinfomantAadhar] = useState(formData?.InitiatorinfoDetails?.infomantAadhar ? formData?.InitiatorinfoDetails?.infomantAadhar : "");
     
-    const [infomantMobile, setinfomantMobile] = useState(formData?.InformarHosInstDetails?.infomantMobile  ? formData?.InformarHosInstDetails?.infomantMobile : "");
-    const [informerDesi, setinformerDesi] = useState(formData?.InformarHosInstDetails?.informerDesi  ? formData?.InformarHosInstDetails?.informerDesi : "");
-    const [informerAddress, setinformerAddress] = useState(formData?.InformarHosInstDetails?.informerAddress  ? formData?.InformarHosInstDetails?.informerAddress : "");
+    const [infomantMobile, setinfomantMobile] = useState(formData?.InitiatorinfoDetails?.infomantMobile  ? formData?.InitiatorinfoDetails?.infomantMobile : "");
+    const [informerDesi, setinformerDesi] = useState(formData?.InitiatorinfoDetails?.informerDesi  ? formData?.InitiatorinfoDetails?.informerDesi : "");
+    const [informerAddress, setinformerAddress] = useState(formData?.InitiatorinfoDetails?.informerAddress  ? formData?.InitiatorinfoDetails?.informerAddress : "");
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [toast, setToast] = useState(false);
-    const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InformarHosInstDetails?.infomantFirstNameEn ? false : false);
-    const [infomantAadharError, setinfomantAadharError] = useState(formData?.InformarHosInstDetails?.infomantAadhar ? false : false);
-    const [infomantMobileError, setinfomantMobileError] = useState(formData?.InformarHosInstDetails?.infomantMobile  ? false : false);
-    const [mobileLengthError, setMobileLengthError] = useState(formData?.InformarHosInstDetails?.infomantMobile ? false : false);
-    const [informerDesiError, setinformerDesiError] = useState(formData?.InformarHosInstDetails?.informerDesi  ? false : false);
-    const [informerAddressError, setinformerAddressError] = useState(formData?.InformarHosInstDetails?.informerAddress ? false : false);
+    const [relationnError, setrelationnError] = useState(formData?.InitiatorinfoDetails?.relation ? false : false);
+    const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.infomantFirstNameEn ? false : false);
+    const [infomantAadharError, setinfomantAadharError] = useState(formData?.InitiatorinfoDetails?.infomantAadhar ? false : false);
+    const [infomantMobileError, setinfomantMobileError] = useState(formData?.InitiatorinfoDetails?.infomantMobile  ? false : false);
+    const [mobileLengthError, setMobileLengthError] = useState(formData?.InitiatorinfoDetails?.infomantMobile ? false : false);
+    const [informerDesiError, setinformerDesiError] = useState(formData?.InitiatorinfoDetails?.informerDesi  ? false : false);
+    const [informerAddressError, setinformerAddressError] = useState(formData?.InitiatorinfoDetails?.informerAddress ? false : false);
 
 
     const onSkip = () => onSelect();
@@ -34,14 +37,26 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
 
     useEffect(() => {
         if (isInitialRender) {
-          if (formData?.InformarHosInstDetails?.isDeclarationInfo != null) {
+          if (formData?.InitiatorinfoDetails?.isDeclarationInfo != null) {
             setIsInitialRender(false);
-            setIsDeclarationInfo(formData?.InformarHosInstDetails?.isDeclarationInfo);
+            setIsDeclarationInfo(formData?.InitiatorinfoDetails?.isDeclarationInfo);
+          }
+          if (formData?.InitiatorinfoDetails?.isCaretaker != null) {
+            setIsInitialRender(false);
+            setIsCaretaker(formData?.InitiatorinfoDetails?.isCaretaker);
           }
         }    
          
         
       }, [isInitialRender]);
+      function setSelectrelation(e) {
+        if (e.target.value.length === 51) {
+            return false;
+            // window.alert("Username shouldn't exceed 10 characters")
+        } else {
+            setrelation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+        }
+    }
 
     function setSelectinfomantFirstNameEn(e) {
         if (e.target.value.length === 51) {
@@ -99,7 +114,7 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
 
    
     function setDeclarationInfo(e) {
-        if (e.target.checked == true) {
+        if (e.target.checked == false) {
             setIsDeclarationInfo(e.target.checked);
       
     
@@ -113,9 +128,35 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
         }
       }
 
+      function setCaretaker(e) {
+        if (e.target.checked == true) {
+            setIsCaretaker(e.target.checked);
+      
+            setinformerDesi("");
+        //   setFatherFirstNameMl("");
+    
+        //   setFatherNationality(null);
+    
+       
+        } else {
+            setIsCaretaker(e.target.checked);
+        }
+      }
+
+
 
     let validFlag = true;
     const goNext = () => {
+      // if (relation == null || relation == "" || relation == undefined) {
+      //   validFlag = false;
+      //   setrelationnError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setrelationnError(false);
+      // }
         if (infomantFirstNameEn == null || infomantFirstNameEn == "" || infomantFirstNameEn == undefined) {
             validFlag = false;
             setinfomantFirstNmeEnError(true);
@@ -160,7 +201,7 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
        
           if (validFlag == true) {
       
-     
+        sessionStorage.setItem("relation", relation  ? relation : null);       
         sessionStorage.setItem("infomantFirstNameEn", infomantFirstNameEn  ? infomantFirstNameEn : null);          
         sessionStorage.setItem("infomantAadhar", infomantAadhar  ? infomantAadhar : null);     
     
@@ -168,9 +209,11 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
         sessionStorage.setItem("informerDesi", informerDesi  ? informerDesi : null);    
         sessionStorage.setItem("informerAddress", informerAddress  ? informerAddress : null);    
         sessionStorage.setItem("isDeclarationInfo", isDeclarationInfo ? isDeclarationInfo : null);
+        sessionStorage.setItem("isCaretaker", isCaretaker ? isCaretaker : null);
+
 
         onSelect(config.key, {
-            infomantFirstNameEn,  infomantAadhar,   infomantMobile ,informerDesi,  informerAddress,isDeclarationInfo  });
+          relation , infomantFirstNameEn,  infomantAadhar,   infomantMobile ,informerDesi,  informerAddress,isDeclarationInfo ,isCaretaker });
         }
       };
     return (
@@ -180,7 +223,7 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
             <BackButton >{t("CS_COMMON_BACK")}</BackButton> */}
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isDeclarationInfo}>
                 <div className="row">
-                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
+                    <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span> </h1>
                     </div>
                 </div>
 
@@ -190,8 +233,24 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
             <CheckBox label={t("Declared that I/My ____ Delivered Male child/ Female child Born ./ഞാൻ/എന്റെ _____ പ്രസവിച്ച ആൺ കുട്ടി/ പെൺ കുട്ടി ജനിച്ചതായി പ്രഖ്യാപിച്ചു.")} onChange={setDeclarationInfo} value={isDeclarationInfo} checked={isDeclarationInfo} />
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_PARENTS_GUARDIAN_CARETAKER")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        
+        
                 <div className="row">
                     <div className="col-md-12" >
+
+                    <div className="col-md-4" ><CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="relation"
+                                value={relation} onChange={setSelectrelation} disable={isEdit} placeholder={`${t("CR_RELATION")}`}
+                                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })} />
+                        </div>
+
                     <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantAadhar" value={infomantAadhar} onChange={setSelectinfomantAadhar} disable={isEdit} 
                             placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
@@ -204,8 +263,24 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
                                 value={infomantFirstNameEn} onChange={setSelectinfomantFirstNameEn} disable={isEdit} placeholder={`${t("CR_INFORMANT_NAME")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })} />
                         </div>
-                        <div className="col-md-4" >
-                            <CardLabel>{`${t("CR_INFORMER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
+
+
+                        
+                       
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-12" >
+                    
+                    <div className="row">
+          <div className="col-md-12">
+            <CheckBox label={t("CR_INITIATOR_IS_CARETAKER")} onChange={setCaretaker} value={isCaretaker} checked={isCaretaker} />
+          </div>
+        </div>
+        {isCaretaker === true && (
+          <div>
+                        <div className="col-md-3" >
+                            <CardLabel>{`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput
                                 t={t}
                                 isMandatory={true}
@@ -219,17 +294,8 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
                                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
                             />
                         </div>
-                      
-                       
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12" >
-                    {/* <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                            <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantMobile" value={infomantMobile} onChange={setSelectinfomantMobile} disable={isEdit} 
-                            placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
-                        </div> */}
-
+                        </div>
+        )}
 
                         <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                             <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantMobile" value={infomantMobile} onChange={setSelectinfomantMobile} disable={isEdit} 
@@ -295,4 +361,4 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
         </React.Fragment>
     );
 };
-export default InformarHospitalInstitution;
+export default InitiatorDetails;

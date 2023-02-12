@@ -38,7 +38,8 @@ import AddressOutsideKerala from "../src/pageComponents/birthComponents/AddressO
 import AddressPermanentOutsideKerala from "../src/pageComponents/birthComponents/AddressPermanentOutsideKerala";
 import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/AddressPermanentInsideKerala";
 import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
-
+import InformarHospitalInstitution from "../src/pageComponents/birthComponents/InformarHospitalInstitution";
+import InitiatorDetails from "../src/pageComponents/birthComponents/InitiatorDetails";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
@@ -70,6 +71,7 @@ import Institution from "./pageComponents/deathComponents/Institution";
 import DeathPlaceHome from "./pageComponents/deathComponents/DeathPlaceHome";
 import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicle";
 import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
+import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
 
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
@@ -210,6 +212,8 @@ const componentsToRegister = {
   AddressPermanentOutsideKerala,
   AddressPermanentOutsideIndia,
   AddressPermanentInsideKerala,
+  InformarHospitalInstitution,
+  InitiatorDetails,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -244,6 +248,7 @@ const componentsToRegister = {
   Institution,
   Hospital,
   DeathPublicPlace,
+  DeathOutsideJurisdiction,
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,

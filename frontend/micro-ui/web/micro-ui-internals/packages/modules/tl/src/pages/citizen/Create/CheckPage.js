@@ -51,8 +51,6 @@ const CheckPage = ({ onSubmit, value }) => {
     return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
       }`;
   }
-
-  console.log("formdata"+JSON.stringify(TradeDetails));
   const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
   if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
@@ -76,13 +74,13 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_DISTRICT")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.districtid?.name}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LB_TYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.localbodytype?.name}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LB_NAME_LABEL")}`}</CardText>
@@ -106,6 +104,9 @@ const CheckPage = ({ onSubmit, value }) => {
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
                 </div>
+                <div className="col-md-2">
+                  {<ActionButton jumpTo={`${routeLink}/license-unit-det`} />}
+                </div>
               </div>
             </div>
           </StatusTable>
@@ -120,25 +121,36 @@ const CheckPage = ({ onSubmit, value }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_SECTOR")}`}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_BUSINESS_SECTOR")}`}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.businessSector?.name}</CardText>
                 </div>
                 <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LOCALIZATION_SECTOR")}`}</CardText>
+                </div>
+                <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.i18nKey}</CardText>
+                </div>
+                <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.organisationregistrationno}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesstype?.i18nKey}</CardText>
                 </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.institutionName}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.businesssubtype?.businesscategory?.i18nKey}</CardText>
                 </div>
               </div>
             </div>
+
 
             <div className="row">
               <div className="col-md-12">
@@ -169,6 +181,9 @@ const CheckPage = ({ onSubmit, value }) => {
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.noOfEmployees}</CardText>
+                </div>
+                <div className="col-md-2">
+                  {<ActionButton jumpTo={`${routeLink}/license-unit-det`} />}
                 </div>
               </div>
             </div>
@@ -234,9 +249,10 @@ const CheckPage = ({ onSubmit, value }) => {
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.ownershipCategory?.name}</CardText>
                 </div>
+
               </div>
             </div>
-            {TradeDetails?.structureType === "LAND" && (
+            {TradeDetails?.tradeLicenseDetail?.structureType?.code === "LAND" && (
               <div>
                 {TradeDetails?.tradeLicenseDetail?.structurePlace.map((structure, index) => (
                   <div className="row" key={index}>
@@ -275,7 +291,7 @@ const CheckPage = ({ onSubmit, value }) => {
               </div>
             )}
 
-            {TradeDetails?.structureType === "BUILDING" && (
+            {TradeDetails?.tradeLicenseDetail?.structureType?.code === "BUILDING" && (
               <div>
                 {TradeDetails?.tradeLicenseDetail?.structurePlace.map((structure, index) => (
                   <div className="row" key={index}>
@@ -307,7 +323,7 @@ const CheckPage = ({ onSubmit, value }) => {
                 ))}
               </div>
             )}
-            {TradeDetails?.structureType === "VEHICLE" && (
+            {TradeDetails?.tradeLicenseDetail?.structureType?.code === "VEHICLE" && (
               <div>
                 {TradeDetails?.tradeLicenseDetail?.structurePlace.map((structure, index) => (
                   <div className="row" key={index}>
@@ -323,7 +339,7 @@ const CheckPage = ({ onSubmit, value }) => {
                 ))}
               </div>
             )}
-            {TradeDetails?.structureType === "WATER" && (
+            {TradeDetails?.tradeLicenseDetail?.structureType?.code === "WATER" && (
               <div>
                 {TradeDetails?.tradeLicenseDetail?.structurePlace.map((structure, index) => (
                   <div className="row" key={index}>
@@ -339,31 +355,25 @@ const CheckPage = ({ onSubmit, value }) => {
                 ))}
               </div>
             )}
-            {/* {TradeDetails?.structureType === "DESIGNATEDPLACE" && (
-              <div>
-                {TradeDetails?.tradeLicenseDetail?.structurePlace.map((structure, index) => (
-                  <div className="row" key={index}>
-                    <div className="col-md-12">
-                      <div className="col-md-1">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_DESIGNATED_PLACE")}`}</CardText>
-                      </div>
-                      <div className="col-md-1">
-                        <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.institution?.natureOfInstitution}</CardText>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  {<ActionButton jumpTo={`${routeLink}/license-unit-det`} />}
+                </div>
               </div>
-            )} */}
+            </div>
+
+
+
           </StatusTable>
         </div>
 
         <div>
           <div className="row">
-            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_PLACE_ACTIVITY")}`}</span></h1>
+            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LOCATION_ADDRESS")}`}</span></h1>
             </div>
           </div>
-          {(TradeDetails?.structureType === "BUILDING" || TradeDetails?.structureType === "LAND") && (
+          {(TradeDetails?.tradeLicenseDetail?.structureType?.code === "BUILDING" || TradeDetails?.tradeLicenseDetail?.structureType?.code === "LAND") && (
             <StatusTable>
               <div className="row">
                 <div className="col-md-12">
@@ -409,9 +419,16 @@ const CheckPage = ({ onSubmit, value }) => {
                   </div>
                 </div>
               </div>
+              <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-2">
+                  {<ActionButton jumpTo={`${routeLink}/license-unit-det`} />}
+                </div>
+              </div>
+            </div>
             </StatusTable>
           )}
-          {TradeDetails?.structureType === "VEHICLE" && (
+          {TradeDetails?.tradeLicenseDetail?.structureType?.code === "VEHICLE" && (
             <StatusTable>
               <div className="row">
                 <div className="col-md-12">
@@ -431,18 +448,18 @@ const CheckPage = ({ onSubmit, value }) => {
               </div>
             </StatusTable>
           )}
-          {TradeDetails?.structureType === "WATER" && (
+          {TradeDetails?.tradeLicenseDetail?.structureType?.code === "WATER" && (
             <StatusTable>
               <div className="row">
                 <div className="col-md-12">
-                <div className="col-md-2">
+                  <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_WATER_BODY")}`}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.waterbody}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_SERVICE_AREA")}`}</CardText> 
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_SERVICE_AREA")}`}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.serviceArea}</CardText>

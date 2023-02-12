@@ -31,14 +31,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
   // const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameMl);
   // const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.DeathPlaceHome?.DeathPlaceWardId);
  
-  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepostofficeId ? false : false);
-  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomepincode ? false : false);
-  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameEn ? false : false);
-  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomehoueNameMl ? false : false);
-  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomelocalityEn ? false : false);
-  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomelocalityMl ? false : false );
-  const [AdsHomeStreetNameEnError, setAdsHomeStreetNameEnError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameEn ? false : false); 
-  const [AdsHomeStreetNameMlError, setAdsHomeStreetNameMlError] = useState(formData?.DeathPlaceHome?.DeathPlaceHomestreetNameMl ? false : false);
+  
   
   let cmbPostOffice = [];
   PostOffice &&
@@ -146,53 +139,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
   }
   let validFlag = true;
 
-  const goNext = () => {
-   
-    if (DeathPlaceHomelocalityEn == null || DeathPlaceHomelocalityEn == "" || DeathPlaceHomelocalityEn == undefined) {
-      validFlag = false;
-      setAdsHomeLocalityNameEnError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setAdsHomeLocalityNameEnError(false);
-    }
-
-    if (DeathPlaceHomelocalityMl == null || DeathPlaceHomelocalityMl == "" || DeathPlaceHomelocalityMl == undefined) {
-      validFlag = false;
-      setAdsHomeLocalityNameMlError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setAdsHomeLocalityNameMlError(false);
-    }
-    if (DeathPlaceHomehoueNameEn == null || DeathPlaceHomehoueNameEn == "" || DeathPlaceHomehoueNameEn == undefined) {
-      validFlag = false;
-      setAdsHomeHouseNameEnError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setAdsHomeHouseNameEnError(false);
-    }
-    if (DeathPlaceHomehoueNameMl == null || DeathPlaceHomehoueNameMl == "" || DeathPlaceHomehoueNameMl == undefined) {
-      validFlag = false;
-      setAdsHomeHouseNameMlError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setAdsHomeHouseNameMlError(false);
-    }
-   
-  
-
-    if (validFlag == true) {
+  const goNext = () => { 
     
       // sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn  : null);
       // sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl  ? DeathPlaceHomehoueNameMl  : null);
@@ -214,8 +161,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
         // DeathPlaceHomepostofficeId,
         // DeathPlaceHomepincode ,
         // DeathPlaceWardId,    
-      });
-    }
+      });    
   };
 
   if (isPostOfficeLoading) {
@@ -231,7 +177,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
         
         <div className="row">
           <div className="col-md-12">
-          <div className="col-md-4">
+          <div className="col-md-2">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
                 <span className="mandatorycss">*</span>
@@ -245,7 +191,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>    
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -253,7 +199,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={true}
+                isMandatory={false}
                 option={cmbPostOffice}
                 selected={DeathPlaceHomepostofficeId}
                 select={setSelectDeathPlaceHomepostofficeId}
@@ -261,14 +207,14 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-1">
               <CardLabel>
                 {t("CS_COMMON_PIN_CODE")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceHomepincode"
@@ -286,18 +232,14 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 })}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_LOCALITY_EN")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceHomelocalityEn"
@@ -308,52 +250,14 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
             </div>
-            <div className="col-md-4">
-              <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="DeathPlaceHomestreetNameEn"
-                value={DeathPlaceHomestreetNameEn}
-                onChange={setSelectDeathPlaceHomestreetNameEn}
-                placeholder={`${t("CR_STREET_NAME_EN")}`}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CR_HOUSE_NAME_EN")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="DeathPlaceHomehoueNameEn"
-                value={DeathPlaceHomehoueNameEn}
-                onChange={setSelectDeathPlaceHomehoueNameEn}
-                placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_LOCALITY_ML")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceHomelocalityMl"
@@ -369,7 +273,27 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 })}
               />
             </div>
-            <div className="col-md-4">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            
+            <div className="col-md-3">
+              <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="DeathPlaceHomestreetNameEn"
+                value={DeathPlaceHomestreetNameEn}
+                onChange={setSelectDeathPlaceHomestreetNameEn}
+                placeholder={`${t("CR_STREET_NAME_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-3">
               <CardLabel>{t("CR_STREET_NAME_ML")} </CardLabel>
               <TextInput
                 t={t}
@@ -389,14 +313,32 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 })}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_HOUSE_NAME_EN")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="DeathPlaceHomehoueNameEn"
+                value={DeathPlaceHomehoueNameEn}
+                onChange={setSelectDeathPlaceHomehoueNameEn}
+                placeholder={`${t("CR_HOUSE_NAME_EN")}`}
+                disable={isEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_HOUSE_NAME_ML")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceHomehoueNameMl"
@@ -413,51 +355,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
               />
             </div>
           </div>
-        </div>
-        {toast && (
-          <Toast
-            error={
-              AdsHomePincodeError ||
-              AdsHomePostOfficeError ||             
-              AdsHomeLocalityNameEnError ||
-              AdsHomeLocalityNameMlError ||
-              AdsHomeHouseNameEnError || AdsHomeHouseNameMlError
-             
-              
-             
-            }
-            label={
-              AdsHomePincodeError ||
-              AdsHomePostOfficeError ||             
-              AdsHomeLocalityNameEnError ||
-              AdsHomeLocalityNameMlError ||
-              AdsHomeHouseNameEnError || AdsHomeHouseNameMlError
-            
-                ? 
-                  AdsHomePincodeError 
-                  ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                  : AdsHomePostOfficeError
-                  ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                 
-                  : AdsHomeLocalityNameEnError
-                  ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                  
-                  : AdsHomeLocalityNameMlError
-                  ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                  : AdsHomeHouseNameEnError
-                  ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                  : AdsHomeHouseNameMlError
-                  ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                  
-                
-                  :
-                    setToast(false)
-                : setToast(false)
-            }
-            onClose={() => setToast(false)}
-          />
-        )}
-        {""}
+        </div>  
       </FormStep>
     </React.Fragment>
   );

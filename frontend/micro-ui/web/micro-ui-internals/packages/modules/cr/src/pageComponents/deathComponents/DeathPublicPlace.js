@@ -113,17 +113,11 @@ const DeathPublicPlace = ({ config, onSelect, userType, formData,DeathPlaceType,
   };
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}>
-
-
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}>      
         
-        <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
-          </div>
-        </div>
 
         <div className="row">
-          <div className="col-md-6" >
+          <div className="col-md-3" >
             <CardLabel>{`${t("CR_PUBLIC_PLACE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
@@ -134,7 +128,7 @@ const DeathPublicPlace = ({ config, onSelect, userType, formData,DeathPlaceType,
               placeholder={`${t("CR_PUBLIC_PLACE_TYPE")}`}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-3">
             <CardLabel>
               {`${t("CS_COMMON_WARD")}`}
               <span className="mandatorycss">*</span>
@@ -149,9 +143,7 @@ const DeathPublicPlace = ({ config, onSelect, userType, formData,DeathPlaceType,
               {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
             />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-3">
             <CardLabel>
               {t("CR_LOCALITY_EN")}
               <span className="mandatorycss">*</span>
@@ -167,7 +159,7 @@ const DeathPublicPlace = ({ config, onSelect, userType, formData,DeathPlaceType,
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-3">
             <CardLabel>
               {t("CR_LOCALITY_ML")}
               <span className="mandatorycss">*</span>
@@ -189,9 +181,9 @@ const DeathPublicPlace = ({ config, onSelect, userType, formData,DeathPlaceType,
             />
           </div>
         </div>
-
         <div className="row">
-          <div className="col-md-6">
+          
+          <div className="col-md-3">
             <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
             <TextInput
               t={t}
@@ -204,7 +196,7 @@ const DeathPublicPlace = ({ config, onSelect, userType, formData,DeathPlaceType,
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-3">
             <CardLabel>{t("CR_STREET_NAME_ML")} </CardLabel>
             <TextInput
               t={t}
@@ -222,9 +214,6 @@ const DeathPublicPlace = ({ config, onSelect, userType, formData,DeathPlaceType,
               })}
             />
           </div>
-        </div>
-        <div className="row">
-        <div className="col-md-12" >
           <div className="col-md-6" >
             <CardLabel>{`${t("CR_DESCRIPTION")}`}</CardLabel>
             <TextArea
@@ -238,8 +227,10 @@ const DeathPublicPlace = ({ config, onSelect, userType, formData,DeathPlaceType,
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
             />
           </div>
-          </div>
         </div>
+
+      
+        
 
       </FormStep>
     </React.Fragment>
