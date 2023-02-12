@@ -176,29 +176,37 @@ public class DeathRegistryMdmsUtil {
                         , String presentAddressDistrict
                         , String presentAddressState
                         , String presentAddressCountry
-                        , String presentPostOfficeId) {
+                        , String presentPostOfficeId
+                        , String presentAddressVillage
+                        , String presentAddrTaluk) {
         MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificate(requestInfo
                                         , tenantId
                                         , presentAddressDistrict
                                         , presentAddressState
                                         , presentAddressCountry
-                                        , presentPostOfficeId);
+                                        , presentPostOfficeId
+                                        , presentAddressVillage
+                                        , presentAddrTaluk);
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
         return result;
     }
 
-    //RAkhi S ikm on 23.12.2022
+    //RAkhi S ikm on 12.02.2023
     private MdmsCriteriaReq getMDMSRequestCertificate(RequestInfo requestInfo
                             , String tenantId
                             , String presentAddressDistrict
                             , String presentAddressState
                             , String presentAddressCountry
-                            , String presentPostOfficeId) {
+                            , String presentPostOfficeId
+                            , String presentAddressVillage
+                            , String presentAddrTaluk) {
         ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
         List<ModuleDetail> commonMasterRequest = getcommonMasterRequest(presentAddressDistrict
                                 ,presentAddressState
                                 ,presentAddressCountry
-                                ,presentPostOfficeId);     
+                                ,presentPostOfficeId
+                                ,presentAddressVillage
+                                ,presentAddrTaluk);     
         
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);     
@@ -242,13 +250,17 @@ public class DeathRegistryMdmsUtil {
                                 , String presentAddressDistrict
                                 , String presentAddressState
                                 , String presentAddressCountry
-                                , String presentAddressPostOfficeId) {
+                                , String presentAddressPostOfficeId
+                                , String presentAddressVillage
+                                , String presentAddressTaluk) {
         MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateMl(requestInfo
                                                 , tenantId
                                                 , presentAddressDistrict
                                                 , presentAddressState
                                                 , presentAddressCountry
-                                                , presentAddressPostOfficeId);
+                                                , presentAddressPostOfficeId
+                                                , presentAddressVillage
+                                                , presentAddressTaluk);
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
         return result;
     }
@@ -258,12 +270,16 @@ public class DeathRegistryMdmsUtil {
                                 , String presentAddressDistrict
                                 , String presentAddressState
                                 , String presentAddressCountry
-                                , String presentAddressPostOfficeId) {
+                                , String presentAddressPostOfficeId
+                                , String presentAddressVillage
+                                , String presentAddressTaluk) {
         ModuleDetail tenantIdRequest = getTenantIdCertificateMl(tenantId);
         List<ModuleDetail> commonMasterRequest = getcommonMasterRequestMl(presentAddressDistrict
                                         ,presentAddressState
                                         ,presentAddressCountry
-                                        ,presentAddressPostOfficeId); 
+                                        ,presentAddressPostOfficeId
+                                        ,presentAddressVillage
+                                        ,presentAddressTaluk); 
 
         
         List<ModuleDetail> moduleDetails = new LinkedList<>();
@@ -301,11 +317,13 @@ public class DeathRegistryMdmsUtil {
        
         return crDeathModuleDtls;
     }
-    //RAkhi S ikm on 09.01.2023
+    //RAkhi S ikm on 11.02.2023
     private List<ModuleDetail> getcommonMasterRequest(String presentAddressDistrict
                                         , String presentAddressState
                                         , String presentAddressCountry
-                                        , String presentPostOfficeId) {
+                                        , String presentPostOfficeId
+                                        , String presentAddressVillage
+                                        , String presentAddrTaluk) {
         // master details for death certificate
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
 
@@ -313,7 +331,7 @@ public class DeathRegistryMdmsUtil {
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(DeathRegistryConstants.DISTRICT).filter(filterCode).build());  
         
-        //Rakhi S on 11.01.2023 state , COUNTRY
+        //Rakhi S on 11.02.2023 state , COUNTRY
         final String filterCodeState = "$.[?(@.code=='"+presentAddressState+"')].name"; 
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(DeathRegistryConstants.STATE).filter(filterCodeState).build());        
@@ -325,6 +343,14 @@ public class DeathRegistryMdmsUtil {
         final String filterCodePostOffice = "$.[?(@.code=='"+presentPostOfficeId+"')].name"; 
         crDeathMasterDetails
                         .add(MasterDetail.builder().name(DeathRegistryConstants.POSTOFFICE).filter(filterCodePostOffice).build());
+        //Rakhi S on 12.02.2023 Village 
+        final String filterCodeVillage = "$.[?(@.code=='"+presentAddressVillage+"')].name"; 
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathRegistryConstants.VILLAGE).filter(filterCodeVillage).build());
+        //taluk
+        final String filterCodeTaluk = "$.[?(@.code=='"+presentAddrTaluk+"')].name"; 
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathRegistryConstants.TALUK).filter(filterCodeTaluk).build());
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(DeathRegistryConstants.COMMON_MASTERS_MODULE).build();
@@ -332,11 +358,13 @@ public class DeathRegistryMdmsUtil {
                
          return Arrays.asList(crDeathModuleDtls);
     }
-    //RAkhi S ikm on 11.01.2023
+    //RAkhi S ikm on 12.02.2023
     private List<ModuleDetail> getcommonMasterRequestMl(String presentAddressDistrict
                                                ,String presentAddressState
                                                ,String presentAddressCountry
-                                               ,String presentAddressPostOfficeId) {
+                                               ,String presentAddressPostOfficeId
+                                               ,String presentAddressVillage
+                                               ,String presentAddressTaluk) {
 
         // master details for death certificate
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
@@ -356,6 +384,13 @@ public class DeathRegistryMdmsUtil {
         final String filterCodePostOffice = "$.[?(@.code=='"+presentAddressPostOfficeId+"')].namelocal";
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(DeathRegistryConstants.POSTOFFICE).filter(filterCodePostOffice).build()); 
+        //Rakhi S ikm on 12.02.2023 village and taluk
+        final String filterCodeVillage = "$.[?(@.code=='"+presentAddressVillage+"')].namelocal";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.VILLAGE).filter(filterCodeVillage).build()); 
+        final String filterCodeTaluk = "$.[?(@.code=='"+presentAddressTaluk+"')].namelocal";
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathRegistryConstants.TALUK).filter(filterCodeTaluk).build()); 
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(DeathRegistryConstants.COMMON_MASTERS_MODULE).build();
@@ -370,13 +405,17 @@ public class DeathRegistryMdmsUtil {
                         , String permanentAddressDistrict
                         , String permanentAddressState
                         , String permanentAddressCountry
-                        , String permanentPostOfficeId) {
+                        , String permanentPostOfficeId
+                        , String permanentVillage
+                        , String permanentTaluk) {
         MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificateP(requestInfo   
                         , tenantId
                         , permanentAddressDistrict
                         , permanentAddressState
                         , permanentAddressCountry
-                        , permanentPostOfficeId);
+                        , permanentPostOfficeId
+                        , permanentVillage
+                        , permanentTaluk);
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
         return result;
         }
@@ -385,7 +424,9 @@ public class DeathRegistryMdmsUtil {
                             , String permanentAddressDistrict
                             , String permanentAddressState
                             , String permanentAddressCountry
-                            , String permanentPostOfficeId) {
+                            , String permanentPostOfficeId
+                            , String permanentVillage
+                            , String permanentTaluk) {
 
         ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
         List<ModuleDetail> commonMasterRequest = getcommonMasterRequestP(
@@ -393,7 +434,9 @@ public class DeathRegistryMdmsUtil {
                                 ,permanentAddressDistrict
                                 ,permanentAddressState
                                 ,permanentAddressCountry
-                                ,permanentPostOfficeId);       
+                                ,permanentPostOfficeId
+                                ,permanentVillage
+                                ,permanentTaluk);       
 
         
         List<ModuleDetail> moduleDetails = new LinkedList<>();
@@ -413,7 +456,9 @@ public class DeathRegistryMdmsUtil {
                                         , String permanentAddressDistrict
                                         , String permanentAddressState
                                         , String permanentAddressCountry
-                                        , String permanentPostOfficeId) {
+                                        , String permanentPostOfficeId
+                                        , String permanentVillage
+                                        , String permanentTaluk) {
 
         // master details for death certificate
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
@@ -432,6 +477,14 @@ public class DeathRegistryMdmsUtil {
         final String filterCodePostOffice = "$.[?(@.code=='"+permanentPostOfficeId+"')].name";
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(DeathRegistryConstants.POSTOFFICE).filter(filterCodePostOffice).build()); 
+        //Rakhi S ikm on 12.02.2023
+        final String filterCodeVillage = "$.[?(@.code=='"+permanentVillage+"')].name";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.VILLAGE).filter(filterCodeVillage).build());
+
+        final String filterCodeTaluk= "$.[?(@.code=='"+permanentTaluk+"')].name";
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathRegistryConstants.TALUK).filter(filterCodeTaluk).build());
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(DeathRegistryConstants.COMMON_MASTERS_MODULE).build();
@@ -444,13 +497,17 @@ public class DeathRegistryMdmsUtil {
                         , String permanentAddressDistrict
                         , String permanentAddressState
                         , String permanentAddressCountry
-                        , String permanentPostOfficeId) {
+                        , String permanentPostOfficeId
+                        , String permanentVillage
+                        , String permanentTaluk) {
         MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestCertificatePMl(requestInfo   
                         , tenantId
                         , permanentAddressDistrict
                         , permanentAddressState
                         , permanentAddressCountry
-                        , permanentPostOfficeId);
+                        , permanentPostOfficeId
+                        , permanentVillage
+                        , permanentTaluk);
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
         return result;
         }
@@ -459,7 +516,9 @@ public class DeathRegistryMdmsUtil {
                 , String permanentAddressDistrict
                 , String permanentAddressState
                 , String permanentAddressCountry
-                , String permanentPostOfficeId) {
+                , String permanentPostOfficeId
+                , String permanentVillage
+                , String permanentTaluk) {
 
         ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
         List<ModuleDetail> commonMasterRequest = getcommonMasterRequestPMl(
@@ -467,7 +526,9 @@ public class DeathRegistryMdmsUtil {
                 ,permanentAddressDistrict
                 ,permanentAddressState
                 ,permanentAddressCountry
-                ,permanentPostOfficeId);       
+                ,permanentPostOfficeId
+                ,permanentVillage
+                ,permanentTaluk);       
 
 
         List<ModuleDetail> moduleDetails = new LinkedList<>();
@@ -483,11 +544,14 @@ public class DeathRegistryMdmsUtil {
         System.out.println("mdmsreq2"+mdmsCriteriaReq);
         return mdmsCriteriaReq;
         }
+        //Rakhi S on 11.02.2023
         private List<ModuleDetail> getcommonMasterRequestPMl( String tenantId
                         , String permanentAddressDistrict
                         , String permanentAddressState
                         , String permanentAddressCountry
-                        , String permanentPostOfficeId) {
+                        , String permanentPostOfficeId
+                        , String permanentVillage
+                        , String permanentTaluk) {
 
         // master details for death certificate
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
@@ -506,6 +570,15 @@ public class DeathRegistryMdmsUtil {
         final String filterCodePostOffice = "$.[?(@.code=='"+permanentPostOfficeId+"')].namelocal";
         crDeathMasterDetails
                 .add(MasterDetail.builder().name(DeathRegistryConstants.POSTOFFICE).filter(filterCodePostOffice).build()); 
+        
+        //Rakhi S on 12.02.2023
+        final String filterCodeVillage = "$.[?(@.code=='"+permanentVillage+"')].namelocal";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.VILLAGE).filter(filterCodeVillage).build()); 
+
+        final String filterCodeTaluk = "$.[?(@.code=='"+permanentTaluk+"')].namelocal";
+        crDeathMasterDetails
+                        .add(MasterDetail.builder().name(DeathRegistryConstants.TALUK).filter(filterCodeTaluk).build()); 
 
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)

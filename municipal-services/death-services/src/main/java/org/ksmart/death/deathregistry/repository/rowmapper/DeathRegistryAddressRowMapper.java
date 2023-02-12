@@ -58,6 +58,19 @@ public class DeathRegistryAddressRowMapper  implements ResultSetExtractor  , Bas
                             .permanentAddrHoueNameEn(rs.getString("R_housename_en"))
                             .permanentAddrHoueNameMl(rs.getString("R_housename_ml"))
                             .permanentAddrPostalCode(rs.getString("R_postal_code"))
+                            //Rakhi S ikm 12.02.2023
+                            .presentAddrPostofficeNameEn(rs.getString("P_postoffice_name_en"))
+                            .presentAddrPostofficeNameMl(rs.getString("P_postoffice_name_ml"))
+                            .presentAddrTalukNameEn(rs.getString("P_taluk_name_en"))
+                            .presentAddrTalukNameMl(rs.getString("P_taluk_name_ml"))
+                            .presentAddrVillageNameEn(rs.getString("P_village_name_en"))
+                            .presentAddrVillageNameMl(rs.getString("P_village_name_ml"))
+                            .permanentAddrPostofficeNameEn(rs.getString("R_postoffice_name_en"))
+                            .permanentAddrPostofficeNameMl(rs.getString("R_postoffice_name_ml"))
+                            .permanentAddrTalukNameEn(rs.getString("R_taluk_name_en"))
+                            .permanentAddrTalukNameMl(rs.getString("R_taluk_name_ml"))
+                            .permanentAddrVillageNameEn(rs.getString("R_village_name_en"))
+                            .permanentAddrVillageNameMl(rs.getString("R_village_name_ml"))
                             .build();
     }
 

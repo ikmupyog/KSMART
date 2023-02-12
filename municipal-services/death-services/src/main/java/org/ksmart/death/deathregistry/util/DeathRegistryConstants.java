@@ -79,4 +79,6 @@ public class DeathRegistryConstants {
      public static final String NOT_RECORDED_EN = "Not Recorded";
      public static final String NOT_RECORDED_ML = "രേഖപ്പെടുത്തിയിട്ടില്ല";
      public static final String DEATH_PLACE_LIST = "PlaceMasterDeath";
+     //Rakhi S on 12.02.2023
+     public static final String VILLAGE = "Village";
 }

@@ -95,22 +95,20 @@ public class DeathRegistryRepository {
 				deathCertPath = deathCertPath.replace("$id",cert.getDeathBasicInfo().getId());
 				deathCertPath = deathCertPath.replace("$tenantId",cert.getDeathBasicInfo().getTenantId());
 				deathCertPath = deathCertPath.replace("$regNo",cert.getDeathBasicInfo().getRegistrationNo());
-                // System.out.println("regNo:"+cert.getDeathBasicInfo().getRegistrationNo());
-                // deathCertPath = deathCertPath.replace("$regNo","RG-109-2023-CRDRNR-C-KOCHI-KL");
-                // System.out.println("regNo1:"+deathCertPath);
 				deathCertPath = deathCertPath.replace("$dateofdeath",format.format(cert.getDeathBasicInfo().getDateOfDeath()));
 				deathCertPath = deathCertPath.replace("$gender",cert.getDeathBasicInfo().getDeceasedGender().toString());             
                 deathCertPath = deathCertPath.replace("$deathcertificateno",cert.getDeathBasicInfo().getCertificateNo());
 
 				String finalPath = uiHost + deathCertPath;
-                System.out.println("finalPath:"+finalPath);
                 //RAkhi S on 10.02.2023 MDMS Call
                 Object mdmsData = util.mDMSCallCertificate(pdfApplicationRequest.getRequestInfo()
                                 , cert.getDeathBasicInfo().getTenantId()
                                 , cert.getDeathAddressInfo().getPresentAddrDistrictId()
                                 , cert.getDeathAddressInfo().getPresentAddrStateId()
                                 , cert.getDeathAddressInfo().getPresentAddrCountryId()
-                                , cert.getDeathAddressInfo().getPresentAddrPostofficeId());
+                                , cert.getDeathAddressInfo().getPresentAddrPostofficeId()
+                                , cert.getDeathAddressInfo().getPresentAddrVillageId()
+                                , cert.getDeathAddressInfo().getPresentAddrTalukId());
 
                  Map<String,List<String>> masterData = getAttributeValues(mdmsData);
 
@@ -179,11 +177,13 @@ public class DeathRegistryRepository {
 
                  //RAkhi S on 10.02.2023 MDMS Call Malayalam fields 
                 Object mdmsDataMl = util.mDMSCallCertificateMl(pdfApplicationRequest.getRequestInfo()
-                                , cert.getDeathBasicInfo().getTenantId()
+                                , cert.getDeathBasicInfo().getTenantId()                               
                                 , cert.getDeathAddressInfo().getPresentAddrDistrictId()
                                 , cert.getDeathAddressInfo().getPresentAddrStateId()
                                 , cert.getDeathAddressInfo().getPresentAddrCountryId()
-                                , cert.getDeathAddressInfo().getPresentAddrPostofficeId());
+                                , cert.getDeathAddressInfo().getPresentAddrPostofficeId()
+                                , cert.getDeathAddressInfo().getPresentAddrVillageId()
+                                , cert.getDeathAddressInfo().getPresentAddrTalukId());
                 Map<String,List<String>> masterDataMl = getAttributeValuesMl(mdmsDataMl);
 
                 String lbNameMl = masterDataMl.get(DeathRegistryConstants.TENANTS).toString();
@@ -226,6 +226,34 @@ public class DeathRegistryRepository {
                      cert.getDeathAddressInfo().setPresentAddrPostofficeNameMl(presentAddPOMl);
                 }
 
+                //Rakhi S ikm on 12.02.2023 Village
+                String presentAddVillage = masterData.get(DeathRegistryConstants.VILLAGE).toString();
+                presentAddVillage = presentAddVillage.replaceAll("[\\[\\]\\(\\)]", "");
+                if (null != presentAddVillage && !presentAddVillage.isEmpty()){
+                    cert.getDeathAddressInfo().setPresentAddrVillageNameEn(presentAddVillage);
+                }
+
+                String presentAddVillageMl = masterDataMl.get(DeathRegistryConstants.VILLAGE).toString();
+                presentAddVillageMl = presentAddVillageMl.replaceAll("[\\[\\]\\(\\)]", "");
+                if (null != presentAddVillageMl && !presentAddVillageMl.isEmpty()){
+                    cert.getDeathAddressInfo().setPresentAddrVillageNameMl(presentAddVillageMl);
+                }
+                //End VillageMApping
+
+                //Rakhi S ikm on 12.02.2023 Taluk
+                String presentAddTaluk = masterData.get(DeathRegistryConstants.TALUK).toString();
+                presentAddTaluk = presentAddTaluk.replaceAll("[\\[\\]\\(\\)]", "");
+                if (null != presentAddTaluk && !presentAddTaluk.isEmpty()){
+                    cert.getDeathAddressInfo().setPresentAddrTalukNameEn(presentAddTaluk);
+                }
+
+                String presentAddTalukMl = masterDataMl.get(DeathRegistryConstants.TALUK).toString();
+                presentAddTalukMl = presentAddTalukMl.replaceAll("[\\[\\]\\(\\)]", "");
+                if (null != presentAddTalukMl && !presentAddTalukMl.isEmpty()){
+                    cert.getDeathAddressInfo().setPresentAddrTalukNameMl(presentAddTalukMl);
+                }                
+                //End Taluk MApping
+
                 //RAkhi S on 11.02.2023 MDMS Call Malayalam
                 String presentAddDistrictMl = masterDataMl.get(DeathRegistryConstants.DISTRICT).toString();
                 presentAddDistrictMl = presentAddDistrictMl.replaceAll("[\\[\\]\\(\\)]", "");
@@ -239,12 +267,15 @@ public class DeathRegistryRepository {
                 presentAddCountryMl = presentAddCountryMl.replaceAll("[\\[\\]\\(\\)]", "");
                 cert.getDeathAddressInfo().setPresentAddrcountryMl(presentAddCountryMl);
 
+                //Rakhi S on 12.02.2023
                 Object mdmsDataPermanent = util.mDMSCallCertificateP(pdfApplicationRequest.getRequestInfo()     
                                 , cert.getDeathBasicInfo().getTenantId()                           
                                 , cert.getDeathAddressInfo().getPermanentAddrDistrictId()
                                 , cert.getDeathAddressInfo().getPermanentAddrStateId()
                                 , cert.getDeathAddressInfo().getPermanentAddrCountryId()
-                                , cert.getDeathAddressInfo().getPermanentAddrPostofficeId());
+                                , cert.getDeathAddressInfo().getPermanentAddrPostofficeId()
+                                , cert.getDeathAddressInfo().getPermanentAddrVillageId()
+                                , cert.getDeathAddressInfo().getPermanentAddrTalukId());
                 Map<String,List<String>> masterDataPermanent = getAttributeValues(mdmsDataPermanent);
 
                 Object mdmsDataPermanentMl = util.mDMSCallCertificatePMl(pdfApplicationRequest.getRequestInfo()     
@@ -252,7 +283,9 @@ public class DeathRegistryRepository {
                                 , cert.getDeathAddressInfo().getPermanentAddrDistrictId()
                                 , cert.getDeathAddressInfo().getPermanentAddrStateId()
                                 , cert.getDeathAddressInfo().getPermanentAddrCountryId()
-                                , cert.getDeathAddressInfo().getPermanentAddrPostofficeId());
+                                , cert.getDeathAddressInfo().getPermanentAddrPostofficeId()
+                                , cert.getDeathAddressInfo().getPermanentAddrVillageId()
+                                , cert.getDeathAddressInfo().getPermanentAddrTalukId());
                 Map<String,List<String>> masterDataPermanentMl = getAttributeValues(mdmsDataPermanentMl);
 
                 String permanentAddDistrict = masterDataPermanent.get(DeathRegistryConstants.DISTRICT).toString();
@@ -300,6 +333,35 @@ public class DeathRegistryRepository {
                  cert.getDeathAddressInfo().setPermanentAddrPostofficeNameMl(permanentAddPOMl);
               }
 
+              //Rakhi S ikm on 12.02.2023 Village
+              String permanentAddVillage = masterDataPermanent.get(DeathRegistryConstants.VILLAGE).toString();
+              permanentAddVillage = permanentAddVillage.replaceAll("[\\[\\]\\(\\)]", "");
+              if (null != permanentAddVillage && !permanentAddVillage.isEmpty()){
+                  cert.getDeathAddressInfo().setPermanentAddrVillageNameEn(permanentAddVillage);
+              }
+
+              String permanentVillageMl = masterDataPermanentMl.get(DeathRegistryConstants.VILLAGE).toString();
+              permanentVillageMl = permanentVillageMl.replaceAll("[\\[\\]\\(\\)]", "");
+              if (null != permanentVillageMl && !permanentVillageMl.isEmpty()){
+                  cert.getDeathAddressInfo().setPermanentAddrVillageNameMl(permanentVillageMl);
+              }
+              //End VillageMApping
+
+              //Rakhi S ikm on 12.02.2023 Taluk
+              String permanentAddTaluk = masterDataPermanent.get(DeathRegistryConstants.TALUK).toString();
+              permanentAddTaluk = permanentAddTaluk.replaceAll("[\\[\\]\\(\\)]", "");
+              if (null != permanentAddTaluk && !permanentAddTaluk.isEmpty()){
+                  cert.getDeathAddressInfo().setPermanentAddrTalukNameEn(permanentAddTaluk);
+              }
+
+              String permanentAddTalukMl = masterDataPermanentMl.get(DeathRegistryConstants.TALUK).toString();
+              permanentAddTalukMl = permanentAddTalukMl.replaceAll("[\\[\\]\\(\\)]", "");
+              if (null != permanentAddTalukMl && !permanentAddTalukMl.isEmpty()){
+                  cert.getDeathAddressInfo().setPermanentAddrTalukNameMl(permanentAddTalukMl);
+              }                
+              //End Taluk MApping
+
+
                 //RAkhi S on 11.02.2023
                 if(cert.getDeathBasicInfo().getDeceasedFirstNameMl()!=null){}
                 else {               
@@ -338,7 +400,7 @@ public class DeathRegistryRepository {
                 String spouseMl = "";
                 String spouseEn = "";    
 
-                if(cert.getDeathFamilyInfo().getSpouseUnavailable()!=1){
+                if(cert.getDeathFamilyInfo().getSpouseUnavailable()!=true){
 
                         if(cert.getDeathFamilyInfo().getSpouseType().equals(DeathRegistryConstants.WIFE.toString())){
                             spouseMl = DeathRegistryConstants.WIFE_ML.toString();
@@ -356,7 +418,7 @@ public class DeathRegistryRepository {
                     cert.getDeathFamilyInfo().setSpouseName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+
                     DeathRegistryConstants.NOT_RECORDED_EN);
                 }
-                if(cert.getDeathFamilyInfo().getMotherUnavailable() != 1){
+                if(cert.getDeathFamilyInfo().getMotherUnavailable() != true){
                         cert.getDeathFamilyInfo().setMotherName(cert.getDeathFamilyInfo().getMotherNameMl()+DeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
                         cert.getDeathFamilyInfo().getMotherNameEn()+DeathRegistryConstants.FEMALE_DEPENDENT_EN.toString()); 
                 }
@@ -371,7 +433,7 @@ public class DeathRegistryRepository {
                 fatherNameMl = DeathRegistryConstants.MALE_DEPENDENT_FATHER_ML.toString();
                 fatherNameEn = DeathRegistryConstants.MALE_DEPENDENT_FATHER_EN.toString();
 
-                if(cert.getDeathFamilyInfo().getFatherUnavailable() != 1){
+                if(cert.getDeathFamilyInfo().getFatherUnavailable() != true){
                     cert.getDeathFamilyInfo().setFatherName(cert.getDeathFamilyInfo().getFatherNameMl()+ fatherNameMl+" / "+
                                             cert.getDeathFamilyInfo().getFatherNameEn()+ fatherNameEn);
                 }
@@ -432,6 +494,24 @@ public class DeathRegistryRepository {
                 else{
                     cert.getDeathAddressInfo().setPresentAddrPincode((long) 0);
                 }
+                //Rakhi S ikm on 12.02.2023
+                if(cert.getDeathAddressInfo().getPresentAddrVillageNameEn() != null){}
+                else{
+                    cert.getDeathAddressInfo().setPresentAddrVillageNameEn("");
+                }
+                if(cert.getDeathAddressInfo().getPresentAddrVillageNameMl() != null){}
+                else{
+                    cert.getDeathAddressInfo().setPresentAddrVillageNameMl("");
+                }
+
+                if(cert.getDeathAddressInfo().getPresentAddrTalukNameEn() != null){}
+                else{
+                    cert.getDeathAddressInfo().setPresentAddrTalukNameEn("");
+                }
+                if(cert.getDeathAddressInfo().getPresentAddrTalukNameMl() != null){}
+                else{
+                    cert.getDeathAddressInfo().setPresentAddrTalukNameMl("");
+                }
 
                 //permanant
                 if(cert.getDeathAddressInfo().getPermanentAddrResidenceAsscNo() != null){}
@@ -484,8 +564,28 @@ public class DeathRegistryRepository {
                 }
                 if(cert.getDeathAddressInfo().getPermanentAddrPincode() != 0){}
                 else{
-                    cert.getDeathAddressInfo().setPresentAddrPincode((long)0);
+                    cert.getDeathAddressInfo().setPermanentAddrPincode((long)0);
                 }
+
+                 //Rakhi S ikm on 12.02.2023
+                 if(cert.getDeathAddressInfo().getPermanentAddrVillageNameEn() != null){}
+                 else{
+                     cert.getDeathAddressInfo().setPermanentAddrVillageNameEn("");
+                 }
+                 if(cert.getDeathAddressInfo().getPermanentAddrVillageNameMl() != null){}
+                 else{
+                     cert.getDeathAddressInfo().setPermanentAddrVillageNameMl("");
+                 }
+ 
+                 if(cert.getDeathAddressInfo().getPermanentAddrTalukNameEn() != null){}
+                 else{
+                     cert.getDeathAddressInfo().setPermanentAddrTalukNameEn("");
+                 }
+                 if(cert.getDeathAddressInfo().getPermanentAddrTalukNameMl() != null){}
+                 else{
+                     cert.getDeathAddressInfo().setPermanentAddrTalukNameMl("");
+                 }
+
                 //end
                 cert.getDeathBasicInfo().setPresentAddressFullEn(cert.getDeathAddressInfo().getPresentAddrResidenceAsscNo() + " "+
                                             cert.getDeathAddressInfo().getPresentAddrHouseNo()+ " "+
@@ -494,6 +594,8 @@ public class DeathRegistryRepository {
                                             cert.getDeathAddressInfo().getPresentAddrLocalityEn()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrCityEn()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrPostofficeNameEn()+ " "+
+                                            cert.getDeathAddressInfo().getPresentAddrVillageNameEn()+ " "+
+                                            cert.getDeathAddressInfo().getPresentAddrTalukNameEn()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrDistrictId()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrStateId()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrCountryId());  
@@ -505,6 +607,8 @@ public class DeathRegistryRepository {
                                             cert.getDeathAddressInfo().getPresentAddrLocalityMl()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrCityMl()+ " "+                                            
                                             cert.getDeathAddressInfo().getPresentAddrPostofficeNameMl()+ " "+
+                                            cert.getDeathAddressInfo().getPresentAddrVillageNameMl()+ " "+
+                                            cert.getDeathAddressInfo().getPresentAddrTalukNameMl()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrDistrictMl()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrStateMl()+ " "+
                                             cert.getDeathAddressInfo().getPresentAddrcountryMl());
@@ -516,6 +620,8 @@ public class DeathRegistryRepository {
                                             cert.getDeathAddressInfo().getPermanentAddrLocalityEn()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrCityEn()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrPostofficeNameEn()+ " "+
+                                            cert.getDeathAddressInfo().getPermanentAddrVillageNameEn()+ " "+
+                                            cert.getDeathAddressInfo().getPermanentAddrTalukNameEn()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrDistrictId()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrStateId()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrCountryId());
@@ -527,6 +633,8 @@ public class DeathRegistryRepository {
                                             cert.getDeathAddressInfo().getPermanentAddrLocalityMl()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrCityMl() +" "+
                                             cert.getDeathAddressInfo().getPermanentAddrPostofficeNameMl()+ " "+
+                                            cert.getDeathAddressInfo().getPermanentAddrVillageNameMl()+ " "+
+                                            cert.getDeathAddressInfo().getPermanentAddrTalukNameMl()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrDistrictMl()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrStateMl()+ " "+
                                             cert.getDeathAddressInfo().getPermanentAddrcountryMl());
@@ -783,14 +891,14 @@ public class DeathRegistryRepository {
             DeathPdfApplicationRequest req = DeathPdfApplicationRequest.builder().deathCertificate(pdfApplicationRequest.getDeathCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
                  /********************************************* */
 
-          try {
-              ObjectMapper mapper = new ObjectMapper();
-              Object obj = req;
-              mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-            System.out.println("pdfrequest: "+ mapper.writeValueAsString(obj));
-              }catch(Exception e) {
-                // log.error("Exception while fetching from searcher: ",e);
-              }
+        //   try {
+        //       ObjectMapper mapper = new ObjectMapper();
+        //       Object obj = req;
+        //       mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //     System.out.println("pdfrequest: "+ mapper.writeValueAsString(obj));
+        //       }catch(Exception e) {
+        //         // log.error("Exception while fetching from searcher: ",e);
+        //       }
 
 
               /********************************************** */
