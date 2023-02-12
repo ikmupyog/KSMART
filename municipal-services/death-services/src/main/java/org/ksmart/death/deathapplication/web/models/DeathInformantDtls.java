@@ -38,7 +38,6 @@ public class DeathInformantDtls {
     // @JsonProperty("InitiatorMobile")
     // private String initiatorMobile ;
     
-
     @JsonProperty("InformantAadharNo")
     private String informantAadharNo ;
 
@@ -136,7 +135,7 @@ public class DeathInformantDtls {
     private String documentFileStoreId ;
 
     //Rakhi s on 08.02.2023
-    @Schema(type = "boolean" ,description = "Informant aadhar submitted(0/1)")
+    @Schema(type = "boolean" ,description = "Informant aadhar submitted(true/false)")
     @JsonProperty("InformantAadharSubmitted")
     private boolean  informantAadharSubmitted ;   
 

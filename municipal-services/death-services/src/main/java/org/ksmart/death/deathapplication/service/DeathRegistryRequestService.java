@@ -230,14 +230,14 @@ public class DeathRegistryRequestService {
 
         DeathFamilyInfo deathFamilyInfo = deathrequest.getDeathCertificateDtls().get(0).getDeathFamilyInfo();
         DeathRegistryFamilyInfo registryFamilyInfo = new DeathRegistryFamilyInfo();
-        registryFamilyInfo.setSpouseUnavailable(deathFamilyInfo.getSpouseUnavailable());
+      //  registryFamilyInfo.setSpouseUnavailable(deathFamilyInfo.getSpouseUnavailable());
         registryFamilyInfo.setSpouseType(deathFamilyInfo.getSpouseType());
         registryFamilyInfo.setSpouseNameEn(deathFamilyInfo.getSpouseNameEn());
         registryFamilyInfo.setSpouseNameML(deathFamilyInfo.getSpouseNameML());
-        registryFamilyInfo.setFatherUnavailable(deathFamilyInfo.getFatherUnavailable());
+      //  registryFamilyInfo.setFatherUnavailable(deathFamilyInfo.getFatherUnavailable());
         registryFamilyInfo.setFatherNameEn(deathFamilyInfo.getFatherNameEn());
         registryFamilyInfo.setFatherNameMl(deathFamilyInfo.getFatherNameMl());
-        registryFamilyInfo.setMotherUnavailable(deathFamilyInfo.getMotherUnavailable());
+      //  registryFamilyInfo.setMotherUnavailable(deathFamilyInfo.getMotherUnavailable());
         registryFamilyInfo.setMotherNameEn(deathFamilyInfo.getMotherNameEn());
         registryFamilyInfo.setMotherNameMl(deathFamilyInfo.getMotherNameMl());
         registryFamilyInfo.setFamilyMobileNo(deathFamilyInfo.getFamilyMobileNo());
