@@ -549,7 +549,7 @@ serviceMaps:
          death_place_street_ml = ? , death_place_country = ? , 
          death_place_state = ? , death_place_district = ? , death_place_city = ? ,
          death_place_remarks_en = ? , death_place_remarks_ml = ? , place_of_burial_en = ? , 
-         place_of_burial_ml = ?
+         place_of_burial_ml = ? ,action = ?
          WHERE  tenantid = ? AND ack_no = ?
       
 
@@ -679,6 +679,8 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.PlaceOfBurialEn
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.PlaceOfBurialMl
+            
+      - jsonPath: $.deathCertificateDtls.*.action
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
@@ -911,12 +913,11 @@ serviceMaps:
           locality_ml = ? , ward_id = ? , taluk_id = ? , village_id = ? , postoffice_id = ? ,  pincode = ? , 
           district_id = ? , state_id = ? , country_id = ? , createdby = ? , createdtime = ? , lastmodifiedby = ? , 
           lastmodifiedtime = ? , location_type = ? , housename_ml = ? , housename_en = ? , lbtype = ? , 
-          postal_code  = ? WHERE death_dtl_id = ? , tenantid = ? , addr_typeid  = ? 
+          postal_code  = ? WHERE death_dtl_id = ? AND tenantid = ? AND addr_typeid  = ? 
      
 
       basePath: deathCertificateDtls.*
       jsonMaps:
-      - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrId
       
       - jsonPath: $.deathCertificateDtls.*.InformantDetails.InformantAddrStreetNameEn
 
@@ -981,7 +982,7 @@ serviceMaps:
     - query: UPDATE public.eg_death_address_dtls SET  streetname_en = ? , streetname_ml = ? ,  locality_en = ? ,
          locality_ml = ? , ward_id = ? , taluk_id = ? , village_id = ? , postoffice_id = ? , pincode = ? , district_id = ? ,  
          state_id = ? , country_id = ? , createdby = ? , createdtime = ? , lastmodifiedby = ? , lastmodifiedtime = ? , 
-         location_type = ? , housename_ml = ? , housename_en = ? , lbtype = ? , postal_code = ? WHERE death_dtl_id = ? , tenantid = ? , addr_typeid = ? 
+         location_type = ? , housename_ml = ? , housename_en = ? , lbtype = ? , postal_code = ? WHERE death_dtl_id = ? AND tenantid = ? AND addr_typeid = ? 
         
 
       basePath: deathCertificateDtls.* 
