@@ -28,7 +28,7 @@ public class DeathFamilyInfo {
 
 
     @JsonProperty("SpouseUnavailable")
-    private Integer spouseUnavailable ;
+    private boolean spouseUnavailable ;
 
     @JsonProperty("SpouseType")
     private String spouseType ;
@@ -40,7 +40,7 @@ public class DeathFamilyInfo {
     private String spouseNameML ;
 
     @JsonProperty("FatherUnavailable")
-    private Integer fatherUnavailable ;
+    private boolean fatherUnavailable ;
 
     @JsonProperty("FatherNameEn")
     private String fatherNameEn ;
@@ -49,7 +49,7 @@ public class DeathFamilyInfo {
     private String fatherNameMl ;
 
     @JsonProperty("MotherUnavailable")
-    private Integer motherUnavailable;
+    private boolean motherUnavailable;
     
     @JsonProperty("MotherNameEn")
     private String motherNameEn;

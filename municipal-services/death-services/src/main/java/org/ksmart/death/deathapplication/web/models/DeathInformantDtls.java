@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 /*
      * Creates main model class  
-     * Jasmine on 4.02.2023      
+     * Jasmine on 11.02.2023      
 */
 @Schema(name = "Death Registration Request", description = "An Object holds the  informant details of death ")
 @Validated
@@ -38,7 +38,6 @@ public class DeathInformantDtls {
     // @JsonProperty("InitiatorMobile")
     // private String initiatorMobile ;
     
-
     @JsonProperty("InformantAadharNo")
     private String informantAadharNo ;
 
@@ -60,8 +59,8 @@ public class DeathInformantDtls {
     @JsonProperty("InformantAddrTenantId")
     private String informantAddrTenantId ;
 
-    @JsonProperty("InformantAddrAddrTypeId")
-    private String informantAddrAddrTypeId ;
+    @JsonProperty("InformantAddrTypeId")
+    private String informantAddrTypeId ;
 
     @JsonProperty("InformantAddrLocationType")
     private String informantAddrLocationType ;
@@ -91,7 +90,7 @@ public class DeathInformantDtls {
     private String informantAddrPostofficeId ;
 
     @JsonProperty("InformantAddrPincode")
-    private String informantAddrPincode ;
+    private Long informantAddrPincode ;
 
     @JsonProperty("InformantAddrLocalityEn")
     private String informantAddrLocalityEn ;
@@ -112,7 +111,7 @@ public class DeathInformantDtls {
     private String informantAddrHoueNameMl ;
 
     @JsonProperty("InformantAddrPostalCode")
-    private String informantAddrPostalCode ;
+    private Long informantAddrPostalCode ;
 
     @JsonProperty("DocumentId")
     private String documentId ;
@@ -136,7 +135,7 @@ public class DeathInformantDtls {
     private String documentFileStoreId ;
 
     //Rakhi s on 08.02.2023
-    @Schema(type = "boolean" ,description = "Informant aadhar submitted(0/1)")
+    @Schema(type = "boolean" ,description = "Informant aadhar submitted(true/false)")
     @JsonProperty("InformantAadharSubmitted")
     private boolean  informantAadharSubmitted ;   
 

@@ -45,8 +45,8 @@ public class DeathInitiatorDtls {
     @JsonProperty("InitiatorAddrTenantId")
     private String initiatorAddrTenantId ;
 
-    @JsonProperty("InitiatorAddrAddrTypeId")
-    private String initiatorAddrAddrTypeId ;
+    @JsonProperty("InitiatorAddrTypeId")
+    private String initiatorAddrTypeId ;
 
     @JsonProperty("InitiatorAddrLocationType")
     private String initiatorAddrLocationType ;
@@ -76,7 +76,7 @@ public class DeathInitiatorDtls {
     private String initiatorAddrPostofficeId ;
 
     @JsonProperty("InitiatorAddrPincode")
-    private String initiatorAddrPincode ;
+    private Long initiatorAddrPincode ;
 
     @JsonProperty("InitiatorAddrLocalityEn")
     private String initiatorAddrLocalityEn ;

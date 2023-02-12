@@ -19,6 +19,9 @@ import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathAddressInfo;
 import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
+import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
+import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
+import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
 import org.ksmart.death.common.contract.EncryptionDecryptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,10 +64,25 @@ public class DeathEnrichment implements BaseEnrichment{
                .forEach(deathdtls -> {
                 deathdtls.getDeathBasicInfo().setId(UUID.randomUUID().toString());
                 deathdtls.setDeathAuditDetails(auditDetails);
-                //Rakhi S on 09.02.2023
-                deathdtls.getDeathAddressInfo().setPresentAddrId(UUID.randomUUID().toString());
-                deathdtls.getDeathAddressInfo().setPermanentAddrId(UUID.randomUUID().toString());
-                deathdtls.getDeathStatisticalInfo().setStatisticalId(UUID.randomUUID().toString());                        
+                //Rakhi S on 09.02.2023 //Validation Jasmine 11.02.2023
+                DeathAddressInfo  addressinfo = deathdtls.getDeathAddressInfo();
+                if (addressinfo!=null){
+                    addressinfo.setPresentAddrId(UUID.randomUUID().toString());
+                    addressinfo.setPermanentAddrId(UUID.randomUUID().toString());
+                }
+                DeathStatisticalInfo  statisticalInfo = deathdtls.getDeathStatisticalInfo();
+                if (statisticalInfo!=null){
+                    statisticalInfo.setStatisticalId(UUID.randomUUID().toString()); 
+                } 
+                //Jasmine informant and initiator 11.02.2023
+                DeathInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
+                if (informantInfo!=null){
+                    informantInfo.setInformantAddrId(UUID.randomUUID().toString());  
+                }
+                DeathInitiatorDtls  initiatorInfo = deathdtls.getDeathInitiatorDtls();
+                if (initiatorInfo!=null){
+                    initiatorInfo.setInitiatorAddrId(UUID.randomUUID().toString());  
+                }                  
                 //Encryption Jasmine 10.02.2023
                 DeathBasicInfo deathBasicDtls = request.getDeathCertificateDtls().get(0).getDeathBasicInfo();
                 DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
@@ -74,7 +92,6 @@ public class DeathEnrichment implements BaseEnrichment{
                 deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
-
             });
         }  
     //Rakhi S on 08.02.2023 ACK no formating

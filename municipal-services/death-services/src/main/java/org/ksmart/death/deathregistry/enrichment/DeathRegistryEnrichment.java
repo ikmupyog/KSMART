@@ -22,6 +22,7 @@ import org.ksmart.death.deathregistry.util.DeathRegistryMdmsUtil;
 import org.ksmart.death.deathregistry.web.models.AuditDetails;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryInformantDtls;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
@@ -78,7 +79,12 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
                 deathdtls.getDeathAddressInfo().setPresentAddrId(UUID.randomUUID().toString());
                 deathdtls.getDeathAddressInfo().setPermanentAddrId(UUID.randomUUID().toString());
                 deathdtls.getDeathStatisticalInfo().setStatisticalId(UUID.randomUUID().toString());
-            });
+                //Jasmine 11.02.2023
+                DeathRegistryInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
+                    if (informantInfo!=null){
+                        informantInfo.setInformantAddrId(UUID.randomUUID().toString());  
+                    }
+                });
     }
     //Registration Number Creation by Rakhi S ikm on 10.02.2023
     public void setRegistrationNumberDetails(DeathRegistryRequest request) {

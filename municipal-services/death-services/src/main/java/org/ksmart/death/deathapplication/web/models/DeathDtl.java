@@ -34,7 +34,6 @@ import javax.validation.constraints.Size;
 @Builder
 public class DeathDtl {
 
-
      @JsonProperty("InformationDeath")
      private DeathBasicInfo deathBasicInfo;
 
@@ -47,12 +46,14 @@ public class DeathDtl {
     @JsonProperty("statisticalInfo")
     private DeathStatisticalInfo  deathStatisticalInfo;
 
-    @JsonProperty("informantDetails")
+    @JsonProperty("InformantDetails")
     private DeathInformantDtls deathInformantDtls;
+
+    @JsonProperty("InitiatorDetails")
+    private DeathInitiatorDtls deathInitiatorDtls;
 
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
-
 
 //Jasmine 11.02.2023
     @Size(max = 64)
