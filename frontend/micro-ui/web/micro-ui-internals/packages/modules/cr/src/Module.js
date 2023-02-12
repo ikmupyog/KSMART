@@ -39,6 +39,7 @@ import AddressPermanentOutsideKerala from "../src/pageComponents/birthComponents
 import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/AddressPermanentInsideKerala";
 import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
 import InformarHospitalInstitution from "../src/pageComponents/birthComponents/InformarHospitalInstitution";
+import InitiatorDetails from "../src/pageComponents/birthComponents/InitiatorDetails";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
@@ -213,6 +214,7 @@ const componentsToRegister = {
   AddressPermanentOutsideIndia,
   AddressPermanentInsideKerala,
   InformarHospitalInstitution,
+  InitiatorDetails,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,

@@ -408,7 +408,22 @@ export const newConfig = [
         hideInEmployee: true,
       },   
 
-      
+      {
+        route: "initiator-details",
+        component: "InitiatorDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "InitiatorinfoDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: true,
+      },   
    
       {
         route: "multiple-birth",
