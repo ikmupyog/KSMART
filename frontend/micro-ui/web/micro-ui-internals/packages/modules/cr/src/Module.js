@@ -35,6 +35,9 @@ import AddressBirth from "../src/pageComponents/birthComponents/AddressBirth";
 import AddressBrOutsideIndia from "../src/pageComponents/birthComponents/AddressBrOutsideIndia";
 import AddressInsideKerala from "../src/pageComponents/birthComponents/AddressInsideKerala";
 import AddressOutsideKerala from "../src/pageComponents/birthComponents/AddressOutsideKerala";
+import AddressPermanentOutsideKerala from "../src/pageComponents/birthComponents/AddressPermanentOutsideKerala";
+import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/AddressPermanentInsideKerala";
+import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -62,11 +65,11 @@ import PlaceOfDeathOther from "./pageComponents/deathComponents/PlaceOfDeathOthe
 import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVehicle";
 import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
-import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
 import Hospital from "./pageComponents/deathComponents/Hospital";
 import Institution from "./pageComponents/deathComponents/Institution";
 import DeathPlaceHome from "./pageComponents/deathComponents/DeathPlaceHome";
 import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicle";
+import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
@@ -203,8 +206,10 @@ const componentsToRegister = {
   AddressBirth,
   AddressBrOutsideIndia,
   AddressInsideKerala,
-  AddressOutsideKerala,
-
+  AddressOutsideKerala,   
+  AddressPermanentOutsideKerala,
+  AddressPermanentOutsideIndia,
+  AddressPermanentInsideKerala,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -233,12 +238,12 @@ const componentsToRegister = {
   PlaceOfDeathVehicle,
   InformentAddress,
   StatisticalInfo,
-  StatisticalInfoContinue,
   ApplicantDetails,
   DeathPlaceVehicle,
   DeathPlaceHome,
   Institution,
   Hospital,
+  DeathPublicPlace,
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,

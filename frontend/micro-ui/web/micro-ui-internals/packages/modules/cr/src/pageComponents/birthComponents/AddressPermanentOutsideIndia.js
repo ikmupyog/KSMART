@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader, CheckBox 
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
+const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -13,34 +13,50 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
   // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  const [outsideCountry, setoutsideCountry] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.outsideCountry ? formData?.AddressBrOutsideIndiaDetails?.outsideCountry : null
+  const [PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(
+    formData?.AddressPermanentOutsideIndiaDetails?.PermntOutsideIndiaCountry
+      ? formData?.AddressPermanentOutsideIndiaDetails?.PermntOutsideIndiaCountry
+      : null
   );
-  const [provinceEn, setprovinceEn] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.provinceEn ? formData?.AddressBrOutsideIndiaDetails?.provinceEn : null
+  const [PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(
+    formData?.AddressPermanentOutsideIndiaDetails?.PermntOutsideIndiaprovinceEn
+      ? formData?.AddressPermanentOutsideIndiaDetails?.PermntOutsideIndiaprovinceEn
+      : null
   );
-  const [adrsVillage, setadrsVillage] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.adrsVillage ? formData?.AddressBrOutsideIndiaDetails?.adrsVillage : null
+  const [adrsPermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(
+    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaVillage
+      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaVillage
+      : null
   );
-  const [adrsCityTown, setadrsCityTown] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.adrsCityTown ? formData?.AddressBrOutsideIndiaDetails?.adrsCityTown : null
+  const [adrsPermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(
+    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaCityTown
+      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaCityTown
+      : null
   );
   const [postCode, setpostCode] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.postCode ? formData?.AddressBrOutsideIndiaDetails?.postCode : null
+    formData?.AddressPermanentOutsideIndiaDetails?.postCode ? formData?.AddressPermanentOutsideIndiaDetails?.postCode : null
   );
 
-  const [addressLinetwoEn, setaddressLinetwoEn] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.addressLinetwoEn ? formData?.AddressBrOutsideIndiaDetails?.addressLinetwoEn : null
+  const [adrsPermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(
+    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLinetwoEn
+      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLinetwoEn
+      : null
   );
-  const [addressLinetwoMl, setaddressLinetwoMl] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.addressLinetwoMl ? formData?.AddressBrOutsideIndiaDetails?.addressLinetwoMl : null
+  const [adrsPermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(
+    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLinetwoMl
+      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLinetwoMl
+      : null
   );
 
-  const [addressLineoneEn, setaddressLineoneEn] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.addressLineoneEn ? formData?.AddressBrOutsideIndiaDetails?.addressLineoneEn : null
+  const [adrsPermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(
+    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLineoneEn
+      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLineoneEn
+      : null
   );
-  const [addressLineoneMl, setaddressLineoneMl] = useState(
-    formData?.AddressBrOutsideIndiaDetails?.addressLineoneMl ? formData?.AddressBrOutsideIndiaDetails?.addressLineoneMl : null
+  const [adrsPermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(
+    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLineoneMl
+      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLineoneMl
+      : null
   );
 
   // const [CommencementDate, setCommencementDate] = useState();
@@ -58,57 +74,57 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
     });
   const onSkip = () => onSelect();
 
-  function setSelectadrsVillage(value) {
-    setadrsVillage(value);
+  function setSelectadrsPermntOutsideIndiaVillage(value) {
+    setadrsPermntOutsideIndiaVillage(value);
     console.log("Village" + cmbVillage);
   }
 
-  function setSelectadrsCityTown(e) {
+  function setSelectadrsPermntOutsideIndiaCityTown(e) {
     if (e.target.value.length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setadrsCityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setadrsPermntOutsideIndiaCityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
 
-  function setSelectaddressLinetwoEn(e) {
+  function setSelectadrsPermntOutsideIndiaLinetwoEn(e) {
     if (e.target.value.length === 51) {
       return false;
     }
-    setaddressLinetwoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    setadrsPermntOutsideIndiaLinetwoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
   }
-  function setSelectaddressLinetwoMl(e) {
+  function setSelectadrsPermntOutsideIndiaLinetwoMl(e) {
     if (e.target.value.length === 51) {
       return false;
     }
-    setaddressLinetwoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
-  }
-
-  function setSelectaddressLineoneEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setaddressLineoneEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-    }
-  }
-  function setSelectaddressLineoneMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setaddressLineoneMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
-    }
-  }
-  function setSelectprovinceEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setprovinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-    }
+    setadrsPermntOutsideIndiaLinetwoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
   }
 
-  function setSelectoutsideCountry(value) {
-    setoutsideCountry(value);
+  function setSelectadrsPermntOutsideIndiaLineoneEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setadrsPermntOutsideIndiaLineoneEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
+  function setSelectadrsPermntOutsideIndiaLineoneMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setadrsPermntOutsideIndiaLineoneMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    }
+  }
+  function setSelectPermntOutsideIndiaprovinceEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setPermntOutsideIndiaprovinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
+
+  function setSelectPermntOutsideIndiaCountry(value) {
+    setPermntOutsideIndiaCountry(value);
     console.log("Country" + cmbCountry);
   }
   function setSelectpostCode(e) {
@@ -130,26 +146,26 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
   }
 
   const goNext = () => {
-    sessionStorage.setItem("outsideCountry", outsideCountry ? outsideCountry.code : null);
-    sessionStorage.setItem("provinceEn", provinceEn ? provinceEn : null);
-    sessionStorage.setItem("adrsVillage", adrsVillage ? adrsVillage.code : null);
-    sessionStorage.setItem("adrsCityTown", adrsCityTown ? adrsCityTown : null);
+    sessionStorage.setItem("PermntOutsideIndiaCountry", PermntOutsideIndiaCountry ? PermntOutsideIndiaCountry.code : null);
+    sessionStorage.setItem("PermntOutsideIndiaprovinceEn", PermntOutsideIndiaprovinceEn ? PermntOutsideIndiaprovinceEn : null);
+    sessionStorage.setItem("adrsPermntOutsideIndiaVillage", adrsPermntOutsideIndiaVillage ? adrsPermntOutsideIndiaVillage.code : null);
+    sessionStorage.setItem("adrsPermntOutsideIndiaCityTown", adrsPermntOutsideIndiaCityTown ? adrsPermntOutsideIndiaCityTown : null);
     sessionStorage.setItem("postCode", postCode ? postCode : null);
-    sessionStorage.setItem("addressLinetwoEn", addressLinetwoEn ? addressLinetwoEn : null);
-    sessionStorage.setItem("addressLinetwoMl", addressLinetwoMl ? addressLinetwoMl : null);
-    sessionStorage.setItem("addressLineoneEn", addressLineoneEn ? addressLineoneEn : null);
-    sessionStorage.setItem("addressLineoneMl", addressLineoneMl ? addressLineoneMl : null);
+    sessionStorage.setItem("adrsPermntOutsideIndiaLinetwoEn", adrsPermntOutsideIndiaLinetwoEn ? adrsPermntOutsideIndiaLinetwoEn : null);
+    sessionStorage.setItem("adrsPermntOutsideIndiaLinetwoMl", adrsPermntOutsideIndiaLinetwoMl ? adrsPermntOutsideIndiaLinetwoMl : null);
+    sessionStorage.setItem("adrsPermntOutsideIndiaLineoneEn", adrsPermntOutsideIndiaLineoneEn ? adrsPermntOutsideIndiaLineoneEn : null);
+    sessionStorage.setItem("adrsPermntOutsideIndiaLineoneMl", adrsPermntOutsideIndiaLineoneMl ? adrsPermntOutsideIndiaLineoneMl : null);
 
     onSelect(config.key, {
-      outsideCountry,
-      provinceEn,
-      adrsVillage,
-      adrsCityTown,
+      PermntOutsideIndiaCountry,
+      PermntOutsideIndiaprovinceEn,
+      adrsPermntOutsideIndiaVillage,
+      adrsPermntOutsideIndiaCityTown,
       postCode,
-      addressLinetwoEn,
-      addressLinetwoMl,
-      addressLineoneEn,
-      addressLineoneMl,
+      adrsPermntOutsideIndiaLinetwoEn,
+      adrsPermntOutsideIndiaLinetwoMl,
+      adrsPermntOutsideIndiaLineoneEn,
+      adrsPermntOutsideIndiaLineoneMl,
     });
   };
   if (isCountryLoading) {
@@ -157,7 +173,7 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!outsideCountry}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PermntOutsideIndiaCountry}>
         {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header> */}
@@ -180,21 +196,21 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 optionKey="name"
                 isMandatory={true}
                 option={cmbCountry}
-                selected={outsideCountry}
-                select={setSelectoutsideCountry}
+                selected={PermntOutsideIndiaCountry}
+                select={setSelectPermntOutsideIndiaCountry}
                 disabled={isEdit}
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="provinceEn"
-                value={provinceEn}
-                onChange={setSelectprovinceEn}
+                name="PermntOutsideIndiaprovinceEn"
+                value={PermntOutsideIndiaprovinceEn}
+                onChange={setSelectPermntOutsideIndiaprovinceEn}
                 disable={isEdit}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
@@ -215,29 +231,29 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 optionKey="i18nKey"
                 isMandatory={true}
                 option={cmbUrbanRural}
-                selected={adrsVillage}
-                select={setSelectadrsVillage}
+                selected={adrsPermntOutsideIndiaVillage}
+                select={setSelectadrsPermntOutsideIndiaVillage}
                 disabled={isEdit}
                 placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_CITY_TOWN_EN")}<span className="mandatorycss">*</span></CardLabel> 
               <TextInput
                 t={t}
                 isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="adrsCityTown"
-                value={adrsCityTown}
-                onChange={setSelectadrsCityTown}
+                name="adrsPermntOutsideIndiaCityTown"
+                value={adrsPermntOutsideIndiaCityTown}
+                onChange={setSelectadrsPermntOutsideIndiaCityTown}
                 disable={isEdit}
                 placeholder={`${t("CR_CITY_TOWN_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{t("CR_ZIP_CODE")} <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_ZIP_CODE")}<span className="mandatorycss">*</span></CardLabel> 
               <TextInput
                 t={t}
                 isMandatory={true}
@@ -262,30 +278,30 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="addressLineoneEn"
-                value={addressLineoneEn}
-                onChange={setSelectaddressLineoneEn}
+                name="adrsPermntOutsideIndiaLineoneEn"
+                value={adrsPermntOutsideIndiaLineoneEn}
+                onChange={setSelectadrsPermntOutsideIndiaLineoneEn}
                 placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="addressLinetwoEn"
-                value={addressLinetwoEn}
-                onChange={setSelectaddressLinetwoEn}
+                name="adrsPermntOutsideIndiaLinetwoEn"
+                value={adrsPermntOutsideIndiaLinetwoEn}
+                onChange={setSelectadrsPermntOutsideIndiaLinetwoEn}
                 disable={isEdit}
                 placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
@@ -297,15 +313,15 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="addressLineoneMl"
-                value={addressLineoneMl}
-                onChange={setSelectaddressLineoneMl}
+                name="adrsPermntOutsideIndiaLineoneMl"
+                value={adrsPermntOutsideIndiaLineoneMl}
+                onChange={setSelectadrsPermntOutsideIndiaLineoneMl}
                 placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
                 disable={isEdit}
                 {...(validation = {
@@ -323,9 +339,9 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
                 isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="addressLinetwoMl"
-                value={addressLinetwoMl}
-                onChange={setSelectaddressLinetwoMl}
+                name="adrsPermntOutsideIndiaLinetwoMl"
+                value={adrsPermntOutsideIndiaLinetwoMl}
+                onChange={setSelectadrsPermntOutsideIndiaLinetwoMl}
                 disable={isEdit}
                 placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                 {...(validation = {
@@ -346,4 +362,4 @@ const AddressBrOutsideIndia = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default AddressBrOutsideIndia;
+export default AddressPermanentOutsideIndia;

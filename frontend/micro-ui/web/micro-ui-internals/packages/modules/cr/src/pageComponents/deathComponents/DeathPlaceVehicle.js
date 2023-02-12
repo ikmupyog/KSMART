@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton,TextAre
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType, selectDeathPlaceType,VehicleNumber, setVehicleNumber,
+const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType, setDeathPlaceType,VehicleNumber, setVehicleNumber,
   VehicleFromplaceEn, setVehicleFromplaceEn,VehicleToPlaceEn, setVehicleToPlaceEn,GeneralRemarks, setGeneralRemarks,VehicleFirstHaltEn, setVehicleFirstHaltEn,
   VehicleFirstHaltMl, setVehicleFirstHaltMl,VehicleHospitalEn, setSelectedVehicleHospitalEn,DeathPlaceWardId, setDeathPlaceWardId,VehicleFromplaceMl, setVehicleFromplaceMl,VehicleToPlaceMl, setVehicleToPlaceMl}) => {
   const stateId = Digit.ULBService.getStateId();
@@ -16,7 +16,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   
-  // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.DeathPlaceVehicle?.DeathPlaceType);
+  // const [DeathPlaceType, setDeathPlaceType] = useState(formData?.DeathPlaceVehicle?.DeathPlaceType);
   // const [VehicleNumber, setVehicleNumber] = useState(formData?.DeathPlaceVehicle?.VehicleNumber);
   // const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.DeathPlaceVehicle?.VehicleFromplaceEn);
   // const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.DeathPlaceVehicle?.VehicleToPlaceEn);
@@ -70,7 +70,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
   const onSkip = () => onSelect();
 
   function setselectDeathPlaceType(value) {
-    selectDeathPlaceType(value);
+    setDeathPlaceType(value);
   }
   function setSelectVehicleNumber(e) {
     setVehicleNumber(e.target.value);
