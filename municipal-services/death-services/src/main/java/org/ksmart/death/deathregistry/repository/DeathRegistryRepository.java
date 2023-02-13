@@ -879,6 +879,12 @@ public class DeathRegistryRepository {
                         cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceOtherMl()+" / "+cert.getDeathBasicInfo().getDeathPlaceOtherEn());
                     }
                 }
+                //Rakhi S on 13.02.2023 
+                //Place of Death Outside Jurisdiction
+                else if(DeathRegistryConstants.DEATH_PLACE_OUTSIDE_JURISDICTION.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
+                    cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceRemarksMl()+" / "+cert.getDeathBasicInfo().getDeathPlaceRemarksEn());
+                }
+
 
                 //Rakhi S on 11.02.2023
                if(cert.getDeathBasicInfo().getDeceasedGender().equals(DeathRegistryConstants.GENDER_MALE.toString())){

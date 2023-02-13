@@ -107,7 +107,7 @@ public class WorkflowIntegrator {
            .get(0).getAction().equalsIgnoreCase(DeathConstants.TRIGGER_NOWORKFLOW)) {
 
                 JSONObject obj = new JSONObject();
-                 System.out.println("businessServiceFromMDMS"+businessServiceFromMDMS);    
+                //  System.out.println("businessServiceFromMDMS"+businessServiceFromMDMS);    
                 // Adding assignes to processInstance  assignees
                 // List<Map<String, String>> uuidMaps = buildUUIDList(deathDtl.getAssignees());
                 // System.out.println(uuidMaps);
