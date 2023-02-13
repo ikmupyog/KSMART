@@ -1,4 +1,4 @@
-import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSelect, TextInput, TextArea, LabelFieldPair } from "@egovernments/digit-ui-react-components";
+import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSelect, TextInput, TextArea, LabelFieldPair, Toast } from "@egovernments/digit-ui-react-components";
 import React, { useState, useReducer, useCallback } from "react";
 import Timeline from "../components/TLTimeline";
 
@@ -209,49 +209,67 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
   }, [dispatchapplicant, appState]);
 
 
-  const goNext = () => {
-    //  valflag=validateData();
-    //  if (validateData()) {
-    let owners = appState;
-    let ownerspremise = ownerState;
-    let institution = LicenseeType.code==="INSTITUTION" ? {
-      "institutionName": institutionName, "contactNo": contactNo,
-      "organisationregistrationno": organisationregistrationno, "address": insaddress, "natureOfInstitution": natureOfInstitution.code,
-      "email": email, "licenseUnitId": licenseUnitId
-    } :{};
-    let licenseeType = LicenseeType.code;
-    let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;
-    let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
-    let structurePlaceSubtype = formDatalocal?.tradeLicenseDetail?.structurePlaceSubtype;
-    let businessActivityDesc = formDatalocal?.tradeLicenseDetail?.businessActivityDesc;
-    let noOfEmployees = formDatalocal?.tradeLicenseDetail?.noOfEmployees;
-    let ownershipCategory = formDatalocal?.tradeLicenseDetail?.ownershipCategory;
-    let address = formDatalocal?.tradeLicenseDetail?.address;
-    let structurePlace = formDatalocal?.tradeLicenseDetail?.structurePlace;
-    let tradeUnits=formDatalocal?.tradeLicenseDetail?.tradeUnits;
-    let businessSector = formDatalocal?.tradeLicenseDetail?.businessSector;
-    let tradeLicenseDetail = { licenseeType, owners, ownerspremise, institution, businessSector,capitalInvestment,structureType,structurePlaceSubtype
-                              ,businessActivityDesc,noOfEmployees,ownershipCategory,address,structurePlace,tradeUnits };
-    onSelect(config.key, { tradeLicenseDetail });
-    // } else {
-    //   setToast(true)
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // }
+  const goNext = async () => {
+
+    const result = await validateData();
+    console.log(result);
+    if (result) {
+      let owners = appState;
+      let ownerspremise = ownerState;
+      let institution = LicenseeType.code === "INSTITUTION" ? {
+        "institutionName": institutionName, "contactNo": contactNo,
+        "organisationregistrationno": organisationregistrationno, "address": insaddress, "natureOfInstitution": natureOfInstitution.code,
+        "email": email, "licenseUnitId": licenseUnitId
+      } : {};
+      let licenseeType = LicenseeType.code;
+      let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;
+      let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
+      let structurePlaceSubtype = formDatalocal?.tradeLicenseDetail?.structurePlaceSubtype;
+      let businessActivityDesc = formDatalocal?.tradeLicenseDetail?.businessActivityDesc;
+      let noOfEmployees = formDatalocal?.tradeLicenseDetail?.noOfEmployees;
+      let ownershipCategory = formDatalocal?.tradeLicenseDetail?.ownershipCategory;
+      let address = formDatalocal?.tradeLicenseDetail?.address;
+      let structurePlace = formDatalocal?.tradeLicenseDetail?.structurePlace;
+      let tradeUnits = formDatalocal?.tradeLicenseDetail?.tradeUnits;
+      let businessSector = formDatalocal?.tradeLicenseDetail?.businessSector;
+      let tradeLicenseDetail = {
+        licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
+        , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits
+      };
+      onSelect(config.key, { tradeLicenseDetail });
+    } else {
+      console.log("else part");
+      setToast(true)
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    }
 
   };
 
   function validateData() {
     let mobilevalidation = /^[5-9]{1}[0-9]{9}$/;
+    let validation = true;
+    appState?.map((ob) => {
+      if (!ob.mobileNumber.match(mobilevalidation)) {
+        setErrorMessage(t("TL_INVALID_MOBILE_NO"));
+        validation = false;
+      }
+    });
+    ownerState?.map((ob) => {
+      if (!ob.ownerContactNo.match(mobilevalidation)) {
+        setErrorMessage(t("TL_INVALID_MOBILE_NO"));
+        validation = false;
+      }
+    });
     if (!contactNo.match(mobilevalidation) && contactNo !== "") {
+      console.log("hai inside");
       setErrorMessage(t("TL_INVALID_MOBILE_NO"));
-      setValflag(false);
-      return valflag;
-    } else {
-      setValflag(true);
-      return valflag;
+      validation = false;
     }
+    console.log("hai loop");
+    return Promise.resolve(validation);
+
   }
 
   const onSkip = () => onSelect();
@@ -259,8 +277,14 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
       {window.location.href.includes("/employee") ? <Timeline /> : null}
-      {/* isDisabled={!fields[0].tradecategory || !fields[0].tradetype || !fields[0].tradesubtype} */}
-      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}  >
+      <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}
+        isDisabled={!LicenseeType || appState[0].name === "" || appState[0].applicantNameLocal === "" || appState[0].careOfName === ""
+          || appState[0].houseName === "" || appState[0].street === "" || appState[0].locality === "" || appState[0].postOffice === ""
+          || appState[0].aadhaarNumber === "" || appState[0].mobileNumber === "" || appState[0].emailId === ""
+          || (LicenseeType?.code === "INSTITUTION" ? (appState[0].designation === "" || contactNo === "" || email === "" || insaddress === "" || institutionName === ""
+            || organisationregistrationno === "" || licenseUnitId === "") : false)
+          || ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
+          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""} >
 
         <div className="row">
           <div className="col-md-12" > <header className="card-header">New IFTE & OS License Application</header>
@@ -311,16 +335,16 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                       <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applicantName" value={field.name} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "name")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSEE_NAME") })} />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_LICENSEE_NAME")}`}(Malayalam) <span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applicantNameLocal" value={field.applicantNameLocal} onChange={e => handleAppInputField(index, e.target.value, "applicantNameLocal")} />
+                      <CardLabel>{`${t("TL_LICENSEE_NAME")}`}(Local) <span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applicantNameLocal" value={field.applicantNameLocal} onChange={e => handleAppInputField(index, e.target.value.replace(/[^\u0D00-\u0D7F\u200D\u200C .&'@']/g,''), "applicantNameLocal")} {...(validation = {pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",isRequired: true,type: "text",title: t("TL_LICENSEE_NAME")})}/>
                     </div>
                     <div className="col-md-3">
                       <CardLabel>S/O or D/O<span className="mandatorycss">*</span></CardLabel>
                       <div className="col-md-4">
-                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} selected={comenu.filter(obj => obj.code === field.careOf)[0]} select={e => handleAppSelectField(index, e, "careOf")} {...(validation = { isRequired: true, type: "text", title: "S/O or D/O"})} />
+                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} selected={comenu.filter(obj => obj.code === field.careOf)[0]} select={e => handleAppSelectField(index, e, "careOf")} {...(validation = { isRequired: true, type: "text", title: "S/O or D/O" })} />
                       </div>
                       <div className="col-md-8">
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appconame" value={field.careOfName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "careOfName")} {...(validation = { isRequired: true, type: "text", title: "C/O Name"})} />
+                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appconame" value={field.careOfName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "careOfName")} {...(validation = { isRequired: true, type: "text", title: "C/O Name" })} />
                       </div>
 
                     </div>
@@ -336,7 +360,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                     </div>
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_LOCALITY")}`}<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applocality" value={field.locality} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: true, title: t("TL_INVALID_LOCALITY") })}  />
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applocality" value={field.locality} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: true, title: t("TL_INVALID_LOCALITY") })} />
                     </div>
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -346,15 +370,15 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_HOUSE_NO_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphousename" value={field.houseName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName")} {...(validation = { isRequired: true, title: t("TL_INVALID_HOUSE_NO_NAME") })}/>
-                    </div>
-                    <div className="col-md-3"> 
-                      <CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appponame" value={field.postOffice} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice")} {...(validation = { isRequired: true, title: t("TL_INVALID_POSTOFFICE") })}/>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="apphousename" value={field.houseName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName")} {...(validation = { isRequired: true, title: t("TL_INVALID_HOUSE_NO_NAME") })} />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>{`${t("TL_PIN")}`}</CardLabel> 
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="pincode" value={field.pincode} onChange={e => handleAppInputField(index, e.target.value.replace(/[^0-9]/ig, ''), "pincode", 6)} {...(validation = { isRequired: true, title: t("TL_INVALID_PIN") })}/>
+                      <CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appponame" value={field.postOffice} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice")} {...(validation = { isRequired: true, title: t("TL_INVALID_POSTOFFICE") })} />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_PIN")}`}</CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="pincode" value={field.pincode} onChange={e => handleAppInputField(index, e.target.value.replace(/[^0-9]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, title: t("TL_INVALID_PIN") })} />
                     </div>
 
                     {LicenseeType.code === "JOINT_PARTNERSHIP" && (
@@ -432,10 +456,10 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
               </div>
               <div className="col-md-3">
                 <CardLabel>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type="email" name="email" value={email} onChange={e => setEmail(e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, '').length < 101 ? e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, '') : e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, '').substring(0, e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, '').length - 1))} {...(validation = { isRequired: true, title: t("TL_INVALID_EMAIL_ID") })}  />
+                <TextInput t={t} isMandatory={config.isMandatory} type="email" name="email" value={email} onChange={e => setEmail(e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, '').length < 101 ? e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, '') : e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, '').substring(0, e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, '').length - 1))} {...(validation = { isRequired: true, title: t("TL_INVALID_EMAIL_ID") })} />
               </div>
               <div className="col-md-6" ><CardLabel>{`${t("TL_LICENSING_INSTITUTION_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="insaddress" value={address} onChange={e => setInsaddress(e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, '').length < 250 ? e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, '') : (e.target.value).substring(0, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, '').length - 1))} {...(validation = { isRequired: true, title: t("TL_INVALID_LICENSING_INSTITUTION_ADDRESS") })} />
+                <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="insaddress" value={insaddress} onChange={e => setInsaddress(e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, '').length < 250 ? e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, '') : (e.target.value).substring(0, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, '').length - 1))} {...(validation = { isRequired: true, title: t("TL_INVALID_LICENSING_INSTITUTION_ADDRESS") })} />
               </div>
             </div>
             <div className="row">
@@ -464,10 +488,10 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                     <div className="col-md-3">
                       <CardLabel>S/O or D/O<span className="mandatorycss">*</span></CardLabel>
                       <div className="col-md-4">
-                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} selected={comenu.filter(obj => obj.code === field.careOf)[0]} select={e => handleAppSelectField(index, e, "careOf")} {...(validation = { isRequired: true, type: "text", title:t("TL_INVALID_CO") })} />
+                        <Dropdown t={t} optionKey="code" isMandatory={config.isMandatory} option={comenu} selected={comenu.filter(obj => obj.code === field.careOf)[0]} select={e => handleAppSelectField(index, e, "careOf")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_CO") })} />
                       </div>
                       <div className="col-md-8">
-                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appconame" value={field.careOfName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "careOfName")} {...(validation = { isRequired: true, type: "text", title:t("TL_INVALID_CO") })} />
+                        <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="appconame" value={field.careOfName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "careOfName")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_CO") })} />
                       </div>
                     </div>
                   </div>
@@ -475,30 +499,30 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                   <div className="row">
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_LOCALIZATION_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applicantMobileNo" value={field.mobileNumber} onChange={e => handleAppInputField(index, e.target.value.replace(/[^0-9]/ig, ''), "mobileNumber", 10)} {...(validation = { isRequired: true, type: "text", title:t("TL_INVALID_MOBILE_NO") })}/>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="applicantMobileNo" value={field.mobileNumber} onChange={e => handleAppInputField(index, e.target.value.replace(/[^0-9]/ig, ''), "mobileNumber", 10)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_MOBILE_NO") })} />
                     </div>
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type="email" name="applicantEmail" value={field.emailId} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, ''), "emailId")} {...(validation = { isRequired: true, type: "text", title:t("TL_INVALID_EMAIL_ID") })}/>
+                      <TextInput t={t} isMandatory={config.isMandatory} type="email" name="applicantEmail" value={field.emailId} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9+_.-]+@[a-zA-Z0-9.-]/ig, ''), "emailId")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_EMAIL_ID") })} />
                     </div>
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_LOCALITY")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="locality" value={field.locality} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: false, type: "text", title:t("TL_INVALID_LOCALITY") })}/>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="locality" value={field.locality} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_LOCALITY") })} />
                     </div>
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_HOUSE_NO_NAME")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="houseName" value={field.houseName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName")} {...(validation = { isRequired: false, type: "text", title:t("TL_INVALID_HOUSE_NO_NAME") })}/>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="houseName" value={field.houseName} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName")} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_HOUSE_NO_NAME") })} />
                     </div>
                   </div>
                   <div className="row">
 
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_POSTOFFICE")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="postOffice" value={field.postOffice} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice")} {...(validation = { isRequired: false, type: "text", title:t("TL_INVALID_POSTOFFICE") })}/>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="postOffice" value={field.postOffice} onChange={e => handleAppInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice")} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
                     </div>
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_PIN")}`}</CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="pincode" value={field.pincode} onChange={e => handleAppInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, type: "text", title:t("TL_INVALID_PIN") })}/>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="pincode" value={field.pincode} onChange={e => handleAppInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_PIN") })} />
                     </div>
                     <div className="col-md-3">
                       <CardLabel>{`${t("TL_LICENSEE_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -534,7 +558,7 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                 <div className="row">
                   <div className="col-md-3">
                     <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="aadhaarNumber" value={field.owneraadhaarNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "owneraadhaarNo", 12)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_AADHAR_NO") })}/>
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="aadhaarNumber" value={field.owneraadhaarNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "owneraadhaarNo", 12)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_AADHAR_NO") })} />
                   </div>
                   <div className="col-md-3">
                     <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -542,30 +566,30 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
                   </div>
                   <div className="col-md-3">
                     <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownermobileno" value={field.ownerContactNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "ownerContactNo", 10)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_MOBILE_NO") })}/>
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownermobileno" value={field.ownerContactNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "ownerContactNo", 10)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_MOBILE_NO") })} />
                   </div>
                   <div className="col-md-3">
                     <CardLabel>{`${t("TL_LOCALITY")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerlocality" value={field.locality} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALITY") })}/>
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerlocality" value={field.locality} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALITY") })} />
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-3">
                     <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerstreet" value={field.street} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "street")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_STREET_NAME") })}/>
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerstreet" value={field.street} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "street")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_STREET_NAME") })} />
                   </div>
                   <div className="col-md-3">
                     <CardLabel>{`${t("TL_HOUSE_NO_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerhousename" value={field.houseName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_HOUSE_NO_NAME") })}/>
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerhousename" value={field.houseName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_HOUSE_NO_NAME") })} />
                   </div>
 
                   <div className="col-md-3">
                     <CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerponame" value={field.postOffice} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })}/>
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerponame" value={field.postOffice} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
                   </div>
                   <div className="col-md-1">
                     <CardLabel>{`${t("TL_PIN")}`}</CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerpincode" value={field.pincode} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode", 6)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_PIN") })}/>
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerpincode" value={field.pincode} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_PIN") })} />
                   </div>
                   {ownerState.length === (index + 1) && (
                     <div className="col-md-1">
@@ -599,7 +623,15 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
 
         }
 
-
+        <div>
+          {toast && (
+            <Toast
+              error={toast}
+              label={errorMessage}
+              onClose={() => setToast(false)}
+            />
+          )}{""}
+        </div>
       </FormStep>
 
     </React.Fragment>

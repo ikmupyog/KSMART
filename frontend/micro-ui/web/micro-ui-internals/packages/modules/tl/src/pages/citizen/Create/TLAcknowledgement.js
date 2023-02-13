@@ -70,7 +70,7 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
       if (!resubmit) {
 
         let formdata = !isEdit ? convertToTrade(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "TL") : []);
-        formdata.Licenses[0].tenantId = "kl.cochin"; //formdata?.Licenses[0]?.tenantId || tenantId1;
+        formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
           mutation.mutate(formdata, {

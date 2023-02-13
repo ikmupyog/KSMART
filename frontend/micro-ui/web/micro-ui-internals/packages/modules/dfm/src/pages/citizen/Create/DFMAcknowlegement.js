@@ -24,7 +24,7 @@ const GetActionMessage = (props) => {
       : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
     return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application")
-      ? t("CS_TRADE_APPLICATION_FAILED")
+      ? t("Application Submission failed")
       : t("CS_TRADE_UPDATE_APPLICATION_FAILED");
   }
 };
