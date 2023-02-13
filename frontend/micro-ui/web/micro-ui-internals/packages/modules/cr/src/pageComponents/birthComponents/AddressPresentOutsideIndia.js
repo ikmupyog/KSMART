@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@e
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressOutsideIndia = ({
+const AddressPresentOutsideIndia = ({
   config,
   onSelect,
   userType,
@@ -517,4 +517,4 @@ const AddressOutsideIndia = ({
     </React.Fragment>
   );
 };
-export default AddressOutsideIndia;
+export default AddressPresentOutsideIndia;

@@ -281,11 +281,11 @@ export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   // data?.TradeDetails?.tradeLicenseDetail?.address?.tenantId = Digit.ULBService.getCitizenCurrentTenant();
   let address = data?.TradeDetails?.tradeLicenseDetail?.address;
-  address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  address.tenantId =Digit.ULBService.getCitizenCurrentTenant();
   let tradeUnits = [{
-    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesscategory?.code,
-    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesstype?.code,
-    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesssubtype?.code
+    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.code,
+    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesstype?.code,
+    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesssubtype?.code
   }];
   const formdata = {
     Licenses: [
@@ -300,7 +300,7 @@ export const convertToTrade = (data = {}) => {
           channel: "CITIZEN",
           businessSector: data?.TradeDetails?.tradeLicenseDetail?.businessSector.code,
           capitalInvestment: data?.TradeDetails?.tradeLicenseDetail?.capitalInvestment,
-          enterpriseType: "MANUFACTURING.MICRO",  /////   hard codede from 
+          enterpriseType: data?.TradeDetails?.tradeLicenseDetail?.enterpriseType,  
           structureType: data?.TradeDetails?.tradeLicenseDetail?.structureType.code,
           structurePlaceSubtype: data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype.code,
           businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc,
@@ -316,7 +316,7 @@ export const convertToTrade = (data = {}) => {
           ownerspremise: data?.TradeDetails?.tradeLicenseDetail?.ownerspremise
         },
 
-        tradeName: data?.TradeDetails?.tradeName,
+        licenseUnitName: data?.TradeDetails?.licenseUnitName,
         licenseUnitNameLocal: data?.TradeDetails?.licenseUnitNameLocal,
         desiredLicensePeriod: data?.TradeDetails?.desiredLicensePeriod,
         wfDocuments: [],
@@ -325,7 +325,6 @@ export const convertToTrade = (data = {}) => {
       }
     ]
   };
-  console.log("final data" + formdata);
   return formdata;
 };
 
@@ -337,10 +336,10 @@ export const getWfDocumentsnew = (data) => {
       fileStoreId: docs.fileStoreId,
       documentType: docs.documentType,
       tenantId: data?.tenantId,
-
     }
     );
   });
+  return wfdoc;
 }
 export const getwfdocuments = (data) => {
   let wfdoc = [];

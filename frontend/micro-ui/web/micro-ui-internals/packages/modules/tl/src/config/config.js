@@ -907,4 +907,27 @@ export const newConfig = [
       }
     ]
   }
+  ,
+
+  {
+    head: "Search for Renewal",
+    body: [
+      {
+        //if want to input index in url just pul @0 after route name owner-ship-details@0
+        type: "component",
+        route: "license-renewal-search",
+        isMandatory: true,
+        component: "renewalSearchTrade",
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep: '',
+      }
+    ]
+  }
 ];

@@ -262,7 +262,7 @@ export const newConfig = [
       },
       {
         route: "address-birth",
-        component: "AddressBirth",
+        component: "AddressBasePage",
         texts: {
           headerCaption: "",
           header: "",
@@ -272,7 +272,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "AddressBirthDetails",
-        nextStep: "null",
+        nextStep: null,
         type: "component",
         hideInEmployee: false,
       },
