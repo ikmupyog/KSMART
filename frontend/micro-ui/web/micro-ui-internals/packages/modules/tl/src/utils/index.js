@@ -281,11 +281,11 @@ export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   // data?.TradeDetails?.tradeLicenseDetail?.address?.tenantId = Digit.ULBService.getCitizenCurrentTenant();
   let address = data?.TradeDetails?.tradeLicenseDetail?.address;
-  address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  address.tenantId =Digit.ULBService.getCitizenCurrentTenant();
   let tradeUnits = [{
-    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesscategory?.code,
-    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesstype?.code,
-    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesssubtype?.code
+    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.code,
+    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesstype?.code,
+    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesssubtype?.code
   }];
   const formdata = {
     Licenses: [
@@ -316,7 +316,7 @@ export const convertToTrade = (data = {}) => {
           ownerspremise: data?.TradeDetails?.tradeLicenseDetail?.ownerspremise
         },
 
-        tradeName: data?.TradeDetails?.tradeName,
+        licenseUnitName: data?.TradeDetails?.licenseUnitName,
         licenseUnitNameLocal: data?.TradeDetails?.licenseUnitNameLocal,
         desiredLicensePeriod: data?.TradeDetails?.desiredLicensePeriod,
         wfDocuments: [],
@@ -330,6 +330,8 @@ export const convertToTrade = (data = {}) => {
 };
 
 export const getWfDocumentsnew = (data) => {
+console.log("hai docs" + JSON.stringify(data));
+
   let wfdoc = [];
   data?.TradeDetails?.ownersdoc?.map((docs) => {
     wfdoc.push({
@@ -341,6 +343,7 @@ export const getWfDocumentsnew = (data) => {
     }
     );
   });
+  return wfdoc;
 }
 export const getwfdocuments = (data) => {
   let wfdoc = [];

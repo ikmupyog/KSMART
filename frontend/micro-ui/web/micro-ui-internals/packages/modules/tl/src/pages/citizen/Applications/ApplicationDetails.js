@@ -231,7 +231,7 @@ if(wfdata)
                 );
               })}
               <CardSubHeader>{t("TL_TRADE_UNITS_HEADER")}</CardSubHeader>
-              {application?.tradeLicenseDetail?.tradeUnits?.map((ele, index) => {
+              {/* {application?.tradeLicenseDetail?.tradeUnits?.map((ele, index) => {
                 return (
                   <div key={index} style={multiBoxStyle}>
                     <CardSectionHeader style={multiHeaderStyle}>
@@ -256,7 +256,7 @@ if(wfdata)
                     />
                   </div>
                 );
-              })}
+              })} */}
               {/* {Array.isArray(application?.tradeLicenseDetail?.accessories) && application?.tradeLicenseDetail?.accessories.length > 0 && (
                 <CardSubHeader style={{ paddingTop: "7px" }}>{t("TL_NEW_TRADE_DETAILS_HEADER_ACC")}</CardSubHeader>
               )} */}
@@ -312,17 +312,17 @@ if(wfdata)
               />} */}
               <CardSubHeader>{t("TL_COMMON_DOCS")}</CardSubHeader>
               <div>
-                {application?.tradeLicenseDetail?.applicationDocuments?.length > 0 ? (
+                {/* {application?.tradeLicenseDetail?.applicationDocuments?.length > 0 ? (
                   <TLDocument value={{...application}}></TLDocument>
                 ) : (
                   <StatusTable>
                     <Row text={t("TL_NO_DOCUMENTS_MSG")} />
                   </StatusTable>
-                )}
+                )} */}
               </div>
               {workflowDocs?.length > 0 && <div>
               <CardSubHeader>{t("TL_TIMELINE_DOCS")}</CardSubHeader>
-              <div>
+              {/* <div>
                 {workflowDocs?.length > 0 ? (
                   <TLDocument value={{"workflowDocs":workflowDocs}}></TLDocument>
                 ) : (
@@ -330,7 +330,7 @@ if(wfdata)
                     <Row text={t("TL_NO_DOCUMENTS_MSG")} />
                   </StatusTable>
                 )}
-              </div>
+              </div> */}
               </div>}
               <TLWFApplicationTimeline application={application} id={id} />
               {application?.status === "CITIZENACTIONREQUIRED" ? (
