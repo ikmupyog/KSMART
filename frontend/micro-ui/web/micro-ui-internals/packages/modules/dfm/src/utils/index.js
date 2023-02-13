@@ -332,7 +332,7 @@ export const convertToFileSubmission = (data = {}) => {
             street:data?.AddressDet?.StreetName, 
             streetmal:data?.AddressDet?.StreetNamMal, 
             pincode:data?.AddressDet?.Pincode, 
-            postOfficeName: data?.AddressDet?.PostOfficeList?.code,
+            postOfficeName: data?.AddressDet?.PostOfficeList?.name,
             residenceAssociationNo:data?.AddressDet?.ResAssociationNo,
             localPlace:data?.AddressDet?.LocalPlace,
             localPlaceMal:data?.AddressDet?.LocalPlaceMal,  
