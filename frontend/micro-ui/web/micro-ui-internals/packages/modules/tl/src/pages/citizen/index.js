@@ -23,7 +23,7 @@ const App = () => {
   const TLList = Digit?.ComponentRegistryService?.getComponent('TLList');
   const SearchTradeComponent = Digit?.ComponentRegistryService?.getComponent('TLSearchTradeComponent');
   const MyApplications = Digit?.ComponentRegistryService?.getComponent('MyApplications');
-
+  const SearchRenewalTrade = Digit?.ComponentRegistryService?.getComponent('TLSearchRenewalTrade');
   const getBackPageNumber = () => {
     let goBacktoFromProperty = -1;
   if(sessionStorage.getItem("VisitedCommonPTSearch") === "true" && (sessionStorage.getItem("VisitedAccessoriesDetails") === "true" || sessionStorage.getItem("VisitedisAccessories") === "true") && isCommonPTPropertyScreen)
@@ -49,6 +49,7 @@ const App = () => {
           <PrivateRoute path={`${path}/tradelicence/application/:id/:tenantId`} component={ApplicationDetails} />
           <PrivateRoute path={`${path}/tradelicence/renewal-list`} component={TLList} />
           <PrivateRoute path={`${path}/tradelicence/trade-search`} component={SearchTradeComponent} />
+          <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={SearchRenewalTrade} />
         </AppContainer>
       </Switch>
     </span>
