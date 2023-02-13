@@ -300,7 +300,7 @@ export const convertToTrade = (data = {}) => {
           channel: "CITIZEN",
           businessSector: data?.TradeDetails?.tradeLicenseDetail?.businessSector.code,
           capitalInvestment: data?.TradeDetails?.tradeLicenseDetail?.capitalInvestment,
-          enterpriseType: "MANUFACTURING.MICRO",  /////   hard codede from 
+          enterpriseType: data?.TradeDetails?.tradeLicenseDetail?.enterpriseType,  
           structureType: data?.TradeDetails?.tradeLicenseDetail?.structureType.code,
           structurePlaceSubtype: data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype.code,
           businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc,
@@ -325,13 +325,10 @@ export const convertToTrade = (data = {}) => {
       }
     ]
   };
-  console.log("final data" + formdata);
   return formdata;
 };
 
 export const getWfDocumentsnew = (data) => {
-console.log("hai docs" + JSON.stringify(data));
-
   let wfdoc = [];
   data?.TradeDetails?.ownersdoc?.map((docs) => {
     wfdoc.push({
@@ -339,7 +336,6 @@ console.log("hai docs" + JSON.stringify(data));
       fileStoreId: docs.fileStoreId,
       documentType: docs.documentType,
       tenantId: data?.tenantId,
-
     }
     );
   });
