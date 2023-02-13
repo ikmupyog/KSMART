@@ -689,7 +689,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "FamilyInformationDeath",
-        nextStep: null,
+        nextStep: "statistical-info",
 
         // nextStep: "statistical-info",
         type: "component",
