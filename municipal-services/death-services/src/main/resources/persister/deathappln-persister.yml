@@ -549,7 +549,7 @@ serviceMaps:
          death_place_street_ml = ? , death_place_country = ? , 
          death_place_state = ? , death_place_district = ? , death_place_city = ? ,
          death_place_remarks_en = ? , death_place_remarks_ml = ? , place_of_burial_en = ? , 
-         place_of_burial_ml = ? ,action = ?
+         place_of_burial_ml = ? ,action = ? , status = ? 
          WHERE  tenantid = ? AND ack_no = ?
       
 
@@ -681,6 +681,8 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.PlaceOfBurialMl
             
       - jsonPath: $.deathCertificateDtls.*.action
+
+      - jsonPath: $.deathCertificateDtls.*.applicationStatus
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 

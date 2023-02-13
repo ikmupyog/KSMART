@@ -39,16 +39,16 @@ public class DeathRegistryStatisticalInfo {
     private String medicalAttentionType;
 
     @JsonProperty("IsAutopsyPerformed")
-    private Boolean isAutopsyPerformed;
+    private String isAutopsyPerformed;
 
     @JsonProperty("IsAutopsyCompleted")
-    private Boolean isAutopsyCompleted;
+    private String isAutopsyCompleted;
 
     @JsonProperty("MannerOfDeath")
     private String mannerOfDeath;
 
     @JsonProperty("DeathMedicallyCertified")
-    private Boolean deathMedicallyCertified;
+    private String deathMedicallyCertified;
 
     @JsonProperty("DeathCauseMain")
     private String deathCauseMain;

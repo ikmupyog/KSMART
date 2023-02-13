@@ -5,10 +5,15 @@ import javax.validation.Valid;
 
 import org.ksmart.death.common.contract.RequestInfoWrapper;
 import org.ksmart.death.deathapplication.service.DeathApplnService;
+import org.ksmart.death.deathapplication.service.DeathRegistryRequestService;
+import org.ksmart.death.deathapplication.util.DeathConstants;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtlResponse;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
+import org.ksmart.death.deathregistry.service.DeathRegistryService;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
 import org.ksmart.death.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +46,18 @@ public class DeathApplnController {
 
     private final DeathApplnService deathService;
 
+    private final DeathRegistryRequestService deathRegistryRequestService;
+
+    private final DeathRegistryService deathRegistryService;
+
     @Autowired
-    public DeathApplnController(DeathApplnService deathService) {
+    public DeathApplnController(DeathApplnService deathService,DeathRegistryRequestService deathRegistryRequestService ,  DeathRegistryService deathRegistryService) {
       
         this.deathService = deathService;
+
+        this.deathRegistryRequestService = deathRegistryRequestService;
+
+        this.deathRegistryService = deathRegistryService;
     }
 
 
@@ -104,6 +117,24 @@ public class DeathApplnController {
         String status=request.getDeathCertificateDtls().get(0).getApplicationStatus();
 
         String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();
+
+System.out.println("status and applicationType"+status +" "+applicationType);
+        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCertificateDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){
+         
+            DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
+
+            List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
+
+
+        }
+
+    //    if((status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED))&&  (applicationType.equals(DeathConstants.APPLICATION_CORRECTION))){
+
+    //         DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
+
+    //         List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.update(registryRequest);                   
+       
+    //     }
 
         DeathDtlResponse response = DeathDtlResponse
                                         .builder()

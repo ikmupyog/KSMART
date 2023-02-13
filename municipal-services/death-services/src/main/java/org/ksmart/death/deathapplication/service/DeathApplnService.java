@@ -68,6 +68,8 @@ public class DeathApplnService {
      public List<DeathDtl> create(DeathDtlRequest request) {
           enrichmentService.enrichCreate(request);
           enrichmentService.setACKNumber(request); 
+          //Jasmine 13.02.2023
+          workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           return request.getDeathCertificateDtls();
      }
@@ -81,7 +83,7 @@ public class DeathApplnService {
      public List<DeathDtl> update(DeathDtlRequest request) {
       
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
-          System.out.println("ackNo"+ackNumber);
+         // System.out.println("ackNo"+ackNumber);
           List<DeathDtl> searchResult = repository.getDeathApplication(DeathSearchCriteria
                                                     .builder()
                                                     .deathACKNo(ackNumber)
@@ -97,7 +99,8 @@ public class DeathApplnService {
                                   .build();
           //Jasmine 09.02.2023                        
           enrichmentService.enrichUpdate(request);
-        //  workflowIntegrator.callWorkFlow(request);
+          //Jasmine 13.02.2023
+          workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
           return result.getDeathCertificateDtls();
      }    
