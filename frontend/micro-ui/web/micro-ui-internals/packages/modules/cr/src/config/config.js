@@ -262,7 +262,7 @@ export const newConfig = [
       },
       {
         route: "address-birth",
-        component: "AddressBirth",
+        component: "AddressBasePage",
         texts: {
           headerCaption: "",
           header: "",

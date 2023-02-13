@@ -6,8 +6,6 @@ import StatisticalInformation from "../src/pageComponents/birthComponents/Statis
 import BirthVehicle from "../src/pageComponents/birthComponents/BirthVehicle";
 import PublicPlace from "../src/pageComponents/birthComponents/PublicPlace";
 import BirthPlace from "../src/pageComponents/birthComponents/BirthPlace";
-import Address from "../src/pageComponents/birthComponents/Address";
-import AddressOutsideIndia from "../src/pageComponents/birthComponents/AddressOutsideIndia";
 import FatherInformation from "../src/pageComponents/birthComponents/FatherInformation";
 import MotherInformation from "../src/pageComponents/birthComponents/MotherInformation";
 import PlaceofBirthHome from "../src/pageComponents/birthComponents/PlaceofBirthHome";
@@ -31,10 +29,11 @@ import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPl
 import BirthPlaceHome from "../src/pageComponents/birthComponents/BirthPlaceHome";
 import BirthPlaceVehicle from "../src/pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../src/pageComponents/birthComponents/BirthPlacePublicPlace";
-import AddressBirth from "../src/pageComponents/birthComponents/AddressBirth";
-import AddressBrOutsideIndia from "../src/pageComponents/birthComponents/AddressBrOutsideIndia";
-import AddressInsideKerala from "../src/pageComponents/birthComponents/AddressInsideKerala";
-import AddressOutsideKerala from "../src/pageComponents/birthComponents/AddressOutsideKerala";
+import AddressBasePage from "../src/pageComponents/birthComponents/AddressBasePage";
+import AddressPresent from "../src/pageComponents/birthComponents/AddressPresent";
+import AddressPresentOutsideIndia from "../src/pageComponents/birthComponents/AddressPresentOutsideIndia";
+import AddressPresentInsideKerala from "../src/pageComponents/birthComponents/AddressPresentInsideKerala";
+import AddressPresentOutsideKerala from "../src/pageComponents/birthComponents/AddressPresentOutsideKerala";
 import AddressPermanentOutsideKerala from "../src/pageComponents/birthComponents/AddressPermanentOutsideKerala";
 import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/AddressPermanentInsideKerala";
 import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
@@ -173,8 +172,6 @@ const componentsToRegister = {
   BirthVehicle,
   PublicPlace,
   BirthPlace,
-  Address,
-  AddressOutsideIndia,
   FatherInformation,
   MotherInformation,
   PlaceofBirthHome,
@@ -205,10 +202,11 @@ const componentsToRegister = {
   BirthPlaceHome,
   BirthPlacePublicPlace,
   BirthPlaceVehicle,
-  AddressBirth,
-  AddressBrOutsideIndia,
-  AddressInsideKerala,
-  AddressOutsideKerala,   
+  AddressBasePage,
+  AddressPresent,
+  AddressPresentInsideKerala,
+  AddressPresentOutsideKerala,
+  AddressPresentOutsideIndia,   
   AddressPermanentOutsideKerala,
   AddressPermanentOutsideIndia,
   AddressPermanentInsideKerala,

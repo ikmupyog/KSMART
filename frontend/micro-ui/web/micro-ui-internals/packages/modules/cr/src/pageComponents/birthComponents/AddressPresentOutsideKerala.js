@@ -4,7 +4,7 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
 
-const AddressOutsideKerala = ({ config, onSelect, userType, formData }) => {
+const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -489,4 +489,4 @@ const AddressOutsideKerala = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default AddressOutsideKerala;
+export default AddressPresentOutsideKerala;
