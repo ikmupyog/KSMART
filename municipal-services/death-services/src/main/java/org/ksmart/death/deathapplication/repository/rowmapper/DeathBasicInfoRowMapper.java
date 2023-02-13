@@ -74,6 +74,8 @@ public class DeathBasicInfoRowMapper  implements ResultSetExtractor  , BaseRowMa
           .nationality(rs.getString("nationality"))
           .religion(rs.getString("religion"))
           .occupation(rs.getString("occupation"))
+          .deathACKNo(rs.getString("ack_no"))
+          .funcionUID(rs.getString("funcion_uid"))
           .build();
       }
    

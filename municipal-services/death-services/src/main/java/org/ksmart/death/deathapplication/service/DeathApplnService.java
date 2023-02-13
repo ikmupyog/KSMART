@@ -76,45 +76,38 @@ public class DeathApplnService {
 
     //Jasmine Search 06.02.2023
     public List<DeathDtl> search(DeathSearchCriteria criteria, RequestInfo requestInfo) {
-          return repository.getDeathApplication(criteria);
+          return repository.getDeathApplication(criteria, requestInfo);
      }
 
      //Jasmine  Update 07.02.2023
      public List<DeathDtl> update(DeathDtlRequest request) {
       
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
-         // System.out.println("ackNo"+ackNumber);
-          List<DeathDtl> searchResult = repository.getDeathApplication(DeathSearchCriteria
-                                                    .builder()
-                                                    .deathACKNo(ackNumber)
-                                                    //.id(id)
-                                                    .build());
-         // System.out.println("searchResult"+searchResult);
+          DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
+                                        .deathACKNo(ackNumber)
+                                        .build());
+
+          List<DeathDtl> searchResult = repository.getDeathApplication(criteria,request.getRequestInfo());
           validatorService.validateUpdate(request, searchResult);
          // mdmsValidator.validateMDMSData(request,mdmsData);
-         DeathDtlRequest result = DeathDtlRequest
-                                  .builder()
-                                  .requestInfo(request.getRequestInfo())
-                                  .deathCertificateDtls(searchResult)
-                                  .build();
+
+
           //Jasmine 09.02.2023                        
           enrichmentService.enrichUpdate(request);
           //Jasmine 13.02.2023
           workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+          DeathDtlRequest result = DeathDtlRequest
+                                   .builder()
+                                   .requestInfo(request.getRequestInfo())
+                                   .deathCertificateDtls(searchResult)
+                                   .build();
           return result.getDeathCertificateDtls();
      }    
 }
              /********************************************* */
 
-     //         try {
-     //           ObjectMapper mapper = new ObjectMapper();
-     //           Object obj = request;
-     //           mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-     //           System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
-     // }catch(Exception e) {
-     //      //   log.error("Exception while fetching from searcher: ",e);
-     // }
+ 
 
 
 /********************************************** */
