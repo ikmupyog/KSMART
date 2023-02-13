@@ -98,13 +98,13 @@ const CheckPage = ({ onSubmit, value }) => {
               <CardText style={{ fontSize: "15px", Colour: "black" }}>{t('Residential Certificate')}</CardText>
             </div>
             <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Building No")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(AddressDet?.BuildingNo)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ServiceDet?.DoorNo)}</CardText>
             </div>
             <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Owner Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ServiceDet?.OwnerName)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ServiceDet?.Name)}</CardText>
             </div>
-            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Occupier Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ServiceDet?.NameOccupier)}</CardText>
+            <div className="col-md-3" ><CardLabel style={{ lineHeight: "auto" }}>{`${t("Owner Address")}`}</CardLabel>
+              <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(ServiceDet?.Address)}</CardText>
             </div>
           </div>
           <div className="row">

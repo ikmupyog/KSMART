@@ -8,8 +8,8 @@ export const newConfig = [
         key: "tradedetils1",
         withoutLabel: true,
         hideInCitizen: true,
-      }
-    ]
+      },
+    ],
   },
   {
     head: "TL_COMMON_TR_DETAILS",
@@ -20,8 +20,8 @@ export const newConfig = [
         key: "tradedetils",
         withoutLabel: true,
         hideInCitizen: true,
-      }
-    ]
+      },
+    ],
   },
   {
     head: "TL_TRADE_UNITS_HEADER",
@@ -32,8 +32,8 @@ export const newConfig = [
         key: "tradeUnits",
         withoutLabel: true,
         hideInCitizen: true,
-      }
-    ]
+      },
+    ],
   },
   {
     head: "TL_NEW_TRADE_DETAILS_HEADER_ACC",
@@ -44,8 +44,8 @@ export const newConfig = [
         key: "accessories",
         withoutLabel: true,
         hideInCitizen: true,
-      }
-    ]
+      },
+    ],
   },
   {
     head: "TL_NEW_APPLICATION_PROPERTY",
@@ -55,15 +55,15 @@ export const newConfig = [
         withoutLabel: true,
         key: "cpt",
         type: "component",
-        hideInCitizen: true
+        hideInCitizen: true,
       },
     ],
   },
   {
-    "head": "ES_NEW_APPLICATION_LOCATION_DETAILS",
-    "body": [
+    head: "ES_NEW_APPLICATION_LOCATION_DETAILS",
+    body: [
       {
-        "route": "map",
+        route: "map",
         component: "TLSelectGeolocation",
         nextStep: "tladdress",
         hideInEmployee: true,
@@ -73,157 +73,157 @@ export const newConfig = [
           header: "TL_GEOLOACTION_HEADER",
           cardText: "TL_GEOLOCATION_TEXT",
           nextText: "CS_COMMON_NEXT",
-          skipAndContinueText: "CORE_COMMON_SKIP_CONTINUE"
-        }
+          skipAndContinueText: "CORE_COMMON_SKIP_CONTINUE",
+        },
       },
       {
         route: "pincode",
         component: "TLSelectPincode",
         texts: {
-          "headerCaption": "TL_LOCATION_CAPTION",
-          "header": "TL_PINCODE_HEADER",
-          "cardText": "TL_PINCODE_TEXT",
-          "submitBarLabel": "CS_COMMON_NEXT",
-          "skipText": "CORE_COMMON_SKIP_CONTINUE"
+          headerCaption: "TL_LOCATION_CAPTION",
+          header: "TL_PINCODE_HEADER",
+          cardText: "TL_PINCODE_TEXT",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "CORE_COMMON_SKIP_CONTINUE",
         },
         withoutLabel: true,
         key: "address",
         nextStep: "address",
-        type: "component"
+        type: "component",
       },
       {
-        "route": "tladdress",
-        "component": "SelectTradeAddress",
-        "withoutLabel": true,
-        "texts": {
-          "headerCaption": "TL_LOCATION_CAPTION",
-          "header": "TL_ADDRESS_HEADER",
-          "cardText": "TL_ADDRESS_TEXT",
-          "submitBarLabel": "CS_COMMON_NEXT"
+        route: "tladdress",
+        component: "SelectTradeAddress",
+        withoutLabel: true,
+        texts: {
+          headerCaption: "TL_LOCATION_CAPTION",
+          header: "TL_ADDRESS_HEADER",
+          cardText: "TL_ADDRESS_TEXT",
+          submitBarLabel: "CS_COMMON_NEXT",
         },
-        "key": "address",
-        "nextStep": "street",
-        "isMandatory": true,
-        "type": "component"
+        key: "address",
+        nextStep: "street",
+        isMandatory: true,
+        type: "component",
       },
       {
-        "route": "address",
-        "component": "TLSelectAddress",
-        "withoutLabel": true,
-        "texts": {
-          "headerCaption": "TL_LOCATION_CAPTION",
-          "header": "TL_ADDRESS_HEADER",
-          "cardText": "TL_ADDRESS_TEXT",
-          "submitBarLabel": "CS_COMMON_NEXT"
+        route: "address",
+        component: "TLSelectAddress",
+        withoutLabel: true,
+        texts: {
+          headerCaption: "TL_LOCATION_CAPTION",
+          header: "TL_ADDRESS_HEADER",
+          cardText: "TL_ADDRESS_TEXT",
+          submitBarLabel: "CS_COMMON_NEXT",
         },
-        "key": "address",
-        "nextStep": "street",
-        "isMandatory": true,
-        "type": "component"
+        key: "address",
+        nextStep: "street",
+        isMandatory: true,
+        type: "component",
       },
       {
-        "type": "component",
-        "route": "street",
-        "component": "SelectStreet",
-        "key": "address",
-        "withoutLabel": true,
-        "hideInEmployee": true,
-        "texts": {
-          "headerCaption": "TL_LOCATION_CAPTION",
-          "header": "TL_ADDRESS_HEADER",
-          "cardText": "TL_STREET_TEXT",
-          "submitBarLabel": "CS_COMMON_NEXT"
+        type: "component",
+        route: "street",
+        component: "SelectStreet",
+        key: "address",
+        withoutLabel: true,
+        hideInEmployee: true,
+        texts: {
+          headerCaption: "TL_LOCATION_CAPTION",
+          header: "TL_ADDRESS_HEADER",
+          cardText: "TL_STREET_TEXT",
+          submitBarLabel: "CS_COMMON_NEXT",
         },
-        "inputs": [
+        inputs: [
           {
-            "label": "TL_LOCALIZATION_STREET_NAME",
-            "type": "text",
-            "name": "street",
-            "disable": "window.location.href.includes(`edit-application`)||window.location.href.includes(`renew-trade`)",
+            label: "TL_LOCALIZATION_STREET_NAME",
+            type: "text",
+            name: "street",
+            disable: "window.location.href.includes(`edit-application`)||window.location.href.includes(`renew-trade`)",
             // "validation": {
             //     "maxlength": 256,
             //     "title": "CORE_COMMON_STREET_INVALID"
             // }
           },
           {
-            "label": "TL_LOCALIZATION_BUILDING_NO",
-            "type": "text",
-            "name": "doorNo",
-            "disable": "window.location.href.includes(`edit-application`)||window.location.href.includes(`renew-trade`)",
+            label: "TL_LOCALIZATION_BUILDING_NO",
+            type: "text",
+            name: "doorNo",
+            disable: "window.location.href.includes(`edit-application`)||window.location.href.includes(`renew-trade`)",
             // "validation": {
             //     "maxlength": 256,
             //     "title": "CORE_COMMON_DOOR_INVALID"
             // }
-          }
+          },
         ],
-        "nextStep": "landmark"
+        nextStep: "landmark",
       },
       {
-        "type": "component",
-        "component": "SelectStreet",
-        "key": "address",
-        "withoutLabel": true,
-        "hideInCitizen": true,
-        "texts": {
-          "headerCaption": "TL_LOCATION_CAPTION",
-          "header": "TL_ADDRESS_HEADER",
-          "cardText": "TL_STREET_TEXT",
-          "submitBarLabel": "CS_COMMON_NEXT"
+        type: "component",
+        component: "SelectStreet",
+        key: "address",
+        withoutLabel: true,
+        hideInCitizen: true,
+        texts: {
+          headerCaption: "TL_LOCATION_CAPTION",
+          header: "TL_ADDRESS_HEADER",
+          cardText: "TL_STREET_TEXT",
+          submitBarLabel: "CS_COMMON_NEXT",
         },
-        "inputs": [
+        inputs: [
           {
-            "label": "TL_LOCALIZATION_BUILDING_NO",
-            "type": "text",
-            "name": "doorNo",
+            label: "TL_LOCALIZATION_BUILDING_NO",
+            type: "text",
+            name: "doorNo",
             // "validation": {
             //     "maxlength": 256,
             //     "title": "CORE_COMMON_DOOR_INVALID"
             // }
           },
           {
-            "label": "TL_LOCALIZATION_STREET_NAME",
-            "type": "text",
-            "name": "street",
+            label: "TL_LOCALIZATION_STREET_NAME",
+            type: "text",
+            name: "street",
             // "validation": {
             //     "maxlength": 256,
             //     "title": "CORE_COMMON_STREET_INVALID"
             // }
-          }
-        ]
+          },
+        ],
       },
       {
-        "type": "component",
-        "route": "landmark",
-        "component": "SelectLandmark",
-        "withoutLabel": true,
-        "texts": {
-          "headerCaption": "TL_LOCATION_CAPTION",
-          "header": "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE",
-          "cardText": "TL_LANDMARK_TEXT",
-          "submitBarLabel": "CS_COMMON_NEXT",
-          "skipText": "CORE_COMMON_SKIP_CONTINUE"
+        type: "component",
+        route: "landmark",
+        component: "SelectLandmark",
+        withoutLabel: true,
+        texts: {
+          headerCaption: "TL_LOCATION_CAPTION",
+          header: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE",
+          cardText: "TL_LANDMARK_TEXT",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "CORE_COMMON_SKIP_CONTINUE",
         },
-        "key": "address",
-        "nextStep": "owner-ship-details",
-        "hideInEmployee": true
+        key: "address",
+        nextStep: "owner-ship-details",
+        hideInEmployee: true,
       },
       {
-        "type": "component",
-        "route": "proof",
-        "component": "Proof",
-        "withoutLabel": true,
-        "texts": {
-          "headerCaption": "TL_OWNERS_DETAILS",
-          "header": "TL_OWNERS_PHOTOGRAPH_HEADER",
-          "cardText": "",
-          "nextText": "CS_COMMON_NEXT",
-          "submitBarLabel": "CS_COMMON_NEXT"
+        type: "component",
+        route: "proof",
+        component: "Proof",
+        withoutLabel: true,
+        texts: {
+          headerCaption: "TL_OWNERS_DETAILS",
+          header: "TL_OWNERS_PHOTOGRAPH_HEADER",
+          cardText: "",
+          nextText: "CS_COMMON_NEXT",
+          submitBarLabel: "CS_COMMON_NEXT",
         },
-        "key": "owners",
-        "nextStep": null,
-        "hideInEmployee": true
-      }
-    ]
+        key: "owners",
+        nextStep: null,
+        hideInEmployee: true,
+      },
+    ],
   },
   {
     head: "Birth Routing",
@@ -276,40 +276,24 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-
       {
-        route: "birth-place",
-        component: "BirthPlace",
+        route: "address-permanent",
+        component: "AddressPermanent",
         texts: {
           headerCaption: "",
           header: "",
-          // CR_BIRTH_PLACE
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },
         withoutLabel: true,
-        key: "BirthPlace",
-        nextStep: "father-informations",
+        key: "AddressPermanentDetails",
+        nextStep: "null",
         type: "component",
         hideInEmployee: false,
       },
-      {
-        route: "hospital-details",
-        component: "HospitalDetails",
-        texts: {
-          headerCaption: "",
-          header: "Hospital Details",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "HospitalDetails",
-        nextStep: "father-informations",
-        type: "component",
-        hideInEmployee: false,
-      },
+    
+    
       {
         route: "address-insidekerala",
         component: "AddressInsideKerala",
@@ -326,107 +310,9 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-
       {
-        route: "birthaddress",
-        component: "Address",
-        texts: {
-          headerCaption: "",
-          header: "Address",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "AddressDetails",
-        nextStep: "statistical-information",
-        type: "component",
-        hideInEmployee: false,
-      },
-      {
-        route: "father-informations",
-        component: "FatherInformation",
-        texts: {
-          headerCaption: "",
-          header: "Father's Information",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "FatherInfoDetails",
-        type: "component",
-        nextStep: "mother-informations",
-        hideInEmployee: false,
-      },
-      {
-        route: "mother-informations",
-        component: "MotherInformation",
-        texts: {
-          headerCaption: "",
-          header: "CR_MOTHER_INFORMATION",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "MotherInfoDetails",
-        type: "component",
-        nextStep: "birthaddress",
-        hideInEmployee: false,
-      },
-      {
-        route: "statistical-information",
-        component: "StatisticalInformation",
-        texts: {
-          headerCaption: "",
-          header: "CR_MORE_INFORMATION",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "StatisticalInfoDetails",
-        nextStep: null,
-        type: "component",
-        hideInEmployee: true,
-      },
-
-      {
-        route: "birthplace-hospital",
-        component: "BirthPlaceHospital",
-        texts: {
-          headerCaption: "",
-          header: "Hospital Details",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BirthPlaceHospitalDetails",
-        nextStep: "parents-details",
-        type: "component",
-        hideInEmployee: false,
-      },
-      {
-        route: "birthplace-institution",
-        component: "BirthPlaceInstitution",
-        texts: {
-          headerCaption: "",
-          header: "Institution Details",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BirthPlaceInstitutionDetails",
-        nextStep: "parents-details",
-        type: "component",
-        hideInEmployee: false,
-      },
-      {
-        route: "birthplace-Home",
-        component: "BirthPlaceHome",
+        route: "address-permanent-insidekerala",
+        component: "AddressPermanentInsideKerala",
         texts: {
           headerCaption: "",
           header: "",
@@ -435,64 +321,14 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "BirthPlaceHomeDetails",
-        nextStep: "parents-details",
-        type: "component",
-        hideInEmployee: false,
-      },
-
-      {
-        route: "birthPlace-vehicle",
-        component: "BirthPlaceVehicle",
-        texts: {
-          headerCaption: "",
-          header: "Parents Details",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BirthPlaceVehicleDetails",
-        nextStep: "parents-details",
-        type: "component",
-        hideInEmployee: false,
-      },
-
-      {
-        route: "place-of-birth-home",
-        component: "PlaceofBirthHome",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BirthPlaceHomeDetails",
-        nextStep: "father-informations",
-        type: "component",
-        hideInEmployee: true,
-      },
-      {
-        route: "birthplace-publicplace",
-        component: "BirthPlacePublicPlace",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BirthPlacePublicPlaceDetails",
-        nextStep: "parents-details",
+        key: "AddressPermntInsideKeralaDetails",
+        nextStep: "null",
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "mother-details",
-        component: "MotherInformation",
+        route: "address-outside-kerala",
+        component: "AddressOutsideKerala",
         texts: {
           headerCaption: "",
           header: "",
@@ -501,14 +337,14 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "TradeDetails",
-        nextStep: "father-details",
+        key: "AddressOutsideKeralaDetails",
+        nextStep: "null",
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "father-details",
-        component: "FatherDetails",
+        route: "address-permanent-outside-kerala",
+        component: "AddressPermanentOutsideKerala",
         texts: {
           headerCaption: "",
           header: "",
@@ -517,93 +353,12 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "TradeDetails",
-        nextStep: "TradeLicense",
+        key: "AddressPermanentOutsideKeralaDetails",
+        nextStep: "null",
         type: "component",
         hideInEmployee: false,
       },
-      {
-        route: "institution-details",
-        component: "InstitutionDetails",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "InstitutionDetails",
-        nextStep: "institution-address",
-        type: "component",
-        hideInEmployee: true,
-      },
-
-      {
-        route: "institution-address",
-        component: "InstitutionAddress",
-        texts: {
-          headerCaption: "",
-          header: "Institution Address",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "InstitutionAddressDetails",
-        nextStep: "father-informations",
-        type: "component",
-        hideInEmployee: false,
-      },
-      {
-        route: "public-place",
-        component: "PublicPlace",
-        texts: {
-          headerCaption: "PublicPlace",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "PublicPlaceDetails",
-        nextStep: "father-informations",
-        type: "component",
-        hideInEmployee: true,
-      },
-      {
-        route: "birth-vehicle",
-        component: "BirthVehicle",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BirthVehicleDetails",
-        nextStep: "father-informations",
-        type: "component",
-        hideInEmployee: true,
-      },
-
-      {
-        route: "address-outside-india",
-        component: "AddressOutsideIndia",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "AddressOutsideIndiaDetails",
-        nextStep: "statistical-information",
-        type: "component",
-        hideInEmployee: true,
-      },
+     
       {
         route: "addressbrith-outside-india",
         component: "AddressBrOutsideIndia",
@@ -620,27 +375,9 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
-
-
       {
-        route: "address-one",
-        component: "AddressOne",
-        texts: {
-          headerCaption: "",
-          header: "Address",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "AddressOneDetails",
-        nextStep: "present-address",
-        type: "component",
-        hideInEmployee: false,
-      },
-      {
-        route: "address-inside-india",
-        component: "AddressInsideIndia",
+        route: "address-permanent-outside-india",
+        component: "AddressPermanentOutsideIndia",
         texts: {
           headerCaption: "",
           header: "",
@@ -649,46 +386,45 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "AddressInsideIndiaDetails",
-        nextStep: "statistical-information",
-        type: "component",
-        hideInEmployee: false,
-      },
-
-
-
-      {
-        route: "address-outsidekerala",
-        component: "AddressOutsideKerala",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "AddressOutsideKeralaDetails",
+        key: "AddressPermanentOutsideIndiaDetails",
         nextStep: "null",
         type: "component",
-        hideInEmployee: false,
-      },
+        hideInEmployee: true,
+      },   
       {
-        route: "permanent-address",
-        component: "AddressPermanent",
+        route: "informer-details",
+        component: "InformarHospitalInstitution",
         texts: {
           headerCaption: "",
-          header: "Address",
+          header: "",
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
           skipText: "",
         },
         withoutLabel: true,
-        key: "AddressPermanentDetails",
-        nextStep: "father-informations",
+        key: "InformarHosInstDetails",
+        nextStep: "null",
         type: "component",
-        hideInEmployee: false,
-      },
+        hideInEmployee: true,
+      },   
+
+      {
+        route: "initiator-details",
+        component: "InitiatorDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "InitiatorinfoDetails",
+        nextStep: "null",
+        type: "component",
+        hideInEmployee: true,
+      },   
+   
       {
         route: "multiple-birth",
         component: "MultipleBirth",
@@ -785,87 +521,9 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
-      {
-        route: "hospital",
-        isMandatory: true,
-        component: "Hospital",
-        texts: {
-          headerCaption: "",
-          // header: "CR_PLACE_OF_DEATH",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "Hospital",
-        nextStep: "address-of-decesed",
-        type: "component",
-        hideInEmployee: true,
-      },
-      {
-        route: "institution",
-        isMandatory: true,
-        component: "Institution",
-        texts: {
-          headerCaption: "",
-          // header: "CR_PLACE_OF_DEATH",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "Institution",
-        nextStep: "address-of-decesed",
-        type: "component",
-        hideInEmployee: true,
-      },
-      {
-        route: "death-place-home",
-        isMandatory: true,
-        component: "DeathPlaceHome",
-        texts: {
-          headerCaption: "",
-          // header: "CR_PLACE_OF_DEATH",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "DeathPlaceHome",
-        nextStep: "address-of-decesed",
-        type: "component",
-        hideInEmployee: true,
-      },
-      {
-        route: "vehicle",
-        isMandatory: true,
-        component: "Vehicle",
-        texts: {
-          headerCaption: "",
-          // header: "CR_PLACE_OF_DEATH",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "Vehicle",
-        nextStep: "place-of-death",
-        type: "component",
-        hideInEmployee: true,
-      },
+      
     ],
   },
-
-
-
-
-
-
-
 
   {
     head: "Adoption Routing",
@@ -887,7 +545,6 @@ export const newConfig = [
         nextStep: "adopted-Parents-information",
       },
 
-
       // {
       //   route: "adopted-mother-information",
       //   component: "AdoptionMotherInformation",
@@ -902,8 +559,7 @@ export const newConfig = [
       //   withoutLabel: true,
       //   hideInEmployee: false,
       //   nextStep: "adopted-father-information",
-      // },    
-
+      // },
 
       {
         route: "adopted-Parents-information",
@@ -997,8 +653,6 @@ export const newConfig = [
       //   hideInEmployee: false,
       //   nextStep: "AdoptionStatisticalInformation",
       // },
-
-
     ],
   },
 
@@ -1034,8 +688,27 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "PlaceOfDeath",
-        nextStep: "address-of-decesed",
+        key: "FamilyInformationDeath",
+        nextStep: null,
+
+        // nextStep: "statistical-info",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
+        route: "statistical-info",
+        component: "StatisticalInfo",
+        texts: {
+          headerCaption: "",
+          // header: "CR_STATISTICAL_INFORMATION_CONTINUE",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "StatisticalInfo",
+        nextStep: null,
         type: "component",
         hideInEmployee: false,
       },
@@ -1069,7 +742,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "FamilyInformationDeath",
-        nextStep: "statistical-info-continue",
+        nextStep: "statistical-info",
         type: "component",
         hideInEmployee: true,
       },
@@ -1176,6 +849,114 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
+      {
+        route: "hospital",
+        isMandatory: true,
+        component: "Hospital",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "Hospital",
+        nextStep: "address-of-decesed",
+        type: "component",
+        hideInEmployee: true,
+      },
+      {
+        route: "institution",
+        isMandatory: true,
+        component: "Institution",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "Institution",
+        nextStep: "address-of-decesed",
+        type: "component",
+        hideInEmployee: true,
+      },
+      {
+        route: "death-place-home",
+        isMandatory: true,
+        component: "DeathPlaceHome",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "DeathPlaceHome",
+        nextStep: "address-of-decesed",
+        type: "component",
+        hideInEmployee: true,
+      },
+      {
+        route: "death-place-vehicle",
+        isMandatory: true,
+        component: "DeathPlaceVehicle",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "DeathPlaceVehicle",
+        nextStep: "place-of-death",
+        type: "component",
+        hideInEmployee: true,
+      },
+      {
+        route: "death-public-place",
+        isMandatory: true,
+        component: "DeathPublicPlace",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        nextStep: "place-of-death",
+        type: "component",
+        hideInEmployee: true,
+      },
+      {
+        route: "death-outside-jurisdiction",
+        isMandatory: true,
+        component: "DeathOutsideJurisdiction",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "DeathOutsideJurisdiction",
+        nextStep: "place-of-death",
+        type: "component",
+        hideInEmployee: true,
+      },
+      
       // {
       //   route: "statistical-info",
       //   component: "StatisticalInfo",
@@ -1192,23 +973,7 @@ export const newConfig = [
       //   type: "component",
       //   hideInEmployee: true,
       // },
-      {
-        route: "statistical-info-continue",
-        component: "StatisticalInfoContinue",
-        texts: {
-          headerCaption: "",
-          // header: "CR_STATISTICAL_INFORMATION_CONTINUE",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "StatisticalInfoContinue",
-        nextStep: "general-remarks",
-        type: "component",
-        hideInEmployee: true,
-      },
+
       {
         route: "applicant-details",
         component: "ApplicantDetails",
@@ -1244,7 +1009,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
-    ]
+    ],
   },
   {
     head: "Marriage Routing",
@@ -1284,7 +1049,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
-    ]
+    ],
   },
   {
     head: "ES_NEW_APPLICATION_OWNERSHIP_DETAILS",
@@ -1415,7 +1180,7 @@ export const newConfig = [
         component: "CPTSearchProperty",
         key: "cptsearchproperty",
         withoutLabel: true,
-        nextStep: 'search-results',
+        nextStep: "search-results",
         hideInEmployee: true,
       },
       {
@@ -1425,7 +1190,7 @@ export const newConfig = [
         component: "CPTSearchResults",
         key: "cptsearchresults",
         withoutLabel: true,
-        nextStep: 'property-details',
+        nextStep: "property-details",
         hideInEmployee: true,
       },
       {
@@ -1436,7 +1201,7 @@ export const newConfig = [
         key: "cptcreateproperty",
         withoutLabel: true,
         isSkipEnabled: true,
-        nextStep: 'acknowledge-create-property',
+        nextStep: "acknowledge-create-property",
         hideInEmployee: true,
       },
       {
@@ -1446,7 +1211,7 @@ export const newConfig = [
         component: "CPTAcknowledgement",
         key: "cptacknowledgement",
         withoutLabel: true,
-        nextStep: 'property-details',
+        nextStep: "property-details",
         hideInEmployee: true,
       },
       {
@@ -1456,7 +1221,7 @@ export const newConfig = [
         component: "CPTPropertyDetails",
         key: "propertydetails",
         withoutLabel: true,
-        nextStep: 'owner-ship-details',
+        nextStep: "owner-ship-details",
         hideInEmployee: true,
       },
     ],
@@ -1469,7 +1234,7 @@ export const newConfig = [
         withoutLabel: true,
         key: "documents",
         type: "component",
-        hideInCitizen: true
+        hideInCitizen: true,
       },
     ],
   },

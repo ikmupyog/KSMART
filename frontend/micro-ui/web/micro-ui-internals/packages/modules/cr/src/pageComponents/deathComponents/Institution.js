@@ -9,15 +9,20 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
- 
+  const { data: institutionType = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
   const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
-  const { data: institutionid = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.Institution?.DeathPlaceType);
   // const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(formData?.Institution?.DeathPlaceInstId); 
   
  
   let naturetypecmbvalue = null;
+  let cmbinstitutionType = [];
+  institutionType &&
+  institutionType["birth-death-service"] &&
+  institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+    cmbinstitutionType.push(ob);
+  });
   let cmbInstitution = [];
   institution &&
     institution["birth-death-service"] &&
@@ -25,12 +30,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
       cmbInstitution.push(ob);
     });
     
-    let cmbInstitutionId = [];
-    institutionid &&
-    institutionid["birth-death-service"] &&
-    institutionid["birth-death-service"].Institution.map((ob) => {
-      cmbInstitutionId.push(ob);
-    });
+    
 
   const onSkip = () => onSelect();
 
@@ -78,7 +78,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               t={t}
               optionKey="name"
               isMandatory={true}
-              option={cmbInstitutionId}
+              option={cmbinstitutionType}
               selected={DeathPlaceInstId}
               select={selectDeathPlaceInstId}
               disabled={isEdit}

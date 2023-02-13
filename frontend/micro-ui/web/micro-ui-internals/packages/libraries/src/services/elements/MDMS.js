@@ -1279,6 +1279,21 @@ const getCRInstitutionList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRInstitutionPlaceOfEventList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "InstitutionTypePlaceOfEvent",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCROtherPlaceList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2266,6 +2281,9 @@ export const MdmsService = {
   },
   getCRInstitutionId: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRInstitutionIdList(tenantId, moduleCode), moduleCode);
+  },
+  getCRInstitutionPlaceOfEvent: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRInstitutionPlaceOfEventList(tenantId, moduleCode), moduleCode);
   },
   getCROtherPlace: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCROtherPlaceList(tenantId, moduleCode), moduleCode);

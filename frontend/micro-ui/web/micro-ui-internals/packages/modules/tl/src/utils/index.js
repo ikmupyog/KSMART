@@ -85,8 +85,8 @@ export const propertyCardBodyStyle = {
 };
 
 export const getTransaltedLocality = (data) => {
-  let localityVariable = data?.tenantId?.replaceAll(".","_") || stringReplaceAll(data?.tenantId,".","_");
-  return (localityVariable.toUpperCase()+"_REVENUE_"+data?.locality?.code);
+  let localityVariable = data?.tenantId?.replaceAll(".", "_") || stringReplaceAll(data?.tenantId, ".", "_");
+  return (localityVariable.toUpperCase() + "_REVENUE_" + data?.locality?.code);
 }
 
 export const setAddressDetails = (data) => {
@@ -130,62 +130,52 @@ export const gettradeownerarray = (data) => {
   const isEditRenew = window.location.href.includes("renew-trade");
   data.tradeLicenseDetail.owners.map((oldowner) => {
     data?.owners?.owners.map((newowner) => {
-      if(oldowner.id === newowner.id)
-      {
-        if((oldowner.name !== newowner.name) || (oldowner.gender !== newowner?.gender?.code) || (oldowner.mobileNumber !== newowner.mobilenumber) || (oldowner.permanentAddress !== data?.owners?.permanentAddress) || (oldowner.relationship !== newowner.relationship?.code) || (oldowner.fatherOrHusbandName !== newowner.fatherOrHusbandName))
-        {
-        if (oldowner.name !== newowner.name)
-        {
-          oldowner.name = newowner.name;
+      if (oldowner.id === newowner.id) {
+        if ((oldowner.name !== newowner.name) || (oldowner.gender !== newowner?.gender?.code) || (oldowner.mobileNumber !== newowner.mobilenumber) || (oldowner.permanentAddress !== data?.owners?.permanentAddress) || (oldowner.relationship !== newowner.relationship?.code) || (oldowner.fatherOrHusbandName !== newowner.fatherOrHusbandName)) {
+          if (oldowner.name !== newowner.name) {
+            oldowner.name = newowner.name;
+          }
+          if (oldowner.gender !== newowner.gender?.code) {
+            oldowner.gender = newowner.gender?.code;
+          }
+          if (oldowner.mobileNumber !== newowner.mobilenumber) {
+            oldowner.mobileNumber = newowner.mobilenumber;
+          }
+          if (oldowner.permanentAddress !== data?.owners?.permanentAddress) {
+            oldowner.permanentAddress = data?.owners?.permanentAddress;
+          }
+          if (oldowner.relationship !== newowner.relationship?.code) {
+            oldowner.relationship = newowner.relationship?.code;
+          }
+          if (oldowner.fatherOrHusbandName !== newowner.fatherOrHusbandName) {
+            oldowner.fatherOrHusbandName = newowner.fatherOrHusbandName;
+          }
+          let found = tradeownerarray.length > 0 ? tradeownerarray.some(el => el.id === oldowner.id) : false;
+          if (!found) tradeownerarray.push(oldowner);
         }
-        if(oldowner.gender !== newowner.gender?.code)
-        {
-          oldowner.gender = newowner.gender?.code;
-        }
-        if(oldowner.mobileNumber !== newowner.mobilenumber)
-        {
-          oldowner.mobileNumber = newowner.mobilenumber;
-        }
-        if(oldowner.permanentAddress !== data?.owners?.permanentAddress)
-        {
-          oldowner.permanentAddress = data?.owners?.permanentAddress;
-        }
-        if(oldowner.relationship !== newowner.relationship?.code)
-        {
-          oldowner.relationship = newowner.relationship?.code;
-        }
-        if(oldowner.fatherOrHusbandName !== newowner.fatherOrHusbandName)
-        {
-          oldowner.fatherOrHusbandName = newowner.fatherOrHusbandName;
-        }
-        let found = tradeownerarray.length > 0 ?tradeownerarray.some(el => el.id === oldowner.id):false;
-          if(!found)tradeownerarray.push(oldowner);
-      }
-        else
-        {
-          let found = tradeownerarray.length > 0 ? tradeownerarray.some(el => el.id === oldowner.id):false;
-          if(!found)tradeownerarray.push(oldowner);
+        else {
+          let found = tradeownerarray.length > 0 ? tradeownerarray.some(el => el.id === oldowner.id) : false;
+          if (!found) tradeownerarray.push(oldowner);
         }
       }
     })
   })
   !isEditRenew && !window.location.href.includes("edit-application") && data.tradeLicenseDetail.owners.map((oldowner) => {
-    let found = tradeownerarray.length > 0 ? tradeownerarray.some(el => el.id === oldowner.id):false;
-    if(!found)tradeownerarray.push({...oldowner,active:false});   
+    let found = tradeownerarray.length > 0 ? tradeownerarray.some(el => el.id === oldowner.id) : false;
+    if (!found) tradeownerarray.push({ ...oldowner, active: false });
   })
   data?.owners?.owners.map((ob) => {
-    if(!ob.id)
-    {
+    if (!ob.id) {
       tradeownerarray.push({
-              mobileNumber: ob.mobilenumber,
-              name: ob.name,
-              fatherOrHusbandName: "",
-              relationship: "",
-              dob: null,
-              gender: ob?.gender?.code || null,
-              permanentAddress: data?.owners?.permanentAddress,
-              ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL")) && {uuid : data?.tradeLicenseDetail?.owners?.[0]?.uuid } ,
-            });
+        mobileNumber: ob.mobilenumber,
+        name: ob.name,
+        fatherOrHusbandName: "",
+        relationship: "",
+        dob: null,
+        gender: ob?.gender?.code || null,
+        permanentAddress: data?.owners?.permanentAddress,
+        ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL")) && { uuid: data?.tradeLicenseDetail?.owners?.[0]?.uuid },
+      });
     }
   })
   return tradeownerarray;
@@ -205,32 +195,27 @@ export const gettradeupdateunits = (data) => {
   const isEditRenew = window.location.href.includes("renew-trade");
   data.tradeLicenseDetail.tradeUnits.map((oldunit) => {
     data.TradeDetails.units.map((newunit) => {
-      if(oldunit.id === newunit.id)
-      {
-        if (oldunit.tradeType !== newunit.tradesubtype.code)
-        {
+      if (oldunit.id === newunit.id) {
+        if (oldunit.tradeType !== newunit.tradesubtype.code) {
           oldunit.tradeType = newunit.tradesubtype.code;
           TLunits.push(oldunit);
         }
-        else
-        {
-          let found = TLunits.length > 0 ? TLunits.some(el => el.id === oldunit.id):false;
-          if(!found)TLunits.push(oldunit);
+        else {
+          let found = TLunits.length > 0 ? TLunits.some(el => el.id === oldunit.id) : false;
+          if (!found) TLunits.push(oldunit);
         }
 
       }
-      else
-      {
-        if(!isEditRenew){
-        let found = TLunits.length > 0 ? TLunits.some(el => el.id === oldunit.id):false;
-        if(!found)TLunits.push({...oldunit,active:false});  
-        } 
+      else {
+        if (!isEditRenew) {
+          let found = TLunits.length > 0 ? TLunits.some(el => el.id === oldunit.id) : false;
+          if (!found) TLunits.push({ ...oldunit, active: false });
+        }
       }
     })
   })
   data.TradeDetails.units.map((ob) => {
-    if(!ob.id)
-    {
+    if (!ob.id) {
       TLunits.push({ tradeType: ob.tradesubtype.code, uom: ob.unit, uomValue: ob.uom });
     }
   })
@@ -245,147 +230,118 @@ export const getaccessories = (data) => {
   return tradeaccessories;
 };
 
-export const gettradeupdateaccessories = (data) => {
-  let TLaccessories = [];
-  const isEditRenew = window.location.href.includes("renew-trade");
-  if(data?.TradeDetails?.isAccessories?.i18nKey.includes("NO"))
-  {
-    data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
-      TLaccessories.push({...oldunit,active:false});
-    })
-  }
-  else{
-  data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
-    data.TradeDetails.accessories.map((newunit) => {
-      if(oldunit.id === newunit.id)
-      {
-        if (oldunit.accessoryCategory !== newunit.accessory.code)
-        {
-          oldunit.accessoryCategory = newunit.accessory.code;
-          TLaccessories.push(oldunit);
-        }
-        else
-        {
-          let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id):false;
-          if(!found)TLaccessories.push(oldunit);
-        }
+// export const gettradeupdateaccessories = (data) => {
+//   let TLaccessories = [];
+//   const isEditRenew = window.location.href.includes("renew-trade");
+//   if(data?.TradeDetails?.isAccessories?.i18nKey.includes("NO"))
+//   {
+//     data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
+//       TLaccessories.push({...oldunit,active:false});
+//     })
+//   }
+//   else{
+//   data?.tradeLicenseDetail?.accessories && data.tradeLicenseDetail.accessories.map((oldunit) => {
+//     data.TradeDetails.accessories.map((newunit) => {
+//       if(oldunit.id === newunit.id)
+//       {
+//         if (oldunit.accessoryCategory !== newunit.accessory.code)
+//         {
+//           oldunit.accessoryCategory = newunit.accessory.code;
+//           TLaccessories.push(oldunit);
+//         }
+//         else
+//         {
+//           let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id):false;
+//           if(!found)TLaccessories.push(oldunit);
+//         }
 
-      }
-      else
-      {
-        if(!isEditRenew){
-          let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id):false;
-          if(!found)TLaccessories.push({...oldunit,active:false});
-        }
-        
-      }
-    })
-  })
-  data.TradeDetails.accessories.map((ob) => {
-    if(!ob.id)
-    {
-      TLaccessories.push({ uom: ob.unit, accessoryCategory: ob.accessory.code, uomValue: ob.uom ? ob.uom : null, count: ob.accessorycount });
-    }
-  })
-}
-  return TLaccessories;
-}
+//       }
+//       else
+//       {
+//         if(!isEditRenew){
+//           let found = TLaccessories.length > 0 ? TLaccessories.some(el => el.id === oldunit.id):false;
+//           if(!found)TLaccessories.push({...oldunit,active:false});
+//         }
+
+//       }
+//     })
+//   })
+//   data.TradeDetails.accessories.map((ob) => {
+//     if(!ob.id)
+//     {
+//       TLaccessories.push({ uom: ob.unit, accessoryCategory: ob.accessory.code, uomValue: ob.uom ? ob.uom : null, count: ob.accessorycount });
+//     }
+//   })
+// }
+//   return TLaccessories;
+// }
+
 
 export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
+  // data?.TradeDetails?.tradeLicenseDetail?.address?.tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  let address = data?.TradeDetails?.tradeLicenseDetail?.address;
+  address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  let tradeUnits = [{
+    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesscategory?.code,
+    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesstype?.code,
+    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businesssubtype?.code
+  }];
   const formdata = {
     Licenses: [
       {
         action: "INITIATE",
         applicationType: "NEW",
-        commencementDate: Date.parse(data?.owners?.CommencementDate),
+        commencementDate: Date.parse(data?.TradeDetails?.commencementDate),
         financialYear: Financialyear ? Financialyear : "2022-23",
         licenseType: "PERMANENT",
         tenantId: Digit.ULBService.getCitizenCurrentTenant(),
         tradeLicenseDetail: {
-          channel:"CITIZEN",
-          address: {
-            tenantId:Digit.ULBService.getCitizenCurrentTenant(),
-            pincode:null,
-            doorNo: data?.TradeDetails?.DoorNoBuild+data?.TradeDetails?.DoorSubBuild,
-            street:data?.TradeDetails?.StreetName,
-            landmark:data?.TradeDetails?.LandMark,
-            zonalid:data?.TradeDetails?.Zonal.code,
-            wardid:data?.TradeDetails?.WardNo.code,
-            wardno:data?.TradeDetails?.WardNo.wardno,
-            circledivisionid:data?.TradeDetails?.Zonal.code,
-            contactno:data?.TradeDetails?.MobileNo,
-            email:data?.TradeDetails?.EmailID,
-          },
+          channel: "CITIZEN",
+          businessSector: data?.TradeDetails?.tradeLicenseDetail?.businessSector.code,
+          capitalInvestment: data?.TradeDetails?.tradeLicenseDetail?.capitalInvestment,
+          enterpriseType: "MANUFACTURING.MICRO",  /////   hard codede from 
+          structureType: data?.TradeDetails?.tradeLicenseDetail?.structureType.code,
+          structurePlaceSubtype: data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype.code,
+          businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc,
+          licenseeType: data?.TradeDetails?.tradeLicenseDetail?.licenseeType,
+          noOfEmployees: data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees,
+          ownershipCategory: data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory?.code,
+          address: data?.TradeDetails?.tradeLicenseDetail?.address,
           applicationDocuments: null,
-          owners: [
-            {
-              mobileNumber: data?.address?.IndividualMobNo,
-              name: data?.address?.IndividualName,
-              fatherOrHusbandName: null,
-              dob: null,
-              gender: null,
-              permanentAddress: data?.address?.IndividualAddress,
-              emailId: data?.address?.IndividualEmailID,
-              aadhaarNumber: data?.address?.IndividualAadharNo,
-              ownerType: data?.address?.OwnProperty.code =="YES" ? "OWN" :"RENT",
-              consentAgreementPlace: data?.address?.OwnerConsentPlace,
-              consentAgreementDate: Date.parse(data?.address?.OwnerConsentDateStart),
-              consentAgreementEndDate: Date.parse(data?.address?.OwnerConsentDateEnd),
-            }
-          ],
-          structureType: data?.TradeDetails?.StructureType.maincode,
-          institution: {
-            name:data?.address?.IndividualName,
-            type:"CITIZEN",
-            designation:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.address?.IndividualDesignation:null,
-            active:true,
-            instituionName:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.LicensingInstitutionName:null,
-            contactNo:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.InstitutionMobileNo:null,
-            organisationregistrationno:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.LicensingInstitutionID:null,
-            address:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.LicensingInstitutionAddress:null,
-            natureOfInstitution:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.LicensingInstitutionType.code:null,
-            email:data?.TradeDetails?.LicenseeType.code =="INSTITUTION" ? data?.TradeDetails?.InstitutionEmailID:null,            
-          },
-          tradeUnits: [
-            {
-              tradeType: data?.TradeDetails[0]?.tradesubtype.code,
-            }
-          ],
-          structurePlace: [
-            {
-              isResurveyed:data?.TradeDetails?.setPlaceofActivity.code =="LAND" && data?.TradeDetails?.ResurveyedLand =="YES" ? false:true,
-              blockNo: data?.TradeDetails?.setPlaceofActivity.code =="LAND" ? data?.TradeDetails?.BlockNo:null,
-              surveyNo: data?.TradeDetails?.setPlaceofActivity.code =="LAND" ? data?.TradeDetails?.SurveyNo:null,
-              subDivisionNo: data?.TradeDetails?.setPlaceofActivity.code =="LAND" ? data?.TradeDetails?.SubDivNo:null,
-              partitionNo: data?.TradeDetails?.setPlaceofActivity.code =="LAND" ? data?.TradeDetails?.PartitionNo:null,
-              doorNo: data?.TradeDetails?.setPlaceofActivity.code =="BUILDING" ? data.TradeDetails.DoorNoBuild:null,
-              doorNoSub: data?.TradeDetails?.setPlaceofActivity.code =="BUILDING" ? data.TradeDetails.DoorSubBuild:null,
-              vehicleNo: data?.TradeDetails?.setPlaceofActivity.code =="VEHICLE" ? data.TradeDetails.VechicleNo:null,
-              vesselNo: data?.TradeDetails?.setPlaceofActivity.code =="WATER" ? data.TradeDetails.VesselNo:null,
-            }
-          ],
-          businessSector: data?.TradeDetails?.setSector.code, 
-          capitalInvestment: data?.TradeDetails?.CapitalAmount,
-          enterpriseType: data?.TradeDetails?.enterpriseType,
-          licenseUnitType: data?.TradeDetails?.LicensingUnitType.code,
-          licenseUnitId: data?.TradeDetails?.LicenseUnitID,
-          structurePlaceSubType: data?.TradeDetails?.StructureType.code,
-          customDetailType: data?.TradeDetails[0]?.units?.unit,
-          businessActivityDesc:data?.TradeDetails[0]?.units?.uom,
-          licenseeType:data?.TradeDetails?.LicenseeType.code
+          owners: data?.TradeDetails?.tradeLicenseDetail?.owners,
+          institution: data?.TradeDetails?.tradeLicenseDetail?.institution,
+          tradeUnits: tradeUnits,
+          structurePlace: data?.TradeDetails?.tradeLicenseDetail?.structurePlace,
+          ownerspremise: data?.TradeDetails?.tradeLicenseDetail?.ownerspremise
         },
-        
-        tradeName: data?.TradeDetails?.LicenseUnitName,
+
+        tradeName: data?.TradeDetails?.tradeName,
+        licenseUnitNameLocal: data?.TradeDetails?.licenseUnitNameLocal,
+        desiredLicensePeriod: data?.TradeDetails?.desiredLicensePeriod,
         wfDocuments: [],
         applicationDocuments: [],
-        workflowCode: "NewTL",
-      },
-    ],
+        workflowCode: "NewTL"
+      }
+    ]
   };
+  console.log("final data" + formdata);
   return formdata;
 };
 
+export const getWfDocumentsnew = (data) => {
+  let wfdoc = [];
+  data?.TradeDetails?.ownersdoc?.map((docs) => {
+    wfdoc.push({
+      fileName: docs.name,
+      fileStoreId: docs.fileStoreId,
+      documentType: docs.documentType,
+      tenantId: data?.tenantId,
+
+    }
+    );
+  });
+}
 export const getwfdocuments = (data) => {
   let wfdoc = [];
   let doc = data ? data.owners.documents : [];
@@ -411,93 +367,85 @@ export const getwfdocuments = (data) => {
 }
 
 export const getEditTradeDocumentUpdate = (data) => {
-  let updateddocuments=[];
+  let updateddocuments = [];
   let doc = data ? data.owners.documents : [];
   data?.tradeLicenseDetail?.applicationDocuments?.map((olddoc) => {
-    if(olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId === data.owners.documents["OwnerPhotoProof"].fileStoreId ||
-    olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId == data.owners.documents["ProofOfOwnership"].fileStoreId ||
-    olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId === data.owners.documents["ProofOfIdentity"].fileStoreId)
-    {
+    if (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId === data.owners.documents["OwnerPhotoProof"].fileStoreId ||
+      olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId == data.owners.documents["ProofOfOwnership"].fileStoreId ||
+      olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId === data.owners.documents["ProofOfIdentity"].fileStoreId) {
       updateddocuments.push(olddoc);
     }
-    else{
-    if(olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId !== data.owners.documents["OwnerPhotoProof"].fileStoreId)
-    {
-      updateddocuments.push({
-        fileName: doc["OwnerPhotoProof"].name,
-        fileStoreId: doc["OwnerPhotoProof"].fileStoreId,
-        documentType: "OWNERPHOTO",
-        tenantId: data?.tenantId,
-      });
-      updateddocuments.push({...olddoc, active :"false"});
+    else {
+      if (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId !== data.owners.documents["OwnerPhotoProof"].fileStoreId) {
+        updateddocuments.push({
+          fileName: doc["OwnerPhotoProof"].name,
+          fileStoreId: doc["OwnerPhotoProof"].fileStoreId,
+          documentType: "OWNERPHOTO",
+          tenantId: data?.tenantId,
+        });
+        updateddocuments.push({ ...olddoc, active: "false" });
+      }
+      if (olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId !== data.owners.documents["ProofOfOwnership"].fileStoreId) {
+        updateddocuments.push({
+          fileName: doc["ProofOfOwnership"].name,
+          fileStoreId: doc["ProofOfOwnership"].fileStoreId,
+          documentType: "OWNERSHIPPROOF",
+          tenantId: data?.tenantId,
+        });
+        updateddocuments.push({ ...olddoc, active: "false" });
+      }
+      if (olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId !== data.owners.documents["ProofOfIdentity"].fileStoreId) {
+        updateddocuments.push({
+          fileName: doc["ProofOfIdentity"].name,
+          fileStoreId: doc["ProofOfIdentity"].fileStoreId,
+          documentType: "OWNERIDPROOF",
+          tenantId: data?.tenantId,
+        });
+        updateddocuments.push({ ...olddoc, active: "false" });
+      }
     }
-    if(olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId !== data.owners.documents["ProofOfOwnership"].fileStoreId)
-    {
-      updateddocuments.push({
-        fileName: doc["ProofOfOwnership"].name,
-        fileStoreId: doc["ProofOfOwnership"].fileStoreId,
-        documentType: "OWNERSHIPPROOF",
-        tenantId: data?.tenantId,
-      });
-      updateddocuments.push({...olddoc,active:"false"});
-    }
-    if(olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId !== data.owners.documents["ProofOfIdentity"].fileStoreId)
-    {
-      updateddocuments.push({
-        fileName: doc["ProofOfIdentity"].name,
-        fileStoreId: doc["ProofOfIdentity"].fileStoreId,
-        documentType: "OWNERIDPROOF",
-        tenantId: data?.tenantId,
-      });
-      updateddocuments.push({...olddoc,active:"false"});
-    }
-  }
   });
   return updateddocuments;
 }
 
-export const getEditRenewTradeDocumentUpdate = (data,datafromflow) => {
-  let updateddocuments=[];
+export const getEditRenewTradeDocumentUpdate = (data, datafromflow) => {
+  let updateddocuments = [];
   let doc = datafromflow ? datafromflow.owners.documents : [];
   data.tradeLicenseDetail.applicationDocuments.map((olddoc) => {
-    if(olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId === datafromflow.owners.documents["OwnerPhotoProof"].fileStoreId ||
-    olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId == datafromflow.owners.documents["ProofOfOwnership"].fileStoreId ||
-    olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId === datafromflow.owners.documents["ProofOfIdentity"].fileStoreId)
-    {
+    if (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId === datafromflow.owners.documents["OwnerPhotoProof"].fileStoreId ||
+      olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId == datafromflow.owners.documents["ProofOfOwnership"].fileStoreId ||
+      olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId === datafromflow.owners.documents["ProofOfIdentity"].fileStoreId) {
       updateddocuments.push(olddoc);
     }
-    else{
-    if(olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId !== datafromflow.owners.documents["OwnerPhotoProof"].fileStoreId)
-    {
-      updateddocuments.push({
-        fileName: doc["OwnerPhotoProof"].name,
-        fileStoreId: doc["OwnerPhotoProof"].fileStoreId,
-        documentType: "OWNERPHOTO",
-        tenantId: data?.tenantId,
-      });
-      updateddocuments.push({...olddoc, active :"false"});
+    else {
+      if (olddoc.documentType === "OWNERPHOTO" && olddoc.fileStoreId !== datafromflow.owners.documents["OwnerPhotoProof"].fileStoreId) {
+        updateddocuments.push({
+          fileName: doc["OwnerPhotoProof"].name,
+          fileStoreId: doc["OwnerPhotoProof"].fileStoreId,
+          documentType: "OWNERPHOTO",
+          tenantId: data?.tenantId,
+        });
+        updateddocuments.push({ ...olddoc, active: "false" });
+      }
+      if (olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId !== datafromflow.owners.documents["ProofOfOwnership"].fileStoreId) {
+        updateddocuments.push({
+          fileName: doc["ProofOfOwnership"].name,
+          fileStoreId: doc["ProofOfOwnership"].fileStoreId,
+          documentType: "OWNERSHIPPROOF",
+          tenantId: data?.tenantId,
+        });
+        updateddocuments.push({ ...olddoc, active: "false" });
+      }
+      if (olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId !== datafromflow.owners.documents["ProofOfIdentity"].fileStoreId) {
+        updateddocuments.push({
+          fileName: doc["ProofOfIdentity"].name,
+          fileStoreId: doc["ProofOfIdentity"].fileStoreId,
+          documentType: "OWNERIDPROOF",
+          tenantId: data?.tenantId,
+        });
+        updateddocuments.push({ ...olddoc, active: "false" });
+      }
     }
-    if(olddoc.documentType === "OWNERSHIPPROOF" && olddoc.fileStoreId !== datafromflow.owners.documents["ProofOfOwnership"].fileStoreId)
-    {
-      updateddocuments.push({
-        fileName: doc["ProofOfOwnership"].name,
-        fileStoreId: doc["ProofOfOwnership"].fileStoreId,
-        documentType: "OWNERSHIPPROOF",
-        tenantId: data?.tenantId,
-      });
-      updateddocuments.push({...olddoc,active:"false"});
-    }
-    if(olddoc.documentType === "OWNERIDPROOF" && olddoc.fileStoreId !== datafromflow.owners.documents["ProofOfIdentity"].fileStoreId)
-    {
-      updateddocuments.push({
-        fileName: doc["ProofOfIdentity"].name,
-        fileStoreId: doc["ProofOfIdentity"].fileStoreId,
-        documentType: "OWNERIDPROOF",
-        tenantId: data?.tenantId,
-      });
-      updateddocuments.push({...olddoc,active:"false"});
-    }
-  }
   });
   return updateddocuments;
 }
@@ -513,7 +461,10 @@ export const convertToUpdateTrade = (data = {}, datafromflow, tenantId) => {
   }
   formdata1.Licenses[0].action = "APPLY";
   formdata1.Licenses[0].wfDocuments = formdata1.Licenses[0].wfDocuments ? formdata1.Licenses[0].wfDocuments : getwfdocuments(datafromflow);
-  formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments = !isEdit ? (formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments ? formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments : getwfdocuments(datafromflow)):getEditRenewTradeDocumentUpdate(data?.Licenses[0],datafromflow);
+  formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments = !isEdit ?
+    (formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments ?
+      formdata1.Licenses[0].tradeLicenseDetail.applicationDocuments : getWfDocumentsnew(datafromflow)) : // getwfdocuments(datafromflow)) : 
+    getEditRenewTradeDocumentUpdate(data?.Licenses[0], datafromflow);
   return formdata1;
 }
 
@@ -586,7 +537,7 @@ export const convertToEditTrade = (data, fy = []) => {
         tradeLicenseDetail: {
           address: data.tradeLicenseDetail.address,
           applicationDocuments: data.tradeLicenseDetail.applicationDocuments,
-          accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
+          //    accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
           owners: isDirectrenewal ? data.tradeLicenseDetail.owners : gettradeownerarray(data),
           structureType: isDirectrenewal ? data.tradeLicenseDetail.structureType : (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
@@ -595,13 +546,15 @@ export const convertToEditTrade = (data, fy = []) => {
           auditDetails: data.tradeLicenseDetail.auditDetails,
           channel: data.tradeLicenseDetail.channel,
           id: data.tradeLicenseDetail.id,
-          ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL") && {institution: {
-            designation: data?.owners?.owners?.[0]?.designation,
-            ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-            mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-            instituionName: data?.owners?.owners?.[0]?.institutionName,
-            name: data?.owners?.owners?.[0]?.name,
-           }}),
+          ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL") && {
+            institution: {
+              designation: data?.owners?.owners?.[0]?.designation,
+              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+              instituionName: data?.owners?.owners?.[0]?.institutionName,
+              name: data?.owners?.owners?.[0]?.name,
+            }
+          }),
         },
         calculation: null,
         auditDetails: data?.auditDetails,
@@ -643,7 +596,7 @@ export const convertToResubmitTrade = (data) => {
         tradeLicenseDetail: {
           address: data.tradeLicenseDetail.address,
           applicationDocuments: getEditTradeDocumentUpdate(data),
-          accessories: gettradeupdateaccessories(data),
+          //    accessories: gettradeupdateaccessories(data),
           owners: gettradeownerarray(data),
           structureType: (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
@@ -652,13 +605,13 @@ export const convertToResubmitTrade = (data) => {
           auditDetails: data.tradeLicenseDetail.auditDetails,
           channel: data.tradeLicenseDetail.channel,
           id: data.tradeLicenseDetail.id,
-          institution:data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? {
+          institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? {
             designation: data?.owners?.owners?.[0]?.designation,
             ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
             mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
             instituionName: data?.owners?.owners?.[0]?.institutionName,
             name: data?.owners?.owners?.[0]?.name,
-           } : null,
+          } : null,
         },
         calculation: null,
         auditDetails: data?.auditDetails,
