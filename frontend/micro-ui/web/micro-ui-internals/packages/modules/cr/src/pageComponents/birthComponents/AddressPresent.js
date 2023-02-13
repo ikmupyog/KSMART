@@ -78,6 +78,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, addressCountry, 
     }
     function setSelectaddressStateName(value) {
         setaddressStateName(value);
+        setValue(value.statecode);
     }
 
     const goNext = () => {

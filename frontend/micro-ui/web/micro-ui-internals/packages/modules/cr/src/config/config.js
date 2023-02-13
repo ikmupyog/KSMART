@@ -272,7 +272,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "AddressBirthDetails",
-        nextStep: "null",
+        nextStep: null,
         type: "component",
         hideInEmployee: false,
       },

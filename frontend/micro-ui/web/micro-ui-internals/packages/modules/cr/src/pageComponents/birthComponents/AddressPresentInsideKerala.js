@@ -122,6 +122,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             }
         }
     }, [District, LBType, localbodies, Talukvalues, Villagevalues, lbs, isInitialRender]);
+    
     const onSkip = () => onSelect();
 
     function setSelectinsideKeralaDistrict(value) {
@@ -496,6 +497,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             name="presentInsideKeralaPincode"
                             value={presentInsideKeralaPincode}
                             onChange={setSelectinsideKeralaPincode}
+                            disable={isDisableStatus}
                             placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                             {...(validation = {
                                 pattern: "^[a-zA-Z-.`' ]*$",
