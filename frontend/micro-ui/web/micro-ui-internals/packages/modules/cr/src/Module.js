@@ -71,6 +71,8 @@ import DeathPlaceHome from "./pageComponents/deathComponents/DeathPlaceHome";
 import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicle";
 import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
+import Informer from "./pageComponents/deathComponents/Informer";
+import Initiater from "./pageComponents/deathComponents/Initiater";
 
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
@@ -247,6 +249,8 @@ const componentsToRegister = {
   Hospital,
   DeathPublicPlace,
   DeathOutsideJurisdiction,
+  Informer,
+  Initiater,
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
