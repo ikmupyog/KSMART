@@ -81,4 +81,6 @@ public class DeathRegistryConstants {
      public static final String DEATH_PLACE_LIST = "PlaceMasterDeath";
      //Rakhi S on 12.02.2023
      public static final String VILLAGE = "Village";
+     //Rakhi S on 13.02.2023
+     public static final String  DEATH_PLACE_OUTSIDE_JURISDICTION = "OUTSIDE_JURISDICTION";
 }

@@ -67,9 +67,10 @@ public class DeathApplnService {
      //RAkhi S ikm  on 06.02.2023
      public List<DeathDtl> create(DeathDtlRequest request) {
           enrichmentService.enrichCreate(request);
-          enrichmentService.setACKNumber(request); 
+          enrichmentService.setACKNumber(request);           
           //Jasmine 13.02.2023
           workflowIntegrator.callWorkFlow(request);
+         //RAkhi S ikm  on 06.02.2023         
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           return request.getDeathCertificateDtls();
      }
