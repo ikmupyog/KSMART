@@ -125,7 +125,16 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
       setGeneralRemarks(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }    
   }
- 
+  // let cmbfilterNation =[];
+  // useEffect(() => {
+  //   if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
+  //     if (stateId === "kl" && cmbNation.length > 0) {
+  //       cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
+  //       setSelectDeathPlaceCountry(cmbfilterNation[0]);
+  //       console.log("cmbfilterNation[0]");
+  //     }
+  //   }
+  // });
   const goNext = () => {       
     // sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code  : null);
     // sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code  : null);
