@@ -14,18 +14,29 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
   // const [HospitalName, selectHospitalName] = useState(formData?.BirthPlaceHospitalDetails?.HospitalName);
   // const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.BirthPlaceHospitalDetails?.HospitalNameMl);
-
+  const [isInitialRender, setIsInitialRender] = useState(true);
   let cmbhospital = [];
+  let cmbhospitalMl = [];
   hospitalData &&
     hospitalData["egov-location"] &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
+  useEffect(() => {
 
+    if (isInitialRender) {
+      if (hospitalName) {
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === hospitalName.hospitalName);
+        selectHospitalNameMl(cmbhospitalMl[0]);
+        setIsInitialRender(false);
+      }
+    }
+  }, [cmbhospitalMl, isInitialRender])
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {
     selectHospitalName(value);
+    setIsInitialRender(true);
   }
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
@@ -56,36 +67,37 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
           </div>
         </div>
         <div className="row">
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_HOSPITAL_EN")}`}
-                {/* <span className="mandatorycss">*</span> */}
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="hospitalName"
-                isMandatory={false}
-                option={cmbhospital}
-                selected={hospitalName}
-                select={setselectHospitalName}
-                placeholder={`${t("CR_HOSPITAL_EN")}`}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_HOSPITAL_ML")}`}
-                {/* <span className="mandatorycss">*</span> */}
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="hospitalNamelocal"
-                isMandatory={false}
-                option={cmbhospital}
-                selected={hospitalNameMl}
-                select={setselectHospitalNameMl}
-                placeholder={`${t("CR_HOSPITAL_ML")}`}
-              />
-            </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {`${t("CR_HOSPITAL_EN")}`}
+              {/* <span className="mandatorycss">*</span> */}
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="hospitalName"
+              isMandatory={false}
+              option={cmbhospital}
+              selected={hospitalName}
+              select={setselectHospitalName}
+              placeholder={`${t("CR_HOSPITAL_EN")}`}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {`${t("CR_HOSPITAL_ML")}`}
+              {/* <span className="mandatorycss">*</span> */}
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="hospitalNamelocal"
+              isMandatory={false}
+              option={cmbhospital}
+              selected={hospitalNameMl}
+              select={setselectHospitalNameMl}
+              placeholder={`${t("CR_HOSPITAL_ML")}`}
+              disable={true}
+            />
+          </div>
         </div>
 
       </FormStep>

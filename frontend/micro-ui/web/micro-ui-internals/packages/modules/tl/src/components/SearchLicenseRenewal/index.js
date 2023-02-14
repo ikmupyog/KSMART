@@ -23,6 +23,7 @@ const mystyle = {
  };
 
 const SearchLicenseRenewal = ({tenantId, t, onSubmit, data, count }) => {
+
     const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
         defaultValues: {
             offset: 0,
@@ -31,8 +32,6 @@ const SearchLicenseRenewal = ({tenantId, t, onSubmit, data, count }) => {
             sortOrder: "DESC"
         }
     })
-    console.log("control");
-    console.log(control);
     useEffect(() => {
       register("offset", 0)
       register("limit", 10)

@@ -71,6 +71,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeceasedGender, setselectedDeceasedGender] = useState(formData?.InformationDeath?.DeceasedGender);
   const [Nationality, setSelectedNationality] = useState(formData?.InformationDeath?.Nationality);
   const [Religion, setSelectedReligion] = useState(formData?.InformationDeath?.Religion);
+  const { data: State = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   const [CommencementDate, setCommencementDate] = useState(
     formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
   );
@@ -170,6 +171,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     place["common-masters"].PlaceMasterDeath.map((ob) => {
       cmbPlace.push(ob);
     });
+let cmbState = [];
+    State &&
+    State["common-masters"] &&
+    State["common-masters"].State.map((ob) => {
+      cmbState.push(ob);
+    });
   function selectReligion(value) {
     setSelectedReligion(value);
   }
@@ -215,6 +222,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     setselectDeathPlace(value);
     setValue(value.code);
   }
+  // let workFlowCode ="";
   function selectDateOfDeath(value) {
     setDateOfDeath(value);
     const today = new Date();
@@ -224,6 +232,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       console.log(Difference_In_DaysRounded);
+      // if(Difference_In_DaysRounded<=21){
+      //   workFlowCode="death21days"
+      // }
     } else {
       setDateOfDeath(null);
       setDOBError(true);
@@ -261,6 +272,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let cmbfilterReligion = [];
   let cmbfilterAgeUnit = [];
   let naturetype = null;
+  let cmbfilterNationI =[];
+  let cmbFilterState = [];
   // let isInitialRender =[];
   useEffect(() => {
     if (Nationality == null || Nationality == "") {
@@ -281,6 +294,22 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         setSelectedAgeUnit(cmbfilterAgeUnit[0]);
       }
     }
+    if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
+      if (stateId === "kl" && cmbNation.length > 0) {
+        cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
+        setSelectDeathPlaceCountry(cmbfilterNationI[0]);
+      }
+    }
+    if (DeathPlaceState == null || DeathPlaceState == "") {
+      if (stateId === "kl" && cmbState.length > 0) {
+         cmbFilterState = cmbState.filter((cmbState) => cmbState.name !== ("Kerala"));
+         SelectDeathPlaceState(cmbFilterState[0]);
+      }
+    }
+
+    // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+    // setAdrsStateName(cmbFilterState[0]);
+
 
     // if (isInitialRender) {
     //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
