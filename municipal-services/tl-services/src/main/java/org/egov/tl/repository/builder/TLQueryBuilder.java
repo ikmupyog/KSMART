@@ -240,7 +240,7 @@ public class TLQueryBuilder {
             preparedStmtList.add(criteria.getValidTo());
         }
 
-        if (criteria.getApplicationType() == TLConstants.APPLICATION_TYPE_RENEWAL) {
+        if (criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
 
             addRenewalCriteria(builder, preparedStmtList, criteria);
         }
