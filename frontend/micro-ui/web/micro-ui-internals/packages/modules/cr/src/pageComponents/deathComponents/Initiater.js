@@ -11,40 +11,44 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   const [isDeclarationInfoone, setIsDeclarationInfoone] = useState(
-    formData?.Informer?.isDeclarationInfoone ? formData?.Informer?.isDeclarationInfoone : false
+    formData?.Initiater?.isDeclarationInfoone ? formData?.Initiater?.isDeclarationInfoone : false
   );
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
-  //   formData?.Informer?.isDeclarationInfotwo ? formData?.Informer?.isDeclarationInfotwo : false
+  //   formData?.Initiater?.isDeclarationInfotwo ? formData?.Initiater?.isDeclarationInfotwo : false
   // );
-  const [InformantAadharNo, setInformantAadharNo] = useState(
-    formData?.Informer?.InformantAadharNo ? formData?.Informer?.InformantAadharNo : ""
+  const [InitiatorAadhaar, setInitiatorAadhaar] = useState(
+    formData?.Initiater?.InitiatorAadhaar ? formData?.Initiater?.InitiatorAadhaar : ""
   );  
-  const [InformantNameEn, setInformantNameEn] = useState(
-    formData?.Informer?.InformantNameEn ? formData?.Informer?.InformantNameEn : ""
+  const [InitiatorName, setInitiatorName] = useState(
+    formData?.Initiater?.InitiatorName ? formData?.Initiater?.InitiatorName : ""
   );
-  const [InformantMobileNo, setInformantMobileNo] = useState(
-    formData?.Informer?.InformantMobileNo ? formData?.Informer?.InformantMobileNo : ""
+  const [InitiatorRelation, setInitiatorRelation] = useState(
+    formData?.Initiater?.InitiatorRelation ? formData?.Initiater?.InitiatorRelation : ""
   );
-  const [DeathSignedOfficerDesignation, setDeathSignedOfficerDesignation] = useState(
-    formData?.Informer?.DeathSignedOfficerDesignation ? formData?.Informer?.DeathSignedOfficerDesignation : ""
-  );  
+  
+  const [InitiatorMobile, setInitiatorMobile] = useState(
+    formData?.Initiater?.InitiatorMobile ? formData?.Initiater?.InitiatorMobile : ""
+  );
+   
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
-  const [infomantNameError, setinfomantNameError] = useState(formData?.Informer?.InformantNameEn ? false : false);
-  const [infomantAadharError, setinfomantAadharError] = useState(formData?.Informer?.infomantAadhar ? false : false);
-  const [infomantMobileError, setinfomantMobileError] = useState(formData?.Informer?.InformantMobileNo ? false : false);
-  const [informerDesiError, setinformerDesiError] = useState(formData?.Informer?.DeathSignedOfficerDesignation ? false : false);
+  
+  const [InitiaterRelationError, setInitiaterRelationError] = useState(formData?.Initiater?.InitiatorRelation ? false : false);
+  const [InitiaterNameError, setInitiaterNameError] = useState(formData?.Initiater?.InitiatorName ? false : false);
+  const [InitiaterAadharError, setInitiaterAadharError] = useState(formData?.Initiater?.InitiatorAadhaar ? false : false);
+  const [InitiaterMobileError, setInitiaterMobileError] = useState(formData?.Initiater?.InitiatorMobile ? false : false);
+ 
   const onSkip = () => onSelect();
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.Informer?.isDeclarationInfoone != null) {
+      if (formData?.Initiater?.isDeclarationInfoone != null) {
         setIsInitialRender(false);
-        setIsDeclarationInfoone(formData?.Informer?.isDeclarationInfoone);
+        setIsDeclarationInfoone(formData?.Initiater?.isDeclarationInfoone);
       }
-      // if (formData?.Informer?.isDeclarationInfotwo != null) {
+      // if (formData?.Initiater?.isDeclarationInfotwo != null) {
       //   setIsInitialRender(false);
-      //   setIsDeclarationInfotwo(formData?.Informer?.isDeclarationInfotwo);
+      //   setIsDeclarationInfotwo(formData?.Initiater?.isDeclarationInfotwo);
       // }
     }
   }, [isInitialRender]);
@@ -63,114 +67,115 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
   //     setIsDeclarationInfotwo(e.target.checked);
   //   }
   // }
-  function setSelectInformantAadharNo(e) {
+  function setSelectInitiatorAadhaar(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 12) {
         return false;
       } else if (e.target.value.length < 12) {
-        setInformantAadharNo(e.target.value);
+        setInitiatorAadhaar(e.target.value);
         return false;
       } else {
-        setInformantAadharNo(e.target.value);
+        setInitiatorAadhaar(e.target.value);
       }
     } else {
-      setInformantAadharNo(e.target.value);
+      setInitiatorAadhaar(e.target.value);
     }
   }
-  // function setSelectInformantNameEn(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;      
-  //   } else {
-  //     setInformantNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-  //   }
-  // }
-  function setSelectInformantNameEn(value) {
-    setInformantNameEn(value);    
+  function setSelectInitiatorName(e) {
+    if (e.target.value.length === 51) {
+      return false;      
+    } else {
+      setInitiatorName(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
   }
+  function setSelectInitiatorRelation(e) {
+    if (e.target.value.length === 51) {
+      return false;      
+    } else {
+      setInitiatorRelation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
+  
+  // function setSelectInitiatorName(value) {
+  //   setInitiatorName(value);    
+  // }
 
-  function setSelectInformantMobileNo(e) {
+  function setSelectInitiatorMobile(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 10) {
         return false;
       } else if (e.target.value.length < 10) {
-        setInformantMobileNo(e.target.value);
+        setInitiatorMobile(e.target.value);
         return false;
       } else {
-        setInformantMobileNo(e.target.value);
+        setInitiatorMobile(e.target.value);
       }
     } else {
-      setInformantMobileNo(e.target.value);
+      setInitiatorMobile(e.target.value);
     }
   }
-  function setSelectDeathSignedOfficerDesignation(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setDeathSignedOfficerDesignation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-    }
-  }  
+   
 
   let validFlag = true;
   const goNext = () => {
-    if (InformantNameEn == null || InformantNameEn == "" || InformantNameEn == undefined) {
+    if (InitiatorRelation == null || InitiatorRelation == "" || InitiatorRelation == undefined) {
       validFlag = false;
-      setinfomantNameError(true);
+      setInitiaterRelationError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setinfomantNameError(false);
+      setInitiaterRelationError(false);
     }
-    if (DeathSignedOfficerDesignation == null || DeathSignedOfficerDesignation == "" || DeathSignedOfficerDesignation == undefined) {
+   
+    if (InitiatorName == null || InitiatorName == "" || InitiatorName == undefined) {
       validFlag = false;
-      setinformerDesiError(true);
+      setInitiaterNameError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setinformerDesiError(false);
+      setInitiaterNameError(false);
     }
 
-    if (InformantAadharNo == null || InformantAadharNo == "" || InformantAadharNo == undefined) {
+
+    if (InitiatorAadhaar == null || InitiatorAadhaar == "" || InitiatorAadhaar == undefined) {
       validFlag = false;
-      setinfomantAadharError(true);
+      setInitiaterAadharError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setinfomantAadharError(false);
+      setInitiaterAadharError(false);
     }
-    if (InformantMobileNo == null || InformantMobileNo == "" || InformantMobileNo == undefined) {
+    if (InitiatorMobile == null || InitiatorMobile == "" || InitiatorMobile == undefined) {
       validFlag = false;
-      setinfomantMobileError(true);
+      setInitiaterMobileError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setinfomantMobileError(false);
+      setInitiaterMobileError(false);
     }
 
     if (validFlag == true) {
       sessionStorage.setItem("isDeclarationInfoone", isDeclarationInfoone ? isDeclarationInfoone : null);
-      // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);
-      sessionStorage.setItem("InformantNameEn", InformantNameEn ? InformantNameEn : null);
-      sessionStorage.setItem("InformantAadharNo", InformantAadharNo ? InformantAadharNo : null);
-
-      sessionStorage.setItem("InformantMobileNo", InformantMobileNo ? InformantMobileNo : null);
-      sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
-      
+      // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);      
+      sessionStorage.setItem("InitiatorRelation", InitiatorRelation ? InitiatorRelation : null);
+      sessionStorage.setItem("InitiatorName", InitiatorName ? InitiatorName : null);
+      sessionStorage.setItem("InitiatorAadhaar", InitiatorAadhaar ? InitiatorAadhaar : null);
+      sessionStorage.setItem("InitiatorMobile", InitiatorMobile ? InitiatorMobile : null);      
       onSelect(config.key, {
         isDeclarationInfoone,
         // isDeclarationInfotwo,
-        InformantNameEn,
-        InformantAadharNo,
-        InformantMobileNo,
-        DeathSignedOfficerDesignation,       
+        InitiatorName,
+        InitiatorRelation,
+        InitiatorAadhaar,
+        InitiatorMobile,               
       });
     }
   };
@@ -205,17 +210,35 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             <CheckBox label={t("TestDocuments")} onChange={setDeclarationInfoone} value={isDeclarationInfoone} checked={isDeclarationInfoone} />
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(" CR_INFORMANT_DETAILS")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(" CR_INITIATOR_DETAILS")}`}</span>
             </h1>
           </div>
-        </div> */}
+        </div>
 
         <div className="row">
           <div className="col-md-12">
+          <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_RELATION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="InitiatorRelation"
+                value={InitiatorRelation}
+                onChange={setSelectInitiatorRelation}
+                disable={isEdit}
+                placeholder={`${t("CR_RELATION")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RELATION") })}
+              />
+            </div>
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_AADHAAR")}`}
@@ -223,12 +246,12 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"number"}
                 optionKey="i18nKey"
-                name="InformantAadharNo"
-                value={InformantAadharNo}
-                onChange={setSelectInformantAadharNo}
+                name="InitiatorAadhaar"
+                value={InitiatorAadhaar}
+                onChange={setSelectInitiatorAadhaar}
                 disable={isEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
@@ -242,36 +265,19 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="InformantNameEn"
-                value={InformantNameEn}
-                onChange={setSelectInformantNameEn}
+                name="InitiatorName"
+                value={InitiatorName}
+                onChange={setSelectInitiatorName}
                 disable={isEdit}
                 placeholder={`${t("CR_INFORMANT_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>
              
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_INITIATOR_DESIGNATION")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="DeathSignedOfficerDesignation"
-                value={DeathSignedOfficerDesignation}
-                onChange={setSelectDeathSignedOfficerDesignation}
-                disable={isEdit}
-                placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
-              />
-            </div>
+           
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
@@ -279,12 +285,12 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"number"}
                 optionKey="i18nKey"
-                name="InformantMobileNo"
-                value={InformantMobileNo}
-                onChange={setSelectInformantMobileNo}
+                name="InitiatorMobile"
+                value={InitiatorMobile}
+                onChange={setSelectInitiatorMobile}
                 disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
@@ -296,17 +302,17 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
         {toast && (
           <Toast
-            error={infomantNameError || infomantAadharError || infomantMobileError || informerDesiError}
+            error={InitiaterNameError || InitiaterAadharError || InitiaterMobileError || InitiaterRelationError }
             label={
-              infomantNameError || infomantAadharError || infomantMobileError || informerDesiError
-                ? infomantNameError
-                  ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
-                  : infomantAadharError
-                  ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-                  : infomantMobileError
-                  ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                  : informerDesiError
-                  ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+              InitiaterNameError || InitiaterAadharError || InitiaterMobileError || InitiaterRelationError
+                ? InitiaterNameError
+                  ? t(`CR_ERROR_INITIATER_NAME_CHOOSE`)
+                  : InitiaterAadharError
+                  ? t(`CR_ERROR_INITIATER_AADHAR_CHOOSE`)
+                  : InitiaterMobileError
+                  ? t(`CR_ERROR_INITIATER_MOBILE_CHOOSE`) 
+                  : InitiaterRelationError  
+                  ? t(`CR_ERROR_INITIATER_RELATION_CHOOSE`)              
                   : setToast(false)
                 : setToast(false)
             }
