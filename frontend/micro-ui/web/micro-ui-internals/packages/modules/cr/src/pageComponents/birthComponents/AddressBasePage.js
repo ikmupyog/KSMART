@@ -10,6 +10,7 @@ import AddressSameAsAbove from "./AddressSameAsAbove";
 import AddressPermanent from "./AddressPermanent";
 import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentInsideKerala";
+import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
 const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -82,7 +83,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
     const [presentOutSideIndiaPostCode, setPostCode] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaPostCode ? formData?.AddressBirthDetails?.presentOutSideIndiaPostCode : "");
     const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AddressBirthDetails?.presentOutSideCountry ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
-  
+
     //############################################### Same As Above ##################################################################################################
 
     const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressBirthDetails?.isPrsentAddress ? formData?.AddressBirthDetails?.isPrsentAddress : true);
@@ -110,6 +111,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [permntInKeralaWardNo, setpermntInKeralaWardNo] = useState(formData?.AddressBirthDetails?.permntInKeralaWardNo ? formData?.AddressBirthDetails?.permntInKeralaWardNo : null);
 
     //############################################################################### Permanent Outside Kerala ############################################################################
+
     const [permntOutsideKeralaDistrict, setpermntOutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaDistrict ? formData?.AddressBirthDetails?.permntOutsideKeralaDistrict : null);
     const [permntOutsideKeralaTaluk, setpermntOutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaTaluk ? formData?.AddressBirthDetails?.permntOutsideKeralaTaluk : null);
     const [permntOutsideKeralaCityVilgeEn, setpermntOutsideKeralaCityVilgeEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn ? formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn : null);
@@ -124,6 +126,18 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl : "");
     const [permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn ? formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn : "");
     const [permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl ? formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl : "");
+
+    //######################################################################## Permanent Ouside Country #############################################################################################
+
+    const [PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLineoneEn);
+    const [PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLineoneMl);
+    const [PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLinetwoEn);
+    const [PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLinetwoMl);
+    const [PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaprovinceEn);
+    const [PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaVillage ? formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaVillage : null);
+    const [PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaCityTown ? formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaCityTown : null);
+    const [PermanentOutsideIndiaPostCode, setPermantpostCode] = useState(formData?.AddressOutsideIndiaDetails?.PermanentOutsideIndiaPostCode);
+    const [PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaCountry);
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -239,7 +253,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("presentOutSideIndiaadrsCityTown", presentOutSideIndiaadrsCityTown ? presentOutSideIndiaadrsCityTown : null);
         sessionStorage.setItem("isPrsentAddress", isPrsentAddress ? isPrsentAddress : true);
 
-        
+
         sessionStorage.setItem("permtaddressCountry", permtaddressCountry.code);
         sessionStorage.setItem("permtaddressStateName", permtaddressStateName.code);
         sessionStorage.setItem("permntInKeralaAdrHouseNameEn", permntInKeralaAdrHouseNameEn ? permntInKeralaAdrHouseNameEn : null);
@@ -268,6 +282,15 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("permntOutsideKeralaStreetNameMl", permntOutsideKeralaStreetNameMl ? permntOutsideKeralaStreetNameMl : null);
         sessionStorage.setItem("permntOutsideKeralaPostOfficeEn", permntOutsideKeralaPostOfficeEn ? permntOutsideKeralaPostOfficeEn : null);
         sessionStorage.setItem("permntOutsideKeralaPostOfficeMl", permntOutsideKeralaPostOfficeMl ? permntOutsideKeralaPostOfficeMl : null);
+        sessionStorage.setItem("PermntOutsideIndiaLineoneEn", PermntOutsideIndiaLineoneEn ? PermntOutsideIndiaLineoneEn : null);
+        sessionStorage.setItem("PermntOutsideIndiaLineoneMl", PermntOutsideIndiaLineoneMl ? PermntOutsideIndiaLineoneMl : null);
+        sessionStorage.setItem("PermntOutsideIndiaLinetwoEn", PermntOutsideIndiaLinetwoEn ? PermntOutsideIndiaLinetwoEn : null);
+        sessionStorage.setItem("PermntOutsideIndiaLinetwoMl", PermntOutsideIndiaLinetwoMl ? PermntOutsideIndiaLinetwoMl : null);
+        sessionStorage.setItem("PermntOutsideIndiaprovinceEn", PermntOutsideIndiaprovinceEn ? PermntOutsideIndiaprovinceEn : null);
+        sessionStorage.setItem("PermntOutsideIndiaVillage", PermntOutsideIndiaVillage ? PermntOutsideIndiaVillage.code : null);
+        sessionStorage.setItem("PermntOutsideIndiaCityTown", PermntOutsideIndiaCityTown ? PermntOutsideIndiaCityTown : null);
+        sessionStorage.setItem("PermanentOutsideIndiaPostCode", PermanentOutsideIndiaPostCode ? PermanentOutsideIndiaPostCode : null);
+        sessionStorage.setItem("PermntOutsideIndiaCountry", PermntOutsideIndiaCountry ? PermntOutsideIndiaCountry.code : null);
 
         onSelect(config.key, {
             presentaddressCountry,
@@ -335,7 +358,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
             permntOutsideKeralaStreetNameMl,
             permntOutsideKeralaHouseNameMl,
             permntOutsideKeralaPostOfficeEn,
-            permntOutsideKeralaPostOfficeMl
+            permntOutsideKeralaPostOfficeMl,
+            PermntOutsideIndiaLineoneEn,
+            PermntOutsideIndiaLineoneMl,
+            PermntOutsideIndiaLinetwoEn,
+            PermntOutsideIndiaLinetwoMl,
+            PermntOutsideIndiaprovinceEn,
+            PermntOutsideIndiaVillage,
+            PermntOutsideIndiaCityTown,
+            PermanentOutsideIndiaPostCode,
+            PermntOutsideIndiaCountry
         });
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
@@ -552,6 +584,32 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
                             value={value}
                             setValue={setValue}
+                        />
+                    </div>
+                )}
+                {countryvalue != "IND" && isPrsentAddress === false && (
+                    <div>
+                        <AddressPermanentOutsideIndia
+                            PermntOutsideIndiaLineoneEn={PermntOutsideIndiaLineoneEn}
+                            setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
+                            PermntOutsideIndiaLineoneMl={PermntOutsideIndiaLineoneMl}
+                            setadrsPermntOutsideIndiaLineoneMl={setadrsPermntOutsideIndiaLineoneMl}
+                            PermntOutsideIndiaLinetwoEn={PermntOutsideIndiaLinetwoEn}
+                            setadrsPermntOutsideIndiaLinetwoEn={setadrsPermntOutsideIndiaLinetwoEn}
+                            PermntOutsideIndiaLinetwoMl={PermntOutsideIndiaLinetwoMl}
+                            setadrsPermntOutsideIndiaLinetwoMl={setadrsPermntOutsideIndiaLinetwoMl}
+                            PermntOutsideIndiaprovinceEn={PermntOutsideIndiaprovinceEn}
+                            setPermntOutsideIndiaprovinceEn={setPermntOutsideIndiaprovinceEn}
+                            PermntOutsideIndiaVillage={PermntOutsideIndiaVillage}
+                            setadrsPermntOutsideIndiaVillage={setadrsPermntOutsideIndiaVillage}
+                            PermntOutsideIndiaCityTown={PermntOutsideIndiaCityTown}
+                            setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
+                            PermanentOutsideIndiaPostCode={PermanentOutsideIndiaPostCode}
+                            setPermantpostCode={setPermantpostCode}
+                            PermntOutsideIndiaCountry={PermntOutsideIndiaCountry}
+                            setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                            countryvalue={countryvalue}
+                            setCountryValue={setCountryValue}
                         />
                     </div>
                 )}

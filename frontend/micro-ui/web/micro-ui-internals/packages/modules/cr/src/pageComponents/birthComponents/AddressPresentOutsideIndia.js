@@ -49,7 +49,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
 
   function setSelectadrsVillage(value) {
     setadrsVillage(value);
-    console.log("Village" + cmbVillage);
   }
 
   function setSelectadrsCityTown(e) {
@@ -146,9 +145,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
     setOutSideCountry(value);
     console.log("Country" + cmbCountry);
   }
-  function setSelectPostCode(e) {
-    setPostCode(e.target.value);
-  }
+  // function setSelectPostCode(e) {
+  //   setPostCode(e.target.value);
+  // }
   function setSelectPostCode(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 10) {
@@ -208,17 +207,16 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={true}
                 option={cmbCountry}
                 selected={presentOutSideCountry}
                 select={setSelectOutSideCountry}
+                placeholder={`${t("CS_COMMON_COUNTRY")}`}
               />
             </div>
             <div className="col-md-6">
               <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="presentOutSideIndiaProvinceEn"
@@ -241,7 +239,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
               <Dropdown
                 t={t}
                 optionKey="i18nKey"
-                isMandatory={true}
                 option={cmbUrbanRural}
                 selected={presentOutSideIndiaadrsVillage}
                 select={setSelectadrsVillage}
@@ -254,7 +251,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="presentOutSideIndiaadrsCityTown"
@@ -268,7 +264,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
               <CardLabel>{t("CR_ZIP_CODE")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="presentOutSideIndiaPostCode"
@@ -292,7 +287,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
               <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="presentOutSideIndiaAdressEn"
@@ -307,7 +301,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
               <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="presentOutSideIndiaAdressEnB"
@@ -325,7 +318,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
               <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="presentOutSideIndiaAdressMl"
@@ -344,7 +336,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
               <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="presentOutSideIndiaAdressMlB"
