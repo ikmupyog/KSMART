@@ -99,7 +99,7 @@ public class ApplicantPersonal {
     @JsonProperty("title")
     private String title;
 
-    @Schema(type = "string", description = "Tenant identification number")
+    @Schema(type = "string", description = "Tenant identification number", example = "kl.cochin")
     @NotBlank(message = "Tenant identification number is required")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
     @Pattern(regexp = FMConstants.PATTERN_TENANT,
@@ -176,4 +176,5 @@ public class ApplicantPersonal {
         }
         documents.add(document);
     }
+
 }

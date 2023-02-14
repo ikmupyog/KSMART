@@ -106,15 +106,31 @@ public class FileManagementController implements FileManagementBaseController {
                                                         .build());
     }
 
+    @Override
+    @PostMapping("/applicantservices/_download")
+    public ResponseEntity<CertificateResponse> downloadCertificate(@RequestBody final RequestInfoWrapper request,
+                                                                   @ModelAttribute final ApplicantServiceSearchCriteria searchCriteria) {
+
+        final List<CertificateDetails> certificateDetails = fmService.downloadCertificate(request.getRequestInfo(),
+                                                                                          searchCriteria);
+        return ResponseEntity.ok(CertificateResponse.builder()
+                                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                        Boolean.TRUE))
+                                                    .certificateDetails(certificateDetails)
+                                                    .build());
+    }
+
+    @Deprecated
+    @Override
     @PostMapping("/applicantpersonals/_download") // value = { "/applicantpersonals/_download" }
     public ResponseEntity<CertificateResponse> download(@RequestBody final RequestInfoWrapper request,
                                                         @ModelAttribute final ApplicantSearchCriteria criteria) {
 
-        final List<CertificateDetails> details = fmService.download(criteria, request.getRequestInfo());
+        final List<CertificateDetails> certificateDetails = fmService.download(criteria, request.getRequestInfo());
         final CertificateResponse response = CertificateResponse.builder()
                                                                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                                     Boolean.TRUE))
-                                                                .certificateDet(details)
+                                                                .certificateDetails(certificateDetails)
                                                                 .build();
         return ResponseEntity.ok(response);
     }

@@ -1,13 +1,14 @@
 package org.egov.filemgmnt.web.models.certificate;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.egov.filemgmnt.util.FMConstants;
+import org.egov.filemgmnt.web.enums.CertificateStatus;
 import org.egov.filemgmnt.web.models.AuditDetails;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -28,33 +29,41 @@ public class CertificateDetails {
     @JsonProperty("id")
     private String id;
 
-    @Schema(type = "string", description = "Tenant identification number")
-    @Size(max = 64)
-    @NotNull
+    @Schema(type = "string", description = "Tenant identification number", example = "kl.cochin")
+    @NotBlank(message = "Tenant identification number is required")
+    @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
+    @Pattern(regexp = FMConstants.PATTERN_TENANT,
+             message = "Invalid tenant identification number format, ex: kl.cochin")
     @JsonProperty("tenantId")
     private String tenantId;
 
     @Schema(type = "string", description = "Bussiness service code")
-    @Size(max = 64)
+    @Size(max = 64, message = "Business service code length cannot exceed 64 characters")
     @JsonProperty("bussinessService")
     private String bussinessService;
 
     @Schema(type = "string", description = "Certificate number")
-    @Size(max = 64)
+    @Size(max = 64, message = "Certificate number length cannot exceed 64 characters")
     @JsonProperty("certificateNo")
     private String certificateNo;
 
-    @Schema(type = "string", description = "Status of certificate")
-    @Size(max = 64)
+    @Schema(type = "string",
+            allowableValues = { "ACTIVE", "CANCELLED", "FREE_DOWNLOAD", "PAID_DOWNLOAD", "PAID_PDF_GENERATED", "PAID" },
+            description = "Status of certificate")
     @JsonProperty("certificateStatus")
-    private StatusEnum certificateStatus;
+    private CertificateStatus certificateStatus;
 
-    @Schema(type = "string", description = "Applicant id")
-    @Size(max = 64)
+    @Schema(type = "string", format = "uuid", description = "Applicant id")
+    @Size(max = 64, message = "Applicant personal id length cannot exceed 64 characters")
     @JsonProperty("applicantPersonalId")
     private String applicantPersonalId;
 
-    @Schema(type = "string", description = "File store id")
+    @Schema(type = "string", description = "Service details id")
+    @Size(max = 64, message = "Service details id length cannot exceed 64 characters")
+    @JsonProperty("serviceDetailsId")
+    private String serviceDetailsId;
+
+    @Schema(type = "string", format = "uuid", description = "File store id")
     @Size(max = 64)
     @JsonProperty("filestoreId")
     private String filestoreId;
@@ -66,40 +75,4 @@ public class CertificateDetails {
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
-    public enum StatusEnum {
-        ACTIVE("ACTIVE"),
-
-        CANCELLED("CANCELLED"),
-
-        FREE_DOWNLOAD("FREE_DOWNLOAD"),
-
-        PAID_DOWNLOAD("PAID_DOWNLOAD"),
-
-        PAID_PDF_GENERATED("PAID_PDF_GENERATED"),
-
-        PAID("PAID");
-
-        private String value;
-
-        StatusEnum(String value) {
-            this.value = value;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return String.valueOf(value);
-        }
-
-        @JsonCreator
-        public static StatusEnum fromValue(String text) {
-            for (StatusEnum b : StatusEnum.values()) {
-                if (String.valueOf(b.value)
-                          .equals(text)) {
-                    return b;
-                }
-            }
-            return null;
-        }
-    }
 }

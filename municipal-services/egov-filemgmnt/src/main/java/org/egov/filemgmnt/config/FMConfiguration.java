@@ -72,10 +72,10 @@ public class FMConfiguration {
     private String userSearchEndpoint;
 
     // Communication file config
-    @Value("${persister.save.communicationfile.topic}")
+    @Value("${persister.save.communicationfile.topic:}")
     private String saveCommunicationFileTopic;
 
-    @Value("${persister.update.communicationfile.topic}")
+    @Value("${persister.update.communicationfile.topic:}")
     private String updateCommunicationFileTopic;
 
     // PDF Gen

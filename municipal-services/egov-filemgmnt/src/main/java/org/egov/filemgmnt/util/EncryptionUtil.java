@@ -47,7 +47,7 @@ public class EncryptionUtil {
         this.encryptionService = encryptionService;
     }
 
-    public <T> T encryptObject(final Object objectToEncrypt, final String key, final Class<T> classType) {
+    public <T> T encryptObject(final Object objectToEncrypt, final String key, final Class<T> classType) { // NOPMD
         if (objectToEncrypt == null) {
             return null;
         }

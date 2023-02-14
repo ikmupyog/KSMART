@@ -34,7 +34,7 @@ public class ApplicantFileDetail {
     @JsonProperty("id")
     private String id;
 
-    @Schema(type = "string", description = "Tenant identification number")
+    @Schema(type = "string", description = "Tenant identification number", example = "kl.cochin")
     @NotBlank(message = "Tenant identification number is required")
     @Size(max = 64, message = "Tenant identification number length cannot exceed 64 characters")
     @Pattern(regexp = "^kl\\.[a-z]+$", message = "Invalid tenant identification number format, ex: kl.cochin")

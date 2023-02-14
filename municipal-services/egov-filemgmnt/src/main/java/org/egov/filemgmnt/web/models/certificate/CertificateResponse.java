@@ -26,14 +26,14 @@ public class CertificateResponse {
     private ResponseInfo responseInfo;
 
     @JsonProperty("CertificateDetails")
-    private List<CertificateDetails> certificateDet;
+    private List<CertificateDetails> certificateDetails;
 
-    public CertificateResponse addCertificateDetails(CertificateDetails det) {
+    public CertificateResponse addCertificateDetails(final CertificateDetails certificateDetail) {
 
-        if (certificateDet == null) {
-            certificateDet = new ArrayList<>();
+        if (certificateDetails == null) {
+            certificateDetails = new ArrayList<>();
         }
-        certificateDet.add(det);
+        certificateDetails.add(certificateDetail);
         return this;
 
     }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Communication File Management")
@@ -35,6 +36,7 @@ public class CommunicationFileManagementController {
 
     }
 
+    @Operation(hidden = true)
     @PostMapping("/officecommunication/_create")
     public ResponseEntity<CommunicationFileResponse> create(@RequestBody CommunicationFileRequest request) {
         List<CommunicationFile> files = communicationService.create(request);
@@ -48,6 +50,7 @@ public class CommunicationFileManagementController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(hidden = true)
     @PutMapping("/officecommuication/_update")
     public ResponseEntity<CommunicationFileResponse> update(@RequestBody CommunicationFileRequest request) {
 
@@ -62,6 +65,7 @@ public class CommunicationFileManagementController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(hidden = true)
     @PostMapping("/officecommuication/_search")
     public ResponseEntity<CommunicationFileResponse> search(@RequestBody RequestInfoWrapper request,
                                                             @ModelAttribute CommunicationFileSearchCriteria criteria) {

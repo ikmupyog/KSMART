@@ -8,7 +8,6 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.Role;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.repository.ServiceRequestRepository;
-import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.web.enums.FMUserType;
 import org.egov.filemgmnt.web.models.ApplicantPersonal;
 import org.egov.filemgmnt.web.models.user.FMUser;
@@ -23,11 +22,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Slf4j
 class UserService {
 
     @Autowired
@@ -140,19 +137,7 @@ class UserService {
     }
 
     private <T> FMUserResponse userCall(final StringBuilder uri, final T request) {
-        if (log.isInfoEnabled()) {
-            log.info("User URI: {}", uri.toString());
-            log.info("User request: \n{}", FMUtils.toJson(request));
-        }
-
-        final FMUserResponse response = objectMapper.convertValue(restRepo.fetchResult(uri, request),
-                                                                  FMUserResponse.class);
-
-        if (log.isDebugEnabled()) {
-            log.debug("User response: \n{}", FMUtils.toJson(response));
-        }
-
-        return response;
+        return objectMapper.convertValue(restRepo.fetchResult(uri, request), FMUserResponse.class);
     }
 
     private Role buildCitizenRole(final String tenantId) {

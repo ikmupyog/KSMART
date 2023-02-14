@@ -370,14 +370,16 @@ serviceMaps:
                  
     - query: >
         UPDATE eg_fm_applicantpersonal 
-        SET aadhaarno = ?, email = ?, firstname = ?, lastname = ?, title = ?, mobileno = ?, lastmodifiedby = ?, lastmodifiedtime = ?
+        SET aadhaarno = ?, email = ?, firstname = ?, lastname = ?, title = ?, mobileno = ?, fatherfirstname= ?
+        , fatherlastname= ?, motherfirstname= ?, motherlastname= ?, applicantcategory= ?, dateofbirth= ?, bankaccountno= ?, firstnamemal= ?
+        , lastnamemal= ?, fatherfirstnamemal= ?, fatherlastnamemal= ?, motherfirstnamemal= ?, motherlastnamemal= ?, lastmodifiedby = ?, lastmodifiedtime = ?
         WHERE id = ?;
         
       basePath: ApplicantServiceDetail.applicant
       jsonMaps:
-      - jsonPath: $.ApplicantServiceDetail.applicant.aadhaarNo 
+      - jsonPath: $.ApplicantServiceDetail.applicant.aadhaarNumber 
       
-      - jsonPath: $.ApplicantServiceDetail.applicant.email 
+      - jsonPath: $.ApplicantServiceDetail.applicant.emailId 
       
       - jsonPath: $.ApplicantServiceDetail.applicant.firstName 
       
@@ -385,8 +387,34 @@ serviceMaps:
       
       - jsonPath: $.ApplicantServiceDetail.applicant.title 
       
-      - jsonPath: $.ApplicantServiceDetail.applicant.mobileNo
-     
+      - jsonPath: $.ApplicantServiceDetail.applicant.mobileNumber
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.fatherFirstName
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.fatherLastName
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.motherFirstName
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.motherLastName
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.applicantcategory
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.dateofbirth
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.bankaccountno
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.firstnamemal
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.lastnamemal
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.fatherFirstNameMal
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.fatherLastNameMal
+       
+      - jsonPath: $.ApplicantServiceDetail.applicant.motherFirstNameMal
+        
+      - jsonPath: $.ApplicantServiceDetail.applicant.motherLastNameMal         
+   
       - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.lastModifiedBy
 
       - jsonPath: $.ApplicantServiceDetail.applicant.auditDetails.lastModifiedTime
@@ -403,7 +431,9 @@ serviceMaps:
       
     - query: >      
         UPDATE eg_fm_applicantaddress 
-        SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?, lastmodifiedby = ?, lastmodifiedtime = ?
+        SET buildingno = ?, housename = ?, street = ?, pincode = ?, postofficename = ?, residenceassociationno = ?, localplace = ?
+        , mainplace = ?, wardno = ?, subno = ?, housenamemal = ?, village = ?, taluk = ?, streetmal =?
+        , localplacemal = ?, mainplacemal = ?, lastmodifiedby = ?, lastmodifiedtime = ?
         WHERE id = ?;
         
       basePath: ApplicantServiceDetail.applicant.address
@@ -417,6 +447,28 @@ serviceMaps:
       - jsonPath: $.ApplicantServiceDetail.applicant.address.pincode
       
       - jsonPath: $.ApplicantServiceDetail.applicant.address.postOfficeName
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.residenceAssociationNo
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.localPlace
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.mainPlace
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.wardNo
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.subNo     
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.houseNameMal    
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.village          
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.taluk
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.streetmal
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.localPlaceMal
+      
+      - jsonPath: $.ApplicantServiceDetail.applicant.address.mainPlaceMal
      
       - jsonPath: $.ApplicantServiceDetail.applicant.address.auditDetails.lastModifiedBy
 
@@ -517,3 +569,39 @@ serviceMaps:
       - jsonPath: $.ApplicantServiceDetail.serviceDocument.auditDetails.lastModifiedTime
          
       - jsonPath: $.ApplicantServiceDetail.serviceDocument.id
+
+  -  version: 1.0
+     description: Persists certificate details  in egov_filemgmnt database, eg_fm_certificatedetail table
+     fromTopic: save-fm-applicantcertificate
+     isTransaction: true
+     queryMaps:
+     - query: >
+         INSERT INTO eg_fm_certificatedetail(id, tenantid, businessservice, certificateno, certificatestatus, applicantpersonalid
+           , filestoreid, dateofissue, createdby, createdtime, lastmodifiedby, lastmodifiedtime) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+
+       basePath: CertificateDetails.*
+       jsonMaps:
+       - jsonPath: $.CertificateDetails.*.id
+
+       - jsonPath: $.CertificateDetails.*.tenantId 
+      
+       - jsonPath: $.CertificateDetails.*.bussinessService 
+      
+       - jsonPath: $.CertificateDetails.*.certificateNo 
+      
+       - jsonPath: $.CertificateDetails.*.certificateStatus 
+      
+       - jsonPath: $.CertificateDetails.*.applicantPersonalId 
+       
+       - jsonPath: $.CertificateDetails.*.filestoreId 
+       
+       - jsonPath: $.CertificateDetails.*.dateofIssue 
+      
+       - jsonPath: $.CertificateDetails.*.auditDetails.createdBy
+
+       - jsonPath: $.CertificateDetails.*.auditDetails.createdTime
+      
+       - jsonPath: $.CertificateDetails.*.auditDetails.lastModifiedBy
+
+       - jsonPath: $.CertificateDetails.*.auditDetails.lastModifiedTime

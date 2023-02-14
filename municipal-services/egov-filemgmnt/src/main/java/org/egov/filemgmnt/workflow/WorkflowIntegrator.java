@@ -60,7 +60,7 @@ public class WorkflowIntegrator {
         }
 
         if (StringUtils.isBlank(fileAction)) {
-            throw new CustomException(INVALID_FILE_ACTION.getCode(), " File action is required.");
+            throw new CustomException(INVALID_FILE_ACTION.getCode(), "File action is required.");
         }
 
         final ApplicantPersonal applicant = serviceDetail.getApplicant();

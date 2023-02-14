@@ -1,6 +1,5 @@
 package org.egov.filemgmnt.web.models.certificate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.egov.common.contract.request.RequestInfo;
@@ -20,21 +19,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CertificateRequest {
+public class ResidentialCertificateRequest {
 
     @JsonProperty("RequestInfo")
     private RequestInfo requestInfo;
 
-    @JsonProperty("CertificateDetails")
-    private List<CertificateDetails> certificateDetails;
-
-    public CertificateRequest addCertificateDetails(final CertificateDetails certificateDetail) {
-        if (certificateDetails == null) {
-            certificateDetails = new ArrayList<>();
-        }
-        certificateDetails.add(certificateDetail);
-
-        return this;
-    }
+    @JsonProperty("ResidentialCertificate")
+    private List<ResidentialCertificate> residentialCertificates;
 
 }

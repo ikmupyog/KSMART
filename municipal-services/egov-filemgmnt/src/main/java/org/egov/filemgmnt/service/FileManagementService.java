@@ -50,13 +50,15 @@ public class FileManagementService extends AbstractFileManagementService {
     private final FileManagementValidator validator;
     private final FileManagementEnrichment enrichment;
     private final FileManagementRepository repository;
+    private final CertificateService certService;
 
     FileManagementService(final FileManagementValidator validator, final FileManagementEnrichment enrichment,
-                          final FileManagementRepository repository) {
+                          final FileManagementRepository repository, final CertificateService certService) {
         super();
         this.validator = validator;
         this.enrichment = enrichment;
         this.repository = repository;
+        this.certService = certService;
     }
 
     public ApplicantServiceDetail create(final ApplicantServiceRequest request) {
@@ -194,12 +196,27 @@ public class FileManagementService extends AbstractFileManagementService {
         return decryptApplicants(result, requestInfo);
     }
 
+    // Residential certificate download
+    public List<CertificateDetails> downloadCertificate(final RequestInfo requestInfo,
+                                                        final ApplicantServiceSearchCriteria searchCriteria) {
+        final CertificateRequest request = certService.creteCertificateRequest(searchCriteria, requestInfo);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Certificate request: \n{}", FMUtils.toJson(request));
+        }
+
+        // producer.push(fmConfig.getSaveApplicantCertificateTopic(), request);
+
+        return request.getCertificateDetails();
+    }
+
+    @Deprecated
     public List<CertificateDetails> download(@Valid final ApplicantSearchCriteria criteria,
                                              final RequestInfo requestInfo) {
         final CertificateRequest request = repository.getResidentialCertificate(criteria, requestInfo);
 
         if (log.isDebugEnabled()) {
-            log.debug("Pdf request: \n{}", FMUtils.toJson(request));
+            log.debug("Certificate request: \n{}", FMUtils.toJson(request));
         }
 
         producer.push(fmConfig.getSaveApplicantCertificateTopic(), request);
