@@ -22,12 +22,18 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
   const [InitiatorName, setInitiatorName] = useState(
     formData?.Initiater?.InitiatorName ? formData?.Initiater?.InitiatorName : ""
   );
+  const [InitiatorRelation, setInitiatorRelation] = useState(
+    formData?.Initiater?.InitiatorRelation ? formData?.Initiater?.InitiatorRelation : ""
+  );
+  
   const [InitiatorMobile, setInitiatorMobile] = useState(
     formData?.Initiater?.InitiatorMobile ? formData?.Initiater?.InitiatorMobile : ""
   );
    
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
+  
+  const [InitiaterRelationError, setInitiaterRelationError] = useState(formData?.Initiater?.InitiatorRelation ? false : false);
   const [InitiaterNameError, setInitiaterNameError] = useState(formData?.Initiater?.InitiatorName ? false : false);
   const [InitiaterAadharError, setInitiaterAadharError] = useState(formData?.Initiater?.InitiatorAadhaar ? false : false);
   const [InitiaterMobileError, setInitiaterMobileError] = useState(formData?.Initiater?.InitiatorMobile ? false : false);
@@ -82,6 +88,14 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
       setInitiatorName(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
+  function setSelectInitiatorRelation(e) {
+    if (e.target.value.length === 51) {
+      return false;      
+    } else {
+      setInitiatorRelation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
+  
   // function setSelectInitiatorName(value) {
   //   setInitiatorName(value);    
   // }
@@ -104,6 +118,17 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
   let validFlag = true;
   const goNext = () => {
+    if (InitiatorRelation == null || InitiatorRelation == "" || InitiatorRelation == undefined) {
+      validFlag = false;
+      setInitiaterRelationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setInitiaterRelationError(false);
+    }
+   
     if (InitiatorName == null || InitiatorName == "" || InitiatorName == undefined) {
       validFlag = false;
       setInitiaterNameError(true);
@@ -114,7 +139,8 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
     } else {
       setInitiaterNameError(false);
     }
-   
+
+
     if (InitiatorAadhaar == null || InitiatorAadhaar == "" || InitiatorAadhaar == undefined) {
       validFlag = false;
       setInitiaterAadharError(true);
@@ -138,7 +164,8 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
     if (validFlag == true) {
       sessionStorage.setItem("isDeclarationInfoone", isDeclarationInfoone ? isDeclarationInfoone : null);
-      // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);
+      // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);      
+      sessionStorage.setItem("InitiatorRelation", InitiatorRelation ? InitiatorRelation : null);
       sessionStorage.setItem("InitiatorName", InitiatorName ? InitiatorName : null);
       sessionStorage.setItem("InitiatorAadhaar", InitiatorAadhaar ? InitiatorAadhaar : null);
       sessionStorage.setItem("InitiatorMobile", InitiatorMobile ? InitiatorMobile : null);      
@@ -146,6 +173,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
         isDeclarationInfoone,
         // isDeclarationInfotwo,
         InitiatorName,
+        InitiatorRelation,
         InitiatorAadhaar,
         InitiatorMobile,               
       });
@@ -193,6 +221,24 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
+          <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_RELATION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="InitiatorRelation"
+                value={InitiatorRelation}
+                onChange={setSelectInitiatorRelation}
+                disable={isEdit}
+                placeholder={`${t("CR_RELATION")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RELATION") })}
+              />
+            </div>
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_AADHAAR")}`}
@@ -256,15 +302,17 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
         {toast && (
           <Toast
-            error={InitiaterNameError || InitiaterAadharError || InitiaterMobileError }
+            error={InitiaterNameError || InitiaterAadharError || InitiaterMobileError || InitiaterRelationError }
             label={
-              InitiaterNameError || InitiaterAadharError || InitiaterMobileError 
+              InitiaterNameError || InitiaterAadharError || InitiaterMobileError || InitiaterRelationError
                 ? InitiaterNameError
                   ? t(`CR_ERROR_INITIATER_NAME_CHOOSE`)
                   : InitiaterAadharError
                   ? t(`CR_ERROR_INITIATER_AADHAR_CHOOSE`)
                   : InitiaterMobileError
-                  ? t(`CR_ERROR_INITIATER_MOBILE_CHOOSE`)                 
+                  ? t(`CR_ERROR_INITIATER_MOBILE_CHOOSE`) 
+                  : InitiaterRelationError  
+                  ? t(`CR_ERROR_INITIATER_RELATION_CHOOSE`)              
                   : setToast(false)
                 : setToast(false)
             }
