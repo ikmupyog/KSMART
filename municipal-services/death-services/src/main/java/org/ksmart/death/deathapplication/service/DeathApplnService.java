@@ -66,10 +66,9 @@ public class DeathApplnService {
           //Rakhi S ikm on 08.02.2023
           enrichmentService.enrichCreate(request);
           enrichmentService.setACKNumber(request);           
-          //Jasmine 13.02.2023
-          workflowIntegrator.callWorkFlow(request);
          //RAkhi S ikm  on 06.02.2023         
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
+          workflowIntegrator.callWorkFlow(request);
           return request.getDeathCertificateDtls();
      }
 
