@@ -35,7 +35,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [countryvalue, setCountryValue] = useState(formData?.AddressBirthDetails?.presentaddressCountry ? formData?.AddressBirthDetails?.presentaddressCountry.countrycode : null);
     const [value, setValue] = useState(formData?.AddressBirthDetails?.presentaddressStateName ? formData?.AddressBirthDetails?.presentaddressStateName.statecode : null);
 
-    //################################# Inside Kerala #########################################################################################################
+    //################################# Present Inside Kerala #########################################################################################################
 
     const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo);
     const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentInsideKeralaDistrict);
@@ -54,7 +54,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
 
-    //################################# Outside Kerala ##########################################################################################################
+    //################################# Present Outside Kerala ##########################################################################################################
 
     const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaDistrict ? formData?.AddressBirthDetails?.presentOutsideKeralaDistrict : null);
     const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : null);
@@ -71,23 +71,18 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [presentOutsideKeralaPostOfficeEn, setoutsideKeralaPostOfficeEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn ? formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn : "");
     const [presentOutsideKeralaPostOfficeMl, setoutsideKeralaPostOfficeMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl ? formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl : "");
 
-    //############################################### Out Side India ###########################################################################################################
+    //############################################### Present Out Side India ###########################################################################################################
 
     const [presentOutSideIndiaAdressEn, setAdressEn] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaAdressEn ? formData?.AddressBirthDetails?.presentOutSideIndiaAdressEn : "");
     const [presentOutSideIndiaAdressMl, setAdressMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaAdressMl ? formData?.AddressBirthDetails?.presentOutSideIndiaAdressMl : "");
     const [presentOutSideIndiaAdressEnB, setAdressEnB] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaAdressEnB ? formData?.AddressBirthDetails?.presentOutSideIndiaAdressEnB : "");
     const [presentOutSideIndiaAdressMlB, setAdressMlB] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaAdressMlB ? formData?.AddressBirthDetails?.presentOutSideIndiaAdressMlB : "");
-    const [presentOutSideIndiaLocalityEn, setLocalityEn] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaLocalityEn ? formData?.AddressBirthDetails?.presentOutSideIndiaLocalityEn : "");
-    const [presentOutSideIndiaLocalityMl, setLocalityMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaLocalityMl ? formData?.AddressBirthDetails?.presentOutSideIndiaLocalityMl : "");
     const [presentOutSideIndiaProvinceEn, setProvinceEn] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceEn : "");
-    const [presentOutSideIndiaProvinceMl, setProvinceMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl : "");
+    const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl : "");
+    const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
     const [presentOutSideIndiaPostCode, setPostCode] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaPostCode ? formData?.AddressBirthDetails?.presentOutSideIndiaPostCode : "");
     const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AddressBirthDetails?.presentOutSideCountry ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
-    const [presentOutSideIndiaResNoEn, setResNoEn] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaResNoEn ? formData?.AddressBirthDetails?.presentOutSideIndiaResNoEn : "");
-    const [presentOutSideIndiaResNoMl, setResNoMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaResNoMl ? formData?.AddressBirthDetails?.presentOutSideIndiaResNoMl : "");
-    const [presentOutSideIndiaHouseNameEn, setHouseNameEn] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaHouseNameEn ? formData?.AddressBirthDetails?.presentOutSideIndiaHouseNameEn : "");
-    const [presentOutSideIndiaHouseNameMl, setHouseNameMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaHouseNameMl ? formData?.AddressBirthDetails?.presentOutSideIndiaHouseNameMl : "");
-
+  
     //############################################### Same As Above ##################################################################################################
 
     const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressBirthDetails?.isPrsentAddress ? formData?.AddressBirthDetails?.isPrsentAddress : true);
@@ -237,18 +232,14 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("presentOutSideIndiaAdressMl", presentOutSideIndiaAdressMl ? presentOutSideIndiaAdressMl : null);
         sessionStorage.setItem("presentOutSideIndiaAdressEnB", presentOutSideIndiaAdressEnB ? presentOutSideIndiaAdressEnB : null);
         sessionStorage.setItem("presentOutSideIndiaAdressMlB", presentOutSideIndiaAdressMlB ? presentOutSideIndiaAdressMlB : null);
-        sessionStorage.setItem("presentOutSideIndiaAdressMlB", presentOutSideIndiaAdressMlB ? presentOutSideIndiaAdressMlB : null);
-        sessionStorage.setItem("presentOutSideIndiaLocalityMl", presentOutSideIndiaLocalityMl ? presentOutSideIndiaLocalityMl : null);
         sessionStorage.setItem("presentOutSideIndiaProvinceEn", presentOutSideIndiaProvinceEn ? presentOutSideIndiaProvinceEn : null);
-        sessionStorage.setItem("presentOutSideIndiaProvinceMl", presentOutSideIndiaProvinceMl ? presentOutSideIndiaProvinceMl : null);
+        sessionStorage.setItem("presentOutSideIndiaadrsVillage", presentOutSideIndiaadrsVillage ? presentOutSideIndiaadrsVillage.code : null);
         sessionStorage.setItem("presentOutSideIndiaPostCode", presentOutSideIndiaPostCode ? presentOutSideIndiaPostCode : null);
         sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry ? presentOutSideCountry.code : null);
-        sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry ? presentOutSideCountry : null);
-        sessionStorage.setItem("presentOutSideIndiaResNoMl", presentOutSideIndiaResNoMl ? presentOutSideIndiaResNoMl : null);
-        sessionStorage.setItem("presentOutSideIndiaHouseNameEn", presentOutSideIndiaHouseNameEn ? presentOutSideIndiaHouseNameEn : null);
-        sessionStorage.setItem("presentOutSideIndiaHouseNameMl", presentOutSideIndiaHouseNameMl ? presentOutSideIndiaHouseNameMl : null);
+        sessionStorage.setItem("presentOutSideIndiaadrsCityTown", presentOutSideIndiaadrsCityTown ? presentOutSideIndiaadrsCityTown : null);
         sessionStorage.setItem("isPrsentAddress", isPrsentAddress ? isPrsentAddress : true);
 
+        
         sessionStorage.setItem("permtaddressCountry", permtaddressCountry.code);
         sessionStorage.setItem("permtaddressStateName", permtaddressStateName.code);
         sessionStorage.setItem("permntInKeralaAdrHouseNameEn", permntInKeralaAdrHouseNameEn ? permntInKeralaAdrHouseNameEn : null);
@@ -454,26 +445,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setAdressEnB={setAdressEnB}
                             presentOutSideIndiaAdressMlB={presentOutSideIndiaAdressMlB}
                             setAdressMlB={setAdressMlB}
-                            presentOutSideIndiaLocalityEn={presentOutSideIndiaLocalityEn}
-                            setLocalityEn={setLocalityEn}
-                            presentOutSideIndiaLocalityMl={presentOutSideIndiaLocalityMl}
-                            setLocalityMl={setLocalityMl}
                             presentOutSideIndiaProvinceEn={presentOutSideIndiaProvinceEn}
                             setProvinceEn={setProvinceEn}
-                            presentOutSideIndiaProvinceMl={presentOutSideIndiaProvinceMl}
-                            setProvinceMl={setProvinceMl}
+                            presentOutSideIndiaadrsVillage={presentOutSideIndiaadrsVillage}
+                            setadrsVillage={setadrsVillage}
+                            presentOutSideIndiaadrsCityTown={presentOutSideIndiaadrsCityTown}
+                            setadrsCityTown={setadrsCityTown}
                             presentOutSideIndiaPostCode={presentOutSideIndiaPostCode}
                             setPostCode={setPostCode}
                             presentOutSideCountry={presentOutSideCountry}
                             setOutSideCountry={setOutSideCountry}
-                            presentOutSideIndiaResNoEn={presentOutSideIndiaResNoEn}
-                            setResNoEn={setResNoEn}
-                            presentOutSideIndiaResNoMl={presentOutSideIndiaResNoMl}
-                            setResNoMl={setResNoMl}
-                            presentOutSideIndiaHouseNameEn={presentOutSideIndiaHouseNameEn}
-                            setHouseNameEn={setHouseNameEn}
-                            presentOutSideIndiaHouseNameMl={presentOutSideIndiaHouseNameMl}
-                            setHouseNameMl={setHouseNameMl}
                             countryvalue={countryvalue}
                             setCountryValue={setCountryValue}
                         />

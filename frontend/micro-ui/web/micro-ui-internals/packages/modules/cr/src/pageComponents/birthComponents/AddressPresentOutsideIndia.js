@@ -3,31 +3,11 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@e
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressPresentOutsideIndia = ({
-  config,
-  onSelect,
-  userType,
-  formData,
-  presentOutSideIndiaAdressEn,
-  setAdressEn,
-  presentOutSideIndiaAdressMl,
-  setAdressMl,
-  presentOutSideIndiaAdressEnB,
-  setAdressEnB,
-  presentOutSideIndiaAdressMlB,
-  setAdressMlB,
-  presentOutSideIndiaProvinceEn,
-  setProvinceEn,
-  presentOutSideIndiaadrsVillage,
-  setadrsVillage,
-  presentOutSideIndiaadrsCityTown,
-  setadrsCityTown,
-  presentOutSideIndiaPostCode,
-  setPostCode,
-  presentOutSideCountry,
-  setOutSideCountry,
-  countryvalue,
-  setCountryValue,
+const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, presentOutSideIndiaAdressEn, setAdressEn,
+  presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
+  setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaadrsVillage, setadrsVillage,
+  presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode, presentOutSideCountry,
+  setOutSideCountry, countryvalue, setCountryValue,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
