@@ -218,10 +218,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
                 select={setSelectOutSideCountry}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
                 {t("CR_STATE_REGION_PROVINCE_EN")}
@@ -237,9 +233,10 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               />
-            </div>            
+            </div>           
           </div>
         </div>
+       
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-4">
@@ -254,7 +251,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
                 option={cmbUrbanRural}
                 selected={presentOutSideIndiaadrsVillage}
                 select={setSelectadrsVillage}
-                disabled={isEdit}
+              
                 placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
               />
             </div>
@@ -268,7 +265,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
                 name="presentOutSideIndiaadrsCityTown"
                 value={presentOutSideIndiaadrsCityTown}
                 onChange={setSelectadrsCityTown}
-                disable={isEdit}
+               
                 placeholder={`${t("CR_CITY_TOWN_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
               />
@@ -296,7 +293,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
             />
           </div>
           </div>
-        </div>+++++++++++++++++++++++++++++++++++++++++++++
+        </div>
 
 
 
