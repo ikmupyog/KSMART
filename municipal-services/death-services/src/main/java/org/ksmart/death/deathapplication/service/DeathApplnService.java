@@ -1,5 +1,6 @@
 package org.ksmart.death.deathapplication.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,17 +93,21 @@ public class DeathApplnService {
           validatorService.validateUpdate(request, searchResult);
          // mdmsValidator.validateMDMSData(request,mdmsData);
 
-
           //Jasmine 09.02.2023                        
           enrichmentService.enrichUpdate(request);
           //Jasmine 13.02.2023
           workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+
+          List<DeathDtl> response = new ArrayList<>();
+          
           DeathDtlRequest result = DeathDtlRequest
                                    .builder()
                                    .requestInfo(request.getRequestInfo())
-                                   .deathCertificateDtls(searchResult)
+                                   .deathCertificateDtls(request.getDeathCertificateDtls())
                                    .build();
+                                 //  System.out.println("SearchResult"+result);
+
           return result.getDeathCertificateDtls();
      }    
 }

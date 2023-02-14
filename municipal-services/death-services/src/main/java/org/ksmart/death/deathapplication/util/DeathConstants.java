@@ -109,4 +109,8 @@ public class DeathConstants {
     public static final String ACK_NUMBER_CAPTION = "AK";
 
     public static final String DEATH_PLACE_LIST = "PlaceMasterDeath";
+
+    //Jasmine 1402.2023
+    public static final String DEATH_PLACE_PUBLICPLACES = "PUBLIC_PLACES";
+    public static final String DEATH_PLACE_OUTSIDE_JURISDICATION = "OUTSIDE_JURISDICTION";
 }
