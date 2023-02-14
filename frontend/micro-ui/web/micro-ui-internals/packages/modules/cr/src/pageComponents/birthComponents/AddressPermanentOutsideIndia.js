@@ -1,82 +1,45 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData }) => {
+const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
+  PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
+  PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
+  PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, PermanentOutsideIndiaPostCode, setPermantpostCode, PermntOutsideIndiaCountry,
+  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
+}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  // const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
-  // const [setPlaceofActivity, setSelectedPlaceofActivity] = useState(formData?.TradeDetails?.setPlaceofActivity);
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  // const [PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLineoneEn);
+  // const [PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLineoneMl);
+  // const [PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLinetwoEn);
+  // const [PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLinetwoMl);
+  // const [PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaprovinceEn);
+  // const [PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaVillage ? formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaVillage : null);
+  // const [PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaCityTown ? formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaCityTown : null);
+  // const [PermanentOutsideIndiaPostCode, setPermantpostCode] = useState(formData?.AddressOutsideIndiaDetails?.PermanentOutsideIndiaPostCode);
+  // const [PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaCountry);
 
-  const [PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.PermntOutsideIndiaCountry
-      ? formData?.AddressPermanentOutsideIndiaDetails?.PermntOutsideIndiaCountry
-      : null
-  );
-  const [PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.PermntOutsideIndiaprovinceEn
-      ? formData?.AddressPermanentOutsideIndiaDetails?.PermntOutsideIndiaprovinceEn
-      : null
-  );
-  const [adrsPermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaVillage
-      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaVillage
-      : null
-  );
-  const [adrsPermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaCityTown
-      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaCityTown
-      : null
-  );
-  const [postCode, setpostCode] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.postCode ? formData?.AddressPermanentOutsideIndiaDetails?.postCode : null
-  );
 
-  const [adrsPermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLinetwoEn
-      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLinetwoEn
-      : null
-  );
-  const [adrsPermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLinetwoMl
-      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLinetwoMl
-      : null
-  );
-
-  const [adrsPermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLineoneEn
-      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLineoneEn
-      : null
-  );
-  const [adrsPermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(
-    formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLineoneMl
-      ? formData?.AddressPermanentOutsideIndiaDetails?.adrsPermntOutsideIndiaLineoneMl
-      : null
-  );
-
-  // const [CommencementDate, setCommencementDate] = useState();
-  let cmbVillage = [];
-  const cmbUrbanRural = [
-    { i18nKey: "Town", code: "TOWN" },
-    { i18nKey: "Village", code: "VILLAGE" },
-  ];
-  let naturetypecmbvalue = null;
   let cmbCountry = [];
   Country &&
     Country["common-masters"] &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
+  let cmbVillage = [];
+  const cmbUrbanRural = [
+    { i18nKey: "Town", code: "TOWN" },
+    { i18nKey: "Village", code: "VILLAGE" },
+  ];
   const onSkip = () => onSelect();
 
   function setSelectadrsPermntOutsideIndiaVillage(value) {
     setadrsPermntOutsideIndiaVillage(value);
-    console.log("Village" + cmbVillage);
   }
 
   function setSelectadrsPermntOutsideIndiaCityTown(e) {
@@ -88,31 +51,71 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData }) 
     }
   }
 
+  function setSelectadrsPermntOutsideIndiaLineoneEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setadrsPermntOutsideIndiaLineoneEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
   function setSelectadrsPermntOutsideIndiaLinetwoEn(e) {
     if (e.target.value.length === 51) {
       return false;
     }
     setadrsPermntOutsideIndiaLinetwoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
   }
+
   function setSelectadrsPermntOutsideIndiaLinetwoMl(e) {
     if (e.target.value.length === 51) {
       return false;
     }
     setadrsPermntOutsideIndiaLinetwoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
   }
-
-  function setSelectadrsPermntOutsideIndiaLineoneEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setadrsPermntOutsideIndiaLineoneEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-    }
-  }
   function setSelectadrsPermntOutsideIndiaLineoneMl(e) {
     if (e.target.value.length === 51) {
       return false;
+    }
+    setadrsPermntOutsideIndiaLineoneMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+  }
+  function setSelectLocalityEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    }
+    setLocalityEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+  }
+  function setSelectLocalityMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    }
+    setLocalityMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+  }
+  function setSelectResNoEn(e) {
+    if (e.target.value.length === 20) {
+      return false;
     } else {
-      setadrsPermntOutsideIndiaLineoneMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setResNoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
+  function setSelectResNoMl(e) {
+    if (e.target.value.length === 20) {
+      return false;
+    } else {
+      setResNoMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    }
+  }
+  function setSelectHouseNameEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
+  function setSelectHouseNameMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
     }
   }
   function setSelectPermntOutsideIndiaprovinceEn(e) {
@@ -122,58 +125,53 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData }) 
       setPermntOutsideIndiaprovinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
-
+  function setSelectProvinceMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setProvinceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    }
+  }
   function setSelectPermntOutsideIndiaCountry(value) {
     setPermntOutsideIndiaCountry(value);
-    console.log("Country" + cmbCountry);
   }
-  function setSelectpostCode(e) {
-    setpostCode(e.target.value);
-  }
-  function setSelectpostCode(e) {
+  // function setSelectPostCode(e) {
+  //   setPermantpostCode(e.target.value);
+  // }
+  function setSelectPostCode(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 10) {
         return false;
       } else if (e.target.value.length < 10) {
-        setpostCode(e.target.value);
+        setPermantpostCode(e.target.value);
         return false;
       } else {
-        setpostCode(e.target.value);
+        setPermantpostCode(e.target.value);
       }
     } else {
-      setpostCode(e.target.value);
+      setPermantpostCode(e.target.value);
     }
   }
-
   const goNext = () => {
-    sessionStorage.setItem("PermntOutsideIndiaCountry", PermntOutsideIndiaCountry ? PermntOutsideIndiaCountry.code : null);
-    sessionStorage.setItem("PermntOutsideIndiaprovinceEn", PermntOutsideIndiaprovinceEn ? PermntOutsideIndiaprovinceEn : null);
-    sessionStorage.setItem("adrsPermntOutsideIndiaVillage", adrsPermntOutsideIndiaVillage ? adrsPermntOutsideIndiaVillage.code : null);
-    sessionStorage.setItem("adrsPermntOutsideIndiaCityTown", adrsPermntOutsideIndiaCityTown ? adrsPermntOutsideIndiaCityTown : null);
-    sessionStorage.setItem("postCode", postCode ? postCode : null);
-    sessionStorage.setItem("adrsPermntOutsideIndiaLinetwoEn", adrsPermntOutsideIndiaLinetwoEn ? adrsPermntOutsideIndiaLinetwoEn : null);
-    sessionStorage.setItem("adrsPermntOutsideIndiaLinetwoMl", adrsPermntOutsideIndiaLinetwoMl ? adrsPermntOutsideIndiaLinetwoMl : null);
-    sessionStorage.setItem("adrsPermntOutsideIndiaLineoneEn", adrsPermntOutsideIndiaLineoneEn ? adrsPermntOutsideIndiaLineoneEn : null);
-    sessionStorage.setItem("adrsPermntOutsideIndiaLineoneMl", adrsPermntOutsideIndiaLineoneMl ? adrsPermntOutsideIndiaLineoneMl : null);
+    // sessionStorage.setItem("PermntOutsideIndiaLineoneEn", PermntOutsideIndiaLineoneEn ? PermntOutsideIndiaLineoneEn  : null);
+    // sessionStorage.setItem("PermntOutsideIndiaLineoneMl", PermntOutsideIndiaLineoneMl  ? PermntOutsideIndiaLineoneMl  : null);
+    // sessionStorage.setItem("PermntOutsideIndiaLinetwoEn", PermntOutsideIndiaLinetwoEn  ? PermntOutsideIndiaLinetwoEn  : null);
+    // sessionStorage.setItem("PermntOutsideIndiaLinetwoMl", PermntOutsideIndiaLinetwoMl  ? PermntOutsideIndiaLinetwoMl  : null) ;
+    // sessionStorage.setItem("PermntOutsideIndiaprovinceEn", PermntOutsideIndiaprovinceEn  ? PermntOutsideIndiaprovinceEn  : null);
+    // sessionStorage.setItem("PermntOutsideIndiaVillage", PermntOutsideIndiaVillage ? PermntOutsideIndiaVillage.code : null);
+    // sessionStorage.setItem("PermntOutsideIndiaCityTown", PermntOutsideIndiaCityTown ? PermntOutsideIndiaCityTown : null);
+    // sessionStorage.setItem("PermanentOutsideIndiaPostCode", PermanentOutsideIndiaPostCode  ? PermanentOutsideIndiaPostCode  : null);
+    // sessionStorage.setItem("PermntOutsideIndiaCountry", PermntOutsideIndiaCountry ? PermntOutsideIndiaCountry.code : null);
 
-    onSelect(config.key, {
-      PermntOutsideIndiaCountry,
-      PermntOutsideIndiaprovinceEn,
-      adrsPermntOutsideIndiaVillage,
-      adrsPermntOutsideIndiaCityTown,
-      postCode,
-      adrsPermntOutsideIndiaLinetwoEn,
-      adrsPermntOutsideIndiaLinetwoMl,
-      adrsPermntOutsideIndiaLineoneEn,
-      adrsPermntOutsideIndiaLineoneMl,
-    });
+    // onSelect(config.key, { PermntOutsideIndiaLineoneEn,PermntOutsideIndiaLineoneMl, PermntOutsideIndiaLinetwoEn,PermntOutsideIndiaLinetwoMl,
+    //   PermntOutsideIndiaprovinceEn,PermntOutsideIndiaVillage,PermntOutsideIndiaCityTown,PermanentOutsideIndiaPostCode,PermntOutsideIndiaCountry});
   };
   if (isCountryLoading) {
     return <Loader></Loader>;
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!PermntOutsideIndiaCountry}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header> */}
@@ -194,26 +192,23 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData }) 
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={true}
                 option={cmbCountry}
                 selected={PermntOutsideIndiaCountry}
                 select={setSelectPermntOutsideIndiaCountry}
-                disabled={isEdit}
+                placeholder={`${t("CS_COMMON_COUNTRY")}`}
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="PermntOutsideIndiaprovinceEn"
                 value={PermntOutsideIndiaprovinceEn}
                 onChange={setSelectPermntOutsideIndiaprovinceEn}
-                disable={isEdit}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               />
             </div>
           </div>
@@ -229,44 +224,40 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData }) 
               <Dropdown
                 t={t}
                 optionKey="i18nKey"
-                isMandatory={true}
                 option={cmbUrbanRural}
-                selected={adrsPermntOutsideIndiaVillage}
+                selected={PermntOutsideIndiaVillage}
                 select={setSelectadrsPermntOutsideIndiaVillage}
-                disabled={isEdit}
                 placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{t("CR_CITY_TOWN_EN")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>
+                {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="adrsPermntOutsideIndiaCityTown"
-                value={adrsPermntOutsideIndiaCityTown}
+                name="PermntOutsideIndiaCityTown"
+                value={PermntOutsideIndiaCityTown}
                 onChange={setSelectadrsPermntOutsideIndiaCityTown}
-                disable={isEdit}
                 placeholder={`${t("CR_CITY_TOWN_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{t("CR_ZIP_CODE")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ZIP_CODE")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="postCode"
-                value={postCode}
-                onChange={setSelectpostCode}
-                disable={isEdit}
+                name="PermanentOutsideIndiaPostCode"
+                value={PermanentOutsideIndiaPostCode}
+                onChange={setSelectPostCode}
                 placeholder={`${t("CR_ZIP_CODE")}`}
                 {...(validation = {
                   pattern: "^[a-zA-Z-.0-9`' ]*$",
-                  isRequired: true,
+                  isRequired: false,
                   type: "text",
                   title: t("CR_INVALID_ZIP_CODE"),
                 })}
@@ -278,85 +269,73 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData }) 
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")} <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="adrsPermntOutsideIndiaLineoneEn"
-                value={adrsPermntOutsideIndiaLineoneEn}
+                name="PermntOutsideIndiaLineoneEn"
+                value={PermntOutsideIndiaLineoneEn}
                 onChange={setSelectadrsPermntOutsideIndiaLineoneEn}
                 placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
-                disable={isEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
               />
             </div>
+
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")} <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="adrsPermntOutsideIndiaLinetwoEn"
-                value={adrsPermntOutsideIndiaLinetwoEn}
+                name="PermntOutsideIndiaLinetwoEn"
+                value={PermntOutsideIndiaLinetwoEn}
                 onChange={setSelectadrsPermntOutsideIndiaLinetwoEn}
-                disable={isEdit}
                 placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
               />
             </div>
           </div>
         </div>
-
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")} <span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="adrsPermntOutsideIndiaLineoneMl"
-                value={adrsPermntOutsideIndiaLineoneMl}
+                name="PermntOutsideIndiaLineoneMl"
+                value={PermntOutsideIndiaLineoneMl}
                 onChange={setSelectadrsPermntOutsideIndiaLineoneMl}
                 placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
-                disable={isEdit}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
+                  isRequired: false,
                   type: "text",
                   title: t("CR_INVALID_ADDRES_LINE_ONE_ML"),
                 })}
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="adrsPermntOutsideIndiaLinetwoMl"
-                value={adrsPermntOutsideIndiaLinetwoMl}
+                name="PermntOutsideIndiaLinetwoMl"
+                value={PermntOutsideIndiaLinetwoMl}
                 onChange={setSelectadrsPermntOutsideIndiaLinetwoMl}
-                disable={isEdit}
                 placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
+                  isRequired: false,
                   type: "text",
                   title: t("CR_INVALID_ADDRES_LINE_TWO_ML"),
                 })}
               />
             </div>
           </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12"></div>
         </div>
       </FormStep>
     </React.Fragment>
