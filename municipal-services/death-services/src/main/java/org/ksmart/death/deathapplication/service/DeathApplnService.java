@@ -15,7 +15,7 @@ import org.ksmart.death.deathapplication.kafka.producer.DeathProducer;
 import org.ksmart.death.deathapplication.repository.DeathApplnRepository;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.validators.DeathApplnValidator;
-import org.ksmart.death.deathapplication.validators.MDMSValidator;
+import org.ksmart.death.deathapplication.validators.DeathMDMSValidator;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
@@ -35,44 +35,41 @@ public class DeathApplnService {
      //Rakhi S ikm on 08.02.2023
      private final DeathEnrichment enrichmentService;
      private final DeathConfiguration deathConfig;
-   //  private final DeathEnrichment enrichmentService;
-   //  private final DeathMdmsUtil util;
+     private final DeathMdmsUtil util;
      private final WorkflowIntegrator workflowIntegrator;
-   //  private final MDMSValidator mdmsValidator;
      private final DeathApplnValidator validatorService;
      private final DeathApplnRepository repository;
+     //RAkhi S on 14.02.2023
+     private final DeathMDMSValidator mdmsValidator;
 
      //Rakhi S ikm on 08.02.2023
      @Autowired
      DeathApplnService(DeathApplnRepository repository ,DeathProducer producer
                          ,DeathEnrichment enrichmentService,DeathApplnValidator validatorService,DeathConfiguration deathConfig
-                         ,WorkflowIntegrator workflowIntegrator){
-          
-     //,DeathConfiguration deathConfig
-     //             DeathEnrichment enrichmentService,DeathMdmsUtil util,MDMSValidator mdmsValidator,
-     //             ,,){
+                         ,WorkflowIntegrator workflowIntegrator,DeathMdmsUtil util
+                         ,DeathMDMSValidator mdmsValidator){
 
-       //  this.deathConfig = deathConfig;
-      //   
-       //  this.enrichmentService = enrichmentService;
-       //  this.util = util;
-       //  this.mdmsValidator = mdmsValidator;
+         this.mdmsValidator = mdmsValidator;
          this.validatorService = validatorService;
          this.producer = producer;
          this.deathConfig = deathConfig;
          this.enrichmentService = enrichmentService;
          this.repository = repository;
          this.workflowIntegrator = workflowIntegrator;
+         this.util = util;
      }
 
      //RAkhi S ikm  on 06.02.2023
      public List<DeathDtl> create(DeathDtlRequest request) {
+          // Rakhi S IKM validate mdms data on 14.02.2023
+          Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
+          // mdmsValidator.validateDeathMDMSData(request,mdmsData);
+          //Rakhi S ikm on 08.02.2023
           enrichmentService.enrichCreate(request);
           enrichmentService.setACKNumber(request);           
-          //Jasmine 13.02.2023
-          workflowIntegrator.callWorkFlow(request);
          //RAkhi S ikm  on 06.02.2023         
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
+          workflowIntegrator.callWorkFlow(request);
           return request.getDeathCertificateDtls();
      }
 
