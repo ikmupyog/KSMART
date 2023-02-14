@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import AddressPresent from "./AddressPresent";
 import AddressPresentInsideKerala from "./AddressPresentInsideKerala";
 import AddressPresentOutsideKerala from "./AddressPresentOutsideKerala";
+import AddressPresentOutsideIndia from "./AddressPresentOutsideIndia";
 
 const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -25,6 +26,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     //################################### Present Country State ##########################################################################
     const [addressCountry, setaddressCountry] = useState(formData?.AddressBirthDetails?.addressCountry);
     const [addressStateName, setaddressStateName] = useState(formData?.AddressBirthDetails?.addressStateName);
+    const [countryvalue, setCountryValue] = useState();
     const [value, setValue] = useState();
     //################################# Inside Kerala ####################################################################################
     const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo);
@@ -163,7 +165,20 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("presentOutsideKeralaLocalityNameMl", presentOutsideKeralaLocalityNameMl ? presentOutsideKeralaLocalityNameMl : null);
         sessionStorage.setItem("presentOutsideKeralaStreetNameEn", presentOutsideKeralaStreetNameEn ? presentOutsideKeralaStreetNameEn : null);
         sessionStorage.setItem("presentOutsideKeralaStreetNameMl", presentOutsideKeralaStreetNameMl ? presentOutsideKeralaStreetNameMl : null);
-
+        sessionStorage.setItem("AdressEn", AdressEn ? AdressEn : null);
+        sessionStorage.setItem("AdressMl", AdressMl ? AdressMl : null);
+        sessionStorage.setItem("AdressEnB", AdressEnB ? AdressEnB : null);
+        sessionStorage.setItem("AdressMlB", AdressMlB ? AdressMlB : null);
+        sessionStorage.setItem("LocalityEn", LocalityEn ? LocalityEn : null);
+        sessionStorage.setItem("LocalityMl", LocalityMl ? LocalityMl : null);
+        sessionStorage.setItem("ProvinceEn", ProvinceEn ? ProvinceEn : null);
+        sessionStorage.setItem("ProvinceMl", ProvinceMl ? ProvinceMl : null);
+        sessionStorage.setItem("PostCode", PostCode ? PostCode : null);
+        sessionStorage.setItem("OutSideCountry", OutSideCountry ? OutSideCountry.code : null);
+        sessionStorage.setItem("ResNoEn", ResNoEn ? ResNoEn : null);
+        sessionStorage.setItem("ResNoMl", ResNoMl ? ResNoMl : null);
+        sessionStorage.setItem("HouseNameEn", HouseNameEn ? HouseNameEn : null);
+        sessionStorage.setItem("HouseNameMl", HouseNameMl ? HouseNameMl : null);
         onSelect(config.key, {
             addressCountry,
             addressStateName,
@@ -192,6 +207,15 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
             presentOutsideKeralaLocalityNameMl,
             presentOutsideKeralaStreetNameMl,
             presentOutsideKeralaHouseNameMl,
+            AdressEn, 
+            AdressMl, 
+            AdressEnB, 
+            AdressMlB, 
+            LocalityEn, 
+            LocalityMl, 
+            ProvinceEn, 
+            ProvinceMl, 
+            OutSideCountry,
         });
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
@@ -199,9 +223,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     }
     return (
         <React.Fragment>
+            <BackButton>{t("CS_COMMON_BACK")}</BackButton>
             {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
             {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-            <BackButton>{t("CS_COMMON_BACK")}</BackButton>
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!addressCountry}>
 
                 <div>
@@ -212,6 +236,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                         setaddressStateName={setaddressStateName}
                         value={value}
                         setValue={setValue}
+                        countryvalue={countryvalue}
+                        setCountryValue={setCountryValue}
                     />
                 </div>
                 {value === "KL" && (
@@ -284,6 +310,18 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setoutsideKeralaPostOfficeEn={setoutsideKeralaPostOfficeEn}
                             presentOutsideKeralaPostOfficeMl={presentOutsideKeralaPostOfficeMl}
                             setoutsideKeralaPostOfficeMl={setoutsideKeralaPostOfficeMl}
+                        />
+                    </div>
+                )}
+                {countryvalue != "KL" && (
+                    <div>
+                        <AddressPresentOutsideIndia
+                            // AdressEn={AdressEn}, 
+                            // setAdressEn={setAdressEn},
+                            // AdressMl, setAdressMl, AdressEnB, setAdressEnB, AdressMlB, setAdressMlB, LocalityEn, setLocalityEn,
+                            // LocalityMl, setLocalityMl, ProvinceEn, setProvinceEn, ProvinceMl, setProvinceMl, PostCode, setPostCode, OutSideCountry,
+                            // setOutSideCountry, ResNoEn, setResNoEn, ResNoMl, setResNoMl, HouseNameEn, setHouseNameEn, HouseNameMl, setHouseNameMl,
+                            // countryvalue, setCountryValue
                         />
                     </div>
                 )}

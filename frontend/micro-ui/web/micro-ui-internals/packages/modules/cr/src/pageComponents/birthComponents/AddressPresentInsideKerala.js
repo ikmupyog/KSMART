@@ -79,7 +79,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         PostOffice["common-masters"].PostOffice.map((ob) => {
             cmbPostOffice.push(ob);
         });
-
+        console.log(PostOffice);
     LBType &&
         LBType["common-masters"] &&
         LBType["common-masters"].LBType.map((ob) => {
@@ -122,7 +122,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             }
         }
     }, [District, LBType, localbodies, Talukvalues, Villagevalues, lbs, isInitialRender]);
-    
+
     const onSkip = () => onSelect();
 
     function setSelectinsideKeralaDistrict(value) {

@@ -233,7 +233,7 @@ console.log(value);
     // });
   };
 
-  if (isCountryLoading || isStateLoading || isDistrictLoading || isTalukLoading || isVillageLoading) {
+  if ( isDistrictLoading || isTalukLoading || isVillageLoading) {
     return <Loader></Loader>;
   }
 

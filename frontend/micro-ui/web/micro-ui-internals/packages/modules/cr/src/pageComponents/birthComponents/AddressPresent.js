@@ -74,7 +74,9 @@ const AddressPresent = ({ config, onSelect, userType, formData, addressCountry, 
     const onSkip = () => onSelect();
 
     function setSelectaddressCountry(value) {
+        console.log(value);
         setaddressCountry(value);
+        // setCountryValue
     }
     function setSelectaddressStateName(value) {
         setaddressStateName(value);
