@@ -118,7 +118,7 @@ public class DeathApplnController {
 
         String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();
 
-System.out.println("status and applicationType"+status +" "+applicationType);
+        //System.out.println("status and applicationType"+status +" "+applicationType);
         if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCertificateDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){
          
             DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);

@@ -84,10 +84,11 @@ public class DeathEnrichment implements BaseEnrichment{
                     initiatorInfo.setInitiatorAddrId(UUID.randomUUID().toString());  
                 }                  
                 //Encryption Jasmine 10.02.2023
-                DeathBasicInfo deathBasicDtls = request.getDeathCertificateDtls().get(0).getDeathBasicInfo();
+                // request.getDeathCertificateDtls().get(0)
+                DeathBasicInfo deathBasicDtls =deathdtls.getDeathBasicInfo();
                 DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
                 deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
-                DeathFamilyInfo deathFamilyDtls =request.getDeathCertificateDtls().get(0).getDeathFamilyInfo() ;
+                DeathFamilyInfo deathFamilyDtls =deathdtls.getDeathFamilyInfo() ;
                 DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
                 deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
@@ -177,10 +178,10 @@ public class DeathEnrichment implements BaseEnrichment{
 //Jasmine 10.02.2023
              request.getDeathCertificateDtls()
                      .forEach(deathDtls -> {
-                        DeathBasicInfo deathBasicDtls = request.getDeathCertificateDtls().get(0).getDeathBasicInfo();
+                        DeathBasicInfo deathBasicDtls = deathDtls.getDeathBasicInfo();
                         DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
                         deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
-                        DeathFamilyInfo deathFamilyDtls =request.getDeathCertificateDtls().get(0).getDeathFamilyInfo() ;
+                        DeathFamilyInfo deathFamilyDtls =deathDtls.getDeathFamilyInfo() ;
                         DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
                         deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
                         deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());

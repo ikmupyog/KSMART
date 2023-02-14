@@ -47,6 +47,12 @@ public class DeathApplnRowMapper  implements ResultSetExtractor<List<DeathDtl>>,
          while (rs.next()) {
     
              result.add(DeathDtl.builder()
+             .applicationType(rs.getString("appl_type"))
+             .applicationStatus(rs.getString("status"))
+             .businessService(rs.getString("businessService"))
+             .action(rs.getString("action"))
+             .workflowcode(rs.getString("workflowcode"))
+             .assignuser(rs.getString("assignee"))
              .deathBasicInfo(basicInfoRowMapper.extractData(rs))
              .deathAddressInfo(addressRowMapper.extractData(rs))
              .deathFamilyInfo(familyInfoRowMapper.extractData(rs))
