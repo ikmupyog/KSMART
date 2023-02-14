@@ -187,7 +187,7 @@ const InformarHospitalInstitution = ({ config, onSelect, userType, formData,
 
                 <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("Declared that I/My ____ Delivered Male child/ Female child Born ./ഞാൻ/എന്റെ _____ പ്രസവിച്ച ആൺ കുട്ടി/ പെൺ കുട്ടി ജനിച്ചതായി പ്രഖ്യാപിച്ചു.")} onChange={setDeclarationInfo} value={isDeclarationInfo} checked={isDeclarationInfo} />
+            <CheckBox label={t("CR_INFORMER_DECLARATION_STATEMENT")} onChange={setDeclarationInfo} value={isDeclarationInfo} checked={isDeclarationInfo} />
           </div>
         </div>
                 <div className="row">

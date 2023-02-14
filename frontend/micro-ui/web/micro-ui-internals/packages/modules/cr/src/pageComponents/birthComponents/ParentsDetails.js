@@ -411,23 +411,23 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
           }
         }      
         
-
-    
-      if (FatherFirstNameEn != null || FatherFirstNameEn != "" || FatherFirstNameEn != undefined) {
-        if (FatherFirstNmeEnError) {
-          validFlag = false;
-          setFatherFirstNmeEnError(true);
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-          // return false;
-          // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-          setFatherFirstNmeEnError(false);
-        }
       }
-    }
+    
+      // if (FatherFirstNameEn != null || FatherFirstNameEn != "" || FatherFirstNameEn != undefined) {
+      //   if (FatherFirstNmeEnError) {
+      //     validFlag = false;
+      //     setFatherFirstNmeEnError(true);
+      //     setToast(true);
+      //     setTimeout(() => {
+      //       setToast(false);
+      //     }, 2000);
+      //     // return false;
+      //     // window.alert("Username shouldn't exceed 10 characters")
+      //   } else {
+      //     setFatherFirstNmeEnError(false);
+      //   }
+      // }
+    
     if (FatherMobile != null || FatherMobile != "" || FatherMobile != undefined) {
       if (FatherMobileError) {
         validFlag = false;
@@ -881,6 +881,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
               MotherEducationError ||
               MotherProfessionError ||
               MotherNationalityError ||
+              FatherAadharError ||
               FatherFirstNmeEnError ||
               FatherEduError ||
               FatherProfError ||
@@ -895,27 +896,28 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
               MotherEducationError ||
               MotherProfessionError ||
               MotherNationalityError ||
+              FatherAadharError ||
               FatherFirstNmeEnError ||
               FatherEduError ||
               FatherProfError ||
               ReligionStError ||
-              FatherMobileError ||
-              // || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError || MotherTalukError || MotherPlaceTypeError
+              FatherMobileError ||             
               OrderofChildrenError
                 ? MotherAadharError
-                  ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                  ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
                   : MotherMarriageBirthError
-                  ? t(`CR_INVALID_MOBILE_NO`)
+                  ? t(`CR_INVALID_MOTHER_AGE_AT_BIRTH`)
                   : MotherEducationError
                   ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
                   : MotherProfessionError
                   ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`)
                   : MotherNationalityError
                   ? t(`BIRTH_ERROR_MOTHER_NATIONALITY_CHOOSE`)
-                  : //   : MotherCountryError ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : MotherStateError ? t(`BIRTH_ERROR_STATE_CHOOSE`)
-                  //         : MotherDistrictError ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`) : MotherLBNameError ? t(`BIRTH_ERROR_LBNAME_CHOOSE`)  : MotherTalukError ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : MotherPlaceTypeError ? t(`BIRTH_ERROR_URBAN_CHOOSE`)
+                  : 
                   OrderofChildrenError
                   ? t(`BIRTH_ERROR_ORDER_OF_CHILDREN`)
+                  : FatherAadharError
+                  ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
                   : FatherFirstNmeEnError
                   ? t(`CR_INVALID_FATHER_NAME_EN`)
                   : FatherEduError
@@ -926,8 +928,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                   ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
                   : FatherMobileError
                   ? t(`CR_INVALID_MOBILE_NO`)
-                  : //  : || MotherProfessionError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                    // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+                  : 
 
                     setToast(false)
                 : setToast(false)

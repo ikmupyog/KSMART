@@ -40,7 +40,7 @@ const getPath = (path, params) => {
   return path;
 };
 
-const CheckPage = ({ onSubmit, value, userType }) => {
+const BirthCheckPage = ({ onSubmit, value, userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -176,4 +176,4 @@ const CheckPage = ({ onSubmit, value, userType }) => {
   );
 };
 
-export default CheckPage;
+export default BirthCheckPage;

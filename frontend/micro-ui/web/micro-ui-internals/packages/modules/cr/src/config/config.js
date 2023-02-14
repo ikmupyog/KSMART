@@ -262,7 +262,7 @@ export const newConfig = [
       },
       {
         route: "address-birth",
-        component: "AddressBirth",
+        component: "AddressBasePage",
         texts: {
           headerCaption: "",
           header: "",
@@ -272,7 +272,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "AddressBirthDetails",
-        nextStep: "null",
+        nextStep: null,
         type: "component",
         hideInEmployee: false,
       },
@@ -689,7 +689,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "FamilyInformationDeath",
-        nextStep: null,
+        nextStep: "statistical-info",
 
         // nextStep: "statistical-info",
         type: "component",
@@ -956,6 +956,45 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
+      {
+        route: "informer",
+        isMandatory: true,
+        component: "Informer",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "Informer",
+        nextStep: "place-of-death",
+        type: "component",
+        hideInEmployee: true,
+      },
+      {
+        route: "initiater",
+        isMandatory: true,
+        component: "Initiater",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "Initiater",
+        nextStep: "place-of-death",
+        type: "component",
+        hideInEmployee: true,
+      },
+
+      
+
       
       // {
       //   route: "statistical-info",

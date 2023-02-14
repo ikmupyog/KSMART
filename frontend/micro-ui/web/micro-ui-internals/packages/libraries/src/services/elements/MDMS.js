@@ -1360,10 +1360,10 @@ const getCRInstitutionIdList = (tenantId, moduleCode) => ({
     tenantId: tenantId,
     moduleDetails: [
       {
-        moduleName: moduleCode,
+        moduleName: "egov-location",
         masterDetails: [
           {
-            name: "Institution",
+            name: "institutionList",
           },
         ],
       },
