@@ -39,8 +39,8 @@ public class TLQueryBuilder {
     @Value("${egov.receipt.businessserviceBPA}")
     private String businessServiceBPA;
 
-    @Value("${renewal.pending.interval}")
-    private long renewalPeriod;
+    // @Value("${renewal.pending.interval}")
+    // private long renewalPeriod;
 
     private static final String QUERY = "SELECT tl.*,tld.*,tlunit.*,tlowner.*," +
             "tladdress.*,tlapldoc.*,tlverdoc.*,tlownerdoc.*,tlinsti.*,tl.id as tl_id,tl.tenantid as tl_tenantId,tl.lastModifiedTime as "
@@ -143,139 +143,173 @@ public class TLQueryBuilder {
 
         addBusinessServiceClause(criteria, preparedStmtList, builder);
 
-        if (criteria.getAccountId() != null) {
+        // if (criteria.getAccountId() != null) {
+        // addClauseIfRequired(preparedStmtList, builder);
+        // builder.append(" tl.accountid = ? ");
+        // preparedStmtList.add(criteria.getAccountId());
+
+        // List<String> ownerIds = criteria.getOwnerIds();
+        // if (!CollectionUtils.isEmpty(ownerIds)) {
+        // builder.append(" OR (tlowner.id
+        // IN(").append(createQuery(ownerIds)).append(")");
+        // addToPreparedStatement(preparedStmtList, ownerIds);
+        // addBusinessServiceClause(criteria, preparedStmtList, builder);
+        // builder.append(" AND tlowner.active = ? )");
+        // preparedStmtList.add(true);
+        // }
+        // }
+
+        // else {
+
+        if (criteria.getTenantId() != null) {
             addClauseIfRequired(preparedStmtList, builder);
-            builder.append(" tl.accountid = ? ");
-            preparedStmtList.add(criteria.getAccountId());
+            builder.append(" tl.tenantid=? ");
+            preparedStmtList.add(criteria.getTenantId());
+        }
+        List<String> ids = criteria.getIds();
+        if (!CollectionUtils.isEmpty(ids)) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" tl.id IN (").append(createQuery(ids)).append(")");
+            addToPreparedStatement(preparedStmtList, ids);
+        }
 
-            List<String> ownerIds = criteria.getOwnerIds();
-            if (!CollectionUtils.isEmpty(ownerIds)) {
-                builder.append(" OR (tlowner.id IN (").append(createQuery(ownerIds)).append(")");
-                addToPreparedStatement(preparedStmtList, ownerIds);
-                addBusinessServiceClause(criteria, preparedStmtList, builder);
-                builder.append(" AND tlowner.active = ? )");
-                preparedStmtList.add(true);
+        List<String> ownerIds = criteria.getOwnerIds();
+        if (!CollectionUtils.isEmpty(ownerIds)) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" (tlowner.id IN (").append(createQuery(ownerIds)).append(")");
+            addToPreparedStatement(preparedStmtList, ownerIds);
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" tlowner.active = ? ) ");
+            preparedStmtList.add(true);
+        }
+
+        if (criteria.getApplicationNumber() != null) {
+            List<String> applicationNumber = Arrays.asList(criteria.getApplicationNumber().split(","));
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" LOWER(tl.applicationnumber) IN (").append(createQuery(applicationNumber)).append(")");
+            addToPreparedStatement(preparedStmtList, applicationNumber);
+        }
+
+        List<String> status = criteria.getStatus();
+        if (!CollectionUtils.isEmpty(status)) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" LOWER(tl.status) IN (").append(createQuery(status)).append(")");
+            addToPreparedStatement(preparedStmtList, status);
+        }
+
+        if (criteria.getApplicationType() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.applicationtype = ? ");
+            preparedStmtList.add(criteria.getApplicationType());
+        }
+
+        List<String> licenseNumbers = criteria.getLicenseNumbers();
+        if (!CollectionUtils.isEmpty(licenseNumbers)) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" LOWER(tl.licensenumber) IN (").append(createQuery(licenseNumbers)).append(")");
+            addToPreparedStatement(preparedStmtList, licenseNumbers);
+        }
+
+        // if (criteria.getLicenseNumber() != null) {
+        // addClauseIfRequired(preparedStmtList, builder);
+        // builder.append(" tl.licensenumber = ? ");
+        // preparedStmtList.add(criteria.getLicenseNumber());
+        // }
+
+        if (criteria.getOldLicenseNumber() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.oldlicensenumber = ? ");
+            preparedStmtList.add(criteria.getOldLicenseNumber());
+        }
+
+        if (criteria.getFromDate() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.applicationDate >= ? ");
+            preparedStmtList.add(criteria.getFromDate());
+        }
+
+        if (criteria.getToDate() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.applicationDate <= ? ");
+            preparedStmtList.add(criteria.getToDate());
+        }
+
+        if (criteria.getValidTo() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.validTo <= ? ");
+            preparedStmtList.add(criteria.getValidTo());
+        }
+
+        if (criteria.getApplicationType() == TLConstants.APPLICATION_TYPE_RENEWAL) {
+
+            addRenewalCriteria(builder, preparedStmtList, criteria);
+        }
+
+        if (criteria.getLocality() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tladdress.locality = ? ");
+            preparedStmtList.add(criteria.getLocality());
+        }
+
+        if (criteria.getTradeName() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  LOWER(tl.tradename) = LOWER(?) ");
+            preparedStmtList.add(criteria.getTradeName());
+        }
+
+        if (criteria.getIssuedFrom() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.issueddate >= ? ");
+            preparedStmtList.add(criteria.getIssuedFrom());
+        }
+
+        if (criteria.getIssuedTo() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tl.issueddate <= ? ");
+            preparedStmtList.add(criteria.getIssuedTo());
+        }
+
+        if (criteria.getTradeType() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tlunit.businesssubtype LIKE ? ");
+            preparedStmtList.add(criteria.getTradeType().split("\\.")[0] + "%");
+        }
+
+        if (criteria.getStructureType() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tld.structuretype = ? ");
+            preparedStmtList.add(criteria.getStructureType());
+        }
+
+        if (criteria.getWardId() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tladdress.wardid = ? ");
+            preparedStmtList.add(criteria.getWardId());
+        }
+
+        if (criteria.getOwnerName() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(
+                    "  tlowner.tradelicensedetailid=(select distinct tradelicensedetailid from eg_tl_owner where tradelicensedetailid=tld.id and ownername ILIKE concat('%', ?, '%') ) ");
+            preparedStmtList.add(criteria.getOwnerName());
+        }
+
+        if (criteria.getDoorNo() != null) {
+
+            addClauseIfRequired(preparedStmtList, builder);
+            if (criteria.getDoorNoSub() != null) {
+                builder.append(
+                        "  tlstructplace.tradelicensedetailid = (select distinct tradelicensedetailid from eg_tl_structureplacedetail where tradelicensedetailid=tld.id and doorno=? and doorsub=?) ");
+                preparedStmtList.add(criteria.getDoorNo());
+                preparedStmtList.add(criteria.getDoorNoSub());
+            } else {
+                builder.append(
+                        "  tlstructplace.tradelicensedetailid = (select distinct tradelicensedetailid from eg_tl_structureplacedetail where tradelicensedetailid=tld.id and doorno=?) ");
+                preparedStmtList.add(criteria.getDoorNo());
             }
         }
 
-        else {
-
-            if (criteria.getTenantId() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append(" tl.tenantid=? ");
-                preparedStmtList.add(criteria.getTenantId());
-            }
-            List<String> ids = criteria.getIds();
-            if (!CollectionUtils.isEmpty(ids)) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append(" tl.id IN (").append(createQuery(ids)).append(")");
-                addToPreparedStatement(preparedStmtList, ids);
-            }
-
-            List<String> ownerIds = criteria.getOwnerIds();
-            if (!CollectionUtils.isEmpty(ownerIds)) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append(" (tlowner.id IN (").append(createQuery(ownerIds)).append(")");
-                addToPreparedStatement(preparedStmtList, ownerIds);
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append(" tlowner.active = ? ) ");
-                preparedStmtList.add(true);
-            }
-
-            if (criteria.getApplicationNumber() != null) {
-                List<String> applicationNumber = Arrays.asList(criteria.getApplicationNumber().split(","));
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append(" LOWER(tl.applicationnumber) IN (").append(createQuery(applicationNumber)).append(")");
-                addToPreparedStatement(preparedStmtList, applicationNumber);
-            }
-
-            List<String> status = criteria.getStatus();
-            if (!CollectionUtils.isEmpty(status)) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append(" LOWER(tl.status) IN (").append(createQuery(status)).append(")");
-                addToPreparedStatement(preparedStmtList, status);
-            }
-
-            if (criteria.getApplicationType() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tl.applicationtype = ? ");
-                preparedStmtList.add(criteria.getApplicationType());
-            }
-
-            List<String> licenseNumbers = criteria.getLicenseNumbers();
-            if (!CollectionUtils.isEmpty(licenseNumbers)) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append(" LOWER(tl.licensenumber) IN (").append(createQuery(licenseNumbers)).append(")");
-                addToPreparedStatement(preparedStmtList, licenseNumbers);
-            }
-
-            // if (criteria.getLicenseNumber() != null) {
-            // addClauseIfRequired(preparedStmtList, builder);
-            // builder.append(" tl.licensenumber = ? ");
-            // preparedStmtList.add(criteria.getLicenseNumber());
-            // }
-
-            if (criteria.getOldLicenseNumber() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tl.oldlicensenumber = ? ");
-                preparedStmtList.add(criteria.getOldLicenseNumber());
-            }
-
-            if (criteria.getFromDate() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tl.applicationDate >= ? ");
-                preparedStmtList.add(criteria.getFromDate());
-            }
-
-            if (criteria.getToDate() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tl.applicationDate <= ? ");
-                preparedStmtList.add(criteria.getToDate());
-            }
-
-            if (criteria.getValidTo() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tl.validTo <= ? ");
-                preparedStmtList.add(criteria.getValidTo());
-            }
-
-            if (criteria.getRenewalPending() != null && criteria.getRenewalPending()) {
-
-                addRenewalCriteria(builder, preparedStmtList, criteria);
-
-            }
-
-            if (criteria.getLocality() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tladdress.locality = ? ");
-                preparedStmtList.add(criteria.getLocality());
-            }
-
-            if (criteria.getTradeName() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  LOWER(tl.tradename) = LOWER(?) ");
-                preparedStmtList.add(criteria.getTradeName());
-            }
-
-            if (criteria.getIssuedFrom() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tl.issueddate >= ? ");
-                preparedStmtList.add(criteria.getIssuedFrom());
-            }
-
-            if (criteria.getIssuedTo() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tl.issueddate <= ? ");
-                preparedStmtList.add(criteria.getIssuedTo());
-            }
-
-            if (criteria.getTradeType() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tlunit.businesssubtype LIKE ? ");
-                preparedStmtList.add(criteria.getTradeType().split("\\.")[0] + "%");
-            }
-
-        }
+        // }
 
         // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);
 
@@ -290,61 +324,89 @@ public class TLQueryBuilder {
 
     private void addRenewalCriteria(StringBuilder builder, List<Object> preparedStmtList,
             TradeLicenseSearchCriteria criteria) {
-
         addClauseIfRequired(preparedStmtList, builder);
         builder.append(" ((  tl.validTo <= ? ");
-        preparedStmtList.add(System.currentTimeMillis() + renewalPeriod);
+        preparedStmtList.add("1680220800000");
 
         addClauseIfRequired(preparedStmtList, builder);
-        builder.append(" (( (tl.status IN (?,?)) ");
+        builder.append("  ((tl.workflowcode = ? AND tl.status=?) ");
+        preparedStmtList.add("PdeTL");
         preparedStmtList.add(TLConstants.STATUS_APPROVED);
-        preparedStmtList.add(TLConstants.STATUS_EXPIRED);
 
-        addClauseIfRequired(preparedStmtList, builder);
-
-        /* SELECT NewTL applications which do not have any renewal applications yet */
-        builder.append(
-                " (tl.licensenumber NOT IN (SELECT licensenumber from eg_tl_tradelicense WHERE UPPER(applicationtype) = ? AND licensenumber IS NOT NULL)  OR (");
-
-        /*
-         * SELECT applications which have application type as renewal, and having the
-         * latest financial year among all the renewal application
-         * for that particular license number
-         */
-        builder.append(
-                " tl.applicationtype = ? and ? > tl.financialyear AND tl.financialyear = (select max(financialyear) from eg_tl_tradelicense where licensenumber=tl.licensenumber)    )))");
-
-        /*
-         * SELECT applications which are manually expired after their real expiry date,
-         * and which is having the latest financial year from among all the applications
-         * for that particular license number
-         */
-        builder.append(
-                " OR ( tl.status = ? AND tl.financialyear = (select max(financialyear) from eg_tl_tradelicense where licensenumber=tl.licensenumber)  )))  ");
-
-        /*
-         * SELECT those applications for which there exist a rejected application for
-         * the current financial year, and financial year of this application should be
-         * just before that of the rejected application
-         */
-        builder.append(
-                "OR  ( tl.financialyear= (select max(financialyear) from eg_tl_tradelicense where licensenumber=tl.licensenumber and licensenumber in ( select licensenumber from eg_tl_tradelicense where status=? and financialyear=? ) and status<>?  ) ");
-
-        /* set status (approved) and validTo(before current timestamp) conditions */
-        builder.append(" AND (tl.status IN (?,?) ) AND tl.validTo <= ? ) ) ");
-
-        preparedStmtList.add(TLConstants.APPLICATION_TYPE_RENEWAL);
-        preparedStmtList.add(TLConstants.APPLICATION_TYPE_RENEWAL);
-        preparedStmtList.add(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
-        preparedStmtList.add(TLConstants.STATUS_MANUALLYEXPIRED);
-        preparedStmtList.add(TLConstants.STATUS_REJECTED);
-        preparedStmtList.add(criteria.getFinancialYear());
-        preparedStmtList.add(TLConstants.STATUS_REJECTED);
+        builder.append(" OR (tl.workflowcode = ? AND tl.status=?)) ");
+        preparedStmtList.add("RenewalTL");
         preparedStmtList.add(TLConstants.STATUS_APPROVED);
-        preparedStmtList.add(TLConstants.STATUS_EXPIRED);
-        preparedStmtList.add(System.currentTimeMillis() + renewalPeriod);
-
     }
+
+    // private void addRenewalCriteria(StringBuilder builder, List<Object>
+    // preparedStmtList,
+    // TradeLicenseSearchCriteria criteria) {
+
+    // addClauseIfRequired(preparedStmtList, builder);
+    // builder.append(" (( tl.validTo <= ? ");
+    // preparedStmtList.add(System.currentTimeMillis() + renewalPeriod);
+
+    // addClauseIfRequired(preparedStmtList, builder);
+    // builder.append(" (( (tl.status IN (?,?)) ");
+    // preparedStmtList.add(TLConstants.STATUS_APPROVED);
+    // preparedStmtList.add(TLConstants.STATUS_EXPIRED);
+
+    // addClauseIfRequired(preparedStmtList, builder);
+
+    // /* SELECT NewTL applications which do not have any renewal applications yet
+    // */
+    // builder.append(
+    // " (tl.licensenumber NOT IN (SELECT licensenumber from eg_tl_tradelicense
+    // WHERE UPPER(applicationtype) = ? AND licensenumber IS NOT NULL) OR (");
+
+    // /*
+    // * SELECT applications which have application type as renewal, and having the
+    // * latest financial year among all the renewal application
+    // * for that particular license number
+    // */
+    // builder.append(
+    // " tl.applicationtype = ? and ? > tl.financialyear AND tl.financialyear =
+    // (select max(financialyear) from eg_tl_tradelicense where
+    // licensenumber=tl.licensenumber) )))");
+
+    // /*
+    // * SELECT applications which are manually expired after their real expiry
+    // date,
+    // * and which is having the latest financial year from among all the
+    // applications
+    // * for that particular license number
+    // */
+    // builder.append(
+    // " OR ( tl.status = ? AND tl.financialyear = (select max(financialyear) from
+    // eg_tl_tradelicense where licensenumber=tl.licensenumber) ))) ");
+
+    // /*
+    // * SELECT those applications for which there exist a rejected application for
+    // * the current financial year, and financial year of this application should
+    // be
+    // * just before that of the rejected application
+    // */
+    // builder.append(
+    // "OR ( tl.financialyear= (select max(financialyear) from eg_tl_tradelicense
+    // where licensenumber=tl.licensenumber and licensenumber in ( select
+    // licensenumber from eg_tl_tradelicense where status=? and financialyear=? )
+    // and status<>? ) ");
+
+    // /* set status (approved) and validTo(before current timestamp) conditions */
+    // builder.append(" AND (tl.status IN (?,?) ) AND tl.validTo <= ? ) ) ");
+
+    // preparedStmtList.add(TLConstants.APPLICATION_TYPE_RENEWAL);
+    // preparedStmtList.add(TLConstants.APPLICATION_TYPE_RENEWAL);
+    // preparedStmtList.add(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
+    // preparedStmtList.add(TLConstants.STATUS_MANUALLYEXPIRED);
+    // preparedStmtList.add(TLConstants.STATUS_REJECTED);
+    // preparedStmtList.add(criteria.getFinancialYear());
+    // preparedStmtList.add(TLConstants.STATUS_REJECTED);
+    // preparedStmtList.add(TLConstants.STATUS_APPROVED);
+    // preparedStmtList.add(TLConstants.STATUS_EXPIRED);
+    // preparedStmtList.add(System.currentTimeMillis() + renewalPeriod);
+
+    // }
 
     private String addCountWrapper(String query) {
 
@@ -474,9 +536,10 @@ public class TLQueryBuilder {
         if (criteria.getOwnerName() != null) {
             addClauseIfRequired(preparedStmtList, builder);
             builder.append(
-                    "  tlowner.tradelicensedetailid=(select distinct tradelicensedetailid from eg_tl_owner_pde where tradelicensedetailid=tld.id and LOWER(ownername) LIKE LOWER(?) ) ");
-            // builder.append(" LOWER(tlowner.ownername) LIKE LOWER(?) ");
-            preparedStmtList.add(criteria.getOwnerName().split("\\.")[0] + "%");
+                    "  tlowner.tradelicensedetailid=(select distinct tradelicensedetailid from eg_tl_owner_pde where tradelicensedetailid=tld.id and ownername ILIKE concat('%', ?, '%') ) ");
+            // builder.append(" tlowner.ownername ILIKE %?% ");
+            preparedStmtList.add(criteria.getOwnerName());
+            // preparedStmtList.add(criteria.getOwnerName().split("\\.")[0] + "%");
         }
 
         if (criteria.getWardId() != null) {
