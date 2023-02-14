@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const Initiater = ({ config, onSelect, userType, formData }) => {
@@ -29,7 +29,9 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
   const [InitiatorMobile, setInitiatorMobile] = useState(
     formData?.Initiater?.InitiatorMobile ? formData?.Initiater?.InitiatorMobile : ""
   );
-   
+  const [initiatorAddress, setinitiatorAddress] = useState(
+    formData?.Initiater?.initiatorAddress ? formData?.Initiater?.initiatorAddress : ""
+  );
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
   
@@ -37,7 +39,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
   const [InitiaterNameError, setInitiaterNameError] = useState(formData?.Initiater?.InitiatorName ? false : false);
   const [InitiaterAadharError, setInitiaterAadharError] = useState(formData?.Initiater?.InitiatorAadhaar ? false : false);
   const [InitiaterMobileError, setInitiaterMobileError] = useState(formData?.Initiater?.InitiatorMobile ? false : false);
- 
+  
   const onSkip = () => onSelect();
 
   useEffect(() => {
@@ -114,7 +116,14 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
       setInitiatorMobile(e.target.value);
     }
   }
-   
+  function setSelectinitiatorAddress(e) {
+    if (e.target.value.length === 251) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setinitiatorAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  } 
 
   let validFlag = true;
   const goNext = () => {
@@ -168,22 +177,23 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("InitiatorRelation", InitiatorRelation ? InitiatorRelation : null);
       sessionStorage.setItem("InitiatorName", InitiatorName ? InitiatorName : null);
       sessionStorage.setItem("InitiatorAadhaar", InitiatorAadhaar ? InitiatorAadhaar : null);
-      sessionStorage.setItem("InitiatorMobile", InitiatorMobile ? InitiatorMobile : null);      
+      sessionStorage.setItem("InitiatorMobile", InitiatorMobile ? InitiatorMobile : null);  
+      sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);    
       onSelect(config.key, {
         isDeclarationInfoone,
         // isDeclarationInfotwo,
         InitiatorName,
         InitiatorRelation,
         InitiatorAadhaar,
-        InitiatorMobile,               
+        InitiatorMobile,  
+        initiatorAddress,             
       });
     }
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-       {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-            <BackButton >{t("CS_COMMON_BACK")}</BackButton>
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      <BackButton >{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -276,8 +286,6 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>
-             
-           
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
@@ -296,9 +304,28 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
+            
           </div>
         </div>
-        
+        <div className="row">
+          <div className="col-md-12">
+          <div className="col-md-6">
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAddress"
+                value={initiatorAddress}
+                onChange={setSelectinitiatorAddress}
+                disable={isEdit}
+                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+              />
+            </div>
+          </div>
+        </div> 
 
         {toast && (
           <Toast
