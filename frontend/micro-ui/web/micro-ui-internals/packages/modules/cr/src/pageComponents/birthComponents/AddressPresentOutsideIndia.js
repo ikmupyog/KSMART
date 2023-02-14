@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
   presentOutSideIndiaAdressEn, setAdressEn, presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB, setAdressMlB, 
-  presentOutSideIndiaProvinceEn, setProvinceEn,adrsVillage,setadrsVillage,adrsCityTown,setadrsCityTown, presentOutSideIndiaPostCode, setPostCode, presentOutSideCountry,
+  presentOutSideIndiaProvinceEn, setProvinceEn,presentOutSideIndiaadrsVillage,setadrsVillage,presentOutSideIndiaadrsCityTown,setadrsCityTown, presentOutSideIndiaPostCode, setPostCode, presentOutSideCountry,
   setOutSideCountry,  
   countryvalue, setCountryValue
 }) => {
@@ -28,11 +28,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
   // const [presentOutSideIndiaResNoMl, setResNoMl] = useState(formData?.AddressOutsideIndiaDetails?.presentOutSideIndiaResNoMl);
   // const [presentOutSideIndiaHouseNameEn, setHouseNameEn] = useState(formData?.AddressOutsideIndiaDetails?.presentOutSideIndiaHouseNameEn);
   // const [presentOutSideIndiaHouseNameMl, setHouseNameMl] = useState(formData?.AddressOutsideIndiaDetails?.presentOutSideIndiaHouseNameMl);
-  // const [adrsVillage, setadrsVillage] = useState(
-  //   formData?.AddressBrOutsideIndiaDetails?.adrsVillage ? formData?.AddressBrOutsideIndiaDetails?.adrsVillage : null
+  // const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(
+  //   formData?.AddressBrOutsideIndiaDetails?.presentOutSideIndiaadrsVillage ? formData?.AddressBrOutsideIndiaDetails?.presentOutSideIndiaadrsVillage : null
   // );
-  // const [adrsCityTown, setadrsCityTown] = useState(
-  //   formData?.AddressBrOutsideIndiaDetails?.adrsCityTown ? formData?.AddressBrOutsideIndiaDetails?.adrsCityTown : null
+  // const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(
+  //   formData?.AddressBrOutsideIndiaDetails?.presentOutSideIndiaadrsCityTown ? formData?.AddressBrOutsideIndiaDetails?.presentOutSideIndiaadrsCityTown : null
   // );
   let cmbCountry = [];
   Country &&
@@ -179,11 +179,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
     // sessionStorage.setItem("presentOutSideIndiaResNoMl", presentOutSideIndiaResNoMl  ? presentOutSideIndiaResNoMl  : null);
     // sessionStorage.setItem("presentOutSideIndiaHouseNameEn", presentOutSideIndiaHouseNameEn  ? presentOutSideIndiaHouseNameEn  : null);
     // sessionStorage.setItem("presentOutSideIndiaHouseNameMl", presentOutSideIndiaHouseNameMl  ? presentOutSideIndiaHouseNameMl  : null);
-    // sessionStorage.setItem("adrsVillage", adrsVillage ? adrsVillage.code : null);
-    // sessionStorage.setItem("adrsCityTown", adrsCityTown ? adrsCityTown : null);
+    // sessionStorage.setItem("presentOutSideIndiaadrsVillage", presentOutSideIndiaadrsVillage ? presentOutSideIndiaadrsVillage.code : null);
+    // sessionStorage.setItem("presentOutSideIndiaadrsCityTown", presentOutSideIndiaadrsCityTown ? presentOutSideIndiaadrsCityTown : null);
 
 
-    // onSelect(config.key, { adrsVillage,adrsCityTown, presentOutSideIndiaAdressEn, presentOutSideIndiaAdressEnB, presentOutSideIndiaAdressMlB, presentOutSideIndiaAdressMlB, presentOutSideIndiaProvinceEn,  presentOutSideCountry, });
+    // onSelect(config.key, { presentOutSideIndiaadrsVillage,presentOutSideIndiaadrsCityTown, presentOutSideIndiaAdressEn, presentOutSideIndiaAdressEnB, presentOutSideIndiaAdressMlB, presentOutSideIndiaAdressMlB, presentOutSideIndiaProvinceEn,  presentOutSideCountry, });
   
   };
   if (isCountryLoading) {
@@ -252,7 +252,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 isMandatory={true}
                 option={cmbUrbanRural}
-                selected={adrsVillage}
+                selected={presentOutSideIndiaadrsVillage}
                 select={setSelectadrsVillage}
                 disabled={isEdit}
                 placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
@@ -265,8 +265,8 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData,
                 isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
-                name="adrsCityTown"
-                value={adrsCityTown}
+                name="presentOutSideIndiaadrsCityTown"
+                value={presentOutSideIndiaadrsCityTown}
                 onChange={setSelectadrsCityTown}
                 disable={isEdit}
                 placeholder={`${t("CR_CITY_TOWN_EN")}`}
