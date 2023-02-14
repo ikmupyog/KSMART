@@ -233,7 +233,7 @@ console.log(value);
     // });
   };
 
-  if (isCountryLoading || isStateLoading || isDistrictLoading || isTalukLoading || isVillageLoading) {
+  if ( isDistrictLoading || isTalukLoading || isVillageLoading) {
     return <Loader></Loader>;
   }
 
@@ -257,7 +257,7 @@ console.log(value);
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbFilterDistrict}
+              option={cmbDistrict}
               selected={presentOutsideKeralaDistrict}
               select={setSelectoutsideKeralaDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}

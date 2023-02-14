@@ -265,6 +265,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let cmbfilterReligion = [];
   let cmbfilterAgeUnit = [];
   let naturetype = null;
+  let cmbfilterNationI =[];
   // let isInitialRender =[];
   useEffect(() => {
     if (Nationality == null || Nationality == "") {
@@ -285,7 +286,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         setSelectedAgeUnit(cmbfilterAgeUnit[0]);
       }
     }
-
+    if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
+      if (stateId === "kl" && cmbNation.length > 0) {
+        cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
+        setSelectDeathPlaceCountry(cmbfilterNationI[0]);
+      }
+    }
     // if (isInitialRender) {
     //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
     //     setIsInitialRender(false);
