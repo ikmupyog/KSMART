@@ -257,7 +257,7 @@ console.log(value);
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbFilterDistrict}
+              option={cmbDistrict}
               selected={presentOutsideKeralaDistrict}
               select={setSelectoutsideKeralaDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}
