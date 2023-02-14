@@ -325,7 +325,8 @@ public class TLQueryBuilder {
             TradeLicenseSearchCriteria criteria) {
         addClauseIfRequired(preparedStmtList, builder);
         builder.append(" (tl.validTo <= ?) ");
-        preparedStmtList.add("1680220800000");
+        long renewalPeriod = 1680220800000L;
+        preparedStmtList.add(renewalPeriod);
 
         addClauseIfRequired(preparedStmtList, builder);
         builder.append("  ((tl.workflowcode = ? AND tl.status=?) ");
