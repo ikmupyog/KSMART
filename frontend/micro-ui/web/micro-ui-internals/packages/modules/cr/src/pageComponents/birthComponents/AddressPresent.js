@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
-    permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
-    isPrsentAddress,setIsPrsentAddress
+const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
+    presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const tenantId = Digit.ULBService.getCitizenCurrentTenant();
@@ -18,7 +17,15 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
     const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
+    //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
     const [isInitialRender, setIsInitialRender] = useState(true);
+    // const [lbs, setLbs] = useState(0);
+    // const [presentaddressCountry, setaddressCountry] = useState(formData?.AddressBirthDetails?.presentaddressCountry);
+    // const [presentaddressStateName, setaddressStateName] = useState(formData?.AddressBirthDetails?.presentaddressStateName);
+    // const [Talukvalues, setLbsTalukvalue] = useState(null);
+    // const [Villagevalues, setLbsVillagevalue] = useState(null);
+    // const [value, setValue] = useState();
+
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -54,10 +61,10 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-                setpermtaddressCountry(cmbFilterCountry[0]);
+                setaddressCountry(cmbFilterCountry[0]);
                 setCountryValue(cmbFilterCountry[0].countrycode)
                 cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-                setpermtaddressStateName(cmbFilterState[0]);
+                setaddressStateName(cmbFilterState[0]);
                 setValue(cmbFilterState[0].statecode);
                 setIsInitialRender(false);
             }
@@ -67,21 +74,21 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     const onSkip = () => onSelect();
 
     function setSelectaddressCountry(value) {
-        setpermtaddressCountry(value);
+        setaddressCountry(value);
         setCountryValue(value.countrycode);
     }
     function setSelectaddressStateName(value) {
-        setpermtaddressStateName(value);
+        setaddressStateName(value);
         setValue(value.statecode);
     }
 
     const goNext = () => {
-        // sessionStorage.setItem("permtaddressCountry", permtaddressCountry.code);
-        // sessionStorage.setItem("permtaddressStateName", permtaddressStateName.code);
+        // sessionStorage.setItem("presentaddressCountry", presentaddressCountry.code);
+        // sessionStorage.setItem("presentaddressStateName", presentaddressStateName.code);
 
         // onSelect(config.key, {
-        //     permtaddressCountry,
-        //     permtaddressStateName,
+        //     presentaddressCountry,
+        //     presentaddressStateName,
         // });
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
@@ -89,11 +96,11 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     }
     return (
         <React.Fragment>
-            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!permtaddressCountry}>
+            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}>
                 <div className="row">
                     <div className="col-md-12">
                         <h1 className="headingh1">
-                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>{" "}
                         </h1>
                     </div>
                 </div>
@@ -108,7 +115,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                             optionKey="name"
                             isMandatory={false}
                             option={cmbCountry}
-                            selected={permtaddressCountry}
+                            selected={presentaddressCountry}
                             select={setSelectaddressCountry}
                         />
                     </div>
@@ -123,7 +130,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                                 optionKey="name"
                                 isMandatory={false}
                                 option={cmbState}
-                                selected={permtaddressStateName}
+                                selected={presentaddressStateName}
                                 select={setSelectaddressStateName}
                             />
                         </div>
@@ -133,4 +140,4 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
         </React.Fragment>
     );
 };
-export default AddressPermanent;
+export default AddressPresent;

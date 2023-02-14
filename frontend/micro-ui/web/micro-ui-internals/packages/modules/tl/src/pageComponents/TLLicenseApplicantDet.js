@@ -232,9 +232,10 @@ const TLLicenseApplicantDet = ({ t, config, onSelect, userType, formData }) => {
       let structurePlace = formDatalocal?.tradeLicenseDetail?.structurePlace;
       let tradeUnits = formDatalocal?.tradeLicenseDetail?.tradeUnits;
       let businessSector = formDatalocal?.tradeLicenseDetail?.businessSector;
+      let enterpriseType=formDatalocal?.tradeLicenseDetail?.enterpriseType;
       let tradeLicenseDetail = {
         licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
-        , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits
+        , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits,enterpriseType
       };
       onSelect(config.key, { tradeLicenseDetail });
     } else {
