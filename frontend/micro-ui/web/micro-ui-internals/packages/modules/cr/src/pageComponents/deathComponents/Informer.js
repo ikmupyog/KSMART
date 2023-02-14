@@ -300,13 +300,13 @@ const Informer = ({ config, onSelect, userType, formData }) => {
             label={
               infomantNameError || infomantAadharError || infomantMobileError || informerDesiError
                 ? infomantNameError
-                  ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
+                  ? t(`CR_ERROR_INFORMANT_NAME_CHOOSE`)
                   : infomantAadharError
-                  ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+                  ? t(`CR_ERROR_INFORMANT_AADHAR_CHOOSE`)
                   : infomantMobileError
-                  ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                  ? t(`CR_ERROR_INFORMANT_MOBILE_CHOOSE`)
                   : informerDesiError
-                  ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                  ? t(`CR_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
                   : setToast(false)
                 : setToast(false)
             }
