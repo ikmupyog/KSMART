@@ -215,6 +215,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     setselectDeathPlace(value);
     setValue(value.code);
   }
+  // let workFlowCode ="";
   function selectDateOfDeath(value) {
     setDateOfDeath(value);
     const today = new Date();
@@ -224,6 +225,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       console.log(Difference_In_DaysRounded);
+      // if(Difference_In_DaysRounded<=21){
+      //   workFlowCode="death21days"
+      // }
     } else {
       setDateOfDeath(null);
       setDOBError(true);
@@ -261,6 +265,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let cmbfilterReligion = [];
   let cmbfilterAgeUnit = [];
   let naturetype = null;
+  let cmbfilterNationI =[];
   // let isInitialRender =[];
   useEffect(() => {
     if (Nationality == null || Nationality == "") {
@@ -281,7 +286,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         setSelectedAgeUnit(cmbfilterAgeUnit[0]);
       }
     }
-
+    if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
+      if (stateId === "kl" && cmbNation.length > 0) {
+        cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
+        setSelectDeathPlaceCountry(cmbfilterNationI[0]);
+      }
+    }
     // if (isInitialRender) {
     //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
     //     setIsInitialRender(false);
