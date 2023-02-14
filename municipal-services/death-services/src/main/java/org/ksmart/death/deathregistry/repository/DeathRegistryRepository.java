@@ -127,6 +127,8 @@ public class DeathRegistryRepository {
                  String lbName = masterData.get(DeathRegistryConstants.TENANTS).toString();
                  lbName = lbName.replaceAll("[\\[\\]\\(\\)]", "");
                  cert.getDeathBasicInfo().setLocalBodyName(lbName);    
+
+                 System.out.println("lbName"+lbName);
                  
                  Object mdmsDistrict = util.mDMSCallCertificateLBDistrict(pdfApplicationRequest.getRequestInfo()
                             , cert.getDeathBasicInfo().getTenantId());
@@ -197,7 +199,6 @@ public class DeathRegistryRepository {
                                 , cert.getDeathAddressInfo().getPresentAddrVillageId()
                                 , cert.getDeathAddressInfo().getPresentAddrTalukId());
                 Map<String,List<String>> masterDataMl = getAttributeValuesMl(mdmsDataMl);
-
                 String lbNameMl = masterDataMl.get(DeathRegistryConstants.TENANTS).toString();
                 lbNameMl = lbNameMl.replaceAll("[\\[\\]\\(\\)]", "");
                 cert.getDeathBasicInfo().setLocalBodyNameMl(lbNameMl);
@@ -215,7 +216,7 @@ public class DeathRegistryRepository {
                 String presentAddCountry = masterData.get(DeathRegistryConstants.COUNTRY).toString();
                 presentAddCountry = presentAddCountry.replaceAll("[\\[\\]\\(\\)]", "");
                 cert.getDeathAddressInfo().setPresentAddrCountryId(presentAddCountry);  
-                
+
                 //RAkhi S on 11.02.2023
 
                 String presentAddPO = masterData.get(DeathRegistryConstants.POSTOFFICE).toString();
@@ -237,7 +238,6 @@ public class DeathRegistryRepository {
                     }
                      cert.getDeathAddressInfo().setPresentAddrPostofficeNameMl(presentAddPOMl);
                 }
-
                 //Rakhi S ikm on 12.02.2023 Village
                 String presentAddVillage = masterData.get(DeathRegistryConstants.VILLAGE).toString();
                 presentAddVillage = presentAddVillage.replaceAll("[\\[\\]\\(\\)]", "");
@@ -882,7 +882,11 @@ public class DeathRegistryRepository {
                 //Rakhi S on 13.02.2023 
                 //Place of Death Outside Jurisdiction
                 else if(DeathRegistryConstants.DEATH_PLACE_OUTSIDE_JURISDICTION.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
-                    cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceRemarksMl()+" / "+cert.getDeathBasicInfo().getDeathPlaceRemarksEn());
+                    cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceRemarksMl()+" / "
+                                                        +cert.getDeathBasicInfo().getDeathPlaceRemarksEn()
+                                                        +"("+DeathRegistryConstants.PLACE_OF_BURIAL.toString() 
+                                                        +cert.getDeathBasicInfo().getPlaceOfBurialMl()+" / "
+                                                        +cert.getDeathBasicInfo().getPlaceOfBurialEn()+")");
                 }
 
 
