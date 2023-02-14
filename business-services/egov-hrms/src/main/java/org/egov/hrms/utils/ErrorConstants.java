@@ -205,4 +205,10 @@ public class ErrorConstants {
 	public static final String HRMS_EMPLOYEE_NULL_WARD_CODE = "ERR_HRMS_WARD_NULL_CODE";
 	public static final String HRMS_EMPLOYEE_NULL_WARD_CODE_MSG = "Ward Code in an HRMS request should not be null.";
 
+	public static final String HRMS_HOSPIAL_COUNT_LABEL = "ERR_HRMS_HOSPITAL_COUNT_LABEL";
+	public static final String HRMS_HOSPIAL_COUNT_LABEL_MSG = "Hospital code in an HRMS should not be greater than one.";
+
+	public static final String HRMS_INVALID_HOSPITAL_CODE = "ERR_HRMS_INVALID_HOSPITAL";
+	public static final String HRMS_INVALID_JHOSPITAL_MSG = "Hospital code value is invalid.";
+
 }

@@ -1,5 +1,6 @@
 package org.egov.hrms.model;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -50,9 +51,8 @@ public class JurisdictionChild {
 	private String wardCode;
 
 	@SafeHtml
-	@NotNull
-	@NotBlank
-	@NotEmpty
+	@Valid
+	@NotBlank(message = "Ward Label is required")
 	@Size(max = 256)
 	private String wardLabel;
 
