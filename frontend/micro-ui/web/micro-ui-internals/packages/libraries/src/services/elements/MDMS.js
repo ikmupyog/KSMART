@@ -1009,6 +1009,22 @@ const getCRPregnantDeceasedlist
     ],
   },
 });
+const getCRRBirthStatuslist
+ = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "BirthStatus",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRcauseOfSpouseTypelist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2293,6 +2309,10 @@ export const MdmsService = {
   },
   getCRPregnantDeceased: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRPregnantDeceasedlist(tenantId, moduleCode), moduleCode);
+  },
+  
+  getCRBirthStatus: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRRBirthStatuslist(tenantId, moduleCode), moduleCode);
   },
   getDeathPlaceType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getDeathPlaceTypelist(tenantId, moduleCode), moduleCode);

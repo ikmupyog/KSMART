@@ -99,13 +99,13 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const options = [
-    { i18nKey: "yes", code: "Yes" },
-    { i18nKey: "no", code: "No" },
+    { i18nKey: "YES", code: "CR_YES" },
+    { i18nKey: "NO", code: "No" },
   ];
 
   const menub = [
-    { i18nKey: "YES", code: "YES" },
-    { i18nKey: "NO", code: "NO" },
+    { i18nKey: "YES", code: "CR_YES" },
+    { i18nKey: "NO", code: "CR_NO" },
   ];
 
   // // const handleRadioChangeTabacco = (e) => {
@@ -127,6 +127,14 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const { data: deathsub = {}, isLoadingsub } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   const { data: mannerOfDeath = {}, isLoadingmanner } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MannerOfDeath");
   const { data: pregnantDeceased = {}, isLoadingPregnant } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PregnantDeceased");
+  const { data: birthStatus = {}, isLoadingBirthStatus } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "BirthStatus");
+
+  let cmbbirthstatus = [];
+  birthStatus &&
+  birthStatus["birth-death-service"] &&
+  birthStatus["birth-death-service"].PregnantDeceased.map((ob) => {
+    cmbbirthstatus.push(ob);
+    });
   let cmbpregnantDeceased = [];
   pregnantDeceased &&
   pregnantDeceased["birth-death-service"] &&
@@ -297,8 +305,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   function selectDeathCauseSubTimeUnit2(value) {
     setDeathCauseSubTimeUnit2(value);
   }
-  function selectDeathCauseOther(value) {
-    setDeathCauseOther(value);
+  function selectDeathCauseOther(e) {
+    setDeathCauseOther(e.target.value);
   }
   function selectIsdeceasedPregnant(value) {
     setIsdeceasedPregnant(value);
@@ -469,7 +477,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
               <CardLabel>{t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED")}</CardLabel>
               <Dropdown
                 t={t}
-                optionKey="name"
+                optionKey="i18nKey"
                 isMandatory={false}
                 option={menub}
                 selected={DeathMedicallyCertified}
@@ -727,9 +735,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 <CardLabel>{t("CR_WAS_THERE")}</CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="code"
+                  optionKey="name"
                   isMandatory={false}
-                  option={menub}
+                  option={cmbbirthstatus}
                   selected={IsDelivery}
                   select={selectIsDelivery}
                   disabled={isEdit}
