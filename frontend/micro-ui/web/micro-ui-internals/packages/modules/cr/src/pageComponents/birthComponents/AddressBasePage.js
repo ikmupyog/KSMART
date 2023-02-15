@@ -554,6 +554,26 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setOutSideCountry={setOutSideCountry}
                             countryvalue={countryvalue}
                             setCountryValue={setCountryValue}
+                            isPrsentAddress={isPrsentAddress}
+                            setIsPrsentAddress={setIsPrsentAddress}
+                            PermntOutsideIndiaLineoneEn={PermntOutsideIndiaLineoneEn}
+                            setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
+                            PermntOutsideIndiaLineoneMl={PermntOutsideIndiaLineoneMl}
+                            setadrsPermntOutsideIndiaLineoneMl={setadrsPermntOutsideIndiaLineoneMl}
+                            PermntOutsideIndiaLinetwoEn={PermntOutsideIndiaLinetwoEn}
+                            setadrsPermntOutsideIndiaLinetwoEn={setadrsPermntOutsideIndiaLinetwoEn}
+                            PermntOutsideIndiaLinetwoMl={PermntOutsideIndiaLinetwoMl}
+                            setadrsPermntOutsideIndiaLinetwoMl={setadrsPermntOutsideIndiaLinetwoMl}
+                            PermntOutsideIndiaprovinceEn={PermntOutsideIndiaprovinceEn}
+                            setPermntOutsideIndiaprovinceEn={setPermntOutsideIndiaprovinceEn}
+                            PermntOutsideIndiaVillage={PermntOutsideIndiaVillage}
+                            setadrsPermntOutsideIndiaVillage={setadrsPermntOutsideIndiaVillage}
+                            PermntOutsideIndiaCityTown={PermntOutsideIndiaCityTown}
+                            setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
+                            PermanentOutsideIndiaPostCode={PermanentOutsideIndiaPostCode}
+                            setPermantpostCode={setPermantpostCode}
+                            PermntOutsideIndiaCountry={PermntOutsideIndiaCountry}
+                            setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                         />
                     </div>
                 )}
