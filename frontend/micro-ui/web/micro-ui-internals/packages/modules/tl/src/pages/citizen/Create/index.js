@@ -6,14 +6,14 @@ import { newConfig as newConfigTL } from "../../../config/config";
 // import CheckPage from "./CheckPage";
 // import TLAcknowledgement from "./TLAcknowledgement";
 
-const CreateTradeLicence = ({ parentRoute }) => {
+const CreateTradeLicence = ({ parentRoute,isRenewal }) => {
   const queryClient = useQueryClient();
   const match = useRouteMatch();
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const history = useHistory();
   let config = [];
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
+  const [params, setParams, clearParams] = isRenewal ? Digit.Hooks.useSessionStorage("TL_RENEWAL_TRADE", {}) : Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
   let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/")
 
   const stateId = Digit.ULBService.getStateId();
@@ -95,7 +95,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
-
+ 
   const handleSkip = () => {};
   const handleMultiple = () => {};
 
@@ -114,7 +114,7 @@ const CreateTradeLicence = ({ parentRoute }) => {
   let skipenanbledOb = newConfig?.filter(obj => obj?.body?.some(com => com.component === "CPTCreateProperty"))?.[0];
   let skipenabled = skipenanbledOb?.body?.filter((ob) => ob?.component === "CPTCreateProperty")?.[0]?.isSkipEnabled;
   sessionStorage.setItem("skipenabled",skipenabled);
-  config.indexRoute = "license-unit-det";
+  config.indexRoute = isRenewal ? "licenserenewal-unit-det" : "license-unit-det";
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("TLCheckPage");
   const TLAcknowledgement = Digit?.ComponentRegistryService?.getComponent("TLAcknowledgement");
   return (

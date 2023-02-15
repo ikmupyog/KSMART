@@ -535,6 +535,7 @@ let cmbState = [];
   };
   return (
     <React.Fragment>
+     
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep
