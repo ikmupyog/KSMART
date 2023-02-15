@@ -67,7 +67,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeceasedLastNameMl, setDeceasedLastNameMl] = useState(
     formData?.InformationDeath?.DeceasedLastNameMl ? formData?.InformationDeath?.DeceasedLastNameMl : ""
   );
-  const [Age, setAge] = useState(formData?.InformationDeath?.Age? formData?.InformationDeath?.Age : "");
+  const [Age, setAge] = useState(formData?.InformationDeath?.Age ? formData?.InformationDeath?.Age : "");
   const [DeceasedGender, setselectedDeceasedGender] = useState(formData?.InformationDeath?.DeceasedGender);
   const [Nationality, setSelectedNationality] = useState(formData?.InformationDeath?.Nationality);
   const [Religion, setSelectedReligion] = useState(formData?.InformationDeath?.Religion);
@@ -94,7 +94,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl);
   const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl);
   //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
-  // 
+  //
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
   const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.InformationDeath?.VehicleFromplaceEn);
   const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.InformationDeath?.VehicleToPlaceEn);
@@ -105,22 +105,30 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.InformationDeath?.VehicleFirstHaltMl);
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.InformationDeath?.VehicleHospitalEn);
   const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.InformationDeath?.DeathPlaceWardId);
-//Public Place
+  //Public Place
 
-  const [DeathPlaceLocalityEn, setDeathPlaceLocalityEn] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn? formData?.InformationDeath?.DeathPlaceLocalityEn : "");  
-  const [DeathPlaceLocalityMl, setDeathPlaceLocalityMl] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl? formData?.InformationDeath?.DeathPlaceLocalityMl : "");  
-  const [DeathPlaceStreetEn, setDeathPlaceStreetEn] = useState(formData?.InformationDeath?.DeathPlaceStreetEn? formData?.InformationDeath?.DeathPlaceStreetEn : "");  
-  const [DeathPlaceStreetMl, setDeathPlaceStreetMl] = useState(formData?.InformationDeath?.DeathPlaceStreetMl ? formData?.InformationDeath?.DeathPlaceStreetMl : "");  
- 
-//DeathOutsideJurisdiction
+  const [DeathPlaceLocalityEn, setDeathPlaceLocalityEn] = useState(
+    formData?.InformationDeath?.DeathPlaceLocalityEn ? formData?.InformationDeath?.DeathPlaceLocalityEn : ""
+  );
+  const [DeathPlaceLocalityMl, setDeathPlaceLocalityMl] = useState(
+    formData?.InformationDeath?.DeathPlaceLocalityMl ? formData?.InformationDeath?.DeathPlaceLocalityMl : ""
+  );
+  const [DeathPlaceStreetEn, setDeathPlaceStreetEn] = useState(
+    formData?.InformationDeath?.DeathPlaceStreetEn ? formData?.InformationDeath?.DeathPlaceStreetEn : ""
+  );
+  const [DeathPlaceStreetMl, setDeathPlaceStreetMl] = useState(
+    formData?.InformationDeath?.DeathPlaceStreetMl ? formData?.InformationDeath?.DeathPlaceStreetMl : ""
+  );
+
+  //DeathOutsideJurisdiction
   const [DeathPlaceCountry, setSelectDeathPlaceCountry] = useState(formData?.InformationDeath?.DeathPlaceCountry);
   const [DeathPlaceState, SelectDeathPlaceState] = useState(formData?.InformationDeath?.DeathPlaceState);
-  const [DeathPlaceDistrict, SelectDeathPlaceDistrict] = useState(formData?.InformationDeath?.DeathPlaceDistrict); 
-  const [DeathPlaceCity, SelectDeathPlaceCity] = useState(formData?.InformationDeath?.DeathPlaceCity); 
-  const [DeathPlaceRemarksEn, SelectDeathPlaceRemarksEn] = useState(formData?.InformationDeath?.DeathPlaceRemarksEn); 
-  const [DeathPlaceRemarksMl, SelectDeathPlaceRemarksMl] = useState(formData?.InformationDeath?.DeathPlaceRemarksMl);  
-  const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn); 
-  const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl); 
+  const [DeathPlaceDistrict, SelectDeathPlaceDistrict] = useState(formData?.InformationDeath?.DeathPlaceDistrict);
+  const [DeathPlaceCity, SelectDeathPlaceCity] = useState(formData?.InformationDeath?.DeathPlaceCity);
+  const [DeathPlaceRemarksEn, SelectDeathPlaceRemarksEn] = useState(formData?.InformationDeath?.DeathPlaceRemarksEn);
+  const [DeathPlaceRemarksMl, SelectDeathPlaceRemarksMl] = useState(formData?.InformationDeath?.DeathPlaceRemarksMl);
+  const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn);
+  const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl);
 
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [toast, setToast] = useState(false);
@@ -171,8 +179,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     place["common-masters"].PlaceMasterDeath.map((ob) => {
       cmbPlace.push(ob);
     });
-let cmbState = [];
-    State &&
+  let cmbState = [];
+  State &&
     State["common-masters"] &&
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
@@ -272,7 +280,7 @@ let cmbState = [];
   let cmbfilterReligion = [];
   let cmbfilterAgeUnit = [];
   let naturetype = null;
-  let cmbfilterNationI =[];
+  let cmbfilterNationI = [];
   let cmbFilterState = [];
   // let isInitialRender =[];
   useEffect(() => {
@@ -302,14 +310,13 @@ let cmbState = [];
     }
     if (DeathPlaceState == null || DeathPlaceState == "") {
       if (stateId === "kl" && cmbState.length > 0) {
-         cmbFilterState = cmbState.filter((cmbState) => cmbState.name !== ("Kerala"));
-         SelectDeathPlaceState(cmbFilterState[0]);
+        cmbFilterState = cmbState.filter((cmbState) => cmbState.name !== "Kerala");
+        SelectDeathPlaceState(cmbFilterState[0]);
       }
     }
 
     // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
     // setAdrsStateName(cmbFilterState[0]);
-
 
     // if (isInitialRender) {
     //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
@@ -344,7 +351,6 @@ let cmbState = [];
         }
         if (naturetype === "VEHICLE") {
           <DeathPlaceVehicle
-          
             DeathPlaceType={DeathPlaceType}
             VehicleNumber={VehicleNumber}
             VehicleFromplaceEn={VehicleFromplaceEn}
@@ -354,35 +360,33 @@ let cmbState = [];
             VehicleFirstHaltMl={VehicleFirstHaltMl}
             VehicleHospitalEn={VehicleHospitalEn}
             DeathPlaceWardId={DeathPlaceWardId}
-            VehicleFromplaceMl ={VehicleFromplaceMl}
+            VehicleFromplaceMl={VehicleFromplaceMl}
             VehicleToPlaceMl={VehicleToPlaceMl}
           />;
         }
         if (naturetype === "PUBLIC_PLACES") {
-          <DeathPublicPlace          
+          <DeathPublicPlace
             DeathPlaceType={DeathPlaceType}
             DeathPlaceLocalityEn={DeathPlaceLocalityEn}
             DeathPlaceLocalityMl={DeathPlaceLocalityMl}
-            DeathPlaceStreetEn={DeathPlaceStreetEn}          
-            DeathPlaceStreetMl={DeathPlaceStreetMl}         
+            DeathPlaceStreetEn={DeathPlaceStreetEn}
+            DeathPlaceStreetMl={DeathPlaceStreetMl}
             DeathPlaceWardId={DeathPlaceWardId}
             GeneralRemarks={GeneralRemarks}
-            
           />;
         }
         if (naturetype === "OUTSIDE_JURISDICTION") {
-          <DeathOutsideJurisdiction                  
-  DeathPlaceCountry={DeathPlaceCountry}
-  DeathPlaceState={DeathPlaceState}
-  DeathPlaceDistrict={DeathPlaceDistrict}
-  DeathPlaceCity={DeathPlaceCity}          
-  DeathPlaceRemarksEn={DeathPlaceRemarksEn}         
-  DeathPlaceRemarksMl={DeathPlaceRemarksMl}  
-  PlaceOfBurialMl={PlaceOfBurialMl}
-  PlaceOfBurialEn={PlaceOfBurialEn}
-  GeneralRemarks={GeneralRemarks}
-  DeathPlaceWardId={DeathPlaceWardId}
-            
+          <DeathOutsideJurisdiction
+            DeathPlaceCountry={DeathPlaceCountry}
+            DeathPlaceState={DeathPlaceState}
+            DeathPlaceDistrict={DeathPlaceDistrict}
+            DeathPlaceCity={DeathPlaceCity}
+            DeathPlaceRemarksEn={DeathPlaceRemarksEn}
+            DeathPlaceRemarksMl={DeathPlaceRemarksMl}
+            PlaceOfBurialMl={PlaceOfBurialMl}
+            PlaceOfBurialEn={PlaceOfBurialEn}
+            GeneralRemarks={GeneralRemarks}
+            DeathPlaceWardId={DeathPlaceWardId}
           />;
         }
       }
@@ -425,7 +429,7 @@ let cmbState = [];
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
     }
     if (DeathPlace.code === "HOME") {
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
       sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
       sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn : null);
       sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl ? DeathPlaceHomehoueNameMl : null);
@@ -437,19 +441,17 @@ let cmbState = [];
       sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
     }
     if (DeathPlace.code === "VEHICLE") {
-    sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-    sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
-    sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
-    sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
-    sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
-    sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
-    sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
-    sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
-    sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
-    sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-    sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
-    
-
+      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
+      sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
+      sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
+      sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
+      sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
+      sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
+      sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
+      sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
+      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
     }
     if (DeathPlace.code === "PUBLIC_PLACES") {
       sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
@@ -458,20 +460,19 @@ let cmbState = [];
       sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
       sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
       sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);     
-  
-      }
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);
+    }
     if (DeathPlace.code === "OUTSIDE_JURISDICTION") {
-      sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code  : null);
-      sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code  : null);
-      sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code  : null);    
-      sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity  : null);
-      sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn  : null);
-      sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl  : null);
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
-      sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn  : null);
-      sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl  : null);
-      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);    
+      sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code : null);
+      sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code : null);
+      sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code : null);
+      sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity : null);
+      sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn : null);
+      sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl : null);
+      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
+      sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn : null);
+      sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
+      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
     }
     onSelect(config.key, {
       DateOfDeath,
@@ -517,20 +518,18 @@ let cmbState = [];
       GeneralRemarks,
       DeathPlaceWardId,
       DeathPlaceType,
-      DeathPlaceLocalityEn, 
-      DeathPlaceLocalityMl, 
-      DeathPlaceStreetEn, 
-      DeathPlaceStreetMl,            
+      DeathPlaceLocalityEn,
+      DeathPlaceLocalityMl,
+      DeathPlaceStreetEn,
+      DeathPlaceStreetMl,
       DeathPlaceCountry,
       DeathPlaceState,
       DeathPlaceDistrict,
       DeathPlaceCity,
       DeathPlaceRemarksEn,
-      DeathPlaceRemarksMl,      
+      DeathPlaceRemarksMl,
       PlaceOfBurialMl,
       PlaceOfBurialEn,
-      
-
     });
   };
   return (
@@ -575,7 +574,10 @@ let cmbState = [];
                 />
               </div>
               <div className="col-md-2">
-                <CardLabel>{t("CR_TIME_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>
+                  {t("CR_TIME_OF_DEATH")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
                 <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setTimeOfDeath)} value={TimeOfDeath} />
               </div>
             </div>
@@ -592,7 +594,10 @@ let cmbState = [];
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CR_PLACE_OF_DEATH")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {t("CR_PLACE_OF_DEATH")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="code"
@@ -648,80 +653,78 @@ let cmbState = [];
         {value === "VEHICLE" && (
           <div>
             <DeathPlaceVehicle
-            DeathPlaceType={DeathPlaceType}
-            selectDeathPlaceType={selectDeathPlaceType}
-            VehicleNumber={VehicleNumber}
-            setVehicleNumber= {setVehicleNumber}
-            VehicleFromplaceEn= {VehicleFromplaceEn}            
-            setVehicleFromplaceEn= {setVehicleFromplaceEn}
-            VehicleToPlaceEn= {VehicleToPlaceEn}
-            setVehicleToPlaceEn={setVehicleToPlaceEn}
-            GeneralRemarks={GeneralRemarks} 
-            setGeneralRemarks={setGeneralRemarks}
-            VehicleFirstHaltEn={VehicleFirstHaltEn}
-            setVehicleFirstHaltEn={setVehicleFirstHaltEn}
-            VehicleFirstHaltMl={VehicleFirstHaltMl}
-            setVehicleFirstHaltMl={setVehicleFirstHaltMl}
-            VehicleHospitalEn={VehicleHospitalEn} 
-            setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
-            DeathPlaceWardId={DeathPlaceWardId}
-            setDeathPlaceWardId={setDeathPlaceWardId}
-            VehicleFromplaceMl={VehicleFromplaceMl}
-            setVehicleFromplaceMl={setVehicleFromplaceMl}
-            VehicleToPlaceMl={VehicleToPlaceMl}
-            setVehicleToPlaceMl={setVehicleToPlaceMl}
-              
+              DeathPlaceType={DeathPlaceType}
+              selectDeathPlaceType={selectDeathPlaceType}
+              VehicleNumber={VehicleNumber}
+              setVehicleNumber={setVehicleNumber}
+              VehicleFromplaceEn={VehicleFromplaceEn}
+              setVehicleFromplaceEn={setVehicleFromplaceEn}
+              VehicleToPlaceEn={VehicleToPlaceEn}
+              setVehicleToPlaceEn={setVehicleToPlaceEn}
+              GeneralRemarks={GeneralRemarks}
+              setGeneralRemarks={setGeneralRemarks}
+              VehicleFirstHaltEn={VehicleFirstHaltEn}
+              setVehicleFirstHaltEn={setVehicleFirstHaltEn}
+              VehicleFirstHaltMl={VehicleFirstHaltMl}
+              setVehicleFirstHaltMl={setVehicleFirstHaltMl}
+              VehicleHospitalEn={VehicleHospitalEn}
+              setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
+              DeathPlaceWardId={DeathPlaceWardId}
+              setDeathPlaceWardId={setDeathPlaceWardId}
+              VehicleFromplaceMl={VehicleFromplaceMl}
+              setVehicleFromplaceMl={setVehicleFromplaceMl}
+              VehicleToPlaceMl={VehicleToPlaceMl}
+              setVehicleToPlaceMl={setVehicleToPlaceMl}
             />
-          </div>         
+          </div>
         )}
-         {value === "PUBLIC_PLACES" && (
-            <div>
-              <DeathPublicPlace             
-               DeathPlaceType={DeathPlaceType}
-               selectDeathPlaceType={selectDeathPlaceType}
-               DeathPlaceLocalityEn={DeathPlaceLocalityEn}
-               setDeathPlaceLocalityEn={setDeathPlaceLocalityEn}
-               DeathPlaceLocalityMl={DeathPlaceLocalityMl}
-               setDeathPlaceLocalityMl={setDeathPlaceLocalityMl}
-               DeathPlaceStreetEn={DeathPlaceStreetEn}  
-               setDeathPlaceStreetEn={setDeathPlaceStreetEn}        
-               DeathPlaceStreetMl={DeathPlaceStreetMl} 
-               setDeathPlaceStreetMl={setDeathPlaceStreetMl}        
-               DeathPlaceWardId={DeathPlaceWardId}
-               setDeathPlaceWardId={setDeathPlaceWardId}
-               GeneralRemarks={GeneralRemarks}
-               setGeneralRemarks={setGeneralRemarks}
-                
-              />
-            </div>
-              )}
-              {value === "OUTSIDE_JURISDICTION" && (
-            <div>
-              <DeathOutsideJurisdiction             
-               DeathPlaceCountry={DeathPlaceCountry}
-               setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
-               DeathPlaceState={DeathPlaceState}
-               SelectDeathPlaceState={SelectDeathPlaceState}
-               DeathPlaceDistrict={DeathPlaceDistrict}
-               SelectDeathPlaceDistrict={SelectDeathPlaceDistrict}
-               DeathPlaceCity={DeathPlaceCity} 
-               SelectDeathPlaceCity={SelectDeathPlaceCity}         
-               DeathPlaceRemarksEn={DeathPlaceRemarksEn}
-               SelectDeathPlaceRemarksEn={SelectDeathPlaceRemarksEn}         
-               DeathPlaceRemarksMl={DeathPlaceRemarksMl}  
-               SelectDeathPlaceRemarksMl={SelectDeathPlaceRemarksMl} 
-               PlaceOfBurialMl={PlaceOfBurialMl}
-               SelectPlaceOfBurialMl={SelectPlaceOfBurialMl}
-               PlaceOfBurialEn={PlaceOfBurialEn}
-               SelectPlaceOfBurialEn={SelectPlaceOfBurialEn}
-               GeneralRemarks={GeneralRemarks}
-               setGeneralRemarks={setGeneralRemarks}
-               DeathPlaceWardId={DeathPlaceWardId}
-              setDeathPlaceWardId={setDeathPlaceWardId}              
-              />
-            </div>
-              )}
-              
+        {value === "PUBLIC_PLACES" && (
+          <div>
+            <DeathPublicPlace
+              DeathPlaceType={DeathPlaceType}
+              selectDeathPlaceType={selectDeathPlaceType}
+              DeathPlaceLocalityEn={DeathPlaceLocalityEn}
+              setDeathPlaceLocalityEn={setDeathPlaceLocalityEn}
+              DeathPlaceLocalityMl={DeathPlaceLocalityMl}
+              setDeathPlaceLocalityMl={setDeathPlaceLocalityMl}
+              DeathPlaceStreetEn={DeathPlaceStreetEn}
+              setDeathPlaceStreetEn={setDeathPlaceStreetEn}
+              DeathPlaceStreetMl={DeathPlaceStreetMl}
+              setDeathPlaceStreetMl={setDeathPlaceStreetMl}
+              DeathPlaceWardId={DeathPlaceWardId}
+              setDeathPlaceWardId={setDeathPlaceWardId}
+              GeneralRemarks={GeneralRemarks}
+              setGeneralRemarks={setGeneralRemarks}
+            />
+          </div>
+        )}
+        {value === "OUTSIDE_JURISDICTION" && (
+          <div>
+            <DeathOutsideJurisdiction
+              DeathPlaceCountry={DeathPlaceCountry}
+              setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
+              DeathPlaceState={DeathPlaceState}
+              SelectDeathPlaceState={SelectDeathPlaceState}
+              DeathPlaceDistrict={DeathPlaceDistrict}
+              SelectDeathPlaceDistrict={SelectDeathPlaceDistrict}
+              DeathPlaceCity={DeathPlaceCity}
+              SelectDeathPlaceCity={SelectDeathPlaceCity}
+              DeathPlaceRemarksEn={DeathPlaceRemarksEn}
+              SelectDeathPlaceRemarksEn={SelectDeathPlaceRemarksEn}
+              DeathPlaceRemarksMl={DeathPlaceRemarksMl}
+              SelectDeathPlaceRemarksMl={SelectDeathPlaceRemarksMl}
+              PlaceOfBurialMl={PlaceOfBurialMl}
+              SelectPlaceOfBurialMl={SelectPlaceOfBurialMl}
+              PlaceOfBurialEn={PlaceOfBurialEn}
+              SelectPlaceOfBurialEn={SelectPlaceOfBurialEn}
+              GeneralRemarks={GeneralRemarks}
+              setGeneralRemarks={setGeneralRemarks}
+              DeathPlaceWardId={DeathPlaceWardId}
+              setDeathPlaceWardId={setDeathPlaceWardId}
+            />
+          </div>
+        )}
+
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -969,7 +972,10 @@ let cmbState = [];
               />
             </div>
             <div className="col-md-2">
-              <CardLabel>{t("CR_NATIONALITY")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {t("CR_NATIONALITY")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="nationalityname"
@@ -982,7 +988,10 @@ let cmbState = [];
               />
             </div>
             <div className="col-md-2">
-              <CardLabel>{t("CS_COMMON_RELIGION")}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>
+                {t("CS_COMMON_RELIGION")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
@@ -1036,18 +1045,8 @@ let cmbState = [];
 
         {toast && (
           <Toast
-            error={
-              DOBError              
-            }
-            label={
-              DOBError
-                ? DOBError
-                  ? t(`CR_INVALID_DATE`)
-                  : DOBError
-                  ? t(`CR_INVALID_DATE`)
-                  :  setToast(false)
-                : setToast(false)
-            }
+            error={DOBError}
+            label={DOBError ? (DOBError ? t(`CR_INVALID_DATE`) : DOBError ? t(`CR_INVALID_DATE`) : setToast(false)) : setToast(false)}
             onClose={() => setToast(false)}
           />
         )}

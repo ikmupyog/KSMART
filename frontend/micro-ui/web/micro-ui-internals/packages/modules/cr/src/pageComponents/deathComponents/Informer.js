@@ -16,23 +16,19 @@ const Informer = ({ config, onSelect, userType, formData }) => {
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
   //   formData?.Informer?.isDeclarationInfotwo ? formData?.Informer?.isDeclarationInfotwo : false
   // );
-  const [InformantAadharNo, setInformantAadharNo] = useState(
-    formData?.Informer?.InformantAadharNo ? formData?.Informer?.InformantAadharNo : ""
-  );  
-  const [InformantNameEn, setInformantNameEn] = useState(
-    formData?.Informer?.InformantNameEn ? formData?.Informer?.InformantNameEn : ""
-  );
-  const [InformantMobileNo, setInformantMobileNo] = useState(
-    formData?.Informer?.InformantMobileNo ? formData?.Informer?.InformantMobileNo : ""
-  );
+  const [InformantAadharNo, setInformantAadharNo] = useState(formData?.Informer?.InformantAadharNo ? formData?.Informer?.InformantAadharNo : "");
+  const [InformantNameEn, setInformantNameEn] = useState(formData?.Informer?.InformantNameEn ? formData?.Informer?.InformantNameEn : "");
+  const [InformantMobileNo, setInformantMobileNo] = useState(formData?.Informer?.InformantMobileNo ? formData?.Informer?.InformantMobileNo : "");
+  const [InformantAddress, setInformantAddress] = useState(formData?.Informer?.InformantAddress ? formData?.Informer?.InformantAddress : "");
   const [DeathSignedOfficerDesignation, setDeathSignedOfficerDesignation] = useState(
     formData?.Informer?.DeathSignedOfficerDesignation ? formData?.Informer?.DeathSignedOfficerDesignation : ""
-  );  
+  );
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
   const [infomantNameError, setinfomantNameError] = useState(formData?.Informer?.InformantNameEn ? false : false);
-  const [infomantAadharError, setinfomantAadharError] = useState(formData?.Informer?.infomantAadhar ? false : false);
+  const [infomantAadharError, setinfomantAadharError] = useState(formData?.Informer?.InformantAadharNo ? false : false);
   const [infomantMobileError, setinfomantMobileError] = useState(formData?.Informer?.InformantMobileNo ? false : false);
+  const [informantAddressError, setinformantAddressError] = useState(formData?.Informer?.InformantAddress ? false : false);
   const [informerDesiError, setinformerDesiError] = useState(formData?.Informer?.DeathSignedOfficerDesignation ? false : false);
   const onSkip = () => onSelect();
 
@@ -48,7 +44,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
       // }
     }
   }, [isInitialRender]);
- 
+
   function setDeclarationInfoone(e) {
     if (e.target.checked == true) {
       setIsDeclarationInfoone(e.target.checked);
@@ -77,16 +73,16 @@ const Informer = ({ config, onSelect, userType, formData }) => {
       setInformantAadharNo(e.target.value);
     }
   }
-  // function setSelectInformantNameEn(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;      
-  //   } else {
-  //     setInformantNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-  //   }
-  // }
-  function setSelectInformantNameEn(value) {
-    setInformantNameEn(value);    
+  function setSelectInformantNameEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setInformantNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
   }
+  // function setSelectInformantNameEn(e) {
+  //   setInformantNameEn(e.target.value);
+  // }
 
   function setSelectInformantMobileNo(e) {
     if (e.target.value.length != 0) {
@@ -102,6 +98,20 @@ const Informer = ({ config, onSelect, userType, formData }) => {
       setInformantMobileNo(e.target.value);
     }
   }
+  function setSelectInformantAddress(e) {
+    if (e.target.value.length != 0) {
+      if (e.target.value.length > 30) {
+        return false;
+      } else if (e.target.value.length < 30) {
+        setInformantAddress(e.target.value);
+        return false;
+      } else {
+        setInformantAddress(e.target.value);
+      }
+    } else {
+      setInformantAddress(e.target.value);
+    }
+  }
   function setSelectDeathSignedOfficerDesignation(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -109,7 +119,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
     } else {
       setDeathSignedOfficerDesignation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
-  }  
+  }
 
   let validFlag = true;
   const goNext = () => {
@@ -154,6 +164,16 @@ const Informer = ({ config, onSelect, userType, formData }) => {
     } else {
       setinfomantMobileError(false);
     }
+    if (InformantAddress == null || InformantAddress == "" || InformantAddress == undefined) {
+      validFlag = false;
+      setinformantAddressError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setinformantAddressError(false);
+    }
 
     if (validFlag == true) {
       sessionStorage.setItem("isDeclarationInfoone", isDeclarationInfoone ? isDeclarationInfoone : null);
@@ -163,14 +183,14 @@ const Informer = ({ config, onSelect, userType, formData }) => {
 
       sessionStorage.setItem("InformantMobileNo", InformantMobileNo ? InformantMobileNo : null);
       sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
-      
+
       onSelect(config.key, {
         isDeclarationInfoone,
         // isDeclarationInfotwo,
         InformantNameEn,
         InformantAadharNo,
         InformantMobileNo,
-        DeathSignedOfficerDesignation,       
+        DeathSignedOfficerDesignation,
       });
     }
   };
@@ -234,7 +254,6 @@ const Informer = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
             </div>
-
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_INFORMANT_NAME")}`}
@@ -253,7 +272,6 @@ const Informer = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>
-             
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_INFORMER_DESIGNATION")}`}
@@ -290,20 +308,38 @@ const Informer = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {`${t("CR_ADDRESS_INFORMER")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={true}
+                type={"text"}
+                optionKey="i18nKey"
+                name="InformantAddress"
+                value={InformantAddress}
+                onChange={setSelectInformantAddress}
+                disable={isEdit}
+                placeholder={`${t("CR_MOBILE_NO")}`}
+                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
+              />
+            </div>
           </div>
         </div>
-        
 
         {toast && (
           <Toast
-            error={infomantNameError || infomantAadharError || infomantMobileError || informerDesiError}
+            error={infomantNameError || infomantAadharError || infomantMobileError ||informantAddressError|| informerDesiError}
             label={
-              infomantNameError || infomantAadharError || infomantMobileError || informerDesiError
-                ? infomantNameError
+              infomantNameError || infomantAadharError || infomantMobileError || informerDesiError ||  informantAddressError ? infomantNameError
                   ? t(`CR_ERROR_INFORMANT_NAME_CHOOSE`)
                   : infomantAadharError
                   ? t(`CR_ERROR_INFORMANT_AADHAR_CHOOSE`)
                   : infomantMobileError
+                  ? t(`CR_ERROR_INFORMANT_ADRESS_CHOOSE`)
+                  : informantAddressError
                   ? t(`CR_ERROR_INFORMANT_MOBILE_CHOOSE`)
                   : informerDesiError
                   ? t(`CR_ERROR_INFORMANT_DESIGNATION_CHOOSE`)

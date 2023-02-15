@@ -254,7 +254,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectInitiatorAadhaar}
                 disable={isEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
             </div>
 
@@ -293,7 +293,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
                 onChange={setSelectInitiatorMobile}
                 disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
-                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
+                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "number", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
           </div>
