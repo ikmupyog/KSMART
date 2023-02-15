@@ -136,7 +136,8 @@ public class TradeLicenseSearchCriteria {
                 && this.licenseNumbers == null && this.oldLicenseNumber == null && this.mobileNumber == null &&
                 this.fromDate == null && this.toDate == null && this.ownerIds == null && this.locality == null
                 && this.tradeName == null &&
-                this.ownerName == null && this.issuedFrom == null && this.issuedTo == null && this.tradeType == null);
+                this.ownerName == null && this.issuedFrom == null && this.issuedTo == null && this.tradeType == null
+                && this.wardId == null && this.structureType == null && this.doorNo == null);
     }
 
     public boolean mobileNumberOnly() {
