@@ -977,6 +977,54 @@ const getCROtherDeathPlacelist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRMannerOfDeathlist
+ = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "MannerOfDeath",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRPregnantDeceasedlist
+ = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "PregnantDeceased",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRRBirthStatuslist
+ = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "BirthStatus",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCRcauseOfSpouseTypelist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1272,7 +1320,7 @@ const getCRInstitutionList = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "InstitutionType",
+            name: "InstitutionTypePlaceOfEvent",
           },
         ],
       },
@@ -2256,10 +2304,19 @@ export const MdmsService = {
   getCROtherDeathPlace: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCROtherDeathPlacelist(tenantId, moduleCode), moduleCode);
   },
+  getCRMannerOfDeath: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRMannerOfDeathlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRPregnantDeceased: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRPregnantDeceasedlist(tenantId, moduleCode), moduleCode);
+  },
+  
+  getCRBirthStatus: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRRBirthStatuslist(tenantId, moduleCode), moduleCode);
+  },
   getDeathPlaceType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getDeathPlaceTypelist(tenantId, moduleCode), moduleCode);
   },
-
   getCRcauseOfSpouseType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRcauseOfSpouseTypelist(tenantId, moduleCode), moduleCode);
   },

@@ -708,10 +708,50 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "StatisticalInfo",
+        nextStep: "initiater",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
+        route: "initiater",
+        isMandatory: true,
+        component: "Initiater",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "Initiater",
+        nextStep: "informer",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
+        route: "informer",
+        isMandatory: true,
+        component: "Informer",
+        texts: {
+          headerCaption: "",
+          // header: "CR_PLACE_OF_DEATH",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "Informer",
         nextStep: null,
         type: "component",
         hideInEmployee: false,
       },
+
+
+
+
       {
         route: "address-of-decesed",
         isMandatory: true,
@@ -956,24 +996,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
-      {
-        route: "informer",
-        isMandatory: true,
-        component: "Informer",
-        texts: {
-          headerCaption: "",
-          // header: "CR_PLACE_OF_DEATH",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "Informer",
-        nextStep: "place-of-death",
-        type: "component",
-        hideInEmployee: true,
-      },
+     
       {
         route: "initiater",
         isMandatory: true,

@@ -2,47 +2,59 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const BirthPlaceInstitution = ({ config, onSelect, userType, formData, institution, setInstitution, institutionIdMl, setInstitutionIdMl,
-  institutionId, setInstitutionId
+const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
+  institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
-  // const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Institution");
+  const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
   const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
   const [isInitialRender, setIsInitialRender] = useState(true);
+console.log(institutionidList);
   // const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
   let cmbInstitution = [];
   institutionList &&
     institutionList["birth-death-service"] &&
-    institutionList["birth-death-service"].InstitutionType.map((ob) => {
+    institutionList["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
       cmbInstitution.push(ob);
     });
   ///institution-id
   let cmbInstitutionId = [];
   let cmbInstitutionIdML = [];
+  let cmbFilterInstitutionList = [];
+
   institutionidList &&
     institutionidList["egov-location"] &&
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionId.push(ob);
     });
+    console.log(cmbInstitutionId);
   useEffect(() => {
 
     if (isInitialRender) {
+      if (institution) {
+        console.log(institution);
+        // if (cmbInstitutionId.length > 0) {
+          console.log(cmbInstitutionId);
+          cmbFilterInstitutionList = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === institution.code);
+        // }
+      }
       if (institutionId) {
-        cmbInstitutionIdML = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.institutionName === institutionId.institutionName);
+        cmbInstitutionIdML = cmbFilterInstitutionList.filter((cmbFilterInstitutionList) => cmbFilterInstitutionList.institutionName === institutionId.institutionName);
         setInstitutionIdMl(cmbInstitutionIdML[0]);
         setIsInitialRender(false);
       }
     }
-  }, [cmbInstitutionIdML, isInitialRender])
+  }, [cmbFilterInstitutionList, cmbInstitutionIdML, isInitialRender])
+
   const onSkip = () => onSelect();
 
   function setselectInstitution(value) {
     setInstitution(value);
+    setIsInitialRender(true);
   }
   function setselectInstitutionId(value) {
     setInstitutionId(value);
@@ -51,8 +63,6 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData, instituti
   function setselectInstitutionIdMl(value) {
     setInstitutionIdMl(value);
   }
-
-
   const goNext = () => {
     // console.log('clicked');
     // sessionStorage.setItem("Institution", Institution.code);
@@ -94,7 +104,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData, instituti
               t={t}
               optionKey="institutionName"
               isMandatory={true}
-              option={cmbInstitutionId}
+              option={cmbFilterInstitutionList}
               selected={institutionId}
               select={setselectInstitutionId}
               placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
@@ -106,7 +116,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData, instituti
               t={t}
               optionKey="institutionNamelocal"
               isMandatory={true}
-              option={cmbInstitutionId}
+              option={cmbFilterInstitutionList}
               selected={institutionIdMl}
               select={setselectInstitutionIdMl}
               placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}
@@ -114,9 +124,6 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData, instituti
             />
           </div>
         </div>
-
-
-
       </FormStep>
     </React.Fragment>
   );

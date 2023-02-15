@@ -71,6 +71,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeceasedGender, setselectedDeceasedGender] = useState(formData?.InformationDeath?.DeceasedGender);
   const [Nationality, setSelectedNationality] = useState(formData?.InformationDeath?.Nationality);
   const [Religion, setSelectedReligion] = useState(formData?.InformationDeath?.Religion);
+  const { data: State = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   const [CommencementDate, setCommencementDate] = useState(
     formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
   );
@@ -170,6 +171,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     place["common-masters"].PlaceMasterDeath.map((ob) => {
       cmbPlace.push(ob);
     });
+let cmbState = [];
+    State &&
+    State["common-masters"] &&
+    State["common-masters"].State.map((ob) => {
+      cmbState.push(ob);
+    });
   function selectReligion(value) {
     setSelectedReligion(value);
   }
@@ -266,6 +273,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let cmbfilterAgeUnit = [];
   let naturetype = null;
   let cmbfilterNationI =[];
+  let cmbFilterState = [];
   // let isInitialRender =[];
   useEffect(() => {
     if (Nationality == null || Nationality == "") {
@@ -292,6 +300,17 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         setSelectDeathPlaceCountry(cmbfilterNationI[0]);
       }
     }
+    if (DeathPlaceState == null || DeathPlaceState == "") {
+      if (stateId === "kl" && cmbState.length > 0) {
+         cmbFilterState = cmbState.filter((cmbState) => cmbState.name !== ("Kerala"));
+         SelectDeathPlaceState(cmbFilterState[0]);
+      }
+    }
+
+    // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+    // setAdrsStateName(cmbFilterState[0]);
+
+
     // if (isInitialRender) {
     //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
     //     setIsInitialRender(false);
@@ -516,6 +535,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
+     
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep

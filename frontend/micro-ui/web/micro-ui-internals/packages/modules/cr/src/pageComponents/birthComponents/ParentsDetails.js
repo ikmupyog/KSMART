@@ -126,8 +126,6 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
     });
 
   let cmbReligion = [];
-
-  console.log(ReligionList);
   ReligionList &&
     ReligionList["common-masters"] &&
     ReligionList["common-masters"].Religion.map((ob) => {
