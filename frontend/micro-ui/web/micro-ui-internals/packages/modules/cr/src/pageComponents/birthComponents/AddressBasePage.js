@@ -193,7 +193,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
         Village["common-masters"].Village.map((ob) => {
             cmbVillage.push(ob);
         });
-        
+
     const onSkip = () => onSelect();
 
     let validFlag = true;
@@ -449,7 +449,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                 presentOutSideIndiaAdressEnB,
                 presentOutSideIndiaAdressMlB,
                 presentOutSideIndiaAdressMlB,
-                presentOutSideIndiaLocalityMl,
                 presentOutSideIndiaProvinceEn,
                 presentOutSideCountry,
                 isPrsentAddress,
