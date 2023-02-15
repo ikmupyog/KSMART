@@ -272,28 +272,10 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "AddressBirthDetails",
-        nextStep: null,
+        nextStep: "initiator-details",
         type: "component",
         hideInEmployee: false,
-      },      
-    
-      {
-        route: "informer-details",
-        component: "InformarHospitalInstitution",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "InformarHosInstDetails",
-        nextStep: "null",
-        type: "component",
-        hideInEmployee: true,
       },   
-
       {
         route: "initiator-details",
         component: "InitiatorDetails",
@@ -306,11 +288,26 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "InitiatorinfoDetails",
-        nextStep: "null",
+        nextStep: "informer-details",
         type: "component",
         hideInEmployee: true,
-      },   
-   
+      },  
+      {
+        route: "informer-details",
+        component: "InformarHospitalInstitution",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "InformarHosInstDetails",
+        nextStep: null,
+        type: "component",
+        hideInEmployee: true,
+      },  
       {
         route: "multiple-birth",
         component: "MultipleBirth",
@@ -326,11 +323,7 @@ export const newConfig = [
         nextStep: "hospital-details",
         type: "component",
         hideInEmployee: false,
-      },
-     
-      
-     
-    
+      },  
       
     ],
   },

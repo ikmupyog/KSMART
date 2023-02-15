@@ -2,26 +2,13 @@ import { CitizenHomeCard, CaseIcon } from "@egovernments/digit-ui-react-componen
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
-import StatisticalInformation from "../src/pageComponents/birthComponents/StatisticalInformation";
 import BirthVehicle from "../src/pageComponents/birthComponents/BirthVehicle";
-import PublicPlace from "../src/pageComponents/birthComponents/PublicPlace";
-import BirthPlace from "../src/pageComponents/birthComponents/BirthPlace";
-import FatherInformation from "../src/pageComponents/birthComponents/FatherInformation";
-import MotherInformation from "../src/pageComponents/birthComponents/MotherInformation";
-import PlaceofBirthHome from "../src/pageComponents/birthComponents/PlaceofBirthHome";
-import HospitalDetails from "../src/pageComponents/birthComponents/HospitalDetails";
-import OtherCountry from "../src/pageComponents/birthComponents/OtherCountry";
-import InstitutionDetails from "../src/pageComponents/birthComponents/InstitutionDetails";
-import InstitutionAddress from "../src/pageComponents/birthComponents/InstitutionAddress";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
-import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
-import AddressInsideIndia from "../src/pageComponents/birthComponents/AddressInsideIndia";
+import AddressOne from "./pageComponents/birthComponents/OldAddressOne";
+import AddressInsideIndia from "./pageComponents/birthComponents/OldAddressInsideIndia";
 import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSameAsAbove";
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
-import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
-import InformantDetails from "../src/pageComponents/birthComponents/InformantDetails";
-import InformantAddress from "../src/pageComponents/birthComponents/InformantAddress";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -170,16 +157,7 @@ const componentsToRegister = {
   CRModule,
   CRLinks,
   CRCard,
-  StatisticalInformation,
   BirthVehicle,
-  PublicPlace,
-  BirthPlace,
-  FatherInformation,
-  MotherInformation,
-  PlaceofBirthHome,
-  HospitalDetails,
-  OtherCountry,
-  InstitutionDetails,
   ChildDetails,
   CRApplicationDetails,
   CRApplicationDeathDetails,
@@ -193,10 +171,6 @@ const componentsToRegister = {
   AddressSameAsAbove,
   AddressPermanent,
   MultipleBirth,
-  BornOutsideIndia,
-  InstitutionAddress,
-  InformantDetails,
-  InformantAddress,
   CRCreateBirthRegistration: CreateBirthRegistration,
   ParentsDetails,
   BirthPlaceHospital,
