@@ -204,7 +204,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .userActive(rs.getBoolean("useractive"))
                     .name(rs.getString("ownername"))
                     .aadhaarNumber(rs.getString("aadharno"))
-                    .permanentAddress(rs.getString("address"))
+                    // .permanentAddress(rs.getString("address"))
                     .emailId(rs.getString("email"))
                     .build();
             tradeLicense.getTradeLicenseDetail().addOwnersItem(owner);

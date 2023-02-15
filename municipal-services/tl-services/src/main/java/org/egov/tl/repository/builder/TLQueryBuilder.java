@@ -200,6 +200,9 @@ public class TLQueryBuilder {
                 addClauseIfRequired(preparedStmtList, builder);
                 builder.append("  tl.applicationtype = ? ");
                 preparedStmtList.add(criteria.getApplicationType());
+                if (criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
+                    addRenewalCriteria(builder, preparedStmtList, criteria);
+                }
             }
 
             List<String> licenseNumbers = criteria.getLicenseNumbers();
@@ -237,11 +240,6 @@ public class TLQueryBuilder {
                 addClauseIfRequired(preparedStmtList, builder);
                 builder.append("  tl.validTo <= ? ");
                 preparedStmtList.add(criteria.getValidTo());
-            }
-
-            if (criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
-
-                addRenewalCriteria(builder, preparedStmtList, criteria);
             }
 
             if (criteria.getLocality() != null) {
