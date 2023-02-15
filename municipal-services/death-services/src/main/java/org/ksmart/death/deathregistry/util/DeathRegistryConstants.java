@@ -48,7 +48,7 @@ public class DeathRegistryConstants {
      public static final String VEHICLE_TYPE = "VehicleType";
      public static final String OTHER_PLACE_TYPE = "OtherDeathPlace";
      public static final String VEHICLE_DEATH_CAPTION1 = "വാഹനത്തിൽ  യാത്രചെയ്യവേ ";
-     public static final String VEHICLE_DEATH_CAPTION2 ="-ത്തിനും ";
+     public static final String VEHICLE_DEATH_CAPTION2 ="-എന്ന സ്ഥലത്തിനും ";
      public static final String VEHICLE_DEATH_CAPTION3 =" മദ്ധ്യേ ";
      public static final String VEHICLE_DEATH_CAPTION4 ="പരിധിയിൽ.";
      public static final String VEHICLE_DEATH_CAPTION5 ="In the vehicle on the way from ";
