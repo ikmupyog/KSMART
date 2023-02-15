@@ -267,12 +267,14 @@ public class EnrichmentService {
         searchCriteria.setTenantId(criteria.getTenantId());
         Set<String> ownerids = new HashSet<>();
         licenses.forEach(license -> {
-            license.getTradeLicenseDetail().getOwners()
-                    .forEach(owner -> {
-                        if (owner.getUuid() != null) {
-                            ownerids.add(owner.getUuid());
-                        }
-                    });
+            if (license.getTradeLicenseDetail().getOwners() != null) {
+                license.getTradeLicenseDetail().getOwners().forEach(owner -> {
+                    if (owner.getUuid() != null) {
+                        ownerids.add(owner.getUuid());
+                    }
+                });
+            }
+
         });
 
         /*
