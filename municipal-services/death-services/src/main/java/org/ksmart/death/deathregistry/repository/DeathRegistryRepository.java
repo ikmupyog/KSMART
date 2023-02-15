@@ -889,7 +889,50 @@ public class DeathRegistryRepository {
                 //Rakhi S on 13.02.2023 
                 //Place of Death Outside Jurisdiction
                 else if(DeathRegistryConstants.DEATH_PLACE_OUTSIDE_JURISDICTION.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
-                    cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceRemarksMl()+" / "
+
+                    //Rakhi S on 15.02.2023 mdms call
+                    Object mdmsJurisdiction = util.mDMSCallJurisdiction(pdfApplicationRequest.getRequestInfo()
+                                , cert.getDeathBasicInfo().getTenantId()
+                                , cert.getDeathBasicInfo().getDeathPlaceDistrict()
+                                , cert.getDeathBasicInfo().getDeathPlaceState()
+                                , cert.getDeathBasicInfo().getDeathPlaceCountry());
+
+                    Map<String,List<String>> masterDataJurisdiction = getAttributeValues(mdmsJurisdiction);
+
+                    String jurisdictionDistrict = masterDataJurisdiction.get(DeathRegistryConstants.DISTRICT).toString();
+                    jurisdictionDistrict = jurisdictionDistrict.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    String jurisdictionState = masterDataJurisdiction.get(DeathRegistryConstants.STATE).toString();
+                    jurisdictionState = jurisdictionState.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    String jurisdictionCountry = masterDataJurisdiction.get(DeathRegistryConstants.COUNTRY).toString();
+                    jurisdictionCountry = jurisdictionCountry.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    Object mdmsJurisdictionMl = util.mDMSCallJurisdictionMl(pdfApplicationRequest.getRequestInfo()
+                                , cert.getDeathBasicInfo().getTenantId()
+                                , cert.getDeathBasicInfo().getDeathPlaceDistrict()
+                                , cert.getDeathBasicInfo().getDeathPlaceState()
+                                , cert.getDeathBasicInfo().getDeathPlaceCountry());
+
+                    Map<String,List<String>> masterDataJurisdictionMl = getAttributeValues(mdmsJurisdictionMl);
+
+                    String jurisdictionDistrictMl = masterDataJurisdictionMl.get(DeathRegistryConstants.DISTRICT).toString();
+                    jurisdictionDistrictMl = jurisdictionDistrictMl.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    String jurisdictionStateMl = masterDataJurisdictionMl.get(DeathRegistryConstants.STATE).toString();
+                    jurisdictionStateMl = jurisdictionStateMl.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    String jurisdictionCountryMl = masterDataJurisdictionMl.get(DeathRegistryConstants.COUNTRY).toString();
+                    jurisdictionCountryMl = jurisdictionCountryMl.replaceAll("[\\[\\]\\(\\)]", "");
+
+                    //************************** */
+                    cert.getDeathBasicInfo().setPlaceofDeath(jurisdictionDistrictMl+", "
+                                                        +jurisdictionStateMl+", "
+                                                        +jurisdictionCountryMl+", "
+                                                        +cert.getDeathBasicInfo().getDeathPlaceRemarksMl()+" / "
+                                                        +jurisdictionDistrict+", "
+                                                        +jurisdictionState+", "
+                                                        +jurisdictionCountry+", "
                                                         +cert.getDeathBasicInfo().getDeathPlaceRemarksEn()
                                                         +"("+DeathRegistryConstants.PLACE_OF_BURIAL.toString() 
                                                         +cert.getDeathBasicInfo().getPlaceOfBurialMl()+" / "

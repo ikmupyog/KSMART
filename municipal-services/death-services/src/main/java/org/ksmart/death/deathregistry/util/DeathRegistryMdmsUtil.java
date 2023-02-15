@@ -1373,4 +1373,132 @@ public Object mDMSCallCertificateLBDistrictMl(RequestInfo requestInfo
                
                 return crDeathModuleDtls;
         }
+        //RAkhi S ikm on 15.02.2023
+    public Object mDMSCallJurisdiction(RequestInfo requestInfo
+                        , String tenantId
+                        , String jurisdictionDistrict
+                        , String jurisdictionState
+                        , String jurisdictionCountry) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestJurisdiction(requestInfo
+                                , tenantId
+                                , jurisdictionDistrict
+                                , jurisdictionState
+                                , jurisdictionCountry);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+        }
+        //RAkhi S ikm on 15.02.2023
+    private MdmsCriteriaReq getMDMSRequestJurisdiction(RequestInfo requestInfo
+                        , String tenantId
+                        , String jurisdictionDistrict
+                        , String jurisdictionState
+                        , String jurisdictionCountry) {
+                ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+                List<ModuleDetail> commonMasterRequest = getcommonMasterJurisdiction(tenantId
+                                        , jurisdictionDistrict
+                                        , jurisdictionState
+                                        , jurisdictionCountry);     
+
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                moduleDetails.add(tenantIdRequest);     
+                moduleDetails.addAll(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                        .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+    //RAkhi S ikm on 15.02.2023
+    private List<ModuleDetail> getcommonMasterJurisdiction(String tenantId
+                                , String jurisdictionDistrict
+                                , String jurisdictionState
+                                , String jurisdictionCountry) {
+                // master details for death certificate
+                List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+                final String filterCode = "$.[?(@.code=='"+jurisdictionDistrict+"')].name";
+                crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.DISTRICT).filter(filterCode).build());  
+
+                final String filterCodeState = "$.[?(@.code=='"+jurisdictionState+"')].name"; 
+                crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.STATE).filter(filterCodeState).build());        
+
+                final String filterCodeCountry = "$.[?(@.code=='"+jurisdictionCountry+"')].name"; 
+                crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.COUNTRY).filter(filterCodeCountry).build());                
+
+                ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+                return Arrays.asList(crDeathModuleDtls);
+        }
+
+                //RAkhi S ikm on 15.02.2023
+    public Object mDMSCallJurisdictionMl(RequestInfo requestInfo
+                , String tenantId
+                , String jurisdictionDistrict
+                , String jurisdictionState
+                , String jurisdictionCountry) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestJurisdictionMl(requestInfo
+                        , tenantId
+                        , jurisdictionDistrict
+                        , jurisdictionState
+                        , jurisdictionCountry);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+        }
+   //RAkhi S ikm on 15.02.2023
+        private MdmsCriteriaReq getMDMSRequestJurisdictionMl(RequestInfo requestInfo
+                                , String tenantId
+                                , String jurisdictionDistrict
+                                , String jurisdictionState
+                                , String jurisdictionCountry) {
+                ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+                List<ModuleDetail> commonMasterRequest = getcommonMasterJurisdictionMl(tenantId
+                                , jurisdictionDistrict
+                                , jurisdictionState
+                                , jurisdictionCountry);     
+
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                moduleDetails.add(tenantIdRequest);     
+                moduleDetails.addAll(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+        //RAkhi S ikm on 15.02.2023
+    private List<ModuleDetail> getcommonMasterJurisdictionMl(String tenantId
+                        , String jurisdictionDistrict
+                        , String jurisdictionState
+                        , String jurisdictionCountry) {
+                // master details for death certificate
+                List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+
+                final String filterCode = "$.[?(@.code=='"+jurisdictionDistrict+"')].namelocal";
+                crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.DISTRICT).filter(filterCode).build());  
+
+                final String filterCodeState = "$.[?(@.code=='"+jurisdictionState+"')].namelocal"; 
+                crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.STATE).filter(filterCodeState).build());        
+
+                final String filterCodeCountry = "$.[?(@.code=='"+jurisdictionCountry+"')].namelocal"; 
+                crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathRegistryConstants.COUNTRY).filter(filterCodeCountry).build());                
+
+                ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathRegistryConstants.COMMON_MASTERS_MODULE).build();
+                return Arrays.asList(crDeathModuleDtls);
+        }
+
 }
