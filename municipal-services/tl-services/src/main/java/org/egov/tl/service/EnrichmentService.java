@@ -571,9 +571,12 @@ public class EnrichmentService {
                 // enrichBoundary(new TradeLicenseRequest(requestInfo, licenses));
                 break;
         }
-        UserDetailResponse userDetailResponse = userService.getUser(searchCriteria,
-                requestInfo);
-        enrichOwner(userDetailResponse, licenses);
+        if (!criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
+            UserDetailResponse userDetailResponse = userService.getUser(searchCriteria,
+                    requestInfo);
+            enrichOwner(userDetailResponse, licenses);
+        }
+
         return licenses;
     }
 
