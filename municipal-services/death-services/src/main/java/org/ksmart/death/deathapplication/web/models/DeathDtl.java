@@ -37,13 +37,13 @@ public class DeathDtl {
      @JsonProperty("InformationDeath")
      private DeathBasicInfo deathBasicInfo;
 
-    @JsonProperty("addressOfDeceased")
+    @JsonProperty("AddressOfDeceased")
     private DeathAddressInfo deathAddressInfo;    
 
-    @JsonProperty("familyInformationDeath")
+    @JsonProperty("FamilyInformationDeath")
     private DeathFamilyInfo deathFamilyInfo;
 
-    @JsonProperty("statisticalInfo")
+    @JsonProperty("StatisticalInfo")
     private DeathStatisticalInfo  deathStatisticalInfo;
 
     @JsonProperty("InformantDetails")
@@ -52,7 +52,7 @@ public class DeathDtl {
     @JsonProperty("Initiator")
     private DeathInitiatorDtls deathInitiatorDtls;
 
-    @JsonProperty("auditDetails")
+    @JsonProperty("AuditDetails")
     private AuditDetails  deathAuditDetails;
 
 //Jasmine 11.02.2023
