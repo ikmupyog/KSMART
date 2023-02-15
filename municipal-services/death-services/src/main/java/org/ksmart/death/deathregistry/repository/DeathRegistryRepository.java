@@ -126,10 +126,8 @@ public class DeathRegistryRepository {
 
                  String lbName = masterData.get(DeathRegistryConstants.TENANTS).toString();
                  lbName = lbName.replaceAll("[\\[\\]\\(\\)]", "");
-                 cert.getDeathBasicInfo().setLocalBodyName(lbName);    
+                 cert.getDeathBasicInfo().setLocalBodyName(lbName);   
 
-                 System.out.println("lbName"+lbName);
-                 
                  Object mdmsDistrict = util.mDMSCallCertificateLBDistrict(pdfApplicationRequest.getRequestInfo()
                             , cert.getDeathBasicInfo().getTenantId());
                  Map<String,List<String>> masterDataDistrict = getAttributeValuesVehicle(mdmsDistrict);
@@ -412,8 +410,9 @@ public class DeathRegistryRepository {
                 String spouseMl = "";
                 String spouseEn = "";    
 
+                System.out.println("spouse:"+cert.getDeathFamilyInfo().getSpouseNameEn());
                 if(cert.getDeathFamilyInfo().getSpouseUnavailable()!=true){
-
+                    System.out.println("hiii:"+cert.getDeathFamilyInfo().getSpouseNameEn());
                         if(cert.getDeathFamilyInfo().getSpouseType().equals(DeathRegistryConstants.WIFE.toString())){
                             spouseMl = DeathRegistryConstants.WIFE_ML.toString();
                             spouseEn = DeathRegistryConstants.WIFE_EN.toString();
@@ -425,6 +424,8 @@ public class DeathRegistryRepository {
                 
                         cert.getDeathFamilyInfo().setSpouseName(cert.getDeathFamilyInfo().getSpouseNameML()+ spouseMl+" / "+
                         cert.getDeathFamilyInfo().getSpouseNameEn()+ spouseEn);
+
+                        System.out.println("hiii:" + cert.getDeathFamilyInfo().getSpouseName());
                 }
                 else{
                     cert.getDeathFamilyInfo().setSpouseName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+

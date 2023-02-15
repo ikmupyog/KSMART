@@ -31,19 +31,19 @@ public class DeathRegistryDtl {
      @JsonProperty("InformationDeath")
      private DeathRegistryBasicInfo deathBasicInfo;
 
-    @JsonProperty("addressOfDeceased")
+    @JsonProperty("AddressOfDeceased")
     private DeathRegistryAddressInfo deathAddressInfo;    
 
-    @JsonProperty("familyInformationDeath")
+    @JsonProperty("FamilyInformationDeath")
     private DeathRegistryFamilyInfo deathFamilyInfo;
 
-    @JsonProperty("statisticalInfo")
+    @JsonProperty("StatisticalInfo")
     private DeathRegistryStatisticalInfo  deathStatisticalInfo;
 
-    @JsonProperty("informantDetails")
+    @JsonProperty("InformantDetails")
     private DeathRegistryInformantDtls deathInformantDtls;
 
-    @JsonProperty("auditDetails")
+    @JsonProperty("AuditDetails")
     private AuditDetails  deathAuditDetails;
 
     @JsonProperty("applicationType")
