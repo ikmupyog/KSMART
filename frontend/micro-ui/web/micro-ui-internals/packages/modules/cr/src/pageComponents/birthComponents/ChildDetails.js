@@ -75,7 +75,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : null);
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.medicalAttensionSub ? formData?.ChildDetails?.medicalAttensionSub : null);
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.ChildDetails?.deliveryMethods ? formData?.ChildDetails?.deliveryMethods : null);
-  const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
+  const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : "");
 
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);

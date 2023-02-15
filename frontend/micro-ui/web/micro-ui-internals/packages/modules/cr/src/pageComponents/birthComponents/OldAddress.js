@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Toast, 
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import AddressOutsideIndia from "./AddressOutsideIndia";
-import AddressInsideIndia  from "./AddressInsideIndia";
+import AddressInsideIndia  from "./OldAddressInsideIndia";
 
 const Address = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
