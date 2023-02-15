@@ -300,6 +300,7 @@ function Jurisdiction({
         });
       }
     });
+
   // cmbInfntWardNo.map((wardmst) => {
   //   wardmst.localnamecmb = wardmst.InfntWardNo + " ( " + wardmst.localname + " )";
   //   wardmst.namecmb = wardmst.InfntWardNo + " ( " + wardmst.name + " )";
@@ -415,6 +416,13 @@ function Jurisdiction({
     }
   }, [Boundary, isInitialRenderBoundaryType2]);
 
+  useEffect(()=>{
+    if(isInitialRenderBoundaryType2 &&tenantId && Boundary?.length>0  ){
+      let boundaryArr = Boundary?.filter((ele) => ele.code == tenantId)
+      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, boundary: boundaryArr&&boundaryArr[0] } : item)));
+    }
+  },[tenantId,Boundary,isInitialRenderBoundaryType2])
+
   useEffect(() => {
     if (isInitialRenderHierarchy) {
       if (data?.MdmsRes?.["egov-location"]["TenantBoundary"].map((ele) => ele.hierarchyType).length > 0) {
@@ -471,7 +479,7 @@ function Jurisdiction({
       }
     }).filter((ab)=>{return ab !== undefined})
     setInstitutionNameList(institutionNameList)
-    console.log("institutionName1",institutionNameList,institutionName)
+    // console.log("institutionName1",institutionNameList,institutionName)
   };
   const selectInstitutionName=(value)=>{
    
@@ -479,7 +487,7 @@ function Jurisdiction({
     setInstitutionAddress(value.address)
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionname: value.name } : item)));
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionaddress: value.address } : item)));
-    console.log("JURIS",institutionName,value.name)
+    // console.log("JURIS",institutionName,value.name)
   }
   const selectHospital = (value) => {
     setHospitalName(value)
@@ -489,12 +497,10 @@ function Jurisdiction({
     })
     setHospitalAddress(val[0].address)
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, hospitalName: value.name, hospitalAddress:val[0].address, hospitalCode:value.code} : item)));
-    console.log("jurisdiction",jurisdiction)
+    // console.log("jurisdiction",jurisdiction)
   
  };
- useEffect(()=>{
-console.log("jurisdiction",jurisdiction)
- },[jurisdiction])
+
   const selectrole = (e, data) => {
     const index = jurisdiction?.roles.filter((ele) => ele.code == data.code);
     let res = null;
