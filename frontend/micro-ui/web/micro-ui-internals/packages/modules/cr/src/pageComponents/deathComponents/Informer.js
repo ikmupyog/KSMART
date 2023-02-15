@@ -10,8 +10,8 @@ const Informer = ({ config, onSelect, userType, formData }) => {
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  const [isDeclarationInfoone, setIsDeclarationInfoone] = useState(
-    formData?.Informer?.isDeclarationInfoone ? formData?.Informer?.isDeclarationInfoone : false
+  const [IsDeclarationInformer, setIsDeclarationInformer] = useState(
+    formData?.Informer?.IsDeclarationInformer ? formData?.Informer?.IsDeclarationInformer : false
   );
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
   //   formData?.Informer?.isDeclarationInfotwo ? formData?.Informer?.isDeclarationInfotwo : false
@@ -41,9 +41,9 @@ const Informer = ({ config, onSelect, userType, formData }) => {
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.Informer?.isDeclarationInfoone != null) {
+      if (formData?.Informer?.IsDeclarationInformer != null) {
         setIsInitialRender(false);
-        setIsDeclarationInfoone(formData?.Informer?.isDeclarationInfoone);
+        se(formData?.Informer?.IsDeclarationInformer);
       }
       // if (formData?.Informer?.isDeclarationInfotwo != null) {
       //   setIsInitialRender(false);
@@ -52,11 +52,11 @@ const Informer = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
  
-  function setDeclarationInfoone(e) {
+  function setDeclarationInfo(e) {
     if (e.target.checked == true) {
-      setIsDeclarationInfoone(e.target.checked);
+      setIsDeclarationInformer(e.target.checked);
     } else {
-      setIsDeclarationInfoone(e.target.checked);
+      setIsDeclarationInformer(e.target.checked);
     }
   }
   // function setDeclarationInfotwo(e) {
@@ -165,7 +165,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("isDeclarationInfoone", isDeclarationInfoone ? isDeclarationInfoone : null);
+      sessionStorage.setItem("IsDeclarationInformer", IsDeclarationInformer ? IsDeclarationInformer : null);
       // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);
       sessionStorage.setItem("InformantNameEn", InformantNameEn ? InformantNameEn : null);
       sessionStorage.setItem("InformantAadharNo", InformantAadharNo ? InformantAadharNo : null);
@@ -174,7 +174,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
       sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);   
       onSelect(config.key, {
-        isDeclarationInfoone,
+        IsDeclarationInformer,
         // isDeclarationInfotwo,
         InformantNameEn,
         InformantAadharNo,
@@ -199,7 +199,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("TestDescription")} onChange={setDeclarationInfoone} value={isDeclarationInfoone} checked={isDeclarationInfoone} />
+            <CheckBox label={t("TestDescription")} onChange={setDeclarationInfo} value={IsDeclarationInformer} checked={IsDeclarationInformer} />
             {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>

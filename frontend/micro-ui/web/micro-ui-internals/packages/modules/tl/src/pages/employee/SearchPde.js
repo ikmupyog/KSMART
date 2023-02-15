@@ -7,8 +7,7 @@ import { useQueryClient } from "react-query";
 
 const SearchPde = (searchdata) => {
 
-console.log(searchdata);
-   const[searchdatacat,setSearchdatacat]=useState(searchdata);
+    const[searchdatacat,setSearchdatacat]=useState(searchdata);
     const [errorMessage, setErrorMessage] = useState("");
     const [wardmandatory, setWardmandatory] = useState(true);
     const [toast, setToast] = useState(false);
@@ -28,7 +27,6 @@ console.log(searchdata);
 
     function onSubmit(_data, pageflag) {
         console.log(_data?.wardId);
-        console.log("searchcriteria" + JSON.stringify(_data));
         setSearchdatacat(_data);
         if (_data?.wardId === undefined || _data?.wardId === null || _data?.wardId === 0) {
             setWardmandatory(false);
