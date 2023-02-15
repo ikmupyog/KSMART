@@ -38,7 +38,7 @@ public class OwnerInfo extends User {
 
         @Size(max = 64)
         @SafeHtml
-        @JsonProperty("nameLocal ")
+        @JsonProperty("applicantNameLocal ")
         private String applicantNameLocal = null;
 
         @Size(max = 64)
@@ -93,7 +93,7 @@ public class OwnerInfo extends User {
                         String lastModifiedBy, Long lastModifiedDate, String otpReference, String tenantId,
                         List<Document> documents, Boolean userActive, String houseName, String street,
                         String locality, String postOffice, String pincode, String designation, String careOf,
-                        String careOfName) {
+                        String careOfName, String applicantNameLocal) {
                 super(id, uuid, userName, password, salutation, name, gender, mobileNumber, emailId, altContactNumber,
                                 pan, aadhaarNumber, permanentAddress, permanentCity, permanentPincode,
                                 correspondenceCity, correspondencePincode, correspondenceAddress, active, dob,
@@ -110,6 +110,7 @@ public class OwnerInfo extends User {
                 this.designation = designation;
                 this.careOf = careOf;
                 this.careOfName = careOfName;
+                this.applicantNameLocal = applicantNameLocal;
         }
 
         public OwnerInfo addDocumentsItem(Document documentsItem) {

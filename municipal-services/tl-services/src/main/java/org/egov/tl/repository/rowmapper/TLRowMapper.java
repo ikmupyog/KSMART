@@ -114,6 +114,11 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .wardNo(rs.getString("wardno") == null ? null : Integer.parseInt(rs.getString("wardno")))
                     .contactNo(rs.getString("contactno"))
                     .email(rs.getString("email"))
+                    .lbBuildingCode(rs.getString("lbbuildingcode"))
+                    .lbBuildingName(rs.getString("lbbuildingname"))
+                    .postOffice(rs.getString("postoffice"))
+                    .serviceArea(rs.getString("servicearea"))
+                    .waterbody(rs.getString("waterbody"))
                     .build();
 
             Institution institution = null;
@@ -158,6 +163,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .structurePlaceSubtype(rs.getString("structureplacesubtype"))
                     .businessActivityDesc(rs.getString("businessactivitydesc"))
                     .licenseeType(rs.getString("licenseetype"))
+                    .establishmentUnitId(rs.getString("establishmentunitid"))
                     .build();
 
             tradeLicense.setTradeLicenseDetail(tradeLicenseDetail);
@@ -167,6 +173,8 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
         if (rs.getString("tl_un_id") != null && rs.getBoolean("tl_un_active")) {
             TradeUnit tradeUnit = TradeUnit.builder()
                     .businessSubtype(rs.getString("tl_un_businesssubtype"))
+                    .businessCategory(rs.getString("tl_un_businesscategory"))
+                    .businessType(rs.getString("tl_un_businesstype"))
                     .id(rs.getString("tl_un_id"))
                     .tenantId(tenantId)
                     .active(rs.getBoolean("tl_un_active"))
@@ -198,18 +206,38 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                 .active(rs.getBoolean("ownerdocactive"))
                 .build();
 
-        if (rs.getBoolean("useractive") && rs.getString("tlowner_uuid") != null) {
-            OwnerInfo owner = OwnerInfo.builder()
-                    .uuid(rs.getString("tlowner_uuid"))
-                    .userActive(rs.getBoolean("useractive"))
-                    .name(rs.getString("ownername"))
-                    .aadhaarNumber(rs.getString("aadharno"))
-                    // .permanentAddress(rs.getString("address"))
-                    .emailId(rs.getString("email"))
-                    .build();
-            tradeLicense.getTradeLicenseDetail().addOwnersItem(owner);
+        if (rs.getString("applicationtype").equals("PdeTL") || rs.getString("applicationtype").equals("PdeTL")) {
+            if (rs.getString("ownerpde_id") != null) {
+                OwnerInfo owner = OwnerInfo.builder()
+                        .uuid(rs.getString("ownerpde_id"))
+                        .userActive(rs.getBoolean("ownerpde_active"))
+                        .name(rs.getString("ownerpde_name"))
+                        .build();
+                tradeLicense.getTradeLicenseDetail().addOwnersItem(owner);
+            }
+        } else {
+            if (rs.getBoolean("useractive") && rs.getString("tlowner_uuid") != null) {
+                OwnerInfo owner = OwnerInfo.builder()
+                        .uuid(rs.getString("tlowner_uuid"))
+                        .userActive(rs.getBoolean("useractive"))
+                        .name(rs.getString("ownername"))
+                        .aadhaarNumber(rs.getString("aadharno"))
+                        // .permanentAddress(rs.getString("address"))
+                        .emailId(rs.getString("email"))
+                        .applicantNameLocal(rs.getString("ownername"))
+                        .careOf(rs.getString("careof"))
+                        .careOfName(rs.getString("careofname"))
+                        .mobileNumber(rs.getString("ownercontactno"))
+                        .designation(rs.getString("designation"))
+                        .houseName(rs.getString("housename"))
+                        .street(rs.getString("street"))
+                        .locality(rs.getString("locality"))
+                        .postOffice(rs.getString("postoffice"))
+                        .pincode(rs.getString("pincode"))
+                        .build();
+                tradeLicense.getTradeLicenseDetail().addOwnersItem(owner);
+            }
         }
-
         // Add owner document to the specific tradeLicense for which it was used
         String docuserid = rs.getString("docuserid");
         String doctradeLicenseDetailId = rs.getString("doctradelicensedetailid");
@@ -257,6 +285,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                     .vesselNo(rs.getString("vesselno"))
                     .active(rs.getBoolean("tlstructplace_active"))
                     .isResurveyed(rs.getBoolean("isresurveyed"))
+                    .stallNo(rs.getString("stallno"))
                     .build();
             tradeLicense.getTradeLicenseDetail().addStructurePlaceItem(structurePlace);
         }

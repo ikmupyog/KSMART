@@ -42,7 +42,7 @@ public class TLQueryBuilder {
     // @Value("${renewal.pending.interval}")
     // private long renewalPeriod;
 
-    private static final String QUERY = "SELECT tl.*,tld.*,tlunit.*,tlowner.*," +
+    private static final String QUERY = "SELECT tl.*,tld.*,tlowner.*," +
             "tladdress.*,tlapldoc.*,tlverdoc.*,tlownerdoc.*,tlinsti.*,tl.id as tl_id,tl.tenantid as tl_tenantId,tl.lastModifiedTime as "
             +
             "tl_lastModifiedTime,tl.createdBy as tl_createdBy,tl.lastModifiedBy as tl_lastModifiedBy,tl.createdTime as "
@@ -75,13 +75,23 @@ public class TLQueryBuilder {
             +
             " tlstructplace.partitionno as partitionno, tlstructplace.doorno as tlstructplace_doorno, tlstructplace.doorsub as doorsub, "
             +
-            " tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active, tlstructplace.isresurveyed AS isresurveyed, tlstructplace.stallno as stallno FROM eg_tl_tradelicense tl"
+            " tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active, tlstructplace.isresurveyed AS isresurveyed, tlstructplace.stallno as stallno, "
+            +
+            "eg_tl_owner_pde.id as ownerpde_id, ownertype as ownerpde_ownertype, active as ownertype_active, ownername as ownertype_ownername, "
+            +
+            "aadharno as ownerpde_aadharno, address as ownerpde_address, email as ownerpde_email, mobilenumber as ownerpde_mobilenumber, "
+            +
+            ""
+            +
+            "FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_tradelicensedetail tld ON tld.tradelicenseid = tl.id"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_address tladdress ON tladdress.tradelicensedetailid = tld.id"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_owner tlowner ON tlowner.tradelicensedetailid = tld.id"
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_owner_pde tlownerpde ON tlownerpde.tradelicensedetailid = tld.id"
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_tradeunit tlunit ON tlunit.tradelicensedetailid = tld.id"
             + LEFT_OUTER_JOIN_STRING
@@ -143,7 +153,8 @@ public class TLQueryBuilder {
 
         addBusinessServiceClause(criteria, preparedStmtList, builder);
 
-        if (criteria.getAccountId() != null) {
+        if (criteria.getAccountId() != null
+                && !criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
             addClauseIfRequired(preparedStmtList, builder);
             builder.append(" tl.accountid = ? ");
             preparedStmtList.add(criteria.getAccountId());
@@ -333,6 +344,10 @@ public class TLQueryBuilder {
 
         builder.append(" OR (tl.workflowcode = ? AND tl.status=?)) ");
         preparedStmtList.add("RenewalTL");
+        preparedStmtList.add(TLConstants.STATUS_APPROVED);
+
+        builder.append(" OR (tl.workflowcode = ? AND tl.status=?)) ");
+        preparedStmtList.add("NewTL");
         preparedStmtList.add(TLConstants.STATUS_APPROVED);
     }
 
