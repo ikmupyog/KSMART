@@ -127,6 +127,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [value, setValue] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
+ 
+  const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
+  
+
   let naturetypecmbvalue = null;
   const maxDate = new Date();
   let menu = [];
@@ -209,8 +213,32 @@ let cmbState = [];
     setAge(e.target.value);
   }
   function setSelectDeceasedAadharNumber(e) {
-    setDeceasedAadharNumber(e.target.value);
+    if (e.target.value.length != 0) {
+      if (e.target.value.length > 12) {
+        // setDeceasedAadharNumber(e.target.value);
+        setAadharError(true);
+        return false;
+        // const limit = 12;
+        // setDeceasedAadharNumber(e.target.value.slice(0, limit));
+        // window.alert("Username shouldn't exceed 10 characters")
+      } else if (e.target.value.length < 12) {
+        setAadharError(true);
+        setDeceasedAadharNumber(e.target.value);
+        return false;
+      } else {
+        setAadharError(false);
+        setDeceasedAadharNumber(e.target.value);
+        return true;
+      }
+    } else {
+      setAadharError(false);
+      setDeceasedAadharNumber(e.target.value);
+      return true;
+    }
   }
+  // function setSelectDeceasedAadharNumber(e) {
+  //   setDeceasedAadharNumber(e.target.value);
+  // }
   function setSelectDeceasedIdproofNo(e) {
     // console.log("Test" + e);
     setDeceasedIdproofNo(e.target.value);
@@ -389,6 +417,17 @@ let cmbState = [];
     }
   });
   const goNext = () => {
+   
+      if (AadharError) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
     sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
     sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
     sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
@@ -1038,14 +1077,14 @@ let cmbState = [];
         {toast && (
           <Toast
             error={
-              DOBError              
+              DOBError   || AadharError            
             }
             label={
-              DOBError
-                ? DOBError
-                  ? t(`CR_INVALID_DATE`)
-                  : DOBError
-                  ? t(`CR_INVALID_DATE`)
+              DOBError ||AadharError
+             ? AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) 
+             :  DOBError ? t(`CR_INVALID_DATE`)
+             
+                 
                   :  setToast(false)
                 : setToast(false)
             }
