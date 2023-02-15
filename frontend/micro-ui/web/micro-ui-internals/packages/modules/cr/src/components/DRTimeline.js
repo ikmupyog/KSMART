@@ -9,12 +9,12 @@ const getAction = (flow) => {
     case "STAKEHOLDER": actions = []
       break;
     default: actions = [
-      'CR_LEGAL_INFORMATION',
-      'CR_PLACE_OF_DEATH',
-      'CR_FAMILY_INFO',  
-      'CR_ADDRESS_DECESED',         
-      'CR_STATISTICAL_INFORMATION',
-      // 'CR_APPLICANT_DETAILS',
+      'CR_DEATH_INFO',
+      'CR_ADDRESS_DECESED',
+      'CR_FAMILY_DETAILS',  
+      'CR_MORE_INFO',         
+      'CR_INFORMENT_DETAILS',
+      // 'CR_INITIATOR_DETAILS',
       'CR_SUMMARY',
     ]
   }

@@ -10,8 +10,8 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  const [isDeclarationInfoone, setIsDeclarationInfoone] = useState(
-    formData?.Initiater?.isDeclarationInfoone ? formData?.Initiater?.isDeclarationInfoone : false
+  const [IsDeclarationInitiator, setIsDeclarationInitiator] = useState(
+    formData?.Initiater?.IsDeclarationInitiator ? formData?.Initiater?.IsDeclarationInitiator : false
   );
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
   //   formData?.Initiater?.isDeclarationInfotwo ? formData?.Initiater?.isDeclarationInfotwo : false
@@ -42,9 +42,9 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.Initiater?.isDeclarationInfoone != null) {
+      if (formData?.Initiater?.IsDeclarationInitiator != null) {
         setIsInitialRender(false);
-        setIsDeclarationInfoone(formData?.Initiater?.isDeclarationInfoone);
+        setIsDeclarationInitiator(formData?.Initiater?.IsDeclarationInitiator);
       }
       // if (formData?.Initiater?.isDeclarationInfotwo != null) {
       //   setIsInitialRender(false);
@@ -53,11 +53,11 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
  
-  function setDeclarationInfoone(e) {
+  function setDeclarationInitiater(e) {
     if (e.target.checked == true) {
-      setIsDeclarationInfoone(e.target.checked);
+      setIsDeclarationInitiator(e.target.checked);
     } else {
-      setIsDeclarationInfoone(e.target.checked);
+      setIsDeclarationInitiator(e.target.checked);
     }
   }
   // function setDeclarationInfotwo(e) {
@@ -163,14 +163,14 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("isDeclarationInfoone", isDeclarationInfoone ? isDeclarationInfoone : null);
+      sessionStorage.setItem("IsDeclarationInitiator", IsDeclarationInitiator ? IsDeclarationInitiator : null);
       // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);      
       sessionStorage.setItem("InitiatorRelation", InitiatorRelation ? InitiatorRelation : null);
       sessionStorage.setItem("InitiatorName", InitiatorName ? InitiatorName : null);
       sessionStorage.setItem("InitiatorAadhaar", InitiatorAadhaar ? InitiatorAadhaar : null);
       sessionStorage.setItem("InitiatorMobile", InitiatorMobile ? InitiatorMobile : null);      
       onSelect(config.key, {
-        isDeclarationInfoone,
+        IsDeclarationInitiator,
         // isDeclarationInfotwo,
         InitiatorName,
         InitiatorRelation,
@@ -195,7 +195,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("TestDescription")} onChange={setDeclarationInfoone} value={isDeclarationInfoone} checked={isDeclarationInfoone} />
+            <CheckBox label={t("TestDescription")} onChange={setIsDeclarationInitiator} value={IsDeclarationInitiator} checked={IsDeclarationInitiator} />
             {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>
