@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, TextArea, Toast, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
-import HospitalDetails from "../../pageComponents/birthComponents/HospitalDetails";
-import InstitutionDetails from "../../pageComponents/birthComponents/InstitutionDetails";
-import BirthVehicle from "../../pageComponents/birthComponents/BirthVehicle";
-import PublicPlace from "../../pageComponents/birthComponents/PublicPlace";
-import OtherCountry from "../../pageComponents/birthComponents/OtherCountry";
-import InstitutionAddress from "../../pageComponents/birthComponents/InstitutionAddress";
-import PlaceofBirthHome from "../../pageComponents/birthComponents/PlaceofBirthHome";
-import InformantDetails from "./InformantDetails";
-import InformantAddress from "./InformantAddress";
+import HospitalDetails from "./OldHospitalDetails";
+import InstitutionDetails from "./OldInstitutionDetails";
+import BirthVehicle from "./BirthVehicle";
+import PublicPlace from "./OldPublicPlace";
+import OtherCountry from "./OldOtherCountry";
+import InstitutionAddress from "./OldInstitutionAddress";
+import PlaceofBirthHome from "./OldPlaceofBirthHome";
+import InformantDetails from "./OldInformantDetails";
+import InformantAddress from "./OldInformantAddress";
 
 // import VehicleInformtAddress from "./VehicleInformtAddress";
 
