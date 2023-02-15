@@ -263,7 +263,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <CardLabel>{`${t("CR_SPOUSE_TYPE_EN")}`}</CardLabel>
                   <Dropdown
                     t={t}
@@ -276,7 +276,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_SPOUSE_TYPE_EN")}`}
                   />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
                   <TextInput
                     t={t}
@@ -291,7 +291,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                   />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <CardLabel>{`${t("CR_NAME_ML")}`}</CardLabel>
                   <TextInput
                     t={t}
@@ -311,7 +311,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     })}
                   />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
                   <TextInput
                     t={t}

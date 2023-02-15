@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const Informer = ({ config, onSelect, userType, formData }) => {
@@ -28,6 +28,9 @@ const Informer = ({ config, onSelect, userType, formData }) => {
   const [DeathSignedOfficerDesignation, setDeathSignedOfficerDesignation] = useState(
     formData?.Informer?.DeathSignedOfficerDesignation ? formData?.Informer?.DeathSignedOfficerDesignation : ""
   );  
+  const [InformantAddress, setInformantAddress] = useState(
+    formData?.Informer?.InformantAddress ? formData?.Informer?.InformantAddress : ""
+  );
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
   const [infomantNameError, setinfomantNameError] = useState(formData?.Informer?.InformantNameEn ? false : false);
@@ -77,16 +80,16 @@ const Informer = ({ config, onSelect, userType, formData }) => {
       setInformantAadharNo(e.target.value);
     }
   }
-  // function setSelectInformantNameEn(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;      
-  //   } else {
-  //     setInformantNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-  //   }
-  // }
-  function setSelectInformantNameEn(value) {
-    setInformantNameEn(value);    
+  function setSelectInformantNameEn(e) {
+    if (e.target.value.length === 51) {
+      return false;      
+    } else {
+      setInformantNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
   }
+  // function setSelectInformantNameEn(value) {
+  //   setInformantNameEn(value);    
+  // }
 
   function setSelectInformantMobileNo(e) {
     if (e.target.value.length != 0) {
@@ -104,10 +107,16 @@ const Informer = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectDeathSignedOfficerDesignation(e) {
     if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+      return false;      
     } else {
       setDeathSignedOfficerDesignation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  } 
+  function setSelectInformantAddress(e) {
+    if (e.target.value.length === 251) {
+      return false;      
+    } else {
+      setInformantAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }  
 
@@ -163,22 +172,22 @@ const Informer = ({ config, onSelect, userType, formData }) => {
 
       sessionStorage.setItem("InformantMobileNo", InformantMobileNo ? InformantMobileNo : null);
       sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
-      
+      sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);   
       onSelect(config.key, {
         isDeclarationInfoone,
         // isDeclarationInfotwo,
         InformantNameEn,
         InformantAadharNo,
         InformantMobileNo,
-        DeathSignedOfficerDesignation,       
+        DeathSignedOfficerDesignation,
+        InformantAddress,       
       });
     }
   };
   return (
     <React.Fragment>
-      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-            {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-            <BackButton >{t("CS_COMMON_BACK")}</BackButton> */}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      <BackButton >{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -223,7 +232,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"number"}
                 optionKey="i18nKey"
                 name="InformantAadharNo"
@@ -242,7 +251,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="InformantNameEn"
@@ -261,7 +270,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathSignedOfficerDesignation"
@@ -279,7 +288,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"number"}
                 optionKey="i18nKey"
                 name="InformantMobileNo"
@@ -290,9 +299,28 @@ const Informer = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
+           
           </div>
         </div>
-        
+        <div className="row">
+          <div className="col-md-12">
+          <div className="col-md-6">
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="InformantAddress"
+                value={InformantAddress}
+                onChange={setSelectInformantAddress}
+                disable={isEdit}
+                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+              />
+            </div>
+          </div>
+        </div> 
 
         {toast && (
           <Toast
