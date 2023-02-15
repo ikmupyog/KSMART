@@ -609,7 +609,7 @@ export const convertToDeathRegistration = (data = {}) => {
           DeceasedGender: data?.InformationDeath?.DeceasedGender.code,
           Nationality: data?.InformationDeath?.Nationality.code,
           Religion: data?.InformationDeath?.Religion.code,
-          Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation : null,
+          Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation.code : null,
           funcionUID: "CRDRNR",
           registrationNo: null,
         },
