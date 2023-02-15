@@ -50,68 +50,71 @@ public class DeathInformantDtls {
     @JsonProperty("InformantMobileNo")
     private String informantMobileNo ;
 
-    @JsonProperty("InformantAddrId")
-    private String informantAddrId;
+    @JsonProperty("InformantAddress")
+    private String informantAddress ;
 
-    @JsonProperty("InformantAddrDeathDtlId")
-    private String informantAddrDeathDtlId ;
+    // @JsonProperty("InformantAddrId")
+    // private String informantAddrId;
 
-    @JsonProperty("InformantAddrTenantId")
-    private String informantAddrTenantId ;
+    // @JsonProperty("InformantAddrDeathDtlId")
+    // private String informantAddrDeathDtlId ;
 
-    @JsonProperty("InformantAddrTypeId")
-    private String informantAddrTypeId ;
+    // @JsonProperty("InformantAddrTenantId")
+    // private String informantAddrTenantId ;
 
-    @JsonProperty("InformantAddrLocationType")
-    private String informantAddrLocationType ;
+    // @JsonProperty("InformantAddrTypeId")
+    // private String informantAddrTypeId ;
 
-    @JsonProperty("InformantAddrCountryId")
-    private String informantAddrCountryId ;
+    // @JsonProperty("InformantAddrLocationType")
+    // private String informantAddrLocationType ;
 
-    @JsonProperty("InformantAddrStateId")
-    private String informantAddrStateId ;
+    // @JsonProperty("InformantAddrCountryId")
+    // private String informantAddrCountryId ;
 
-    @JsonProperty("InformantAddrDistrictId")
-    private String informantAddrDistrictId ;
+    // @JsonProperty("InformantAddrStateId")
+    // private String informantAddrStateId ;
 
-    @JsonProperty("InformantAddrTalukId")
-    private String informantAddrTalukId ;
+    // @JsonProperty("InformantAddrDistrictId")
+    // private String informantAddrDistrictId ;
 
-    @JsonProperty("InformantAddrVillageId")
-    private String informantAddrVillageId ;
+    // @JsonProperty("InformantAddrTalukId")
+    // private String informantAddrTalukId ;
 
-    @JsonProperty("InformantAddrLbType")
-    private String informantAddrLbType ;
+    // @JsonProperty("InformantAddrVillageId")
+    // private String informantAddrVillageId ;
 
-    @JsonProperty("InformantAddrWardId")
-    private String informantAddrWardId ;
+    // @JsonProperty("InformantAddrLbType")
+    // private String informantAddrLbType ;
 
-    @JsonProperty("InformantAddrPostofficeId")
-    private String informantAddrPostofficeId ;
+    // @JsonProperty("InformantAddrWardId")
+    // private String informantAddrWardId ;
 
-    @JsonProperty("InformantAddrPincode")
-    private Long informantAddrPincode ;
+    // @JsonProperty("InformantAddrPostofficeId")
+    // private String informantAddrPostofficeId ;
 
-    @JsonProperty("InformantAddrLocalityEn")
-    private String informantAddrLocalityEn ;
+    // @JsonProperty("InformantAddrPincode")
+    // private Long informantAddrPincode ;
 
-    @JsonProperty("InformantAddrLocalityMl")
-    private String informantAddrLocalityMl ;
+    // @JsonProperty("InformantAddrLocalityEn")
+    // private String informantAddrLocalityEn ;
 
-    @JsonProperty("InformantAddrStreetNameEn")
-    private String informantAddrStreetNameEn ;
+    // @JsonProperty("InformantAddrLocalityMl")
+    // private String informantAddrLocalityMl ;
 
-    @JsonProperty("InformantAddrStreetNameMl")
-    private String informantAddrStreetNameMl ;
+    // @JsonProperty("InformantAddrStreetNameEn")
+    // private String informantAddrStreetNameEn ;
 
-    @JsonProperty("InformantAddrHoueNameEn")
-    private String informantAddrHoueNameEn ;
+    // @JsonProperty("InformantAddrStreetNameMl")
+    // private String informantAddrStreetNameMl ;
 
-    @JsonProperty("InformantAddrHoueNameMl")
-    private String informantAddrHoueNameMl ;
+    // @JsonProperty("InformantAddrHoueNameEn")
+    // private String informantAddrHoueNameEn ;
 
-    @JsonProperty("InformantAddrPostalCode")
-    private String informantAddrPostalCode ;
+    // @JsonProperty("InformantAddrHoueNameMl")
+    // private String informantAddrHoueNameMl ;
+
+    // @JsonProperty("InformantAddrPostalCode")
+    // private String informantAddrPostalCode ;
 
     @JsonProperty("DocumentId")
     private String documentId ;

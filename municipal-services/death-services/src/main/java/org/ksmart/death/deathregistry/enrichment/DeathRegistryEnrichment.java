@@ -80,10 +80,10 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
                 deathdtls.getDeathAddressInfo().setPermanentAddrId(UUID.randomUUID().toString());
                 deathdtls.getDeathStatisticalInfo().setStatisticalId(UUID.randomUUID().toString());
                 //Jasmine 11.02.2023
-                DeathRegistryInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
-                    if (informantInfo!=null){
-                        informantInfo.setInformantAddrId(UUID.randomUUID().toString());  
-                    }
+                // DeathRegistryInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
+                //     if (informantInfo!=null){
+                //         informantInfo.setInformantAddrId(UUID.randomUUID().toString());  
+                //     }
                 });
     }
     //Registration Number Creation by Rakhi S ikm on 10.02.2023
