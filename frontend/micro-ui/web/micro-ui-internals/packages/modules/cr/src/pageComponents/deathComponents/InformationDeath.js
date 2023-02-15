@@ -240,16 +240,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectAge(e) {
-    // const newValue = parseInt(e.target.value);
-    // if (e.target.value != null || e.target.value != "") {
-    // if ( newValue <= 150) {
-    //   setAge(newValue);
-    // }
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value <= 150) {
-        setAge(e.target.value);
-      }
+    const newValue = parseInt(e.target.value);
+    if (newValue >= 0 && newValue <= 150) {
+      setValue(newValue);
     }
+    // if (e.target.value != null || e.target.value != "") {
+    //   if (e.target.value <= 150) {
+    //     setAge(e.target.value);
+    //   }
+    // }
   }
   function setSelectDeceasedAadharNumber(e) {
     if (e.target.value.length != 0) {
