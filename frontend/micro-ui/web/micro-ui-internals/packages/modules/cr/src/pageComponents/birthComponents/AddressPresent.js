@@ -3,7 +3,9 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@e
 import { useTranslation } from "react-i18next";
 
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
-    presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue
+    presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
+    permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
+    setIsPrsentAddress
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const tenantId = Digit.ULBService.getCitizenCurrentTenant();
@@ -12,20 +14,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-    const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-    const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-    const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-    const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-    const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-    //  const { data: boundaryList = {}, iswLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "cochin/egov-location", "boundary-data");
     const [isInitialRender, setIsInitialRender] = useState(true);
-    // const [lbs, setLbs] = useState(0);
-    // const [presentaddressCountry, setaddressCountry] = useState(formData?.AddressBirthDetails?.presentaddressCountry);
-    // const [presentaddressStateName, setaddressStateName] = useState(formData?.AddressBirthDetails?.presentaddressStateName);
-    // const [Talukvalues, setLbsTalukvalue] = useState(null);
-    // const [Villagevalues, setLbsVillagevalue] = useState(null);
-    // const [value, setValue] = useState();
-
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -49,10 +38,6 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     let currentLB = [];
     let cmbFilterCountry = [];
     let cmbFilterState = [];
-    let cmbFilterDistrict = [];
-    let cmbFilterLBtype = [];
-    let cmbFilterTaluk = [];
-    let cmbFilterVillage = [];
 
     useEffect(() => {
 
@@ -69,17 +54,27 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 setIsInitialRender(false);
             }
         }
-    }, [Country, State, District, LBType, localbodies, isInitialRender]);
+    }, [Country, State, localbodies, isInitialRender]);
 
     const onSkip = () => onSelect();
 
     function setSelectaddressCountry(value) {
         setaddressCountry(value);
         setCountryValue(value.countrycode);
+        if (isPrsentAddress) {
+            setpermtaddressCountry(presentaddressCountry);
+        } else {
+            setpermtaddressCountry('');
+        }
     }
     function setSelectaddressStateName(value) {
         setaddressStateName(value);
         setValue(value.statecode);
+        if (isPrsentAddress) {
+            setpermtaddressStateName(presentaddressStateName);
+        } else {
+            setpermtaddressStateName('');
+        }
     }
 
     const goNext = () => {

@@ -726,12 +726,12 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "Initiater",
-        nextStep: "informer",
+        nextStep: "informant-details",
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "informer",
+        route: "informant-details",
         isMandatory: true,
         component: "Informer",
         texts: {

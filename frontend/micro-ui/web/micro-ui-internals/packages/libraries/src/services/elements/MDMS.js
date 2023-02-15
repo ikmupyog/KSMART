@@ -1320,7 +1320,7 @@ const getCRInstitutionList = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "InstitutionType",
+            name: "InstitutionTypePlaceOfEvent",
           },
         ],
       },
