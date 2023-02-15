@@ -880,9 +880,9 @@ public class DeathRegistryRepository {
                     // }
                      //Rakhi S on 15.02.2023
                      if(cert.getDeathBasicInfo().getDeathPlaceStreetMl() != null){
-                        cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceStreetMl()
+                        cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceStreetMl()+", "
                                 +cert.getDeathBasicInfo().getDeathPlaceLocalityMl()+" / "
-                                +cert.getDeathBasicInfo().getDeathPlaceStreetEn()
+                                +cert.getDeathBasicInfo().getDeathPlaceStreetEn()+", "
                                 +cert.getDeathBasicInfo().getDeathPlaceLocalityEn());
                     }
                     else{
