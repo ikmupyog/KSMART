@@ -37,7 +37,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
   const [InitiaterNameError, setInitiaterNameError] = useState(formData?.Initiator?.InitiatorName ? false : false);
   const [InitiaterAadharError, setInitiaterAadharError] = useState(formData?.Initiator?.InitiatorAadhaar ? false : false);
   const [InitiaterMobileError, setInitiaterMobileError] = useState(formData?.Initiator?.InitiatorMobile ? false : false);
- 
+  const [InitiatorAddress, setInitiatorAddress] = useState(formData?.Initiator?.InitiatorAddress ? formData?.Initiator?.InitiatorAddress : ""  );
   const onSkip = () => onSelect();
 
   useEffect(() => {
@@ -114,7 +114,13 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
       setInitiatorMobile(e.target.value);
     }
   }
-   
+  function setSelectInitiatorAddress(e) {
+    if (e.target.value.length === 251) {
+      return false;      
+    } else {
+      setInitiatorAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }  
 
   let validFlag = true;
   const goNext = () => {
@@ -168,22 +174,24 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("InitiatorRelation", InitiatorRelation ? InitiatorRelation : null);
       sessionStorage.setItem("InitiatorName", InitiatorName ? InitiatorName : null);
       sessionStorage.setItem("InitiatorAadhaar", InitiatorAadhaar ? InitiatorAadhaar : null);
-      sessionStorage.setItem("InitiatorMobile", InitiatorMobile ? InitiatorMobile : null);      
+      sessionStorage.setItem("InitiatorMobile", InitiatorMobile ? InitiatorMobile : null); 
+      sessionStorage.setItem("InitiatorAddress", InitiatorAddress ? InitiatorAddress : null);       
+       
       onSelect(config.key, {
         IsDeclarationInitiator,
         // isDeclarationInfotwo,
         InitiatorName,
         InitiatorRelation,
         InitiatorAadhaar,
-        InitiatorMobile,               
+        InitiatorMobile,       
+        InitiatorAddress,        
       });
     }
   };
   return (
     <React.Fragment>
-      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-            {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-            <BackButton >{t("CS_COMMON_BACK")}</BackButton> */}
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      <BackButton >{t("CS_COMMON_BACK")}</BackButton> 
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -299,7 +307,25 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
         
-
+        <div className="row">
+          <div className="col-md-12">
+          <div className="col-md-6">
+              <CardLabel>{`${t("CR_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="InitiatorAddress"
+                value={InitiatorAddress}
+                onChange={setSelectInitiatorAddress}
+                disable={isEdit}
+                placeholder={`${t("CR_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              />
+            </div>
+          </div>
+        </div> 
         {toast && (
           <Toast
             error={InitiaterNameError || InitiaterAadharError || InitiaterMobileError || InitiaterRelationError }
