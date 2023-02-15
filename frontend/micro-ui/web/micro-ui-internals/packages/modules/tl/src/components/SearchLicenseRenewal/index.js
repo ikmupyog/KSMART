@@ -65,7 +65,8 @@ const SearchLicenseRenewal = ({tenantId, t, onSubmit, data, count }) => {
       return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }}/>
     }
     const handleLinkClick = (finaldata) => {
-      Digit.SessionStorage.set("PDE_CREATE_TRADE", finaldata);
+     console.log("hai data"+finaldata);
+      Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
     }
     //need to get from workflow
     const GetCell = (value) => <span className="cell-text"  style={{wordBreak:"break-word"}}>{value}</span>;
@@ -78,40 +79,40 @@ const SearchLicenseRenewal = ({tenantId, t, onSubmit, data, count }) => {
             return (
               <div>
                 <span className="link">
-                  <Link onClick={event => handleLinkClick(row.original)} to={{pathname:`/digit-ui/employee/tl/pde-editapplication`}}>
+                  <Link onClick={event => handleLinkClick(row.original)} to={{pathname:`/digit-ui/citizen/tl/tradelicence/license-renewal-pde`}}>
                     {row.original["applicationNumber"]}
                   </Link>
                 </span>
               </div>
             );
           },
-        },
-        {
-            Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.tradeName),
-        },
-        {
-            Header: t("TL_LOCALIZATION_LICENSEE_NAME"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.tradeLicenseDetail.ownersPde.map(owner => owner.name+" ")),
-        },
-        {
-          Header: t("TL_DOOR_DETAILS"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.tradeLicenseDetail.address.wardNo + " - " + row.tradeLicenseDetail.address.doorNo),
-        },
+         },
+        // {
+        //     Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+        //     disableSortBy: true,
+        //     accessor: (row) => GetCell(row.tradeName),
+        // },
+        // {
+        //     Header: t("TL_LOCALIZATION_LICENSEE_NAME"),
+        //     disableSortBy: true,
+        //     accessor: (row) => GetCell(row.tradeLicenseDetail.ownersPde.map(owner => owner.name+" ")),
+        // },
+        // {
+        //   Header: t("TL_DOOR_DETAILS"),
+        //   disableSortBy: true,
+        //   accessor: (row) => GetCell(row.tradeLicenseDetail.address.wardNo + " - " + row.tradeLicenseDetail.address.doorNo),
+        // },
         
-        {
-          Header: t("TL_LOCALIZATION_SECTOR"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.tradeLicenseDetail.businessSector),
-        },
-        {
-          Header: t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.status),
-        },
+        // {
+        //   Header: t("TL_LOCALIZATION_SECTOR"),
+        //   disableSortBy: true,
+        //   accessor: (row) => GetCell(row.tradeLicenseDetail.businessSector),
+        // },
+        // {
+        //   Header: t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"),
+        //   disableSortBy: true,
+        //   accessor: (row) => GetCell(row.status),
+        // },
         
 
       ]), [] )

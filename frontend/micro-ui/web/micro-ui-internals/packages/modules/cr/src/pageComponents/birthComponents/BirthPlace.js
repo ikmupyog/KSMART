@@ -242,9 +242,7 @@ const BirthPlace = ({ config, onSelect, userType, formData }) => {
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderLB, setIsInitialRenderLB] = useState(true);
   const [LBCombo, setLBCombo] = useState(null);
-  const [LBDistrictCombo, setLBDistrictCombo] = useState(null);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let menu = [];

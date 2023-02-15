@@ -17,6 +17,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  // const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
+  // const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
 
   // const [childDOB, setChildDOB] = useState(isEdit ? (formData?.ChildDetails?.childDOB):(formData?.ChildDetails?.childDOB ? formData?.ChildDetails?.childDOB : ""));
   const [childDOB, setChildDOB] = useState(formData?.ChildDetails?.childDOB ? formData?.ChildDetails?.childDOB : "");
@@ -73,7 +75,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : null);
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.medicalAttensionSub ? formData?.ChildDetails?.medicalAttensionSub : null);
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.ChildDetails?.deliveryMethods ? formData?.ChildDetails?.deliveryMethods : null);
-  const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
+  const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : "");
 
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
@@ -166,6 +168,14 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
+  // let cmbInstitutionId = [];
+  // institutionidList &&
+  //   institutionidList["egov-location"] &&
+  //   institutionidList["egov-location"].institutionList.map((ob) => {
+  //     cmbInstitutionId.push(ob);
+  //   });
+  //   console.log(cmbInstitutionId);
+
   const onSkip = () => onSelect();
 
   useEffect(() => {
@@ -794,7 +804,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return null;
     }
   };
-  if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
+  if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading ) {
     return <Loader></Loader>;
   }
   return (
@@ -823,7 +833,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 date={childDOB}
                 name="childDOB"
                 max={childDOB ? childDOB : convertEpochToDate(new Date())}
-                min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
+                // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                 onChange={setselectChildDOB}
                 inputFormat="DD-MM-YYYY"
                 placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
@@ -1207,13 +1217,13 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"number"}
+                type={"decimal"}
                 optionKey="i18nKey"
                 name="birthWeight"
                 value={birthWeight}
                 onChange={setSelectBirthWeight}
                 placeholder={`${t("CR_BIRTH_WEIGHT")}`}
-                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "number", title: t("CR_INVALID_BIRTH_WEIGHT") })}
+                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
               />
             </div>
           </div>

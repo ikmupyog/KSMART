@@ -33,10 +33,10 @@ const SearchFields = ({ register, control, reset, tenantId, t  }) => {
     if (lbTypeId) {
       if (lbId) {
         if (initialrender) {
-          console.log("inside lb" + JSON.stringify(lbId));
           setTenantidsearch(lbId.code)
           queryClient.removeQueries("TL_ZONAL_OFFICE");
           setInitialrender(false);
+          Digit.SessionStorage.set("CITIZEN.COMMON.HOME.CITY", lbId);
         }
       }
     }

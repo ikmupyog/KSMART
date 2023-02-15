@@ -10,40 +10,40 @@ const Informer = ({ config, onSelect, userType, formData }) => {
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  const [isDeclarationInfoone, setIsDeclarationInfoone] = useState(
-    formData?.Informer?.isDeclarationInfoone ? formData?.Informer?.isDeclarationInfoone : false
+  const [IsDeclarationInformer, setIsDeclarationInformer] = useState(
+    formData?.InformantDetails?.IsDeclarationInformer ? formData?.InformantDetails?.IsDeclarationInformer : false
   );
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
-  //   formData?.Informer?.isDeclarationInfotwo ? formData?.Informer?.isDeclarationInfotwo : false
+  //   formData?.InformantDetails?.isDeclarationInfotwo ? formData?.InformantDetails?.isDeclarationInfotwo : false
   // );
   const [InformantAadharNo, setInformantAadharNo] = useState(
-    formData?.Informer?.InformantAadharNo ? formData?.Informer?.InformantAadharNo : ""
+    formData?.InformantDetails?.InformantAadharNo ? formData?.InformantDetails?.InformantAadharNo : ""
   );  
   const [InformantNameEn, setInformantNameEn] = useState(
-    formData?.Informer?.InformantNameEn ? formData?.Informer?.InformantNameEn : ""
+    formData?.InformantDetails?.InformantNameEn ? formData?.InformantDetails?.InformantNameEn : ""
   );
   const [InformantMobileNo, setInformantMobileNo] = useState(
-    formData?.Informer?.InformantMobileNo ? formData?.Informer?.InformantMobileNo : ""
+    formData?.InformantDetails?.InformantMobileNo ? formData?.InformantDetails?.InformantMobileNo : ""
   );
   const [DeathSignedOfficerDesignation, setDeathSignedOfficerDesignation] = useState(
-    formData?.Informer?.DeathSignedOfficerDesignation ? formData?.Informer?.DeathSignedOfficerDesignation : ""
+    formData?.InformantDetails?.DeathSignedOfficerDesignation ? formData?.InformantDetails?.DeathSignedOfficerDesignation : ""
   );  
   const [InformantAddress, setInformantAddress] = useState(
-    formData?.Informer?.InformantAddress ? formData?.Informer?.InformantAddress : ""
+    formData?.InformantDetails?.InformantAddress ? formData?.InformantDetails?.InformantAddress : ""
   );
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
-  const [infomantNameError, setinfomantNameError] = useState(formData?.Informer?.InformantNameEn ? false : false);
-  const [infomantAadharError, setinfomantAadharError] = useState(formData?.Informer?.infomantAadhar ? false : false);
-  const [infomantMobileError, setinfomantMobileError] = useState(formData?.Informer?.InformantMobileNo ? false : false);
-  const [informerDesiError, setinformerDesiError] = useState(formData?.Informer?.DeathSignedOfficerDesignation ? false : false);
+  const [infomantNameError, setinfomantNameError] = useState(formData?.InformantDetails?.InformantNameEn ? false : false);
+  const [infomantAadharError, setinfomantAadharError] = useState(formData?.InformantDetails?.infomantAadhar ? false : false);
+  const [infomantMobileError, setinfomantMobileError] = useState(formData?.InformantDetails?.InformantMobileNo ? false : false);
+  const [informerDesiError, setinformerDesiError] = useState(formData?.InformantDetails?.DeathSignedOfficerDesignation ? false : false);
   const onSkip = () => onSelect();
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.Informer?.isDeclarationInfoone != null) {
+      if (formData?.Informer?.IsDeclarationInformer != null) {
         setIsInitialRender(false);
-        setIsDeclarationInfoone(formData?.Informer?.isDeclarationInfoone);
+        se(formData?.Informer?.IsDeclarationInformer);
       }
       // if (formData?.Informer?.isDeclarationInfotwo != null) {
       //   setIsInitialRender(false);
@@ -52,11 +52,11 @@ const Informer = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
  
-  function setDeclarationInfoone(e) {
+  function setDeclarationInfo(e) {
     if (e.target.checked == true) {
-      setIsDeclarationInfoone(e.target.checked);
+      setIsDeclarationInformer(e.target.checked);
     } else {
-      setIsDeclarationInfoone(e.target.checked);
+      setIsDeclarationInformer(e.target.checked);
     }
   }
   // function setDeclarationInfotwo(e) {
@@ -165,7 +165,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("isDeclarationInfoone", isDeclarationInfoone ? isDeclarationInfoone : null);
+      sessionStorage.setItem("IsDeclarationInformer", IsDeclarationInformer ? IsDeclarationInformer : null);
       // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);
       sessionStorage.setItem("InformantNameEn", InformantNameEn ? InformantNameEn : null);
       sessionStorage.setItem("InformantAadharNo", InformantAadharNo ? InformantAadharNo : null);
@@ -174,7 +174,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
       sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);   
       onSelect(config.key, {
-        isDeclarationInfoone,
+        IsDeclarationInformer,
         // isDeclarationInfotwo,
         InformantNameEn,
         InformantAadharNo,
@@ -199,7 +199,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("TestDescription")} onChange={setDeclarationInfoone} value={isDeclarationInfoone} checked={isDeclarationInfoone} />
+            <CheckBox label={t("TestDescription")} onChange={setDeclarationInfo} value={IsDeclarationInformer} checked={IsDeclarationInformer} />
             {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>
@@ -305,7 +305,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
           <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <CardLabel>{`${t("CR_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
                 isMandatory={false}
@@ -315,8 +315,8 @@ const Informer = ({ config, onSelect, userType, formData }) => {
                 value={InformantAddress}
                 onChange={setSelectInformantAddress}
                 disable={isEdit}
-                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                placeholder={`${t("CR_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
               />
             </div>
           </div>

@@ -674,7 +674,23 @@ export const newConfig = [
         key: "InformationDeath",
         withoutLabel: true,
         hideInEmployee: false,
+        nextStep: "address-death",
+      },
+      {
+        route: "address-death",
+        component: "AddressBasePage",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressBirthDetails",
         nextStep: "family-information",
+        type: "component",
+        hideInEmployee: false,
       },
       {
         route: "family-information",
@@ -708,12 +724,12 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "StatisticalInfo",
-        nextStep: "initiater",
+        nextStep: "initiator",
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "initiater",
+        route: "initiator",
         isMandatory: true,
         component: "Initiater",
         texts: {
@@ -743,13 +759,12 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "Informer",
+        key: "InformantDetails",
         nextStep: null,
         type: "component",
         hideInEmployee: false,
       },
-
-
+      ////////////////////Death-Stop////////////////////////
 
 
       {

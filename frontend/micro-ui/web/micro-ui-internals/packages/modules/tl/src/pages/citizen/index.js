@@ -11,7 +11,9 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 // import SearchTradeComponent from "./SearchTrade";
 
 const App = () => {
+  //console.log("renewal **********************************************************" +JSON.stringify(pathrenewal));
   const { path, url, ...match } = useRouteMatch();
+  console.log(path);
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
 
@@ -40,7 +42,7 @@ const App = () => {
       <Switch>
         <AppContainer>
           <BackButton /* style={{ position: "fixed", top: "55px" }} */ isCommonPTPropertyScreen={isCommonPTPropertyScreen} isSuccessScreen={isSuccessScreen} getBackPageNumber={getBackPageNumber}>Back</BackButton>
-          <PrivateRoute path={`${path}/tradelicence/new-application`} component={CreateTradeLicence} />
+          <PrivateRoute path={`${path}/tradelicence/new-application`} component={() => <CreateTradeLicence  isRenewal={false}/>} />
           <PrivateRoute path={`${path}/tradelicence/edit-application/:id/:tenantId`} component={EditTrade} />
           <PrivateRoute path={`${path}/tradelicence/renew-trade/:id/:tenantId`} component={RenewTrade} />
           <PrivateRoute path={`${path}/tradelicence/my-application`} component={MyApplications} />
@@ -50,6 +52,8 @@ const App = () => {
           <PrivateRoute path={`${path}/tradelicence/renewal-list`} component={TLList} />
           <PrivateRoute path={`${path}/tradelicence/trade-search`} component={SearchTradeComponent} />
           <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={SearchRenewalTrade} />
+          <PrivateRoute path={`${path}/tradelicence/license-renewal-pde`}   component={() => <CreateTradeLicence  isRenewal={true}/>} />
+          {/* component={() => <CreateTradeLicence  isRenewal={true}/>} />	 */}
         </AppContainer>
       </Switch>
     </span>

@@ -3,11 +3,16 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@e
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, presentOutSideIndiaAdressEn, setAdressEn,
+const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, presentOutSideIndiaAdressEn, setAdressEn,
   presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
   setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaadrsVillage, setadrsVillage,
   presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode, presentOutSideCountry,
   setOutSideCountry, countryvalue, setCountryValue,
+  isPrsentAddress, setIsPrsentAddress, PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
+  PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
+  PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
+  PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
+  PermanentOutsideIndiaPostCode, setPermantpostCode, PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -40,7 +45,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
-  let cmbVillage = [];
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
     { i18nKey: "Village", code: "VILLAGE" },
@@ -49,6 +53,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
 
   function setSelectadrsVillage(value) {
     setadrsVillage(value);
+    if (isPrsentAddress) {
+      setadrsPermntOutsideIndiaVillage(presentOutSideIndiaadrsVillage);
+    } else {
+      setadrsPermntOutsideIndiaVillage('');
+    }
   }
 
   function setSelectadrsCityTown(e) {
@@ -57,6 +66,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
       setadrsCityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      if (isPrsentAddress) {
+        setadrsPermntOutsideIndiaCityTown(presentOutSideIndiaadrsCityTown);
+      } else {
+        setadrsPermntOutsideIndiaCityTown('');
+      }
     }
   }
 
@@ -66,6 +80,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
       setAdressEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      if (isPrsentAddress) {
+        setadrsPermntOutsideIndiaLineoneEn(presentOutSideIndiaAdressEn);
+      } else {
+        setadrsPermntOutsideIndiaLineoneEn('');
+      }
     }
   }
   function setSelectAdressEnB(e) {
@@ -73,32 +92,59 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
       return false;
     }
     setAdressEnB(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (isPrsentAddress) {
+      setadrsPermntOutsideIndiaLinetwoEn(presentOutSideIndiaAdressEnB);
+    } else {
+      setadrsPermntOutsideIndiaLinetwoEn('');
+    }
   }
 
   function setSelectAdressMlB(e) {
     if (e.target.value.length === 51) {
       return false;
+    } else {
+      setAdressMlB(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      if (isPrsentAddress) {
+        setadrsPermntOutsideIndiaLinetwoMl(presentOutSideIndiaAdressMlB);
+      } else {
+        setadrsPermntOutsideIndiaLinetwoMl('');
+      }
     }
-    setAdressMlB(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
   }
   function setSelectAdressMl(e) {
     if (e.target.value.length === 51) {
       return false;
+    } else {
+      setAdressMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      if (isPrsentAddress) {
+        setadrsPermntOutsideIndiaLineoneMl(presentOutSideIndiaAdressMl);
+      } else {
+        setadrsPermntOutsideIndiaLinetwoEn('');
+      }
     }
-    setAdressMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
-  }  
-  
+
+  }
+
   function setSelectProvinceEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
       setProvinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      if (isPrsentAddress) {
+        setPermntOutsideIndiaprovinceEn(presentOutSideIndiaProvinceEn);
+      } else {
+        setPermntOutsideIndiaprovinceEn('');
+      }
     }
   }
 
   function setSelectOutSideCountry(value) {
     setOutSideCountry(value);
-    console.log("Country" + cmbCountry);
+    if (isPrsentAddress) {
+      setPermntOutsideIndiaCountry(presentOutSideCountry);
+    } else {
+      setPermntOutsideIndiaCountry('');
+    }
   }
   // function setSelectPostCode(e) {
   //   setPostCode(e.target.value);
@@ -112,10 +158,13 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType,formData, prese
         return false;
       } else {
         setPostCode(e.target.value);
+        if (isPrsentAddress) {
+          setPermantpostCode(presentOutSideIndiaPostCode);
+        } else {
+          setPermantpostCode('');
+        }
       }
-    } else {
-      setPostCode(e.target.value);
-    }
+    } 
   }
   const goNext = () => {
     // sessionStorage.setItem("presentOutSideIndiaAdressEn", presentOutSideIndiaAdressEn ? presentOutSideIndiaAdressEn  : null);
