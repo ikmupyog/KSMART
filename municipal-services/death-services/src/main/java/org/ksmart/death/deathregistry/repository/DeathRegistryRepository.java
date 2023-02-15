@@ -771,17 +771,17 @@ public class DeathRegistryRepository {
 
                     //End
                     cert.getDeathBasicInfo().setPlaceofDeath(                       
-                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+ " "+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ " "+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+ " "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameMl()+ ", "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameMl()+ ", "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityMl()+ ", "+
                         cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeMl()+ " "+
                         cert.getDeathBasicInfo().getDeathPlaceHomeDistrictMl ()+ " "+
                         cert.getDeathBasicInfo().getDeathPlaceHomeStateMl()+ " "+
                         cert.getDeathBasicInfo().getDeathPlaceHomeCountryMl()+" / "+
 
-                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+ " "+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+ " "+
-                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn()+ " "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeHoueNameEn()+ ", "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeStreetNameEn()+ ", "+
+                        cert.getDeathBasicInfo().getDeathPlaceHomeLocalityEn()+ ", "+
                         cert.getDeathBasicInfo().getDeathPlaceHomePostOfficeEn()+ " "+
                         cert.getDeathBasicInfo().getDeathPlaceHomeDistrictId()+ " "+
                         cert.getDeathBasicInfo().getDeathPlaceHomeStateId()+ " "+
@@ -811,12 +811,12 @@ public class DeathRegistryRepository {
                 else if(DeathRegistryConstants.DEATH_PLACE_INSTITUTION.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
                     Object mdmsDataInstitution = util.mDMSCallCertificateInstitution(pdfApplicationRequest.getRequestInfo()     
                                             , cert.getDeathBasicInfo().getTenantId()                           
-                                            , cert.getDeathBasicInfo().getDeathPlaceInstId());
+                                            , cert.getDeathBasicInfo().getDeathPlaceType());
                     Map<String,List<String>> masterDataInstitution = getAttributeValuesHospital(mdmsDataInstitution);
 
                     Object mdmsDataInstitutionMl = util.mDMSCallCertificateInstitutionMl(pdfApplicationRequest.getRequestInfo()     
                                             , cert.getDeathBasicInfo().getTenantId()                           
-                                            , cert.getDeathBasicInfo().getDeathPlaceInstId());
+                                            , cert.getDeathBasicInfo().getDeathPlaceType());
                     Map<String,List<String>> masterDataInstitutionMl = getAttributeValuesHospital(mdmsDataInstitutionMl);
 
                     String deathPlaceInstitution = masterDataInstitution.get(DeathRegistryConstants.INSTITUTION_NAME).toString();
@@ -858,22 +858,32 @@ public class DeathRegistryRepository {
                 }
                 //Place of Death Other
                 else if(DeathRegistryConstants.DEATH_PLACE_OTHER_PLACES.toString().equals(cert.getDeathBasicInfo().getDeathPlace())){
-                    Object mdmsDataOtherPlace = util.mDMSCallCertificateOther(pdfApplicationRequest.getRequestInfo()     
-                                            , cert.getDeathBasicInfo().getDeathPlaceType()                   
-                                            );
-                    Map<String,List<String>> masterDataOtherPlace = getAttributeValuesOther(mdmsDataOtherPlace);
-                    String OtherPlace = masterDataOtherPlace.get(DeathRegistryConstants.OTHER_PLACE_TYPE).toString();
-                    OtherPlace = OtherPlace.replaceAll("[\\[\\]\\(\\)]", ""); 
+                    // Object mdmsDataOtherPlace = util.mDMSCallCertificateOther(pdfApplicationRequest.getRequestInfo()     
+                    //                         , cert.getDeathBasicInfo().getDeathPlaceType()                   
+                    //                         );
+                    // Map<String,List<String>> masterDataOtherPlace = getAttributeValuesOther(mdmsDataOtherPlace);
+                    // String OtherPlace = masterDataOtherPlace.get(DeathRegistryConstants.OTHER_PLACE_TYPE).toString();
+                    // OtherPlace = OtherPlace.replaceAll("[\\[\\]\\(\\)]", ""); 
 
-                    Object mdmsDataOtherPlaceMl = util.mDMSCallCertificateOtherMl(pdfApplicationRequest.getRequestInfo()     
-                                            , cert.getDeathBasicInfo().getDeathPlaceType()                   
-                                            );
-                    Map<String,List<String>> masterDataOtherPlaceMl = getAttributeValuesOther(mdmsDataOtherPlaceMl);
-                    String OtherPlaceMl = masterDataOtherPlaceMl.get(DeathRegistryConstants.OTHER_PLACE_TYPE).toString();
-                    OtherPlaceMl = OtherPlaceMl.replaceAll("[\\[\\]\\(\\)]", ""); 
+                    // Object mdmsDataOtherPlaceMl = util.mDMSCallCertificateOtherMl(pdfApplicationRequest.getRequestInfo()     
+                    //                         , cert.getDeathBasicInfo().getDeathPlaceType()                   
+                    //                         );
+                    // Map<String,List<String>> masterDataOtherPlaceMl = getAttributeValuesOther(mdmsDataOtherPlaceMl);
+                    // String OtherPlaceMl = masterDataOtherPlaceMl.get(DeathRegistryConstants.OTHER_PLACE_TYPE).toString();
+                    // OtherPlaceMl = OtherPlaceMl.replaceAll("[\\[\\]\\(\\)]", ""); 
 
-                    if(OtherPlace != null){
-                        cert.getDeathBasicInfo().setPlaceofDeath(OtherPlaceMl+" / "+OtherPlace);
+                    // if(OtherPlace != null){
+                        // cert.getDeathBasicInfo().setPlaceofDeath(OtherPlaceMl+" / "+OtherPlace);                       
+                    // }
+                    // else{
+                    //     cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceOtherMl()+" / "+cert.getDeathBasicInfo().getDeathPlaceOtherEn());
+                    // }
+                     //Rakhi S on 15.02.2023
+                     if(cert.getDeathBasicInfo().getDeathPlaceStreetMl() != null){
+                        cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceStreetMl()
+                                +cert.getDeathBasicInfo().getDeathPlaceLocalityMl()+" / "
+                                +cert.getDeathBasicInfo().getDeathPlaceStreetEn()
+                                +cert.getDeathBasicInfo().getDeathPlaceLocalityEn());
                     }
                     else{
                         cert.getDeathBasicInfo().setPlaceofDeath(cert.getDeathBasicInfo().getDeathPlaceOtherMl()+" / "+cert.getDeathBasicInfo().getDeathPlaceOtherEn());
