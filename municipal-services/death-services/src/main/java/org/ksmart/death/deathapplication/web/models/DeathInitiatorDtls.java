@@ -36,68 +36,71 @@ public class DeathInitiatorDtls {
     @JsonProperty("InitiatorMobile")
     private String initiatorMobile ;
 
-    @JsonProperty("InitiatorAddrId")
-    private String initiatorAddrId;
+    @JsonProperty("InitiatorAddress")
+    private String initiatorAddress ;
 
-    @JsonProperty("InitiatorAddrDeathDtlId")
-    private String initiatorAddrDeathDtlId ;
+    // @JsonProperty("InitiatorAddrId")
+    // private String initiatorAddrId;
 
-    @JsonProperty("InitiatorAddrTenantId")
-    private String initiatorAddrTenantId ;
+    // @JsonProperty("InitiatorAddrDeathDtlId")
+    // private String initiatorAddrDeathDtlId ;
 
-    @JsonProperty("InitiatorAddrTypeId")
-    private String initiatorAddrTypeId ;
+    // @JsonProperty("InitiatorAddrTenantId")
+    // private String initiatorAddrTenantId ;
 
-    @JsonProperty("InitiatorAddrLocationType")
-    private String initiatorAddrLocationType ;
+    // @JsonProperty("InitiatorAddrTypeId")
+    // private String initiatorAddrTypeId ;
 
-    @JsonProperty("InitiatorAddrCountryId")
-    private String initiatorAddrCountryId ;
+    // @JsonProperty("InitiatorAddrLocationType")
+    // private String initiatorAddrLocationType ;
 
-    @JsonProperty("InitiatorAddrStateId")
-    private String initiatorAddrStateId ;
+    // @JsonProperty("InitiatorAddrCountryId")
+    // private String initiatorAddrCountryId ;
 
-    @JsonProperty("InitiatorAddrDistrictId")
-    private String initiatorAddrDistrictId ;
+    // @JsonProperty("InitiatorAddrStateId")
+    // private String initiatorAddrStateId ;
 
-    @JsonProperty("InitiatorAddrTalukId")
-    private String initiatorAddrTalukId ;
+    // @JsonProperty("InitiatorAddrDistrictId")
+    // private String initiatorAddrDistrictId ;
 
-    @JsonProperty("InitiatorAddrVillageId")
-    private String initiatorAddrVillageId ;
+    // @JsonProperty("InitiatorAddrTalukId")
+    // private String initiatorAddrTalukId ;
 
-    @JsonProperty("InitiatorAddrLbType")
-    private String initiatorAddrLbType ;
+    // @JsonProperty("InitiatorAddrVillageId")
+    // private String initiatorAddrVillageId ;
 
-    @JsonProperty("InitiatorAddrWardId")
-    private String initiatorAddrWardId ;
+    // @JsonProperty("InitiatorAddrLbType")
+    // private String initiatorAddrLbType ;
 
-    @JsonProperty("InitiatorAddrPostofficeId")
-    private String initiatorAddrPostofficeId ;
+    // @JsonProperty("InitiatorAddrWardId")
+    // private String initiatorAddrWardId ;
 
-    @JsonProperty("InitiatorAddrPincode")
-    private Long initiatorAddrPincode ;
+    // @JsonProperty("InitiatorAddrPostofficeId")
+    // private String initiatorAddrPostofficeId ;
 
-    @JsonProperty("InitiatorAddrLocalityEn")
-    private String initiatorAddrLocalityEn ;
+    // @JsonProperty("InitiatorAddrPincode")
+    // private Long initiatorAddrPincode ;
 
-    @JsonProperty("InitiatorAddrLocalityMl")
-    private String initiatorAddrLocalityMl ;
+    // @JsonProperty("InitiatorAddrLocalityEn")
+    // private String initiatorAddrLocalityEn ;
 
-    @JsonProperty("InitiatorAddrStreetNameEn")
-    private String initiatorAddrStreetNameEn ;
+    // @JsonProperty("InitiatorAddrLocalityMl")
+    // private String initiatorAddrLocalityMl ;
 
-    @JsonProperty("InitiatorAddrStreetNameMl")
-    private String initiatorAddrStreetNameMl ;
+    // @JsonProperty("InitiatorAddrStreetNameEn")
+    // private String initiatorAddrStreetNameEn ;
 
-    @JsonProperty("InitiatorAddrHoueNameEn")
-    private String initiatorAddrHoueNameEn ;
+    // @JsonProperty("InitiatorAddrStreetNameMl")
+    // private String initiatorAddrStreetNameMl ;
 
-    @JsonProperty("InitiatorAddrHoueNameMl")
-    private String initiatorAddrHoueNameMl ;
+    // @JsonProperty("InitiatorAddrHoueNameEn")
+    // private String initiatorAddrHoueNameEn ;
 
-    @JsonProperty("InitiatorAddrPostalCode")
-    private String initiatorAddrPostalCode ;
+    // @JsonProperty("InitiatorAddrHoueNameMl")
+    // private String initiatorAddrHoueNameMl ;
+
+    // @JsonProperty("InitiatorAddrPostalCode")
+    // private String initiatorAddrPostalCode ;
 
     @JsonProperty("DocumentId")
     private String documentId ;

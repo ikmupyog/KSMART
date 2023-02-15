@@ -75,14 +75,14 @@ public class DeathEnrichment implements BaseEnrichment{
                     statisticalInfo.setStatisticalId(UUID.randomUUID().toString()); 
                 } 
                 //Jasmine informant and initiator 11.02.2023
-                DeathInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
-                if (informantInfo!=null){
-                    informantInfo.setInformantAddrId(UUID.randomUUID().toString());  
-                }
-                DeathInitiatorDtls  initiatorInfo = deathdtls.getDeathInitiatorDtls();
-                if (initiatorInfo!=null){
-                    initiatorInfo.setInitiatorAddrId(UUID.randomUUID().toString());  
-                }                  
+                // DeathInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
+                // if (informantInfo!=null){
+                //     informantInfo.setInformantAddrId(UUID.randomUUID().toString());  
+                // }
+                // DeathInitiatorDtls  initiatorInfo = deathdtls.getDeathInitiatorDtls();
+                // if (initiatorInfo!=null){
+                //     initiatorInfo.setInitiatorAddrId(UUID.randomUUID().toString());  
+                // }                  
                 //Encryption Jasmine 10.02.2023
                 // request.getDeathCertificateDtls().get(0)
                 DeathBasicInfo deathBasicDtls =deathdtls.getDeathBasicInfo();
