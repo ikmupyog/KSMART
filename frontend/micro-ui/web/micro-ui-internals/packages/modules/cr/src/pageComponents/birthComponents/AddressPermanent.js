@@ -13,11 +13,6 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-    const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-    const { data: Taluk = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-    const { data: Village = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-    const { data: District = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-    const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
     const [isInitialRender, setIsInitialRender] = useState(true);
 
     let cmbLB = [];
@@ -42,11 +37,6 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     let currentLB = [];
     let cmbFilterCountry = [];
     let cmbFilterState = [];
-    let cmbFilterDistrict = [];
-    let cmbFilterLBtype = [];
-    let cmbFilterTaluk = [];
-    let cmbFilterVillage = [];
-
     useEffect(() => {
 
         if (isInitialRender) {
@@ -62,7 +52,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                 setIsInitialRender(false);
             }
         }
-    }, [Country, State, District, LBType, localbodies, isInitialRender]);
+    }, [Country, State, localbodies, isInitialRender]);
 
     const onSkip = () => onSelect();
 
@@ -89,7 +79,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     }
     return (
         <React.Fragment>
-            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!permtaddressCountry}>
+            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
                 <div className="row">
                     <div className="col-md-12">
                         <h1 className="headingh1">

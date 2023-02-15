@@ -234,7 +234,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
         sessionStorage.setItem("presentOutsideKeralaCityVilgeEn", presentOutsideKeralaCityVilgeEn ? presentOutsideKeralaCityVilgeEn : null);
         sessionStorage.setItem("presentOutsideKeralaVillage", presentOutsideKeralaVillage ? presentOutsideKeralaVillage.code : null);
         sessionStorage.setItem("presentOutsideKeralaTaluk", presentOutsideKeralaTaluk ? presentOutsideKeralaTaluk.code : null);
-        sessionStorage.setItem("presentOutsideKeralaPostOffice", presentOutsideKeralaPostOffice ? presentOutsideKeralaPostOffice.code : null);
+        sessionStorage.setItem("presentOutsideKeralaPostOfficeEn", presentOutsideKeralaPostOfficeEn ? presentOutsideKeralaPostOfficeEn : null);
+        sessionStorage.setItem("presentOutsideKeralaPostOfficeMl", presentOutsideKeralaPostOfficeMl ? presentOutsideKeralaPostOfficeMl : null);
         sessionStorage.setItem("presentOutsideKeralaPincode", presentOutsideKeralaPincode ? presentOutsideKeralaPincode : null);
         sessionStorage.setItem("presentOutsideKeralaHouseNameEn", presentOutsideKeralaHouseNameEn ? presentOutsideKeralaHouseNameEn : null);
         sessionStorage.setItem("presentOutsideKeralaHouseNameMl", presentOutsideKeralaHouseNameMl ? presentOutsideKeralaHouseNameMl : null);
@@ -313,7 +314,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
             presentOutsideKeralaVillage,
             presentOutsideKeralaCityVilgeEn,
             presentOutsideKeralaPincode,
-            presentOutsideKeralaPostOffice,
+            presentOutsideKeralaPostOfficeEn,
+            presentOutsideKeralaPostOfficeMl,
             presentOutsideKeralaLocalityNameEn,
             presentOutsideKeralaStreetNameEn,
             presentOutsideKeralaHouseNameEn,
@@ -373,7 +375,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;
     }
-    console.log("isPrsentAddress" + isPrsentAddress);
     return (
         <React.Fragment>
             <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -391,6 +392,12 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                         setValue={setValue}
                         countryvalue={countryvalue}
                         setCountryValue={setCountryValue}
+                        permtaddressCountry={permtaddressCountry}
+                        setpermtaddressCountry={setpermtaddressCountry}
+                        permtaddressStateName={permtaddressStateName}
+                        setpermtaddressStateName={setpermtaddressStateName}
+                        isPrsentAddress={isPrsentAddress}
+                        setIsPrsentAddress={setIsPrsentAddress}
                     />
                 </div>
                 {countryvalue === "IND" && value === "KL" && (
@@ -431,6 +438,34 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setLbsVillagevalue={setLbsVillagevalue}
                             PostOfficevalues={PostOfficevalues}
                             setPostOfficevalues={setPostOfficevalues}
+                            isPrsentAddress={isPrsentAddress}
+                            setIsPrsentAddress={setIsPrsentAddress}
+                            permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}
+                            setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
+                            permntInKeralaAdrLBName={permntInKeralaAdrLBName}
+                            setpermntInKeralaAdrLBName={setpermntInKeralaAdrLBName}
+                            permntInKeralaAdrTaluk={permntInKeralaAdrTaluk}
+                            setpermntInKeralaAdrTaluk={setpermntInKeralaAdrTaluk}
+                            permntInKeralaAdrVillage={permntInKeralaAdrVillage}
+                            setpermntInKeralaAdrVillage={setpermntInKeralaAdrVillage}
+                            permntInKeralaAdrPostOffice={permntInKeralaAdrPostOffice}
+                            setpermntInKeralaAdrPostOffice={setpermntInKeralaAdrPostOffice}
+                            permntInKeralaAdrPincode={permntInKeralaAdrPincode}
+                            setpermntInKeralaAdrPincode={setpermntInKeralaAdrPincode}
+                            permntInKeralaAdrHouseNameEn={permntInKeralaAdrHouseNameEn}
+                            setpermntInKeralaAdrHouseNameEn={setpermntInKeralaAdrHouseNameEn}
+                            permntInKeralaAdrHouseNameMl={permntInKeralaAdrHouseNameMl}
+                            setpermntInKeralaAdrHouseNameMl={setpermntInKeralaAdrHouseNameMl}
+                            permntInKeralaAdrLocalityNameEn={permntInKeralaAdrLocalityNameEn}
+                            setpermntInKeralaAdrLocalityNameEn={setpermntInKeralaAdrLocalityNameEn}
+                            permntInKeralaAdrLocalityNameMl={permntInKeralaAdrLocalityNameMl}
+                            setpermntInKeralaAdrLocalityNameMl={setpermntInKeralaAdrLocalityNameMl}
+                            permntInKeralaAdrStreetNameEn={permntInKeralaAdrStreetNameEn}
+                            setpermntInKeralaAdrStreetNameEn={setpermntInKeralaAdrStreetNameEn}
+                            permntInKeralaAdrStreetNameMl={permntInKeralaAdrStreetNameMl}
+                            setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
+                            permntInKeralaWardNo={permntInKeralaWardNo}
+                            setpermntInKeralaWardNo={setpermntInKeralaWardNo}
                         />
                     </div>
                 )}
@@ -465,6 +500,34 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setoutsideKeralaPostOfficeEn={setoutsideKeralaPostOfficeEn}
                             presentOutsideKeralaPostOfficeMl={presentOutsideKeralaPostOfficeMl}
                             setoutsideKeralaPostOfficeMl={setoutsideKeralaPostOfficeMl}
+                            isPrsentAddress={isPrsentAddress}
+                            setIsPrsentAddress={setIsPrsentAddress}
+                            permntOutsideKeralaDistrict={permntOutsideKeralaDistrict}
+                            setpermntOutsideKeralaDistrict={setpermntOutsideKeralaDistrict}
+                            permntOutsideKeralaTaluk={permntOutsideKeralaTaluk}
+                            setpermntOutsideKeralaTaluk={setpermntOutsideKeralaTaluk}
+                            permntOutsideKeralaCityVilgeEn={permntOutsideKeralaCityVilgeEn}
+                            setpermntOutsideKeralaCityVilgeEn={setpermntOutsideKeralaCityVilgeEn}
+                            permntOutsideKeralaVillage={permntOutsideKeralaVillage}
+                            setpermntOutsideKeralaVillage={setpermntOutsideKeralaVillage}
+                            permntOutsideKeralaPincode={permntOutsideKeralaPincode}
+                            setpermntOutsideKeralaPincode={setpermntOutsideKeralaPincode}
+                            permntOutsideKeralaHouseNameEn={permntOutsideKeralaHouseNameEn}
+                            setpermntOutsideKeralaHouseNameEn={setpermntOutsideKeralaHouseNameEn}
+                            permntOutsideKeralaHouseNameMl={permntOutsideKeralaHouseNameMl}
+                            setpermntOutsideKeralaHouseNameMl={setpermntOutsideKeralaHouseNameMl}
+                            permntOutsideKeralaLocalityNameEn={permntOutsideKeralaLocalityNameEn}
+                            setpermntOutsideKeralaLocalityNameEn={setpermntOutsideKeralaLocalityNameEn}
+                            permntOutsideKeralaLocalityNameMl={permntOutsideKeralaLocalityNameMl}
+                            setpermntOutsideKeralaLocalityNameMl={setpermntOutsideKeralaLocalityNameMl}
+                            permntOutsideKeralaStreetNameEn={permntOutsideKeralaStreetNameEn}
+                            setpermntOutsideKeralaStreetNameEn={setpermntOutsideKeralaStreetNameEn}
+                            permntOutsideKeralaStreetNameMl={permntOutsideKeralaStreetNameMl}
+                            setpermntOutsideKeralaStreetNameMl={setpermntOutsideKeralaStreetNameMl}
+                            permntOutsideKeralaPostOfficeEn={permntOutsideKeralaPostOfficeEn}
+                            setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
+                            permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
+                            setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
                         />
                     </div>
                 )}
