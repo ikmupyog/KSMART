@@ -54,7 +54,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl);
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
-
+    const [PostOfficevalues, setPostOfficevalues] = useState(null);
     //################################# Present Outside Kerala ##########################################################################################################
 
     const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaDistrict ? formData?.AddressBirthDetails?.presentOutsideKeralaDistrict : null);
@@ -429,6 +429,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setLbsTalukvalue={setLbsTalukvalue}
                             Villagevalues={Villagevalues}
                             setLbsVillagevalue={setLbsVillagevalue}
+                            PostOfficevalues={PostOfficevalues}
+                            setPostOfficevalues={setPostOfficevalues}
                         />
                     </div>
                 )}
@@ -549,7 +551,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setLbsTalukvalue={setLbsTalukvalue}
                             Villagevalues={Villagevalues}
                             setLbsVillagevalue={setLbsVillagevalue}
-
+                            PostOfficevalues={PostOfficevalues}
+                            setPostOfficevalues={setPostOfficevalues}
                         />
                     </div>
                 )}
