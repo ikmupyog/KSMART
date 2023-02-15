@@ -34,10 +34,13 @@ public class DeathInitiatorDtls {
     private String initiatorName ;
 
     @JsonProperty("InitiatorMobile")
-    private String initiatorMobile ;
+    private Long initiatorMobile ;
 
     @JsonProperty("InitiatorAddress")
     private String initiatorAddress ;
+
+    @JsonProperty("IsDeclarationInitiator")
+    private boolean isDeclarationInitiator ;
 
     // @JsonProperty("InitiatorAddrId")
     // private String initiatorAddrId;

@@ -24,6 +24,7 @@ public class DeathRegistryInformantRowMapper {
                             .deathSignedOfficerDesignation(rs.getString("death_signed_officer_designation"))
                             .informantMobileNo(rs.getString("informant_mobile_no"))
                             .informantAddress(rs.getString("informant_address"))
+                            .isDeclarationInformant(rs.getBoolean("is_declaration_informant"))
                             // .informantAddrDeathDtlId(rs.getString("I_death_dtl_id"))
                             // .informantAddrTenantId(rs.getString("I_tenantid"))
                             // .informantAddrTypeId(rs.getString("I_addr_typeid"))

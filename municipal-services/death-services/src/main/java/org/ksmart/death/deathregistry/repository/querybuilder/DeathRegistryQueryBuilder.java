@@ -30,7 +30,7 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
          .append("      , stat.id statid, stat.death_dtl_id, stat.tenantid stattenantid, stat.residencelocalbody, stat.residence_place_type, stat.residencedistrict, stat.residencestate, stat.religion, stat.religion_other, stat.occupation, stat.occupation_other, stat.medical_attention_type")
          .append("      , stat.death_medically_certified, stat.death_cause_main, stat.death_cause_sub, stat.death_cause_other, stat.death_during_delivery, stat.smoking_num_years, stat.tobacco_num_years, stat.arecanut_num_years, stat.alcohol_num_years")
          .append("      , stat.createdby, stat.createdtime, stat.lastmodifiedby, stat.lastmodifiedtime, stat.nationality ,dt.burial_state,stat.occupation_sub, stat.occupation_minor, stat.education_main, stat.education_sub, stat.residencelbtype")
-         .append("      , stat.smoking_type,stat.tobacco_type,stat.arecanut_type,stat.alcohol_type,dt.informant_address,dt.initiator_address ,")
+         .append("      , stat.smoking_type,stat.tobacco_type,stat.arecanut_type,stat.alcohol_type,dt.informant_address,dt.is_declaration_informant,")
          .append("stat.autopsy_performed,")
          .append("stat.autopsy_completed,")
          .append("stat.manner_of_death,")

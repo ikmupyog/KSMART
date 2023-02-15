@@ -37,6 +37,8 @@ public class DeathApplnQueryBuilder extends BaseQueryBuilder {
          .append(" ,dt.death_place_locality_ml")
          .append(" ,dt.death_place_street_en")
          .append(" ,dt.death_place_street_ml ,")
+         .append(" ,dt.is_declaration_informant ,")
+         .append(" ,dt.is_declaration_initiator ,")
          .append("stat.autopsy_performed,")
          .append("stat.autopsy_completed,")
          .append("stat.manner_of_death,")

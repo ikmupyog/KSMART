@@ -48,10 +48,15 @@ public class DeathInformantDtls {
     private String deathSignedOfficerDesignation ;
 
     @JsonProperty("InformantMobileNo")
-    private String informantMobileNo ;
+    private Long informantMobileNo ;
 
     @JsonProperty("InformantAddress")
     private String informantAddress ;
+
+    @JsonProperty("IsDeclarationInformant")
+    private boolean isDeclarationInformant ;
+
+    
 
     // @JsonProperty("InformantAddrId")
     // private String informantAddrId;

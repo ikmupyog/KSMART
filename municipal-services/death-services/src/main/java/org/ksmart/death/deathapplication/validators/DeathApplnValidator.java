@@ -143,7 +143,7 @@ public void validateCommonFields(DeathDtlRequest request) {
                     throw new CustomException("INFORMANT DESIGNATION IS INVALID", "The designation of informant " +
                     informantDtls.getDeathSignedOfficerDesignation()+ " is invalid");  
                 }
-                if(StringUtils.isEmpty(informantDtls.getInformantMobileNo())){
+                if(informantDtls.getInformantMobileNo()<=0){
                     throw new CustomException("MOBILE NUMBER OF INFORMANT IS INVALID", "The mobile number of informant " +
                     informantDtls.getInformantMobileNo()+ " is invalid");  
                 }
@@ -171,7 +171,7 @@ public void validateCommonFields(DeathDtlRequest request) {
                     throw new CustomException("INFORMANT DESIGNATION IS INVALID", "The designation of informant " +
                     informantDtls.getDeathSignedOfficerDesignation()+ " is invalid");  
                 }
-                if(StringUtils.isEmpty(informantDtls.getInformantMobileNo())){
+                if(informantDtls.getInformantMobileNo()<=0){
                     throw new CustomException("MOBILE NUMBER OF INFORMANT IS INVALID", "The mobile number of informant " +
                     informantDtls.getInformantMobileNo()+ " is invalid");  
                 }

@@ -53,6 +53,9 @@ public class DeathRegistryInformantDtls {
     @JsonProperty("InformantAddress")
     private String informantAddress ;
 
+    @JsonProperty("IsDeclarationInformant")
+    private boolean isDeclarationInformant ;
+
     // @JsonProperty("InformantAddrId")
     // private String informantAddrId;
 
