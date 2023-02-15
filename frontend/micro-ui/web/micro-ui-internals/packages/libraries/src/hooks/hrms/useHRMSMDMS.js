@@ -15,16 +15,26 @@ const useHrmsMDMS = (tenantId, moduleCode, type, config = {}) => {
   const useZonalOffice = () => {
     return useQuery("TL_ZONAL_OFFICE", () => MdmsService.getTLZonalOffice(tenantId, moduleCode, type), config);
   };
+  const useInstitutionPlaceOfEvent = () => {
+    return useQuery("HRMS_INSTITUTION_LIST", () => MdmsService.getCRInstitutionPlaceOfEvent(tenantId, moduleCode), config);
+  };
+  const useInstitutionList = () => {
+    return useQuery("HRMS_INSTITUTION_LIST", () => MdmsService.getCRInstitutionId(tenantId, moduleCode), config);
+  };
 
   switch (type) {
     case "HRMSRolesandDesignation":
       return useHrmsRolesandDesignations();
     case "EmployeeType":
       return useHrmsEmployeeTypes();
-      case "boundary-data":
-        return useZonalOffice();
+    case "boundary-data":
+      return useZonalOffice();
     case "DeactivationReason":
       return useHrmsEmployeeReasons();
+    case "InstitutionTypePlaceOfEvent":
+      return useInstitutionPlaceOfEvent();
+    case "institution":
+      return useInstitutionList();
   }
 };
 export default useHrmsMDMS;

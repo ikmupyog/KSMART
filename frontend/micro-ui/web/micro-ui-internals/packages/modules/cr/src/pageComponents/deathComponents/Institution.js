@@ -10,7 +10,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   const { t } = useTranslation();
   let validation = {};
   const { data: institutionType = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
-  const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
+  // const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.Institution?.DeathPlaceType);
   // const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(formData?.Institution?.DeathPlaceInstId); 
@@ -23,12 +23,12 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
     cmbinstitutionType.push(ob);
   });
-  let cmbInstitution = [];
-  institution &&
-    institution["birth-death-service"] &&
-    institution["birth-death-service"].InstitutionType.map((ob) => {
-      cmbInstitution.push(ob);
-    });
+  // let cmbInstitution = [];
+  // institution &&
+  //   institution["birth-death-service"] &&
+  //   institution["birth-death-service"].InstitutionType.map((ob) => {
+  //     cmbInstitution.push(ob);
+  //   });
     
     
 
@@ -65,7 +65,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               t={t}
               optionKey="name"
               isMandatory={true}
-              option={cmbInstitution}
+              option={cmbinstitutionType}
               selected={DeathPlaceType}
               select={setselectDeathPlaceType}
               disabled={isEdit}

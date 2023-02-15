@@ -329,34 +329,34 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   }
   let naturetype = null;
 
-  useEffect(() => {
-    if (isInitialRender) {
-      if (MedicalAttentionType) {
-        setIsInitialRender(false);
-        naturetype = MedicalAttentionType.code;
-        setValue(naturetype);
-        if (naturetype === "MEDICAL_ATTENTION_TYPE_INSTITUTION") {
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     if (MedicalAttentionType) {
+  //       setIsInitialRender(false);
+  //       naturetype = MedicalAttentionType.code;
+  //       setValue(naturetype);
+  //       if (naturetype === "MEDICAL_ATTENTION_TYPE_INSTITUTION") {
          
-          // <Institution DeathCauseMain={DeathCauseMain} 
-          // DeathCauseMainCustom={DeathCauseMainCustom}
-          // DeathCauseMainInterval = {DeathCauseMainInterval}
-          // DeathCauseMainTimeUnit= {DeathCauseMainTimeUnit}
-          // DeathCauseSub = {DeathCauseSub}
-          // DeathCauseSubCustom = {DeathCauseSubCustom}
-          // DeathCauseSubInterval = {DeathCauseSubInterval}
-          // DeathCauseSubTimeUnit = {DeathCauseSubTimeUnit}
-          // DeathCauseSub2 = {DeathCauseSub2}
-          // DeathCauseSubCustom2 = {DeathCauseSubCustom2}
-          // DeathCauseSubInterval2 = {DeathCauseSubInterval2}
-          // DeathCauseSubTimeUnit2 = {DeathCauseSubTimeUnit2}
-          // />;
+  //         // <Institution DeathCauseMain={DeathCauseMain} 
+  //         // DeathCauseMainCustom={DeathCauseMainCustom}
+  //         // DeathCauseMainInterval = {DeathCauseMainInterval}
+  //         // DeathCauseMainTimeUnit= {DeathCauseMainTimeUnit}
+  //         // DeathCauseSub = {DeathCauseSub}
+  //         // DeathCauseSubCustom = {DeathCauseSubCustom}
+  //         // DeathCauseSubInterval = {DeathCauseSubInterval}
+  //         // DeathCauseSubTimeUnit = {DeathCauseSubTimeUnit}
+  //         // DeathCauseSub2 = {DeathCauseSub2}
+  //         // DeathCauseSubCustom2 = {DeathCauseSubCustom2}
+  //         // DeathCauseSubInterval2 = {DeathCauseSubInterval2}
+  //         // DeathCauseSubTimeUnit2 = {DeathCauseSubTimeUnit2}
+  //         // />;
           
-        }
-      }
-    }
+  //       }
+  //     }
+  //   }
   
-    MedicalAttentionType.code === "MEDICAL_ATTENTION_TYPE_INSTITUTION"
-  });
+  //   MedicalAttentionType.code === "MEDICAL_ATTENTION_TYPE_INSTITUTION"
+  // });
 
   const goNext = () => {
     sessionStorage.setItem("MedicalAttentionType", MedicalAttentionType ? MedicalAttentionType.code : null);
@@ -385,7 +385,6 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("TobaccoType", SmokingType ? SmokingType : null);
     sessionStorage.setItem("AlcoholType", AlcoholType ? AlcoholType : null);
 
-    if (MedicalAttentionType.code === "MEDICAL_ATTENTION_TYPE_INSTITUTION") {    
       sessionStorage.setItem("DeathCauseMain", DeathCauseMain ? DeathCauseMain.code : null);
       sessionStorage.setItem("DeathCauseMainCustom", DeathCauseMainCustom ? DeathCauseMainCustom : null);
       sessionStorage.setItem("DeathCauseMainInterval", DeathCauseMainInterval ? DeathCauseMainInterval : null);
@@ -398,7 +397,6 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("DeathCauseSubCustom2", DeathCauseSubCustom2 ? DeathCauseSubCustom2 : null);
       sessionStorage.setItem("DeathCauseSubInterval2", DeathCauseSubInterval2 ? DeathCauseSubInterval2 : null);
       sessionStorage.setItem("DeathCauseSubTimeUnit2", DeathCauseSubTimeUnit2 ? DeathCauseSubTimeUnit2.code : null);
-      }
 
     onSelect(config.key, {
       MedicalAttentionType,

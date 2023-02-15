@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, TextArea, CheckBo
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 // import PlaceOfDeathHome from "./PlaceOfDeathHome";
-import InformantAddress from "../birthComponents/InformantAddress";
+// import InformantAddress from "../birthComponents/InformantAddress";
 
 const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
@@ -20,21 +20,21 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
  
 
  // Informent Address from Birth Page
-  const [InformantAdrsCountry, setInformantAdrsCountry] = useState(formData?.ApplicantDetails?.InformantAdrsCountry ? formData?.ApplicantDetails?.InformantAdrsCountry : null );
-  const [InformantAdrsStateName, setInformantAdrsStateName] = useState(formData?.ApplicantDetails?.InformantAdrsStateName ? formData?.ApplicantDetails?.InformantAdrsStateName :null);
-  const [InformantAdrsDistrict, setInformantAdrsDistrict] = useState(formData?.ApplicantDetails?.InformantAdrsDistrict ? formData?.ApplicantDetails?.InformantAdrsDistrict : null);
-  const [InformantAdrsLBTypeName, setInformantAdrsLBTypeName] = useState(formData?.ApplicantDetails?.InformantAdrsLBTypeName ? formData?.ApplicantDetails?.InformantAdrsLBTypeName : null);
-  const [InformantAdrsLBName, setInformantAdrsLBName] = useState(formData?.ApplicantDetails?.InformantAdrsLBName ? formData?.ApplicantDetails?.InformantAdrsLBName : null );
-  const [InformantAdrsTaluk, setInformantAdrsTaluk] = useState(formData?.ApplicantDetails?.InformantAdrsTaluk ? formData?.ApplicantDetails?.InformantAdrsTaluk : null);
-  const [InformantAdrsPostOffice, setInformantAdrsPostOffice] = useState(formData?.ApplicantDetails?.InformantAdrsPostOffice ? formData?.ApplicantDetails?.InformantAdrsPostOffice : null);
-  const [InformantAdrsPincode, setInformantAdrsPincode] = useState(formData?.ApplicantDetails?.InformantAdrsPincode ? formData?.ApplicantDetails?.InformantAdrsPincode :0 );
-  const [InformantAdrsHouseNameEn, setInformantAdrsHouseNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsHouseNameEn ? formData?.ApplicantDetails?.InformantAdrsHouseNameEn :"");
-  const [InformantAdrsResNo, setInformantAdrsResNo] = useState(formData?.ApplicantDetails?.InformantAdrsResNo ? formData?.ApplicantDetails?.InformantAdrsResNo : "");
-  const [InformantAdrsDoorNo, setInformantAdrsDoorNo] = useState(formData?.ApplicantDetails?.InformantAdrsDoorNo ? formData?.ApplicantDetails?.InformantAdrsDoorNo : "");
-  const [InformantAdrsMainPlaceEn, setInformantAdrsMainPlaceEn] = useState(formData?.ApplicantDetails?.InformantAdrsMainPlaceEn ? formData?.ApplicantDetails?.InformantAdrsMainPlaceEn : "");
-  const [InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsLocalityNameEn ? formData?.ApplicantDetails?.InformantAdrsLocalityNameEn : "");
-  const [InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsStreetNameEn ? formData?.ApplicantDetails?.InformantAdrsStreetNameEn : "");
-  const [InformantAdrsVillage, setInformantAdrsVillage] = useState(formData?.ApplicantDetails?.InformantAdrsVillage ? formData?.ApplicantDetails?.InformantAdrsVillage : null);
+  // const [InformantAdrsCountry, setInformantAdrsCountry] = useState(formData?.ApplicantDetails?.InformantAdrsCountry ? formData?.ApplicantDetails?.InformantAdrsCountry : null );
+  // const [InformantAdrsStateName, setInformantAdrsStateName] = useState(formData?.ApplicantDetails?.InformantAdrsStateName ? formData?.ApplicantDetails?.InformantAdrsStateName :null);
+  // const [InformantAdrsDistrict, setInformantAdrsDistrict] = useState(formData?.ApplicantDetails?.InformantAdrsDistrict ? formData?.ApplicantDetails?.InformantAdrsDistrict : null);
+  // const [InformantAdrsLBTypeName, setInformantAdrsLBTypeName] = useState(formData?.ApplicantDetails?.InformantAdrsLBTypeName ? formData?.ApplicantDetails?.InformantAdrsLBTypeName : null);
+  // const [InformantAdrsLBName, setInformantAdrsLBName] = useState(formData?.ApplicantDetails?.InformantAdrsLBName ? formData?.ApplicantDetails?.InformantAdrsLBName : null );
+  // const [InformantAdrsTaluk, setInformantAdrsTaluk] = useState(formData?.ApplicantDetails?.InformantAdrsTaluk ? formData?.ApplicantDetails?.InformantAdrsTaluk : null);
+  // const [InformantAdrsPostOffice, setInformantAdrsPostOffice] = useState(formData?.ApplicantDetails?.InformantAdrsPostOffice ? formData?.ApplicantDetails?.InformantAdrsPostOffice : null);
+  // const [InformantAdrsPincode, setInformantAdrsPincode] = useState(formData?.ApplicantDetails?.InformantAdrsPincode ? formData?.ApplicantDetails?.InformantAdrsPincode :0 );
+  // const [InformantAdrsHouseNameEn, setInformantAdrsHouseNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsHouseNameEn ? formData?.ApplicantDetails?.InformantAdrsHouseNameEn :"");
+  // const [InformantAdrsResNo, setInformantAdrsResNo] = useState(formData?.ApplicantDetails?.InformantAdrsResNo ? formData?.ApplicantDetails?.InformantAdrsResNo : "");
+  // const [InformantAdrsDoorNo, setInformantAdrsDoorNo] = useState(formData?.ApplicantDetails?.InformantAdrsDoorNo ? formData?.ApplicantDetails?.InformantAdrsDoorNo : "");
+  // const [InformantAdrsMainPlaceEn, setInformantAdrsMainPlaceEn] = useState(formData?.ApplicantDetails?.InformantAdrsMainPlaceEn ? formData?.ApplicantDetails?.InformantAdrsMainPlaceEn : "");
+  // const [InformantAdrsLocalityNameEn, setInformantAdrsLocalityNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsLocalityNameEn ? formData?.ApplicantDetails?.InformantAdrsLocalityNameEn : "");
+  // const [InformantAdrsStreetNameEn, setInformantAdrsStreetNameEn] = useState(formData?.ApplicantDetails?.InformantAdrsStreetNameEn ? formData?.ApplicantDetails?.InformantAdrsStreetNameEn : "");
+  // const [InformantAdrsVillage, setInformantAdrsVillage] = useState(formData?.ApplicantDetails?.InformantAdrsVillage ? formData?.ApplicantDetails?.InformantAdrsVillage : null);
     // const [InformantAdrsBuldingNo, setInformantAdrsBuldingNo] = useState(formData?.ApplicantDetails?.InformantAdrsBuldingNo);
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -72,21 +72,21 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
  
     
  // Address from Birth
-    sessionStorage.setItem("InformantAdrsCountry", InformantAdrsCountry ? InformantAdrsCountry.code : null);
-    sessionStorage.setItem("InformantAdrsStateName", InformantAdrsStateName ? InformantAdrsStateName.code : null);
-    sessionStorage.setItem("InformantAdrsLBTypeName", InformantAdrsLBTypeName ? InformantAdrsLBTypeName.code : null);    
-    sessionStorage.setItem("InformantAdrsResNo", InformantAdrsResNo ? InformantAdrsResNo : null);
-    sessionStorage.setItem("InformantAdrsDoorNo", InformantAdrsDoorNo ? InformantAdrsDoorNo : null);
-    sessionStorage.setItem("InformantAdrsHouseNameEn", InformantAdrsHouseNameEn ? InformantAdrsHouseNameEn : null);
-    sessionStorage.setItem("InformantAdrsMainPlaceEn", InformantAdrsMainPlaceEn ? InformantAdrsMainPlaceEn : null);
-    sessionStorage.setItem("InformantAdrsLocalityNameEn", InformantAdrsLocalityNameEn ? InformantAdrsLocalityNameEn : null);
-    sessionStorage.setItem("InformantAdrsStreetNameEn", InformantAdrsStreetNameEn ? InformantAdrsStreetNameEn : null);
-    sessionStorage.setItem("InformantAdrsVillage", InformantAdrsVillage ? InformantAdrsVillage.code : null);
-    sessionStorage.setItem("InformantAdrsLBName", InformantAdrsLBName ? InformantAdrsLBName.code : null);
-    sessionStorage.setItem("InformantAdrsDistrict", InformantAdrsDistrict ? InformantAdrsDistrict.code : null);
-    sessionStorage.setItem("InformantAdrsTaluk", InformantAdrsTaluk ? InformantAdrsTaluk.code : null);
-    sessionStorage.setItem("InformantAdrsPostOffice", InformantAdrsPostOffice ? InformantAdrsPostOffice.code : null);
-    sessionStorage.setItem("InformantAdrsPincode", InformantAdrsPincode ? InformantAdrsPostOffice : null);
+    // sessionStorage.setItem("InformantAdrsCountry", InformantAdrsCountry ? InformantAdrsCountry.code : null);
+    // sessionStorage.setItem("InformantAdrsStateName", InformantAdrsStateName ? InformantAdrsStateName.code : null);
+    // sessionStorage.setItem("InformantAdrsLBTypeName", InformantAdrsLBTypeName ? InformantAdrsLBTypeName.code : null);    
+    // sessionStorage.setItem("InformantAdrsResNo", InformantAdrsResNo ? InformantAdrsResNo : null);
+    // sessionStorage.setItem("InformantAdrsDoorNo", InformantAdrsDoorNo ? InformantAdrsDoorNo : null);
+    // sessionStorage.setItem("InformantAdrsHouseNameEn", InformantAdrsHouseNameEn ? InformantAdrsHouseNameEn : null);
+    // sessionStorage.setItem("InformantAdrsMainPlaceEn", InformantAdrsMainPlaceEn ? InformantAdrsMainPlaceEn : null);
+    // sessionStorage.setItem("InformantAdrsLocalityNameEn", InformantAdrsLocalityNameEn ? InformantAdrsLocalityNameEn : null);
+    // sessionStorage.setItem("InformantAdrsStreetNameEn", InformantAdrsStreetNameEn ? InformantAdrsStreetNameEn : null);
+    // sessionStorage.setItem("InformantAdrsVillage", InformantAdrsVillage ? InformantAdrsVillage.code : null);
+    // sessionStorage.setItem("InformantAdrsLBName", InformantAdrsLBName ? InformantAdrsLBName.code : null);
+    // sessionStorage.setItem("InformantAdrsDistrict", InformantAdrsDistrict ? InformantAdrsDistrict.code : null);
+    // sessionStorage.setItem("InformantAdrsTaluk", InformantAdrsTaluk ? InformantAdrsTaluk.code : null);
+    // sessionStorage.setItem("InformantAdrsPostOffice", InformantAdrsPostOffice ? InformantAdrsPostOffice.code : null);
+    // sessionStorage.setItem("InformantAdrsPincode", InformantAdrsPincode ? InformantAdrsPostOffice : null);
 // sessionStorage.setItem("InformantAdrsBuldingNo", InformantAdrsBuldingNo);
     onSelect(config.key, {
 
@@ -224,7 +224,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div>
           <div>
-          <InformantAddress
+          {/* <InformantAddress
               InformantAdrsCountry={InformantAdrsCountry}
               setInformantAdrsCountry={setInformantAdrsCountry}
               InformantAdrsStateName={InformantAdrsStateName}
@@ -257,7 +257,7 @@ const ApplicantDetails = ({ config, onSelect, userType, formData }) => {
               InformantAdrsVillage={InformantAdrsVillage}
               setInformantAdrsVillage={setInformantAdrsVillage}
               // InfntWardNo={InfntWardNo} setInfntWardNo={setInfntWardNo}
-            />
+            /> */}
           </div>
         </div>
        
