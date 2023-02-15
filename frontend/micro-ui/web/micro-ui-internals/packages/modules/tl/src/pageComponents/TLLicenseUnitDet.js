@@ -345,7 +345,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   });
 
   const changesetDesiredLicensePeriod = (e => {
-    e.target.value>=1 && e.target.value<=5 ? setDesiredLicensePeriod(e.target.value.replace(/[^0-9.]/ig, '')) : e.target.value('') ;
+    e.target.value>=1 && e.target.value<=5 ? setDesiredLicensePeriod(e.target.value.replace(/[^0-9.]/ig, '')) : setDesiredLicensePeriod('') ;
   });
 
   const changesetNoofEmployees = (e => {
@@ -464,9 +464,10 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     //return fieldsDoor;
   };
   let data1 = [];
-  let configDoor = "";
-
-  const mutationsearchDoor = Digit.Hooks.tl.useSearchPde({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, configDoor });
+  let config =  {enabled: !!(payloadDoor && Object.keys(payloadDoor).length > 0)}
+  
+  const mutationsearchDoor = Digit.Hooks.tl.useTLSearchApplication(payloadDoor.length > 0 ? payloadDoor : payloadDoorinit);
+ 
   let searchResultDoor = "";
 
   const reducerDoor = (stateDoor, action) => {
@@ -501,16 +502,21 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       case "CHECK_DOOR":
         queryClient.removeQueries("TL_SEARCH_PDE");
         data1["wardId"] = WardNo?.code ? WardNo.code : "";
+        console.log("data1");
+        console.log(data1);
         stateDoor.map((data, __index) => {
           data1["doorNo"] = data?.doorNo ? data.doorNo : "";
           data1["subNo"] = data?.doorNoSub ? data.doorNoSub : "";
-          configDoor = {
-            enabled: !!(data && Object.keys(data).length > 0)
+          config = {
+            enabled: !!(data1 && Object.keys(data1).length > 0)
           }
           data1 = {
             ...data1
           }
           setPayloadDoor(Object.keys(data1).filter(k => data1[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data1[key] === "object" ? data1[key].code : data1[key] }), {}));
+          console.log("payloadDoor"); 
+          console.log(payloadDoor); 
+          
           searchResultDoor = mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError ? mutationsearchDoor.data.Licenses : "";
           if (searchResultDoor?.length === 1) {
             setFlgCheckDoor(true);
@@ -716,7 +722,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       let localbody = Localbody;
 
       let tradeLicenseDetail = { businessSector, capitalInvestment, enterpriseType, structureType, structurePlaceSubtype, businessActivityDesc, noOfEmployees, ownershipCategory, address, tradeUnits, structurePlace, }
-      console.log(tradeLicenseDetail);
       onSelect(config.key, { districtid, localbodytype, localbody, commencementDate, tradeLicenseDetail, licenseUnitName, licenseUnitNameLocal, desiredLicensePeriod });
     } 
     else {
@@ -740,12 +745,12 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         || !structureType || !structurePlaceSubtype || !ownershipCategory 
         || (value2 === "LAND"  ? (value3 === "" || locality === "" || buildingName === "" ||  formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "" ) : false)
         || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
-        || (value2 === "BUILDING"  ?  (formStateDoor[0].doorNo  === "" ||  formStateDoor[0].doorNoSub  === "" ||locality === "" || buildingName === "") : false)
+        || (value2 === "BUILDING"  ?  (formStateDoor[0].doorNo  === "" ||  locality === "" || buildingName === "") : false)
         || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo  === "") : false) 
         || (value2 === "VEHICLE"  ? (formStateDoor[0].vehicleNo === "" || serviceArea === "") : false)
         || (value2 === "WATER"  ? (formStateDoor[0].vesselNo === "" || waterbody === ""  || serviceArea === "")  : false)
         || (value2 === "DESIGNATEDPLACE" ? false : false) 
-        //|| flgCheckDoor === true && flgCheck === false
+        || flgCheckDoor === true && flgCheck === false
           }  
          >
     
