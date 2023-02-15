@@ -54,47 +54,13 @@ public class Address {
 
         @Size(max = 64)
         @SafeHtml
-        @JsonProperty("addressId")
-        private String addressId = null;
-
-        @Size(max = 64)
-        @SafeHtml
-        @JsonProperty("addressNumber")
-        private String addressNumber = null;
-
-        @Size(max = 64)
-        @SafeHtml
-        @JsonProperty("type")
-        private String type = null;
-
-        @SafeHtml
-        @JsonProperty("addressLine1")
-        private String addressLine1 = null;
-
-        @Size(max = 256)
-        @SafeHtml
-        @JsonProperty("addressLine2")
-        private String addressLine2 = null;
-
-        @Size(max = 64)
-        @SafeHtml
         @JsonProperty("landmark")
         private String landmark = null;
 
         @Size(max = 64)
         @SafeHtml
-        @JsonProperty("city")
-        private String city = null;
-
-        @Size(max = 64)
-        @SafeHtml
         @JsonProperty("pincode")
         private String pincode = null;
-
-        @Size(max = 64)
-        @SafeHtml
-        @JsonProperty("detail")
-        private String detail = null;
 
         @Size(max = 64)
         @SafeHtml
@@ -124,11 +90,6 @@ public class Address {
         @JsonProperty("wardNo")
         private Integer wardNo;
 
-        // @Size(max = 64)
-        // @SafeHtml
-        @JsonProperty("circleDivisionId")
-        private Long circleDivisionId;
-
         @Size(max = 64)
         @SafeHtml
         @JsonProperty("contactNo")
@@ -149,9 +110,23 @@ public class Address {
         @JsonProperty("lbBuildingName")
         private String lbBuildingName = null;
 
-        @Size(max = 15)
+        @Size(max = 150)
         @SafeHtml
-        @JsonProperty("buildingType")
-        private String buildingType = null;
+        @JsonProperty("postOffice")
+        private String postOffice = null;
 
+        @Size(max = 250)
+        @SafeHtml
+        @JsonProperty("waterbody")
+        private String waterbody = null;
+
+        @Size(max = 250)
+        @SafeHtml
+        @JsonProperty("serviceArea")
+        private String serviceArea = null;
+
+        @Size(max = 64)
+        @SafeHtml
+        @JsonProperty("localityName")
+        private String localityName = null;
 }
