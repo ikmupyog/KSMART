@@ -708,12 +708,12 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "StatisticalInfo",
-        nextStep: "initiater",
+        nextStep: "initiator",
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "initiater",
+        route: "initiator",
         isMandatory: true,
         component: "Initiater",
         texts: {
@@ -725,7 +725,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "Initiater",
+        key: "Initiator",
         nextStep: "informant-details",
         type: "component",
         hideInEmployee: false,
