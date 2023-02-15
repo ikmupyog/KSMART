@@ -153,6 +153,12 @@ const CreateEmployee = ({userType}) => {
         tenantId:null,
         roleCode:null,
         zoneCode:null,
+        hospitalCode:null,
+        hospitalName:null,
+        hospitalAddress:null,
+        intitutiontype:null,
+        institutionname:null,
+        institutionaddress:null,
         jurisdictionChilds:[{
           wardCode:null
         }],
