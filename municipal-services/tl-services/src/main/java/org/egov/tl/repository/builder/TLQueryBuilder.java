@@ -77,9 +77,9 @@ public class TLQueryBuilder {
             +
             " tlstructplace.vehicleno as vehicleno, tlstructplace.vesselno as vesselno,tlstructplace.active as tlstructplace_active, tlstructplace.isresurveyed AS isresurveyed, tlstructplace.stallno as stallno, "
             +
-            "tlownerpde.id as ownerpde_id, ownertype as ownerpde_ownertype, active as ownerpde_active, ownername as ownerpde_ownername, "
+            " tlownerpde.id as ownerpde_id, tlownerpde.ownertype as ownerpde_ownertype, tlownerpde.active as ownerpde_active, tlownerpde.ownername as ownerpde_ownername, "
             +
-            "aadharno as ownerpde_aadharno, address as ownerpde_address, email as ownerpde_email, mobilenumber as ownerpde_mobilenumber "
+            " tlownerpde.aadharno as ownerpde_aadharno, tlownerpde.address as ownerpde_address, tlownerpde.email as ownerpde_email, tlownerpde.mobilenumber as ownerpde_mobilenumber "
             +
             ""
             +
