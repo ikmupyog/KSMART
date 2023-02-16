@@ -47,12 +47,16 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const match = useRouteMatch();
   const {
     ChildDetails,
-    BirthPlace,
-    HospitalDetails,
-    FatherInfoDetails,
-    MotherInfoDetails,
-    AddressDetails,
-    StatisticalInfoDetails,
+    ParentsDetails,
+    AddressBirthDetails,
+    InitiatorinfoDetails,
+    InformarHosInstDetails,
+    // BirthPlace,
+    // HospitalDetails,
+    // FatherInfoDetails,
+    // MotherInfoDetails,
+    // AddressDetails,
+    // StatisticalInfoDetails,
     isEditProperty,
     cpt,
   } = value;
@@ -91,12 +95,13 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
         <div style={{
           maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"auto",backgroundColor: "lightblue" }} >
           {/* class="site-wrap" */}
+
           <div className="row" >
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>  {`${t("CR_FIRST_NAME_EN")}`} {`${t("CR_MIDDLE_NAME_EN")}`} {`${t("CR_LAST_NAME_EN")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.ChildDOB)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.childFirstNameEn ? ChildDetails.childFirstNameEn : 'NA' )} {t(ChildDetails.childMiddleNameEn  ? ChildDetails.childMiddleNameEn : 'NA')} {t(ChildDetails.childLastNameEn ? ChildDetails.childLastNameEn : 'NA' )} </CardText>
             </div>
            
           </div>
@@ -108,20 +113,23 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.Gender.value)}</CardText>
             </div>
           </div>
+
+          <div className="row" >
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.ChildDOB)}</CardText>
+            </div>
+           
+          </div>
+        
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(BirthPlace.HospitalName.hospitalName)}</CardText>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_FATHER_NAME")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(FatherInfoDetails.FatherFirstNameEn ? FatherInfoDetails.FatherFirstNameEn : 'NA')}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ChildDetails.hospitalName.hospitalName)}</CardText>
             </div>
           </div>
           <div className="row">
@@ -131,10 +139,28 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(MotherInfoDetails.MotherFirstNameEn ? MotherInfoDetails.MotherFirstNameEn : 'NA')}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.MotherFirstNameEn ? ParentsDetails.MotherFirstNameEn : 'NA')}</CardText>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_FATHER_NAME")}`}</CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.FatherFirstNameEn ? ParentsDetails.FatherFirstNameEn : 'NA')}</CardText>
             </div>
           </div>
           
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_PRESENT_ADDRESS")}`}</CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : 'NA')}
+              {t(AddressBirthDetails.presentInsideKeralaStreetNameEn ? AddressBirthDetails.presentInsideKeralaStreetNameEn : 'NA')}
+              {t(AddressBirthDetails.presentInsideKeralaLocalityNameEn ? AddressBirthDetails.presentInsideKeralaLocalityNameEn : 'NA')}</CardText>
+            </div>
+          </div> 
         </div>
         <div className="row">
             <div className="col-md-12">

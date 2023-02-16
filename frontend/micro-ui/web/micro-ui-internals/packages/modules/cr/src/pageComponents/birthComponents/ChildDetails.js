@@ -11,6 +11,7 @@ import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPla
 
 const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
+  const tenantId = Digit.ULBService.getCitizenCurrentTenant();
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -124,6 +125,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
+  let workFlowCode ="";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -279,6 +281,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       return true;
     }
   }
+
   function setselectChildDOB(value) {
     setChildDOB(value);
     const today = new Date();
@@ -293,6 +296,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       if (Difference_In_DaysRounded >= 365) {
         setChildAadharHIde(true);
       } else {
+        if(Difference_In_DaysRounded <= 21){
+          workFlowCode ="birth21days";
+        }        
         setChildAadharHIde(false);
         setChildAadharNo("");
       }
@@ -709,6 +715,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       setBirthWeightError(false);
     }
     if (validFlag == true) {
+      sessionStorage.setItem("stateId", stateId ? stateId : null);
+      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      sessionStorage.setItem("workFlowCode", workFlowCode ? workFlowCode : null);
       sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
       sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
       sessionStorage.setItem("gender", gender ? gender.code : null);
@@ -763,7 +772,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
 
       onSelect(config.key, {
-        childDOB, birthDateTime, gender, childAadharNo,
+        stateId,tenantId,workFlowCode,childDOB, birthDateTime, gender, childAadharNo,
         isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
         institutionTypeCode, institution, institutionNameCode, institutionId, institutionIdMl,
