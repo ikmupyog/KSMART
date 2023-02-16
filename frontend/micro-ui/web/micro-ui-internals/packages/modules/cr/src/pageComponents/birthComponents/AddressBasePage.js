@@ -199,7 +199,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
 
     let validFlag = true;
     const goNext = () => {
-        if (isPrsentAddress) {
+        if (isPrsentAddress === true || isPrsentAddress === false ) {
             if (countryvalue === "IND" && value === "KL") {
                 if (presentaddressCountry == null || presentaddressCountry == undefined) {
                     setPresentAddressCountryError(true);
