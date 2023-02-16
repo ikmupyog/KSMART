@@ -79,9 +79,13 @@ public class TLQueryBuilder {
             +
             " tlownerpde.id as ownerpde_id, tlownerpde.ownertype as ownerpde_ownertype, tlownerpde.active as ownerpde_active, tlownerpde.ownername as ownerpde_ownername, "
             +
-            " tlownerpde.aadharno as ownerpde_aadharno, tlownerpde.address as ownerpde_address, tlownerpde.email as ownerpde_email, tlownerpde.mobilenumber as ownerpde_mobilenumber "
+            " tlownerpde.address as ownerpde_address, tlownerpde.email as ownerpde_email, tlownerpde.mobilenumber as ownerpde_mobilenumber, "
             +
-            ""
+            " tlownerpde.ownernamelocal as ownerpde_ownernamelocal, tlownerpde.careof as ownerpde_careof, tlownerpde.careofname as ownerpde_careofname, "
+            +
+            " tlownerpde.designation as ownerpde_designation, tlownerpde.housename as ownerpde_housename, tlownerpde.street as ownerpde_street, "
+            +
+            " tlownerpde.locality as ownerpde_locality, tlownerpde.postoffice as ownerpde_postoffice, tlownerpde.pincode as ownerpde_pincode "
             +
             "FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING

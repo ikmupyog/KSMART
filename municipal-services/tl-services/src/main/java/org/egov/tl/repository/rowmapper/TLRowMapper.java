@@ -212,6 +212,17 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .uuid(rs.getString("ownerpde_id"))
                         .userActive(rs.getBoolean("ownerpde_active"))
                         .name(rs.getString("ownerpde_name"))
+                        .emailId(rs.getString("ownerpde_email"))
+                        .applicantNameLocal(rs.getString("ownerpde_ownernamelocal"))
+                        .careOf(rs.getString("ownerpde_careof"))
+                        .careOfName(rs.getString("ownerpde_careofname"))
+                        .mobileNumber(rs.getString("ownerpde_mobilenumber"))
+                        .designation(rs.getString("ownerpde_designation"))
+                        .houseName(rs.getString("ownerpde_housename"))
+                        .street(rs.getString("ownerpde_street"))
+                        .locality(rs.getString("ownerpde_locality"))
+                        .postOffice(rs.getString("ownerpde_postoffice"))
+                        .pincode(rs.getString("ownerpde_pincode"))
                         .build();
                 tradeLicense.getTradeLicenseDetail().addOwnersItem(owner);
             }
