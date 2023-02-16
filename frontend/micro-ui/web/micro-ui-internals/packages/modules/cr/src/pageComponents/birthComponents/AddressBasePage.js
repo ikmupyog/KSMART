@@ -79,6 +79,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [presentOutSideIndiaAdressEnB, setAdressEnB] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaAdressEnB ? formData?.AddressBirthDetails?.presentOutSideIndiaAdressEnB : "");
     const [presentOutSideIndiaAdressMlB, setAdressMlB] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaAdressMlB ? formData?.AddressBirthDetails?.presentOutSideIndiaAdressMlB : "");
     const [presentOutSideIndiaProvinceEn, setProvinceEn] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceEn : "");
+    const [presentOutSideIndiaProvinceMl, setProvinceMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl : "");
     const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage : "");
     const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
     const [presentOutSideIndiaPostCode, setPostCode] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaPostCode ? formData?.AddressBirthDetails?.presentOutSideIndiaPostCode : "");
@@ -129,11 +130,13 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
 
     //######################################################################## Permanent Ouside Country #############################################################################################
 
-    const [PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaLineoneEn);
-    const [PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaLineoneMl);
-    const [PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaLinetwoEn);
-    const [PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaLinetwoMl);
-    const [PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaprovinceEn);
+    const [PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaLineoneEn ? formData?.AddressBirthDetails?.PermntOutsideIndiaLineoneEn : "");
+    const [PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaLineoneMl ? formData?.AddressBirthDetails?.PermntOutsideIndiaLineoneMl : "");
+    const [PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaLinetwoEn ? formData?.AddressBirthDetails?.PermntOutsideIndiaLinetwoEn : "");
+    const [PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaLinetwoMl ? formData?.AddressBirthDetails?.PermntOutsideIndiaLinetwoMl : "");
+    const [PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaprovinceEn ? formData?.AddressBirthDetails?.PermntOutsideIndiaprovinceEn : "");
+    const [PermntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl] = useState(formData?.AddressBirthDetails?.PermntOutsideIndiaprovinceMl ? formData?.AddressBirthDetails?.PermntOutsideIndiaprovinceMl : "");
+
     const [PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaVillage ? formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaVillage : null);
     const [PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaCityTown ? formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaCityTown : null);
     const [PermanentOutsideIndiaPostCode, setPermantpostCode] = useState(formData?.AddressBirthDetails?.PermanentOutsideIndiaPostCode);
@@ -155,6 +158,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [PresentInsideKeralaPostOfficeError, setPresentInsideKeralaPostOfficeError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaPostOfficeError ? false : false);
     const [PresentInsideKeralaPincodeError, setPresentInsideKeralaPincodeError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaPincodeError ? false : false);
     const [PresentCityVillageError, setCityVillageError] = useState(formData?.AddressBirthDetails?.PresentCityVillageError ? false : false);
+    const [PresentOutSideIndiaProvinceEnError, setPresentOutSideIndiaProvinceEnError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaProvinceEnError ? false : false);
+    const [PresentOutSideIndiaProvinceMlError, setPresentOutSideIndiaProvinceMlError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaProvinceMlError ? false : false);
+    const [PresentOutSideIndiaCityError, setPresentOutSideIndiaCityError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaCityError ? false : false);
 
 
     let cmbLB = [];
@@ -199,7 +205,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
 
     let validFlag = true;
     const goNext = () => {
-        if (isPrsentAddress === true || isPrsentAddress === false ) {
+        if (isPrsentAddress === true || isPrsentAddress === false) {
             if (countryvalue === "IND" && value === "KL") {
                 if (presentaddressCountry == null || presentaddressCountry == undefined) {
                     setPresentAddressCountryError(true);
@@ -464,6 +470,70 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                     setPresentInsideKeralaHouseNameMlError(false);
                 }
             }
+            if (countryvalue != "IND") {
+
+                if (presentaddressCountry == null || presentaddressCountry == undefined) {
+                    setPresentAddressCountryError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentAddressCountryError(false);
+                }
+                if (presentOutSideCountry == null || presentOutSideCountry == undefined) {
+                    setPresentAddressCountryError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentAddressCountryError(false);
+                }
+                if (presentOutSideIndiaProvinceEn == null || presentOutSideIndiaProvinceEn == undefined || presentOutSideIndiaProvinceEn == "") {
+                    setPresentOutSideIndiaProvinceEnError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentOutSideIndiaProvinceEnError(false);
+                }
+                if (presentOutSideIndiaProvinceMl == null || presentOutSideIndiaProvinceMl == undefined || presentOutSideIndiaProvinceMl == "") {
+                    setPresentOutSideIndiaProvinceMlError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentOutSideIndiaProvinceMlError(false);
+                }
+                if (presentOutSideIndiaadrsVillage == null || presentOutSideIndiaadrsVillage == undefined) {
+                    setPresentInsideKeralaVillageError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaVillageError(false);
+                }
+                if (presentOutSideIndiaadrsCityTown == null || presentOutSideIndiaadrsCityTown == undefined || presentOutSideIndiaadrsCityTown == "") {
+                    setPresentOutSideIndiaCityError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentOutSideIndiaCityError(false);
+                }
+
+            }
         }
         if (validFlag === true) {
             //################################# Present Inside Kerala ############################################################################
@@ -506,6 +576,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
             sessionStorage.setItem("presentOutSideIndiaAdressEnB", presentOutSideIndiaAdressEnB ? presentOutSideIndiaAdressEnB : null);
             sessionStorage.setItem("presentOutSideIndiaAdressMlB", presentOutSideIndiaAdressMlB ? presentOutSideIndiaAdressMlB : null);
             sessionStorage.setItem("presentOutSideIndiaProvinceEn", presentOutSideIndiaProvinceEn ? presentOutSideIndiaProvinceEn : null);
+            sessionStorage.setItem("presentOutSideIndiaProvinceMl", presentOutSideIndiaProvinceMl ? presentOutSideIndiaProvinceMl : null);
             sessionStorage.setItem("presentOutSideIndiaadrsVillage", presentOutSideIndiaadrsVillage ? presentOutSideIndiaadrsVillage.code : null);
             sessionStorage.setItem("presentOutSideIndiaPostCode", presentOutSideIndiaPostCode ? presentOutSideIndiaPostCode : null);
             sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry ? presentOutSideCountry.code : null);
@@ -800,6 +871,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setAdressMlB={setAdressMlB}
                             presentOutSideIndiaProvinceEn={presentOutSideIndiaProvinceEn}
                             setProvinceEn={setProvinceEn}
+                            presentOutSideIndiaProvinceMl={presentOutSideIndiaProvinceMl}
+                            setProvinceMl={setProvinceMl}
                             presentOutSideIndiaadrsVillage={presentOutSideIndiaadrsVillage}
                             setadrsVillage={setadrsVillage}
                             presentOutSideIndiaadrsCityTown={presentOutSideIndiaadrsCityTown}
@@ -822,6 +895,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setadrsPermntOutsideIndiaLinetwoMl={setadrsPermntOutsideIndiaLinetwoMl}
                             PermntOutsideIndiaprovinceEn={PermntOutsideIndiaprovinceEn}
                             setPermntOutsideIndiaprovinceEn={setPermntOutsideIndiaprovinceEn}
+                            PermntOutsideIndiaprovinceMl={PermntOutsideIndiaprovinceMl}
+                            setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
                             PermntOutsideIndiaVillage={PermntOutsideIndiaVillage}
                             setadrsPermntOutsideIndiaVillage={setadrsPermntOutsideIndiaVillage}
                             PermntOutsideIndiaCityTown={PermntOutsideIndiaCityTown}
@@ -962,7 +1037,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             PresentInsideKeralaTalukError || PresentInsideKeralaVillageError || PresentInsideKeralaLBNameError ||
                             PresentInsideKeralaWardNoError || PresentInsideKeralaHouseNameEnError || PresentInsideKeralaHouseNameMlError ||
                             PresentInsideKeralaLocalityNameEnError || PresentInsideKeralaLocalityNameMlError || PresentInsideKeralaPostOfficeError ||
-                            PresentInsideKeralaPincodeError || PresentCityVillageError
+                            PresentInsideKeralaPincodeError || PresentCityVillageError || PresentOutSideIndiaProvinceEnError || PresentOutSideIndiaProvinceMlError
+                            || PresentOutSideIndiaCityError
                         }
                         label={
 
@@ -970,36 +1046,27 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                                 PresentInsideKeralaTalukError || PresentInsideKeralaVillageError || PresentInsideKeralaLBNameError ||
                                 PresentInsideKeralaWardNoError || PresentInsideKeralaHouseNameEnError || PresentInsideKeralaHouseNameMlError ||
                                 PresentInsideKeralaLocalityNameEnError || PresentInsideKeralaLocalityNameMlError || PresentInsideKeralaPostOfficeError ||
-                                PresentInsideKeralaPincodeError || PresentCityVillageError
+                                PresentInsideKeralaPincodeError || PresentCityVillageError || PresentOutSideIndiaProvinceEnError || PresentOutSideIndiaProvinceMlError
+                                || PresentOutSideIndiaCityError
                                 ? PresentAddressCountryError
-                                    ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)
-                                    : PresentAddressStateNameError
-                                        ? t(`BIRTH_ERROR_STATE_CHOOSE`)
-                                        : PresentInsideKeralaDistrictError
-                                            ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
-                                            : PresentInsideKeralaTalukError
-                                                ? t(`BIRTH_ERROR_TALUK_CHOOSE`)
-                                                : PresentInsideKeralaVillageError
-                                                    ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
-                                                    : PresentInsideKeralaLBNameError
-                                                        ? t(`BIRTH_ERROR_LBNAME_CHOOSE`)
-                                                        : PresentInsideKeralaWardNoError
-                                                            ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                                                            : PresentInsideKeralaHouseNameEnError
-                                                                ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                                                : PresentInsideKeralaHouseNameMlError
-                                                                    ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                                                                    : PresentInsideKeralaLocalityNameEnError
-                                                                        ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                                                        : PresentInsideKeralaLocalityNameMlError
-                                                                            ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                                                            : PresentInsideKeralaPostOfficeError
-                                                                                ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                                                                                : PresentInsideKeralaPincodeError
-                                                                                    ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                                                                                    : PresentCityVillageError
-                                                                                    ? t(`BIRTH_ERROR_CITY_CHOOSE`)
-                                                                                    : setToast(false)
+                                    ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : PresentAddressStateNameError
+                                        ? t(`BIRTH_ERROR_STATE_CHOOSE`) : PresentInsideKeralaDistrictError
+                                            ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`) : PresentInsideKeralaTalukError
+                                                ? t(`BIRTH_ERROR_TALUK_CHOOSE`) : PresentInsideKeralaVillageError
+                                                    ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`) : PresentInsideKeralaLBNameError
+                                                        ? t(`BIRTH_ERROR_LBNAME_CHOOSE`) : PresentInsideKeralaWardNoError
+                                                            ? t(`BIRTH_ERROR_WARD_CHOOSE`) : PresentInsideKeralaHouseNameEnError
+                                                                ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`) : PresentInsideKeralaHouseNameMlError
+                                                                    ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`) : PresentInsideKeralaLocalityNameEnError
+                                                                        ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`) : PresentInsideKeralaLocalityNameMlError
+                                                                            ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`) : PresentInsideKeralaPostOfficeError
+                                                                                ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`) : PresentInsideKeralaPincodeError
+                                                                                    ? t(`BIRTH_ERROR_PINCODE_CHOOSE`) : PresentCityVillageError
+                                                                                        ? t(`BIRTH_ERROR_CITY_CHOOSE`) : PresentOutSideIndiaProvinceEnError
+                                                                                            ? t(`BIRTH_ERROR_STATE_PROVINCE_EN`) : PresentOutSideIndiaProvinceMlError
+                                                                                                ? t(`BIRTH_ERROR_STATE_PROVINCE_ML`) : PresentOutSideIndiaCityError
+                                                                                                ? t(`BIRTH_ERROR_CITY_TOWN`)
+                                                                                                : setToast(false)
                                 : setToast(false)
                         }
                         onClose={() => setToast(false)}
