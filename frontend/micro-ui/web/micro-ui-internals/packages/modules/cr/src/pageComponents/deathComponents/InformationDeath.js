@@ -130,13 +130,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn);
   const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl);
 
-  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
+ 
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
+  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
+  const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
 
+  let DeathPlaceTypecode= "";
   let naturetypecmbvalue = null;
   const maxDate = new Date();
   let menu = [];
@@ -240,15 +243,15 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectAge(e) {
-    const newValue = parseInt(e.target.value);
-    if (newValue >= 0 && newValue <= 150) {
-      setValue(newValue);
-    }
-    // if (e.target.value != null || e.target.value != "") {
-    //   if (e.target.value <= 150) {
-    //     setAge(e.target.value);
-    //   }
+    // const newValue = parseInt(e.target.value);
+    // if (newValue >= 0 && newValue <= 150) {
+    //   setValue(newValue);
     // }
+    if (e.target.value != null || e.target.value != "") {
+      if (e.target.value <= 150) {
+        setAge(e.target.value);
+      }
+    }
   }
   function setSelectDeceasedAadharNumber(e) {
     if (e.target.value.length != 0) {
@@ -368,8 +371,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     }
     if (DeathPlaceState == null || DeathPlaceState == "") {
       if (stateId === "kl" && cmbState.length > 0) {
-        cmbFilterState = cmbState.filter((cmbState) => cmbState.name !== "Kerala");
-        SelectDeathPlaceState(cmbFilterState[0]);
+        cmbFilterState = cmbState.filter((cmbState) => cmbState.name != "Kerala");
+        SelectDeathPlaceState(cmbFilterState);
       }
     }
 
@@ -461,7 +464,22 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       }, 2000);
     } else {
       setAadharError(false);
-    }
+    } 
+    
+    if (DeathPlace.code === "HOSPITAL") {
+      if (DeathPlaceType == null || DeathPlaceType === null) {
+        setHospitalError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        DeathPlaceTypecode = DeathPlaceType.code;
+        setHospitalError(false);
+      }
+    } 
+
     sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
     sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
     sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
@@ -484,6 +502,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
     sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+    sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
     sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
     // if (validFlag === true) {
 
@@ -566,6 +585,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       // checked,
       DeathPlace,
       DeathPlaceType,
+      DeathPlaceTypecode,
       DeathPlaceInstId,
       DeathPlaceHomehoueNameEn,
       DeathPlaceHomehoueNameMl,
@@ -1117,13 +1137,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
         {toast && (
           <Toast
-            error={DOBError || AadharError}
+            error={DOBError || AadharError || HospitalError}
             label={
-              DOBError || AadharError
-                ? DOBError
-                  ? t(`CR_INVALID_DATE`)
-                  : AadharError
-                  ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+              DOBError || AadharError || HospitalError
+                ? DOBError? t(`CR_INVALID_DATE`)
+                  : AadharError? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                  : HospitalError ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
+
                   : setToast(false)
                 : setToast(false)
             }

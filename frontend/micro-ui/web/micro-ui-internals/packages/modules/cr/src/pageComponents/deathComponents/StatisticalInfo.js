@@ -99,15 +99,23 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
   const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
-  const options = [
-    { i18nKey: "YES", code: "CR_YES" },
-    { i18nKey: "NO", code: "No" },
+  const minutes = [
+    { i18nKey: "Min", code: "CR_MIN" },
+    { i18nKey: "Hours", code: "CR_HOURS" },
   ];
-
+  const days = [
+    { i18nKey: "Days", code: "CR_DAYS" },
+    { i18nKey: "Weeks", code: "CR_WEEKS" },
+  ];
+  const months = [
+    { i18nKey: "Months", code: "CR_MONTHS" },
+    { i18nKey: "Years", code: "CR_YEARS" },
+  ];
   const menub = [
     { i18nKey: "YES", code: "CR_YES" },
     { i18nKey: "NO", code: "CR_NO" },
   ];
+  
 
   // // const handleRadioChangeTabacco = (e) => {
   // //   setisTabacco(e.target.value);
@@ -534,7 +542,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           {/*  INSTITUTION */}
-          {value === "MEDICAL_ATTENTION_TYPE_INSTITUTION" && (
+          {/* {value === "MEDICAL_ATTENTION_TYPE_INSTITUTION" && ( */}
             <div>
               <div className="row">
                 <div className="col-md-12">
@@ -603,12 +611,12 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     />
                   </div>
                   <div className="col-md-3">
-                    <CardLabel>{t("CR_TIME_UNIT_MIN_HOURS")}</CardLabel>
+                    <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
                     <Dropdown
                       t={t}
                       optionKey="code"
                       isMandatory={false}
-                      option={menub}
+                      option={minutes}
                       selected={DeathCauseMainTimeUnit}
                       select={selectDeathCauseMainTimeUnit}
                       disabled={isEdit}
@@ -669,12 +677,12 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     />
                   </div>
                   <div className="col-md-3">
-                    <CardLabel>{t("CR_TIME_UNIT_DAYS")}</CardLabel>
+                    <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
                     <Dropdown
                       t={t}
                       optionKey="code"
                       isMandatory={false}
-                      option={menub}
+                      option={days}
                       selected={DeathCauseSubTimeUnit}
                       select={selectDeathCauseSubTimeUnit}
                       disabled={isEdit}
@@ -728,24 +736,23 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     />
                   </div>
                   <div className="col-md-3">
-                    <CardLabel>{t("CR_TIME_UNIT_MONTHS")}</CardLabel>
+                    <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
                     <Dropdown
                       t={t}
                       optionKey="code"
                       isMandatory={false}
-                      option={menub}
+                      option={months}
                       selected={DeathCauseSubTimeUnit2}
                       select={selectDeathCauseSubTimeUnit2}
                       disabled={isEdit}
                       placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
                       {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MONTH") })}
-
                     />
                   </div>
                 </div>
               </div>
             </div>
-          )}
+          {/* )} */}
         </div>
         <div className="row">
           <div className="col-md-12">
