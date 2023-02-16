@@ -224,6 +224,8 @@ StringBuilder query = new StringBuilder(QUERY);
                       // addFilter("dt.application_no", criteria.getA(), query, preparedStmtValues);  
                         addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
                         addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
+                        addFilter("dt.death_place_ward_id", criteria.getDeathPlaceWardId(), query, preparedStmtValues);
+                        addFilter("dt.death_place_inst_type", criteria.getHospitalName(), query, preparedStmtValues);
                         // addDateRangeFilter("dt.dateofdeath",
                         // criteria.getFromDate(),
                         // criteria.getToDate(),
