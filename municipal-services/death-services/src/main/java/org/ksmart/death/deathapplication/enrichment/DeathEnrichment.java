@@ -156,9 +156,14 @@ public class DeathEnrichment implements BaseEnrichment{
             String IDGenerated = null;
                 IDGenerated = idGenerator.setIDGenerator(request, DeathConstants.FUN_MODULE_NEWAPPLN,
                                 DeathConstants.ACK_NUMBER_CAPTION);
-
+            Long ackNoId=null;
+            String inputString = IDGenerated; 
+            String[] ackNoIdArray= inputString.split("-");
+            for (int i=0; i < 1; i++){
+                ackNoId=Long.parseLong(ackNoIdArray[1]);
+            }
                 deathdtls.getDeathBasicInfo().setDeathACKNo(IDGenerated);
-              //  deathdtls.getDeathBasicInfo().setAckNoID(ackNoId);
+                deathdtls.getDeathBasicInfo().setAckNoID(ackNoId);
                 deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
         });
 
@@ -188,7 +193,7 @@ public class DeathEnrichment implements BaseEnrichment{
             RequestInfo requestInfo = request.getRequestInfo();
             User userInfo = requestInfo.getUserInfo();
             AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-//Jasmine 10.02.2023
+//Jasmine Encryption 10.02.2023
              request.getDeathCertificateDtls()
                      .forEach(deathDtls -> {
                         DeathBasicInfo deathBasicDtls = deathDtls.getDeathBasicInfo();
