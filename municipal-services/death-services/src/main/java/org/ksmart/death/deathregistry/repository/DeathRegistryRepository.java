@@ -221,7 +221,7 @@ public class DeathRegistryRepository {
                 presentAddPO = presentAddPO.replaceAll("[\\[\\]\\(\\)]", "");
                 if (null != presentAddPO && !presentAddPO.isEmpty()){
                      presentAddPO=presentAddPO+" "+DeathRegistryConstants.PO_EN;
-                    if(cert.getDeathAddressInfo().getPresentAddrPincode() != 0){
+                    if(cert.getDeathAddressInfo().getPresentAddrPincode() != null){
                         presentAddPO = presentAddPO+" "+cert.getDeathAddressInfo().getPresentAddrPincode();
                     }
                      cert.getDeathAddressInfo().setPresentAddrPostofficeNameEn(presentAddPO);
@@ -231,7 +231,7 @@ public class DeathRegistryRepository {
                 presentAddPOMl = presentAddPOMl.replaceAll("[\\[\\]\\(\\)]", "");
                 if (null != presentAddPOMl && !presentAddPOMl.isEmpty()){
                     presentAddPOMl=presentAddPOMl+" "+DeathRegistryConstants.PO_ML;
-                    if(cert.getDeathAddressInfo().getPresentAddrPincode() != 0){
+                    if(cert.getDeathAddressInfo().getPresentAddrPincode() != null){
                         presentAddPOMl = presentAddPOMl+" "+cert.getDeathAddressInfo().getPresentAddrPincode();
                     }
                      cert.getDeathAddressInfo().setPresentAddrPostofficeNameMl(presentAddPOMl);
@@ -327,7 +327,7 @@ public class DeathRegistryRepository {
 
                 if (null != permanentAddPO && !permanentAddPO.isEmpty()){
                     permanentAddPO=permanentAddPO+" "+DeathRegistryConstants.PO_EN;
-                   if(cert.getDeathAddressInfo().getPermanentAddrPincode() != 0){
+                   if(cert.getDeathAddressInfo().getPermanentAddrPincode() != null){
                     permanentAddPO = permanentAddPO+" "+cert.getDeathAddressInfo().getPermanentAddrPincode();
                    }
                     cert.getDeathAddressInfo().setPermanentAddrPostofficeNameEn(permanentAddPO);
@@ -337,7 +337,7 @@ public class DeathRegistryRepository {
 
                if (null != permanentAddPOMl && !permanentAddPOMl.isEmpty()){
                 permanentAddPOMl=permanentAddPOMl+" "+DeathRegistryConstants.PO_ML;
-                if(cert.getDeathAddressInfo().getPermanentAddrPincode() != 0){
+                if(cert.getDeathAddressInfo().getPermanentAddrPincode() != null){
                     permanentAddPOMl = permanentAddPOMl+" "+cert.getDeathAddressInfo().getPermanentAddrPincode();
                 }
                  cert.getDeathAddressInfo().setPermanentAddrPostofficeNameMl(permanentAddPOMl);
@@ -499,9 +499,9 @@ public class DeathRegistryRepository {
                 else{
                     cert.getDeathAddressInfo().setPresentAddrPostofficeNameMl("");
                 }
-                if(cert.getDeathAddressInfo().getPresentAddrPincode() != 0){}
+                if(cert.getDeathAddressInfo().getPresentAddrPincode() != null){}
                 else{
-                    cert.getDeathAddressInfo().setPresentAddrPincode((long) 0);
+                    cert.getDeathAddressInfo().setPresentAddrPincode("");
                 }
                 //Rakhi S ikm on 12.02.2023
                 if(cert.getDeathAddressInfo().getPresentAddrVillageNameEn() != null){}
@@ -571,9 +571,9 @@ public class DeathRegistryRepository {
                 else{
                     cert.getDeathAddressInfo().setPermanentAddrPostofficeNameMl("");
                 }
-                if(cert.getDeathAddressInfo().getPermanentAddrPincode() != 0){}
+                if(cert.getDeathAddressInfo().getPermanentAddrPincode() != null){}
                 else{
-                    cert.getDeathAddressInfo().setPermanentAddrPincode((long)0);
+                    cert.getDeathAddressInfo().setPermanentAddrPincode("");
                 }
 
                  //Rakhi S ikm on 12.02.2023
@@ -696,7 +696,7 @@ public class DeathRegistryRepository {
     
                     if (null != deathPlacePO && !deathPlacePO.isEmpty()){
                         deathPlacePO=deathPlacePO+" "+DeathRegistryConstants.PO_EN;
-                       if(cert.getDeathBasicInfo().getDeathPlaceHomePincode() != 0){
+                       if(cert.getDeathBasicInfo().getDeathPlaceHomePincode() != null){
                         deathPlacePO = deathPlacePO+" "+cert.getDeathBasicInfo().getDeathPlaceHomePincode();
                        }
                         cert.getDeathBasicInfo().setDeathPlaceHomePostOfficeEn(deathPlacePO);
@@ -707,7 +707,7 @@ public class DeathRegistryRepository {
 
                     if (null != deathPlacePOMl && !deathPlacePOMl.isEmpty()){
                         deathPlacePOMl=deathPlacePOMl+" "+DeathRegistryConstants.PO_ML;
-                        if(cert.getDeathBasicInfo().getDeathPlaceHomePincode() != 0){
+                        if(cert.getDeathBasicInfo().getDeathPlaceHomePincode() != null){
                             deathPlacePOMl = deathPlacePOMl+" "+cert.getDeathBasicInfo().getDeathPlaceHomePincode();
                         }
                         cert.getDeathBasicInfo().setDeathPlaceHomePostOfficeMl(deathPlacePOMl);
@@ -761,9 +761,9 @@ public class DeathRegistryRepository {
                     else{
                         cert.getDeathBasicInfo().setDeathPlaceHomePostOfficeMl("");
                     }
-                    if(cert.getDeathBasicInfo().getDeathPlaceHomePincode() != 0){}
+                    if(cert.getDeathBasicInfo().getDeathPlaceHomePincode() != null){}
                     else{
-                        cert.getDeathBasicInfo().setDeathPlaceHomePincode((long)0);
+                        cert.getDeathBasicInfo().setDeathPlaceHomePincode("");
                     }
 
                     //End

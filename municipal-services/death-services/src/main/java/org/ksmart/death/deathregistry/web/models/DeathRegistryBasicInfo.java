@@ -211,7 +211,7 @@ public class DeathRegistryBasicInfo {
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomePincode")
-    private Long deathPlaceHomePincode  ;
+    private String deathPlaceHomePincode  ;
 
 
     @Schema(type = "string", description= " " )

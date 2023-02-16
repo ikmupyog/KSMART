@@ -133,4 +133,6 @@ public class DeathConstants {
     // public static final String FUN_MODULE_CORRECTION = "BFIFLN";
 
     // public static final String DEATH_REGNO_UID= "CRDRNR";
+    public static final String COUNTRY_CODE = "COUNTRY_INDIA";
+    public static final String STATE_CODE_SMALL = "kl";
 }

@@ -63,7 +63,7 @@ public class DeathRegistryAddressInfo {
     private String presentAddrPostofficeId ;
 
     @JsonProperty("PresentAddrPincode")
-    private Long presentAddrPincode ;
+    private String presentAddrPincode ;
 
     @JsonProperty("PresentAddrLocalityEn")
     private String presentAddrLocalityEn ;
@@ -126,7 +126,7 @@ public class DeathRegistryAddressInfo {
     private String permanentAddrPostofficeId ;
 
     @JsonProperty("PermanentAddrPincode")
-    private Long permanentAddrPincode ;
+    private String permanentAddrPincode ;
 
     @JsonProperty("PermanentAddrLocalityEn")
     private String permanentAddrLocalityEn ;

@@ -51,7 +51,7 @@ public class DeathRegistryBasicInfoRowMapper  implements ResultSetExtractor  , B
           .deathPlaceStreetMl(rs.getString("death_place_street_ml"))
           .generalRemarks(rs.getString("general_remarks"))
           .deathPlaceHomePostofficeId(rs.getString("death_home_postoffice_id"))
-          .deathPlaceHomePincode(rs.getLong("death_home_pincode"))
+          .deathPlaceHomePincode(rs.getString("death_home_pincode"))
           .deathPlaceHomeLocalityEn(rs.getString("death_home_locality_en"))
           .deathPlaceHomeLocalityMl(rs.getString("death_home_locality_ml"))
           .deathPlaceHomeStreetNameEn(rs.getString("death_home_street_en"))

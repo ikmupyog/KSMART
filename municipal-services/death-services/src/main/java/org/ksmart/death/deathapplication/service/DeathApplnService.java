@@ -65,6 +65,8 @@ public class DeathApplnService {
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
           // mdmsValidator.validateDeathMDMSData(request,mdmsData);
           //Rakhi S ikm on 08.02.2023
+          enrichmentService.setPresentAddress(request);
+          enrichmentService.setPermanentAddress(request);
           enrichmentService.enrichCreate(request);
           enrichmentService.setACKNumber(request);           
          //RAkhi S ikm  on 06.02.2023         

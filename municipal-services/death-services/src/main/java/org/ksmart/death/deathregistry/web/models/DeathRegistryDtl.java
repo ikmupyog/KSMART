@@ -31,7 +31,7 @@ public class DeathRegistryDtl {
      @JsonProperty("InformationDeath")
      private DeathRegistryBasicInfo deathBasicInfo;
 
-    @JsonProperty("AddressOfDeceased")
+    @JsonProperty("AddressBirthDetails")
     private DeathRegistryAddressInfo deathAddressInfo;    
 
     @JsonProperty("FamilyInformationDeath")

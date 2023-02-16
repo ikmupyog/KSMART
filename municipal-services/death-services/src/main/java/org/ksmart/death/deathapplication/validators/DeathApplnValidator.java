@@ -187,7 +187,7 @@ public void validateCommonFields(DeathDtlRequest request) {
                     throw new CustomException("DEATHPLACE POSTOFFICE IS INVALID", "The postoffice name " +
                     basicInfo.getDeathPlaceHomePostofficeId()+ " is invalid");  
                 } 
-                if(basicInfo.getDeathPlaceHomePincode()<=0){
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomePincode())){
                     throw new CustomException("DEATHPLACE POSTOFFICE IS INVALID", "The postoffice name " +
                     basicInfo.getDeathPlaceHomePincode()+ " is invalid");  
                 } 
