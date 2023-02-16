@@ -154,6 +154,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [PresentInsideKeralaLocalityNameMlError, setPresentInsideKeralaLocalityNameMlError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaLocalityNameMlError ? false : false);
     const [PresentInsideKeralaPostOfficeError, setPresentInsideKeralaPostOfficeError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaPostOfficeError ? false : false);
     const [PresentInsideKeralaPincodeError, setPresentInsideKeralaPincodeError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaPincodeError ? false : false);
+    const [PresentCityVillageError, setCityVillageError] = useState(formData?.AddressBirthDetails?.PresentCityVillageError ? false : false);
 
 
     let cmbLB = [];
@@ -199,135 +200,199 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     let validFlag = true;
     const goNext = () => {
         if (isPrsentAddress) {
-            if (presentaddressCountry == null || presentaddressCountry == undefined) {
-                setPresentAddressCountryError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentAddressCountryError(false);
+            if (countryvalue === "IND" && value === "KL") {
+                if (presentaddressCountry == null || presentaddressCountry == undefined) {
+                    setPresentAddressCountryError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentAddressCountryError(false);
+                }
+                if (presentaddressStateName == null || presentaddressStateName == undefined) {
+                    setPresentAddressStateNameError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentAddressStateNameError(false);
+                }
+                if (presentInsideKeralaDistrict == null || presentInsideKeralaDistrict == undefined) {
+                    setPresentInsideKeralaDistrictError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaDistrictError(false);
+                }
+                if (presentInsideKeralaTaluk == null || presentInsideKeralaTaluk == undefined) {
+                    setPresentInsideKeralaTalukError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaTalukError(false);
+                }
+                if (presentInsideKeralaVillage == null || presentInsideKeralaVillage == undefined) {
+                    setPresentInsideKeralaVillageError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaVillageError(false);
+                }
+                if (presentInsideKeralaLBName == null || presentInsideKeralaLBName == undefined) {
+                    setPresentInsideKeralaLBNameError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaLBNameError(false);
+                }
+                if (presentWardNo == null || presentWardNo == undefined) {
+                    setPresentInsideKeralaWardNoError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaWardNoError(false);
+                }
+                if (presentInsideKeralaHouseNameEn == null || presentInsideKeralaHouseNameEn == undefined || presentInsideKeralaHouseNameEn == "") {
+                    setPresentInsideKeralaHouseNameEnError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaHouseNameEnError(false);
+                }
+                if (presentInsideKeralaHouseNameMl == null || presentInsideKeralaHouseNameMl == undefined || presentInsideKeralaHouseNameMl == "") {
+                    setPresentInsideKeralaHouseNameMlError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaHouseNameMlError(false);
+                }
+                if (presentInsideKeralaLocalityNameEn == null || presentInsideKeralaLocalityNameEn == undefined || presentInsideKeralaLocalityNameEn == "") {
+                    setPresentInsideKeralaLocalityNameEnError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaLocalityNameEnError(false);
+                }
+                if (presentInsideKeralaLocalityNameMl == null || presentInsideKeralaLocalityNameMl == undefined || presentInsideKeralaLocalityNameMl == "") {
+                    setPresentInsideKeralaLocalityNameMlError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaLocalityNameMlError(false);
+                }
+                if (presentInsideKeralaPostOffice == null || presentInsideKeralaPostOffice == undefined) {
+                    setPresentInsideKeralaPostOfficeError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaPostOfficeError(false);
+                }
+                if (presentInsideKeralaPincode == null || presentInsideKeralaPincode == undefined || presentInsideKeralaPincode == "") {
+                    setPresentInsideKeralaPincodeError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaPincodeError(false);
+                }
             }
-            if (presentaddressStateName == null || presentaddressStateName == undefined) {
-                setPresentAddressStateNameError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentAddressStateNameError(false);
-            }
-            if (presentInsideKeralaDistrict == null || presentInsideKeralaDistrict == undefined) {
-                setPresentInsideKeralaDistrictError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaDistrictError(false);
-            }
-            if (presentInsideKeralaTaluk == null || presentInsideKeralaTaluk == undefined) {
-                setPresentInsideKeralaTalukError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaTalukError(false);
-            }
-            if (presentInsideKeralaVillage == null || presentInsideKeralaVillage == undefined) {
-                setPresentInsideKeralaVillageError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaVillageError(false);
-            }
-            if (presentInsideKeralaLBName == null || presentInsideKeralaLBName == undefined) {
-                setPresentInsideKeralaLBNameError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaLBNameError(false);
-            }
-            if (presentWardNo == null || presentWardNo == undefined) {
-                setPresentInsideKeralaWardNoError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaWardNoError(false);
-            }
-            if (presentInsideKeralaHouseNameEn == null || presentInsideKeralaHouseNameEn == undefined || presentInsideKeralaHouseNameEn == "") {
-                setPresentInsideKeralaHouseNameEnError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaHouseNameEnError(false);
-            }
-            if (presentInsideKeralaHouseNameMl == null || presentInsideKeralaHouseNameMl == undefined || presentInsideKeralaHouseNameMl == "") {
-                setPresentInsideKeralaHouseNameMlError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaHouseNameMlError(false);
-            }
-            if (presentInsideKeralaLocalityNameEn == null || presentInsideKeralaLocalityNameEn == undefined || presentInsideKeralaLocalityNameEn == "") {
-                setPresentInsideKeralaLocalityNameEnError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaLocalityNameEnError(false);
-            }
-            if (presentInsideKeralaLocalityNameMl == null || presentInsideKeralaLocalityNameMl == undefined || presentInsideKeralaLocalityNameMl == "") {
-                setPresentInsideKeralaLocalityNameMlError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaLocalityNameMlError(false);
-            }
-            if (presentInsideKeralaPostOffice == null || presentInsideKeralaPostOffice == undefined ) {
-                setPresentInsideKeralaPostOfficeError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaPostOfficeError(false);
-            }
-            if (presentInsideKeralaPincode == null || presentInsideKeralaPincode == undefined || presentInsideKeralaPincode == "") {
-                setPresentInsideKeralaPincodeError(true);
-                validFlag = false;
-                setToast(true);
-                setTimeout(() => {
-                    setToast(false);
-                }, 2000);
-            } else {
-                setPresentInsideKeralaPincodeError(false);
+            if (countryvalue === "IND" && value != "KL") {
+                if (presentaddressCountry == null || presentaddressCountry == undefined) {
+                    setPresentAddressCountryError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentAddressCountryError(false);
+                }
+                if (presentaddressStateName == null || presentaddressStateName == undefined) {
+                    setPresentAddressStateNameError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentAddressStateNameError(false);
+                }
+                if (presentOutsideKeralaDistrict == null || presentOutsideKeralaDistrict == undefined) {
+                    setPresentInsideKeralaDistrictError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaDistrictError(false);
+                }
+                if (presentOutsideKeralaTaluk == null || presentOutsideKeralaTaluk == undefined) {
+                    setPresentInsideKeralaTalukError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaTalukError(false);
+                }
+                if (presentOutsideKeralaVillage == null || presentOutsideKeralaVillage == undefined) {
+                    setPresentInsideKeralaVillageError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentInsideKeralaVillageError(false);
+                }
+                if (presentOutsideKeralaCityVilgeEn == null || presentOutsideKeralaCityVilgeEn == undefined || presentOutsideKeralaCityVilgeEn == "") {
+                    setCityVillageError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setCityVillageError(false);
+                }
             }
         }
         if (validFlag === true) {
@@ -349,7 +414,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
             sessionStorage.setItem("presentInsideKeralaPostOffice", presentInsideKeralaPostOffice ? presentInsideKeralaPostOffice.code : null);
             sessionStorage.setItem("presentInsideKeralaPincode", presentInsideKeralaPincode ? presentInsideKeralaPincode.code : null);
 
-            //################################# Present Inside Kerala ############################################################################
+            //################################# Present Outside Kerala ############################################################################
 
             sessionStorage.setItem("presentOutsideKeralaDistrict", presentOutsideKeralaDistrict ? presentOutsideKeralaDistrict.code : null);
             sessionStorage.setItem("presentOutsideKeralaCityVilgeEn", presentOutsideKeralaCityVilgeEn ? presentOutsideKeralaCityVilgeEn : null);
@@ -827,43 +892,44 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             PresentInsideKeralaTalukError || PresentInsideKeralaVillageError || PresentInsideKeralaLBNameError ||
                             PresentInsideKeralaWardNoError || PresentInsideKeralaHouseNameEnError || PresentInsideKeralaHouseNameMlError ||
                             PresentInsideKeralaLocalityNameEnError || PresentInsideKeralaLocalityNameMlError || PresentInsideKeralaPostOfficeError ||
-                            PresentInsideKeralaPincodeError
+                            PresentInsideKeralaPincodeError || PresentCityVillageError
                         }
                         label={
 
                             PresentAddressCountryError || PresentAddressStateNameError || PresentInsideKeralaDistrictError ||
-                            PresentInsideKeralaTalukError || PresentInsideKeralaVillageError || PresentInsideKeralaLBNameError ||
-                            PresentInsideKeralaWardNoError || PresentInsideKeralaHouseNameEnError || PresentInsideKeralaHouseNameMlError ||
-                            PresentInsideKeralaLocalityNameEnError || PresentInsideKeralaLocalityNameMlError || PresentInsideKeralaPostOfficeError ||
-                            PresentInsideKeralaPincodeError
+                                PresentInsideKeralaTalukError || PresentInsideKeralaVillageError || PresentInsideKeralaLBNameError ||
+                                PresentInsideKeralaWardNoError || PresentInsideKeralaHouseNameEnError || PresentInsideKeralaHouseNameMlError ||
+                                PresentInsideKeralaLocalityNameEnError || PresentInsideKeralaLocalityNameMlError || PresentInsideKeralaPostOfficeError ||
+                                PresentInsideKeralaPincodeError || PresentCityVillageError
                                 ? PresentAddressCountryError
                                     ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`)
                                     : PresentAddressStateNameError
                                         ? t(`BIRTH_ERROR_STATE_CHOOSE`)
                                         : PresentInsideKeralaDistrictError
-                                        ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
-                                        : PresentInsideKeralaTalukError
-                                        ? t(`BIRTH_ERROR_TALUK_CHOOSE`)
-                                        : PresentInsideKeralaVillageError
-                                        ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
-                                        : PresentInsideKeralaLBNameError
-                                        ? t(`BIRTH_ERROR_LBNAME_CHOOSE`)
-                                        : PresentInsideKeralaWardNoError
-                                        ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                                        : PresentInsideKeralaHouseNameEnError
-                                        ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                        : PresentInsideKeralaHouseNameMlError
-                                        ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                                        : PresentInsideKeralaLocalityNameEnError
-                                        ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                        : PresentInsideKeralaLocalityNameMlError
-                                        ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                        : PresentInsideKeralaPostOfficeError
-                                        ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                                        : PresentInsideKeralaPincodeError
-                                        ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-
-                                        : setToast(false)
+                                            ? t(`BIRTH_ERROR_DISTRICT_CHOOSE`)
+                                            : PresentInsideKeralaTalukError
+                                                ? t(`BIRTH_ERROR_TALUK_CHOOSE`)
+                                                : PresentInsideKeralaVillageError
+                                                    ? t(`BIRTH_ERROR_VILLAGE_CHOOSE`)
+                                                    : PresentInsideKeralaLBNameError
+                                                        ? t(`BIRTH_ERROR_LBNAME_CHOOSE`)
+                                                        : PresentInsideKeralaWardNoError
+                                                            ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                                                            : PresentInsideKeralaHouseNameEnError
+                                                                ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                                                : PresentInsideKeralaHouseNameMlError
+                                                                    ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                                                                    : PresentInsideKeralaLocalityNameEnError
+                                                                        ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                                        : PresentInsideKeralaLocalityNameMlError
+                                                                            ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                                            : PresentInsideKeralaPostOfficeError
+                                                                                ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                                                                                : PresentInsideKeralaPincodeError
+                                                                                    ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                                                                                    : PresentCityVillageError
+                                                                                    ? t(`BIRTH_ERROR_CITY_CHOOSE`)
+                                                                                    : setToast(false)
                                 : setToast(false)
                         }
                         onClose={() => setToast(false)}
