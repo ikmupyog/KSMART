@@ -73,5 +73,23 @@ public class DeathApplnRepository {
         List<Map<String, Object>> ackDetails= jdbcTemplate.queryForList(query,preparedStmtValues.toArray());
         return ackDetails; 
      }
+
+     //Jasmine 15/02/2023 for ID generation
+
+     public String getNewID(String tenantId, int Year, String moduleCode, String idType) {
+
+        List<Object> preparedStmtValues = new ArrayList<>();
+        preparedStmtValues.add(idType);
+        preparedStmtValues.add(moduleCode);
+        preparedStmtValues.add(tenantId);
+        preparedStmtValues.add(Year);
+        String query = queryBuilder.getNextIDQuery();
+        List<Map<String, Object>> nextID = jdbcTemplate.queryForList(query, preparedStmtValues.toArray());
+        // finalid=String.format("%05d",Integer.parseInt(String.valueOf(nextID.get(0).get("genid"))));
+        String finalid = String.valueOf(nextID.get(0).get("fn_next_id"));
+
+        return finalid;
+    }
+
     
 }

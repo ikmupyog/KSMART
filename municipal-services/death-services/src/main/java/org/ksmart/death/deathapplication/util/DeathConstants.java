@@ -99,23 +99,38 @@ public class DeathConstants {
     public static final String APPLICATION_CORRECTION = "corr";
 
     public static final String LB_TYPE_CORPORATION = "LB_TYPE_CORPORATION";
+
     public static final String LB_TYPE_MUNICIPALITY = "LB_TYPE_MUNICIPALITY";
+
     public static final String LB_TYPE_CORPORATION_CAPTION = "C";
+
     public static final String LB_TYPE_MUNICIPALITY_CAPTION = "M";
-    public static final String DEATH_REGNO_UID= "CRDRNR";
+
     public static final String STATE_CODE= "KL";
     //ACKNumber
     public static final String ACK_NUMBER_FIRST = "1";
+
     public static final String ACK_NUMBER_CAPTION = "AK";
 
     public static final String DEATH_PLACE_LIST = "PlaceMasterDeath";
     //Rakhi S on 14.02.2023
     public static final String DISTRICT = "District";
-    public static final String STATE = "State";
-    public static final String COUNTRY = "Country";
-    public static final String RELIGION = "Religion";
 
+    public static final String STATE = "State";
+
+    public static final String COUNTRY = "Country";
+
+    public static final String RELIGION = "Religion";
     //Jasmine 1402.2023
     public static final String DEATH_PLACE_PUBLICPLACES = "PUBLIC_PLACES";
+
     public static final String DEATH_PLACE_OUTSIDE_JURISDICATION = "OUTSIDE_JURISDICTION";
+
+    public static final String REG_UNIT_CAPTION = "RG";
+
+    public static final String FUN_MODULE_NEWAPPLN= "CRDRNR";
+
+    // public static final String FUN_MODULE_CORRECTION = "BFIFLN";
+
+    // public static final String DEATH_REGNO_UID= "CRDRNR";
 }

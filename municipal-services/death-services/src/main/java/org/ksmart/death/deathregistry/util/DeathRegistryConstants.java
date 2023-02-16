@@ -69,6 +69,8 @@ public class DeathRegistryConstants {
      public static final String LB_TYPE_CORPORATION_CAPTION = "C";
      public static final String LB_TYPE_MUNICIPALITY_CAPTION = "M";
      public static final String DEATH_REGNO_UID= "CRDRNR";
+
+     
      public static final String STATE_CODE= "KL";
      public static final String TENANT_EGOV_LOCATION= "egov-location";
      public static final String EGOV_LOCATION_JSONPATH = "$.MdmsRes.egov-location";
@@ -84,5 +86,10 @@ public class DeathRegistryConstants {
      //Rakhi S on 13.02.2023
      public static final String  DEATH_PLACE_OUTSIDE_JURISDICTION = "OUTSIDE_JURISDICTION";
      public static final String PLACE_OF_BURIAL ="Place of Burial : ";
+
+     public static final String REG_NUMBER_CAPTION ="RG";
+     public static final String FUN_MODULE_NEWAPPLN= "CRDRNR";
+
+
 
 }

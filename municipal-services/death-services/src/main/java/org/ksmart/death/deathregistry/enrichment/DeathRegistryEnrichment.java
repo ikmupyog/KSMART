@@ -15,10 +15,12 @@ import org.ksmart.death.common.Idgen.IdResponse;
 import org.ksmart.death.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.death.common.repository.IdGenRepository;
 import org.ksmart.death.common.repository.ServiceRequestRepository;
+import org.ksmart.death.deathapplication.util.IDGenerator;
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
 import org.ksmart.death.deathregistry.repository.DeathRegistryRepository;
 import org.ksmart.death.deathregistry.util.DeathRegistryConstants;
 import org.ksmart.death.deathregistry.util.DeathRegistryMdmsUtil;
+import org.ksmart.death.deathregistry.util.RegistryIDGenerator;
 import org.ksmart.death.deathregistry.web.models.AuditDetails;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
@@ -43,7 +45,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 public class DeathRegistryEnrichment implements BaseEnrichment{
-
+  //Jasmine 16.02.2023
+    private RegistryIDGenerator idGenerator;
    
 	@Autowired
 	IdGenRepository idGenRepository;
@@ -62,6 +65,10 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
 
     @Autowired
     DeathRegistryMdmsUtil util;
+    public DeathRegistryEnrichment( RegistryIDGenerator idGenerator) {
+
+        this.idGenerator = idGenerator;
+    }
 
 //Rakhi S ikm on 09.02.2023
     public void enrichCreate(DeathRegistryRequest request) {
@@ -96,47 +103,49 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
         
         request.getDeathCertificateDtls()
                 .forEach(deathdtls -> {    
-                    String registrationNo=null;
-                    Long registrationNoId=null;
-                    //Rakhi S on 10.02.2023 mdms call for tenand idgencode and lbtypecode
-                    Object mdmsData = util.mDMSCallRegNoFormating(request.getRequestInfo()
-                                        , request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
+                    // String registrationNo=null;
+                    // Long registrationNoId=null;
+                    // //Rakhi S on 10.02.2023 mdms call for tenand idgencode and lbtypecode
+                    // Object mdmsData = util.mDMSCallRegNoFormating(request.getRequestInfo()
+                    //                     , request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
 
-                    Map<String,List<String>> masterData = getAttributeValues(mdmsData);
+                    // Map<String,List<String>> masterData = getAttributeValues(mdmsData);
 
-                    String idgenCode = masterData.get(DeathRegistryConstants.TENANTS).toString();
-                    idgenCode = idgenCode.replaceAll("[\\[\\]\\(\\)]", "");
+                    // String idgenCode = masterData.get(DeathRegistryConstants.TENANTS).toString();
+                    // idgenCode = idgenCode.replaceAll("[\\[\\]\\(\\)]", "");
 
-                    Object mdmsDataLBType = util.mDMSCallLBType(request.getRequestInfo()
-                                    , request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
+                    // Object mdmsDataLBType = util.mDMSCallLBType(request.getRequestInfo()
+                    //                 , request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
 
-                    Map<String,List<String>> masterDataLBType = getAttributeValues(mdmsDataLBType);
+                    // Map<String,List<String>> masterDataLBType = getAttributeValues(mdmsDataLBType);
 
-                    String lbType = masterDataLBType.get(DeathRegistryConstants.TENANTS).toString();
-                    lbType = lbType.replaceAll("[\\[\\]\\(\\)]", "");
+                    // String lbType = masterDataLBType.get(DeathRegistryConstants.TENANTS).toString();
+                    // lbType = lbType.replaceAll("[\\[\\]\\(\\)]", "");
 
-                    String lbTypeCode = "";
+                    // String lbTypeCode = "";
 
-                    if(lbType.equals(DeathRegistryConstants.LB_TYPE_CORPORATION.toString())){
-                        lbTypeCode=DeathRegistryConstants.LB_TYPE_CORPORATION_CAPTION.toString();
-                    }
-                    else if(lbType.equals(DeathRegistryConstants.LB_TYPE_MUNICIPALITY.toString())){
-                        lbTypeCode=DeathRegistryConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
-                    }
-                    //end
+                    // if(lbType.equals(DeathRegistryConstants.LB_TYPE_CORPORATION.toString())){
+                    //     lbTypeCode=DeathRegistryConstants.LB_TYPE_CORPORATION_CAPTION.toString();
+                    // }
+                    // else if(lbType.equals(DeathRegistryConstants.LB_TYPE_MUNICIPALITY.toString())){
+                    //     lbTypeCode=DeathRegistryConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
+                    // }
+                    // //end
 
-                    if (RegistrationNoDetails.size()>=1) {
-                        //RegistrationNo new format decision by Domain team created by Rakhi S                       
-                        registrationNo=String.valueOf("RG-"+RegistrationNoDetails.get(0).get("regno"))+"-"+String.valueOf(Year)+"-"+DeathRegistryConstants.DEATH_REGNO_UID.toString()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathRegistryConstants.STATE_CODE.toString();
-                        registrationNoId=Long.parseLong(String.valueOf(RegistrationNoDetails.get(0).get("regno")));
-                    }
-                    else{
-                        registrationNo="RG-"+DeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+DeathRegistryConstants.DEATH_REGNO_UID.toString()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathRegistryConstants.STATE_CODE.toString();
-                        registrationNoId=Long.parseLong(DeathRegistryConstants.REGISTRATION_NUMBER_FIRST);
-                    }
-
-                        deathdtls.getDeathBasicInfo().setRegistrationNo(registrationNo);
-                        deathdtls.getDeathBasicInfo().setRegistrationNoID(registrationNoId);
+                    // if (RegistrationNoDetails.size()>=1) {
+                    //     //RegistrationNo new format decision by Domain team created by Rakhi S                       
+                    //     registrationNo=String.valueOf("RG-"+RegistrationNoDetails.get(0).get("regno"))+"-"+String.valueOf(Year)+"-"+DeathRegistryConstants.DEATH_REGNO_UID.toString()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathRegistryConstants.STATE_CODE.toString();
+                    //     registrationNoId=Long.parseLong(String.valueOf(RegistrationNoDetails.get(0).get("regno")));
+                    // }
+                    // else{
+                    //     registrationNo="RG-"+DeathRegistryConstants.REGISTRATION_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+DeathRegistryConstants.DEATH_REGNO_UID.toString()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathRegistryConstants.STATE_CODE.toString();
+                    //     registrationNoId=Long.parseLong(DeathRegistryConstants.REGISTRATION_NUMBER_FIRST);
+                    // }
+                    String IDGenerated = null;
+                    IDGenerated = idGenerator.setIDGenerator(request, DeathRegistryConstants.FUN_MODULE_NEWAPPLN,
+                                DeathRegistryConstants.REG_NUMBER_CAPTION);
+                        deathdtls.getDeathBasicInfo().setRegistrationNo(IDGenerated);
+                       // deathdtls.getDeathBasicInfo().setRegistrationNoID(registrationNoId);
                         deathdtls.getDeathBasicInfo().setRegistrationDate(currentTime);
                 });     
     }  
@@ -160,6 +169,8 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
         // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
     }
+
+
 
     // //Certificate Number Creation by Rakhi S 10.02.2023
     public void setCertificateNumberDetails(DeathRegistryRequest request) {
