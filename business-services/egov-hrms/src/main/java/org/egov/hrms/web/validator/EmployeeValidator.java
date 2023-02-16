@@ -190,7 +190,7 @@ public class EmployeeValidator {
         validateUserName(employees,errorMap,request.getRequestInfo());
 		validateWardCodes(employees, errorMap);
 		validateWardLabels(employees, errorMap);
-		validateHospitalJurisdiction(employees, errorMap);
+
 	}
 
 	/**
@@ -234,7 +234,9 @@ public class EmployeeValidator {
 	}
 
 	private void validateHospitalJurisdiction(List<Employee> employees, Map<String, String> errorMap) {
+
 		employees.forEach(employee -> {
+//			employee.getJurisdictions().get(0)
 			System.out.println("size" + employee.getJurisdictions().size());
 			if (employee.getJurisdictions().size() > 1) {
 				errorMap.put(ErrorConstants.HRMS_HOSPIAL_COUNT_LABEL, ErrorConstants.HRMS_HOSPIAL_COUNT_LABEL_MSG);
@@ -316,9 +318,14 @@ public class EmployeeValidator {
 		validateAssignments(employee, errorMap, mdmsData);
 		validateServiceHistory(employee, errorMap, mdmsData);
 		validateJurisdicton(employee, errorMap, mdmsData, boundaryMap);
-		validateHospital(employee, errorMap, mdmsDataHosp);
+
 		validateEducationalDetails(employee, errorMap, mdmsData);
 		validateDepartmentalTest(employee, errorMap, mdmsData);
+
+		if (employee.getEmployeeType().equals(HRMSConstants.HRMS_EMPLOYEE_TYPE_HOSP)) {
+			validateHospital(employee, errorMap, mdmsDataHosp);
+
+		}
 	}
 
 

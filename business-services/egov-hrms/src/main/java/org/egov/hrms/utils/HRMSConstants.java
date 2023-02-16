@@ -51,4 +51,6 @@ public class HRMSConstants {
 	public static final String LOCATION_MDMS_INSTITUTION = "institutionList";
 	public static final String MDMS_HOSPITALS_CODE_JSONPATH = "$.MdmsRes.egov-location.hospitalList[*].code";
 
+	public static final String HRMS_EMPLOYEE_TYPE_HOSP = "HOSPITAL";
+
 }
