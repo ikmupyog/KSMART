@@ -156,9 +156,9 @@ public class TLQueryBuilder {
         StringBuilder builder = new StringBuilder(QUERY);
 
         addBusinessServiceClause(criteria, preparedStmtList, builder);
-
-        if (criteria.getAccountId() != null
-                && !criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
+        String applicationtype = criteria.getApplicationType() == null ? "" : criteria.getApplicationType();
+        if (criteria.getAccountId() != null &&
+                !applicationtype.equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
             addClauseIfRequired(preparedStmtList, builder);
             builder.append(" tl.accountid = ? ");
             preparedStmtList.add(criteria.getAccountId());

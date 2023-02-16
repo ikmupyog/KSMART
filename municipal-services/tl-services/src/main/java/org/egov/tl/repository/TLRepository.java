@@ -59,7 +59,7 @@ public class TLRepository {
         List<Object> preparedStmtList = new ArrayList<>();
         String query = queryBuilder.getTLSearchQuery(criteria, preparedStmtList, false);
         List<TradeLicense> licenses = jdbcTemplate.query(query, preparedStmtList.toArray(), rowMapper);
-        // sortChildObjectsById(licenses);
+        sortChildObjectsById(licenses);
         return licenses;
     }
 
