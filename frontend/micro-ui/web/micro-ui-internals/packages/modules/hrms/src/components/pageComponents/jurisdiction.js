@@ -15,7 +15,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
 
 
   const [jurisdictions, setjurisdictions] = useState(
-    [
+    formData?.Jurisdictions || [
       {
         id: undefined,
         key: 1,
@@ -173,9 +173,9 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   }
 
   function getroledata() {
-    return data?.MdmsRes?.["ACCESSCONTROL-ROLES"].roles.map(role => { return { code: role.code, name: role?.name ? role?.name : " ", labelKey: 'ACCESSCONTROL_ROLES_ROLES_' + role.code } });
-  
-    // return filterData.filter((ele) => (jurisdictions.key>1 && ele.code === "HOSPITAL_OPERATOR")? return niull:return ele )
+   
+     return data?.MdmsRes?.["ACCESSCONTROL-ROLES"].roles.map(role => { return { code: role.code, name: role?.name ? role?.name : " ", labelKey: 'ACCESSCONTROL_ROLES_ROLES_' + role.code } })
+
   }
 
   //Maya
@@ -195,6 +195,10 @@ function getInstitutionList()
   return institutionEvent?.InstitutionTypePlaceOfEvent?.map((ab) =>{
     return {code :ab?.code , name: ab?.name}
   });
+}
+function getWardList()
+{
+  return []
 }
   if (isLoading) {
     return <Loader />;
@@ -222,6 +226,7 @@ function getInstitutionList()
           getHospitalNames={getHospitalNames}
           getInstitutionList={getInstitutionList}
           getwarddata={getwarddata}
+          getWardList={getWardList}
           handleRemoveUnit={handleRemoveUnit}
         />
       ))}
@@ -243,6 +248,7 @@ function Jurisdiction({
   getroledata,
   getHospitalNames,
   getInstitutionList,
+  getWardList,
   getwarddata,
   roleoption,
   hospitalOption,
@@ -285,7 +291,8 @@ function Jurisdiction({
   const [displayInstitution, setDisplayInstitution] =useState(false)
   const [institutionAddress, setInstitutionAddress] = useState()
   const [selectedRolesData, setSelectedRolesData] = useState("");
-
+  const [wardList, setWardList] = useState("");
+  const [wardName, setWardName] = useState("");
   
   let ZonalA = [];
   let cmbInfntWardNo = [];
@@ -438,15 +445,26 @@ function Jurisdiction({
   };
   //Jetheesh
   const setSelectZonalOffice = (value) => {
+    
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item ,TenantBoundary:[] ,zoneCode: value } : item)));
     setZonal(value);
     setIsInitialRender(true);
     setWardNo(null);
     setFilterWard(null);
+    // (displayHospital || displayInstitution? setWardList(value?.children?.map((emp)=>{
+    //   return {name:emp?.children[0]?.name, code:emp?.wardno, data:emp}
+    // })):setWardList([]))
+    let res= value?.children?.map((emp)=>{
+      return {name:emp?.children[0]?.name, code:emp?.wardno, data:emp}
+    })
+    setWardList(res)
   };
 
   //lekshmy
   const selectrolenew = (value) => {
+    // let re= wards && wards?.map((emp)=>{
+    //   return {name:emp?.children[0]?.name, code:emp?.wardno, data:emp}
+    // })
     (value.code === "HOSPITAL_OPERATOR" || value.code ===  "HOSPITAL_APPROVER") ? setDisplayHopital(true) : (setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? {
       ...item, hospitalCode: null, hospitalName: null,
       hospitalAddress: null,
@@ -455,7 +473,7 @@ function Jurisdiction({
       ...item, intitutiontype: null, institutionname: null,
       institutionaddress: null,
     } : item))), setDisplayInstitution(false));
-
+// console.log("waD",re)
     setSelectedRolesData(value.code)
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, role: value } : item)));
     getHospitalNames()  
@@ -481,6 +499,11 @@ function Jurisdiction({
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionaddress: value.address } : item)));
     console.log("JURIS",institutionName,value.name)
   }
+  const selectward1= (value)=>{
+    console.log("value",value)
+    setWardName(value)
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: [value.data]}  : item)));
+  }
   const selectHospital = (value) => {
     setHospitalName(value)
     let val=hospital.hospitalList.filter((ab) =>{
@@ -493,7 +516,7 @@ function Jurisdiction({
   
  };
  useEffect(()=>{
-console.log("jurisdiction",jurisdiction)
+console.log("jurisdiction123",jurisdiction)
  },[jurisdiction])
   const selectrole = (e, data) => {
     const index = jurisdiction?.roles.filter((ele) => ele.code == data.code);
@@ -540,9 +563,11 @@ console.log("jurisdiction",jurisdiction)
       res.push(ob?.[1]);
     });
     let tenantcode = tenantId.replace('.', '_').toUpperCase();
-    // res?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
-    res?.length>0 && res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
+    
+    // // res?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
+     res?.length>0 && res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
+     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
+    console.log("ress",e,res)
   };
 
 
@@ -613,37 +638,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
           />
         </LabelFieldPair>
 
-        <LabelFieldPair>
-          <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-          <div className="form-field">
-            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Czonal?.length>0 ? Czonal[0]:Zonal}
-              select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
-        </LabelFieldPair>
-
-        <LabelFieldPair>
-          <CardLabel className="card-label-smaller">{t("TL_LOCALIZATION_WARD_NO")} <span className="mandatorycss">*</span></CardLabel>
-          <div className="form-field">
-            <MultiSelectDropdown
-              className="form-field"
-              //isMandatory={true}
-              defaultUnit="Selected"
-              selected ={jurisdiction?.TenantBoundary}
-              // selected={jurisdiction?.jurisdictionChilds?.length>0?jurisdiction?.jurisdictionChilds:jurisdictions}
-              options={wards && wards}
-              onSelect={selectward}
-              optionsKey="name"
-              t={t}
-              placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`}
-            />
-            <div className="tag-container">
-
-              {jurisdiction?.TenantBoundary?.length > 0 &&
-                jurisdiction?.TenantBoundary.map((value, index) => {
-                  return <RemoveableTag key={index} text={`${t(value && value["name"]).slice(0, 22)} ...`} onClick={() => onRemoved(index, value)} />;
-                })}
-            </div>
-          </div>
-        </LabelFieldPair>
+    
 
         <LabelFieldPair>
           <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -716,6 +711,51 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
               </div>
             </LabelFieldPair>
           </div> : ""}
+          <LabelFieldPair>
+          <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Czonal?.length>0 ? Czonal[0]:Zonal}
+              select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
+        </LabelFieldPair>
+{displayHospital || displayInstitution?
+<div>
+         <LabelFieldPair>
+          <CardLabel>{t("TL_LOCALIZATION_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <Dropdown t={t} optionKey="name" isRequired="false" option={wardList} selected={jurisdiction?.TenantBoundary[0]}
+              select={selectward1} placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`} /></div>
+        </LabelFieldPair>
+</div>:
+ <LabelFieldPair>
+          <CardLabel className="card-label-smaller">{t("TL_LOCALIZATION_WARD_NO")} <span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <MultiSelectDropdown
+              className="form-field"
+              //isMandatory={true}
+              defaultUnit="Selected"
+              selected ={jurisdiction?.TenantBoundary}
+              // selected={jurisdiction?.jurisdictionChilds?.length>0?jurisdiction?.jurisdictionChilds:jurisdictions}
+              options={wards && wards}
+              onSelect={selectward}
+              optionsKey="name"
+              t={t}
+              placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`}
+            />
+            <div className="tag-container">
+
+              {jurisdiction?.TenantBoundary?.length > 0 &&
+                jurisdiction?.TenantBoundary.map((value, index) => {
+                  return <RemoveableTag key={index} text={`${t(value && value["name"]).slice(0, 22)} ...`} onClick={() => onRemoved(index, value)} />;
+                })}
+            </div>
+          </div>
+        </LabelFieldPair> }
+        {/* <LabelFieldPair>
+          <CardLabel>{t("TL_LOCALIZATION_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <Dropdown t={t} optionKey="name" isRequired="false" option={wards} selected={selectward}
+              select={selectward} placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`} /></div>
+        </LabelFieldPair> */}
 
       </div>
     </div>

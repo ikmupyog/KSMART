@@ -18,6 +18,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   let cmbWardNoFinal = [];
   let cmbStructure = [];
   let cmbPostOffice = [];
+  let cmbPO = [];
   let cmbPlace = [];
   let cmbSector = [];
   let cmbSectorFileterData = [];
@@ -25,7 +26,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const [formDataPage, setFormDataPage] = useState(window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade") ? formData : formData?.TradeDetails);
   const queryClient = useQueryClient();
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [flgCheckDoor, setFlgCheckDoor] = useState(false);
+  const [flgCheckDoor, setFlgCheckDoor] = useState(true); // ***********Change flag only for true for testing
   const [flgCheck, setFlgCheck] = useState(false);
   const [toast, setToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -78,6 +79,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const [LBTypeList, setLBTypeList] = useState(formDataPage?.localbodytype ? cmbLBType.filter((lbtype) => lbtype?.code.includes(formDataPage?.localbodytype?.code))[0] : "");
   const [Localbody, setLocalbody] = useState(formDataPage?.localbody ? cmbLB.filter((lb) => lb?.code.includes(formDataPage?.localbody?.code))[0] : "");
   const [FilterLocalbody, setFilterLocalbody] = useState([]);
+  const [FilterPostoffice, setFilterPostoffice] = useState([]);
   const [businessSector, setBusinessSector] = useState(formDataPage?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formDataPage?.tradeLicenseDetail?.businessSector))[0] : "");
   const [enterpriseType, setEnterpriseType] = useState(formDataPage?.tradeLicenseDetail?.enterpriseType ? formDataPage?.tradeLicenseDetail?.enterpriseType : "");
   const [BuildingType, setBuildingType] = useState(formData?.tradeLicenseDetail?.address?.buildingType ? buildingtype.filter((type) => type.code.includes(formData?.tradeLicenseDetail?.address?.buildingType))[0] : "");
@@ -126,7 +128,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const [WardNo, setWardNo] = useState(formDataPage?.tradeLicenseDetail?.address?.wardid ? cmbWardNoFinal.filter((ward) => ward?.code.includes(formDataPage?.tradeLicenseDetail?.address?.wardid))[0] : "");
   const [payloadDoor, setPayloadDoor] = useState([]);
   const [payloadDoorinit, setPayloadDoorinit] = useState({ "wardId": "0" });
-
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("TL_CREATE_TRADE");
@@ -345,7 +346,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   });
 
   const changesetDesiredLicensePeriod = (e => {
-    e.target.value>=1 && e.target.value<=5 ? setDesiredLicensePeriod(e.target.value.replace(/[^0-9.]/ig, '')) : e.target.value('') ;
+    e.target.value>=1 && e.target.value<=5 ? setDesiredLicensePeriod(e.target.value.replace(/[^0-9.]/ig, '')) : setDesiredLicensePeriod('') ;
   });
 
   const changesetNoofEmployees = (e => {
@@ -388,9 +389,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const selectIsResurveyed = (value => {
     setIsResurveyed(value);
     setValue3(value.code);
-    let door = [...fieldsDoor];
-    door[0].isResurveyed = value;
-    setFeildsDoor(door);
+    formStateDoor[0].isResurveyed = value;
   });
 
   const changesetBlockNo = (e => {
@@ -464,11 +463,24 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     //return fieldsDoor;
   };
   let data1 = [];
-  let configDoor = "";
+  let config1 =  {enabled: !!(payloadDoor && Object.keys(payloadDoor).length > 0)}
+  let searchReult="";
+  
 
-  const mutationsearchDoor = Digit.Hooks.tl.useSearchPde({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, configDoor });
-  let searchResultDoor = "";
+  const mutationDoor = Digit.Hooks.tl.useSearch({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, config1 });
 
+  useEffect(() => {
+    if ((payloadDoor.length === undefined)&&(structureType.code === "BUILDING")) {
+      if (mutationDoor !== undefined) {
+        if (mutationDoor?.status === "success") {
+          mutationDoor.mutate({ tenantId, filters: payloadDoor, config1 }, {
+            onSuccess,
+          });
+        }
+      }
+
+    }
+  }, [mutationDoor])
   const reducerDoor = (stateDoor, action) => {
 
     switch (action.type) {
@@ -484,7 +496,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
             doorNoSub: "",
             vehicleNo: "",
             vesselNo: "",
-            isResurveyed: false,
+            isResurveyed: "",
             stallNo: "",
           },
         ];
@@ -499,22 +511,23 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
           }
         });
       case "CHECK_DOOR":
-        queryClient.removeQueries("TL_SEARCH_PDE");
         data1["wardId"] = WardNo?.code ? WardNo.code : "";
         stateDoor.map((data, __index) => {
           data1["doorNo"] = data?.doorNo ? data.doorNo : "";
           data1["subNo"] = data?.doorNoSub ? data.doorNoSub : "";
-          configDoor = {
-            enabled: !!(data && Object.keys(data).length > 0)
+          config1 = {
+            enabled: !!(data1 && Object.keys(data1).length > 0)
           }
           data1 = {
             ...data1
           }
+
           setPayloadDoor(Object.keys(data1).filter(k => data1[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data1[key] === "object" ? data1[key].code : data1[key] }), {}));
-          searchResultDoor = mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError ? mutationsearchDoor.data.Licenses : "";
-          if (searchResultDoor?.length === 1) {
+          searchReult = mutationDoor?.status === "success" && mutationDoor?.isSuccess && !mutationDoor?.isError ? mutationDoor.data.Licenses : "";
+          if (searchReult?.length === 1) {
             setFlgCheckDoor(true);
           }
+
           setFlgCheck(true);
       });
       return [
@@ -534,14 +547,13 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         doorNoSub: "",
         vehicleNo: "",
         vesselNo: "",
-        isResurveyed: false,
+        isResurveyed: "",
         stallNo: ""
       },
     ];
   };
 
   const [formStateDoor, dispatchDoor] = isEdit || editview ? useReducer(reducerDoor, storedDoorData, initFnEdit) : useReducer(reducerDoor, storedDoorData, initFn);
-
   const handleTextInputField1  = useCallback((index, e, key, length = 100) => {
     if (e.length <= length) {
         dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e } });
@@ -586,8 +598,12 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setIsInitialRender(false);
       cmbLB.push(...LBs.filter((localbody) => ((localbody?.city?.districtid == DistrictList?.districtid) && (localbody?.city?.lbtypecode == LBTypeList?.code))));
       setFilterLocalbody(cmbLB);
+
+      cmbPO = [];
+      cmbPO.push(...cmbPostOffice.filter((po) => (po?.distid == DistrictList?.districtid)));
+      setFilterPostoffice(cmbPO);
     }
-  }, [isInitialRender, FilterLocalbody]);
+  }, [isInitialRender, FilterLocalbody,FilterPostoffice]);
 
   useEffect(() => {
     if ((isInitialRender)) {
@@ -631,25 +647,31 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   if (formDataPage?.tradeLicenseDetail?.structureType && structureType === undefined && cmbStructure.length > 0) {
     setStructureType(formDataPage?.tradeLicenseDetail?.structureType ? cmbPlace.filter((structure) => structure.code.includes(formDataPage?.tradeLicenseDetail?.structureType.code))[0] : "");
     setValue2(formDataPage?.tradeLicenseDetail?.structureType.code);
-  }setFeildsDoor
+  }
   if (formDataPage?.tradeLicenseDetail?.structurePlaceSubtype && structurePlaceSubtype === undefined && cmbPlace.length > 0) {
     setStructurePlaceSubtype(formDataPage?.tradeLicenseDetail?.structurePlaceSubtype ? cmbStructure.filter((place) => place.code.includes(formDataPage?.tradeLicenseDetail?.structurePlaceSubtype.code))[0] : "");
   }
   if (formDataPage?.tradeLicenseDetail?.ownershipCategory && ownershipCategory === undefined && ownershipCategoryMenu.length > 0) {
     setOwnershipCategory(formDataPage?.tradeLicenseDetail?.ownershipCategory ? ownershipCategoryMenu.filter((category) => category.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory.code))[0] : "");
   }
-  if (formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed && ownershipCategoryMenu === undefined && menu.length > 0) {
-    setIsResurveyed(formDataPage?.tradeLicenseDetail?.structurePlace[0].isResurveyed ? "YES":"NO");
-    setValue3(formDataPage?.tradeLicenseDetail?.structurePlace[0].isResurveyed ? "YES":"NO")
+  if (formDataPage?.tradeLicenseDetail?.structurePlace[0]?.isResurveyed?.code && !value3) {
+    setIsResurveyed(formDataPage?.tradeLicenseDetail?.structurePlace[0].isResurveyed.code);
+    setValue3(formDataPage?.tradeLicenseDetail?.structurePlace[0].isResurveyed.code);
   }
   if (formDataPage?.tradeLicenseDetail?.address?.postOffice && typeof(PostOffice) === "object" && cmbPostOffice.length > 0 && !(postOffice)) {
     setPostOffice(formDataPage?.tradeLicenseDetail?.address?.postOffice ? cmbPostOffice.filter((poffice) => poffice.code.includes(formDataPage?.tradeLicenseDetail?.address?.postOffice.code))[0] : "");
   }
   if ((formDataPage?.tradeLicenseDetail?.tradeUnits || formDataPage?.tradeLicenseDetail?.structurePlace) && editview) {
     setFeilds(formDataPage?.tradeLicenseDetail?.tradeUnits ? [formDataPage?.tradeLicenseDetail?.tradeUnits] : [{ businesscategory: "", businesstype: "", businesssubtype: "", unit: null, uom: null }]);
-    setFeildsDoor(formDataPage?.tradeLicenseDetail?.structurePlace ? formDataPage?.tradeLicenseDetail?.structurePlace : initFnEdit());
+    setFeildsDoor(formDataPage?.tradeLicenseDetail?.structurePlace ? 
+      formDataPage?.tradeLicenseDetail?.structurePlace : initFnEdit());
     setEditview(false);
+    setFlgCheck(true);
+    setFlgCheckDoor(false);
   }
+
+
+
   function validateData() {
     let mobilevalidation = /^[5-9]{1}[0-9]{9}$/;
     let validation = true;
@@ -716,7 +738,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       let localbody = Localbody;
 
       let tradeLicenseDetail = { businessSector, capitalInvestment, enterpriseType, structureType, structurePlaceSubtype, businessActivityDesc, noOfEmployees, ownershipCategory, address, tradeUnits, structurePlace, }
-      console.log(tradeLicenseDetail);
       onSelect(config.key, { districtid, localbodytype, localbody, commencementDate, tradeLicenseDetail, licenseUnitName, licenseUnitNameLocal, desiredLicensePeriod });
     } 
     else {
@@ -738,14 +759,15 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         || !fields[0].businesscategory || !fields[0].businesstype || !fields[0].businesssubtype || capitalInvestment === "" || !commencementDate
         || desiredLicensePeriod === "" || noOfEmployees === "" || licenseUnitName === "" ||licenseUnitNameLocal === "" || contactno === "" || email === "" 
         || !structureType || !structurePlaceSubtype || !ownershipCategory 
-        || (value2 === "LAND"  ? (value3 === "" || locality === "" || buildingName === "" ||  formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "" ) : false)
+        || (value2 === "LAND"  ? (value3 === "" || locality === "" || buildingName === "" 
+        ||  formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "" ) : false)
         || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
-        || (value2 === "BUILDING"  ?  (formStateDoor[0].doorNo  === "" ||  formStateDoor[0].doorNoSub  === "" ||locality === "" || buildingName === "") : false)
+        || (value2 === "BUILDING"  ?  (formStateDoor[0].doorNo  === "" ||  locality === "" || buildingName === "") : false)
         || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo  === "") : false) 
         || (value2 === "VEHICLE"  ? (formStateDoor[0].vehicleNo === "" || serviceArea === "") : false)
         || (value2 === "WATER"  ? (formStateDoor[0].vesselNo === "" || waterbody === ""  || serviceArea === "")  : false)
         || (value2 === "DESIGNATEDPLACE" ? false : false) 
-        //|| flgCheckDoor === true && flgCheck === false
+        || flgCheckDoor === true && flgCheck === false
           }  
          >
     
@@ -904,7 +926,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                           </CardLabel>&nbsp;
                         </div>
                         <div className="col-md-8" >
-                          <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={isResurveyed} onSelect={selectIsResurveyed} disabled={isEdit} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
+                          <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={field?.isResurveyed} onSelect={selectIsResurveyed} disabled={isEdit} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
                         </div>
                       </div>
                       {value3 === "YES" && (
@@ -958,7 +980,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="buildingName" value={buildingName} onChange={changesetBuildingName} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_BUILDING_NAME") })} />
                         </div>
                         <div className="col-md-4" ><CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-                          <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPostOffice} selected={postOffice} select={selectsetPostOffice} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
+                          <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={FilterPostoffice} selected={postOffice} select={selectsetPostOffice} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
                         </div>
                         <div className="col-md-4" ><CardLabel>{`${t("TL_PIN")}`}<span className="mandatorycss">*</span></CardLabel>
                           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode} onChange={changesetPincode} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_PIN") })} />
