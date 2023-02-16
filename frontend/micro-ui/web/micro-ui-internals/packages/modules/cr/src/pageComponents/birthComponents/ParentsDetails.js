@@ -170,7 +170,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
 
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.length === 51) {
+    if (e.target.value.trim().length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -179,7 +179,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   }
 
   function setSelectMotherFirstNameMl(e) {
-    if (e.target.value.length === 51) {
+    if (e.target.value.trim().length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -188,12 +188,12 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   }
 
   function setSelectMotherAadhar(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setMotherAadhar(e.target.value);
+    if (e.target.value.trim().length != 0) {
+      if (e.target.value.trim().length > 12) {
+        // setMotherAadhar(e.target.value.trim());
         setMotherAadharError(true);
         return false;
-      } else if (e.target.value.length < 12) {
+      } else if (e.target.value.trim().length < 12) {
         setMotherAadharError(true);
         setMotherAadhar(e.target.value);
         return false;
@@ -209,14 +209,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectFatherAadhar(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
+    if (e.target.value.trim().length != 0) {
+      if (e.target.value.trim().length > 12) {
+        // setChildAadharNo(e.target.value.trim());
         setFatherAadharError(true);
         // const limit = 12;
-        // setFatherAadhar(e.target.value.slice(0, limit));
+        // setFatherAadhar(e.target.value.trim().slice(0, limit));
         // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.length < 12) {
+      } else if (e.target.value.trim().length < 12) {
         setFatherAadharError(true);
         setFatherAadhar(e.target.value);
         return false;
@@ -232,14 +232,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectFatherMobile(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 10) {
-        // setChildAadharNo(e.target.value);
+    if (e.target.value.trim().length != 0) {
+      if (e.target.value.trim().length > 10) {
+        // setChildAadharNo(e.target.value.trim());
         setFatherMobileError(true);
         // const limit = 12;
-        // setFatherAadhar(e.target.value.slice(0, limit));
+        // setFatherAadhar(e.target.value.trim().slice(0, limit));
         // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.length < 10) {
+      } else if (e.target.value.trim().length < 10) {
         setFatherMobileError(true);
         setFatherMobile(e.target.value);
         return false;
@@ -255,7 +255,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectFatherEmail(e) {
-    if (e.target.value.length === 51) {
+    if (e.target.value.trim().length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -264,7 +264,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   }
 
   function setSelectMotherMarriageAge(e) {
-    if (e.target.value.length === 3) {
+    if (e.target.value.trim().length === 3) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -272,7 +272,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectMotherMarriageBirth(e) {
-    if (e.target.value.length === 3) {
+    if (e.target.value.trim().length === 3) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -295,7 +295,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   
 
   function setSelectOrderofChildren(e) {
-    if (e.target.value.length === 3) {
+    if (e.target.value.trim().length === 3) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -322,7 +322,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   }
   
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.length === 51) {
+    if (e.target.value.trim().length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -330,7 +330,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectFatherFirstNameMl(e) {
-    if (e.target.value.length === 51) {
+    if (e.target.value.trim().length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
