@@ -32,12 +32,12 @@ public class DeathApplnQueryBuilder extends BaseQueryBuilder {
          .append(" , stat.createdby, stat.createdtime, stat.lastmodifiedby, stat.lastmodifiedtime, stat.nationality ,dt.burial_state,stat.occupation_sub, stat.occupation_minor, stat.education_main, stat.education_sub, stat.residencelbtype")
          .append(" , stat.smoking_type,stat.tobacco_type,stat.arecanut_type,stat.alcohol_type,dt.ack_no , dt.status,dt.action,dt.appl_type ,dt.registration_no ,dt.registration_date  ,")
          .append("dt.appl_type,dt.businessservice ,dt.workflowcode ,dt.funcion_uid ,")
-         .append("dt.initiator_name,dt.initiator_aadhar_submitted ,dt.initiator_aadhar_no ,dt.initiator_mobile_no,dt.initiator_relation ,dt.assignee,dt.informant_address,dt.initiator_address,")
+         .append("dt.initiator_name,dt.initiator_aadhar_submitted ,dt.initiator_aadhar_no ,dt.initiator_mobile_no,dt.initiator_relation ,dt.assignee,dt.informant_address,dt.initiator_address")
          .append(" ,dt.death_place_locality_en")
          .append(" ,dt.death_place_locality_ml")
          .append(" ,dt.death_place_street_en")
-         .append(" ,dt.death_place_street_ml ,")
-         .append(" ,dt.is_declaration_informant ,")
+         .append(" ,dt.death_place_street_ml ")
+         .append(" ,dt.is_declaration_informant ")
          .append(" ,dt.is_declaration_initiator ,")
          .append("stat.autopsy_performed,")
          .append("stat.autopsy_completed,")
@@ -245,5 +245,9 @@ public String getDeathAckNoIdQuery(@NotNull String tenantId ,int Year ,@NotNull 
             addFilter("A.applnYear", Year, query, preparedStmtValues);                                          
             return query.toString();
 }  
+public String getNextIDQuery() {
+  StringBuilder query = new StringBuilder("select fn_next_id(?,?,?,?)");
+  return query.toString();
     
+}
 }
