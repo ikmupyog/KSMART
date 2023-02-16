@@ -5,12 +5,13 @@ import { useTranslation } from "react-i18next";
 
 const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, presentOutSideIndiaAdressEn, setAdressEn,
   presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
-  setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaadrsVillage, setadrsVillage,
+  setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaProvinceMl, setProvinceMl, presentOutSideIndiaadrsVillage, setadrsVillage,
   presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode, presentOutSideCountry,
   setOutSideCountry, countryvalue, setCountryValue,
   isPrsentAddress, setIsPrsentAddress, PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
   PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
   PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
+  PermntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
   PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
   PermanentOutsideIndiaPostCode, setPermantpostCode, PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry
 }) => {
@@ -137,6 +138,18 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
       }
     }
   }
+  function setSelectProvinceMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setProvinceMl(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      if (isPrsentAddress) {
+        setPermntOutsideIndiaprovinceMl(presentOutSideIndiaProvinceEn);
+      } else {
+        setPermntOutsideIndiaprovinceMl('');
+      }
+    }
+  }
 
   function setSelectOutSideCountry(value) {
     setOutSideCountry(value);
@@ -164,7 +177,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
           setPermantpostCode('');
         }
       }
-    } 
+    }
   }
   const goNext = () => {
     // sessionStorage.setItem("presentOutSideIndiaAdressEn", presentOutSideIndiaAdressEn ? presentOutSideIndiaAdressEn  : null);
@@ -202,166 +215,162 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>
-                {`${t("CS_COMMON_COUNTRY")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                option={cmbCountry}
-                selected={presentOutSideCountry}
-                select={setSelectOutSideCountry}
-                placeholder={`${t("CS_COMMON_COUNTRY")}`}
-              />
-            </div>
-            <div className="col-md-6">
-              <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="presentOutSideIndiaProvinceEn"
-                value={presentOutSideIndiaProvinceEn}
-                onChange={setSelectProvinceEn}
-                placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
-              />
-            </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {`${t("CS_COMMON_COUNTRY")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              option={cmbCountry}
+              selected={presentOutSideCountry}
+              select={setSelectOutSideCountry}
+              placeholder={`${t("CS_COMMON_COUNTRY")}`}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaProvinceEn"
+              value={presentOutSideIndiaProvinceEn}
+              onChange={setSelectProvinceEn}
+              placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")} <span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaProvinceMl"
+              value={presentOutSideIndiaProvinceMl}
+              onChange={setSelectProvinceMl}
+              placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+            />
           </div>
         </div>
 
         <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CR_TOWN_VILLAGE_EN")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="i18nKey"
-                option={cmbUrbanRural}
-                selected={presentOutSideIndiaadrsVillage}
-                select={setSelectadrsVillage}
-                placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="presentOutSideIndiaadrsCityTown"
-                value={presentOutSideIndiaadrsCityTown}
-                onChange={setSelectadrsCityTown}
-                placeholder={`${t("CR_CITY_TOWN_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>{t("CR_ZIP_CODE")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="presentOutSideIndiaPostCode"
-                value={presentOutSideIndiaPostCode}
-                onChange={setSelectPostCode}
-                placeholder={`${t("CR_ZIP_CODE")}`}
-                {...(validation = {
-                  pattern: "^[a-zA-Z-.0-9`' ]*$",
-                  isRequired: true,
-                  type: "number",
-                  maxLength: 6,
-                  minLength: 6,
-                  title: t("CR_INVALID_ZIP_CODE"),
-                })}
-              />
-            </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CR_TOWN_VILLAGE_EN")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="i18nKey"
+              option={cmbUrbanRural}
+              selected={presentOutSideIndiaadrsVillage}
+              select={setSelectadrsVillage}
+              placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaadrsCityTown"
+              value={presentOutSideIndiaadrsCityTown}
+              onChange={setSelectadrsCityTown}
+              placeholder={`${t("CR_CITY_TOWN_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>{t("CR_ZIP_CODE")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaPostCode"
+              value={presentOutSideIndiaPostCode}
+              onChange={setSelectPostCode}
+              placeholder={`${t("CR_ZIP_CODE")}`}
+              {...(validation = {
+                pattern: "^[a-zA-Z-.0-9`' ]*$",
+                isRequired: true,
+                type: "number",
+                max: 6,
+                min: 6,
+                title: t("CR_INVALID_ZIP_CODE"),
+              })}
+            />
           </div>
         </div>
 
         <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="presentOutSideIndiaAdressEn"
-                value={presentOutSideIndiaAdressEn}
-                onChange={setSelectAdressEn}
-                placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
-              />
-            </div>
-
-            <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="presentOutSideIndiaAdressEnB"
-                value={presentOutSideIndiaAdressEnB}
-                onChange={setSelectAdressEnB}
-                placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
-              />
-            </div>
+          <div className="col-md-6">
+            <CardLabel>{t("CR_ADDRES_LINE_ONE_EN")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaAdressEn"
+              value={presentOutSideIndiaAdressEn}
+              onChange={setSelectAdressEn}
+              placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
+            />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="presentOutSideIndiaAdressMl"
-                value={presentOutSideIndiaAdressMl}
-                onChange={setSelectAdressMl}
-                placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
-                  type: "text",
-                  title: t("CR_INVALID_ADDRES_LINE_ONE_ML"),
-                })}
-              />
-            </div>
-            <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="presentOutSideIndiaAdressMlB"
-                value={presentOutSideIndiaAdressMlB}
-                onChange={setSelectAdressMlB}
-                placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: true,
-                  type: "text",
-                  title: t("CR_INVALID_ADDRES_LINE_TWO_ML"),
-                })}
-              />
-            </div>
+          <div className="col-md-6">
+            <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaAdressMl"
+              value={presentOutSideIndiaAdressMl}
+              onChange={setSelectAdressMl}
+              placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_ADDRES_LINE_ONE_ML"),
+              })}
+            />
+          </div>
+          <div className="col-md-6">
+            <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaAdressEnB"
+              value={presentOutSideIndiaAdressEnB}
+              onChange={setSelectAdressEnB}
+              placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
+            />
+          </div>
+          <div className="col-md-6">
+            <CardLabel>{t("CR_ADDRES_LINE_TWO_ML")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaAdressMlB"
+              value={presentOutSideIndiaAdressMlB}
+              onChange={setSelectAdressMlB}
+              placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_ADDRES_LINE_TWO_ML"),
+              })}
+            />
           </div>
         </div>
       </FormStep>

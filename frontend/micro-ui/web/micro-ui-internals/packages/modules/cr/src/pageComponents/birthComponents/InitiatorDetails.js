@@ -1,46 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(
-    formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : false
-  );
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : false);
   const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : "");
-  const [initiatorNameEn, setinitiatorNameEn] = useState(
-    formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : ""
-  );
-  const [initiatorAadhar, setinitiatorAadhar] = useState(
-    formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : ""
-  );
-
-  const [initiatorMobile, setinitiatorMobile] = useState(
-    formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : ""
-  );
-  const [initiatorDesi, setinitiatorDesi] = useState(
-    formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : ""
-  );
-  const [initiatorAddress, setinitiatorAddress] = useState(
-    formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : ""
-  );
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : "");
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : "");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
-  const [relationnError, setrelationnError] = useState(formData?.InitiatorinfoDetails?.relation ? false : false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
-  const [mobileLengthError, setMobileLengthError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
-  const [initiatorAddressError, setinitiatorAddressError] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? false : false);
-
+ 
   const onSkip = () => onSelect();
 
   useEffect(() => {
@@ -56,7 +36,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
 
-  const userInfo = window.localStorage.getItem("Citizen.user-info.");
+  const userInfo = window.localStorage.getItem("Citizen.user-info");
   console.log(localStorage.getItem(userInfo));
 
   function setSelectrelation(e) {
@@ -222,9 +202,6 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-            {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-            <BackButton >{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration}>
         <div className="row">
           <div className="col-md-12">
@@ -253,18 +230,15 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
         </div>
 
         <div className="row">
-          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="relation"
                 value={relation}
                 onChange={setSelectrelation}
-                disable={isEdit}
                 placeholder={`${t("CR_RELATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })}
               />
@@ -277,13 +251,11 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"number"}
                 optionKey="i18nKey"
                 name="initiatorAadhar"
                 value={initiatorAadhar}
                 onChange={setSelectinitiatorAadhar}
-                disable={isEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -296,21 +268,17 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"text"}
                 optionKey="i18nKey"
                 name="initiatorNameEn"
                 value={userInfo}
                 onChange={setSelectinitiatorNameEn}
-                disable={isEdit}
                 placeholder={`${t("CR_INFORMANT_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>
-          </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
             <div className="row">
               <div className="col-md-12">
                 <CheckBox label={t("CR_INITIATOR_IS_CARETAKER")} onChange={setCaretaker} value={isCaretaker} checked={isCaretaker} />
@@ -325,13 +293,11 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                   </CardLabel>
                   <TextInput
                     t={t}
-                    isMandatory={true}
                     type={"text"}
                     optionKey="i18nKey"
                     name="initiatorDesi"
                     value={initiatorDesi}
                     onChange={setSelectinitiatorDesi}
-                    disable={isEdit}
                     placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
                   />
@@ -346,13 +312,11 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
                 type={"number"}
                 optionKey="i18nKey"
                 name="initiatorMobile"
                 value={initiatorMobile}
                 onChange={setSelectinitiatorMobile}
-                disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -361,18 +325,15 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
                 name="initiatorAddress"
                 value={initiatorAddress}
                 onChange={setSelectinitiatorAddress}
-                disable={isEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
-          </div>
         </div>
 
         {toast && (
