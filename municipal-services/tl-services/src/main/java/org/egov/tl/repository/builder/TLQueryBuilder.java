@@ -79,7 +79,7 @@ public class TLQueryBuilder {
             +
             "eg_tl_owner_pde.id as ownerpde_id, ownertype as ownerpde_ownertype, active as ownertype_active, ownername as ownertype_ownername, "
             +
-            "aadharno as ownerpde_aadharno, address as ownerpde_address, email as ownerpde_email, mobilenumber as ownerpde_mobilenumber, "
+            "aadharno as ownerpde_aadharno, address as ownerpde_address, email as ownerpde_email, mobilenumber as ownerpde_mobilenumber "
             +
             ""
             +
