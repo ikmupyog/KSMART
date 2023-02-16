@@ -93,7 +93,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           </div>
         </div>
         <div style={{
-          maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"800PX",backgroundColor: "lightblue" }} >
+          maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"800PX",backgroundColor: "#e2eaed" }} >
           {/* class="site-wrap" */}
 
           <div className="row" >
@@ -101,7 +101,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>  {`${t("CR_CHILD_NAME")}`} </CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.childFirstNameEn)} {t(ChildDetails.childMiddleNameEn  )} {t(ChildDetails.childLastNameEn ? ChildDetails.childLastNameEn : 'NA' )} </CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.childFirstNameEn ? ChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(ChildDetails.childMiddleNameEn  )} {t(ChildDetails.childLastNameEn  )} </CardText>
             </div>
            
           </div>
@@ -140,7 +140,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.MotherFirstNameEn ? ParentsDetails.MotherFirstNameEn : 'NA')}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.MotherFirstNameEn ? ParentsDetails.MotherFirstNameEn : 'CR_NOT_RECORDED')}</CardText>
             </div>
           </div>
           <div className="row">
@@ -148,7 +148,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_FATHER_NAME")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.FatherFirstNameEn ? ParentsDetails.FatherFirstNameEn : 'NA')}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.FatherFirstNameEn ? ParentsDetails.FatherFirstNameEn : 'CR_NOT_RECORDED')}</CardText>
             </div>
           </div>
           
@@ -157,15 +157,33 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_PRESENT_ADDRESS")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : 'NA')}
-              {t(AddressBirthDetails.presentInsideKeralaStreetNameEn ? AddressBirthDetails.presentInsideKeralaStreetNameEn : 'NA')}  
-              {t(AddressBirthDetails.presentInsideKeralaLocalityNameEn ? AddressBirthDetails.presentInsideKeralaLocalityNameEn : 'NA')} 
-              {t(AddressBirthDetails.presentInsideKeralaDistrict.code )} 
-              {t( AddressBirthDetails.presentaddressStateName.statecode)} 
-              {t( AddressBirthDetails.presentaddressCountry .code )}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(AddressBirthDetails.presentInsideKeralaHouseNameEn  ? AddressBirthDetails.presentInsideKeralaHouseNameEn : 'CR_NOT_RECORDED' )} ,
+                {t(AddressBirthDetails.presentInsideKeralaStreetNameEn ? AddressBirthDetails.presentInsideKeralaStreetNameEn : 'CR_NOT_RECORDED' )}, 
+              {t(AddressBirthDetails.presentInsideKeralaLocalityNameEn ? AddressBirthDetails.presentInsideKeralaLocalityNameEn : 'CR_NOT_RECORDED')},
+              {t(AddressBirthDetails.presentInsideKeralaDistrict  ? AddressBirthDetails.presentInsideKeralaDistrict.name : 'CR_NOT_RECORDED')},
+              {t( AddressBirthDetails.presentaddressStateName ? AddressBirthDetails.presentaddressStateName.name : 'CR_NOT_RECORDED' )},
+              {t( AddressBirthDetails.presentaddressCountry.name )}
+              </CardText>
               
             </div>
           </div> 
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_PERMANENT_ADDRESS")}`}</CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn  ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : 'CR_NOT_RECORDED' )} ,
+                {t(AddressBirthDetails.permntInKeralaAdrStreetNameEn ? AddressBirthDetails.permntInKeralaAdrStreetNameEn : 'CR_NOT_RECORDED' )} , 
+              {t(AddressBirthDetails.permntInKeralaAdrLocalityNameEn ? AddressBirthDetails.permntInKeralaAdrLocalityNameEn : 'CR_NOT_RECORDED'  )} ,
+              {t(AddressBirthDetails.permntInKeralaAdrDistrict  ? AddressBirthDetails.permntInKeralaAdrDistrict.name : 'CR_NOT_RECORDED'   )},
+              {t( AddressBirthDetails.permtaddressStateName ? AddressBirthDetails.permtaddressStateName.name : 'CR_NOT_RECORDED' )} ,
+              {t( AddressBirthDetails.permtaddressCountry ? AddressBirthDetails.permtaddressCountry.name : 'CR_NOT_RECORDED' )}
+              </CardText>
+              
+            </div>
+          </div> 
+
+         
         </div>
 
         <div className="row">
