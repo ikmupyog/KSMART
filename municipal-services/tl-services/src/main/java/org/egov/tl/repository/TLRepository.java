@@ -134,7 +134,7 @@ public class TLRepository {
         if (CollectionUtils.isEmpty(tradeLicenses))
             return;
         tradeLicenses.forEach(license -> {
-            license.getTradeLicenseDetail().getOwners().sort(Comparator.comparing(User::getUuid));
+            // license.getTradeLicenseDetail().getOwners().sort(Comparator.comparing(User::getUuid));
             license.getTradeLicenseDetail().getTradeUnits().sort(Comparator.comparing(TradeUnit::getId));
 
             List<Document> applnDocuments = license.getTradeLicenseDetail().getApplicationDocuments();
