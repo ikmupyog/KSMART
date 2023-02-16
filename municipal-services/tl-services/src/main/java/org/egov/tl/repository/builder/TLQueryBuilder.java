@@ -346,7 +346,7 @@ public class TLQueryBuilder {
         preparedStmtList.add("PdeTL");
         preparedStmtList.add(TLConstants.STATUS_APPROVED);
 
-        builder.append(" OR (tl.workflowcode = ? AND tl.status=?)) ");
+        builder.append(" OR (tl.workflowcode = ? AND tl.status=?) ");
         preparedStmtList.add("RenewalTL");
         preparedStmtList.add(TLConstants.STATUS_APPROVED);
 
