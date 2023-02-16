@@ -36,7 +36,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
 
-  const userInfo = window.localStorage.getItem("Citizen.user-info.");
+  const userInfo = window.localStorage.getItem("Citizen.user-info");
   console.log(localStorage.getItem(userInfo));
 
   function setSelectrelation(e) {
