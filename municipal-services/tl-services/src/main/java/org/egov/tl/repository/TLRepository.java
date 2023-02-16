@@ -150,9 +150,9 @@ public class TLRepository {
     public List<TradeLicense> getPlainLicenseSearch(TradeLicenseSearchCriteria criteria) {
         List<Object> preparedStmtList = new ArrayList<>();
         String query = queryBuilder.getTLPlainSearchQuery(criteria, preparedStmtList);
-        log.info("Query: " + query);
+        // log.info("Query: " + query);
         List<TradeLicense> licenses = jdbcTemplate.query(query, preparedStmtList.toArray(), rowMapper);
-        sortChildObjectsById(licenses);
+        // sortChildObjectsById(licenses);
         return licenses;
     }
 
