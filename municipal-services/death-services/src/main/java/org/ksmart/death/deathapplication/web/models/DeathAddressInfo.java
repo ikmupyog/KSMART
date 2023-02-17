@@ -249,6 +249,12 @@ public class DeathAddressInfo {
     @JsonProperty("PresentAddrPostalCode")
     private String presentAddrPostalCode ;
 
+    @JsonProperty("PresentAddrTownOrVillage")
+    private String presentAddrTownOrVillage ;
+
+    @JsonProperty("PresentAddrCityOrVillageEn")
+    private String presentAddrCityOrVillageEn ;
+
     ////Permanant
     @Size(max = 1000)
     @JsonProperty("permtaddressCountry")
@@ -393,6 +399,10 @@ public class DeathAddressInfo {
     @JsonProperty("PermntOutsideIndiaCountry")
     private String PermntOutsideIndiaCountry;
 
+    @Size(max = 2500)
+    @JsonProperty("PermntOutsideIndiaprovinceMl")
+    private String PermntOutsideIndiaprovinceMl;
+
 
     ////Db Fields//////
 
@@ -459,5 +469,12 @@ public class DeathAddressInfo {
 
     @JsonProperty("PermanentAddrPostalCode")
     private String permanentAddrPostalCode ;
+
+    @JsonProperty("PermanentAddrTownOrVillage")
+    private String permanentAddrTownOrVillage ;
+
+    @JsonProperty("PermanentAddrCityOrVillageEn")
+    private String permanentAddrCityOrVillageEn ;
+
     
 }
