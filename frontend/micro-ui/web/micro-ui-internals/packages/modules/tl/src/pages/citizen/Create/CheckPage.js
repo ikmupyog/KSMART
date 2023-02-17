@@ -58,7 +58,6 @@ const CheckPage = ({ onSubmit, value }) => {
     routeLink = routeLink.replace("/check", "");
   }
   const docstatus = TradeDetails?.ownersdoc?.length > 0 ? true : false;
-  console.log(JSON.stringify(TradeDetails));
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
@@ -147,7 +146,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.businesssubtype?.businesscategory?.i18nKey}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesssubtype?.i18nKey}</CardText>
                 </div>
               </div>
             </div>
@@ -171,7 +170,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSE_PERIOD")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.desiredLicensePeriod}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.desiredLicensePeriod?.name}</CardText>
                 </div>
               </div>
             </div>
@@ -476,7 +475,7 @@ const CheckPage = ({ onSubmit, value }) => {
             </StatusTable>
           )}
         </div>
-        {TradeDetails?.tradeLicenseDetail?.licenseeType === "INSTITUTION" && (
+        {TradeDetails?.tradeLicenseDetail?.licenseeType?.code === "INSTITUTION" && (
           <div>
             <div className="row">
               <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>Institution Details</span></h1>
@@ -629,7 +628,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.emailId}</CardText>
                   </div>
-                  {TradeDetails?.licenseeType === "INSTITUTION" && (
+                  {TradeDetails?.licenseeType?.code === "INSTITUTION" && (
                     <div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LICENSEE_DESIGNATION")}`}</CardText>

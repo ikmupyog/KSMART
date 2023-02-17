@@ -25,8 +25,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
 
   const [minDate, setMinDate] = useState('2018-01-01');
   const [formDataPage, setFormDataPage] = useState(window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade") ? formData : formData?.TradeDetails);
-  console.log("formDataPage");
-  console.log(formDataPage);
   const queryClient = useQueryClient();
   const [tenantboundary, setTenantboundary] = useState(false);
   const [flgCheckDoor, setFlgCheckDoor] = useState(); // ***********Change flag only for true for testing
@@ -693,8 +691,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setFilterPostoffice(cmbPO);
 
       if(formDataPage && formDataPage?.tradeLicenseDetail?.structureType){
-        console.log("structureType");
-        console.log(formDataPage?.tradeLicenseDetail?.structureType);
         setOwnershipCategoryMenu(ownershipCategoryMenumain);
         if(formDataPage?.tradeLicenseDetail?.structureType?.code === "DESIGNATEDPLACE"){
           let tempval=ownershipCategoryMenumain;
