@@ -1,4 +1,5 @@
 import { CardLabel, CardLabelDesc, FormStep, UploadFile } from "@egovernments/digit-ui-react-components";
+import { set } from "lodash";
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/TLTimeline";
 
@@ -155,11 +156,14 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
                 "documentType": docuploadedId, "description": docuploadedName,
                 "fileStoreId": response?.data?.files[0]?.fileStoreId, "name": file.name, "type": file.type, "size": file.size
               };
-              // const removeindex = uploadedFiles.findIndex(element => {
+              // let tempfiles=uploadedFiles;
+              // const removeindex = tempfiles.findIndex(element => {
               //   return element.documentType ===temp.documentType
               // });
               // if(removeindex !== -1){
-              //   setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+              //   tempfiles=tempfiles.splice(removeindex,1);
+              //   setUploadedFiles(tempfiles);
+              //  // setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
               // }
               uploadedFiles.push(temp);
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
