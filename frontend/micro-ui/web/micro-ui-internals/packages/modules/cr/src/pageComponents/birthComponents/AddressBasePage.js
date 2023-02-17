@@ -14,6 +14,8 @@ import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
 const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
+    let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
     tenantId = Digit.ULBService.getCurrentTenantId();
     if (tenantId === "kl") {
         tenantId = Digit.ULBService.getCitizenCurrentTenant();

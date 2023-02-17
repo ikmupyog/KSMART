@@ -203,6 +203,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
   return (
     <React.Fragment>
+       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration}>
         <div className="row">
           <div className="col-md-12">

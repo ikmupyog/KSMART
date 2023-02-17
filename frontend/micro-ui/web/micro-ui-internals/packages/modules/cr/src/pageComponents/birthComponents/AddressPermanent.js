@@ -7,6 +7,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     isPrsentAddress, setIsPrsentAddress
 }) => {
     const stateId = Digit.ULBService.getStateId();
+    let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();
     if (tenantId === "kl") {
         tenantId = Digit.ULBService.getCitizenCurrentTenant();
