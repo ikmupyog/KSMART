@@ -7,13 +7,13 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
   setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaProvinceMl, setProvinceMl, presentOutSideIndiaadrsVillage, setadrsVillage,
   presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode, presentOutSideCountry,
-  setOutSideCountry, countryvalue, setCountryValue,
-  isPrsentAddress, setIsPrsentAddress, PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
-  PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
-  PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
-  PermntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
-  PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
-  PermanentOutsideIndiaPostCode, setPermantpostCode, PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry
+  setOutSideCountry, countryvalue, setCountryValue,  
+  isPrsentAddress, setIsPrsentAddress, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
+  permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
+  permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
+  permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
+  permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
+  permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry, setPermntOutsideIndiaCountry
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
