@@ -89,6 +89,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.InformationDeath?.HospitalNameMl);
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
   // Home
   const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId);
   const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode);
@@ -410,7 +411,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           />;
         }
         if (naturetype === "INSTITUTION") {
-          <Hospital DeathPlaceType={DeathPlaceType} />;
+          <Hospital DeathPlaceType={DeathPlaceType}
+          InstitutionIdMl={InstitutionIdMl} />;
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
@@ -561,6 +563,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
       sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
+      sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl.DeathPlaceInstId : null);
+      
     }
     if (DeathPlace.code === "HOME") {
       sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
@@ -635,6 +639,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       HospitalNameMl,
       DeathPlaceTypecode,
       DeathPlaceInstId,
+      InstitutionIdMl,
       institutionNameCode,
       DeathPlaceHomehoueNameEn,
       DeathPlaceHomehoueNameMl,

@@ -76,23 +76,52 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
     setVehicleNumber(e.target.value);
   }
   function setSelectVehicleFromplaceEn(e) {
-    setVehicleFromplaceEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setVehicleFromplaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
+    
   }
   function setSelectVehicleToPlaceEn(e) {
-    setVehicleToPlaceEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setVehicleToPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    }
+   
   }
   function setSelectVehicleFirstHaltEn(e) {
-    setVehicleFirstHaltEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setVehicleFirstHaltEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    } 
   }
   function setSelectVehicleFirstHaltMl(e) {
-    setVehicleFirstHaltMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setVehicleFirstHaltMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
+   
   }
 
   function setSelectVehicleFromplaceMl(e) {
-    setVehicleFromplaceMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setVehicleFromplaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
+    
   }
   function setSelectVehicleToPlaceMl(e) {
-    setVehicleToPlaceMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setVehicleToPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    }
+       
   }
   function setSelectGeneralRemarks(e) {
     setGeneralRemarks(e.target.value);
@@ -140,6 +169,14 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <div className="row">
+        <div className="col-md-12" >
+            <h1 className="headingh1" >
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DEATH_VEHICLE")}`}
+                </span> 
+            </h1>
+        </div>
+    </div>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-3">
