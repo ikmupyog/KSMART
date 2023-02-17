@@ -69,7 +69,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? formData?.ChildDetails?.vehicleHaltPlaceMl : "");
   const [vehicleToMl, setvehicleToMl] = useState(formData?.ChildDetails?.vehicleToMl ? formData?.ChildDetails?.vehicleToMl : "");
   const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? formData?.ChildDetails?.vehicleDesDetailsEn : "");
-  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");
+  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");  
 
   const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType ? formData?.ChildDetails?.publicPlaceType : "");
   const [localityNameEn, setlocalityNameEn] = useState(formData?.ChildDetails?.localityNameEn ? formData?.ChildDetails?.localityNameEn : "");
@@ -243,6 +243,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             vehicleToMl={vehicleToMl}
             vehicleDesDetailsEn={vehicleDesDetailsEn}
             setadmittedHospitalEn={setadmittedHospitalEn}
+            wardNo={wardNo}
           />;
         }
 
@@ -603,6 +604,20 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         setAdsHomeHouseNameMlError(false);
       }
     } else if (birthPlace.code === "VEHICLE") {
+      if (wardNo === null) {
+        validFlag = false;
+        setAdsWardError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        wardNameEn = wardNo.name;
+        wardNameMl = wardNo.localname;
+        wardNumber = wardNo.wardno;
+        setAdsWardError(false);
+      }
+
       if (vehicleType == null || vehicleType == "" || vehicleType == undefined) {
         validFlag = false;
         setvehiTypeError(true);
@@ -1022,6 +1037,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               setvehicleToMl={setvehicleToMl}
               setvehicleDesDetailsEn={setvehicleDesDetailsEn}
               setSelectedadmittedHospitalEn={setSelectedadmittedHospitalEn}
+              wardNo={wardNo}
             />
           </div>
         )}
@@ -1225,7 +1241,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={true}
+                isMandatory={false}
                 option={cmbAttDeliverySub}
                 selected={medicalAttensionSub}
                 select={setSelectMedicalAttensionSub}
@@ -1239,7 +1255,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="i18nKey"
-                isMandatory={true}
+                isMandatory={false}
                 option={cmbPregWeek}
                 selected={pregnancyDuration}
                 select={setSelectPregnancyDuration}
@@ -1252,7 +1268,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={true}
+                isMandatory={false}
                 option={cmbDeliveryMethod}
                 selected={deliveryMethods}
                 select={setSelectDeliveryMethod}
@@ -1266,7 +1282,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={true}
+                isMandatory={false}
                 type={"decimal"}
                 optionKey="i18nKey"
                 name="birthWeight"
