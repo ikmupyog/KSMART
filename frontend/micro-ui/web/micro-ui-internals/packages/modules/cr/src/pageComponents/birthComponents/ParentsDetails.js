@@ -504,6 +504,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   ) {
     return <Loader></Loader>;
   }
+  console.log(formData);
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
