@@ -1,11 +1,11 @@
-import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSfieldelect, TextInput, TextArea, DatePicker, LabelFieldPair } from "@egovernments/digit-ui-react-components";
+import { CardLabel, Dropdown, FormStep, LinkButton, Loader, RadioButtons, RadioOrSfieldelect, TextInput, TextArea, DatePicker, LabelFieldPair, Toast  } from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect, useCallback, useReducer } from "react";
+import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
 import { sortDropdownNames } from "../utils/index";
 import { useQueryClient } from "react-query";
-const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) => {
 
-  console.log("alldata"+JSON.stringify(formData));
+const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) => {
 
   let naturetype = null;
   let naturetypecmbvalue = null;
@@ -19,15 +19,20 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   let cmbWardNoFinal = [];
   let cmbStructure = [];
   let cmbPostOffice = [];
+  let cmbPO = [];
   let cmbPlace = [];
   let cmbSector = [];
   let cmbSectorFileterData = [];
 
-  const [formDataPage, setFormDataPage] = useState(formData) ;//useState(window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade") ? formData : formData?.TradeDetails);
+  const [minDate, setMinDate] = useState('2018-01-01');
+  const [formDataPage, setFormDataPage] = useState(formData);
   const queryClient = useQueryClient();
   const [tenantboundary, setTenantboundary] = useState(false);
+  const [flgCheckDoor, setFlgCheckDoor] = useState(); // ***********Change flag only for true for testing
+  const [flgCheck, setFlgCheck] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [tenantId, setTenantId] = useState(Digit.ULBService.getCitizenCurrentTenant());
-  console.log(tenantId);
   const [editview, setEditview] = useState(Object.keys(formData).length === 0 ? false : true);
   if (tenantboundary) {
     queryClient.removeQueries("TL_ZONAL_OFFICE");
@@ -44,42 +49,53 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     { i18nKey: "TL_COMMON_NO", code: "NO" },
   ];
 
-  const ownershipCategoryMenu = [
+  const ownershipCategoryMenumain = [
     { name: "Own", code: "OWN" },
     { name: "Joint Ownership", code: "JOINTOWNER" },
     { name: "Lease", code: "LEASE" },
     { name: "Rent", code: "RENT" },
     { name: "Consent", code: "CONSENT" },
     { name: "LB Owned Building", code: "LBBUILDING" },
+    { name: "Revenue", code: "REVENUE" },
+    { name: "LSGD", code: "LSGD" },
+    { name: "Others", code: "OTHERS" },
   ];
 
+  const LicensePeriod = [
+    { name: "Upto 1 Year", code: "1" },
+    { name: "Upto 2 Year", code: "2" },
+    { name: "Upto 3 Year", code: "3" },
+    { name: "Upto 4 Year", code: "4" },
+    { name: "Upto 5 Year", code: "5" },
+  ];
+
+  const [ownershipCategoryMenu,setOwnershipCategoryMenu] =useState([]);
   const stateId = Digit.ULBService.getStateId();
   let validation = {};
+
   const { data: Districts = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "District");
   const { data: PostOffice = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "PostOffice");
   const { data: LBTypes = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "LBType");
   const { data: BoundaryList = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, "egov-location", "boundary-data");
-  //const [BoundaryList,setBoundaryList] = useState([]);
   const { data: localbodies, islocalbodiesLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "tenant", "Localbody");
   const { data: sector = {}, isSectorLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "EnterpriseType");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: dataitem = {}, isstructuretypeLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeStructureSubtype");
-  const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
-  
+
   const [value2, setValue2] = useState();
-  const [value3, setValue3] = useState();
+  const [value3, setValue3] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed === false ?  "NO" : "YES");
   const [isInitialPageRender, setIsInitialPageRender] = useState();
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRendercombo, setisInitialRendercombo] = useState(true);
   const [isInitialRenderRadio, setisInitialRenderRadio] = useState(true);
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const isEdit = window.location.href.includes("/licenserenewal-unit-det") || window.location.href.includes("renew-trade");
   const [DistrictList, setDistrictList] = useState(formDataPage?.districtid ? cmbDistrict?.filter((district) => district?.districtid.includes(formDataPage?.districtid?.districtid))[0] : "");
   const [LBTypeList, setLBTypeList] = useState(formDataPage?.localbodytype ? cmbLBType.filter((lbtype) => lbtype?.code.includes(formDataPage?.localbodytype?.code))[0] : "");
   const [Localbody, setLocalbody] = useState(formDataPage?.localbody ? cmbLB.filter((lb) => lb?.code.includes(formDataPage?.localbody?.code))[0] : "");
   const [FilterLocalbody, setFilterLocalbody] = useState([]);
+  const [FilterPostoffice, setFilterPostoffice] = useState([]);
   const [businessSector, setBusinessSector] = useState(formDataPage?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formDataPage?.tradeLicenseDetail?.businessSector))[0] : "");
   const [enterpriseType, setEnterpriseType] = useState(formDataPage?.tradeLicenseDetail?.enterpriseType ? formDataPage?.tradeLicenseDetail?.enterpriseType : "");
-
   const [BuildingType, setBuildingType] = useState(formData?.tradeLicenseDetail?.address?.buildingType ? buildingtype.filter((type) => type.code.includes(formData?.tradeLicenseDetail?.address?.buildingType))[0] : "");
   const [businessCategory, setBusinessCategory] = useState(formDataPage?.tradeLicenseDetail?.tradeUnits?.businessCategory ? TradeCategoryMenu.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits?.businessCategory))[0] : "");
   const [businessType, setBusinessType] = useState(formDataPage?.tradeLicenseDetail?.tradeUnits?.businessType ? BusinessTypeMenu.filter((type) => type?.code.includes(formDataPage?.tradeLicenseDetail?.tradeUnits?.businessType))[0] : "");
@@ -88,7 +104,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   const [noOfEmployees, setNoOfEmployees] = useState(formDataPage?.tradeLicenseDetail?.noOfEmployees ? formDataPage?.tradeLicenseDetail?.noOfEmployees : "");
   const [capitalInvestment, setCapitalInvestment] = useState(formDataPage?.tradeLicenseDetail?.capitalInvestment ? formDataPage?.tradeLicenseDetail?.capitalInvestment : "");
   const [commencementDate, setCommencementDate] = useState(formDataPage?.commencementDate);
-  const [desiredLicensePeriod, setDesiredLicensePeriod] = useState(formDataPage?.desiredLicensePeriod ? formDataPage?.desiredLicensePeriod : "");
+  const [desiredLicensePeriod, setDesiredLicensePeriod] = useState(formDataPage?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formDataPage?.desiredLicensePeriod.code))[0] : "");
   const [setSector, setSelectedSector] = useState(formData?.TradeDetails?.setSector);
   const [licenseUnitName, setLicenseUnitName] = useState(formDataPage?.licenseUnitName ? formDataPage?.licenseUnitName : "");
   const [licenseUnitNameLocal, setLicenseUnitNameLocal] = useState(formDataPage?.licenseUnitNameLocal ? formDataPage?.licenseUnitNameLocal : "");
@@ -98,17 +114,17 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   const [structurePlaceSubtype, setStructurePlaceSubtype] = useState(formDataPage?.tradeLicenseDetail?.structurePlaceSubtype ? cmbPlace.filter((place) => place?.code.includes(formDataPage?.tradeLicenseDetail?.structurePlaceSubtype))[0] : "");
   const [filteredPlaceSubtype, setFilteredPlaceSubtype] = useState([]);
   const [ownershipCategory, setOwnershipCategory] = useState(formDataPage?.tradeLicenseDetail?.ownershipCategory ? ownershipCategoryMenu.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory))[0] : "");
-  const [isResurveyed, setIsResurveyed] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed ? ownershipCategoryMenu.filter((menu) => menu?.code.includes(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed))[0] : "");
+  const [isResurveyed, setIsResurveyed] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed === true ? menu.filter((menu) => menu?.code.includes(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed))[0] : "");
   const [blockNo, setBlockNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.blockNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.blockNo : "");
   const [surveyNo, setSurveyNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.setSurveyNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.setSurveyNo : "");
   const [subDivisionNo, setSubDivisionNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.subDivisionNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.subDivisionNo : "");
   const [partitionNo, setPartitionNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.partitionNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.partitionNo : "");
-  const [locality, setLocality] = useState(formDataPage?.tradeLicenseDetail?.address?.locality ? formDataPage?.tradeLicenseDetail?.address?.locality : "");
+  const [locality, setLocality] = useState(formDataPage?.tradeLicenseDetail?.address?.localityName ? formDataPage?.tradeLicenseDetail?.address?.localityName : "");
   const [street, setStreet] = useState(formDataPage?.tradeLicenseDetail?.address?.street ? formDataPage?.tradeLicenseDetail?.address?.street : "");
   const [landmark, setLandmark] = useState(formDataPage?.tradeLicenseDetail?.address?.landmark ? formDataPage?.tradeLicenseDetail?.address?.landmark : "");
   const [buildingName, setBuildingName] = useState(formDataPage?.tradeLicenseDetail?.address?.buildingName ? formDataPage?.tradeLicenseDetail?.address?.buildingName : "");
   const [pincode, setPincode] = useState(formDataPage?.tradeLicenseDetail?.address?.pincode ? formDataPage?.tradeLicenseDetail?.address?.pincode : "");
-  const [postOffice, setPostOffice] = useState(formDataPage?.tradeLicenseDetail?.address?.postOffice ? cmbPostOffice.filter((postoffice) => postoffice?.code.includes(formDataPage?.tradeLicenseDetail?.address?.postOffice))[0] : "");
+  const [postOffice, setPostOffice] = useState(formDataPage?.tradeLicenseDetail?.address?.postOffice ? cmbPostOffice.filter((postoffice) => postoffice?.code.includes(formDataPage?.tradeLicenseDetail?.address?.postOffice.code))[0] : "");
   const [vehicleNo, setVehicleNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.vehicleNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.vehicleNo : "");
   const [serviceArea, setServiceArea] = useState(formDataPage?.tradeLicenseDetail?.address?.serviceArea ? formDataPage?.tradeLicenseDetail?.address?.serviceArea : "");
   const [vesselNo, setVesselNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo : "");
@@ -117,17 +133,21 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   const [fieldsDoor, setFeildsDoor] = useState(
     (formDataPage?.tradeLicenseDetail && formDataPage?.tradeLicenseDetail.structurePlace) || [{
       blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
-      vehicleNo: "", vesselNo: "", isResurveyed: false, stallNo: ""
+      vehicleNo: "", vesselNo: "", isResurveyed: "", stallNo: ""
     }]
   );
-
-  const storedDoorData = formDataPage?.door?.door;
+  
+  console.log("log data"+JSON.stringify(formData));
+  console.log("formdata"+JSON.stringify(formDataPage));
+  const storedDoorData = formDataPage?.tradeLicenseDetail?.structurePlace;
   const [zonalOffice, setZonalOffice] = useState(formDataPage?.tradeLicenseDetail?.address?.zonalid ? Zonal.filter((zone) => zone?.code.includes(formDataPage?.tradeLicenseDetail?.address?.zonalid))[0] : "");
   const [WardNo, setWardNo] = useState(formDataPage?.tradeLicenseDetail?.address?.wardid ? cmbWardNoFinal.filter((ward) => ward?.code.includes(formDataPage?.tradeLicenseDetail?.address?.wardid))[0] : "");
-  // const onSuccess = () => {
-  //   sessionStorage.removeItem("CurrentTenant");
-  //   queryClient.invalidateQueries("TL_CREATE_TRADE");
-  // };
+  const [payloadDoor, setPayloadDoor] = useState([]);
+  const [payloadDoorinit, setPayloadDoorinit] = useState({ "wardId": "0" });
+  const onSuccess = () => {
+    sessionStorage.removeItem("CurrentFinancialYear");
+    queryClient.invalidateQueries("TL_CREATE_TRADE");
+  };
 
 
   sector &&
@@ -150,6 +170,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     Districts["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
+
   PostOffice &&
     PostOffice["common-masters"] &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
@@ -212,7 +233,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     }
   }
 
-
+  const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
   let BusinessCategoryMenu = [];
   //let TradeTypeMenu = [];
 
@@ -328,11 +349,16 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   }
 
   const changesetBusinessActivityDesc = (e => {
-    setBusinessActivityDesc(e.target.value);
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setBusinessActivityDesc(e.target.value.length<=200 ? e.target.value.replace(/[^A-Za-z0-9@'$#& ,.]/ig, '') : (e.target.value.replace(/[^A-Za-z0-9@'$#& ,.]/ig, '')).substring(0, 200));
+    }
+    else {
+      return;
+    }
   });
 
   const changesetCapitalInvestment = (e => {
-    setCapitalInvestment(e.target.value);
+    setCapitalInvestment(e.target.value.length<=12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     setIsInitialRender(true);
   });
 
@@ -341,23 +367,34 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const changesetDesiredLicensePeriod = (e => {
-    setDesiredLicensePeriod(e.target.value);
+     setDesiredLicensePeriod(e);
   });
 
   const changesetNoofEmployees = (e => {
-    setNoOfEmployees(e.target.value);
+    setNoOfEmployees(e.target.value.length<=4 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 4));
   });
 
   const changesetLicenseUnitName = (e => {
-    setLicenseUnitName(e.target.value);
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setLicenseUnitName(e.target.value.length<=100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
+    }
+    else {
+      return;
+    }
+    
   });
 
   const changesetLicenseUnitNameLocal = (e => {
-    setLicenseUnitNameLocal(e.target.value);
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setLicenseUnitNameLocal(e.target.value.length<=200 ? e.target.value.replace(/[^\u0D00-\u0D7F\u200D\u200C .&'@']/ig, '') : (e.target.value.replace(/[^\u0D00-\u0D7F\u200D\u200C .&'@']/ig, '')).substring(0, 200));
+    }
+    else {
+      return;
+    }
   });
 
   const changesetContactno = (e => {
-    setContactno(e.target.value);
+    setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
   });
 
   const changesetEmail = (e => {
@@ -365,6 +402,22 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const selectStructureType = (value => {
+    setOwnershipCategoryMenu(ownershipCategoryMenumain);
+    if(value.code === 'DESIGNATEDPLACE'){
+      let tempval=ownershipCategoryMenumain;
+      tempval.splice(0,6); 
+      setOwnershipCategoryMenu(tempval);
+    }
+    else if(value.code !== 'BUILDING'){
+      let tempval=ownershipCategoryMenumain;
+      tempval.splice(5,4); 
+      setOwnershipCategoryMenu(tempval);
+    }
+    else if(value.code === 'BUILDING'){
+      let tempval=ownershipCategoryMenumain;
+      tempval.splice(6,4); 
+      setOwnershipCategoryMenu(tempval);
+    }
     setStructureType(value);
     naturetypecmbvalue = value.code.substring(0, 4);
     setValue2(naturetypecmbvalue);
@@ -384,6 +437,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   const selectIsResurveyed = (value => {
     setIsResurveyed(value);
     setValue3(value.code);
+    formStateDoor[0].isResurveyed = value;
   });
 
   const changesetBlockNo = (e => {
@@ -403,25 +457,47 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const changesetLocality = (e => {
-    setLocality(e.target.value);
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setLocality(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
+    }
+    else {
+      return;
+    }
   });
 
   const changesetStreet = (e => {
-    setStreet(e.target.value);
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setStreet(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
+    }
+    else {
+      return;
+    }
+    
   });
 
   const changesetLandmark = (e => {
-    setLandmark(e.target.value);
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setLandmark(e.target.value.length <= 150 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 150));
+    }
+    else {
+      return;
+    }
   });
 
   const changesetBuildingName = (e => {
-    setBuildingName(e.target.value);
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setBuildingName(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
+    }
+    else {
+      return;
+    }
+    
   });
 
   const changesetPincode = (e => {
-    setPincode(e.target.value);
+    setPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
     setPostOffice(cmbPostOffice.filter((postoffice) => {
-      postOffice.pincode === e.target.value.pincode
+      postoffice.pincode === e.target.value.pincode
     }));
   });
 
@@ -435,7 +511,12 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const changesetServiceArea = (e => {
-    setServiceArea(e.target.value);
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setServiceArea(e.target.value.length <= 200 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 200));
+    }
+    else {
+      return;
+    }
   });
 
   const changesetVesselNo = (e => {
@@ -443,8 +524,13 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const changesetWaterbody = (e => {
-    setWaterbody(e.target.value);
-  });
+    if (e.target.value.trim().length > 0 && e.target.value.trim() !== ".") {
+      setWaterbody(e.target.value.length <= 200 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 200));  
+    }
+    else {
+      return;
+    }
+   });
 
   const selectBusinessSector = (value => {
     setBusinessSector(value);
@@ -453,9 +539,28 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
 
   const initFnEdit = () => {
-    return fieldsDoor;
+    return formDataPage?.tradeLicenseDetail?.structurePlace;
+    //return fieldsDoor;
   };
+  let data1 = [];
+  let config1 =  {enabled: !!(payloadDoor && Object.keys(payloadDoor).length > 0)}
+  let searchReult="";
+  
 
+  const mutationDoor = Digit.Hooks.tl.useSearch({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, config1 });
+
+  useEffect(() => {
+    if ((payloadDoor.length === undefined)&&(structureType.code === "BUILDING")) {
+      if (mutationDoor !== undefined) {
+        if (mutationDoor?.error !== null) {
+          mutationDoor.mutate({ tenantId, filters: payloadDoor, config1 }, {
+            onSuccess,
+          });
+        }
+      }
+
+    }
+  }, [mutationDoor])
   const reducerDoor = (stateDoor, action) => {
 
     switch (action.type) {
@@ -471,7 +576,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
             doorNoSub: "",
             vehicleNo: "",
             vesselNo: "",
-            isResurveyed: false,
+            isResurveyed: "",
             stallNo: "",
           },
         ];
@@ -485,29 +590,39 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
             return data;
           }
         });
-      // case "CHECK_DOOR":
-      //   queryClient.removeQueries("TL_SEARCH_PDE");
-      //   data1["wardId"] = WardNo?.code ? WardNo.code : "";
-      //   state1.map((data, __index) => {
-      //     data1["doorNo"] = data?.doorNo ? data.doorNo : "";
-      //     data1["subNo"] = data?.doorNoSub ? data.doorNoSub : "";
-      //     configDoor = {
-      //       enabled: !!(data && Object.keys(data).length > 0)
-      //     }
-      //     data1 = {
-      //       ...data1
-      //     }
-      // setPayloadDoor(Object.keys(data1).filter(k => data1[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data1[key] === "object" ? data1[key].code : data1[key] }), {}));
-      // searchResultDoor = mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError ? mutationsearchDoor.data.Licenses : "";
-      // if (searchResultDoor?.length === 1) {
-      //   formData = (mutationsearchDoor?.status === "success" && mutationsearchDoor?.isSuccess && !mutationsearchDoor?.isError) ? mutationsearchDoor.data : "";
-      //   setFlgCheck(true);
-      // }
-      // });
-      // return [
-      //   ...stateDoor
-      // ];
+      case "CHECK_DOOR":
+        data1["wardId"] = WardNo?.code ? WardNo.code : "";
+        stateDoor.map((data, __index) => {
+          data1["doorNo"] = data?.doorNo ? data.doorNo : "";
+          data1["subNo"] = data?.doorNoSub ? data.doorNoSub : "";
+          data1["checkDuplication"] = "DUPLICATION";
+          config1 = {
+            enabled: !!(data1 && Object.keys(data1).length > 0)
+          }
+          data1 = {
+            ...data1
+          }
 
+          setPayloadDoor(Object.keys(data1).filter(k => data1[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data1[key] === "object" ? data1[key].code : data1[key] }), {}));
+          searchReult = mutationDoor?.status === "success" && mutationDoor?.isSuccess && !mutationDoor?.isError ? mutationDoor.data.Licenses : "";
+          if (searchReult?.length === 1) {
+            setFlgCheckDoor(true);
+            setErrorMessage(t("Door No Already Entered entered Another Appln"));
+            setToast(true)
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+            return { ...data, [action.payload.key]: '' };
+          }
+          else{
+            setFlgCheckDoor(false);
+          }
+
+          setFlgCheck(true);
+      });
+      return [
+        ...stateDoor
+      ];
     }
   };
 
@@ -522,42 +637,25 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
         doorNoSub: "",
         vehicleNo: "",
         vesselNo: "",
-        isResurveyed: false,
+        isResurveyed: "",
         stallNo: ""
       },
     ];
   };
 
-  const [formStateDoor, dispatchDoor] = isEdit ? useReducer(reducerDoor, storedDoorData, initFnEdit) : useReducer(reducerDoor, storedDoorData, initFn);
+  const [formStateDoor, dispatchDoor] = isEdit || editview ? useReducer(reducerDoor, storedDoorData, initFnEdit) : useReducer(reducerDoor, storedDoorData, initFn);
 
-  const handleTextInputField1 = ((index, e, key) => {
-    if (key === "doorNo")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 5 ? e.target.value.replace(/[^0-9.]/ig, '') : (e.target.value.replace(/[^0-9.]/ig, '')).substring(0, 5) } });
-    if (key === "doorNoSub")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 14 ? e.target.value : e.target.value.substring(0, 14) } });
-    if (key === "stallNo")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
-    if (key === "blockNo")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
-    if (key === "surveyNo")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
-    if (key === "subDivisionNo")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
-    if (key === "partitionNo")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
-    if (key === "vehicleNo")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
-    if (key === "vesselNo")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e.target.value.length <= 15 ? e.target.value : e.target.value.substring(0, 15) } });
-    if (key === "isResurveyed")
-      dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: value2 === "LAND" ? e.code : "" } });
-
-    setFeildsDoor((formDataPage?.tradeLicenseDetail && formDataPage?.tradeLicenseDetail.structurePlace) || [{
-      blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
-      vehicleNo: "", vesselNo: "", isResurveyed: null, stallNo: ""
-    }]);
-  });
-
+  console.log("formdata"+storedDoorData);
+  console.log(isEdit);
+  const handleTextInputField1  = useCallback((index, e, key, length = 100) => {
+    if (e.length <= length) {
+        dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e } });
+        setFlgCheck(false);
+        setFlgCheckDoor(false);
+    }
+    else
+      return;
+  }, [dispatchDoor]);
 
   useEffect(() => {
     if (isInitialRender) {
@@ -593,8 +691,31 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setIsInitialRender(false);
       cmbLB.push(...LBs.filter((localbody) => ((localbody?.city?.districtid == DistrictList?.districtid) && (localbody?.city?.lbtypecode == LBTypeList?.code))));
       setFilterLocalbody(cmbLB);
+
+      cmbPO = [];
+      cmbPO.push(...cmbPostOffice.filter((po) => (po?.distid == DistrictList?.districtid)));
+      setFilterPostoffice(cmbPO);
+
+      if(formDataPage && formDataPage?.tradeLicenseDetail?.structureType){
+        setOwnershipCategoryMenu(ownershipCategoryMenumain);
+        if(formDataPage?.tradeLicenseDetail?.structureType?.code === "DESIGNATEDPLACE"){
+          let tempval=ownershipCategoryMenumain;
+          tempval.splice(0,6); 
+          setOwnershipCategoryMenu(tempval);
+        }
+        else if(formDataPage?.tradeLicenseDetail?.structureType?.code !== "BUILDING"){
+          let tempval=ownershipCategoryMenumain;
+          tempval.splice(5,4); 
+          setOwnershipCategoryMenu(tempval);
+        }
+        else if(formDataPage?.tradeLicenseDetail?.structureType?.code === "BUILDING"){
+          let tempval=ownershipCategoryMenumain;
+          tempval.splice(6,4); 
+          setOwnershipCategoryMenu(tempval);
+        }
+      }
     }
-  }, [isInitialRender, FilterLocalbody]);
+  }, [isInitialRender, FilterLocalbody,FilterPostoffice, ownershipCategoryMenu]);
 
   useEffect(() => {
     if ((isInitialRender)) {
@@ -638,7 +759,6 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   if (formDataPage?.tradeLicenseDetail?.structureType && structureType === undefined && cmbStructure.length > 0) {
     setStructureType(formDataPage?.tradeLicenseDetail?.structureType ? cmbPlace.filter((structure) => structure.code.includes(formDataPage?.tradeLicenseDetail?.structureType.code))[0] : "");
     setValue2(formDataPage?.tradeLicenseDetail?.structureType.code);
-    formDataPage?.tradeLicenseDetail?.structurePlace[0].isResurveyed ? setValue3("YES"):setValue3("NO");
   }
   if (formDataPage?.tradeLicenseDetail?.structurePlaceSubtype && structurePlaceSubtype === undefined && cmbPlace.length > 0) {
     setStructurePlaceSubtype(formDataPage?.tradeLicenseDetail?.structurePlaceSubtype ? cmbStructure.filter((place) => place.code.includes(formDataPage?.tradeLicenseDetail?.structurePlaceSubtype.code))[0] : "");
@@ -646,50 +766,104 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   if (formDataPage?.tradeLicenseDetail?.ownershipCategory && ownershipCategory === undefined && ownershipCategoryMenu.length > 0) {
     setOwnershipCategory(formDataPage?.tradeLicenseDetail?.ownershipCategory ? ownershipCategoryMenu.filter((category) => category.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory.code))[0] : "");
   }
-  if (formDataPage?.tradeLicenseDetail?.address?.postOffice && PostOffice === undefined && cmbPostOffice.length > 0) {
+  if (formDataPage?.desiredLicensePeriod && LicensePeriod === undefined && LicensePeriod.length > 0) {
+    setDesiredLicensePeriod(formDataPage?.desiredLicensePeriod ? LicensePeriod.filter((period) => period.code.includes(formDataPage?.desiredLicensePeriod.code))[0] : "");
+  }
+  if (formDataPage?.tradeLicenseDetail?.structurePlace[0]?.isResurveyed?.code && !value3) {
+    setIsResurveyed(formDataPage?.tradeLicenseDetail?.structurePlace[0].isResurveyed.code);
+    setValue3(formDataPage?.tradeLicenseDetail?.structurePlace[0].isResurveyed.code);
+  }
+  if (formDataPage?.tradeLicenseDetail?.address?.postOffice && typeof(PostOffice) === "object" && cmbPostOffice.length > 0 && !(postOffice)) {
     setPostOffice(formDataPage?.tradeLicenseDetail?.address?.postOffice ? cmbPostOffice.filter((poffice) => poffice.code.includes(formDataPage?.tradeLicenseDetail?.address?.postOffice.code))[0] : "");
   }
   if ((formDataPage?.tradeLicenseDetail?.tradeUnits || formDataPage?.tradeLicenseDetail?.structurePlace) && editview) {
     setFeilds(formDataPage?.tradeLicenseDetail?.tradeUnits ? [formDataPage?.tradeLicenseDetail?.tradeUnits] : [{ businesscategory: "", businesstype: "", businesssubtype: "", unit: null, uom: null }]);
-    setFeildsDoor(formDataPage?.tradeLicenseDetail?.structurePlace ? formDataPage?.tradeLicenseDetail?.structurePlace : initFn());
+    setFeildsDoor(formDataPage?.tradeLicenseDetail?.structurePlace ? 
+      formDataPage?.tradeLicenseDetail?.structurePlace : initFnEdit());
     setEditview(false);
+    setFlgCheck(true);
+    setFlgCheckDoor(false);
   }
-  const goNext = () => {
-    let combineddoorno = "";
-    formStateDoor.map((data) => {
-      combineddoorno = combineddoorno + data.doorNo +
-        (data.doorNoSub !== "" && data.doorNoSub !== null ? "/" + data.doorNoSub : "") +
-        (data.stallNo !== "" && data.stallNo !== null ? "(" + data.stallNo + ")" : "") + ",";
-    });
-    combineddoorno = combineddoorno.slice(0, -1);
 
-    let units = fields;
-    // formData.TradeDetails.Units;    
-    let address = {
-      "doorNo": combineddoorno,
-      "localityName": locality,
-      "street": street,
-      "landmark": landmark,
-      "buildingName": buildingName,
-      "zonalid": WardNo.zonecode,
-      "wardid": WardNo.code,
-      "wardno": WardNo.wardno,
-      "postOffice": postOffice.code,
-      "pincode": pincode,
-      "contactno": contactno,
-      "email": email,
-      "waterbody": waterbody,
-      "serviceArea": serviceArea
-    };
-    let tradeUnits = units[0];
 
-    let structurePlace = formStateDoor;
-    let districtid = DistrictList;
-    let localbodytype = LBTypeList;
-    let localbody = Localbody;
 
-    let tradeLicenseDetail = { businessSector, capitalInvestment, enterpriseType, structureType, structurePlaceSubtype, businessActivityDesc, noOfEmployees, ownershipCategory, address, tradeUnits, structurePlace, }
-    onSelect(config.key, { districtid, localbodytype, localbody, commencementDate, tradeLicenseDetail, licenseUnitName, licenseUnitNameLocal, desiredLicensePeriod });
+  function validateData() {
+    let mobilevalidation = /^[5-9]{1}[0-9]{9}$/;
+    let validation = true;
+    if(value2 === "BUILDING"){
+      formStateDoor.map((data) => {
+        const noOccurence = formStateDoor.filter(d => ((d.doorNo === data.doorNo) && (d.doorNoSub === data.doorNoSub))).length;
+        validation = noOccurence > 1 ?  false : true;
+      });
+      if (validation === false) setErrorMessage(t("TL_DOOR_ALREADY_SELECT"));
+    }
+  
+    if (!contactno.match(mobilevalidation)) {
+      setErrorMessage(t("TL_INVALID_MOBILE_NO"));
+      validation = false;
+    }
+    if (desiredLicensePeriod>5) {
+      setErrorMessage(t("TL_INVALID_License_PERIOD"));
+      validation = false;
+    }
+    if (capitalInvestment < 0) {
+      setErrorMessage(t("TL_INVALID_CAPITAL_AMOUNT"));
+      validation = false;
+    }
+    return Promise.resolve(validation);
+
+  }
+
+
+  const goNext = async () => {
+
+    const result = await validateData();
+    if (result) {
+      let combineddoorno = "";
+      formStateDoor.map((data) => {
+          combineddoorno = combineddoorno + data.doorNo +
+          (data.doorNoSub !== "" && data.doorNoSub !== null ? "/" + data.doorNoSub : "") +
+          (data.stallNo !== "" && data.stallNo !== null ? "(" + data.stallNo + ")" : "") + ",";
+      });
+      combineddoorno = combineddoorno.slice(0, -1);
+
+      let units = fields;    
+      let address = {
+        "doorNo": combineddoorno,
+        "localityName": locality,
+        "street": street,
+        "landmark": landmark,
+        "buildingName": buildingName,
+        "zonalid": WardNo.zonecode,
+        "wardid": WardNo.code,
+        "wardno": WardNo.wardno,
+        "postOffice": postOffice,
+        "pincode": pincode,
+        "contactno": contactno,
+        "email": email,
+        "waterbody": waterbody,
+        "serviceArea": serviceArea
+      };
+      let tradeUnits = units[0];
+
+      let structurePlace = formStateDoor;
+      let districtid = DistrictList;
+      let localbodytype = LBTypeList;
+      let localbody = Localbody;
+      let owners =formDataPage?.tradeLicenseDetail?.owners;
+      let ownerspremise=formDataPage?.tradeLicenseDetail?.ownerspremise;
+      let institution=formDataPage?.tradeLicenseDetail?.institution;
+      let licenseeType=formDataPage?.tradeLicenseDetail?.licenseeType;
+
+      let tradeLicenseDetail = { licenseeType, owners, ownerspremise,institution,businessSector, capitalInvestment, enterpriseType, structureType, structurePlaceSubtype, businessActivityDesc, noOfEmployees, ownershipCategory, address, tradeUnits, structurePlace, }
+      onSelect(config.key, { districtid, localbodytype, localbody, commencementDate, tradeLicenseDetail, licenseUnitName, licenseUnitNameLocal, desiredLicensePeriod });
+    } 
+    else {
+      setToast(true)
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    }
   };
 
   const onSkip = () => onSelect();
@@ -698,7 +872,23 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       {window.location.href.includes("/citizen") ? <Timeline /> : null}
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       {isLoading ? (<Loader />) : (
-        <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}  >
+        <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}  
+        isDisabled = {!DistrictList || !LBTypeList || !Localbody || !zonalOffice|| !WardNo || !businessSector 
+        || !fields[0].businesscategory || !fields[0].businesstype || !fields[0].businesssubtype || capitalInvestment === "" || !commencementDate
+        || desiredLicensePeriod === "" || noOfEmployees === "" || licenseUnitName === "" ||licenseUnitNameLocal === "" || contactno === "" || email === "" 
+        || !structureType || !structurePlaceSubtype || !ownershipCategory 
+        || (value2 === "LAND"  ? (value3 === "" || locality === "" || !postOffice || pincode === ""
+        ||  formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "" ) : false)
+        // || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
+        || (value2 === "BUILDING"  ?  (formStateDoor[0].doorNo  === "" ||  locality === "" || !postOffice || pincode === "" ) : false)
+        || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo  === "") : false) 
+        || (value2 === "VEHICLE"  ? serviceArea === "" || (structurePlaceSubtype.code !=="HAND_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false ) : false)
+        || (value2 === "WATER"  ? (formStateDoor[0].vesselNo === "" || waterbody === ""  || serviceArea === "")  : false)
+        || (value2 === "DESIGNATEDPLACE" ? false : false) 
+        || flgCheckDoor === true && flgCheck === false
+          }  
+         >
+    
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
             <div className="row">
               <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LB_DET_LABEL")}`}</span> </h1>
@@ -709,14 +899,14 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                 <div className="row">
                   <div className="col-md-4" >
                     <CardLabel>{`${t("TL_DISTRICT")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="name" isMandatory={true} option={cmbDistrict} selected={DistrictList} select={selectDistrict} disabled={isEdit} placeholder={`${t("CS_COMMON_DISTRICT")}`}  {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_DISTRICT"), })} />
+                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbDistrict} selected={DistrictList} select={selectDistrict} disabled={isEdit} placeholder={`${t("CS_COMMON_DISTRICT")}`}  {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_DISTRICT"), })} />
                   </div>
                   <div className="col-md-4" >
                     <CardLabel>{`${t("TL_LB_TYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
                       optionKey="name"
-                      isMandatory={true}
+                      isMandatory={config.isMandatory}
                       option={cmbLBType}
                       selected={LBTypeList}
                       select={selectLBType}
@@ -727,7 +917,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                   </div>
                   <div className="col-md-4" >
                     <CardLabel>{`${t("TL_LB_NAME_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="name" isMandatory={true} option={FilterLocalbody} selected={Localbody} select={selectLocalbody} disabled={isEdit} placeholder={`${t("LB_NAME")}`} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALBODY"), })} />
+                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={FilterLocalbody} selected={Localbody} select={selectLocalbody} disabled={isEdit} placeholder={`${t("LB_NAME")}`} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALBODY"), })} />
                   </div>
                 </div>
               </div>
@@ -762,7 +952,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
               return (
                 <div className="row" key={index}>
                   <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_SECTOR")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} option={BusinessCategoryMenu} optionKey="i18nKey" isMandatory={config.isMandatory} value={field?.businesscategory} selected={field?.businesscategory} name={`TradeCategory-${index}`} select={(e) => selectBusinessCategory(index, e)} placeholder="Bussiness Category" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_CATEGORY"), })} />
+                    <Dropdown t={t} option={BusinessCategoryMenu} optionKey="i18nKey" isMandatory={config.isMandatory} value={field?.businesscategory} selected={field?.businesscategory}  name={`TradeCategory-${index}`} select={(e) => selectBusinessCategory(index, e)} placeholder="Bussiness Category" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_CATEGORY"), })} />
                   </div>
                   <div className="col-md-4" >
                     <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -770,7 +960,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                   </div>
                   <div className="col-md-4" >
                     <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getBusinessSubTypeMenu(field?.businesstype), "i18nKey", t)} selected={field?.businesssubtype} select={(e) => selectBusinessSubType(index, e)} placeholder="Bussiness Sub Type" />
+                    <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getBusinessSubTypeMenu(field?.businesstype), "i18nKey", t)} selected={field?.businesssubtype} select={(e) => selectBusinessSubType(index, e)} placeholder="Bussiness Sub Type" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })} />
                   </div>
                 </div>
               )
@@ -779,7 +969,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
             <div className="row">
               <div className="col-md-6">
                 <CardLabel>{`${t("TL_CUSTOM_DETAILED_TYPE_LABEL")}`}</CardLabel>
-                <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="businessActivityDesc" value={businessActivityDesc} onChange={changesetBusinessActivityDesc} placeholder="Custom Specific Description" {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_BUSINESS_ACTIVITY"), })} />
+                <TextInput t={t} type={"text"} isMandatory={false} optionKey="i18nKey" name="businessActivityDesc" value={businessActivityDesc} onChange={changesetBusinessActivityDesc} placeholder="Custom Specific Description" {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_BUSINESS_ACTIVITY"), })} />
               </div>
             </div>
             <div className="row">
@@ -790,11 +980,11 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
               {/* <div className="col-md-5" > */}
               {/* <div className="row"> */}
               <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} optionKey="i18nKey" name="capitalInvestment" value={capitalInvestment} onChange={changesetCapitalInvestment} placeholder="Capital Investment Range" {...(validation = { pattern: "^([0-9])$", isRequired: false, type: "number", title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
+                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="capitalInvestment" value={capitalInvestment} onChange={changesetCapitalInvestment} placeholder="Capital Investment Range" {...(validation = { isRequired: true,  title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
               </div>
               <div className="col-md-3" >
                 <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-                <DatePicker name="commencementDate" date={commencementDate} onChange={changesetCommencementDate} disabled={isEdit} placeholder="Date of Commencement"  {...(validation = { isRequired: false, title: t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL") })} />
+                <DatePicker name="commencementDate" min={minDate} date={commencementDate} onChange={changesetCommencementDate} disabled={isEdit} placeholder="Date of Commencement"  {...(validation = { isRequired: true, title: t("TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL") })} />
               </div>
               {/* </div>
               </div>
@@ -802,11 +992,11 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                 <div className="row"> */}
               <div className="col-md-3" >
                 <CardLabel>{`${t("TL_LICENSE_PERIOD")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="desiredLicensePeriod" value={desiredLicensePeriod} onChange={changesetDesiredLicensePeriod} placeholder="Desired Period of License" disable={isEdit} {...(validation = { pattern: "^[0-9]*$", isRequired: false, type: "number", title: t("TL_INVALID_LICENSE_PERIOD") })} />
+                <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={LicensePeriod} selected={desiredLicensePeriod} select={changesetDesiredLicensePeriod} placeholder="Desired License Period" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSE_PERIOD"), })} />
               </div>
               <div className="col-md-3">
-                <CardLabel>{`${t("TL_NEW_NUMBER_OF_EMPLOYEES_LABEL")}`}</CardLabel>
-                <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="noOfEmployees" value={noOfEmployees} onChange={changesetNoofEmployees} placeholder="No. of Employees" {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_NO_EMPLOYEES"), })} />
+                <CardLabel>{`${t("TL_NEW_NUMBER_OF_EMPLOYEES_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="noOfEmployees" value={noOfEmployees} onChange={changesetNoofEmployees} placeholder="No. of Employees" {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_NO_EMPLOYEES"), })} />
               </div>
               {/* </div> */}
               {/* </div> */}
@@ -817,24 +1007,24 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
             </div>
             <div className="row">
               <div className="col-md-3" ><CardLabel>{`${t("TL_LICENSING_UNIT_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="licenseUnitName" value={licenseUnitName} onChange={changesetLicenseUnitName} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
+                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="licenseUnitName"  value={licenseUnitName} onChange={changesetLicenseUnitName} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
               </div>
               <div className="col-md-3" ><CardLabel>{`${t("TL_LICENSING_UNIT_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="licenseUnitNameLocal" value={licenseUnitNameLocal} onChange={changesetLicenseUnitNameLocal} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME_ML")}`} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
+                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="licenseUnitNameLocal" value={licenseUnitNameLocal} onChange={changesetLicenseUnitNameLocal} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME_ML")}`} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
               </div>
-              <div className="col-md-3" ><CardLabel>{`${t("TL_CONTACT_NO")}`}</CardLabel>
-                <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="contactno" value={contactno} onChange={changesetContactno} disable={isEdit} placeholder={`${t("TL_CONTACT_NO")}`} {...(validation = { pattern: "^[0-9]*$", type: "number", isRequired: false, title: t("TL_INVALID_MOBILE_NO") })} />
+              <div className="col-md-3" ><CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="contactno" value={contactno} onChange={changesetContactno} disable={isEdit} placeholder={`${t("TL_CONTACT_NO")}`} {...(validation = { pattern: "^[0-9]*$",  isRequired: true, title: t("TL_INVALID_MOBILE_NO") })} />
               </div>
-              <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}</CardLabel>
-                <TextInput t={t} isMandatory={false} type="email" optionKey="i18nKey" name="email" value={email} onChange={changesetEmail} disable={isEdit} placeholder={`${t("TL_LOCALIZATION_EMAIL_ID")}`} {...(validation = { isRequired: false, title: t("TL_INVALID_EMAIL_ID") })} />
+              <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_EMAIL_ID")}`}<span className="mandatorycss">*</span></CardLabel>
+                <TextInput t={t} isMandatory={config.isMandatory} type="email" optionKey="i18nKey" name="email" value={email} onChange={changesetEmail} disable={isEdit} placeholder={`${t("TL_LOCALIZATION_EMAIL_ID")}`} {...(validation = { isRequired: true, title: t("TL_INVALID_EMAIL_ID") })} />
               </div>
             </div>
             <div className="row">
               <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_PLACE_ACTVITY")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPlace} selected={structureType} select={selectStructureType} disabled={isEdit} {...(validation = { isRequired: true, title: t("TL_INVALID_EMAIL_ID") })} />
+                <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPlace} selected={structureType} select={selectStructureType} disabled={isEdit} {...(validation = { isRequired: true, title: t("TL_INVALID_PLACE_STRUCTURE") })} />
               </div>
               <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_NATURE_STRUCTURE")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={filteredPlaceSubtype} selected={structurePlaceSubtype} select={SelectStructurePlaceSubtype} disabled={isEdit} {...(validation = { isRequired: true, title: t("TL_INVALID_EMAIL_ID") })} />
+                <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={filteredPlaceSubtype} selected={structurePlaceSubtype} select={SelectStructurePlaceSubtype} disabled={isEdit} {...(validation = { isRequired: true, title: t("TL_INVALID_SUB_PLACE_STRUCTURE") })} />
               </div>
               <div className="col-md-4">
                 <CardLabel>{`${t("TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL")} `}<span className="mandatorycss">*</span></CardLabel>
@@ -854,23 +1044,23 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                           </CardLabel>&nbsp;
                         </div>
                         <div className="col-md-8" >
-                          <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={isResurveyed} onSelect={selectIsResurveyed} disabled={isEdit} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
+                          <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={field?.isResurveyed} onSelect={selectIsResurveyed} disabled={isEdit} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
                         </div>
                       </div>
                       {value3 === "YES" && (
                         <div>
                           <div className="row">
                             <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="blockNo" value={field?.blockNo} onChange={(e) => handleTextInputField1(index, e, "blockNo")} disable={isEdit}  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
+                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="blockNo" value={field?.blockNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^0-9]/ig, ''), "blockNo", 5)}  disable={isEdit}  {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, title: t("TL_INVALID_BLOCK_NO") })} />
                             </div>
                             <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="surveyNo" value={field?.surveyNo} onChange={(e) => handleTextInputField1(index, e, "surveyNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
+                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="surveyNo" value={field?.surveyNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^0-9]/ig, ''), "surveyNo", 5)} disable={isEdit}     {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, title: t("TL_INVALID_SURVEY_NO") })} />
                             </div>
                             <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="subDivisionNo" value={field?.subDivisionNo} onChange={(e) => handleTextInputField1(index, e, "subDivisionNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
+                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="subDivisionNo" value={field?.subDivisionNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^0-9]/ig, ''), "subDivisionNo", 5)} disable={isEdit}     {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true,  title: t("TL_INVALID_SUBDIVISION_NO") })} />
                             </div>
-                            <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_PARTITION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="partitionNo" value={field?.partitionNo} onChange={(e) => handleTextInputField1(index, e, "partitionNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_PARTITION_NO") })} />
+                            <div className="col-md-3" > <CardLabel>{`${t("TL_LOCALIZATION_PARTITION_NO")}`}</CardLabel>
+                              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="partitionNo" value={field?.partitionNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^0-9]/ig, ''), "partitionNo", 5)} disable={isEdit}     {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, title: t("TL_INVALID_PARTITION_NO") })} />
                             </div>
                           </div>
                         </div>)}
@@ -878,13 +1068,13 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                         <div>
                           <div className="row">
                             <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_BLOCK_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="blockNo" value={field?.blockNo} onChange={(e) => handleTextInputField1(index, e, "blockNo")} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
+                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="blockNo" value={field?.blockNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^0-9]/ig, ''), "blockNo", 5)} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_BLOCK_NO") })} />
                             </div>
                             <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SURVEY_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="surveyNo" value={field?.surveyNo} onChange={(e) => handleTextInputField1(index, e, "surveyNo")} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
+                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="surveyNo" value={field?.surveyNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^0-9]/ig, ''), "surveyNo", 5)} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SURVEY_NO") })} />
                             </div>
                             <div className="col-md-4" > <CardLabel>{`${t("TL_LOCALIZATION_SUBDIVISION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="subDivisionNo" value={field?.subDivisionNo} onChange={(e) => handleTextInputField1(index, e, "subDivisionNo")} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
+                              <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="subDivisionNo" value={field?.subDivisionNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^0-9]/ig, ''), "subDivisionNo", 5)} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SUBDIVISION_NO") })} />
                             </div>
                           </div>
                         </div>)}
@@ -904,14 +1094,14 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-4" ><CardLabel>{`${t("TL_BUILDING_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                        <div className="col-md-4" ><CardLabel>{`${t("TL_BUILDING_NAME")}`}</CardLabel>
                           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="buildingName" value={buildingName} onChange={changesetBuildingName} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_NAME") })} />
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("TL_POSTOFFICE")}`}</CardLabel>
-                          <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPostOffice} selected={postOffice} select={selectsetPostOffice} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
+                        <div className="col-md-4" ><CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+                          <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={FilterPostoffice} selected={postOffice} select={selectsetPostOffice} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("TL_PIN")}`}</CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode} onChange={changesetPincode} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_PIN") })} />
+                        <div className="col-md-4" ><CardLabel>{`${t("TL_PIN")}`}<span className="mandatorycss">*</span></CardLabel>
+                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode} onChange={changesetPincode} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_PIN") })} />
                         </div>
                       </div>
                     </div>
@@ -934,14 +1124,14 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                       </div>
                       <div className="row">
                         <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="doorNo" value={field.doorNo} onChange={(e) => handleTextInputField1(index, e, "doorNo")} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_DOOR_NO") })} />
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="doorNo" value={field.doorNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^0-9]/ig, ''), "doorNo", 5)} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, title: t("TL_INVALID_DOOR_NO") })} />
                         </div>
                         <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO_SUB")}`}</CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="doorNoSub" value={field.doorNoSub} onChange={(e) => handleTextInputField1(index, e, "doorNoSub")} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
+                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="doorNoSub" value={field.doorNoSub} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "doorNoSub", 14)} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
                         </div>
-                        {ownershipCategory.code === "LBBUILDING" && (
+                        {value2 === "LBBUILDING" && (
                           <div className="col-md-2" ><CardLabel>{`${t("TL_STALL_NO")}`}</CardLabel>
-                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="stallNo" value={field.stallNo} onChange={(e) => handleTextInputField1(index, e, "stallNo")} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_STALL_NO") })} />
+                            <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="stallNo" value={field.stallNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "stallNo", 4)} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_STALL_NO") })} />
                           </div>
                         )}
 
@@ -983,7 +1173,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                       </div>
                       <div className="row">
                         <div className="col-md-7" ><CardLabel>{`${t("TL_VECHICLE_NO")}`}</CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="vehicleNo" value={field?.vehicleNo} onChange={(e) => handleTextInputField1(index, e, "vehicleNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_VECHICLE_NO") })} />
+                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="vehicleNo" value={field?.vehicleNo} onChange={(e) => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "vehicleNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_VECHICLE_NO") })} />
                         </div>
                       </div>
                       <div className="row">
@@ -995,7 +1185,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="serviceArea" value={serviceArea} onChange={changesetServiceArea} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SERVICE_AREA") })} />
                         </div>
                         <div className="col-md-6" ><CardLabel>{`${t("TL_DESIGNATED_PLACE")}`}</CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="Street" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DESIGNATED_PUBLIC_PLACE") })} />
+                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="landmark" value={landmark} onChange={changesetLandmark}  disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DESIGNATED_PUBLIC_PLACE") })} />
                         </div>
                       </div>
                     </div>
@@ -1008,21 +1198,21 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-7" ><CardLabel>{`${t("TL_VESSEL_NO")}*`}</CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="vesselNo" value={field?.vesselNo} onChange={(e) => handleTextInputField1(index, e, "vesselNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_VESSEL_NO") })} /> </div>    </div>
+                        <div className="col-md-7" ><CardLabel>{`${t("TL_VESSEL_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="vesselNo" value={field?.vesselNo} onChange={(e) => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "vesselNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_VESSEL_NO") })} /> </div>    </div>
                       <div className="row">
                         <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span>{`${t("TL_LOCATION_ADDRESS")}`} </h1>
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-4" ><CardLabel>{`${t("TL_WATER_BODY")}*`}<span className="mandatorycss">*</span></CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="waterbody" value={waterbody} onChange={changesetWaterbody} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, type: "number", title: t("TL_INVALID_WATER_BODY") })} />
+                        <div className="col-md-4" ><CardLabel>{`${t("TL_WATER_BODY")}`}<span className="mandatorycss">*</span></CardLabel>
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="waterbody" value={waterbody} onChange={changesetWaterbody} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_WATER_BODY") })} />
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("TL_SERVICE_AREA")}*`}</CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="ServiceArea" value={serviceArea} onChange={changesetServiceArea} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_SERVICE_AREA") })} />
+                        <div className="col-md-4" ><CardLabel>{`${t("TL_SERVICE_AREA")}`}<span className="mandatorycss">*</span></CardLabel>
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="ServiceArea" value={serviceArea} onChange={changesetServiceArea} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_SERVICE_AREA") })} />
                         </div>
-                        <div className="col-md-4" ><CardLabel>{`${t("TL_DESIGNATED_PLACE")}*`}</CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DesignatedPublicPlace" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DESIGNATED_PUBLIC_PLACE") })} />
+                        <div className="col-md-4" ><CardLabel>{`${t("TL_DESIGNATED_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="landmark" value={landmark} onChange={changesetLandmark} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_DESIGNATED_PUBLIC_PLACE") })} />
                         </div>
                       </div>
                     </div>
@@ -1035,8 +1225,8 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                       </div>
                       <div className="row">
                         {/* {`${t("Details Specify")}`} */}
-                        <div className="col-md-7" ><CardLabel>{`${t("TL_DESIGNATED_PLACE")}*`}</CardLabel>
-                          <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="DesignatedPublicPlace" disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DESIGNATED_PUBLIC_PLACE") })} />
+                        <div className="col-md-7" ><CardLabel>{`${t("TL_DESIGNATED_PLACE")}`} </CardLabel>
+                          <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="landmark" value={landmark} onChange={changesetLandmark} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DESIGNATED_PUBLIC_PLACE") })} />
                         </div>
                       </div>
                     </div>
@@ -1048,12 +1238,23 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
             {value2 === "BUILDING" && (
               <div>
                 <div className="row">
+                  <div className="col-md-7" >
+                    <div style={{ justifyContent: "right", display: "flex", paddingBottom: "15px", color: "#FF8C00" }}>
+                      <div className="col-md-3">
+                        <button type="button" style={{ paddingTop: "10px" }} onClick={(e) => dispatchDoor({ type: "CHECK_DOOR" })}>
+                          {`${t("TL_CHECK_DOOR_LABEL")}`}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
                   <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span>{`${t("TL_LOCATION_ADDRESS")}`} </h1>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALITY")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="locality" value={locality} onChange={changesetLocality} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_LOCALITY") })} />
+                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="locality" value={locality} onChange={changesetLocality} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_LOCALITY") })} />
                   </div>
                   <div className="col-md-4" ><CardLabel>{`${t("TL_STREET_NAME")}`}</CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="street" value={street} onChange={changesetStreet} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_STREET_NAME") })} />
@@ -1063,19 +1264,28 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-4" ><CardLabel>{`${t("TL_BUILDING_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="buildingName" value={buildingName} onChange={changesetBuildingName} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_NAME") })} />
+                  <div className="col-md-4" ><CardLabel>{`${t("TL_BUILDING_NAME")}`}</CardLabel>
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="buildingName" value={buildingName} onChange={changesetBuildingName} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_NAME") })} />
                   </div>
-                  <div className="col-md-4" ><CardLabel>{`${t("TL_POSTOFFICE")}`}</CardLabel>
-                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPostOffice} selected={postOffice} select={selectsetPostOffice} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
+                  <div className="col-md-4" ><CardLabel>{`${t("TL_POSTOFFICE")}`} <span className="mandatorycss">*</span></CardLabel>
+                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={FilterPostoffice} selected={postOffice} select={selectsetPostOffice} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
                   </div>
-                  <div className="col-md-4" ><CardLabel>{`${t("TL_PIN")}`}</CardLabel>
-                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode} onChange={changesetPincode} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_PIN") })} />
+                  <div className="col-md-4" ><CardLabel>{`${t("TL_PIN")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode} onChange={changesetPincode} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, title: t("TL_INVALID_PIN") })} />
                   </div>
                 </div>
               </div>
             )}
           </div>
+          <div>
+          {toast && (
+            <Toast
+              error={toast}
+              label={errorMessage}
+              onClose={() => setToast(false)}
+            />
+          )}{""}
+        </div>
         </FormStep>
       )}
     </React.Fragment>

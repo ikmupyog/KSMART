@@ -34,10 +34,12 @@ export const GetServiceDefinitions = {
             ? Menu.push({
                 name: t("SERVICEDEFS.OTHERS"),
                 key: def.menuPath,
+                deptCode:def.department
               })
             : Menu.push({
                 name: t("SERVICEDEFS." + def.menuPath.toUpperCase()),
                 key: def.menuPath,
+                deptCode:def.department
               });
         }
       })

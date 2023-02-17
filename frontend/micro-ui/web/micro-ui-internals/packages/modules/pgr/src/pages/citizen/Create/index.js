@@ -66,9 +66,13 @@ export const CreateComplaint = () => {
   };
   const submitComplaint = async () => {
     if (paramState?.complaintType) {
+      console.log(paramState?.complaintType["deptCode"]);
+      // let deptCode = paramState?.complaintType["deptCode"];
       const { city_complaint, locality_complaint, uploadedImages, complaintType, subType, details, ...values } = paramState;
       const { code: cityCode, name: city } = city_complaint;
       const { code: localityCode, name: localityName } = locality_complaint;
+      const  deptCode  = paramState?.complaintType["deptCode"];
+
       const _uploadImages = uploadedImages?.map((url) => ({
         documentType: "PHOTO",
         fileStoreId: url,
@@ -82,6 +86,7 @@ export const CreateComplaint = () => {
         cityCode,
         city,
         description: details,
+        deptCode: deptCode,
         district: city,
         region: city,
         localityCode,
@@ -89,7 +94,7 @@ export const CreateComplaint = () => {
         state: stateInfo.name,
         uploadedImages: _uploadImages,
       };
-
+      console.log(data);
       await dispatch(createComplaint(data));
       await client.refetchQueries(["complaintsList"]);
       history.push(`${match.path}/response`);
