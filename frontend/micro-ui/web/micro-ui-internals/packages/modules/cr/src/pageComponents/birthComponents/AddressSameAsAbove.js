@@ -14,7 +14,6 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData,isPrsentAddre
   const onSkip = () => onSelect();
 
   function setSameAsPresent(e) {
-    console.log(e.target.checked);
     setIsPrsentAddress(e.target.checked);
     if (e.target.checked == true) {
       // setPermanentLBTypeName(PresentLBTypeName);

@@ -2,7 +2,6 @@ import { CitizenHomeCard, CaseIcon } from "@egovernments/digit-ui-react-componen
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
-import BirthVehicle from "../src/pageComponents/birthComponents/BirthVehicle";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import AddressOne from "./pageComponents/birthComponents/OldAddressOne";
 import AddressInsideIndia from "./pageComponents/birthComponents/OldAddressInsideIndia";
@@ -157,7 +156,6 @@ const componentsToRegister = {
   CRModule,
   CRLinks,
   CRCard,
-  BirthVehicle,
   ChildDetails,
   CRApplicationDetails,
   CRApplicationDeathDetails,

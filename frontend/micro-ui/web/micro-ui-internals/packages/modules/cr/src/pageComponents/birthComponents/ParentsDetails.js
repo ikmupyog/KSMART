@@ -31,64 +31,64 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   //
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [lbs, setLbs] = useState(0);
-  const [MotherFirstNameEn, setMotherFirstNameEn] = useState(
-    formData?.ParentsDetails?.MotherFirstNameEn ? formData?.ParentsDetails?.MotherFirstNameEn : ""
+  const [motherFirstNameEn, setMotherFirstNameEn] = useState(
+    formData?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn : ""
   );
 
-  const [MotherFirstNameMl, setMotherFirstNameMl] = useState(
-    formData?.ParentsDetails?.MotherFirstNameMl ? formData?.ParentsDetails?.MotherFirstNameMl : ""
+  const [motherFirstNameMl, setMotherFirstNameMl] = useState(
+    formData?.ParentsDetails?.motherFirstNameMl ? formData?.ParentsDetails?.motherFirstNameMl : ""
   );
-  const [MotherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.MotherAadhar ? formData?.ParentsDetails?.MotherAadhar : "");
-  const [MotherMarriageAge, setMotherMarriageAge] = useState(
-    formData?.ParentsDetails?.MotherMarriageAge ? formData?.ParentsDetails?.MotherMarriageAge : ""
+  const [motherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.motherAadhar ? formData?.ParentsDetails?.motherAadhar : "");
+  const [motherMarriageAge, setMotherMarriageAge] = useState(
+    formData?.ParentsDetails?.motherMarriageAge ? formData?.ParentsDetails?.motherMarriageAge : ""
   );
-  const [MotherEmail, setMotherEmail] = useState(formData?.ParentsDetails?.MotherEmail ? formData?.ParentsDetails?.MotherEmail : "");
-  const [MotherMarriageBirth, setMotherMarriageBirth] = useState(
-    formData?.ParentsDetails?.MotherMarriageBirth ? formData?.ParentsDetails?.MotherMarriageBirth : ""
+  const [motherEmail, setMotherEmail] = useState(formData?.ParentsDetails?.motherEmail ? formData?.ParentsDetails?.motherEmail : "");
+  const [motherMarriageBirth, setMotherMarriageBirth] = useState(
+    formData?.ParentsDetails?.motherMarriageBirth ? formData?.ParentsDetails?.motherMarriageBirth : ""
   );
-  const [MotherEducation, setMotherEducation] = useState(
-    formData?.ParentsDetails?.MotherEducation ? formData?.ParentsDetails?.MotherEducation : null
+  const [motherEducation, setMotherEducation] = useState(
+    formData?.ParentsDetails?.motherEducation ? formData?.ParentsDetails?.motherEducation : null
   );
-  const [MotherProfession, setMotherProfession] = useState(
-    formData?.ParentsDetails?.MotherProfession ? formData?.ParentsDetails?.MotherProfession : null
+  const [motherProfession, setMotherProfession] = useState(
+    formData?.ParentsDetails?.motherProfession ? formData?.ParentsDetails?.motherProfession : null
   );
  
   // const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.ParentsDetails?.MotherAgeMarriage ? formData?.ParentsDetails?.MotherAgeMarriage : "");
-  const [OrderofChildren, setOrderofChildren] = useState(
-    formData?.ParentsDetails?.OrderofChildren ? formData?.ParentsDetails?.OrderofChildren : ""
+  const [orderofChildren, setOrderofChildren] = useState(
+    formData?.ParentsDetails?.orderofChildren ? formData?.ParentsDetails?.orderofChildren : ""
   );
 
-  const [MotherNationality, setMotherNationality] = useState(
-    formData?.ParentsDetails?.MotherNationality ? formData?.ParentsDetails?.MotherNationality : null
+  const [motherNationality, setMotherNationality] = useState(
+    formData?.ParentsDetails?.motherNationality ? formData?.ParentsDetails?.motherNationality : null
   );
 
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.ParentsDetails?.isMotherInfo ? formData?.ParentsDetails?.isMotherInfo : false);
 
-  const [FatherAadhar, setFatherAadhar] = useState(formData?.ParentsDetails?.FatherAadhar ? formData?.ParentsDetails?.FatherAadhar : "");
+  const [fatherAadhar, setFatherAadhar] = useState(formData?.ParentsDetails?.fatherAadhar ? formData?.ParentsDetails?.fatherAadhar : "");
   const [toast, setToast] = useState(false);
-  const [MotherAadharError, setMotherAadharError] = useState(formData?.ParentsDetails?.MotherAadhar ? false : false);
-  const [MotherMarriageBirthError, setMotherMarriageBirthError] = useState(formData?.ParentsDetails?.MotherMarriageBirth ? false : false);
-  const [MotherEducationError, setMotherEducationError] = useState(formData?.ParentsDetails?.MotherEducation ? false : false);
-  const [MotherProfessionError, setMotherProfessionError] = useState(formData?.ParentsDetails?.MotherProfession ? false : false);
-  const [MotherNationalityError, setMotherNationalityError] = useState(formData?.ParentsDetails?.MotherNationality ? false : false);
+  const [MotherAadharError, setMotherAadharError] = useState(formData?.ParentsDetails?.motherAadhar ? false : false);
+  const [MotherMarriageBirthError, setMotherMarriageBirthError] = useState(formData?.ParentsDetails?.motherMarriageBirth ? false : false);
+  const [MotherEducationError, setMotherEducationError] = useState(formData?.ParentsDetails?.motherEducation ? false : false);
+  const [MotherProfessionError, setMotherProfessionError] = useState(formData?.ParentsDetails?.motherProfession ? false : false);
+  const [MotherNationalityError, setMotherNationalityError] = useState(formData?.ParentsDetails?.motherNationality ? false : false);
 
-  const [FatherAadharError, setFatherAadharError] = useState(formData?.ParentsDetails?.FatherAadhar ? false : false);
+  const [FatherAadharError, setFatherAadharError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
   const [isFatherInfo, setIsFatherInfo] = useState(formData?.ParentsDetails?.isFatherInfo ? formData?.ParentsDetails?.isFatherInfo : false);
-  const [FatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.ParentsDetails?.FatherFirstNameEn ? formData?.ParentsDetails?.FatherFirstNameEn : ""  );
-  const [FatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.ParentsDetails?.FatherFirstNameMl ? formData?.ParentsDetails?.FatherFirstNameMl : ""  );
-  const [FatherNationality, setFatherNationality] = useState(formData?.ParentsDetails?.FatherNationality ? formData?.ParentsDetails?.FatherNationality : null  );
-  const [FatherEducation, setFatherEducation] = useState(formData?.ParentsDetails?.FatherEducation ? formData?.ParentsDetails?.FatherEducation : null );
-  const [FatherProfession, setFatherProfession] = useState( formData?.ParentsDetails?.FatherProfession ? formData?.ParentsDetails?.FatherProfession : null  );
+  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? formData?.ParentsDetails?.fatherFirstNameEn : ""  );
+  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.ParentsDetails?.fatherFirstNameMl ? formData?.ParentsDetails?.fatherFirstNameMl : ""  );
+  const [fatherNationality, setFatherNationality] = useState(formData?.ParentsDetails?.fatherNationality ? formData?.ParentsDetails?.fatherNationality : null  );
+  const [fatherEducation, setFatherEducation] = useState(formData?.ParentsDetails?.fatherEducation ? formData?.ParentsDetails?.fatherEducation : null );
+  const [fatherProfession, setFatherProfession] = useState( formData?.ParentsDetails?.fatherProfession ? formData?.ParentsDetails?.fatherProfession : null  );
   const [Religion, setReligion] = useState(formData?.ParentsDetails?.Religion ? formData?.ParentsDetails?.Religion : null);
-  const [FatherEmail, setFatherEmail] = useState(formData?.ParentsDetails?.FatherEmail ? formData?.ParentsDetails?.FatherEmail : "");
-  const [FatherMobile, setFatherMobile] = useState(formData?.ParentsDetails?.FatherMobile ? formData?.ParentsDetails?.FatherMobile : "");
+  const [fatherEmail, setFatherEmail] = useState(formData?.ParentsDetails?.fatherEmail ? formData?.ParentsDetails?.fatherEmail : "");
+  const [fatherMobile, setFatherMobile] = useState(formData?.ParentsDetails?.fatherMobile ? formData?.ParentsDetails?.fatherMobile : "");
 
-  const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.ParentsDetails?.OrderofChildren ? false : false);
-  const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.ParentsDetails?.FatherFirstNameEn ? false : false);
-  const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.ParentsDetails?.FatherFirstNameMl ? false : false);
-  const [FatherMobileError, setFatherMobileError] = useState(formData?.ParentsDetails?.FatherAadhar ? false : false);
-  const [FatherEduError, setFatherEduError] = useState(formData?.ParentsDetails?.FatherEducation ? false : false);
-  const [FatherProfError, setFatherProfError] = useState(formData?.ParentsDetails?.FatherProfession ? false : false);
+  const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.ParentsDetails?.orderofChildren ? false : false);
+  const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? false : false);
+  const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.ParentsDetails?.fatherFirstNameMl ? false : false);
+  const [FatherMobileError, setFatherMobileError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
+  const [FatherEduError, setFatherEduError] = useState(formData?.ParentsDetails?.fatherEducation ? false : false);
+  const [FatherProfError, setFatherProfError] = useState(formData?.ParentsDetails?.fatherProfession ? false : false);
   const [ReligionStError, setReligionStError] = useState(formData?.ParentsDetails?.Religion ? false : false);
 
  
@@ -136,7 +136,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   let cmbfilterCountry = [];
   let cmbfilterState = [];
   // useEffect(() => {
-  //     if (MotherNationality == null || MotherNationality == '') {
+  //     if (motherNationality == null || motherNationality == '') {
   //         if (stateId === "kl" && cmbNation.length > 0) {
   //             cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes('Indian'));
   //             setMotherNationality(cmbfilterNation[0]);
@@ -378,7 +378,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   let validFlag = true;
   const goNext = () => {
     if (isMotherInfo === false) {
-      if (MotherAadhar != null || MotherAadhar != "" || MotherAadhar != undefined) {
+      if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
         if (MotherAadharError) {
           validFlag = false;
           setMotherAadharError(true);
@@ -394,7 +394,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
       }
     }
       if (isFatherInfo === false) {
-        if (FatherAadhar != null || FatherAadhar != "" || FatherAadhar != undefined) {
+        if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
           if (FatherAadharError) {
             validFlag = false;
             setFatherAadharError(true);
@@ -411,7 +411,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
         
       }
     
-      // if (FatherFirstNameEn != null || FatherFirstNameEn != "" || FatherFirstNameEn != undefined) {
+      // if (fatherFirstNameEn != null || fatherFirstNameEn != "" || fatherFirstNameEn != undefined) {
       //   if (FatherFirstNmeEnError) {
       //     validFlag = false;
       //     setFatherFirstNmeEnError(true);
@@ -426,7 +426,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
       //   }
       // }
     
-    if (FatherMobile != null || FatherMobile != "" || FatherMobile != undefined) {
+    if (fatherMobile != null || fatherMobile != "" || fatherMobile != undefined) {
       if (FatherMobileError) {
         validFlag = false;
         setFatherMobileError(true);
@@ -442,50 +442,50 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("MotherFirstNameEn", MotherFirstNameEn ? MotherFirstNameEn : null);
-      sessionStorage.setItem("MotherFirstNameMl", MotherFirstNameMl ? MotherFirstNameMl : null);
-      sessionStorage.setItem("MotherAadhar", MotherAadhar ? MotherAadhar : null);
-      sessionStorage.setItem("MotherMarriageAge", MotherMarriageAge ? MotherMarriageAge : null);
-      sessionStorage.setItem("MotherMarriageBirth", MotherMarriageBirth ? MotherMarriageBirth : null);
-      sessionStorage.setItem("MotherEducation", MotherEducation ? MotherEducation.code : null);
-      sessionStorage.setItem("MotherProfession", MotherProfession ? MotherProfession.code : null);
-      sessionStorage.setItem("MotherNationality", MotherNationality ? MotherNationality.code : null);
+      sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
+      sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
+      sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
+      sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
+      sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
+      sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
+      sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
+      sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);
       // sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage ? MotherAgeMarriage : null);
 
-      sessionStorage.setItem("OrderofChildren", OrderofChildren ? OrderofChildren : null);
+      sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
       sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
       sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
-      sessionStorage.setItem("FatherAadhar", FatherAadhar ? FatherAadhar : null);
-      sessionStorage.setItem("FatherFirstNameEn", FatherFirstNameEn ? FatherFirstNameEn : null);
-      sessionStorage.setItem("FatherFirstNameMl", FatherFirstNameMl ? FatherFirstNameMl : null);
-      sessionStorage.setItem("FatherNationality", FatherNationality ? FatherNationality.code : null);
-      sessionStorage.setItem("FatherEducation", FatherEducation ? FatherEducation.code : null);
-      sessionStorage.setItem("FatherProfession", FatherProfession ? FatherProfession.code : null);
+      sessionStorage.setItem("fatherAadhar", fatherAadhar ? fatherAadhar : null);
+      sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
+      sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
+      sessionStorage.setItem("fatherNationality", fatherNationality ? fatherNationality.code : null);
+      sessionStorage.setItem("fatherEducation", fatherEducation ? fatherEducation.code : null);
+      sessionStorage.setItem("fatherProfession", fatherProfession ? fatherProfession.code : null);
       sessionStorage.setItem("Religion", Religion ? Religion.code : null);
-      sessionStorage.setItem("FatherEmail", FatherEmail ? FatherEmail : null);
-      sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null);
+      sessionStorage.setItem("fatherEmail", fatherEmail ? fatherEmail : null);
+      sessionStorage.setItem("fatherMobile", fatherMobile ? fatherMobile : null);
 
       onSelect(config.key, {
-        MotherFirstNameEn,
-        MotherFirstNameMl,
-        MotherAadhar,
-        MotherMarriageAge,
-        MotherMarriageBirth,
-        MotherEducation,
-        MotherProfession,
-        MotherNationality,
-        OrderofChildren,
-        FatherAadhar,
+        motherFirstNameEn,
+        motherFirstNameMl,
+        motherAadhar,
+        motherMarriageAge,
+        motherMarriageBirth,
+        motherEducation,
+        motherProfession,
+        motherNationality,
+        orderofChildren,
+        fatherAadhar,
         isMotherInfo,
         isFatherInfo,
-        FatherFirstNameEn,
-        FatherFirstNameMl,
-        FatherNationality,
-        FatherEducation,
-        FatherProfession,
+        fatherFirstNameEn,
+        fatherFirstNameMl,
+        fatherNationality,
+        fatherEducation,
+        fatherProfession,
         Religion,
-        FatherMobile,
-        FatherEmail,
+        fatherMobile,
+        fatherEmail,
       });
     }
   };
@@ -504,12 +504,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   ) {
     return <Loader></Loader>;
   }
+  console.log(formData);
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {/* isDisabled={!MotherFirstNameEn} */}
+      {/* isDisabled={!motherFirstNameEn} */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         {/* <div className="row">
           <div className="col-md-12">
@@ -540,8 +541,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"number"}
                     optionKey="i18nKey"
-                    name="MotherAadhar"
-                    value={MotherAadhar}
+                    name="motherAadhar"
+                    value={motherAadhar}
                     onChange={setSelectMotherAadhar}
                     // disable={isMotherInfo}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
@@ -559,8 +560,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="MotherFirstNameEn"
-                    value={MotherFirstNameEn}
+                    name="motherFirstNameEn"
+                    value={motherFirstNameEn}
                     onChange={setSelectMotherFirstNameEn}
                     // disable={isMotherInfo}
                     placeholder={`${t("CR_MOTHER_NAME_EN")}`}
@@ -578,8 +579,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="MotherFirstNameMl"
-                    value={MotherFirstNameMl}
+                    name="motherFirstNameMl"
+                    value={motherFirstNameMl}
                     onChange={setSelectMotherFirstNameMl}
                     // disable={isMotherInfo}
                     placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -603,7 +604,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     optionKey="nationalityname"
                     isMandatory={false}
                     option={cmbNation}
-                    selected={MotherNationality}
+                    selected={motherNationality}
                     select={setSelectMotherNationality}
                     // disabled={isMotherInfo}
                     placeholder={`${t("CR_NATIONALITY")}`}
@@ -616,8 +617,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"number"}
                     optionKey="i18nKey"
-                    name="MotherMarriageAge"
-                    value={MotherMarriageAge}
+                    name="motherMarriageAge"
+                    value={motherMarriageAge}
                     onChange={setSelectMotherMarriageAge}
                     // disable={isMotherInfo}
                     placeholder={`${t("CR_MOTHER_AGE_MARRIAGE")}`}
@@ -633,8 +634,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"number"}
                     optionKey="i18nKey"
-                    name="MotherMarriageBirth"
-                    value={MotherMarriageBirth}
+                    name="motherMarriageBirth"
+                    value={motherMarriageBirth}
                     onChange={setSelectMotherMarriageBirth}
                     // disable={isMotherInfo}
                     placeholder={`${t("CR_MOTHER_AGE_BIRTH")}`}
@@ -652,8 +653,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"number"}
                     optionKey="i18nKey"
-                    name="OrderofChildren"
-                    value={OrderofChildren}
+                    name="orderofChildren"
+                    value={orderofChildren}
                     onChange={setSelectOrderofChildren}
                     // disable={isMotherInfo}
                     placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
@@ -667,7 +668,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     optionKey="name"
                     isMandatory={false}
                     option={cmbQualification}
-                    selected={MotherEducation}
+                    selected={motherEducation}
                     select={setSelectMotherEducation}
                     // disabled={isMotherInfo}
                     placeholder={`${t("CR_EDUCATION")}`}
@@ -680,7 +681,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     optionKey="name"
                     isMandatory={false}
                     option={cmbProfession}
-                    selected={MotherProfession}
+                    selected={motherProfession}
                     select={setSelectMotherProfession}
                     // disabled={isMotherInfo}
                     placeholder={`${t("CR_PROFESSIONAL")}`}
@@ -716,8 +717,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"number"}
                     optionKey="i18nKey"
-                    name="FatherAadhar"
-                    value={FatherAadhar}
+                    name="fatherAadhar"
+                    value={fatherAadhar}
                     onChange={setSelectFatherAadhar}
                     // disable={isFatherInfo}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
@@ -735,8 +736,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="FatherFirstNameEn"
-                    value={FatherFirstNameEn}
+                    name="fatherFirstNameEn"
+                    value={fatherFirstNameEn}
                     onChange={setSelectFatherFirstNameEn}
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_FATHER_NAME_EN")}`}
@@ -754,8 +755,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="FatherFirstNameMl"
-                    value={FatherFirstNameMl}
+                    name="fatherFirstNameMl"
+                    value={fatherFirstNameMl}
                     onChange={setSelectFatherFirstNameMl}
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -780,7 +781,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     optionKey="nationalityname"
                     isMandatory={false}
                     option={cmbNation}
-                    selected={FatherNationality}
+                    selected={fatherNationality}
                     select={setSelectFatherNationality}
                     // disable={isFatherInfo}
                   />
@@ -792,7 +793,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     optionKey="name"
                     isMandatory={false}
                     option={cmbQualification}
-                    selected={FatherEducation}
+                    selected={fatherEducation}
                     select={setSelectFatherEducation}
                     // disable={isFatherInfo}
                   />
@@ -804,7 +805,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     optionKey="name"
                     isMandatory={false}
                     option={cmbProfession}
-                    selected={FatherProfession}
+                    selected={fatherProfession}
                     select={setSelectFatherProfession}
                     // disable={isFatherInfo}
                   />
@@ -845,8 +846,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type={"number"}
                     optionKey="i18nKey"
-                    name="FatherMobile"
-                    value={FatherMobile}
+                    name="fatherMobile"
+                    value={fatherMobile}
                     onChange={setSelectFatherMobile}
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_PARENTS_CONTACT_NO")}`}
@@ -860,8 +861,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
                     isMandatory={false}
                     type="email"
                     optionKey="i18nKey"
-                    name="FatherEmail"
-                    value={FatherEmail}
+                    name="fatherEmail"
+                    value={fatherEmail}
                     onChange={setSelectFatherEmail}
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_PARENTS_EMAIL")}`}

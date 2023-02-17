@@ -3,15 +3,20 @@ import { FormStep, CardLabel, TextInput, Dropdown, Loader, TextArea } from "@ego
 import { useTranslation } from "react-i18next";
 
 const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, vehicleRegistrationNo, vehicleFromEn,
-  vehicleToEn, vehicleFromMl, vehicleHaltPlace, vehicleHaltPlaceMl, vehicleToMl, vehicleDesDetailsEn,setvehicleToEn, setadmittedHospitalEn,
+  vehicleToEn, vehicleFromMl, vehicleHaltPlace, vehicleHaltPlaceMl, vehicleToMl, vehicleDesDetailsEn, setvehicleToEn, setadmittedHospitalEn,
   setvehicleType, setvehicleRegistrationNo, setvehicleFromEn, setvehicleFromMl, setvehicleHaltPlace, setvehicleHaltPlaceMl,
   setvehicleToMl, setvehicleDesDetailsEn, setSelectedadmittedHospitalEn
 }) => {
   const stateId = Digit.ULBService.getStateId();
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const { t } = useTranslation();
   let validation = {};
 
-  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "hospital");
   const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
 
   // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -123,142 +128,142 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
             </h1>
           </div>
         </div>
-        <div className="row">          
-            <div className="col-md-3" >
-              <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={true}
-                option={cmbVehicle}
-                selected={vehicleType}
-                select={setSelectVehicleType}
-                placeholder={`${t("CR_VEHICLE_TYPE")}`}
-              />
+        <div className="row">
+          <div className="col-md-3" >
+            <CardLabel>{`${t("CR_VEHICLE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={true}
+              option={cmbVehicle}
+              selected={vehicleType}
+              select={setSelectVehicleType}
+              placeholder={`${t("CR_VEHICLE_TYPE")}`}
+            />
 
-            </div>
-            <div className="col-md-3" >
-              <CardLabel>{`${t("CR_VEHICLE_REGISTRATION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="vehicleRegistrationNo"
-                value={vehicleRegistrationNo}
-                onChange={setSelectVehicleRegistrationNo}
-                placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
-              />
-            </div>
-            <div className="col-md-3" >
-              <CardLabel>{`${t("CR_VEHICLE_FROM_EN")}`}</CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="vehicleFromEn"
-                value={vehicleFromEn}
-                onChange={setSelectVehicleFromEn}
-                placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
-              />
-            </div>
-            <div className="col-md-3" >
-              <CardLabel>{`${t("CR_VEHICLE_FROM_ML")}`}</CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="vehicleFromMl"
-                value={vehicleFromMl}
-                onChange={setSelectVehicleFromMl}
-                placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
-                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
-              />
-            </div>
+          </div>
+          <div className="col-md-3" >
+            <CardLabel>{`${t("CR_VEHICLE_REGISTRATION_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="vehicleRegistrationNo"
+              value={vehicleRegistrationNo}
+              onChange={setSelectVehicleRegistrationNo}
+              placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
+            />
+          </div>
+          <div className="col-md-3" >
+            <CardLabel>{`${t("CR_VEHICLE_FROM_EN")}`}</CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="vehicleFromEn"
+              value={vehicleFromEn}
+              onChange={setSelectVehicleFromEn}
+              placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
+            />
+          </div>
+          <div className="col-md-3" >
+            <CardLabel>{`${t("CR_VEHICLE_FROM_ML")}`}</CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="vehicleFromMl"
+              value={vehicleFromMl}
+              onChange={setSelectVehicleFromMl}
+              placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
+            />
+          </div>
         </div>
 
         <div className="row">
-            <div className="col-md-3" >
-              <CardLabel>{`${t("CR_VEHICLE_TO_EN")}`}</CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="vehicleToEn"
-                value={vehicleToEn}
-                onChange={setSelectVehicleToEn}
-                placeholder={`${t("CR_VEHICLE_TO_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
-              />
-            </div>
-            <div className="col-md-3" >
-              <CardLabel>{`${t("CR_VEHICLE_TO_ML")}`}</CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="vehicleToMl"
-                value={vehicleToMl}
-                onChange={setSelectVehicleToMl}
-                placeholder={`${t("CR_VEHICLE_TO_ML")}`}
-                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
-              />
-            </div>
-            <div className="col-md-3" >
-              <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="vehicleHaltPlace"
-                value={vehicleHaltPlace}
-                onChange={setSelectVehicleHaltPlace}
-                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_EN") })}
-              />
-            </div>
-            <div className="col-md-3" >
-              <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="vehicleHaltPlaceMl"
-                value={vehicleHaltPlaceMl}
-                onChange={setSelectVehicleHaltPlaceMl}
-                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}
-                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_ML") })}
-              />
-            </div>
+          <div className="col-md-3" >
+            <CardLabel>{`${t("CR_VEHICLE_TO_EN")}`}</CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="vehicleToEn"
+              value={vehicleToEn}
+              onChange={setSelectVehicleToEn}
+              placeholder={`${t("CR_VEHICLE_TO_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
+            />
+          </div>
+          <div className="col-md-3" >
+            <CardLabel>{`${t("CR_VEHICLE_TO_ML")}`}</CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="vehicleToMl"
+              value={vehicleToMl}
+              onChange={setSelectVehicleToMl}
+              placeholder={`${t("CR_VEHICLE_TO_ML")}`}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
+            />
+          </div>
+          <div className="col-md-3" >
+            <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="vehicleHaltPlace"
+              value={vehicleHaltPlace}
+              onChange={setSelectVehicleHaltPlace}
+              placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_EN") })}
+            />
+          </div>
+          <div className="col-md-3" >
+            <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="vehicleHaltPlaceMl"
+              value={vehicleHaltPlaceMl}
+              onChange={setSelectVehicleHaltPlaceMl}
+              placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_ML") })}
+            />
+          </div>
         </div>
 
         <div className="row">
-            <div className="col-md-6" >
-              <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}<span className="mandatorycss">*</span></CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="hospitalName"
-                isMandatory={true}
-                option={cmbhospital}
-                selected={setadmittedHospitalEn}
-                select={selectadmittedHospitalEn}
-                placeholder={`${t("CR_ADMITTED_HOSPITAL_EN")}`}
-              />
-            </div>
-            <div className="col-md-6" >
-              <CardLabel>{`${t("CR_DESCRIPTION")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextArea
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="vehicleDesDetailsEn"
-                value={vehicleDesDetailsEn}
-                onChange={setSelectVehicleOtherDetailsEn}
-                placeholder={`${t("CR_DESCRIPTION")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
-              />
-            </div>
+          <div className="col-md-6" >
+            <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="hospitalName"
+              isMandatory={true}
+              option={cmbhospital}
+              selected={setadmittedHospitalEn}
+              select={selectadmittedHospitalEn}
+              placeholder={`${t("CR_ADMITTED_HOSPITAL_EN")}`}
+            />
+          </div>
+          <div className="col-md-6" >
+            <CardLabel>{`${t("CR_DESCRIPTION")}`}<span className="mandatorycss">*</span></CardLabel>
+            <TextArea
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="vehicleDesDetailsEn"
+              value={vehicleDesDetailsEn}
+              onChange={setSelectVehicleOtherDetailsEn}
+              placeholder={`${t("CR_DESCRIPTION")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
+            />
+          </div>
         </div>
 
       </FormStep>

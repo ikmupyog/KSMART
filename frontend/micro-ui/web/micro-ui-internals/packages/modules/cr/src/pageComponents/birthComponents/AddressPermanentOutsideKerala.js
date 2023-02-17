@@ -4,20 +4,23 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
 
-const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData ,permntOutsideKeralaDistrict, setpermntOutsideKeralaDistrict,
-  permntOutsideKeralaTaluk, setpermntOutsideKeralaTaluk,permntOutsideKeralaCityVilgeEn, setpermntOutsideKeralaCityVilgeEn,
-  permntOutsideKeralaVillage, setpermntOutsideKeralaVillage,permntOutsideKeralaPincode, setpermntOutsideKeralaPincode,
-  permntOutsideKeralaHouseNameEn, setpermntOutsideKeralaHouseNameEn,permntOutsideKeralaHouseNameMl, setpermntOutsideKeralaHouseNameMl,
-  permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn,permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl,
-  permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn,permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl,
-  permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn,permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
+const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, permntOutsideKeralaDistrict, setpermntOutsideKeralaDistrict,
+  permntOutsideKeralaTaluk, setpermntOutsideKeralaTaluk, permntOutsideKeralaCityVilgeEn, setpermntOutsideKeralaCityVilgeEn,
+  permntOutsideKeralaVillage, setpermntOutsideKeralaVillage, permntOutsideKeralaPincode, setpermntOutsideKeralaPincode,
+  permntOutsideKeralaHouseNameEn, setpermntOutsideKeralaHouseNameEn, permntOutsideKeralaHouseNameMl, setpermntOutsideKeralaHouseNameMl,
+  permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn, permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl,
+  permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn, permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl,
+  permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
   value, setValue
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const tenantId = Digit.ULBService.getCurrentTenantId();
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   // const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   // const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   // const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
@@ -61,7 +64,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData ,p
   let districtid = null;
   let cmbFilterDistrict = [];
   let cmbLB = [];
-console.log(value);
+  console.log(value);
   Taluk &&
     Taluk["common-masters"] &&
     Taluk["common-masters"].Taluk.map((ob) => {
@@ -82,24 +85,24 @@ console.log(value);
   //   PostOffice["common-masters"].PostOffice.map((ob) => {
   //     cmbPostOffice.push(ob);
   //   });
-  
-    useEffect(() => {
 
-      if (isInitialRender) {
-          if (cmbDistrict.length > 0) {
-            console.log(cmbDistrict);
-              // currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-              // setinsideKeralaLBName(currentLB[0]);
-              cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === "pb");
-              console.log(cmbFilterDistrict);
-              // setpermntOutsideKeralaDistrict(cmbFilterDistrict);
-              // cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
-              // setLbsTalukvalue(cmbFilterTaluk);
-              // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-              // setLbsVillagevalue(cmbFilterVillage);
-              setIsInitialRender(false);
-          }
+  useEffect(() => {
+
+    if (isInitialRender) {
+      if (cmbDistrict.length > 0) {
+        console.log(cmbDistrict);
+        // currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+        // setinsideKeralaLBName(currentLB[0]);
+        cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === "pb");
+        console.log(cmbFilterDistrict);
+        // setpermntOutsideKeralaDistrict(cmbFilterDistrict);
+        // cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
+        // setLbsTalukvalue(cmbFilterTaluk);
+        // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+        // setLbsVillagevalue(cmbFilterVillage);
+        setIsInitialRender(false);
       }
+    }
   }, [cmbFilterDistrict, isInitialRender]);
 
   const onSkip = () => onSelect();
@@ -233,7 +236,7 @@ console.log(value);
     // });
   };
 
-  if ( isDistrictLoading || isTalukLoading || isVillageLoading) {
+  if (isDistrictLoading || isTalukLoading || isVillageLoading) {
     return <Loader></Loader>;
   }
 
@@ -292,47 +295,47 @@ console.log(value);
             />
           </div>
           <div className="col-md-3">
-              <CardLabel>
-                {t("CR_CITY_VILLAGE_NAME_EN")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="permntOutsideKeralaCityVilgeEn"
-                value={permntOutsideKeralaCityVilgeEn}
-                onChange={setSelectpermntOutsideKeralaCityVilgeEn}
-                placeholder={`${t("CR_CITY_VILLAGE_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
-              />
-            </div>
+            <CardLabel>
+              {t("CR_CITY_VILLAGE_NAME_EN")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntOutsideKeralaCityVilgeEn"
+              value={permntOutsideKeralaCityVilgeEn}
+              onChange={setSelectpermntOutsideKeralaCityVilgeEn}
+              placeholder={`${t("CR_CITY_VILLAGE_NAME_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+            />
+          </div>
         </div>
-        <div className="row">            
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CS_COMMON_PIN_CODE")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="permntOutsideKeralaPincode"
-                value={permntOutsideKeralaPincode}
-                onChange={setSelectpermntOutsideKeralaPincode}
-                placeholder={`${t("CS_COMMON_PIN_CODE")}`}
-                {...(validation = {
-                  pattern: "^[a-zA-Z-.`' ]*$",
-                  isRequired: true,
-                  type: "number",
-                  maxLength: 6,
-                  minLength: 6,
-                  title: t("CS_COMMON_INVALID_PIN_CODE"),
-                })}
-              />
-            </div>
-            {/* <div className="col-md-4">
+        <div className="row">
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CS_COMMON_PIN_CODE")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntOutsideKeralaPincode"
+              value={permntOutsideKeralaPincode}
+              onChange={setSelectpermntOutsideKeralaPincode}
+              placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+              {...(validation = {
+                pattern: "^[a-zA-Z-.`' ]*$",
+                isRequired: true,
+                type: "number",
+                maxLength: 6,
+                minLength: 6,
+                title: t("CS_COMMON_INVALID_PIN_CODE"),
+              })}
+            />
+          </div>
+          {/* <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -346,38 +349,38 @@ console.log(value);
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div> */}
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CS_COMMON_POST_OFFICE")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="permntOutsideKeralaPostOfficeEn"
-                value={permntOutsideKeralaPostOfficeEn}
-                onChange={setSelectoutsideKeralaPostOfficeEn}
-                placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {t("CS_COMMON_POST_OFFICE")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="permntOutsideKeralaPostOfficeMl"
-                value={permntOutsideKeralaPostOfficeMl}
-                onChange={setSelectoutsideKeralaPostOfficeMl}
-                placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
-              />
-            </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CS_COMMON_POST_OFFICE")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntOutsideKeralaPostOfficeEn"
+              value={permntOutsideKeralaPostOfficeEn}
+              onChange={setSelectoutsideKeralaPostOfficeEn}
+              placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CS_COMMON_POST_OFFICE")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="permntOutsideKeralaPostOfficeMl"
+              value={permntOutsideKeralaPostOfficeMl}
+              onChange={setSelectoutsideKeralaPostOfficeMl}
+              placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+            />
+          </div>
         </div>
         <div className="row">
           <div className="col-md-6">
