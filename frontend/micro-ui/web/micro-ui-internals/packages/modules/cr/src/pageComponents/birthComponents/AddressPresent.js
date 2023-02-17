@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress
+    setIsPrsentAddress, Villagevalues,setLbsVillagevalue
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const tenantId = Digit.ULBService.getCitizenCurrentTenant();
@@ -14,12 +14,13 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+    const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const [isInitialRender, setIsInitialRender] = useState(true);
 
     let cmbLB = [];
     let cmbCountry = [];
     let cmbState = [];
-
+    let cmbVillage = [];
     Country &&
         Country["common-masters"] &&
         Country["common-masters"].Country.map((ob) => {
@@ -35,9 +36,15 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });
+    Village &&
+        Village["common-masters"] &&
+        Village["common-masters"].Village.map((ob) => {
+            cmbVillage.push(ob);
+        });
     let currentLB = [];
     let cmbFilterCountry = [];
     let cmbFilterState = [];
+    let cmbFilterVillage = [];
 
     useEffect(() => {
 
@@ -51,10 +58,12 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
                 setaddressStateName(cmbFilterState[0]);
                 setValue(cmbFilterState[0].statecode);
+                cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+                setLbsVillagevalue(cmbFilterVillage);
                 setIsInitialRender(false);
             }
         }
-    }, [Country, State, localbodies, isInitialRender]);
+    }, [Country, State, localbodies,Villagevalues, isInitialRender]);
 
     const onSkip = () => onSelect();
 

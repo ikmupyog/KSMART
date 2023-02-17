@@ -34,7 +34,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const [toast, setToast] = useState(false);
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [isDisableStatus, setDisableStatus] = useState(true);
-    
+
     let cmbLB = [];
     let cmbTaluk = [];
     let cmbVillage = [];
@@ -109,6 +109,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 setLbsTalukvalue(cmbFilterTaluk);
                 cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
                 setLbsVillagevalue(cmbFilterVillage);
+                console.log(cmbFilterVillage);
                 cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid);
                 setPostOfficevalues(cmbFilterPostOffice);
                 setIsInitialRender(false);
@@ -135,6 +136,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     // }
     function setSelectinsideKeralaLBName(value) {
         setinsideKeralaLBName(value);
+        console.log(isPrsentAddress);
         if (isPrsentAddress) {
             setpermntInKeralaAdrLBName(presentInsideKeralaLBName);
         } else {
