@@ -403,6 +403,10 @@ public class DeathAddressInfo {
     @JsonProperty("PermntOutsideIndiaprovinceMl")
     private String PermntOutsideIndiaprovinceMl;
 
+    @Size(max = 2500)
+    @JsonProperty("permntOutsideKeralaCityVilgeEn")
+    private String permntOutsideKeralaCityVilgeEn;
+
 
     ////Db Fields//////
 
