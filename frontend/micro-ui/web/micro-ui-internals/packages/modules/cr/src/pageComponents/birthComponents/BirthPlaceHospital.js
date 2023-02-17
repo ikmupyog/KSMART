@@ -7,11 +7,14 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   selectHospitalNameMl,
 }) => {
   const stateId = Digit.ULBService.getStateId();
-  const tenantId = Digit.ULBService.getCitizenCurrentTenant();
-  console.log(tenantId);
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const { t } = useTranslation();
   let validation = {};
-  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "hospital");
   // const [HospitalName, selectHospitalName] = useState(formData?.BirthPlaceHospitalDetails?.HospitalName);
   // const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.BirthPlaceHospitalDetails?.HospitalNameMl);
   const [isInitialRender, setIsInitialRender] = useState(true);

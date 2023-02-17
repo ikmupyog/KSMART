@@ -28,7 +28,6 @@ const CreateBirthRegistration = ({ parentUrl }) => {
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
-    console.log("checkpage" + nextStep);
     // if (typeof nextStep == "object" && nextStep != null) {
     //   if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
     //   {
@@ -89,7 +88,6 @@ const CreateBirthRegistration = ({ parentUrl }) => {
       nextStep = key;
     }
     if (nextStep === null) {
-      console.log("jetheesh");
       return redirectWithHistory(`${match.path}/check`);
     }
     nextPage = `${match.path}/${nextStep}`;

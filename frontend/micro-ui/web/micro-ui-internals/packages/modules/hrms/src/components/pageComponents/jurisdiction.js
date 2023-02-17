@@ -4,18 +4,47 @@ import cleanup from "../Utils/cleanup";
 import {hospital} from "./hospital"
 import {institutionEvent} from "./InstitutionTypePlaceOfEvent"
 import {institutionName12} from "./institution"
-// import MultiSelectDropdown from "./Multiselect";
+// import MultiSelectDropdown from "./Multiselect";institution
 
 const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
+  const stateId = Digit.ULBService.getStateId(); 
   const [inactiveJurisdictions, setInactiveJurisdictions] = useState([]);
   const { data: data = {}, isLoading } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "egov-hrms", "HRMSRolesandDesignation") || {};
+  const { data: hospitalData = {}, Loading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
+  // const { data: institutionData = {}, Loading:loaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
   //Maya
+  // console.log(institutionList,hospitalData); 
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "/egov-location", "boundary-data");
+  
+  let cmbhospital = [];
+  hospitalData &&
+    hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList.map((ob) => {
+      cmbhospital.push(ob);
+    });
+  let cmbInstitutionId= [];
+  // institutionData &&
+  //   institutionData["egov-location"] &&
+  //   institutionData["egov-location"].institutionList.map((ob) => {
+  //     cmbInstitutionId.push(ob);
+  //   });
 
+  let cmbInstitution = [];
+  institutionList &&
+    institutionList["birth-death-service"] &&
+    institutionList["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+      cmbInstitution.push(ob);
+    });
+    // institutionidList &&
+    // institutionidList["egov-location"] &&
+    // institutionidList["egov-location"].institutionList.map((ob) => {
+    //   cmbInstitutionId.push(ob);
+    // });
 
   const [jurisdictions, setjurisdictions] = useState(
-    [
+    formData?.Jurisdictions || [
       {
         id: undefined,
         key: 1,
@@ -173,9 +202,9 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   }
 
   function getroledata() {
-    return data?.MdmsRes?.["ACCESSCONTROL-ROLES"].roles.map(role => { return { code: role.code, name: role?.name ? role?.name : " ", labelKey: 'ACCESSCONTROL_ROLES_ROLES_' + role.code } });
-  
-    // return filterData.filter((ele) => (jurisdictions.key>1 && ele.code === "HOSPITAL_OPERATOR")? return niull:return ele )
+   
+     return data?.MdmsRes?.["ACCESSCONTROL-ROLES"].roles.map(role => { return { code: role.code, name: role?.name ? role?.name : " ", labelKey: 'ACCESSCONTROL_ROLES_ROLES_' + role.code } })
+
   }
 
   //Maya
@@ -185,16 +214,22 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   //NIUA
   function getHospitalNames()
   {
-   return hospital?.hospitalList?.map((ab) =>{
-      return {code :ab?.code , name: ab?.hospitalName}
-    });
+  //  return hospital?.hospitalList?.map((ab) =>{
+  //     return {code :ab?.code , name: ab?.hospitalName}
+  //   });
+  return cmbhospital
   }
   //NIUA
 function getInstitutionList()
 {
-  return institutionEvent?.InstitutionTypePlaceOfEvent?.map((ab) =>{
-    return {code :ab?.code , name: ab?.name}
-  });
+  // return institutionEvent?.InstitutionTypePlaceOfEvent?.map((ab) =>{
+  //   return {code :ab?.code , name: ab?.name}
+  // });
+  return cmbInstitution
+}
+function getWardList()
+{
+  return []
 }
   if (isLoading) {
     return <Loader />;
@@ -222,6 +257,7 @@ function getInstitutionList()
           getHospitalNames={getHospitalNames}
           getInstitutionList={getInstitutionList}
           getwarddata={getwarddata}
+          getWardList={getWardList}
           handleRemoveUnit={handleRemoveUnit}
         />
       ))}
@@ -243,6 +279,7 @@ function Jurisdiction({
   getroledata,
   getHospitalNames,
   getInstitutionList,
+  getWardList,
   getwarddata,
   roleoption,
   hospitalOption,
@@ -285,7 +322,8 @@ function Jurisdiction({
   const [displayInstitution, setDisplayInstitution] =useState(false)
   const [institutionAddress, setInstitutionAddress] = useState()
   const [selectedRolesData, setSelectedRolesData] = useState("");
-
+  const [wardList, setWardList] = useState("");
+  const [wardName, setWardName] = useState("");
   
   let ZonalA = [];
   let cmbInfntWardNo = [];
@@ -385,6 +423,15 @@ function Jurisdiction({
     let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode)
     setRolesData(Croles)
   },[])
+  useEffect(()=>{
+    if(jurisdiction?.roleCode?.toLowerCase().includes('hospital')){
+      setDisplayHopital(true)
+      let Crhospital =   getHospitalNames()?.length>0 && getHospitalNames().filter((ele)=>ele.code == jurisdiction?.hospitalCode)
+      setHospitalName(Crhospital?.length>0 && Crhospital[0])
+      setHospitalAddress(Crhospital?.length>0 && Crhospital[0].address)
+    }
+   
+  },[])
 
   useEffect(() => {
     if (isInitialRenderBoundaryType) {
@@ -438,15 +485,26 @@ function Jurisdiction({
   };
   //Jetheesh
   const setSelectZonalOffice = (value) => {
+    
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item ,TenantBoundary:[] ,zoneCode: value } : item)));
     setZonal(value);
     setIsInitialRender(true);
     setWardNo(null);
     setFilterWard(null);
+    // (displayHospital || displayInstitution? setWardList(value?.children?.map((emp)=>{
+    //   return {name:emp?.children[0]?.name, code:emp?.wardno, data:emp}
+    // })):setWardList([]))
+    let res= value?.children?.map((emp)=>{
+      return {name:emp?.children[0]?.name, code:emp?.wardno, data:emp}
+    })
+    setWardList(res)
   };
 
   //lekshmy
   const selectrolenew = (value) => {
+    // let re= wards && wards?.map((emp)=>{
+    //   return {name:emp?.children[0]?.name, code:emp?.wardno, data:emp}
+    // })
     (value.code === "HOSPITAL_OPERATOR" || value.code ===  "HOSPITAL_APPROVER") ? setDisplayHopital(true) : (setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? {
       ...item, hospitalCode: null, hospitalName: null,
       hospitalAddress: null,
@@ -455,7 +513,7 @@ function Jurisdiction({
       ...item, intitutiontype: null, institutionname: null,
       institutionaddress: null,
     } : item))), setDisplayInstitution(false));
-
+// console.log("waD",re)
     setSelectedRolesData(value.code)
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, role: value } : item)));
     getHospitalNames()  
@@ -464,14 +522,14 @@ function Jurisdiction({
     setInstitutionAddress("")
     setInstitutionType(value)
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, intitutiontype: value } : item)));
-    let institutionNameList = institutionName12?.institutionList?.map((name) =>{
-      if(name.placeofEventCodeNew === value.code)
-      {
-        return {code :name?.code , name: name?.institutionName, address:name?.address}
-      }
-    }).filter((ab)=>{return ab !== undefined})
+    // let institutionNameList = cmbInstitutionId?.institutionList?.map((name) =>{
+    //   if(name.placeofEventCodeNew === value.code)
+    //   {
+    //     return {code :name?.code , name: name?.institutionName, address:name?.address}
+    //   }
+    // }).filter((ab)=>{return ab !== undefined})
     setInstitutionNameList(institutionNameList)
-    console.log("institutionName1",institutionNameList,institutionName)
+    // console.log("institutionName1",institutionNameList,institutionName)
   };
   const selectInstitutionName=(value)=>{
    
@@ -481,20 +539,23 @@ function Jurisdiction({
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionaddress: value.address } : item)));
     console.log("JURIS",institutionName,value.name)
   }
+  const selectward1= (value)=>{
+    console.log("value",value)
+    setWardName(value)
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: [value.data]}  : item)));
+  }
   const selectHospital = (value) => {
+    // console.log(value);
     setHospitalName(value)
-    let val=hospital.hospitalList.filter((ab) =>{
-     if(ab.code === value.code)
-     return ab.address
-    })
-    setHospitalAddress(val[0].address)
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, hospitalName: value.name, hospitalAddress:val[0].address, hospitalCode:value.code} : item)));
-    console.log("jurisdiction",jurisdiction)
+    // let val=hospital.hospitalList.filter((ab) =>{
+    //  if(ab.code === value.code)
+    //  return ab.address
+    // })
+    setHospitalAddress(value.address)
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, hospitalName: value.name, hospitalAddress:value.address, hospitalCode:value.code} : item)));
+    // console.log("jurisdiction",jurisdiction)
   
  };
- useEffect(()=>{
-console.log("jurisdiction",jurisdiction)
- },[jurisdiction])
   const selectrole = (e, data) => {
     const index = jurisdiction?.roles.filter((ele) => ele.code == data.code);
     let res = null;
@@ -540,9 +601,11 @@ console.log("jurisdiction",jurisdiction)
       res.push(ob?.[1]);
     });
     let tenantcode = tenantId.replace('.', '_').toUpperCase();
-    // res?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
-    res?.length>0 && res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
+    
+    // // res?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
+     res?.length>0 && res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
+     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
+    // console.log("ress",e,res)
   };
 
 
@@ -613,37 +676,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
           />
         </LabelFieldPair>
 
-        <LabelFieldPair>
-          <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-          <div className="form-field">
-            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Czonal?.length>0 ? Czonal[0]:Zonal}
-              select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
-        </LabelFieldPair>
-
-        <LabelFieldPair>
-          <CardLabel className="card-label-smaller">{t("TL_LOCALIZATION_WARD_NO")} <span className="mandatorycss">*</span></CardLabel>
-          <div className="form-field">
-            <MultiSelectDropdown
-              className="form-field"
-              //isMandatory={true}
-              defaultUnit="Selected"
-              selected ={jurisdiction?.TenantBoundary}
-              // selected={jurisdiction?.jurisdictionChilds?.length>0?jurisdiction?.jurisdictionChilds:jurisdictions}
-              options={wards && wards}
-              onSelect={selectward}
-              optionsKey="name"
-              t={t}
-              placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`}
-            />
-            <div className="tag-container">
-
-              {jurisdiction?.TenantBoundary?.length > 0 &&
-                jurisdiction?.TenantBoundary.map((value, index) => {
-                  return <RemoveableTag key={index} text={`${t(value && value["name"]).slice(0, 22)} ...`} onClick={() => onRemoved(index, value)} />;
-                })}
-            </div>
-          </div>
-        </LabelFieldPair>
+    
 
         <LabelFieldPair>
           <CardLabel>{`${t("HR_COMMON_TABLE_COL_ROLE")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -657,7 +690,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
             <LabelFieldPair>
               <CardLabel>{`Hospital Name`}<span className="mandatorycss">*</span></CardLabel>
               <div className="form-field">
-                <Dropdown t={t} optionKey="name" isRequired="false" option={getHospitalNames()} selected={hospitalName && hospitalName[0]}
+                <Dropdown t={t} optionKey="hospitalName" isRequired="false" option={getHospitalNames()} selected={hospitalName && hospitalName}
                   select={selectHospital} placeholder={`Hospital Name`} /></div>
             </LabelFieldPair>
             <LabelFieldPair>
@@ -686,7 +719,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
             <LabelFieldPair>
               <CardLabel>{`Institution Type`}<span className="mandatorycss">*</span></CardLabel>
               <div className="form-field">
-                <Dropdown t={t} optionKey="name" isRequired="false" option={getInstitutionList()} selected={institutionType && institutionType[0]}
+                <Dropdown t={t} optionKey="name" isRequired="false" option={getInstitutionList()} selected={institutionType && institutionType}
                   select={selectInstitution} placeholder={`Institution Type`} /></div>
             </LabelFieldPair>
 
@@ -716,6 +749,51 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
               </div>
             </LabelFieldPair>
           </div> : ""}
+          <LabelFieldPair>
+          <CardLabel>{`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <Dropdown t={t} optionKey="name" isRequired="false" option={cmbZonal[0]} selected={Czonal?.length>0 ? Czonal[0]:Zonal}
+              select={setSelectZonalOffice} placeholder={`${t("TL_LOCALIZATION_ZONAL_OFFICE")}`} /></div>
+        </LabelFieldPair>
+{displayHospital || displayInstitution?
+<div>
+         <LabelFieldPair>
+          <CardLabel>{t("TL_LOCALIZATION_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <Dropdown t={t} optionKey="name" isRequired="false" option={wardList} selected={jurisdiction?.TenantBoundary[0]}
+              select={selectward1} placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`} /></div>
+        </LabelFieldPair>
+</div>:
+ <LabelFieldPair>
+          <CardLabel className="card-label-smaller">{t("TL_LOCALIZATION_WARD_NO")} <span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <MultiSelectDropdown
+              className="form-field"
+              //isMandatory={true}
+              defaultUnit="Selected"
+              selected ={jurisdiction?.TenantBoundary}
+              // selected={jurisdiction?.jurisdictionChilds?.length>0?jurisdiction?.jurisdictionChilds:jurisdictions}
+              options={wards && wards}
+              onSelect={selectward}
+              optionsKey="name"
+              t={t}
+              placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`}
+            />
+            <div className="tag-container">
+
+              {jurisdiction?.TenantBoundary?.length > 0 &&
+                jurisdiction?.TenantBoundary.map((value, index) => {
+                  return <RemoveableTag key={index} text={`${t(value && value["name"]).slice(0, 22)} ...`} onClick={() => onRemoved(index, value)} />;
+                })}
+            </div>
+          </div>
+        </LabelFieldPair> }
+        {/* <LabelFieldPair>
+          <CardLabel>{t("TL_LOCALIZATION_WARD_NO")}<span className="mandatorycss">*</span></CardLabel>
+          <div className="form-field">
+            <Dropdown t={t} optionKey="name" isRequired="false" option={wards} selected={selectward}
+              select={selectward} placeholder={`${t("TL_LOCALIZATION_WARD_NO")}`} /></div>
+        </LabelFieldPair> */}
 
       </div>
     </div>

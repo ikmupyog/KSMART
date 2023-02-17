@@ -39,7 +39,7 @@ module.exports = function (app) {
     "/egov-hrms/employees/_count",
     "/tl-services/v1/_create",
     "/tl-services/v1/_search",
-    "/birth-services/cr/birth/_create",
+    "/birth-services/ksmart/birth/createbirth",
     "/birth-services/cr/birth/_search",
     "/death-services/v1/crdeathdetails/_create",
     "/death-services/v1/crdeathdetails/_search", 
