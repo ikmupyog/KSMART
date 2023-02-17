@@ -58,7 +58,7 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
           <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>
-                {`${t("CR_HOSPITAL")}`}
+                {`${t("CR_HOSPITAL_EN")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <Dropdown
@@ -68,7 +68,7 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
                 option={cmbhospital}
                 selected={DeathPlaceType}
                 select={setselectDeathPlaceType}
-                placeholder={`${t("CR_HOSPITAL")}`}
+                placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
             </div>
             <div className="col-md-4">
