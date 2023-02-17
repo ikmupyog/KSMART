@@ -12,7 +12,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  
+  const [isDisableStatus, setDisableStatus] = useState(true);
  
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: State = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
@@ -177,9 +177,11 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
             option={cmbNation} 
             selected={DeathPlaceCountry} 
             select={selectDeathPlaceCountry} 
-            disabled={isEdit}
+            disable={isDisableStatus}
             placeholder={`${t("CS_COMMON_COUNTRY")}`}
              />
+           
+
            
           </div>
           <div className="col-md-4">
@@ -193,7 +195,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
                 option={cmbState}
                 selected={DeathPlaceState}
                 select={setSelectDeathPlaceState}
-                disabled={isEdit}
+                disable={isEdit}
               />
             </div>    
             <div className="col-md-4">
