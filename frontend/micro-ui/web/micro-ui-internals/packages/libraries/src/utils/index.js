@@ -118,7 +118,7 @@ const didEmployeeHasRole = (role) => {
 const pgrAccess = () => {
   const userInfo = Digit.UserService.getUser();
   const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
-  const pgrRoles = ["PGR_LME", "PGR-ADMIN", "CSR", "CEMP", "FEMP", "DGRO", "ULB Operator", "GRO", "GO", "RO", "GA"];
+  const pgrRoles = ["PGR_LME", "PGR-ADMIN", "CSR", "CEMP", "FEMP", "DGRO", "ULB Operator", "GRO", "GO", "RO", "GA","WARD_OVERSEER","OVERSEER_HIGHER","AE","WARD_JHI","PGR_JHI","HIHS"];
 
   const PGR_ACCESS = userRoles?.filter((role) => pgrRoles.includes(role));
 
@@ -206,7 +206,7 @@ const crAccess = () => {
   const userInfo = Digit.UserService.getUser();
   const userRoles = userInfo?.info?.roles?.map((roleData) => roleData.code);
   const crRoles = ["BND_CEMP", "BIRTH_APPLICATION_EDITOR", "BIRTH_APPLICATION_VIEWER", "BIRTH_REPORT_VIEWER",
-  "DEATH_APPLICATION_CREATOR", "DEATH_APPLICATION_EDITOR", "DEATH_APPLICATION_VIEWER","DEATH_REPORT_VIEWER" ];
+  "DEATH_APPLICATION_CREATOR", "DEATH_APPLICATION_EDITOR", "DEATH_APPLICATION_VIEWER","DEATH_REPORT_VIEWER","HOSPITAL_OPERATOR","HOSPITAL_APPROVER","BND_LOCAL_REGISTRAR","BND_DISTRICT_REGISTRAR","JHI", "BND_SUB_REGISTRAR" ];
 
   const CR_ACCESS = userRoles?.filter((role) => crRoles.includes(role));
 
