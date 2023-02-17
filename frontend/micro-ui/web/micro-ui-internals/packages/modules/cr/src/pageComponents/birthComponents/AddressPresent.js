@@ -5,10 +5,14 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues,setLbsVillagevalue
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue
 }) => {
     const stateId = Digit.ULBService.getStateId();
-    const tenantId = Digit.ULBService.getCitizenCurrentTenant();
+    let tenantId = "";
+    tenantId = Digit.ULBService.getCurrentTenantId();
+    if (tenantId === "kl") {
+        tenantId = Digit.ULBService.getCitizenCurrentTenant();
+    }
     const { t } = useTranslation();
     let validation = {};
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
@@ -63,7 +67,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 setIsInitialRender(false);
             }
         }
-    }, [Country, State, localbodies,Villagevalues, isInitialRender]);
+    }, [Country, State, localbodies, Villagevalues, isInitialRender]);
 
     const onSkip = () => onSelect();
 

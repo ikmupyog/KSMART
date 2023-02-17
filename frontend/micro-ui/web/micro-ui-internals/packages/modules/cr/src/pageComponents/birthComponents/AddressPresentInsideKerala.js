@@ -23,14 +23,17 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const stateId = Digit.ULBService.getStateId();
     const { t } = useTranslation();
     let validation = {};
-    const tenantId = Digit.ULBService.getCitizenCurrentTenant();
+    tenantId = Digit.ULBService.getCurrentTenantId();
+    if (tenantId === "kl") {
+        tenantId = Digit.ULBService.getCitizenCurrentTenant();
+    }
     const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
     const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-    const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
+    const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
     const [toast, setToast] = useState(false);
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [isDisableStatus, setDisableStatus] = useState(true);

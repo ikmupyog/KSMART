@@ -14,7 +14,10 @@ import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
 const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const stateId = Digit.ULBService.getStateId();
-    const tenantId = Digit.ULBService.getCitizenCurrentTenant();
+    tenantId = Digit.ULBService.getCurrentTenantId();
+    if (tenantId === "kl") {
+        tenantId = Digit.ULBService.getCitizenCurrentTenant();
+    }
     const { t } = useTranslation();
     let validation = {};
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
@@ -24,7 +27,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-    const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
+    const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [lbs, setLbs] = useState(0);
     const [toast, setToast] = useState(false);
@@ -1116,7 +1119,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                                 PresentInsideKeralaLocalityNameEnError || PresentInsideKeralaLocalityNameMlError || PresentInsideKeralaPostOfficeError ||
                                 PresentInsideKeralaPincodeError || PresentCityVillageError || PresentOutSideIndiaProvinceEnError || PresentOutSideIndiaProvinceMlError
                                 || PresentOutSideIndiaCityError || PresentOutSideIndiaPostCodeError || PresentOutSideIndiaLineOneEnError || PresentOutSideIndiaLineOneMlError
-                                || PresentOutSideIndiaLineTwoEnError || PresentOutSideIndiaLineTwoMlError  
+                                || PresentOutSideIndiaLineTwoEnError || PresentOutSideIndiaLineTwoMlError
                                 ? PresentAddressCountryError
                                     ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : PresentAddressStateNameError
                                         ? t(`BIRTH_ERROR_STATE_CHOOSE`) : PresentInsideKeralaDistrictError
@@ -1134,13 +1137,13 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                                                                                         ? t(`BIRTH_ERROR_CITY_CHOOSE`) : PresentOutSideIndiaProvinceEnError
                                                                                             ? t(`BIRTH_ERROR_STATE_PROVINCE_EN`) : PresentOutSideIndiaProvinceMlError
                                                                                                 ? t(`BIRTH_ERROR_STATE_PROVINCE_ML`) : PresentOutSideIndiaCityError
-                                                                                                ? t(`BIRTH_ERROR_CITY_TOWN`) : PresentOutSideIndiaPostCodeError
-                                                                                                ? t(`BIRTH_ERROR_ZIP_CODE`) : PresentOutSideIndiaLineOneEnError
-                                                                                                ? t(`BIRTH_ERROR_ADDRESS_LINE_ONE_EN`) : PresentOutSideIndiaLineOneMlError
-                                                                                                ? t(`BIRTH_ERROR_ADDRESS_LINE_ONE_ML`) : PresentOutSideIndiaLineTwoEnError
-                                                                                                ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`) : PresentOutSideIndiaLineTwoMlError
-                                                                                                ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`)                                                                                                
-                                                                                                : setToast(false)
+                                                                                                    ? t(`BIRTH_ERROR_CITY_TOWN`) : PresentOutSideIndiaPostCodeError
+                                                                                                        ? t(`BIRTH_ERROR_ZIP_CODE`) : PresentOutSideIndiaLineOneEnError
+                                                                                                            ? t(`BIRTH_ERROR_ADDRESS_LINE_ONE_EN`) : PresentOutSideIndiaLineOneMlError
+                                                                                                                ? t(`BIRTH_ERROR_ADDRESS_LINE_ONE_ML`) : PresentOutSideIndiaLineTwoEnError
+                                                                                                                    ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`) : PresentOutSideIndiaLineTwoMlError
+                                                                                                                        ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`)
+                                                                                                                        : setToast(false)
                                 : setToast(false)
                         }
                         onClose={() => setToast(false)}

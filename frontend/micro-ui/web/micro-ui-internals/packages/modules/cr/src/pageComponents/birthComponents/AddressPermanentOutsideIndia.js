@@ -11,6 +11,10 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 

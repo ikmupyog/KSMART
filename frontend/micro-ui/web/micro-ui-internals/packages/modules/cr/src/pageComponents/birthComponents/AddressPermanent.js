@@ -4,10 +4,13 @@ import { useTranslation } from "react-i18next";
 
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
-    isPrsentAddress,setIsPrsentAddress
+    isPrsentAddress, setIsPrsentAddress
 }) => {
     const stateId = Digit.ULBService.getStateId();
-    const tenantId = Digit.ULBService.getCitizenCurrentTenant();
+    tenantId = Digit.ULBService.getCurrentTenantId();
+    if (tenantId === "kl") {
+        tenantId = Digit.ULBService.getCitizenCurrentTenant();
+    }
     const { t } = useTranslation();
     let validation = {};
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
