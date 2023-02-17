@@ -348,7 +348,7 @@ public class TLQueryBuilder {
     private void addRenewalCriteria(StringBuilder builder, List<Object> preparedStmtList,
             TradeLicenseSearchCriteria criteria) {
         addClauseIfRequired(preparedStmtList, builder);
-        builder.append(" (tl.validTo < ?) ");
+        builder.append(" (tl.validTo <= ?) ");
         long renewalPeriod = 1680220800000L;
         preparedStmtList.add(renewalPeriod);
 
