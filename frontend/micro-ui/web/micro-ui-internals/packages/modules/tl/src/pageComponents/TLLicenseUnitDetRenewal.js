@@ -129,7 +129,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   const [serviceArea, setServiceArea] = useState(formDataPage?.tradeLicenseDetail?.address?.serviceArea ? formDataPage?.tradeLicenseDetail?.address?.serviceArea : "");
   const [vesselNo, setVesselNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.vesselNo : "");
   const [waterbody, setWaterbody] = useState(formDataPage?.tradeLicenseDetail?.address?.waterbody ? formDataPage?.tradeLicenseDetail?.address?.waterbody : "");
-  const [fields, setFeilds] = useState([{ businesscategory: "", businesstype: "", businesssubtype: "", unit: null, uom: null }]);
+  const [fields, setFeilds] = useState( [{ businesscategory: "", businesstype: "", businesssubtype: "", unit: null, uom: null }]);
   const [fieldsDoor, setFeildsDoor] = useState(
     (formDataPage?.tradeLicenseDetail && formDataPage?.tradeLicenseDetail.structurePlace) || [{
       blockNo: "", surveyNo: "", subDivisionNo: "", partitionNo: "", doorNo: "", doorNoSub: "",
@@ -251,22 +251,25 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
   function getBusinessTypeMenu(BusinessCategory) {
     let BusinessTypeMenu = [];
-    Data &&
-      Data.TradeLicense &&
-      Data.TradeLicense.TradeType.map((ob) => {
-        if (
-          ob.code.split(".")[0] === BusinessCategory.code &&
-          !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[1]}`)
-        ) {
-          BusinessTypeMenu.push({ i18nKey: `TRADELICENSE_TRADETYPE_${ob.code.split(".")[1]}`, code: `${ob.code.split(".")[1]}` });
-        }
-      });
+    if(BusinessCategory){
+      Data &&
+        Data.TradeLicense &&
+        Data.TradeLicense.TradeType.map((ob) => {
+          if (
+            ob.code.split(".")[0] === BusinessCategory.code &&
+            !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[1]}`)
+          ) {
+            BusinessTypeMenu.push({ i18nKey: `TRADELICENSE_TRADETYPE_${ob.code.split(".")[1]}`, code: `${ob.code.split(".")[1]}` });
+          }
+        });
+    }
     return BusinessTypeMenu;
   }
 
   function getBusinessSubTypeMenu(BusinessType) {
     let BusinessSubTypeMenu = [];
-    BusinessType &&
+    if(BusinessType){
+      BusinessType &&
       Data &&
       Data.TradeLicense &&
       Data.TradeLicense.TradeType.map((ob) => {
@@ -274,6 +277,8 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
           BusinessSubTypeMenu.push({ i18nKey: `TL_${ob.code}`, code: `${ob.code}` });
         }
       });
+    }
+    
     return BusinessSubTypeMenu;
   }
 
@@ -645,8 +650,6 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
 
   const [formStateDoor, dispatchDoor] = isEdit || editview ? useReducer(reducerDoor, storedDoorData, initFnEdit) : useReducer(reducerDoor, storedDoorData, initFn);
 
-  console.log("formdata"+storedDoorData);
-  console.log(isEdit);
   const handleTextInputField1  = useCallback((index, e, key, length = 100) => {
     if (e.length <= length) {
         dispatchDoor({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e } });
