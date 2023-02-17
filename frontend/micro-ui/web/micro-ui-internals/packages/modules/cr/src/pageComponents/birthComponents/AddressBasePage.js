@@ -1105,7 +1105,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             PresentInsideKeralaWardNoError || PresentInsideKeralaHouseNameEnError || PresentInsideKeralaHouseNameMlError ||
                             PresentInsideKeralaLocalityNameEnError || PresentInsideKeralaLocalityNameMlError || PresentInsideKeralaPostOfficeError ||
                             PresentInsideKeralaPincodeError || PresentCityVillageError || PresentOutSideIndiaProvinceEnError || PresentOutSideIndiaProvinceMlError
-                            || PresentOutSideIndiaCityError || PresentOutSideIndiaPostCodeError || PresentOutSideIndiaLineOneEnError || PresentOutSideIndiaLineOneMlError 
+                            || PresentOutSideIndiaCityError || PresentOutSideIndiaPostCodeError || PresentOutSideIndiaLineOneEnError || PresentOutSideIndiaLineOneMlError
                             || PresentOutSideIndiaLineTwoEnError || PresentOutSideIndiaLineTwoMlError
                         }
                         label={
@@ -1115,7 +1115,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                                 PresentInsideKeralaWardNoError || PresentInsideKeralaHouseNameEnError || PresentInsideKeralaHouseNameMlError ||
                                 PresentInsideKeralaLocalityNameEnError || PresentInsideKeralaLocalityNameMlError || PresentInsideKeralaPostOfficeError ||
                                 PresentInsideKeralaPincodeError || PresentCityVillageError || PresentOutSideIndiaProvinceEnError || PresentOutSideIndiaProvinceMlError
-                                || PresentOutSideIndiaCityError || PresentOutSideIndiaPostCodeError || PresentOutSideIndiaLineOneEnError || PresentOutSideIndiaLineOneMlError 
+                                || PresentOutSideIndiaCityError || PresentOutSideIndiaPostCodeError || PresentOutSideIndiaLineOneEnError || PresentOutSideIndiaLineOneMlError
                                 || PresentOutSideIndiaLineTwoEnError || PresentOutSideIndiaLineTwoMlError  
                                 ? PresentAddressCountryError
                                     ? t(`BIRTH_ERROR_COUNTRY_CHOOSE`) : PresentAddressStateNameError
@@ -1139,7 +1139,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                                                                                                 ? t(`BIRTH_ERROR_ADDRESS_LINE_ONE_EN`) : PresentOutSideIndiaLineOneMlError
                                                                                                 ? t(`BIRTH_ERROR_ADDRESS_LINE_ONE_ML`) : PresentOutSideIndiaLineTwoEnError
                                                                                                 ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`) : PresentOutSideIndiaLineTwoMlError
-                                                                                                ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`)                                                                                                 
+                                                                                                ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`)                                                                                                
                                                                                                 : setToast(false)
                                 : setToast(false)
                         }

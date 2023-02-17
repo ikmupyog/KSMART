@@ -88,12 +88,13 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         {
           Header: t("CR_COMMON_COL_APP_DATE"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.dateofbirth) : ""),
+          accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
         },
         {
             Header: t("CR_COMMON_COL_DOB"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+            
+            accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.childDOB) : ""),
         },
         // {
         //     Header: t("TL_APPLICATION_TYPE_LABEL"),
@@ -101,15 +102,17 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
         // },
         {
-            Header: t("CR_COMMON_COL_FATHER_NAME"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.birthFather.firstname_en + " " + row.birthFather.middlename_en + " " + row.birthFather.lastname_en  || "-"),
-        },
-        {
           Header: t("CR_COMMON_COL_MOTHER_NAME"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.birthMother.firstname_en + " " + row.birthMother.middlename_en + " " + row.birthMother.lastname_en  || "-"),
+          accessor: (row) => GetCell(row.ParentsDetails.MotherFirstNameEn  || "-"),
+        
         },
+        {
+            Header: t("CR_COMMON_COL_FATHER_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.ParentsDetails.FatherFirstNameEn  || "-"),
+        },
+        
         // {
         //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
         //   disableSortBy: true,
