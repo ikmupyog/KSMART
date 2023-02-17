@@ -58,6 +58,7 @@ const CheckPage = ({ onSubmit, value }) => {
     routeLink = routeLink.replace("/check", "");
   }
   const docstatus = TradeDetails?.ownersdoc?.length > 0 ? true : false;
+  console.log(JSON.stringify(TradeDetails));
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
@@ -409,13 +410,13 @@ const CheckPage = ({ onSubmit, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_POSTOFFICE")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.postOffice}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_PIN")}`}</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.pincode}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.postOffice?.pincode}</CardText>
                   </div>
                 </div>
               </div>

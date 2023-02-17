@@ -281,7 +281,13 @@ export const convertToTrade = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   // data?.TradeDetails?.tradeLicenseDetail?.address?.tenantId = Digit.ULBService.getCitizenCurrentTenant();
   let address = data?.TradeDetails?.tradeLicenseDetail?.address;
-  address.tenantId =Digit.ULBService.getCitizenCurrentTenant();
+  address.postOffice = data?.TradeDetails?.tradeLicenseDetail?.address?.postOffice?.name;
+  address.tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  let structurePlace = data?.TradeDetails?.tradeLicenseDetail?.structurePlace;
+  structurePlace?.map((structplace) => {
+    structplace.isResurveyed = structplace?.isResurveyed?.code === "YES" ? true : false;
+  });
+  //structurePlace.isResurveyed = data?.TradeDetails?.tradeLicenseDetail?.structurePlace?.isResurveyed?.code === "YES" ? true : false;
   let tradeUnits = [{
     "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.code,
     "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesstype?.code,
@@ -300,7 +306,7 @@ export const convertToTrade = (data = {}) => {
           channel: "CITIZEN",
           businessSector: data?.TradeDetails?.tradeLicenseDetail?.businessSector.code,
           capitalInvestment: data?.TradeDetails?.tradeLicenseDetail?.capitalInvestment,
-          enterpriseType: data?.TradeDetails?.tradeLicenseDetail?.enterpriseType,  
+          enterpriseType: data?.TradeDetails?.tradeLicenseDetail?.enterpriseType,
           structureType: data?.TradeDetails?.tradeLicenseDetail?.structureType.code,
           structurePlaceSubtype: data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype.code,
           businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc,
@@ -312,7 +318,7 @@ export const convertToTrade = (data = {}) => {
           owners: data?.TradeDetails?.tradeLicenseDetail?.owners,
           institution: data?.TradeDetails?.tradeLicenseDetail?.institution,
           tradeUnits: tradeUnits,
-          structurePlace: data?.TradeDetails?.tradeLicenseDetail?.structurePlace,
+          structurePlace:structurePlace, //data?.TradeDetails?.tradeLicenseDetail?.structurePlace,
           ownerspremise: data?.TradeDetails?.tradeLicenseDetail?.ownerspremise
         },
 
@@ -325,6 +331,7 @@ export const convertToTrade = (data = {}) => {
       }
     ]
   };
+  console.log("finalformdata" + formdata);
   return formdata;
 };
 
