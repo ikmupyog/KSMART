@@ -65,7 +65,13 @@ import TLPdeEntry from "./pageComponents/TLPdeEntry";
 import SearchPde from "./pages/employee/SearchPde";
 import SearchPdeApplication from "./components/SearchPdeApplication";
 import TLLicenseUnitDet from "./pageComponents/TLLicenseUnitDet";
-import TLLicenseApplicantDet from "./pageComponents/TLLicenseApplicantDet"
+import TLLicenseApplicantDet from "./pageComponents/TLLicenseApplicantDet";
+import TLDocumentUpload from "./pageComponents/TLDocumentUpload";
+import SearchRenewalTrade from "./pages/citizen/SearchRenewalTrade";
+import SearchLicenseRenewal from "./components/SearchLicenseRenewal";
+import TLLicenseUnitDetRenewal from "./pageComponents/TLLicenseUnitDetRenewal";
+import TLLicenseApplicantDetRenewal from './pageComponents/TLLicenseApplicantDetRenewal';
+
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -94,13 +100,17 @@ export const TLLinks = ({ matchPath, userType }) => {
       link: `${matchPath}/tradelicence/new-application`,
       i18nKey: t("TL_CREATE_TRADE"),
     },
-    {
-      link: `${matchPath}/tradelicence/renewal-list`,
-      i18nKey: t("TL_RENEWAL_HEADER"),
-    },
+    // {
+    //   link: `${matchPath}/tradelicence/renewal-list`,
+    //   i18nKey: t("TL_RENEWAL_HEADER"),
+    // },
     {
       link: `${matchPath}/tradelicence/my-application`,
       i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
+    },
+    {
+      link: `${matchPath}/tradelicence/license-renewal-search`,
+      i18nKey: t("TL_RENEWAL_HEADER"),
     },
   ];
 
@@ -169,9 +179,13 @@ const componentsToRegister = {
   TLSearchPde:SearchPde,
   SearchPdeApplication,
   TLLicenseUnitDet,
-  TLLicenseApplicantDet
+  TLLicenseApplicantDet,
+  TLDocumentUpload,
+  TLSearchRenewalTrade : SearchRenewalTrade,
+  SearchLicenseRenewal,
+  TLLicenseUnitDetRenewal,
+  TLLicenseApplicantDetRenewal
 };
-
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {
     Digit.ComponentRegistryService.setComponent(key, value);

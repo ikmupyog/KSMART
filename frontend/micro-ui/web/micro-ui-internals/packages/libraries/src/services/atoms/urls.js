@@ -107,13 +107,13 @@ const Urls = {
     updatepdewf: "/tl-services/pde/_updatewf"
   },
   cr: {
-    create: "/birth-services/cr/birth/_create",
+    create: "/birth-services/ksmart/birth/createbirth",
     search: "/birth-services/cr/birth/_search",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/birth-services/cr/birth/_update",    
   },
   crdeath: {
-    create: "/death-services/v1/crdeathdetails/_create",
+    create: "/death-services/v1/deathdetails/_createdeath ",
     search: "/death-services/v1/crdeathdetails/_search",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/death-services/v1/crdeathdetails/_update",
@@ -129,7 +129,7 @@ const Urls = {
     registry_search_birth: "/birth-services/cr/registry/_search",  
   },
   dfm: {
-    create: "/filemgmnt/v1/applicantpersonals/_create",
+    create: "/filemgmnt/v1/applicantservices/_create",
     search: "/filemgmnt/v1/applicantpersonals/_search",
     download_pdf: "/egov-pdf/download/dfm/",
     update: "/filemgmnt/v1/applicantpersonals/_update",

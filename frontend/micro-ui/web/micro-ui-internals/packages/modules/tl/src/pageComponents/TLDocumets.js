@@ -19,15 +19,22 @@ function TLDocument({ value = {} }) {
   );
   let documents = window.location.href.includes("/tl/tradelicence/application/") ? value?.tradeLicenseDetail?.applicationDocuments : [];
   if(value?.workflowDocs) documents = value?.workflowDocs;
-  if(value?.owners?.documents["ProofOfIdentity"]) documents.push(value.owners.documents["ProofOfIdentity"]);
-  if(value?.owners?.documents["ProofOfOwnership"]) documents.push(value.owners.documents["ProofOfOwnership"]);
-  if(value?.owners?.documents["OwnerPhotoProof"]) documents.push(value.owners.documents["OwnerPhotoProof"]);
-  
+  // if(value?.owners?.documents["ProofOfIdentity"]) documents.push(value.owners.documents["ProofOfIdentity"]);
+  // if(value?.owners?.documents["ProofOfOwnership"]) documents.push(value.owners.documents["ProofOfOwnership"]);
+  // if(value?.owners?.documents["OwnerPhotoProof"]) documents.push(value.owners.documents["OwnerPhotoProof"]);
+  if(value?.owners?.documents){
+    if(value?.owners?.documents["ProofOfIdentity"]) documents.push(value.owners.documents["ProofOfIdentity"]);
+    if(value?.owners?.documents["ProofOfOwnership"]) documents.push(value.owners.documents["ProofOfOwnership"]);
+    if(value?.owners?.documents["OwnerPhotoProof"]) documents.push(value.owners.documents["OwnerPhotoProof"]);
+  }
+  value?.ownersdoc.map((obj)=>{
+    documents.push(obj);
+  });
 
   if (isLoading) {
     return <Loader />;
   }
-
+  
   return (
     <div style={{ marginTop: "19px" }}>
       <React.Fragment>

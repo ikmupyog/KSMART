@@ -39,23 +39,36 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     return useQuery("CR_RELIGION", () => MdmsService.getCRReligion(tenantId, moduleCode), config);
   };
   const useCRcauseOfDeathMain = () => {
-    return useQuery("CR_RELIGION", () => MdmsService.getCRcauseOfDeathMain(tenantId, moduleCode), config);
+    return useQuery("CR_DEATHCAUSE", () => MdmsService.getCRcauseOfDeathMain(tenantId, moduleCode), config);
   };
   const useCRcauseOfDeathsub = () => {
     return useQuery("CR_CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART", () => MdmsService.getCRcauseOfDeathsub(tenantId, moduleCode), config);
   };
   const useCRcauseOfSpouseType = () => {
     return useQuery("CR_SPOUSE", () => MdmsService.getCRcauseOfSpouseType(tenantId, moduleCode), config);
-  };  
+  };
   // const useCRVehicleType = () => {
   //   return useQuery("CR_VEHICLE_TYPE", () => MdmsService.getCRVehicleType(tenantId, moduleCode), config);
-  // }; 
-  
+  // };
+
   // const useCRplaceType = () => {
   //   return useQuery("CR_DEATH_PLACE_TYPE", () => MdmsService.getCRplaceType(tenantId, moduleCode), config);
-  // }; 
+  // };
+  const useDeathPlaceType = () => {
+    return useQuery("CR_DEATHPLACE", () => MdmsService.getDeathPlaceType(tenantId, moduleCode), config);
+  };
+
   const useCROtherDeathPlace = () => {
     return useQuery("CR_RELIGION", () => MdmsService.getCROtherDeathPlace(tenantId, moduleCode), config);
+  };
+  const useCRMannerOfDeath = () => {
+    return useQuery("CR_RELIGION", () => MdmsService.getCRMannerOfDeath(tenantId, moduleCode), config);
+  };
+  const useCRPregnantDeceased = () => {
+    return useQuery("CR_PREGNANT", () => MdmsService.getCRPregnantDeceased(tenantId, moduleCode), config);
+  };
+  const useCRBirthStatus = () => {
+    return useQuery("CR_PREGNANT", () => MdmsService.getCRBirthStatus(tenantId, moduleCode), config);
   };
   //////institution-type
   const useCRInstitution = () => {
@@ -64,6 +77,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   /////institution-id
   const useCRInstitutionId = () => {
     return useQuery("CR_INSTITUTION_ID", () => MdmsService.getCRInstitutionId(tenantId, moduleCode), config);
+  };
+  const useCRInstitutionPlaceOfEvent = () => {
+    return useQuery("CR_INSTITUTION_ID", () => MdmsService.getCRInstitutionPlaceOfEvent(tenantId, moduleCode), config);
   };
   const useCROtherPlace = () => {
     return useQuery("CR_OTHER_PLACE", () => MdmsService.getCROtherPlace(tenantId, moduleCode), config);
@@ -283,17 +299,25 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     case "DeathCause":
       return useCRcauseOfDeathMain();
     case "DeathCauseSub":
-        return useCRcauseOfDeathsub();   
+      return useCRcauseOfDeathsub();
     case "OtherDeathPlace":
-        return useCROtherDeathPlace();
+      return useCROtherDeathPlace();
+    case "MannerOfDeath":
+      return useCRMannerOfDeath();
+    case "PregnantDeceased":
+      return useCRPregnantDeceased();
+    case "BirthStatus":
+      return useCRBirthStatus();
+    case "PlaceMasterDeath":
+      return useDeathPlaceType();
     case "SpouseType":
-        return useCRcauseOfSpouseType();  
+      return useCRcauseOfSpouseType();
     // case "PlaceMasterDeath":
-    //   return useCRplaceType(); 
+    //   return useCRplaceType();
 
     // case "VehicleType":
-    //   return useCRVehicleType(); 
-          
+    //   return useCRVehicleType();
+
     case "Village":
       return useCRVillage();
     case "District":
@@ -328,8 +352,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRReligion();
     case "InstitutionType":
       return useCRInstitution();
-    case "Institution":
+    case "institution":
       return useCRInstitutionId();
+    case "InstitutionTypePlaceOfEvent":
+      return useCRInstitutionPlaceOfEvent();
     case "OtherBithPlace":
       return useCROtherPlace();
     case "TLDocuments":

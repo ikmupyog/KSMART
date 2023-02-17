@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea ,BackButton} from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/DRTimeline";
+import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const PublicPlace = ({ config, onSelect, userType, formData ,setPublicPlaceType, setSelectedPublicPlaceType, 

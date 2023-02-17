@@ -1,35 +1,31 @@
-import {  CitizenHomeCard, CaseIcon} from "@egovernments/digit-ui-react-components";
+import { CitizenHomeCard, CaseIcon } from "@egovernments/digit-ui-react-components";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
-import StatisticalInformation from "../src/pageComponents/birthComponents/StatisticalInformation";
 import BirthVehicle from "../src/pageComponents/birthComponents/BirthVehicle";
-import PublicPlace from "../src/pageComponents/birthComponents/PublicPlace";
-import BirthPlace from "../src/pageComponents/birthComponents/BirthPlace";
-import Address from "../src/pageComponents/birthComponents/Address";
-import AddressOutsideIndia from "../src/pageComponents/birthComponents/AddressOutsideIndia";
-import FatherInformation from "../src/pageComponents/birthComponents/FatherInformation";
-import MotherInformation from "../src/pageComponents/birthComponents/MotherInformation";
-import PlaceofBirthHome from "../src/pageComponents/birthComponents/PlaceofBirthHome";
-import HospitalDetails from "../src/pageComponents/birthComponents/HospitalDetails";
-import OtherCountry from "../src/pageComponents/birthComponents/OtherCountry";
-import InstitutionDetails from "../src/pageComponents/birthComponents/InstitutionDetails";
-import InstitutionAddress from "../src/pageComponents/birthComponents/InstitutionAddress";
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
-import AddressOne from "../src/pageComponents/birthComponents/AddressOne";
-import AddressInsideIndia from "../src/pageComponents/birthComponents/AddressInsideIndia";
-import AddressSameAsAbove  from "../src/pageComponents/birthComponents/AddressSameAsAbove";
+import AddressOne from "./pageComponents/birthComponents/OldAddressOne";
+import AddressInsideIndia from "./pageComponents/birthComponents/OldAddressInsideIndia";
+import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSameAsAbove";
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
-import BornOutsideIndia from "../src/pageComponents/birthComponents/BornOutsideIndia";
-import InformantDetails from "../src/pageComponents/birthComponents/InformantDetails";
-import InformantAddress from "../src/pageComponents/birthComponents/InformantAddress";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
 import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPlaceInstitution";
-
-
+import BirthPlaceHome from "../src/pageComponents/birthComponents/BirthPlaceHome";
+import BirthPlaceVehicle from "../src/pageComponents/birthComponents/BirthPlaceVehicle";
+import BirthPlacePublicPlace from "../src/pageComponents/birthComponents/BirthPlacePublicPlace";
+import AddressBasePage from "../src/pageComponents/birthComponents/AddressBasePage";
+import AddressPresent from "../src/pageComponents/birthComponents/AddressPresent";
+import AddressPresentOutsideIndia from "../src/pageComponents/birthComponents/AddressPresentOutsideIndia";
+import AddressPresentInsideKerala from "../src/pageComponents/birthComponents/AddressPresentInsideKerala";
+import AddressPresentOutsideKerala from "../src/pageComponents/birthComponents/AddressPresentOutsideKerala";
+import AddressPermanentOutsideKerala from "../src/pageComponents/birthComponents/AddressPermanentOutsideKerala";
+import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/AddressPermanentInsideKerala";
+import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
+import InformarHospitalInstitution from "../src/pageComponents/birthComponents/InformarHospitalInstitution";
+import InitiatorDetails from "../src/pageComponents/birthComponents/InitiatorDetails";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
@@ -56,7 +52,15 @@ import PlaceOfDeathOther from "./pageComponents/deathComponents/PlaceOfDeathOthe
 import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVehicle";
 import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
-import StatisticalInfoContinue from "./pageComponents/deathComponents/StatisticalInfoContinue";
+import Hospital from "./pageComponents/deathComponents/Hospital";
+import Institution from "./pageComponents/deathComponents/Institution";
+import DeathPlaceHome from "./pageComponents/deathComponents/DeathPlaceHome";
+import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicle";
+import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
+import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
+import Informer from "./pageComponents/deathComponents/Informer";
+import Initiater from "./pageComponents/deathComponents/Initiater";
+
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
@@ -70,7 +74,7 @@ import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
 import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/DeathCorrectionroute";
 import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
-import BirthCheckPage from "./pages/citizen/BirthRegistration/CheckPage";
+import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
@@ -78,7 +82,7 @@ import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowl
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
-
+import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
@@ -110,7 +114,7 @@ export const CRLinks = ({ matchPath, userType }) => {
   useEffect(() => {
     clearParams();
   }, []);
-  
+
   const links = [
     {
       link: `${matchPath}/cr-birth-creation`,
@@ -132,7 +136,7 @@ export const CRLinks = ({ matchPath, userType }) => {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
     },
-    
+
     // {
     //   link: `${matchPath}/tradelicence/renewal-list`,
     //   i18nKey: t("TL_RENEWAL_HEADER"),
@@ -144,7 +148,7 @@ export const CRLinks = ({ matchPath, userType }) => {
   ];
 
   return (
-    <CitizenHomeCard style={{display: "flex",justifyContent: "space-evenly"}} header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />
+    <CitizenHomeCard style={{ display: "flex", justifyContent: "space-evenly" }} header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />
   )
 };
 
@@ -153,23 +157,12 @@ const componentsToRegister = {
   CRModule,
   CRLinks,
   CRCard,
-  StatisticalInformation,
   BirthVehicle,
-  PublicPlace,
-  BirthPlace,
-  Address,
-  AddressOutsideIndia,
-  FatherInformation,
-  MotherInformation,
-  PlaceofBirthHome,
-  HospitalDetails,
-  OtherCountry,
-  InstitutionDetails,
   ChildDetails,
   CRApplicationDetails,
   CRApplicationDeathDetails,
   CRSearch,
-  SearchCrApplication, 
+  SearchCrApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
   ChildDetails,
@@ -178,26 +171,33 @@ const componentsToRegister = {
   AddressSameAsAbove,
   AddressPermanent,
   MultipleBirth,
-  BornOutsideIndia,
-  InstitutionAddress,
-  InformantDetails,
-  InformantAddress,
-  CRCreateBirthRegistration : CreateBirthRegistration,
+  CRCreateBirthRegistration: CreateBirthRegistration,
   ParentsDetails,
   BirthPlaceHospital,
   BirthPlaceInstitution,
-
- //////////////////
+  BirthPlaceHome,
+  BirthPlacePublicPlace,
+  BirthPlaceVehicle,
+  AddressBasePage,
+  AddressPresent,
+  AddressPresentInsideKerala,
+  AddressPresentOutsideKerala,
+  AddressPresentOutsideIndia,   
+  AddressPermanentOutsideKerala,
+  AddressPermanentOutsideIndia,
+  AddressPermanentInsideKerala,
+  InformarHospitalInstitution,
+  InitiatorDetails,
+  //////////////////
   // SearchRegistry,
   AdoptionDetails,
   AdoptionMotherInformation,
   AdoptiveParentsDetails,
   BirthMotherInformation,
   BirthFatherInformation,
-  BirthParentsAddress,  
-  AdoptionStatisticalInformation,  
- AdoptionParentsAddress,
-
+  BirthParentsAddress,
+  AdoptionStatisticalInformation,
+  AdoptionParentsAddress,
 
 
   //////////////////
@@ -216,8 +216,15 @@ const componentsToRegister = {
   PlaceOfDeathVehicle,
   InformentAddress,
   StatisticalInfo,
-  StatisticalInfoContinue,
   ApplicantDetails,
+  DeathPlaceVehicle,
+  DeathPlaceHome,
+  Institution,
+  Hospital,
+  DeathPublicPlace,
+  DeathOutsideJurisdiction,
+  Informer,
+  Initiater,
   // DeathCertificate,
   GeneralRemarks,
   BirthCheckPage,
@@ -227,9 +234,10 @@ const componentsToRegister = {
   DeathAcknowledgement,
   MarriageAcknowledgement,
   BirthCertificate,
-  CRCreateDeathRegistration : CreateDeathRegistration,
+  CRCreateDeathRegistration: CreateDeathRegistration,
   TLResponse: Response,
-  CRCreateMarriageRegistration : CreateMarriageRegistration,
+  //Marriage
+  CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
 };
 

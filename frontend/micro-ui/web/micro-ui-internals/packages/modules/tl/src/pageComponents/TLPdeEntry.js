@@ -83,7 +83,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
 
   const periodList = (mutationperiod?.status === "success" && mutationperiod?.isSuccess && !mutationperiod?.isError) ? mutationperiod.data : "";
 
-  const [licensingInstitutionName, setLicensingInstitution] = useState(formData?.tradeName ? formData?.tradeName : "");
+  const [licensingInstitutionName, setLicensingInstitution] = useState(formData?.licenseUnitName ? formData?.licenseUnitName : "");
   const [PaidYear, setSelectedYear] = useState(formData.TradeDetails?.PaidYear);
   const [DoorNoBuild, setDoorNoBuild] = useState(formData.TradeDetails?.structurePlace?.doorNo);
   const [DoorSubBuild, setDoorSubBuild] = useState(formData.TradeDetails?.DoorSubBuild);
@@ -93,13 +93,13 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
   const [BuildingstallNo, setBuildingstallNo] = useState(formData.tradeLicenseDetail?.structurePlace?.stallNo ? formData.tradeLicenseDetail?.structurePlace?.stallNo : "");
   const [sector, setSector] = useState(formData?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec.code.includes(formData?.tradeLicenseDetail?.businessSector))[0] : "");
   const [LicenseeType, setLicenseeType] = useState(formData?.tradeLicenseDetail?.licenseeType ? menu.filter((lic) => lic.code.includes(formData?.tradeLicenseDetail?.licenseeType))[0] : "");
-  const [BuildingType, setBuildingType] = useState(formData?.tradeLicenseDetail?.address?.buildingType ? buildingtype.filter((type) => type.code.includes(formData?.tradeLicenseDetail?.address?.buildingType))[0] : "");
+  const [BuildingType, setBuildingType] = useState(formData?.tradeLicenseDetail?.ownershipCategory ? buildingtype.filter((type) => type.code.includes(formData?.tradeLicenseDetail?.ownershipCategory))[0] : "");
 
   const [capitalAmount, setCapitalAmount] = useState(formData?.tradeLicenseDetail?.capitalInvestment ? formData?.tradeLicenseDetail?.capitalInvestment : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderRadio, setIsInitialRenderRadio] = useState(true);
   const [value2, setValue2] = useState(formData?.tradeLicenseDetail?.licenseeType ? formData?.tradeLicenseDetail?.licenseeType : "");
-  const [value3, setValue3] = useState(formData?.tradeLicenseDetail?.address?.buildingType ? formData?.tradeLicenseDetail?.address?.buildingType : "");
+  const [value3, setValue3] = useState(formData?.tradeLicenseDetail?.ownershipCategory ? formData?.tradeLicenseDetail?.ownershipCategory : "");
   const [fields, setFeilds] = useState(
     (formData?.tradeLicenseDetail && formData?.tradeLicenseDetail?.ownersPde) || [{ name: "" }]
   );
@@ -303,7 +303,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setRentFromYear(rentdata[0]?.fromYear ? cmbPayYearFrom.filter((year) => year.code.includes(rentdata[0]?.fromYear))[0] : "");
     setRentToYear(rentdata[0]?.toYear ? cmbPayYearTo.filter((year) => year.code.includes(rentdata[0]?.toYear))[0] : "");
 
-    setLicensingInstitution(formData?.tradeName ? formData?.tradeName : "");
+    setLicensingInstitution(formData?.licenseUnitName ? formData?.licenseUnitName : "");
     setDoorNoBuild(formData.TradeDetails?.structurePlace?.doorNo);
     setDoorSubBuild(formData.TradeDetails?.DoorSubBuild);
     setBuildingCode(formData.tradeLicenseDetail?.address?.lbBuildingCode ? formData.tradeLicenseDetail?.address?.lbBuildingCode : "");
@@ -311,10 +311,10 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
     setBuildingstallNo(formData.tradeLicenseDetail?.structurePlace?.stallNo ? formData.tradeLicenseDetail?.structurePlace?.stallNo : "");
     setSector(formData?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec.code.includes(formData?.tradeLicenseDetail?.businessSector))[0] : "");
     setLicenseeType(formData?.tradeLicenseDetail?.licenseeType ? menu.filter((lic) => lic.code.includes(formData?.tradeLicenseDetail?.licenseeType))[0] : "");
-    setBuildingType(formData?.tradeLicenseDetail?.address?.buildingType ? buildingtype.filter((type) => type.code.includes(formData?.tradeLicenseDetail?.address?.buildingType))[0] : "");
+    setBuildingType(formData?.tradeLicenseDetail?.ownershipCategory ? buildingtype.filter((type) => type.code.includes(formData?.tradeLicenseDetail?.ownershipCategory))[0] : "");
     setCapitalAmount(formData?.tradeLicenseDetail?.capitalInvestment ? formData?.tradeLicenseDetail?.capitalInvestment : "");
     setValue2(formData?.tradeLicenseDetail?.licenseeType ? formData?.tradeLicenseDetail?.licenseeType : "");
-    setValue3(formData?.tradeLicenseDetail?.address?.buildingType ? formData?.tradeLicenseDetail?.address?.buildingType : "");
+    setValue3(formData?.tradeLicenseDetail?.ownershipCategory ? formData?.tradeLicenseDetail?.ownershipCategory : "");
     setFeilds((formData?.tradeLicenseDetail && formData?.tradeLicenseDetail?.ownersPde) || [{ name: "" }]);
     setFeilds1((formData?.tradeLicenseDetail && formData?.tradeLicenseDetail.structurePlace) || [{ doorNo: "", doorNoSub: "", stallNo: "" }]);
     setWardNo(formData.tradeLicenseDetail?.address?.wardNo ? cmbWardNoFinal.filter((ward) => ward.wardno.includes(formData.tradeLicenseDetail?.address?.wardNo))[0] : "");
@@ -964,6 +964,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                 tradeLicenseDetail: {
                   id: (isEdit) ? formData?.tradeLicenseDetail?.id : null,
                   channel: "PDE",
+                  ownershipCategory:BuildingType.code,
                   address: {
                     id: (isEdit) ? formData?.tradeLicenseDetail?.address?.id : null,
                     tenantId: tenantId,
@@ -974,7 +975,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                     circledivisionid: WardNo.zonecode,
                     lbBuildingCode: BuildingCode === undefined ? "" : BuildingCode,
                     lbBuildingName: BuildingName === undefined ? "" : BuildingName,
-                    buildingType: BuildingType.code
+                   // buildingType: BuildingType.code
                   },
                   ownersPde: [
                     ...formState
@@ -987,7 +988,7 @@ const TLPdeEntry = ({ t, config, onSelect, formData, isEdit }) => {
                   licenseeType: value2,
                   taxPde: Tax
                 },
-                tradeName: licensingInstitutionName,
+                licenseUnitName: licensingInstitutionName,
                 workflowCode: "PdeTL"
               }
             ]

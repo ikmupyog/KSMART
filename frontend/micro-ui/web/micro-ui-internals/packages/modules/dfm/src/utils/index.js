@@ -272,104 +272,155 @@ export const convertToFileSubmission = (data = {}) => {
   let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   console.log('filesub data',data);
   const formdata = {
-    ApplicantPersonals: [
-      {
-        id:1,
-        aadhaarNo: data?.ApplicantDetails?.AadharNo, 
-        email:  data?.ApplicantDetails?.Email, 
-        firstName:  data?.ApplicantDetails?.FirstName,     
-        lastName:  data?.ApplicantDetails?.LastName,
-        firstNameMal:  data?.ApplicantDetails?.LastNameMal,
-        lastNameMal:  data?.ApplicantDetails?.LastNameMal,
-        title:  data?.ApplicantDetails?.Title?.code, 
-        mobileNo:  data?.ApplicantDetails?.MobileNo, 
-        tenantId: Digit.ULBService.getCitizenCurrentTenant(),
-        fatherFirstName:data?.ApplicantDetails?.FatherFirstName,
-        fatherLastName:data?.ApplicantDetails?.FatherLastName,
-        motherFirstName:data?.ApplicantDetails?.MotherFirstName,
-        motherLastName:data?.ApplicantDetails?.MotherLastName,
-        applicantCategory:data?.ApplicantDetails?.CategoryList?.id,
-        dateOfBirth:Date.parse(data?.ApplicantDetails?.DateofBirth),
-        bankAccountNo:data?.ApplicantDetails?.AccountNo,
-
-        applicantChild: { 
-          applicantPersonalId:23,
-          buildingNumber: data?.ServiceDet?.BuldingNo, 
-          relationOfAssessee : null,
-          nameOfOccupier : data?.ServiceDet?.NameOccupier,
-          durationOfResidence: data?.ServiceDet?.ResidenceDuration, 
-        },
-        serviceDetails: {
-          applicantPersonalId: '23',
-          serviceId: '16',
-          serviceCode: "PN001.ALP",
-          serviceSubType: '2',
-          serviceMinorType: '5'
-        },
-        applicantAddress: {
-          applicantPersonalId: '23',
-          buildingNo: data?.AddressDet?.BuildingNo,
-          subNo: data?.AddressDet?.SubNo,
-          houseName:data?.AddressDet?.HouseName, 
-          street:data?.AddressDet?.StreetName, 
-          pincode:data?.AddressDet?.Pincode, 
-          postOfficeName: data?.AddressDet?.PostOfficeList?.code, 
-          taluk: data?.AddressDet?.Taluk?.code, 
-          houseNameMal: data?.AddressDet?.HouseNameMal, 
-          village:data?.AddressDet?.Village?.code, 
-          residenceAssociationNo:data?.AddressDet?.ResAssociationNo, 
-          localPlace:data?.AddressDet?.LocalPlace, 
-          mainPlace:data?.AddressDet?.MainPlace, 
-          localPlaceMal:data?.AddressDet?.LocalPlaceMal, 
-          mainPlaceMal:data?.AddressDet?.MainPlaceMal, 
-          wardNo: data?.ServiceDet?.WardNo?.code, 
-        },
-        applicantServiceDocuments: {
-          applicantPersonalId: '23',
-          documentTypeId: '2',
-          fileStoreId: '537',
-          serviceDetailsId: '34',
-          applicationdetails:12345,
-          active: "Yes",
-          documentNumber: '12345',
-        },
-        applicantDocuments: {
-          applicantPersonalId: '23',
-          documentTypeId: '2',
-          documentNumber: '12345',
-          docExpiryDate: '1234577'
-        },
-        fileDetail: {
-          applicantPersonalId : 23,
-          documenttypeId :9,
-          tenantId: "kl.cochin",
-          serviceDetailsId :537,
-          fileNumber :1,
-          fileCode :"KL-FM-2022-11-02-000043",
-          fileName :"PensionAdalath",
-          fileArisingMode :1,
-          fileArisingDate : null,
-          financialYear : Financialyear ? Financialyear : 2022-23,
-          applicationDate : null,
-          workflowCode :"NewDFM",
-          action :"INITIATE",
-          fileStatus :1,
-          active : "Yes",
-          docexpiryDate : 2225,
-          businessService : 89,
-          comment:"Test",
-          assignee:[
-            
-          ]
-        },
+    ApplicantServiceDetail: {
+        id: null,
+        applicantPersonalId: null,
+        serviceId: null,
+        serviceCode: "PN001.IGNOAPS",
+        serviceSubType: 2,
+        serviceMinorType: 3,
         auditDetails: {
           createdBy: null,
           lastModifiedBy: null,
           createdTime: null,
           lastModifiedTime: null
+        },
+        businessService: "DFM",
+         workflowCode: "NewDFM",
+         action: "INITIATE",
+         comments: "null",
+         assignees: [
+          "04bbfaed-100e-4bfa-abcf-093d57206e12"
+        ],
+        
+        applicant:{
+          id:null,
+          firstName:  data?.ApplicantDetails?.FirstName,  
+          firstNameMal:  data?.ApplicantDetails?.FirstNameMal,   
+          lastName:  data?.ApplicantDetails?.LastName,
+          lastNameMal:  data?.ApplicantDetails?.LastNameMal,
+          dateOfBirth:Date.parse(data?.ApplicantDetails?.DateofBirth),
+          aadhaarNumber: data?.ApplicantDetails?.AadharNo, 
+          mobileNumber:  data?.ApplicantDetails?.MobileNo, 
+          emailId:  data?.ApplicantDetails?.Email, 
+          bankAccountNo:data?.ApplicantDetails?.AccountNo,
+          title:  data?.ApplicantDetails?.Title?.code, 
+          tenantId: "kl.cochin",
+          // tenantId: Digit.ULBService.getCitizenCurrentTenant(),
+          fatherFirstName:data?.ApplicantDetails?.FatherFirstName,
+          fatherFirstNameMal:data?.ApplicantDetails?.FatherFirstNameMal,
+          fatherLastName:data?.ApplicantDetails?.FatherLastName,
+          fatherLastNameMal:data?.ApplicantDetails?.FatherLastNameMal,
+          motherFirstName:data?.ApplicantDetails?.MotherFirstName,
+          motherFirstNameMal:data?.ApplicantDetails?.MotherFirstNameMal,
+          motherLastName:data?.ApplicantDetails?.MotherLastName,
+          motherLastNameMal:data?.ApplicantDetails?.MotherLastNameMal,
+          applicantCategory:data?.ApplicantDetails?.CategoryList?.id,
+          auditDetails: {
+            createdBy: null,
+            lastModifiedBy: null,
+            createdTime: null,
+            lastModifiedTime: null
+          },
+          address: {
+            id: null,
+            applicantPersonalId: '23',
+            buildingNo: data?.AddressDet?.DoorNo,
+            subNo: data?.AddressDet?.SubNo,
+            houseName:data?.AddressDet?.HouseName, 
+            houseNameMal: data?.AddressDet?.HouseNameMal, 
+            street:data?.AddressDet?.StreetName, 
+            streetmal:data?.AddressDet?.StreetNamMal, 
+            pincode:data?.AddressDet?.Pincode, 
+            postOfficeName: data?.AddressDet?.PostOfficeList?.name,
+            residenceAssociationNo:data?.AddressDet?.ResAssociationNo,
+            localPlace:data?.AddressDet?.LocalPlace,
+            localPlaceMal:data?.AddressDet?.LocalPlaceMal,  
+            mainPlace:data?.AddressDet?.MainPlace, 
+            mainPlaceMal:data?.AddressDet?.MainPlaceMal, 
+            wardNo: data?.AddressDet?.WardNo?.wardno, 
+            village:data?.AddressDet?.Village?.code,   
+            taluk: data?.AddressDet?.Taluk?.code,
+            auditDetails: {
+              createdBy: null,
+              lastModifiedBy: null,
+              createdTime: null,
+              lastModifiedTime: null
+            },   
+          },
+          documents: [{
+            if: null,
+            applicantPersonalId: null,
+            documentTypeId: 1,
+            documentNumber: 101,
+            docExpiryDate: 123455656,
+            auditDetails: {
+              createdBy: null,
+              createdTime: null,
+              lastModifiedBy: null,
+              lastModifiedTime: null
+          }
+          }],
+        },
+        serviceDocument: {
+          id: null,
+          applicantPersonalId: null,
+          serviceDetailsId: null,
+          documentTypeId: null,
+          fileStoreId: null,
+          active: null,
+          documentNumber: null,
+          applicationDetails: null,
+          auditDetails: {
+            createdBy: null,
+            createdTime: null,
+            lastModifiedBy: null,
+            lastModifiedTime: null
         }
+        },
+        fileDetail: {
+          id: null,
+          tenantId: "kl.cochin",
+          applicantPersonalId: null,
+          serviceDetailsId: null,
+          fileNumber: null,
+          fileCode: null,
+          fileName: null,
+          fileArisingMode: 1,
+          fileArisingDate: "23012023",
+          financialYear: null,
+          applicationDate: "23012023",
+          businessService: "DFM",
+          workflowCode: null,
+          action: null,
+          comments: null,
+          assignees: null,
+          fileStatus: null,
+          auditDetails: {
+            createdBy: null,
+            createdTime: null,
+            lastModifiedBy: null,
+            lastModifiedTime: null
+          }
+        },
+        applicantDetails: { 
+          applicantPersonalId:23,
+          buildingNumber: data?.ServiceDet?.DoorNo, 
+          relationOfAssessee : null,
+          nameOfOccupier : data?.ServiceDet?.NameOccupier,
+          nameOfOccupierMal: null,
+          relationOfOccupier: null,
+          durationOfResidenceInYears: data?.ServiceDet?.ResidenceDurationYr,
+          durationOfResidenceInMonths: data?.ServiceDet?.ResidenceDurationMon,
+          ownerName:  data?.ServiceDet?.Name,
+          ownerNameMal: null,
+          ownerAddress:  data?.ServiceDet?.Address,
+          ownerAddressMal: null,
+          ownerMobileNo: null, 
+        },  
+       
       }
-    ]
+    
   };
   return formdata;
 };

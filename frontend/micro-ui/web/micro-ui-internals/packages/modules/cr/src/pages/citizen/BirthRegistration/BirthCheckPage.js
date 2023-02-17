@@ -40,19 +40,23 @@ const getPath = (path, params) => {
   return path;
 };
 
-const CheckPage = ({ onSubmit, value, userType }) => {
+const BirthCheckPage = ({ onSubmit, value, userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
   const {
     ChildDetails,
-    BirthPlace,
-    HospitalDetails,
-    FatherInfoDetails,
-    MotherInfoDetails,
-    AddressDetails,
-    StatisticalInfoDetails,
+    ParentsDetails,
+    AddressBirthDetails,
+    InitiatorinfoDetails,
+    InformarHosInstDetails,
+    // BirthPlace,
+    // HospitalDetails,
+    // FatherInfoDetails,
+    // MotherInfoDetails,
+    // AddressDetails,
+    // StatisticalInfoDetails,
     isEditProperty,
     cpt,
   } = value;
@@ -89,14 +93,15 @@ const CheckPage = ({ onSubmit, value, userType }) => {
           </div>
         </div>
         <div style={{
-          maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"auto",backgroundColor: "lightblue" }} >
+          maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"800PX",backgroundColor: "#e2eaed" }} >
           {/* class="site-wrap" */}
+
           <div className="row" >
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>  {`${t("CR_CHILD_NAME")}`} </CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.ChildDOB)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.childFirstNameEn ? ChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(ChildDetails.childMiddleNameEn  )} {t(ChildDetails.childLastNameEn  )} </CardText>
             </div>
            
           </div>
@@ -105,25 +110,29 @@ const CheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_GENDER")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.Gender.value)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.gender.code )}</CardText>
             </div>
           </div>
+
+          <div className="row" >
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.childDOB)}</CardText>
+            </div>
+           
+          </div>
+        
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_BIRTH_PLACE")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(BirthPlace.HospitalName.hospitalName)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ChildDetails.hospitalName.hospitalName)}</CardText>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_FATHER_NAME")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(FatherInfoDetails.FatherFirstNameEn ? FatherInfoDetails.FatherFirstNameEn : 'NA')}</CardText>
-            </div>
-          </div>
+
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}</CardLabel>
@@ -131,11 +140,57 @@ const CheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(MotherInfoDetails.MotherFirstNameEn ? MotherInfoDetails.MotherFirstNameEn : 'NA')}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.MotherFirstNameEn ? ParentsDetails.MotherFirstNameEn : 'CR_NOT_RECORDED')}</CardText>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_FATHER_NAME")}`}</CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.FatherFirstNameEn ? ParentsDetails.FatherFirstNameEn : 'CR_NOT_RECORDED')}</CardText>
             </div>
           </div>
           
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_PRESENT_ADDRESS")}`}</CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(AddressBirthDetails.presentInsideKeralaHouseNameEn  ? AddressBirthDetails.presentInsideKeralaHouseNameEn : 'CR_NOT_RECORDED' )} ,
+                {t(AddressBirthDetails.presentInsideKeralaStreetNameEn ? AddressBirthDetails.presentInsideKeralaStreetNameEn : 'CR_NOT_RECORDED' )}, 
+              {t(AddressBirthDetails.presentInsideKeralaLocalityNameEn ? AddressBirthDetails.presentInsideKeralaLocalityNameEn : 'CR_NOT_RECORDED')},
+              {t(AddressBirthDetails.presentInsideKeralaPostOffice  ? AddressBirthDetails.presentInsideKeralaPostOffice.name : 'CR_NOT_RECORDED')},
+              {t( AddressBirthDetails.presentInsideKeralaPincode ? AddressBirthDetails.presentInsideKeralaPincode : 'CR_NOT_RECORDED' )},
+              {t(AddressBirthDetails.presentInsideKeralaDistrict  ? AddressBirthDetails.presentInsideKeralaDistrict.name : 'CR_NOT_RECORDED')},
+              {t( AddressBirthDetails.presentaddressStateName ? AddressBirthDetails.presentaddressStateName.name : 'CR_NOT_RECORDED' )},
+              {t( AddressBirthDetails.presentaddressCountry? AddressBirthDetails.presentaddressCountry.name : 'CR_NOT_RECORDED' )},
+              </CardText>
+              
+            </div>
+          </div> 
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_PERMANENT_ADDRESS")}`}</CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn  ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : 'CR_NOT_RECORDED' )} ,
+               {t(AddressBirthDetails.permntInKeralaAdrStreetNameEn ? AddressBirthDetails.permntInKeralaAdrStreetNameEn : 'CR_NOT_RECORDED' )} , 
+              {t(AddressBirthDetails.permntInKeralaAdrLocalityNameEn ? AddressBirthDetails.permntInKeralaAdrLocalityNameEn : 'CR_NOT_RECORDED'  )} ,
+              {t(AddressBirthDetails.permntInKeralaAdrPostOffice  ? AddressBirthDetails.permntInKeralaAdrPostOffice.name : 'CR_NOT_RECORDED')},
+              {t( AddressBirthDetails.permntInKeralaAdrPincode ? AddressBirthDetails.permntInKeralaAdrPincode : 'CR_NOT_RECORDED' )},
+              {t(AddressBirthDetails.permntInKeralaAdrDistrict  ? AddressBirthDetails.permntInKeralaAdrDistrict.name : 'CR_NOT_RECORDED'   )},
+              {t( AddressBirthDetails.permtaddressStateName ? AddressBirthDetails.permtaddressStateName.name : 'CR_NOT_RECORDED' )} ,
+              {t( AddressBirthDetails.permtaddressCountry ? AddressBirthDetails.permtaddressCountry.name : 'CR_NOT_RECORDED' )}
+
+              </CardText>
+              
+            </div>
+          </div> 
+
+         
         </div>
+
         <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">              
@@ -176,4 +231,4 @@ const CheckPage = ({ onSubmit, value, userType }) => {
   );
 };
 
-export default CheckPage;
+export default BirthCheckPage;

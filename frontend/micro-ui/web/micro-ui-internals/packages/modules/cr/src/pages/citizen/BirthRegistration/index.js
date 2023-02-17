@@ -6,12 +6,13 @@ import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
 const CreateBirthRegistration = ({ parentUrl }) => {
+  console.log("checkpage");
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_TRADE", {});
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});

@@ -51,7 +51,7 @@ const initRequestBody = (tenantId) => ({
     moduleDetails: [
       {
         moduleName: "common-masters",
-        masterDetails: [{ name: "Department" }, { name: "Designation" }, { name: "StateInfo" }, { name: "wfSlaConfig" },{ name: "District" }],
+        masterDetails: [{ name: "Department" }, { name: "Designation" }, { name: "StateInfo" }, { name: "wfSlaConfig" }, { name: "District" }],
       },
       {
         moduleName: "tenant",
@@ -61,7 +61,6 @@ const initRequestBody = (tenantId) => ({
         moduleName: "DIGIT-UI",
         masterDetails: [{ name: "ApiCachingSettings" }],
       },
-           
     ],
   },
 });
@@ -626,7 +625,7 @@ const getTLStructureTypeList = (tenantId, moduleCode, type) => ({
     moduleDetails: [
       {
         moduleName: moduleCode,
-        masterDetails: [{ name: "StructureType"}],
+        masterDetails: [{ name: "StructureType" }],
       },
     ],
   },
@@ -725,6 +724,42 @@ const getTLFinancialYearList = (tenantId, moduleCode, type) => ({
       {
         moduleName: moduleCode,
         masterDetails: [{ name: "FinancialYear", filter: `[?(@.module == "TL")]` }],
+      },
+    ],
+  },
+});
+const getTLDistrict = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "District", filter: `[?(@.statecode == "kl")]` }],
+      },
+    ],
+  },
+});
+const getTLLBType = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "LBType", filter: `[?((@.code == "LB_TYPE_MUNICIPALITY") || (@.code == "LB_TYPE_CORPORATION"))]` }],
+      },
+    ],
+  },
+});
+const getTLLocalbody = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "tenants", filter: `[?(@.city.statecode == "kl")]` }],
       },
     ],
   },
@@ -912,6 +947,21 @@ const getCRcauseOfDeathsublist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getDeathPlaceTypelist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "PlaceMasterDeath",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCROtherDeathPlacelist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -921,6 +971,54 @@ const getCROtherDeathPlacelist = (tenantId, moduleCode) => ({
         masterDetails: [
           {
             name: "OtherDeathPlace",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRMannerOfDeathlist
+ = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "MannerOfDeath",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRPregnantDeceasedlist
+ = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "PregnantDeceased",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRRBirthStatuslist
+ = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "BirthStatus",
           },
         ],
       },
@@ -1219,10 +1317,25 @@ const getCRInstitutionList = (tenantId, moduleCode) => ({
     tenantId: tenantId,
     moduleDetails: [
       {
+        moduleName: "egov-location",
+        masterDetails: [
+          {
+            name: "InstitutionTypePlaceOfEvent",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getCRInstitutionPlaceOfEventList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "InstitutionType",
+            name: "InstitutionTypePlaceOfEvent",
           },
         ],
       },
@@ -1280,7 +1393,7 @@ const getCRVehicleTypeList = (tenantId, moduleCode) => ({
     tenantId: tenantId,
     moduleDetails: [
       {
-        moduleName: birth-death-service,
+        moduleName: birth - death - service,
         masterDetails: [
           {
             name: "VehicleType",
@@ -1295,10 +1408,10 @@ const getCRInstitutionIdList = (tenantId, moduleCode) => ({
     tenantId: tenantId,
     moduleDetails: [
       {
-        moduleName: moduleCode,
+        moduleName: "egov-location",
         masterDetails: [
           {
-            name: "Institution",
+            name: "institutionList",
           },
         ],
       },
@@ -1322,7 +1435,6 @@ const getChargeSlabsCategoryCriteria = (tenantId, moduleCode) => ({
   },
 });
 
-
 const getGenderTypeList = (tenantId, moduleCode, type) => ({
   type,
   details: {
@@ -1339,7 +1451,6 @@ const getGenderTypeList = (tenantId, moduleCode, type) => ({
     ],
   },
 });
-
 
 const getDssDashboardCriteria = (tenantId, moduleCode) => ({
   details: {
@@ -1474,14 +1585,13 @@ const getDocumentTypesCriteria = (tenantId, moduleCode, type) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "DocTypeMapping"
-          }
-        ]
-      }
-    ]
-  }
-})
-
+            name: "DocTypeMapping",
+          },
+        ],
+      },
+    ],
+  },
+});
 
 const getTradeTypeRoleCriteria = (tenantId, moduleCode, type) => ({
   type,
@@ -1492,13 +1602,13 @@ const getTradeTypeRoleCriteria = (tenantId, moduleCode, type) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "TradeTypetoRoleMapping"
-          }
-        ]
-      }
-    ]
-  }
-})
+            name: "TradeTypetoRoleMapping",
+          },
+        ],
+      },
+    ],
+  },
+});
 
 const getFSTPORejectionReasonCriteria = (tenantId, moduleCode, type) => ({
   type,
@@ -1517,7 +1627,6 @@ const getFSTPORejectionReasonCriteria = (tenantId, moduleCode, type) => ({
     ],
   },
 });
-
 
 const getFSMPaymentTypeCriteria = (tenantId, moduleCode, type) => ({
   type,
@@ -1580,7 +1689,6 @@ const GetEgovLocations = (MdmsRes) => {
   }));
 };
 
-
 const GetServiceDefs = (MdmsRes, moduleCode) => MdmsRes[`RAINMAKER-${moduleCode}`].ServiceDefs.filter((def) => def.active);
 
 const GetSanitationType = (MdmsRes) => MdmsRes["FSM"].SanitationType.filter((type) => type.active);
@@ -1622,24 +1730,24 @@ const GetSlumLocalityMapping = (MdmsRes, tenantId) =>
   MdmsRes["FSM"].Slum.filter((type) => type.active).reduce((prev, curr) => {
     return prev[curr.locality]
       ? {
-        ...prev,
-        [curr.locality]: [
-          ...prev[curr.locality],
-          {
-            ...curr,
-            i18nKey: `${tenantId.toUpperCase().replace(".", "_")}_${curr.locality}_${curr.code}`,
-          },
-        ],
-      }
+          ...prev,
+          [curr.locality]: [
+            ...prev[curr.locality],
+            {
+              ...curr,
+              i18nKey: `${tenantId.toUpperCase().replace(".", "_")}_${curr.locality}_${curr.code}`,
+            },
+          ],
+        }
       : {
-        ...prev,
-        [curr.locality]: [
-          {
-            ...curr,
-            i18nKey: `${tenantId.toUpperCase().replace(".", "_")}_${curr.locality}_${curr.code}`,
-          },
-        ],
-      };
+          ...prev,
+          [curr.locality]: [
+            {
+              ...curr,
+              i18nKey: `${tenantId.toUpperCase().replace(".", "_")}_${curr.locality}_${curr.code}`,
+            },
+          ],
+        };
   }, {});
 
 const GetPropertyOwnerShipCategory = (MdmsRes) =>
@@ -1727,12 +1835,12 @@ const getTLStructureType = (MdmsRes) =>
     };
   });
 const getTLStructureTypePlace = (MdmsRes) =>
-MdmsRes["TradeLicense"].TradeStructureSubtype.filter((TradeStructureSubtype) => TradeStructureSubtype.active).map((TLStructureSubtypeList) => {
-  return {
-    ...TLStructureSubtypeList,
-    // i18nKey: `TradeLicense_STRUCTURESUBTYPE_${stringReplaceAll(TLStructureSubtypeList.code, ".", "_")}`,
-  };
-});
+  MdmsRes["TradeLicense"].TradeStructureSubtype.filter((TradeStructureSubtype) => TradeStructureSubtype.active).map((TLStructureSubtypeList) => {
+    return {
+      ...TLStructureSubtypeList,
+      // i18nKey: `TradeLicense_STRUCTURESUBTYPE_${stringReplaceAll(TLStructureSubtypeList.code, ".", "_")}`,
+    };
+  });
 
 const getTLAccessoriesType = (MdmsRes) =>
   MdmsRes["TradeLicense"].AccessoriesCategory.filter((AccessoriesCategory) => AccessoriesCategory.active).map((TLAccessoryTypeList) => {
@@ -1749,7 +1857,7 @@ const getTLFinancialYear = (MdmsRes) =>
       //i18nKey: `TRADELICENSE_ACCESSORIESCATEGORY_${stringReplaceAll(TLAccessoryTypeList.code, ".", "_")}`,
     };
   });
-  
+
 const getFloorList = (MdmsRes) =>
   MdmsRes["PropertyTax"].Floor.filter((PTFloor) => PTFloor.active).map((PTFloorlist) => {
     return {
@@ -1859,47 +1967,40 @@ const getFSMGenderType = (MdmsRes) => {
 };
 
 const GetFSTPORejectionReason = (MdmsRes) => {
-  return MdmsRes["Vehicle"].FSTPORejectionReason.filter((reason) => reason.active)
-    .map((reasonDetails) => {
-      return {
-        ...reasonDetails,
-        i18nKey: `ES_ACTION_REASON_${reasonDetails.code}`,
-      };
-    });
-}
+  return MdmsRes["Vehicle"].FSTPORejectionReason.filter((reason) => reason.active).map((reasonDetails) => {
+    return {
+      ...reasonDetails,
+      i18nKey: `ES_ACTION_REASON_${reasonDetails.code}`,
+    };
+  });
+};
 
 const GetPaymentType = (MdmsRes) => {
-
-  return MdmsRes["FSM"].PaymentType.filter((option) => option.active)
-    .map((reasonDetails) => {
-      return {
-        ...reasonDetails,
-        i18nKey: `ES_ACTION_${reasonDetails.code}`,
-      };
-    });
-}
+  return MdmsRes["FSM"].PaymentType.filter((option) => option.active).map((reasonDetails) => {
+    return {
+      ...reasonDetails,
+      i18nKey: `ES_ACTION_${reasonDetails.code}`,
+    };
+  });
+};
 
 const GetTripNumber = (MdmsRes) => {
-
-  return MdmsRes["FSM"].TripNumber.filter((option) => option.active)
-    .map((reasonDetails) => {
-      return {
-        ...reasonDetails,
-        i18nKey: `ES_ACTION_TRIP_${reasonDetails.code}`,
-      };
-    });
-}
+  return MdmsRes["FSM"].TripNumber.filter((option) => option.active).map((reasonDetails) => {
+    return {
+      ...reasonDetails,
+      i18nKey: `ES_ACTION_TRIP_${reasonDetails.code}`,
+    };
+  });
+};
 
 const GetReceivedPaymentType = (MdmsRes) => {
-
-  return MdmsRes["FSM"].ReceivedPaymentType.filter((option) => option.active)
-    .map((reasonDetails) => {
-      return {
-        ...reasonDetails,
-        i18nKey: `ES_ACTION_${reasonDetails.code}`,
-      };
-    });
-}
+  return MdmsRes["FSM"].ReceivedPaymentType.filter((option) => option.active).map((reasonDetails) => {
+    return {
+      ...reasonDetails,
+      i18nKey: `ES_ACTION_${reasonDetails.code}`,
+    };
+  });
+};
 const getFinancialPeriod = (tenantId, moduleCode, type) => ({
   type,
   details: {
@@ -1920,7 +2021,8 @@ const getFinancialPeriod = (tenantId, moduleCode, type) => ({
 const getDssDashboard = (MdmsRes) => MdmsRes["dss-dashboard"]["dashboard-config"];
 
 const GetRoleStatusMapping = (MdmsRes) => MdmsRes["DIGIT-UI"].RoleStatusMapping;
-const GetCommonFields = (MdmsRes, moduleCode) => moduleCode.toUpperCase() === "PROPERTYTAX" ? MdmsRes["PropertyTax"].CommonFieldsConfig : MdmsRes["FSM"].CommonFieldsConfig;
+const GetCommonFields = (MdmsRes, moduleCode) =>
+  moduleCode.toUpperCase() === "PROPERTYTAX" ? MdmsRes["PropertyTax"].CommonFieldsConfig : MdmsRes["FSM"].CommonFieldsConfig;
 
 const GetPreFields = (MdmsRes) => MdmsRes["FSM"].PreFieldsConfig;
 
@@ -2009,14 +2111,14 @@ const transformResponse = (type, MdmsRes, moduleCode, tenantId) => {
     case "TLGendertype":
       return TLGenderType(MdmsRes);
     case "CRGenderType":
-        return CRGenderType(MdmsRes);
+      return CRGenderType(MdmsRes);
     case "PTGenderType":
       return PTGenderType(MdmsRes);
     case "HRGenderType":
       return HRGenderType(MdmsRes);
     case "DocumentTypes":
       return GetDocumentsTypes(MdmsRes);
-      case "IdProof":
+    case "IdProof":
       return GetIdProof(MdmsRes);
     case "CheckList":
       return GetChecklist(MdmsRes);
@@ -2202,16 +2304,29 @@ export const MdmsService = {
   getCROtherDeathPlace: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCROtherDeathPlacelist(tenantId, moduleCode), moduleCode);
   },
+  getCRMannerOfDeath: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRMannerOfDeathlist(tenantId, moduleCode), moduleCode);
+  },
+  getCRPregnantDeceased: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRPregnantDeceasedlist(tenantId, moduleCode), moduleCode);
+  },
+  
+  getCRBirthStatus: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRRBirthStatuslist(tenantId, moduleCode), moduleCode);
+  },
+  getDeathPlaceType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getDeathPlaceTypelist(tenantId, moduleCode), moduleCode);
+  },
   getCRcauseOfSpouseType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRcauseOfSpouseTypelist(tenantId, moduleCode), moduleCode);
   },
   getCRDeathVehicleType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDeathVehicleTypelist(tenantId, moduleCode), moduleCode);
   },
-  
+
   // getCRplaceType: (tenantId, moduleCode) => {
   //   return MdmsService.getDataByCriteria(tenantId, getCRplaceTypelist(tenantId, moduleCode), moduleCode);
-  // }, 
+  // },
   getCRVillage: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRVillagelist(tenantId, moduleCode), moduleCode);
   },
@@ -2224,6 +2339,9 @@ export const MdmsService = {
   getCRInstitutionId: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRInstitutionIdList(tenantId, moduleCode), moduleCode);
   },
+  getCRInstitutionPlaceOfEvent: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRInstitutionPlaceOfEventList(tenantId, moduleCode), moduleCode);
+  },
   getCROtherPlace: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCROtherPlaceList(tenantId, moduleCode), moduleCode);
   },
@@ -2232,7 +2350,7 @@ export const MdmsService = {
   },
   getCRState: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRStatelist(tenantId, moduleCode), moduleCode);
-  },  
+  },
   getCROccupation: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCROccupationlist(tenantId, moduleCode), moduleCode);
   },
@@ -2272,11 +2390,11 @@ export const MdmsService = {
   getCRDeathPlaceType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDeathPlaceTypeList(tenantId, moduleCode), moduleCode);
   },
-  
+
   getCRVehicleType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRVehicleTypeList(tenantId, moduleCode), moduleCode);
   },
-  
+
   getCRMaleDependent: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRMaleDependentlist(tenantId, moduleCode), moduleCode);
   },
@@ -2392,6 +2510,15 @@ export const MdmsService = {
   getTLFinancialYear: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLFinancialYearList(tenantId, moduleCode), moduleCode);
   },
+  getTLDistrict: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLDistrict(tenantId, moduleCode), moduleCode);
+  },
+  getTLLBType: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLLBType(tenantId, moduleCode), moduleCode);
+  },
+  getTLLocalbody: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTLLocalbody(tenantId, moduleCode), moduleCode);
+  },
   getFloorList: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getPTFloorList(tenantId, moduleCode, type), moduleCode);
   },
@@ -2446,7 +2573,6 @@ export const MdmsService = {
 
   getGenderType: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getGenderTypeList(tenantId, moduleCode, type), moduleCode);
-
   },
 
   TLGenderType: (tenantId, moduleCode, type) => {
@@ -2491,9 +2617,8 @@ export const MdmsService = {
 
   getFSMReceivedPaymentType: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getFSMReceivedPaymentTypeCriteria(tenantId, moduleCode, type), moduleCode);
-  },  
+  },
   getTLFinancePeriod: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getFinancialPeriod(tenantId, moduleCode), moduleCode);
-  }
+  },
 };
-
