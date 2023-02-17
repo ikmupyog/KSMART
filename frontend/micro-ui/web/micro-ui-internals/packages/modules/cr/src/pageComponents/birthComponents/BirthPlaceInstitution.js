@@ -13,17 +13,17 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   }
   const { t } = useTranslation();
   let validation = {};
-  const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
+  const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
   const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "institution");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  console.log(institutionidList);
+  
   // const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
   let cmbInstitution = [];
-  institutionList &&
-    institutionList["birth-death-service"] &&
-    institutionList["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+  institutionType &&
+  institutionType["birth-death-service"] &&
+  institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
       cmbInstitution.push(ob);
     });
   ///institution-id
@@ -36,24 +36,24 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionId.push(ob);
     });
-  console.log(cmbInstitutionId);
-  useEffect(() => {
+  console.log(institutionType);
+  // useEffect(() => {
 
-    if (isInitialRender) {
-      if (institution) {
-        console.log(institution);
-        // if (cmbInstitutionId.length > 0) {
-        console.log(cmbInstitutionId);
-        cmbFilterInstitutionList = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === institution.code);
-        // }
-      }
-      if (institutionId) {
-        cmbInstitutionIdML = cmbFilterInstitutionList.filter((cmbFilterInstitutionList) => cmbFilterInstitutionList.institutionName === institutionId.institutionName);
-        setInstitutionIdMl(cmbInstitutionIdML[0]);
-        setIsInitialRender(false);
-      }
-    }
-  }, [cmbFilterInstitutionList, cmbInstitutionIdML, isInitialRender])
+  //   if (isInitialRender) {
+  //     if (institution) {
+  //       console.log(institution);
+  //       // if (cmbInstitutionId.length > 0) {
+  //       console.log(cmbInstitutionId);
+  //       cmbFilterInstitutionList = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === institution.code);
+  //       // }
+  //     }
+  //     if (institutionId) {
+  //       cmbInstitutionIdML = cmbFilterInstitutionList.filter((cmbFilterInstitutionList) => cmbFilterInstitutionList.institutionName === institutionId.institutionName);
+  //       setInstitutionIdMl(cmbInstitutionIdML[0]);
+  //       setIsInitialRender(false);
+  //     }
+  //   }
+  // }, [cmbFilterInstitutionList, cmbInstitutionIdML, isInitialRender])
 
   const onSkip = () => onSelect();
 
@@ -77,7 +77,8 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     //   Institution, InstitutionId     
     // });
   };
-  if (isinstitutionLoad || isinstitutionidLoad) {
+  // isinstitutionLoad ||
+  if ( isinstitutionidLoad) {
     return <Loader></Loader>;
   }
   return (
@@ -109,7 +110,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               t={t}
               optionKey="institutionName"
               isMandatory={true}
-              option={cmbFilterInstitutionList}
+              option={cmbInstitutionId}
               selected={institutionId}
               select={setselectInstitutionId}
               placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
@@ -121,7 +122,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               t={t}
               optionKey="institutionNamelocal"
               isMandatory={true}
-              option={cmbFilterInstitutionList}
+              option={cmbInstitutionId}
               selected={institutionIdMl}
               select={setselectInstitutionIdMl}
               placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}
