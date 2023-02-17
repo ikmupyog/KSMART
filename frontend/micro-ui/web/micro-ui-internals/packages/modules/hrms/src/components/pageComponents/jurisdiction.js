@@ -13,9 +13,9 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   const { data: data = {}, isLoading } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "egov-hrms", "HRMSRolesandDesignation") || {};
   const { data: hospitalData = {}, Loading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
   const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
-  // const { data: institutionData = {}, Loading:loaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
+  const { data: institutionData = {}, Loading:loaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
   //Maya
-  // console.log(institutionList,hospitalData); 
+  // console.log(institutionList,institutionData); 
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "/egov-location", "boundary-data");
   
   let cmbhospital = [];
@@ -25,11 +25,11 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
       cmbhospital.push(ob);
     });
   let cmbInstitutionId= [];
-  // institutionData &&
-  //   institutionData["egov-location"] &&
-  //   institutionData["egov-location"].institutionList.map((ob) => {
-  //     cmbInstitutionId.push(ob);
-  //   });
+  institutionData &&
+    institutionData["egov-location"] &&
+    institutionData["egov-location"].institutionList.map((ob) => {
+      cmbInstitutionId.push(ob);
+    });
 
   let cmbInstitution = [];
   institutionList &&
@@ -259,6 +259,7 @@ function getWardList()
           getwarddata={getwarddata}
           getWardList={getWardList}
           handleRemoveUnit={handleRemoveUnit}
+          cmbInstitutionId={cmbInstitutionId}
         />
       ))}
       <label onClick={handleAddUnit} className="link-label" style={{ width: "12rem" }}>
@@ -279,6 +280,7 @@ function Jurisdiction({
   getroledata,
   getHospitalNames,
   getInstitutionList,
+  cmbInstitutionId,
   getWardList,
   getwarddata,
   roleoption,
@@ -528,16 +530,16 @@ function Jurisdiction({
     //     return {code :name?.code , name: name?.institutionName, address:name?.address}
     //   }
     // }).filter((ab)=>{return ab !== undefined})
-    setInstitutionNameList(institutionNameList)
+    setInstitutionNameList(cmbInstitutionId)
     // console.log("institutionName1",institutionNameList,institutionName)
   };
   const selectInstitutionName=(value)=>{
    
     setInstitutionName(value)
-    setInstitutionAddress(value.address)
+    setInstitutionAddress(value?.address)
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionname: value.name } : item)));
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionaddress: value.address } : item)));
-    console.log("JURIS",institutionName,value.name)
+    // console.log("JURIS",institutionName,value.name)
   }
   const selectward1= (value)=>{
     console.log("value",value)
@@ -727,7 +729,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
             <LabelFieldPair>
               <CardLabel>{`Institution Name`}<span className="mandatorycss">*</span></CardLabel>
               <div className="form-field">
-                <Dropdown t={t} optionKey="name" isRequired="false" option={institutionNameList} selected={institutionName}
+                <Dropdown t={t} optionKey="institutionName" isRequired="false" option={institutionNameList} selected={institutionName}
                   select={selectInstitutionName} placeholder={`Institution Name`} /></div>
             </LabelFieldPair>
             <LabelFieldPair>

@@ -70,30 +70,30 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_HOSPITAL_EN")}`}
-              {/* <span className="mandatorycss">*</span> */}
+              <span className="mandatorycss">*</span>
             </CardLabel>
             <Dropdown
               t={t}
               optionKey="hospitalName"
-              isMandatory={false}
+              isMandatory={true}
               option={cmbhospital}
               selected={hospitalName}
               select={setselectHospitalName}
               placeholder={`${t("CR_HOSPITAL_EN")}`}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>
               {`${t("CR_HOSPITAL_ML")}`}
-              {/* <span className="mandatorycss">*</span> */}
+              <span className="mandatorycss">*</span>
             </CardLabel>
             <Dropdown
               t={t}
               optionKey="hospitalNamelocal"
-              isMandatory={false}
+              isMandatory={true}
               option={cmbhospital}
               selected={hospitalNameMl}
               select={setselectHospitalNameMl}
