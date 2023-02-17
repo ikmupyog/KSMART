@@ -42,7 +42,9 @@ export const fetchBusinessServiceByTenant = (tenantId, businessServices) => asyn
 };
 
 export const applyInboxFilters = (filters) => async (dispatch) => {
+  console.log(filters);
   let response = await Digit.PGRService.inboxFilter(filters);
+  console.log(response);
   dispatch({
     type: APPLY_INBOX_FILTER,
     payload: { response },

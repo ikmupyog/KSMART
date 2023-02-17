@@ -1,6 +1,7 @@
 import { APPLY_INBOX_FILTER, CREATE_COMPLAINT, FETCH_COMPLAINTS, UPDATE_COMPLAINT } from "../actions/types";
 
 function complaintReducer(state = {}, action) {
+  console.log(action);
   switch (action.type) {
     case CREATE_COMPLAINT:
       return { ...state, response: action.payload };

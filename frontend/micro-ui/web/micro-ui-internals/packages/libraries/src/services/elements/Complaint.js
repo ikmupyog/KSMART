@@ -14,10 +14,12 @@ export const Complaint = {
     uploadedImages,
     mobileNumber,
     name,
+    deptCode
   }) => {
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const defaultData = {
       service: {
+        deptCode:deptCode,
         tenantId: cityCode,
         serviceCode: complaintType,
         description: description,

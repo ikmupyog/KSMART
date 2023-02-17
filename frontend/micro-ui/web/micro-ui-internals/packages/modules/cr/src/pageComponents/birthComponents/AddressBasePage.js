@@ -101,7 +101,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
 
     //################################################# Permanent Inside Kerala ##########################################################################################
 
-    const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrDistrict ? ormData?.AddressBirthDetails?.permntInKeralaAdrDistrict : null);
+    const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrDistrict ? formData?.AddressBirthDetails?.permntInKeralaAdrDistrict : null);
     // const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName ? formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName : null);
     const [permntInKeralaAdrLBName, setpermntInKeralaAdrLBName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBName ? formData?.AddressBirthDetails?.permntInKeralaAdrLBName : null);
     const [permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrTaluk ? formData?.AddressBirthDetails?.permntInKeralaAdrTaluk : null);
