@@ -23,7 +23,11 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 const InformationDeath = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
-  const { t } = useTranslation();
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }  const { t } = useTranslation();
   let validation = {};
 
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
@@ -84,6 +88,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
+  const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.InformationDeath?.HospitalNameMl);
   // Home
   const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId);
   const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode);
@@ -399,7 +404,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         naturetype = DeathPlace.code;
         setValue(naturetype);
         if (naturetype === "HOSPITAL") {
-          <Hospital DeathPlaceType={DeathPlaceType} />;
+          <Hospital 
+          DeathPlaceType={DeathPlaceType}
+          HospitalNameMl={HospitalNameMl} 
+          />;
         }
         if (naturetype === "INSTITUTION") {
           <Hospital DeathPlaceType={DeathPlaceType} />;
@@ -514,6 +522,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
 
     if (validFlag == true) {
+      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
     sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
     sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
     sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
@@ -536,6 +545,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
     sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+    sessionStorage.setItem("HospitalNameMl", HospitalNameMl.DeathPlaceType);
+   
     sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
     sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
     sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
@@ -598,6 +609,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
     }
     onSelect(config.key, {
+      tenantId,
       DateOfDeath,
       TimeOfDeath,
       DeceasedFirstNameEn,
@@ -620,6 +632,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       // checked,
       DeathPlace,
       DeathPlaceType,
+      HospitalNameMl,
       DeathPlaceTypecode,
       DeathPlaceInstId,
       institutionNameCode,
@@ -702,8 +715,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               </div>
               <div className="col-md-2">
                 <CardLabel>
-                  {t("CR_TIME_OF_DEATH")}
-                  <span className="mandatorycss">*</span>
+                  {t("CR_TIME_OF_DEATH")}                  
                 </CardLabel>
                 <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setTimeOfDeath)} value={TimeOfDeath} />
               </div>
@@ -736,11 +748,26 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_PLACE_OF_DEATH")}`}
               />
             </div>
+            {/* {value === "HOSPITAL" && (
+          <div className="col-md-6">
+            <Hospital selectDeathPlaceType={selectDeathPlaceType} DeathPlaceType={DeathPlaceType} />
+          </div>
+        )}
+        {value === "INSTITUTION" && (
+         <div className="col-md-6">
+            <Institution
+              selectDeathPlaceType={selectDeathPlaceType}
+              DeathPlaceType={DeathPlaceType}
+              DeathPlaceInstId={DeathPlaceInstId}
+              setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
+            />
+          </div>
+        )} */}
           </div>
         </div>
         {value === "HOSPITAL" && (
           <div>
-            <Hospital selectDeathPlaceType={selectDeathPlaceType} DeathPlaceType={DeathPlaceType} />
+            <Hospital selectDeathPlaceType={selectDeathPlaceType} DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} selectHospitalNameMl ={selectHospitalNameMl}/>
           </div>
         )}
         {value === "INSTITUTION" && (
