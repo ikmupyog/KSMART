@@ -76,10 +76,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
   /////institution-id
   const useCRInstitutionId = () => {
-    return useQuery("CR_INSTITUTION_ID", () => MdmsService.getCRInstitutionId(tenantId, moduleCode), config);
+    return useQuery("CR_INSTITUTION_LIST", () => MdmsService.getCRInstitutionId(tenantId, moduleCode), config);
   };
   const useCRInstitutionPlaceOfEvent = () => {
-    return useQuery("CR_INSTITUTION_ID", () => MdmsService.getCRInstitutionPlaceOfEvent(tenantId, moduleCode), config);
+    return useQuery("CR_INSTITUTION_TYPE", () => MdmsService.getCRInstitutionPlaceOfEvent(tenantId, moduleCode), config);
   };
   const useCROtherPlace = () => {
     return useQuery("CR_OTHER_PLACE", () => MdmsService.getCROtherPlace(tenantId, moduleCode), config);
@@ -350,8 +350,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRAgeUnit();
     case "Religion":
       return useCRReligion();
-    case "InstitutionType":
-      return useCRInstitution();
+    // case "InstitutionType":
+    //   return useCRInstitution();
     case "institution":
       return useCRInstitutionId();
     case "InstitutionTypePlaceOfEvent":
