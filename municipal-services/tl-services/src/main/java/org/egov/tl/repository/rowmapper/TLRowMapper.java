@@ -73,6 +73,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .licenseUnitNameLocal(rs.getString("licenseunitnamelocal"))
                         .assignUser(rs.getString("assignee"))
                         .desiredLicensePeriod(rs.getInt("desiredlicenseperiod"))
+                        .isMigrated(rs.getBoolean("is_migrated"))
                         .id(id)
                         .build();
 
@@ -206,10 +207,11 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                 .active(rs.getBoolean("ownerdocactive"))
                 .build();
 
-        if (rs.getString("applicationtype").equals("PdeTL") || rs.getString("applicationtype").equals("PdeTL")) {
+        if (rs.getString("applicationtype").equals("PdeTL")
+                || (rs.getString("applicationtype").equals("RenewalTL") && rs.getBoolean("is_migrated"))) {
             if (rs.getString("ownerpde_id") != null) {
                 OwnerInfo owner = OwnerInfo.builder()
-                        .uuid(rs.getString("ownerpde_id"))
+                        // .uuid(rs.getString("ownerpde_id"))
                         .userActive(rs.getBoolean("ownerpde_active"))
                         .name(rs.getString("ownerpde_name"))
                         .emailId(rs.getString("ownerpde_email"))

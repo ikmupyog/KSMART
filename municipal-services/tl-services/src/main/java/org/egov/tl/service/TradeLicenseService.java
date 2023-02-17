@@ -374,7 +374,7 @@ public class TradeLicenseService {
      */
     public List<TradeLicense> getLicensesWithOwnerInfo(TradeLicenseRequest request) {
         TradeLicenseSearchCriteria criteria = new TradeLicenseSearchCriteria();
-        TradeLicense.ApplicationTypeEnum applicationType = request.getLicenses().get(0).getApplicationType();
+        // TradeLicense.ApplicationTypeEnum applicationType = request.getLicenses().get(0).getApplicationType();
         List<String> ids = new LinkedList<>();
         request.getLicenses().forEach(license -> {
             ids.add(license.getId());
@@ -383,7 +383,7 @@ public class TradeLicenseService {
         criteria.setTenantId(request.getLicenses().get(0).getTenantId());
         criteria.setIds(ids);
         criteria.setBusinessService(request.getLicenses().get(0).getBusinessService());
-        criteria.setApplicationType(applicationType.toString());
+        // criteria.setApplicationType(applicationType.toString());
 
         List<TradeLicense> licenses = repository.getLicenses(criteria);
 

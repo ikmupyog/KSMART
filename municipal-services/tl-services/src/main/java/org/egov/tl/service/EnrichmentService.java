@@ -340,11 +340,14 @@ public class EnrichmentService {
         users.forEach(user -> userIdToOwnerMap.put(user.getUuid(), user));
         licenses.forEach(license -> {
             license.getTradeLicenseDetail().getOwners().forEach(owner -> {
-                if (userIdToOwnerMap.get(owner.getUuid()) == null)
-                    throw new CustomException("OWNER SEARCH ERROR", "The owner of the tradeCategoryDetail "
-                            + license.getTradeLicenseDetail().getId() + " is not coming in user search");
-                else
-                    owner.addUserDetail(userIdToOwnerMap.get(owner.getUuid()));
+                if (!license.getApplicationType().equals("PdeTL")
+                        || (!license.getApplicationType().equals("RenewalTL") && !license.getIsMigrated())) {
+                    if (userIdToOwnerMap.get(owner.getUuid()) == null)
+                        throw new CustomException("OWNER SEARCH ERROR", "The owner of the tradeCategoryDetail "
+                                + license.getTradeLicenseDetail().getId() + " is not coming in user search");
+                    else
+                        owner.addUserDetail(userIdToOwnerMap.get(owner.getUuid()));
+                }
             });
 
             /*
@@ -571,11 +574,13 @@ public class EnrichmentService {
                 // enrichBoundary(new TradeLicenseRequest(requestInfo, licenses));
                 break;
         }
-        if (!criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
-            UserDetailResponse userDetailResponse = userService.getUser(searchCriteria,
-                    requestInfo);
-            enrichOwner(userDetailResponse, licenses);
-        }
+        // if
+        // (!criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL))
+        // {
+        UserDetailResponse userDetailResponse = userService.getUser(searchCriteria,
+                requestInfo);
+        enrichOwner(userDetailResponse, licenses);
+        // }
 
         return licenses;
     }

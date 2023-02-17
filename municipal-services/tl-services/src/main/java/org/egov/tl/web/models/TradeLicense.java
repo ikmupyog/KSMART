@@ -221,4 +221,7 @@ public class TradeLicense {
   @JsonProperty("desiredLicensePeriod")
   private Integer desiredLicensePeriod = 0;
 
+  @JsonProperty("isMigrated")
+  private Boolean isMigrated;
+
 }
