@@ -427,8 +427,8 @@ function Jurisdiction({
     if(jurisdiction?.roleCode?.toLowerCase().includes('hospital')){
       setDisplayHopital(true)
       let Crhospital =   getHospitalNames()?.length>0 && getHospitalNames().filter((ele)=>ele.code == jurisdiction?.hospitalCode)
-      setHospitalName(Crhospital && Crhospital[0])
-      setHospitalAddress(Crhospital&&Crhospital[0].address)
+      setHospitalName(Crhospital?.length>0 && Crhospital[0])
+      setHospitalAddress(Crhospital?.length>0 && Crhospital[0].address)
     }
    
   },[])
