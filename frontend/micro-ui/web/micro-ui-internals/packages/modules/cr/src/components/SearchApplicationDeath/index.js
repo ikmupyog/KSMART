@@ -85,11 +85,11 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
             );
           },
         },
-        {
-            Header: t("CR_COMMON_COL_APP_DATE"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
-        },
+        // {
+        //     Header: t("CR_COMMON_COL_APP_DATE"),
+        //     disableSortBy: true,
+        //     accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+        // },
         {
           Header: t("CR_COMMON_COL_DOD"),
           disableSortBy: true,
