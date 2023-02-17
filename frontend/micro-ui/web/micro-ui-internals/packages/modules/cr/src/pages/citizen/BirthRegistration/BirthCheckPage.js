@@ -160,9 +160,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(AddressBirthDetails.presentInsideKeralaHouseNameEn  ? AddressBirthDetails.presentInsideKeralaHouseNameEn : 'CR_NOT_RECORDED' )} ,
                 {t(AddressBirthDetails.presentInsideKeralaStreetNameEn ? AddressBirthDetails.presentInsideKeralaStreetNameEn : 'CR_NOT_RECORDED' )}, 
               {t(AddressBirthDetails.presentInsideKeralaLocalityNameEn ? AddressBirthDetails.presentInsideKeralaLocalityNameEn : 'CR_NOT_RECORDED')},
+              {t(AddressBirthDetails.presentInsideKeralaPostOffice  ? AddressBirthDetails.presentInsideKeralaPostOffice.name : 'CR_NOT_RECORDED')},
+              {t( AddressBirthDetails.presentInsideKeralaPincode ? AddressBirthDetails.presentInsideKeralaPincode : 'CR_NOT_RECORDED' )},
               {t(AddressBirthDetails.presentInsideKeralaDistrict  ? AddressBirthDetails.presentInsideKeralaDistrict.name : 'CR_NOT_RECORDED')},
               {t( AddressBirthDetails.presentaddressStateName ? AddressBirthDetails.presentaddressStateName.name : 'CR_NOT_RECORDED' )},
-              {t( AddressBirthDetails.presentaddressCountry.name )}
+              {t( AddressBirthDetails.presentaddressCountry? AddressBirthDetails.presentaddressCountry.name : 'CR_NOT_RECORDED' )},
               </CardText>
               
             </div>
@@ -173,11 +175,14 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn  ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : 'CR_NOT_RECORDED' )} ,
-                {t(AddressBirthDetails.permntInKeralaAdrStreetNameEn ? AddressBirthDetails.permntInKeralaAdrStreetNameEn : 'CR_NOT_RECORDED' )} , 
+               {t(AddressBirthDetails.permntInKeralaAdrStreetNameEn ? AddressBirthDetails.permntInKeralaAdrStreetNameEn : 'CR_NOT_RECORDED' )} , 
               {t(AddressBirthDetails.permntInKeralaAdrLocalityNameEn ? AddressBirthDetails.permntInKeralaAdrLocalityNameEn : 'CR_NOT_RECORDED'  )} ,
+              {t(AddressBirthDetails.permntInKeralaAdrPostOffice  ? AddressBirthDetails.permntInKeralaAdrPostOffice.name : 'CR_NOT_RECORDED')},
+              {t( AddressBirthDetails.permntInKeralaAdrPincode ? AddressBirthDetails.permntInKeralaAdrPincode : 'CR_NOT_RECORDED' )},
               {t(AddressBirthDetails.permntInKeralaAdrDistrict  ? AddressBirthDetails.permntInKeralaAdrDistrict.name : 'CR_NOT_RECORDED'   )},
               {t( AddressBirthDetails.permtaddressStateName ? AddressBirthDetails.permtaddressStateName.name : 'CR_NOT_RECORDED' )} ,
               {t( AddressBirthDetails.permtaddressCountry ? AddressBirthDetails.permtaddressCountry.name : 'CR_NOT_RECORDED' )}
+
               </CardText>
               
             </div>
