@@ -36,8 +36,8 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
 
-  const userInfo = window.localStorage.getItem("user-info");
-  console.log(userInfo("id"));
+  let userInfo = window.localStorage.getItem("user-info");
+  console.log(JSON.stringify(userInfo).id);
 
   function setSelectrelation(e) {
     if (e.target.value.length === 51) {
@@ -200,6 +200,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
       });
     }
   };
+  console.log(formData);
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration}>
@@ -271,7 +272,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 type={"text"}
                 optionKey="i18nKey"
                 name="initiatorNameEn"
-                value={userInfo}
+                value={initiatorNameEn}
                 onChange={setSelectinitiatorNameEn}
                 placeholder={`${t("CR_INFORMANT_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
