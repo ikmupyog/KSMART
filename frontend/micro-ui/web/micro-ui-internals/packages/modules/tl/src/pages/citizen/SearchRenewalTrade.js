@@ -28,6 +28,7 @@ const SearchRenewalTrade = (searchdata) => {
         delete _data?.lbId;
         delete _data?.zonalId
         setSearchdatacat(_data);
+        console.log(JSON.stringify( _data?.wardId));
         if (_data?.wardId === undefined || _data?.wardId === null || _data?.wardId === 0) {
             setWardmandatory(false);
             setErrorMessage("Please select ward no");
@@ -45,11 +46,10 @@ const SearchRenewalTrade = (searchdata) => {
             _data.sortBy = "wardId",
                 _data.sortOrder = "DESC"
         }
-        queryClient.removeQueries("TL_SEARCH_PDE");
+        queryClient.removeQueries("TL_SEARCH");
         const data = {
             ..._data
         }
-
         setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
         console.log("payload"+payload);
     }
@@ -57,15 +57,18 @@ const SearchRenewalTrade = (searchdata) => {
     const config = {
         enabled: !!(payload && Object.keys(payload).length > 0)
     }
-    const searchReult=[];
-    const { data }  = Digit.Hooks.tl.useTLSearchApplication({}, { enabled: true }, t);
-  //  const { data  } = Digit.Hooks.tl.useTLSearchApplication({}, { enabled: true }, t); //Digit.Hooks.tl.useSearchPde({ tenantId, filters: payload, config })
-   if(data!==undefined){
-    data?.map((application) => {
-        searchReult.push(application?.raw);
-    });
-   }
+    // const { isLoading, isError, error, data: searchReult, error: errorApplication } = Digit.Hooks.tl.useTLApplicationDetails({
+    //     tenantId: tenantId,
+    //     wardId: payload?.wardId,
+    //     applicationType:"RENEWAL",
+    //     enabled:payload && Object.keys(payload).length > 0 ?true:false
+    //   });
 
+    const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } =
+     Digit.Hooks.tl.useSearch({tenantId, filters: payload, config})
+
+
+console.log(JSON.stringify(searchReult));
    // : { raw : searchReult, Count: count } = {}, isLoading, isSuccess
 
     // const initiataed = searchReult ? searchReult.filter((data) => data?.status === null ? data : data?.status.includes("INITIATED")) : "";
@@ -103,8 +106,8 @@ const SearchRenewalTrade = (searchdata) => {
 
   
     if (wardmandatory)
-        // return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
-        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />
+         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+       // return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />
     else
         return (
             <div>
