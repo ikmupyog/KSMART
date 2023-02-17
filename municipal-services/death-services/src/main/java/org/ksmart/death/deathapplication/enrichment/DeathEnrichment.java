@@ -214,10 +214,16 @@ public class DeathEnrichment implements BaseEnrichment{
                     .forEach(death -> {
                         if (death.getDeathAddressInfo().getPresentaddressCountry().contains(DeathConstants.COUNTRY_CODE)) {
                             if(death.getDeathAddressInfo().getPresentaddressStateName().contains(DeathConstants.STATE_CODE_SMALL)) {
+
                                 death.getDeathAddressInfo().setPresentAddrCountryId(death.getDeathAddressInfo().getPresentaddressCountry());    
                                 death.getDeathAddressInfo().setPresentAddrStateId(death.getDeathAddressInfo().getPresentaddressStateName());    
                                 death.getDeathAddressInfo().setPresentAddrDistrictId(death.getDeathAddressInfo().getPresentInsideKeralaDistrict());
-    
+                                death.getDeathAddressInfo().setPresentAddrVillageId(death.getDeathAddressInfo().getPresentInsideKeralaVillage());
+                                death.getDeathAddressInfo().setPresentAddrTalukId(death.getDeathAddressInfo().getPresentInsideKeralaTaluk());
+                                death.getDeathAddressInfo().setPresentAddrWardId(death.getDeathAddressInfo().getPresentWardNo());
+                                death.getDeathAddressInfo().setPresentAddrPostofficeId(death.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
+                                death.getDeathAddressInfo().setPresentAddrPincode(death.getDeathAddressInfo().getPresentInsideKeralaPincode());
+
                                 death.getDeathAddressInfo().setPresentAddrLocalityEn(death.getDeathAddressInfo().getPresentInsideKeralaLocalityNameEn());
                                 death.getDeathAddressInfo().setPresentAddrLocalityMl(death.getDeathAddressInfo().getPresentInsideKeralaLocalityNameMl());
     
@@ -226,22 +232,19 @@ public class DeathEnrichment implements BaseEnrichment{
     
                                 death.getDeathAddressInfo().setPresentAddrHoueNameEn(death.getDeathAddressInfo().getPresentInsideKeralaHouseNameEn());
                                 death.getDeathAddressInfo().setPresentAddrHoueNameMl(death.getDeathAddressInfo().getPresentInsideKeralaHouseNameMl());
-
-                                death.getDeathAddressInfo().setPresentAddrVillageId(death.getDeathAddressInfo().getPresentInsideKeralaVillage());
-                                death.getDeathAddressInfo().setPresentAddrTalukId(death.getDeathAddressInfo().getPresentInsideKeralaTaluk());
-                                death.getDeathAddressInfo().setPresentAddrWardId(death.getDeathAddressInfo().getPresentWardNo());
-
-                                death.getDeathAddressInfo().setPresentAddrPostofficeId(death.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
-                                death.getDeathAddressInfo().setPresentAddrPincode(death.getDeathAddressInfo().getPresentInsideKeralaPincode());
-
-
                             } else{
+
                                 death.getDeathAddressInfo().setPresentAddrCountryId(death.getDeathAddressInfo().getPresentaddressCountry());
-    
-                                death.getDeathAddressInfo().setPresentAddrStateId(death.getDeathAddressInfo().getPresentaddressStateName());
-    
+                                death.getDeathAddressInfo().setPresentAddrStateId(death.getDeathAddressInfo().getPresentaddressStateName());    
                                 death.getDeathAddressInfo().setPresentAddrDistrictId(death.getDeathAddressInfo().getPresentOutsideKeralaDistrict());
-    
+
+                                death.getDeathAddressInfo().setPresentAddrVillageId(death.getDeathAddressInfo().getPresentOutsideKeralaVillageName());
+                                death.getDeathAddressInfo().setPresentAddrVillage(death.getDeathAddressInfo().getPresentInsideKeralaVillage());
+                                death.getDeathAddressInfo().setPresentAddrTalukId(death.getDeathAddressInfo().getPresentInsideKeralaTaluk());
+                             //   death.getDeathAddressInfo().setPresentAddrWardId(death.getDeathAddressInfo().getPresentWardNo());
+                                death.getDeathAddressInfo().setPresentAddrPostofficeId(death.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
+                                death.getDeathAddressInfo().setPresentAddrPincode(death.getDeathAddressInfo().getPresentOutsideKeralaPincode());
+                               
                                 death.getDeathAddressInfo().setPresentAddrLocalityEn(death.getDeathAddressInfo().getPresentOutsideKeralaLocalityNameEn());
                                 death.getDeathAddressInfo().setPresentAddrLocalityMl(death.getDeathAddressInfo().getPresentOutsideKeralaLocalityNameMl());
     
@@ -251,9 +254,7 @@ public class DeathEnrichment implements BaseEnrichment{
                                 death.getDeathAddressInfo().setPresentAddrHoueNameEn(death.getDeathAddressInfo().getPresentOutsideKeralaHouseNameEn());
                                 death.getDeathAddressInfo().setPresentAddrHoueNameMl(death.getDeathAddressInfo().getPresentOutsideKeralaHouseNameMl());
     
-                                death.getDeathAddressInfo().setPresentAddrVillageId(death.getDeathAddressInfo().getPresentOutsideKeralaVillageName());
-                                // death.getDeathAddressInfo().setPresentAddrTalukId(death.getDeathAddressInfo().getPresentInsideKeralaTaluk());
-                                // death.getDeathAddressInfo().setPresentAddrWardId(death.getDeathAddressInfo().getPresentWardNo());
+
 
                                 // death.getDeathAddressInfo().setPresentAddrPostofficeId(death.getDeathAddressInfo().getPresentInsideKeralaPostOffice());
                                 death.getDeathAddressInfo().setPresentAddrPincode(death.getDeathAddressInfo().getPresentOutsideKeralaPincode());
@@ -261,6 +262,7 @@ public class DeathEnrichment implements BaseEnrichment{
                             }
                         } else{
                             death.getDeathAddressInfo().setPresentAddrCountryId(death.getDeathAddressInfo().getPresentOutSideCountry());
+                            death.getDeathAddressInfo().setPresentAddrStateId(null);(death.getDeathAddressInfo().getPresentOutSideCountry());
                             death.getDeathAddressInfo().setPresentAddrVillageId(death.getDeathAddressInfo().getPresentOutSideIndiaadrsVillage());
                         }
                     });
