@@ -2,15 +2,78 @@ import { CardLabel, CardLabelDesc, FormStep, UploadFile } from "@egovernments/di
 import React, { useEffect, useState } from "react";
 import Timeline from "../components/TLTimeline";
 
+
+const getStyle = () => {
+  let citizenStyles = {};
+  citizenStyles = {
+
+    //cursor: {cursor:pointer},
+    containerStyles: {
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      flexWrap: "wrap",
+      margin: "0px",
+      padding: "0px"
+    },
+    tagContainerStyles: {
+      margin: "0px",
+      padding: "0px",
+      width: "46%"
+    },
+    tagStyles: {
+      height: "auto",
+      padding: "5px",
+      margin: 0,
+      width: "100%",
+      margin: "5px"
+    },
+    textStyles: {
+      wordBreak: "break-all",
+      height: "auto",
+      lineHeight: "16px",
+      overflow: "hidden",
+      // minHeight: "35px",
+      maxHeight: "34px"
+    },
+    inputStyles: {
+      width: "43%",
+      minHeight: "42px",
+      maxHeight: "42px",
+      top: "5px",
+      left: "5px"
+    },
+    buttonStyles: {
+      height: "auto",
+      minHeight: "30px",
+      width: "43%",
+      maxHeight: "40px",
+      margin: "5px",
+      padding: "0px"
+    },
+    closeIconStyles: {
+      width: "20px",
+      cursor:"hand"
+    },
+    uploadFile: {
+      minHeight: "40px",
+      width: "370px"
+    }
+  };
+  return citizenStyles;
+}
+
 const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
   //console.log(JSON.stringify(formData?.TradeDetails?.ownersdoc));
+  let extraStyles = {};
+  extraStyles = getStyle();
   let documentList = [
     { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" },
     { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership" },
     { "code": "OWNERPHOTO", "description": "OwnerPhotoProof" }
   ]
 
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState(formData?.TradeDetails?.ownersdoc? formData?.TradeDetails?.ownersdoc: []);
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
   const [uploadedFile, setUploadedFile] = useState(formData?.owners?.documents?.ProofOfIdentity?.fileStoreId || null);
@@ -64,6 +127,17 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
     };
     setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
   }
+
+  function handleDelete(e) {
+    const removeindex = uploadedFiles?.findIndex(element => {
+      return element?.documentType === e
+    });
+    if (removeindex === -1) {
+      return false;
+    };
+    setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+  }
+
   useEffect(() => {
     (async () => {
       setError(null);
@@ -81,6 +155,12 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
                 "documentType": docuploadedId, "description": docuploadedName,
                 "fileStoreId": response?.data?.files[0]?.fileStoreId, "name": file.name, "type": file.type, "size": file.size
               };
+              // const removeindex = uploadedFiles.findIndex(element => {
+              //   return element.documentType ===temp.documentType
+              // });
+              // if(removeindex !== -1){
+              //   setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
+              // }
               uploadedFiles.push(temp);
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
             } else {
@@ -105,38 +185,83 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
         </div>
         <CardLabelDesc style={{ fontWeight: "unset" }}>{t(`TL_UPLOAD_RESTRICTIONS_TYPES`)}</CardLabelDesc>
         <CardLabelDesc style={{ fontWeight: "unset" }}> {t(`TL_UPLOAD_RESTRICTIONS_SIZE`)}</CardLabelDesc>
-        <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
-        {
-          documentList.map((doc, index, arr) => (
-            <div className="row" key={doc.code}>
-              <div className="col-md-12">
-                <div className="col-md-3">
-                  <span>
-                    {doc.code}
-                  </span>
-                </div>
-                <div className="col-md-3">
-                  <UploadFile
-                    id={doc.code}
-                    name={doc.description}
-                    extraStyleName={"propertyCreate"}
-                    accept=".jpg,.png,.pdf"
-                    onUpload={selectfile}
-                    onDelete={() => {
-                      onDeleteown(doc.code);
-                      setUploadedFile(null);
-                    }}
-                 
 
-                    message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                    error={error}
-                  />
-                </div>
-              </div>
+
+        <div>
+          <div className="col-md-6">
+            <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
+          </div>
+          <div className="col-md-6">
+            <CardLabel>{`${t(`TL_ACTION_FILEUPLOADED`)}`}</CardLabel>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              {
+                documentList.map((doc, index, arr) => (
+                  <div className="row" key={doc.code}>
+                    <div className="col-md-12">
+                      <div className="col-md-3">
+                        <span>
+                          {doc.code}
+                        </span>
+                      </div>
+                      <div className="col-md-3">
+                        <UploadFile
+                          id={doc.code}
+                          name={doc.description}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectfile}
+                          onDelete={() => {
+                            onDeleteown(doc.code);
+                            setUploadedFile(null);
+                          }}
+
+
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          error={error}
+                        />
+                      </div>
+
+                    </div>
+                  </div>
+                )
+                )
+
+              }
             </div>
-          )
-          )
-        }
+            {/* <div className="col-md-6" style={{ "border": "groove" }}>
+              {uploadedFiles?.map((doc, index, arr) => (
+                <div className="row" key={doc.description}>
+                  <div className="col-md-12" style={{ "border-bottom": "groove" }} >
+                    <div className="col-md-1" style={{ "min-height": "40px", "width": "370px" }}>
+                      <span>
+                        {doc.description}
+                      </span>
+                    </div>
+                    <div className="col-md-4">
+                      <span>
+                        {doc.name}
+                      </span>
+                    </div>
+                    <div className="col-md-1">
+                      <span onClick={() => handleDelete(doc.documentType)} style={extraStyles ? extraStyles?.closeIconStyles : null}>
+                        <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24" fill="#9E9E9E">
+                          <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path>
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+              ))}
+            </div> */}
+          </div>
+        </div>
+
+
 
         {error ? <div style={{ height: "20px", width: "100%", fontSize: "20px", color: "red", marginTop: "5px" }}>{error}</div> : ""}
         <div style={{ disabled: "true", height: "20px", width: "100%" }}></div>
