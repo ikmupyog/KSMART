@@ -577,9 +577,13 @@ public class EnrichmentService {
         // if
         // (!criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL))
         // {
-        UserDetailResponse userDetailResponse = userService.getUser(searchCriteria,
-                requestInfo);
-        enrichOwner(userDetailResponse, licenses);
+
+        if (!CollectionUtils.isEmpty(searchCriteria.getOwnerIds())) {
+            UserDetailResponse userDetailResponse = userService.getUser(searchCriteria,
+                    requestInfo);
+            enrichOwner(userDetailResponse, licenses);
+        }
+
         // }
 
         return licenses;
