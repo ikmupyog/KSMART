@@ -59,7 +59,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!DeathPlaceType}>     
         <div className="row">
         <div className="col-md-12">
-          <div className="col-md-3">
+          <div className="col-md-6">
             <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
@@ -72,7 +72,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               placeholder={`${t("CR_INSTITUTION_TYPE")}`}
             />
           </div>
-          <div className="col-md-3">
+          <div className="col-md-6">
             <CardLabel>{`${t("CR_INSTITUTION_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown
               t={t}
