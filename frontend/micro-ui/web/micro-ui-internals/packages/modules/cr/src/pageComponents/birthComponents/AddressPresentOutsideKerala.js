@@ -24,6 +24,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
