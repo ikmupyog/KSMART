@@ -107,6 +107,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [localNameEnError, setlocalNameEnError] = useState(formData?.ChildDetails?.localityNameEn ? false : false);
   const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
   const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.DeliveryMethodSub ? false : false);
+  const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.ChildDetails?.medicalAttensionSub ? false : false);
+  // const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails.pregnancyDuration ? false : false);
+  const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
 
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
@@ -705,7 +708,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         setplaceTypepEnError(false);
       }
     }
-    if (birthWeight != null) {
+   
+    if (birthWeight == null || birthWeight == "" || birthWeight == undefined) {
       let BirthWeightCheck = birthWeight;
       if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
         validFlag = false;
@@ -721,6 +725,36 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     else {
       setBirthWeightError(false);
     }
+    if (medicalAttensionSub == null || medicalAttensionSub == "" || medicalAttensionSub == undefined) {
+      validFlag = false;
+      setMedicalAttensionSubStError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMedicalAttensionSubStError(false);
+    }
+    // if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
+    //   validFlag = false;
+    //   setPregnancyDurationStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setPregnancyDurationStError(false);
+    // }   
+    if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
+      validFlag = false;
+      setDeliveryMethodStError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setDeliveryMethodStError(false);
+    } 
     if (validFlag == true) {
       sessionStorage.setItem("stateId", stateId ? stateId : null);
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
@@ -840,7 +874,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_DATE_OF_BIRTH_TIME")}
                 <span className="mandatorycss">*</span>
@@ -856,11 +890,11 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
               />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
               <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3">
               <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
@@ -1187,11 +1221,11 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-12">
             <div className="col-md-3">
               <CardLabel>
-                {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}</CardLabel>
+                {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} <span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbAttDeliverySub}
                 selected={medicalAttensionSub}
                 select={setSelectMedicalAttensionSub}
@@ -1200,12 +1234,12 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="col-md-3">
               <CardLabel>
-                {`${t("CR_PREGNANCY_DURATION")}`}
+                {`${t("CR_PREGNANCY_DURATION")}`} <span className="mandatorycss">*</span>
               </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="i18nKey"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbPregWeek}
                 selected={pregnancyDuration}
                 select={setSelectPregnancyDuration}
@@ -1214,11 +1248,11 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="col-md-3">
               <CardLabel>
-                {`${t("CR_DELIVERY_METHOD")}`}</CardLabel>
+                {`${t("CR_DELIVERY_METHOD")}`} <span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
-                isMandatory={false}
+                isMandatory={true}
                 option={cmbDeliveryMethod}
                 selected={deliveryMethods}
                 select={setSelectDeliveryMethod}
@@ -1232,14 +1266,14 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
+                isMandatory={true}
                 type={"decimal"}
                 optionKey="i18nKey"
                 name="birthWeight"
                 value={birthWeight}
                 onChange={setSelectBirthWeight}
                 placeholder={`${t("CR_BIRTH_WEIGHT")}`}
-                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: false, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
+                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
               />
             </div>
           </div>
@@ -1260,7 +1294,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               vehiHaltPlaceMlError ||
               admittedHospitalEnError || vehiDesDetailsEnError ||
               placeTypepEnError || localNameEnError || localNameMlError ||
-              BirthWeightError
+              MedicalAttensionSubStError ||  DeliveryMethodStError  ||  BirthWeightError
+                // || PregnancyDurationStError 
+                  
+             
             }
             label={
               AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
@@ -1276,7 +1313,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 vehiHaltPlaceMlError ||
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
-                BirthWeightError
+                MedicalAttensionSubStError ||  DeliveryMethodStError  ||  BirthWeightError
+                // || PregnancyDurationStError 
                 ?
                 AadharError
                   ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1300,6 +1338,11 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                                                       : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
                                                         : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
                                                           : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                                                            : MedicalAttensionSubStError  ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                              // : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                                : DeliveryMethodStError  ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                 
+                                                            
                                                             : setToast(false)
                 : setToast(false)
             }
