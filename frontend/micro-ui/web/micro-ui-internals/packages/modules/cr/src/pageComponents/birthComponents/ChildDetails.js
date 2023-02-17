@@ -108,9 +108,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
   const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.DeliveryMethodSub ? false : false);
   const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.ChildDetails?.medicalAttensionSub ? false : false);
-  // const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails.pregnancyDuration ? false : false);
+  
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
-
+  const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
   // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
@@ -735,16 +735,16 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setMedicalAttensionSubStError(false);
     }
-    // if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
-    //   validFlag = false;
-    //   setPregnancyDurationStError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setPregnancyDurationStError(false);
-    // }   
+    if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
+      validFlag = false;
+      setPregnancyDurationStError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setPregnancyDurationStError(false);
+    }   
     if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
       validFlag = false;
       setDeliveryMethodStError(true);
@@ -1295,7 +1295,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               admittedHospitalEnError || vehiDesDetailsEnError ||
               placeTypepEnError || localNameEnError || localNameMlError ||
               MedicalAttensionSubStError ||  DeliveryMethodStError  ||  BirthWeightError
-                // || PregnancyDurationStError 
+                || PregnancyDurationStError 
                   
              
             }
@@ -1314,7 +1314,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError ||  DeliveryMethodStError  ||  BirthWeightError
-                // || PregnancyDurationStError 
+                || PregnancyDurationStError 
                 ?
                 AadharError
                   ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1339,7 +1339,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                                                         : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
                                                           : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
                                                             : MedicalAttensionSubStError  ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
-                                                              // : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                              : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
                                                                 : DeliveryMethodStError  ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
                  
                                                             
