@@ -130,7 +130,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
-  let workFlowCode = "";
+  let workFlowCode = "birth21days";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -848,7 +848,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               <DatePicker
                 date={childDOB}
                 name="childDOB"
-                max={childDOB ? childDOB : convertEpochToDate(new Date())}
+                max={convertEpochToDate(new Date())}
                 // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                 onChange={setselectChildDOB}
                 inputFormat="DD-MM-YYYY"
