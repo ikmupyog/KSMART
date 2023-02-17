@@ -228,8 +228,8 @@ serviceMaps:
 
 
 
-    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
      
 
       basePath: deathCertificateDtls.*
@@ -283,6 +283,14 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrLbType
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrPostalCode
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceEn
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceMl
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrTownOrVillage
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrCityOrVillageEn
 
     - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
