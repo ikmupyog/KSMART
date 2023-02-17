@@ -175,40 +175,43 @@ public class TradeLicenseService {
     public List<TradeLicense> search(TradeLicenseSearchCriteria criteria, RequestInfo requestInfo,
             String serviceFromPath, HttpHeaders headers) {
         List<TradeLicense> licenses;
-        // allow mobileNumber based search by citizen if interserviceCall
-        boolean isInterServiceCall = isInterServiceCall(headers);
-        tlValidator.validateSearch(requestInfo, criteria, serviceFromPath, isInterServiceCall);
-        criteria.setBusinessService(serviceFromPath);
-        enrichmentService.enrichSearchCriteriaWithAccountId(requestInfo, criteria);
-        if (criteria.getRenewalPending() != null && criteria.getRenewalPending() == true) {
+        String checkDuplication = criteria.getCheckDuplication() == null ? "" : criteria.getCheckDuplication();
+        if (checkDuplication.equals("DUPLICATION")) {
+            licenses = getLicensesWithDuplicateDoorCheck(criteria, requestInfo);
+        } else {
+            // allow mobileNumber based search by citizen if interserviceCall
+            boolean isInterServiceCall = isInterServiceCall(headers);
+            tlValidator.validateSearch(requestInfo, criteria, serviceFromPath, isInterServiceCall);
+            criteria.setBusinessService(serviceFromPath);
+            enrichmentService.enrichSearchCriteriaWithAccountId(requestInfo, criteria);
+            if (criteria.getRenewalPending() != null && criteria.getRenewalPending() == true) {
 
-            String currentFinancialYear = "";
+                String currentFinancialYear = "";
 
-            Object mdmsData = util.mDMSCall(requestInfo, criteria.getTenantId());
-            String jsonPath = TLConstants.MDMS_CURRENT_FINANCIAL_YEAR.replace("{}", businessService_TL);
-            List<Map<String, Object>> jsonOutput = JsonPath.read(mdmsData, jsonPath);
+                Object mdmsData = util.mDMSCall(requestInfo, criteria.getTenantId());
+                String jsonPath = TLConstants.MDMS_CURRENT_FINANCIAL_YEAR.replace("{}", businessService_TL);
+                List<Map<String, Object>> jsonOutput = JsonPath.read(mdmsData, jsonPath);
 
-            for (int i = 0; i < jsonOutput.size(); i++) {
-                Object startingDate = jsonOutput.get(i).get(TLConstants.MDMS_STARTDATE);
-                Object endingDate = jsonOutput.get(i).get(TLConstants.MDMS_ENDDATE);
-                Long startTime = (Long) startingDate;
-                Long endTime = (Long) endingDate;
+                for (int i = 0; i < jsonOutput.size(); i++) {
+                    Object startingDate = jsonOutput.get(i).get(TLConstants.MDMS_STARTDATE);
+                    Object endingDate = jsonOutput.get(i).get(TLConstants.MDMS_ENDDATE);
+                    Long startTime = (Long) startingDate;
+                    Long endTime = (Long) endingDate;
 
-                if (System.currentTimeMillis() >= startTime && System.currentTimeMillis() <= endTime) {
-                    currentFinancialYear = jsonOutput.get(i).get(TLConstants.MDMS_FIN_YEAR_RANGE).toString();
-                    break;
+                    if (System.currentTimeMillis() >= startTime && System.currentTimeMillis() <= endTime) {
+                        currentFinancialYear = jsonOutput.get(i).get(TLConstants.MDMS_FIN_YEAR_RANGE).toString();
+                        break;
+                    }
+
                 }
-
+                criteria.setFinancialYear(currentFinancialYear);
             }
 
-            criteria.setFinancialYear(currentFinancialYear);
-
-        }
-
-        if (criteria.getMobileNumber() != null || criteria.getOwnerName() != null) {
-            licenses = getLicensesFromMobileNumber(criteria, requestInfo);
-        } else {
-            licenses = getLicensesWithOwnerInfo(criteria, requestInfo);
+            if (criteria.getMobileNumber() != null || criteria.getOwnerName() != null) {
+                licenses = getLicensesFromMobileNumber(criteria, requestInfo);
+            } else {
+                licenses = getLicensesWithOwnerInfo(criteria, requestInfo);
+            }
         }
 
         return licenses;
@@ -374,7 +377,8 @@ public class TradeLicenseService {
      */
     public List<TradeLicense> getLicensesWithOwnerInfo(TradeLicenseRequest request) {
         TradeLicenseSearchCriteria criteria = new TradeLicenseSearchCriteria();
-        // TradeLicense.ApplicationTypeEnum applicationType = request.getLicenses().get(0).getApplicationType();
+        // TradeLicense.ApplicationTypeEnum applicationType =
+        // request.getLicenses().get(0).getApplicationType();
         List<String> ids = new LinkedList<>();
         request.getLicenses().forEach(license -> {
             ids.add(license.getId());
@@ -559,6 +563,23 @@ public class TradeLicenseService {
         }
 
         return false;
+    }
+
+    /**
+     * Returns the door details for duplicate check
+     * 
+     * @param criteria    The object containing the paramters on which to search
+     * @param requestInfo The search request's requestInfo
+     * @return List of licenses with the selected door no.
+     */
+    public List<TradeLicense> getLicensesWithDuplicateDoorCheck(TradeLicenseSearchCriteria criteria,
+            RequestInfo requestInfo) {
+        List<TradeLicense> licenses = repository.getLicensesWithDoorNoSearch(criteria);
+        // if (licenses.isEmpty())
+        // return Collections.emptyList();
+        // licenses = enrichmentService.enrichTradeLicenseSearch(licenses, criteria,
+        // requestInfo);
+        return licenses;
     }
 
 }

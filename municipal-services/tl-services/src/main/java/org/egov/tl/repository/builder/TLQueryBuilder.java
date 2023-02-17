@@ -150,6 +150,17 @@ public class TLQueryBuilder {
             + LEFT_OUTER_JOIN_STRING
             + "eg_establishmentunit unit ON unit.id = tld.establishmentunitid ";
 
+    private static final String DOORSEARCHQUERY = "SELECT " +
+            "tladdress.*, tlstructplace.*, tladdress.tradelicensedetailid as detailid, tladdress.id as tl_ad_id, "
+            +
+            " tlstructplace.active as tlstructplace_active, tlstructplace.id as tlstructplace_id, tlstructplace.tenantid as  tlstructplace_tenantid, "
+            +
+            " tladdress.tenantid as tladdress_tenantid, tlstructplace.doorno as tlstructplace_doorno "
+            +
+            " FROM eg_tl_address tladdress "
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_structureplacedetail tlstructplace ON tlstructplace.tradelicensedetailid = tladdress.tradelicensedetailid ";
+
     public String getTLSearchQuery(TradeLicenseSearchCriteria criteria, List<Object> preparedStmtList,
             boolean isCount) {
 
@@ -337,7 +348,7 @@ public class TLQueryBuilder {
     private void addRenewalCriteria(StringBuilder builder, List<Object> preparedStmtList,
             TradeLicenseSearchCriteria criteria) {
         addClauseIfRequired(preparedStmtList, builder);
-        builder.append(" (tl.validTo <= ?) ");
+        builder.append(" (tl.validTo < ?) ");
         long renewalPeriod = 1680220800000L;
         preparedStmtList.add(renewalPeriod);
 
@@ -606,6 +617,45 @@ public class TLQueryBuilder {
     public String getNextIDQuery() {
         StringBuilder query = new StringBuilder("select fn_next_id(?,?,?,?)");
         return query.toString();
+    }
+
+    public String getDoorNoSearchQuery(TradeLicenseSearchCriteria criteria, List<Object> preparedStmtList,
+            boolean isCount) {
+
+        StringBuilder builder = new StringBuilder(DOORSEARCHQUERY);
+
+        if (criteria.getTenantId() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append(" tladdress.tenantid=? ");
+            preparedStmtList.add(criteria.getTenantId());
+        }
+
+        if (criteria.getWardId() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tladdress.wardid = ? ");
+            preparedStmtList.add(criteria.getWardId());
+        }
+
+        if (criteria.getDoorNo() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tlstructplace.doorno = ? ");
+            preparedStmtList.add(criteria.getDoorNo());
+        }
+
+        if (criteria.getDoorNoSub() != null) {
+            addClauseIfRequired(preparedStmtList, builder);
+            builder.append("  tlstructplace.doorsub = ? ");
+            preparedStmtList.add(criteria.getDoorNoSub());
+        }
+        return builder.toString();
+
+        // if (!isCount) {
+        // return addPaginationWrapper(builder.toString(), preparedStmtList, criteria);
+        // }
+
+        // else {
+        // return addCountWrapper(builder.toString());
+        // }
     }
 
 }

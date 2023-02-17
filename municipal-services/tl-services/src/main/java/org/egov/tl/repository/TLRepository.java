@@ -6,6 +6,7 @@ import org.egov.tl.config.TLConfiguration;
 import org.egov.tl.producer.Producer;
 import org.egov.tl.repository.builder.TLQueryBuilder;
 import org.egov.tl.repository.rowmapper.TLRowMapper;
+import org.egov.tl.repository.rowmapper.TLRowMapperDoor;
 import org.egov.tl.repository.rowmapper.TLRowMapperPde;
 import org.egov.tl.web.models.*;
 import org.egov.tl.workflow.WorkflowService;
@@ -31,6 +32,8 @@ public class TLRepository {
 
     private TLRowMapperPde rowMapperPde;
 
+    private TLRowMapperDoor rowMapperDoor;
+
     private Producer producer;
 
     private TLConfiguration config;
@@ -39,7 +42,8 @@ public class TLRepository {
 
     @Autowired
     public TLRepository(JdbcTemplate jdbcTemplate, TLQueryBuilder queryBuilder, TLRowMapper rowMapper,
-            Producer producer, TLConfiguration config, WorkflowService workflowService, TLRowMapperPde rowMapperPde) {
+            Producer producer, TLConfiguration config, WorkflowService workflowService,
+            TLRowMapperPde rowMapperPde, TLRowMapperDoor rowMapperDoor) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
@@ -47,6 +51,7 @@ public class TLRepository {
         this.config = config;
         this.workflowService = workflowService;
         this.rowMapperPde = rowMapperPde;
+        this.rowMapperDoor = rowMapperDoor;
     }
 
     /**
@@ -229,6 +234,20 @@ public class TLRepository {
         String finalid = String.valueOf(nextID.get(0).get("fn_next_id"));
 
         return finalid;
+    }
+
+    /**
+     * Searhces license with Door No
+     *
+     * @param criteria The tradeLicense Search criteria
+     * @return List of TradeLicense from seach
+     */
+    public List<TradeLicense> getLicensesWithDoorNoSearch(TradeLicenseSearchCriteria criteria) {
+        List<Object> preparedStmtList = new ArrayList<>();
+        String query = queryBuilder.getDoorNoSearchQuery(criteria, preparedStmtList, false);
+        List<TradeLicense> licenses = jdbcTemplate.query(query, preparedStmtList.toArray(), rowMapperDoor);
+        // sortChildObjectsById(licenses);
+        return licenses;
     }
 
 }
