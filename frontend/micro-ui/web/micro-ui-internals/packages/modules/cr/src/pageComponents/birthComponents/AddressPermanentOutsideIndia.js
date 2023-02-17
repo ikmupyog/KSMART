@@ -11,6 +11,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();

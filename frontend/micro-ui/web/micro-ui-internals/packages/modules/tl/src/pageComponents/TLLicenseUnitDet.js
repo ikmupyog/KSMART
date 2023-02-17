@@ -592,7 +592,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         stateDoor.map((data, __index) => {
           data1["doorNo"] = data?.doorNo ? data.doorNo : "";
           data1["subNo"] = data?.doorNoSub ? data.doorNoSub : "";
-          data1["applicationType"] = "NEW";
+          data1["checkDuplication"] = "DUPLICATION";
           config1 = {
             enabled: !!(data1 && Object.keys(data1).length > 0)
           }
@@ -871,10 +871,10 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         || !fields[0].businesscategory || !fields[0].businesstype || !fields[0].businesssubtype || capitalInvestment === "" || !commencementDate
         || desiredLicensePeriod === "" || noOfEmployees === "" || licenseUnitName === "" ||licenseUnitNameLocal === "" || contactno === "" || email === "" 
         || !structureType || !structurePlaceSubtype || !ownershipCategory 
-        || (value2 === "LAND"  ? (value3 === "" || locality === "" 
+        || (value2 === "LAND"  ? (value3 === "" || locality === "" || !postOffice || pincode === ""
         ||  formStateDoor[0].blockNo == "" || formStateDoor[0].surveyNo == "" || formStateDoor[0].subDivisionNo == "" ) : false)
         // || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
-        || (value2 === "BUILDING"  ?  (formStateDoor[0].doorNo  === "" ||  locality === "" ) : false)
+        || (value2 === "BUILDING"  ?  (formStateDoor[0].doorNo  === "" ||  locality === "" || !postOffice || pincode === "" ) : false)
         || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo  === "") : false) 
         || (value2 === "VEHICLE"  ? serviceArea === "" || (structurePlaceSubtype.code !=="HAND_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false ) : false)
         || (value2 === "WATER"  ? (formStateDoor[0].vesselNo === "" || waterbody === ""  || serviceArea === "")  : false)
@@ -1262,7 +1262,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="buildingName" value={buildingName} onChange={changesetBuildingName} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_BUILDING_NAME") })} />
                   </div>
                   <div className="col-md-4" ><CardLabel>{`${t("TL_POSTOFFICE")}`} <span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={cmbPostOffice} selected={postOffice} select={selectsetPostOffice} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
+                    <Dropdown t={t} optionKey="name" isMandatory={config.isMandatory} option={FilterPostoffice} selected={postOffice} select={selectsetPostOffice} disabled={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
                   </div>
                   <div className="col-md-4" ><CardLabel>{`${t("TL_PIN")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode} onChange={changesetPincode} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, title: t("TL_INVALID_PIN") })} />
