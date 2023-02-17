@@ -76,6 +76,6 @@ public class DeathFamilyInfo {
 
     @Size(max = 12)
     @JsonProperty("MotherAadharNo")
-    private String MotherAadharNo;
+    private String motherAadharNo;
     
 }

@@ -55,6 +55,8 @@ public class DeathApplnRepository {
                 deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
                 DeathFamilyInfo deathFamilyDtls =deathDtl.getDeathFamilyInfo() ;
                 DeathFamilyInfo deathFamilyDcr = encryptionDecryptionUtil.decryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class,requestInfo);
+               System.out.println("DecryptionFamily"+deathFamilyDcr);
+               System.out.println("DecryptionBasic"+dec);
                 deathFamilyDtls.setFatherAadharNo(deathFamilyDcr.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyDcr.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar()); 

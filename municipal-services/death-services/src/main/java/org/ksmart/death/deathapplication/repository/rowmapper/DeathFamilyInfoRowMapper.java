@@ -28,8 +28,11 @@ public class  DeathFamilyInfoRowMapper   implements ResultSetExtractor  , BaseRo
                          .motherNameMl(rs.getString("female_dependent_name_ml"))
                          .familyMobileNo(rs.getLong("family_mobile_no"))
                          .familyEmailId(rs.getString("family_email"))
+                         .spouseAadhaar(rs.getString("spouse_aadhaar"))
+                         .fatherAadharNo(rs.getString("male_dependent_aadharno"))
+                         .motherAadharNo(rs.getString("female_dependent_aadharno"))
                          .build();
                     }
                 
-    
+        
 }
