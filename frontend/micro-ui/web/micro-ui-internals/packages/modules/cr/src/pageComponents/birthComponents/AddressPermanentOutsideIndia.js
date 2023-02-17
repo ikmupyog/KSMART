@@ -3,26 +3,31 @@ import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@e
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
-  PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
-  PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, PermntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
-  PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, PermanentOutsideIndiaPostCode, setPermantpostCode, PermntOutsideIndiaCountry,
+const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
+  permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
+  permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
+  permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry,
   setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
-  // const [PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLineoneEn);
-  // const [PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLineoneMl);
-  // const [PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLinetwoEn);
-  // const [PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaLinetwoMl);
-  // const [PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaprovinceEn);
-  // const [PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaVillage ? formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaVillage : null);
-  // const [PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaCityTown ? formData?.AddressBrOutsideIndiaDetails?.PermntOutsideIndiaCityTown : null);
-  // const [PermanentOutsideIndiaPostCode, setPermantpostCode] = useState(formData?.AddressOutsideIndiaDetails?.PermanentOutsideIndiaPostCode);
-  // const [PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressOutsideIndiaDetails?.PermntOutsideIndiaCountry);
+  // const [permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(formData?.AddressOutsideIndiaDetails?.permntOutsideIndiaLineoneEn);
+  // const [permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(formData?.AddressOutsideIndiaDetails?.permntOutsideIndiaLineoneMl);
+  // const [permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(formData?.AddressOutsideIndiaDetails?.permntOutsideIndiaLinetwoEn);
+  // const [permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(formData?.AddressOutsideIndiaDetails?.permntOutsideIndiaLinetwoMl);
+  // const [permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(formData?.AddressOutsideIndiaDetails?.permntOutsideIndiaprovinceEn);
+  // const [permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(formData?.AddressBrOutsideIndiaDetails?.permntOutsideIndiaVillage ? formData?.AddressBrOutsideIndiaDetails?.permntOutsideIndiaVillage : null);
+  // const [permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(formData?.AddressBrOutsideIndiaDetails?.permntOutsideIndiaCityTown ? formData?.AddressBrOutsideIndiaDetails?.permntOutsideIndiaCityTown : null);
+  // const [permanentOutsideIndiaPostCode, setPermantpostCode] = useState(formData?.AddressOutsideIndiaDetails?.permanentOutsideIndiaPostCode);
+  // const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressOutsideIndiaDetails?.permntOutsideIndiaCountry);
 
 
   let cmbCountry = [];
@@ -160,18 +165,18 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
     }
   }
   const goNext = () => {
-    // sessionStorage.setItem("PermntOutsideIndiaLineoneEn", PermntOutsideIndiaLineoneEn ? PermntOutsideIndiaLineoneEn  : null);
-    // sessionStorage.setItem("PermntOutsideIndiaLineoneMl", PermntOutsideIndiaLineoneMl  ? PermntOutsideIndiaLineoneMl  : null);
-    // sessionStorage.setItem("PermntOutsideIndiaLinetwoEn", PermntOutsideIndiaLinetwoEn  ? PermntOutsideIndiaLinetwoEn  : null);
-    // sessionStorage.setItem("PermntOutsideIndiaLinetwoMl", PermntOutsideIndiaLinetwoMl  ? PermntOutsideIndiaLinetwoMl  : null) ;
-    // sessionStorage.setItem("PermntOutsideIndiaprovinceEn", PermntOutsideIndiaprovinceEn  ? PermntOutsideIndiaprovinceEn  : null);
-    // sessionStorage.setItem("PermntOutsideIndiaVillage", PermntOutsideIndiaVillage ? PermntOutsideIndiaVillage.code : null);
-    // sessionStorage.setItem("PermntOutsideIndiaCityTown", PermntOutsideIndiaCityTown ? PermntOutsideIndiaCityTown : null);
-    // sessionStorage.setItem("PermanentOutsideIndiaPostCode", PermanentOutsideIndiaPostCode  ? PermanentOutsideIndiaPostCode  : null);
-    // sessionStorage.setItem("PermntOutsideIndiaCountry", PermntOutsideIndiaCountry ? PermntOutsideIndiaCountry.code : null);
+    // sessionStorage.setItem("permntOutsideIndiaLineoneEn", permntOutsideIndiaLineoneEn ? permntOutsideIndiaLineoneEn  : null);
+    // sessionStorage.setItem("permntOutsideIndiaLineoneMl", permntOutsideIndiaLineoneMl  ? permntOutsideIndiaLineoneMl  : null);
+    // sessionStorage.setItem("permntOutsideIndiaLinetwoEn", permntOutsideIndiaLinetwoEn  ? permntOutsideIndiaLinetwoEn  : null);
+    // sessionStorage.setItem("permntOutsideIndiaLinetwoMl", permntOutsideIndiaLinetwoMl  ? permntOutsideIndiaLinetwoMl  : null) ;
+    // sessionStorage.setItem("permntOutsideIndiaprovinceEn", permntOutsideIndiaprovinceEn  ? permntOutsideIndiaprovinceEn  : null);
+    // sessionStorage.setItem("permntOutsideIndiaVillage", permntOutsideIndiaVillage ? permntOutsideIndiaVillage.code : null);
+    // sessionStorage.setItem("permntOutsideIndiaCityTown", permntOutsideIndiaCityTown ? permntOutsideIndiaCityTown : null);
+    // sessionStorage.setItem("permanentOutsideIndiaPostCode", permanentOutsideIndiaPostCode  ? permanentOutsideIndiaPostCode  : null);
+    // sessionStorage.setItem("permntOutsideIndiaCountry", permntOutsideIndiaCountry ? permntOutsideIndiaCountry.code : null);
 
-    // onSelect(config.key, { PermntOutsideIndiaLineoneEn,PermntOutsideIndiaLineoneMl, PermntOutsideIndiaLinetwoEn,PermntOutsideIndiaLinetwoMl,
-    //   PermntOutsideIndiaprovinceEn,PermntOutsideIndiaVillage,PermntOutsideIndiaCityTown,PermanentOutsideIndiaPostCode,PermntOutsideIndiaCountry});
+    // onSelect(config.key, { permntOutsideIndiaLineoneEn,permntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn,permntOutsideIndiaLinetwoMl,
+    //   permntOutsideIndiaprovinceEn,permntOutsideIndiaVillage,permntOutsideIndiaCityTown,permanentOutsideIndiaPostCode,permntOutsideIndiaCountry});
   };
   if (isCountryLoading) {
     return <Loader></Loader>;
@@ -199,7 +204,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               optionKey="name"
               option={cmbCountry}
-              selected={PermntOutsideIndiaCountry}
+              selected={permntOutsideIndiaCountry}
               select={setSelectPermntOutsideIndiaCountry}
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
             />
@@ -210,8 +215,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="PermntOutsideIndiaprovinceEn"
-              value={PermntOutsideIndiaprovinceEn}
+              name="permntOutsideIndiaprovinceEn"
+              value={permntOutsideIndiaprovinceEn}
               onChange={setSelectPermntOutsideIndiaprovinceEn}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
@@ -223,8 +228,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="PermntOutsideIndiaprovinceMl"
-              value={PermntOutsideIndiaprovinceMl}
+              name="permntOutsideIndiaprovinceMl"
+              value={permntOutsideIndiaprovinceMl}
               onChange={setSelectPermntOutsideIndiaprovinceMl}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
@@ -242,7 +247,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               optionKey="i18nKey"
               option={cmbUrbanRural}
-              selected={PermntOutsideIndiaVillage}
+              selected={permntOutsideIndiaVillage}
               select={setSelectadrsPermntOutsideIndiaVillage}
               placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
             />
@@ -255,8 +260,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="PermntOutsideIndiaCityTown"
-              value={PermntOutsideIndiaCityTown}
+              name="permntOutsideIndiaCityTown"
+              value={permntOutsideIndiaCityTown}
               onChange={setSelectadrsPermntOutsideIndiaCityTown}
               placeholder={`${t("CR_CITY_TOWN_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
@@ -268,8 +273,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="PermanentOutsideIndiaPostCode"
-              value={PermanentOutsideIndiaPostCode}
+              name="permanentOutsideIndiaPostCode"
+              value={permanentOutsideIndiaPostCode}
               onChange={setSelectPostCode}
               placeholder={`${t("CR_ZIP_CODE")}`}
               {...(validation = {
@@ -289,8 +294,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="PermntOutsideIndiaLineoneEn"
-              value={PermntOutsideIndiaLineoneEn}
+              name="permntOutsideIndiaLineoneEn"
+              value={permntOutsideIndiaLineoneEn}
               onChange={setSelectadrsPermntOutsideIndiaLineoneEn}
               placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
@@ -302,8 +307,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="PermntOutsideIndiaLineoneMl"
-              value={PermntOutsideIndiaLineoneMl}
+              name="permntOutsideIndiaLineoneMl"
+              value={permntOutsideIndiaLineoneMl}
               onChange={setSelectadrsPermntOutsideIndiaLineoneMl}
               placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
               {...(validation = {
@@ -323,8 +328,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="PermntOutsideIndiaLinetwoEn"
-              value={PermntOutsideIndiaLinetwoEn}
+              name="permntOutsideIndiaLinetwoEn"
+              value={permntOutsideIndiaLinetwoEn}
               onChange={setSelectadrsPermntOutsideIndiaLinetwoEn}
               placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
@@ -336,8 +341,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, Pe
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="PermntOutsideIndiaLinetwoMl"
-              value={PermntOutsideIndiaLinetwoMl}
+              name="permntOutsideIndiaLinetwoMl"
+              value={permntOutsideIndiaLinetwoMl}
               onChange={setSelectadrsPermntOutsideIndiaLinetwoMl}
               placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
               {...(validation = {

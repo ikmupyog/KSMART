@@ -4,15 +4,44 @@ import cleanup from "../Utils/cleanup";
 import {hospital} from "./hospital"
 import {institutionEvent} from "./InstitutionTypePlaceOfEvent"
 import {institutionName12} from "./institution"
-// import MultiSelectDropdown from "./Multiselect";
+// import MultiSelectDropdown from "./Multiselect";institution
 
 const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
+  const stateId = Digit.ULBService.getStateId(); 
   const [inactiveJurisdictions, setInactiveJurisdictions] = useState([]);
   const { data: data = {}, isLoading } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "egov-hrms", "HRMSRolesandDesignation") || {};
+  const { data: hospitalData = {}, Loading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
+  // const { data: institutionData = {}, Loading:loaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
   //Maya
+  // console.log(institutionList,hospitalData); 
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "/egov-location", "boundary-data");
+  
+  let cmbhospital = [];
+  hospitalData &&
+    hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList.map((ob) => {
+      cmbhospital.push(ob);
+    });
+  let cmbInstitutionId= [];
+  // institutionData &&
+  //   institutionData["egov-location"] &&
+  //   institutionData["egov-location"].institutionList.map((ob) => {
+  //     cmbInstitutionId.push(ob);
+  //   });
 
+  let cmbInstitution = [];
+  institutionList &&
+    institutionList["birth-death-service"] &&
+    institutionList["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+      cmbInstitution.push(ob);
+    });
+    // institutionidList &&
+    // institutionidList["egov-location"] &&
+    // institutionidList["egov-location"].institutionList.map((ob) => {
+    //   cmbInstitutionId.push(ob);
+    // });
 
   const [jurisdictions, setjurisdictions] = useState(
     formData?.Jurisdictions || [
@@ -185,16 +214,18 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
   //NIUA
   function getHospitalNames()
   {
-   return hospital?.hospitalList?.map((ab) =>{
-      return {code :ab?.code , name: ab?.hospitalName}
-    });
+  //  return hospital?.hospitalList?.map((ab) =>{
+  //     return {code :ab?.code , name: ab?.hospitalName}
+  //   });
+  return cmbhospital
   }
   //NIUA
 function getInstitutionList()
 {
-  return institutionEvent?.InstitutionTypePlaceOfEvent?.map((ab) =>{
-    return {code :ab?.code , name: ab?.name}
-  });
+  // return institutionEvent?.InstitutionTypePlaceOfEvent?.map((ab) =>{
+  //   return {code :ab?.code , name: ab?.name}
+  // });
+  return cmbInstitution
 }
 function getWardList()
 {
@@ -392,6 +423,15 @@ function Jurisdiction({
     let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode)
     setRolesData(Croles)
   },[])
+  useEffect(()=>{
+    if(jurisdiction?.roleCode?.toLowerCase().includes('hospital')){
+      setDisplayHopital(true)
+      let Crhospital =   getHospitalNames()?.length>0 && getHospitalNames().filter((ele)=>ele.code == jurisdiction?.hospitalCode)
+      setHospitalName(Crhospital?.length>0 && Crhospital[0])
+      setHospitalAddress(Crhospital?.length>0 && Crhospital[0].address)
+    }
+   
+  },[])
 
   useEffect(() => {
     if (isInitialRenderBoundaryType) {
@@ -482,14 +522,14 @@ function Jurisdiction({
     setInstitutionAddress("")
     setInstitutionType(value)
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, intitutiontype: value } : item)));
-    let institutionNameList = institutionName12?.institutionList?.map((name) =>{
-      if(name.placeofEventCodeNew === value.code)
-      {
-        return {code :name?.code , name: name?.institutionName, address:name?.address}
-      }
-    }).filter((ab)=>{return ab !== undefined})
+    // let institutionNameList = cmbInstitutionId?.institutionList?.map((name) =>{
+    //   if(name.placeofEventCodeNew === value.code)
+    //   {
+    //     return {code :name?.code , name: name?.institutionName, address:name?.address}
+    //   }
+    // }).filter((ab)=>{return ab !== undefined})
     setInstitutionNameList(institutionNameList)
-    console.log("institutionName1",institutionNameList,institutionName)
+    // console.log("institutionName1",institutionNameList,institutionName)
   };
   const selectInstitutionName=(value)=>{
    
@@ -505,19 +545,17 @@ function Jurisdiction({
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: [value.data]}  : item)));
   }
   const selectHospital = (value) => {
+    // console.log(value);
     setHospitalName(value)
-    let val=hospital.hospitalList.filter((ab) =>{
-     if(ab.code === value.code)
-     return ab.address
-    })
-    setHospitalAddress(val[0].address)
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, hospitalName: value.name, hospitalAddress:val[0].address, hospitalCode:value.code} : item)));
-    console.log("jurisdiction",jurisdiction)
+    // let val=hospital.hospitalList.filter((ab) =>{
+    //  if(ab.code === value.code)
+    //  return ab.address
+    // })
+    setHospitalAddress(value.address)
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, hospitalName: value.name, hospitalAddress:value.address, hospitalCode:value.code} : item)));
+    // console.log("jurisdiction",jurisdiction)
   
  };
- useEffect(()=>{
-console.log("jurisdiction123",jurisdiction)
- },[jurisdiction])
   const selectrole = (e, data) => {
     const index = jurisdiction?.roles.filter((ele) => ele.code == data.code);
     let res = null;
@@ -567,7 +605,7 @@ console.log("jurisdiction123",jurisdiction)
     // // res?.forEach(resData => { resData.name =  tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno })
      res?.length>0 && res?.forEach(resData => { resData.name = (resData?.wardno? tenantcode + '_' + jurisdiction?.hierarchy?.code + '_' + resData.wardno :resData?.wardLabel ) })
      setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, TenantBoundary: res}  : item)));
-    console.log("ress",e,res)
+    // console.log("ress",e,res)
   };
 
 
@@ -652,7 +690,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
             <LabelFieldPair>
               <CardLabel>{`Hospital Name`}<span className="mandatorycss">*</span></CardLabel>
               <div className="form-field">
-                <Dropdown t={t} optionKey="name" isRequired="false" option={getHospitalNames()} selected={hospitalName && hospitalName[0]}
+                <Dropdown t={t} optionKey="hospitalName" isRequired="false" option={getHospitalNames()} selected={hospitalName && hospitalName}
                   select={selectHospital} placeholder={`Hospital Name`} /></div>
             </LabelFieldPair>
             <LabelFieldPair>
@@ -681,7 +719,7 @@ let tenantcode = tenantId.replace('.', '_').toUpperCase();
             <LabelFieldPair>
               <CardLabel>{`Institution Type`}<span className="mandatorycss">*</span></CardLabel>
               <div className="form-field">
-                <Dropdown t={t} optionKey="name" isRequired="false" option={getInstitutionList()} selected={institutionType && institutionType[0]}
+                <Dropdown t={t} optionKey="name" isRequired="false" option={getInstitutionList()} selected={institutionType && institutionType}
                   select={selectInstitution} placeholder={`Institution Type`} /></div>
             </LabelFieldPair>
 

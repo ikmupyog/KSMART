@@ -504,11 +504,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   ) {
     return <Loader></Loader>;
   }
+  console.log(formData);
   return (
     <React.Fragment>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      
       {/* isDisabled={!motherFirstNameEn} */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         {/* <div className="row">

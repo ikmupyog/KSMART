@@ -139,9 +139,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
   const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
-
+  const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
+  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
   let DeathPlaceTypecode= "";
-  let naturetypecmbvalue = null;
+  let institutionNameCode = "";
+  let naturetypecmbvalue = null;  
   const maxDate = new Date();
   let menu = [];
   Menu &&
@@ -485,7 +487,33 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         setHospitalError(false);
       }
     } 
+    else if (DeathPlace.code === "INSTITUTION") {
+      if (DeathPlaceType == null) {
+        setInstitutionError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        DeathPlaceTypecode =  DeathPlaceType.code;
+        setInstitutionError(false);
+        if (DeathPlaceInstId === null ) {          
+          setInstitutionNameError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          institutionNameCode = DeathPlaceInstId.code;
+          setInstitutionNameError(false);
+        }
+      }
+    }
 
+
+    if (validFlag == true) {
     sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
     sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
     sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
@@ -509,6 +537,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
     sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
     sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
+    sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
     sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
     // if (validFlag === true) {
 
@@ -593,6 +622,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceType,
       DeathPlaceTypecode,
       DeathPlaceInstId,
+      institutionNameCode,
       DeathPlaceHomehoueNameEn,
       DeathPlaceHomehoueNameMl,
       DeathPlaceHomelocalityEn,
@@ -625,7 +655,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       DeathPlaceRemarksMl,
       PlaceOfBurialMl,
       PlaceOfBurialEn,
+      
     });
+  }
   };
   return (
     <React.Fragment>
@@ -1143,12 +1175,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
         {toast && (
           <Toast
-            error={DOBError || AadharError || HospitalError}
+            error={
+              DOBError || AadharError || HospitalError  || InstitutionError || InstitutionNameError
+            }
             label={
-              DOBError || AadharError || HospitalError
+              DOBError || AadharError || HospitalError  || InstitutionError || InstitutionNameError
                 ? DOBError? t(`CR_INVALID_DATE`)
                   : AadharError? t(`CS_COMMON_INVALID_AADHAR_NO`)
                   : HospitalError ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
+                  : InstitutionError ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                  : InstitutionNameError ? t(`CR_ERROR_INSTITUTION_NAME_CHOOSE`)
 
                   : setToast(false)
                 : setToast(false)

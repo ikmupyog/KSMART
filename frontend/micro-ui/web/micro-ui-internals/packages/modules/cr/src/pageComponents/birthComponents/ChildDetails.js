@@ -130,7 +130,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
-  let workFlowCode = "";
+  let workFlowCode = "birth21days";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -297,13 +297,15 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
-      // console.log(Difference_In_DaysRounded);
+      console.log(Difference_In_DaysRounded);
+      if (Difference_In_DaysRounded <= 21) {
+        console.log("Difference_In_DaysRounded" + Difference_In_DaysRounded);
+        workFlowCode = "birth21days";
+        console.log(workFlowCode + "workFlowCode");
+      }
       if (Difference_In_DaysRounded >= 365) {
         setChildAadharHIde(true);
       } else {
-        if (Difference_In_DaysRounded <= 21) {
-          workFlowCode = "birth21days";
-        }
         setChildAadharHIde(false);
         setChildAadharNo("");
       }
@@ -722,7 +724,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     if (validFlag == true) {
       sessionStorage.setItem("stateId", stateId ? stateId : null);
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      sessionStorage.setItem("workFlowCode", workFlowCode ? workFlowCode : null);
+      sessionStorage.setItem("workFlowCode", workFlowCode);
       sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
       sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
       sessionStorage.setItem("gender", gender ? gender.code : null);
@@ -846,7 +848,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               <DatePicker
                 date={childDOB}
                 name="childDOB"
-                max={childDOB ? childDOB : convertEpochToDate(new Date())}
+                max={convertEpochToDate(new Date())}
                 // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                 onChange={setselectChildDOB}
                 inputFormat="DD-MM-YYYY"

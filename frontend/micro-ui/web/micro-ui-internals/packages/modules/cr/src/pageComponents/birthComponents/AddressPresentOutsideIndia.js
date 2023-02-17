@@ -8,15 +8,20 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaProvinceMl, setProvinceMl, presentOutSideIndiaadrsVillage, setadrsVillage,
   presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode, presentOutSideCountry,
   setOutSideCountry, countryvalue, setCountryValue,
-  isPrsentAddress, setIsPrsentAddress, PermntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
-  PermntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, PermntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
-  PermntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, PermntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
-  PermntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
-  PermntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, PermntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
-  PermanentOutsideIndiaPostCode, setPermantpostCode, PermntOutsideIndiaCountry, setPermntOutsideIndiaCountry
+  isPrsentAddress, setIsPrsentAddress, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
+  permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
+  permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
+  permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
+  permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
+  permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry, setPermntOutsideIndiaCountry
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 

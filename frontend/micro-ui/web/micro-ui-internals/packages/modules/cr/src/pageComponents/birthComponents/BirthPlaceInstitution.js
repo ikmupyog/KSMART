@@ -6,12 +6,17 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId
 }) => {
   const stateId = Digit.ULBService.getStateId();
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const { t } = useTranslation();
   let validation = {};
   const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
-  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
+  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "institution");
   const [isInitialRender, setIsInitialRender] = useState(true);
-console.log(institutionidList);
+  console.log(institutionidList);
   // const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
@@ -31,15 +36,15 @@ console.log(institutionidList);
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionId.push(ob);
     });
-    console.log(cmbInstitutionId);
+  console.log(cmbInstitutionId);
   useEffect(() => {
 
     if (isInitialRender) {
       if (institution) {
         console.log(institution);
         // if (cmbInstitutionId.length > 0) {
-          console.log(cmbInstitutionId);
-          cmbFilterInstitutionList = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === institution.code);
+        console.log(cmbInstitutionId);
+        cmbFilterInstitutionList = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === institution.code);
         // }
       }
       if (institutionId) {

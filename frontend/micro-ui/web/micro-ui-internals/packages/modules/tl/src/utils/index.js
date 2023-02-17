@@ -310,7 +310,7 @@ export const convertToTrade = (data = {}) => {
           structureType: data?.TradeDetails?.tradeLicenseDetail?.structureType.code,
           structurePlaceSubtype: data?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype.code,
           businessActivityDesc: data?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc,
-          licenseeType: data?.TradeDetails?.tradeLicenseDetail?.licenseeType,
+          licenseeType: data?.TradeDetails?.tradeLicenseDetail?.licenseeType?.code,
           noOfEmployees: data?.TradeDetails?.tradeLicenseDetail?.noOfEmployees,
           ownershipCategory: data?.TradeDetails?.tradeLicenseDetail?.ownershipCategory?.code,
           address: data?.TradeDetails?.tradeLicenseDetail?.address,
@@ -324,14 +324,13 @@ export const convertToTrade = (data = {}) => {
 
         licenseUnitName: data?.TradeDetails?.licenseUnitName,
         licenseUnitNameLocal: data?.TradeDetails?.licenseUnitNameLocal,
-        desiredLicensePeriod: data?.TradeDetails?.desiredLicensePeriod,
+        desiredLicensePeriod: data?.TradeDetails?.desiredLicensePeriod?.code,
         wfDocuments: [],
         applicationDocuments: [],
         workflowCode: "NewTL"
       }
     ]
   };
-  console.log("finalformdata" + formdata);
   return formdata;
 };
 

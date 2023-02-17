@@ -21,12 +21,19 @@ const Details = () => {
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("EMPLOYEE_HRMS_MUTATION_HAPPENED", false);
   const [successData, setsuccessData, clearSuccessData] = Digit.Hooks.useSessionStorage("EMPLOYEE_HRMS_MUTATION_SUCCESS_DATA", false);
   const { data: boundaryList = {}, isLoadingBoundary } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const { data: hospitalData = {}, Loading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
  
   let cmbZonal = [];
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
       cmbZonal.push(ob.boundary.children);
+    });
+    let cmbhospital = [];
+  hospitalData &&
+    hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList.map((ob) => {
+      cmbhospital.push(ob);
     });
   useEffect(() => {
     setMutationHappened(false);
@@ -152,10 +159,11 @@ const Details = () => {
 
             {data?.Employees?.[0]?.jurisdictions?.length > 0
               ? data?.Employees?.[0]?.jurisdictions?.map((element, index) => {
-                // console.log(data,element);
+                // console.log(data,element,cmbhospital);
                 let Czonal =cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == element?.zoneCode)
                 let Croles= data?.Employees?.[0]?.user.roles.filter((ele) => ele.code == element?.roleCode)
-                // console.log(Croles);
+                let Crhospital = cmbhospital?.length>0 &&cmbhospital.filter((ele)=>ele.code == element.hospitalCode)
+                // console.log(Crhospital);
                 return (
                   <StatusTable
                     key={index}
@@ -176,6 +184,25 @@ const Details = () => {
                     <Row label={t("HR_BOUNDARY_TYPE_LABEL")} text={t(Digit.Utils.locale.convertToLocale(element?.boundaryType, 'EGOV_LOCATION_BOUNDARYTYPE'))} textStyle={{ whiteSpace: "pre" }} />
                     <Row label={t("HR_BOUNDARY_LABEL")} text={t(element?.boundary)} />
                     <Row
+                      label={t("HR_ROLE_LABEL")}
+                      text={Croles && Croles[0]?.name}
+                      // text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
+                    />
+                   {Croles?.length > 0 && Croles[0]?.name?.toLowerCase().includes('hospital')&&(
+                    <React.Fragment>
+                        <Row
+                      label={t("Hospital Name")}
+                      text={Crhospital && Crhospital[0]?.hospitalName}
+                      // text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
+                    />
+                     <Row
+                      label={t("Hospital Address")}
+                      text={Crhospital && Crhospital[0]?.address}
+                      // text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
+                    />
+                    </React.Fragment>
+                   )}
+                    <Row
                       label={t("TL_LOCALIZATION_ZONAL_OFFICE")}
                       text={Czonal&& Czonal[0]?.name}
                     />
@@ -183,11 +210,7 @@ const Details = () => {
                       label={t("HR_WARD_LABEL")}
                       text={element?.jurisdictionChilds?.map((wards) => t(wards?.wardLabel))}
                     />
-                    <Row
-                      label={t("HR_ROLE_LABEL")}
-                      text={Croles && Croles[0]?.name}
-                      // text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
-                    />
+                  
                   </StatusTable>
                 );
               })

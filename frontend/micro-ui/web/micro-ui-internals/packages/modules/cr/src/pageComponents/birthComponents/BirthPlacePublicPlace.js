@@ -7,10 +7,15 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo
 }) => {
   const stateId = Digit.ULBService.getStateId();
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const { t } = useTranslation();
   let validation = {};
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
 
   // const [publicPlaceType, setpublicPlaceType] = useState(formData?.BirthPlacePublicPlaceDetails?.publicPlaceType? formData?.BirthPlacePublicPlaceDetails?.publicPlaceType : "");  
   // const [localityNameEn, setlocalityNameEn] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameEn? formData?.BirthPlacePublicPlaceDetails?.localityNameEn : "");  
