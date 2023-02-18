@@ -392,7 +392,7 @@ export const convertToBirthRegistration = (data = {}) => {
           isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
           permtaddressCountry: data?.AddressBirthDetails?.permtaddressCountry ? data?.AddressBirthDetails?.permtaddressCountry.code : null,
           permtaddressStateName: data?.AddressBirthDetails?.permtaddressStateName ? data?.AddressBirthDetails?.permtaddressStateName.code : null,
-          permntInKeralaAdrLBName: data?.AddressBirthDetails?.permntInKeralaAdrLBName ? data?.AddressBirthDetails?.permntInKeralaAdrLBName : null,
+          permntInKeralaAdrLBName: data?.AddressBirthDetails?.permntInKeralaAdrLBName ? data?.AddressBirthDetails?.permntInKeralaAdrLBName.code : null,
           permntInKeralaAdrDistrict: data?.AddressBirthDetails?.permntInKeralaAdrDistrict ? data?.AddressBirthDetails?.permntInKeralaAdrDistrict.code : null,
           permntInKeralaAdrTaluk: data?.AddressBirthDetails?.permntInKeralaAdrTaluk ? data?.AddressBirthDetails?.permntInKeralaAdrTaluk.code : null,
           permntInKeralaAdrVillage: data?.AddressBirthDetails?.permntInKeralaAdrVillage ? data?.AddressBirthDetails?.permntInKeralaAdrVillage.code : null,
