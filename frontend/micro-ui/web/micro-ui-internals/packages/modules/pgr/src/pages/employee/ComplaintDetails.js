@@ -306,6 +306,10 @@ export const ComplaintDetails = (props) => {
    
     setSelectedAction(action);
     switch (action) {
+      case "RETURN":
+        setPopup(true);
+        setDisplayMenu(false);
+        break;
       case "RECOMMEND":
         setPopup(true);
         setDisplayMenu(false);
