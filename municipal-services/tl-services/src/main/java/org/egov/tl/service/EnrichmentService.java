@@ -60,6 +60,12 @@ public class EnrichmentService {
             tradeLicense.setApplicationDate(auditDetails.getCreatedTime());
             tradeLicense.getTradeLicenseDetail().setId(UUID.randomUUID().toString());
             tradeLicense.getTradeLicenseDetail().setAuditDetails(auditDetails);
+            if (tradeLicense.getOldApplicationNumber() != null) {
+                tradeLicense.setRenewalActive(false);
+            } else {
+                tradeLicense.setRenewalActive(false);
+                tradeLicense.setOldApplicationNumber("0");
+            }
             String businessService = tradeLicense.getBusinessService();
             if (businessService == null) {
                 businessService = businessService_TL;

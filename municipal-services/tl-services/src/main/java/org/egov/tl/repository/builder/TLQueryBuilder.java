@@ -42,22 +42,40 @@ public class TLQueryBuilder {
     // @Value("${renewal.pending.interval}")
     // private long renewalPeriod;
 
-    private static final String QUERY = "SELECT tl.*,tld.*,tlowner.*," +
-            "tladdress.*,tlapldoc.*,tlverdoc.*,tlownerdoc.*,tlinsti.*,tl.id as tl_id,tl.tenantid as tl_tenantId,tl.lastModifiedTime as "
+    private static final String QUERY = "SELECT tl.*,tld.*, " +
+            "tladdress.*,tlapldoc.*,tlverdoc.*,tlownerdoc.*, tl.id as tl_id,tl.tenantid as tl_tenantId,tl.lastModifiedTime as "
             +
             "tl_lastModifiedTime,tl.createdBy as tl_createdBy,tl.lastModifiedBy as tl_lastModifiedBy,tl.createdTime as "
             +
             "tl_createdTime,tl.filestoreid as tl_fileStoreId,tld.id as tld_id,tladdress.id as tl_ad_id,tld.createdBy as tld_createdBy,"
             +
-            "tlowner.id as tlowner_uuid,tlowner.active as useractive," +
-            "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as " +
-            "tld_createdTime, "
+            "tlowner.id as tlowner_uuid,tlowner.active as useractive, "
             +
-            "tlunit.id as tl_un_id,tlunit.businesssubtype as tl_un_businesssubtype,tlunit.businesscategory as tl_un_businesscategory,tlunit.active as tl_un_active,"
+            "tld.createdTime as tld_createdTime,tld.lastModifiedBy as tld_lastModifiedBy,tld.createdTime as tld_createdTime, "
+            +
+            " tladdress.tenantid, tladdress.doorno as tlad_doorno, tladdress.latitude, tladdress.longitude, "
+            +
+            " tladdress.buildingname as tlad_buildingname, tladdress.landmark as tlad_landmark, tladdress.street as tlad_street, "
+            +
+            " tladdress.locality as tlad_locality, tladdress.pincode as tlad_pincode, tladdress.zonalid, tladdress.wardid, tladdress.wardno, "
+            +
+            " tladdress.contactno as tlad_contactno, tladdress.email as tlad_email, tladdress.lbbuildingcode, tladdress.lbbuildingname, "
+            +
+            " tladdress.postoffice as tlad_, tladdress.servicearea, tladdress.waterbody, "
+            +
+            " tlowner.ownername as tlowner_ownername, tlowner.aadharno as tlowner_aadharno, tlowner.isactive, tlowner.ownernamelocal as tlowner_ownernamelocal, "
+            +
+            " tlowner.careof as tlowner_careof, tlowner.careofname as tlowner_careofname, tlowner.designation as tlowner_designation, tlowner.housename as tlowner_housename, "
+            +
+            " tlowner.street as tlowner_street, tlowner.email as tlowner_email, tlowner.locality as tlowner_locality, tlowner.postoffice as tlowner_postoffice, "
+            +
+            " tlowner.pincode as tlowner_pincode, tlowner.ownercontactno as tlowner_ownercontactno, "
+            +
+            "tlunit.id as tl_un_id,tlunit.businesssubtype as tl_un_businesssubtype,tlunit.businesscategory as tl_un_businesscategory,tlunit.active as tl_un_active, "
             +
             "tlunit.businesstype as tl_un_businesstype, "
             +
-            "tlapldoc.id as tl_ap_doc_id,tlapldoc.documenttype as tl_ap_doc_documenttype,tlapldoc.filestoreid as tl_ap_doc_filestoreid,tlapldoc.active as tl_ap_doc_active,"
+            "tlapldoc.id as tl_ap_doc_id,tlapldoc.documenttype as tl_ap_doc_documenttype,tlapldoc.filestoreid as tl_ap_doc_filestoreid,tlapldoc.active as tl_ap_doc_active, "
             +
             "tlverdoc.id as tl_ver_doc_id,tlverdoc.documenttype as tl_ver_doc_documenttype,tlverdoc.filestoreid as tl_ver_doc_filestoreid,tlverdoc.active as tl_ver_doc_active,"
             +
@@ -69,7 +87,7 @@ public class TLQueryBuilder {
             +
             " tlinsti.institutionname as instiinstitutionname, tlinsti.contactno as insticontactno, tlinsti.organisationregistrationno as instiorganisationregistrationno, tlinsti.address as instiaddress, "
             +
-            " tlinsti.natureofinstitution as natureofinstitution, tlinsti.email as instiemail, tlinsti.licenseunitid as inst_licenseunitid, "
+            " tlinsti.natureofinstitution as natureofinstitution, tlinsti.email as instiemail, tlinsti.licenseunitid as inst_licenseunitid,  "
             +
             " tlstructplace.id as tlstructplace_id, tlstructplace.blockno as blockno, tlstructplace.surveyno as surveyno, tlstructplace.subdivisionno as subdivisionno, "
             +
@@ -85,7 +103,13 @@ public class TLQueryBuilder {
             +
             " tlownerpde.designation as ownerpde_designation, tlownerpde.housename as ownerpde_housename, tlownerpde.street as ownerpde_street, "
             +
-            " tlownerpde.locality as ownerpde_locality, tlownerpde.postoffice as ownerpde_postoffice, tlownerpde.pincode as ownerpde_pincode "
+            " tlownerpde.locality as ownerpde_locality, tlownerpde.postoffice as ownerpde_postoffice, tlownerpde.pincode as ownerpde_pincode, "
+            +
+            " premiseown.id as premiseown_id, premiseown.premiseownername as premiseownername, premiseown.housename as premiseown_housename, premiseown.street as premiseown_street, "
+            +
+            " premiseown.locality as premiseown_locality, premiseown.postoffice as premiseown_postoffice, premiseown.pincode as premiseown_pincode, "
+            +
+            " premiseown.aadhaarno as premiseown_aadhaarno, premiseown.contactno as premiseown_contactno, premiseown.active as premiseown_active "
             +
             "FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
@@ -107,7 +131,9 @@ public class TLQueryBuilder {
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_institution tlinsti ON tlinsti.tradelicensedetailid = tld.id "
             + LEFT_OUTER_JOIN_STRING
-            + "eg_tl_structureplacedetail tlstructplace ON tlstructplace.tradelicensedetailid = tld.id ";
+            + "eg_tl_structureplacedetail tlstructplace ON tlstructplace.tradelicensedetailid = tld.id "
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_premiseowner premiseown ON premiseown.tradelicensedetailid = tld.id ";
 
     private final String paginationWrapper = "SELECT * FROM " +
             "(SELECT *, DENSE_RANK() OVER (ORDER BY tl_lastModifiedTime DESC , tl_id) offset_ FROM " +

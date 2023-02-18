@@ -224,4 +224,12 @@ public class TradeLicense {
   @JsonProperty("isMigrated")
   private Boolean isMigrated;
 
+  @JsonProperty("renewalActive")
+  private Boolean renewalActive;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("oldApplicationNumber")
+  private String oldApplicationNumber;
+
 }

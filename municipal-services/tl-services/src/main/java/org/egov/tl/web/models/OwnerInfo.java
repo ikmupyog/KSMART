@@ -38,7 +38,7 @@ public class OwnerInfo extends User {
 
         @Size(max = 64)
         @SafeHtml
-        @JsonProperty("applicantNameLocal ")
+        @JsonProperty("applicantNameLocal")
         private String applicantNameLocal = null;
 
         @Size(max = 64)
