@@ -411,7 +411,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           />;
         }
         if (naturetype === "INSTITUTION") {
-          <Institution DeathPlaceType={DeathPlaceType}
+          <Institution 
+          DeathPlaceType={DeathPlaceType}
           DeathPlaceInstId={DeathPlaceInstId}
           InstitutionIdMl={InstitutionIdMl} />;
         }
@@ -564,7 +565,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
       sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-      sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl.DeathPlaceInstId : null);
+      sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl. InstitutionIdMl: null);
       
     }
     if (DeathPlace.code === "HOME") {
