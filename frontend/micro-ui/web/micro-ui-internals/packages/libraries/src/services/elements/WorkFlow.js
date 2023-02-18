@@ -135,6 +135,7 @@ export const WorkflowService = {
           moduleCode === "FSM_POST_PAY_SERVICE" ||
           moduleCode === "FSM_VEHICLE_TRIP" ||
           moduleCode === "pgrhealth" ||
+          moduleCode === "pgrengineering" ||
           moduleCode === "OBPS"
         )
           null;
