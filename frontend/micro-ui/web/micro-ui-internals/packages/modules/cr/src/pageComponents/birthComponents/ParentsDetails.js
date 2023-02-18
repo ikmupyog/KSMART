@@ -379,7 +379,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
       setMotherFirstNameEn("");
       setMotherFirstNameMl("");
       setMotherAadhar("");
-      motherMaritalStatus(null);
+      setMotherMaritalStatus(null);
       setMotherMarriageAge("");
       setMotherMarriageBirth("");
       setMotherEducation(null);

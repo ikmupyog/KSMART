@@ -9,9 +9,9 @@ const mystyle = {
 
 
 const SearchFields = ({register, control, reset, tenantId, t }) => {
-    const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes("kl")
+    // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes("kl")
 // console.log(applicationTypes);
-    const applicationType = useWatch({ control, name: "applicationType" });
+    // const applicationType = useWatch({ control, name: "applicationType" });
 
     let businessServices=[];
     // if(applicationType && applicationType?.code==="RENEWAL")
@@ -25,7 +25,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     // else if(applicationType && applicationType?.code==="NEW")
     // businessServices=["NewBirth"]
     // else
-    businessServices=["birth-services",]
+    businessServices=["birth21days",]
 
     // const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({ businessServices, tenantId }, {});
     // let applicationStatuses = []
