@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton, CheckBox ,Loader} from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton, CheckBox, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, selectDeathPlaceType, HospitalNameMl, selectHospitalNameMl, }) => {
+const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, selectDeathPlaceType, HospitalNameMl, selectHospitalNameMl }) => {
   const { t } = useTranslation();
   let validation = {};
   let tenantId = "";
@@ -25,17 +25,16 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.InformationDeath?.DeathPlaceType){
+      if (formData?.InformationDeath?.DeathPlaceType) {
         selectHospitalNameMl(HospitalNameMl);
         setIsInitialRender(false);
-      }else {
+      } else {
         cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === DeathPlaceType.hospitalName);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       }
     }
-  }, [cmbhospitalMl, isInitialRender])
-
+  }, [cmbhospitalMl, isInitialRender]);
 
   const onSkip = () => onSelect();
   function setselectDeathPlaceType(value) {
@@ -48,7 +47,7 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
   const goNext = () => {
     // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null );
     // sessionStorage.setItem("HospitalNameMl", HospitalNameMl.DeathPlaceType);
-       // onSelect(config.key, { HospitalName, HospitalNameMl
+    // onSelect(config.key, { HospitalName, HospitalNameMl
     // });
   };
   if (isLoading) {
@@ -59,7 +58,7 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
         <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}>
-      <div className="row">
+        <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HOSPITAL_DETAILES")}`}</span>{" "}
