@@ -244,6 +244,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       setDeceasedMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
+
   function setSelectDeceasedLastNameEn(e) {
     if (e.target.value.length === 51) {
       return false;

@@ -169,7 +169,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
         
         <div className="row">
           <div className="col-md-12">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <CardLabel>{t("CS_COMMON_COUNTRY")}<span className="mandatorycss">*</span></CardLabel>
             <Dropdown t={t} 
             optionKey="name" 
@@ -180,11 +180,8 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
             disable={isDisableStatus}
             placeholder={`${t("CS_COMMON_COUNTRY")}`}
              />
-           
-
-           
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
               <CardLabel>
                 {t("CR_STATE_REGION_PROVINCE")}        
               </CardLabel>
@@ -198,7 +195,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
                 disable={isEdit}
               />
             </div>    
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CS_COMMON_DISTRICT")}
                 <span className="mandatorycss">*</span>
@@ -214,12 +211,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
             </div>
-            
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_CITY_VILLAGE")}
                 <span className="mandatorycss">*</span>
@@ -236,8 +228,13 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
                 disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE") })}
               />
-            </div>           
-            <div className="col-md-4">
+            </div>        
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+               
+            <div className="col-md-6">
               <CardLabel>
                 {t("CR_PLACE_DEATH_EN")}
                 <span className="mandatorycss">*</span>
@@ -255,7 +252,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PLACE_DEATH_EN") })}
               />
             </div>       
-            <div className="col-md-4">
+            <div className="col-md-6">
               <CardLabel>
                 {t("CR_PLACE_DEATH_ML")}
                 <span className="mandatorycss">*</span>
@@ -337,7 +334,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
             <div className="col-md-6">
               <CardLabel>
                 {`${t("CR_OTHER_DETAILS_EN")}`}
-                <span className="mandatorycss">*</span>
+                {/* <span className="mandatorycss">*</span> */}
               </CardLabel>
               <TextArea
                 t={t}
@@ -349,7 +346,7 @@ const DeathOutsideJurisdiction  = ({ config, onSelect, userType, formData ,Death
                 onChange={setSelectGeneralRemarks}
                 disable={isEdit}
                 placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
               />
             </div>
           </div>
