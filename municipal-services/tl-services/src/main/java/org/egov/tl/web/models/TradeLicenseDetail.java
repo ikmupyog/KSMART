@@ -239,4 +239,12 @@ public class TradeLicenseDetail {
     return this;
   }
 
+  public TradeLicenseDetail addPremiseOwnerItem(OwnerPremise ownerPremiseItem) {
+    if (this.ownerspremise == null)
+      this.ownerspremise = new ArrayList<>();
+    if (!this.ownerspremise.contains(ownerPremiseItem))
+      this.ownerspremise.add(ownerPremiseItem);
+    return this;
+  }
+
 }
