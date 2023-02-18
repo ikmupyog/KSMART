@@ -496,8 +496,9 @@ function Jurisdiction({
     // (displayHospital || displayInstitution? setWardList(value?.children?.map((emp)=>{
     //   return {name:emp?.children[0]?.name, code:emp?.wardno, data:emp}
     // })):setWardList([]))
+    // console.log(value,cmbZonal);
     let res= value?.children?.map((emp)=>{
-      return {name:emp?.children[0]?.name, code:emp?.wardno, data:emp}
+      return {name:emp?.name, code:emp?.wardno, data:emp}
     })
     setWardList(res)
   };
