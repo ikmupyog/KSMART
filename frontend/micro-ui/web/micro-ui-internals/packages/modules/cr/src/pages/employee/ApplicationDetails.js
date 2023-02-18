@@ -10,16 +10,16 @@ import orderBy from "lodash/orderBy";
 const ApplicationDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { id: applicationno } = useParams();
+  const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
   const [businessService, setBusinessService] = useState("birth21days"); //DIRECTRENEWAL
   // const [businessService, setBusinessService] = useState("NewBirthTwentyOne"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
-  sessionStorage.setItem("applicationNo", applicationno)
+  sessionStorage.setItem("applicationNumber", applicationNumber)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationno);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
 
   const stateId = Digit.ULBService.getStateId();
 
@@ -32,10 +32,10 @@ const ApplicationDetails = () => {
   } = Digit.Hooks.cr.useApplicationActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  console.log(applicationDetails?.applicationData.tenantid);
+  // console.log(applicationDetails);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
-    id: applicationDetails?.applicationData?.applicationno,
+    id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: businessService,
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config:{},
