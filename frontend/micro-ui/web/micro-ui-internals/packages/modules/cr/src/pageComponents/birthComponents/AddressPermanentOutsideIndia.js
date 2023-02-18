@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
   permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
-  permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry,
-  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
+  permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode,
+  //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -195,7 +195,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <CardLabel>
               {`${t("CS_COMMON_COUNTRY")}`}
               <span className="mandatorycss">*</span>
@@ -208,8 +208,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               select={setSelectPermntOutsideIndiaCountry}
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
             />
-          </div>
-          <div className="col-md-4">
+          </div> */}
+          <div className="col-md-6">
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}</CardLabel>
             <TextInput
               t={t}
@@ -222,7 +222,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}</CardLabel>
             <TextInput
               t={t}

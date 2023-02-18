@@ -52,8 +52,8 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         <SearchField>
             <label><span className="mandatorycss">*</span> {t("Registry ID")}</label>
             <TextInput name="id" inputRef={register({})} 
-             placeholder={`${t("Registry ID")}`}
-             {...(validation = { isRequired: true, type: "text", title: t("DC_INVALID_REGISTRY_ID") })}/>
+             placeholder={`${t("Registry ID")}`} 
+             {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_REGISTRY_ID") })}/>
         </SearchField>
         <SearchField>
             <label>

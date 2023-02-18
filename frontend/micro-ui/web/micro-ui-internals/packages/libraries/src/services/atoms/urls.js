@@ -119,8 +119,8 @@ const Urls = {
     search: "/death-services/v1/deathdetails/_searchdeath",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/death-services/v1/crdeathdetails/_update",
-    registry_search: "/death-services/v1/crdeathregistry/_search",
-    registry_download: "/death-services/v1/crdeathregistry/_download",
+    registry_search: "/death-services/v1/deathregistry/_searchdeath",
+    registry_download: "/death-services/v1/deathregistry/_downloaddeath",
   },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",
