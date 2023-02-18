@@ -113,6 +113,16 @@ public class DeathApplnQueryBuilder extends BaseQueryBuilder {
          .append(" ,presentaddress.postoffice_name_ml as  P_postoffice_name_ml") 
          .append(" ,presentaddress.housename_ml as  P_housename_ml")
          .append(" ,presentaddress.housename_en as  P_housename_en")
+
+         .append(" ,presentaddress.province_name_en as  P_province_name_en")
+         .append(" ,presentaddress.province_name_ml as  P_province_name_ml")
+         .append(" ,presentaddress.city_town_village as  P_city_town_village")
+         .append(" ,presentaddress.city_en as  P_city_en")
+         .append(" ,permanentAddress.province_name_en as  R_province_name_en")
+         .append(" ,permanentAddress.province_name_ml as  R_province_name_ml")
+         .append(" ,permanentAddress.city_town_village as  R_city_town_village")
+         .append(" ,permanentAddress.city_en as  R_city_en")
+
          .append(" ,permanentAddress.death_dtl_id  as R_death_dtl_id")  
          .append(" ,permanentAddress.tenantid as R_tenantid") 
          .append(" ,permanentAddress.addr_typeid as R_addr_typeid")
