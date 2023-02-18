@@ -115,9 +115,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
       setIsCaretaker(e.target.checked);
 
       setinitiatorDesi("");
-      //   setFatherFirstNameMl("");
-
-      //   setFatherNationality(null);
+     
     } else {
       setIsCaretaker(e.target.checked);
     }
@@ -145,6 +143,9 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setinfomantFirstNmeEnError(false);
     }
+    if (isCaretaker === true) {
+
+
     if (initiatorDesi == null || initiatorDesi == "" || initiatorDesi == undefined) {
       validFlag = false;
       setinitiatorDesiError(true);
@@ -155,6 +156,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setinitiatorDesiError(false);
     }
+  }
 
     if (initiatorAadhar == null || initiatorAadhar == "" || initiatorAadhar == undefined) {
       validFlag = false;
@@ -280,7 +282,9 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
         </div>
-        <div className="row">
+
+        <div className="row">  
+        <div className="col-md-12">    
             <div className="row">
               <div className="col-md-12">
                 <CheckBox label={t("CR_INITIATOR_IS_CARETAKER")} onChange={setCaretaker} value={isCaretaker} checked={isCaretaker} />
@@ -301,12 +305,13 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                     value={initiatorDesi}
                     onChange={setSelectinitiatorDesi}
                     placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
+                   //            disable={isCaretaker}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
                   />
                 </div>
               </div>
             )}
-
+ 
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
@@ -337,6 +342,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
         </div>
+        </div>    
 
         {toast && (
           <Toast

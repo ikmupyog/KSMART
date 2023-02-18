@@ -411,7 +411,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           />;
         }
         if (naturetype === "INSTITUTION") {
-          <Hospital DeathPlaceType={DeathPlaceType}
+          <Institution DeathPlaceType={DeathPlaceType}
+          DeathPlaceInstId={DeathPlaceInstId}
           InstitutionIdMl={InstitutionIdMl} />;
         }
         if (naturetype === "HOME") {
@@ -782,6 +783,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               DeathPlaceType={DeathPlaceType}
               DeathPlaceInstId={DeathPlaceInstId}
               setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
+              InstitutionIdMl={InstitutionIdMl} 
+              setInstitutionIdMl = {setInstitutionIdMl}
+              
             />
           </div>
         )}
