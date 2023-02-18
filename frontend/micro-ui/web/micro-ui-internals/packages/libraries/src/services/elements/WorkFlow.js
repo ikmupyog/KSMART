@@ -113,12 +113,12 @@ export const WorkflowService = {
     });
   },
 
-  getDetailsById: async ({ tenantId, id, moduleCode, role, getTripData }) => {
-    const workflow = await Digit.WorkflowService.getByBusinessId(tenantId, id);
+  getDetailsById: async ({ tenantId, id, moduleCode, role, getTripData }) => {    
+    const workflow = await Digit.WorkflowService.getByBusinessId(tenantId, id);    
     const applicationProcessInstance = cloneDeep(workflow?.ProcessInstances);
     const getLocationDetails = window.location.href.includes("/obps/") || window.location.href.includes("noc/inbox");
     const moduleCodeData = getLocationDetails ? applicationProcessInstance?.[0]?.businessService : moduleCode;
-    const businessServiceResponse = (await Digit.WorkflowService.init(tenantId, moduleCodeData))?.BusinessServices[0]?.states;
+    const businessServiceResponse = (await Digit.WorkflowService.init(tenantId, moduleCodeData))?.BusinessServices[0]?.states;  
     if (workflow && workflow.ProcessInstances) {
       const processInstances = workflow.ProcessInstances;
       const nextStates = processInstances[0]?.nextActions.map((action) => ({ action: action?.action, nextState: processInstances[0]?.state.uuid }));
@@ -134,7 +134,7 @@ export const WorkflowService = {
           moduleCode === "FSM" ||
           moduleCode === "FSM_POST_PAY_SERVICE" ||
           moduleCode === "FSM_VEHICLE_TRIP" ||
-          moduleCode === "PGR" ||
+          moduleCode === "pgrhealth" ||
           moduleCode === "OBPS"
         )
           null;
@@ -142,13 +142,13 @@ export const WorkflowService = {
       }
 
       const getStateForUUID = (uuid) => businessServiceResponse?.find((state) => state.uuid === uuid);
-
+      
       const actionState = businessServiceResponse
         ?.filter((state) => state.uuid === processInstances[0]?.state.uuid)
-        .map((state) => {
-          let _nextActions = state.actions?.map?.((ac) => {
+        .map((state) => {          
+          let _nextActions = state.actions?.map?.((ac) => {           
             let actionResultantState = getStateForUUID(ac.nextState);
-            let assignees = actionResultantState?.actions?.reduce?.((acc, act) => {
+            let assignees = actionResultantState?.actions?.reduce?.((acc, act) => {              
               return [...acc, ...act.roles];
             }, []);
             return { ...actionResultantState, assigneeRoles: assignees, action: ac.action, roles: ac.roles };
