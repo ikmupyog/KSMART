@@ -985,6 +985,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               hospitalName={hospitalName}
               hospitalNameMl={hospitalNameMl}
               selectHospitalNameMl={selectHospitalNameMl}
+              formData={formData}
             />
           </div>
         )}
