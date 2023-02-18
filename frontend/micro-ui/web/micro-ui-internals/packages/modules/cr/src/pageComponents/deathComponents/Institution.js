@@ -13,7 +13,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  
+  // console.log(tenantId);
   // tenantId = 'kl.cochin';
   const { t } = useTranslation();
   let validation = {};
@@ -41,7 +41,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
     cmbInstitutionId.push(ob);
   });
   
-   console.log(institutionidList);
+  //  console.log(institutionidList);
   // let cmbInstitution = [];
   // institution &&
   //   institution["birth-death-service"] &&
