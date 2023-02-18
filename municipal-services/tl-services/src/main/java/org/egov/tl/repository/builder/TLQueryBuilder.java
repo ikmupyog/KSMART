@@ -61,7 +61,7 @@ public class TLQueryBuilder {
             +
             " tladdress.contactno as tlad_contactno, tladdress.email as tlad_email, tladdress.lbbuildingcode, tladdress.lbbuildingname, "
             +
-            " tladdress.postoffice as tlad_, tladdress.servicearea, tladdress.waterbody, "
+            " tladdress.postoffice as tlad_postoffice, tladdress.servicearea, tladdress.waterbody, "
             +
             " tlowner.ownername as tlowner_ownername, tlowner.aadharno as tlowner_aadharno, tlowner.isactive, tlowner.ownernamelocal as tlowner_ownernamelocal, "
             +
