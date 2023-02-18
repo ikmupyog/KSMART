@@ -4,9 +4,9 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
 
-const BirthPlaceHome = ({ config, onSelect, userType, formData, 
+const BirthPlaceHome = ({ config, onSelect, userType, formData,
   adrsPincode, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl,
-  wardNo,setWardNo,adrsPostOffice, setAdrsPostOffice, setAdrsPincode, setAdrsHouseNameEn, setAdrsHouseNameMl, setAdrsLocalityNameEn,
+  wardNo, setWardNo, adrsPostOffice, setAdrsPostOffice, setAdrsPincode, setAdrsHouseNameEn, setAdrsHouseNameMl, setAdrsLocalityNameEn,
   setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues
 
 }) => {
@@ -59,7 +59,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
     cmbWardNoFinal.push(wardmst);
   });
- 
+
   useEffect(() => {
 
     if (isInitialRender) {
@@ -70,7 +70,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
         setIsInitialRender(false);
       }
     }
-  }, [ localbodies, PostOfficevalues, isInitialRender]);
+  }, [localbodies, PostOfficevalues, isInitialRender]);
   const onSkip = () => onSelect();
 
   function setSelectAdrsPostOffice(value) {
