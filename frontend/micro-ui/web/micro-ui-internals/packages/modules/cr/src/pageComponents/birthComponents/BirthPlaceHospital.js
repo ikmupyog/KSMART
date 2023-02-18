@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
   selectHospitalNameMl,
 }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -28,7 +29,10 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   useEffect(() => {
 
     if (isInitialRender) {
-      if (hospitalName) {
+      if (formData?.ChildDetails?.hospitalName){
+        selectHospitalNameMl(hospitalNameMl);
+        setIsInitialRender(false);
+      } else {
         cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === hospitalName.hospitalName);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);

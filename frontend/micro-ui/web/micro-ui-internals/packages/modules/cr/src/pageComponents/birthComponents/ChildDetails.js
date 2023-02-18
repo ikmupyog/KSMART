@@ -69,7 +69,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? formData?.ChildDetails?.vehicleHaltPlaceMl : "");
   const [vehicleToMl, setvehicleToMl] = useState(formData?.ChildDetails?.vehicleToMl ? formData?.ChildDetails?.vehicleToMl : "");
   const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? formData?.ChildDetails?.vehicleDesDetailsEn : "");
-  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");  
+  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");
 
   const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType ? formData?.ChildDetails?.publicPlaceType : "");
   const [localityNameEn, setlocalityNameEn] = useState(formData?.ChildDetails?.localityNameEn ? formData?.ChildDetails?.localityNameEn : "");
@@ -108,7 +108,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
   const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.DeliveryMethodSub ? false : false);
   const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.ChildDetails?.medicalAttensionSub ? false : false);
-  
+
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
@@ -420,6 +420,11 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
+      console.log(cb);
+      console.log(value);
+      let hour = value;
+      let period = hour > 12 ? "PM" : "AM";
+      console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -723,8 +728,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         setplaceTypepEnError(false);
       }
     }
-   
-    if (birthWeight == null || birthWeight == "" || birthWeight == undefined) {
+    if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
       let BirthWeightCheck = birthWeight;
       if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
         validFlag = false;
@@ -738,7 +742,13 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       }
     }
     else {
-      setBirthWeightError(false);
+      setBirthWeightError(true);
+      validFlag = false;
+      setBirthWeightError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
     if (medicalAttensionSub == null || medicalAttensionSub == "" || medicalAttensionSub == undefined) {
       validFlag = false;
@@ -759,7 +769,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       }, 2000);
     } else {
       setPregnancyDurationStError(false);
-    }   
+    }
     if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
       validFlag = false;
       setDeliveryMethodStError(true);
@@ -769,7 +779,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       }, 2000);
     } else {
       setDeliveryMethodStError(false);
-    } 
+    }
     if (validFlag == true) {
       sessionStorage.setItem("stateId", stateId ? stateId : null);
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
@@ -905,7 +915,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
               <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
             </div>
@@ -923,7 +933,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             {ChildAadharHIde === true && (
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardLabel>
                 <TextInput
                   t={t}
@@ -975,6 +985,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               hospitalName={hospitalName}
               hospitalNameMl={hospitalNameMl}
               selectHospitalNameMl={selectHospitalNameMl}
+              formData={formData}
             />
           </div>
         )}
@@ -1310,10 +1321,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
               vehiHaltPlaceMlError ||
               admittedHospitalEnError || vehiDesDetailsEnError ||
               placeTypepEnError || localNameEnError || localNameMlError ||
-              MedicalAttensionSubStError ||  DeliveryMethodStError  ||  BirthWeightError
-                || PregnancyDurationStError 
-                  
-             
+              MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
+              || PregnancyDurationStError
+
+
             }
             label={
               AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
@@ -1329,8 +1340,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 vehiHaltPlaceMlError ||
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
-                MedicalAttensionSubStError ||  DeliveryMethodStError  ||  BirthWeightError
-                || PregnancyDurationStError 
+                MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
+                || PregnancyDurationStError
                 ?
                 AadharError
                   ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1354,12 +1365,12 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                                                       : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
                                                         : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
                                                           : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                                                            : MedicalAttensionSubStError  ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                            : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
                                                               : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                : DeliveryMethodStError  ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-                 
-                                                            
-                                                            : setToast(false)
+                                                                : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+
+
+                                                                  : setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
