@@ -244,6 +244,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       setDeceasedMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
+
   function setSelectDeceasedLastNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -411,7 +412,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           />;
         }
         if (naturetype === "INSTITUTION") {
-          <Hospital DeathPlaceType={DeathPlaceType}
+          <Institution 
+          DeathPlaceType={DeathPlaceType}
+          DeathPlaceInstId={DeathPlaceInstId}
           InstitutionIdMl={InstitutionIdMl} />;
         }
         if (naturetype === "HOME") {
@@ -563,7 +566,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
       sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-      sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl.DeathPlaceInstId : null);
+      sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl. InstitutionIdMl: null);
       
     }
     if (DeathPlace.code === "HOME") {
@@ -782,6 +785,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               DeathPlaceType={DeathPlaceType}
               DeathPlaceInstId={DeathPlaceInstId}
               setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
+              InstitutionIdMl={InstitutionIdMl} 
+              setInstitutionIdMl = {setInstitutionIdMl}
+              
             />
           </div>
         )}

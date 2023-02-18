@@ -71,14 +71,15 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     const columns = useMemo( () => ([
         {
           Header: t("CR_COMMON_COL_APP_NO"),
-          accessor: "applicationno",
+          accessor: "applicationNumber",
           disableSortBy: true,
           Cell: ({ row }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.applicationno}`}>
-                    {row.original.applicationno}
+                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.applicationNumber}`}>
+                    {/* {row.original.applicationNumber} */}
+                    {row.original.applicationNumber}
                   </Link>
                 </span>
               </div>
@@ -92,9 +93,8 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         },
         {
             Header: t("CR_COMMON_COL_DOB"),
-            disableSortBy: true,
-            
-            accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.childDOB) : ""),
+            disableSortBy: true,            
+            accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
         },
         // {
         //     Header: t("TL_APPLICATION_TYPE_LABEL"),
@@ -104,13 +104,13 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         {
           Header: t("CR_COMMON_COL_MOTHER_NAME"),
           disableSortBy: true,
-          accessor: (row) => GetCell(row.ParentsDetails.MotherFirstNameEn  || "-"),
+          accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"]  || "-"),
         
         },
         {
             Header: t("CR_COMMON_COL_FATHER_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.ParentsDetails.FatherFirstNameEn  || "-"),
+            accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"]  || "-"),
         },
         
         // {

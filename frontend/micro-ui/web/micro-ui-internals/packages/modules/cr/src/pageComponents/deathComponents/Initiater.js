@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const Initiater = ({ config, onSelect, userType, formData }) => {

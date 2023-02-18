@@ -288,9 +288,10 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "InitiatorinfoDetails",
-        nextStep: "informer-details",
+        nextStep: null,
         type: "component",
         hideInEmployee: true,
+        hideInCitizen: false,
       },  
       {
         route: "informer-details",
@@ -306,7 +307,8 @@ export const newConfig = [
         key: "InformarHosInstDetails",
         nextStep: null,
         type: "component",
-        hideInEmployee: true,
+        hideInEmployee: false,
+        hideInCitizen: true,
       },  
       {
         route: "multiple-birth",

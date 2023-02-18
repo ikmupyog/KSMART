@@ -1,21 +1,52 @@
-import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton,TextArea } from "@egovernments/digit-ui-react-components";
+import React, { useState, useEffect } from "react";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton, TextArea } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType, selectDeathPlaceType,VehicleNumber, setVehicleNumber,
-  VehicleFromplaceEn, setVehicleFromplaceEn,VehicleToPlaceEn, setVehicleToPlaceEn,GeneralRemarks, setGeneralRemarks,VehicleFirstHaltEn, setVehicleFirstHaltEn,
-  VehicleFirstHaltMl, setVehicleFirstHaltMl,VehicleHospitalEn, setSelectedVehicleHospitalEn,DeathPlaceWardId, setDeathPlaceWardId,VehicleFromplaceMl, setVehicleFromplaceMl,VehicleToPlaceMl, setVehicleToPlaceMl}) => {
+const DeathPlaceVehicle = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  DeathPlaceType,
+  selectDeathPlaceType,
+  VehicleNumber,
+  setVehicleNumber,
+  VehicleFromplaceEn,
+  setVehicleFromplaceEn,
+  VehicleToPlaceEn,
+  setVehicleToPlaceEn,
+  GeneralRemarks,
+  setGeneralRemarks,
+  VehicleFirstHaltEn,
+  setVehicleFirstHaltEn,
+  VehicleFirstHaltMl,
+  setVehicleFirstHaltMl,
+  VehicleHospitalEn,
+  setSelectedVehicleHospitalEn,
+  DeathPlaceWardId,
+  setDeathPlaceWardId,
+  VehicleFromplaceMl,
+  setVehicleFromplaceMl,
+  VehicleToPlaceMl,
+  setVehicleToPlaceMl,
+}) => {
   const stateId = Digit.ULBService.getStateId();
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const { t } = useTranslation();
   let validation = {};
+  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
 
   const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
   // const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  
+
   // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.DeathPlaceVehicle?.DeathPlaceType);
   // const [VehicleNumber, setVehicleNumber] = useState(formData?.DeathPlaceVehicle?.VehicleNumber);
   // const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.DeathPlaceVehicle?.VehicleFromplaceEn);
@@ -29,6 +60,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
   // const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.Vehicle?.DeathPlaceWardId);
 
   // let naturetypecmbvalue = null;
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   let cmbhospital = [];
   hospital &&
@@ -42,31 +74,47 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
   //   LBType["common-masters"].LBType.map((ob) => {
   //     cmbLBType.push(ob);
   //   });
+  let cmbLB = [];
+  localbodies &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants.map((ob) => {
+      cmbLB.push(ob);
+    });
+    let currentLB=[];
+  useEffect(() => {
+    if (isInitialRender) {
+      if (cmbLB.length > 0) {
+        currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+        setVehicleFirstHaltEn(currentLB[0].name);
+        setIsInitialRender(false);
+      }
+    }
+  }, [localbodies, isInitialRender]);
   let cmbVehicle = [];
   Vehicle &&
     Vehicle["birth-death-service"] &&
     Vehicle["birth-death-service"].VehicleType.map((ob) => {
       cmbVehicle.push(ob);
     });
-    let Zonal = [];
-    let cmbWardNo = [];
-    let cmbWardNoFinal = [];
-    boundaryList &&
-      boundaryList["egov-location"] &&
-      boundaryList["egov-location"].TenantBoundary.map((ob) => {
-        if (ob?.hierarchyType.code === "REVENUE") {
-          Zonal.push(...ob.boundary.children);
-          ob.boundary.children.map((obward) => {
-            cmbWardNo.push(...obward.children);
-          });
-        }
-      });
-  
-    cmbWardNo.map((wardmst) => {
-      wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
-      wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
-      cmbWardNoFinal.push(wardmst);
+  let Zonal = [];
+  let cmbWardNo = [];
+  let cmbWardNoFinal = [];
+  boundaryList &&
+    boundaryList["egov-location"] &&
+    boundaryList["egov-location"].TenantBoundary.map((ob) => {
+      if (ob?.hierarchyType.code === "REVENUE") {
+        Zonal.push(...ob.boundary.children);
+        ob.boundary.children.map((obward) => {
+          cmbWardNo.push(...obward.children);
+        });
+      }
     });
+
+  cmbWardNo.map((wardmst) => {
+    wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
+    wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
+    cmbWardNoFinal.push(wardmst);
+  });
   const onSkip = () => onSelect();
 
   function setselectDeathPlaceType(value) {
@@ -79,59 +127,54 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleFromplaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+      setVehicleFromplaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
-    
   }
   function setSelectVehicleToPlaceEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleToPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+      setVehicleToPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
-   
   }
+
   function setSelectVehicleFirstHaltEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleFirstHaltEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
-    } 
+      setVehicleFirstHaltEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
   }
   function setSelectVehicleFirstHaltMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleFirstHaltMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+      setVehicleFirstHaltMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
     }
-   
   }
 
   function setSelectVehicleFromplaceMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleFromplaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+      setVehicleFromplaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
     }
-    
   }
   function setSelectVehicleToPlaceMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleToPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+      setVehicleToPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
     }
-       
   }
   function setSelectGeneralRemarks(e) {
     setGeneralRemarks(e.target.value);
   }
 
-   function setSelectDeathPlaceWardId(value) {
-      setDeathPlaceWardId(value);
-    }
-    
-    
+  function setSelectDeathPlaceWardId(value) {
+    setDeathPlaceWardId(value);
+  }
+
   function selectVehicleHospitalEn(value) {
     setSelectedVehicleHospitalEn(value);
   }
@@ -148,7 +191,6 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
     // sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
     // sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
     // sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
-    
 
     onSelect(config.key, {
       // DeathPlaceType,
@@ -164,22 +206,24 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
       // DeathPlaceWardId
     });
   };
+  if (islocalbodiesLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-      <div className="row">
-        <div className="col-md-12" >
-            <h1 className="headingh1" >
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DEATH_VEHICLE")}`}
-                </span> 
-            </h1>
-        </div>
-    </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-3">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DEATH_VEHICLE")}`}</span>
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_VEHICLE_TYPE")}`}
                 <span className="mandatorycss">*</span>
@@ -195,7 +239,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                 placeholder={`${t("CR_VEHICLE_TYPE")}`}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_VEHICLE_REGISTRATION_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -212,26 +256,52 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                 placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
               />
-            </div>
-            <div className="col-md-3">
+            </div>{" "}
+            <div className="col-md-4">
               <CardLabel>
-                {`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
+                {`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="VehicleFirstHaltEn"
+                name="vehicleHaltPlace"
                 value={VehicleFirstHaltEn}
                 onChange={setSelectVehicleFirstHaltEn}
-                disable={isEdit}
-                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT") })}
+                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
+                disable={true}
+                {...(validation = {
+                  pattern: "^[a-zA-Z-.0-9`' ]*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_EN"),
+                })}
               />
             </div>
-            <div className="col-md-3">
+            {/* <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="vehicleHaltPlace"
+                value={VehicleFirstHaltEn}
+                onChange={setSelectVehicleFirstHaltEn}
+                // placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
+                disable={true}
+                {...(validation = {
+                  pattern: "^[a-zA-Z-.0-9`' ]*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_EN"),
+                })}
+              />
+            </div> */}
+            {/* <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}
                 <span className="mandatorycss">*</span>
@@ -253,7 +323,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                   title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_ML"),
                 })}
               />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="row">
@@ -333,8 +403,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
 
         <div className="row">
           <div className="col-md-12">
-            
-            <div className="col-md-3">
+            <div className="col-md-6">
               <CardLabel>{`${t("CR_ADMITTED_HOSPITAL_EN")}`}</CardLabel>
               <Dropdown
                 t={t}
@@ -347,7 +416,7 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                 placeholder={`${t("CR_ADMITTED_HOSPITAL_EN")}`}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-6">
               <CardLabel>
                 {`${t("CS_COMMON_WARD")}`}
                 <span className="mandatorycss">*</span>
@@ -360,11 +429,15 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                 select={setSelectDeathPlaceWardId}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
-            </div>        
+            </div>
+            </div>
+            </div>
+            <div className="row">
+          <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
                 {`${t("CR_OTHER_DETAILS_EN")}`}
-                <span className="mandatorycss">*</span>
+                
               </CardLabel>
               <TextArea
                 t={t}
@@ -376,11 +449,11 @@ const DeathPlaceVehicle = ({ config, onSelect, userType,formData,DeathPlaceType,
                 onChange={setSelectGeneralRemarks}
                 disable={isEdit}
                 placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
               />
             </div>
+            </div>
           </div>
-        </div>
        
       </FormStep>
     </React.Fragment>
