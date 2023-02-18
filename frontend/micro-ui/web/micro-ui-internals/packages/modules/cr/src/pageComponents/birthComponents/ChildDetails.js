@@ -23,6 +23,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  const [PostOfficevalues, setPostOfficevalues] = useState(null);
   // const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
   // const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
 
@@ -220,7 +221,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         }
         if (placeOfBirth === "HOME") {
           <BirthPlaceHome
-            adrsPostOffice={adrsPostOffice}
             adrsPincode={adrsPincode}
             adrsHouseNameEn={adrsHouseNameEn}
             adrsHouseNameMl={adrsHouseNameMl}
@@ -229,6 +229,8 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
             adrsStreetNameEn={adrsStreetNameEn}
             adrsStreetNameMl={adrsStreetNameMl}
             wardNo={wardNo}
+            adrsPostOffice={adrsPostOffice}
+            PostOfficevalues={PostOfficevalues}
           />;
         }
         if (placeOfBirth === "VEHICLE") {
@@ -1003,25 +1005,27 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         )}
         {value === "HOME" && (
           <div>
-            <BirthPlaceHome
-              adrsPostOffice={adrsPostOffice}
-              adrsPincode={adrsPincode}
+            <BirthPlaceHome      
               adrsHouseNameEn={adrsHouseNameEn}
               adrsHouseNameMl={adrsHouseNameMl}
-              adrsLocalityNameEn={adrsLocalityNameEn}
-              adrsLocalityNameMl={adrsLocalityNameMl}
-              adrsStreetNameEn={adrsStreetNameEn}
-              adrsStreetNameMl={adrsStreetNameMl}
-              wardNo={wardNo}
-              setAdrsPostOffice={setAdrsPostOffice}
-              setAdrsPincode={setAdrsPincode}
               setAdrsHouseNameEn={setAdrsHouseNameEn}
               setAdrsHouseNameMl={setAdrsHouseNameMl}
+              adrsLocalityNameEn={adrsLocalityNameEn}
+              adrsLocalityNameMl={adrsLocalityNameMl}
               setAdrsLocalityNameEn={setAdrsLocalityNameEn}
               setAdrsLocalityNameMl={setAdrsLocalityNameMl}
+              adrsStreetNameEn={adrsStreetNameEn}
+              adrsStreetNameMl={adrsStreetNameMl}
               setAdrsStreetNameEn={setAdrsStreetNameEn}
-              setAdrsStreetNameMl={setAdrsStreetNameMl}
+              setAdrsStreetNameMl={setAdrsStreetNameMl}      
+              wardNo={wardNo}
               setWardNo={setWardNo}
+              adrsPostOffice={adrsPostOffice}
+              setAdrsPostOffice={setAdrsPostOffice}
+              adrsPincode={adrsPincode}
+              setAdrsPincode={setAdrsPincode}      
+              PostOfficevalues={PostOfficevalues}
+              setPostOfficevalues={setPostOfficevalues}   
             />
           </div>
         )}
