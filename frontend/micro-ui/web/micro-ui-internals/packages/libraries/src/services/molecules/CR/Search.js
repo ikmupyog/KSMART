@@ -39,81 +39,75 @@ export const CRsearch = {
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRService.CRsearch({ tenantId, filters });
-    console.log(response.BirthDetails);
-    return response.BirthDetails[0];
+    console.log(response.ChildDetails);
+    return response.ChildDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await CRService.CRsearch({ tenantId, filters });
-    return response.BirthDetails;
+    return response.ChildDetails;
   },
 
-  applicationDetails: async (t, tenantId, applicationNo, userType) => {
-    console.log("applicationNo" + applicationNo);
-    const filter = { applicationNo };
+  applicationDetails: async (t, tenantId, applicationNumber, userType) => {
+    // console.log("applicationNumber" + applicationNumber);
+    const filter = { applicationNumber };
     const response = await CRsearch.application(tenantId, filter);
+    console.log(response);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
     if (response?.licenseNumber) {
-      const licenseNumbers = response?.applicationno;
-      const filters = { licenseNumbers, offset: 0 };
+      const birthNumbers = response?.applicationNumber;
+      const filters = { birthNumbers, offset: 0 };
       numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
     }
-    // let propertyAddress = "";
-    // if (propertyDetails && propertyDetails?.Properties.length) {
-    //   propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
-    // }
     let employeeResponse = [];
     const Birthdetails = {
       title: "Birth Application Summary Details",
-      asSectionHeader: true,
-      
+      asSectionHeader: true,      
     }
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationno || "NA" },
-        { title: "CR_BIRTH_CHILDNAME_LABEL", value: response?.ChildDetails.childFirstNameEn + response?.ChildDetails.childMiddleNameEn + response?.ChildDetails.childLastNameEn },
-        { title: "CR_BIRTH_GENDER_LABEL", value: response?.ChildDetails.gender.code},
+        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },
+        { title: "CR_BIRTH_CHILDNAME_LABEL", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
+        { title: "CR_BIRTH_GENDER_LABEL", value: response?.gender},
         { title: "CR_BIRTH_DOB_LABEL", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "CR_BIRTH_PLACE_LABEL", value: response?.ChildDetails.hospitalName.hospitalName},
-
-      ],
+        { title: "CR_BIRTH_PLACE_LABEL", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},       
+       ],
     };
     const parentInfo = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
-        { title: "CR_BIRTH_MOTHERNAME_LABEL", value: response?.ParentsDetails.MotherFirstNameEn },
-        { title: "CR_BIRTH_FATHERNAME_LABEL", value: response?.ParentsDetails.FatherFirstNameEn },
-        
+        { title: "CR_BIRTH_MOTHER_NAME_LABEL", value: response?.ParentsDetails?.motherFirstNameEn + " / " + response?.ParentsDetails?.motherFirstNameMl || "NA"},
+        { title: "CR_BIRTH_FATHER_NAME_LABEL", value: response?.ParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},       
       ],
     };
     const AddressBirthDetailsInfo = {
       title: "CR_ADDRESS_INFORMATION_HEADER",
-      values: [
-        { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPostOffice.name || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaDistrict.name|| "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERS_STATE_LABEL", value: response?.AddressBirthDetails. AddressBirthDetails.presentaddressStateName.name || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails.presentaddressCountry.name || "CR_NOT_RECORDED"},
+      // values: [
+      //   { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPostOffice.name || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaDistrict.name|| "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERS_STATE_LABEL", value: response?.AddressBirthDetails. AddressBirthDetails.presentaddressStateName.name || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails.presentaddressCountry.name || "CR_NOT_RECORDED"},
 
-        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPostOffice.name || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict.name|| "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.AddressBirthDetails.permtaddressStateName.name || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry.name || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPostOffice.name || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict.name|| "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.AddressBirthDetails.permtaddressStateName.name || "CR_NOT_RECORDED"},
+      //   { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry.name || "CR_NOT_RECORDED"},
         
         
-      ],
+      // ],
     };
     // const fatherInfo = {
     //   title: "CR_BIRTH_FATHER_INFORMATION_HEADER",
@@ -144,12 +138,12 @@ export const CRsearch = {
     // };
     const statisticalInfo = {
       title: "CR_STATSTICAL_INFORMATION_HEADER",
-      values: [
-        { title: "CR_STATSTICAL_WEIGHT_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
-        { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.birthStatistical.height_of_child || "NA" },
-        { title: "CR_STATSTICAL_PWEEK_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
-        { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
-      ],
+      // values: [
+      //   { title: "CR_STATSTICAL_WEIGHT_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
+      //   { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.birthStatistical.height_of_child || "NA" },
+      //   { title: "CR_STATSTICAL_PWEEK_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
+      //   { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
+      // ],
     };
     // const tradeUnits = {
     //   title: "TL_TRADE_UNITS_HEADER",
@@ -321,9 +315,9 @@ export const CRsearch = {
     // }
     response && employeeResponse.push(Birthdetails);
     response && employeeResponse.push(childdetails);
-    response && employeeResponse.push(fatherInfo);
-    response && employeeResponse.push(motherInfo);
-    response && employeeResponse.push(addressInfo);
+    response && employeeResponse.push(parentInfo);
+    // response && employeeResponse.push(motherInfo);
+    // response && employeeResponse.push(addressInfo);
     response && employeeResponse.push(statisticalInfo);
     // response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
     // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);

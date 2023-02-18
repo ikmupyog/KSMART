@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect  } from "react";
+import React, { useState, useContext, useEffect, Loader } from "react";
 import {
   FormStep,
   CardLabel,
@@ -18,7 +18,6 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
 
   const RadioButton = ({ selected, handleChange }) => {
     return (
-      
       <div className="statistical-radio">
         <div>
           <input
@@ -115,7 +114,6 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "YES", code: "CR_YES" },
     { i18nKey: "NO", code: "CR_NO" },
   ];
-  
 
   // // const handleRadioChangeTabacco = (e) => {
   // //   setisTabacco(e.target.value);
@@ -135,20 +133,24 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const { data: deathmain = {}, isLoadingA } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCause");
   const { data: deathsub = {}, isLoadingsub } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   const { data: mannerOfDeath = {}, isLoadingmanner } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MannerOfDeath");
-  const { data: pregnantDeceased = {}, isLoadingPregnant } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PregnantDeceased");
+  const { data: pregnantDeceased = {}, isLoadingPregnant } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+    stateId,
+    "birth-death-service",
+    "PregnantDeceased"
+  );
   const { data: birthStatus = {}, isLoadingBirthStatus } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "BirthStatus");
   const [isInitialRender, setIsInitialRender] = useState(true);
   let cmbbirthstatus = [];
   birthStatus &&
-  birthStatus["birth-death-service"] &&
-  birthStatus["birth-death-service"].PregnantDeceased.map((ob) => {
-    cmbbirthstatus.push(ob);
+    birthStatus["birth-death-service"] &&
+    birthStatus["birth-death-service"].PregnantDeceased.map((ob) => {
+      cmbbirthstatus.push(ob);
     });
   let cmbpregnantDeceased = [];
   pregnantDeceased &&
-  pregnantDeceased["birth-death-service"] &&
-  pregnantDeceased["birth-death-service"].PregnantDeceased.map((ob) => {
-    cmbpregnantDeceased.push(ob);
+    pregnantDeceased["birth-death-service"] &&
+    pregnantDeceased["birth-death-service"].PregnantDeceased.map((ob) => {
+      cmbpregnantDeceased.push(ob);
     });
   let cmbAttention = [];
   attention &&
@@ -174,6 +176,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     mannerOfDeath["birth-death-service"].MannerOfDeath.map((ob) => {
       cmbmannerofdeath.push(ob);
     });
+    console.log(mannerOfDeath);
+  
 
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   const [MedicalAttentionType, setMedicalAttentionType] = useState(
@@ -344,8 +348,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   //       naturetype = MedicalAttentionType.code;
   //       setValue(naturetype);
   //       if (naturetype === "MEDICAL_ATTENTION_TYPE_INSTITUTION") {
-         
-  //         // <Institution DeathCauseMain={DeathCauseMain} 
+
+  //         // <Institution DeathCauseMain={DeathCauseMain}
   //         // DeathCauseMainCustom={DeathCauseMainCustom}
   //         // DeathCauseMainInterval = {DeathCauseMainInterval}
   //         // DeathCauseMainTimeUnit= {DeathCauseMainTimeUnit}
@@ -358,11 +362,11 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   //         // DeathCauseSubInterval2 = {DeathCauseSubInterval2}
   //         // DeathCauseSubTimeUnit2 = {DeathCauseSubTimeUnit2}
   //         // />;
-          
+
   //       }
   //     }
   //   }
-  
+
   //   MedicalAttentionType.code === "MEDICAL_ATTENTION_TYPE_INSTITUTION"
   // });
 
@@ -393,18 +397,18 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("TobaccoType", SmokingType ? SmokingType : null);
     sessionStorage.setItem("AlcoholType", AlcoholType ? AlcoholType : null);
 
-      sessionStorage.setItem("DeathCauseMain", DeathCauseMain ? DeathCauseMain.code : null);
-      sessionStorage.setItem("DeathCauseMainCustom", DeathCauseMainCustom ? DeathCauseMainCustom : null);
-      sessionStorage.setItem("DeathCauseMainInterval", DeathCauseMainInterval ? DeathCauseMainInterval : null);
-      sessionStorage.setItem("DeathCauseMainTimeUnit", DeathCauseMainTimeUnit ? DeathCauseMainTimeUnit.code : null);
-      sessionStorage.setItem("DeathCauseSub", DeathCauseSub ? DeathCauseSub.code : null);
-      sessionStorage.setItem("DeathCauseSubCustom", DeathCauseSubCustom ? DeathCauseSubCustom : null);
-      sessionStorage.setItem("DeathCauseSubInterval", DeathCauseSubInterval ? DeathCauseSubInterval : null);
-      sessionStorage.setItem("DeathCauseSubTimeUnit", DeathCauseSubTimeUnit ? DeathCauseSubTimeUnit.code : null);
-      sessionStorage.setItem("DeathCauseSub2", DeathCauseSub2 ? DeathCauseSub2.code : null);
-      sessionStorage.setItem("DeathCauseSubCustom2", DeathCauseSubCustom2 ? DeathCauseSubCustom2 : null);
-      sessionStorage.setItem("DeathCauseSubInterval2", DeathCauseSubInterval2 ? DeathCauseSubInterval2 : null);
-      sessionStorage.setItem("DeathCauseSubTimeUnit2", DeathCauseSubTimeUnit2 ? DeathCauseSubTimeUnit2.code : null);
+    sessionStorage.setItem("DeathCauseMain", DeathCauseMain ? DeathCauseMain.code : null);
+    sessionStorage.setItem("DeathCauseMainCustom", DeathCauseMainCustom ? DeathCauseMainCustom : null);
+    sessionStorage.setItem("DeathCauseMainInterval", DeathCauseMainInterval ? DeathCauseMainInterval : null);
+    sessionStorage.setItem("DeathCauseMainTimeUnit", DeathCauseMainTimeUnit ? DeathCauseMainTimeUnit.code : null);
+    sessionStorage.setItem("DeathCauseSub", DeathCauseSub ? DeathCauseSub.code : null);
+    sessionStorage.setItem("DeathCauseSubCustom", DeathCauseSubCustom ? DeathCauseSubCustom : null);
+    sessionStorage.setItem("DeathCauseSubInterval", DeathCauseSubInterval ? DeathCauseSubInterval : null);
+    sessionStorage.setItem("DeathCauseSubTimeUnit", DeathCauseSubTimeUnit ? DeathCauseSubTimeUnit.code : null);
+    sessionStorage.setItem("DeathCauseSub2", DeathCauseSub2 ? DeathCauseSub2.code : null);
+    sessionStorage.setItem("DeathCauseSubCustom2", DeathCauseSubCustom2 ? DeathCauseSubCustom2 : null);
+    sessionStorage.setItem("DeathCauseSubInterval2", DeathCauseSubInterval2 ? DeathCauseSubInterval2 : null);
+    sessionStorage.setItem("DeathCauseSubTimeUnit2", DeathCauseSubTimeUnit2 ? DeathCauseSubTimeUnit2.code : null);
 
     onSelect(config.key, {
       MedicalAttentionType,
@@ -431,8 +435,12 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
       TobaccoType,
       AlcoholType,
     });
+
   };
   console.log(formData);
+  // if (isLoading || isLoadingA || isLoadingsub || isLoadingmanner || isLoadingPregnant || isLoadingBirthStatus) {
+  //   return <Loader></Loader>;
+  // } 
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
@@ -543,44 +551,44 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
           </div>
           {/*  INSTITUTION */}
           {/* {value === "MEDICAL_ATTENTION_TYPE_INSTITUTION" && ( */}
-            <div>
-              <div className="row">
-                <div className="col-md-12">
-                  <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_IMMEDIATE_CAUSE")}`}</span>{" "}
-                  </h1>
-                </div>
+          <div>
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_IMMEDIATE_CAUSE")}`}</span>{" "}
+                </h1>
               </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}</CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={false}
-                      option={cmbDeathmain}
-                      selected={DeathCauseMain}
-                      select={selectDeathCauseMain}
-                      disabled={isEdit}
-                      placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}`}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      // optionKey="i18nKey"
-                      name="DeathCauseMainCustom"
-                      value={DeathCauseMainCustom}
-                      onChange={selectDeathCauseMainCustom}
-                      disable={isEdit}
-                      placeholder={`${t(" ")}`}
-                    />
-                  </div>
-                  {/* <div className="col-md-3">
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}</CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={false}
+                    option={cmbDeathmain}
+                    selected={DeathCauseMain}
+                    select={selectDeathCauseMain}
+                    disabled={isEdit}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}`}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    // optionKey="i18nKey"
+                    name="DeathCauseMainCustom"
+                    value={DeathCauseMainCustom}
+                    onChange={selectDeathCauseMainCustom}
+                    disable={isEdit}
+                    placeholder={`${t(" ")}`}
+                  />
+                </div>
+                {/* <div className="col-md-3">
               <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER")}</CardLabel>
               <TextInput
                 // t={t}
@@ -595,163 +603,163 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
               />
             </div> */}
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      // optionKey="i18nKey"
-                      name="DeathCauseMainInterval"
-                      value={DeathCauseMainInterval}
-                      onChange={selectDeathCauseMainInterval}
-                      disable={isEdit}
-                      placeholder={`${t(" ")}`}
-                      // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="code"
-                      isMandatory={false}
-                      option={minutes}
-                      selected={DeathCauseMainTimeUnit}
-                      select={selectDeathCauseMainTimeUnit}
-                      disabled={isEdit}
-                      placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
-                    />
-                  </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    // optionKey="i18nKey"
+                    name="DeathCauseMainInterval"
+                    value={DeathCauseMainInterval}
+                    onChange={selectDeathCauseMainInterval}
+                    disable={isEdit}
+                    placeholder={`${t(" ")}`}
+                    // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                  />
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_UNDERLYING_CAUSE")}`}</span>{" "}
-                  </h1>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_A")}</CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={false}
-                      option={cmbDeathsub}
-                      selected={DeathCauseSub}
-                      select={selectDeathCauseSub}
-                      disabled={isEdit}
-                      placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="DeathCauseSubCustom"
-                      value={DeathCauseSubCustom}
-                      onChange={selectDeathCauseSubCustom}
-                      disable={isEdit}
-                      placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}`}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="DeathCauseSubInterval"
-                      value={DeathCauseSubInterval}
-                      onChange={selectDeathCauseSubInterval}
-                      disable={isEdit}
-                      // placeholder={`${t(" ")}`}
-                      // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="code"
-                      isMandatory={false}
-                      option={days}
-                      selected={DeathCauseSubTimeUnit}
-                      select={selectDeathCauseSubTimeUnit}
-                      disabled={isEdit}
-                      placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_B")}</CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={false}
-                      option={cmbDeathsub}
-                      selected={DeathCauseSub2}
-                      select={selectDeathCauseSub2}
-                      disabled={isEdit}
-                      placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="DeathCauseSubCustom2"
-                      value={DeathCauseSubCustom2}
-                      onChange={selectDeathCauseSubCustom2}
-                      disable={isEdit}
-                      placeholder={`${t(" ")}`}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="DeathCauseSubInterval2"
-                      value={DeathCauseSubInterval2}
-                      onChange={selectDeathCauseSubInterval2}
-                      disable={isEdit}
-                      placeholder={`${t(" ")}`}
-                      // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="code"
-                      isMandatory={false}
-                      option={months}
-                      selected={DeathCauseSubTimeUnit2}
-                      select={selectDeathCauseSubTimeUnit2}
-                      disabled={isEdit}
-                      placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
-                      {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MONTH") })}
-                    />
-                  </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="code"
+                    isMandatory={false}
+                    option={minutes}
+                    selected={DeathCauseMainTimeUnit}
+                    select={selectDeathCauseMainTimeUnit}
+                    disabled={isEdit}
+                    placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                  />
                 </div>
               </div>
             </div>
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_UNDERLYING_CAUSE")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_A")}</CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={false}
+                    option={cmbDeathsub}
+                    selected={DeathCauseSub}
+                    select={selectDeathCauseSub}
+                    disabled={isEdit}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="DeathCauseSubCustom"
+                    value={DeathCauseSubCustom}
+                    onChange={selectDeathCauseSubCustom}
+                    disable={isEdit}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}`}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="DeathCauseSubInterval"
+                    value={DeathCauseSubInterval}
+                    onChange={selectDeathCauseSubInterval}
+                    disable={isEdit}
+                    // placeholder={`${t(" ")}`}
+                    // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="code"
+                    isMandatory={false}
+                    option={days}
+                    selected={DeathCauseSubTimeUnit}
+                    select={selectDeathCauseSubTimeUnit}
+                    disabled={isEdit}
+                    placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_B")}</CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={false}
+                    option={cmbDeathsub}
+                    selected={DeathCauseSub2}
+                    select={selectDeathCauseSub2}
+                    disabled={isEdit}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="DeathCauseSubCustom2"
+                    value={DeathCauseSubCustom2}
+                    onChange={selectDeathCauseSubCustom2}
+                    disable={isEdit}
+                    placeholder={`${t(" ")}`}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="DeathCauseSubInterval2"
+                    value={DeathCauseSubInterval2}
+                    onChange={selectDeathCauseSubInterval2}
+                    disable={isEdit}
+                    placeholder={`${t(" ")}`}
+                    // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="code"
+                    isMandatory={false}
+                    option={months}
+                    selected={DeathCauseSubTimeUnit2}
+                    select={selectDeathCauseSubTimeUnit2}
+                    disabled={isEdit}
+                    placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                    {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MONTH") })}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
           {/* )} */}
         </div>
         <div className="row">
@@ -777,7 +785,6 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t(" ")}`}
                 {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
               />
-              
             </div>
           </div>
         </div>

@@ -89,6 +89,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.InformationDeath?.HospitalNameMl);
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
   // Home
   const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId);
   const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode);
@@ -243,6 +244,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       setDeceasedMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
+
   function setSelectDeceasedLastNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -410,7 +412,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           />;
         }
         if (naturetype === "INSTITUTION") {
-          <Hospital DeathPlaceType={DeathPlaceType} />;
+          <Institution 
+          DeathPlaceType={DeathPlaceType}
+          DeathPlaceInstId={DeathPlaceInstId}
+          InstitutionIdMl={InstitutionIdMl} />;
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
@@ -561,6 +566,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
       sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
+      sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl. InstitutionIdMl: null);
+      
     }
     if (DeathPlace.code === "HOME") {
       sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
@@ -635,6 +642,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       HospitalNameMl,
       DeathPlaceTypecode,
       DeathPlaceInstId,
+      InstitutionIdMl,
       institutionNameCode,
       DeathPlaceHomehoueNameEn,
       DeathPlaceHomehoueNameMl,
@@ -777,6 +785,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               DeathPlaceType={DeathPlaceType}
               DeathPlaceInstId={DeathPlaceInstId}
               setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
+              InstitutionIdMl={InstitutionIdMl} 
+              setInstitutionIdMl = {setInstitutionIdMl}
+              
             />
           </div>
         )}

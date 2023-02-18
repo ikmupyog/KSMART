@@ -5,7 +5,7 @@ import { MdmsService } from "../../services/elements/MDMS";
 const useMDMS = {
   applicationTypes: (tenantId) =>
     useQuery(
-      [tenantId, "TL_MDMS_APPLICATION_STATUS"],
+      [tenantId, "CR_BIRTH_MDMS_APPLICATION_STATUS"],
       () =>
         MdmsService.getDataByCriteria(
           tenantId,
@@ -14,7 +14,7 @@ const useMDMS = {
               tenantId: tenantId,
               moduleDetails: [
                 {
-                  moduleName: "TradeLicense",
+                  moduleName: "birth-death-service",
                   masterDetails: [
                     {
                       name: "ApplicationType",
