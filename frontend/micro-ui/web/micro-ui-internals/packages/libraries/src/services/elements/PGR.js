@@ -41,10 +41,10 @@ export const PGRService = {
       params: { tenantId, ...params },
     }),
 
-  employeeSearch: (tenantId, roles) => {
+  employeeSearch: (tenantId, roles,uuid) => {
     return Request({
       url: Urls.EmployeeSearch,
-      params: { tenantId, roles },
+      params: { tenantId, roles,uuid },
       auth: true,
     });
   },
