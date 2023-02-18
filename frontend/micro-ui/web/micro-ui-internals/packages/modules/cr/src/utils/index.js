@@ -275,7 +275,7 @@ export const convertToBirthRegistration = (data = {}) => {
     ChildDetails: [
       {
         childDOB: Date.parse(data?.ChildDetails?.childDOB),
-        birthDateTime: data?.ChildDetails?.birthDateTime,
+        birthDateTime: parseInt(data?.ChildDetails?.birthDateTime),
         gender: data?.ChildDetails?.gender ? data?.ChildDetails?.gender.code : null,
         childAadharNo: data?.ChildDetails?.childAadharNo,
         isChildName: data?.ChildDetails?.isChildName ? data?.ChildDetails?.isChildName : false,
