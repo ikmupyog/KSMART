@@ -728,7 +728,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
         setplaceTypepEnError(false);
       }
     }
-    console.log(birthWeight);
     if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
       let BirthWeightCheck = birthWeight;
       if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {

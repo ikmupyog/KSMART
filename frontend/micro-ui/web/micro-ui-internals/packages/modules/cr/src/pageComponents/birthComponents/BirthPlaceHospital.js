@@ -32,6 +32,10 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
         cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === hospitalName.hospitalName);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
+      } else if (formData?.BirthPlaceHospitalDetails?.HospitalName){
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === hospitalName.hospitalName);
+        selectHospitalNameMl(cmbhospitalMl[0]);
+        setIsInitialRender(false);
       }
     }
   }, [cmbhospitalMl, isInitialRender])
