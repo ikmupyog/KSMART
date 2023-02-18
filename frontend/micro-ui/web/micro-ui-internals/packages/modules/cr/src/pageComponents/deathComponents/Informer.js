@@ -199,7 +199,7 @@ const Informer = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("TestDescription")} onChange={setDeclarationInfo} value={IsDeclarationInformer} checked={IsDeclarationInformer} />
+            <CheckBox label={t("CR_DECLARATION")} onChange={setDeclarationInfo} value={IsDeclarationInformer} checked={IsDeclarationInformer} />
             {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>
