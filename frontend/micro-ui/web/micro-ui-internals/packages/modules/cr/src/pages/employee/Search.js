@@ -32,7 +32,7 @@ const Search = ({ path }) => {
         enabled: !!(payload && Object.keys(payload).length > 0)
     }
     if (window.location.href.includes("/birthsearch") == true) {
-        const { data: { BirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: payload, config })
+        const { data: { ChildDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: payload, config })
         console.log(searchReult);
         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     } else {

@@ -46,7 +46,7 @@ export const CRService = {
     }),
     CRResistryDownloadBirth: ( id, source ) =>
     Request({
-      url: Urls.crbirth.registry_download,
+      url: Urls.cr.registry_download,
       data: {},
       useCache: false,
       method: "POST",
@@ -58,7 +58,7 @@ export const CRService = {
     }),
     CRRegistrySearchBirth: ({   filters }) =>
     Request({
-      url: Urls. crbirth.registry_search_birth,
+      url: Urls. cr.registry_search_birth,
       useCache: false,
       method: "POST",
       auth: true,
