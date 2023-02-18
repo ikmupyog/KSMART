@@ -77,9 +77,9 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.ChildDetails["applicationNumber"]}`}>
+                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.applicationNumber}`}>
                     {/* {row.original.applicationNumber} */}
-                    {row.original.ChildDetails["applicationNumber"]}
+                    {row.original.applicationNumber}
                   </Link>
                 </span>
               </div>
@@ -94,7 +94,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         {
             Header: t("CR_COMMON_COL_DOB"),
             disableSortBy: true,            
-            accessor: (row) => GetCell(row.ChildDetails["childDOB"] ? convertEpochToDateDMY(row.ChildDetails["childDOB"]) : ""),
+            accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
         },
         // {
         //     Header: t("TL_APPLICATION_TYPE_LABEL"),

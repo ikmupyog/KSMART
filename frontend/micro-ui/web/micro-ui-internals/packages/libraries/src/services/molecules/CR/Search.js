@@ -39,43 +39,39 @@ export const CRsearch = {
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRService.CRsearch({ tenantId, filters });
-    console.log(response.BirthDetails);
-    return response.BirthDetails[0];
+    console.log(response.ChildDetails);
+    return response.ChildDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await CRService.CRsearch({ tenantId, filters });
-    return response.BirthDetails;
+    return response.ChildDetails;
   },
 
-  applicationDetails: async (t, tenantId, applicationNo, userType) => {
-    console.log("applicationNo" + applicationNo);
-    const filter = { applicationNo };
+  applicationDetails: async (t, tenantId, applicationNumber, userType) => {
+    console.log("applicationNumber" + applicationNumber);
+    const filter = { applicationNumber };
     const response = await CRsearch.application(tenantId, filter);
+    console.log(response);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
     if (response?.licenseNumber) {
-      const licenseNumbers = response?.applicationno;
-      const filters = { licenseNumbers, offset: 0 };
+      const birthNumbers = response?.applicationNumber;
+      const filters = { birthNumbers, offset: 0 };
       numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
     }
-    // let propertyAddress = "";
-    // if (propertyDetails && propertyDetails?.Properties.length) {
-    //   propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
-    // }
     let employeeResponse = [];
     const Birthdetails = {
       title: "Birth Application Summary Details",
-      asSectionHeader: true,
-      
+      asSectionHeader: true,      
     }
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
       values: [
-        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationno || "NA" },
+        { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },
         { title: "CR_BIRTH_CHILDNAME_LABEL", value: response?.ChildDetails.childFirstNameEn + response?.ChildDetails.childMiddleNameEn + response?.ChildDetails.childLastNameEn },
         { title: "CR_BIRTH_GENDER_LABEL", value: response?.ChildDetails.gender.code},
         { title: "CR_BIRTH_DOB_LABEL", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },

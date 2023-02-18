@@ -13,7 +13,7 @@ const ApplicationDetails = () => {
   const { id: applicationno } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("NewBirth"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("birth21days"); //DIRECTRENEWAL
   // const [businessService, setBusinessService] = useState("NewBirthTwentyOne"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
@@ -22,7 +22,6 @@ const ApplicationDetails = () => {
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationno);
 
   const stateId = Digit.ULBService.getStateId();
-  const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
 
   const {
     isLoading: updatingApplication,
@@ -38,7 +37,7 @@ const ApplicationDetails = () => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationno,
     moduleCode: businessService,
-    role: "BND_CEMP",
+    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config:{},
   });
 
@@ -86,15 +85,13 @@ const ApplicationDetails = () => {
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter(item => {
-  if ((item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
+  if ((item.code == "HOSPITAL_OPERATOR" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
 
   const rolecheck = rolearray.length > 0 ? true : false;
   const validTo = applicationDetails?.applicationData?.validTo;
   const currentDate = Date.now();
   const duration = validTo - currentDate;
-  const renewalPeriod = TradeRenewalDate?.TradeLicense?.TradeRenewal?.[0]?.renewalPeriod;
-
-  if (rolecheck && (applicationDetails?.applicationData?.status === "APPROVED" || applicationDetails?.applicationData?.status === "EXPIRED" || (applicationDetails?.applicationData?.status === "MANUALEXPIRED" && renewalPending==="true")) && duration <= renewalPeriod) {
+  if (rolecheck && (applicationDetails?.applicationData?.status === "APPROVED" || applicationDetails?.applicationData?.status === "EXPIRED" || (applicationDetails?.applicationData?.status === "MANUALEXPIRED" && renewalPending==="true"))) {
     if(workflowDetails?.data && allowedToNextYear) {
       if(!workflowDetails?.data?.actionState) {
         workflowDetails.data.actionState = {};
@@ -161,14 +158,14 @@ const ApplicationDetails = () => {
   const wfDocs = workflowDetails.data?.timeline?.reduce((acc, { wfDocuments }) => {
     return wfDocuments ? [...acc, ...wfDocuments] : acc;
   }, []);
-  const ownerdetails = applicationDetails?.applicationDetails.find(e => e.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS");
-  let appdetailsDocuments = ownerdetails?.additionalDetails?.documents;
-  if(appdetailsDocuments && wfDocs?.length && !(appdetailsDocuments.find(e => e.title === "TL_WORKFLOW_DOCS"))){
-    ownerdetails.additionalDetails.documents = [...ownerdetails.additionalDetails.documents,{
-      title: "TL_WORKFLOW_DOCS",
-      values: wfDocs?.map?.((e) => ({ ...e, title: e.documentType})),
-    }];
-  }
+  // const ownerdetails = applicationDetails?.applicationDetails.find(e => e.title === "ES_NEW_APPLICATION_OWNERSHIP_DETAILS");
+  // let appdetailsDocuments = ownerdetails?.additionalDetails?.documents;
+  // if(appdetailsDocuments && wfDocs?.length && !(appdetailsDocuments.find(e => e.title === "TL_WORKFLOW_DOCS"))){
+  //   ownerdetails.additionalDetails.documents = [...ownerdetails.additionalDetails.documents,{
+  //     title: "TL_WORKFLOW_DOCS",
+  //     values: wfDocs?.map?.((e) => ({ ...e, title: e.documentType})),
+  //   }];
+  // }
 
 
 
