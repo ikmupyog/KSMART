@@ -215,7 +215,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                 OwnerInfo owner = OwnerInfo.builder()
                         // .uuid(rs.getString("ownerpde_id"))
                         .userActive(rs.getBoolean("ownerpde_active"))
-                        .name(rs.getString("ownerpde_name"))
+                        .name(rs.getString("ownerpde_ownername"))
                         .emailId(rs.getString("ownerpde_email"))
                         .applicantNameLocal(rs.getString("ownerpde_ownernamelocal"))
                         .careOf(rs.getString("ownerpde_careof"))
