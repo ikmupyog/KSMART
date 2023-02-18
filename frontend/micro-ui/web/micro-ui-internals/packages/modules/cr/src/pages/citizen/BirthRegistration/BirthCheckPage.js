@@ -93,7 +93,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           </div>
         </div>
         <div style={{
-          maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"800PX",backgroundColor: "#e2eaed" }} >
+          maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"600PX",backgroundColor: "lightblue" }} >
           {/* class="site-wrap" */}
 
           <div className="row" >
@@ -138,9 +138,13 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}</CardLabel>
               {/* <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.BirthPlace.name)}</CardText> */}
             </div>
+
+
+            
+           
             <div className="col-md-6">
               {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.MotherFirstNameEn ? ParentsDetails.MotherFirstNameEn : 'CR_NOT_RECORDED')}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.motherFirstNameEn ? ParentsDetails.motherFirstNameEn : 'CR_NOT_RECORDED')}</CardText>
             </div>
           </div>
           <div className="row">
@@ -148,7 +152,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_FATHER_NAME")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.FatherFirstNameEn ? ParentsDetails.FatherFirstNameEn : 'CR_NOT_RECORDED')}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(ParentsDetails.fatherFirstNameEn ? ParentsDetails.fatherFirstNameEn : 'CR_NOT_RECORDED')}</CardText>
             </div>
           </div>
           
