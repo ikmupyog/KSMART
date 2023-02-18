@@ -578,7 +578,7 @@ serviceMaps:
          death_place_state = ? , death_place_district = ? , death_place_city = ? ,
          death_place_remarks_en = ? , death_place_remarks_ml = ? , place_of_burial_en = ? , 
          place_of_burial_ml = ? ,action = ? , status = ?  , informant_address = ? ,initiator_address = ? ,
-         is_declaration_initiator,is_declaration_informant
+         is_declaration_initiator = ?,is_declaration_informant = ?
          WHERE  tenantid = ? AND ack_no = ?
       
 
@@ -741,7 +741,8 @@ serviceMaps:
         streetname_ml = ? , locality_en = ? , locality_ml = ? , ward_id = ? , taluk_id = ? , village_id = ? , 
         postoffice_id = ? , pincode = ? , district_id = ? , state_id = ? , country_id = ? , 
         lastmodifiedby = ? , lastmodifiedtime = ? , location_type = ? , housename_ml = ? , 
-        housename_en = ? , lbtype = ? , postal_code = ? WHERE  death_dtl_id = ? AND tenantid = ? AND addr_typeid = ?
+        housename_en = ? , lbtype = ? , postal_code = ? , province_name_en = ?, province_name_ml = ?, 
+        city_town_village = ?, city_en = ? WHERE  death_dtl_id = ? AND tenantid = ? AND addr_typeid = ?
      
       basePath: deathCertificateDtls.*
 
@@ -785,11 +786,21 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrPostalCode
 
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceEn
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceMl
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrTownOrVillage
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrCityOrVillageEn
+
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrTypeId
+
+      
 
     - query: INSERT INTO public.eg_death_address_dtls_log SELECT * FROM  public.eg_death_address_dtls WHERE death_dtl_id = ? 
              AND tenantid = ? AND addr_typeid = ?;
@@ -806,7 +817,8 @@ serviceMaps:
         locality_ml = ? , ward_id = ? , taluk_id = ? , village_id = ? , postoffice_id = ? , pincode = ? , 
         district_id = ? , state_id = ? , country_id = ? , lastmodifiedby = ? , 
         lastmodifiedtime = ? , location_type = ? , housename_ml = ? , housename_en = ? , lbtype = ? , 
-        postal_code = ? WHERE  death_dtl_id = ? AND tenantid = ? AND addr_typeid = ?
+        postal_code = ? ,province_name_en = ?, province_name_ml = ?, 
+        city_town_village = ?, city_en = ?   WHERE  death_dtl_id = ? AND tenantid = ? AND addr_typeid = ?
      
 
       basePath: deathCertificateDtls.*
@@ -849,6 +861,14 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrLbType
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrPostalCode
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceEn
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceMl
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrTownOrVillage
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrCityOr
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 

@@ -97,7 +97,7 @@ public class DeathApplnService {
           //Jasmine 13.02.2023
           workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
-
+          
           List<DeathDtl> response = new ArrayList<>();
           
           DeathDtlRequest result = DeathDtlRequest
