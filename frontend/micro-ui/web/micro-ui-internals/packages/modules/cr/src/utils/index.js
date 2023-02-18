@@ -288,7 +288,7 @@ export const convertToBirthRegistration = (data = {}) => {
         childLastNameEn: data?.ChildDetails?.childLastNameEn,
         childLastNameMl: data?.ChildDetails?.childLastNameMl,
         hospitalCode: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.code : null,
-        birthPlace: data?.HospitalDetails?.birthPlace ? data?.HospitalDetails?.birthPlace.code : null,
+        birthPlace: data?.ChildDetails?.birthPlace ? data?.ChildDetails?.birthPlace.code : null,
         hospitalName: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalName : null,
         hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
         institutionTypeCode: data?.ChildDetails?.institutionTypeCode ? data?.ChildDetails?.institutionTypeCode.code : null,
