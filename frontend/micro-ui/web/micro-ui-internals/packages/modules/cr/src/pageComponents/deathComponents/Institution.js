@@ -14,7 +14,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   
-  // tenantId = 'kl.cochin';
+  tenantId = 'kl.cochin';
   const { t } = useTranslation();
   let validation = {};
   const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
