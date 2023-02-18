@@ -15,10 +15,11 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   }
   const { t } = useTranslation();
   let validation = {};
-
+  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "hospital");
   const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const [toast, setToast] = useState(false);
@@ -46,27 +47,42 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       cmbVehicle.push(ob);
     });
 
-    let Zonal = [];
-    let cmbWardNo = [];
-    let cmbWardNoFinal = [];
-    boundaryList &&
-      boundaryList["egov-location"] &&
-      boundaryList["egov-location"].TenantBoundary.map((ob) => {
-        if (ob?.hierarchyType.code === "REVENUE") {
-          Zonal.push(...ob.boundary.children);
-          ob.boundary.children.map((obward) => {
-            cmbWardNo.push(...obward.children);
-          });
-        }
-      });
-  
-    cmbWardNo.map((wardmst) => {
-      wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
-      wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
-      cmbWardNoFinal.push(wardmst);
+  let Zonal = [];
+  let cmbWardNo = [];
+  let cmbWardNoFinal = [];
+  boundaryList &&
+    boundaryList["egov-location"] &&
+    boundaryList["egov-location"].TenantBoundary.map((ob) => {
+      if (ob?.hierarchyType.code === "REVENUE") {
+        Zonal.push(...ob.boundary.children);
+        ob.boundary.children.map((obward) => {
+          cmbWardNo.push(...obward.children);
+        });
+      }
     });
-  
 
+  cmbWardNo.map((wardmst) => {
+    wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+    wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+    cmbWardNoFinal.push(wardmst);
+  });
+  let cmbLB = [];
+  localbodies &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants.map((ob) => {
+      cmbLB.push(ob);
+    });
+    let currentLB=[];
+  useEffect(() => {
+
+    if (isInitialRender) {
+      if (cmbLB.length > 0) {
+        currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+        setvehicleHaltPlace(currentLB[0].name);
+        setIsInitialRender(false);
+      }
+    }
+  }, [localbodies, isInitialRender]);
   const onSkip = () => onSelect();
 
   function setSelectVehicleType(value) {
@@ -133,14 +149,14 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   }
   function setSelectWard(value) {
     setPresentWardNo(value);
-   
-}
+
+  }
 
   let validFlag = true;
   const goNext = () => {
 
   };
-  if (isLoad || isLoading) {
+  if (isLoad || isLoading || islocalbodiesLoading || isWardLoaded) {
     return <Loader></Loader>;
   }
   return (
@@ -191,14 +207,15 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               value={vehicleHaltPlace}
               onChange={setSelectVehicleHaltPlace}
               placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
+              disable={true}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_PLACE_FIRST_HALT_EN") })}
             />
-          </div>        
-         
+          </div>
+
         </div>
 
         <div className="row">
-        <div className="col-md-3" >
+          <div className="col-md-3" >
             <CardLabel>{`${t("CR_VEHICLE_FROM_EN")}`}</CardLabel>
             <TextInput
               t={t}
@@ -250,7 +267,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
             />
           </div>
-         
+
           {/* <div className="col-md-3" >
             <CardLabel>{`${t("CR_VEHICLE_PLACE_FIRST_HALT_ML")}`}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
