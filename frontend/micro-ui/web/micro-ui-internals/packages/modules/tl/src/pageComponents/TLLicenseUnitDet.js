@@ -547,7 +547,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const mutationDoor = Digit.Hooks.tl.useSearch({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, config1 });
 
   useEffect(() => {
-      if (payloadDoor.length === undefined) {
+    if ((payloadDoor.length === undefined) && (structureType.code === "BUILDING")) {
         if (mutationDoor !== undefined) {
           if (mutationDoor?.error !== null) {      
             mutationDoor.mutate({ tenantId, filters: payloadDoor, config1 }, {
@@ -882,7 +882,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         || (value2 === "VEHICLE"  ? serviceArea === "" || (structurePlaceSubtype.code ==="MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false ) : false)
         || (value2 === "WATER"  ? (formStateDoor[0].vesselNo === "" || waterbody === ""  || serviceArea === "")  : false)
         || (value2 === "DESIGNATEDPLACE" ? false : false) 
-        || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
+        // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
           }  
          >
     

@@ -40,7 +40,16 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
 
   /****  address */
 
-
+  let ownerappmap ={
+    name: "ownerName",
+    houseName: "houseName",
+    street: "street",
+    locality: "locality",
+    postOffice: "postOffice",
+    pincode: "pincode",
+    aadhaarNumber: "owneraadhaarNo",
+    mobileNumber: "ownerContactNo"
+  };
   /** applicant */
 
   /** owner */
@@ -207,16 +216,35 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
   const handleAppInputField = useCallback((index, e, key, length = 100) => {
     if(e.length===0){
       dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: "" } });
+      if(formDatalocal?.tradeLicenseDetail?.ownershipCategory === "OWN" && LicenseeType === "INDIVIDUAL" && ownerappmap[key]){
+        let jsonString = [];
+        jsonString['index'] = index;
+        jsonString['key'] = ownerappmap[key];
+        jsonString['value'] = "";
+
+        disptachowner({ type: "EDIT_CURRENT_OWNER", payload: {...jsonString} });
+      }
       return;
     }
     if(e.trim()==="" || e.trim()==="."){
       return;
     }
-    if (e.length <= length)
+    if (e.length <= length){
       dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: e } });
+      if(formDatalocal?.tradeLicenseDetail?.ownershipCategory === "OWN" && LicenseeType === "INDIVIDUAL" && ownerappmap[key]){
+        let jsonString = [];
+        jsonString['index'] = index;
+        jsonString['key'] = ownerappmap[key];
+        jsonString['value'] = e;
+
+       let peyloadtemp= { index, key, value: e };
+
+       disptachowner({ type: "EDIT_CURRENT_OWNER",payload : {...jsonString} });
+      }
+    }
     else
       return;
-  }, [dispatchapplicant]);
+  }, [dispatchapplicant,disptachowner]);
 
   const handleAppSelectField = useCallback((index, e, key) => {
     appState[index].careOf = e.code;
@@ -234,7 +262,7 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
         "institutionName": institutionName, "contactNo": contactNo,
         "organisationregistrationno": organisationregistrationno, "address": insaddress, "natureOfInstitution": natureOfInstitution.code,
         "email": email, "licenseUnitId": licenseUnitId
-      } : {};
+      } : null;
       let licenseeType = LicenseeType.code;
       let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;
       let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
@@ -274,6 +302,7 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
         validation = false;
       }
     });
+    if(formDatalocal?.tradeLicenseDetail?.structureType !== 'DESIGNATEDPLACE')    
     ownerState?.map((ob) => {
       if (!ob.ownerContactNo.match(mobilevalidation)) {
         setErrorMessage(t("TL_INVALID_MOBILE_NO"));
@@ -296,7 +325,8 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
     }
     return Promise.resolve(validation);
   }
-
+  console.log("appState");
+  console.log(LicenseeType);
   const onSkip = () => onSelect();
   return (
     <React.Fragment>
@@ -304,12 +334,12 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
       {window.location.href.includes("/employee") ? <Timeline /> : null}
       <FormStep config={config} onSelect={goNext} onSkip={onSkip} t={t}
         isDisabled={!LicenseeType || appState[0].name === "" || appState[0].applicantNameLocal === "" || appState[0].careOfName === ""
-          || appState[0].houseName === "" || appState[0].street === "" || appState[0].locality === "" || appState[0].postOffice === ""
+          || appState[0].houseName === "" ||(LicenseeType.code !== "INSTITUTION" ? appState[0].street === "" : false) || appState[0].locality === "" || appState[0].postOffice === ""
           || appState[0].aadhaarNumber === "" || appState[0].mobileNumber === "" || appState[0].emailId === ""
           || (LicenseeType?.code === "INSTITUTION" ? (appState[0].designation === "" || contactNo === "" || email === "" || insaddress === "" || institutionName === ""
             || organisationregistrationno === "" || licenseUnitId === "") : false)
-          || ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
-          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""} >
+          || ((formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
+          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false)} >
 
         <div className="row">
           <div className="col-md-12" > <header className="card-header">New IFTE & OS License Application</header>
@@ -560,94 +590,96 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
             }
           </div>
         )}
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_OWNER_ADDRESS_LABEL")}`}
-              </span>{" "}
-            </h1>
+        {(formDatalocal?.tradeLicenseDetail?.structureType !== "DESIGNATEDPLACE") && (
+        <div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_OWNER_ADDRESS_LABEL")}`}
+                </span>{" "}
+              </h1>
+            </div>
           </div>
-        </div>
-        {ownerState.map((field, index) => {
-          return (
-            <div key={`${field}-${index}`}>
-              <div style={{
-                border: "solid",
-                borderRadius: "10px",
-                //  padding: "25px",
-                //  paddingTop: "25px",
-                marginTop: "5px",
-                borderColor: "#f3f3f3",
-                background: "#FAFAFA",
-              }} className="col-md-12">
-                <div className="row">
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="aadhaarNumber" value={field.owneraadhaarNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "owneraadhaarNo", 12)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_AADHAR_NO") })} />
+          {ownerState.map((field, index) => {
+            return (
+              <div key={`${field}-${index}`}>
+                <div style={{
+                  border: "solid",
+                  borderRadius: "10px",
+                  //  padding: "25px",
+                  //  paddingTop: "25px",
+                  marginTop: "5px",
+                  borderColor: "#f3f3f3",
+                  background: "#FAFAFA",
+                }} className="col-md-12">
+                  <div className="row">
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="aadhaarNumber" value={field.owneraadhaarNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "owneraadhaarNo", 12)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_AADHAR_NO") })} />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownername" value={field.ownerName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z ]/ig, ''), "ownerName")} />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownermobileno" value={field.ownerContactNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "ownerContactNo", 10)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_MOBILE_NO") })} />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_LOCALITY")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerlocality" value={field.locality} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALITY") })} />
+                    </div>
                   </div>
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LICENSEE_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownername" value={field.ownerName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z ]/ig, ''), "ownerName")} />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_CONTACT_NO")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownermobileno" value={field.ownerContactNo} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "ownerContactNo", 10)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_MOBILE_NO") })} />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_LOCALITY")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerlocality" value={field.locality} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "locality")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LOCALITY") })} />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerstreet" value={field.street} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "street")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_STREET_NAME") })} />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_HOUSE_NO_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerhousename" value={field.houseName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName", 150)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_HOUSE_NO_NAME") })} />
-                  </div>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_STREET_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerstreet" value={field.street} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "street")} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_STREET_NAME") })} />
+                    </div>
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_HOUSE_NO_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerhousename" value={field.houseName} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "houseName", 150)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_HOUSE_NO_NAME") })} />
+                    </div>
 
-                  <div className="col-md-3">
-                    <CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerponame" value={field.postOffice} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice", 50)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
-                  </div>
-                  <div className="col-md-1">
-                    <CardLabel>{`${t("TL_PIN")}`}</CardLabel>
-                    <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerpincode" value={field.pincode} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_PIN") })} />
-                  </div>
-                  {ownerState.length === (index + 1) && (
-                    <div className="col-md-1">
-                      <CardLabel>Add More</CardLabel>
-                      <LinkButton
-                        label={
-                          <svg className="icon  icon--plus" viewBox="0 0 5 5" fill="green" width="50" height="50">
-                            <path d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
-                          </svg>
-                        }
-                        onClick={(e) => disptachowner({ type: "ADD_OWNER" })}
-                      />
+                    <div className="col-md-3">
+                      <CardLabel>{`${t("TL_POSTOFFICE")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerponame" value={field.postOffice} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^A-Za-z0-9@'$#& ,]/ig, ''), "postOffice", 50)} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_POSTOFFICE") })} />
                     </div>
-                  )}
-                  {ownerState.length > 1 && (
                     <div className="col-md-1">
-                      <CardLabel>Remove</CardLabel>
-                      <LinkButton
-                        label={
-                          <svg viewBox="0 0 24 24" fill="red" width="50" height="50"> <g> <path fill="none" d="M0 0h24v24H0z" /> <path d="M7 4V2h10v2h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5zM6 6v14h12V6H6zm3 3h2v8H9V9zm4 0h2v8h-2V9z" /> </g> </svg>
-                        }
-                        onClick={(e) => disptachowner({ type: "REMOVE_OWNER", payload: { index } })}
-                      />
+                      <CardLabel>{`${t("TL_PIN")}`}</CardLabel>
+                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerpincode" value={field.pincode} onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9.]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, type: "text", title: t("TL_INVALID_PIN") })} />
                     </div>
-                  )}
+                    {ownerState.length === (index + 1) && (
+                      <div className="col-md-1">
+                        <CardLabel>Add More</CardLabel>
+                        <LinkButton
+                          label={
+                            <svg className="icon  icon--plus" viewBox="0 0 5 5" fill="green" width="50" height="50">
+                              <path d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                            </svg>
+                          }
+                          onClick={(e) => disptachowner({ type: "ADD_OWNER" })}
+                        />
+                      </div>
+                    )}
+                    {ownerState.length > 1 && (
+                      <div className="col-md-1">
+                        <CardLabel>Remove</CardLabel>
+                        <LinkButton
+                          label={
+                            <svg viewBox="0 0 24 24" fill="red" width="50" height="50"> <g> <path fill="none" d="M0 0h24v24H0z" /> <path d="M7 4V2h10v2h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5zM6 6v14h12V6H6zm3 3h2v8H9V9zm4 0h2v8h-2V9z" /> </g> </svg>
+                          }
+                          onClick={(e) => disptachowner({ type: "REMOVE_OWNER", payload: { index } })}
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        })
-
-        }
-
+            )
+          })
+          }
+        </div>
+        )}
         <div>
           {toast && (
             <Toast

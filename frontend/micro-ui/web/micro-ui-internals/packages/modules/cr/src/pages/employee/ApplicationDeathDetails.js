@@ -10,16 +10,16 @@ import orderBy from "lodash/orderBy";
 const ApplicationDeathDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { id: applicationNo } = useParams();
+  const { id: DeathACKNo } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("death21days"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("DEATHHOSP"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
-  sessionStorage.setItem("applicationNo", applicationNo)
+  sessionStorage.setItem("DeathACKNo", DeathACKNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, applicationNo);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, DeathACKNo);
 
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
@@ -38,7 +38,7 @@ const ApplicationDeathDetails = () => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationno,
     moduleCode: businessService,
-    role: "BND_CEMP",
+    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config:{},
   });
 
@@ -75,7 +75,7 @@ const ApplicationDeathDetails = () => {
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
       if(data.action == "RESUBMIT") {
         data.redirectionUrl = {
-          pathname: `/digit-ui/employee/tl/edit-application-details/${applicationNumber}`,
+          pathname: `/digit-ui/employee/tl/edit-application-details/${DeathACKNo}`,
           state: applicationDetails
         },
         data.tenantId = stateId
@@ -86,7 +86,7 @@ const ApplicationDeathDetails = () => {
 
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter(item => {
-  if ((item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
+  if ((item.code == "HOSPITAL_OPERATOR" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
 
   const rolecheck = rolearray.length > 0 ? true : false;
   const validTo = applicationDetails?.applicationData?.validTo;
@@ -105,7 +105,7 @@ const ApplicationDeathDetails = () => {
         workflowDetails?.data?.actionState?.nextActions?.push({
           action: "RENEWAL_SUBMIT_BUTTON",
           redirectionUrl: {
-            pathname: `/digit-ui/employee/tl/renew-application-details/${applicationNumber}`,
+            pathname: `/digit-ui/employee/tl/renew-application-details/${DeathACKNo}`,
             state: applicationDetails
           },
           tenantId: stateId,
