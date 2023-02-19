@@ -576,7 +576,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
     sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-    sessionStorage.setItem("HospitalNameMl", HospitalNameMl.DeathPlaceType);
+    sessionStorage.setItem("HospitalNameMl", HospitalNameMl ?  HospitalNameMl.code : null);
    
     sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
     sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);

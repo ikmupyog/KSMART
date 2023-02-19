@@ -259,12 +259,12 @@ let ownerappmap ={
     if (result) {
       let owners = appState;
 
-      let ownerspremise = ownerState;
+      let ownerspremise =  ownerState;
       let institution = LicenseeType.code === "INSTITUTION" ? {
         "institutionName": institutionName, "contactNo": contactNo,
         "organisationregistrationno": organisationregistrationno, "address": insaddress, "natureOfInstitution": natureOfInstitution.code,
         "email": email, "licenseUnitId": licenseUnitId
-      } : {};
+      } : null;
       let licenseeType = LicenseeType;
       let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;
       let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
@@ -335,8 +335,8 @@ let ownerappmap ={
           || appState[0].aadhaarNumber === "" || appState[0].mobileNumber === "" || appState[0].emailId === ""
           || (LicenseeType?.code === "INSTITUTION" ? (appState[0].designation === "" || contactNo === "" || email === "" || insaddress === "" || institutionName === ""
           || organisationregistrationno === "" || licenseUnitId === "") : false)
-          || (formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
-          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false} >
+          || ((formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
+          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false)} >
 
         <div className="row">
           <div className="col-md-12" > <header className="card-header">New IFTE & OS License Application</header>

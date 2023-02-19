@@ -44,6 +44,7 @@ const ApplicationDetails = (props) => {
     MenuStyle,
     paymentsList,
     showTimeLine = true,
+    wardcodes
   } = props;
   useEffect(() => {
     if (showToast) {
@@ -175,6 +176,7 @@ const ApplicationDetails = (props) => {
               businessService={businessService}
               workflowDetails={workflowDetails}
               moduleCode={moduleCode}
+              wardcodes={wardcodes}
             />
           ) : null}
           {isWarningPop ? (

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton} from "@egovernments/digit-ui-react-components";
+import React, { useState ,useEffect} from "react";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -40,7 +40,20 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   institutionidList["egov-location"].institutionList.map((ob) => {
     cmbInstitutionId.push(ob);
   });
-  
+  let currentLB = [];
+  // useEffect(() => {
+
+    if (isInitialRender) {
+      console.log(DeathPlaceType);
+      if (DeathPlaceType) {
+        currentLB = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === DeathPlaceType.code);
+        console.log(currentLB);
+        selectDeathPlaceInstId(currentLB);
+      
+        setIsInitialRender(false);
+      }
+    } 
+  // },[currentLB,isInitialRender]);
   //  console.log(institutionidList);
   // let cmbInstitution = [];
   // institution &&
@@ -64,6 +77,24 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   function setselectInstitutionIdMl(value) {
     setInstitutionIdMl(value);
   }
+  let cmbInstitutionIdMl = [];
+
+  // useEffect(() => {
+    
+  //   if (isInitialRender) {
+  //     if (institutionType === "INSTITUTION") {
+  //     if (formData?.InformationDeath?.DeathPlaceInstId){
+  //       selectDeathPlaceInstId(DeathPlaceInstId);
+  //       setIsInitialRender(false);
+  //     }else {
+  //       cmbInstitutionIdMl = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.name === DeathPlaceInstId.name);
+  //       setInstitutionIdMl(cmbInstitutionIdMl[0]);
+  //       setIsInitialRender(false);
+  //     }
+  //   }
+  // }
+  // }, [cmbInstitutionIdMl, isInitialRender])
+
   const goNext = () => {
     // sessionStorage.setItem("DeathPlaceType", DeathPlaceType.code);
     // sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId.code);
@@ -111,7 +142,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               t={t}
               optionKey="institutionName"
               isMandatory={true}
-              option={cmbInstitutionId}
+              option={currentLB}
               selected={DeathPlaceInstId}
               select={selectDeathPlaceInstId}
               disabled={isEdit}
