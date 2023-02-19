@@ -23,15 +23,15 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({  tenantId }, {});
     let applicationStatuses = []
 
-    statusData && statusData?.otherRoleStates?.map((status) => {
-        let found = applicationStatuses.length>0? applicationStatuses?.some(el => el?.code === status.applicationStatus) : false;  
-        if(!found) applicationStatuses.push({code:status?.applicationStatus, i18nKey:`WF_NEWTL_${(status?.applicationStatus)}`})
-    })
+    // statusData && statusData?.otherRoleStates?.map((status) => {
+    //     let found = applicationStatuses.length>0? applicationStatuses?.some(el => el?.code === status.applicationStatus) : false;  
+    //     if(!found) applicationStatuses.push({code:status?.applicationStatus, i18nKey:`WF_NEWTL_${(status?.applicationStatus)}`})
+    // })
 
-    statusData && statusData?.userRoleStates?.map((status) => {
-        let found = applicationStatuses.length>0? applicationStatuses?.some(el => el?.code === status.applicationStatus) : false;  
-        if(!found) applicationStatuses.push({code:status?.applicationStatus, i18nKey:`WF_NEWTL_${(status?.applicationStatus)}`})
-    })
+    // statusData && statusData?.userRoleStates?.map((status) => {
+    //     let found = applicationStatuses.length>0? applicationStatuses?.some(el => el?.code === status.applicationStatus) : false;  
+    //     if(!found) applicationStatuses.push({code:status?.applicationStatus, i18nKey:`WF_NEWTL_${(status?.applicationStatus)}`})
+    // })
 
     return <>
         <SearchField>
@@ -77,7 +77,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <label>{t("TL_TRADE_LICENSE_LABEL")}</label>
             <TextInput  name="licenseNumbers" inputRef={register({})}/>
         </SearchField> */}
-        { isLoading ? <Loader/> : <SearchField>
+        {/* { isLoading ? <Loader/> : <SearchField>
             <label>{t("CR_SEARCH_RESULTS_APP_STATUS_LABEL")}</label>
             <Controller
                     control={control}
@@ -93,7 +93,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                         />
                     )}
             />
-        </SearchField>}
+        </SearchField>} */}
         <SearchField>
             <label>{t("CR_SEARCH_MOTHER_NAME")}</label>
             <TextInput  name="tradeName" inputRef={register({})}/>
