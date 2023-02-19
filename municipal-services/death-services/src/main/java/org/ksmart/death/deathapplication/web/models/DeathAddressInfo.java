@@ -173,7 +173,7 @@ public class DeathAddressInfo {
     private String presentOutSideCountry;
 
     @JsonProperty("isPrsentAddress")
-    private String isPrsentAddress;
+    private Boolean isPrsentAddress;
 
     @Size(max = 1000)
     @JsonProperty("presentOutSideIndiaadrsVillage")
@@ -186,6 +186,9 @@ public class DeathAddressInfo {
     @Size(max = 64)
     @JsonProperty("presentOutSideIndiaPostCode")
     private String presentOutSideIndiaPostCode;
+
+    @JsonProperty("isPrsentAddressInt")
+    private int isPrsentAddressInt;
 
     ////Db Fields//////
 

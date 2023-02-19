@@ -1,11 +1,14 @@
 package org.ksmart.death.deathregistry.repository;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.egov.tracer.model.CustomException;
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
@@ -110,6 +113,13 @@ public class DeathRegistryRepository {
 				deathCertPath = deathCertPath.replace("$dateofdeath",format.format(cert.getDeathBasicInfo().getDateOfDeath()));
 				deathCertPath = deathCertPath.replace("$gender",cert.getDeathBasicInfo().getDeceasedGender().toString());             
                 deathCertPath = deathCertPath.replace("$deathcertificateno",cert.getDeathBasicInfo().getCertificateNo());
+
+                //Epoc to Date Format
+                // Date date = new Date(cert.getDeathBasicInfo().getDateOfDeath());
+                // DateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+                // formatDate.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+                // String formatted = formatDate.format(date);
+                // System.out.println("formatted"+formatted);
 
 				String finalPath = uiHost + deathCertPath;
                 //RAkhi S on 10.02.2023 MDMS Call
