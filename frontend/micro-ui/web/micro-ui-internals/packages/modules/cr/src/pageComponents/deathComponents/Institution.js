@@ -40,7 +40,20 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   institutionidList["egov-location"].institutionList.map((ob) => {
     cmbInstitutionId.push(ob);
   });
-  
+  let currentLB = [];
+  // useEffect(() => {
+
+    if (isInitialRender) {
+      console.log(DeathPlaceType);
+      if (DeathPlaceType) {
+        currentLB = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === DeathPlaceType.code);
+        console.log(currentLB);
+        selectDeathPlaceInstId(currentLB);
+      
+        setIsInitialRender(false);
+      }
+    } 
+  // },[currentLB,isInitialRender]);
   //  console.log(institutionidList);
   // let cmbInstitution = [];
   // institution &&
@@ -129,7 +142,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               t={t}
               optionKey="institutionName"
               isMandatory={true}
-              option={cmbInstitutionId}
+              option={currentLB}
               selected={DeathPlaceInstId}
               select={selectDeathPlaceInstId}
               disabled={isEdit}
