@@ -115,14 +115,62 @@ public class TLValidator {
                 errorMap.put("NULL_FINANCIALYEAR", " Financial Year cannot be null");
             if (license.getTradeLicenseDetail().getStructureType() == null)
                 errorMap.put("NULL_STRUCTURETYPE", " Structure Type cannot be null");
-            // if (license.getTradeLicenseDetail().getSubOwnerShipCategory() == null)
-            // errorMap.put("NULL_SUBOWNERSHIPCATEGORY", " SubOwnership Category cannot be
-            // null");
-            // if ((license.getTradeLicenseDetail().getAddress().getLocality() ==
-            // null)||(license.getTradeLicenseDetail().getAddress().getLocality().getCode()
-            // == null))
-            // errorMap.put("NULL_LOCALITY", " Locality cannot be null");
-
+            if (license.getTradeLicenseDetail().getCapitalInvestment() == null)
+                errorMap.put("NULL_CAPITALINVESTMENT", " Capital Investment cannot be null");
+            if (license.getTradeLicenseDetail().getStructurePlaceSubtype() == null)
+                errorMap.put("NULL_STRUCTUREPLACESUBTYPE", " Structure Place Subtype cannot be null");
+            if (license.getTradeLicenseDetail().getNoOfEmployees() == null)
+                errorMap.put("NULL_NOOFEMPLOYEES", " No of Employees cannot be null");
+            if (license.getLicenseUnitName() == null)
+                errorMap.put("NULL_LICENSEUNITNAME", " License Unit Name cannot be null");
+            if (license.getLicenseUnitNameLocal() == null)
+                errorMap.put("NULL_LICENSEUNITNAMELOCAL", " License Unit Name local cannot be null");
+            if (license.getDesiredLicensePeriod() == null)
+                errorMap.put("NULL_DESIREDLICENSEPERIOD", " Desired License Period cannot be null");
+            if (license.getTradeLicenseDetail().getAddress().getLocalityName() == null)
+                errorMap.put("NULL_LOCALITYOFLICENSINGUNIT", " Locality of the Licensing Unit cannot be null");
+            if (license.getTradeLicenseDetail().getAddress().getPostOffice() == null)
+                errorMap.put("NULL_POSTOFFICEOFLICENSINGUNIT", " Post Office of the Licensing Unit cannot be null");
+            // if
+            // (license.getTradeLicenseDetail().getInstitution().getOrganisationRegistrationNo()
+            // == null)
+            // errorMap.put("NULL_INSTITUTIONID", " Institution ID cannot be null");
+            // if (license.getTradeLicenseDetail().getInstitution().getInstitutionName() ==
+            // null)
+            // errorMap.put("NULL_INSTITUTIONNAME", " Institution Name cannot be null");
+            // if (license.getTradeLicenseDetail().getInstitution().getLicenseUnitId() ==
+            // null)
+            // errorMap.put("NULL_SUBSIDIARYFRANCHISEBRANCHID", "
+            // Subsidiary/Franchise/Branch ID cannot be null");
+            // if (license.getTradeLicenseDetail().getInstitution().getContactNo() == null)
+            // errorMap.put("NULL_CONTACTNOLICENSINGUNIT", " Contact No of the Licensing
+            // Unit cannot be null");
+            // if (license.getTradeLicenseDetail().getInstitution().getEmail() == null)
+            // errorMap.put("NULL_EMAILOFLICENSINGUNIT", " Email ID of Licensing Unit cannot
+            // be null");
+            license.getTradeLicenseDetail().getOwners().forEach(
+                    owner -> {
+                        if (owner.getName() == null)
+                            errorMap.put("NULL_OWNER_LICENSINGUNIT", " Owner Name of Licensing Unit cannot be null");
+                        if (owner.getApplicantNameLocal() == null)
+                            errorMap.put("NULL_OWNERLOCAL_LICENSINGUNIT",
+                                    " Owner Name Local of Licensing Unit cannot be null");
+                        if (owner.getCareOf() == null)
+                            errorMap.put("NULL_CAREOFOWNER",
+                                    " Care of Owner of Licensing Unit cannot be null");
+                        if (owner.getCareOfName() == null)
+                            errorMap.put("NULL_LOCALITY_OWNER_LICENSINGUNIT",
+                                    " Care of Name of Owner of Licensing Unit cannot be null");
+                        if (owner.getAadhaarNumber() == null)
+                            errorMap.put("NULL_AADHARNO_OWNER_LICENSINGUNIT",
+                                    " Aadhar No of Owner of Licensing Unit cannot be null");
+                        if (owner.getEmailId() == null)
+                            errorMap.put("NULL_EMAILID_OWNER_LICENSINGUNIT",
+                                    " Email ID of Owner of Licensing Unit cannot be null");
+                        if (owner.getMobileNumber() == null)
+                            errorMap.put("NULL_MOBILENO_OWNER_LICENSINGUNIT",
+                                    " Mobile No of Owner of Licensing Unit cannot be null");
+                    });
             if (!errorMap.isEmpty())
                 throw new CustomException(errorMap);
         });
@@ -344,10 +392,12 @@ public class TLValidator {
             throw new CustomException("INVALID UPDATE", "The license to be updated is not in database");
         validateAllIds(searchResult, licenses);
         String businessService = request.getLicenses().isEmpty() ? null : licenses.get(0).getBusinessService();
-        if (licenses.get(0).getApplicationType() != null
-                && licenses.get(0).getApplicationType().toString().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
-            validateRenewal(request);
-        }
+        // if (licenses.get(0).getApplicationType() != null
+        // &&
+        // licenses.get(0).getApplicationType().toString().equals(TLConstants.APPLICATION_TYPE_RENEWAL))
+        // {
+        // validateRenewal(request);
+        // }
         if (businessService == null)
             businessService = businessService_TL;
         switch (businessService) {

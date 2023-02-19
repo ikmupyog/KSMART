@@ -29,17 +29,17 @@ public class Institution {
   @JsonProperty("active")
   private Boolean active;
 
-  @Size(max = 256)
+  @Size(max = 250)
   @SafeHtml
   @JsonProperty("institutionName")
   private String institutionName;
 
-  @Size(max = 64)
+  @Size(max = 50)
   @SafeHtml
   @JsonProperty("contactNo")
   private String contactNo;
 
-  @Size(max = 64)
+  @Size(max = 50)
   @SafeHtml
   @JsonProperty("organisationRegistrationNo")
   private String organisationRegistrationNo;

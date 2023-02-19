@@ -437,7 +437,7 @@ public class TLConstants {
 
         public static final String FUN_MODULE_NEWL = "BFIFLN";
 
-        public static final String FUN_MODULE_LNEW = "BFIFLN";
+        public static final String FUN_MODULE_RENEWALL = "BFIFLR";
 
         public TLConstants() {
         }

@@ -40,7 +40,7 @@ public class OwnerPremise {
     @JsonProperty("tenantId")
     private String tenantId = null;
 
-    @Size(max = 200)
+    @Size(max = 300)
     @SafeHtml
     @JsonProperty("ownerName")
     private String ownerName = null;
@@ -74,7 +74,7 @@ public class OwnerPremise {
     @JsonProperty("owneraadhaarNo")
     private String owneraadhaarNo;
 
-    @Size(max = 64)
+    @Size(max = 15)
     @SafeHtml
     @JsonProperty("ownerContactNo")
     private String ownerContactNo = null;

@@ -36,37 +36,37 @@ public class OwnerInfo extends User {
         @JsonProperty("userActive")
         private Boolean userActive;
 
-        @Size(max = 64)
+        @Size(max = 300)
         @SafeHtml
         @JsonProperty("applicantNameLocal")
         private String applicantNameLocal = null;
 
-        @Size(max = 64)
+        @Size(max = 10)
         @SafeHtml
         @JsonProperty("careOf")
         private String careOf = null;
 
-        @Size(max = 64)
+        @Size(max = 200)
         @SafeHtml
         @JsonProperty("careOfName")
         private String careOfName = null;
 
-        @Size(max = 64)
+        @Size(max = 150)
         @SafeHtml
         @JsonProperty("designation")
         private String designation = null;
 
-        @Size(max = 64)
+        @Size(max = 200)
         @SafeHtml
         @JsonProperty("houseName")
         private String houseName = null;
 
-        @Size(max = 64)
+        @Size(max = 150)
         @SafeHtml
         @JsonProperty("street")
         private String street = null;
 
-        @Size(max = 64)
+        @Size(max = 150)
         @SafeHtml
         @JsonProperty("locality")
         private String locality = null;
@@ -76,7 +76,7 @@ public class OwnerInfo extends User {
         @JsonProperty("postOffice")
         private String postOffice = null;
 
-        @Size(max = 150)
+        @Size(max = 10)
         @SafeHtml
         @JsonProperty("pincode")
         private String pincode = null;

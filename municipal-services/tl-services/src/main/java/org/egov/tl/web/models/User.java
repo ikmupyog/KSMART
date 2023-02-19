@@ -22,19 +22,19 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User   {
+public class User {
         @JsonProperty("id")
         private Long id;
 
-        @Size(max=64)
+        @Size(max = 64)
         @JsonProperty("uuid")
         private String uuid;
 
-        @Size(max=64)
+        @Size(max = 64)
         @JsonProperty("userName")
         private String userName;
 
-        @Size(max=64)
+        @Size(max = 64)
         @JsonProperty("password")
         private String password;
 
@@ -42,7 +42,7 @@ public class User   {
         private String salutation;
 
         @NotNull
-        @Size(max=100)
+        @Size(max = 150)
         @JsonProperty("name")
         private String name;
 
@@ -54,16 +54,16 @@ public class User   {
         @JsonProperty("mobileNumber")
         private String mobileNumber;
 
-        @Size(max=128)
+        @Size(max = 128)
         @JsonProperty("emailId")
         @Pattern(regexp = "^$|^(?=^.{1,64}$)((([^<>()\\[\\]\\\\.,;:\\s$*@'\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@'\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,})))$", message = "Invalid emailId")
         private String emailId;
 
-        @Size(max=50)
+        @Size(max = 50)
         @JsonProperty("altContactNumber")
         private String altContactNumber;
 
-        @Size(max=10)
+        @Size(max = 10)
         @JsonProperty("pan")
         private String pan;
 
@@ -71,27 +71,27 @@ public class User   {
         @JsonProperty("aadhaarNumber")
         private String aadhaarNumber;
 
-        @Size(max=300)
+        @Size(max = 300)
         @JsonProperty("permanentAddress")
         private String permanentAddress;
 
-        @Size(max=300)
+        @Size(max = 300)
         @JsonProperty("permanentCity")
         private String permanentCity;
 
-        @Size(max=10)
+        @Size(max = 10)
         @JsonProperty("permanentPinCode")
         private String permanentPincode;
 
-        @Size(max=300)
+        @Size(max = 300)
         @JsonProperty("correspondenceCity")
         private String correspondenceCity;
 
-        @Size(max=10)
+        @Size(max = 10)
         @JsonProperty("correspondencePinCode")
         private String correspondencePincode;
 
-        @Size(max=300)
+        @Size(max = 300)
         @JsonProperty("correspondenceAddress")
         private String correspondenceAddress;
 
@@ -104,11 +104,11 @@ public class User   {
         @JsonProperty("pwdExpiryDate")
         private Long pwdExpiryDate;
 
-        @Size(max=16)
+        @Size(max = 16)
         @JsonProperty("locale")
         private String locale;
 
-        @Size(max=50)
+        @Size(max = 50)
         @JsonProperty("type")
         private String type;
 
@@ -122,11 +122,11 @@ public class User   {
         @Valid
         private List<Role> roles;
 
-        @Size(max=100)
+        @Size(max = 100)
         @JsonProperty("fatherOrHusbandName")
         private String fatherOrHusbandName;
 
-        @Size(max=32)
+        @Size(max = 32)
         @JsonProperty("bloodGroup")
         private String bloodGroup;
 
@@ -136,14 +136,14 @@ public class User   {
         @JsonProperty("photo")
         private String photo;
 
-        @Size(max=64)
+        @Size(max = 64)
         @JsonProperty("createdBy")
         private String createdBy;
 
         @JsonProperty("createdDate")
         private Long createdDate;
 
-        @Size(max=64)
+        @Size(max = 64)
         @JsonProperty("lastModifiedBy")
         private String lastModifiedBy;
 
@@ -153,10 +153,9 @@ public class User   {
         @JsonProperty("otpReference")
         private String otpReference;
 
-        @Size(max=256)
+        @Size(max = 256)
         @JsonProperty("tenantId")
         private String tenantId;
-
 
         public User addRolesItem(Role rolesItem) {
                 if (this.roles == null) {
@@ -168,12 +167,14 @@ public class User   {
 
         @Override
         public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+                if (this == o)
+                        return true;
+                if (o == null || getClass() != o.getClass())
+                        return false;
                 User user = (User) o;
                 return Objects.equals(uuid, user.uuid) &&
-                        Objects.equals(name, user.name) &&
-                        Objects.equals(mobileNumber, user.mobileNumber);
+                                Objects.equals(name, user.name) &&
+                                Objects.equals(mobileNumber, user.mobileNumber);
         }
 
         @Override
@@ -182,4 +183,3 @@ public class User   {
                 return Objects.hash(uuid, name, mobileNumber);
         }
 }
-

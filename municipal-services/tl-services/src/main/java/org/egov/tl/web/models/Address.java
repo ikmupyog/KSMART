@@ -52,7 +52,7 @@ public class Address {
         @JsonProperty("longitude")
         private Double longitude = null;
 
-        @Size(max = 64)
+        @Size(max = 150)
         @SafeHtml
         @JsonProperty("landmark")
         private String landmark = null;
@@ -62,12 +62,12 @@ public class Address {
         @JsonProperty("pincode")
         private String pincode = null;
 
-        @Size(max = 64)
+        @Size(max = 150)
         @SafeHtml
         @JsonProperty("buildingName")
         private String buildingName = null;
 
-        @Size(max = 64)
+        @Size(max = 100)
         @SafeHtml
         @JsonProperty("street")
         private String street = null;
@@ -110,7 +110,7 @@ public class Address {
         @JsonProperty("lbBuildingName")
         private String lbBuildingName = null;
 
-        @Size(max = 150)
+        @Size(max = 100)
         @SafeHtml
         @JsonProperty("postOffice")
         private String postOffice = null;
@@ -125,7 +125,7 @@ public class Address {
         @JsonProperty("serviceArea")
         private String serviceArea = null;
 
-        @Size(max = 64)
+        @Size(max = 100)
         @SafeHtml
         @JsonProperty("localityName")
         private String localityName = null;

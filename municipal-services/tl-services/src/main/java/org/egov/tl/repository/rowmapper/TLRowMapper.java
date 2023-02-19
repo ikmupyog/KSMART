@@ -74,6 +74,8 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .assignUser(rs.getString("assignee"))
                         .desiredLicensePeriod(rs.getInt("desiredlicenseperiod"))
                         .isMigrated(rs.getBoolean("is_migrated"))
+                        .renewalActive(rs.getBoolean("renewalactive"))
+                        .oldApplicationNumber(rs.getString("mig_num_appln_id"))
                         .id(id)
                         .build();
 

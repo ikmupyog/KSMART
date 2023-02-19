@@ -230,6 +230,5 @@ public class TradeLicense {
   @Size(max = 64)
   @SafeHtml
   @JsonProperty("oldApplicationNumber")
-  private String oldApplicationNumber;
-
+  private String oldApplicationNumber = null;
 }
