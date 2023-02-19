@@ -36,7 +36,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
   const { data: AgeUnitvalue = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  const { data: OccupationMain = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
+  // const { data: OccupationMain = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
+  const { data: Profession = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
 
   const [DateOfDeath, setDateOfDeath] = useState(formData?.InformationDeath?.DateOfDeath ? formData?.InformationDeath?.DateOfDeath : "");
@@ -89,6 +90,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.InformationDeath?.HospitalNameMl);
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
   // Home
   const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId);
   const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode);
@@ -146,6 +148,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
   const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
   const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
+  const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
   let DeathPlaceTypecode= "";
   let institutionNameCode = "";
   let naturetypecmbvalue = null;  
@@ -180,12 +183,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     AgeUnitvalue["birth-death-service"].AgeUnit.map((ob) => {
       cmbAgeUnit.push(ob);
     });
-  let cmbOccupationMain = [];
-  OccupationMain &&
-    OccupationMain["common-masters"] &&
-    OccupationMain["common-masters"]?.Occupation?.map((ob) => {
-      cmbOccupationMain.push(ob);
-    });
+  // let cmbOccupationMain = [];
+  // OccupationMain &&
+  //   OccupationMain["common-masters"] &&
+  //   OccupationMain["common-masters"]?.Occupation?.map((ob) => {
+  //     cmbOccupationMain.push(ob);
+  //   });
+
+    let cmbOccupationMain = [];
+    Profession &&
+      Profession["birth-death-service"] &&
+      Profession["birth-death-service"].Profession.map((ob) => {
+        cmbOccupationMain.push(ob);
+      });
+  
+
   let cmbPlace = [];
   place &&
     place["common-masters"] &&
@@ -243,6 +255,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       setDeceasedMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
+
   function setSelectDeceasedLastNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -321,6 +334,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     }
   }
+
+
+  
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
   }
@@ -385,7 +401,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         SelectDeathPlaceState(cmbFilterState);
       }
     }
-  }
+  }   
+
   }, [Nation,isInitialRender]);
 
     // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
@@ -410,7 +427,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           />;
         }
         if (naturetype === "INSTITUTION") {
-          <Hospital DeathPlaceType={DeathPlaceType} />;
+          <Institution 
+          DeathPlaceType={DeathPlaceType}
+          DeathPlaceInstId={DeathPlaceInstId}
+          InstitutionIdMl={InstitutionIdMl} />;
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
@@ -481,6 +501,17 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     } else {
       setAadharError(false);
     } 
+   if (Age == null || Age == '' || Age == undefined) {
+        validFlag = false;
+        setAgeError(true);
+        setToast(true);
+        setTimeout(() => {
+            setToast(false);
+        }, 2000);
+
+    } else {
+      setAgeError(false);
+    }
     
     if (DeathPlace.code == "HOSPITAL") {
       if (DeathPlaceType == null ) {
@@ -561,6 +592,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
       sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
+      sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl. InstitutionIdMl: null);
+      
     }
     if (DeathPlace.code === "HOME") {
       sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
@@ -635,6 +668,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       HospitalNameMl,
       DeathPlaceTypecode,
       DeathPlaceInstId,
+      InstitutionIdMl,
       institutionNameCode,
       DeathPlaceHomehoueNameEn,
       DeathPlaceHomehoueNameMl,
@@ -777,6 +811,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               DeathPlaceType={DeathPlaceType}
               DeathPlaceInstId={DeathPlaceInstId}
               setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
+              InstitutionIdMl={InstitutionIdMl} 
+              setInstitutionIdMl = {setInstitutionIdMl}
+              
             />
           </div>
         )}
@@ -1119,13 +1156,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               <Dropdown
                 t={t}
                 optionKey="code"
-                isMandatory={false}
+                isMandatory={true}
                 option={menu}
                 selected={DeceasedGender}
                 select={selectDeceasedGender}
                 disabled={isEdit}
                 placeholder={`${t("CR_GENDER")}`}
-                // {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
+                {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
               />
             </div>
             <div className="col-md-2">
@@ -1203,16 +1240,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         {toast && (
           <Toast
             error={
-              DOBError || AadharError || HospitalError  || InstitutionError || InstitutionNameError
+              DOBError || AadharError || HospitalError  || InstitutionError || InstitutionNameError||AgeError
             }
             label={
-              DOBError || AadharError || HospitalError  || InstitutionError || InstitutionNameError
+              DOBError || AadharError || HospitalError  || InstitutionError || InstitutionNameError || AgeError
                 ? DOBError? t(`CR_INVALID_DATE`)
                   : AadharError? t(`CS_COMMON_INVALID_AADHAR_NO`)
                   : HospitalError ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
                   : InstitutionError ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                  : InstitutionNameError ? t(`CR_ERROR_INSTITUTION_NAME_CHOOSE`)
-
+                  : InstitutionNameError ? t(`CR_ERROR_DECEASED_SEX_CHOOSE`)
+                  : AgeError ? t()
                   : setToast(false)
                 : setToast(false)
             }

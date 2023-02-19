@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, BackButton, CheckBox ,Loader} from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, selectDeathPlaceType, HospitalNameMl, selectHospitalNameMl, }) => {
   const { t } = useTranslation();
   let validation = {};
-  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "hospital");
   // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.HospitalDetails?.DeathPlaceType);
   // const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.HospitalDetails?.HospitalNameMl);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
@@ -20,16 +25,18 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
 
   useEffect(() => {
     if (isInitialRender) {
-      if (DeathPlaceType) {
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.DeathPlaceType === DeathPlaceType.DeathPlaceType);
+      if (formData?.InformationDeath?.DeathPlaceType){
+        selectHospitalNameMl(HospitalNameMl);
+        setIsInitialRender(false);
+      }else {
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === DeathPlaceType.hospitalName);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       }
     }
-  }, [cmbhospitalMl, isInitialRender]);
+  }, [cmbhospitalMl, isInitialRender])
 
 
-  useEffect(() => {}, []);
   const onSkip = () => onSelect();
   function setselectDeathPlaceType(value) {
     selectDeathPlaceType(value);
@@ -41,12 +48,17 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
   const goNext = () => {
     // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null );
     // sessionStorage.setItem("HospitalNameMl", HospitalNameMl.DeathPlaceType);
+       // onSelect(config.key, { HospitalName, HospitalNameMl
+    // });
   };
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
         <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}>
       <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -56,9 +68,9 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-6">
               <CardLabel>
-                {`${t("CR_HOSPITAL")}`}
+                {`${t("CR_HOSPITAL_EN")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <Dropdown
@@ -68,10 +80,10 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
                 option={cmbhospital}
                 selected={DeathPlaceType}
                 select={setselectDeathPlaceType}
-                placeholder={`${t("CR_HOSPITAL")}`}
+                placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
               <CardLabel>
                 {`${t("CR_HOSPITAL_ML")}`}
                 {/* <span className="mandatorycss">*</span> */}

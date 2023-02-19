@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+
+import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const Initiater = ({ config, onSelect, userType, formData }) => {
@@ -53,7 +54,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
  
-  function setDeclarationInitiater(e) {
+  function setselectIsDeclarationInitiator(e) {
     if (e.target.checked == true) {
       setIsDeclarationInitiator(e.target.checked);
     } else {
@@ -203,7 +204,8 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("TestDescription")} onChange={setIsDeclarationInitiator} value={IsDeclarationInitiator} checked={IsDeclarationInitiator} />
+            
+            <CheckBox label={t("CR_DECLARATION")} onChange={setselectIsDeclarationInitiator} value={IsDeclarationInitiator} checked={IsDeclarationInitiator} />
             {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>
@@ -280,7 +282,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
                 value={InitiatorName}
                 onChange={setSelectInitiatorName}
                 disable={isEdit}
-                placeholder={`${t("CR_INFORMANT_NAME")}`}
+                placeholder={`${t("CR_INITIATOR_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>

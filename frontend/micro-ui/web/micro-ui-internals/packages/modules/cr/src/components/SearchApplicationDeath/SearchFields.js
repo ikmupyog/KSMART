@@ -9,19 +9,18 @@ const mystyle = {
 
 
 const SearchFields = ({register, control, reset, tenantId, t }) => {
-    const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
+    // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
 
-    const applicationType = useWatch({ control, name: "applicationType" });
+    // const applicationType = useWatch({ control, name: "applicationType" });
 
-    let businessServices=[];
-    if(applicationType && applicationType?.code==="RENEWAL")
-    businessServices=["EDITRENEWAL","DIRECTRENEWAL"]
-    else if(applicationType && applicationType?.code==="NEW")
-    businessServices=["NewTL"]
-    else
-    businessServices=["EDITRENEWAL","DIRECTRENEWAL","NewTL"]
-
-    const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({ businessServices, tenantId }, {});
+    // let businessServices=[];
+    // if(applicationType && applicationType?.code==="RENEWAL")
+    // businessServices=["EDITRENEWAL","DIRECTRENEWAL"]
+    // else if(applicationType && applicationType?.code==="NEW")
+    // businessServices=["NewTL"]
+    // else
+    // businessServices=["EDITRENEWAL","DIRECTRENEWAL","NewTL"]
+    const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({  tenantId }, {});
     let applicationStatuses = []
 
     statusData && statusData?.otherRoleStates?.map((status) => {
@@ -39,7 +38,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <label>{t("CR_SEARCH_ACK_NO")}</label>
             <TextInput name="DeathACKNo" inputRef={register({})} />
         </SearchField>
-        {applicationTypesLoading ? <Loader/> : <SearchField>
+        {/* {applicationTypesLoading ? <Loader/> : <SearchField>
             <label>{t("CR_SEARCH_APPLICATION_TYPE")}</label>
             <Controller
            
@@ -56,7 +55,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                         />
                     )}
                     />
-        </SearchField>}
+        </SearchField>} */}
         <SearchField>
             <label  style={mystyle}>{t("CR_SEARCH_FROM_DATE")}</label>
             <Controller
@@ -104,7 +103,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <p onClick={() => {
                 reset({ 
                     DeathACKNo:"",
-                    applicationType: "", 
+                    // applicationType: "", 
                     fromDate: "", 
                     toDate: "",
                     licenseNumbers: "",

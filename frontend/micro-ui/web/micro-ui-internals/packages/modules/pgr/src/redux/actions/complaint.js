@@ -18,7 +18,6 @@ const createComplaint = ({
   deptCode,
 
 }) => async (dispatch, getState) => {
-  console.log(dispatch);
   const response = await Digit.Complaint.create({
     cityCode,
     complaintType,

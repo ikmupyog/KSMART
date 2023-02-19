@@ -237,8 +237,17 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+     
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FAMILY_DETAILS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+     
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -264,7 +273,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-3">
-                  <CardLabel>{`${t("CR_SPOUSE_TYPE_EN")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_SPOUSE_TYPE_EN")}`} <span className="mandatorycss">*</span></CardLabel>
                   <Dropdown
                     t={t}
                     optionKey="name"
@@ -277,7 +286,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                   />
                 </div>
                 <div className="col-md-3">
-                  <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -292,7 +301,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                   />
                 </div>
                 <div className="col-md-3">
-                  <CardLabel>{`${t("CR_NAME_ML")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_NAME_ML")}`}  <span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -305,7 +314,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: false,
+                      isRequired: true,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}
@@ -356,7 +365,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CR_NAME_EN")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -367,11 +376,11 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     onChange={setSelectFatherNameEn}
                     disable={isEdit}
                     placeholder={`${t("CR_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CR_NAME_ML")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span></CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -384,7 +393,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: false,
+                      isRequired: true,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}
@@ -436,7 +445,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                 <div className="col-md-4">
                   <CardLabel>
                     {`${t("CR_NAME_EN")}`}
-                    {/* <span className="mandatorycss">*</span> */}
+                    <span className="mandatorycss">*</span>
                   </CardLabel>
                   <TextInput
                     t={t}
@@ -448,13 +457,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     onChange={setSelectMotherNameEn}
                     disable={isEdit}
                     placeholder={`${t("CR_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-4">
                   <CardLabel>
                     {`${t("CR_NAME_ML")}`}
-                    {/* <span className="mandatorycss">*</span> */}
+                    <span className="mandatorycss">*</span>
                   </CardLabel>
                   <TextInput
                     t={t}
@@ -468,7 +477,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: false,
+                      isRequired: true,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}

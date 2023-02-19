@@ -15,6 +15,7 @@ const Details = () => {
   const { tenantId: tenantId } = useParams()
   const history = useHistory();
   const [displayMenu, setDisplayMenu] = useState(false);
+  const stateId = Digit.ULBService.getStateId(); 
   const isupdate = Digit.SessionStorage.get("isupdate");
   const { isLoading, isError, error, data, ...rest } = Digit.Hooks.hrms.useHRMSSearch({ codes: employeeId }, tenantId, null, isupdate);
   const [errorInfo, setErrorInfo, clearError] = Digit.Hooks.useSessionStorage("EMPLOYEE_HRMS_ERROR_DATA", false);
@@ -22,7 +23,9 @@ const Details = () => {
   const [successData, setsuccessData, clearSuccessData] = Digit.Hooks.useSessionStorage("EMPLOYEE_HRMS_MUTATION_SUCCESS_DATA", false);
   const { data: boundaryList = {}, isLoadingBoundary } = Digit.Hooks.hrms.useHrmsMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const { data: hospitalData = {}, Loading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
- 
+  const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
+  const { data: institutionData = {}, Loading:loaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
+
   let cmbZonal = [];
   boundaryList &&
     boundaryList["egov-location"] &&
@@ -35,6 +38,19 @@ const Details = () => {
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
+    let cmbInstitutionId= [];
+    institutionData &&
+      institutionData["egov-location"] &&
+      institutionData["egov-location"].institutionList.map((ob) => {
+        cmbInstitutionId.push(ob);
+      });
+  
+    let cmbInstitution = [];
+    institutionList &&
+      institutionList["birth-death-service"] &&
+      institutionList["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+        cmbInstitution.push(ob);
+      });
   useEffect(() => {
     setMutationHappened(false);
     clearSuccessData();
@@ -159,10 +175,12 @@ const Details = () => {
 
             {data?.Employees?.[0]?.jurisdictions?.length > 0
               ? data?.Employees?.[0]?.jurisdictions?.map((element, index) => {
-                // console.log(data,element,cmbhospital);
+                // console.log(data,element,cmbhospital,cmbInstitutionId,cmbInstitution);
                 let Czonal =cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == element?.zoneCode)
                 let Croles= data?.Employees?.[0]?.user.roles.filter((ele) => ele.code == element?.roleCode)
                 let Crhospital = cmbhospital?.length>0 &&cmbhospital.filter((ele)=>ele.code == element.hospitalCode)
+                let CrinstitutionType =''
+                let Crinstitution =''
                 // console.log(Crhospital);
                 return (
                   <StatusTable
@@ -186,22 +204,35 @@ const Details = () => {
                     <Row
                       label={t("HR_ROLE_LABEL")}
                       text={Croles && Croles[0]?.name}
-                      // text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
                     />
                    {Croles?.length > 0 && Croles[0]?.name?.toLowerCase().includes('hospital')&&(
                     <React.Fragment>
                         <Row
                       label={t("Hospital Name")}
                       text={Crhospital && Crhospital[0]?.hospitalName}
-                      // text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
                     />
                      <Row
                       label={t("Hospital Address")}
                       text={Crhospital && Crhospital[0]?.address}
-                      // text={data?.Employees?.[0]?.user.roles.filter((ele) => ele.tenantId == element?.boundary).map((ele) => t(`ACCESSCONTROL_ROLES_ROLES_` + ele?.code))}
                     />
                     </React.Fragment>
                    )}
+                    {Croles?.length > 0 && Croles[0]?.name?.toLowerCase().includes('institution')&&(
+                      <React.Fragment>
+                        <Row
+                        label={t("Institution Type")}
+                        text={Crhospital && Crhospital[0]?.address}
+                        />
+                        <Row
+                        label={t("Institution Name")}
+                        text={Crhospital && Crhospital[0]?.address}
+                        />
+                        <Row
+                        label={t("Institution Address")}
+                        text={Crhospital && Crhospital[0]?.address}
+                        />
+                      </React.Fragment>
+                    )}
                     <Row
                       label={t("TL_LOCALIZATION_ZONAL_OFFICE")}
                       text={Czonal&& Czonal[0]?.name}

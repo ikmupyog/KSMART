@@ -88,7 +88,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage : "");
     const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
     const [presentOutSideIndiaPostCode, setPostCode] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaPostCode ? formData?.AddressBirthDetails?.presentOutSideIndiaPostCode : "");
-    const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AddressBirthDetails?.presentOutSideCountry ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
+    //const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AddressBirthDetails?.presentOutSideCountry ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
 
     //############################################### Same As Above ##################################################################################################
 
@@ -145,7 +145,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     const [permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(formData?.AddressBrOutsideIndiaDetails?.permntOutsideIndiaVillage ? formData?.AddressBrOutsideIndiaDetails?.permntOutsideIndiaVillage : null);
     const [permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(formData?.AddressBrOutsideIndiaDetails?.permntOutsideIndiaCityTown ? formData?.AddressBrOutsideIndiaDetails?.permntOutsideIndiaCityTown : null);
     const [permanentOutsideIndiaPostCode, setPermantpostCode] = useState(formData?.AddressBirthDetails?.permanentOutsideIndiaPostCode ? formData?.AddressBirthDetails?.permanentOutsideIndiaPostCode : null);
-    const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressBirthDetails?.permntOutsideIndiaCountry ? formData?.AddressBirthDetails?.permntOutsideIndiaCountry : null);
+    //const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressBirthDetails?.permntOutsideIndiaCountry ? formData?.AddressBirthDetails?.permntOutsideIndiaCountry : null);
 
     //############################################################# Error Constants #####################################################################################
 
@@ -492,16 +492,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                 } else {
                     setPresentAddressCountryError(false);
                 }
-                if (presentOutSideCountry == null || presentOutSideCountry == undefined) {
-                    setPresentAddressCountryError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentAddressCountryError(false);
-                }
+                // if (presentOutSideCountry == null || presentOutSideCountry == undefined) {
+                //     setPresentAddressCountryError(true);
+                //     validFlag = false;
+                //     setToast(true);
+                //     setTimeout(() => {
+                //         setToast(false);
+                //     }, 2000);
+                // } else {
+                //     setPresentAddressCountryError(false);
+                // }
                 if (presentOutSideIndiaProvinceEn == null || presentOutSideIndiaProvinceEn == undefined || presentOutSideIndiaProvinceEn == "") {
                     setPresentOutSideIndiaProvinceEnError(true);
                     validFlag = false;
@@ -649,7 +649,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
             sessionStorage.setItem("presentOutSideIndiaProvinceMl", presentOutSideIndiaProvinceMl ? presentOutSideIndiaProvinceMl : null);
             sessionStorage.setItem("presentOutSideIndiaadrsVillage", presentOutSideIndiaadrsVillage ? presentOutSideIndiaadrsVillage.code : null);
             sessionStorage.setItem("presentOutSideIndiaPostCode", presentOutSideIndiaPostCode ? presentOutSideIndiaPostCode : null);
-            sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry ? presentOutSideCountry.code : null);
+            // sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry ? presentOutSideCountry.code : null);
             sessionStorage.setItem("presentOutSideIndiaadrsCityTown", presentOutSideIndiaadrsCityTown ? presentOutSideIndiaadrsCityTown : null);
             sessionStorage.setItem("isPrsentAddress", isPrsentAddress ? isPrsentAddress : true);
 
@@ -662,7 +662,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
             sessionStorage.setItem("permntInKeralaAdrStreetNameEn", permntInKeralaAdrStreetNameEn ? permntInKeralaAdrStreetNameEn : "");
             sessionStorage.setItem("permntInKeralaAdrStreetNameMl", permntInKeralaAdrStreetNameMl ? permntInKeralaAdrStreetNameMl : "");
             sessionStorage.setItem("permntInKeralaAdrVillage", permntInKeralaAdrVillage ? permntInKeralaAdrVillage.code : null);
-            sessionStorage.setItem("permntInKeralaAdrLBName", permntInKeralaAdrLBName ? permntInKeralaAdrLBName : null);
+            sessionStorage.setItem("permntInKeralaAdrLBName", permntInKeralaAdrLBName ? permntInKeralaAdrLBName.code : null);
             sessionStorage.setItem("permntInKeralaAdrDistrict", permntInKeralaAdrDistrict ? permntInKeralaAdrDistrict.code : null);
             sessionStorage.setItem("permntInKeralaAdrTaluk", permntInKeralaAdrTaluk ? permntInKeralaAdrTaluk.code : null);
             sessionStorage.setItem("permntInKeralaAdrPostOffice", permntInKeralaAdrPostOffice ? permntInKeralaAdrPostOffice.code : null);
@@ -689,7 +689,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
             sessionStorage.setItem("permntOutsideIndiaVillage", permntOutsideIndiaVillage ? permntOutsideIndiaVillage.code : null);
             sessionStorage.setItem("permntOutsideIndiaCityTown", permntOutsideIndiaCityTown ? permntOutsideIndiaCityTown : null);
             sessionStorage.setItem("permanentOutsideIndiaPostCode", permanentOutsideIndiaPostCode ? permanentOutsideIndiaPostCode : null);
-            sessionStorage.setItem("permntOutsideIndiaCountry", permntOutsideIndiaCountry ? permntOutsideIndiaCountry.code : null);
+            // sessionStorage.setItem("permntOutsideIndiaCountry", permntOutsideIndiaCountry ? permntOutsideIndiaCountry.code : null);
 
             onSelect(config.key, {
                 presentaddressCountry,
@@ -726,7 +726,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                 presentOutSideIndiaAdressMlB,
                 presentOutSideIndiaAdressMlB,
                 presentOutSideIndiaProvinceEn,
-                presentOutSideCountry,
+                // presentOutSideCountry,
                 isPrsentAddress,
 
                 permtaddressCountry,
@@ -765,7 +765,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                 permntOutsideIndiaVillage,
                 permntOutsideIndiaCityTown,
                 permanentOutsideIndiaPostCode,
-                permntOutsideIndiaCountry
+                // permntOutsideIndiaCountry
             });
         }
     };
@@ -951,8 +951,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setadrsCityTown={setadrsCityTown}
                             presentOutSideIndiaPostCode={presentOutSideIndiaPostCode}
                             setPostCode={setPostCode}
-                            presentOutSideCountry={presentOutSideCountry}
-                            setOutSideCountry={setOutSideCountry}
+                            // presentOutSideCountry={presentOutSideCountry}
+                            // setOutSideCountry={setOutSideCountry}
                             countryvalue={countryvalue}
                             setCountryValue={setCountryValue}
                             isPrsentAddress={isPrsentAddress}
@@ -975,8 +975,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
                             permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
                             setPermantpostCode={setPermantpostCode}
-                            permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                            setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                            // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                            // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                         />
                     </div>
                 )}
@@ -1095,8 +1095,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
                             setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
                             permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
                             setPermantpostCode={setPermantpostCode}
-                            permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                            setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                            // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                            // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                             countryvalue={countryvalue}
                             setCountryValue={setCountryValue}
                         />

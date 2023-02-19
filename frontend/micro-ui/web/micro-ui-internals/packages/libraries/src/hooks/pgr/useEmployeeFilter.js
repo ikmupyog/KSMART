@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-const useEmployeeFilter = (tenantId, roles, complaintDetails) => {
+const useEmployeeFilter = (tenantId,uuid, roles, complaintDetails) => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
   const { t } = useTranslation();
   useEffect(() => {
     (async () => {
       // const _roles = roles.join(",");
-      const searchResponse = await Digit.PGRService.employeeSearch(tenantId, roles);
+      const USER_UUID = Digit.UserService.getUser()?.info?.uuid;
+      
+      const searchResponse = await Digit.PGRService.employeeSearch(tenantId, roles,uuid);
 
       const serviceDefs = await Digit.MDMSService.getServiceDefs(tenantId, "PGR");
       const serviceCode = complaintDetails.service.serviceCode;

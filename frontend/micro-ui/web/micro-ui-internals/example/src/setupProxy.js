@@ -40,7 +40,7 @@ module.exports = function (app) {
     "/tl-services/v1/_create",
     "/tl-services/v1/_search",
     "/birth-services/ksmart/birth/createbirth",
-    "/birth-services/cr/birth/_search",
+    "/birth-services/ksmart/birth/searchbirth",
     "/death-services/v1/crdeathdetails/_create",
     "/death-services/v1/crdeathdetails/_search", 
     "/filemgmnt/v1/applicantpersonals/_create",

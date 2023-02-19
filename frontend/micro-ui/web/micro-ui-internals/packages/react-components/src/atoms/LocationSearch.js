@@ -37,6 +37,8 @@ const getName = (places) => {
 
 const loadGoogleMaps = (callback) => {
   const key = globalConfigs?.getConfig("GMAPS_API_KEY");
+  // const key = globalConfigs?.getConfig("AIzaSyB_2cieu90RKipfkKS8I59nHLw48nvUiA4");
+
   const loader = new Loader({
     apiKey: key,
     version: "weekly",
@@ -386,7 +388,9 @@ const LocationSearch = (props) => {
         <SearchIconSvg className="map-search-bar-icon" />
         <input id="pac-input" className="map-search-bar" type="text" placeholder="Search Address" />
       </div>
-      <div id="map" className="map"></div>
+      <div id="map" className="map">
+        
+      </div>
     </div>
   );
 };

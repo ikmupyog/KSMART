@@ -27,7 +27,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const [formDataPage, setFormDataPage] = useState(window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade") ? formData : formData?.TradeDetails);
   const queryClient = useQueryClient();
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [flgCheckDoor, setFlgCheckDoor] = useState(); // ***********Change flag only for true for testing
+  const [flgCheckDoor, setFlgCheckDoor] = useState(false); 
   const [flgCheck, setFlgCheck] = useState(false);
   const [toast, setToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,9 +55,8 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
     { name: "Rent", code: "RENT" },
     { name: "Consent", code: "CONSENT" },
     { name: "LB Owned Building", code: "LBBUILDING" },
-    { name: "Revenue", code: "REVENUE" },
-    { name: "LSGD", code: "LSGD" },
-    { name: "Others", code: "OTHERS" },
+    { name: "Central/State Government", code: "CENTRALSTATEGOVT" },
+    { name: "Local Government", code: "LOCALGOVT" },
   ];
 
   const LicensePeriod = [
@@ -350,7 +349,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setBusinessActivityDesc(e.target.value.length<=200 ? e.target.value.replace(/[^A-Za-z0-9@'$#& ,.]/ig, '') : (e.target.value.replace(/[^A-Za-z0-9@'$#& ,.]/ig, '')).substring(0, 200));
     }
     else {
-      return;
+      setBusinessActivityDesc('');
     }
   });
 
@@ -376,7 +375,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setLicenseUnitName(e.target.value.length<=100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
     }
     else {
-      return;
+      setLicenseUnitName('');
     }
     
   });
@@ -386,7 +385,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setLicenseUnitNameLocal(e.target.value.length<=200 ? e.target.value.replace(/[^\u0D00-\u0D7F\u200D\u200C .&'@']/ig, '') : (e.target.value.replace(/[^\u0D00-\u0D7F\u200D\u200C .&'@']/ig, '')).substring(0, 200));
     }
     else {
-      return;
+      setLicenseUnitNameLocal('');
     }
   });
 
@@ -399,23 +398,24 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   });
 
   const selectStructureType = (value => {
+    setStructureType(value);
+    let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);
-    if(value.code === 'DESIGNATEDPLACE'){
-      let tempval=ownershipCategoryMenumain;
+    if(value?.code === "DESIGNATEDPLACE"){
+      tempval=ownershipCategoryMenumain;
       tempval.splice(0,6); 
       setOwnershipCategoryMenu(tempval);
     }
-    else if(value.code !== 'BUILDING'){
-      let tempval=ownershipCategoryMenumain;
-      tempval.splice(5,4); 
+    else if(value?.code !== "BUILDING"){
+      tempval=ownershipCategoryMenumain;
+      tempval.splice(5,3); 
       setOwnershipCategoryMenu(tempval);
     }
-    else if(value.code === 'BUILDING'){
-      let tempval=ownershipCategoryMenumain;
-      tempval.splice(6,4); 
+    else if(value?.code === "BUILDING"){
+      tempval=ownershipCategoryMenumain;
+      tempval.splice(6,2); 
       setOwnershipCategoryMenu(tempval);
     }
-    setStructureType(value);
     naturetypecmbvalue = value.code.substring(0, 4);
     setValue2(naturetypecmbvalue);
     setIsInitialRender(true);
@@ -458,7 +458,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setLocality(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
     }
     else {
-      return;
+      setLocality('');
     }
   });
 
@@ -467,7 +467,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setStreet(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
     }
     else {
-      return;
+      setStreet('');
     }
     
   });
@@ -477,7 +477,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setLandmark(e.target.value.length <= 150 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 150));
     }
     else {
-      return;
+      setLandmark('');
     }
   });
 
@@ -486,7 +486,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setBuildingName(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
     }
     else {
-      return;
+      setBuildingName('');
     }
     
   });
@@ -512,7 +512,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setServiceArea(e.target.value.length <= 200 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 200));
     }
     else {
-      return;
+      setServiceArea('');
     }
   });
 
@@ -525,7 +525,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       setWaterbody(e.target.value.length <= 200 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 200));  
     }
     else {
-      return;
+      setWaterbody('');
     }
    });
 
@@ -547,17 +547,17 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const mutationDoor = Digit.Hooks.tl.useSearch({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, config1 });
 
   useEffect(() => {
-    if ((payloadDoor.length === undefined)&&(structureType.code === "BUILDING")) {
-      if (mutationDoor !== undefined) {
-        if (mutationDoor?.error !== null) {
-          mutationDoor.mutate({ tenantId, filters: payloadDoor, config1 }, {
-            onSuccess,
-          });
+      if (payloadDoor.length === undefined) {
+        if (mutationDoor !== undefined) {
+          if (mutationDoor?.error !== null) {      
+            mutationDoor.mutate({ tenantId, filters: payloadDoor, config1 }, {
+              onSuccess,
+            });
+          }
         }
       }
-
-    }
   }, [mutationDoor])
+  
   const reducerDoor = (stateDoor, action) => {
 
     switch (action.type) {
@@ -602,6 +602,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
 
           setPayloadDoor(Object.keys(data1).filter(k => data1[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data1[key] === "object" ? data1[key].code : data1[key] }), {}));
           searchReult = mutationDoor?.status === "success" && mutationDoor?.isSuccess && !mutationDoor?.isError ? mutationDoor.data.Licenses : "";
+
           if (searchReult?.length === 1) {
             setFlgCheckDoor(true);
             setErrorMessage(t("Door No Already Entered entered Another Appln"));
@@ -609,13 +610,15 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
             setTimeout(() => {
               setToast(false);
             }, 2000);
-            return { ...data, [action.payload.key]: '' };
+            setFlgCheck(true);
+            return { ...data};
+            
           }
           else{
             setFlgCheckDoor(false);
+            setFlgCheck(true);
           }
-
-          setFlgCheck(true);
+          
       });
       return [
         ...stateDoor
@@ -699,12 +702,12 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         }
         else if(formDataPage?.tradeLicenseDetail?.structureType?.code !== "BUILDING"){
           let tempval=ownershipCategoryMenumain;
-          tempval.splice(5,4); 
+          tempval.splice(5,3); 
           setOwnershipCategoryMenu(tempval);
         }
         else if(formDataPage?.tradeLicenseDetail?.structureType?.code === "BUILDING"){
           let tempval=ownershipCategoryMenumain;
-          tempval.splice(6,4); 
+          tempval.splice(6,2); 
           setOwnershipCategoryMenu(tempval);
         }
       }
@@ -876,10 +879,10 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         // || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
         || (value2 === "BUILDING"  ?  (formStateDoor[0].doorNo  === "" ||  locality === "" || !postOffice || pincode === "" ) : false)
         || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo  === "") : false) 
-        || (value2 === "VEHICLE"  ? serviceArea === "" || (structurePlaceSubtype.code !=="HAND_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false ) : false)
+        || (value2 === "VEHICLE"  ? serviceArea === "" || (structurePlaceSubtype.code ==="MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false ) : false)
         || (value2 === "WATER"  ? (formStateDoor[0].vesselNo === "" || waterbody === ""  || serviceArea === "")  : false)
         || (value2 === "DESIGNATEDPLACE" ? false : false) 
-        || flgCheckDoor === true && flgCheck === false
+        || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
           }  
          >
     
@@ -1001,7 +1004,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
             </div>
             <div className="row">
               <div className="col-md-3" ><CardLabel>{`${t("TL_LICENSING_UNIT_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
-                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="licenseUnitName"  value={licenseUnitName} onChange={changesetLicenseUnitName} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME")}`} {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
+                <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="licenseUnitName"  value={licenseUnitName} onChange={changesetLicenseUnitName} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME")}`} {...(validation = {isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
               </div>
               <div className="col-md-3" ><CardLabel>{`${t("TL_LICENSING_UNIT_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
                 <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="licenseUnitNameLocal" value={licenseUnitNameLocal} onChange={changesetLicenseUnitNameLocal} disable={isEdit} placeholder={`${t("TL_LICENSING_UNIT_NAME_ML")}`} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_LICENSING_UNIT_NAME") })} />
@@ -1166,7 +1169,11 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-7" ><CardLabel>{`${t("TL_VECHICLE_NO")}`}</CardLabel>
+                        <div className="col-md-7" ><CardLabel>{`${t("TL_VECHICLE_NO")}`} 
+                        {structurePlaceSubtype?.code === "MOTOR_VEHICLE" && (
+                          <span className="mandatorycss">*</span>
+                        )}
+                        </CardLabel>
                           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="vehicleNo" value={field?.vehicleNo} onChange={(e) => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "vehicleNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_VECHICLE_NO") })} />
                         </div>
                       </div>

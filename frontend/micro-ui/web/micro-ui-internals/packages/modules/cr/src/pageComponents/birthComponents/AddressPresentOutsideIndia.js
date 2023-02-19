@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, presentOutSideIndiaAdressEn, setAdressEn,
   presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
   setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaProvinceMl, setProvinceMl, presentOutSideIndiaadrsVillage, setadrsVillage,
-  presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode, presentOutSideCountry,
-  setOutSideCountry, countryvalue, setCountryValue,
+  presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode,
+  //  presentOutSideCountry,  setOutSideCountry, countryvalue, setCountryValue,
   isPrsentAddress, setIsPrsentAddress, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
   permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
@@ -156,14 +156,14 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     }
   }
 
-  function setSelectOutSideCountry(value) {
-    setOutSideCountry(value);
-    if (isPrsentAddress) {
-      setPermntOutsideIndiaCountry(presentOutSideCountry);
-    } else {
-      setPermntOutsideIndiaCountry('');
-    }
-  }
+  // function setSelectOutSideCountry(value) {
+  //   setOutSideCountry(value);
+  //   if (isPrsentAddress) {
+  //     setPermntOutsideIndiaCountry(presentOutSideCountry);
+  //   } else {
+  //     setPermntOutsideIndiaCountry('');
+  //   }
+  // }
   // function setSelectPostCode(e) {
   //   setPostCode(e.target.value);
   // }
@@ -220,7 +220,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <CardLabel>
               {`${t("CS_COMMON_COUNTRY")}`}
               <span className="mandatorycss">*</span>
@@ -233,8 +233,8 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               select={setSelectOutSideCountry}
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
             />
-          </div>
-          <div className="col-md-4">
+          </div> */}
+          <div className="col-md-6">
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -247,7 +247,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")} <span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
