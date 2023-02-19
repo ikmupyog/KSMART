@@ -134,7 +134,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
-  let workFlowCode = "birth21days";
+  let workFlowCode = "BIRTHHOSP21";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -306,7 +306,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       console.log(Difference_In_DaysRounded);
       if (Difference_In_DaysRounded <= 21) {
         console.log("Difference_In_DaysRounded" + Difference_In_DaysRounded);
-        workFlowCode = "birth21days";
+        workFlowCode = "BIRTHHOSP21";
         console.log(workFlowCode + "workFlowCode");
       }
       if (Difference_In_DaysRounded >= 365) {
