@@ -359,7 +359,7 @@ let ownerappmap ={
           <div className="col-md-12">
             <LabelFieldPair style={{ display: "flex", }}>
               <CardLabel style={{ fontSize: "17px", width: "none !important" }}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
-              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" }} />
+              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" ,justifyContent: "space-between", width: "48%" }} />
             </LabelFieldPair>
           </div>
         </div>
