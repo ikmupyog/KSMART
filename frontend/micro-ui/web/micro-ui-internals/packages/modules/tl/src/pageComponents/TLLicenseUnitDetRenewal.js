@@ -31,7 +31,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   const [formDataPage, setFormDataPage] = useState(formData?.TradeDetails ? formData?.TradeDetails : formData);
   const queryClient = useQueryClient();
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [flgCheckDoor, setFlgCheckDoor] = useState(); // ***********Change flag only for true for testing
+  const [flgCheckDoor, setFlgCheckDoor] = useState(false);
   const [flgCheck, setFlgCheck] = useState(false);
   const [toast, setToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -59,9 +59,8 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
     { name: "Rent", code: "RENT" },
     { name: "Consent", code: "CONSENT" },
     { name: "LB Owned Building", code: "LBBUILDING" },
-    { name: "Revenue", code: "REVENUE" },
-    { name: "LSGD", code: "LSGD" },
-    { name: "Others", code: "OTHERS" },
+    { name: "Central/State Government", code: "CENTRALSTATEGOVT" },
+    { name: "Local Government", code: "LOCALGOVT" },
   ];
 
   const LicensePeriod = [
@@ -358,7 +357,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setBusinessActivityDesc(e.target.value.length <= 200 ? e.target.value.replace(/[^A-Za-z0-9@'$#& ,.]/ig, '') : (e.target.value.replace(/[^A-Za-z0-9@'$#& ,.]/ig, '')).substring(0, 200));
     }
     else {
-      return;
+      setBusinessActivityDesc('');
     }
   });
 
@@ -384,7 +383,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setLicenseUnitName(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
     }
     else {
-      return;
+      setLicenseUnitName('');
     }
 
   });
@@ -394,7 +393,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setLicenseUnitNameLocal(e.target.value.length <= 200 ? e.target.value.replace(/[^\u0D00-\u0D7F\u200D\u200C .&'@']/ig, '') : (e.target.value.replace(/[^\u0D00-\u0D7F\u200D\u200C .&'@']/ig, '')).substring(0, 200));
     }
     else {
-      return;
+      setLicenseUnitNameLocal('');
     }
   });
 
@@ -407,23 +406,25 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
   });
 
   const selectStructureType = (value => {
+    setStructureType(value);
+    let tempval = [];
     setOwnershipCategoryMenu(ownershipCategoryMenumain);
-    if (value.code === 'DESIGNATEDPLACE') {
-      let tempval = ownershipCategoryMenumain;
+    if (value?.code === "DESIGNATEDPLACE") {
+      tempval = ownershipCategoryMenumain;
       tempval.splice(0, 6);
       setOwnershipCategoryMenu(tempval);
     }
-    else if (value.code !== 'BUILDING') {
-      let tempval = ownershipCategoryMenumain;
-      tempval.splice(5, 4);
+    else if (value.code !== "BUILDING") {
+      tempval = ownershipCategoryMenumain;
+      tempval.splice(5, 3);
       setOwnershipCategoryMenu(tempval);
     }
-    else if (value.code === 'BUILDING') {
-      let tempval = ownershipCategoryMenumain;
-      tempval.splice(6, 4);
+    else if (value.code === "BUILDING") {
+      tempval = ownershipCategoryMenumain;
+      tempval.splice(6, 2);
       setOwnershipCategoryMenu(tempval);
     }
-    setStructureType(value);
+    
     naturetypecmbvalue = value.code.substring(0, 4);
     setValue2(naturetypecmbvalue);
     setIsInitialRender(true);
@@ -466,7 +467,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setLocality(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
     }
     else {
-      return;
+      setLocality('');
     }
   });
 
@@ -475,7 +476,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setStreet(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
     }
     else {
-      return;
+      setStreet('');
     }
 
   });
@@ -485,7 +486,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setLandmark(e.target.value.length <= 150 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 150));
     }
     else {
-      return;
+      setLandmark('');
     }
   });
 
@@ -494,7 +495,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setBuildingName(e.target.value.length <= 100 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 100));
     }
     else {
-      return;
+      setBuildingName('');
     }
 
   });
@@ -520,7 +521,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setServiceArea(e.target.value.length <= 200 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 200));
     }
     else {
-      return;
+      setServiceArea('');
     }
   });
 
@@ -533,7 +534,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
       setWaterbody(e.target.value.length <= 200 ? e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '') : (e.target.value.replace(/[^A-Za-z1-9' @&.]/ig, '')).substring(0, 200));
     }
     else {
-      return;
+       setWaterbody('');
     }
   });
 
@@ -617,13 +618,15 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
             setTimeout(() => {
               setToast(false);
             }, 2000);
-            return { ...data, [action.payload.key]: '' };
+            setFlgCheck(true);
+            return { ...data};
+
           }
           else {
             setFlgCheckDoor(false);
+            setFlgCheck(true);
           }
 
-          setFlgCheck(true);
         });
         return [
           ...stateDoor
@@ -708,12 +711,12 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
         }
         else if (formDataPage?.tradeLicenseDetail?.structureType !== "BUILDING") {
           let tempval = ownershipCategoryMenumain;
-          tempval.splice(5, 4);
+          tempval.splice(5, 3);
           setOwnershipCategoryMenu(tempval);
         }
         else if (formDataPage?.tradeLicenseDetail?.structureType === "BUILDING") {
           let tempval = ownershipCategoryMenumain;
-          tempval.splice(6, 4);
+          tempval.splice(6, 2);
           setOwnershipCategoryMenu(tempval);
         }
       }
@@ -917,10 +920,10 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
             // || (value3 === "Yes"  ? (formStateDoor[0].partitionNo === "" ): false)
             || (value2 === "BUILDING" ? (formStateDoor[0].doorNo === "" || locality === "" || !postOffice || pincode === "") : false)
             || (ownershipCategory.code === "LBBUILDING" ? (formStateDoor[0].stallNo === "") : false)
-            || (value2 === "VEHICLE" ? serviceArea === "" || (structurePlaceSubtype.code !== "HAND_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false) : false)
+            || (value2 === "VEHICLE" ? serviceArea === "" || (structurePlaceSubtype.code !== "MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false) : false)
             || (value2 === "WATER" ? (formStateDoor[0].vesselNo === "" || waterbody === "" || serviceArea === "") : false)
             || (value2 === "DESIGNATEDPLACE" ? false : false)
-            || flgCheckDoor === true && flgCheck === false
+            // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
           }
         >
 
@@ -1207,7 +1210,11 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-7" ><CardLabel>{`${t("TL_VECHICLE_NO")}`}</CardLabel>
+                        <div className="col-md-7" ><CardLabel>{`${t("TL_VECHICLE_NO")}`}
+                        {structurePlaceSubtype?.code === "MOTOR_VEHICLE" && (
+                          <span className="mandatorycss">*</span>
+                        )}
+                        </CardLabel>
                           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="vehicleNo" value={field?.vehicleNo} onChange={(e) => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "vehicleNo")}      {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_VECHICLE_NO") })} />
                         </div>
                       </div>
@@ -1284,7 +1291,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span>{`${t("TL_LOCATION_ADDRESS")}`} </h1>
+                  <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LOCATION_ADDRESS")}`} </span></h1>
                   </div>
                 </div>
                 <div className="row">
