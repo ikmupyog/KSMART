@@ -422,8 +422,11 @@ function Jurisdiction({
       }
   },[])
   useEffect(()=>{
-    let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode)
+    let Croles= getroledata().filter((ele) => ele.code  ==  jurisdiction.roleCode )
     setRolesData(Croles)
+   if(Croles?.length>0){
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, role: Croles[0] } : item)));
+   }
   },[])
   useEffect(()=>{
     if(jurisdiction?.roleCode?.toLowerCase().includes('hospital')){

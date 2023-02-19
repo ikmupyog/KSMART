@@ -98,7 +98,7 @@ let ownerappmap ={
     return [
       {
         owneraadhaarNo: "",
-        ownerName: formDatalocal?.tradeLicenseDetail?.structurePlaceSubtype?.name,
+        ownerName: "",
         houseName: "",
         street: "",
         locality: "",
@@ -258,12 +258,13 @@ let ownerappmap ={
     const result = await validateData();
     if (result) {
       let owners = appState;
-      let ownerspremise = ownerState;
+
+      let ownerspremise =  ownerState;
       let institution = LicenseeType.code === "INSTITUTION" ? {
         "institutionName": institutionName, "contactNo": contactNo,
         "organisationregistrationno": organisationregistrationno, "address": insaddress, "natureOfInstitution": natureOfInstitution.code,
         "email": email, "licenseUnitId": licenseUnitId
-      } : {};
+      } : null;
       let licenseeType = LicenseeType;
       let capitalInvestment = formDatalocal?.tradeLicenseDetail?.capitalInvestment;
       let structureType = formDatalocal?.tradeLicenseDetail?.structureType;
@@ -277,7 +278,7 @@ let ownerappmap ={
       let businessSector = formDatalocal?.tradeLicenseDetail?.businessSector;
       let enterpriseType=formDatalocal?.tradeLicenseDetail?.enterpriseType;
       let tradeLicenseDetail = {
-        licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
+        licenseeType, owners, ownerspremise : (structureType.code !== "DESIGNATEDPLACE" ? ownerspremise : null), institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
         , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits,enterpriseType
       };
       onSelect(config.key, { tradeLicenseDetail });
@@ -334,8 +335,8 @@ let ownerappmap ={
           || appState[0].aadhaarNumber === "" || appState[0].mobileNumber === "" || appState[0].emailId === ""
           || (LicenseeType?.code === "INSTITUTION" ? (appState[0].designation === "" || contactNo === "" || email === "" || insaddress === "" || institutionName === ""
           || organisationregistrationno === "" || licenseUnitId === "") : false)
-          || (formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
-          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false} >
+          || ((formDatalocal?.tradeLicenseDetail?.structureType?.code !== "DESIGNATEDPLACE") ? (ownerState[0].owneraadhaarNo == "" || ownerState[0].ownerName == "" || ownerState[0].houseName == "" || ownerState[0].street == ""
+          || ownerState[0].locality == "" || ownerState[0].postOffice == "" || ownerState[0].ownerContactNo == ""):false)} >
 
         <div className="row">
           <div className="col-md-12" > <header className="card-header">New IFTE & OS License Application</header>
@@ -358,7 +359,7 @@ let ownerappmap ={
           <div className="col-md-12">
             <LabelFieldPair style={{ display: "flex", }}>
               <CardLabel style={{ fontSize: "17px", width: "none !important" }}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
-              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" }} />
+              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" ,justifyContent: "space-between", width: "48%" }} />
             </LabelFieldPair>
           </div>
         </div>

@@ -14,7 +14,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("PT")) {
     return <PTActionModal {...props} />;
   }
-  if (props?.businessService.includes("NewBirth")) {
+  if (props?.businessService.includes("BIRTHHOSP21")) {
     return <BirthActionModal {...props} />;
   }
   if (props?.businessService.includes("NewBirthTwentyOne")) {

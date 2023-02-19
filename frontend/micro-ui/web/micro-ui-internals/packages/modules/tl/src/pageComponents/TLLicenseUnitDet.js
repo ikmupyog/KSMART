@@ -547,7 +547,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const mutationDoor = Digit.Hooks.tl.useSearch({ tenantId, filters: (payloadDoor.length === undefined) ? payloadDoor : payloadDoorinit, config1 });
 
   useEffect(() => {
-      if (payloadDoor.length === undefined) {
+    if ((payloadDoor.length === undefined) && (structureType.code === "BUILDING")) {
         if (mutationDoor !== undefined) {
           if (mutationDoor?.error !== null) {      
             mutationDoor.mutate({ tenantId, filters: payloadDoor, config1 }, {
@@ -882,7 +882,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         || (value2 === "VEHICLE"  ? serviceArea === "" || (structurePlaceSubtype.code ==="MOTOR_VEHICLE" ? formStateDoor[0].vehicleNo === "" : false ) : false)
         || (value2 === "WATER"  ? (formStateDoor[0].vesselNo === "" || waterbody === ""  || serviceArea === "")  : false)
         || (value2 === "DESIGNATEDPLACE" ? false : false) 
-        || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
+        // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
           }  
          >
     
@@ -937,7 +937,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
             </div>
             <div className="row">
               <div className="col-md-3">
-                <CardLabel style={{ marginBottom: "30px" }}>
+                <CardLabel style={{ marginBottom: "30px",marginTop:"20px" }}>
                   {`${t("TL_BUSINESS_SECTOR")}`}<span className="mandatorycss">*</span>
                 </CardLabel>
               </div>
@@ -1250,7 +1250,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span>{`${t("TL_LOCATION_ADDRESS")}`} </h1>
+                  <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LOCATION_ADDRESS")}`} </span></h1>
                   </div>
                 </div>
                 <div className="row">

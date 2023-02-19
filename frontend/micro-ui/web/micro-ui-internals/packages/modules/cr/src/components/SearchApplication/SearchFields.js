@@ -25,7 +25,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     // else if(applicationType && applicationType?.code==="NEW")
     // businessServices=["NewBirth"]
     // else
-    businessServices=["birth21days",]
+    businessServices=["BIRTHHOSP21",]
 
     // const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({ businessServices, tenantId }, {});
     // let applicationStatuses = []
