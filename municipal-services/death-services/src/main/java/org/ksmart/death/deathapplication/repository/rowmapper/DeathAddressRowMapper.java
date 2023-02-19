@@ -145,6 +145,10 @@ public class DeathAddressRowMapper  implements ResultSetExtractor  , BaseRowMapp
                           .PermntOutsideIndiaLinetwoEn(rs.getString("R_streetname_en"))
                           .PermntOutsideIndiaLinetwoMl(rs.getString("R_streetname_ml"))
                           .PermanentOutsideIndiaPostCode(rs.getString("R_postal_code"))
+
+                          .permntInKeralaAdrLBName(rs.getString("R_addr_lb_name"))
+                          .presentInsideKeralaLBName(rs.getString("P_addr_lb_name"))
+                          .isPrsentAddress(rs.getBoolean("P_addr_sameas_present"))
                           .build();
     }
 

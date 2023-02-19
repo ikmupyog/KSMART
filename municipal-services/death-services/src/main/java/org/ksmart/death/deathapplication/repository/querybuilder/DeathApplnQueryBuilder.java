@@ -151,6 +151,11 @@ public class DeathApplnQueryBuilder extends BaseQueryBuilder {
          .append(" ,permanentAddress.postoffice_name_ml as  R_postoffice_name_ml")
          .append(" ,permanentAddress.housename_ml as  R_housename_ml")
          .append(" ,permanentAddress.housename_en as  R_housename_en")
+
+         .append(" ,presentaddress.addr_sameas_present as  P_addr_sameas_present")
+         .append(" ,permanentAddress.addr_lb_name as  R_addr_lb_name")
+         .append(" ,presentaddress.addr_lb_name as  P_addr_lb_name")
+         
          //commented on 15/12/2023
         //  .append(" ,initiatorAddress.death_dtl_id  as I_death_dtl_id") 
         //  .append(" ,initiatorAddress.tenantid as I_tenantid") 
