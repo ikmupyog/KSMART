@@ -20,7 +20,8 @@ const ApplicationDetails = () => {
   const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.tl.useApplicationDetail(t, tenantId, applicationNumber);
-  const wardcodes = applicationDetails?.tradeLicenseDetail?.address?.wardId ; //: data?.tradeLicenseDetail?.address?.wardId;
+ 
+  const wardcodes = applicationDetails?.applicationData?.tradeLicenseDetail?.address?.wardId ; //: data?.tradeLicenseDetail?.address?.wardId;
 
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
@@ -171,7 +172,6 @@ const ApplicationDetails = () => {
     }];
   }
 
-  //console.log("application Det"+JSON.stringify(applicationDetails));
 
 
   return (

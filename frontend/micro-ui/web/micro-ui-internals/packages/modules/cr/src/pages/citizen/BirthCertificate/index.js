@@ -56,8 +56,8 @@ const BirthCertificateSearch = ({ path }) => {
     data: { RegisterBirthDetails: searchReult, Count: count } = {},
     isLoading,
     isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearchBirth({filters: payload, config });
-  console.log(searchReult);
+  } = Digit.Hooks.cr.useRegistrySearchBirth({filters: payload, config }); 
+  // console.log(searchReult);
   let payloadData = { id: isSuccess && searchReult[0]?.id, source: "sms" };
   let registryPayload = Object.keys(payloadData)
     .filter((k) => payloadData[k])

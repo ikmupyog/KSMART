@@ -69,9 +69,9 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
   let extraStyles = {};
   extraStyles = getStyle();
   let documentList = [
-    { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" },
-    { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership" },
-    { "code": "OWNERPHOTO", "description": "OwnerPhotoProof" }
+    { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" , "label" : "Proof Of Identity" },
+    { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership","label" : "Proof Of Ownership" },
+    { "code": "OWNERPHOTO", "description": "OwnerPhotoProof","label" : "Photo" }
   ]
 
   const [uploadedFiles, setUploadedFiles] = useState(formData?.TradeDetails?.ownersdoc? formData?.TradeDetails?.ownersdoc: []);
@@ -190,15 +190,18 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
         <CardLabelDesc style={{ fontWeight: "unset" }}>{t(`TL_UPLOAD_RESTRICTIONS_TYPES`)}</CardLabelDesc>
         <CardLabelDesc style={{ fontWeight: "unset" }}> {t(`TL_UPLOAD_RESTRICTIONS_SIZE`)}</CardLabelDesc>
 
+        <div className="col-md-6">
+            <CardLabel>Document Type</CardLabel>
+          </div>
 
-        <div>
+        {/* <div>
           <div className="col-md-6">
             <CardLabel>{`${t("TL_CATEGORY_DOCUMENT_TYPE")}`}</CardLabel>
           </div>
           <div className="col-md-6">
             <CardLabel>{`${t(`TL_ACTION_FILEUPLOADED`)}`}</CardLabel>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -208,7 +211,7 @@ const TLDocumentUpload = ({ t, config, onSelect, userType, formData }) => {
                     <div className="col-md-12">
                       <div className="col-md-3">
                         <span>
-                          {doc.code}
+                          {doc.label}
                         </span>
                       </div>
                       <div className="col-md-3">
