@@ -22,7 +22,7 @@ const hstyle = {
   lineHieght: "1.5rem",
 };
 
-const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
+const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
   console.log(data);
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
@@ -200,4 +200,4 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   );
 };
 
-export default SearchApplication;
+export default SearchApplicationDeath;

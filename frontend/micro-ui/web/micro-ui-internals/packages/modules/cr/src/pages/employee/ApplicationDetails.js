@@ -62,7 +62,6 @@ const ApplicationDetails = () => {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
-  console.log(workflowDetails);
   if (workflowDetails?.data?.processInstances?.length > 0) {
     let filteredActions = [];
     filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter(
@@ -72,7 +71,6 @@ const ApplicationDetails = () => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      console.log(data.action);
       if (data.action == "EDIT") {
         data.redirectionUrl = {
           pathname: `/digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}`,
