@@ -170,6 +170,7 @@ const ApplicationDetails = () => {
     }];
   }
 
+  //console.log("application Det"+JSON.stringify(applicationDetails));
 
 
   return (

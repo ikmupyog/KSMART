@@ -98,7 +98,7 @@ let ownerappmap ={
     return [
       {
         owneraadhaarNo: "",
-        ownerName: formDatalocal?.tradeLicenseDetail?.structurePlaceSubtype?.name,
+        ownerName: "",
         houseName: "",
         street: "",
         locality: "",
@@ -258,6 +258,7 @@ let ownerappmap ={
     const result = await validateData();
     if (result) {
       let owners = appState;
+
       let ownerspremise = ownerState;
       let institution = LicenseeType.code === "INSTITUTION" ? {
         "institutionName": institutionName, "contactNo": contactNo,
@@ -277,7 +278,7 @@ let ownerappmap ={
       let businessSector = formDatalocal?.tradeLicenseDetail?.businessSector;
       let enterpriseType=formDatalocal?.tradeLicenseDetail?.enterpriseType;
       let tradeLicenseDetail = {
-        licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
+        licenseeType, owners, ownerspremise : (structureType.code !== "DESIGNATEDPLACE" ? ownerspremise : null), institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
         , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits,enterpriseType
       };
       onSelect(config.key, { tradeLicenseDetail });

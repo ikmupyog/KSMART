@@ -51,15 +51,17 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
     false
   );
   const isEdit = window.location.href.includes("renew-trade");
+  //const isEdit= data?.TradeDetails?.workflowCode==="RenewalTL" ? true :false;
+  const isRenewalEdit=data?.TradeDetails?.workflowCode==="RenewalTL" ? true :false
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
   const stateId = Digit.ULBService.getStateId();
   const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
   const [isInitialRender, setIsInitialRender] = useState(true);
-
   useEffect(() => {
     if (isInitialRender) {
+    
     const onSuccessedit = () => {
       setMutationHappened(true);
     };
@@ -68,8 +70,7 @@ const TLAcknowledgement = ({ data, onSuccess }) => {
       let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
       data.tenantId = tenantId1;
       if (!resubmit) {
-
-        let formdata = !isEdit ? convertToTrade(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "TL") : []);
+         let formdata = !isRenewalEdit ? convertToTrade(data) : convertToEditTrade(data?.TradeDetails)   //(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "TL") : []);
         formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
