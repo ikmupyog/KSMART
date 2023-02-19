@@ -28,7 +28,6 @@ const SearchRenewalTrade = (searchdata) => {
         delete _data?.lbId;
         delete _data?.zonalId
         setSearchdatacat(_data);
-        console.log(JSON.stringify( _data?.wardId));
         if (_data?.wardId === undefined || _data?.wardId === null || _data?.wardId === 0) {
             setWardmandatory(false);
             setErrorMessage("Please select ward no");
@@ -48,63 +47,17 @@ const SearchRenewalTrade = (searchdata) => {
         }
         queryClient.removeQueries("TL_SEARCH");
         const data = {
-            ..._data
+            ..._data  //,"applicationType":"RENEWAL"
         }
         setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
-        console.log("payload"+payload);
     }
 
     const config = {
         enabled: !!(payload && Object.keys(payload).length > 0)
     }
-    // const { isLoading, isError, error, data: searchReult, error: errorApplication } = Digit.Hooks.tl.useTLApplicationDetails({
-    //     tenantId: tenantId,
-    //     wardId: payload?.wardId,
-    //     applicationType:"RENEWAL",
-    //     enabled:payload && Object.keys(payload).length > 0 ?true:false
-    //   });
-
     const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } =
      Digit.Hooks.tl.useSearch({tenantId, filters: payload, config})
-
-
-console.log(JSON.stringify(searchReult));
-   // : { raw : searchReult, Count: count } = {}, isLoading, isSuccess
-
-    // const initiataed = searchReult ? searchReult.filter((data) => data?.status === null ? data : data?.status.includes("INITIATED")) : "";
-    // const forwarded = searchReult ? searchReult.filter((data) => data?.status === null ? data : data?.status.includes("FORWARDED")) : "";
-    // const approved = searchReult ? searchReult.filter((data) => data?.status === null ? data : data?.status.includes("APPROVED")) : "";
-
-    // let sortedData = [];
-    // if (oprole) {
-    //     if (initiataed?.length > 0)
-    //         initiataed.map((ob) => {
-    //             sortedData.push(ob);
-    //         });
-    //     if (forwarded?.length > 0)
-    //         forwarded.map((ob) => {
-    //             sortedData.push(ob);
-    //         });
-    //     if (approved?.length > 0)
-    //         approved.map((ob) => {
-    //             sortedData.push(ob);
-    //         });
-    // }
-
-    // else if (approle) {
-    //     if (forwarded?.length > 0)
-    //         forwarded.map((ob) => {
-    //             sortedData.push(ob);
-    //         });
-    //     if (approved?.length > 0)
-    //         approved.map((ob) => {
-    //             sortedData.push(ob);
-    //         });
-    // }
-
-    // sortedData = sortedData?.length > 0 ? sortedData : searchReult;
-
-  
+ 
     if (wardmandatory)
          return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
        // return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />

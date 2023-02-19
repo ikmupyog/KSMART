@@ -77,9 +77,9 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
   
   // RAIN-5692 PGR : GRO is assigning complaint, Selecting employee and assign. Its not getting assigned.
   // Fix for next action  assignee dropdown issue
-  const stateArray = workflowDetails?.data?.initialActionState?.nextActions?.filter( ele => ele?.action == selectedAction );  
+  const stateArray = workflowDetails?.data?.initialActionState?.nextActions?.filter( ele => ele?.action == selectedAction );   
   const useEmployeeData = Digit.Hooks.pgr.useEmployeeFilter(
-    tenantId, 
+    tenantId, stateArray?.[0]?.actions?.[0]?.uuid,
     stateArray?.[0]?.assigneeRoles?.length > 0 ? stateArray?.[0]?.assigneeRoles?.join(",") : "",
     complaintDetails
     );
@@ -158,8 +158,8 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
       }
       headerBarEnd={<CloseBtn onClick={() => close(popup)} />}
       actionCancelLabel={t("CS_COMMON_CANCEL")}
-      actionCancelOnSubmit={() => close(popup)}
-      actionSaveLabel={
+      actionCancelOnSubmit={() => close(popup)}      
+      actionSaveLabel={       
         selectedAction === "ASSIGN" || selectedAction === "REASSIGN"
           ? t("CS_COMMON_ASSIGN")
           : selectedAction === "REJECT"
@@ -210,11 +210,13 @@ export const ComplaintDetails = (props) => {
   const { t } = useTranslation();
   const [fullscreen, setFullscreen] = useState(false);
   const [imageZoom, setImageZoom] = useState(null);
-  // const [actionCalled, setActionCalled] = useState(false);
+  // const [actionCalled, setActionCalled] = useState(false); moduleCode: "pgrhealth",
   const [toast, setToast] = useState(false);
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { isLoading, complaintDetails, revalidate: revalidateComplaintDetails } = Digit.Hooks.pgr.useComplaintDetails({ tenantId, id });
-  const workflowDetails = Digit.Hooks.useWorkflowDetails({ tenantId, id, moduleCode: "PGR", role: "EMPLOYEE" });
+  
+  const [businessService, setBusinessService] = useState("pgrhealth1"); //DIRECTRENEWAL
+  const workflowDetails = Digit.Hooks.useWorkflowDetails({ tenantId, id,  moduleCode: businessService, role: "EMPLOYEE" });
   const [imagesToShowBelowComplaintDetails, setImagesToShowBelowComplaintDetails] = useState([])
   
   // RAIN-5692 PGR : GRO is assigning complaint, Selecting employee and assign. Its not getting assigned.
@@ -234,6 +236,11 @@ export const ComplaintDetails = (props) => {
       }
     }
   },[workflowDetails])
+  useEffect(() => {
+    if (workflowDetails?.data?.applicationBusinessService) {
+      setBusinessService(workflowDetails?.data?.applicationBusinessService);
+    }
+  }, [workflowDetails.data]);
   const [displayMenu, setDisplayMenu] = useState(false);
   const [popup, setPopup] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
@@ -296,8 +303,21 @@ export const ComplaintDetails = (props) => {
   }
 
   function onActionSelect(action) {
+   
     setSelectedAction(action);
     switch (action) {
+      case "RETURN":
+        setPopup(true);
+        setDisplayMenu(false);
+        break;
+      case "RECOMMEND":
+        setPopup(true);
+        setDisplayMenu(false);
+        break;
+      case "VERIFY":
+        setPopup(true);
+        setDisplayMenu(false);
+        break;
       case "ASSIGN":
         setPopup(true);
         setDisplayMenu(false);
@@ -324,8 +344,10 @@ export const ComplaintDetails = (props) => {
   }
 
   async function onAssign(selectedEmployee, comments, uploadedFile) {
+   
     setPopup(false);
     const response = await Digit.Complaint.assign(complaintDetails, selectedAction, selectedEmployee, comments, uploadedFile, tenantId);
+   
     setAssignResponse(response);
     setToast(true);
     setLoader(true);
@@ -462,19 +484,19 @@ export const ComplaintDetails = (props) => {
             )}
           </React.Fragment>
         )}
-      </Card>
+      </Card>      
       {fullscreen ? (
         <PopUp>
           <div className="popup-module">
             <HeaderBar main={<Heading label="Complaint Geolocation" />} end={<CloseBtn onClick={() => close(fullscreen)} />} />
             <div className="popup-module-main">
-              <img src="https://via.placeholder.com/912x568" />
+              <img src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_2cieu90RKipfkKS8I59nHLw48nvUiA4&callback=myMap" />
             </div>
           </div>
         </PopUp>
       ) : null}
       {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={onCloseImageZoom} /> : null}
-      {popup ? (
+      {popup ? (        
         <ComplaintDetailsModal
           workflowDetails={workflowDetails}
           complaintDetails={complaintDetails}
@@ -488,7 +510,7 @@ export const ComplaintDetails = (props) => {
       ) : null}
       {toast && <Toast label={t(assignResponse ? `CS_ACTION_${selectedAction}_TEXT` : "CS_ACTION_ASSIGN_FAILED")} onClose={closeToast} />}
       {!workflowDetails?.isLoading && workflowDetails?.data?.nextActions?.length > 0 && (
-        <ActionBar>
+        <ActionBar>          
           {displayMenu && workflowDetails?.data?.nextActions ? (
             <Menu options={workflowDetails?.data?.nextActions.map((action) => action.action)} t={t} onSelect={onActionSelect} />
           ) : null}

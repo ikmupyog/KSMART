@@ -298,7 +298,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>
               {t("CR_LOCALITY_EN")}
               <span className="mandatorycss">*</span>
@@ -314,7 +314,40 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
+            <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="adrsStreetNameEn"
+              value={adrsStreetNameEn}
+              onChange={setSelectAdrsStreetNameEn}
+              placeholder={`${t("CR_STREET_NAME_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+            />
+          </div>
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CR_HOUSE_NAME_EN")}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="adrsHouseNameEn"
+              value={adrsHouseNameEn}
+              onChange={setSelectAdrsHouseNameEn}
+              placeholder={`${t("CR_HOUSE_NAME_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+            />
+          </div>         
+        </div>
+
+        
+        <div className="row">
+        <div className="col-md-4">
             <CardLabel>
               {t("CR_LOCALITY_ML")}
               <span className="mandatorycss">*</span>
@@ -335,23 +368,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
               })}
             />
           </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="adrsStreetNameEn"
-              value={adrsStreetNameEn}
-              onChange={setSelectAdrsStreetNameEn}
-              placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
-            />
-          </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>{t("CR_STREET_NAME_ML")} </CardLabel>
             <TextInput
               t={t}
@@ -369,25 +386,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
               })}
             />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_HOUSE_NAME_EN")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="adrsHouseNameEn"
-              value={adrsHouseNameEn}
-              onChange={setSelectAdrsHouseNameEn}
-              placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
-            />
-          </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <CardLabel>
               {t("CR_HOUSE_NAME_ML")}
               <span className="mandatorycss">*</span>
