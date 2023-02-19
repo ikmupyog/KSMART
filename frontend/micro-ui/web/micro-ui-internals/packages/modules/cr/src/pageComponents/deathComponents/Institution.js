@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton} from "@egovernments/digit-ui-react-components";
+import React, { useState ,useEffect} from "react";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -64,6 +64,24 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   function setselectInstitutionIdMl(value) {
     setInstitutionIdMl(value);
   }
+  let cmbInstitutionIdMl = [];
+
+  // useEffect(() => {
+    
+  //   if (isInitialRender) {
+  //     if (institutionType === "INSTITUTION") {
+  //     if (formData?.InformationDeath?.DeathPlaceInstId){
+  //       selectDeathPlaceInstId(DeathPlaceInstId);
+  //       setIsInitialRender(false);
+  //     }else {
+  //       cmbInstitutionIdMl = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.name === DeathPlaceInstId.name);
+  //       setInstitutionIdMl(cmbInstitutionIdMl[0]);
+  //       setIsInitialRender(false);
+  //     }
+  //   }
+  // }
+  // }, [cmbInstitutionIdMl, isInitialRender])
+
   const goNext = () => {
     // sessionStorage.setItem("DeathPlaceType", DeathPlaceType.code);
     // sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId.code);

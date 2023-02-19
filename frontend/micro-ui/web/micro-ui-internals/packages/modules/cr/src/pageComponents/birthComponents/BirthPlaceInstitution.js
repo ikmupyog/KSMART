@@ -126,7 +126,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               selected={institutionIdMl}
               select={setselectInstitutionIdMl}
               placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}
-              disable={true}
+              disable={false}
             />
           </div>
         </div>
