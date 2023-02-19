@@ -36,9 +36,10 @@ const Timeline = ({ currentStep = 1, flow = "" }) => {
           <div className="timeline-content">
 
             <span className={`circle ${index <= currentStep - 1 && 'active'}`}>{index < currentStep - 1 ? <TickMark /> : index + 1}</span>
-            <Link to={{ pathname: `/digit-ui/citizen/tl/tradelicence/new-application/` + link[index] }}>
+            <span className="secondary-color">{t(action)}</span>
+            {/* <Link to={{ pathname: `/digit-ui/citizen/tl/tradelicence/new-application/` + link[index] }}>
               <span className="secondary-color">{t(action)}</span>
-            </Link>
+            </Link> */}
           </div>
           {index < arr.length - 1 && <span className={`line ${index < currentStep - 1 && 'active'}`}></span>}
         </div>
