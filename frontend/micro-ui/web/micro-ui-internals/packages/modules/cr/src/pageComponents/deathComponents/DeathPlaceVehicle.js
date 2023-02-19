@@ -259,7 +259,7 @@ const DeathPlaceVehicle = ({
             </div>{" "}
             <div className="col-md-4">
               <CardLabel>
-                {`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
+                {`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -269,7 +269,7 @@ const DeathPlaceVehicle = ({
                 name="vehicleHaltPlace"
                 value={VehicleFirstHaltEn}
                 onChange={setSelectVehicleFirstHaltEn}
-                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT_EN")}`}
+                placeholder={`${t("CR_VEHICLE_PLACE_FIRST_HALT")}`}
                 disable={true}
                 {...(validation = {
                   pattern: "^[a-zA-Z-.0-9`' ]*$",
