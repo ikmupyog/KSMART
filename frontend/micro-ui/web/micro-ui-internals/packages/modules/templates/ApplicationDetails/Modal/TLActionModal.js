@@ -29,8 +29,10 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
     {
       roles: action?.assigneeRoles?.map?.((e) => ({ code: e })),
       isActive: true,
-      rolecodes: businessService==="PdeTL"? action?.assigneeRoles?.map?.((e) => (e)).join(","):null,
-      wardcodes: businessService==="PdeTL"? wardcodes?wardcodes:null :null
+      rolecodes:action?.assigneeRoles?.map?.((e) => (e)).join(","),
+      wardcodes:wardcodes
+      // rolecodes: businessService==="PdeTL"? action?.assigneeRoles?.map?.((e) => (e)).join(","):null,
+      // wardcodes: businessService==="PdeTL"? wardcodes?wardcodes:null :null
     },
     { enabled: !action?.isTerminateState }
   );
