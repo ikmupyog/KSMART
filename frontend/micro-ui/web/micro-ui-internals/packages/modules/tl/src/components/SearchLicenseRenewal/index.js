@@ -100,7 +100,7 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count }) => {
     {
         Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.tradeName),
+        accessor: (row) => GetCell(row.licenseUnitName),
     },
     {
         Header: t("TL_LOCALIZATION_LICENSEE_NAME"),
