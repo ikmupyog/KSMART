@@ -318,7 +318,7 @@ export const convertToTrade = (data = {}) => {
           owners: data?.TradeDetails?.tradeLicenseDetail?.owners,
           institution: data?.TradeDetails?.tradeLicenseDetail?.institution,
           tradeUnits: tradeUnits,
-          structurePlace:structurePlace, //data?.TradeDetails?.tradeLicenseDetail?.structurePlace,
+          structurePlace: structurePlace, //data?.TradeDetails?.tradeLicenseDetail?.structurePlace,
           ownerspremise: data?.TradeDetails?.tradeLicenseDetail?.ownerspremise
         },
 
@@ -337,6 +337,19 @@ export const convertToTrade = (data = {}) => {
 export const getWfDocumentsnew = (data) => {
   let wfdoc = [];
   data?.TradeDetails?.ownersdoc?.map((docs) => {
+    wfdoc.push({
+      fileName: docs.name,
+      fileStoreId: docs.fileStoreId,
+      documentType: docs.documentType,
+      tenantId: data?.tenantId,
+    }
+    );
+  });
+  return wfdoc;
+}
+export const getWfDocumentsupdatenew = (data) => {
+  let wfdoc = [];
+  data?.ownersdoc?.map((docs) => {
     wfdoc.push({
       fileName: docs.name,
       fileStoreId: docs.fileStoreId,
@@ -514,60 +527,109 @@ export const stringToBoolean = (value) => {
 
 
 //FinancialYear
-export const convertToEditTrade = (data, fy = []) => {
-  const currrentFYending = fy?.filter(item => item?.code === data?.financialYear)?.[0]?.endingDate;
-  const nextFinancialYearForRenewal = fy?.filter(item => item?.startingDate === currrentFYending)?.[0]?.code;
-  let isDirectrenewal = stringToBoolean(sessionStorage.getItem("isDirectRenewal"));
-  let formdata = {
+export const convertToEditTrade = (data = {}) => {
+
+  let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
+  let structurePlace = data?.tradeLicenseDetail?.structurePlace;
+  structurePlace?.map((structplace) => {
+    structplace.isResurveyed = structplace?.isResurveyed?.code === "YES" || (structplace?.isResurveyed?.code) ? true : false;
+  });
+  const formdata = {
     Licenses: [
       {
-        id: data?.id,
-        tenantId: data?.address?.city?.code,
-        businessService: data?.businessService,
-        licenseType: data?.licenseType,
-        applicationType: "RENEWAL",
-        workflowCode: isDirectrenewal ? "DIRECTRENEWAL" : "EDITRENEWAL",
-        licenseNumber: data?.licenseNumber,
-        applicationNumber: data?.applicationNumber,
-        tradeName: data?.tradeName,
-        applicationDate: data?.applicationDate,
-        commencementDate: data?.commencementDate,
-        issuedDate: data?.issuedDate,
-        financialYear: nextFinancialYearForRenewal || "2020-21",
-        validFrom: data?.validFrom,
-        validTo: data?.validTo,
         action: "INITIATE",
-        wfDocuments: data?.wfDocuments,
-        status: data?.status,
+        applicationType: "RENEWAL",
+        commencementDate: Date.parse(data?.commencementDate),
+        financialYear: Financialyear ? Financialyear : "2022-23",
+        licenseType: "PERMANENT",
+        tenantId: Digit.ULBService.getCitizenCurrentTenant(),
         tradeLicenseDetail: {
-          address: data.tradeLicenseDetail.address,
-          applicationDocuments: data.tradeLicenseDetail.applicationDocuments,
-          //    accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
-          owners: isDirectrenewal ? data.tradeLicenseDetail.owners : gettradeownerarray(data),
-          structureType: isDirectrenewal ? data.tradeLicenseDetail.structureType : (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
-          subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
-          tradeUnits: gettradeupdateunits(data),
-          additionalDetail: data.tradeLicenseDetail.additionalDetail,
-          auditDetails: data.tradeLicenseDetail.auditDetails,
-          channel: data.tradeLicenseDetail.channel,
-          id: data.tradeLicenseDetail.id,
-          ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL") && {
-            institution: {
-              designation: data?.owners?.owners?.[0]?.designation,
-              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-              instituionName: data?.owners?.owners?.[0]?.institutionName,
-              name: data?.owners?.owners?.[0]?.name,
-            }
-          }),
+          channel: "CITIZEN",
+          businessSector: data?.tradeLicenseDetail?.businessSector,
+          capitalInvestment: data?.tradeLicenseDetail?.capitalInvestment,
+          enterpriseType: data?.tradeLicenseDetail?.enterpriseType,
+          structureType: data?.tradeLicenseDetail?.structureType,
+          structurePlaceSubtype: data?.tradeLicenseDetail?.structurePlaceSubtype,
+          businessActivityDesc: data?.tradeLicenseDetail?.businessActivityDesc,
+          licenseeType: data?.tradeLicenseDetail?.licenseeType,
+          noOfEmployees: data?.tradeLicenseDetail?.noOfEmployees,
+          ownershipCategory: data?.tradeLicenseDetail?.ownershipCategory,
+          address: data?.tradeLicenseDetail?.address,
+           applicationDocuments: null,
+        //  applicationDocuments: getWfDocumentsupdatenew(data),
+          owners: data?.tradeLicenseDetail?.owners,
+          institution: data?.tradeLicenseDetail?.institution,
+          tradeUnits: data?.tradeLicenseDetail?.tradeUnits, // tradeUnits,
+          structurePlace: structurePlace, //data?.TradeDetails?.tradeLicenseDetail?.structurePlace,
+          ownerspremise: data?.tradeLicenseDetail?.ownerspremise
         },
-        calculation: null,
-        auditDetails: data?.auditDetails,
-        accountId: data?.accountId,
+        oldApplicationNumber: data?.oldApplicationNumber,
+        licenseUnitName: data?.licenseUnitName,
+        licenseUnitNameLocal: data?.licenseUnitNameLocal,
+        desiredLicensePeriod: data?.desiredLicensePeriod,
+        wfDocuments: [],
+        applicationDocuments: [],
+        workflowCode: "RenewalTL",
+        licenseNumber: data?.licenseNumber === null ? "0" : data?.licenseNumber
       }
     ]
-  }
+  };
   return formdata;
+
+
+  // const currrentFYending = fy?.filter(item => item?.code === data?.financialYear)?.[0]?.endingDate;
+  // const nextFinancialYearForRenewal = fy?.filter(item => item?.startingDate === currrentFYending)?.[0]?.code;
+  // let isDirectrenewal = stringToBoolean(sessionStorage.getItem("isDirectRenewal"));
+  // let formdata = {
+  //   Licenses: [
+  //     {
+  //       id: data?.id,
+  //       tenantId: data?.address?.city?.code,
+  //       businessService: data?.businessService,
+  //       licenseType: data?.licenseType,
+  //       applicationType: "RENEWAL",
+  //       workflowCode: isDirectrenewal ? "DIRECTRENEWAL" : "EDITRENEWAL",
+  //       licenseNumber: data?.licenseNumber,
+  //       applicationNumber: data?.applicationNumber,
+  //       tradeName: data?.tradeName,
+  //       applicationDate: data?.applicationDate,
+  //       commencementDate: data?.commencementDate,
+  //       issuedDate: data?.issuedDate,
+  //       financialYear: nextFinancialYearForRenewal || "2020-21",
+  //       validFrom: data?.validFrom,
+  //       validTo: data?.validTo,
+  //       action: "INITIATE",
+  //       wfDocuments: data?.wfDocuments,
+  //       status: data?.status,
+  //       tradeLicenseDetail: {
+  //         address: data.tradeLicenseDetail.address,
+  //         applicationDocuments: data.tradeLicenseDetail.applicationDocuments,
+  //         //    accessories: isDirectrenewal ? data.tradeLicenseDetail.accessories : gettradeupdateaccessories(data),
+  //         owners: isDirectrenewal ? data.tradeLicenseDetail.owners : gettradeownerarray(data),
+  //         structureType: isDirectrenewal ? data.tradeLicenseDetail.structureType : (data?.TradeDetails?.VehicleType ? data?.TradeDetails?.VehicleType.code : data?.TradeDetails?.BuildingType.code),
+  //         subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL") ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code : data?.ownershipCategory?.code,
+  //         tradeUnits: gettradeupdateunits(data),
+  //         additionalDetail: data.tradeLicenseDetail.additionalDetail,
+  //         auditDetails: data.tradeLicenseDetail.auditDetails,
+  //         channel: data.tradeLicenseDetail.channel,
+  //         id: data.tradeLicenseDetail.id,
+  //         ...(data?.ownershipCategory?.code.includes("INSTITUTIONAL") && {
+  //           institution: {
+  //             designation: data?.owners?.owners?.[0]?.designation,
+  //             ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+  //             mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+  //             instituionName: data?.owners?.owners?.[0]?.institutionName,
+  //             name: data?.owners?.owners?.[0]?.name,
+  //           }
+  //         }),
+  //       },
+  //       calculation: null,
+  //       auditDetails: data?.auditDetails,
+  //       accountId: data?.accountId,
+  //     }
+  //   ]
+  // }
+  // return formdata;
 }
 
 
