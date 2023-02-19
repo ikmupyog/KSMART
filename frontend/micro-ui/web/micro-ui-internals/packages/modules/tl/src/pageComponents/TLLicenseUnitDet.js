@@ -937,7 +937,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
             </div>
             <div className="row">
               <div className="col-md-3">
-                <CardLabel style={{ marginBottom: "30px" }}>
+                <CardLabel style={{ marginBottom: "30px",marginTop:"20px" }}>
                   {`${t("TL_BUSINESS_SECTOR")}`}<span className="mandatorycss">*</span>
                 </CardLabel>
               </div>

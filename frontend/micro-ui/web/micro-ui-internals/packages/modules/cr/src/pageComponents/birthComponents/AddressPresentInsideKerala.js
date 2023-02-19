@@ -339,7 +339,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             selected={presentInsideKeralaDistrict}
                             select={setSelectinsideKeralaDistrict}
                             placeholder={`${t("CS_COMMON_DISTRICT")}`}
-                            disable={isDisableStatus}
+                            //disable={isDisableStatus}
                         />
                     </div>
 
