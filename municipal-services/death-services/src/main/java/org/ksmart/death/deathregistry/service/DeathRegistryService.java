@@ -90,7 +90,7 @@ public class DeathRegistryService {
 
         return request.getDeathCertificateDtls();
       }
-    //Search  Jasmine 08.03.2023
+    //Search  Jasmine 08.02.2023
      public List<DeathRegistryDtl> search(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
 
 		    return repository.getDeathApplication(criteria);
