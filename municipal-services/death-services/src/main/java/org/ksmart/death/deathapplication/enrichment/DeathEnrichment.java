@@ -295,7 +295,7 @@ public class DeathEnrichment implements BaseEnrichment{
                                     death.getDeathAddressInfo().setPermanentAddrHoueNameEn(death.getDeathAddressInfo().getPermntInKeralaAdrHouseNameEn());
                                     death.getDeathAddressInfo().setPermanentAddrHoueNameMl(death.getDeathAddressInfo().getPermntInKeralaAdrHouseNameMl());
                                     death.getDeathAddressInfo().setPermanentAddrPincode(death.getDeathAddressInfo().getPermntInKeralaAdrPincode());
-                                    death.getDeathAddressInfo().setPermanentAddrWardId(death.getDeathAddressInfo().getPermanentAddrWardId());
+                                    death.getDeathAddressInfo().setPermanentAddrWardId(death.getDeathAddressInfo().getPermntInKeralaWardNo());
                                     death.getDeathAddressInfo().setPermanentAddrPostofficeId(death.getDeathAddressInfo().getPermntInKeralaAdrPostOffice());
                                 }else{
                                     death.getDeathAddressInfo().setPermanentAddrCountryId(death.getDeathAddressInfo().getPermtaddressCountry());
