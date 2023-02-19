@@ -7,19 +7,19 @@ import { Header,CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
-const ApplicationDetails = () => {
+const ApplicationDeathDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const { id: applicationNumber } = useParams();
+  const { id: DeathACKNo } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("DEATHHOSP"); //DIRECTRENEWAL
   // const [businessService, setBusinessService] = useState("NewBirthTwentyOne"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
-  sessionStorage.setItem("applicationNumber", applicationNumber)
+  sessionStorage.setItem("DeathACKNo", DeathACKNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, DeathACKNo);
 
   const stateId = Digit.ULBService.getStateId();
 
@@ -35,7 +35,7 @@ const ApplicationDetails = () => {
   // console.log(applicationDetails);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
-    id: applicationDetails?.applicationData?.applicationNumber,
+    id: applicationDetails?.applicationData?.DeathACKNo,
     moduleCode: businessService,
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config:{},
@@ -75,7 +75,7 @@ const ApplicationDetails = () => {
       console.log(data.action);
       if(data.action == "EDIT") {
         data.redirectionUrl = {
-          pathname: `/digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}`,
+          pathname: `/digit-ui/employee/cr/cr-flow/information-death/${DeathACKNo}`,
           state: applicationDetails
         },
         data.tenantId = stateId
@@ -87,7 +87,6 @@ const ApplicationDetails = () => {
   const userInfo = Digit.UserService.getUser();
   const rolearray = userInfo?.info?.roles.filter(item => {
   if ((item.code == "HOSPITAL_OPERATOR" && item.code == "BND_CEMP" && item.tenantId === tenantId) || item.code == "CITIZEN" ) return true; });
-
   const rolecheck = rolearray.length > 0 ? true : false;
   const validTo = applicationDetails?.applicationData?.validTo;
   const currentDate = Date.now();
@@ -103,7 +102,7 @@ const ApplicationDetails = () => {
         workflowDetails?.data?.actionState?.nextActions?.push({
           action: "RENEWAL_SUBMIT_BUTTON",
           redirectionUrl: {
-            pathname: `/digit-ui/employee/tl/renew-application-details/${applicationNumber}`,
+            pathname: `/digit-ui/employee/tl/renew-application-details/${DeathACKNo}`,
             state: applicationDetails
           },
           tenantId: stateId,
@@ -143,7 +142,7 @@ const ApplicationDetails = () => {
                   {
                     action: data.action,
                     redirectionUrll: {
-                      pathname: `TL/${applicationDetails?.applicationData?.applicationNumber}/${tenantId}`,
+                      pathname: `TL/${applicationDetails?.applicationData?.DeathACKNo}/${tenantId}`,
                       state: tenantId
                     },
                     tenantId: tenantId,
@@ -177,7 +176,7 @@ const ApplicationDetails = () => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"Birth Application Summary Details"}
+        header={"Death Application Summary Details"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}
@@ -185,7 +184,7 @@ const ApplicationDetails = () => {
         mutate={mutate}
         workflowDetails={workflowDetails}
         businessService={businessService}
-        moduleCode="birth-services"
+        moduleCode="death-services"
         showToast={showToast}
         setShowToast={setShowToast}
         closeToast={closeToast}
@@ -195,4 +194,5 @@ const ApplicationDetails = () => {
   );
 };
 
-export default ApplicationDetails;
+
+export default ApplicationDeathDetails;
