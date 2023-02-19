@@ -65,6 +65,12 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     if (isMobile) {
       return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }}/>
     }
+    const handleLinkClick = (finaldata) => {  
+      //console.log(finaldata);
+      let temp={};
+      temp.ChildDetails=finaldata;
+       Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
+    }
 
     //need to get from workflow
     const GetCell = (value) => <span className="cell-text">{value}</span>;
@@ -77,7 +83,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
             return (
               <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/cr/application-details/${row.original.applicationNumber}`}>
+                  <Link onClick={event => handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-details/${row.original.applicationNumber}`}>
                     {/* {row.original.applicationNumber} */}
                     {row.original.applicationNumber}
                   </Link>

@@ -39,7 +39,6 @@ export const CRsearch = {
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRService.CRsearch({ tenantId, filters });
-    console.log(response.ChildDetails);
     return response.ChildDetails[0];
   },
 
