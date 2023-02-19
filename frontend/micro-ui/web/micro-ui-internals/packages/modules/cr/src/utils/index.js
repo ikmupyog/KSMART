@@ -326,7 +326,7 @@ export const convertToBirthRegistration = (data = {}) => {
         birthWeight: data?.ChildDetails?.birthWeight,
         pregnancyDuration: data?.ChildDetails?.pregnancyDuration ? data?.ChildDetails?.pregnancyDuration.code : null,
         medicalAttensionSub: data?.ChildDetails?.medicalAttensionSub ? data?.ChildDetails?.medicalAttensionSub.code : null,
-        deliveryMethods: data?.ChildDetails?.medicalAttensionSub ? data?.ChildDetails?.medicalAttensionSub.code : null,
+        deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.ChildDetails?.workFlowCode,
