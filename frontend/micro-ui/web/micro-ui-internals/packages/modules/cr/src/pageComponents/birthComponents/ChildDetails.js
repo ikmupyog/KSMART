@@ -10,6 +10,7 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 
 const ChildDetails = ({ config, onSelect, userType, formData }) => {
+  console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -24,12 +25,26 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
+  const convertEpochFormateToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${day}/${month}/${year}`;
+    } else {
+      return null;
+    }
+  };
   // const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
   // const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
 
   // const [childDOB, setChildDOB] = useState(isEdit ? (formData?.ChildDetails?.childDOB):(formData?.ChildDetails?.childDOB ? formData?.ChildDetails?.childDOB : ""));
-  const [childDOB, setChildDOB] = useState(formData?.ChildDetails?.childDOB ? formData?.ChildDetails?.childDOB : "");
-  const [gender, selectGender] = useState(formData?.ChildDetails?.gender);
+  const [childDOB, setChildDOB] = useState( formData?.ChildDetails?.childDOB ? convertEpochFormateToDate(formData?.ChildDetails?.childDOB) : ""); 
+  const [gender, selectGender] = useState(formData?.ChildDetails?.gender ? formData?.ChildDetails?.gender : null);
   const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
@@ -39,7 +54,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const [childLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.childLastNameMl ? formData?.ChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
-  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : "");
+  const [birthDateTime, setbirthDateTime] = useState( ""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
 
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace ? formData?.ChildDetails?.birthPlace : null);
@@ -134,7 +149,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
-  let workFlowCode = "birth21days";
+  let workFlowCode = "BIRTHHOSP21";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -197,6 +212,14 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       }
     }
   }, [isInitialRender]);
+  useEffect(() => {
+    // if (isInitialRender) {
+      console.log(formData?.ChildDetails?.gender);
+      if (formData?.ChildDetails?.gender != null) {
+        selectGender(formData?.ChildDetails?.gender);
+      }
+    // }
+  });
 
 
   React.useEffect(() => {
@@ -306,7 +329,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       console.log(Difference_In_DaysRounded);
       if (Difference_In_DaysRounded <= 21) {
         console.log("Difference_In_DaysRounded" + Difference_In_DaysRounded);
-        workFlowCode = "birth21days";
+        workFlowCode = "BIRTHHOSP21";
         console.log(workFlowCode + "workFlowCode");
       }
       if (Difference_In_DaysRounded >= 365) {
@@ -867,23 +890,10 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   };
 
-  const convertEpochFormateToDate = (dateEpoch) => {
-    // Returning null in else case because new Date(null) returns initial date from calender
-    if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
-      let month = dateFromApi.getMonth() + 1;
-      let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
-      month = (month > 9 ? "" : "0") + month;
-      day = (day > 9 ? "" : "0") + day;
-      return `${day}/${month}/${year}`;
-    } else {
-      return null;
-    }
-  };
+
   if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
     return <Loader></Loader>;
-  }
+  } else
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>

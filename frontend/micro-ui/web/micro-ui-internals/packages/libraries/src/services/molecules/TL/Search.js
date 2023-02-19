@@ -196,7 +196,7 @@ export const TLSearch = {
               value: unit?.businessType ? `TRADELICENSE_TRADETYPE_${unit?.businessType}` : "NA" 
               },
               { title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
-               value: unit?.businessSubtype ? `TL_${ stringReplaceAll(unit?.businessSubtype,".","_")}` : "NA" 
+               value: unit?.businessSubtype ? `TRADELICENSE_TRADETYPE_${ stringReplaceAll(unit?.businessSubtype,".","_")}` : "NA" 
               },
             ],
           };
@@ -204,28 +204,7 @@ export const TLSearch = {
       },
     };
 
-    // const accessories = {
-    //   title: "TL_NEW_TRADE_DETAILS_HEADER_ACC",
-    //   // asSectionHeader: true,
-    //   additionalDetails: {
-    //     accessories: response?.tradeLicenseDetail?.accessories?.map((unit, index) => {
-    //       let accessoryCategory = "NA";
-    //       if (unit?.accessoryCategory) {
-    //         accessoryCategory = stringReplaceAll(unit?.accessoryCategory, ".", "_");
-    //         accessoryCategory = `TRADELICENSE_ACCESSORIESCATEGORY_${stringReplaceAll(accessoryCategory, "-", "_")}`;
-    //       }
-    //       return {
-    //         title: "TL_ACCESSORY_LABEL",
-    //         values: [
-    //           { title: "TL_NEW_TRADE_DETAILS_ACC_LABEL", value: accessoryCategory },
-    //           { title: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER", value: unit?.uom || "NA" },
-    //           { title: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL", value: unit?.uomValue || "NA" },
-    //           { title: "TL_ACCESSORY_COUNT_LABEL", value: unit?.count || "NA" },
-    //         ],
-    //       };
-    //     }),
-    //   },
-    // };
+
 
     // const PropertyDetail = {
     //   title: "PT_DETAILS",

@@ -12,8 +12,8 @@ const CrFlowApp = ({ parentUrl }) => {
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
-
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}); //? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+  console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
