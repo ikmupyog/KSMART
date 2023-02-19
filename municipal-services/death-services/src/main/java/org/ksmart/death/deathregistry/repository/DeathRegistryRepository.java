@@ -428,23 +428,57 @@ public class DeathRegistryRepository {
                     DeathRegistryConstants.NOT_RECORDED_EN);
                 }
                 if(cert.getDeathFamilyInfo().getMotherUnavailable() != true){
-                        cert.getDeathFamilyInfo().setMotherName(cert.getDeathFamilyInfo().getMotherNameMl()+DeathRegistryConstants.FEMALE_DEPENDENT_ML.toString()+" / "+
-                        cert.getDeathFamilyInfo().getMotherNameEn()+DeathRegistryConstants.FEMALE_DEPENDENT_EN.toString()); 
+                        String motherpresent="";
+                        if(cert.getDeathFamilyInfo().getMotherNameMl() != null){
+                            motherpresent = cert.getDeathFamilyInfo().getMotherNameMl();
+                        }
+
+                        if(cert.getDeathFamilyInfo().getMotherNameEn() != null){
+                            if(motherpresent != ""){
+                                motherpresent = motherpresent+"/ "+cert.getDeathFamilyInfo().getMotherNameEn();
+                            }
+                            else{
+                                motherpresent=cert.getDeathFamilyInfo().getMotherNameEn();
+                            }
+                            
+                        }                        
+                        // cert.getDeathFamilyInfo().setMotherName(cert.getDeathFamilyInfo().getMotherNameMl()+" / "+
+                        // cert.getDeathFamilyInfo().getMotherNameEn()); 
+                        cert.getDeathFamilyInfo().setMotherName(motherpresent);
                 }
                 else{
                         cert.getDeathFamilyInfo().setMotherName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+
                         DeathRegistryConstants.NOT_RECORDED_EN);
                 }
     
-                String fatherNameMl = "";
-                String fatherNameEn = "";    
+                // String fatherNameMl = "";
+                // String fatherNameEn = "";    
                 
-                fatherNameMl = DeathRegistryConstants.MALE_DEPENDENT_FATHER_ML.toString();
-                fatherNameEn = DeathRegistryConstants.MALE_DEPENDENT_FATHER_EN.toString();
+                // fatherNameMl = DeathRegistryConstants.MALE_DEPENDENT_FATHER_ML.toString();
+                // fatherNameEn = DeathRegistryConstants.MALE_DEPENDENT_FATHER_EN.toString();
 
                 if(cert.getDeathFamilyInfo().getFatherUnavailable() != true){
-                    cert.getDeathFamilyInfo().setFatherName(cert.getDeathFamilyInfo().getFatherNameMl()+ fatherNameMl+" / "+
-                                            cert.getDeathFamilyInfo().getFatherNameEn()+ fatherNameEn);
+                    String fatherpresent="";
+                    if(cert.getDeathFamilyInfo().getFatherNameMl() != null){
+                        fatherpresent = cert.getDeathFamilyInfo().getFatherNameMl();
+                    }
+                    else{
+                        fatherpresent="";
+                    }
+
+                    if(cert.getDeathFamilyInfo().getFatherNameEn() != null){
+                        if(fatherpresent!=""){
+                            fatherpresent = fatherpresent+"/ "+cert.getDeathFamilyInfo().getFatherNameEn();
+                        }
+                        else{
+                            fatherpresent=cert.getDeathFamilyInfo().getFatherNameEn();
+                        }
+                        
+                    }                   
+
+                    // cert.getDeathFamilyInfo().setFatherName(cert.getDeathFamilyInfo().getFatherNameMl()+" / "+
+                    //                         cert.getDeathFamilyInfo().getFatherNameEn());
+                    cert.getDeathFamilyInfo().setFatherName(fatherpresent);
                 }
                 else{
                     cert.getDeathFamilyInfo().setFatherName(DeathRegistryConstants.NOT_RECORDED_ML+" / "+
