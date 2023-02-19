@@ -210,12 +210,12 @@ export const ComplaintDetails = (props) => {
   const { t } = useTranslation();
   const [fullscreen, setFullscreen] = useState(false);
   const [imageZoom, setImageZoom] = useState(null);
-  // const [actionCalled, setActionCalled] = useState(false); moduleCode: "pgrhealth",
+ 
   const [toast, setToast] = useState(false);
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { isLoading, complaintDetails, revalidate: revalidateComplaintDetails } = Digit.Hooks.pgr.useComplaintDetails({ tenantId, id });
   
-  const [businessService, setBusinessService] = useState("pgrhealth1"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("pgrhealthcomplaints"); //DIRECTRENEWAL
   const workflowDetails = Digit.Hooks.useWorkflowDetails({ tenantId, id,  moduleCode: businessService, role: "EMPLOYEE" });
   const [imagesToShowBelowComplaintDetails, setImagesToShowBelowComplaintDetails] = useState([])
   
