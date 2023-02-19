@@ -142,6 +142,7 @@ public class DeathRegistryRequestService {
             deathRegistryBasicInfo.setNationality(deathBasicInfo.getNationality());
             deathRegistryBasicInfo.setReligion(deathBasicInfo.getReligion());
             deathRegistryBasicInfo.setOccupation(deathBasicInfo.getOccupation());
+            deathRegistryBasicInfo.setDeathACKNo(deathBasicInfo.getDeathACKNo());
             return deathRegistryBasicInfo;
         
     }
