@@ -10,7 +10,7 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
-  console.log(JSON.stringify(formData));
+  // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -901,22 +901,29 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
       setisInitialRenderFormData(true);
     }
   }
+  console.log(cmbAttDeliverySub);
   if (formData?.ChildDetails?.medicalAttensionSub != null) {
+    console.log(cmbAttDeliverySub);
     if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
       setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
       setisInitialRenderFormData(true);
     }
   }
-  if (formData?.ChildDetails?.pregnancyDuration != null) {
-  console.log(formData?.ChildDetails?.pregnancyDuration);
-  console.log(cmbPregWeek);
-    if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-      setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]);
-      setisInitialRenderFormData(true);
-    }
-  }
+  // console.log(cmbPregWeek);
+  // if (formData?.ChildDetails?.pregnancyDuration != null) {
+  //   console.log(formData?.ChildDetails?.pregnancyDuration);
+  //   console.log(cmbPregWeek);
+  //   console.log(pregnancyDuration);
+  //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+  //     console.log(cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]);
+  //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]);      
+  //     setisInitialRenderFormData(true);
+  //   }
+  // }
 
   // if (formData?.ChildDetails?.deliveryMethods != null) {
+  //   console.log(formData?.ChildDetails?.deliveryMethods);
+  //   console.log(cmbDeliveryMethod);
   //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
   //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
   //     setisInitialRenderFormData(true);
