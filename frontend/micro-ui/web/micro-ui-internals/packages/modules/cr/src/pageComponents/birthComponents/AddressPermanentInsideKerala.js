@@ -289,7 +289,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               selected={permntInKeralaAdrDistrict}
               select={setSelectpermntInKeralaAdrDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}
-              disable={isDisableStatus}
+             // disable={isDisableStatus}
             />
           </div>
 

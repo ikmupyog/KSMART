@@ -98,7 +98,7 @@ let ownerappmap ={
     return [
       {
         owneraadhaarNo: "",
-        ownerName: formDatalocal?.tradeLicenseDetail?.structurePlaceSubtype?.name,
+        ownerName: "",
         houseName: "",
         street: "",
         locality: "",
@@ -258,6 +258,7 @@ let ownerappmap ={
     const result = await validateData();
     if (result) {
       let owners = appState;
+
       let ownerspremise = ownerState;
       let institution = LicenseeType.code === "INSTITUTION" ? {
         "institutionName": institutionName, "contactNo": contactNo,
@@ -277,7 +278,7 @@ let ownerappmap ={
       let businessSector = formDatalocal?.tradeLicenseDetail?.businessSector;
       let enterpriseType=formDatalocal?.tradeLicenseDetail?.enterpriseType;
       let tradeLicenseDetail = {
-        licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
+        licenseeType, owners, ownerspremise : (structureType.code !== "DESIGNATEDPLACE" ? ownerspremise : null), institution, businessSector, capitalInvestment, structureType, structurePlaceSubtype
         , businessActivityDesc, noOfEmployees, ownershipCategory, address, structurePlace, tradeUnits,enterpriseType
       };
       onSelect(config.key, { tradeLicenseDetail });
@@ -358,7 +359,7 @@ let ownerappmap ={
           <div className="col-md-12">
             <LabelFieldPair style={{ display: "flex", }}>
               <CardLabel style={{ fontSize: "17px", width: "none !important" }}>{`${t("TL_LICENSEE_MSG")}`}</CardLabel>
-              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" }} />
+              <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={LicenseeType} onSelect={selectLicenseeType} style={{ marginTop: "8px", padding: "10px", height: "10px", display: "flex" ,justifyContent: "space-between", width: "48%" }} />
             </LabelFieldPair>
           </div>
         </div>
