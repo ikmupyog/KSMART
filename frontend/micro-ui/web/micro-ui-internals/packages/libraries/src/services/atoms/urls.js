@@ -111,8 +111,8 @@ const Urls = {
     search:"/birth-services/ksmart/birth/searchbirth",
     update:"/birth-services/ksmart/birth/updatebirth",   
     download_pdf: "/egov-pdf/download/CR/",
-    registry_download: "/birth-services/cr/registry/_download",
-    registry_search_birth: "/birth-services/cr/registry/_search",   
+    registry_download: "/birth-services/cr/registry/_download", 
+    registry_search_birth: "/birth-services/cr/registry/_search",    
   },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath ",
