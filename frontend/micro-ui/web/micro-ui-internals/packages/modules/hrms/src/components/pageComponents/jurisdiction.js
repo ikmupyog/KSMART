@@ -438,6 +438,19 @@ function Jurisdiction({
    
   },[])
 
+  useEffect(()=>{
+    // console.log(jurisdiction);
+    if(jurisdiction?.roleCode?.toLowerCase().includes('institution')){
+      setDisplayInstitution(true)
+      // let crinstitution = getInstitutionList()?.length>0 && getInstitutionList().filter((ele)=>ele.code == "INST_TYPE_JAIL") intitutiontype
+      // let crinstitutionName = cmbInstitutionId?.length>0 && cmbInstitutionId.filter((ele)=>ele.code == "INSTITUTION_2413") hospitalCode
+      // console.log(cmbInstitutionId,crinstitution,crinstitutionName)
+      // setInstitutionType(crinstitution?.length>0 && crinstitution[0])
+      // setInstitutionName(crinstitutionName?.length>0 && crinstitutionName[0])
+      // setInstitutionAddress(crinstitutionName?.length>0 && crinstitutionName[0]?.address)
+    }
+  },[])
+
   useEffect(() => {
     if (isInitialRenderBoundaryType) {
       selectBoundaryType(
@@ -525,10 +538,11 @@ function Jurisdiction({
     getHospitalNames()  
   };
   const selectInstitution = (value) => {
+    // console.log(value);
     setInstitutionAddress("")
     setInstitutionType(value)
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, intitutiontype: value } : item)));
-    // let institutionNameList = cmbInstitutionId?.institutionList?.map((name) =>{
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, intitutiontype: value.code } : item)));
+    // let institutionNameList = cmbInstitutionId?.institutionList?.map((name) =>{ hospitalCode
     //   if(name.placeofEventCodeNew === value.code)
     //   {
     //     return {code :name?.code , name: name?.institutionName, address:name?.address}
@@ -538,11 +552,12 @@ function Jurisdiction({
     // console.log("institutionName1",institutionNameList,institutionName)
   };
   const selectInstitutionName=(value)=>{
-   
+  //  console.log(value);
     setInstitutionName(value)
     setInstitutionAddress(value?.address)
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionname: value.name } : item)));
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionname: value.institutionName } : item)));
     setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutionaddress: value.address } : item)));
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, hospitalCode: value.code } : item)));
     // console.log("JURIS",institutionName,value.name)
   }
   const selectward1= (value)=>{
