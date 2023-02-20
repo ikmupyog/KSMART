@@ -329,6 +329,22 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
             />
           </div>
           <div className="col-md-6">
+            <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="presentOutSideIndiaAdressEnB"
+              value={presentOutSideIndiaAdressEnB}
+              onChange={setSelectAdressEnB}
+              placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
+            />
+          </div>
+          
+          </div>
+          <div className="row">
+          <div className="col-md-6">
             <CardLabel>{t("CR_ADDRES_LINE_ONE_ML")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -344,19 +360,6 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 type: "text",
                 title: t("CR_INVALID_ADDRES_LINE_ONE_ML"),
               })}
-            />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="presentOutSideIndiaAdressEnB"
-              value={presentOutSideIndiaAdressEnB}
-              onChange={setSelectAdressEnB}
-              placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
             />
           </div>
           <div className="col-md-6">

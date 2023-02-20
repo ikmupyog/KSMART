@@ -20,7 +20,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("NewBirthTwentyOne")) {
     return <BirthActionModal {...props} />;
   }
-  if (props?.businessService.includes("death21days")) {
+  if (props?.businessService.includes("DEATHHOSP")) {
     return <DeathActionModal {...props} />;
   }
   if (props?.businessService.includes("NewDFM")) {
