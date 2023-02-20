@@ -442,12 +442,12 @@ function Jurisdiction({
     // console.log(jurisdiction);
     if(jurisdiction?.roleCode?.toLowerCase().includes('institution')){
       setDisplayInstitution(true)
-      // let crinstitution = getInstitutionList()?.length>0 && getInstitutionList().filter((ele)=>ele.code == "INST_TYPE_JAIL") intitutiontype
-      // let crinstitutionName = cmbInstitutionId?.length>0 && cmbInstitutionId.filter((ele)=>ele.code == "INSTITUTION_2413") hospitalCode
-      // console.log(cmbInstitutionId,crinstitution,crinstitutionName)
-      // setInstitutionType(crinstitution?.length>0 && crinstitution[0])
-      // setInstitutionName(crinstitutionName?.length>0 && crinstitutionName[0])
-      // setInstitutionAddress(crinstitutionName?.length>0 && crinstitutionName[0]?.address)
+      let crinstitution = getInstitutionList()?.length>0 && getInstitutionList().filter((ele)=>ele.code == jurisdiction?.institutiontype) 
+      let crinstitutionName = cmbInstitutionId?.length>0 && cmbInstitutionId.filter((ele)=>ele.code == jurisdiction?.hospitalCode) 
+      // console.log(cmbInstitutionId,crinstitution,crinstitutionName) intitutiontype "INST_TYPE_JAIL"
+      setInstitutionType(crinstitution?.length>0 && crinstitution[0])
+      setInstitutionName(crinstitutionName?.length>0 && crinstitutionName[0])
+      setInstitutionAddress(crinstitutionName?.length>0 && crinstitutionName[0]?.address)
     }
   },[])
 
