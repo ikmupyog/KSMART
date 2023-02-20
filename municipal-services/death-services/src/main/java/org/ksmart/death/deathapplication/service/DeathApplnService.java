@@ -27,7 +27,21 @@ import org.egov.common.contract.request.RequestInfo;
      * Jasmine on 06.02.2023
      * 
      */
+    import com.fasterxml.jackson.databind.ObjectMapper;
+    import com.fasterxml.jackson.databind.SerializationFeature;
+    
+    import lombok.extern.slf4j.Slf4j;
+    
+    /**
+         * Creates CrDeathService
+         * Jasmine IKM
+         * on 07.02.2023
+         * DeathRegistryService create Rakhi S on 09.02.2023
+         */
+    
 
+    
+      @Slf4j
 @Service
 public class DeathApplnService {
 
@@ -82,7 +96,17 @@ public class DeathApplnService {
 
      //Jasmine  Update 07.02.2023
      public List<DeathDtl> update(DeathDtlRequest request) {
-      
+          
+          enrichmentService.setPresentAddress(request);
+          enrichmentService.setPermanentAddress(request);
+          try {
+               ObjectMapper mapper = new ObjectMapper();
+               Object obj = request;
+               mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+              System.out.println("AfterUpdate "+ mapper.writeValueAsString(obj));
+       }catch(Exception e) {
+           log.error("Exception while fetching from searcher: ",e);
+       }
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
           DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
                                         .deathACKNo(ackNumber)
@@ -94,6 +118,7 @@ public class DeathApplnService {
 
           //Jasmine 09.02.2023                        
           enrichmentService.enrichUpdate(request);
+   
           //Jasmine 13.02.2023
           workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);

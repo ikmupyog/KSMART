@@ -57,6 +57,11 @@ public class DeathRegistryRequestService {
             if  (deathdet.getDeathAddressInfo()!=null){
                 deathRegistryReading.setDeathAddressInfo(createRegistryAddress(deathrequest));
             }
+            if  (deathdet.getDeathInformantDtls()!=null){
+                deathRegistryReading.setDeathInformantDtls(createRegistryInformantDtls(deathrequest));
+            }
+
+
             deathRegistryDetails.add(deathRegistryReading);
         });
          request = DeathRegistryRequest
@@ -207,7 +212,7 @@ public class DeathRegistryRequestService {
         registryAddress.setPermanentAddrId(deathAddress.getPermanentAddrId());
         registryAddress.setPermanentAddrDeathDtlId(deathAddress.getPermanentAddrDeathDtlId());
         registryAddress.setPermanentAddrTenantId(deathAddress.getPermanentAddrTenantId());
-      //  registryAddress.setPermanentAddrTypeId(deathAddress.getPermanentAddrTypeId());
+        registryAddress.setPermanentAddrTypeId(deathAddress.getPermanentAddrTypeId());
         registryAddress.setPermanentAddrCountryId(deathAddress.getPermanentAddrCountryId());
         registryAddress.setPermanentAddrStateId(deathAddress.getPermanentAddrStateId());
         registryAddress.setPermanentAddrDistrictId(deathAddress.getPermanentAddrDistrictId());
