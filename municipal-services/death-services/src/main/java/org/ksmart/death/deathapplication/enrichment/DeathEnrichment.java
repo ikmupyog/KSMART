@@ -102,6 +102,12 @@ public class DeathEnrichment implements BaseEnrichment{
                 deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+                DeathInformantDtls deathInformant =deathdtls.getDeathInformantDtls() ;
+                DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathInformantDtls.class);
+                deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                DeathInitiatorDtls deathInitiator =deathdtls.getDeathInitiatorDtls() ;
+                DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.encryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class);
+                deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
             });
         }  
     //Rakhi S on 08.02.2023 ACK no formating
@@ -204,6 +210,12 @@ public class DeathEnrichment implements BaseEnrichment{
                         deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
                         deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
                         deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+                        DeathInformantDtls deathInformant =deathDtls.getDeathInformantDtls() ;
+                        DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathInformantDtls.class);
+                        deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                        DeathInitiatorDtls deathInitiator =deathDtls.getDeathInitiatorDtls() ;
+                        DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.encryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class);
+                        deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
                         deathDtls.setDeathAuditDetails(auditDetails);
                     } );        
         }//UPDATE END

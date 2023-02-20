@@ -899,6 +899,7 @@ serviceMaps:
       basePath: deathCertificateDtls.*.StatisticalInfo
       jsonMaps:
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id 
+      
 
 
     - query: UPDATE public.eg_death_statistical_dtls SET  religion = ? ,  occupation = ? ,  medical_attention_type = ? ,  
