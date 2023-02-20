@@ -541,7 +541,7 @@ function Jurisdiction({
     // console.log(value);
     setInstitutionAddress("")
     setInstitutionType(value)
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, intitutiontype: value.code } : item)));
+    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, institutiontype: value.code } : item)));
     // let institutionNameList = cmbInstitutionId?.institutionList?.map((name) =>{ hospitalCode
     //   if(name.placeofEventCodeNew === value.code)
     //   {
