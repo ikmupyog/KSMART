@@ -140,6 +140,10 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
          .append(" ,dt.death_place_locality_ml")
          .append(" ,dt.death_place_street_en")
          .append(" ,dt.death_place_street_ml")
+
+         .append(" ,presentaddress.addr_sameas_present as  P_addr_sameas_present")
+         .append(" ,permanentAddress.addr_lb_name as  R_addr_lb_name")
+         .append(" ,presentaddress.addr_lb_name as  P_addr_lb_name")
         //  .append(" ,informantAddress.death_dtl_id  as I_death_dtl_id") 
         //  .append(" ,informantAddress.tenantid as I_tenantid") 
         //  .append(" ,informantAddress.addr_typeid as I_addr_typeid") 
