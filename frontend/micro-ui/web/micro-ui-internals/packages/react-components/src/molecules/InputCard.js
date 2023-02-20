@@ -27,9 +27,20 @@ const InputCard = ({
   // TODO: inputs handle
   return (
     <Card style={cardStyle}>
-      {texts.headerCaption && <CardCaption>{t(texts.headerCaption)}</CardCaption>}
-      {texts?.header && <CardHeader>{t(texts.header)}</CardHeader>}
-      {texts?.cardText && <CardText>{t(texts.cardText)}</CardText>}
+    
+           <div className="row" style={{display:"grid"}}>
+           <div className="col-md-12">
+             <div className="col-md-12">
+               <h1 className="headingh1">
+                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(texts?.header)}`}</span>{" "}
+               </h1>
+             </div>
+           </div>
+         </div>
+          {/* : texts.headerCaption && <CardCaption>{t(texts.headerCaption)}</CardCaption>}  */}
+
+       {/* {texts?.header && <CardHeader>{t(texts.header)}</CardHeader>}
+      {texts?.cardText && <CardText>{t(texts.cardText)}</CardText>}  */}
       {children}
       {texts.submitBarLabel ? <SubmitBar disabled={isDisable} submit={submit} label={t(texts.submitBarLabel)} onSubmit={onNext} /> : null}
       {texts.skipLabel ? <CardText style={{ marginTop: "10px", textAlign: isMobile ? "center" : "left" }}> {t(texts.skipLabel)} </CardText> : null}
