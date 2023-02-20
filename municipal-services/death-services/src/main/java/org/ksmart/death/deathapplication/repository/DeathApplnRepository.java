@@ -60,12 +60,12 @@ public class DeathApplnRepository {
                 deathFamilyDtls.setFatherAadharNo(deathFamilyDcr.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyDcr.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar()); 
-                DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
-                DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
-                deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
-                DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
-                DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
-                deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
+                // DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
+                // DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
+                // deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                // DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
+                // DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
+                // deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
 
     
               System.out.println("deathBasicDcr"+dec);
