@@ -27,16 +27,17 @@ const InputCard = ({
   // TODO: inputs handle
   return (
     <Card style={cardStyle}>
-    
-           <div className="row" style={{display:"grid"}}>
-           <div className="col-md-12">
-             <div className="col-md-12">
-               <h1 className="headingh1">
-                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(texts?.header)}`}</span>{" "}
-               </h1>
-             </div>
-           </div>
-         </div>
+        {texts?.header&&
+        <div className="row" style={{display:"grid"}}>
+        <div className="col-md-12">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(texts?.header)}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+      </div>
+        }          
           {/* : texts.headerCaption && <CardCaption>{t(texts.headerCaption)}</CardCaption>}  */}
 
        {/* {texts?.header && <CardHeader>{t(texts.header)}</CardHeader>}
