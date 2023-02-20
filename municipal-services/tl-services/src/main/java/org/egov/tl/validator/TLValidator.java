@@ -127,10 +127,12 @@ public class TLValidator {
                 errorMap.put("NULL_LICENSEUNITNAMELOCAL", " License Unit Name local cannot be null");
             if (license.getDesiredLicensePeriod() == null)
                 errorMap.put("NULL_DESIREDLICENSEPERIOD", " Desired License Period cannot be null");
-            if (license.getTradeLicenseDetail().getAddress().getLocalityName() == null)
-                errorMap.put("NULL_LOCALITYOFLICENSINGUNIT", " Locality of the Licensing Unit cannot be null");
-            if (license.getTradeLicenseDetail().getAddress().getPostOffice() == null)
-                errorMap.put("NULL_POSTOFFICEOFLICENSINGUNIT", " Post Office of the Licensing Unit cannot be null");
+            // if (license.getTradeLicenseDetail().getAddress().getLocalityName() == null)
+            // errorMap.put("NULL_LOCALITYOFLICENSINGUNIT", " Locality of the Licensing Unit
+            // cannot be null");
+            // if (license.getTradeLicenseDetail().getAddress().getPostOffice() == null)
+            // errorMap.put("NULL_POSTOFFICEOFLICENSINGUNIT", " Post Office of the Licensing
+            // Unit cannot be null");
             // if
             // (license.getTradeLicenseDetail().getInstitution().getOrganisationRegistrationNo()
             // == null)
