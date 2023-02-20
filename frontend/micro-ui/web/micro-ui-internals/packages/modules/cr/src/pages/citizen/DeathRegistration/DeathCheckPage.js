@@ -204,6 +204,17 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                     </div>
           )}
+            {InformationDeath.DeathPlace.code === "PUBLIC_PLACES" && (
+                    
+                    <div className="row">
+                      <div className="col-md-6">
+                        <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-6">
+                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.VehicleFirstHaltEn) + "," + (InformationDeath.VehicleFirstHaltEn)}</CardText>
+                      </div>
+                    </div>
+          )}
             </div>
           </div>
 
