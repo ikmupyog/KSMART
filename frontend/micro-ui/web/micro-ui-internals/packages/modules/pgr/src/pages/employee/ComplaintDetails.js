@@ -42,7 +42,13 @@ const MapView = (props) => {
     </div>
   );
 };
-
+const cardStyle ={
+  display:"flex", 
+  gap:"100px"
+}
+const complntSummary={
+  width:"700px"
+}
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
 };
@@ -426,7 +432,8 @@ export const ComplaintDetails = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card style ={cardStyle}>
+        <div style={complntSummary}>
         <CardSubHeader>{t(`CS_HEADER_COMPLAINT_SUMMARY`)}</CardSubHeader>
         <CardLabel>{t(`CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS`)}</CardLabel>
         {isLoading ? (
@@ -457,7 +464,10 @@ export const ComplaintDetails = (props) => {
         {imagesToShowBelowComplaintDetails?.thumbs ? (
           <DisplayPhotos srcs={imagesToShowBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
         ) : null}
-        <BreakLine />
+        </div>
+        
+        {/* <BreakLine /> */}
+        <div>
         {workflowDetails?.isLoading && <Loader />}
         {!workflowDetails?.isLoading && (
           <React.Fragment>
@@ -484,6 +494,8 @@ export const ComplaintDetails = (props) => {
             )}
           </React.Fragment>
         )}
+        </div>
+        
       </Card>      
       {fullscreen ? (
         <PopUp>
