@@ -54,7 +54,7 @@ public class DeathInformantDtls {
     private String informantAddress ;
 
     @JsonProperty("IsDeclarationInformant")
-    private boolean isDeclarationInformant ;
+    private boolean isDeclarationInformant;
 
     
 

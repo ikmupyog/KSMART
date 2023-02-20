@@ -57,6 +57,11 @@ public class DeathRegistryRequestService {
             if  (deathdet.getDeathAddressInfo()!=null){
                 deathRegistryReading.setDeathAddressInfo(createRegistryAddress(deathrequest));
             }
+            if  (deathdet.getDeathInformantDtls()!=null){
+                deathRegistryReading.setDeathInformantDtls(createRegistryInformantDtls(deathrequest));
+            }
+
+
             deathRegistryDetails.add(deathRegistryReading);
         });
          request = DeathRegistryRequest
@@ -207,7 +212,7 @@ public class DeathRegistryRequestService {
         registryAddress.setPermanentAddrId(deathAddress.getPermanentAddrId());
         registryAddress.setPermanentAddrDeathDtlId(deathAddress.getPermanentAddrDeathDtlId());
         registryAddress.setPermanentAddrTenantId(deathAddress.getPermanentAddrTenantId());
-      //  registryAddress.setPermanentAddrTypeId(deathAddress.getPermanentAddrTypeId());
+        registryAddress.setPermanentAddrTypeId(deathAddress.getPermanentAddrTypeId());
         registryAddress.setPermanentAddrCountryId(deathAddress.getPermanentAddrCountryId());
         registryAddress.setPermanentAddrStateId(deathAddress.getPermanentAddrStateId());
         registryAddress.setPermanentAddrDistrictId(deathAddress.getPermanentAddrDistrictId());
@@ -235,15 +240,31 @@ public class DeathRegistryRequestService {
         registryFamilyInfo.setSpouseType(deathFamilyInfo.getSpouseType());
         registryFamilyInfo.setSpouseNameEn(deathFamilyInfo.getSpouseNameEn());
         registryFamilyInfo.setSpouseNameML(deathFamilyInfo.getSpouseNameML());
+        registryFamilyInfo.setSpouseAadhaar(deathFamilyInfo.getSpouseAadhaar());
+        registryFamilyInfo.setSpouseNameML(deathFamilyInfo.getSpouseNameML());
        // registryFamilyInfo.setFatherUnavailable(deathFamilyInfo.getFatherUnavailable());
         registryFamilyInfo.setFatherNameEn(deathFamilyInfo.getFatherNameEn());
         registryFamilyInfo.setFatherNameMl(deathFamilyInfo.getFatherNameMl());
+        registryFamilyInfo.setFatherAadharNo(deathFamilyInfo.getFatherAadharNo());
        // registryFamilyInfo.setMotherUnavailable(deathFamilyInfo.getMotherUnavailable());
         registryFamilyInfo.setMotherNameEn(deathFamilyInfo.getMotherNameEn());
         registryFamilyInfo.setMotherNameMl(deathFamilyInfo.getMotherNameMl());
+        registryFamilyInfo.setMotherAadharNo(deathFamilyInfo.getMotherAadharNo());
         registryFamilyInfo.setFamilyMobileNo(deathFamilyInfo.getFamilyMobileNo());
         registryFamilyInfo.setFamilyEmailId(deathFamilyInfo.getFamilyEmailId());
         return registryFamilyInfo;
+    }
+    public DeathRegistryInformantDtls createRegistryInformantDtls(DeathDtlRequest deathrequest){
+
+        DeathInformantDtls deathInformantDtls = deathrequest.getDeathCertificateDtls().get(0).getDeathInformantDtls();
+        DeathRegistryInformantDtls registryInformantDtls = new DeathRegistryInformantDtls();
+       registryInformantDtls.setInformantAadharNo(deathInformantDtls.getInformantAadharNo());
+       registryInformantDtls.setInformantNameEn(deathInformantDtls.getInformantAadharNo());
+       registryInformantDtls.setInformantMobileNo(deathInformantDtls.getInformantAadharNo());
+       registryInformantDtls.setDeathSignedOfficerDesignation(deathInformantDtls.getInformantAadharNo());
+       registryInformantDtls.setInformantAddress(deathInformantDtls.getInformantAddress());
+       registryInformantDtls.setDeclarationInformant(deathInformantDtls.isDeclarationInformant());
+        return registryInformantDtls;
     }
 
 

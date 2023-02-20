@@ -20,6 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
      * Creates CrDeathService
@@ -27,6 +31,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
      * on 07.02.2023
      * DeathRegistryService create Rakhi S on 09.02.2023
      */
+
+/**
+     * Creates DeathController 
+     * Jasmine 06/02/2023
+     * Death Application Create Api- Rakhi S on 06.02.2023 
+     */
+
+  @Slf4j
  @Service
  
 public class DeathRegistryService {
@@ -63,6 +75,14 @@ public class DeathRegistryService {
      //  mdmsValidator.validateMDMSData(request,mdmsData);
 
        // enrich request
+                  try {
+            ObjectMapper mapper = new ObjectMapper();
+            Object obj = request;
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+           System.out.println("RegistryCreate "+ mapper.writeValueAsString(obj));
+    }catch(Exception e) {
+        log.error("Exception while fetching from searcher: ",e);
+    }
        enrichmentService.enrichCreate(request);
        //IDGen call
        //enrichmentService.setIdgenIds(request);  

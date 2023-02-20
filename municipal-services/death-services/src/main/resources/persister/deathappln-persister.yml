@@ -750,7 +750,7 @@ serviceMaps:
         postoffice_id = ? , pincode = ? , district_id = ? , state_id = ? , country_id = ? , 
         lastmodifiedby = ? , lastmodifiedtime = ? , location_type = ? , housename_ml = ? , 
         housename_en = ? , lbtype = ? , postal_code = ? , province_name_en = ?, province_name_ml = ?, 
-        city_town_village = ?, city_en = ? WHERE  death_dtl_id = ? AND tenantid = ? AND addr_typeid = ?
+        city_town_village = ?, city_en = ? , addr_lb_name = ?, addr_sameas_present = ? WHERE  death_dtl_id = ? AND tenantid = ? AND addr_typeid = ?
      
       basePath: deathCertificateDtls.*
 
@@ -802,6 +802,10 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrCityOrVillageEn
 
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.presentInsideKeralaLBName
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.isPrsentAddress
+
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
@@ -826,7 +830,7 @@ serviceMaps:
         district_id = ? , state_id = ? , country_id = ? , lastmodifiedby = ? , 
         lastmodifiedtime = ? , location_type = ? , housename_ml = ? , housename_en = ? , lbtype = ? , 
         postal_code = ? ,province_name_en = ?, province_name_ml = ?, 
-        city_town_village = ?, city_en = ?   WHERE  death_dtl_id = ? AND tenantid = ? AND addr_typeid = ?
+        city_town_village = ?, city_en = ?  , addr_lb_name = ?, addr_sameas_present = ?  WHERE  death_dtl_id = ? AND tenantid = ? AND addr_typeid = ?
      
 
       basePath: deathCertificateDtls.*
@@ -877,6 +881,10 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrTownOrVillage
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrCityOr
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.permntInKeralaAdrLBName
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.isPrsentAddress
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
