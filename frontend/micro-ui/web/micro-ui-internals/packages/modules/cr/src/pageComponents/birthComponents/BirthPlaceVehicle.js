@@ -3,8 +3,8 @@ import { FormStep, CardLabel, TextInput, Dropdown, Loader, TextArea } from "@ego
 import { useTranslation } from "react-i18next";
 
 const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, vehicleRegistrationNo, vehicleFromEn,
-  vehicleToEn, vehicleFromMl, vehicleHaltPlace, vehicleHaltPlaceMl, vehicleToMl, vehicleDesDetailsEn, setvehicleToEn, setadmittedHospitalEn,
-  setvehicleType, setvehicleRegistrationNo, setvehicleFromEn, setvehicleFromMl, setvehicleHaltPlace, setvehicleHaltPlaceMl,
+  vehicleToEn, vehicleFromMl, vehicleHaltPlace,  vehicleToMl, vehicleDesDetailsEn, setvehicleToEn, setadmittedHospitalEn,
+  setvehicleType, setvehicleRegistrationNo, setvehicleFromEn, setvehicleFromMl, setvehicleHaltPlace,
   setvehicleToMl, setvehicleDesDetailsEn, setSelectedadmittedHospitalEn, setWardNo, wardNo
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -123,13 +123,13 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       setvehicleHaltPlace(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
     }
   }
-  function setSelectVehicleHaltPlaceMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setvehicleHaltPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
-    }
-  }
+  // function setSelectVehicleHaltPlaceMl(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //   } else {
+  //     setvehicleHaltPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+  //   }
+  // }
   function setSelectVehicleToMl(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -148,7 +148,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     setSelectedadmittedHospitalEn(value);
   }
   function setSelectWard(value) {
-    setPresentWardNo(value);
+    setWardNo(value);
 
   }
 

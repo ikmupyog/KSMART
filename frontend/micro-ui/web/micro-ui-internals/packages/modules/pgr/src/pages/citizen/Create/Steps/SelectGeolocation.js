@@ -1,9 +1,12 @@
 import React from "react";
 import { LocationSearchCard } from "@egovernments/digit-ui-react-components";
+import Timeline from "../../../../components/PGRTimeline";
 
 const SelectGeolocation = ({ onSelect, onSkip, value, t }) => {
   let pincode = "";
   return (
+    <React.Fragment>
+    {window.location.href.includes("/citizen") ? <Timeline currentStep={2}/> : null}
     <LocationSearchCard
       header={t("CS_ADDCOMPLAINT_SELECT_GEOLOCATION_HEADER")}
       cardText={t("CS_ADDCOMPLAINT_SELECT_GEOLOCATION_TEXT")}
@@ -13,6 +16,7 @@ const SelectGeolocation = ({ onSelect, onSkip, value, t }) => {
       onSave={() => onSelect({ pincode })}
       onChange={(code) => (pincode = code)}
     />
+      </React.Fragment>
   );
 };
 
