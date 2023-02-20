@@ -9,8 +9,8 @@ import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome"
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 
-const ChildDetails = ({ config, onSelect, userType, formData }) => {
-  console.log(JSON.stringify(formData));
+const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
+  // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -25,6 +25,7 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
+  isEditBirth = false;
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -43,103 +44,9 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   // const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
 
   // const [childDOB, setChildDOB] = useState(isEdit ? (formData?.ChildDetails?.childDOB):(formData?.ChildDetails?.childDOB ? formData?.ChildDetails?.childDOB : ""));
-  const [childDOB, setChildDOB] = useState( formData?.ChildDetails?.childDOB ? convertEpochFormateToDate(formData?.ChildDetails?.childDOB) : ""); 
-  const [gender, selectGender] = useState(formData?.ChildDetails?.gender ? formData?.ChildDetails?.gender : null);
-  const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
-  const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
-  const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
-  const [childLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.childLastNameEn ? formData?.ChildDetails?.childLastNameEn : "");
-  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.ChildDetails?.childFirstNameMl ? formData?.ChildDetails?.childFirstNameMl : "");
-  const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.childMiddleNameMl ? formData?.ChildDetails?.childMiddleNameMl : "");
-  const [childLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.childLastNameMl ? formData?.ChildDetails?.childLastNameMl : "");
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
-  const [birthDateTime, setbirthDateTime] = useState( ""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
-  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
 
-  const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace ? formData?.ChildDetails?.birthPlace : null);
-  const [value, setValue] = useState();
-  const [hospitalName, selectHospitalName] = useState(formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null);
-  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl ? formData?.ChildDetails?.hospitalNameMl : null);
-
-  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution ? formData?.ChildDetails?.institution : null);
-  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl ? formData?.ChildDetails?.institutionIdMl : null);
-  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId ? formData?.ChildDetails?.institutionId : null);
-
-  const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.ChildDetails?.adrsPostOffice ? formData?.ChildDetails?.adrsPostOffice : null);
-  const [adrsPincode, setAdrsPincode] = useState(formData?.ChildDetails?.adrsPincode ? formData?.ChildDetails?.adrsPincode : null);
-  const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.ChildDetails?.adrsHouseNameEn ? formData?.ChildDetails?.adrsHouseNameEn : "");
-  const [adrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.ChildDetails?.adrsHouseNameMl ? formData?.ChildDetails?.adrsHouseNameMl : "");
-  const [adrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.ChildDetails?.adrsLocalityNameEn ? formData?.ChildDetails?.adrsLocalityNameEn : "");
-  const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.ChildDetails?.adrsLocalityNameMl ? formData?.ChildDetails?.adrsLocalityNameMl : "");
-  const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.ChildDetails?.adrsStreetNameEn ? formData?.ChildDetails?.adrsStreetNameEn : "");
-  const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.ChildDetails?.adrsStreetNameMl ? formData?.ChildDetails?.adrsStreetNameMl : "");
-  const [wardNo, setWardNo] = useState(formData.ChildDetails?.wardNo ? formData.ChildDetails?.wardNo : null);
-
-  const [vehicleType, setvehicleType] = useState(formData?.ChildDetails?.vehicleType ? formData?.ChildDetails?.vehicleType : "");
-  const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.ChildDetails?.vehicleRegistrationNo ? formData?.ChildDetails?.vehicleRegistrationNo : "");
-  const [vehicleFromEn, setvehicleFromEn] = useState(formData?.ChildDetails?.vehicleFromEn ? formData?.ChildDetails?.vehicleFromEn : "");
-  const [vehicleToEn, setvehicleToEn] = useState(formData?.ChildDetails?.vehicleToEn ? formData?.ChildDetails?.vehicleToEn : "");
-  const [vehicleFromMl, setvehicleFromMl] = useState(formData?.ChildDetails?.vehicleFromMl ? formData?.ChildDetails?.vehicleFromMl : "");
-  const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?.ChildDetails?.vehicleHaltPlace ? formData?.ChildDetails?.vehicleHaltPlace : "");
-  const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? formData?.ChildDetails?.vehicleHaltPlaceMl : "");
-  const [vehicleToMl, setvehicleToMl] = useState(formData?.ChildDetails?.vehicleToMl ? formData?.ChildDetails?.vehicleToMl : "");
-  const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? formData?.ChildDetails?.vehicleDesDetailsEn : "");
-  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");
-
-  const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType ? formData?.ChildDetails?.publicPlaceType : "");
-  const [localityNameEn, setlocalityNameEn] = useState(formData?.ChildDetails?.localityNameEn ? formData?.ChildDetails?.localityNameEn : "");
-  const [localityNameMl, setlocalityNameMl] = useState(formData?.ChildDetails?.localityNameMl ? formData?.ChildDetails?.localityNameMl : "");
-  const [streetNameEn, setstreetNameEn] = useState(formData?.ChildDetails?.streetNameEn ? formData?.ChildDetails?.streetNameEn : "");
-  const [streetNameMl, setstreetNameMl] = useState(formData?.ChildDetails?.streetNameMl ? formData?.ChildDetails?.streetNameMl : "");
-  const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.ChildDetails?.publicPlaceDecpEn ? formData?.ChildDetails?.publicPlaceDecpEn : "");
-
-  const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : null);
-  const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.medicalAttensionSub ? formData?.ChildDetails?.medicalAttensionSub : null);
-  const [deliveryMethods, setDeliveryMethod] = useState(formData?.ChildDetails?.deliveryMethods ? formData?.ChildDetails?.deliveryMethods : null);
-  const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
-
-  const [toast, setToast] = useState(false);
-  const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
-  const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
-  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.childDOB ? false : false);
-  const [HospitalError, setHospitalError] = useState(formData?.ChildDetails?.hospitalName ? false : false);
-  const [InstitutionError, setInstitutionError] = useState(formData?.ChildDetails?.institution ? false : false);
-  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.ChildDetails?.institutionId ? false : false);
-  const [WardError, setAdsWardError] = useState(formData?.BirthPlaceHomeDetails?.wardNo ? false : false);
-  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePostOffice ? false : false);
-  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePincode ? false : false);
-  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeHouseNameEn ? false : false);
-  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeHouseNameMl ? false : false);
-  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameEn ? false : false);
-  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameMl ? false : false);
-  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?.ChildDetails?.VehicleRegistrationNo ? false : false);
-  const [vehiTypeError, setvehiTypeError] = useState(formData?.ChildDetails?.vehicleType ? false : false);
-  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?.ChildDetails?.vehicleHaltPlace ? false : false);
-  const [vehiHaltPlaceMlError, setvehiHaltPlaceMlError] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? false : false);
-  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? false : false);
-  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? false : false);
-  const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.ChildDetails?.publicPlaceType ? false : false);
-  const [localNameEnError, setlocalNameEnError] = useState(formData?.ChildDetails?.localityNameEn ? false : false);
-  const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
-  const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.DeliveryMethodSub ? false : false);
-  const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.ChildDetails?.medicalAttensionSub ? false : false);
-
-  const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
-  const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
-  // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
-  // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
-  // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
-  // const [ChildPassportNo, setChildPassportNo] = useState(formData?.ChildDetails?.ChildPassportNo);
-  // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.ChildDetails?.ChildArrivalDate);
-
-  // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  // disable future dates
-  // const maxDate = new Date();
-  // let currentDate = new Date().toJSON().slice(0, 10);
-  const [access, setAccess] = React.useState(true);
-  let placeOfBirth = null;
   let menu = [];
+  let placeOfBirth = null;
   let cmbPlaceMaster = [];
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
@@ -194,6 +101,103 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
+  const [childDOB, setChildDOB] = useState(formData?.ChildDetails?.childDOB ? convertEpochFormateToDate(formData?.ChildDetails?.childDOB) : "");
+  const [gender, selectGender] = useState(formData?.ChildDetails?.gender ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : "");
+  const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
+  const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
+  const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
+  const [childLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.childLastNameEn ? formData?.ChildDetails?.childLastNameEn : "");
+  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.ChildDetails?.childFirstNameMl ? formData?.ChildDetails?.childFirstNameMl : "");
+  const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.childMiddleNameMl ? formData?.ChildDetails?.childMiddleNameMl : "");
+  const [childLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.childLastNameMl ? formData?.ChildDetails?.childLastNameMl : "");
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
+  const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
+  const [birthDateTime, setbirthDateTime] = useState(""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
+  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
+
+  const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "");
+  const [value, setValue] = useState();
+  const [hospitalName, selectHospitalName] = useState(); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
+  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl ? formData?.ChildDetails?.hospitalNameMl : null);
+
+  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution ? formData?.ChildDetails?.institution : null);
+  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl ? formData?.ChildDetails?.institutionIdMl : null);
+  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId ? formData?.ChildDetails?.institutionId : null);
+
+  const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.ChildDetails?.adrsPostOffice ? formData?.ChildDetails?.adrsPostOffice : null);
+  const [adrsPincode, setAdrsPincode] = useState(formData?.ChildDetails?.adrsPincode ? formData?.ChildDetails?.adrsPincode : null);
+  const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.ChildDetails?.adrsHouseNameEn ? formData?.ChildDetails?.adrsHouseNameEn : "");
+  const [adrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.ChildDetails?.adrsHouseNameMl ? formData?.ChildDetails?.adrsHouseNameMl : "");
+  const [adrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.ChildDetails?.adrsLocalityNameEn ? formData?.ChildDetails?.adrsLocalityNameEn : "");
+  const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.ChildDetails?.adrsLocalityNameMl ? formData?.ChildDetails?.adrsLocalityNameMl : "");
+  const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.ChildDetails?.adrsStreetNameEn ? formData?.ChildDetails?.adrsStreetNameEn : "");
+  const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.ChildDetails?.adrsStreetNameMl ? formData?.ChildDetails?.adrsStreetNameMl : "");
+  const [wardNo, setWardNo] = useState(formData.ChildDetails?.wardNo ? formData.ChildDetails?.wardNo : null);
+
+  const [vehicleType, setvehicleType] = useState(formData?.ChildDetails?.vehicleType ? formData?.ChildDetails?.vehicleType : "");
+  const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.ChildDetails?.vehicleRegistrationNo ? formData?.ChildDetails?.vehicleRegistrationNo : "");
+  const [vehicleFromEn, setvehicleFromEn] = useState(formData?.ChildDetails?.vehicleFromEn ? formData?.ChildDetails?.vehicleFromEn : "");
+  const [vehicleToEn, setvehicleToEn] = useState(formData?.ChildDetails?.vehicleToEn ? formData?.ChildDetails?.vehicleToEn : "");
+  const [vehicleFromMl, setvehicleFromMl] = useState(formData?.ChildDetails?.vehicleFromMl ? formData?.ChildDetails?.vehicleFromMl : "");
+  const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?.ChildDetails?.vehicleHaltPlace ? formData?.ChildDetails?.vehicleHaltPlace : "");
+  const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? formData?.ChildDetails?.vehicleHaltPlaceMl : "");
+  const [vehicleToMl, setvehicleToMl] = useState(formData?.ChildDetails?.vehicleToMl ? formData?.ChildDetails?.vehicleToMl : "");
+  const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? formData?.ChildDetails?.vehicleDesDetailsEn : "");
+  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");
+
+  const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType ? formData?.ChildDetails?.publicPlaceType : "");
+  const [localityNameEn, setlocalityNameEn] = useState(formData?.ChildDetails?.localityNameEn ? formData?.ChildDetails?.localityNameEn : "");
+  const [localityNameMl, setlocalityNameMl] = useState(formData?.ChildDetails?.localityNameMl ? formData?.ChildDetails?.localityNameMl : "");
+  const [streetNameEn, setstreetNameEn] = useState(formData?.ChildDetails?.streetNameEn ? formData?.ChildDetails?.streetNameEn : "");
+  const [streetNameMl, setstreetNameMl] = useState(formData?.ChildDetails?.streetNameMl ? formData?.ChildDetails?.streetNameMl : "");
+  const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.ChildDetails?.publicPlaceDecpEn ? formData?.ChildDetails?.publicPlaceDecpEn : "");
+
+  const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : "");
+  const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.medicalAttensionSub ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]) : "");
+  const [deliveryMethods, setDeliveryMethod] = useState(formData?.ChildDetails?.deliveryMethods ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : "");
+  const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
+
+  const [toast, setToast] = useState(false);
+  const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
+  const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
+  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.childDOB ? false : false);
+  const [HospitalError, setHospitalError] = useState(formData?.ChildDetails?.hospitalName ? false : false);
+  const [InstitutionError, setInstitutionError] = useState(formData?.ChildDetails?.institution ? false : false);
+  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.ChildDetails?.institutionId ? false : false);
+  const [WardError, setAdsWardError] = useState(formData?.BirthPlaceHomeDetails?.wardNo ? false : false);
+  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePostOffice ? false : false);
+  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePincode ? false : false);
+  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeHouseNameEn ? false : false);
+  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeHouseNameMl ? false : false);
+  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameEn ? false : false);
+  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameMl ? false : false);
+  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?.ChildDetails?.VehicleRegistrationNo ? false : false);
+  const [vehiTypeError, setvehiTypeError] = useState(formData?.ChildDetails?.vehicleType ? false : false);
+  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?.ChildDetails?.vehicleHaltPlace ? false : false);
+  const [vehiHaltPlaceMlError, setvehiHaltPlaceMlError] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? false : false);
+  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? false : false);
+  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? false : false);
+  const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.ChildDetails?.publicPlaceType ? false : false);
+  const [localNameEnError, setlocalNameEnError] = useState(formData?.ChildDetails?.localityNameEn ? false : false);
+  const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
+  const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.DeliveryMethodSub ? false : false);
+  const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.ChildDetails?.medicalAttensionSub ? false : false);
+
+  const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
+  const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
+  // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
+  // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
+  // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
+  // const [ChildPassportNo, setChildPassportNo] = useState(formData?.ChildDetails?.ChildPassportNo);
+  // const [ChildArrivalDate, setChildArrivalDate] = useState(formData?.ChildDetails?.ChildArrivalDate);
+
+  // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  // disable future dates
+  // const maxDate = new Date();
+  // let currentDate = new Date().toJSON().slice(0, 10);
+  const [access, setAccess] = React.useState(true);
+
   // let cmbInstitutionId = [];
   // institutionidList &&
   //   institutionidList["egov-location"] &&
@@ -212,15 +216,6 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
       }
     }
   }, [isInitialRender]);
-  useEffect(() => {
-    // if (isInitialRender) {
-      console.log(formData?.ChildDetails?.gender);
-      if (formData?.ChildDetails?.gender != null) {
-        selectGender(formData?.ChildDetails?.gender);
-      }
-    // }
-  });
-
 
   React.useEffect(() => {
     if (isInitialRenderPlace) {
@@ -891,457 +886,487 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
   };
 
 
+  // useEffect(() => {
+  //   if (!isInitialRenderFormData) {
+  if (formData?.ChildDetails?.gender != null) {
+    if (menu.length > 0 && (gender === undefined || gender === "")) {
+      selectGender(menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]);
+      setisInitialRenderFormData(true);
+    }
+  }
+  if (formData?.ChildDetails?.birthPlace != null) {
+    if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
+      selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]);
+      setValue(formData?.ChildDetails?.birthPlace);
+      setisInitialRenderFormData(true);
+    }
+  }
+  console.log(cmbAttDeliverySub);
+  if (formData?.ChildDetails?.medicalAttensionSub != null) {
+    console.log(cmbAttDeliverySub);
+    if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
+      setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
+      setisInitialRenderFormData(true);
+    }
+  }
+  // console.log(cmbPregWeek);
+  // if (formData?.ChildDetails?.pregnancyDuration != null) {
+  //   console.log(formData?.ChildDetails?.pregnancyDuration);
+  //   console.log(cmbPregWeek);
+  //   console.log(pregnancyDuration);
+  //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+  //     console.log(cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]);
+  //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]);      
+  //     setisInitialRenderFormData(true);
+  //   }
+  // }
+
+  // if (formData?.ChildDetails?.deliveryMethods != null) {
+  //   console.log(formData?.ChildDetails?.deliveryMethods);
+  //   console.log(cmbDeliveryMethod);
+  //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
+  //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
+  //     setisInitialRenderFormData(true);
+  //   }
+  // }
+
+  //     }
+  //  },[isInitialRenderFormData]);
+
+
+
   if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
     return <Loader></Loader>;
-  } else
-  return (
-    <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
-      {window.location.href.includes("/employee") ? <Timeline /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !birthPlace}>
-        <div className="row">
-          <div className="col-md-12">
+  } else {
+    return (
+      <React.Fragment>
+        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {window.location.href.includes("/citizen") ? <Timeline /> : null}
+        {window.location.href.includes("/employee") ? <Timeline /> : null}
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !birthPlace}>
+          <div className="row">
             <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
-              </h1>
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-3">
-              <CardLabel>
-                {t("CR_DATE_OF_BIRTH_TIME")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <DatePicker
-                date={childDOB}
-                name="childDOB"
-                max={convertEpochToDate(new Date())}
-                // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
-                onChange={setselectChildDOB}
-                inputFormat="DD-MM-YYYY"
-                placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-                {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
-              />
-            </div>
-            <div className="col-md-2">
-              <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-              <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={true}
-                option={menu}
-                selected={gender}
-                select={setselectGender}
-                placeholder={`${t("CR_GENDER")}`}
-                {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
-              />
-            </div>
-            {ChildAadharHIde === true && (
+          <div className="row">
+            <div className="col-md-12">
               <div className="col-md-3">
-                <CardLabel>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"number"}
-                  optionKey="i18nKey"
-                  name="childAadharNo"
-                  value={childAadharNo}
-                  onChange={setSelectChildAadharNo}
-                  placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
-                  inputProps={{
-                    maxLength: 12,
-                  }}
-                  {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                <CardLabel>
+                  {t("CR_DATE_OF_BIRTH_TIME")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <DatePicker
+                  date={childDOB}
+                  name="childDOB"
+                  max={convertEpochToDate(new Date())}
+                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
+                  onChange={setselectChildDOB}
+                  inputFormat="DD-MM-YYYY"
+                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
+                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
-              </div>)}
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
-              </h1>
+              </div>
+              <div className="col-md-2">
+                <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
+                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={true}
+                  option={menu}
+                  selected={gender}
+                  select={setselectGender}
+                  placeholder={`${t("CR_GENDER")}`}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+                />
+              </div>
+              {ChildAadharHIde === true && (
+                <div className="col-md-3">
+                  <CardLabel>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"number"}
+                    optionKey="i18nKey"
+                    name="childAadharNo"
+                    value={childAadharNo}
+                    onChange={setSelectChildAadharNo}
+                    placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>)}
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>
-                {t("CR_PLACE_OF_BIRTH")}<span className="mandatorycss">*</span></CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="code"
-                isMandatory={false}
-                option={cmbPlaceMaster}
-                selected={birthPlace}
-                select={setselectBirthPlace}
-                placeholder={`${t("CR_BIRTH_PLACE")}`}
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_BIRTH")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>
+                  {t("CR_PLACE_OF_BIRTH")}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={false}
+                  option={cmbPlaceMaster}
+                  selected={birthPlace}
+                  select={setselectBirthPlace}
+                  placeholder={`${t("CR_BIRTH_PLACE")}`}
+                />
+              </div>
+            </div>
+          </div>
+          {value === "HOSPITAL" && (
+            <div>
+              <BirthPlaceHospital
+                selectHospitalName={selectHospitalName}
+                hospitalName={hospitalName}
+                hospitalNameMl={hospitalNameMl}
+                selectHospitalNameMl={selectHospitalNameMl}
+                formData={formData}
               />
             </div>
-          </div>
-        </div>
-        {value === "HOSPITAL" && (
-          <div>
-            <BirthPlaceHospital
-              selectHospitalName={selectHospitalName}
-              hospitalName={hospitalName}
-              hospitalNameMl={hospitalNameMl}
-              selectHospitalNameMl={selectHospitalNameMl}
-              formData={formData}
-            />
-          </div>
-        )}
-        {value === "INSTITUTION" && (
-          <div>
-            <BirthPlaceInstitution
-              institution={institution}
-              institutionIdMl={institutionIdMl}
-              institutionId={institutionId}
-              setInstitution={setInstitution}
-              setInstitutionIdMl={setInstitutionIdMl}
-              setInstitutionId={setInstitutionId}
-            />
-          </div>
-        )}
-        {value === "HOME" && (
-          <div>
-            <BirthPlaceHome      
-              adrsHouseNameEn={adrsHouseNameEn}
-              adrsHouseNameMl={adrsHouseNameMl}
-              setAdrsHouseNameEn={setAdrsHouseNameEn}
-              setAdrsHouseNameMl={setAdrsHouseNameMl}
-              adrsLocalityNameEn={adrsLocalityNameEn}
-              adrsLocalityNameMl={adrsLocalityNameMl}
-              setAdrsLocalityNameEn={setAdrsLocalityNameEn}
-              setAdrsLocalityNameMl={setAdrsLocalityNameMl}
-              adrsStreetNameEn={adrsStreetNameEn}
-              adrsStreetNameMl={adrsStreetNameMl}
-              setAdrsStreetNameEn={setAdrsStreetNameEn}
-              setAdrsStreetNameMl={setAdrsStreetNameMl}      
-              wardNo={wardNo}
-              setWardNo={setWardNo}
-              adrsPostOffice={adrsPostOffice}
-              setAdrsPostOffice={setAdrsPostOffice}
-              adrsPincode={adrsPincode}
-              setAdrsPincode={setAdrsPincode}      
-              PostOfficevalues={PostOfficevalues}
-              setPostOfficevalues={setPostOfficevalues}   
-            />
-          </div>
-        )}
-        {value === "VEHICLE" && (
-          <div>
-            <BirthPlaceVehicle
-              vehicleType={vehicleType}
-              vehicleRegistrationNo={vehicleRegistrationNo}
-              vehicleFromEn={vehicleFromEn}
-              vehicleToEn={vehicleToEn}
-              vehicleFromMl={vehicleFromMl}
-              vehicleHaltPlace={vehicleHaltPlace}
-              vehicleHaltPlaceMl={vehicleHaltPlaceMl}
-              vehicleToMl={vehicleToMl}
-              vehicleDesDetailsEn={vehicleDesDetailsEn}
-              setadmittedHospitalEn={setadmittedHospitalEn}
-              setvehicleToEn={setvehicleToEn}
-              setvehicleType={setvehicleType}
-              setvehicleRegistrationNo={setvehicleRegistrationNo}
-              setvehicleFromEn={setvehicleFromEn}
-              setvehicleFromMl={setvehicleFromMl}
-              setvehicleHaltPlace={setvehicleHaltPlace}
-              setvehicleHaltPlaceMl={setvehicleHaltPlaceMl}
-              setvehicleToMl={setvehicleToMl}
-              setvehicleDesDetailsEn={setvehicleDesDetailsEn}
-              setSelectedadmittedHospitalEn={setSelectedadmittedHospitalEn}
-              wardNo={wardNo}
-            />
-          </div>
-        )}
-        {value === "PUBLIC_PLACES" && (
-          <div>
-            <BirthPlacePublicPlace
-              publicPlaceType={publicPlaceType}
-              localityNameEn={localityNameEn}
-              localityNameMl={localityNameMl}
-              streetNameEn={streetNameEn}
-              streetNameMl={streetNameMl}
-              wardNo={wardNo}
-              publicPlaceDecpEn={publicPlaceDecpEn}
-              setpublicPlaceType={setpublicPlaceType}
-              setlocalityNameEn={setlocalityNameEn}
-              setlocalityNameMl={setlocalityNameMl}
-              setstreetNameEn={setstreetNameEn}
-              setstreetNameMl={setstreetNameMl}
-              setpublicPlaceDecpEn={setpublicPlaceDecpEn}
-              setWardNo={setWardNo}
+          )}
+          {value === "INSTITUTION" && (
+            <div>
+              <BirthPlaceInstitution
+                institution={institution}
+                institutionIdMl={institutionIdMl}
+                institutionId={institutionId}
+                setInstitution={setInstitution}
+                setInstitutionIdMl={setInstitutionIdMl}
+                setInstitutionId={setInstitutionId}
+              />
+            </div>
+          )}
+          {value === "HOME" && (
+            <div>
+              <BirthPlaceHome
+                adrsHouseNameEn={adrsHouseNameEn}
+                adrsHouseNameMl={adrsHouseNameMl}
+                setAdrsHouseNameEn={setAdrsHouseNameEn}
+                setAdrsHouseNameMl={setAdrsHouseNameMl}
+                adrsLocalityNameEn={adrsLocalityNameEn}
+                adrsLocalityNameMl={adrsLocalityNameMl}
+                setAdrsLocalityNameEn={setAdrsLocalityNameEn}
+                setAdrsLocalityNameMl={setAdrsLocalityNameMl}
+                adrsStreetNameEn={adrsStreetNameEn}
+                adrsStreetNameMl={adrsStreetNameMl}
+                setAdrsStreetNameEn={setAdrsStreetNameEn}
+                setAdrsStreetNameMl={setAdrsStreetNameMl}
+                wardNo={wardNo}
+                setWardNo={setWardNo}
+                adrsPostOffice={adrsPostOffice}
+                setAdrsPostOffice={setAdrsPostOffice}
+                adrsPincode={adrsPincode}
+                setAdrsPincode={setAdrsPincode}
+                PostOfficevalues={PostOfficevalues}
+                setPostOfficevalues={setPostOfficevalues}
+              />
+            </div>
+          )}
+          {value === "VEHICLE" && (
+            <div>
+              <BirthPlaceVehicle
+                vehicleType={vehicleType}
+                vehicleRegistrationNo={vehicleRegistrationNo}
+                vehicleFromEn={vehicleFromEn}
+                vehicleToEn={vehicleToEn}
+                vehicleFromMl={vehicleFromMl}
+                vehicleHaltPlace={vehicleHaltPlace}
+                vehicleHaltPlaceMl={vehicleHaltPlaceMl}
+                vehicleToMl={vehicleToMl}
+                vehicleDesDetailsEn={vehicleDesDetailsEn}
+                setadmittedHospitalEn={setadmittedHospitalEn}
+                setvehicleToEn={setvehicleToEn}
+                setvehicleType={setvehicleType}
+                setvehicleRegistrationNo={setvehicleRegistrationNo}
+                setvehicleFromEn={setvehicleFromEn}
+                setvehicleFromMl={setvehicleFromMl}
+                setvehicleHaltPlace={setvehicleHaltPlace}
+                setvehicleHaltPlaceMl={setvehicleHaltPlaceMl}
+                setvehicleToMl={setvehicleToMl}
+                setvehicleDesDetailsEn={setvehicleDesDetailsEn}
+                setSelectedadmittedHospitalEn={setSelectedadmittedHospitalEn}
+                wardNo={wardNo}
+              />
+            </div>
+          )}
+          {value === "PUBLIC_PLACES" && (
+            <div>
+              <BirthPlacePublicPlace
+                publicPlaceType={publicPlaceType}
+                localityNameEn={localityNameEn}
+                localityNameMl={localityNameMl}
+                streetNameEn={streetNameEn}
+                streetNameMl={streetNameMl}
+                wardNo={wardNo}
+                publicPlaceDecpEn={publicPlaceDecpEn}
+                setpublicPlaceType={setpublicPlaceType}
+                setlocalityNameEn={setlocalityNameEn}
+                setlocalityNameMl={setlocalityNameMl}
+                setstreetNameEn={setstreetNameEn}
+                setstreetNameMl={setstreetNameMl}
+                setpublicPlaceDecpEn={setpublicPlaceDecpEn}
+                setWardNo={setWardNo}
 
-            />
-          </div>
-        )}
-        <div className="row">
-          <div className="col-md-12">
+              />
+            </div>
+          )}
+          <div className="row">
             <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
-              </h1>
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName} value={isChildName} checked={isChildName} />
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName} value={isChildName} checked={isChildName} />
+              </div>
             </div>
           </div>
-        </div>
-        {isChildName === true && (
-          <div>
-            {/* <div className="row">
+          {isChildName === true && (
+            <div>
+              {/* <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
                   <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_NAME_OF_CHILD")}`}</span>{" "}
                 </h1>
               </div>
             </div> */}
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {`${t("CR_FIRST_NAME_EN")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="childFirstNameEn"
-                    value={childFirstNameEn}
-                    onChange={setSelectChildFirstNameEn}
-                    //  onChange={(e,v) => this.updateTextField(e,v)}
-                    // disable={isChildName}
-                    placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="childMiddleNameEn"
-                    value={childMiddleNameEn}
-                    onChange={setSelectChildMiddleNameEn}
-                    // disable={isChildName}
-                    placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="childLastNameEn"
-                    value={childLastNameEn}
-                    onChange={setSelectChildLastNameEn}
-                    // disable={isChildName}
-                    placeholder={`${t("CR_LAST_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {`${t("CR_FIRST_NAME_ML")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="childFirstNameMl"
-                    value={childFirstNameMl}
-                    onChange={setSelectChildFirstNameMl}
-                    // disable={isChildName}
-                    placeholder={`${t("CR_FIRST_NAME_ML")}`}
-                    {...(validation = {
-                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: true,
-                      type: "text",
-                      title: t("CR_INVALID_FIRST_NAME_ML"),
-                    })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="childMiddleNameMl"
-                    value={childMiddleNameMl}
-                    onChange={setSelectChildMiddleNameMl}
-                    // disable={isChildName}
-                    placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
-                    {...(validation = {
-                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: false,
-                      type: "text",
-                      title: t("CR_INVALID_MIDDLE_NAME_ML"),
-                    })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"text"}
-                    optionKey="i18nKey"
-                    name="childLastNameMl"
-                    value={childLastNameMl}
-                    onChange={setSelectChildLastNameMl}
-                    // disable={isChildName}
-                    placeholder={`${t("CR_LAST_NAME_ML")}`}
-                    {...(validation = {
-                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: false,
-                      type: "text",
-                      title: t("CR_INVALID_LAST_NAME_ML"),
-                    })}
-                  />
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {`${t("CR_FIRST_NAME_EN")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="childFirstNameEn"
+                      value={childFirstNameEn}
+                      onChange={setSelectChildFirstNameEn}
+                      //  onChange={(e,v) => this.updateTextField(e,v)}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_FIRST_NAME_EN")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="childMiddleNameEn"
+                      value={childMiddleNameEn}
+                      onChange={setSelectChildMiddleNameEn}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="childLastNameEn"
+                      value={childLastNameEn}
+                      onChange={setSelectChildLastNameEn}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_LAST_NAME_EN")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>)}
-        {/* <div className="row">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {`${t("CR_FIRST_NAME_ML")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="childFirstNameMl"
+                      value={childFirstNameMl}
+                      onChange={setSelectChildFirstNameMl}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_FIRST_NAME_ML")}`}
+                      {...(validation = {
+                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                        isRequired: true,
+                        type: "text",
+                        title: t("CR_INVALID_FIRST_NAME_ML"),
+                      })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="childMiddleNameMl"
+                      value={childMiddleNameMl}
+                      onChange={setSelectChildMiddleNameMl}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
+                      {...(validation = {
+                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                        isRequired: false,
+                        type: "text",
+                        title: t("CR_INVALID_MIDDLE_NAME_ML"),
+                      })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="childLastNameMl"
+                      value={childLastNameMl}
+                      onChange={setSelectChildLastNameMl}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_LAST_NAME_ML")}`}
+                      {...(validation = {
+                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                        isRequired: false,
+                        type: "text",
+                        title: t("CR_INVALID_LAST_NAME_ML"),
+                      })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>)}
+          {/* <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("OTHER_DETAILS")}`}</span> </h1>
           </div>
         </div> */}
-        {/* <div className="row">         
+          {/* <div className="row">         
           <div className="col-md-6" >
           
             <CheckBox label={t("CR_MULTIPLE_BIRTH")} onChange={setMultipleBirth} value={isMultipleBirth} checked={isMultipleBirth} />
           </div>
         </div> */}
-        <div className="row">
-          <div className="col-md-12">
+          <div className="row">
             <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
-              </h1>
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_BIRTH_INFORMATION")}`}</span>{" "}
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} <span className="mandatorycss">*</span></CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbAttDeliverySub}
-                selected={medicalAttensionSub}
-                select={setSelectMedicalAttensionSub}
-                placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_PREGNANCY_DURATION")}`} <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="i18nKey"
-                isMandatory={false}
-                option={cmbPregWeek}
-                selected={pregnancyDuration}
-                select={setSelectPregnancyDuration}
-                placeholder={`${t("CR_PREGNANCY_DURATION")}`}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_DELIVERY_METHOD")}`} <span className="mandatorycss">*</span></CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbDeliveryMethod}
-                selected={deliveryMethods}
-                select={setSelectDeliveryMethod}
-                placeholder={`${t("CR_DELIVERY_METHOD")}`}
-              />
-            </div>
-            <div className="col-md-3">
-              <CardLabel>
-                {t("CR_BIRTH_WEIGHT")}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"decimal"}
-                optionKey="i18nKey"
-                name="birthWeight"
-                value={birthWeight}
-                onChange={setSelectBirthWeight}
-                placeholder={`${t("CR_BIRTH_WEIGHT")}`}
-                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
-              />
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-3">
+                <CardLabel>
+                  {`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`} <span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbAttDeliverySub}
+                  selected={medicalAttensionSub}
+                  select={setSelectMedicalAttensionSub}
+                  placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>
+                  {`${t("CR_PREGNANCY_DURATION")}`} <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="i18nKey"
+                  isMandatory={false}
+                  option={cmbPregWeek}
+                  selected={pregnancyDuration}
+                  select={setSelectPregnancyDuration}
+                  placeholder={`${t("CR_PREGNANCY_DURATION")}`}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>
+                  {`${t("CR_DELIVERY_METHOD")}`} <span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbDeliveryMethod}
+                  selected={deliveryMethods}
+                  select={setSelectDeliveryMethod}
+                  placeholder={`${t("CR_DELIVERY_METHOD")}`}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>
+                  {t("CR_BIRTH_WEIGHT")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"decimal"}
+                  optionKey="i18nKey"
+                  name="birthWeight"
+                  value={birthWeight}
+                  onChange={setSelectBirthWeight}
+                  placeholder={`${t("CR_BIRTH_WEIGHT")}`}
+                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        {toast && (
-          <Toast
-            error={
-              AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
-              WardError ||
-              AdsHomePincodeError ||
-              AdsHomePostOfficeError ||
-              AdsHomeLocalityNameEnError ||
-              AdsHomeLocalityNameMlError ||
-              AdsHomeHouseNameEnError || AdsHomeHouseNameMlError ||
-              vehiTypeError ||
-              vehicleRegiNoError ||
-              vehicleHaltPlaceError ||
-              vehiHaltPlaceMlError ||
-              admittedHospitalEnError || vehiDesDetailsEnError ||
-              placeTypepEnError || localNameEnError || localNameMlError ||
-              MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-              || PregnancyDurationStError
-
-
-            }
-            label={
-              AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
+          {toast && (
+            <Toast
+              error={
+                AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
                 WardError ||
                 AdsHomePincodeError ||
                 AdsHomePostOfficeError ||
@@ -1356,45 +1381,65 @@ const ChildDetails = ({ config, onSelect, userType, formData }) => {
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
                 || PregnancyDurationStError
-                ?
-                AadharError
-                  ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                    : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
-                      : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                        : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
-                          : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
-                            : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
-                              : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
-                                : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                  : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                    : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
-                                      : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
-                                        : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
-                                          : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
-                                            : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
-                                              : vehiHaltPlaceMlError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_ML_CHOOSE`)
-                                                : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
-                                                  : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
-                                                    : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                                                      : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                                        : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                                          : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                                                            : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
-                                                              : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
 
 
-                                                                  : setToast(false)
-                : setToast(false)
-            }
-            onClose={() => setToast(false)}
-          />
-        )}
-        {""}
+              }
+              label={
+                AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
+                  WardError ||
+                  AdsHomePincodeError ||
+                  AdsHomePostOfficeError ||
+                  AdsHomeLocalityNameEnError ||
+                  AdsHomeLocalityNameMlError ||
+                  AdsHomeHouseNameEnError || AdsHomeHouseNameMlError ||
+                  vehiTypeError ||
+                  vehicleRegiNoError ||
+                  vehicleHaltPlaceError ||
+                  vehiHaltPlaceMlError ||
+                  admittedHospitalEnError || vehiDesDetailsEnError ||
+                  placeTypepEnError || localNameEnError || localNameMlError ||
+                  MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
+                  || PregnancyDurationStError
+                  ?
+                  AadharError
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
+                      : HospitalError ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                        : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                          : InstitutionNameError ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
+                            : WardError ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                              : AdsHomePincodeError ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                                : AdsHomePostOfficeError ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                                  : AdsHomeLocalityNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                    : AdsHomeLocalityNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                      : AdsHomeHouseNameEnError ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                                        : AdsHomeHouseNameMlError ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                                          : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
+                                            : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
+                                              : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
+                                                : vehiHaltPlaceMlError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_ML_CHOOSE`)
+                                                  : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                                                    : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                                                      : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                                                        : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                          : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                            : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                                                              : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                                : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                                  : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
 
-        {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
-      </FormStep>
-    </React.Fragment>
-  );
+
+                                                                    : setToast(false)
+                  : setToast(false)
+              }
+              onClose={() => setToast(false)}
+            />
+          )}
+          {""}
+
+          {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
+        </FormStep>
+      </React.Fragment>
+    );
+  }
 };
 export default ChildDetails;

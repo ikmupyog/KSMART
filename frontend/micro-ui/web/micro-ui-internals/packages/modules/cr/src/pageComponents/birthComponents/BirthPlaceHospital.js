@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
   selectHospitalNameMl,
 }) => {
-  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -16,8 +15,6 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   const { t } = useTranslation();
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "hospital");
-  // const [HospitalName, selectHospitalName] = useState(formData?.BirthPlaceHospitalDetails?.HospitalName);
-  // const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.BirthPlaceHospitalDetails?.HospitalNameMl);
   const [isInitialRender, setIsInitialRender] = useState(true);
   let cmbhospital = [];
   let cmbhospitalMl = [];
@@ -26,6 +23,15 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
+
+    if (formData?.ChildDetails?.hospitalCode != null) {
+      if (cmbhospital.length > 0 && (hospitalName === undefined || hospitalName === "")) {
+        selectHospitalName(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0]);
+        cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0];
+        selectHospitalNameMl(cmbhospitalMl);
+      }
+    }
+
   useEffect(() => {
 
     if (isInitialRender) {
@@ -51,20 +57,12 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
 
 
   const goNext = () => {
-    // sessionStorage.setItem("HospitalName", HospitalName.hospitalName);
-    // sessionStorage.setItem("HospitalNameMl", HospitalNameMl.hospitalName);
-
-    // onSelect(config.key, { HospitalName, HospitalNameMl
-    // });
   };
   if (isLoading) {
     return <Loader></Loader>;
-  }
+  } else 
   return (
     <React.Fragment>
-      {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null} */}
-      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}>
         <div className="row">
           <div className="col-md-12">
