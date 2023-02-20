@@ -150,16 +150,15 @@ public class EnrichmentService {
                 tradeLicense.getTradeLicenseDetail().getInstitution().setTenantId(tradeLicense.getTenantId());
             }
 
-            if (tradeLicense.getApplicationType() != null) {
-                if (tradeLicense.getApplicationType().equals(TLConstants.APPLICATION_TYPE_NEW)) {
-                    tradeLicense.setApplicationNumber(
-                            idGen.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_NEWL,
-                                    TLConstants.APP_NUMBER_CAPTION));
-                } else {
-                    tradeLicense.setApplicationNumber(
-                            idGen.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_RENEWALL,
-                                    TLConstants.APP_NUMBER_CAPTION));
-                }
+            if (tradeLicense.getApplicationType() != null && tradeLicense.getApplicationType().toString()
+                    .equals(TLConstants.APPLICATION_TYPE_NEW)) {
+                tradeLicense.setApplicationNumber(
+                        idGen.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_NEWL,
+                                TLConstants.APP_NUMBER_CAPTION));
+            } else {
+                tradeLicense.setApplicationNumber(
+                        idGen.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_RENEWALL,
+                                TLConstants.APP_NUMBER_CAPTION));
             }
 
             if (requestInfo.getUserInfo().getType().equalsIgnoreCase("CITIZEN"))
