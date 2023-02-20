@@ -447,8 +447,8 @@ public class EmployeeService {
 
 
 //					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
-					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
-					child.getAuditDetails().setLastModifiedDate(new Date().getTime());
+// 					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
+// 					child.getAuditDetails().setLastModifiedDate(new Date().getTime());
 				}
 			});
 		});
