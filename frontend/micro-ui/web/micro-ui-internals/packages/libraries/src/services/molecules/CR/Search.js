@@ -63,7 +63,7 @@ export const CRsearch = {
     }
     let employeeResponse = [];
     const Birthdetails = {
-      title: "Birth Application Summary Details",
+      title: "CR_BIRTH_SUMMARY_DETAILS",
       asSectionHeader: true,      
     }
     const childdetails = {
@@ -144,160 +144,7 @@ export const CRsearch = {
       //   { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
       // ],
     };
-    // const tradeUnits = {
-    //   title: "TL_TRADE_UNITS_HEADER",
-    //   additionalDetails: {
-    //     units: response?.tradeLicenseDetail?.tradeUnits?.map((unit, index) => {
-    //       let tradeSubType = stringReplaceAll(unit?.tradeType, ".", "_");
-    //       tradeSubType = stringReplaceAll(tradeSubType, "-", "_");
-    //       return {
-    //         title: "TL_UNIT_HEADER",
-    //         values: [
-    //           {
-    //             title: "TRADELICENSE_TRADECATEGORY_LABEL",
-    //             value: unit?.tradeType ? `TRADELICENSE_TRADETYPE_${unit?.tradeType?.split(".")[0]}` : "NA",
-    //           },
-    //           { title: "TRADELICENSE_TRADETYPE_LABEL", value: unit?.tradeType ? `TRADELICENSE_TRADETYPE_${unit?.tradeType?.split(".")[1]}` : "NA" },
-    //           { title: "TL_NEW_TRADE_SUB_TYPE_LABEL", value: tradeSubType ? `TRADELICENSE_TRADETYPE_${tradeSubType}` : "NA" },
-    //           { title: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER", value: unit?.uom || "NA" },
-    //           { title: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL", value: unit?.uomValue || "NA" },
-    //         ],
-    //       };
-    //     }),
-    //   },
-    // };
-
-    // const accessories = {
-    //   title: "TL_NEW_TRADE_DETAILS_HEADER_ACC",
-    //   // asSectionHeader: true,
-    //   additionalDetails: {
-    //     accessories: response?.tradeLicenseDetail?.accessories?.map((unit, index) => {
-    //       let accessoryCategory = "NA";
-    //       if (unit?.accessoryCategory) {
-    //         accessoryCategory = stringReplaceAll(unit?.accessoryCategory, ".", "_");
-    //         accessoryCategory = `TRADELICENSE_ACCESSORIESCATEGORY_${stringReplaceAll(accessoryCategory, "-", "_")}`;
-    //       }
-    //       return {
-    //         title: "TL_ACCESSORY_LABEL",
-    //         values: [
-    //           { title: "TL_NEW_TRADE_DETAILS_ACC_LABEL", value: accessoryCategory },
-    //           { title: "TL_NEW_TRADE_DETAILS_UOM_UOM_PLACEHOLDER", value: unit?.uom || "NA" },
-    //           { title: "TL_NEW_TRADE_DETAILS_UOM_VALUE_LABEL", value: unit?.uomValue || "NA" },
-    //           { title: "TL_ACCESSORY_COUNT_LABEL", value: unit?.count || "NA" },
-    //         ],
-    //       };
-    //     }),
-    //   },
-    // };
-
-    // const PropertyDetail = {
-    //   title: "PT_DETAILS",
-    //   values: [
-    //     { title: "TL_PROPERTY_ID", value: propertyDetails?.Properties?.[0]?.propertyId || "NA" },
-    //     { title: "PT_OWNER_NAME", value: propertyDetails?.Properties?.[0]?.owners[0]?.name || "NA" },
-    //     { title: "PROPERTY_ADDRESS", value: propertyAddress || "NA" },
-    //     {
-    //       title: "TL_VIEW_PROPERTY_DETAIL",
-    //       to: `/digit-ui/employee/commonpt/view-property?propertyId=${propertyDetails?.Properties?.[0]?.propertyId}&tenantId=${propertyDetails?.Properties?.[0]?.tenantId}&from=TL_APPLICATION_DETAILS_LABEL`,
-    //       value: "",
-    //       isLink: true,
-    //     },
-    //   ],
-    // };
-
-    // const cityOfApp = cloneDeep(response?.tradeLicenseDetail?.address?.city);
-    // const localityCode = cloneDeep(response?.tradeLicenseDetail?.address?.locality?.code);
-    // const tradeAddress = {
-    //   title: "TL_CHECK_ADDRESS",
-    //   values: [
-    //     { title: "CORE_COMMON_PINCODE", value: response?.tradeLicenseDetail?.address?.pincode || "NA" },
-    //     { title: "MYCITY_CODE_LABEL", value: response?.tradeLicenseDetail?.address?.city || "NA" },
-    //     { title: "TL_LOCALIZATION_LOCALITY", value: `${stringReplaceAll(cityOfApp?.toUpperCase(), ".", "_")}_REVENUE_${localityCode}` },
-    //     { title: "TL_LOCALIZATION_BUILDING_NO", value: response?.tradeLicenseDetail?.address?.doorNo || "NA" },
-    //     { title: "TL_LOCALIZATION_STREET_NAME", value: response?.tradeLicenseDetail?.address?.street || "NA" },
-    //   ],
-    // };
-
-    // const checkOwnerLength = response?.tradeLicenseDetail?.owners?.length || 1;
-    // const owners = response?.tradeLicenseDetail?.subOwnerShipCategory.includes("INSTITUTIONAL")
-    //   ? {
-    //       title: "ES_NEW_APPLICATION_OWNERSHIP_DETAILS",
-    //       additionalDetails: {
-    //         owners: response?.tradeLicenseDetail?.owners?.map((owner, index) => {
-    //           let subOwnerShipCategory = response?.tradeLicenseDetail?.subOwnerShipCategory
-    //             ? `COMMON_MASTERS_OWNERSHIPCATEGORY_${stringReplaceAll(response?.tradeLicenseDetail?.subOwnerShipCategory, ".", "_")}`
-    //             : "NA";
-    //           return {
-    //             title: Number(checkOwnerLength) > 1 ? "TL_PAYMENT_PAID_BY_PLACEHOLDER" : "",
-    //             values: [
-    //               { title: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL", value: subOwnerShipCategory },
-    //               { title: "TL_INSTITUTION_NAME_LABEL", value: response?.tradeLicenseDetail?.institution?.instituionName || "NA" },
-    //               { title: "TL_NEW_OWNER_DESIG_LABEL", value: response?.tradeLicenseDetail?.institution?.designation || "NA" },
-    //               {
-    //                 title: "TL_TELEPHONE_NUMBER_LABEL",
-    //                 value:
-    //                   response?.tradeLicenseDetail?.institution?.contactNo || response?.tradeLicenseDetail?.institution?.contactNo !== ""
-    //                     ? response?.tradeLicenseDetail?.institution?.contactNo
-    //                     : "NA",
-    //               },
-    //               { title: "TL_OWNER_S_MOBILE_NUM_LABEL", value: owner?.mobileNumber || "NA" },
-    //               { title: "TL_NEW_OWNER_DETAILS_NAME_LABEL", value: response?.tradeLicenseDetail?.institution?.name || "NA" },
-    //               { title: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL", value: owner?.emailId || owner?.emailId !== "" ? owner?.emailId : "NA" },
-    //             ],
-    //           };
-    //         }),
-    //         documents: [
-    //           {
-    //             title: "PT_COMMON_DOCS",
-    //             values: response?.tradeLicenseDetail?.applicationDocuments?.map((document) => {
-    //               return {
-    //                 title: `TL_NEW_${document?.documentType.replace(".", "_")}`,
-    //                 documentType: document?.documentType,
-    //                 documentUid: document?.documentUid,
-    //                 fileStoreId: document?.fileStoreId,
-    //               };
-    //             }),
-    //           },
-    //         ],
-    //       },
-    //     }
-    //   : {
-    //       title: "ES_NEW_APPLICATION_OWNERSHIP_DETAILS",
-    //       additionalDetails: {
-    //         owners: response?.tradeLicenseDetail?.owners?.map((owner, index) => {
-    //           let subOwnerShipCategory = response?.tradeLicenseDetail?.subOwnerShipCategory
-    //             ? `COMMON_MASTERS_OWNERSHIPCATEGORY_${stringReplaceAll(response?.tradeLicenseDetail?.subOwnerShipCategory, ".", "_")}`
-    //             : "NA";
-    //           return {
-    //             title: Number(checkOwnerLength) > 1 ? "TL_PAYMENT_PAID_BY_PLACEHOLDER" : "",
-    //             values: [
-    //               { title: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL", value: subOwnerShipCategory },
-    //               { title: "TL_OWNER_S_NAME_LABEL", value: owner?.name || "NA" },
-    //               { title: "TL_OWNER_S_MOBILE_NUM_LABEL", value: owner?.mobileNumber || "NA" },
-    //               { title: "TL_GUARDIAN_S_NAME_LABEL", value: owner?.fatherOrHusbandName || "NA" },
-    //               { title: "TL_RELATIONSHIP_WITH_GUARDIAN_LABEL", value: owner?.relationship || "NA" },
-    //               { title: "TL_NEW_OWNER_DETAILS_GENDER_LABEL", value: owner?.gender || "NA" },
-    //               { title: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL", value: owner?.emailId || "NA" },
-    //               { title: "TL_OWNER_SPECIAL_CATEGORY", value: owner?.ownerType ? `COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}` : "NA" },
-    //               { title: "TL_NEW_OWNER_DETAILS_ADDR_LABEL", value: owner?.permanentAddress || "NA" },
-    //             ],
-    //           };
-    //         }),
-    //         documents: [
-    //           {
-    //             title: "PT_COMMON_DOCS",
-    //             values: response?.tradeLicenseDetail?.applicationDocuments?.map((document) => {
-    //               return {
-    //                 title: `TL_NEW_${document?.documentType.replace(".", "_")}`,
-    //                 documentType: document?.documentType,
-    //                 documentUid: document?.documentUid,
-    //                 fileStoreId: document?.fileStoreId,
-    //               };
-    //             }),
-    //           },
-    //         ],
-    //       },
-    //     };
+    
 
     // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
     //   const details = {
@@ -318,11 +165,6 @@ export const CRsearch = {
     // response && employeeResponse.push(motherInfo);
     // response && employeeResponse.push(addressInfo);
     // response && employeeResponse.push(statisticalInfo);
-    // response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
-    // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);
-    // propertyDetails?.Properties?.length > 0 && employeeResponse.push(PropertyDetail);
-    // response && !(propertyDetails?.Properties?.length > 0) && employeeResponse.push(tradeAddress);
-    // response?.tradeLicenseDetail?.owners && employeeResponse.push(owners);
 
     return {
       tenantId: response.tenantId,
