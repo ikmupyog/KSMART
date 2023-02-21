@@ -6,6 +6,7 @@ import { LOCALIZATION_KEY } from "../../constants/Localization";
 
 import {
   Card,
+  CardLabel,
   Header,
   CardSubHeader,
   StatusTable,
@@ -19,7 +20,19 @@ import {
 } from "@egovernments/digit-ui-react-components";
 
 import TimeLine from "../../components/TimeLine";
-
+const tableStyle ={
+  marginLeft:"15px"
+}
+const cardStyle ={
+  display:"flex", 
+  gap:"100px"
+}
+const complntSummary={
+  width:"700px"
+}
+const borderStyle ={
+  border:"1px solid #EDF2F4"
+}
 const WorkflowComponent = ({ complaintDetails, id, getWorkFlow, zoomImage }) => {
   const tenantId = complaintDetails.service.tenantId;
   const workFlowDetails = Digit.Hooks.useWorkflowDetails({ tenantId: tenantId, id, moduleCode: "PGR" });
@@ -128,13 +141,15 @@ const ComplaintDetailsPage = (props) => {
 
   return (
     <React.Fragment>
-      <div className="complaint-summary">
-        <Header>{t(`${LOCALIZATION_KEY.CS_HEADER}_COMPLAINT_SUMMARY`)}</Header>
-
-        {Object.keys(complaintDetails).length > 0 ? (
-          <React.Fragment>
-            <Card>
-              <CardSubHeader>{t(`SERVICEDEFS.${complaintDetails.audit.serviceCode.toUpperCase()}`)}</CardSubHeader>
+      {/* <div className="complaint-summary">
+        <Header>{t(`${LOCALIZATION_KEY.CS_HEADER}_COMPLAINT_SUMMARY`)}</Header> */}
+         <Card style ={cardStyle}>
+         <div style={complntSummary}>
+         <CardSubHeader>{t(`${LOCALIZATION_KEY.CS_HEADER}_COMPLAINT_SUMMARY`)}</CardSubHeader>
+         {Object.keys(complaintDetails).length > 0 ? (
+          <div style={tableStyle}>
+            {/* <Card> */}
+              <CardLabel>{t(`SERVICEDEFS.${complaintDetails.audit.serviceCode.toUpperCase()}`)}</CardLabel>
               <StatusTable>
                 {Object.keys(complaintDetails.details).map((flag, index, arr) => (
                   <Row
@@ -153,29 +168,37 @@ const ComplaintDetailsPage = (props) => {
                 <DisplayPhotos srcs={imageShownBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
               ) : null}
               {imageZoom ? <ImageViewer imageSrc={imageZoom} onClose={onCloseImageZoom} /> : null}
-            </Card>
-            <Card>
-              {complaintDetails?.service && (
-                <WorkflowComponent getWorkFlow={onWorkFlowChange} complaintDetails={complaintDetails} id={id} zoomImage={zoomImage} />
-              )}
-            </Card>
+            {/* </Card>
+            <Card> */}
+             
+            {/* </Card> */}
             {/* <Card>
       <CardSubHeader>{t(`${LOCALIZATION_KEY.CS_COMMON}_COMMENTS`)}</CardSubHeader>
       <TextArea value={comment} onChange={(e) => setComment(e.target.value)} name="" />
       <SubmitBar disabled={disableComment || comment.length < 1} onSubmit={submitComment} label={t("CS_PGR_SEND_COMMENT")} />
     </Card> */}
-            {toast && (
+           
+          </div>
+        ) : (
+          <Loader />
+        )}
+        </div>
+        <div style={borderStyle}></div>
+        <div>
+        {complaintDetails?.service && (
+                <WorkflowComponent getWorkFlow={onWorkFlowChange} complaintDetails={complaintDetails} id={id} zoomImage={zoomImage} />
+              )}
+        </div>
+         </Card>
+         {toast && (
               <Toast
                 error={commentError}
                 label={!commentError ? t(`CS_COMPLAINT_COMMENT_SUCCESS`) : t(`CS_COMPLAINT_COMMENT_ERROR`)}
                 onClose={() => setToast(false)}
               />
             )}{" "}
-          </React.Fragment>
-        ) : (
-          <Loader />
-        )}
-      </div>
+        
+      
     </React.Fragment>
   );
 };

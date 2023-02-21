@@ -48,6 +48,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   const match = useRouteMatch();
   const {
     InformationDeath,
+    FamilyInformationDeath,
     // ChildDetails,
     // ParentsDetails,
     // AddressBirthDetails,
@@ -99,9 +100,10 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
  
   return (
     <React.Fragment>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
         <div className="row">
@@ -156,7 +158,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 : {t(convertEpochToDate (InformationDeath.DateOfDeath) ? convertEpochToDate (InformationDeath.DateOfDeath) : " CR_NOT_RECORDED")} {" "}
               </CardText>
-            </div>
+            </div>          
           </div>
           <div className="row">
             <div className="col-md-12">
@@ -167,7 +169,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                         <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("PDF_CR_PLACE_OF_DEATH")}`}</CardLabel>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.DeathPlaceType.hospitalName ) + "/" +(InformationDeath.DeathPlaceType.hospitalNamelocal )  }</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.DeathPlaceType.hospitalNamelocal ) + "/" +(InformationDeath.DeathPlaceType.hospitalName )  }</CardText>
                       </div>
                     </div>
           )}
@@ -178,7 +180,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                         <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("PDF_CR_PLACE_OF_DEATH")}`}</CardLabel>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.DeathPlaceType.code) + "," + (InformationDeath.DeathPlaceInstId.code)}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.DeathPlaceType.namelocal) + "," + (InformationDeath.DeathPlaceInstId.institutionNamelocal)+ "/" + (InformationDeath.DeathPlaceType.code) + "," + (InformationDeath.DeathPlaceInstId.institutionName)}</CardText>
                       </div>
                     </div>
           )}
@@ -189,7 +191,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                         <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.DeathPlaceHomehoueNameEn) + "," + (InformationDeath.DeathPlaceHomelocalityEn)+ "," + (InformationDeath.DeathPlaceHomestreetNameEn) +"," + (InformationDeath.DeathPlaceHomepostofficeId.name)+"," +(InformationDeath.DeathPlaceHomepostofficeId.pincode) + "/" + (InformationDeath.DeathPlaceHomehoueNameMl) + "," + (InformationDeath.DeathPlaceHomelocalityMl)+ "," + (InformationDeath.DeathPlaceHomestreetNameMl) +"," + (InformationDeath.DeathPlaceHomepostofficeId.namelocal)+"," +(InformationDeath.DeathPlaceHomepostofficeId.pincode)}</CardText>
+                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.DeathPlaceHomehoueNameMl) + "," + (InformationDeath.DeathPlaceHomelocalityMl)+ "," + (InformationDeath.DeathPlaceHomestreetNameMl) +"," + (InformationDeath.DeathPlaceHomepostofficeId.namelocal)+"," +(InformationDeath.DeathPlaceHomepostofficeId.pincode)+ "/" + (InformationDeath.DeathPlaceHomehoueNameEn) + "," + (InformationDeath.DeathPlaceHomelocalityEn)+ "," + (InformationDeath.DeathPlaceHomestreetNameEn) +"," + (InformationDeath.DeathPlaceHomepostofficeId.name)+"," +(InformationDeath.DeathPlaceHomepostofficeId.pincode) }</CardText>
                       </div>
                     </div>
           )}
@@ -200,7 +202,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                         <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.VehicleFirstHaltEn) + "," + (InformationDeath.VehicleFirstHaltEn)}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>:{`${t("PDF_CR_VEHICLE_STATEMENT_ONE")+ " " + (InformationDeath.VehicleFromplaceMl)+ " " +("PDF_CR_VEHICLE_STATEMENT_TWO")+ " " +(InformationDeath.VehicleToplaceMl)+ " " +("PDF_CR_VEHICLE_STATEMENT_THREE")+ " " +(InformationDeath.VehicleToPlaceMl)+ " " +("PDF_CR_VEHICLE_STATEMENT_FOUR")+ " " +(InformationDeath.VehicleFirstHaltEn)+ " " +("PDF_CR_VEHICLE_STATEMENT_FOUR")+ "/ " +("PDF_CR_VEHICLE_STATEMENT_ONE_EN")+ "/ " +(InformationDeath.VehicleFromplaceEn)+ "/ " +("PDF_CR_VEHICLE_STATEMENT_TWO_EN")+ "/ " +(InformationDeath.VehicleFromplaceEn)+ "/ " +("PDF_CR_VEHICLE_STATEMENT_THREE")}`}</CardText>
                       </div>
                     </div>
           )}
@@ -211,16 +213,95 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                         <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
                       </div>
                       <div className="col-md-6">
-                        <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.VehicleFirstHaltEn) + "," + (InformationDeath.VehicleFirstHaltEn)}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.DeathPlaceLocalityMl) + "," + (InformationDeath.DeathPlaceStreetMl) + "/" + (InformationDeath.DeathPlaceLocalityEn) + "," + (InformationDeath.DeathPlaceStreetEn)}</CardText>
+                      </div>
+                    </div>
+          )}
+             {InformationDeath.DeathPlace.code === "OUTSIDE_JURISDICTION" && (
+                    
+                    <div className="row">
+                      <div className="col-md-6">
+                        <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
+                      </div>
+                      <div className="col-md-6">
+                      <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(InformationDeath.DeathPlaceDistrict.namelocal) + "," + (InformationDeath.DeathPlaceState.namelocal) + "," + (InformationDeath.DeathPlaceCountry.namelocal) + "/" + (InformationDeath.DeathPlaceDistrict.name) + "," + (InformationDeath.DeathPlaceState.name) + "," + (InformationDeath.DeathPlaceCountry.name)}</CardText>
                       </div>
                     </div>
           )}
             </div>
           </div>
 
-           
-          
-          
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_CR_NAME_WIFE_HUSBAND")}`} </CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                : {t(FamilyInformationDeath.SpouseNameMl ? FamilyInformationDeath?.SpouseNameMl : " CR_NOT_RECORDED")  +" "+ "("  +" "+ ( FamilyInformationDeath?.SpouseType.namelocal)+ " " + ")" +  "/" +" "+(FamilyInformationDeath.SpouseNameEN ? FamilyInformationDeath?.SpouseNameEN : " CR_NOT_RECORDED") +" "+ "("+ ( FamilyInformationDeath?.SpouseType.name) + ")" } 
+              </CardText>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_MOTHER")}`} </CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                : {t(FamilyInformationDeath.MotherNameMl ? FamilyInformationDeath?.MotherNameMl : " CR_NOT_RECORDED")  +  "/" +" "+(FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : " CR_NOT_RECORDED") } 
+              </CardText>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_FATHER")}`} </CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                : {t(FamilyInformationDeath.FatherNameMl ? FamilyInformationDeath?.FatherNameMl : " CR_NOT_RECORDED")  +  "/" +" "+(FamilyInformationDeath.FatherNameEn ? FamilyInformationDeath?.FatherNameEn : " CR_NOT_RECORDED") } 
+              </CardText>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_PRESENT_ADDRESS_DECEASED_ML")}`} </CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                : {t("PDF_PRESENT_ADDRESS_DECEASED_ML") } 
+              </CardText>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_PRESENT_ADDRESS_DECEASED_EN")}`} </CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                : {t("PDF_PRESENT_ADDRESS_DECEASED_EN") } 
+              </CardText>
+            </div>
+            </div>
+            
+            <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`} </CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                : {t("PDF_PERMANENT_ADDRESS_DECEASED_ML") } 
+              </CardText>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_PERMANENT_ADDRESS_DECEASED_EN")}`} </CardLabel>
+            </div>
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                : {t("PDF_PERMANENT_ADDRESS_DECEASED_EN") } 
+              </CardText>
+            </div>
+            </div>
           {/* <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_GENDER")}`}</CardLabel>

@@ -42,7 +42,16 @@ const MapView = (props) => {
     </div>
   );
 };
-
+const cardStyle ={
+  display:"flex", 
+  gap:"100px"
+}
+const complntSummary={
+  width:"700px"
+}
+const borderStyle ={
+  border:"1px solid #EDF2F4"
+}
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
 };
@@ -148,6 +157,8 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
           label={
             selectedAction === "ASSIGN" || selectedAction === "REASSIGN"
               ? t("CS_ACTION_ASSIGN")
+              : selectedAction === "VERIFY"
+                 ? t("CS_ACTION_VERIFY")
               : selectedAction === "REJECT"
                 ? t("CS_ACTION_REJECT")
                 : selectedAction === "REOPEN"
@@ -162,6 +173,8 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
       actionSaveLabel={       
         selectedAction === "ASSIGN" || selectedAction === "REASSIGN"
           ? t("CS_COMMON_ASSIGN")
+          : selectedAction === "VERIFY"
+            ? t("CS_ACTION_VERIFY")
           : selectedAction === "REJECT"
             ? t("CS_COMMON_REJECT")
             : selectedAction === "REOPEN"
@@ -306,10 +319,10 @@ export const ComplaintDetails = (props) => {
    
     setSelectedAction(action);
     switch (action) {
-      case "RETURN":
-        setPopup(true);
-        setDisplayMenu(false);
-        break;
+      // case "RETURN":
+      //   setPopup(true);
+      //   setDisplayMenu(false);
+      //   break;
       case "RECOMMEND":
         setPopup(true);
         setDisplayMenu(false);
@@ -426,7 +439,8 @@ export const ComplaintDetails = (props) => {
 
   return (
     <React.Fragment>
-      <Card>
+      <Card style ={cardStyle}>
+        <div style={complntSummary}>
         <CardSubHeader>{t(`CS_HEADER_COMPLAINT_SUMMARY`)}</CardSubHeader>
         <CardLabel>{t(`CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS`)}</CardLabel>
         {isLoading ? (
@@ -457,7 +471,10 @@ export const ComplaintDetails = (props) => {
         {imagesToShowBelowComplaintDetails?.thumbs ? (
           <DisplayPhotos srcs={imagesToShowBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
         ) : null}
-        <BreakLine />
+        </div>
+        <div style={borderStyle}></div>
+        {/* <BreakLine /> */}
+        <div>
         {workflowDetails?.isLoading && <Loader />}
         {!workflowDetails?.isLoading && (
           <React.Fragment>
@@ -484,6 +501,8 @@ export const ComplaintDetails = (props) => {
             )}
           </React.Fragment>
         )}
+        </div>
+        
       </Card>      
       {fullscreen ? (
         <PopUp>

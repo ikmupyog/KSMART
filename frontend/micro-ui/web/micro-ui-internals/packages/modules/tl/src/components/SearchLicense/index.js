@@ -87,12 +87,12 @@ const SearchLicense = ({tenantId, t, onSubmit, data, count }) => {
             disableSortBy: true,
             accessor: (row) => GetCell(row.validTo? convertEpochToDateDMY(row.validTo) : ""),
         },
-        {
-            Header: t("TL_HOME_SEARCH_RESULTS__LOCALITY"),
-            disableSortBy: true,
-            // accessor: (row) => GetCell(row.tradeLicenseDetail.address.locality.name || ""),
-            accessor: (row) => GetCell( t(`${stringReplaceAll(row.tenantId?.toUpperCase(), ".", "_")}_REVENUE_${row.tradeLicenseDetail.address.locality.code}`) || ""),
-        },
+        // {
+        //     Header: t("TL_HOME_SEARCH_RESULTS__LOCALITY"),
+        //     disableSortBy: true,
+        //     // accessor: (row) => GetCell(row.tradeLicenseDetail.address.locality.name || ""),
+        //     accessor: (row) => GetCell( t(`${stringReplaceAll(row.tenantId?.toUpperCase(), ".", "_")}_REVENUE_${row.tradeLicenseDetail.address.locality.code}`) || ""),
+        // },
         {
           Header: t("TL_COMMON_TABLE_COL_STATUS"),
           accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
