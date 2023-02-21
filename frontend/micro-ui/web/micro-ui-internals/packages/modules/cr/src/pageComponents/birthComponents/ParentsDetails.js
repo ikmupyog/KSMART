@@ -973,7 +973,7 @@ console.log(formData?.ParentsDetails);
                 FatherFirstNmeEnError ||
                 FatherEduError ||
                 FatherProfError ||
-                ReligionStError ||
+              
                 FatherMobileError ||
                 ReligionError  ||
                 // || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError  || MotherTalukError || MotherPlaceTypeError
@@ -990,7 +990,7 @@ console.log(formData?.ParentsDetails);
                   FatherFirstNmeEnError ||
                   FatherEduError ||
                   FatherProfError ||
-                  ReligionStError ||
+                
                   FatherMobileError ||
                   ReligionError  ||
                   OrderofChildrenError
