@@ -148,6 +148,8 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
           label={
             selectedAction === "ASSIGN" || selectedAction === "REASSIGN"
               ? t("CS_ACTION_ASSIGN")
+              : selectedAction === "VERIFY"
+                 ? t("CS_ACTION_VERIFY")
               : selectedAction === "REJECT"
                 ? t("CS_ACTION_REJECT")
                 : selectedAction === "REOPEN"
@@ -162,6 +164,8 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
       actionSaveLabel={       
         selectedAction === "ASSIGN" || selectedAction === "REASSIGN"
           ? t("CS_COMMON_ASSIGN")
+          : selectedAction === "VERIFY"
+            ? t("CS_ACTION_VERIFY")
           : selectedAction === "REJECT"
             ? t("CS_COMMON_REJECT")
             : selectedAction === "REOPEN"
@@ -306,10 +310,10 @@ export const ComplaintDetails = (props) => {
    
     setSelectedAction(action);
     switch (action) {
-      case "RETURN":
-        setPopup(true);
-        setDisplayMenu(false);
-        break;
+      // case "RETURN":
+      //   setPopup(true);
+      //   setDisplayMenu(false);
+      //   break;
       case "RECOMMEND":
         setPopup(true);
         setDisplayMenu(false);
