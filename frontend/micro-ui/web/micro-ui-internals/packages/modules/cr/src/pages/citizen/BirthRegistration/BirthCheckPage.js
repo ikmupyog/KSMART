@@ -384,7 +384,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           <div className="row">
           
             <div className="col-md-6">
-            <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PRESENT_ADDRESS")}`}</CardLabel>
+            <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PERMANENT_ADDRESS")}`}</CardLabel>
             </div>
             <div className="col-md-6">
             <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
