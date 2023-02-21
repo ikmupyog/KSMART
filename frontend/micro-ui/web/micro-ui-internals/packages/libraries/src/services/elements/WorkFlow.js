@@ -129,16 +129,19 @@ export const WorkflowService = {
 
       /* To check state is updatable and provide edit option*/
       const currentState = businessServiceResponse?.find((state) => state.uuid === processInstances[0]?.state.uuid);
+      console.log("curent state"+currentState?.isStateUpdatable);
       if (currentState && currentState?.isStateUpdatable) {
+        console.log("curent state"+currentState);
         if (
           moduleCode === "FSM" ||
           moduleCode === "FSM_POST_PAY_SERVICE" ||
           moduleCode === "FSM_VEHICLE_TRIP" ||
-          moduleCode === "pgrhealthcomplaints" ||
-          moduleCode === "pgrengineering" ||
+          moduleCode === "PGR_HEALTH" ||
+          moduleCode === "PGR_ENGG" ||
           moduleCode === "OBPS"
-        )
+        ){
           null;
+        }
         else nextActions.push({ action: "EDIT", state: currentState });
       }
 

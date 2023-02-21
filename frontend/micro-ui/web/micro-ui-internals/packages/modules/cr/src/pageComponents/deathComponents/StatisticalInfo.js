@@ -114,17 +114,11 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "YES", code: "CR_YES" },
     { i18nKey: "NO", code: "CR_NO" },
   ];
-
-  // // const handleRadioChangeTabacco = (e) => {
-  // //   setisTabacco(e.target.value);
-  // // };
-  // const [isPanMasala, setisPanMasala] = useState(formData?.StatisticalInfoContinue?.isPanMasala ? formData?.StatisticalInfoContinue?.isPanMasala : 0);
-  // const handleRadioChangePanmasala = (e) => {
-  //   selectisPanMasala(e.target.value);
-  // };
-  // // const handleRadioChange = (e) => {
-  // //   selectisalcohol(e.target.value);
-  // // };
+  const cmbDelivary = [
+    { i18nKey: "No", code: "CR_NO" },
+    { i18nKey: "Still Birth", code: "CR_STILL_BIRTH" },
+    { i18nKey: "Live Birth", code: "CR_LIVE_BIRTH" },
+  ];
 
   const { t } = useTranslation();
   let validation = {};
@@ -177,8 +171,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
       cmbmannerofdeath.push(ob);
     });
     console.log(mannerOfDeath);
-  
 
+   
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   const [MedicalAttentionType, setMedicalAttentionType] = useState(
     formData?.StatisticalInfo?.MedicalAttentionType ? formData?.StatisticalInfo?.MedicalAttentionType : null
@@ -234,9 +228,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const [DeathCauseOther, setDeathCauseOther] = useState(
     formData?.StatisticalInfo?.DeathCauseOther ? formData?.StatisticalInfo?.DeathCauseOther : null
   );
-  const [IsdeceasedPregnant, setIsdeceasedPregnant] = useState(
-    formData?.StatisticalInfo?.IsdeceasedPregnant ? formData?.StatisticalInfo?.IsdeceasedPregnant : null
-  );
+  // const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : "");
+  const [IsdeceasedPregnant, setIsdeceasedPregnant] = useState(formData?.StatisticalInfo?.IsdeceasedPregnant ? (cmbDelivary.filter(cmbDelivary => cmbDelivary.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]) : "" );
 
   const [IsDelivery, setIsDelivery] = useState(formData?.StatisticalInfo?.IsdeceasedPregnant ? formData?.StatisticalInfo?.IsdeceasedPregnant : null);
   const [DeathDuringDelivery, setIsDeathDuringDelivery] = useState(
@@ -263,8 +256,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   let naturetypecmbvalue = null;
-
-  const onSkip = () => onSelect();
+ 
 
   function selectMedicalAttentionDeath(value) {
     setMedicalAttentionType(value);
@@ -340,6 +332,20 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     setAlcoholType(value);
   }
   let naturetype = null;
+  let currentMainCause = [];
+  let cmbFilterdeathsub = [];
+  useEffect(() => {
+
+    if (isInitialRender) {
+  currentMainCause = cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code);
+  cmbFilterdeathsub = cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === currentMainCause[0].code);
+  selectDeathCauseSub(cmbFilterdeathsub[0]);
+  setIsInitialRender(false);
+}
+}
+, [deathsub, isInitialRender,deathmain]);
+
+const onSkip = () => onSelect();
 
   // useEffect(() => {
   //   if (isInitialRender) {
@@ -377,18 +383,6 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("MannerOfDeath", MannerOfDeath ? MannerOfDeath.code : null);
     sessionStorage.setItem("DeathMedicallyCertified", DeathMedicallyCertified ? DeathMedicallyCertified.code : null);
 
-    // sessionStorage.setItem("DeathCauseMain", DeathCauseMain ? DeathCauseMain.code : null);
-    // sessionStorage.setItem("DeathCauseMainCustom", DeathCauseMainCustom ? DeathCauseMainCustom : null);
-    // sessionStorage.setItem("DeathCauseMainInterval", DeathCauseMainInterval ? DeathCauseMainInterval : null);
-    // sessionStorage.setItem("DeathCauseMainTimeUnit", DeathCauseMainTimeUnit ? DeathCauseMainTimeUnit.code : null);
-    // sessionStorage.setItem("DeathCauseSub", DeathCauseSub ? DeathCauseSub.code : null);
-    // sessionStorage.setItem("DeathCauseSubCustom", DeathCauseSubCustom ? DeathCauseSubCustom : null);
-    // sessionStorage.setItem("DeathCauseSubInterval", DeathCauseSubInterval ? DeathCauseSubInterval : null);
-    // sessionStorage.setItem("DeathCauseSubTimeUnit", DeathCauseSubTimeUnit ? DeathCauseSubTimeUnit.code : null);
-    // sessionStorage.setItem("DeathCauseSub2", DeathCauseSub2 ? DeathCauseSub2.code : null);
-    // sessionStorage.setItem("DeathCauseSubCustom2", DeathCauseSubCustom2 ? DeathCauseSubCustom2 : null);
-    // sessionStorage.setItem("DeathCauseSubInterval2", DeathCauseSubInterval2 ? DeathCauseSubInterval2 : null);
-    // sessionStorage.setItem("DeathCauseSubTimeUnit2", DeathCauseSubTimeUnit2 ? DeathCauseSubTimeUnit2.code : null);
     sessionStorage.setItem("DeathCauseOther", DeathCauseOther ? DeathCauseOther.code : null);
     sessionStorage.setItem("IsdeceasedPregnant", IsdeceasedPregnant ? IsdeceasedPregnant.code : null);
     sessionStorage.setItem("IsDelivery", IsDelivery ? IsDelivery.code : null);
@@ -443,8 +437,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   // } 
   return (
     <React.Fragment>
+       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+     
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -523,7 +518,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     selected={MannerOfDeath}
                     select={selectMannerOfDeath}
                     disabled={isEdit}
-                    placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                    placeholder={`${t("CR_DEATH_OCCUR")}`}
                   />
                 </div>
               </div>
@@ -545,7 +540,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 selected={DeathMedicallyCertified}
                 select={selectDeathMedicallyCertified}
                 disabled={isEdit}
-                placeholder={`${t("CR_MEDICAL_ATTENTION_DEATH")}`}
+                placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED")}`}
               />
             </div>
           </div>
@@ -585,25 +580,10 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     value={DeathCauseMainCustom}
                     onChange={selectDeathCauseMainCustom}
                     disable={isEdit}
-                    placeholder={`${t(" ")}`}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}`}
                   />
-                </div>
-                {/* <div className="col-md-3">
-              <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER")}</CardLabel>
-              <TextInput
-                // t={t}
-                // isMandatory={false}
-                // type={"text"}
-                // // optionKey="i18nKey"
-                // name="CauseOfDeath"
-                // value={CauseOfDeath}
-                // // onChange={setSelectCauseOfDeath}
-                // disable={isEdit}
-                // placeholder={`${t(" ")}`}
-                // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
-              />
-            </div> */}
-                <div className="col-md-3">
+                </div>                
+                <div className="col-md-4">
                   <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
                   <TextInput
                     t={t}
@@ -614,11 +594,11 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     value={DeathCauseMainInterval}
                     onChange={selectDeathCauseMainInterval}
                     disable={isEdit}
-                    placeholder={`${t(" ")}`}
+                    placeholder={`${t("CR_APROXIMATE")}`}
                     // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                   <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
                   <Dropdown
                     t={t}
@@ -628,7 +608,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     selected={DeathCauseMainTimeUnit}
                     select={selectDeathCauseMainTimeUnit}
                     disabled={isEdit}
-                    placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                    placeholder={`${t("CR_TIME_UNIT")}`}
                   />
                 </div>
               </div>
@@ -652,7 +632,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     selected={DeathCauseSub}
                     select={selectDeathCauseSub}
                     disabled={isEdit}
-                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_A")}`}
                   />
                 </div>
                 <div className="col-md-3">
@@ -666,10 +646,10 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     value={DeathCauseSubCustom}
                     onChange={selectDeathCauseSubCustom}
                     disable={isEdit}
-                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_PART")}`}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}`}
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
                   <TextInput
                     t={t}
@@ -680,11 +660,10 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     value={DeathCauseSubInterval}
                     onChange={selectDeathCauseSubInterval}
                     disable={isEdit}
-                    // placeholder={`${t(" ")}`}
-                    // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
+                    placeholder={`${t("CR_APROXIMATE")}`}                   
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                   <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
                   <Dropdown
                     t={t}
@@ -694,7 +673,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     selected={DeathCauseSubTimeUnit}
                     select={selectDeathCauseSubTimeUnit}
                     disabled={isEdit}
-                    placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                    placeholder={`${t("CR_TIME_UNI")}`}
                   />
                 </div>
               </div>
@@ -711,7 +690,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     selected={DeathCauseSub2}
                     select={selectDeathCauseSub2}
                     disabled={isEdit}
-                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN_PART")}`}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB_B")}`}
                   />
                 </div>
                 <div className="col-md-3">
@@ -725,10 +704,10 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     value={DeathCauseSubCustom2}
                     onChange={selectDeathCauseSubCustom2}
                     disable={isEdit}
-                    placeholder={`${t(" ")}`}
+                    placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}`}
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
                   <TextInput
                     t={t}
@@ -739,11 +718,11 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     value={DeathCauseSubInterval2}
                     onChange={selectDeathCauseSubInterval2}
                     disable={isEdit}
-                    placeholder={`${t(" ")}`}
+                    placeholder={`${t("CR_APROXIMATE")}`}
                     // {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                   <CardLabel>{t("CR_TIME_UNIT")}</CardLabel>
                   <Dropdown
                     t={t}
@@ -753,7 +732,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                     selected={DeathCauseSubTimeUnit2}
                     select={selectDeathCauseSubTimeUnit2}
                     disabled={isEdit}
-                    placeholder={`${t("CR_CAUSE_DEATH_MEDICALLY_CERTIFIED ")}`}
+                    placeholder={`${t("CR_TIME_UNIT")}`}
                     {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_MONTH") })}
                   />
                 </div>
@@ -782,17 +761,24 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 value={DeathCauseOther}
                 onChange={selectDeathCauseOther}
                 disable={isEdit}
-                placeholder={`${t(" ")}`}
+                placeholder={`${t(" CR_DEATH_CAUASE_OTHER")}`}
                 {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
               />
             </div>
           </div>
         </div>
         <div>
+        <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PREGNANCY_STATUS_DECEASED")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
-                <CardLabel>{t("CR_WAS_THERE")}</CardLabel>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_DECEASED_PREGNANT")}</CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -801,19 +787,21 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                   selected={IsDelivery}
                   select={selectIsDelivery}
                   disabled={isEdit}
+                  placeholder={`${t("CR_DECEASED_PREGNANT")}`}
                 />
               </div>
-              <div className="col-md-6">
-                <CardLabel>{t("CR_FEMALE_DEATH_PREGNANT")}</CardLabel>
+              <div className="col-md-3">
+                <CardLabel>{t("CR_WAS_THERE_DELIVARY")}</CardLabel>
                 {/* <div className="col-md-6 "> */}
                 <Dropdown
                   t={t}
-                  optionKey="name"
+                  optionKey="i18nKey"
                   isMandatory={false}
-                  option={cmbpregnantDeceased}
+                  option={cmbDelivary}
                   selected={IsdeceasedPregnant}
                   select={selectIsdeceasedPregnant}
                   disabled={isEdit}
+                  placeholder={`${t("CR_WAS_THERE_DELIVARY")}`}
                 />
               </div>
               <div className="col-md-6">
@@ -832,29 +820,15 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
           </div>
         </div>
 
-        {/* <div className="col-md-6">
-              <CardLabel>{t("CR_ACTUAL_CAUSE_OF_DEATH_OTHER_ML")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                // optionKey="i18nKey"
-                name="CauseOfDeath"
-                value={CauseOfDeath}
-                onChange={setSelectCauseOfDeath}
-                disable={isEdit}
-                placeholder={`${t(" ")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
-              />
-            </div> */}
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <h4 style={{ fontWeight: "bold", marginBottom: "15px" }}>{t("CR_HABITS")}</h4>
+        
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HABITS")}`}</span>{" "}
+                </h1>
+              </div>
             </div>
-          </div>
-        </div>
+        
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -867,26 +841,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 selected={SmokingType}
                 onSelect={selectSmokingType}
                 handleChange={handleSmokingType}
-              />
-              {/* <div>
-              {isSmoke === "yes" && (
-                <div className="col-md-4">
-                  <CardLabel>{t("CR_YEAR")}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"number"}
-                    // optionKey="i18nKey"
-                    name="textSmoke"
-                    value={textSmoke}
-                    onChange={(e) => setTextSmoke(e.target.value)}
-                    disable={isEdit}
-                    placeholder={`${t("CR_YEAR")}`}
-                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
-                  />
-                </div>
-              )}
-              </div> */}
+              />             
             </div>
 
             <div className="col-md-6">
@@ -900,25 +855,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 selected={TobaccoType}
                 onSelect={selectTobaccoType}
                 handleChange={handleTobaccoType}
-              />
-              {/* {isTabacco === "yes" && (
-                <div className="col-md-4">
-                  <CardLabel>{t("CR_YEAR")}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"number"}
-                    // optionKey="i18nKey"
-                    name="textTabacco"
-                    value={textTabacco}
-                    onChange={(e) => setTextTabacco(e.target.value)}
-                    disable={isEdit}
-                    placeholder={`${t("CR_YEAR")}`}
-                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
-                  />
-                </div>
-              )} */}
-              {/* </div> */}
+              />              
             </div>
           </div>
         </div>
@@ -934,24 +871,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
                 selected={AlcoholType}
                 onSelect={selectAlcoholType}
                 handleChange={handleAlcoholType}
-              />
-              {/* {isalcohol === "yes" && (
-                <div className="col-md-4">
-                  <CardLabel>{t("CR_YEAR")}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type={"number"}
-                    // optionKey="i18nKey"
-                    name="text"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    disable={isEdit}
-                    placeholder={`${t("CR_YEAR")}`}
-                    {...(validation = { pattern: "^([0-9]){0-3}$", isRequired: true, type: "text", title: t("CR_INVALID_YEAR") })}
-                  />
-                </div>
-              )} */}
+              />              
             </div>
           </div>
         </div>

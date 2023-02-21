@@ -64,73 +64,6 @@ export const TLSearch = {
     // console.log("response"+response);
     let employeeResponse = [];
 
-
-    let structurePlace1 = [];
-    if (response?.tradeLicenseDetail?.structureType?.includes("LAND")) {
-      structurePlace1 = {
-        values: [
-          {
-            title: "TL_LOCALIZATION_BLOCK_NO",
-            value: response?.tradeLicenseDetail?.structurePlace?.blockNo
-              ? response?.tradeLicenseDetail?.structurePlace?.blockNo
-              : "NA"
-          },
-          {
-            title: "TL_LOCALIZATION_SURVEY_NO",
-            value: response?.tradeLicenseDetail?.structurePlace?.surveyNo
-              ? response?.tradeLicenseDetail?.structurePlace?.surveyNo
-              : "NA"
-          },
-          {
-            title: "TL_LOCALIZATION_SUBDIVISION_NO",
-            value: response?.tradeLicenseDetail?.structurePlace?.subDivisionNo
-              ? response?.tradeLicenseDetail?.structurePlace?.subDivisionNo
-              : "NA"
-          },
-          {
-            title: "TL_LOCALIZATION_PARTITION_NO",
-            value: response?.tradeLicenseDetail?.structurePlace?.partitionNo
-              ? response?.tradeLicenseDetail?.structurePlace?.partitionNo
-              : "NA"
-          },
-        ]
-      };
-    }
-    else if (response?.tradeLicenseDetail?.structureType?.includes("BUILDING")) {
-      structurePlace1 = {
-        additionalDetails: {
-          return: {
-            values: [
-              {
-                title: "TL_LOCALIZATION_DOOR_NO", value: response?.tradeLicenseDetail?.structurePlace?.doorNo ? response?.tradeLicenseDetail?.structurePlace?.doorNo
-                  : "NA",
-              },
-              {
-                title: "TL_LOCALIZATION_DOOR_NO_SUB", value: response?.tradeLicenseDetail?.structurePlace?.doorNoSub ? response?.tradeLicenseDetail?.structurePlace?.doorNoSub
-                  : "NA",
-              }
-            ]
-          }
-        }
-      };
-    }
-    else if (response?.tradeLicenseDetail?.structureType?.includes("VEHICLE")) {
-      structurePlace1 = {
-        title: "TL_VECHICLE_NO",
-        value: response?.tradeLicenseDetail?.structurePlace?.vehicleNo
-          ? response?.tradeLicenseDetail?.structurePlace?.vehicleNo
-          : "NA",
-      };
-    }
-    else {
-      structurePlace1 =
-      {
-        title: "TL_VESSEL_NO",
-        value: response?.tradeLicenseDetail?.structurePlace?.vesselNo
-          ? response?.tradeLicenseDetail?.structurePlace?.vesselNo
-          : "NA",
-      }
-    }
     const tradedetails = {
       title: "TL_COMMON_TR_DETAILS",
       asSectionHeader: true,
@@ -138,25 +71,7 @@ export const TLSearch = {
         { title: "TL_FINANCIAL_YEAR_LABEL", value: response?.financialYear ? `FY${response?.financialYear}` : "NA" },
         { title: "TL_APPLICANT_ID_LABEL", value: response?.applicationNumber ? `${response?.applicationNumber}` : "NA" },
         { title: "TL_NEW_TRADE_DETAILS_LIC_TYPE_LABEL", value: response?.licenseType ? `TRADELICENSE_LICENSETYPE_${response?.licenseType}` : "NA" },
-        { title: "TL_COMMON_TABLE_COL_TRD_NAME", value: response?.tradeName },
-
-        {
-          title: "TL_NEW_TRADE_DETAILS_STRUCT_TYPE_LABEL",
-          value: response?.tradeLicenseDetail?.structureType
-            // ? `COMMON_MASTERS_STRUCTURETYPE_${response?.tradeLicenseDetail?.structureType}`
-            // : "NA",
-            ? response?.tradeLicenseDetail?.structureType
-            : "NA",
-        },
-        {
-          title: "TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_LABEL",
-          value: response?.tradeLicenseDetail?.structurePlaceSubtype
-            ? response?.tradeLicenseDetail?.structurePlaceSubtype
-            : "NA",
-        },
-        {
-          value: structurePlace1,
-        },
+        { title: "TL_COMMON_TABLE_COL_TRD_NAME", value: response?.licenseUnitName },
         {
           title: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL",
           value: response?.commencementDate ? convertEpochToDate(response?.commencementDate) : "NA",
@@ -173,9 +88,10 @@ export const TLSearch = {
             ? response?.tradeLicenseDetail?.capitalInvestment
             : "NA",
         },
-        // { title: "TL_NEW_GST_NUMBER_LABEL", value: response?.tradeLicenseDetail?.additionalDetail?.gstNo || "NA" },
-        // { title: "TL_NEW_OPERATIONAL_SQ_FT_AREA_LABEL", value: response?.tradeLicenseDetail?.operationalArea || "NA" },
-        { title: "TL_NEW_NUMBER_OF_EMPLOYEES_LABEL", value: response?.tradeLicenseDetail?.noOfEmployees || "NA" },
+        {
+          title: "TL_NEW_NUMBER_OF_EMPLOYEES_LABEL",
+          value: response?.tradeLicenseDetail?.noOfEmployees || "NA"
+        },
       ],
     };
 
@@ -190,13 +106,15 @@ export const TLSearch = {
             values: [
               {
                 title: "TRADELICENSE_TRADECATEGORY_LABEL",
-                value:unit?.businessCategory? `TRADELICENSE_TRADETYPE_${unit?.businessCategory}` :"NA"
+                value: unit?.businessCategory ? `TRADELICENSE_TRADETYPE_${unit?.businessCategory}` : "NA"
               },
-              { title: "TRADELICENSE_TRADETYPE_LABEL", 
-              value: unit?.businessType ? `TRADELICENSE_TRADETYPE_${unit?.businessType}` : "NA" 
+              {
+                title: "TRADELICENSE_TRADETYPE_LABEL",
+                value: unit?.businessType ? `TRADELICENSE_TRADETYPE_${unit?.businessType}` : "NA"
               },
-              { title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
-               value: unit?.businessSubtype ? `TRADELICENSE_TRADETYPE_${ stringReplaceAll(unit?.businessSubtype,".","_")}` : "NA" 
+              {
+                title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
+                value: unit?.businessSubtype ? `TRADELICENSE_TRADETYPE_${stringReplaceAll(unit?.businessSubtype, ".", "_")}` : "NA"
               },
             ],
           };
@@ -204,8 +122,56 @@ export const TLSearch = {
       },
     };
 
+    let strucutreplacedet = [];
+    if (response?.tradeLicenseDetail?.structureType?.includes("LAND")) {
+      strucutreplacedet.push({
+        title: "TL_LOCALIZATION_BLOCK_NO",
+        value: response?.tradeLicenseDetail?.structurePlace?.blockNo
+          ? response?.tradeLicenseDetail?.structurePlace?.blockNo
+          : "NA"
+      });
+      strucutreplacedet.push({
+        title: "TL_LOCALIZATION_SURVEY_NO",
+        value: response?.tradeLicenseDetail?.structurePlace?.surveyNo
+          ? response?.tradeLicenseDetail?.structurePlace?.surveyNo
+          : "NA"
+      });
+      strucutreplacedet.push({
+        title: "TL_LOCALIZATION_SUBDIVISION_NO",
+        value: response?.tradeLicenseDetail?.structurePlace?.subDivisionNo
+          ? response?.tradeLicenseDetail?.structurePlace?.subDivisionNo
+          : "NA"
+      });
+      strucutreplacedet.push({
+        title: "TL_LOCALIZATION_PARTITION_NO",
+        value: response?.tradeLicenseDetail?.structurePlace?.partitionNo
+          ? response?.tradeLicenseDetail?.structurePlace?.partitionNo
+          : "NA"
+      });
+    }
 
+    const structurePlace1 = {
+      title: "TL_PLACE_ACTIVITY",
+      values: [
+        {
+          title: "TL_NEW_TRADE_DETAILS_STRUCT_TYPE_LABEL",
+          value: response?.tradeLicenseDetail?.structureType
+        },
+        {
+          title: "TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_LABEL",
+          value: response?.tradeLicenseDetail?.structurePlaceSubtype
+            ? response?.tradeLicenseDetail?.structurePlaceSubtype
+            : "NA",
+        },
+      ],
 
+    }
+
+    
+    strucutreplacedet.map((ob)=>{
+      structurePlace1.values.push(ob)
+     // return (ob)
+    })
     // const PropertyDetail = {
     //   title: "PT_DETAILS",
     //   values: [
@@ -336,11 +302,9 @@ export const TLSearch = {
       };
       response && employeeResponse.push(details);
     }
-    console.log(response?.tradeLicenseDetail?.structureType);
-
     response && employeeResponse.push(tradedetails);
     response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
-    // response?.tradeLicenseDetail?.structurePlace && employeeResponse.push(structurePlace1);
+    response?.tradeLicenseDetail?.structureType && employeeResponse.push(structurePlace1);
 
     // response?.tradeLicenseDetail?.accessories && employeeResponse.push(accessories);
     // propertyDetails?.Properties?.length > 0 && employeeResponse.push(PropertyDetail);

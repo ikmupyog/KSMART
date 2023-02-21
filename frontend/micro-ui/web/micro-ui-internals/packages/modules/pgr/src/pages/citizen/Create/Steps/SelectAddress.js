@@ -12,7 +12,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
   });
   const { data: fetchedLocalities } = Digit.Hooks.useBoundaryLocalities(
     selectedCity?.code,
-    "admin",
+    "revenue",
     {
       enabled: !!selectedCity,
     },
