@@ -8,6 +8,7 @@ import {
   Row,
   StatusTable,
   SubmitBar,
+  BackButton,
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -82,6 +83,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   console.log(value);
   return (
     <React.Fragment>
+        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
@@ -335,7 +337,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               
             </div>
           </div>  */}
-
+     
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PRESENT_ADDRESS")}`}</CardLabel>
@@ -380,14 +382,17 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               </CardText>
             </div>
           </div>
+        
+          {AddressBirthDetails.isPrsentAddress === true && (
 
           <div className="row">
           
             <div className="col-md-6">
+
             <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PERMANENT_ADDRESS")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-            <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
                 {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
@@ -424,6 +429,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   AddressBirthDetails.presentaddressCountry.namelocal}
                 ,
               </CardText>
+
+              
               {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
                 {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
@@ -465,6 +472,64 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               </CardText> */}
             </div>
           </div>
+          )}
+
+{AddressBirthDetails.isPrsentAddress === false && (
+ <div className="row">
+          
+ <div className="col-md-6">
+
+ <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PERMANENT_ADDRESS")}`}</CardLabel>
+ </div>
+ <div className="col-md-6">
+   <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+
+
+   :
+   
+     {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrStreetNameEn +
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrLocalityNameEn +
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrPostOffice.name+
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrPincode +
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrDistrict.name +
+       " , " +
+       AddressBirthDetails.permtaddressStateName.name +
+       " , " +
+       AddressBirthDetails.permtaddressCountry.name }
+      
+       </CardText>
+       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+  :
+  {  
+     t(AddressBirthDetails.permntInKeralaAdrHouseNameMl ? AddressBirthDetails.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrStreetNameMl +
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrLocalityNameMl +
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrPostOffice.name+
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrPincode +
+       " , " +
+       AddressBirthDetails.permntInKeralaAdrDistrict.namelocal+
+       " , " +
+       AddressBirthDetails.permtaddressStateName.namelocal+
+       " , " +
+       AddressBirthDetails.permtaddressCountry.namelocal}
+     ,
+     </CardText>
+ </div>
+</div>
+
+
+
+)}
         </div>
 
         <div className="row">
