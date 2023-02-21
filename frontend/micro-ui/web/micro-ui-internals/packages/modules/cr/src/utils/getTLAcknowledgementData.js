@@ -19,6 +19,7 @@ const getOwnerDetails = (application, t) => {
         { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
       ],
     };
+    
   } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
     let values = [];
     application?.tradeLicenseDetail.owners.map((owner) => {

@@ -29,7 +29,7 @@ const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating
     let newIndex=thumbnailsToShow.thumbs?.findIndex(link=>link===imageSource);
     zoomImage((newIndex>-1&&thumbnailsToShow?.fullImage?.[newIndex])||imageSource);
   }
-
+console.log(data);
   let { timeline } = data;
   const totalTimelineLength = useMemo(()=> timeline?.length ,[timeline])
 
@@ -42,13 +42,13 @@ const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating
       }
     });
 
-    const onlyPendingForAssignmentStatusArray = timeline?.filter( e => e?.status === "PENDINGFORASSIGNMENT")
-    const duplicateCheckpointOfPendingForAssignment = onlyPendingForAssignmentStatusArray.at(-1)
-    timeline?.push({
-      ...duplicateCheckpointOfPendingForAssignment,
-      performedAction: "FILED",
-      status: "COMPLAINT_FILED",
-    });
+    // const onlyPendingForAssignmentStatusArray = timeline?.filter( e => e?.status === "PENDINGFORASSIGNMENT")
+    // const duplicateCheckpointOfPendingForAssignment = onlyPendingForAssignmentStatusArray.at(-1)
+    // timeline?.push({
+    //   ...duplicateCheckpointOfPendingForAssignment,
+    //   performedAction: "FILED",
+    //   status: "COMPLAINT_FILED",
+    // });
   }, [timeline]);
 
   const getCommentsInCustomChildComponent = ({comment, thumbnailsToShow, auditDetails, assigner, status}) => {
@@ -79,9 +79,9 @@ const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating
       case "PENDINGFORREASSIGNMENT":
         return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner})} />;
 
-      case "PENDINGFORASSIGNMENT":
-        const isFirstPendingForAssignment = totalTimelineLength - (index + 1) === 0 ? true : false
-        return <PendingForAssignment key={index} isCompleted={isCurrent} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, ...isFirstPendingForAssignment ? {auditDetails} : {thumbnailsToShow, auditDetails} })} />;
+      // case "PENDINGFORASSIGNMENT":
+      //   const isFirstPendingForAssignment = totalTimelineLength - (index + 1) === 0 ? true : false
+      //   return <PendingForAssignment key={index} isCompleted={isCurrent} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, ...isFirstPendingForAssignment ? {auditDetails} : {thumbnailsToShow, auditDetails} })} />;
 
       case "PENDINGFORASSIGNMENT_AFTERREOPEN":
         return <PendingForAssignment isCompleted={isCurrent} key={index} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner})} />;

@@ -100,7 +100,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   const [FatherMobileError, setFatherMobileError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
   const [FatherEduError, setFatherEduError] = useState(formData?.ParentsDetails?.fatherEducation ? false : false);
   const [FatherProfError, setFatherProfError] = useState(formData?.ParentsDetails?.fatherProfession ? false : false);
-  const [ReligionStError, setReligionStError] = useState(formData?.ParentsDetails?.Religion ? false : false);
+  const [ReligionError, setReligionError] = useState(formData?.ParentsDetails?.Religion ? false : false);
   const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.ParentsDetails?.motherMaritalStatus ? false : false);
   const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.ParentsDetails?.motherMaritalStatus ? formData?.ParentsDetails?.motherMaritalStatus : null);
 
@@ -500,6 +500,20 @@ console.log(formData?.ParentsDetails);
         setFatherMobileError(false);
       }
     }
+    if (Religion != null || Religion != "" || Religion != undefined) {
+      if (ReligionError) {
+        validFlag = false;
+        setReligionError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+        // return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+      } else {
+        setReligionError(false);
+      }
+    }
 
     if (validFlag == true) {
       sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
@@ -649,7 +663,7 @@ console.log(formData?.ParentsDetails);
 
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-3">
+                  <div className="col-md-6">
                     <CardLabel>{`${t("CR_NATIONALITY")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
@@ -662,6 +676,10 @@ console.log(formData?.ParentsDetails);
                       placeholder={`${t("CR_NATIONALITY")}`}
                     />
                   </div>
+                  </div>
+                  </div>
+                  <div className="row">
+                <div className="col-md-12">
                   <div className="col-md-3" >
                     <CardLabel>{`${t("CR_MOTHER_MARITAL_STATUS")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
@@ -679,7 +697,7 @@ console.log(formData?.ParentsDetails);
 
                   {ageMariageStatusHide === "MARRIED" && (
 
-                    <div className="col-md-3">
+                    <div className="col-md-6">
                       <CardLabel>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} <span className="mandatorycss">*</span></CardLabel>
                       <TextInput
                         t={t}
@@ -895,7 +913,7 @@ console.log(formData?.ParentsDetails);
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
-                <CardLabel>{`${t("CS_COMMON_RELIGION")}`}</CardLabel>
+                <CardLabel>{`${t("CS_COMMON_RELIGION")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -957,6 +975,7 @@ console.log(formData?.ParentsDetails);
                 FatherProfError ||
                 ReligionStError ||
                 FatherMobileError ||
+                ReligionError  ||
                 // || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError  || MotherTalukError || MotherPlaceTypeError
                 OrderofChildrenError
               }
@@ -973,6 +992,7 @@ console.log(formData?.ParentsDetails);
                   FatherProfError ||
                   ReligionStError ||
                   FatherMobileError ||
+                  ReligionError  ||
                   OrderofChildrenError
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
@@ -996,7 +1016,7 @@ console.log(formData?.ParentsDetails);
                                       ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`)
                                       : FatherProfError
                                         ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`)
-                                        : ReligionStError
+                                        :  ReligionError
                                           ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
                                           : FatherMobileError
                                             ? t(`CR_INVALID_MOBILE_NO`)

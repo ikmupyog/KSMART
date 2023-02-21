@@ -31,19 +31,19 @@ const CRCard = () => {
         {
             count: isLoading ? "-" : inboxData?.totalCount,
             label: t("ES_COMMON_INBOX"),
-            link: `/digit-ui/employee/tl/inbox`,
+            link: `/digit-ui/employee/cr/inbox`,
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
-            role: "BND_CEMP"
+            role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "BND_DISTRICT_REGISTRAR" || "JHI" || "HOSPITAL_OPERATOR" || "HOSPITAL_APPROVER" || "INSTITUTION_OPERATOR" || "INSTITUTION_APPROVER"
         },
         {
             label: t("CR_DEATH_REGISTRATION"),
             link: `/digit-ui/employee/cr/death-flow`,
-            role: "BND_CEMP"
+            role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "BND_DISTRICT_REGISTRAR" || "JHI" || "HOSPITAL_OPERATOR" || "HOSPITAL_APPROVER" || "INSTITUTION_OPERATOR" || "INSTITUTION_APPROVER"
         },
-            {
+        {
             label: t("CR_SEARCH_APPLICATIONS"),
             link: `/digit-ui/employee/cr/search-flow`
             // link: `/digit-ui/employee/cr/search/application`
