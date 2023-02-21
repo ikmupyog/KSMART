@@ -49,6 +49,9 @@ const cardStyle ={
 const complntSummary={
   width:"700px"
 }
+const borderStyle ={
+  border:"1px solid #EDF2F4"
+}
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
 };
@@ -469,7 +472,7 @@ export const ComplaintDetails = (props) => {
           <DisplayPhotos srcs={imagesToShowBelowComplaintDetails?.thumbs} onClick={(source, index) => zoomImageWrapper(source, index)} />
         ) : null}
         </div>
-        
+        <div style={borderStyle}></div>
         {/* <BreakLine /> */}
         <div>
         {workflowDetails?.isLoading && <Loader />}

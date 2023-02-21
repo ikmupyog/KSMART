@@ -668,8 +668,8 @@ export const convertToDeathRegistration = (data = {}) => {
         FamilyInformationDeath: {
           SpouseUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
           SpouseType: data?.FamilyInformationDeath?.SpouseType ? data?.FamilyInformationDeath?.SpouseType.code : null,
-          SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEn ? data?.FamilyInformationDeath?.SpouseNameEn : null,
-          SpouseNameML: data?.FamilyInformationDeath?.SpouseNameML ? data?.FamilyInformationDeath?.SpouseNameML : null,
+          SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEN ? data?.FamilyInformationDeath?.SpouseNameEN : null,
+          SpouseNameML: data?.FamilyInformationDeath?.SpouseNameMl ? data?.FamilyInformationDeath?.SpouseNameMl : null,
           FatherUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
           FatherNameEn: data?.FamilyInformationDeath?.FatherNameEn,
           FatherNameMl: data?.FamilyInformationDeath?.FatherNameMl,

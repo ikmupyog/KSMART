@@ -30,6 +30,9 @@ const cardStyle ={
 const complntSummary={
   width:"700px"
 }
+const borderStyle ={
+  border:"1px solid #EDF2F4"
+}
 const WorkflowComponent = ({ complaintDetails, id, getWorkFlow, zoomImage }) => {
   const tenantId = complaintDetails.service.tenantId;
   const workFlowDetails = Digit.Hooks.useWorkflowDetails({ tenantId: tenantId, id, moduleCode: "PGR" });
@@ -180,6 +183,7 @@ const ComplaintDetailsPage = (props) => {
           <Loader />
         )}
         </div>
+        <div style={borderStyle}></div>
         <div>
         {complaintDetails?.service && (
                 <WorkflowComponent getWorkFlow={onWorkFlowChange} complaintDetails={complaintDetails} id={id} zoomImage={zoomImage} />
