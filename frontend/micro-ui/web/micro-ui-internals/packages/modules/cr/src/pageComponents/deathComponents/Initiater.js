@@ -189,7 +189,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_DECLARATION_STATEMENT")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_DETAILS")}`}</span>
             </h1>
           </div>
         </div>
@@ -197,7 +197,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             
-            <CheckBox label={t("CR_DECLARATION")} onChange={setselectIsDeclarationInitiator} value={IsDeclarationInitiator} checked={IsDeclarationInitiator} />
+            <CheckBox label={t("CR_INITIATOR_DECLARATION_STATEMENT")} onChange={setselectIsDeclarationInitiator} value={IsDeclarationInitiator} checked={IsDeclarationInitiator} />
             {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>
