@@ -10,7 +10,7 @@ import {
   Loader,
   Toast,
 } from "@egovernments/digit-ui-react-components";
-import SearchFormFields from "./SearchFields";
+import SearchFormFields from "./SearchDeathFields";
 import { convertEpochToDateDMY } from "../../utils";
 
 const MobileSearchApplication = ({ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit}) => {
