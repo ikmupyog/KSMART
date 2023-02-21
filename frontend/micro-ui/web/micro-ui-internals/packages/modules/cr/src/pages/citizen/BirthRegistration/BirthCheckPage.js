@@ -358,7 +358,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   AddressBirthDetails.presentaddressStateName.name +
                   " , " +
                   AddressBirthDetails.presentaddressCountry.name }
-                   
+                    </CardText>
+                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
                 {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
                   AddressBirthDetails.presentInsideKeralaStreetNameMl +
@@ -401,10 +403,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   " , " +
                   AddressBirthDetails.presentaddressStateName.name +
                   " , " +
-                  AddressBirthDetails.presentaddressCountry.name +
-                  " / " +
-                  
-                t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                  AddressBirthDetails.presentaddressCountry.name }
+                    </CardText>
+                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
                   AddressBirthDetails.presentInsideKeralaStreetNameMl +
                   " , " +
