@@ -111,23 +111,29 @@ export const CRDeathsearch = {
           title: "PDF_BIRTH_NAME_OF_MOTHER",
           value: response?.FamilyInformationDeath?.MotherNameEn + " / " + response?.FamilyInformationDeath?.MotherNameMl || "NA",
         },
+        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceType + "/" + response?.InformationDeath?.DeathPlaceType || "NA"},       
+
 
         // ...(InformationDeath.DeathPlace.code === "HOSPITAL" && {
-        //   title: "PDF_BIRTH_NAME_OF_MOTHER",
-        //   value: response?.FamilyInformationDeath?.MotherNameEn + " / " + response?.FamilyInformationDeath?.MotherNameMl || "NA",
+
         // }),
       ],
     };
-    // const deathDetails = {
-    //   // title: "",
-    //   values: [
-    //     { title: "CR_FIRST_NAME_EN", value: response?.InformationDeath?.DeceasedFirstNameEn + " " + response?.InformationDeath?.DeceasedMiddleNameEn + " " + response?.InformationDeath?.DeceasedLastNameEn + " / " + response?.InformationDeath?.DeceasedFirstNameMl + " " + response?.InformationDeath?.DeceasedMiddleNameMl + " " + response?.InformationDeath?.DeceasedLastNameMl || "NA"},
-    //     { title: "CR_AGE", value: response?.InformationDeath?.Age|| "NA"},
-    //     { title: "CR_ADDRESS", value: response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn + response?.AddressBirthDetails?.DeceasedFirstNameMl+ response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn+ response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn || "NA"},
-    //     { title: "CR_FATHER_NAME", value: response?.FamilyInformationDeath?.FatherNameEn || "NA"},
-    //     { title: "CR_MOTHER_NAME", value: response?.FamilyInformationDeath?.MotherNameEn || "NA"},
-    //   ],
-    // };
+
+    // const DeathPlaceHome = "";
+    // console.log(response?.InformationDeath?.DeathPlace);
+    // if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
+    //   DeathPlaceHome = {
+    //     title: "PDF_PLACE_OF_DEATH",
+    //     values: [
+    //       {
+    //         title: "PDF_BIRTH_NAME_OF_MOTHER",
+    //         value: response?.FamilyInformationDeath?.DeathPlaceType / response?.DeathPlaceType || "NA",
+    //       },
+    //     ],
+    //   };
+    // }
+
     // const childdetails = {
     //   title: "CR_BIRTH_CHILD_DETAILS",
     //   asSectionHeader: true,
@@ -193,7 +199,7 @@ export const CRDeathsearch = {
     // }
 
     response && employeeResponse.push(InformationDeath);
-    // response && employeeResponse.push(deathDetails);
+    // response && employeeResponse.push(DeathPlaceHome);
     // response && employeeResponse.push(FamilyInformationDeath);
     // response && employeeResponse.push(statisticalInfo);
 

@@ -163,7 +163,6 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
           <div className="row">
             <div className="col-md-12">
             {InformationDeath.DeathPlace.code === "HOSPITAL" && (
-                    
                     <div className="row">
                       <div className="col-md-6">
                         <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("PDF_CR_PLACE_OF_DEATH")}`}</CardLabel>
