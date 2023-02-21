@@ -63,10 +63,7 @@ export const CRDeathsearch = {
       const filters = { deathNumbers, offset: 0 };
       numOfApplications = await CRDeathsearch.numberOfApplications(tenantId, filters);
     }
-    // let propertyAddress = "";
-    // if (propertyDetails && propertyDetails?.Properties.length) {
-    //   propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
-    // }
+    
     let employeeResponse = [];
     const InformationDeath = {
       title: "CR_DEATH_INFORMATION",
