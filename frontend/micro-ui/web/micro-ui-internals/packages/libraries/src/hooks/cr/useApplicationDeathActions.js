@@ -1,8 +1,8 @@
 import { useMutation } from "react-query";
-import ApplicationUpdateActions from "../../services/molecules/CRDEATH/ApplicationUpdateActions";
+import ApplicationDeathUpdateActions from "../../services/molecules/CRDEATH/ApplicationDeathUpdateActions";
 
 const useApplicationDeathActions = (tenantId) => {
-  return useMutation((applicationData) => ApplicationUpdateActions(applicationData, tenantId));
+  return useMutation((applicationData) => ApplicationDeathUpdateActions(applicationData, tenantId));
 };
 
 export default useApplicationDeathActions;

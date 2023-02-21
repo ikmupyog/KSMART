@@ -1,6 +1,6 @@
 import { CRDeathService } from "../../elements/CRDEATH";
 
-const ApplicationUpdateActions = async (applicationData, tenantId) => {
+const ApplicationDeathUpdateActions = async (applicationData, tenantId) => {
   try {
     const response = await CRDeathService.update(applicationData, tenantId);
     return response;
@@ -9,4 +9,4 @@ const ApplicationUpdateActions = async (applicationData, tenantId) => {
   }
 };
 
-export default ApplicationUpdateActions;
+export default ApplicationDeathUpdateActions;
