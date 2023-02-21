@@ -13,7 +13,7 @@ const SearchDeathFields = ({register, control, reset, tenantId, t }) => {
 
     // const applicationType = useWatch({ control, name: "applicationType" });
 
-    // let businessServices=[];
+    let businessServices=[];
     // if(applicationType && applicationType?.code==="RENEWAL")
     // businessServices=["EDITRENEWAL","DIRECTRENEWAL"]
     // else if(applicationType && applicationType?.code==="NEW")
