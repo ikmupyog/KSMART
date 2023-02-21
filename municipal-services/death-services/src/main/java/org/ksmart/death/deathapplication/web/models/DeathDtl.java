@@ -49,7 +49,7 @@ public class DeathDtl {
     @JsonProperty("InformantDetails")
     private DeathInformantDtls deathInformantDtls;
 
-    @JsonProperty("Initiator")
+    @JsonProperty("InitiatorDetails")
     private DeathInitiatorDtls deathInitiatorDtls;
 
     @JsonProperty("AuditDetails")
