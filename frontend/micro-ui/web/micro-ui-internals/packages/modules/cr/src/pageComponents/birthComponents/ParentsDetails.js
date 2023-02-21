@@ -100,7 +100,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData }) => {
   const [FatherMobileError, setFatherMobileError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
   const [FatherEduError, setFatherEduError] = useState(formData?.ParentsDetails?.fatherEducation ? false : false);
   const [FatherProfError, setFatherProfError] = useState(formData?.ParentsDetails?.fatherProfession ? false : false);
-  const [ReligionStError, setReligionStError] = useState(formData?.ParentsDetails?.Religion ? false : false);
+  const [ReligionError, setReligionError] = useState(formData?.ParentsDetails?.Religion ? false : false);
   const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.ParentsDetails?.motherMaritalStatus ? false : false);
   const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.ParentsDetails?.motherMaritalStatus ? formData?.ParentsDetails?.motherMaritalStatus : null);
 
@@ -498,6 +498,20 @@ console.log(formData?.ParentsDetails);
         // window.alert("Username shouldn't exceed 10 characters")
       } else {
         setFatherMobileError(false);
+      }
+    }
+    if (Religion != null || Religion != "" || Religion != undefined) {
+      if (ReligionError) {
+        validFlag = false;
+        setReligionError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+        // return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+      } else {
+        setReligionError(false);
       }
     }
 
@@ -899,7 +913,7 @@ console.log(formData?.ParentsDetails);
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
-                <CardLabel>{`${t("CS_COMMON_RELIGION")}`}</CardLabel>
+                <CardLabel>{`${t("CS_COMMON_RELIGION")}`} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
@@ -961,6 +975,7 @@ console.log(formData?.ParentsDetails);
                 FatherProfError ||
                 ReligionStError ||
                 FatherMobileError ||
+                ReligionError  ||
                 // || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError  || MotherTalukError || MotherPlaceTypeError
                 OrderofChildrenError
               }
@@ -977,6 +992,7 @@ console.log(formData?.ParentsDetails);
                   FatherProfError ||
                   ReligionStError ||
                   FatherMobileError ||
+                  ReligionError  ||
                   OrderofChildrenError
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
@@ -1000,7 +1016,7 @@ console.log(formData?.ParentsDetails);
                                       ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`)
                                       : FatherProfError
                                         ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`)
-                                        : ReligionStError
+                                        :  ReligionError
                                           ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
                                           : FatherMobileError
                                             ? t(`CR_INVALID_MOBILE_NO`)
