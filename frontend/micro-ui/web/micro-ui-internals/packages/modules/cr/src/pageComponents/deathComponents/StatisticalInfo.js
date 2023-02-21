@@ -673,7 +673,7 @@ const onSkip = () => onSelect();
                     selected={DeathCauseSubTimeUnit}
                     select={selectDeathCauseSubTimeUnit}
                     disabled={isEdit}
-                    placeholder={`${t("CR_TIME_UNI")}`}
+                    placeholder={`${t("CR_TIME_UNIT")}`}
                   />
                 </div>
               </div>
@@ -761,7 +761,7 @@ const onSkip = () => onSelect();
                 value={DeathCauseOther}
                 onChange={selectDeathCauseOther}
                 disable={isEdit}
-                placeholder={`${t(" CR_DEATH_CAUASE_OTHER")}`}
+                placeholder={`${t("CR_DEATH_CAUASE_OTHER")}`}
                 {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_CAUSE_OTHER_ML") })}
               />
             </div>

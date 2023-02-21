@@ -9,7 +9,7 @@ import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome"
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 
-const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
+const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false }) => {
   // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -25,7 +25,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
-  isEditBirth = false;
+  
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -118,8 +118,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
 
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "");
   const [value, setValue] = useState();
-  const [hospitalName, selectHospitalName] = useState(); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
-  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl ? formData?.ChildDetails?.hospitalNameMl : null);
+  const [hospitalName, selectHospitalName] = useState(isEditBirth ? "" : formData?.ChildDetails?.hospitalName); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
+  const [hospitalNameMl, selectHospitalNameMl] = useState(isEditBirth ? "" : formData?.ChildDetails?.hospitalNameMl);
 
   const [institution, setInstitution] = useState(formData?.ChildDetails?.institution ? formData?.ChildDetails?.institution : null);
   const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl ? formData?.ChildDetails?.institutionIdMl : null);
@@ -909,26 +909,21 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
       setisInitialRenderFormData(true);
     }
   }
-  // console.log(cmbPregWeek);
-  // if (formData?.ChildDetails?.pregnancyDuration != null) {
-  //   console.log(formData?.ChildDetails?.pregnancyDuration);
-  //   console.log(cmbPregWeek);
-  //   console.log(pregnancyDuration);
-  //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-  //     console.log(cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]);
-  //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]);      
-  //     setisInitialRenderFormData(true);
-  //   }
-  // }
+  console.log(cmbPregWeek);
+  if (formData?.ChildDetails?.pregnancyDuration != null) {
+    if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+      setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);      
+      setisInitialRenderFormData(true);
+    }
+  }
 
-  // if (formData?.ChildDetails?.deliveryMethods != null) {
-  //   console.log(formData?.ChildDetails?.deliveryMethods);
-  //   console.log(cmbDeliveryMethod);
-  //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-  //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
-  //     setisInitialRenderFormData(true);
-  //   }
-  // }
+  if (formData?.ChildDetails?.deliveryMethods != null) {
+    if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
+      // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
+      setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
+      setisInitialRenderFormData(true);
+    }
+  }
 
   //     }
   //  },[isInitialRenderFormData]);
