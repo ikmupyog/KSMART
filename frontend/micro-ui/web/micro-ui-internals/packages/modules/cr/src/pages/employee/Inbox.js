@@ -7,7 +7,7 @@ import MobileInbox from "../../components/inbox/MobileInbox";
 
 const Inbox = ({
   parentRoute,
-  businessService = "BND",
+  businessService = "BIRTHHOSP21",
   initialStates = {},
   filterComponent,
   isInbox

@@ -226,8 +226,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         // " , " +
                         ChildDetails.vehicleFromEn +
                         " , " +
-                        ChildDetails.vehicleToEn +
-                        " , " +
+                        ChildDetails.vehicleToEn 
                         // ChildDetails.vehicleHaltPlace +
                         // " , " +
                         // ChildDetails.vehicleDesDetailsEn +
@@ -235,7 +234,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         // ChildDetails.setadmittedHospitalEn +
                         // " , " +
                         // ChildDetails.wardNo +
-                        " / " +
+                        + " / " +
                         t(ChildDetails.vehicleType.namelocal ? ChildDetails.vehicleType.namelocal : "CR_NOT_RECORDED") +
                         " , " +
                         // ChildDetails.vehicleRegistrationNo +
@@ -388,7 +387,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PERMANENT_ADDRESS")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-            {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+            <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
                 {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
@@ -404,10 +403,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   " , " +
                   AddressBirthDetails.presentaddressStateName.name +
                   " , " +
-                  AddressBirthDetails.presentaddressCountry.name +
-                  " / " +
-                  
-                t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                  AddressBirthDetails.presentaddressCountry.name }
+                    </CardText>
+                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
                   AddressBirthDetails.presentInsideKeralaStreetNameMl +
                   " , " +
@@ -423,8 +423,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   " , " +
                   AddressBirthDetails.presentaddressCountry.namelocal}
                 ,
-              </CardText> */}
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+              </CardText>
+              {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
                 {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
@@ -462,7 +462,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   " , " +
                   AddressBirthDetails.permtaddressCountry.namelocal}
                 ,
-              </CardText>
+              </CardText> */}
             </div>
           </div>
         </div>
