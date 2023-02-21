@@ -8,6 +8,7 @@ import {
   Row,
   StatusTable,
   SubmitBar,
+  BackButton,
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -82,6 +83,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   console.log(value);
   return (
     <React.Fragment>
+        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
       <Card>
