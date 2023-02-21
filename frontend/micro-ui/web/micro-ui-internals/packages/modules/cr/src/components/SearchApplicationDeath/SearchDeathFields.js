@@ -8,7 +8,7 @@ const mystyle = {
   };
 
 
-const SearchFields = ({register, control, reset, tenantId, t }) => {
+const SearchDeathFields = ({register, control, reset, tenantId, t }) => {
     // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
 
     // const applicationType = useWatch({ control, name: "applicationType" });
@@ -20,7 +20,9 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     // businessServices=["NewTL"]
     // else
     // businessServices=["EDITRENEWAL","DIRECTRENEWAL","NewTL"]
-    const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({  tenantId }, {});
+    businessServices=["DEATHHOSP",]
+
+    // const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({  tenantId }, {});
     let applicationStatuses = []
 
     // statusData && statusData?.otherRoleStates?.map((status) => {
@@ -119,4 +121,4 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
         </SearchField>
     </>
 }
-export default SearchFields
+export default SearchDeathFields
