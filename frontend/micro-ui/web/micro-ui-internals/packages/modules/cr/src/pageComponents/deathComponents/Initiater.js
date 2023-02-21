@@ -213,13 +213,13 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
             <CheckBox label={t("TestDocuments")} onChange={setDeclarationInfoone} value={isDeclarationInfoone} checked={isDeclarationInfoone} />
           </div>
         </div> */}
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(" CR_INITIATOR_DETAILS")}`}</span>
             </h1>
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-md-12">
