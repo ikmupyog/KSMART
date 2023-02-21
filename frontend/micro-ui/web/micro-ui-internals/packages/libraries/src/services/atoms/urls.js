@@ -118,7 +118,7 @@ const Urls = {
     create: "/death-services/v1/deathdetails/_createdeath ",
     search: "/death-services/v1/deathdetails/_searchdeath",
     download_pdf: "/egov-pdf/download/CR/",
-    update: "/death-services/v1/crdeathdetails/_update",
+    update: "/death-services/v1/deathdetails/_updatedeath",
     registry_search: "/death-services/v1/deathregistry/_searchdeath",
     registry_download: "/death-services/v1/deathregistry/_downloaddeath",
   },
