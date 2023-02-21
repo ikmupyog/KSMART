@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Hamburger from "./Hamburger";
 import { NotificationBell } from "./svgindex";
 
-const TopBar = ({ img, isMobile, logoUrl, onLogout, toggleSidebar, ulb, userDetails, notificationCount, notificationCountLoaded, cityOfCitizenShownBesideLogo, onNotificationIconClick, hideNotificationIconOnSomeUrlsWhenNotLoggedIn }) => {
+const TopBar = ({ img, isMobile, logoUrl, onLogout, toggleSidebar, ulb, userDetails, notificationCount, notificationCountLoaded, cityOfCitizenShownBesideLogo, onNotificationIconClick, hideNotificationIconOnSomeUrlsWhenNotLoggedIn,cityDetails,t }) => {
   return (
     <div className="navbar">
       <div className="center-container">
@@ -14,7 +14,10 @@ const TopBar = ({ img, isMobile, logoUrl, onLogout, toggleSidebar, ulb, userDeta
           src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png"
           alt="K-SMART"
         />
-        <h3>{cityOfCitizenShownBesideLogo}</h3>
+        {/* <h3>{cityOfCitizenShownBesideLogo}</h3> */}
+        <h3>  {t(cityDetails?.i18nKey).toUpperCase()}{" "}
+              {t(`ULBGRADE_${cityDetails?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`).toUpperCase()}</h3>
+       
         <div className="RightMostTopBarOptions">
           {!hideNotificationIconOnSomeUrlsWhenNotLoggedIn ? <div className="EventNotificationWrapper" onClick={onNotificationIconClick}>
             { notificationCountLoaded && notificationCount ? <span><p>{notificationCount}</p></span> : null }
