@@ -649,7 +649,7 @@ console.log(formData?.ParentsDetails);
 
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-3">
+                  <div className="col-md-6">
                     <CardLabel>{`${t("CR_NATIONALITY")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
@@ -662,6 +662,10 @@ console.log(formData?.ParentsDetails);
                       placeholder={`${t("CR_NATIONALITY")}`}
                     />
                   </div>
+                  </div>
+                  </div>
+                  <div className="row">
+                <div className="col-md-12">
                   <div className="col-md-3" >
                     <CardLabel>{`${t("CR_MOTHER_MARITAL_STATUS")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
@@ -679,7 +683,7 @@ console.log(formData?.ParentsDetails);
 
                   {ageMariageStatusHide === "MARRIED" && (
 
-                    <div className="col-md-3">
+                    <div className="col-md-6">
                       <CardLabel>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} <span className="mandatorycss">*</span></CardLabel>
                       <TextInput
                         t={t}
