@@ -50,7 +50,8 @@ public class IDGenerator {
         RequestInfo requestInfo = request.getRequestInfo();
         int Year = Calendar.getInstance().get(Calendar.YEAR);
         Long currentTime = Long.valueOf(System.currentTimeMillis());
-        String tenantId = requestInfo.getUserInfo().getTenantId();
+       // String tenantId = requestInfo.getUserInfo().getTenantId();
+        String tenantId = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId();
         String nextID = deathApplnRepository.getNewID(tenantId, Year, moduleCode, idType);
         String idGenerated = null;
         Long ackNoId = null;
