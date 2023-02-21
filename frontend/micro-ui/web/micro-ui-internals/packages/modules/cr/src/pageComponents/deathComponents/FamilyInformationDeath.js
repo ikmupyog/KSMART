@@ -174,12 +174,12 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   function setSelectMotherAdharNo(e) {
     setMotherAdharNo(e.target.value);
   }
-  function setSelectMotherEmail(e) {
-    setMotherEmail(e.target.value);
-  }
-  function setSelectMotherMobile(e) {
-    setMotherMobile(e.target.value);
-  }
+  // function setSelectMotherEmail(e) {
+  //   setMotherEmail(e.target.value);
+  // }
+  // function setSelectMotherMobile(e) {
+  //   setMotherMobile(e.target.value);
+  // }
   const goNext = () => {
     sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
     // sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
@@ -236,9 +236,10 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
+   <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
      
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
       <div className="row">
           <div className="col-md-12">
@@ -505,7 +506,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DETAILS_OF_MOTHER")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CONTACT_DETAILS")}`}</span>
             </h1>
           </div>
         </div>

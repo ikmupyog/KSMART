@@ -175,12 +175,12 @@ const Details = () => {
 
             {data?.Employees?.[0]?.jurisdictions?.length > 0
               ? data?.Employees?.[0]?.jurisdictions?.map((element, index) => {
-                // console.log(data,element,cmbhospital,cmbInstitutionId,cmbInstitution);
+                // console.log(data,element,cmbhospital,cmbInstitutionId,cmbInstitution);hospitalCode  intitutiontype
                 let Czonal =cmbZonal&& cmbZonal[0]?.filter((ele) => ele.code == element?.zoneCode)
                 let Croles= data?.Employees?.[0]?.user.roles.filter((ele) => ele.code == element?.roleCode)
                 let Crhospital = cmbhospital?.length>0 &&cmbhospital.filter((ele)=>ele.code == element.hospitalCode)
-                let CrinstitutionType =''
-                let Crinstitution =''
+                  let crinstitution = cmbInstitution?.length>0 && cmbInstitution.filter((ele)=>ele.code == element?.institutiontype)
+                  let crinstitutionName = cmbInstitutionId?.length>0 && cmbInstitutionId.filter((ele)=>ele.code == element?.hospitalCode ) 
                 // console.log(Crhospital);
                 return (
                   <StatusTable
@@ -221,15 +221,15 @@ const Details = () => {
                       <React.Fragment>
                         <Row
                         label={t("Institution Type")}
-                        text={Crhospital && Crhospital[0]?.address}
+                        text={crinstitution && crinstitution[0]?.name}
                         />
                         <Row
                         label={t("Institution Name")}
-                        text={Crhospital && Crhospital[0]?.address}
+                        text={crinstitutionName && crinstitutionName[0]?.institutionName}
                         />
                         <Row
                         label={t("Institution Address")}
-                        text={Crhospital && Crhospital[0]?.address}
+                        text={crinstitutionName && crinstitutionName[0]?.address}
                         />
                       </React.Fragment>
                     )}

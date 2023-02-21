@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Timeline from "../../../../components/PGRTimeline";
 import { TypeSelectCard,CardLabel } from "@egovernments/digit-ui-react-components";
 
 const SelectComplaintType = ({ t, config, onSelect, value }) => {
@@ -27,19 +28,22 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
     setComplaintType(value);
     // SessionStorage.set("complaintType", value);
   }
-  return (
-    
-    <TypeSelectCard 
-      {...mystyle}
-      {...textParams}
-      {...{ menu: menu }}
-      {...{ optionsKey: "name" }}
-      {...{ selected: selectedValue }}
-      {...{ selectedOption: complaintType }}
-      {...{ onSave: goNext }}
-      {...{ t }}
-      disabled={Object.keys(complaintType).length === 0 || complaintType === null ? true : false}
-    />
+  return ( 
+    <React.Fragment>
+         {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      <TypeSelectCard 
+            {...mystyle}
+            {...textParams}
+            {...{ menu: menu }}
+            {...{ optionsKey: "name" }}
+            {...{ selected: selectedValue }}
+            {...{ selectedOption: complaintType }}
+            {...{ onSave: goNext }}
+            {...{ t }}
+            disabled={Object.keys(complaintType).length === 0 || complaintType === null ? true : false}
+          />
+    </React.Fragment>
+   
     
   );
 };

@@ -269,7 +269,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     //   setValue(newValue);
     // }
     if (e.target.value != null || e.target.value != "") {
-      if (e.target.value <= 150) {
+      if (e.target.value <= 120) {
         setAge(e.target.value);
       }
     }
@@ -708,8 +708,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
+      
       <FormStep
         t={t}
         config={config}

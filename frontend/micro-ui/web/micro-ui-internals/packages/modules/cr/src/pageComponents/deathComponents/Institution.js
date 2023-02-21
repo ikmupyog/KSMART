@@ -40,7 +40,20 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   institutionidList["egov-location"].institutionList.map((ob) => {
     cmbInstitutionId.push(ob);
   });
-  
+  let cmbInstitutionIdCode = [];
+  // useEffect(() => {
+
+    // if (isInitialRender) {
+    //   console.log(DeathPlaceType);
+    //   if (DeathPlaceType) {
+    //     cmbInstitutionIdCode = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === DeathPlaceType.code);
+    //     console.log(cmbInstitutionIdCode);
+    //     selectDeathPlaceInstId(cmbInstitutionIdCode);
+      
+    //     setIsInitialRender(false);
+    //   }
+    // } 
+  // },[currentLB,isInitialRender]);
   //  console.log(institutionidList);
   // let cmbInstitution = [];
   // institution &&

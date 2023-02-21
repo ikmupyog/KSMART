@@ -58,6 +58,8 @@ export const StoreService = {
     const { MdmsRes } = await MdmsService.init(stateCode);
     const stateInfo = MdmsRes["common-masters"].StateInfo[0];
     const districts = MdmsRes["common-masters"].District;
+    // console.log(districts);
+    const filterDistricts =districts.filter(districts => districts.statecode ==="kl");
     const localities = {};
     const revenue_localities = {};
     const initData = {
@@ -73,7 +75,7 @@ export const StoreService = {
       },
       localizationModules: stateInfo.localizationModules,
       modules: MdmsRes?.tenant?.citymodule.filter((module) => module?.active).filter((module) => enabledModules?.includes(module?.code))?.sort((x,y)=>x?.order-y?.order),
-      districts:districts
+      districts:filterDistricts
     };
 
   
