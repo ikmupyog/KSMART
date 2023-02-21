@@ -36,7 +36,8 @@
     margin-top: -25px;
     img{
         height: 33vw;
-        filter: grayscale(100%);
+        filter: none !important;
+        -webkit-filter:none !important;
         @apply w-full object-cover;
     }
     h1{
