@@ -83,6 +83,7 @@ public class DeathEnrichment implements BaseEnrichment{
                 if (statisticalInfo!=null){
                     statisticalInfo.setStatisticalId(UUID.randomUUID().toString()); 
                 } 
+                System.out.println("REQUEST"+request.getDeathCertificateDtls());
                 //Jasmine informant and initiator 11.02.2023
                 // DeathInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
                 // if (informantInfo!=null){
@@ -102,6 +103,16 @@ public class DeathEnrichment implements BaseEnrichment{
                 deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+                DeathInformantDtls deathInformant =deathdtls.getDeathInformantDtls() ;
+                if (deathInformant!=null){
+                    DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathInformantDtls.class);
+                    deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                }
+                DeathInitiatorDtls deathInitiator =deathdtls.getDeathInitiatorDtls() ;
+                if (deathInitiator!=null){
+                        DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.encryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class);
+                        deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
+                }
             });
         }  
     //Rakhi S on 08.02.2023 ACK no formating
@@ -204,6 +215,16 @@ public class DeathEnrichment implements BaseEnrichment{
                         deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
                         deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
                         deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+                        DeathInformantDtls deathInformant =deathDtls.getDeathInformantDtls() ;
+                        if (deathInformant!=null){
+                        DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathInformantDtls.class);
+                        deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                        }
+                        DeathInitiatorDtls deathInitiator =deathDtls.getDeathInitiatorDtls() ;
+                        if (deathInitiator!=null){
+                        DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.encryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class);
+                        deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
+                        }
                         deathDtls.setDeathAuditDetails(auditDetails);
                     } );        
         }//UPDATE END

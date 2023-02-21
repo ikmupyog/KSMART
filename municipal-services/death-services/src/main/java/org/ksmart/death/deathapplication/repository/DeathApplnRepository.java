@@ -9,6 +9,8 @@ import org.ksmart.death.deathapplication.repository.rowmapper.DeathApplnRowMappe
 import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
+import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
+import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.ksmart.death.common.contract.EncryptionDecryptionUtil;
@@ -55,13 +57,20 @@ public class DeathApplnRepository {
                 deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
                 DeathFamilyInfo deathFamilyDtls =deathDtl.getDeathFamilyInfo() ;
                 DeathFamilyInfo deathFamilyDcr = encryptionDecryptionUtil.decryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class,requestInfo);
-               System.out.println("DecryptionFamily"+deathFamilyDcr);
-               System.out.println("DecryptionBasic"+dec);
                 deathFamilyDtls.setFatherAadharNo(deathFamilyDcr.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyDcr.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar()); 
-    
-              System.out.println("deathBasicDcr"+dec);
+                DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
+                if (deathInformant!=null){
+                    DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
+                    deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                }
+                
+                DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
+                if (deathInitiator!= null){
+                    DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
+                    deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
+                }
 
 			});
         }

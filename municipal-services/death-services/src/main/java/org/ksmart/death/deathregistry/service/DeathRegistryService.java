@@ -73,16 +73,15 @@ public class DeathRegistryService {
       // RAkhi S IKM validate mdms data       
      //  Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
      //  mdmsValidator.validateMDMSData(request,mdmsData);
-
-       // enrich request
-                  try {
-            ObjectMapper mapper = new ObjectMapper();
-            Object obj = request;
-            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-           System.out.println("RegistryCreate "+ mapper.writeValueAsString(obj));
-    }catch(Exception e) {
-        log.error("Exception while fetching from searcher: ",e);
-    }
+    // enrich request
+    //               try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("RegistryCreate "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
        enrichmentService.enrichCreate(request);
        //IDGen call
        //enrichmentService.setIdgenIds(request);  

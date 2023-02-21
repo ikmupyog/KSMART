@@ -99,14 +99,14 @@ public class DeathApplnService {
           
           enrichmentService.setPresentAddress(request);
           enrichmentService.setPermanentAddress(request);
-          try {
-               ObjectMapper mapper = new ObjectMapper();
-               Object obj = request;
-               mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-              System.out.println("AfterUpdate "+ mapper.writeValueAsString(obj));
-       }catch(Exception e) {
-           log.error("Exception while fetching from searcher: ",e);
-       }
+     //      try {
+     //           ObjectMapper mapper = new ObjectMapper();
+     //           Object obj = request;
+     //           mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+     //          System.out.println("AfterUpdate "+ mapper.writeValueAsString(obj));
+     //   }catch(Exception e) {
+     //       log.error("Exception while fetching from searcher: ",e);
+     //   }
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
           DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
                                         .deathACKNo(ackNumber)
