@@ -864,7 +864,8 @@ export const newConfig = [
         isMandatory: true,
         component: "TLLicenseUnitDet",
         texts: {
-          header: "",     ///"TL_TRADE_UNITS_HEADER",
+         // headerCaption:"New IFTE & OS License Application",
+          header: "TL_LB_DET_LABEL",     ///"TL_TRADE_UNITS_HEADER",
           submitBarLabel: "CS_COMMON_NEXT",
         },
         key: "TradeDetails",
@@ -880,7 +881,7 @@ export const newConfig = [
         isMandatory: true,
         component: "TLLicenseApplicantDet",
         texts: {
-          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          header: "Name and Address of Applicant",     ///"TL_TRADE_UNITS_HEADER",
           submitBarLabel: "CS_COMMON_NEXT",
         },
         key: "TradeDetails",
@@ -940,7 +941,7 @@ export const newConfig = [
         isMandatory: true,
         component: "TLLicenseUnitDetRenewal",
         texts: {
-          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          header: "TL_LB_DET_LABEL",     ///"TL_TRADE_UNITS_HEADER",
           submitBarLabel: "CS_COMMON_NEXT",
         },
         key: "TradeDetails",
@@ -956,7 +957,7 @@ export const newConfig = [
         isMandatory: true,
         component: "TLLicenseApplicantDetRenewal",
         texts: {
-          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          header: "Name and Address of Applicant",     ///"TL_TRADE_UNITS_HEADER",
           submitBarLabel: "CS_COMMON_NEXT",
         },
         key: "TradeDetails",

@@ -471,7 +471,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "Initiater",
+        key: "Initiator",
         nextStep: "informer",
         type: "component",
         hideInEmployee: false,

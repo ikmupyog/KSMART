@@ -768,7 +768,9 @@ const onSkip = () => onSelect();
             </div>
           </div>
         </div>
+        {/* {InformationDeath.DeceasedGender.code === "FEMALE" && ( */}
         <div>
+          
         <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
@@ -820,7 +822,7 @@ const onSkip = () => onSelect();
             </div>
           </div>
         </div>
-
+        {/* )} */}
         
             <div className="row">
               <div className="col-md-12">

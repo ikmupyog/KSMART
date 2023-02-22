@@ -12,35 +12,35 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   const [IsDeclarationInitiator, setIsDeclarationInitiator] = useState(
-    formData?.Initiater?.IsDeclarationInitiator ? formData?.Initiater?.IsDeclarationInitiator : false
+    formData?.Initiator?.IsDeclarationInitiator ? formData?.Initiator?.IsDeclarationInitiator : false
   );
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
-  //   formData?.Initiater?.isDeclarationInfotwo ? formData?.Initiater?.isDeclarationInfotwo : false
+  //   formData?.Initiator?.isDeclarationInfotwo ? formData?.Initiator?.isDeclarationInfotwo : false
   // );
-  const [InitiatorAadhaar, setInitiatorAadhaar] = useState(formData?.Initiater?.InitiatorAadhaar ? formData?.Initiater?.InitiatorAadhaar : "");  
-  const [InitiatorName, setInitiatorName] = useState(formData?.Initiater?.InitiatorName ? formData?.Initiater?.InitiatorName : "" );
-  const [InitiatorRelation, setInitiatorRelation] = useState(formData?.Initiater?.InitiatorRelation ? formData?.Initiater?.InitiatorRelation : "");
-  const [InitiatorMobile, setInitiatorMobile] = useState(formData?.Initiater?.InitiatorMobile ? formData?.Initiater?.InitiatorMobile : "");
-  const [InitiatorAddress, setInitiatorAddress] = useState(formData?.Initiater?.InitiatorAddress ? formData?.Initiater?.InitiatorAddress : ""  );  
+  const [InitiatorAadhaar, setInitiatorAadhaar] = useState(formData?.Initiator?.InitiatorAadhaar ? formData?.Initiator?.InitiatorAadhaar : "");  
+  const [InitiatorName, setInitiatorName] = useState(formData?.Initiator?.InitiatorName ? formData?.Initiator?.InitiatorName : "" );
+  const [InitiatorRelation, setInitiatorRelation] = useState(formData?.Initiator?.InitiatorRelation ? formData?.Initiator?.InitiatorRelation : "");
+  const [InitiatorMobile, setInitiatorMobile] = useState(formData?.Initiator?.InitiatorMobile ? formData?.Initiator?.InitiatorMobile : "");
+  const [InitiatorAddress, setInitiatorAddress] = useState(formData?.Initiator?.InitiatorAddress ? formData?.Initiator?.InitiatorAddress : ""  );  
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
   
-  const [InitiaterRelationError, setInitiaterRelationError] = useState(formData?.Initiater?.InitiatorRelation ? false : false);
-  const [InitiaterNameError, setInitiaterNameError] = useState(formData?.Initiater?.InitiatorName ? false : false);
-  const [InitiaterAadharError, setInitiaterAadharError] = useState(formData?.Initiater?.InitiatorAadhaar ? false : false);
-  const [InitiaterMobileError, setInitiaterMobileError] = useState(formData?.Initiater?.InitiatorMobile ? false : false);
+  const [InitiaterRelationError, setInitiaterRelationError] = useState(formData?.Initiator?.InitiatorRelation ? false : false);
+  const [InitiaterNameError, setInitiaterNameError] = useState(formData?.Initiator?.InitiatorName ? false : false);
+  const [InitiaterAadharError, setInitiaterAadharError] = useState(formData?.Initiator?.InitiatorAadhaar ? false : false);
+  const [InitiaterMobileError, setInitiaterMobileError] = useState(formData?.Initiator?.InitiatorMobile ? false : false);
 
   const onSkip = () => onSelect();
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.Initiater?.IsDeclarationInitiator != null) {
+      if (formData?.Initiator?.IsDeclarationInitiator != null) {
         setIsInitialRender(false);
-        setIsDeclarationInitiator(formData?.Initiater?.IsDeclarationInitiator);
+        setIsDeclarationInitiator(formData?.Initiator?.IsDeclarationInitiator);
       }
-      // if (formData?.Initiater?.isDeclarationInfotwo != null) {
+      // if (formData?.Initiator?.isDeclarationInfotwo != null) {
       //   setIsInitialRender(false);
-      //   setIsDeclarationInfotwo(formData?.Initiater?.isDeclarationInfotwo);
+      //   setIsDeclarationInfotwo(formData?.Initiator?.isDeclarationInfotwo);
       // }
     }
   }, [isInitialRender]);
