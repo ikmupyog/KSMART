@@ -62,17 +62,17 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
   PlaeceMaster &&
-    PlaeceMaster["birth-death-service"] &&
+    PlaeceMaster["birth-death-service"] && PlaeceMaster["birth-death-service"].PlaceMaster &&
     PlaeceMaster["birth-death-service"].PlaceMaster.map((ob) => {
       cmbPlaceMaster.push(ob);
     });
   AttentionOfDelivery &&
-    AttentionOfDelivery["birth-death-service"] &&
+    AttentionOfDelivery["birth-death-service"] && AttentionOfDelivery["birth-death-service"].AttentionOfDelivery &&
     AttentionOfDelivery["birth-death-service"].AttentionOfDelivery.map((ob) => {
       cmbAttDeliverySub.push(ob);
     });
   DeliveryMethodList &&
-    DeliveryMethodList["birth-death-service"] &&
+    DeliveryMethodList["birth-death-service"] && DeliveryMethodList["birth-death-service"].DeliveryMethod &&
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
@@ -287,14 +287,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     selectGender(value);
   }
   function setSelectChildAadharNo(e) {
+    // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     if (e.target.value.length != 0) {
       if (e.target.value.length > 12) {
         // setChildAadharNo(e.target.value);
         setAadharError(true);
         return false;
-        // const limit = 12;
-        // setChildAadharNo(e.target.value.slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
       } else if (e.target.value.length < 12) {
         setAadharError(true);
         setChildAadharNo(e.target.value);

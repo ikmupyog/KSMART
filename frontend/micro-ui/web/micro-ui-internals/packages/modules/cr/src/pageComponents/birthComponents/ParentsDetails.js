@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loade
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const ParentsDetails = ({ config, onSelect, userType, formData,isEditBirth = false }) => {
+const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -25,39 +25,39 @@ const ParentsDetails = ({ config, onSelect, userType, formData,isEditBirth = fal
 
   let cmbQualification = [];
   Qualification &&
-    Qualification["birth-death-service"] &&
+    Qualification["birth-death-service"] && Qualification["birth-death-service"].Qualification &&
     Qualification["birth-death-service"].Qualification.map((ob) => {
       cmbQualification.push(ob);
     });
   let cmbQualificationSub = [];
   QualificationSub &&
-    QualificationSub["birth-death-service"] &&
+    QualificationSub["birth-death-service"] && QualificationSub["birth-death-service"].QualificationSub &&
     QualificationSub["birth-death-service"].QualificationSub.map((ob) => {
       cmbQualificationSub.push(ob);
     });
   let cmbProfession = [];
   Profession &&
-    Profession["birth-death-service"] &&
+    Profession["birth-death-service"] && Profession["birth-death-service"].Profession &&
     Profession["birth-death-service"].Profession.map((ob) => {
       cmbProfession.push(ob);
     });
 
   let cmbCountry = [];
   Country &&
-    Country["common-masters"] &&
+    Country["common-masters"] && Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
   let cmbNation = [];
   Nation &&
-    Nation["common-masters"] &&
+    Nation["common-masters"] && Nation["common-masters"].Country &&
     Nation["common-masters"].Country.map((ob) => {
       cmbNation.push(ob);
     });
 
   let cmbReligion = [];
   ReligionList &&
-    ReligionList["common-masters"] &&
+    ReligionList["common-masters"] && ReligionList["common-masters"].Religion &&
     ReligionList["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
@@ -104,8 +104,6 @@ const ParentsDetails = ({ config, onSelect, userType, formData,isEditBirth = fal
   const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.ParentsDetails?.motherMaritalStatus ? false : false);
   const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.ParentsDetails?.motherMaritalStatus ? formData?.ParentsDetails?.motherMaritalStatus : null);
 
-console.log(formData);
-console.log(formData?.ParentsDetails);
 
   const onSkip = () => onSelect();
 
@@ -153,7 +151,7 @@ console.log(formData?.ParentsDetails);
   }
 
   function setSelectMotherAadhar(e) {
-    setMotherAadhar(e.target.value.length<=12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     // if (e.target.value.trim().length != 0) {
     //   if (e.target.value.trim().length > 12) {
     //     // setMotherAadhar(e.target.value.trim());
@@ -568,7 +566,7 @@ console.log(formData?.ParentsDetails);
   };
 
   if (
-    isReligionListLoading || isQualificationLoading || isQualificationSubLoading || isProfessionLoading || isCountryLoading ||  isNationLoad) {
+    isReligionListLoading || isQualificationLoading || isQualificationSubLoading || isProfessionLoading || isCountryLoading || isNationLoad) {
     return <Loader></Loader>;
   } else
     return (
@@ -664,7 +662,7 @@ console.log(formData?.ParentsDetails);
 
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                     <CardLabel>{`${t("CR_NATIONALITY")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
@@ -677,11 +675,7 @@ console.log(formData?.ParentsDetails);
                       placeholder={`${t("CR_NATIONALITY")}`}
                     />
                   </div>
-                  </div>
-                  </div>
-                  <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-3" >
+                  <div className="col-md-4" >
                     <CardLabel>{`${t("CR_MOTHER_MARITAL_STATUS")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
@@ -694,11 +688,13 @@ console.log(formData?.ParentsDetails);
                       placeholder={`${t("CR_MOTHER_MARITAL_STATUS")}`}
                     />
                   </div>
-
-
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
                   {ageMariageStatusHide === "MARRIED" && (
 
-                    <div className="col-md-6">
+                    <div className="col-md-8">
                       <CardLabel>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} <span className="mandatorycss">*</span></CardLabel>
                       <TextInput
                         t={t}
@@ -710,13 +706,12 @@ console.log(formData?.ParentsDetails);
                         onChange={setSelectMotherMarriageAge}
                         // disable={isMotherInfo}
                         placeholder={`${t("CR_MOTHER_AGE_MARRIAGE")}`}
-                        style={{ textTransform: "uppercase" }}
                         {...(validation = { pattern: "^[0-9]{3}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_MARRIAGE") })}
                       />
                     </div>
                   )}
 
-                  <div className="col-md-3">
+                  <div className="col-md-5">
                     <CardLabel>{`${t("CR_MOTHER_AGE_BIRTH")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
                       t={t}
@@ -974,9 +969,9 @@ console.log(formData?.ParentsDetails);
                 FatherFirstNmeEnError ||
                 FatherEduError ||
                 FatherProfError ||
-              
+
                 FatherMobileError ||
-                ReligionError  ||
+                ReligionError ||
                 // || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError  || MotherTalukError || MotherPlaceTypeError
                 OrderofChildrenError
               }
@@ -991,9 +986,9 @@ console.log(formData?.ParentsDetails);
                   FatherFirstNmeEnError ||
                   FatherEduError ||
                   FatherProfError ||
-                
+
                   FatherMobileError ||
-                  ReligionError  ||
+                  ReligionError ||
                   OrderofChildrenError
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
@@ -1017,7 +1012,7 @@ console.log(formData?.ParentsDetails);
                                       ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`)
                                       : FatherProfError
                                         ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`)
-                                        :  ReligionError
+                                        : ReligionError
                                           ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
                                           : FatherMobileError
                                             ? t(`CR_INVALID_MOBILE_NO`)
