@@ -63,7 +63,7 @@ export const CRDeathsearch = {
       const filters = { deathNumbers, offset: 0 };
       numOfApplications = await CRDeathsearch.numberOfApplications(tenantId, filters);
     }
-    
+
     let employeeResponse = [];
     const InformationDeath = {
       title: "CR_DEATH_INFORMATION",
@@ -87,7 +87,7 @@ export const CRDeathsearch = {
 
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "NA" },
         { title: "PDF_CR_DEATH_OF_DATE", value: response?.InformationDeath ? convertEpochToDate(response?.DateOfDeath) : "NA" },
-        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceType.hospitalName || "NA" },
+        // { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceType.hospitalName || "NA" },
 
         {
           title: "CR_ADDRESS",
@@ -108,8 +108,7 @@ export const CRDeathsearch = {
           title: "PDF_BIRTH_NAME_OF_MOTHER",
           value: response?.FamilyInformationDeath?.MotherNameEn + " / " + response?.FamilyInformationDeath?.MotherNameMl || "NA",
         },
-        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceType + "/" + response?.InformationDeath?.DeathPlaceType || "NA"},       
-
+        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceType + "/" + response?.InformationDeath?.DeathPlaceType || "NA" },
 
         // ...(InformationDeath.DeathPlace.code === "HOSPITAL" && {
 
@@ -125,7 +124,7 @@ export const CRDeathsearch = {
     //     values: [
     //       {
     //         title: "PDF_BIRTH_NAME_OF_MOTHER",
-    //         value: response?.FamilyInformationDeath?.DeathPlaceType / response?.DeathPlaceType || "NA",
+    //         value: response?.FamilyInformationDeath?.DeathPlaceType  || "NA",
     //       },
     //     ],
     //   };

@@ -307,7 +307,7 @@ export const convertToBirthRegistration = (data = {}) => {
         adrsStreetNameMl: data?.ChildDetails?.adrsStreetNameMl,
         adrsPostOffice: data?.ChildDetails?.adrsPostOffice ? data?.ChildDetails?.adrsPostOffice.code : null,
         adrsPincode: data?.ChildDetails?.adrsPincode ? data?.ChildDetails?.adrsPincode.code : null,
-        vehicleType: data?.ChildDetails?.vehicleType ? data?.ChildDetails?.vehicleType.code : null,
+        vehicleType: data?.ChildDetails?.vehicleType,
         vehicleHaltPlace: data?.ChildDetails?.vehicleHaltPlace,
         vehicleHaltPlaceMl: data?.ChildDetails?.vehicleHaltPlaceMl,
         vehicleRegistrationNo: data?.ChildDetails?.vehicleRegistrationNo,
@@ -330,7 +330,6 @@ export const convertToBirthRegistration = (data = {}) => {
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.ChildDetails?.workFlowCode,
-        action:"INITIATE",
         ParentsDetails: {
           motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ParentsDetails?.motherFirstNameMl,
@@ -728,7 +727,7 @@ export const convertToDeathRegistration = (data = {}) => {
           InformantDocumentUserType: null,
           InformantDocumentFileStoreId: null,
         },
-        InitiatorDetails: {
+        Initiator: {
           InitiatorRelation: data?.Initiater?.InitiatorRelation,
           InitiatorAadhaar: data?.Initiater?.InitiatorAadhaar,
           InitiatorName: data?.Initiater?.InitiatorName,
