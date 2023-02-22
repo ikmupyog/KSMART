@@ -886,7 +886,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   };
 
 
-  if (!isEditBirth) {
+  if (isEditBirth) {
     if (formData?.ChildDetails?.gender != null) {
       if (menu.length > 0 && (gender === undefined || gender === "")) {
         selectGender(menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]);
