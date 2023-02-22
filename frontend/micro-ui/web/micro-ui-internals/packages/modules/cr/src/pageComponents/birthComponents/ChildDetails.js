@@ -919,7 +919,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
 
 
-
+console.log(birthWeight);
   if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
     return <Loader></Loader>;
   } else {
@@ -928,7 +928,15 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !birthPlace}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !birthPlace
+          || (value === "HOSPITAL" ? (!hospitalName || !hospitalNameMl) : false)
+          || (value === "INSTITUTION" ? (!institution || !institutionId || !institutionIdMl) : false)
+          || (value === "HOME" ? (!wardNo || !adrsPostOffice || adrsPincode === "" || adrsLocalityNameEn === ""
+          || adrsHouseNameEn === "" || adrsLocalityNameMl === "" || localityNameEn === "") : false)
+          || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "" ) : false)
+          || (value === "VEHICLE" ? (!vehicleType || vehicleRegistrationNo === "" || vehicleHaltPlace === ""
+          || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "" ) : false)
+          || !medicalAttensionSub || !deliveryMethods || birthWeight == null}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">

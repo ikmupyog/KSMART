@@ -3,7 +3,8 @@ import { FormStep, CardLabel, Dropdown, Loader } from "@egovernments/digit-ui-re
 import { useTranslation } from "react-i18next";
 
 const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
-  institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId
+  institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId,
+  isEditBirth = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -40,7 +41,6 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionId.push(ob);
     });
-  console.log(institutionType);
   // useEffect(() => {
 
   //   if (isInitialRender) {
