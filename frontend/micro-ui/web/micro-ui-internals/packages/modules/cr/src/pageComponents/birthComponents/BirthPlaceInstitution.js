@@ -26,7 +26,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
   let cmbInstitution = [];
   institutionType &&
-  institutionType["birth-death-service"] &&
+  institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
   institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
       cmbInstitution.push(ob);
     });
@@ -36,7 +36,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   let cmbFilterInstitutionList = [];
 
   institutionidList &&
-    institutionidList["egov-location"] &&
+    institutionidList["egov-location"] && institutionidList["egov-location"].institutionList &&
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionId.push(ob);
     });

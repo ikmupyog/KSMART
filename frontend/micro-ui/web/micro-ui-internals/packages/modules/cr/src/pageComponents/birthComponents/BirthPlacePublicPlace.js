@@ -23,7 +23,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
   let cmbOtherplace = [];
   otherplace &&
-    otherplace["birth-death-service"] &&
+    otherplace["birth-death-service"] && otherplace["birth-death-service"].OtherBithPlace &&
     otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
       cmbOtherplace.push(ob);
     });
@@ -31,7 +31,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
   boundaryList &&
-    boundaryList["egov-location"] &&
+    boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
       if (ob?.hierarchyType.code === "REVENUE") {
         Zonal.push(...ob.boundary.children);

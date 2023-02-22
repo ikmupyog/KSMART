@@ -26,16 +26,16 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     queryClient.removeQueries("TL_ZONAL_OFFICE");
     setTenantboundary(false);
   }
-  
+
   let cmbhospital = [];
   hospitalData &&
-    hospitalData["egov-location"] &&
+    hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
   let cmbVehicle = [];
   Vehicle &&
-    Vehicle["birth-death-service"] &&
+    Vehicle["birth-death-service"] && Vehicle["birth-death-service"].VehicleType &&
     Vehicle["birth-death-service"].VehicleType.map((ob) => {
       cmbVehicle.push(ob);
     });

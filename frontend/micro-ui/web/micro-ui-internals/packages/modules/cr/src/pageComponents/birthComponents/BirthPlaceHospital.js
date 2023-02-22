@@ -25,7 +25,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   let cmbhospital = [];
   let cmbhospitalMl = [];
   hospitalData &&
-    hospitalData["egov-location"] &&
+    hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
