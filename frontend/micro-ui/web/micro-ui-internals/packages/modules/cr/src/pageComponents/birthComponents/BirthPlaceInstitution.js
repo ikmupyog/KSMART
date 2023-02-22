@@ -14,9 +14,13 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   const { t } = useTranslation();
   let validation = {};
   const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
-  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "institution");
+  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "institution");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  
+  const [tenantboundary, setTenantboundary] = useState(false);
+  if (tenantboundary) {
+    queryClient.removeQueries("CR_INSTITUTION_LIST");
+    setTenantboundary(false);
+  }
   // const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
@@ -69,18 +73,10 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     setInstitutionIdMl(value);
   }
   const goNext = () => {
-    // console.log('clicked');
-    // sessionStorage.setItem("Institution", Institution.code);
-    // sessionStorage.setItem("InstitutionId", InstitutionId.code);
-
-    // onSelect(config.key, { 
-    //   Institution, InstitutionId     
-    // });
   };
-  // isinstitutionLoad ||
-  if ( isinstitutionidLoad) {
+  if ( isinstitutionLoad || isinstitutionidLoad) {
     return <Loader></Loader>;
-  }
+  } else
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!institution}>

@@ -287,7 +287,7 @@ export const convertToBirthRegistration = (data = {}) => {
         childLastNameEn: data?.ChildDetails?.childLastNameEn,
         childLastNameMl: data?.ChildDetails?.childLastNameMl,
         hospitalCode: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.code : null,
-        birthPlace: data?.HospitalDetails?.birthPlace ? data?.HospitalDetails?.birthPlace.code : null,
+        birthPlace: data?.ChildDetails?.birthPlace ? data?.ChildDetails?.birthPlace.code : null,
         hospitalName: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalName : null,
         hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
         institutionTypeCode: data?.ChildDetails?.institutionTypeCode ? data?.ChildDetails?.institutionTypeCode.code : null,
@@ -425,7 +425,7 @@ export const convertToBirthRegistration = (data = {}) => {
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code : null,
           permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
-          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode ,
+          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
         },
         InformarHosInstDetails: {
           infomantFirstNameEn: data?.InformarHosInstDetails?.infomantFirstNameEn,
@@ -663,7 +663,7 @@ export const convertToDeathRegistration = (data = {}) => {
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code : null,
           permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
-          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode ,
+          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
         },
         FamilyInformationDeath: {
           SpouseUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
@@ -992,8 +992,8 @@ export const convertToEditTrade = (data, fy = []) => {
           structureType: isDirectrenewal
             ? data.tradeLicenseDetail.structureType
             : data?.TradeDetails?.VehicleType
-            ? data?.TradeDetails?.VehicleType.code
-            : data?.TradeDetails?.BuildingType.code,
+              ? data?.TradeDetails?.VehicleType.code
+              : data?.TradeDetails?.BuildingType.code,
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
             : data?.ownershipCategory?.code,
@@ -1060,12 +1060,12 @@ export const convertToResubmitTrade = (data) => {
           id: data.tradeLicenseDetail.id,
           institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? {
-                designation: data?.owners?.owners?.[0]?.designation,
-                ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-                mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-                instituionName: data?.owners?.owners?.[0]?.institutionName,
-                name: data?.owners?.owners?.[0]?.name,
-              }
+              designation: data?.owners?.owners?.[0]?.designation,
+              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+              instituionName: data?.owners?.owners?.[0]?.institutionName,
+              name: data?.owners?.owners?.[0]?.name,
+            }
             : null,
         },
         calculation: null,
@@ -1254,10 +1254,10 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
 export const getQueryStringParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split("&").reduce((params, param) => {
-        let [key, value] = param.split("=");
-        params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
-        return params;
-      }, {})
+      let [key, value] = param.split("=");
+      params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
+      return params;
+    }, {})
     : {};
 };
 
