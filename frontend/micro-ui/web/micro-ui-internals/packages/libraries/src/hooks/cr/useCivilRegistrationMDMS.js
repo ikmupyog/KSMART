@@ -59,13 +59,13 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   const useCROtherDeathPlace = () => {
-    return useQuery("CR_RELIGION", () => MdmsService.getCROtherDeathPlace(tenantId, moduleCode), config);
+    return useQuery("CR_DEATH_PLACE_OTHER", () => MdmsService.getCROtherDeathPlace(tenantId, moduleCode), config);
   };
   const useCRMannerOfDeath = () => {
-    return useQuery("CR_RELIGION", () => MdmsService.getCRMannerOfDeath(tenantId, moduleCode), config);
+    return useQuery("CR_MANNEROF_DEATH", () => MdmsService.getCRMannerOfDeath(tenantId, moduleCode), config);
   };
   const useCRPregnantDeceased = () => {
-    return useQuery("CR_PREGNANT", () => MdmsService.getCRPregnantDeceased(tenantId, moduleCode), config);
+    return useQuery("CR_PREGNANTDECEASED", () => MdmsService.getCRPregnantDeceased(tenantId, moduleCode), config);
   };
   const useCRBirthStatus = () => {
     return useQuery("CR_PREGNANT", () => MdmsService.getCRBirthStatus(tenantId, moduleCode), config);

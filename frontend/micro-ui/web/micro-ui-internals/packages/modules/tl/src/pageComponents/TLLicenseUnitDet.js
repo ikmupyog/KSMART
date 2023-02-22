@@ -416,8 +416,9 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       tempval.splice(6,2); 
       setOwnershipCategoryMenu(tempval);
     }
-    naturetypecmbvalue = value.code.substring(0, 4);
-    setValue2(naturetypecmbvalue);
+    // naturetypecmbvalue = value.code.substring(0, 4);
+    // setValue2(naturetypecmbvalue);
+    setValue2(value.code);
     setIsInitialRender(true);
     SelectStructurePlaceSubtype(null);
     setFilteredPlaceSubtype(null);
@@ -976,7 +977,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
             <div className="row">
               {/* <div className="col-md-5" > */}
               {/* <div className="row"> */}
-              <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}<span className="mandatorycss">*</span></CardLabel>
+              <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)<span className="mandatorycss">*</span></CardLabel>
                 <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="capitalInvestment" value={capitalInvestment} onChange={changesetCapitalInvestment} placeholder="Capital Investment Range" {...(validation = { isRequired: true,  title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
               </div>
               <div className="col-md-3" >
@@ -1126,7 +1127,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
                         <div className="col-md-4" ><CardLabel>{`${t("TL_LOCALIZATION_DOOR_NO_SUB")}`}</CardLabel>
                           <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="doorNoSub" value={field.doorNoSub} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "doorNoSub", 14)} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DOOR_NO_SUB") })} />
                         </div>
-                        {value2 === "LBBUILDING" && (
+                        {ownershipCategory.code === "LBBUILDING" && (
                           <div className="col-md-2" ><CardLabel>{`${t("TL_STALL_NO")}`}</CardLabel>
                             <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="stallNo" value={field.stallNo} onChange={e => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "stallNo", 4)} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_STALL_NO") })} />
                           </div>

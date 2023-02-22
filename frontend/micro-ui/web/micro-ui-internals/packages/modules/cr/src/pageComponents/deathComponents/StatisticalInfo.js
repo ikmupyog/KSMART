@@ -435,6 +435,7 @@ const onSkip = () => onSelect();
   // if (isLoading || isLoadingA || isLoadingsub || isLoadingmanner || isLoadingPregnant || isLoadingBirthStatus) {
   //   return <Loader></Loader>;
   // } 
+
   return (
     <React.Fragment>
        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
