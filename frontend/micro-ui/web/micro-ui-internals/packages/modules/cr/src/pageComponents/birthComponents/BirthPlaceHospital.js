@@ -14,12 +14,18 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   }
   const { t } = useTranslation();
   let validation = {};
-  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "hospital");
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [tenantboundary, setTenantboundary] = useState(false);
+  console.log(hospitalData);
+  if (tenantboundary) {
+    queryClient.removeQueries("CR_HOSPITALMASTER");
+    setTenantboundary(false);
+  }
   let cmbhospital = [];
   let cmbhospitalMl = [];
   hospitalData &&
-    hospitalData["egov-location"] &&
+    hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });

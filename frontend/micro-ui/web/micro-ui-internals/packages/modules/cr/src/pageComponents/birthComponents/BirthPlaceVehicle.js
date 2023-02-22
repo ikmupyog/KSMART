@@ -16,33 +16,26 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   const { t } = useTranslation();
   let validation = {};
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
-  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "hospital");
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
-
-  // const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  // const [toast, setToast] = useState(false);
-  // const [vehicleType, setvehicleType] = useState(formData?.BirthPlaceVehicleDetails?.vehicleType ? formData?.BirthPlaceVehicleDetails?.vehicleType : "");
-  // const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.BirthPlaceVehicleDetails?.vehicleRegistrationNo ? formData?.BirthPlaceVehicleDetails?.vehicleRegistrationNo : "");  
-  // const [vehicleFromEn, setvehicleFromEn] = useState(formData?.BirthPlaceVehicleDetails?.setvehicleFromEn ? formData?.BirthPlaceVehicleDetails?.setvehicleFromEn : "");
-  // const [vehicleToEn, setvehicleToEn] = useState(formData?.BirthPlaceVehicleDetails?.vehicleToEn ? formData?.BirthPlaceVehicleDetails?.vehicleToEn : "");
-  // const [vehicleFromMl, setvehicleFromMl] = useState(formData?.BirthPlaceVehicleDetails?.vehicleFromMl ? formData?.BirthPlaceVehicleDetails?.vehicleFromMl : "");
-  // const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?.BirthPlaceVehicleDetails?.vehicleHaltPlace ? formData?.BirthPlaceVehicleDetails?.vehicleHaltPlace : "");
-  // const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.BirthPlaceVehicleDetails?.vehicleHaltPlaceMl ? formData?.BirthPlaceVehicleDetails?.vehicleHaltPlaceMl : "");
-  // const [vehicleToMl, setvehicleToMl] = useState(formData?.BirthPlaceVehicleDetails?.vehicleToMl ? formData?.BirthPlaceVehicleDetails?.vehicleToMl : "");
-  // const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.BirthPlaceVehicleDetails?.vehicleDesDetailsEn ? formData?.BirthPlaceVehicleDetails?.vehicleDesDetailsEn : "");  
-  // const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.BirthPlaceVehicleDetails?.setadmittedHospitalEn ? formData?.BirthPlaceVehicleDetails?.setadmittedHospitalEn : "");
+  const [tenantboundary, setTenantboundary] = useState(false);
+  if (tenantboundary) {
+    queryClient.removeQueries("CR_HOSPITALMASTER");
+    queryClient.removeQueries("TL_ZONAL_OFFICE");
+    setTenantboundary(false);
+  }
 
   let cmbhospital = [];
   hospitalData &&
-    hospitalData["egov-location"] &&
+    hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
   let cmbVehicle = [];
   Vehicle &&
-    Vehicle["birth-death-service"] &&
+    Vehicle["birth-death-service"] && Vehicle["birth-death-service"].VehicleType &&
     Vehicle["birth-death-service"].VehicleType.map((ob) => {
       cmbVehicle.push(ob);
     });
@@ -158,7 +151,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   };
   if (isLoad || isLoading || islocalbodiesLoading || isWardLoaded) {
     return <Loader></Loader>;
-  }
+  } else
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >

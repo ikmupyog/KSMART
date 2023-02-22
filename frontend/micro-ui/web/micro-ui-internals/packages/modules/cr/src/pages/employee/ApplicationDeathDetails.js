@@ -32,10 +32,10 @@ const ApplicationDeathDetails = () => {
   } = Digit.Hooks.cr.useCRDeathApplicationActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  // console.log(applicationDetails);
+  console.log(applicationDetails);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
-    id: applicationDetails?.applicationData?.DeathACKNo,
+    id: applicationDetails?.applicationData?.InformationDeath.DeathACKNo,
     moduleCode: businessService,
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config:{},

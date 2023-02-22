@@ -30,12 +30,12 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   let currentLB = [];
   let cmbFilterPostOffice = [];
   PostOffice &&
-    PostOffice["common-masters"] &&
+    PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
     });
   localbodies &&
-    localbodies["tenant"] &&
+    localbodies["tenant"] && localbodies["tenant"].tenants && 
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
@@ -44,7 +44,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
   boundaryList &&
-    boundaryList["egov-location"] &&
+    boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
       if (ob?.hierarchyType.code === "REVENUE") {
         Zonal.push(...ob.boundary.children);
@@ -230,8 +230,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
 
   if (isPostOfficeLoading || isWardLoaded || islocalbodiesLoading) {
     return <Loader></Loader>;
-  }
-
+  } else
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!adrsLocalityNameEn}>

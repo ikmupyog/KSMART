@@ -426,7 +426,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
           </div>
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <CardLabel>
               {t("CS_COMMON_POST_OFFICE")}
               <span className="mandatorycss">*</span>
@@ -441,7 +441,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
               placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
-          </div>
+          </div> */}
         </div>
         <div className="row">
           <div className="col-md-6">

@@ -15,18 +15,15 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   const { t } = useTranslation();
   let validation = {};
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-
-  // const [publicPlaceType, setpublicPlaceType] = useState(formData?.BirthPlacePublicPlaceDetails?.publicPlaceType? formData?.BirthPlacePublicPlaceDetails?.publicPlaceType : "");  
-  // const [localityNameEn, setlocalityNameEn] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameEn? formData?.BirthPlacePublicPlaceDetails?.localityNameEn : "");  
-  // const [localityNameMl, setlocalityNameMl] = useState(formData?.BirthPlacePublicPlaceDetails?.localityNameMl? formData?.BirthPlacePublicPlaceDetails?.localityNameMl : "");  
-  // const [streetNameEn, setstreetNameEn] = useState(formData?.BirthPlacePublicPlaceDetails?.streetNameEn? formData?.BirthPlacePublicPlaceDetails?.streetNameEn : "");  
-  // const [streetNameMl, setstreetNameMl] = useState(formData?.BirthPlacePublicPlaceDetails?.streetNameMl ? formData?.BirthPlacePublicPlaceDetails?.streetNameMl : "");  
-  // const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.BirthPlacePublicPlaceDetails?.publicPlaceDecpEn ? formData?.BirthPlacePublicPlaceDetails?.publicPlaceDecpEn : "");  
-
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
+  const [tenantboundary, setTenantboundary] = useState(false);
+  if (tenantboundary) {
+    queryClient.removeQueries("TL_ZONAL_OFFICE");
+    setTenantboundary(false);
+  }
   let cmbOtherplace = [];
   otherplace &&
-    otherplace["birth-death-service"] &&
+    otherplace["birth-death-service"] && otherplace["birth-death-service"].OtherBithPlace &&
     otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
       cmbOtherplace.push(ob);
     });
@@ -34,7 +31,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
   boundaryList &&
-    boundaryList["egov-location"] &&
+    boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
       if (ob?.hierarchyType.code === "REVENUE") {
         Zonal.push(...ob.boundary.children);
@@ -104,7 +101,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   };
   if (isotherLoad || isWardLoaded) {
     return <Loader></Loader>;
-  }
+  } else
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}>

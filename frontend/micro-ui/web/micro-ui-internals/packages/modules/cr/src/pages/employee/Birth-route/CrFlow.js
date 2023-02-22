@@ -9,36 +9,36 @@ const CrFlow = ({ path }) => {
   const { t } = useTranslation();
   const cardMenuData = [
     {
-      title: "CR_BIRTH_NEW_REG",
+      title: "CR_BIRTH_REGISTRATION",
       subTitle: "CR_BIRTH_NEW_REGISTRATION",
       img: <BankIcon />,
       link: `${path}/child-details`,
     },
-    {
-      title: "CR_BIRTH_ADOPTION",
-      subTitle: "CR_BIRTH_REG_NEW_ADOPTION",
-      img: <FileProtected />,
-      link: `${path}/adoption-details`,
-    },
-    {
-      title: "CR_STILL_BIRTH",
-      subTitle: "CR_STILL_BIRTH_REG",
-      img: <BankIcon />,
-      // link: `${path}/child-details`,
-    },
-    {
-      title: "CR_BIRTH_BORN_OUTSIDE",
-      subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
-      img: <BankIcon />,
-      // link: `${path}/child-details`,
-    },
+    // {
+    //   title: "CR_BIRTH_ADOPTION",
+    //   subTitle: "CR_BIRTH_REG_NEW_ADOPTION",
+    //   img: <FileProtected />,
+    //   link: `${path}/adoption-details`,
+    // },
+    // {
+    //   title: "CR_STILL_BIRTH",
+    //   subTitle: "CR_STILL_BIRTH_REG",
+    //   img: <BankIcon />,
+    //   // link: `${path}/child-details`,
+    // },
+    // {
+    //   title: "CR_BIRTH_BORN_OUTSIDE",
+    //   subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
+    //   img: <BankIcon />,
+    //   // link: `${path}/child-details`,
+    // },
 
-    {
-      title: "CR_BIRTH_NAME_INC_CORRECTION",
-      subTitle: "CR_BIRTH_NAME_INC_CORRECTION_DESC",
-      img: <FileProtected />,
-      // link: `${path}/structure-type`,
-    },
+    // {
+    //   title: "CR_BIRTH_NAME_INC_CORRECTION",
+    //   subTitle: "CR_BIRTH_NAME_INC_CORRECTION_DESC",
+    //   img: <FileProtected />,
+    //   // link: `${path}/structure-type`,
+    // },
     
   ];
   const ClassList = 
