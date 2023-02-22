@@ -293,20 +293,33 @@ let ownerappmap ={
 
   function validateData() {
     let mobilevalidation = /^[5-9]{1}[0-9]{9}$/;
+    let aadharvalidation = /^[0-9]{12}$/;
     let validation = true;
     appState?.map((ob) => {
       if (!ob.mobileNumber.match(mobilevalidation)) {
         setErrorMessage(t("TL_INVALID_MOBILE_NO"));
         validation = false;
       }
-    });
-    if(formDatalocal?.tradeLicenseDetail?.structureType.code !== 'DESIGNATEDPLACE')
-    ownerState?.map((ob) => {
-      if (!ob.ownerContactNo.match(mobilevalidation)) {
-        setErrorMessage(t("TL_INVALID_MOBILE_NO"));
+      if(!ob.aadhaarNumber.match(aadharvalidation)) {
+        setErrorMessage(t("TL_INVALID_AADHAR_NO"));
         validation = false;
       }
     });
+    if(formDatalocal?.tradeLicenseDetail?.structureType.code !== 'DESIGNATEDPLACE')
+    {
+      ownerState?.map((ob) => {
+        if (!ob.ownerContactNo.match(mobilevalidation)) {
+          setErrorMessage(t("TL_INVALID_MOBILE_NO"));
+          validation = false;
+        }
+        if(!ob.owneraadhaarNo.match(aadharvalidation)) {
+          setErrorMessage(t("TL_INVALID_AADHAR_NO"));
+          validation = false;
+        }
+      });
+    }
+    
+
     if (!contactNo.match(mobilevalidation) && contactNo !== "") {
       setErrorMessage(t("TL_INVALID_MOBILE_NO"));
       validation = false;

@@ -295,17 +295,27 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
 
   function validateData() {
     let mobilevalidation = /^[5-9]{1}[0-9]{9}$/;
+    let aadharvalidation = /^[0-9]{12}$/;
     let validation = true;
     appState?.map((ob) => {
       if (!ob.mobileNumber.match(mobilevalidation)) {
         setErrorMessage(t("TL_INVALID_MOBILE_NO"));
         validation = false;
       }
+      if(!ob.aadhaarNumber.match(aadharvalidation)) {
+        setErrorMessage(t("TL_INVALID_AADHAR_NO"));
+        validation = false;
+      }
+      
     });
     if(formDatalocal?.tradeLicenseDetail?.structureType !== 'DESIGNATEDPLACE')    
     ownerState?.map((ob) => {
       if (!ob.ownerContactNo.match(mobilevalidation)) {
         setErrorMessage(t("TL_INVALID_MOBILE_NO"));
+        validation = false;
+      }
+      if(!ob.owneraadhaarNo.match(aadharvalidation)) {
+        setErrorMessage(t("TL_INVALID_AADHAR_NO"));
         validation = false;
       }
     });
@@ -325,8 +335,6 @@ const TLLicenseApplicantDetRenewal = ({ t, config, onSelect, userType, formData 
     }
     return Promise.resolve(validation);
   }
-  console.log("appState");
-  console.log(LicenseeType);
   const onSkip = () => onSelect();
   return (
     <React.Fragment>
