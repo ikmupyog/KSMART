@@ -88,9 +88,11 @@ const TopBar = ({
         userDetails={userDetails}
         notificationCount={unreadNotificationCount < 99 ? unreadNotificationCount : 99}
         notificationCountLoaded={notificationCountLoaded}
-        cityOfCitizenShownBesideLogo={t(CitizenHomePageTenantId)}
+        cityOfCitizenShownBesideLogo={t(CitizenHomePageTenantId)} 
         onNotificationIconClick={onNotificationIconClick}
         hideNotificationIconOnSomeUrlsWhenNotLoggedIn={urlsToDisableNotificationIcon(pathname)}
+        cityDetails={cityDetails}
+        t={t} 
       />
     );
   }

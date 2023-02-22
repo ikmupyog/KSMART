@@ -57,7 +57,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         hospitalCode:null,
         hospitalName:null,
         hospitalAddress:null,
-        intitutiontype:null,
+        institutiontype:null,
         institutionname:null,
         institutionaddress:null,
         roles: [],
@@ -82,7 +82,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         hospitalCode:jurisdiction?.hospitalCode,
         hospitalName:jurisdiction?.hospitalName,
         hospitalAddress:jurisdiction?.hospitalAddress,
-        intitutiontype:jurisdiction?.intitutiontype,
+        institutiontype:jurisdiction?.institutiontype,
         institutionname:jurisdiction?.institutionname,
         institutionaddress:jurisdiction?.institutionaddress,
 
@@ -142,7 +142,7 @@ const Jurisdictions = ({ t, config, onSelect, userType, formData }) => {
         hospitalCode:null,
         hospitalName:null,
         hospitalAddress:null,
-        intitutiontype:null,
+        institutiontype:null,
         institutionname:null,
         institutionaddress:null,
         // boundary:[],
@@ -442,12 +442,12 @@ function Jurisdiction({
     // console.log(jurisdiction);
     if(jurisdiction?.roleCode?.toLowerCase().includes('institution')){
       setDisplayInstitution(true)
-      // let crinstitution = getInstitutionList()?.length>0 && getInstitutionList().filter((ele)=>ele.code == "INST_TYPE_JAIL") intitutiontype
-      // let crinstitutionName = cmbInstitutionId?.length>0 && cmbInstitutionId.filter((ele)=>ele.code == "INSTITUTION_2413") hospitalCode
-      // console.log(cmbInstitutionId,crinstitution,crinstitutionName)
-      // setInstitutionType(crinstitution?.length>0 && crinstitution[0])
-      // setInstitutionName(crinstitutionName?.length>0 && crinstitutionName[0])
-      // setInstitutionAddress(crinstitutionName?.length>0 && crinstitutionName[0]?.address)
+      let crinstitution = getInstitutionList()?.length>0 && getInstitutionList().filter((ele)=>ele.code == jurisdiction?.institutiontype) 
+      let crinstitutionName = cmbInstitutionId?.length>0 && cmbInstitutionId.filter((ele)=>ele.code == jurisdiction?.hospitalCode) 
+      // console.log(cmbInstitutionId,crinstitution,crinstitutionName) institutiontype "INST_TYPE_JAIL"
+      setInstitutionType(crinstitution?.length>0 && crinstitution[0])
+      setInstitutionName(crinstitutionName?.length>0 && crinstitutionName[0])
+      setInstitutionAddress(crinstitutionName?.length>0 && crinstitutionName[0]?.address)
     }
   },[])
 
@@ -529,7 +529,7 @@ function Jurisdiction({
       hospitalAddress: null,
     } : item))), setDisplayHopital(false));
     (value.code === "INSTITUTION_OPERATOR" ||  value.code === "INSTITUTION_APPROVER") ? setDisplayInstitution(true) : (setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? {
-      ...item, intitutiontype: null, institutionname: null,
+      ...item, institutiontype: null, institutionname: null,
       institutionaddress: null,
     } : item))), setDisplayInstitution(false));
 // console.log("waD",re)
@@ -538,10 +538,10 @@ function Jurisdiction({
     getHospitalNames()  
   };
   const selectInstitution = (value) => {
-    // console.log(value);
+    console.log(value);
     setInstitutionAddress("")
     setInstitutionType(value)
-    setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction.key ? { ...item, intitutiontype: value.code } : item)));
+   setjurisdictions((pre) => pre.map((item) => (item.key === jurisdiction?.key ? { ...item, institutiontype: value.code } : item)));
     // let institutionNameList = cmbInstitutionId?.institutionList?.map((name) =>{ hospitalCode
     //   if(name.placeofEventCodeNew === value.code)
     //   {

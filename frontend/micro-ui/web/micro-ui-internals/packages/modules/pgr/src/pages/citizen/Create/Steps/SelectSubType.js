@@ -1,4 +1,5 @@
 import { TypeSelectCard } from "@egovernments/digit-ui-react-components";
+import Timeline from '../../../../components/PGRTimeline'
 import React, { useState } from "react";
 
 const SelectSubType = ({ t, config, onSelect, value }) => {
@@ -27,8 +28,13 @@ const SelectSubType = ({ t, config, onSelect, value }) => {
     ...{ selected: selectedValue },
     ...{ selectedOption: subType },
     ...{ onSave: goNext },
-  };
+  };  
 
-  return <TypeSelectCard {...configNew} disabled={Object.keys(subType).length === 0 || subType === null ? true : false} t={t} />;
+  return (
+    <React.Fragment>
+      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      <TypeSelectCard {...configNew} disabled={Object.keys(subType).length === 0 || subType === null ? true : false} t={t} />
+    </React.Fragment>
+  )
 };
 export default SelectSubType;

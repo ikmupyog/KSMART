@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { CardLabel, Dropdown, FormStep, RadioButtons } from "@egovernments/digit-ui-react-components";
+import Timeline from "../../../../components/PGRTimeline";
 
 const SelectAddress = ({ t, config, onSelect, value }) => {
   const allCities = Digit.Hooks.pgr.useTenants();
@@ -11,7 +12,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
   });
   const { data: fetchedLocalities } = Digit.Hooks.useBoundaryLocalities(
     selectedCity?.code,
-    "admin",
+    "revenue",
     {
       enabled: !!selectedCity,
     },
@@ -48,7 +49,9 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
     onSelect({ city_complaint: selectedCity, locality_complaint: selectedLocality });
   }
   return (
-    <FormStep config={config} onSelect={onSubmit} t={t} isDisabled={selectedLocality ? false : true}>
+   <React.Fragment>
+       {window.location.href.includes("/citizen") ? <Timeline currentStep={3}/> : null}
+     <FormStep config={config} onSelect={onSubmit} t={t} isDisabled={selectedLocality ? false : true}>
       <div>
         <CardLabel>{t("MYCITY_CODE_LABEL")}</CardLabel>
         {cities?.length < 5 ? (
@@ -56,7 +59,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
         ) : (
           <Dropdown isMandatory selected={selectedCity} option={cities} select={selectCity} optionKey="i18nKey" t={t} />
         )}
-        {selectedCity && localities && <CardLabel>{t("CS_CREATECOMPLAINT_MOHALLA")}</CardLabel>}
+        {selectedCity && localities && <CardLabel>{t("Ward")}</CardLabel>}
         {selectedCity && localities && (
           <React.Fragment>
             {localities?.length < 5 ? (
@@ -68,6 +71,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
         )}
       </div>
     </FormStep>
+   </React.Fragment>
   );
 };
 

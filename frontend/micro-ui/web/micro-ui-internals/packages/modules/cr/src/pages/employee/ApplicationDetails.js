@@ -72,10 +72,11 @@ const ApplicationDetails = () => {
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
       if (data.action == "EDIT") {
+        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
         data.redirectionUrl = {
-          pathname: `/digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}`,
+          pathname: `/digit-ui/employee/cr/cr-flow/child-details`,
           state: applicationDetails,
-          isEditBirth: true
+          isEditBirth: true,
         },
           data.tenantId = stateId
       }

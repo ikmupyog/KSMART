@@ -43,7 +43,16 @@ const LocationSearchCard = ({
 
   return (
     <Card>
-      <CardHeader>{header}</CardHeader>
+        <div className="row" style={{display:"grid"}}>
+           <div className="col-md-12">
+             <div className="col-md-12">
+               <h1 className="headingh1">
+                 <span style={{ background: "#fff", padding: "0 10px" }}>{header}</span>{" "}
+               </h1>
+             </div>
+           </div>
+         </div>
+      {/* <CardHeader>{header}</CardHeader> */}
       <div style={cardBodyStyle}>
       {isPopUp && <LinkButton
             label={
@@ -61,7 +70,7 @@ const LocationSearchCard = ({
         <CardText>
           {/* Click and hold to drop the pin to complaint location. If you are not
         able to pin the location you can skip the continue for next step. */}
-          {cardText}
+          {/* {cardText} */}
         </CardText>
 
         <LocationSearch onChange={isPlaceRequired?onLocationChangewithPlace:onLocationChange} position={position} isPTDefault={isPTDefault} PTdefaultcoord={PTdefaultcoord} isPlaceRequired={isPlaceRequired} />

@@ -183,13 +183,13 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton >{t("CS_COMMON_BACK")}</BackButton> 
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!IsDeclarationInitiator}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_DECLARATION_STATEMENT")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INITIATOR_DETAILS")}`}</span>
             </h1>
           </div>
         </div>
@@ -197,7 +197,7 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
         <div className="row">
           <div className="col-md-12">
             
-            <CheckBox label={t("CR_DECLARATION")} onChange={setselectIsDeclarationInitiator} value={IsDeclarationInitiator} checked={IsDeclarationInitiator} />
+            <CheckBox label={t("CR_INITIATOR_DECLARATION_STATEMENT")} onChange={setselectIsDeclarationInitiator} value={IsDeclarationInitiator} checked={IsDeclarationInitiator} />
             {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>

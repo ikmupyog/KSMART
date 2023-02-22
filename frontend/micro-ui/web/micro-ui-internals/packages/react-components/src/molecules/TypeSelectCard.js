@@ -23,9 +23,18 @@ const TypeSelectCard = ({
 }) => {
   return (
     <Card>
-      <CardCaption>{t(headerCaption)}</CardCaption>
-      <CardHeader>{t(header)}</CardHeader>
-      <CardText>{t(cardText)}</CardText>
+       <div className="row" style={{display:"grid"}}>
+            <div className="col-md-12">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(header)}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
+          </div>
+      {/* <CardCaption>{t(headerCaption)}</CardCaption> */}
+      {/* <CardHeader>{t(header)}</CardHeader> */}
+      {/* <CardText>{t(cardText)}</CardText> */}
       {menu ? <RadioButtons selectedOption={selectedOption} options={menu} optionsKey={optionsKey} onSelect={selected} /> : null}
       <SubmitBar disabled={disabled} label={t(submitBarLabel)} onSubmit={onSave} />
     </Card>

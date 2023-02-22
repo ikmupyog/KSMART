@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FormStep, ImageUploadHandler, Loader } from "@egovernments/digit-ui-react-components";
+import Timeline from "../../../../components/PGRTimeline";
 
 const SelectImages = ({ t, config, onSelect, onSkip, value }) => {
   // const __initImages = Digit.SessionStorage.get("PGR_CREATE_IMAGES");
@@ -27,9 +28,12 @@ const SelectImages = ({ t, config, onSelect, onSkip, value }) => {
   };
 
   return (
-    <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t}>
+   <React.Fragment>
+    {window.location.href.includes("/citizen") ? <Timeline currentStep={5}/> : null}
+     <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t}>
       <ImageUploadHandler tenantId={value.city_complaint?.code} uploadedImages={uploadedImages} onPhotoChange={handleUpload} />
     </FormStep>
+   </React.Fragment>
   );
 };
 

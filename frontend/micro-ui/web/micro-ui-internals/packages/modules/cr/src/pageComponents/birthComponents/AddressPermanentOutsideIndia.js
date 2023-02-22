@@ -223,7 +223,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
             />
           </div>
           <div className="col-md-6">
-            <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")}</CardLabel>
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")}</CardLabel>
             <TextInput
               t={t}
               type={"text"}
@@ -231,8 +231,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               name="permntOutsideIndiaprovinceMl"
               value={permntOutsideIndiaprovinceMl}
               onChange={setSelectPermntOutsideIndiaprovinceMl}
-              placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+              placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
             />
           </div>
         </div>
