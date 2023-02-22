@@ -52,4 +52,11 @@ public class DeathSearchCriteria {
 
     @JsonProperty("DeathPlaceInstId")
     private String deathPlaceInstId;
+
+    //Rakhi S on 22.02.2023
+    @JsonProperty("fromDate")
+    private Long fromDate;
+
+    @JsonProperty("toDate")
+    private Long toDate;
 }

@@ -242,11 +242,11 @@ StringBuilder query = new StringBuilder(QUERY);
                         addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
                         addFilter("dt.death_place_ward_id", criteria.getDeathPlaceWardId(), query, preparedStmtValues);
                         addFilter("dt.death_place_inst_type", criteria.getHospitalName(), query, preparedStmtValues);
-                        // addDateRangeFilter("dt.dateofdeath",
-                        // criteria.getFromDate(),
-                        // criteria.getToDate(),
-                        // query,
-                        // preparedStmtValues);
+                        addDateRangeFilter("dt.createdtime",
+                        criteria.getFromDate(),
+                        criteria.getToDate(),
+                        query,
+                        preparedStmtValues);
                         return query.toString();
 }   
 
