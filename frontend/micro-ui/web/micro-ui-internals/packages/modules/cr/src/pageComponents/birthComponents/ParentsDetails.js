@@ -153,25 +153,26 @@ console.log(formData?.ParentsDetails);
   }
 
   function setSelectMotherAadhar(e) {
-    if (e.target.value.trim().length != 0) {
-      if (e.target.value.trim().length > 12) {
-        // setMotherAadhar(e.target.value.trim());
-        setMotherAadharError(true);
-        return false;
-      } else if (e.target.value.trim().length < 12) {
-        setMotherAadharError(true);
-        setMotherAadhar(e.target.value);
-        return false;
-      } else {
-        setMotherAadharError(false);
-        setMotherAadhar(e.target.value);
-        return true;
-      }
-    } else {
-      setMotherAadharError(false);
-      setMotherAadhar(e.target.value);
-      return true;
-    }
+    setMotherAadhar(e.target.value.length<=12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    // if (e.target.value.trim().length != 0) {
+    //   if (e.target.value.trim().length > 12) {
+    //     // setMotherAadhar(e.target.value.trim());
+    //     setMotherAadharError(true);
+    //     return false;
+    //   } else if (e.target.value.trim().length < 12) {
+    //     setMotherAadharError(true);
+    //     setMotherAadhar(e.target.value);
+    //     return false;
+    //   } else {
+    //     setMotherAadharError(false);
+    //     setMotherAadhar(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setMotherAadharError(false);
+    //   setMotherAadhar(e.target.value);
+    //   return true;
+    // }
   }
   function setSelectFatherAadhar(e) {
     if (e.target.value.trim().length != 0) {
