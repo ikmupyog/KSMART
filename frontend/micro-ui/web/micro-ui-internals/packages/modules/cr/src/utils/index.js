@@ -727,7 +727,7 @@ export const convertToDeathRegistration = (data = {}) => {
           InformantDocumentUserType: null,
           InformantDocumentFileStoreId: null,
         },
-        InitiatorDetails: {
+        Initiator: {
           InitiatorRelation: data?.Initiater?.InitiatorRelation,
           InitiatorAadhaar: data?.Initiater?.InitiatorAadhaar,
           InitiatorName: data?.Initiater?.InitiatorName,
