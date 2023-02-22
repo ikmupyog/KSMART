@@ -9,7 +9,7 @@ import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome"
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 
-const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false }) => {
+const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -25,7 +25,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
-  
+
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -863,7 +863,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
         institutionTypeCode, institution, institutionNameCode, institutionId, institutionIdMl,
         wardNo, wardNameEn, wardNameMl, wardNumber, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl, adrsPostOffice, adrsPincode,
-        vehicleType, vehicleHaltPlace,  vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
+        vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods
@@ -886,47 +886,44 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   };
 
 
-  // useEffect(() => {
-  //   if (!isInitialRenderFormData) {
-  if (formData?.ChildDetails?.gender != null) {
-    if (menu.length > 0 && (gender === undefined || gender === "")) {
-      selectGender(menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]);
-      setisInitialRenderFormData(true);
+  if (!isEditBirth) {
+    if (formData?.ChildDetails?.gender != null) {
+      if (menu.length > 0 && (gender === undefined || gender === "")) {
+        selectGender(menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]);
+        setisInitialRenderFormData(true);
+      }
     }
-  }
-  if (formData?.ChildDetails?.birthPlace != null) {
-    if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
-      selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]);
-      setValue(formData?.ChildDetails?.birthPlace);
-      setisInitialRenderFormData(true);
+    if (formData?.ChildDetails?.birthPlace != null) {
+      if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
+        selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]);
+        setValue(formData?.ChildDetails?.birthPlace);
+        setisInitialRenderFormData(true);
+      }
     }
-  }
-  console.log(cmbAttDeliverySub);
-  if (formData?.ChildDetails?.medicalAttensionSub != null) {
     console.log(cmbAttDeliverySub);
-    if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-      setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
-      setisInitialRenderFormData(true);
+    if (formData?.ChildDetails?.medicalAttensionSub != null) {
+      console.log(cmbAttDeliverySub);
+      if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
+        setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
+        setisInitialRenderFormData(true);
+      }
     }
-  }
-  console.log(cmbPregWeek);
-  if (formData?.ChildDetails?.pregnancyDuration != null) {
-    if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-      setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);      
-      setisInitialRenderFormData(true);
+    console.log(cmbPregWeek);
+    if (formData?.ChildDetails?.pregnancyDuration != null) {
+      if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+        setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
+        setisInitialRenderFormData(true);
+      }
     }
-  }
 
-  if (formData?.ChildDetails?.deliveryMethods != null) {
-    if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-      // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
-      setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
-      setisInitialRenderFormData(true);
+    if (formData?.ChildDetails?.deliveryMethods != null) {
+      if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
+        // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
+        setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
+        setisInitialRenderFormData(true);
+      }
     }
   }
-
-  //     }
-  //  },[isInitialRenderFormData]);
 
 
 
@@ -1372,7 +1369,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                 vehiTypeError ||
                 vehicleRegiNoError ||
                 vehicleHaltPlaceError ||
-               
+
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
@@ -1391,7 +1388,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                   vehiTypeError ||
                   vehicleRegiNoError ||
                   vehicleHaltPlaceError ||
-                 
+
                   admittedHospitalEnError || vehiDesDetailsEnError ||
                   placeTypepEnError || localNameEnError || localNameMlError ||
                   MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
@@ -1412,19 +1409,19 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                                           : vehiTypeError ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
                                             : vehicleRegiNoError ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
                                               : vehicleHaltPlaceError ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
-                                               
-                                                  : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
-                                                    : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
-                                                      : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
-                                                        : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
-                                                          : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
-                                                            : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
-                                                              : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
-                                                                : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                  : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+
+                                                : admittedHospitalEnError ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                                                  : vehiDesDetailsEnError ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                                                    : placeTypepEnError ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                                                      : localNameEnError ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                                                        : localNameMlError ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                                                          : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
+                                                            : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
+                                                              : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
+                                                                : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
 
 
-                                                                    : setToast(false)
+                                                                  : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

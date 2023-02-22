@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loade
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const ParentsDetails = ({ config, onSelect, userType, formData }) => {
+const ParentsDetails = ({ config, onSelect, userType, formData,isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -153,25 +153,26 @@ console.log(formData?.ParentsDetails);
   }
 
   function setSelectMotherAadhar(e) {
-    if (e.target.value.trim().length != 0) {
-      if (e.target.value.trim().length > 12) {
-        // setMotherAadhar(e.target.value.trim());
-        setMotherAadharError(true);
-        return false;
-      } else if (e.target.value.trim().length < 12) {
-        setMotherAadharError(true);
-        setMotherAadhar(e.target.value);
-        return false;
-      } else {
-        setMotherAadharError(false);
-        setMotherAadhar(e.target.value);
-        return true;
-      }
-    } else {
-      setMotherAadharError(false);
-      setMotherAadhar(e.target.value);
-      return true;
-    }
+    setMotherAadhar(e.target.value.length<=12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    // if (e.target.value.trim().length != 0) {
+    //   if (e.target.value.trim().length > 12) {
+    //     // setMotherAadhar(e.target.value.trim());
+    //     setMotherAadharError(true);
+    //     return false;
+    //   } else if (e.target.value.trim().length < 12) {
+    //     setMotherAadharError(true);
+    //     setMotherAadhar(e.target.value);
+    //     return false;
+    //   } else {
+    //     setMotherAadharError(false);
+    //     setMotherAadhar(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setMotherAadharError(false);
+    //   setMotherAadhar(e.target.value);
+    //   return true;
+    // }
   }
   function setSelectFatherAadhar(e) {
     if (e.target.value.trim().length != 0) {
@@ -973,7 +974,7 @@ console.log(formData?.ParentsDetails);
                 FatherFirstNmeEnError ||
                 FatherEduError ||
                 FatherProfError ||
-                ReligionStError ||
+              
                 FatherMobileError ||
                 ReligionError  ||
                 // || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError  || MotherTalukError || MotherPlaceTypeError
@@ -990,7 +991,7 @@ console.log(formData?.ParentsDetails);
                   FatherFirstNmeEnError ||
                   FatherEduError ||
                   FatherProfError ||
-                  ReligionStError ||
+                
                   FatherMobileError ||
                   ReligionError  ||
                   OrderofChildrenError

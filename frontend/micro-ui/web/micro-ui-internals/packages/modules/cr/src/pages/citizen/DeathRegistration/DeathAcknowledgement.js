@@ -129,14 +129,14 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
     }
   }, [mutation.isSuccess, mutation1.isSuccess]);
 
-  const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data || mutation1.data || mutation2.data;
-    const License = (Licenses && Licenses[0]) || {};
-    const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
-    let res = License;
-    const data = getPDFData({ ...res }, tenantInfo, t);
-    data.then((ress) => Digit.Utils.pdf.generate(ress));
-  };
+  // const handleDownloadPdf = async () => {
+  //   const { Licenses = [] } = mutation.data || mutation1.data || mutation2.data;
+  //   const License = (Licenses && Licenses[0]) || {};
+  //   const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
+  //   let res = License;
+  //   const data = getPDFData({ ...res }, tenantInfo, t);
+  //   data.then((ress) => Digit.Utils.pdf.generate(ress));
+  // };
   let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
   // if(enableLoader)
   // {return (<Loader />)}
@@ -160,7 +160,7 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
       <BannerPicker t={t} data={mutation2.data} isSuccess={"success"} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
        <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
     
-        <LinkButton
+        {/* <LinkButton
           label={
             <div className="response-download-button">
               <span>
@@ -168,12 +168,12 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
                   <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
                 </svg>
               </span>
-              <span className="download-button">{t("Acknowledgment")}</span>
+              <span className="download-button">{t("Acknowledgment454545")}</span>
             </div>
           }
           //style={{ width: "100px" }}
           onClick={handleDownloadPdf}
-        />
+        /> */}
       {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
       {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
       {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}

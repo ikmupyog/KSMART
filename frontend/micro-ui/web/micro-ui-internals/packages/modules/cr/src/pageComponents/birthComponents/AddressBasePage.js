@@ -12,7 +12,7 @@ import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressBasePage = ({ config, onSelect, userType, formData }) => {
+const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = false }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -771,7 +771,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData }) => {
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading || isPostOfficeLoading || isTalukLoading || isVillageLoading || isDistrictLoading || isWardLoaded) {
         return <Loader></Loader>;
-    }
+    } else
     return (
         <React.Fragment>
             <BackButton>{t("CS_COMMON_BACK")}</BackButton>
