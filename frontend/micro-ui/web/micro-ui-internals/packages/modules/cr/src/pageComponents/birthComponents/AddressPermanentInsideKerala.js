@@ -418,7 +418,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrLocalityNameEn}
               onChange={setSelectpermntInKeralaAdrLocalityNameEn}
               placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -431,7 +431,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrStreetNameEn}
               onChange={setSelectpermntInKeralaAdrStreetNameEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -447,7 +447,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrHouseNameEn}
               onChange={setSelectpermntInKeralaAdrHouseNameEn}
               placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
             />
           </div>
         </div>

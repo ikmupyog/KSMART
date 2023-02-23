@@ -467,7 +467,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             value={presentInsideKeralaLocalityNameEn}
                             onChange={setSelectinsideKeralaLocalityNameEn}
                             placeholder={`${t("CR_LOCALITY_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
                         />
                     </div>
                     <div className="col-md-4">
@@ -480,7 +480,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             value={presentInsideKeralaStreetNameEn}
                             onChange={setSelectinsideKeralaStreetNameEn}
                             placeholder={`${t("CR_STREET_NAME_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
                         />
                     </div>
                     <div className="col-md-4">
@@ -496,7 +496,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             value={presentInsideKeralaHouseNameEn}
                             onChange={setSelectinsideKeralaHouseNameEn}
                             placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                         />
                     </div>
                    
