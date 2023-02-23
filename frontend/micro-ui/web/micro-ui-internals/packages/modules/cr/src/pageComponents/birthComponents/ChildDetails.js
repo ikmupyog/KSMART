@@ -355,7 +355,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+      setChildFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
   function setSelectChildMiddleNameEn(e) {
@@ -363,7 +363,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+      setChildMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
   function setSelectChildLastNameEn(e) {
@@ -371,7 +371,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+      setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
   function setSelectChildFirstNameMl(e) {
@@ -379,7 +379,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+      setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
   function setSelectChildMiddleNameMl(e) {
@@ -387,7 +387,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+      setChildMiddleNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
   function setSelectChildLastNameMl(e) {
@@ -395,7 +395,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setChildLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+      setChildLastNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
   function setSelectPregnancyDuration(e) {

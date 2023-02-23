@@ -204,10 +204,6 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
       setMotherMarriageBirth(e.target.value);
     }
   }
-
-
-
-
   function setSelectMotherEducation(value) {
     setMotherEducation(value);
   }
@@ -258,7 +254,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setFatherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setFatherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectFatherFirstNameMl(e) {
@@ -266,7 +262,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setFatherFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setFatherFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
