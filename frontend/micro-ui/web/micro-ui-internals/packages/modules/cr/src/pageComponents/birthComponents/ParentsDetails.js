@@ -137,7 +137,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setMotherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'  0-9]/gi, ""));
+      setMotherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''['  0-9]/gi, ""));
     }
   }
 
@@ -146,7 +146,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setMotherFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setMotherFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectMotherAadhar(e) {
