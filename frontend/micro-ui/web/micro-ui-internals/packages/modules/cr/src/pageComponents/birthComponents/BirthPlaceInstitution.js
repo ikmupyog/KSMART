@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId,
+  InstitutionFilterList, setInstitutionFilterList, isInitialRenderInstitutionList, setIsInitialRenderInstitutionList,
   isEditBirth = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -16,7 +17,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   let validation = {};
   const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
   const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "institution");
-  const [isInitialRender, setIsInitialRender] = useState(true);
+  // const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
   if (tenantboundary) {
     queryClient.removeQueries("CR_INSTITUTION_LIST");
@@ -26,108 +27,94 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
   // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
   let cmbInstitution = [];
+  let cmbInstitutionList = [];
   institutionType &&
-  institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
-  institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+    institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
+    institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
       cmbInstitution.push(ob);
     });
-  ///institution-id
-  let cmbInstitutionId = [];
-  let cmbInstitutionIdML = [];
-  let cmbFilterInstitutionList = [];
-
   institutionidList &&
     institutionidList["egov-location"] && institutionidList["egov-location"].institutionList &&
     institutionidList["egov-location"].institutionList.map((ob) => {
-      cmbInstitutionId.push(ob);
+      cmbInstitutionList.push(ob);
     });
-  // useEffect(() => {
-
-  //   if (isInitialRender) {
-  //     if (institution) {
-  //       console.log(institution);
-  //       // if (cmbInstitutionId.length > 0) {
-  //       console.log(cmbInstitutionId);
-  //       cmbFilterInstitutionList = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === institution.code);
-  //       // }
-  //     }
-  //     if (institutionId) {
-  //       cmbInstitutionIdML = cmbFilterInstitutionList.filter((cmbFilterInstitutionList) => cmbFilterInstitutionList.institutionName === institutionId.institutionName);
-  //       setInstitutionIdMl(cmbInstitutionIdML[0]);
-  //       setIsInitialRender(false);
-  //     }
-  //   }
-  // }, [cmbFilterInstitutionList, cmbInstitutionIdML, isInitialRender])
+  useEffect(() => {
+    if (isInitialRenderInstitutionList) {
+      if (institution) {
+        setInstitutionFilterList(cmbInstitutionList.filter((cmbInstitutionList) => cmbInstitutionList.placeofEventCodeNew === institution.code));
+        setIsInitialRenderInstitutionList(false);
+      }
+    }
+  }, [InstitutionFilterList, isInitialRenderInstitutionList])
 
   const onSkip = () => onSelect();
 
   function setselectInstitution(value) {
     setInstitution(value);
-    setIsInitialRender(true);
+    setInstitutionId(null);
+    setInstitutionIdMl(null);
+    setIsInitialRenderInstitutionList(true);
   }
   function setselectInstitutionId(value) {
     setInstitutionId(value);
-    setIsInitialRender(true);
+    setInstitutionIdMl(value);
   }
   function setselectInstitutionIdMl(value) {
     setInstitutionIdMl(value);
   }
   const goNext = () => {
   };
-  if ( isinstitutionLoad || isinstitutionidLoad) {
+  if (isinstitutionLoad || isinstitutionidLoad) {
     return <Loader></Loader>;
   } else
-  return (
-    <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!institution}>
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>
-            </h1>
+    return (
+      <React.Fragment>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!institution}>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSTITUTION_DETAILS")}`}</span>
+              </h1>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-4">
-            <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              isMandatory={true}
-              option={cmbInstitution}
-              selected={institution}
-              select={setselectInstitution}
-              placeholder={`${t("CR_INSTITUTION_TYPE")}`}
-            />
+          <div className="row">
+            <div className="col-md-4">
+              <CardLabel>{`${t("CR_INSTITUTION_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                option={cmbInstitution}
+                selected={institution}
+                select={setselectInstitution}
+                placeholder={`${t("CR_INSTITUTION_TYPE")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="institutionName"
+                option={InstitutionFilterList}
+                selected={institutionId}
+                select={setselectInstitutionId}
+                placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}</CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="institutionNamelocal"
+                option={InstitutionFilterList}
+                selected={institutionIdMl}
+                select={setselectInstitutionIdMl}
+                placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}
+                disable={true}
+              />
+            </div>
           </div>
-          <div className="col-md-4">
-            <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="institutionName"
-              isMandatory={true}
-              option={cmbInstitutionId}
-              selected={institutionId}
-              select={setselectInstitutionId}
-              placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
-            />
-          </div>
-          <div className="col-md-4">
-            <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}</CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="institutionNamelocal"
-              isMandatory={true}
-              option={cmbInstitutionId}
-              selected={institutionIdMl}
-              select={setselectInstitutionIdMl}
-              placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}
-              disable={false}
-            />
-          </div>
-        </div>
-      </FormStep>
-    </React.Fragment>
-  );
+        </FormStep>
+      </React.Fragment>
+    );
 };
 export default BirthPlaceInstitution;

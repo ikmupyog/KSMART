@@ -24,6 +24,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
+  const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
+  const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
 
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -233,10 +235,13 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           />;
         }
         if (placeOfBirth === "INSTITUTION") {
+          setIsInitialRenderInstitutionList(true);
           <BirthPlaceInstitution
             institution={institution}
             institutionIdMl={institutionIdMl}
             institutionId={institutionId}
+            InstitutionFilterList={InstitutionFilterList}
+            isInitialRenderInstitutionList={isInitialRenderInstitutionList}
           />;
         }
         if (placeOfBirth === "HOME") {
@@ -798,7 +803,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setTimeout(() => {
           setToast(false);
         }, 2000);
-      } else{
+      } else {
         setPregnancyDurationStError(false);
         setPregnancyDurationInvalidError(false);
       }
@@ -1061,6 +1066,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 setInstitution={setInstitution}
                 setInstitutionIdMl={setInstitutionIdMl}
                 setInstitutionId={setInstitutionId}
+                InstitutionFilterList={InstitutionFilterList}
+                setInstitutionFilterList={setInstitutionFilterList}
+                isInitialRenderInstitutionList={isInitialRenderInstitutionList}
+                setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
+                formData={formData}
               />
             </div>
           )}
@@ -1087,6 +1097,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 setAdrsPincode={setAdrsPincode}
                 PostOfficevalues={PostOfficevalues}
                 setPostOfficevalues={setPostOfficevalues}
+                formData={formData}
               />
             </div>
           )}
@@ -1115,6 +1126,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 setSelectedadmittedHospitalEn={setSelectedadmittedHospitalEn}
                 wardNo={wardNo}
                 setWardNo={setWardNo}
+                formData={formData}
               />
             </div>
           )}
@@ -1135,7 +1147,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 setstreetNameMl={setstreetNameMl}
                 setpublicPlaceDecpEn={setpublicPlaceDecpEn}
                 setWardNo={setWardNo}
-
+                formData={formData}
               />
             </div>
           )}
@@ -1446,11 +1458,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                                                           : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
                                                             : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
                                                               : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                              : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)                                                                
-                                                              : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                                                                : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
+                                                                  : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
 
 
-                                                                  : setToast(false)
+                                                                    : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
