@@ -187,6 +187,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
+  const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
   // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
@@ -398,7 +399,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
   function setSelectPregnancyDuration(e) {
-    setPregnancyDuration(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));    
+    setPregnancyDuration(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
   }
   // function setSelectPregnancyDuration(value) {
   //   setPregnancyDuration(value);
@@ -790,7 +791,17 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setToast(false);
       }, 2000);
     } else {
-      setPregnancyDurationStError(false);
+      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+        validFlag = false;
+        setPregnancyDurationInvalidError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else{
+        setPregnancyDurationStError(false);
+        setPregnancyDurationInvalidError(false);
+      }
     }
     if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
       validFlag = false;
@@ -1390,7 +1401,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                || PregnancyDurationStError
+                || PregnancyDurationStError || PregnancyDurationInvalidError
 
 
               }
@@ -1409,7 +1420,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   admittedHospitalEnError || vehiDesDetailsEnError ||
                   placeTypepEnError || localNameEnError || localNameMlError ||
                   MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                  || PregnancyDurationStError
+                  || PregnancyDurationStError || PregnancyDurationInvalidError
                   ?
                   AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1435,7 +1446,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                                                           : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
                                                             : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
                                                               : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                                                              : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)                                                                
+                                                              : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
 
 
                                                                   : setToast(false)
