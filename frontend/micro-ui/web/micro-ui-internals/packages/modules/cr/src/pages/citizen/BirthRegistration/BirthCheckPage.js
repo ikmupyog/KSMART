@@ -81,6 +81,23 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
     userType = "employee";
   }
   console.log(value);
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
+
+
+
   return (
     <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -147,7 +164,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(ChildDetails.childDOB)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(ChildDetails.childDOB) ? convertEpochToDate(ChildDetails.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
             </div>
           </div>
 
