@@ -133,93 +133,35 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
 
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length === 51) {
+    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setMotherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setMotherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'  0-9]/gi, ""));
     }
   }
 
   function setSelectMotherFirstNameMl(e) {
-    if (e.target.value.trim().length === 51) {
+    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
       setMotherFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
     }
   }
-
   function setSelectMotherAadhar(e) {
     setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-    // if (e.target.value.trim().length != 0) {
-    //   if (e.target.value.trim().length > 12) {
-    //     // setMotherAadhar(e.target.value.trim());
-    //     setMotherAadharError(true);
-    //     return false;
-    //   } else if (e.target.value.trim().length < 12) {
-    //     setMotherAadharError(true);
-    //     setMotherAadhar(e.target.value);
-    //     return false;
-    //   } else {
-    //     setMotherAadharError(false);
-    //     setMotherAadhar(e.target.value);
-    //     return true;
-    //   }
-    // } else {
-    //   setMotherAadharError(false);
-    //   setMotherAadhar(e.target.value);
-    //   return true;
-    // }
   }
   function setSelectFatherAadhar(e) {
-    if (e.target.value.trim().length != 0) {
-      if (e.target.value.trim().length > 12) {
-        // setChildAadharNo(e.target.value.trim());
-        setFatherAadharError(true);
-        // const limit = 12;
-        // setFatherAadhar(e.target.value.trim().slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.trim().length < 12) {
-        setFatherAadharError(true);
-        setFatherAadhar(e.target.value);
-        return false;
-      } else {
-        setFatherAadharError(false);
-        setFatherAadhar(e.target.value);
-        return true;
-      }
-    } else {
-      setFatherAadharError(false);
-      setFatherAadhar(e.target.value);
-      return true;
-    }
+    setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
   }
   function setSelectFatherMobile(e) {
     if (e.target.value.trim().length != 0) {
-      if (e.target.value.trim().length > 10) {
-        // setChildAadharNo(e.target.value.trim());
-        setFatherMobileError(true);
-        // const limit = 12;
-        // setFatherAadhar(e.target.value.trim().slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.trim().length < 10) {
-        setFatherMobileError(true);
-        setFatherMobile(e.target.value);
-        return false;
-      } else {
-        setFatherMobileError(false);
-        setFatherMobile(e.target.value);
-        return true;
-      }
-    } else {
-      setFatherMobileError(false);
-      setFatherMobile(e.target.value);
-      return true;
+      setFatherMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
   function setSelectFatherEmail(e) {
-    if (e.target.value.trim().length === 51) {
+    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -228,11 +170,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
   }
 
   function setSelectMotherMarriageAge(e) {
-    if (e.target.value.trim().length === 3) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherMarriageAge(e.target.value);
+    if (e.target.value.trim().length === 2) {
+      setMotherMarriageAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
     }
   }
   //   function setSelectMotherMarriageAge(e) {
@@ -486,18 +425,25 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
     // }
 
     if (fatherMobile != null || fatherMobile != "" || fatherMobile != undefined) {
-      if (FatherMobileError) {
+      let mobileLength = fatherMobile;
+      console.log(mobileLength);
+      if (mobileLength.length < 10 || mobileLength.length > 10) {
         validFlag = false;
         setFatherMobileError(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
-        // return false;
-        // window.alert("Username shouldn't exceed 10 characters")
       } else {
         setFatherMobileError(false);
       }
+    } else {
+      validFlag = false;
+      setFatherMobileError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
     if (Religion != null || Religion != "" || Religion != undefined) {
       if (ReligionError) {
@@ -576,12 +522,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 
         {/* isDisabled={!motherFirstNameEn} */}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-          {/* <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1"></h1>
-          </div>
-        </div> */}
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
+          isDisabled={motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
+            || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
+            || !motherEducation || !motherProfession ||
+            fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
+            || !Religion || fatherMobile === ""}>
+
           <div className="row">
             <div className="col-md-12">
               {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
