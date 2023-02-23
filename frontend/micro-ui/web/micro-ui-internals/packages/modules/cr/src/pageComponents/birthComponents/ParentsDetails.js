@@ -519,11 +519,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
 
         {/* isDisabled={!motherFirstNameEn} */}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
-          isDisabled={motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
-            || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
-            || !motherEducation || !motherProfession ||
-            fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
-            || !Religion || fatherMobile === ""}>
+          isDisabled={
+            (!isMotherInfo ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
+              || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
+              || !motherEducation || !motherProfession) : false) 
+              || (!isFatherInfo ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
+              || !Religion || fatherMobile === "") : false)
+          }>
 
           <div className="row">
             <div className="col-md-12">
