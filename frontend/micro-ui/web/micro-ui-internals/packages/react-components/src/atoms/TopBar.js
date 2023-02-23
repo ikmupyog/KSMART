@@ -3,23 +3,25 @@ import PropTypes from "prop-types";
 import Hamburger from "./Hamburger";
 import { NotificationBell } from "./svgindex";
 
-const TopBar = ({ img, isMobile, logoUrl, onLogout, toggleSidebar, ulb, userDetails, notificationCount, notificationCountLoaded, cityOfCitizenShownBesideLogo, onNotificationIconClick, hideNotificationIconOnSomeUrlsWhenNotLoggedIn }) => {
+const TopBar = ({ img, isMobile, logoUrl, onLogout, toggleSidebar, ulb, userDetails, notificationCount, notificationCountLoaded, cityOfCitizenShownBesideLogo, onNotificationIconClick, hideNotificationIconOnSomeUrlsWhenNotLoggedIn,cityDetails,t }) => {
+//  let citizenHomeCity =Digit.SessionStorage.get("CITIZEN.COMMON.HOME.CITY" )
   return (
     <div className="navbar">
       <div className="center-container">
         {isMobile && <Hamburger handleClick={toggleSidebar} />}
-        <img
-          className="city"
-          id="topbar-logo" 
-          src={img || "https://cdn.jsdelivr.net/npm/@egovernments/digit-ui-css@1.0.7/img/m_seva_white_logo.png"}
-          alt="mSeva"
-        />
-        <h3>{cityOfCitizenShownBesideLogo}</h3>
+        <img className="city" id="topbar-logo" src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="K-SMART" />
+        <h3>{cityOfCitizenShownBesideLogo}</h3>  
         <div className="RightMostTopBarOptions">
-          {!hideNotificationIconOnSomeUrlsWhenNotLoggedIn ? <div className="EventNotificationWrapper" onClick={onNotificationIconClick}>
-            { notificationCountLoaded && notificationCount ? <span><p>{notificationCount}</p></span> : null }
-            <NotificationBell />
-          </div> : null}
+          {!hideNotificationIconOnSomeUrlsWhenNotLoggedIn ? (
+            <div className="EventNotificationWrapper" onClick={onNotificationIconClick}>
+              {notificationCountLoaded && notificationCount ? (
+                <span>
+                  <p>{notificationCount}</p>
+                </span>
+              ) : null}
+              <NotificationBell />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
