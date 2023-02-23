@@ -152,7 +152,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [streetNameMl, setstreetNameMl] = useState(formData?.ChildDetails?.streetNameMl ? formData?.ChildDetails?.streetNameMl : "");
   const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.ChildDetails?.publicPlaceDecpEn ? formData?.ChildDetails?.publicPlaceDecpEn : "");
 
-  const [pregnancyDuration, setPregnancyDuration] = useState(isEditBirth ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : formData?.ChildDetails?.pregnancyDuration);
+  // const [pregnancyDuration, setPregnancyDuration] = useState(isEditBirth ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : formData?.ChildDetails?.pregnancyDuration);
+
+  const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : "");
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]) : formData?.ChildDetails?.medicalAttensionSub);
   const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : formData?.ChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
@@ -185,6 +187,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
+  const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
   // const [isAdopted, setIsAdopted] = useState(formData?.ChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.ChildDetails?.isMultipleBirth);
   // const [isBornOutSide, setIsBornOutSide] = useState(formData?.ChildDetails?.isBornOutSide);
@@ -320,9 +323,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
       console.log(Difference_In_DaysRounded);
       if (Difference_In_DaysRounded <= 21) {
-        console.log("Difference_In_DaysRounded" + Difference_In_DaysRounded);
+        // console.log("Difference_In_DaysRounded" + Difference_In_DaysRounded);
         workFlowCode = "BIRTHHOSP21";
-        console.log(workFlowCode + "workFlowCode");
+        // console.log(workFlowCode + "workFlowCode");
       }
       if (Difference_In_DaysRounded >= 365) {
         setChildAadharHIde(true);
@@ -395,9 +398,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       setChildLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
     }
   }
-  function setSelectPregnancyDuration(value) {
-    setPregnancyDuration(value);
+  function setSelectPregnancyDuration(e) {
+    setPregnancyDuration(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
   }
+  // function setSelectPregnancyDuration(value) {
+  //   setPregnancyDuration(value);
+  // }
   function setSelectMedicalAttensionSub(value) {
     setMedicalAttensionSub(value);
   }
@@ -785,7 +791,17 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setToast(false);
       }, 2000);
     } else {
-      setPregnancyDurationStError(false);
+      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+        validFlag = false;
+        setPregnancyDurationInvalidError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else{
+        setPregnancyDurationStError(false);
+        setPregnancyDurationInvalidError(false);
+      }
     }
     if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
       validFlag = false;
@@ -903,12 +919,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setisInitialRenderFormData(true);
       }
     }
-    if (formData?.ChildDetails?.pregnancyDuration != null) {
-      if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-        setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
-        setisInitialRenderFormData(true);
-      }
-    }
+    // if (formData?.ChildDetails?.pregnancyDuration != null) {
+    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
+    //     setisInitialRenderFormData(true);
+    //   }
+    // }
     if (formData?.ChildDetails?.deliveryMethods != null) {
       if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
         // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
@@ -918,8 +934,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
   }
 
-
-console.log(birthWeight);
   if (isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
     return <Loader></Loader>;
   } else {
@@ -932,11 +946,11 @@ console.log(birthWeight);
           || (value === "HOSPITAL" ? (!hospitalName || !hospitalNameMl) : false)
           || (value === "INSTITUTION" ? (!institution || !institutionId || !institutionIdMl) : false)
           || (value === "HOME" ? (!wardNo || !adrsPostOffice || adrsPincode === "" || adrsLocalityNameEn === ""
-          || adrsHouseNameEn === "" || adrsLocalityNameMl === "" || localityNameEn === "") : false)
-          || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "" ) : false)
+            || adrsHouseNameEn === "" || adrsLocalityNameMl === "" || localityNameEn === "") : false)
+          || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "") : false)
           || (value === "VEHICLE" ? (!vehicleType || vehicleRegistrationNo === "" || vehicleHaltPlace === ""
-          || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "" ) : false)
-          || !medicalAttensionSub || !deliveryMethods || birthWeight == null}>
+            || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "") : false)
+          || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1153,7 +1167,6 @@ console.log(birthWeight);
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    {" "}
                     <CardLabel>
                       {`${t("CR_FIRST_NAME_EN")}`}
                       <span className="mandatorycss">*</span>
@@ -1173,7 +1186,6 @@ console.log(birthWeight);
                     />
                   </div>
                   <div className="col-md-4">
-                    {" "}
                     <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
                     <TextInput
                       t={t}
@@ -1189,7 +1201,6 @@ console.log(birthWeight);
                     />
                   </div>
                   <div className="col-md-4">
-                    {" "}
                     <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
                     <TextInput
                       t={t}
@@ -1209,7 +1220,6 @@ console.log(birthWeight);
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    {" "}
                     <CardLabel>
                       {`${t("CR_FIRST_NAME_ML")}`}
                       <span className="mandatorycss">*</span>
@@ -1233,7 +1243,6 @@ console.log(birthWeight);
                     />
                   </div>
                   <div className="col-md-4">
-                    {" "}
                     <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
                     <TextInput
                       t={t}
@@ -1254,7 +1263,6 @@ console.log(birthWeight);
                     />
                   </div>
                   <div className="col-md-4">
-                    {" "}
                     <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
                     <TextInput
                       t={t}
@@ -1311,7 +1319,7 @@ console.log(birthWeight);
                   placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
                 />
               </div>
-              <div className="col-md-3">
+              {/* <div className="col-md-3">
                 <CardLabel>
                   {`${t("CR_PREGNANCY_DURATION")}`} <span className="mandatorycss">*</span>
                 </CardLabel>
@@ -1323,6 +1331,25 @@ console.log(birthWeight);
                   selected={pregnancyDuration}
                   select={setSelectPregnancyDuration}
                   placeholder={`${t("CR_PREGNANCY_DURATION")}`}
+                />
+              </div> */}
+              <div className="col-md-3">
+                <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="pregnancyDuration"
+                  value={pregnancyDuration}
+                  onChange={setSelectPregnancyDuration}
+                  placeholder={`${t("CR_PREGNANCY_DURATION")}`}
+                  {...(validation = {
+                    pattern: "^[0-9`' ]*$",
+                    isRequired: true,
+                    type: "text",
+                    title: t("CR_INVALID_PREGNANCY_DURATION"),
+                  })}
                 />
               </div>
               <div className="col-md-3">
@@ -1374,7 +1401,7 @@ console.log(birthWeight);
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                || PregnancyDurationStError
+                || PregnancyDurationStError || PregnancyDurationInvalidError
 
 
               }
@@ -1393,7 +1420,7 @@ console.log(birthWeight);
                   admittedHospitalEnError || vehiDesDetailsEnError ||
                   placeTypepEnError || localNameEnError || localNameMlError ||
                   MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                  || PregnancyDurationStError
+                  || PregnancyDurationStError || PregnancyDurationInvalidError
                   ?
                   AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1419,7 +1446,8 @@ console.log(birthWeight);
                                                           : BirthWeightError ? t(`BIRTH_WEIGHT_ERROR`)
                                                             : MedicalAttensionSubStError ? t(`BIRTH_ERROR_MEDICAL_ATTENSION_CHOOSE`)
                                                               : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
-                                                                : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
+                                                              : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)                                                                
+                                                              : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
 
 
                                                                   : setToast(false)

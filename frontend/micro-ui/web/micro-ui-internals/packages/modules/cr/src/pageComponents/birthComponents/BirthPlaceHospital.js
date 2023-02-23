@@ -44,9 +44,11 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
         selectHospitalNameMl(hospitalNameMl);
         setIsInitialRender(false);
       } else {
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === hospitalName.hospitalName);
-        selectHospitalNameMl(cmbhospitalMl[0]);
-        setIsInitialRender(false);
+        if (hospitalName != null) {
+          cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalName.code);
+          selectHospitalNameMl(cmbhospitalMl[0]);
+          setIsInitialRender(false);
+        }
       }
     }
   }, [cmbhospitalMl, isInitialRender])
