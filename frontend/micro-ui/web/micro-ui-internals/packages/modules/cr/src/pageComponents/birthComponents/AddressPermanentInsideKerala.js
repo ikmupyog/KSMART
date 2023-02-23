@@ -173,7 +173,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntInKeralaAdrHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
@@ -181,7 +181,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntInKeralaAdrHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -190,7 +190,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntInKeralaAdrLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -199,7 +199,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntInKeralaAdrLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -208,7 +208,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntInKeralaAdrStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -217,7 +217,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntInKeralaAdrStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 

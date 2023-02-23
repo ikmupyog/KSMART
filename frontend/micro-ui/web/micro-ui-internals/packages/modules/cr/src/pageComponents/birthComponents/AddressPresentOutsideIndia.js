@@ -71,7 +71,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setadrsCityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setadrsCityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaCityTown(presentOutSideIndiaadrsCityTown);
       } else {
@@ -85,7 +85,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setAdressEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setAdressEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaLineoneEn(presentOutSideIndiaAdressEn);
       } else {
@@ -97,7 +97,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     if (e.target.value.length === 51) {
       return false;
     }
-    setAdressEnB(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    setAdressEnB(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     if (isPrsentAddress) {
       setadrsPermntOutsideIndiaLinetwoEn(presentOutSideIndiaAdressEnB);
     } else {
@@ -109,7 +109,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setAdressMlB(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setAdressMlB(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaLinetwoMl(presentOutSideIndiaAdressMlB);
       } else {
@@ -121,7 +121,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setAdressMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setAdressMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaLineoneMl(presentOutSideIndiaAdressMl);
       } else {
@@ -135,7 +135,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setProvinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setProvinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setPermntOutsideIndiaprovinceEn(presentOutSideIndiaProvinceEn);
       } else {
@@ -147,7 +147,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setProvinceMl(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setProvinceMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setPermntOutsideIndiaprovinceMl(presentOutSideIndiaProvinceEn);
       } else {
