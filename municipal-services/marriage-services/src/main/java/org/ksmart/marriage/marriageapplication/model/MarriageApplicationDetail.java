@@ -16,147 +16,161 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class MarriageApplicationDetail {
-    @Size(max = 64)
-    @JsonProperty("id")
-    private String id;
 
-    @JsonProperty("dateofreport")
-    private Long dateOfReport;
+    @JsonProperty("marraigeDOM")
+    private Long dateofmarriage;
 
-    @JsonProperty("dateofmarriage")
-    private Long dateOfMarriage;
+    @JsonProperty("marraigeDOR")
+    private Long dateofreporting;
 
-
-
-    @Size(max = 1000)
-    @JsonProperty("firstname_bride_en")
-    private String firstNameEn;
-
-    @Size(max = 1000)
-    @JsonProperty("firstname_bride_ml")
-    private String firstNameMl;
-
-    @Size(max = 1000)
-    @JsonProperty("middlename_bride_en")
-    private String middleNameEn;
-
-    @Size(max = 1000)
-    @JsonProperty("middlename_bride_ml")
-    private String middleNameMl;
-
-    @Size(max = 1000)
-    @JsonProperty("lastname_bride_en")
-    private String lastNameEn;
-
-    @Size(max = 1000)
-    @JsonProperty("lastname_bride_ml")
-    private String lastNameMl;
-
-
-
-    @Size(max = 1000)
-    @JsonProperty("firstname_groom_en")
-    private String firstNameGroomEn;
-
-    @Size(max = 1000)
-    @JsonProperty("firstname_groom_ml")
-    private String firstNameGroomMl;
-
-    @Size(max = 1000)
-    @JsonProperty("middlename_groom_en")
-    private String middleNameGroomEn;
-
-    @Size(max = 1000)
-    @JsonProperty("middlename_groom_ml")
-    private String middleNameGroomMl;
-
-    @Size(max = 1000)
-    @JsonProperty("lastname_groom_en")
-    private String lastNameGroomEn;
-
-    @Size(max = 1000)
-    @JsonProperty("lastname_groom_ml")
-    private String lastNameGroomMl;
 
 
     @Size(max = 64)
-    @JsonProperty("tenantid")
-    private String tenantId;
+    @JsonProperty("marraigeDistrictid")
+    private String districtid;
 
-    @Size(max = 2500)
-    @JsonProperty("remarks_en")
-    private String remarksEn;
+    @Size(max = 64)
+    @JsonProperty("marraigeLBtype")
+    private String lbtype;
 
-    @Size(max = 2500)
-    @JsonProperty("remarks_ml")
-    private String remarksMl;
+
+    @Size(max = 64)
+    private String tenantid;
+
+    @Size(max = 64)
+    @JsonProperty("marraigePlacetype")
+    private String placetype;
+
+    @Size(max = 1000)
+    @JsonProperty("marraigePlacename")
+    private String placename;
+
+    @Size(max = 64)
+    @JsonProperty("marraigeWardCode")
+    private String ward_code;
+
+    @Size(max = 1000)
+    @JsonProperty("marriageStreetEn")
+    private String street_name_en;
+
+    @Size(max = 1000)
+    @JsonProperty("marriageStreetMal")
+    private String street_name_ml;
+
+
+
+    @Size(max = 64)
+    @JsonProperty("marraigeTalukID")
+    private String talukid;
+
+    @Size(max = 64)
+    @JsonProperty("marraigeVillageName")
+    private String village_name;
+
+    @Size(max = 1000)
+    @JsonProperty("marriageLandmark")
+    private String landmark;
+
+    @Size(max = 1000)
+    @JsonProperty("marriageLocalityEn")
+    private String locality_en;
+
+    @Size(max = 1000)
+    @JsonProperty("marriageLocalityMal")
+    private String locality_ml;
+
+    @Size(max = 64)
+    @JsonProperty("marraigeType")
+    private String marriage_type;
+
+
+    @Size(max = 64)
+    @JsonProperty("marriagePlaceothers")
+    private String placeothers;
+
+    @Size(max = 200)
+    @JsonProperty("othMarriageType")
+    private String oth_marriage_type;
+
+    @Size(max = 1000)
+    @JsonProperty("marraigeOthersSpecify")
+    private String othersspecify;
 
     @Size(max = 15)
-    @JsonProperty("aadharno")
-    private String aadharNo;
+    @JsonProperty("WitnessDetails")
+    private String adharno;
+
+    @Size(max = 200)
+    @JsonProperty("witnessNameEn")
+    private String name_en;
+
+
+
+    @Size(max = 200)
+    @JsonProperty("witnessNameMal")
+    private String name_mal;
+
+
+    @JsonProperty("witnessAge")
+    private Integer age;
+
+    @Size(max = 200)
+    @JsonProperty("witnessAddresSEn")
+    private String address_en;
+
+    @Size(max = 200)
+    @JsonProperty("witnessAddressMal")
+    private String address_mal;
+
+    @Size(max = 150)
+    @JsonProperty("witnessMobile")
+    private String mobile;
+
+
+    @JsonProperty("witnessISmessageReceived")
+    private Boolean is_message_received;
+
+
+
+
+    @JsonProperty("witnessISEsigned")
+    private     Boolean is_esigned;
+
+
+
 
     @Size(max = 64)
-    @JsonProperty("esign_user_code")
-    private String esignUserCode;
+    @JsonProperty("marraigeApplicationType")
+    private String applicationtype;
 
     @Size(max = 64)
-    @JsonProperty("esign_user_desig_code")
-    private String esignUserDesigCode;
-
-
+    @JsonProperty("marraigeBusinessService")
+    private String businessservice;
 
     @Size(max = 64)
-    @JsonProperty("applicationtype")
-    private String applicationType;
+    @JsonProperty("marraigeWorkflowCode")
+    private String workflowcode;
 
     @Size(max = 64)
-    @JsonProperty("businessservice")
-    private String businessService;
+    @JsonProperty("marraigeFileNo")
+    private String fileno;
+
+
+
+    @JsonProperty("marraigeFileDate")
+    private long file_date;
 
     @Size(max = 64)
-    @JsonProperty("workflowcode")
-    private String workFlowCode;
+    @JsonProperty("marraigeFileStatus")
+    private String file_status;
 
     @Size(max = 64)
-    @JsonProperty("fm_fileno")
-    private String fmFileNo;
-
-    @JsonProperty("file_date")
-    private Long fileDate;
-    @JsonProperty("file_status")
-    private Long fileStatus;
-
-    @Size(max = 64)
-    @JsonProperty("applicationno")
-    private String applicationNo;
-
-    @Size(max = 64)
-    @JsonProperty("registrationno")
-    private String registrationNo;
-
-    @JsonProperty("registration_date")
-    private Long registrationDate;
-
-    @Size(max = 64)
-    @JsonProperty("action")
+    @JsonProperty("marraigeAction")
     private String action;
 
-
-
-
-    //@JsonProperty("wfDocuments")
-    //private List<Document>  wfDocuments;
-
     @Size(max = 64)
-    @JsonProperty("status")
+    @JsonProperty("marraigeStatus")
     private String status;
-
-
-    @JsonProperty("auditDetails")
-    private AuditDetails auditDetails;
-
-    //@JsonProperty("auditDetails")
-    //private AuditDetails auditDetails;
 
 
 
