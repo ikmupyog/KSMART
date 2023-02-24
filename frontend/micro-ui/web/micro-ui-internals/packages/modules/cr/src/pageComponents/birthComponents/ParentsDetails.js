@@ -120,7 +120,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
     if (isInitialRender) {
       if (formData?.ParentsDetails?.ismotherInfo != null) {
         setIsInitialRender(false);
-        setIsmotherInfo(formData?.ParentsDetails?.ismotherInfo);
+        setIsMotherInfo(formData?.ParentsDetails?.ismotherInfo);
       }
     }
 
@@ -520,11 +520,12 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
         {/* isDisabled={!motherFirstNameEn} */}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
           isDisabled={
-            (!isMotherInfo ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
+            (isMotherInfo === false ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
               || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
-              || !motherEducation || !motherProfession) : false) 
-              || (!isFatherInfo ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
-              || !Religion || fatherMobile === "") : false)
+              || !motherEducation || !motherProfession) : false)
+            || (isFatherInfo === false ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
+            ) : false)
+            || !Religion || fatherMobile === ""
           }>
 
           <div className="row">
