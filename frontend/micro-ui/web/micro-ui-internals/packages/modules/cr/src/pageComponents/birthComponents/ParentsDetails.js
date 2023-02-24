@@ -120,7 +120,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
     if (isInitialRender) {
       if (formData?.ParentsDetails?.ismotherInfo != null) {
         setIsInitialRender(false);
-        setIsmotherInfo(formData?.ParentsDetails?.ismotherInfo);
+        setIsMotherInfo(formData?.ParentsDetails?.ismotherInfo);
       }
     }
 
@@ -152,63 +152,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
   function setSelectMotherAadhar(e) {
     setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
   }
-
-
-  function setSelectMotherAadhar(e) {
-    // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setMotherAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setMotherAadharError(true);
-        setMotherAadhar(e.target.value);
-        return false;
-      } else {
-        setMotherAadharError(false);
-        setMotherAadhar(e.target.value);
-        return true;
-      }
-    } else {
-      setMotherAadharError(false);
-      setMotherAadhar(e.target.value);
-      return true;
-    }
-  }
-
-
-
   function setSelectFatherAadhar(e) {
     setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
   }
-
-
-  function setSelectFatherAadhar(e) {
-    // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setFatherAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setFatherAadharError(true);
-        setFatherAadhar(e.target.value);
-        return false;
-      } else {
-        setFatherAadharError(false);
-        setFatherAadhar(e.target.value);
-        return true;
-      }
-    } else {
-      setFatherAadharError(false);
-      setFatherAadhar(e.target.value);
-      return true;
-    }
-  }
-
-
-
   function setSelectFatherMobile(e) {
     if (e.target.value.trim().length != 0) {
       setFatherMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
@@ -223,19 +169,32 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
     }
   }
 
-  // function setSelectMotherMarriageAge(e) {
-  //   if (e.target.value.trim().length === 2) {
-  //     setMotherMarriageAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
-  //   }
-  // }
   function setSelectMotherMarriageAge(e) {
-    if (e.target.value.trim().length === 3) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherMarriageAge(e.target.value);
+    if (e.target.value.trim().length === 2) {
+      setMotherMarriageAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
     }
   }
+  //   function setSelectMotherMarriageAge(e) {
+  //     if (e.target.value != null || e.target.value != "") {
+
+  //         if (e.target.value.length <= 3) {
+  //             if (e.target.value < 12) {
+  //               setMotherMarriageAge(e.target.value);
+  //               MotherMarriageageError(true);
+  //                 return false;
+  //             }
+  //             else {
+  //               setMotherMarriageAge(e.target.value);
+  //                 MotherMarriageageError(false);
+  //             }
+  //         } else {
+  //             console.log(e.target.value.length);
+  //             MotherMarriageageError(true);
+  //             return false;
+
+  //         }
+  //     }
+  // }
 
   function setSelectMotherMarriageBirth(e) {
     if (e.target.value.trim().length === 3) {
@@ -320,7 +279,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
       setMotherProfession(null);
 
       setOrderofChildren("");
-      // setMotherNationality(null);
+      setMotherNationality(null);
     } else {
 
       setIsMotherInfo(e.target.checked);
@@ -334,7 +293,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
 
       setFatherFirstNameMl("");
 
-      // setFatherNationality(null);
+      setFatherNationality(null);
 
       setFatherEducation(null);
       setFatherProfession(null);
@@ -560,13 +519,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = fa
 
         {/* isDisabled={!motherFirstNameEn} */}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
-          isDisabled={!fatherMobile || 
-            (!isMotherInfo ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
+          isDisabled={
+            (isMotherInfo === false ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
               || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
-              || !motherEducation || !motherProfession) : false) 
-
-              || (!isFatherInfo ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
-              || !Religion || fatherMobile === "") : false)
+              || !motherEducation || !motherProfession) : false)
+            || (isFatherInfo === false ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
+            ) : false)
+            || !Religion || fatherMobile === ""
           }>
 
           <div className="row">
