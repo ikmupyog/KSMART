@@ -1373,6 +1373,22 @@ const getCRIdProofList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRIdProofDetailsList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "IdProofDetails",
+          },
+        ],
+      },
+    ],
+  },
+});
+
 const getCRDeathPlaceTypeList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2387,6 +2403,9 @@ export const MdmsService = {
   getCRIdProof: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRIdProofList(tenantId, moduleCode), moduleCode);
   },
+  getCRIdProofDetails: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRIdProofDetailsList(tenantId, moduleCode), moduleCode);
+  }, 
   getCRDeathPlaceType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDeathPlaceTypeList(tenantId, moduleCode), moduleCode);
   },
