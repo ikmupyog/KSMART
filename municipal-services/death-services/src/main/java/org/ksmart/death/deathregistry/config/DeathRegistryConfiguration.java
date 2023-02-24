@@ -85,4 +85,14 @@ public class DeathRegistryConfiguration {
     @Value("${persister.update.deathcertificate.topic}")
     private String updateDeathCertificateTopic;
 
+    //Rakhi S on 24.02.2023
+    @Value("${egov.bnd.default.limit}")
+    private Integer defaultBndLimit;
+	
+	  @Value("${egov.bnd.default.offset}")
+    private Integer defaultOffset;
+	
+	  @Value("${egov.bnd.max.limit}")
+    private Integer maxSearchLimit;
+	
 }
