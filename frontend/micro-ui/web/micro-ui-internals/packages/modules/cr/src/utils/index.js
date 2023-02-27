@@ -751,7 +751,7 @@ export const convertToDeathRegistration = (data = {}) => {
         businessService: "death-services",
         action: "INITIATE",
         assignee: [],
-        workflowcode: "DEATHHOME",
+        workflowcode: data?.InformationDeath?.workflow,
       },
     ],
   };

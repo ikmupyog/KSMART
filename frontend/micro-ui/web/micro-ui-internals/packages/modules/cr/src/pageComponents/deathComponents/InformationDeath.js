@@ -138,7 +138,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn);
   const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl);
 
- 
+  const [workflow, setWorkflow] = useState(formData?.InformationDeath?.workflow);
+
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -314,6 +315,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectDeathPlace(value) {
     setselectDeathPlace(value);
     setValue(value.code);
+    setselectDeathPlace(value);
+    if (value === 'INSTITUTION') {
+      setWorkflow('DEATHHOSP');
+    } else {
+      setWorkflow('DEATHHOME');
+    }
   }
   // let workFlowCode ="";
   function selectDateOfDeath(value) {
@@ -643,8 +650,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn : null);
       sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
       sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+      sessionStorage.setItem("workflow", workflow);
+
     }
     onSelect(config.key, {
+      workflow,
       tenantId,
       DateOfDeath,
       TimeOfDeath,
