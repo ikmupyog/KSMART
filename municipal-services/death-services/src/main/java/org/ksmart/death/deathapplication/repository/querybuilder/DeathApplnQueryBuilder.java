@@ -2,7 +2,10 @@ package org.ksmart.death.deathapplication.repository.querybuilder;
 
 import java.util.List;
 import javax.validation.constraints.NotNull;
+
+import org.ksmart.death.deathapplication.config.DeathConfiguration;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,6 +16,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DeathApplnQueryBuilder extends BaseQueryBuilder {
+    
+  //Rakhi S on 27.02.2023
+    @Autowired
+    private DeathConfiguration config;
 
          //Jasmine
          private static final String QUERY = new StringBuilder()
@@ -242,12 +249,14 @@ StringBuilder query = new StringBuilder(QUERY);
                         addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
                         addFilter("dt.death_place_ward_id", criteria.getDeathPlaceWardId(), query, preparedStmtValues);
                         addFilter("dt.death_place_inst_type", criteria.getHospitalName(), query, preparedStmtValues);
-                        addDateRangeFilter("dt.createdtime",
+                        addDateRangeFilter("dt.application_date",
                         criteria.getFromDate(),
                         criteria.getToDate(),
                         query,
                         preparedStmtValues);
                         return query.toString();
+                        //Rakhi S on 27.02.2023
+                        // return addPaginationWrapper(query.toString(),preparedStmtValues,criteria);
 }   
 
  //Rakhi S on 08.02.2023  
@@ -268,4 +277,31 @@ public String getNextIDQuery() {
   return query.toString();
     
 }
+    //Rakhi S on 27.02.2023
+    // private final String PAGINATIONWRAPPER = "SELECT * FROM " +
+    //         "(SELECT *, DENSE_RANK() OVER (ORDER BY application_date DESC , id) offset_ FROM " +
+    //         "({})" +
+    //         " result) result_offset " +
+    //         "WHERE offset_ > ? AND offset_ <= ?";
+  
+    //Rakhi S on 27.02.2023
+    // private String addPaginationWrapper(String query, List<Object> preparedStmtList, DeathSearchCriteria criteria) {
+    //   int limit = config.getDefaultBndLimit();
+    //   int offset = config.getDefaultOffset();
+    //   String finalQuery = PAGINATIONWRAPPER.replace("{}", query);
+  
+    //   if (criteria.getLimit() != null && criteria.getLimit() <= config.getMaxSearchLimit())
+    //     limit = criteria.getLimit();
+  
+    //   if (criteria.getLimit() != null && criteria.getLimit() > config.getMaxSearchLimit())
+    //     limit = config.getMaxSearchLimit();
+  
+    //   if (criteria.getOffset() != null)
+    //     offset = criteria.getOffset();
+  
+    //   preparedStmtList.add(offset);
+    //   preparedStmtList.add(limit + offset);
+  
+    //   return finalQuery;
+    // }
 }

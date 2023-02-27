@@ -41,5 +41,15 @@ public class DeathConfiguration {
  
      @Value("${egov.workflow.path}")
      private String wfTransitionPath;
-     
+
+     //Rakhi S on 27.02.2023
+	@Value("${egov.bnd.default.limit}")
+     private Integer defaultBndLimit;
+       
+     @Value("${egov.bnd.default.offset}")
+     private Integer defaultOffset;
+       
+     @Value("${egov.bnd.max.limit}")
+     private Integer maxSearchLimit;
+    
 }
