@@ -63,6 +63,15 @@ class BaseQueryBuilder {
             paramValues.add(value);
         }
     }
+    //Rakhi S on 24.02.2023
+    // void addFilter(String column, Long value, StringBuilder query, List<Object> paramValues) {
+    //     if (value>0) {
+    //         addWhereClause(paramValues, query);
+    //         query.append(column)
+    //              .append("=? ");
+    //         paramValues.add(value);
+    //     }
+    // }
     // void addFilter(String column, Long value, StringBuilder query, List<Object> paramValues) {
     //     if (StringUtils.isAllBlank(value))  {
     //         addWhereClause(paramValues, query);

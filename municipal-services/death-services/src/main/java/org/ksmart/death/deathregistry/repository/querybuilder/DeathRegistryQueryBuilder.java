@@ -2,7 +2,10 @@ package org.ksmart.death.deathregistry.repository.querybuilder;
 
 import java.util.List;
 import javax.validation.constraints.NotNull;
+
+import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,6 +16,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
+
+  //Rakhi S on 24.02.2023
+  @Autowired
+	private DeathRegistryConfiguration config;
 
          //Jasmine
          private static final String QUERY = new StringBuilder()
@@ -221,15 +228,19 @@ StringBuilder query = new StringBuilder(QUERY);
 
                         addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
                         addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
-                      //  addFilter("dt.application_no", criteria.getA(), query, preparedStmtValues);  
                         addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
-                        addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
-                        // addDateRangeFilter("dt.dateofdeath",
-                        // criteria.getFromDate(),
-                        // criteria.getToDate(),
-                        // query,
-                        // preparedStmtValues);
-                        return query.toString();
+                        addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
+                        //Rakhi S on 24.02.2023
+                        addFilter("dt.registration_no", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);
+                        // addFilter("dt.dateofdeath", criteria.getDateOfDeath(), query, preparedStmtValues); 
+                        addDateRangeFilter("dt.registration_date",
+                        criteria.getFromDate(),
+                        criteria.getToDate(),
+                        query,
+                        preparedStmtValues);
+                        // return query.toString();
+                        //Rakhi S on 24.02.2023
+                        return addPaginationWrapper(query.toString(),preparedStmtValues,criteria);
 }    
 
 //RAkhi S on 10.02.2023
@@ -275,5 +286,31 @@ private static final String REGNOQUERY = new StringBuilder()
           addFilter("ct.deathdtlid", id, query, preparedStmtValues);      
         return query.toString();                                              
     }   
-
+    //Rakhi S on 24.02.2023
+    private final String PAGINATIONWRAPPER = "SELECT * FROM " +
+            "(SELECT *, DENSE_RANK() OVER (ORDER BY dateofdeath DESC , id) offset_ FROM " +
+            "({})" +
+            " result) result_offset " +
+            "WHERE offset_ > ? AND offset_ <= ?";
+  
+    //Rakhi S on 24.02.2023
+    private String addPaginationWrapper(String query, List<Object> preparedStmtList, DeathRegistryCriteria criteria) {
+      int limit = config.getDefaultBndLimit();
+      int offset = config.getDefaultOffset();
+      String finalQuery = PAGINATIONWRAPPER.replace("{}", query);
+  
+      if (criteria.getLimit() != null && criteria.getLimit() <= config.getMaxSearchLimit())
+        limit = criteria.getLimit();
+  
+      if (criteria.getLimit() != null && criteria.getLimit() > config.getMaxSearchLimit())
+        limit = config.getMaxSearchLimit();
+  
+      if (criteria.getOffset() != null)
+        offset = criteria.getOffset();
+  
+      preparedStmtList.add(offset);
+      preparedStmtList.add(limit + offset);
+  
+      return finalQuery;
+    }
 }

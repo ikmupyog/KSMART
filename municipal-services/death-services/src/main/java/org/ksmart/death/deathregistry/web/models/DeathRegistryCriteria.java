@@ -1,5 +1,7 @@
 package org.ksmart.death.deathregistry.web.models;
 
+import javax.validation.Valid;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,7 +52,8 @@ public class DeathRegistryCriteria {
     private Long toDate;
 
     //Rakhi S on 10.02.2023
-    public enum SourceEnum {
+   	
+	    public enum SourceEnum {
     	sms("sms"),
         
         email("email"),
@@ -105,4 +108,11 @@ public class DeathRegistryCriteria {
 
     @JsonProperty("hospital")
     private String hospital;
+
+    //Rakhi S on 24.02.2023
+    @Valid
+	  private Integer offset;
+
+  	@Valid
+	  private Integer limit;
 }
