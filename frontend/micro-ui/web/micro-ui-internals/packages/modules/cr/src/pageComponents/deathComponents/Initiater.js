@@ -77,20 +77,16 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 51) {
       return false;      
     } else {
-      setInitiatorName(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setInitiatorName(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
   function setSelectInitiatorRelation(e) {
     if (e.target.value.length === 51) {
       return false;      
     } else {
-      setInitiatorRelation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setInitiatorRelation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
-  
-  // function setSelectInitiatorName(value) {
-  //   setInitiatorName(value);    
-  // }
 
   function setSelectInitiatorMobile(e) {
     if (e.target.value.length != 0) {
@@ -110,7 +106,8 @@ const Initiater = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 251) {
       return false;      
     } else {
-      setInitiatorAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setInitiatorAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+
     }
   }  
 

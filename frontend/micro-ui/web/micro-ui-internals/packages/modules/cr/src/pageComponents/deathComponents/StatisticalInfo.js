@@ -12,7 +12,6 @@ import {
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-
 const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   // const { DeceasedGender } = props;
 
@@ -768,9 +767,11 @@ const onSkip = () => onSelect();
             </div>
           </div>
         </div>
-        {/* {InformationDeath.DeceasedGender.code === "FEMALE" && ( */}
-        <div>
-          
+      
+      {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" && (
+         console.log(formData?.InformationDeath?.DeceasedGender.code),
+
+        <div>          
         <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
@@ -822,7 +823,7 @@ const onSkip = () => onSelect();
             </div>
           </div>
         </div>
-        {/* )} */}
+      )};
         
             <div className="row">
               <div className="col-md-12">
