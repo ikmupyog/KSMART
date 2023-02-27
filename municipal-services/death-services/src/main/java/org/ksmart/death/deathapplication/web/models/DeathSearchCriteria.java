@@ -1,6 +1,9 @@
 package org.ksmart.death.deathapplication.web.models;
 
 import javax.validation.Valid;
+import java.util.List;
+
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -107,4 +110,24 @@ public class DeathSearchCriteria {
 
   	@Valid
 	private Integer limit;
+    //Jasmine 23.02.2023
+    @Size(max = 64)
+    @JsonProperty("applicationType")
+    private String applicationType;
+
+    @JsonProperty("applicationStatus")
+    private String applicationStatus;
+
+    @JsonProperty("businessService")
+    private String businessService;
+
+    @JsonProperty("action")
+    private String action;
+
+    @JsonProperty("assignee")
+    private List<String> assignees;
+
+    public void setStatus(String s) {
+    }
+
 }

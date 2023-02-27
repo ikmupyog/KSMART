@@ -46,7 +46,6 @@ public class DeathApplnRepository {
         
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-
         List<DeathDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
         if(result != null) {
 			result.forEach(deathDtl -> {
@@ -65,7 +64,6 @@ public class DeathApplnRepository {
                     DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
                     deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
                 }
-                
                 DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
                 if (deathInitiator!= null){
                     DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
