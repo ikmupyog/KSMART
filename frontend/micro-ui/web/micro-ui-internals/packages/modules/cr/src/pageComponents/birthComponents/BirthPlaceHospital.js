@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
   selectHospitalNameMl, isEditBirth = false
@@ -16,6 +17,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
+  const queryClient = useQueryClient();
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
     setTenantboundary(false);

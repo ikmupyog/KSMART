@@ -23,28 +23,16 @@ export const CRService = {
       params: details,
       auth: true,
     }),
-  CRRegistrySearch: ({ tenantId, filters }) =>
+  CRRegistrySearchBirth: ({ filters }) =>
     Request({
-      url: Urls.crdeath.registry_search,
+      url: Urls.cr.registry_search_birth,
       useCache: false,
       method: "POST",
       auth: true,
       userService: false,
-      params: {tenantId,...filters },
+      params: { ...filters },
     }),
-    CRResistryDownload: (tenantId, id, source ) =>
-    Request({
-      url: Urls.crdeath.registry_download,
-      data: {},
-      useCache: false,
-      method: "POST",
-      params: { id, source ,tenantId},
-      auth: true,
-      locale: true,
-      userInfo: true,
-      userDownloadInfo: true,
-    }),
-    CRResistryDownloadBirth: ( id, source ) =>
+  CRResistryDownloadBirth: (id, source) =>
     Request({
       url: Urls.cr.registry_download,
       data: {},
@@ -56,17 +44,8 @@ export const CRService = {
       userInfo: true,
       userDownloadInfo: true,
     }),
-    CRRegistrySearchBirth: ({   filters }) =>
-    Request({
-      url: Urls. cr.registry_search_birth,
-      useCache: false,
-      method: "POST",
-      auth: true,
-      userService: false,
-      params: { ...filters },
-    }),
   CRsearch: ({ tenantId, filters }) =>
-     Request({
+    Request({
       url: Urls.cr.search,
       useCache: false,
       method: "POST",

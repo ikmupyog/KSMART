@@ -205,7 +205,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   };
   if (isCountryLoading) {
     return <Loader></Loader>;
-  }
+  } else
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentOutSideIndiaAdressEn}>

@@ -133,10 +133,10 @@ import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
-import useRegistrySearch from "./cr/useRegistrySearch";
-import useResistryDownload from "./cr/useResistryDownload";
+import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
+import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
 
 import useSearchDeath  from "./cr/useSearchDeath";
 import useTenantsDFM from "./dfm/useTenants";
@@ -334,8 +334,8 @@ const cr = {
   useInbox: useCRInbox,
   useMDMS: useCRMDMS,
   useSearch: useCRSearch,
-  useRegistrySearch,
-  useResistryDownload,
+  useRegistrySearchDeath,
+  useRegistryDownloadDeath,
   useResistryDownloadBirth,
   useRegistrySearchBirth,
   useSearchDeath ,

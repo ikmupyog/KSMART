@@ -75,6 +75,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
 
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
+  
   const columns = useMemo(
     () => [
       {
@@ -88,37 +89,37 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
                     {row.original.deathApplicationNo} "188e3dc8-17c8-4ce3-80bf-fb7b8b6df944",
                   </Link> */}
-                {row.original.deathApplicationNo}
+                {row.original.DeathACKNo}
               </span>
             </div>
           );
         },
       },
-      {
-        Header: t("CR_COMMON_COL_APP_DATE"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
-      },
-      {
-        Header: t("CR_COMMON_COL_DOD"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.dateOfDeath ? convertEpochToDateDMY(row.dateOfDeath) : ""),
-      },
+      // {
+      //   Header: t("CR_COMMON_COL_APP_DATE"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+      // },
+      // {
+      //   Header: t("CR_COMMON_COL_DOD"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.dateOfDeath ? convertEpochToDateDMY(row.dateOfDeath) : ""),
+      // },
       // {
       //     Header: t("TL_APPLICATION_TYPE_LABEL"),
       //     disableSortBy: true,
       //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
       // },
-      {
-        Header: t("CR_COMMON_DECEASED_NAME"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.deceasedFirstNameEn + row.deceasedMiddleNameEn + row.deceasedLastNameEn || "-"),
-      },
-      {
-        Header: t("CR_COMMON_DEATH_PLACE"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.deathPlace || "-"),
-      },
+      // {
+      //   Header: t("CR_COMMON_DECEASED_NAME"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.deceasedFirstNameEn + row.deceasedMiddleNameEn + row.deceasedLastNameEn || "-"),
+      // },
+      // {
+      //   Header: t("CR_COMMON_DEATH_PLACE"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.deathPlace || "-"),
+      // },
       {
         Header: t("Download Certificate"),
         disableSortBy: true,
