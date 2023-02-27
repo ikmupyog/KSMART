@@ -115,4 +115,23 @@ public class DeathRegistryCriteria {
 
   	@Valid
 	  private Integer limit;
+
+    //Rakhi S on 27.02.2023
+    @JsonProperty("sortBy")
+    private SortBy sortBy;
+
+    @JsonProperty("sortOrder")
+    private SortOrder sortOrder;
+
+     public enum SortOrder {
+        ASC,
+        DESC
+    }
+
+    public enum SortBy {
+        DeathACKNo,
+        DateOfDeath,
+        DeceasedGender,
+        TenantId
+    }
 }

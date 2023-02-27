@@ -7,6 +7,7 @@ import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
      * Creates CrDeathQueryBuilder
@@ -225,7 +226,7 @@ public String getDeathSearchQuery(@NotNull DeathRegistryCriteria criteria,
                   @NotNull List<Object> preparedStmtValues, Boolean isCount) {
 
 StringBuilder query = new StringBuilder(QUERY);
-
+StringBuilder orderBy = new StringBuilder();
                         addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
                         addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
                         addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
@@ -238,9 +239,26 @@ StringBuilder query = new StringBuilder(QUERY);
                         criteria.getToDate(),
                         query,
                         preparedStmtValues);
-                        // return query.toString();
+                         //Rakhi S on 27.02.2023
+                      if(criteria.getSortOrder() == null){
+                        criteria.setSortOrder(DeathRegistryCriteria.SortOrder.ASC);
+                      }
+                        if (StringUtils.isEmpty(criteria.getSortBy()))
+                        addOrderByColumns("dt.createdtime","ASC", orderBy);
+                        else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DateOfDeath)
+                        addOrderByColumns("dt.dateofdeath",criteria.getSortOrder().toString(), orderBy);
+                        else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DeathACKNo)
+                        addOrderByColumns("dt.ack_no",criteria.getSortOrder().toString(),orderBy);
+                        else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DeceasedGender)
+                        addOrderByColumns("dt.deceased_gender",criteria.getSortOrder().toString(), orderBy);
+                        else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.TenantId)
+                        addOrderByColumns("dt.tenantid",criteria.getSortOrder().toString(), orderBy);
+                        addOrderToQuery(orderBy, query);
+                        addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
+
+                        return query.toString();
                         //Rakhi S on 24.02.2023
-                        return addPaginationWrapper(query.toString(),preparedStmtValues,criteria);
+                        // return addPaginationWrapper(query.toString(),preparedStmtValues,criteria);
 }    
 
 //RAkhi S on 10.02.2023
@@ -287,30 +305,30 @@ private static final String REGNOQUERY = new StringBuilder()
         return query.toString();                                              
     }   
     //Rakhi S on 24.02.2023
-    private final String PAGINATIONWRAPPER = "SELECT * FROM " +
-            "(SELECT *, DENSE_RANK() OVER (ORDER BY dateofdeath DESC , id) offset_ FROM " +
-            "({})" +
-            " result) result_offset " +
-            "WHERE offset_ > ? AND offset_ <= ?";
+    // private final String PAGINATIONWRAPPER = "SELECT * FROM " +
+    //         "(SELECT *, DENSE_RANK() OVER (ORDER BY dateofdeath DESC , id) offset_ FROM " +
+    //         "({})" +
+    //         " result) result_offset " +
+    //         "WHERE offset_ > ? AND offset_ <= ?";
   
     //Rakhi S on 24.02.2023
-    private String addPaginationWrapper(String query, List<Object> preparedStmtList, DeathRegistryCriteria criteria) {
-      int limit = config.getDefaultBndLimit();
-      int offset = config.getDefaultOffset();
-      String finalQuery = PAGINATIONWRAPPER.replace("{}", query);
+    // private String addPaginationWrapper(String query, List<Object> preparedStmtList, DeathRegistryCriteria criteria) {
+    //   int limit = config.getDefaultBndLimit();
+    //   int offset = config.getDefaultOffset();
+    //   String finalQuery = PAGINATIONWRAPPER.replace("{}", query);
   
-      if (criteria.getLimit() != null && criteria.getLimit() <= config.getMaxSearchLimit())
-        limit = criteria.getLimit();
+    //   if (criteria.getLimit() != null && criteria.getLimit() <= config.getMaxSearchLimit())
+    //     limit = criteria.getLimit();
   
-      if (criteria.getLimit() != null && criteria.getLimit() > config.getMaxSearchLimit())
-        limit = config.getMaxSearchLimit();
+    //   if (criteria.getLimit() != null && criteria.getLimit() > config.getMaxSearchLimit())
+    //     limit = config.getMaxSearchLimit();
   
-      if (criteria.getOffset() != null)
-        offset = criteria.getOffset();
+    //   if (criteria.getOffset() != null)
+    //     offset = criteria.getOffset();
   
-      preparedStmtList.add(offset);
-      preparedStmtList.add(limit + offset);
+    //   preparedStmtList.add(offset);
+    //   preparedStmtList.add(limit + offset);
   
-      return finalQuery;
-    }
+    //   return finalQuery;
+    // }
 }

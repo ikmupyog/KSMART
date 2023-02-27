@@ -6,12 +6,18 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.ksmart.death.deathapplication.config.DeathConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 /**
      * Creates CrDeathService
      * Rakhi S IKM
      * on  05/12/2022
      */
 class BaseQueryBuilder {
+      
+    //Rakhi S on 27.02.2023
+      @Autowired
+      private DeathConfiguration config;
 
     void addDateRangeFilter(String column, Long startDate, Long endDate, StringBuilder query,
                             List<Object> paramValues) {
@@ -89,4 +95,56 @@ class BaseQueryBuilder {
                           .stream()
                           .collect(Collectors.joining(", "));
     }
+
+    void addOrderClause(StringBuilder orderBy) {
+        if (orderBy.length() == 0) {
+            orderBy.append(" ORDER BY ");
+        } else {
+            orderBy.append(" ");
+        }
+    }
+    
+    void addOrderByColumns(String column, String valueSort, StringBuilder orderBy){
+        addOrderClause(orderBy);
+        if(!StringUtils.isEmpty(column)){
+            addOrderClause(orderBy);
+            orderBy.append(column);
+            addAscDesc(valueSort, orderBy);
+        }
+    }
+    void addOrderToQuery(StringBuilder orderBy, StringBuilder query){
+        if (orderBy.length() > 0) {
+            String orderByStr = orderBy.toString().trim();
+            orderByStr = orderByStr.substring(0, orderByStr.length() - 1);
+            query.append(orderByStr);
+        }
+    }
+    
+    void addAscDesc(String valueSort, StringBuilder query){
+        if(StringUtils.isEmpty(valueSort) || valueSort == null)
+            query.append("ASC, ");
+        else if(valueSort == "ASC")
+            query.append(" ASC, ");
+        else
+            query.append(" DESC, ");
+    }
+    
+     void addLimitAndOffset(Integer offset, Integer limit, StringBuilder query, final List<Object> paramValues) {
+        // prepare Offset
+         if (offset == null) {
+             query.append(" OFFSET ? ");
+             paramValues.add(config.getDefaultOffset());
+         } else {
+             query.append(" OFFSET ? ");
+             paramValues.add(offset);
+         }
+         // prepare limit
+         if (limit == null) {
+             query.append(" LIMIT ? ");
+             paramValues.add(config.getDefaultBndLimit());
+         } else{
+             query.append(" LIMIT ? ");
+             paramValues.add(limit);
+         }
+     }
 }

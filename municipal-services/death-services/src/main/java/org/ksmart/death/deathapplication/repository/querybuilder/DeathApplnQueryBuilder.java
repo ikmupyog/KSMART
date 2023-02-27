@@ -3,10 +3,9 @@ package org.ksmart.death.deathapplication.repository.querybuilder;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 
-import org.ksmart.death.deathapplication.config.DeathConfiguration;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
      * Creates CrDeathQueryBuilder
@@ -17,9 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeathApplnQueryBuilder extends BaseQueryBuilder {
     
-  //Rakhi S on 27.02.2023
-    @Autowired
-    private DeathConfiguration config;
+
 
          //Jasmine
          private static final String QUERY = new StringBuilder()
@@ -241,6 +238,7 @@ public String getDeathSearchQuery(@NotNull DeathSearchCriteria criteria,
                   @NotNull List<Object> preparedStmtValues, Boolean isCount) {
 
 StringBuilder query = new StringBuilder(QUERY);
+StringBuilder orderBy = new StringBuilder();
 
                         addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
                         addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
@@ -254,6 +252,23 @@ StringBuilder query = new StringBuilder(QUERY);
                         criteria.getToDate(),
                         query,
                         preparedStmtValues);
+                      //Rakhi S on 27.02.2023
+                      if(criteria.getSortOrder() == null){
+                        criteria.setSortOrder(DeathSearchCriteria.SortOrder.ASC);
+                      }
+                        if (StringUtils.isEmpty(criteria.getSortBy()))
+                        addOrderByColumns("dt.createdtime","ASC", orderBy);
+                        else if (criteria.getSortBy() == DeathSearchCriteria.SortBy.DateOfDeath)
+                        addOrderByColumns("dt.dateofdeath",criteria.getSortOrder().toString(), orderBy);
+                        else if (criteria.getSortBy() == DeathSearchCriteria.SortBy.DeathACKNo)
+                        addOrderByColumns("dt.ack_no",criteria.getSortOrder().toString(),orderBy);
+                        else if (criteria.getSortBy() == DeathSearchCriteria.SortBy.DeceasedGender)
+                        addOrderByColumns("dt.deceased_gender",criteria.getSortOrder().toString(), orderBy);
+                        else if (criteria.getSortBy() == DeathSearchCriteria.SortBy.TenantId)
+                        addOrderByColumns("dt.tenantid",criteria.getSortOrder().toString(), orderBy);
+                        addOrderToQuery(orderBy, query);
+                        addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
+
                         return query.toString();
                         //Rakhi S on 27.02.2023
                         // return addPaginationWrapper(query.toString(),preparedStmtValues,criteria);
@@ -304,4 +319,6 @@ public String getNextIDQuery() {
   
     //   return finalQuery;
     // }
+
+   
 }

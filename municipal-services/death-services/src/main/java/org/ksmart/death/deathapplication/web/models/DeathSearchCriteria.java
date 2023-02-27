@@ -130,4 +130,25 @@ public class DeathSearchCriteria {
     public void setStatus(String s) {
     }
 
+    @JsonProperty("DeceasedGender")
+    private String  deceasedGender ;
+
+    @JsonProperty("sortBy")
+    private SortBy sortBy;
+
+    @JsonProperty("sortOrder")
+    private SortOrder sortOrder;
+
+     public enum SortOrder {
+        ASC,
+        DESC
+    }
+
+    public enum SortBy {
+        DeathACKNo,
+        DateOfDeath,
+        DeceasedGender,
+        TenantId
+    }
+    
 }
