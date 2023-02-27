@@ -40,16 +40,16 @@ import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/Ado
 
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
-import AddressOfDecesed from "./pageComponents/deathComponents/AddressOfDecesed";
-import OutSideIndia from "./pageComponents/deathComponents/OutSideIndia";
+// import AddressOfDecesed from "./pageComponents/deathComponents/AddressOfDecesed";
+// import OutSideIndia from "./pageComponents/deathComponents/OutSideIndia";
 import FamilyInformationDeath from "./pageComponents/deathComponents/FamilyInformationDeath";
-import PlaceOfDeath from "./pageComponents/deathComponents/PlaceOfDeath";
-import PlaceOfDeathHome from "./pageComponents/deathComponents/PlaceOfDeathHome";
-import PlaceOfDeathHospital from "./pageComponents/deathComponents/PlaceOfDeathHospital";
-import PlaceOfDeathInstitution from "./pageComponents/deathComponents/PlaceOfDeathInstitution";
-import PlaceOfDeathOther from "./pageComponents/deathComponents/PlaceOfDeathOther";
-import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVehicle";
-import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
+// import PlaceOfDeath from "./pageComponents/deathComponents/PlaceOfDeath";
+// import PlaceOfDeathHome from "./pageComponents/deathComponents/PlaceOfDeathHome";
+// import PlaceOfDeathHospital from "./pageComponents/deathComponents/PlaceOfDeathHospital";
+// import PlaceOfDeathInstitution from "./pageComponents/deathComponents/PlaceOfDeathInstitution";
+// import PlaceOfDeathOther from "./pageComponents/deathComponents/PlaceOfDeathOther";
+// import PlaceOfDeathVehicle from "./pageComponents/deathComponents/PlaceOfDeathVehicle";
+// import InformentAddress from "./pageComponents/deathComponents/InformentAddress";
 import StatisticalInfo from "./pageComponents/deathComponents/StatisticalInfo";
 import Hospital from "./pageComponents/deathComponents/Hospital";
 import Institution from "./pageComponents/deathComponents/Institution";
@@ -61,13 +61,13 @@ import Informer from "./pageComponents/deathComponents/Informer";
 import Initiater from "./pageComponents/deathComponents/Initiater";
 
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
-import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
+// import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
 import SearchRegistryDeath from "./components/SearchRegistryDeath"
 import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails";
-import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
+// import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
 import SearchDeathApplication from "./components/SearchApplicationDeath";
 import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
 import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/DeathCorrectionroute";
@@ -81,7 +81,7 @@ import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowl
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
-import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
+// import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
 import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
@@ -203,18 +203,18 @@ const componentsToRegister = {
   CRSearchdeathcorrection,
   CRSearchDeathCorrectionRoute,
   InformationDeath,
-  AddressOfDecesed,
-  OutSideIndia,
+  // AddressOfDecesed,
+  // OutSideIndia,
   FamilyInformationDeath,
-  PlaceOfDeath,
-  PlaceOfDeathHome,
-  PlaceOfDeathHospital,
-  PlaceOfDeathInstitution,
-  PlaceOfDeathOther,
-  PlaceOfDeathVehicle,
-  InformentAddress,
+  // PlaceOfDeath,
+  // PlaceOfDeathHome,
+  // PlaceOfDeathHospital,
+  // PlaceOfDeathInstitution,
+  // PlaceOfDeathOther,
+  // PlaceOfDeathVehicle,
+  // InformentAddress,
   StatisticalInfo,
-  ApplicantDetails,
+  // ApplicantDetails,
   DeathPlaceVehicle,
   DeathPlaceHome,
   Institution,
@@ -224,7 +224,7 @@ const componentsToRegister = {
   Informer,
   Initiater,
   // DeathCertificate,
-  GeneralRemarks,
+  // GeneralRemarks,
   BirthCheckPage,
   DeathCheckPage,
   MarriageCheckPage,
