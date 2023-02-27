@@ -1,0 +1,314 @@
+serviceMaps:
+  serviceName: kssm-snehapoorvam
+  mappings:
+  - version: 1.0
+    description: Update OB  details in kssm database, tr_snehapoorvam table
+    fromTopic: save-snehapoorvam-tr_snehapoorvamUpdate1
+    isTransaction: true
+    queryMaps:
+    - query: >
+       UPDATE public.tr_snehapoorvam SET  kssmpensionerid=?, scheme_id=?, district=?, application_no=?, application_date=?, office_typeid=?, office_nameid=?, applicant_namemal=?, applicant_nameeng=?, applicant_housenamemal=?, applicant_housenameeng=?, applicant_streetnamemal=?, applicant_streetnameeng=?, applicant_mainplacenamemal=?, applicant_mainplacenameeng=?, applicantlandphone_no=?, applicantmobile_no=?, applicant_district_id=?, applicant_lbid=?, applicant_postofficeid=?, applicant_pincode=?, chvstudent_fathernamemal=?, chvstudent_fathernameeng=?, chvstudent_mothernamemal=?, chvstudent_mothernameeng=?, intalivestatusid_father=?, intalivestatusid_mother=?, father_death_date=?, mother_date_date=?, guardian_name_mal=?, guardian_name_eng=?, guardian_housenamemal=?, guardian_housenameeng=?, guardian_streetmal=?, guardian_streeteng=?, guardian_mainplacemal=?, guardian_mainplaceeng=?, guardian_landphoneno=?, guardian_mobileno=?, guardian_districtid=?, guardian_lbid=?, guardian_postofficeid=?, guardian_pincode=?, relationship_pensioner=?, pensioner_genderid=?, applicant_age=?, applicant_dob=?, chvstudent_schoolnamemal=?, chvstudent_schoolnameeng=?, intschooltype=?, chvstudent_class=?, intschool_districtid=?, intstudent_certstatusid=?, applicant_income=?, applicant_accountno=?, chvaccountholdername_studentmal=?, chvaccountholdername_studenteng=?, chvaccountholdername_guardianmal=?, chvaccountholdername_guardianeng=?, applicant_bank=?, applicant_bank_branch=?, applicant_ifsccode=?, applicant_aadharno=?, applicant_eidno=?, remarks=?, applicant_bank_district=?, applicant_relation_others=?, applicant_admission_no=?, applicant_cource=?, file_status=?, ref_no=?, ref_date=?, chvdeathcertificate_no_father=?, chvdeathcertificate_date_father=?, chvdeathcertificate_issuingauthority_father=?, chvdeathcertificate_no_mother=?, chvdeathcertificate_date_mother=?, chvdeathcertificate_issuingauthority_mother=?, intclass_id=?, chvchildwelfare_certificateno=?, chvchildwelfare_certificatedate=?, chvchildwelfare_cert_issuingauthority=?, intfamilyapl_bpl_id=?, chvfamily_bpl_idno=?, chvfamily_bpl_date=?, chvfamily_bplcert_issuauthority=?, dtcoursestarted_date=?, bpl_certi_no=?, bpl_certi_date=?, bpl_certi_issue_authority=?, intinstitutionid=?, approval_date=?, verify_date=?, reject_date=?, apply_date=?, approve_no=?, rejected_by=?, approved_by=?, verified_by=?, intrenewalid=?, applicant_relation_othersmal=?, numkssmpensioneridold=?, intapptypeid=?, intacdyearid=?, chvincome_certificate_no=?, dtincome_certificate_date=?, chvincome_certificate_issuauthority=?, intstudentclasstype=? WHERE numkssmpensionerid=?;
+      basePath: snehapoorvam.*
+      jsonMaps:
+
+      - jsonPath: $.snehapoorvam.*.kssmpensionerid
+
+      - jsonPath: $.snehapoorvam.*.scheme_id
+
+      - jsonPath: $.snehapoorvam.*.district
+
+      - jsonPath: $.snehapoorvam.*.application_no
+
+      - jsonPath: $.snehapoorvam.*.application_date
+        type: DATE
+        
+      - jsonPath: $.snehapoorvam.*.office_typeid
+
+      - jsonPath: $.snehapoorvam.*.office_nameid
+
+      - jsonPath: $.snehapoorvam.*.applicant_namemal
+
+      - jsonPath: $.snehapoorvam.*.applicant_nameeng
+
+      - jsonPath: $.snehapoorvam.*.applicant_housenamemal
+
+      - jsonPath: $.snehapoorvam.*.applicant_housenameeng
+       
+      - jsonPath: $.snehapoorvam.*.applicant_streetnamemal
+
+      - jsonPath: $.snehapoorvam.*.applicant_streetnameeng
+
+      - jsonPath: $.snehapoorvam.*.applicant_mainplacenamemal 
+
+      - jsonPath: $.snehapoorvam.*.applicant_mainplacenameeng
+
+      - jsonPath: $.snehapoorvam.*.applicantlandphone_no
+
+      - jsonPath: $.snehapoorvam.*.applicantmobile_no
+
+      - jsonPath: $.snehapoorvam.*.applicant_district_id
+
+      - jsonPath: $.snehapoorvam.*.applicant_lbid
+
+      - jsonPath: $.snehapoorvam.*.applicant_postofficeid
+
+      - jsonPath: $.snehapoorvam.*.applicant_pincode
+
+      - jsonPath: $.snehapoorvam.*.chvstudent_fathernamemal
+      
+      - jsonPath: $.snehapoorvam.*.chvstudent_fathernameeng
+       
+      - jsonPath: $.snehapoorvam.*.chvstudent_mothernamemal
+        
+      - jsonPath: $.snehapoorvam.*.chvstudent_mothernameeng
+      
+      - jsonPath: $.snehapoorvam.*.intalivestatusid_father
+      
+      - jsonPath: $.snehapoorvam.*.intalivestatusid_mother 
+      
+      - jsonPath: $.snehapoorvam.*.father_death_date
+        type: DATE
+      
+      - jsonPath: $.snehapoorvam.*.mother_date_date
+        type: DATE
+     
+      - jsonPath: $.snehapoorvam.*.guardian_name_mal
+     
+      - jsonPath: $.snehapoorvam.*.guardian_name_eng
+      
+      - jsonPath: $.snehapoorvam.*.guardian_housenamemal
+      
+      - jsonPath: $.snehapoorvam.*.guardian_housenameeng
+      
+      - jsonPath: $.snehapoorvam.*.guardian_streetmal
+      
+      - jsonPath: $.snehapoorvam.*.guardian_streeteng
+      
+      - jsonPath: $.snehapoorvam.*.guardian_mainplacemal
+         
+      - jsonPath: $.snehapoorvam.*.guardian_mainplaceeng
+          
+      - jsonPath: $.snehapoorvam.*.guardian_landphoneno
+      
+      - jsonPath: $.snehapoorvam.*.guardian_mobileno
+       
+      - jsonPath: $.snehapoorvam.*.guardian_districtid 
+        
+      - jsonPath: $.snehapoorvam.*.guardian_lbid 
+      
+      - jsonPath: $.snehapoorvam.*.guardian_postofficeid 
+      
+      - jsonPath: $.snehapoorvam.*.guardian_pincode
+      
+      - jsonPath: $.snehapoorvam.*.relationship_pensioner
+      
+      
+      - jsonPath: $.snehapoorvam.*.pensioner_genderid 
+        
+      
+      - jsonPath: $.snehapoorvam.*.applicant_age
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_dob
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvstudent_schoolnamemal
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvstudent_schoolnameeng
+      
+      
+      - jsonPath: $.snehapoorvam.*.intschooltype
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvstudent_class 
+      
+      - jsonPath: $.snehapoorvam.*.intschool_districtid
+      
+      
+      - jsonPath: $.snehapoorvam.*.intstudent_certstatusid
+       
+      
+      - jsonPath: $.snehapoorvam.*.applicant_income
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_accountno
+        
+      
+      - jsonPath: $.snehapoorvam.*.chvaccountholdername_studentmal
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvaccountholdername_studenteng
+          
+      
+      - jsonPath: $.snehapoorvam.*.chvaccountholdername_guardianmal
+
+
+      - jsonPath: $.snehapoorvam.*.chvaccountholdername_guardianeng
+
+
+      - jsonPath: $.snehapoorvam.*.applicant_bank
+
+
+      - jsonPath: $.snehapoorvam.*.applicant_bank_branch
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_ifsccode
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_aadharno
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_eidno
+      
+      
+      - jsonPath: $.snehapoorvam.*.remarks
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_bank_district
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_relation_others
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_admission_no
+      
+      
+      - jsonPath: $.snehapoorvam.*.applicant_cource
+      
+      
+      - jsonPath: $.snehapoorvam.*.file_status
+      
+      
+      - jsonPath: $.snehapoorvam.*.ref_no
+      
+      
+      - jsonPath: $.snehapoorvam.*.ref_date
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvdeathcertificate_no_father
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvdeathcertificate_date_father
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvdeathcertificate_issuingauthority_father
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvdeathcertificate_no_mother 
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvdeathcertificate_date_mother
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvdeathcertificate_issuingauthority_mother
+      
+      
+      - jsonPath: $.snehapoorvam.*.intclass_id
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvchildwelfare_certificateno
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvchildwelfare_certificatedate
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvchildwelfare_cert_issuingauthority
+      
+      
+      - jsonPath: $.snehapoorvam.*.intfamilyapl_bpl_id
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvfamily_bpl_idno
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvfamily_bpl_date
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.chvfamily_bplcert_issuauthority 
+      
+      
+      - jsonPath: $.snehapoorvam.*.dtcoursestarted_date
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.bpl_certi_no
+      
+      
+      - jsonPath: $.snehapoorvam.*.bpl_certi_date
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.bpl_certi_issue_authority 
+      
+      
+      - jsonPath: $.snehapoorvam.*.intinstitutionid 
+      
+      
+      - jsonPath: $.snehapoorvam.*.approval_date
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.verify_date
+        type: DATE
+      
+      
+      - jsonPath: $.snehapoorvam.*.reject_date
+        type: DATE
+               
+               
+      - jsonPath: $.snehapoorvam.*.apply_date
+        type: DATE
+                
+                
+      - jsonPath: $.snehapoorvam.*.approve_no 
+                 
+                 
+      - jsonPath: $.snehapoorvam.*.rejected_by
+                  
+                  
+      - jsonPath: $.snehapoorvam.*.approved_by
+             
+             
+      - jsonPath: $.snehapoorvam.*.verified_by 
+              
+              
+      - jsonPath: $.snehapoorvam.*.intrenewalid 
+              
+              
+      - jsonPath: $.snehapoorvam.*.applicant_relation_othersmal 
+               
+               
+      - jsonPath: $.snehapoorvam.*.numkssmpensioneridold 
+      
+      
+      - jsonPath: $.snehapoorvam.*.intapptypeid
+              
+      
+      - jsonPath: $.snehapoorvam.*.intacdyearid
+               
+               
+      - jsonPath: $.snehapoorvam.*.chvincome_certificate_no 
+                
+                
+      - jsonPath: $.snehapoorvam.*.dtincome_certificate_date
+        type: DATE
+                 
+                 
+      - jsonPath: $.snehapoorvam.*.chvincome_certificate_issuauthority
+                  
+                  
+      - jsonPath: $.snehapoorvam.*.intstudentclasstype
+
+      - jsonPath: $.snehapoorvam.*.numkssmpensionerid
+
+      
+
+
+    

@@ -1,0 +1,18 @@
+### STS ###
+.apt_generated
+.settings
+.classpath
+.factorypath
+.project
+.checkstyle
+.eclipse-pmd
+
+### maven ###
+target/
+reports/
+
+### docker ###
+docker_data/
+
+### other files ###
+spy.log
