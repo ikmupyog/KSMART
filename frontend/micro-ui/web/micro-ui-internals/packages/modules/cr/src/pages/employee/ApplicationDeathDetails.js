@@ -13,7 +13,7 @@ const ApplicationDeathDetails = () => {
   const { id: DeathACKNo } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("DEATHHOSP"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("DEATHHOME"); //DIRECTRENEWAL
   // const [businessService, setBusinessService] = useState("NewBirthTwentyOne"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
