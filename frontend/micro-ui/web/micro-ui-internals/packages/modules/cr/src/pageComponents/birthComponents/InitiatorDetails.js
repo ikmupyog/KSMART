@@ -72,35 +72,64 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
       setinitiatorAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
+
+
   function setSelectinitiatorAadhar(e) {
+    setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     if (e.target.value.length != 0) {
       if (e.target.value.length > 12) {
+        // setChildAadharNo(e.target.value);
+        setinitiatorAadharError(true);
         return false;
       } else if (e.target.value.length < 12) {
+        setinitiatorAadharError(true);
         setinitiatorAadhar(e.target.value);
         return false;
       } else {
+        setinitiatorAadharError(false);
         setinitiatorAadhar(e.target.value);
+        return true;
       }
     } else {
+      setinitiatorAadharError(false);
       setinitiatorAadhar(e.target.value);
+      return true;
     }
   }
+  // function setSelectinitiatorAadhar(e) {
 
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 12) {
+  //       return false;
+  //     } else if (e.target.value.length < 12) {
+  //       setinitiatorAadhar(e.target.value);
+  //       return false;
+  //     } else {
+  //       setinitiatorAadhar(e.target.value);
+  //     }
+  //   } else {
+  //     setinitiatorAadhar(e.target.value);
+  //   }
+  // }
   function setSelectinitiatorMobile(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 10) {
-        return false;
-      } else if (e.target.value.length < 10) {
-        setinitiatorMobile(e.target.value);
-        return false;
-      } else {
-        setinitiatorMobile(e.target.value);
-      }
-    } else {
-      setinitiatorMobile(e.target.value);
+    if (e.target.value.trim().length != 0) {
+      setinitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
+  // function setSelectinitiatorMobile(e) {
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 10) {
+  //       return false;
+  //     } else if (e.target.value.length < 10) {
+  //       setinitiatorMobile(e.target.value);
+  //       return false;
+  //     } else {
+  //       setinitiatorMobile(e.target.value);
+  //     }
+  //   } else {
+  //     setinitiatorMobile(e.target.value);
+  //   }
+  // }
 
   function setDeclarationInfo(e) {
     if (e.target.checked == false) {
@@ -206,7 +235,9 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={
+        !isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile
+        }>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -217,6 +248,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
+          <div className="col-md-12">
             <CheckBox
               label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
               onChange={setDeclarationInfo}
@@ -225,6 +257,8 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
             />
           </div>
         </div>
+        </div>
+        
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -234,6 +268,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
         </div>
 
         <div className="row">
+        <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
               <TextInput
@@ -282,13 +317,16 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
         </div>
+        </div>
 
         <div className="row">  
         <div className="col-md-12">    
             <div className="row">
+            <div className="col-md-12">
               <div className="col-md-12">
                 <CheckBox label={t("CR_INITIATOR_IS_CARETAKER")} onChange={setCaretaker} value={isCaretaker} checked={isCaretaker} />
               </div>
+            </div>
             </div>
             {isCaretaker === true && (
               <div>
@@ -328,7 +366,24 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAddress"
+                value={initiatorAddress}
+                onChange={setSelectinitiatorAddress}
+                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+              />
+            </div> */}
+        </div>
+        </div>    
+        <div className="row">  
+        <div className="col-md-12">    
+        <div className="col-md-6">
               <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
@@ -343,7 +398,6 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
             </div>
         </div>
         </div>    
-
         {toast && (
           <Toast
             error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError}
