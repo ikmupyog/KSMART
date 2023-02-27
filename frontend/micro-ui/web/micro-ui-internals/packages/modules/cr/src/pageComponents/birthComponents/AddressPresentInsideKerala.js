@@ -29,16 +29,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     if (tenantId === "kl") {
         tenantId = Digit.ULBService.getCitizenCurrentTenant();
     }
-    const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-    const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-    const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-    const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-    const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
-    const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-    const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
-    const [toast, setToast] = useState(false);
-    const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableStatus, setDisableStatus] = useState(true);
+    const [tenantWard,setTenantWard]=useState(tenantId);
     const [tenantboundary, setTenantboundary] = useState(false);
     const queryClient = useQueryClient();
     if (tenantboundary) {
@@ -48,6 +39,17 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
       queryClient.removeQueries("CR_TALUK");
       setTenantboundary(false);
     }
+    const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+    const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+    const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+    const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+    const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
+    const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
+    const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
+    const [toast, setToast] = useState(false);
+    const [isInitialRender, setIsInitialRender] = useState(true);
+    const [isDisableStatus, setDisableStatus] = useState(true);
+    
     let cmbLB = [];
     let cmbTaluk = [];
     let cmbVillage = [];
@@ -116,6 +118,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 setinsideKeralaLBName(currentLB[0]);
+                setLbs(currentLB);
                 setpermntInKeralaAdrLBName(currentLB[0]);
                 cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
                 setinsideKeralaDistrict(cmbFilterDistrict[0]);
@@ -134,7 +137,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const onSkip = () => onSelect();
 
     function setSelectinsideKeralaDistrict(value) {
-        setIsInitialRender(true);
+        // setIsInitialRender(true);
         setinsideKeralaDistrict(value);
         setinsideKeralaTaluk(null);
         setinsideKeralaVillage(null);
@@ -143,10 +146,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         districtid = value.districtid;
         setTenantboundary(true);
         if (cmbLB.length > 0) {
-            console.log(cmbLB);
-            // if(tenantId === cmbLB.)
             currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
-            console.log(currentLB);
             setLbs(currentLB);
             setpermntInKeralaAdrLBName(currentLB);
             cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
@@ -167,8 +167,8 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     //     setinsideKeralaLBTypeName(value);
     // }
     function setSelectinsideKeralaLBName(value) {
+        setTenantWard(value.code);
         setinsideKeralaLBName(value);
-        console.log(isPrsentAddress);
         setPresentWardNo(null);
         setTenantboundary(true)
         if (isPrsentAddress) {

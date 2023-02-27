@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 
 const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict,
@@ -22,13 +23,23 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
+  const [tenantWard,setTenantWard]=useState(tenantId);
+  const [tenantboundary, setTenantboundary] = useState(false);
+  const queryClient = useQueryClient();
+  if (tenantboundary) {
+    queryClient.removeQueries("TL_ZONAL_OFFICE");
+    queryClient.removeQueries("CR_VILLAGE");
+    queryClient.removeQueries("CR_TALUK");
+    queryClient.removeQueries("CR_TALUK");
+    setTenantboundary(false);
+  }
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "cochin/egov-location", "boundary-data");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableStatus, setDisableStatus] = useState(true);
@@ -132,16 +143,30 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   const onSkip = () => onSelect();
 
   function setSelectpermntInKeralaAdrDistrict(value) {
-    setIsInitialRender(true);
+    // setIsInitialRender(true);
     setpermntInKeralaAdrDistrict(value);
     setpermntInKeralaAdrLBName(null);
     setLbs(null);
     districtid = value.districtid;
+    setTenantboundary(true);
+    if (cmbLB.length > 0) {
+      currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
+      setLbs(currentLB);
+      setpermntInKeralaAdrLBName(currentLB);
+      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
+      setLbsTalukvalue(cmbFilterTaluk);
+      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
+      setLbsVillagevalue(cmbFilterVillage);
+      cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid);
+      setPostOfficevalues(cmbFilterPostOffice);
+      setIsInitialRender(false);
+  }
   }
   function setSelectpermntInKeralaAdrLBTypeName(value) {
     setinsideKeralaLBTypeName(value);
   }
   function setSelectpermntInKeralaAdrLBName(value) {
+    setTenantWard(value.code);
     setpermntInKeralaAdrLBName(value);
   }
   function setSelectpermntInKeralaAdrVillage(value) {
@@ -343,7 +368,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               option={lbs}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
-              disable={isDisableStatus}
+              // disable={isDisableStatus}
               placeholder={`${t("CS_COMMON_LB_NAME")}`}
             />
           </div>
