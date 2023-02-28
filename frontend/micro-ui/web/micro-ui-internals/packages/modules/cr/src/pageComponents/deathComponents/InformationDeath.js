@@ -352,9 +352,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectDateOfDeath(value) {
     setDateOfDeath(value);
     const today = new Date();
-    const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()) {
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
+    const deathDate = new Date(value);
+    if (deathDate.getTime() <= today.getTime()) {
+      let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       console.log(Difference_In_DaysRounded);
@@ -1292,7 +1292,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
                 ? DOBError
                   ? t(`CR_INVALID_DATE`)
                   : sexError
-                  ? t(`BIRTH_ERROR_SEX_CHOOSE`)
+                  ? t(`DEATH_ERROR_SEX_CHOOSE`)
                   : AadharError
                   ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                   : HospitalError
