@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MarriageApplicationConfiguration {
 
-
+    @Value("${egov.idgen.host}")
+    private String idGenHost;
+    @Value("${egov.idgen.path}")
+    private String idGenPath;
     @Value("${persister.save.marriage.application.topic}")
     private String saveMarriageApplicationTopic;
 

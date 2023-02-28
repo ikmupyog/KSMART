@@ -30,8 +30,8 @@ public class MarriageApplicationController {
     private final ResponseInfoFactory responseInfoFactory;
 
 
-    public MarriageApplicationController(MarriageApplicationService crBirthService, ResponseInfoFactory responseInfoFactory) {
-        this.crMarriageService = crBirthService;
+    public MarriageApplicationController( MarriageApplicationService crMarriageService, ResponseInfoFactory responseInfoFactory) {
+        this.crMarriageService = crMarriageService;
         this.responseInfoFactory = responseInfoFactory;
     }
 

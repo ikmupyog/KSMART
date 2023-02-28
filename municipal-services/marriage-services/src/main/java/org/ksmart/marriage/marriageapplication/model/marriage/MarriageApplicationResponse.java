@@ -25,7 +25,7 @@ public class MarriageApplicationResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("BirthDetails")
+    @JsonProperty("MarriageDetails")
     @Valid
     private List<MarriageApplicationDetail> marriageApplicationDetails;
 
@@ -37,11 +37,11 @@ public class MarriageApplicationResponse {
     @JsonProperty("Count")
     private int count;
 
-    public MarriageApplicationResponse addBirthApplication(MarriageApplicationDetail birthDetail) {
+    public MarriageApplicationResponse addBirthApplication(MarriageApplicationDetail details) {
         if (marriageApplicationDetails == null) {
             marriageApplicationDetails = new ArrayList<>();
         }
-        marriageApplicationDetails.add(birthDetail);
+        marriageApplicationDetails.add(details);
         return this;
     }
 
