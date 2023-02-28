@@ -138,8 +138,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn);
   const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl);
 
-  const [workflow, setWorkflow] = useState(formData?.InformationDeath?.workflow);
-
+ 
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -155,7 +154,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let institutionNameCode = "";
   let naturetypecmbvalue = null;  
   const maxDate = new Date();
+  let Difference_In_DaysRounded = null;
   let menu = [];
+  let workFlowCode = "";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -315,12 +316,18 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   function selectDeathPlace(value) {
     setselectDeathPlace(value);
     setValue(value.code);
-    setselectDeathPlace(value);
-    if (value === 'INSTITUTION') {
-      setWorkflow('DEATHHOSP');
-    } else {
-      setWorkflow('DEATHHOME');
-    }
+
+  //   Deathplacevalue = DeathPlace.code;
+  //   // setValue(Deathplacevalue);
+  //   if(Deathplacevalue === "HOME" ){
+  //     workFlowCode="DEATHHOME";
+  //     console.log(workFlowCode);
+  //   }
+  //   // else{
+  //   //   workFlowCode="DEATHHOSP";
+  //   // }
+  // console.log(workFlowCode);
+   
   }
   // let workFlowCode ="";
   function selectDateOfDeath(value) {
@@ -330,8 +337,9 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     if (birthDate.getTime() <= today.getTime()) {
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       console.log(Difference_In_DaysRounded);
+
       // if(Difference_In_DaysRounded<=21){
       //   workFlowCode="death21days"
       // }
@@ -501,6 +509,20 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   },[isInitialRenderDeathPlace]);
   let validFlag = true;
   const goNext = () => {
+
+
+    console.log(DeathPlace.code);
+console.log(Difference_In_DaysRounded);
+if ( Difference_In_DaysRounded <= 21 ){
+    if (DeathPlace.code == "HOME" ) {
+     workFlowCode="DEATHHOME";
+     console.log(workFlowCode);
+    }
+    else{
+     workFlowCode="DEATHHOSP";
+    }
+  }
+    
     if (AadharError) {
       validFlag = false;
       setAadharError(true);
@@ -522,7 +544,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     } else {
       setAgeError(false);
     }
-    
+   
     if (DeathPlace.code == "HOSPITAL") {
       if (DeathPlaceType == null ) {
         setHospitalError(true);
@@ -587,6 +609,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
 
     sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
     sessionStorage.setItem("HospitalNameMl", HospitalNameMl ?  HospitalNameMl.code : null);
+    sessionStorage.setItem("workFlowCode", workFlowCode);
    
     sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
     sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
@@ -650,11 +673,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn : null);
       sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
       sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      sessionStorage.setItem("workflow", workflow);
-
     }
     onSelect(config.key, {
-      workflow,
       tenantId,
       DateOfDeath,
       TimeOfDeath,
@@ -677,6 +697,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
       Occupation,
       // checked,
       DeathPlace,
+      workFlowCode,
       DeathPlaceType,
       HospitalNameMl,
       DeathPlaceTypecode,
