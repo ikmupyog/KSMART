@@ -27,7 +27,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
-  }  const { t } = useTranslation();
+  }
+  const { t } = useTranslation();
   let validation = {};
 
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
@@ -138,21 +139,21 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn);
   const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl);
 
- 
   const [toast, setToast] = useState(false);
   const [value, setValue] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
 
-  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.ChildDOB ? false : false);
+  const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
+  const [DOBError, setDOBError] = useState(formData?.InformationDeath?.ChildDOB ? false : false);
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
   const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
   const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
   const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
   const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
-  let DeathPlaceTypecode= "";
+  let DeathPlaceTypecode = "";
   let institutionNameCode = "";
-  let naturetypecmbvalue = null;  
+  let naturetypecmbvalue = null;
   const maxDate = new Date();
   let Difference_In_DaysRounded = null;
   let menu = [];
@@ -193,13 +194,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   //     cmbOccupationMain.push(ob);
   //   });
 
-    let cmbOccupationMain = [];
-    Profession &&
-      Profession["birth-death-service"] &&
-      Profession["birth-death-service"].Profession.map((ob) => {
-        cmbOccupationMain.push(ob);
-      });
-  
+  let cmbOccupationMain = [];
+  Profession &&
+    Profession["birth-death-service"] &&
+    Profession["birth-death-service"].Profession.map((ob) => {
+      cmbOccupationMain.push(ob);
+    });
 
   let cmbPlace = [];
   place &&
@@ -227,37 +227,52 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setDeceasedLastNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+      setDeceasedLastNameMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+      );
     }
   }
   function setSelectDeceasedMiddleNameMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setDeceasedMiddleNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+      setDeceasedMiddleNameMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+      );
     }
   }
   function setSelectDeceasedFirstNameMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setDeceasedFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+      setDeceasedFirstNameMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+      );
     }
   }
   function setSelectDeceasedFirstNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setDeceasedFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+      setDeceasedFirstNameEn(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
     }
-   }
-
+  }
 
   function setSelectDeceasedMiddleNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setDeceasedMiddleNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+      setDeceasedMiddleNameEn(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
     }
   }
 
@@ -265,7 +280,12 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setDeceasedLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+      setDeceasedLastNameEn(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
     }
   }
   function setSelectAge(e) {
@@ -317,17 +337,16 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     setselectDeathPlace(value);
     setValue(value.code);
 
-  //   Deathplacevalue = DeathPlace.code;
-  //   // setValue(Deathplacevalue);
-  //   if(Deathplacevalue === "HOME" ){
-  //     workFlowCode="DEATHHOME";
-  //     console.log(workFlowCode);
-  //   }
-  //   // else{
-  //   //   workFlowCode="DEATHHOSP";
-  //   // }
-  // console.log(workFlowCode);
-   
+    //   Deathplacevalue = DeathPlace.code;
+    //   // setValue(Deathplacevalue);
+    //   if(Deathplacevalue === "HOME" ){
+    //     workFlowCode="DEATHHOME";
+    //     console.log(workFlowCode);
+    //   }
+    //   // else{
+    //   //   workFlowCode="DEATHHOSP";
+    //   // }
+    // console.log(workFlowCode);
   }
   // let workFlowCode ="";
   function selectDateOfDeath(value) {
@@ -337,7 +356,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     if (birthDate.getTime() <= today.getTime()) {
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+      Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       console.log(Difference_In_DaysRounded);
 
       // if(Difference_In_DaysRounded<=21){
@@ -353,8 +372,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     }
   }
 
-
-  
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
   }
@@ -385,70 +402,62 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   let naturetype = null;
   let cmbfilterNationI = [];
   let cmbFilterState = [];
- 
+
   useEffect(() => {
-    if(isInitialRender)
-    {
-    if (Nationality == null || Nationality == "") {
-      if (stateId === "kl" && cmbNation.length > 0) {
-        cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
-        setSelectedNationality(cmbfilterNation[0]);
+    if (isInitialRender) {
+      if (Nationality == null || Nationality == "") {
+        if (stateId === "kl" && cmbNation.length > 0) {
+          cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
+          setSelectedNationality(cmbfilterNation[0]);
+        }
+      }
+      if (Religion == null || Religion == "") {
+        if (stateId === "kl" && cmbReligion.length > 0) {
+          cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
+          setSelectedReligion(cmbfilterReligion[0]);
+        }
+      }
+      if (AgeUnit == null || AgeUnit == "") {
+        if (stateId === "kl" && cmbAgeUnit.length > 0) {
+          cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes("Years"));
+          setSelectedAgeUnit(cmbfilterAgeUnit[0]);
+        }
+      }
+      if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
+        if (stateId === "kl" && cmbNation.length > 0) {
+          cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
+          setSelectDeathPlaceCountry(cmbfilterNationI[0]);
+        }
+      }
+      if (DeathPlaceState == null || DeathPlaceState == "") {
+        if (stateId === "kl" && cmbState.length > 0) {
+          cmbFilterState = cmbState.filter((cmbState) => cmbState.name != "Kerala");
+          SelectDeathPlaceState(cmbFilterState);
+        }
       }
     }
-    if (Religion == null || Religion == "") {
-      if (stateId === "kl" && cmbReligion.length > 0) {
-        cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
-        setSelectedReligion(cmbfilterReligion[0]);
-      }
-    }
-    if (AgeUnit == null || AgeUnit == "") {
-      if (stateId === "kl" && cmbAgeUnit.length > 0) {
-        cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes("Years"));
-        setSelectedAgeUnit(cmbfilterAgeUnit[0]);
-      }
-    }
-    if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
-      if (stateId === "kl" && cmbNation.length > 0) {
-        cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
-        setSelectDeathPlaceCountry(cmbfilterNationI[0]);
-      }
-    }
-    if (DeathPlaceState == null || DeathPlaceState == "") {
-      if (stateId === "kl" && cmbState.length > 0) {
-        cmbFilterState = cmbState.filter((cmbState) => cmbState.name != "Kerala");
-        SelectDeathPlaceState(cmbFilterState);
-      }
-    }
-  }   
+  }, [Nation, isInitialRender]);
 
-  }, [Nation,isInitialRender]);
+  // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+  // setAdrsStateName(cmbFilterState[0]);
 
-    // cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-    // setAdrsStateName(cmbFilterState[0]);
-
-    // if (isInitialRender) {
-    //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
-    //     setIsInitialRender(false);
-    //     setisCheckedAdhar(formData?.InformationDeath?.ischeckedAdhar );
-    //   }
-    // }
-    React.useEffect(() => {
-      if (isInitialRenderDeathPlace) {
+  // if (isInitialRender) {
+  //   if (formData?.InformationDeath?.ischeckedAdhar  != null) {
+  //     setIsInitialRender(false);
+  //     setisCheckedAdhar(formData?.InformationDeath?.ischeckedAdhar );
+  //   }
+  // }
+  React.useEffect(() => {
+    if (isInitialRenderDeathPlace) {
       if (DeathPlace) {
         setIsInitialRender(false);
         naturetype = DeathPlace.code;
         setValue(naturetype);
         if (naturetype === "HOSPITAL") {
-          <Hospital 
-          DeathPlaceType={DeathPlaceType}
-          HospitalNameMl={HospitalNameMl} 
-          />;
+          <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} />;
         }
         if (naturetype === "INSTITUTION") {
-          <Institution 
-          DeathPlaceType={DeathPlaceType}
-          DeathPlaceInstId={DeathPlaceInstId}
-          InstitutionIdMl={InstitutionIdMl} />;
+          <Institution DeathPlaceType={DeathPlaceType} DeathPlaceInstId={DeathPlaceInstId} InstitutionIdMl={InstitutionIdMl} />;
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
@@ -506,23 +515,29 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
         }
       }
     }
-  },[isInitialRenderDeathPlace]);
+  }, [isInitialRenderDeathPlace]);
   let validFlag = true;
   const goNext = () => {
-
-
     console.log(DeathPlace.code);
-console.log(Difference_In_DaysRounded);
-if ( Difference_In_DaysRounded <= 21 ){
-    if (DeathPlace.code == "HOME" ) {
-     workFlowCode="DEATHHOME";
-     console.log(workFlowCode);
+    console.log(Difference_In_DaysRounded);
+    if (Difference_In_DaysRounded <= 21) {
+      if (DeathPlace.code == "HOME") {
+        workFlowCode = "DEATHHOME";
+        console.log(workFlowCode);
+      } else {
+        workFlowCode = "DEATHHOSP";
+      }
     }
-    else{
-     workFlowCode="DEATHHOSP";
+    if (sexError == null || sexError == "" || sexError == undefined) {
+      validFlag = false;
+      setsexError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setsexError(false);
     }
-  }
-    
     if (AadharError) {
       validFlag = false;
       setAadharError(true);
@@ -532,21 +547,20 @@ if ( Difference_In_DaysRounded <= 21 ){
       }, 2000);
     } else {
       setAadharError(false);
-    } 
-   if (Age == null || Age == '' || Age == undefined) {
-        validFlag = false;
-        setAgeError(true);
-        setToast(true);
-        setTimeout(() => {
-            setToast(false);
-        }, 2000);
-
+    }
+    if (Age == null || Age == "" || Age == undefined) {
+      validFlag = false;
+      setAgeError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     } else {
       setAgeError(false);
     }
-   
+
     if (DeathPlace.code == "HOSPITAL") {
-      if (DeathPlaceType == null ) {
+      if (DeathPlaceType == null) {
         setHospitalError(true);
         validFlag = false;
         setToast(true);
@@ -557,8 +571,7 @@ if ( Difference_In_DaysRounded <= 21 ){
         DeathPlaceTypecode = DeathPlaceType.code;
         setHospitalError(false);
       }
-    } 
-    else if (DeathPlace.code === "INSTITUTION") {
+    } else if (DeathPlace.code === "INSTITUTION") {
       if (DeathPlaceType == null) {
         setInstitutionError(true);
         validFlag = false;
@@ -567,9 +580,9 @@ if ( Difference_In_DaysRounded <= 21 ){
           setToast(false);
         }, 2000);
       } else {
-        DeathPlaceTypecode =  DeathPlaceType.code;
+        DeathPlaceTypecode = DeathPlaceType.code;
         setInstitutionError(false);
-        if (DeathPlaceInstId === null ) {          
+        if (DeathPlaceInstId === null) {
           setInstitutionNameError(true);
           validFlag = false;
           setToast(true);
@@ -583,168 +596,165 @@ if ( Difference_In_DaysRounded <= 21 ){
       }
     }
 
-
     if (validFlag == true) {
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-    sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
-    sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
-    sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
-    sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
-    sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
-    sessionStorage.setItem("DeceasedFirstNameMl", DeceasedFirstNameMl ? DeceasedFirstNameMl : null);
-    sessionStorage.setItem("DeceasedMiddleNameMl", DeceasedMiddleNameMl ? DeceasedMiddleNameMl : null);
-    sessionStorage.setItem("DeceasedLastNameMl", DeceasedLastNameMl ? DeceasedLastNameMl : null);
-    sessionStorage.setItem("Age", Age ? Age : null);
-    sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
-    sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
-    sessionStorage.setItem("Nationality", Nationality ? Nationality.code : null);
-    sessionStorage.setItem("Religion", Religion ? Religion.code : null);
-    sessionStorage.setItem("DeceasedGender", DeceasedGender ? DeceasedGender.code : null);
-    sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
-    sessionStorage.setItem("AgeUnit", AgeUnit ? AgeUnit.code : null);
-    // sessionStorage.setItem("checked", checked ? checked : false);
-    sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
-    sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
-    sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
+      sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
+      sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
+      sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
+      sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
+      sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
+      sessionStorage.setItem("DeceasedFirstNameMl", DeceasedFirstNameMl ? DeceasedFirstNameMl : null);
+      sessionStorage.setItem("DeceasedMiddleNameMl", DeceasedMiddleNameMl ? DeceasedMiddleNameMl : null);
+      sessionStorage.setItem("DeceasedLastNameMl", DeceasedLastNameMl ? DeceasedLastNameMl : null);
+      sessionStorage.setItem("Age", Age ? Age : null);
+      sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
+      sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
+      sessionStorage.setItem("Nationality", Nationality ? Nationality.code : null);
+      sessionStorage.setItem("Religion", Religion ? Religion.code : null);
+      sessionStorage.setItem("DeceasedGender", DeceasedGender ? DeceasedGender.code : null);
+      sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
+      sessionStorage.setItem("AgeUnit", AgeUnit ? AgeUnit.code : null);
+      // sessionStorage.setItem("checked", checked ? checked : false);
+      sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
+      sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
+      sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
-    sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-    sessionStorage.setItem("HospitalNameMl", HospitalNameMl ?  HospitalNameMl.code : null);
-    sessionStorage.setItem("workFlowCode", workFlowCode);
-   
-    sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
-    sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-    sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-    // if (validFlag === true) {
+      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      sessionStorage.setItem("HospitalNameMl", HospitalNameMl ? HospitalNameMl.code : null);
+      sessionStorage.setItem("workFlowCode", workFlowCode);
 
-    if (DeathPlace.code === "HOSPITAL") {
-      //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.removeItem("DeathPlaceInstId");
-    }
-    if (DeathPlace.code === "INSTITUTION") {
-      //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
+      sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-      sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl. InstitutionIdMl: null);
-      
+      // if (validFlag === true) {
+
+      if (DeathPlace.code === "HOSPITAL") {
+        //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
+        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.removeItem("DeathPlaceInstId");
+      }
+      if (DeathPlace.code === "INSTITUTION") {
+        //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
+        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
+        sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl.InstitutionIdMl : null);
+      }
+      if (DeathPlace.code === "HOME") {
+        sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
+        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn : null);
+        sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl ? DeathPlaceHomehoueNameMl : null);
+        sessionStorage.setItem("DeathPlaceHomelocalityEn", DeathPlaceHomelocalityEn ? DeathPlaceHomelocalityEn : null);
+        sessionStorage.setItem("DeathPlaceHomelocalityMl", DeathPlaceHomelocalityMl ? DeathPlaceHomelocalityMl : null);
+        sessionStorage.setItem("DeathPlaceHomestreetNameEn", DeathPlaceHomestreetNameEn ? DeathPlaceHomestreetNameEn : null);
+        sessionStorage.setItem("DeathPlaceHomestreetNameMl", DeathPlaceHomestreetNameMl ? DeathPlaceHomestreetNameMl : null);
+        sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId ? DeathPlaceHomepostofficeId.code : null);
+        sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
+      }
+      if (DeathPlace.code === "VEHICLE") {
+        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
+        sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
+        sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
+        sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
+        sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
+        sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
+        sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
+        sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
+        sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+        sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
+      }
+      if (DeathPlace.code === "PUBLIC_PLACES") {
+        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("DeathPlaceLocalityEn", DeathPlaceLocalityEn ? DeathPlaceLocalityEn : null);
+        sessionStorage.setItem("DeathPlaceLocalityMl", DeathPlaceLocalityMl ? DeathPlaceLocalityMl : null);
+        sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
+        sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
+        sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+        sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);
+      }
+      if (DeathPlace.code === "OUTSIDE_JURISDICTION") {
+        sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code : null);
+        sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code : null);
+        sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code : null);
+        sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity : null);
+        sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn : null);
+        sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl : null);
+        sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
+        sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn : null);
+        sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
+        sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+      }
+      onSelect(config.key, {
+        tenantId,
+        DateOfDeath,
+        TimeOfDeath,
+        DeceasedFirstNameEn,
+        DeceasedMiddleNameEn,
+        DeceasedLastNameEn,
+        DeceasedFirstNameMl,
+        DeceasedMiddleNameMl,
+        DeceasedLastNameMl,
+        Age,
+        DeceasedAadharNotAvailable,
+        DeceasedAadharNumber,
+        DeceasedIdproofType,
+        DeceasedIdproofNo,
+        CommencementDate,
+        DeceasedGender,
+        Nationality,
+        Religion,
+        AgeUnit,
+        Occupation,
+        // checked,
+        DeathPlace,
+        workFlowCode,
+        DeathPlaceType,
+        HospitalNameMl,
+        DeathPlaceTypecode,
+        DeathPlaceInstId,
+        InstitutionIdMl,
+        institutionNameCode,
+        DeathPlaceHomehoueNameEn,
+        DeathPlaceHomehoueNameMl,
+        DeathPlaceHomelocalityEn,
+        DeathPlaceHomelocalityMl,
+        DeathPlaceHomestreetNameEn,
+        DeathPlaceHomestreetNameMl,
+        DeathPlaceHomepostofficeId,
+        DeathPlaceHomepincode,
+        DeathPlaceType,
+        VehicleNumber,
+        VehicleFromplaceEn,
+        VehicleToPlaceEn,
+        VehicleFromplaceMl,
+        VehicleToPlaceMl,
+        VehicleFirstHaltEn,
+        VehicleFirstHaltMl,
+        VehicleHospitalEn,
+        GeneralRemarks,
+        DeathPlaceWardId,
+        DeathPlaceType,
+        DeathPlaceLocalityEn,
+        DeathPlaceLocalityMl,
+        DeathPlaceStreetEn,
+        DeathPlaceStreetMl,
+        DeathPlaceCountry,
+        DeathPlaceState,
+        DeathPlaceDistrict,
+        DeathPlaceCity,
+        DeathPlaceRemarksEn,
+        DeathPlaceRemarksMl,
+        PlaceOfBurialMl,
+        PlaceOfBurialEn,
+      });
     }
-    if (DeathPlace.code === "HOME") {
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn : null);
-      sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl ? DeathPlaceHomehoueNameMl : null);
-      sessionStorage.setItem("DeathPlaceHomelocalityEn", DeathPlaceHomelocalityEn ? DeathPlaceHomelocalityEn : null);
-      sessionStorage.setItem("DeathPlaceHomelocalityMl", DeathPlaceHomelocalityMl ? DeathPlaceHomelocalityMl : null);
-      sessionStorage.setItem("DeathPlaceHomestreetNameEn", DeathPlaceHomestreetNameEn ? DeathPlaceHomestreetNameEn : null);
-      sessionStorage.setItem("DeathPlaceHomestreetNameMl", DeathPlaceHomestreetNameMl ? DeathPlaceHomestreetNameMl : null);
-      sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId ? DeathPlaceHomepostofficeId.code : null);
-      sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
-    }
-    if (DeathPlace.code === "VEHICLE") {
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
-      sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
-      sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
-      sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
-      sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
-      sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
-      sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
-      sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
-      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-    }
-    if (DeathPlace.code === "PUBLIC_PLACES") {
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.setItem("DeathPlaceLocalityEn", DeathPlaceLocalityEn ? DeathPlaceLocalityEn : null);
-      sessionStorage.setItem("DeathPlaceLocalityMl", DeathPlaceLocalityMl ? DeathPlaceLocalityMl : null);
-      sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
-      sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
-      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);
-    }
-    if (DeathPlace.code === "OUTSIDE_JURISDICTION") {
-      sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code : null);
-      sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code : null);
-      sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code : null);
-      sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity : null);
-      sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn : null);
-      sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl : null);
-      sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-      sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn : null);
-      sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
-      sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-    }
-    onSelect(config.key, {
-      tenantId,
-      DateOfDeath,
-      TimeOfDeath,
-      DeceasedFirstNameEn,
-      DeceasedMiddleNameEn,
-      DeceasedLastNameEn,
-      DeceasedFirstNameMl,
-      DeceasedMiddleNameMl,
-      DeceasedLastNameMl,
-      Age,
-      DeceasedAadharNotAvailable,
-      DeceasedAadharNumber,
-      DeceasedIdproofType,
-      DeceasedIdproofNo,
-      CommencementDate,
-      DeceasedGender,
-      Nationality,
-      Religion,
-      AgeUnit,
-      Occupation,
-      // checked,
-      DeathPlace,
-      workFlowCode,
-      DeathPlaceType,
-      HospitalNameMl,
-      DeathPlaceTypecode,
-      DeathPlaceInstId,
-      InstitutionIdMl,
-      institutionNameCode,
-      DeathPlaceHomehoueNameEn,
-      DeathPlaceHomehoueNameMl,
-      DeathPlaceHomelocalityEn,
-      DeathPlaceHomelocalityMl,
-      DeathPlaceHomestreetNameEn,
-      DeathPlaceHomestreetNameMl,
-      DeathPlaceHomepostofficeId,
-      DeathPlaceHomepincode,
-      DeathPlaceType,
-      VehicleNumber,
-      VehicleFromplaceEn,
-      VehicleToPlaceEn,
-      VehicleFromplaceMl,
-      VehicleToPlaceMl,
-      VehicleFirstHaltEn,
-      VehicleFirstHaltMl,
-      VehicleHospitalEn,
-      GeneralRemarks,
-      DeathPlaceWardId,
-      DeathPlaceType,
-      DeathPlaceLocalityEn,
-      DeathPlaceLocalityMl,
-      DeathPlaceStreetEn,
-      DeathPlaceStreetMl,
-      DeathPlaceCountry,
-      DeathPlaceState,
-      DeathPlaceDistrict,
-      DeathPlaceCity,
-      DeathPlaceRemarksEn,
-      DeathPlaceRemarksMl,
-      PlaceOfBurialMl,
-      PlaceOfBurialEn,
-      
-    });
-  }
   };
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
-      
+
       <FormStep
         t={t}
         config={config}
@@ -783,9 +793,7 @@ if ( Difference_In_DaysRounded <= 21 ){
                 />
               </div>
               <div className="col-md-2">
-                <CardLabel>
-                  {t("CR_TIME_OF_DEATH")}                  
-                </CardLabel>
+                <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
                 <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setTimeOfDeath)} value={TimeOfDeath} />
               </div>
             </div>
@@ -836,7 +844,12 @@ if ( Difference_In_DaysRounded <= 21 ){
         </div>
         {value === "HOSPITAL" && (
           <div>
-            <Hospital selectDeathPlaceType={selectDeathPlaceType} DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} selectHospitalNameMl ={selectHospitalNameMl}/>
+            <Hospital
+              selectDeathPlaceType={selectDeathPlaceType}
+              DeathPlaceType={DeathPlaceType}
+              HospitalNameMl={HospitalNameMl}
+              selectHospitalNameMl={selectHospitalNameMl}
+            />
           </div>
         )}
         {value === "INSTITUTION" && (
@@ -846,9 +859,8 @@ if ( Difference_In_DaysRounded <= 21 ){
               DeathPlaceType={DeathPlaceType}
               DeathPlaceInstId={DeathPlaceInstId}
               setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
-              InstitutionIdMl={InstitutionIdMl} 
-              setInstitutionIdMl = {setInstitutionIdMl}
-              
+              InstitutionIdMl={InstitutionIdMl}
+              setInstitutionIdMl={setInstitutionIdMl}
             />
           </div>
         )}
@@ -1274,17 +1286,23 @@ if ( Difference_In_DaysRounded <= 21 ){
 
         {toast && (
           <Toast
-            error={
-              DOBError || AadharError || HospitalError  || InstitutionError || InstitutionNameError||AgeError
-            }
+            error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError}
             label={
-              DOBError || AadharError || HospitalError  || InstitutionError || InstitutionNameError || AgeError
-                ? DOBError? t(`CR_INVALID_DATE`)
-                  : AadharError? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                  : HospitalError ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
-                  : InstitutionError ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                  : InstitutionNameError ? t(`CR_ERROR_DECEASED_SEX_CHOOSE`)
-                  : AgeError ? t()
+              DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError
+                ? DOBError
+                  ? t(`CR_INVALID_DATE`)
+                  : sexError
+                  ? t(`BIRTH_ERROR_SEX_CHOOSE`)
+                  : AadharError
+                  ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                  : HospitalError
+                  ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
+                  : InstitutionError
+                  ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                  : InstitutionNameError
+                  ? t(`CR_ERROR_DECEASED_SEX_CHOOSE`)
+                  : AgeError
+                  ? t()
                   : setToast(false)
                 : setToast(false)
             }
