@@ -3,7 +3,7 @@ serviceMaps:
   mappings:
   - version: 1.0
     description: Update OB  details in kssm database, tr_snehapoorvam table
-    fromTopic: save-snehapoorvam-tr_snehapoorvamUpdate1
+    fromTopic: save-snehapoorvam-tr_snehapoorvamUpdate
     isTransaction: true
     queryMaps:
     - query: >
