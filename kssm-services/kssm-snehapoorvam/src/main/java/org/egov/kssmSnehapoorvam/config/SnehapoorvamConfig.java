@@ -17,7 +17,7 @@ public class SnehapoorvamConfig {
     @Value("${persister.save.kssmsnehapoorvamCreate.topic}")
     private String saveSnehapoorvamCreateTopic;
 
-    @Value("${persister.save.kssmsnehapoorvamUpdate.topic}")
+    @Value("${persister.update.kssmsnehapoorvamUpdate.topic}")
     private String saveSnehapoorvamUpdateTopic;
 
 
