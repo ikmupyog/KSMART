@@ -31,12 +31,33 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
       const dateFromApi = new Date(dateEpoch);
+      console.log(dateFromApi.getDate());
+      console.log(dateFromApi.getMonth() + 1);
+      console.log(dateFromApi.getFullYear());
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      console.log(year);
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${day}/${month}/${year}`;
+    } else {
+      return null;
+    }
+  };
+  const convertEpochToDate = (dateEpoch) => {
+    console.log("MaxDate");
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      console.log("MaxDate" + dateEpoch);
+      const dateFromApi = new Date(dateEpoch);
       let month = dateFromApi.getMonth() + 1;
       let day = dateFromApi.getDate();
       let year = dateFromApi.getFullYear();
       month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
-      return `${day}/${month}/${year}`;
+     return `${year}-${month}-${day}`;
+    //  return `${day}-${month}-${year}`;
     } else {
       return null;
     }
@@ -102,7 +123,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
-  const [childDOB, setChildDOB] = useState(isEditBirth ? convertEpochFormateToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB);
+  console.log(isEditBirth);  //isEditBirth ? convertEpochToDate(formData?.ChildDetails?.childDOB) :
+  const [childDOB, setChildDOB] = useState(isEditBirth ? convertEpochToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB); //formData?.ChildDetails?.childDOB
   const [gender, selectGender] = useState(isEditBirth ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : formData?.ChildDetails?.gender);
   const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
@@ -317,6 +339,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
 
   function setselectChildDOB(value) {
+    console.log(value);
     setChildDOB(value);
     const today = new Date();
     const birthDate = new Date(value);
@@ -888,22 +911,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       });
     }
   };
-  const convertEpochToDate = (dateEpoch) => {
-    // Returning null in else case because new Date(null) returns initial date from calender
-    if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
-      let month = dateFromApi.getMonth() + 1;
-      let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
-      month = (month > 9 ? "" : "0") + month;
-      day = (day > 9 ? "" : "0") + day;
-      return `${year}-${month}-${day}`;
-    } else {
-      return null;
-    }
-  };
-
-
   if (isEditBirth) {
     if (formData?.ChildDetails?.gender != null) {
       if (menu.length > 0 && (gender === undefined || gender === "")) {
@@ -975,10 +982,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 <DatePicker
                   date={childDOB}
                   name="childDOB"
-                  max={convertEpochToDate(new Date())}
+                  // max={convertEpochToDate(new Date())}
                   // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
-                  inputFormat="DD-MM-YYYY"
+                //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
