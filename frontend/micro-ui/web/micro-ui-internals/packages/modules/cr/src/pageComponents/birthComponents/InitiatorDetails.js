@@ -302,7 +302,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
 
             <div className="col-md-4">
               <CardLabel>
-                {`${t("CR_INFORMANT_NAME")}`}
+                {`${t("CR_INITIATOR_NAME")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -312,8 +312,8 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 name="initiatorNameEn"
                 value={initiatorNameEn}
                 onChange={setSelectinitiatorNameEn}
-                placeholder={`${t("CR_INFORMANT_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
+                placeholder={`${t("CR_INITIATOR_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
               />
             </div>
         </div>

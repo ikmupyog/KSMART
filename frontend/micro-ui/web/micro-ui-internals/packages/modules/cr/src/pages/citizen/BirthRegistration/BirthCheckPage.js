@@ -364,7 +364,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 :
                 {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameEn +
+                 ( AddressBirthDetails.presentInsideKeralaStreetNameEn ? AddressBirthDetails.presentInsideKeralaStreetNameEn : " CR_NOT_RECORDED") +
                   " , " +
                   AddressBirthDetails.presentInsideKeralaLocalityNameEn +
                   " , " +
@@ -382,7 +382,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 :
                 {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameMl +
+                 ( AddressBirthDetails.presentInsideKeralaStreetNameMl ? AddressBirthDetails.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED") +
                   " , " +
                   AddressBirthDetails.presentInsideKeralaLocalityNameMl +
                   " , " +
@@ -413,7 +413,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 :
                 {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameEn +
+                  (AddressBirthDetails.presentInsideKeralaStreetNameEn   ? AddressBirthDetails.presentInsideKeralaStreetNameEn : "CR_NOT_RECORDED")+
                   " , " +
                   AddressBirthDetails.presentInsideKeralaLocalityNameEn +
                   " , " +
@@ -431,7 +431,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 :
                 {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameMl +
+                  (AddressBirthDetails.presentInsideKeralaStreetNameMl ? AddressBirthDetails.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED")  +
                   " , " +
                   AddressBirthDetails.presentInsideKeralaLocalityNameMl +
                   " , " +
@@ -506,7 +506,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
    
      {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrStreetNameEn +
+       (AddressBirthDetails.permntInKeralaAdrStreetNameEn ? AddressBirthDetails.permntInKeralaAdrStreetNameEn : "CR_NOT_RECORDED") + 
        " , " +
        AddressBirthDetails.permntInKeralaAdrLocalityNameEn +
        " , " +
@@ -526,7 +526,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   {  
      t(AddressBirthDetails.permntInKeralaAdrHouseNameMl ? AddressBirthDetails.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrStreetNameMl +
+       (AddressBirthDetails.permntInKeralaAdrStreetNameMl ? AddressBirthDetails.permntInKeralaAdrStreetNameMl : "CR_NOT_RECORDED") +
        " , " +
        AddressBirthDetails.permntInKeralaAdrLocalityNameMl +
        " , " +
@@ -543,9 +543,6 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
      </CardText>
  </div>
 </div>
-
-
-
 )}
         </div>
 
