@@ -69,7 +69,8 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
       //console.log(finaldata);
       let temp={};
       temp.ChildDetails=finaldata;
-       Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
+       Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);      
+       Digit.SessionStorage.set("CR_BIRTH_EDIT_FLAG", true); 
     }
 
     //need to get from workflow
