@@ -1,0 +1,180 @@
+{
+  "RequestInfo": {
+    "apiId": "apiId",
+    "ver": "1.0",
+    "ts": null,
+    "action": null,
+    "did": null,
+    "key": null,
+    "msgId": null,
+    "authToken": "7982b107-ea0e-43ef-b7c2-9a690d9bd2e3",
+    "correlationId": null,
+    "userInfo": {
+      "id": null,
+      "tenantId": "kl.cochin",
+      "uuid": "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
+      "roles": [
+        {
+          "id": null,
+          "name": null,
+          "code": "EMPLOYEE",
+          "tenantId": null
+        }
+      ]
+    }
+  },
+  "ApplicantServiceDetail": {
+    "id": null,
+    "applicantPersonalId": null,
+    "serviceId": null,
+    "serviceCode": "PN001.IGNOAPS",
+    "serviceSubType": 2,
+    "serviceMinorType": 3,
+    "auditDetails": {
+      "createdBy": null,
+      "createdTime": null,
+      "lastModifiedBy": null,
+      "lastModifiedTime": null
+    },
+    "businessService": "DFM",
+    "workflowCode": "NewDFM",
+    "action": "INITIATE",
+    "comments": "null",
+    "assignees": [
+      "d75bfcda-bded-4c58-b3f9-38bf9dbbbf95"
+    ],
+    "applicant": {
+      "id": null,
+      "firstName": "Krishna",
+      "firstNameMal": "Krishna",
+      "lastName": "Priya",
+      "lastNameMal": "Priya",
+      "dateOfBirth": null,
+      "aadhaarNumber": 123456123490,
+      "mobileNumber": 9446903827,
+      "emailId": "priyamalu@gmail.com",
+      "bankAccountNo": 1234567,
+      "title": null,
+      "tenantId": "kl.cochin",
+      "fatherFirstName": null,
+      "fatherFirstNameMal": null,
+      "fatherLastName": null,
+      "fatherLastNameMal": null,
+      "motherFirstName": null,
+      "motherFirstNameMal": null,
+      "motherLastName": null,
+      "motherLastNameMal": null,
+      "applicantCategory": null,
+      "auditDetails": {
+        "createdBy": null,
+        "createdTime": null,
+        "lastModifiedBy": null,
+        "lastModifiedTime": null
+      },
+      "address": {
+        "id": null,
+        "applicantPersonalId": null,
+        "buildingNo": 56,
+        "subNo": null,
+        "houseName": "Karthika",
+        "houseNameMal": "കാർത്തിക",
+        "street": null,
+        "streetmal": null,
+        "pincode": 695020,
+        "postOfficeName": "Nemom",
+        "residenceAssociationNo": null,
+        "localPlace": "kodunganoor",
+        "localPlaceMal": "kodunganoor",
+        "mainPlace": "Vattiyoorkavu",
+        "mainPlaceMal": "Vattiyoorkavu",
+        "wardNo": 5,
+        "village": null,
+        "taluk": null,
+        "auditDetails": {
+          "createdBy": null,
+          "createdTime": null,
+          "lastModifiedBy": null,
+          "lastModifiedTime": null
+        }
+      },
+      "documents": [
+        {
+          "id": null,
+          "applicantPersonalId": null,
+          "documentTypeId": 1,
+          "documentNumber": 101,
+          "docExpiryDate": 123455656,
+          "auditDetails": {
+            "createdBy": null,
+            "createdTime": null,
+            "lastModifiedBy": null,
+            "lastModifiedTime": null
+          }
+        }
+      ]
+    },
+    "serviceDocument": {
+      "id": null,
+      "applicantPersonalId": null,
+      "serviceDetailsId": null,
+      "documentTypeId": null,
+      "fileStoreId": null,
+      "active": null,
+      "documentNumber": null,
+      "applicationDetails": null,
+      "auditDetails": {
+        "createdBy": null,
+        "createdTime": null,
+        "lastModifiedBy": null,
+        "lastModifiedTime": null
+      }
+    },
+    "fileDetail": {
+      "id": null,
+      "tenantId": "kl.cochin",
+      "applicantPersonalId": null,
+      "serviceDetailsId": null,
+      "fileNumber": null,
+      "fileCode": null,
+      "fileName": null,
+      "fileArisingMode": 1,
+      "fileArisingDate": "04012023",
+      "financialYear": null,
+      "applicationDate": "04012023",
+      "businessService": "DFM",
+      "workflowCode": null,
+      "action": null,
+      "comments": null,
+      "assignees": null,
+      "fileStatus": null,
+      "auditDetails": {
+        "createdBy": null,
+        "createdTime": null,
+        "lastModifiedBy": null,
+        "lastModifiedTime": null
+      }
+    },
+    "applicantDetails": {
+      "id": null,
+      "applicantPersonalId": null,
+      "buildingNumber": null,
+      "relationOfAssessee": null,
+      "nameOfOccupier": null,
+      "nameOfOccupierMal": null,
+      "relationOfOccupier": null,
+      "durationOfResidenceInYears": null,
+      "durationOfResidenceInMonths": null,
+      "ownerName ": null,
+      "ownerNameMal": null,
+      "ownerAddress": null,
+      "ownerAddressMal": null,
+      "ownerMobileNo": null,
+      "auditDetails": {
+        "createdBy": null,
+        "createdTime": null,
+        "lastModifiedBy": null,
+        "lastModifiedTime": null
+      }
+    }
+  }
+}

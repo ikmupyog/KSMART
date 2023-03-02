@@ -1,0 +1,157 @@
+serviceMaps:
+  serviceName: kssm-snehaswanthanam
+  mappings:
+  - version: 1.0
+    description: Persists OB  details kssm database, tr_snehaswanthanam table
+    fromTopic: snehaswanthanamCreate
+    isTransaction: true
+    queryMaps:
+    - query: >
+       INSERT INTO public.tr_snehasanthwanam(numkssmpensionerid, numkssmefileid, scheme_id, district, application_no, reg_no, application_date, office_typeid, office_nameid, applicant_nameeng, applicant_namemal, applicant_houseno, applicant_wardno, applicant_housenameeng, applicant_housenamemal, applicant_streetnameeng, applicant_streetnamemal, applicant_mainplacenameeng, applicant_mainplacenamemal, applicant_postofficeid, applicant_pincode, applicant_district_id, applicant_lbid, applicant_blockid, village_id_applicant, taluk_id_applicant, applicantlandphone_no, applicantmobile_no, applicant_age, applicant_dob, applicant_genderid, memberbpl, rationcard_no, bplcertificate_no, bplcertificate_date, applicant_bankaccountno, applicant_bank, applicant_bank_branch, applicant_ifsccode, applicant_aadharno, applicant_eidno, file_status, sourceid, user_id, icdsofficer_id, fieldenquiry_date, icdsremarks, icdseligibility_id, cdporec_date, cdpoeligibility_id, remarks, cdposubmit_date, dtdecision_date, chvreason, penstart_date, verifier_id, verifier_date, verifierremarks, approver_id, approver_date, approverremarks, category_id, relationship_id, relationshipeng, relationship_nameeng)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: snehaswanthanam.*
+      jsonMaps:
+      
+      - jsonPath: $.snehaswanthanam.*.numkssmpensionerid
+
+      - jsonPath: $.snehaswanthanam.*.numkssmefileid
+
+      - jsonPath: $.snehaswanthanam.*.scheme_id
+
+      - jsonPath: $.snehaswanthanam.*.district
+
+      - jsonPath: $.snehaswanthanam.*.application_no
+
+      - jsonPath: $.snehaswanthanam.*.reg_no
+
+      - jsonPath: $.snehaswanthanam.*.application_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.office_typeid
+
+      - jsonPath: $.snehaswanthanam.*.office_nameid
+
+      - jsonPath: $.snehaswanthanam.*.applicant_nameeng
+
+      - jsonPath: $.snehaswanthanam.*.applicant_namemal
+
+      - jsonPath: $.snehaswanthanam.*.applicant_houseno
+
+      - jsonPath: $.snehaswanthanam.*.applicant_wardno
+
+      - jsonPath: $.snehaswanthanam.*.applicant_housenameeng
+
+      - jsonPath: $.snehaswanthanam.*.applicant_housenamemal
+
+      - jsonPath: $.snehaswanthanam.*.applicant_streetnameeng
+
+      - jsonPath: $.snehaswanthanam.*.applicant_streetnamemal
+
+      - jsonPath: $.snehaswanthanam.*.applicant_mainplacenameeng
+
+      - jsonPath: $.snehaswanthanam.*.applicant_mainplacenamemal
+
+      - jsonPath: $.snehaswanthanam.*.applicant_postofficeid
+
+      - jsonPath: $.snehaswanthanam.*.applicant_pincode
+
+      - jsonPath: $.snehaswanthanam.*.applicant_district_id
+
+      - jsonPath: $.snehaswanthanam.*.applicant_lbid
+
+      - jsonPath: $.snehaswanthanam.*.applicant_blockid
+
+      - jsonPath: $.snehaswanthanam.*.village_id_applicant
+
+      - jsonPath: $.snehaswanthanam.*.taluk_id_applicant
+
+      - jsonPath: $.snehaswanthanam.*.applicantlandphone_no
+
+      - jsonPath: $.snehaswanthanam.*.applicantmobile_no
+
+      - jsonPath: $.snehaswanthanam.*.applicant_age
+
+      - jsonPath: $.snehaswanthanam.*.applicant_dob
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.applicant_genderid
+
+      - jsonPath: $.snehaswanthanam.*.memberbpl
+
+      - jsonPath: $.snehaswanthanam.*.rationcard_no
+
+      - jsonPath: $.snehaswanthanam.*.bplcertificate_no
+
+      - jsonPath: $.snehaswanthanam.*.bplcertificate_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.applicant_bankaccountno
+
+      - jsonPath: $.snehaswanthanam.*.applicant_bank
+
+      - jsonPath: $.snehaswanthanam.*.applicant_bank_branch
+
+      - jsonPath: $.snehaswanthanam.*.applicant_ifsccode
+
+      - jsonPath: $.snehaswanthanam.*.applicant_aadharno
+
+      - jsonPath: $.snehaswanthanam.*.applicant_eidno
+
+      - jsonPath: $.snehaswanthanam.*.file_status
+
+      - jsonPath: $.snehaswanthanam.*.sourceid
+
+      - jsonPath: $.snehaswanthanam.*.user_id
+
+      - jsonPath: $.snehaswanthanam.*.icdsofficer_id
+
+      - jsonPath: $.snehaswanthanam.*.fieldenquiry_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.icdsremarks
+
+      - jsonPath: $.snehaswanthanam.*.icdseligibility_id
+
+      - jsonPath: $.snehaswanthanam.*.cdporec_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.cdpoeligibility_id
+
+      - jsonPath: $.snehaswanthanam.*.remarks
+
+      - jsonPath: $.snehaswanthanam.*.cdposubmit_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.dtdecision_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.chvreason
+
+      - jsonPath: $.snehaswanthanam.*.penstart_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.verifier_id
+
+      - jsonPath: $.snehaswanthanam.*.verifier_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.verifierremarks
+
+      - jsonPath: $.snehaswanthanam.*.approver_id
+
+      - jsonPath: $.snehaswanthanam.*.approver_date
+        type: DATE
+
+      - jsonPath: $.snehaswanthanam.*.approverremarks
+
+      - jsonPath: $.snehaswanthanam.*.category_id
+
+      - jsonPath: $.snehaswanthanam.*.relationship_id
+
+      - jsonPath: $.snehaswanthanam.*.relationshipeng
+
+      - jsonPath: $.snehaswanthanam.*.relationship_nameeng
+
+      
+
+
+    

@@ -1,0 +1,71 @@
+serviceMaps:
+ serviceName: snehaswanthanam
+ mappings:
+ - version: 1.0.0
+   description: Persists update snehasanthanam in snehasanthanam table
+   fromTopic: snehaswanthanamUpdate
+   isTransaction: true
+   queryMaps:
+    - query: UPDATE public.tr_snehasanthwanam SET applicant_namemal=?, applicant_housenameeng=?, applicant_housenamemal=?, applicant_streetnameeng=?, 
+             applicant_streetnamemal=?, applicant_mainplacenameeng=?, applicant_mainplacenamemal=?, applicant_postofficeid=?,
+             applicant_pincode=?, applicant_district_id=?, applicant_lbid=?,  applicantmobile_no=?, applicant_age=?,applicant_genderid=?,
+             rationcard_no=?,reg_no=?,applicant_bankaccountno=?, applicant_bank=?,applicant_bank_branch=?,category_id=?,
+             applicant_ifsccode=?, file_status=?,relationship_id=?,relationship_nameeng=?
+             WHERE numkssmpensionerid =?;
+
+      basePath: snehaswanthanam.*
+      jsonMaps:
+
+     
+       - jsonPath: $.snehaswanthanam.*.applicant_namemal
+
+       - jsonPath: $.snehaswanthanam.*.applicant_housenameeng
+
+       - jsonPath: $.snehaswanthanam.*.applicant_housenamemal
+
+       - jsonPath: $.snehaswanthanam.*.applicant_streetnameeng
+
+       - jsonPath: $.snehaswanthanam.*.applicant_streetnamemal
+
+       - jsonPath: $.snehaswanthanam.*.applicant_mainplacenameeng
+
+       - jsonPath: $.snehaswanthanam.*.applicant_mainplacenamemal
+
+       - jsonPath: $.snehaswanthanam.*.applicant_postofficeid
+
+       - jsonPath: $.snehaswanthanam.*.applicant_pincode
+
+       - jsonPath: $.snehaswanthanam.*.applicant_district_id
+
+       - jsonPath: $.snehaswanthanam.*.applicant_lbid
+
+       - jsonPath: $.snehaswanthanam.*.applicantmobile_no
+
+       - jsonPath: $.snehaswanthanam.*.applicant_age
+
+       - jsonPath: $.snehaswanthanam.*.applicant_genderid
+
+       - jsonPath: $.snehaswanthanam.*.rationcard_no
+
+       - jsonPath: $.snehaswanthanam.*.reg_no
+
+       - jsonPath: $.snehaswanthanam.*.applicant_bankaccountno
+
+       - jsonPath: $.snehaswanthanam.*.applicant_bank
+
+       - jsonPath: $.snehaswanthanam.*.applicant_bank_branch
+
+       - jsonPath: $.snehaswanthanam.*.category_id
+
+       - jsonPath: $.snehaswanthanam.*.applicant_ifsccode
+
+       - jsonPath: $.snehaswanthanam.*.file_status
+
+       - jsonPath: $.snehaswanthanam.*.relationship_id
+
+       - jsonPath: $.snehaswanthanam.*.relationship_nameeng
+
+       - jsonPath: $.snehaswanthanam.*.numkssmpensionerid
+
+
+       
