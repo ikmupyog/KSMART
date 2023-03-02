@@ -1,0 +1,228 @@
+serviceMaps:
+  serviceName: kssm-aswasakiranam
+  mappings:
+  - version: 1.0
+    description: Persists OB  details kssm database, tr_snehapoorvam table
+    fromTopic: update-aswasakiranam-topic
+    isTransaction: true
+    queryMaps:
+    - query: >
+       UPDATE public.tr_efile_aswasakiranam SET  scheme_id=?, district=?, application_no=?, reg_no=?, application_date=?, office_typeid=?, office_nameid=?, applicant_namemal=?, applicant_nameeng=?, applicant_houseno=?, applicant_wardno=?, applicant_housenamemal=?, applicant_housenameeng=?, applicant_streetnamemal=?, applicant_streetnameeng=?, applicant_mainplacenamemal=?, applicant_mainplacenameeng=?, applicantlandphone_no=?, applicantmobile_no=?, applicant_district_id=?, applicant_lbid=?, applicant_blockid=?, village_id_applicant=?, taluk_id_applicant=?, applicant_postofficeid=?, applicant_pincode=?, applicant_genderid=?, applicant_age=?, applicant_dob=?, pensioner_namemal=?, pensioner_nameeng=?, pensioner_houseno=?, pensioner_housenamemal=?, pensioner_housenameeng=?, pensioner_streetnamemal=?, pensioner_streetnameeng=?, pensioner_mainplacenamemal=?, pensioner_mainplacenameeng=?, pensioner_landphoneno=?, pensioner_mobileno=?, districtid_pensioner=?, pensioner_lbid=?, pensioner_wardno=?, pensioner_postofficeid=?, pensioner_pincode=?, pensioner_genderid=?, pensioner_age=?, pensioner_dob=?, relationship_pensioner=?, relation_detmal=?, relation_deteng=?, memberasharaya_bpl=?, member_category=?, incomecertificate_no=?, incomecertificate_date=?, rationcard_no=?, bplcertificate_no=?, bplcertificate_date=?, categoryremarksmal=?, categoryremarkseng=?, pensioner_disabled=?, disabilty_details=?, disabiltyother_detmal=?, disabiltyother_deteng=?, applicant_employed=?, applicant_employmenttype=?, applicant_income=?, applicant_getpension=?, applicant_pensiontype=?, applicant_pensionamount=?, intfamily_income=?, intaccounttype_bank_post=?, applicant_accountno=?, applicant_pincodeacc=?, applicant_accpostofficeid=?, applicant_emocode=?, applicant_bankaccountno=?, applicant_bank=?, applicant_bank_branch=?, applicant_ifsccode=?, applicant_aadharno=?, applicant_eidno=?, file_status=?, sourceid=?, user_id=?, icdsofficer_id=?, fieldenquiry_date=?, icdsremarks=?, icdseligibility_id=?, cdporec_date=?, cdpoeligibility_id=?, remarks=?, cdposubmit_date=?, dtdecision_date=?, chvreason=?, penstart_date=?, verifierremarks=?, approverremarks=?, verifier_id=?, approver_id=?, numkssmliveid=? WHERE intid=? AND numkssmpensionerid=?;
+      
+      basePath: aswasakiranam.*
+      jsonMaps:
+        - jsonPath: $.aswasakiranam.*.scheme_id
+
+        - jsonPath: $.aswasakiranam.*.district
+
+        - jsonPath: $.aswasakiranam.*.application_no
+
+        - jsonPath: $.aswasakiranam.*.reg_no
+
+        - jsonPath: $.aswasakiranam.*.application_date
+          type: DATE 
+
+        - jsonPath: $.aswasakiranam.*.office_typeid
+
+        - jsonPath: $.aswasakiranam.*.office_nameid
+
+        - jsonPath: $.aswasakiranam.*.applicant_namemal
+
+        - jsonPath: $.aswasakiranam.*.applicant_nameeng
+
+        - jsonPath: $.aswasakiranam.*.applicant_houseno
+
+        - jsonPath: $.aswasakiranam.*.applicant_wardno
+
+        - jsonPath: $.aswasakiranam.*.applicant_housenamemal
+
+        - jsonPath: $.aswasakiranam.*.applicant_housenameeng
+
+        - jsonPath: $.aswasakiranam.*.applicant_streetnamemal
+
+        - jsonPath: $.aswasakiranam.*.applicant_streetnameeng
+
+        - jsonPath: $.aswasakiranam.*.applicant_mainplacenamemal
+
+        - jsonPath: $.aswasakiranam.*.applicant_mainplacenameeng
+
+        - jsonPath: $.aswasakiranam.*.applicantlandphone_no
+
+        - jsonPath: $.aswasakiranam.*.applicantmobile_no
+
+        - jsonPath: $.aswasakiranam.*.applicant_district_id
+
+        - jsonPath: $.aswasakiranam.*.applicant_lbid
+
+        - jsonPath: $.aswasakiranam.*.applicant_blockid
+
+        - jsonPath: $.aswasakiranam.*.village_id_applicant
+
+        - jsonPath: $.aswasakiranam.*.taluk_id_applicant
+
+        - jsonPath: $.aswasakiranam.*.applicant_postofficeid
+
+        - jsonPath: $.aswasakiranam.*.applicant_pincode
+
+        - jsonPath: $.aswasakiranam.*.applicant_genderid
+
+        - jsonPath: $.aswasakiranam.*.applicant_age
+
+        - jsonPath: $.aswasakiranam.*.applicant_dob
+          type: DATE 
+
+        - jsonPath: $.aswasakiranam.*.pensioner_namemal
+
+        - jsonPath: $.aswasakiranam.*.pensioner_nameeng
+
+        - jsonPath: $.aswasakiranam.*.pensioner_houseno
+
+        - jsonPath: $.aswasakiranam.*.pensioner_housenamemal
+
+        - jsonPath: $.aswasakiranam.*.pensioner_housenameeng
+
+        - jsonPath: $.aswasakiranam.*.pensioner_streetnamemal
+
+        - jsonPath: $.aswasakiranam.*.pensioner_streetnameeng
+
+        - jsonPath: $.aswasakiranam.*.pensioner_mainplacenamemal
+
+        - jsonPath: $.aswasakiranam.*.pensioner_mainplacenameeng
+
+        - jsonPath: $.aswasakiranam.*.pensioner_landphoneno
+
+        - jsonPath: $.aswasakiranam.*.pensioner_mobileno
+
+        - jsonPath: $.aswasakiranam.*.districtid_pensioner
+
+        - jsonPath: $.aswasakiranam.*.pensioner_lbid
+
+        - jsonPath: $.aswasakiranam.*.pensioner_wardno
+
+        - jsonPath: $.aswasakiranam.*.pensioner_postofficeid
+
+        - jsonPath: $.aswasakiranam.*.pensioner_pincode
+
+        - jsonPath: $.aswasakiranam.*.pensioner_genderid
+
+        - jsonPath: $.aswasakiranam.*.pensioner_age
+
+        - jsonPath: $.aswasakiranam.*.pensioner_dob
+          type: DATE
+
+        - jsonPath: $.aswasakiranam.*.relationship_pensioner
+
+        - jsonPath: $.aswasakiranam.*.relation_detmal
+
+        - jsonPath: $.aswasakiranam.*.relation_deteng
+
+        - jsonPath: $.aswasakiranam.*.memberasharaya_bpl
+
+        - jsonPath: $.aswasakiranam.*.member_category
+
+        - jsonPath: $.aswasakiranam.*.incomecertificate_no
+
+        - jsonPath: $.aswasakiranam.*.incomecertificate_date
+          type: DATE
+
+        - jsonPath: $.aswasakiranam.*.rationcard_no
+
+        - jsonPath: $.aswasakiranam.*.bplcertificate_no
+
+        - jsonPath: $.aswasakiranam.*.bplcertificate_date
+          type: DATE
+
+        - jsonPath: $.aswasakiranam.*.categoryremarksmal
+
+        - jsonPath: $.aswasakiranam.*.categoryremarkseng
+
+        - jsonPath: $.aswasakiranam.*.pensioner_disabled
+
+        - jsonPath: $.aswasakiranam.*.disabilty_details
+
+        - jsonPath: $.aswasakiranam.*.disabiltyother_detmal
+
+        - jsonPath: $.aswasakiranam.*.disabiltyother_deteng
+
+        - jsonPath: $.aswasakiranam.*.applicant_employed
+
+        - jsonPath: $.aswasakiranam.*.applicant_employmenttype
+
+        - jsonPath: $.aswasakiranam.*.applicant_income
+
+        - jsonPath: $.aswasakiranam.*.applicant_getpension
+
+        - jsonPath: $.aswasakiranam.*.applicant_pensiontype
+
+        - jsonPath: $.aswasakiranam.*.applicant_pensionamount
+
+        - jsonPath: $.aswasakiranam.*.intfamily_income
+
+        - jsonPath: $.aswasakiranam.*.intaccounttype_bank_post
+
+        - jsonPath: $.aswasakiranam.*.applicant_accountno
+
+        - jsonPath: $.aswasakiranam.*.applicant_pincodeacc
+
+        - jsonPath: $.aswasakiranam.*.applicant_accpostofficeid
+
+        - jsonPath: $.aswasakiranam.*.applicant_emocode
+
+        - jsonPath: $.aswasakiranam.*.applicant_bankaccountno
+
+        - jsonPath: $.aswasakiranam.*.applicant_bank
+
+        - jsonPath: $.aswasakiranam.*.applicant_bank_branch
+
+        - jsonPath: $.aswasakiranam.*.applicant_ifsccode
+
+        - jsonPath: $.aswasakiranam.*.applicant_aadharno
+
+        - jsonPath: $.aswasakiranam.*.applicant_eidno
+
+        - jsonPath: $.aswasakiranam.*.file_status
+
+        - jsonPath: $.aswasakiranam.*.sourceid
+
+        - jsonPath: $.aswasakiranam.*.user_id
+
+        - jsonPath: $.aswasakiranam.*.icdsofficer_id
+
+        - jsonPath: $.aswasakiranam.*.fieldenquiry_date
+          type: DATE 
+
+        - jsonPath: $.aswasakiranam.*.icdsremarks
+
+        - jsonPath: $.aswasakiranam.*.icdseligibility_id
+
+        - jsonPath: $.aswasakiranam.*.cdporec_date
+          type: DATE
+
+        - jsonPath: $.aswasakiranam.*.cdpoeligibility_id
+
+        - jsonPath: $.aswasakiranam.*.remarks
+
+        - jsonPath: $.aswasakiranam.*.cdposubmit_date
+          type: DATE
+
+        - jsonPath: $.aswasakiranam.*.dtdecision_date
+          type: DATE
+
+        - jsonPath: $.aswasakiranam.*.chvreason
+
+        - jsonPath: $.aswasakiranam.*.penstart_date
+          type: DATE
+
+        - jsonPath: $.aswasakiranam.*.verifierremarks
+
+        - jsonPath: $.aswasakiranam.*.approverremarks
+
+        - jsonPath: $.aswasakiranam.*.verifier_id
+
+        - jsonPath: $.aswasakiranam.*.approver_id
+
+        - jsonPath: $.aswasakiranam.*.numkssmliveid
+
+        - jsonPath: $.aswasakiranam.*.intid
+        
+        - jsonPath: $.aswasakiranam.*.numkssmpensionerid
