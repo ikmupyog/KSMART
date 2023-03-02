@@ -609,6 +609,14 @@ config:
       - work-dir: "municipal-services/birth-death-services/src/main/resources/db"
         image-name: "birth-death-services-db"
         
+  - name: "builds/upyog/kssm-services/kssm-snehapoorvam"
+    build:
+      - work-dir: "kssm-services/kssm-snehapoorvam"
+        image-name: "kssm-snehapoorvam"
+        dockerfile: "build/maven/Dockerfile"
+      - work-dir: "kssm-services/kssm-snehapoorvam/src/main/resources/db"
+        image-name: "kssm-snehapoorvam-db"
+        
  # Utilities
  
   - name: "builds/upyog/utilities/egov-weekly-impact-notifier"
