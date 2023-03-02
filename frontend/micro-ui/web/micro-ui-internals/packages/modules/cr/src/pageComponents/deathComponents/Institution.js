@@ -2,8 +2,8 @@ import React, { useState ,useEffect} from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,BackButton } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-
-const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, selectDeathPlaceType, DeathPlaceInstId, setSelectedDeathPlaceInstId,InstitutionIdMl, setInstitutionIdMl
+import { useQueryClient } from "react-query";
+const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, selectDeathPlaceType, DeathPlaceInstId, setSelectedDeathPlaceInstId,InstitutionIdMl, setInstitutionIdMl,InstitutionFilterList, setInstitutionFilterList,isInitialRenderInstitutionList, setIsInitialRenderInstitutionList
  }) => {
   // console.log("stateId");
 
@@ -18,8 +18,13 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   const { t } = useTranslation();
   let validation = {};
   const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
-  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "institution");
-  
+  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "institution");
+  const [tenantboundary, setTenantboundary] = useState(false);
+  const queryClient = useQueryClient();
+  if (tenantboundary) {
+    queryClient.removeQueries("CR_INSTITUTION_LIST");
+    setTenantboundary(false);
+  }
   // const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -30,55 +35,43 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   let naturetypecmbvalue = null;
   let cmbinstitutionType = [];
   institutionType &&
-  institutionType["birth-death-service"] &&
+  institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
   institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
     cmbinstitutionType.push(ob);
   });
-  let cmbInstitutionId = [];
+  let cmbInstitutionList = [];
   institutionidList &&
-  institutionidList["egov-location"] &&
+  institutionidList["egov-location"] && institutionidList["egov-location"].institutionList &&
   institutionidList["egov-location"].institutionList.map((ob) => {
-    cmbInstitutionId.push(ob);
+    cmbInstitutionList.push(ob);
   });
-  let cmbInstitutionIdCode = [];
-  // useEffect(() => {
+  // let cmbInstitutionIdCode = [];  
 
-    // if (isInitialRender) {
-    //   console.log(DeathPlaceType);
-    //   if (DeathPlaceType) {
-    //     cmbInstitutionIdCode = cmbInstitutionId.filter((cmbInstitutionId) => cmbInstitutionId.placeofEventCodeNew === DeathPlaceType.code);
-    //     console.log(cmbInstitutionIdCode);
-    //     selectDeathPlaceInstId(cmbInstitutionIdCode);
-      
-    //     setIsInitialRender(false);
-    //   }
-    // } 
-  // },[currentLB,isInitialRender]);
-  //  console.log(institutionidList);
-  // let cmbInstitution = [];
-  // institution &&
-  //   institution["birth-death-service"] &&
-  //   institution["birth-death-service"].InstitutionType.map((ob) => {
-  //     cmbInstitution.push(ob);
-  //   });
-    
-    
+  useEffect(() => {
+    if (isInitialRenderInstitutionList) {
+      if (DeathPlaceType) {
+        setInstitutionFilterList(cmbInstitutionList.filter((cmbInstitutionList) => cmbInstitutionList.placeofEventCodeNew === DeathPlaceType.code));
+        setIsInitialRenderInstitutionList(false);
+      }
+    }
+  }, [InstitutionFilterList, isInitialRenderInstitutionList])
 
   const onSkip = () => onSelect();
 
   function setselectDeathPlaceType(value) {
     selectDeathPlaceType(value);
-    setIsInitialRender(true);
+    setSelectedDeathPlaceInstId(null);
+    setInstitutionIdMl(null);
+    setIsInitialRenderInstitutionList(true);
   }
   function selectDeathPlaceInstId(value) {
     setSelectedDeathPlaceInstId(value);
-    setIsInitialRender(true);
+    setInstitutionIdMl(value);
   } 
   function setselectInstitutionIdMl(value) {
     setInstitutionIdMl(value);
   }
-  let cmbInstitutionIdMl = [];
-
+  
   // useEffect(() => {
     
   //   if (isInitialRender) {
@@ -106,7 +99,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
         
     });
   };
-  if ( isinstitutionidLoad) {
+  if (isinstitutionLoad || isinstitutionidLoad) {
     return <Loader></Loader>;
   }
   return (
@@ -142,7 +135,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               t={t}
               optionKey="institutionName"
               isMandatory={true}
-              option={cmbInstitutionId}
+              option={InstitutionFilterList}
               selected={DeathPlaceInstId}
               select={selectDeathPlaceInstId}
               disabled={isEdit}
@@ -155,7 +148,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               t={t}
               optionKey="institutionNamelocal"
               isMandatory={true}
-              option={cmbInstitutionId}
+              option={InstitutionFilterList}
               selected={InstitutionIdMl}
               select={setselectInstitutionIdMl}
               placeholder={`${t("CR_INSTITUTION_NAME_ML")}`}

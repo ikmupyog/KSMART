@@ -30,6 +30,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   }
   const { t } = useTranslation();
   let validation = {};
+  const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
+  const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
 
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -457,7 +459,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} />;
         }
         if (naturetype === "INSTITUTION") {
-          <Institution DeathPlaceType={DeathPlaceType} DeathPlaceInstId={DeathPlaceInstId} InstitutionIdMl={InstitutionIdMl} />;
+          <Institution DeathPlaceType={DeathPlaceType} DeathPlaceInstId={DeathPlaceInstId} InstitutionIdMl={InstitutionIdMl}  InstitutionFilterList={InstitutionFilterList}
+          isInitialRenderInstitutionList={isInitialRenderInstitutionList} />;
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
@@ -861,6 +864,10 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
               InstitutionIdMl={InstitutionIdMl}
               setInstitutionIdMl={setInstitutionIdMl}
+              InstitutionFilterList={InstitutionFilterList}
+              setInstitutionFilterList={setInstitutionFilterList}
+              isInitialRenderInstitutionList={isInitialRenderInstitutionList}
+              setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
             />
           </div>
         )}
