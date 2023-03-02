@@ -3,7 +3,7 @@ serviceMaps:
  mappings:
  - version: 1.0.0
    description: Persists update snehasanthanam in snehasanthanam table
-   fromTopic: snehaswanthanamUpdate
+   fromTopic: update-snehaswanthanamUpdate-topic
    isTransaction: true
    queryMaps:
     - query: UPDATE public.tr_snehasanthwanam SET applicant_namemal=?, applicant_housenameeng=?, applicant_housenamemal=?, applicant_streetnameeng=?, 
