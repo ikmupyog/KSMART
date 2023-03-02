@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
-  selectHospitalNameMl, isEditBirth = false
+  selectHospitalNameMl, isEditBirth
 }) => {
+  console.log("isEditBirth" + isEditBirth);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -29,6 +30,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
+    
   if (isEditBirth) {
     if (formData?.ChildDetails?.hospitalCode != null) {
       if (cmbhospital.length > 0 && (hospitalName === undefined || hospitalName === "")) {

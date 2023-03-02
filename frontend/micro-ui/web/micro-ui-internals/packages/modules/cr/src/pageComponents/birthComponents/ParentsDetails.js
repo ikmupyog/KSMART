@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loade
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
+const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth,isEditBirthPageComponents}) => {
   // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();

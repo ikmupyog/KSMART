@@ -9,8 +9,9 @@ import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome"
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 
-const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
-  // console.log(JSON.stringify(formData));
+const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
+  // console.log(JSON.stringify(formData));  
+  const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -41,11 +42,21 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       return null;
     }
   };
-  // const { data: institutionList = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
-  // const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "institution");
-
-  // const [childDOB, setChildDOB] = useState(isEdit ? (formData?.ChildDetails?.childDOB):(formData?.ChildDetails?.childDOB ? formData?.ChildDetails?.childDOB : ""));
-
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
   let menu = [];
   let placeOfBirth = null;
   let cmbPlaceMaster = [];
@@ -102,8 +113,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
-  const [childDOB, setChildDOB] = useState(isEditBirth ? convertEpochFormateToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB);
-  const [gender, selectGender] = useState(isEditBirth ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : formData?.ChildDetails?.gender);
+  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB); //formData?.ChildDetails?.childDOB
+  const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : formData?.ChildDetails?.gender);
   const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
@@ -116,11 +127,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   const [birthDateTime, setbirthDateTime] = useState(""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
-
-  const [birthPlace, selectBirthPlace] = useState(isEditBirth ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : formData?.ChildDetails?.birthPlace);
+  const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : formData?.ChildDetails?.birthPlace);
   const [value, setValue] = useState();
-  const [hospitalName, selectHospitalName] = useState(isEditBirth ? "" : formData?.ChildDetails?.hospitalName); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
-  const [hospitalNameMl, selectHospitalNameMl] = useState(isEditBirth ? "" : formData?.ChildDetails?.hospitalNameMl);
+  const [hospitalName, selectHospitalName] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalName); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
+  const [hospitalNameMl, selectHospitalNameMl] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalNameMl);
 
   const [institution, setInstitution] = useState(formData?.ChildDetails?.institution ? formData?.ChildDetails?.institution : null);
   const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl ? formData?.ChildDetails?.institutionIdMl : null);
@@ -157,8 +167,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   // const [pregnancyDuration, setPregnancyDuration] = useState(isEditBirth ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : formData?.ChildDetails?.pregnancyDuration);
 
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : "");
-  const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]) : formData?.ChildDetails?.medicalAttensionSub);
-  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : formData?.ChildDetails?.deliveryMethods);
+  const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]) : formData?.ChildDetails?.medicalAttensionSub);
+  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : formData?.ChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
 
   const [toast, setToast] = useState(false);
@@ -168,13 +178,13 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [HospitalError, setHospitalError] = useState(formData?.ChildDetails?.hospitalName ? false : false);
   const [InstitutionError, setInstitutionError] = useState(formData?.ChildDetails?.institution ? false : false);
   const [InstitutionNameError, setInstitutionNameError] = useState(formData?.ChildDetails?.institutionId ? false : false);
-  const [WardError, setAdsWardError] = useState(formData?.BirthPlaceHomeDetails?.wardNo ? false : false);
-  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePostOffice ? false : false);
-  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePincode ? false : false);
-  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeHouseNameEn ? false : false);
-  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeHouseNameMl ? false : false);
-  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameEn ? false : false);
-  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameMl ? false : false);
+  const [WardError, setAdsWardError] = useState(formData?.ChildDetails?.wardNo ? false : false);
+  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.ChildDetails?.AdrsHomePostOffice ? false : false);
+  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.ChildDetails?.AdrsHomePincode ? false : false);
+  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.ChildDetails?.AdrsHomeHouseNameEn ? false : false);
+  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(formData?.ChildDetails?.AdrsHomeHouseNameMl ? false : false);
+  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(formData?.ChildDetails?.AdrsHomeLocalityNameEn ? false : false);
+  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(formData?.ChildDetails?.AdrsHomeLocalityNameMl ? false : false);
   const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?.ChildDetails?.VehicleRegistrationNo ? false : false);
   const [vehiTypeError, setvehiTypeError] = useState(formData?.ChildDetails?.vehicleType ? false : false);
   const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?.ChildDetails?.vehicleHaltPlace ? false : false);
@@ -874,7 +884,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
       sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
       sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
-
+      let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
         isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
@@ -884,57 +894,38 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
-        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods
+        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen
       });
     }
   };
-  const convertEpochToDate = (dateEpoch) => {
-    // Returning null in else case because new Date(null) returns initial date from calender
-    if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
-      let month = dateFromApi.getMonth() + 1;
-      let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
-      month = (month > 9 ? "" : "0") + month;
-      day = (day > 9 ? "" : "0") + day;
-      return `${year}-${month}-${day}`;
-    } else {
-      return null;
-    }
-  };
-
-
-  if (isEditBirth) {
+  if (isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined)) {
+  
     if (formData?.ChildDetails?.gender != null) {
       if (menu.length > 0 && (gender === undefined || gender === "")) {
         selectGender(menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]);
-        setisInitialRenderFormData(true);
       }
     }
     if (formData?.ChildDetails?.birthPlace != null) {
       if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
         selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]);
         setValue(formData?.ChildDetails?.birthPlace);
-        setisInitialRenderFormData(true);
       }
     }
     if (formData?.ChildDetails?.medicalAttensionSub != null) {
       if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
         setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
-        setisInitialRenderFormData(true);
       }
     }
     // if (formData?.ChildDetails?.pregnancyDuration != null) {
+    //   console.log("pregnancyDuration" + pregnancyDuration);
     //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
     //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
-    //     setisInitialRenderFormData(true);
     //   }
     // }
     if (formData?.ChildDetails?.deliveryMethods != null) {
       if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
         // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
         setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
-        setisInitialRenderFormData(true);
       }
     }
   }
@@ -975,10 +966,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 <DatePicker
                   date={childDOB}
                   name="childDOB"
-                  max={convertEpochToDate(new Date())}
+                  // max={convertEpochToDate(new Date())}
                   // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
-                  inputFormat="DD-MM-YYYY"
+                  //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
@@ -1054,6 +1045,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 hospitalNameMl={hospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
                 formData={formData}
+                isEditBirth={isEditBirth}
               />
             </div>
           )}
@@ -1071,6 +1063,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 isInitialRenderInstitutionList={isInitialRenderInstitutionList}
                 setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
                 formData={formData}
+                isEditBirth={isEditBirth}
               />
             </div>
           )}
@@ -1098,6 +1091,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 PostOfficevalues={PostOfficevalues}
                 setPostOfficevalues={setPostOfficevalues}
                 formData={formData}
+                isEditBirth={isEditBirth}
               />
             </div>
           )}
@@ -1127,6 +1121,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 wardNo={wardNo}
                 setWardNo={setWardNo}
                 formData={formData}
+                isEditBirth={isEditBirth}
               />
             </div>
           )}
@@ -1148,6 +1143,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 setpublicPlaceDecpEn={setpublicPlaceDecpEn}
                 setWardNo={setWardNo}
                 formData={formData}
+                isEditBirth={isEditBirth}
               />
             </div>
           )}
