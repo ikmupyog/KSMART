@@ -2,6 +2,7 @@ import { AppContainer, BackButton, PrivateRoute } from "@egovernments/digit-ui-r
 import React from "react";
 import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
 import ChildDetails from "../../pageComponents/birthComponents/ChildDetails";
+import ChildDStillBirthChildDetailsetails from "../../pageComponents/stillBirthComponents/StillBirthChildDetails";
 import InformationDeath from "../../pageComponents/deathComponents/InformationDeath";
 import BirthCertificateSearch from "./BirthCertificate";
 import DeathCertificate from "./Certificate/DeathCertificate";
@@ -18,6 +19,7 @@ const App = () => {
   let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
 
   const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
+  const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateStillBirthRegistration');
   const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathRegistration');
   const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
 
@@ -42,6 +44,7 @@ const App = () => {
       <Switch>
       <AppContainer>
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
+        <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 

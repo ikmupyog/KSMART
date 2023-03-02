@@ -9,6 +9,8 @@ import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSam
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
+import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
+
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
 import BirthPlaceInstitution from "../src/pageComponents/birthComponents/BirthPlaceInstitution";
@@ -25,6 +27,15 @@ import AddressPermanentInsideKerala from "../src/pageComponents/birthComponents/
 import AddressPermanentOutsideIndia from "../src/pageComponents/birthComponents/AddressPermanentOutsideIndia";
 import InformarHospitalInstitution from "../src/pageComponents/birthComponents/InformarHospitalInstitution";
 import InitiatorDetails from "../src/pageComponents/birthComponents/InitiatorDetails";
+
+import StillBirthChildDetails from "../src/pageComponents/stillBirthComponents/StillBirthChildDetails";
+import StillBirthParentsDetails from "../src/pageComponents/stillBirthComponents/StillBirthParentsDetails";
+import StillBirthPlaceVehicle from "../src/pageComponents/stillBirthComponents/StillBirthPlaceVehicle";
+import StillBirthPlacePublicPlace from "../src/pageComponents/stillBirthComponents/StillBirthPlacePublicPlace";
+import StillBirthPlaceInstitution from "../src/pageComponents/stillBirthComponents/StillBirthPlaceInstitution";
+import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHospital";
+import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
+
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
@@ -120,6 +131,10 @@ export const CRLinks = ({ matchPath, userType }) => {
       i18nKey: t("CR_BIRTH_REGISTRATION"),
     },
     {
+      link: `${matchPath}/cr-stillbirth-creation`,
+      i18nKey: t("CR_STILL_BIRTH_REGISTRATION"),
+    },
+    {
       link: `${matchPath}/cr-death-creation`,
       i18nKey: t("CR_DEATH_REGISTRATION"),
     },
@@ -170,6 +185,7 @@ const componentsToRegister = {
   AddressPermanent,
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
+  CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   ParentsDetails,
   BirthPlaceHospital,
   BirthPlaceInstitution,
@@ -186,6 +202,14 @@ const componentsToRegister = {
   AddressPermanentInsideKerala,
   InformarHospitalInstitution,
   InitiatorDetails,
+//////////////////
+StillBirthChildDetails,
+StillBirthParentsDetails,
+StillBirthPlaceHome,
+StillBirthPlaceHospital,
+StillBirthPlaceInstitution,
+StillBirthPlacePublicPlace,
+StillBirthPlaceVehicle,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
