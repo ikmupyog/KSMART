@@ -3,7 +3,7 @@ serviceMaps:
   mappings:
   - version: 1.0
     description: Persists OB  details kssm database, tr_snehapoorvam table
-    fromTopic: snehapoorvamCreate
+    fromTopic: save-snehapoorvam-topic
     isTransaction: true
     queryMaps:
     - query: >

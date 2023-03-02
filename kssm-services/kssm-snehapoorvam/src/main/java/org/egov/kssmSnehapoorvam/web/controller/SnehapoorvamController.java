@@ -36,7 +36,7 @@ public class SnehapoorvamController {
 
         this.obService = obService;
     }
-    @PostMapping("/v1/_Create")
+    @PostMapping("/v1/Create")
     public ResponseEntity <SnehapoorvamResponse> create(@Valid @RequestBody SnehapoorvamRequest request) {
         
         try {
@@ -56,7 +56,7 @@ public class SnehapoorvamController {
     }
 
 
-    @PostMapping("/v1/_Update")
+    @PostMapping("/v1/Update")
     public ResponseEntity <SnehapoorvamResponse> Update(@Valid @RequestBody SnehapoorvamRequest request) {
         
         try {
