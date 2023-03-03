@@ -692,6 +692,23 @@ export const newConfig = [
         key: "GroomKeyDetails",
         withoutLabel: true,
         hideInEmployee: false,
+        nextStep: "bride-details",
+      },
+      {
+        type: "component",
+        route: "bride-details",
+        isMandatory: true,
+        component: "BrideDetails",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "BrideDetails",
+        withoutLabel: true,
+        hideInEmployee: false,
         nextStep: "place-of-death",
       },
       {

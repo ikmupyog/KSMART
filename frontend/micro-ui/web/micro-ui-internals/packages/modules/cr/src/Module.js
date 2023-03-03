@@ -100,7 +100,7 @@ import CitizenApp from "./pages/citizen";
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
-
+import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -261,6 +261,7 @@ StillBirthPlaceVehicle,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
+  BrideDetails,
 };
 
 export const initCRComponents = () => {
