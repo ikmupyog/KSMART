@@ -12,6 +12,8 @@ import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPla
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
   // console.log(JSON.stringify(formData));  
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -114,7 +116,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     { i18nKey: "42", code: "42" },
   ];
   const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB); //formData?.ChildDetails?.childDOB
-  const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : formData?.ChildDetails?.gender);
+  // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : formData?.ChildDetails?.gender);
+  const [gender, selectGender] = useState(formData?.ChildDetails?.gender?.code ? formData?.ChildDetails?.gender   :  formData?.ChildDetails?.gender ?    
+      (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : "" );
+  
   const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
@@ -127,10 +132,15 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   const [birthDateTime, setbirthDateTime] = useState(""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
-  const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : formData?.ChildDetails?.birthPlace);
+  // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : formData?.ChildDetails?.birthPlace);
+  const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace   :  formData?.ChildDetails?.birthPlace ?    
+    (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "" );
   const [value, setValue] = useState();
-  const [hospitalName, selectHospitalName] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalName); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
-  const [hospitalNameMl, selectHospitalNameMl] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalNameMl);
+  const [hospitalName, selectHospitalName] = useState(formData?.ChildDetails?.hospitalName?.code ? formData?.ChildDetails?.hospitalName   :  formData?.ChildDetails?.hospitalName ?  "" : "" );
+  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl?.code ? formData?.ChildDetails?.hospitalNameMl   :  formData?.ChildDetails?.hospitalNameMl ?  "" : "" );
+  
+  // const [hospitalName, selectHospitalName] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalName); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
+  // const [hospitalNameMl, selectHospitalNameMl] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalNameMl);
 
   const [institution, setInstitution] = useState(formData?.ChildDetails?.institution ? formData?.ChildDetails?.institution : null);
   const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl ? formData?.ChildDetails?.institutionIdMl : null);
@@ -167,8 +177,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   // const [pregnancyDuration, setPregnancyDuration] = useState(isEditBirth ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : formData?.ChildDetails?.pregnancyDuration);
 
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? formData?.ChildDetails?.pregnancyDuration : "");
-  const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]) : formData?.ChildDetails?.medicalAttensionSub);
-  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : formData?.ChildDetails?.deliveryMethods);
+  const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.ChildDetails?.medicalAttensionSub?.code ? formData?.ChildDetails?.medicalAttensionSub   :  formData?.ChildDetails?.medicalAttensionSub ?    
+    (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]) : "" );
+ // const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]) : formData?.ChildDetails?.medicalAttensionSub);
+ const [deliveryMethods, setDeliveryMethod] = useState(formData?.ChildDetails?.deliveryMethods?.code ? formData?.ChildDetails?.deliveryMethods   :  formData?.ChildDetails?.deliveryMethods ?    
+  (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : "" ); 
+//  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : formData?.ChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
 
   const [toast, setToast] = useState(false);
@@ -899,7 +913,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     }
   };
   if (isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined)) {
-  
+
     if (formData?.ChildDetails?.gender != null) {
       if (menu.length > 0 && (gender === undefined || gender === "")) {
         selectGender(menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]);
@@ -966,9 +980,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                 <DatePicker
                   date={childDOB}
                   name="childDOB"
-                  // max={convertEpochToDate(new Date())}
+                  max={convertEpochToDate(new Date())}
                   // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
+                  disable={isDisableEdit}
                   //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
@@ -976,7 +991,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
               </div>
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
+                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} 
+                value={birthDateTime} 
+                disable={isDisableEdit} />
               </div>
               <div className="col-md-3">
                 <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -987,6 +1004,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                   option={menu}
                   selected={gender}
                   select={setselectGender}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_GENDER")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
@@ -1001,6 +1019,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                     optionKey="i18nKey"
                     name="childAadharNo"
                     value={childAadharNo}
+                    disable={isDisableEdit}
                     onChange={setSelectChildAadharNo}
                     placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                     inputProps={{
@@ -1031,6 +1050,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
+                  disable={isDisableEdit}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />
@@ -1159,7 +1179,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
-                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName} value={isChildName} checked={isChildName} />
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName} 
+                value={isChildName} checked={isChildName} />
               </div>
             </div>
           </div>
@@ -1187,6 +1208,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       name="childFirstNameEn"
                       value={childFirstNameEn}
                       onChange={setSelectChildFirstNameEn}
+                      disable={isDisableEdit}
                       //  onChange={(e,v) => this.updateTextField(e,v)}
                       // disable={isChildName}
                       placeholder={`${t("CR_FIRST_NAME_EN")}`}
@@ -1203,7 +1225,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       name="childMiddleNameEn"
                       value={childMiddleNameEn}
                       onChange={setSelectChildMiddleNameEn}
-                      // disable={isChildName}
+                      disable={isDisableEdit}
                       placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                       {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                     />
@@ -1218,7 +1240,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       name="childLastNameEn"
                       value={childLastNameEn}
                       onChange={setSelectChildLastNameEn}
-                      // disable={isChildName}
+                      disable={isDisableEdit}
                       placeholder={`${t("CR_LAST_NAME_EN")}`}
                       {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                     />
@@ -1240,7 +1262,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       name="childFirstNameMl"
                       value={childFirstNameMl}
                       onChange={setSelectChildFirstNameMl}
-                      // disable={isChildName}
+                      disable={isDisableEdit}
                       placeholder={`${t("CR_FIRST_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1260,7 +1282,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       name="childMiddleNameMl"
                       value={childMiddleNameMl}
                       onChange={setSelectChildMiddleNameMl}
-                      // disable={isChildName}
+                      disable={isDisableEdit}
                       placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1280,7 +1302,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       name="childLastNameMl"
                       value={childLastNameMl}
                       onChange={setSelectChildLastNameMl}
-                      // disable={isChildName}
+                      disable={isDisableEdit}
                       placeholder={`${t("CR_LAST_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",

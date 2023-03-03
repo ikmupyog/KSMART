@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth,isEditBirthPageComponents}) => {
   // console.log(JSON.stringify(formData));
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -61,7 +62,10 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth,isEd
     ReligionList["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
-  const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn : "");
+  const [motherFirstNameEn, setMotherFirstNameEn] = useState( formData?.ParentsDetails?.motherFirstNameEn ?  formData?.ParentsDetails?.motherFirstNameEn :
+    formData?.ChildDetails?.ParentsDetails?.motherFirstNameEn ? formData?.ChildDetails?.ParentsDetails?.motherFirstNameEn : "");
+
+  // const [motherFirstNameEn, setMotherFirstNameEn] = useState(isEditBirth ? formData?.ChildDetails?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn : "");
   const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.ParentsDetails?.motherFirstNameMl ? formData?.ParentsDetails?.motherFirstNameMl : "");
   const [motherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.motherAadhar ? formData?.ParentsDetails?.motherAadhar : "");
   const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.ParentsDetails?.motherMarriageAge ? formData?.ParentsDetails?.motherMarriageAge : "");
