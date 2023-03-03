@@ -29,7 +29,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "commencementDate",
+      sortBy: "DateOfDeath",
       sortOrder: "DESC",
     },
   });
@@ -37,7 +37,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    register("sortBy", "commencementDate");
+    register("sortBy", "DateOfDeath");
     register("sortOrder", "DESC");
   }, [register]);
 
@@ -67,7 +67,8 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
   }
   const handleLinkClick = (finaldata) => {
-    Digit.SessionStorage.set("application-deathdetails/${row.original.DeathACKNo", finaldata);
+    Digit.SessionStorage.set("CR_DEATH_EDIT", finaldata);
+    Digit.SessionStorage.set("CR_DEATH_EDIT_FLAG", true);
   }
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
@@ -86,7 +87,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
             // </div>
             <div>
                 <span className="link">
-                  <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}>
+                  <Link onClick={handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}>
                     {row.original.InformationDeath["DeathACKNo"]}
                   </Link>
                 </span>

@@ -19,9 +19,12 @@ import DeathPlaceHome from "./DeathPlaceHome";
 import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
+import { useParams } from "react-router-dom";
 
-const InformationDeath = ({ config, onSelect, userType, formData }) => {
-  console.log(formData);
+const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
+
+  console.log(isedit);
+  console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -30,22 +33,38 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   }
   const { t } = useTranslation();
   let validation = {};
-  const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
-  const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
-
+  const convertEpochToDate = (dateEpoch) => {
+    console.log("MaxDate");
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      console.log("MaxDate" + dateEpoch);
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+     return `${year}-${month}-${day}`;
+    //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
-  const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
-  // const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "IdProofDetails");
+  // const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
+  const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "IdProofDetails");
   const { data: AgeUnitvalue = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const { data: OccupationMain = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
   const { data: Profession = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
 
-  const [DateOfDeath, setDateOfDeath] = useState(formData?.InformationDeath?.DateOfDeath ? formData?.InformationDeath?.DateOfDeath : "");
-  const [TimeOfDeath, setTimeOfDeath] = useState(formData?.InformationDeath?.TimeOfDeath ? formData?.InformationDeath?.TimeOfDeath : "");
+  const [DateOfDeath, setDateOfDeath] = useState(isedit?convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+   : formData?.InformationDeath?.DateOfDeath );
+  const [TimeOfDeath, setTimeOfDeath] = useState("");
+  // (formData?.InformationDeath?.TimeOfDeath ? formData?.InformationDeath?.TimeOfDeath : "");
   const [DeceasedAadharNotAvailable, setDeceasedAadharNotAvailable] = useState(
     formData?.InformationDeath?.DeceasedAadharNotAvailable ? formData?.InformationDeath?.DeceasedAadharNotAvailable : false
   );
@@ -84,10 +103,13 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [CommencementDate, setCommencementDate] = useState(
     formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
   );
+
   // const [checked, setChecked] = useState(formData?.InformationDeath?.checked ? formData?.InformationDeath?.checked : false);
   const [AgeUnit, setSelectedAgeUnit] = useState(formData?.InformationDeath?.AgeUnit ? formData?.InformationDeath?.AgeUnit : null);
   const [Occupation, setSelectedOccupation] = useState(formData?.InformationDeath?.Occupation);
   const [DeathPlace, setselectDeathPlace] = useState(formData?.InformationDeath?.DeathPlace);
+
+  // const [DeathPlace, setselectDeathPlace] = useState(cmbPlace?(cmbPlace.filter(cmbPlace=>cmbPlace.code === formData?.InformationDeath?.DeathPlace)[0]) :formData?.InformationDeath?.DeathPlace) ;
   //Hospital, Intitution, vehicle, Public Place {DeathPlaceType}
   const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType);
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
@@ -115,7 +137,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
   const [VehicleFirstHaltEn, setVehicleFirstHaltEn] = useState(formData?.InformationDeath?.VehicleFirstHaltEn);
   const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.InformationDeath?.VehicleFirstHaltMl);
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.InformationDeath?.VehicleHospitalEn);
-  const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData.InformationDeath?.DeathPlaceWardId);
+  const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData?.InformationDeath?.DeathPlaceWardId);
   //Public Place
 
   const [DeathPlaceLocalityEn, setDeathPlaceLocalityEn] = useState(
@@ -179,8 +201,8 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     });
   let cmbDocumentType = [];
   documentType &&
-    documentType["common-masters"] &&
-    documentType["common-masters"].IdProof.map((ob) => {
+    documentType["birth-death-service"] &&
+    documentType["birth-death-service"].IdProofDetails.map((ob) => {
       cmbDocumentType.push(ob);
     });
   let cmbAgeUnit = [];
@@ -459,8 +481,7 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
           <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} />;
         }
         if (naturetype === "INSTITUTION") {
-          <Institution DeathPlaceType={DeathPlaceType} DeathPlaceInstId={DeathPlaceInstId} InstitutionIdMl={InstitutionIdMl}  InstitutionFilterList={InstitutionFilterList}
-          isInitialRenderInstitutionList={isInitialRenderInstitutionList} />;
+          <Institution DeathPlaceType={DeathPlaceType} DeathPlaceInstId={DeathPlaceInstId} InstitutionIdMl={InstitutionIdMl} />;
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
@@ -524,11 +545,11 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
     console.log(DeathPlace.code);
     console.log(Difference_In_DaysRounded);
     if (Difference_In_DaysRounded <= 21) {
-      if (DeathPlace.code == "HOME") {
-        workFlowCode = "DEATHHOME";
+      if (DeathPlace.code == "HOSPITAL") {
+        workFlowCode = "DEATHHOSP";
         console.log(workFlowCode);
       } else {
-        workFlowCode = "DEATHHOSP";
+        workFlowCode = "DEATHHOME";
       }
     }
     if (sexError == null || sexError == "" || sexError == undefined) {
@@ -864,10 +885,6 @@ const InformationDeath = ({ config, onSelect, userType, formData }) => {
               setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
               InstitutionIdMl={InstitutionIdMl}
               setInstitutionIdMl={setInstitutionIdMl}
-              InstitutionFilterList={InstitutionFilterList}
-              setInstitutionFilterList={setInstitutionFilterList}
-              isInitialRenderInstitutionList={isInitialRenderInstitutionList}
-              setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
             />
           </div>
         )}

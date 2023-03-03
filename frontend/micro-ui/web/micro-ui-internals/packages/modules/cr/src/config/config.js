@@ -330,6 +330,70 @@ export const newConfig = [
     ],
   },
 
+
+  {
+    head: "Birth Routing",
+    body: [
+      {
+        type: "component",
+        route: "stillbirth-child-details",
+        isMandatory: true,
+        component: "StillBirthChildDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "StillBirthChildDetails",
+        withoutLabel: true,
+        nextStep: "stillbirth-parents-details",
+        hideInEmployee: false,
+      },
+      {
+        route: "stillbirth-parents-details",
+        component: "StillBirthParentsDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "StillBirthParentsDetails",
+        type: "component",
+        nextStep: "address-birth",
+        hideInEmployee: false,
+      },
+      {
+        route: "stillbirth-address",
+        component: "AddressBasePage",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressBirthDetails",
+        nextStep: "initiator-details",
+        type: "component",
+        hideInEmployee: false,
+      },   
+      
+      
+      
+      
+    ],
+  },
+
+
+
+
+
+
   {
     head: "Adoption Routing",
     body: [
