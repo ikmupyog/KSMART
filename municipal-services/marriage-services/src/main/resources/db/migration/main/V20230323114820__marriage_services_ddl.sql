@@ -1,8 +1,8 @@
--- Table: public.eg_marriage_details
+-- Table: public.eg_marriage_dtls
 
--- DROP TABLE IF EXISTS public.eg_marriage_details;
+-- DROP TABLE IF EXISTS public.eg_marriage_dtls
 
-CREATE TABLE IF NOT EXISTS public.eg_marriage_details
+CREATE TABLE IF NOT EXISTS public.eg_marriage_dtls
 (
         id character varying(64) COLLATE pg_catalog."default" NOT NULL,
         dateofmarriage bigint,
@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_details
     );
 
    
-CREATE INDEX IF NOT EXISTS idx_eg_marriage_details_tenantid
-    ON public.eg_marriage_details USING btree
+CREATE INDEX IF NOT EXISTS idx_eg_marriage_dtls_tenantid
+    ON public.eg_marriage_dtls USING btree
     (tenantid COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
 
@@ -98,7 +98,7 @@ CREATE INDEX IF NOT EXISTS idx_eg_marriage_details_tenantid
            lastmodifiedby character varying(64) COLLATE pg_catalog."default",
        CONSTRAINT eg_marriage_bride_details_pkey PRIMARY KEY (id),
        CONSTRAINT eg_marriage_bride_details_fkey FOREIGN KEY (marriageid)
-           REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
+           REFERENCES public.eg_marriage_dtls (id) MATCH SIMPLE
            ON UPDATE NO ACTION
            ON DELETE NO ACTION
            NOT VALID
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_groom_details
                lastmodifiedby character varying(64) COLLATE pg_catalog."default",
     CONSTRAINT eg_marriage_groom_details_pkey PRIMARY KEY (id),
     CONSTRAINT eg_marriage_groom_details_fkey FOREIGN KEY (marriageid)
-        REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
+        REFERENCES public.eg_marriage_dtls (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_permanent_address_details
         lastmodifiedby character varying(64) COLLATE pg_catalog."default",
     CONSTRAINT eg_marriage_permanent_address_details_pkey PRIMARY KEY (id),
     CONSTRAINT eg_marriage_permanent_address_details_fkey FOREIGN KEY (marriageid)
-        REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
+        REFERENCES public.eg_marriage_dtls (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_present_address_details
             lastmodifiedby character varying(64) COLLATE pg_catalog."default",
     CONSTRAINT eg_marriage_present_address_details_pkey PRIMARY KEY (id),
     CONSTRAINT eg_marriage_present_address_details_fkey FOREIGN KEY (marriageid)
-        REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
+        REFERENCES public.eg_marriage_dtls (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_witness_details
                 lastmodifiedby character varying(64) COLLATE pg_catalog."default",
     CONSTRAINT eg_marriage_witness_details_pkey PRIMARY KEY (id),
     CONSTRAINT eg_marriage_witness_details_fkey FOREIGN KEY (marriageid)
-        REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
+        REFERENCES public.eg_marriage_dtls (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
