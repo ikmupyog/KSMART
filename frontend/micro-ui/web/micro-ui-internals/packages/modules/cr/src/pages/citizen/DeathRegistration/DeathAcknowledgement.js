@@ -24,12 +24,18 @@ const rowContainerStyle = {
 const BannerPicker = (props) => {
   console.log(props);
   return (
+    // <Banner
+    //   message={GetActionMessage(props)}
+    //   applicationNumber={props.data?.Licenses[0]?.applicationNumber}
+    //   info={props.isSuccess ? props.t("AK-16-2023-CRDRNR-C-KOCHI-KL") : ""}
+    //   successful={props.isSuccess}
+    // />
     <Banner
-      message={GetActionMessage(props)}
-      applicationNumber={props.data?.Licenses[0]?.applicationNumber}
-      info={props.isSuccess ? props.t("AK-16-2023-CRDRNR-C-KOCHI-KL") : ""}
-      successful={props.isSuccess}
-    />
+    message={GetActionMessage(props)}
+    applicationNumber={props.data?.InformationDeath[0]?.DeathACKNo}
+    info={props.isSuccess ? props.DeathACKNo : ""}
+    successful={props.isSuccess}
+  />
   );
 };
 
