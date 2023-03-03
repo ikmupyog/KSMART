@@ -690,7 +690,7 @@ export const newConfig = [
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
         },
-        key: "GroomKeyDetails",
+        key: "GroomDetails",
         withoutLabel: true,
         hideInEmployee: false,
         nextStep: "bride-details",
