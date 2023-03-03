@@ -88,6 +88,18 @@ public class DeathDtl {
     public void setStatus(String s) {
     }
 
+    //Jasmine 01.03.2023
+    @Schema(type = "long",description = "If death date is not known enter the todate" )
+    @JsonProperty("dateOfDeath1")
+    private Long dateOfDeath1;
 
+    @Schema(type = "string", description= "time of death" )
+    @JsonProperty("timeOfDeath1")
+    private Integer timeOfDeath1 ;
+
+    @Schema(type = "string", description= "am/pm" )
+    @Size(max = 64)
+    @JsonProperty("timeOfDeathUnit1")
+    private String timeOfDeathUnit1 ;
 
 }
