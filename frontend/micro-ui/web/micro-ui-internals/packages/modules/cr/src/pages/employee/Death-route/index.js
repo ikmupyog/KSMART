@@ -12,15 +12,19 @@ import { newConfig as newConfigCR } from "../../../config/config";
 // import Search from "../Search";
 import SpecifyCorrection from "../SpecifyCorrection";
 
-const DeathCrFlowApp = ({ parentUrl }) => {
+const DeathCrFlowApp = (props) => {
+  console.log(JSON.stringify(props));
+  console.log(window.location.href.includes("editdeath"));
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
+  const [isedit,setIsedit]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
+  console.log(isedit);
   // let params1 = sessionStorage.getItem('CR_DEATH_CORRECTIONS')
-
+  //death-emp-edit
   console.log('para',params);
   // useEffect(()=>{
   //   let InformationDeath ={
@@ -244,7 +248,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
   const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
   const SearchCorrection = Digit?.ComponentRegistryService?.getComponent("CRSearchdeathcorrection");
   const DeathCorrection = Digit?.ComponentRegistryService?.getComponent("CRSearchDeathCorrectionRoute");
-
+  const InformationDeathEdit = Digit?.ComponentRegistryService?.getComponent("InformationDeath");
   return (
     <React.Fragment>
       <Switch>
@@ -261,6 +265,7 @@ const DeathCrFlowApp = ({ parentUrl }) => {
                 formData={params}
                 onAdd={handleMultiple}
                 userType="employee"
+                isedit={isedit}
               />
             </Route>
           );
@@ -274,12 +279,12 @@ const DeathCrFlowApp = ({ parentUrl }) => {
         <Route path={`${path}`} exact>
           <DeathCrFlow path={path} />
         </Route>
-        <PrivateRoute parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path} />} />
+        <PrivateRoute parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path}  />} />
         {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
         <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/death-information`} component={(props) => <DeathCorrection {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/specify-correction`} component={(props) => <SpecifyCorrection {...props} parentRoute={path} />} />
-
+        {/* <PrivateRoute  path={`${path}/death-emp-edit`}  component={() => <InformationDeathEdit parentUrl={path} />} /> */}
         {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
       </Switch>
     </React.Fragment>
