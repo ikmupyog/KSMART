@@ -165,14 +165,18 @@ const BrideDetails = ({ config, onSelect, userType, formData }) => {
       setbrideMobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' A-Z]/gi, ""));
     }
   }
-  function setSelectbrideGender(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideGender(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' A-Z]/gi, ""));
-    }
+  function setSelectbrideGender(value) {
+    // console.log("gender" + value);
+    setbrideGender(value);
   }
+  // function setSelectbrideGender(value) {
+  //   if (value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setbrideGender(value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' A-Z]/gi, ""));
+  //   }
+  // }
   function setSelectbrideDOB(e) {
     setbrideDOB(value);
     const today = new Date();
