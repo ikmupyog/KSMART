@@ -14,7 +14,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
-import Timeline from "../../../components/CRTimeline";
+import Timeline from "../../components/SBRTimeline";
 
 const ActionButton = ({ jumpTo }) => {
   const { t } = useTranslation();
@@ -47,11 +47,11 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
   const history = useHistory();
   const match = useRouteMatch();
   const {
-    ChildDetails,
-    ParentsDetails,
+    StillBirthChildDetails,
+    StillBirthParentsDetails,
     AddressBirthDetails,
-    InitiatorinfoDetails,
-    InformarHosInstDetails,
+    StillBirthInitiatorinfoDetails,
+  //  InformarHosInstDetails,
     // BirthPlace,
     // HospitalDetails,
     // FatherInfoDetails,
@@ -132,20 +132,20 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {/* {t(ChildDetails.childFirstNameEn ? ChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(ChildDetails.childMiddleNameEn  )} {t(ChildDetails.childLastNameEn  )} */}
-                {t(ChildDetails.childFirstNameEn ? ChildDetails.childFirstNameEn : " CR_NOT_RECORDED") +
+                {/* {t(StillBirthStillBirthChildDetails.childFirstNameEn ? StillBirthChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(StillBirthChildDetails.childMiddleNameEn  )} {t(StillBirthChildDetails.childLastNameEn  )} */}
+                {t(StillBirthChildDetails.childFirstNameEn ? StillBirthChildDetails.childFirstNameEn : " CR_NOT_RECORDED") +
                   " " +
-                  ChildDetails.childMiddleNameEn +
+                  StillBirthChildDetails.childMiddleNameEn +
                   " " +
-                  ChildDetails.childLastNameEn +
+                  StillBirthChildDetails.childLastNameEn +
                   " / " +
-                  t(ChildDetails.childFirstNameMl) +
+                  t(StillBirthChildDetails.childFirstNameMl) +
                   " " +
-                  ChildDetails.childMiddleNameMl +
+                  StillBirthChildDetails.childMiddleNameMl +
                   " " +
-                  ChildDetails.childLastNameMl}
+                  StillBirthChildDetails.childLastNameMl}
               </CardText>
-              {/* {t(ChildDetails.institutionId.institutionName) + " / " + t(ChildDetails.institutionId.institutionNamelocal)}  */}
+              {/* {t(StillBirthChildDetails.institutionId.institutionName) + " / " + t(StillBirthChildDetails.institutionId.institutionNamelocal)}  */}
             </div>
           </div>
           <div className="row">
@@ -154,7 +154,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(ChildDetails.gender.code) + " / " + t(ChildDetails.gender.code + "_ML")}
+                : {t(StillBirthChildDetails.gender.code) + " / " + t(StillBirthChildDetails.gender.code + "_ML")}
               </CardText>
             </div>
           </div>
@@ -164,39 +164,39 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(ChildDetails.childDOB) ? convertEpochToDate(ChildDetails.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(StillBirthChildDetails.childDOB) ? convertEpochToDate(StillBirthChildDetails.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-12">
-              {ChildDetails.birthPlace.code === "HOSPITAL" && (
+              {StillBirthChildDetails.birthPlace.code === "HOSPITAL" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : {t(ChildDetails.hospitalName.hospitalName) + " / " + t(ChildDetails.hospitalName.hospitalNamelocal)}
+                      : {t(StillBirthChildDetails.hospitalName.hospitalName) + " / " + t(StillBirthChildDetails.hospitalName.hospitalNamelocal)}
                     </CardText>
                   </div>
                 </div>
               )}
 
-              {ChildDetails.birthPlace.code === "INSTITUTION" && (
+              {StillBirthChildDetails.birthPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : {t(ChildDetails.institutionId.institutionName) + " / " + t(ChildDetails.institutionId.institutionNamelocal)}
+                      : {t(StillBirthChildDetails.institutionId.institutionName) + " / " + t(StillBirthChildDetails.institutionId.institutionNamelocal)}
                     </CardText>
                   </div>
                 </div>
               )}
 
-              {ChildDetails.birthPlace.code === "HOME" && (
+              {StillBirthChildDetails.birthPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -204,34 +204,34 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :
-                      {t(ChildDetails.adrsHouseNameEn ? ChildDetails.adrsHouseNameEn : "CR_NOT_RECORDED") +
+                      {t(StillBirthChildDetails.adrsHouseNameEn ? StillBirthChildDetails.adrsHouseNameEn : "CR_NOT_RECORDED") +
                         " , " +
-                        ChildDetails.adrsLocalityNameEn +
+                        StillBirthChildDetails.adrsLocalityNameEn +
                         " , " +
-                       ( ChildDetails.adrsStreetNameEn ? ChildDetails.adrsStreetNameEn : "CR_NOT_RECORDED")+
+                       ( StillBirthChildDetails.adrsStreetNameEn ? StillBirthChildDetails.adrsStreetNameEn : "CR_NOT_RECORDED")+
                         " , " +
-                        ChildDetails.wardNo.namecmb +
+                        StillBirthChildDetails.wardNo.namecmb +
                         " , " +
-                        ChildDetails.adrsPostOffice.name +
+                        StillBirthChildDetails.adrsPostOffice.name +
                         " , " +
-                        ChildDetails.adrsPincode +
+                        StillBirthChildDetails.adrsPincode +
                         " / " +
-                        t(ChildDetails.adrsHouseNameMl ? ChildDetails.adrsHouseNameMl : "CR_NOT_RECORDED") +
+                        t(StillBirthChildDetails.adrsHouseNameMl ? StillBirthChildDetails.adrsHouseNameMl : "CR_NOT_RECORDED") +
                         " , " +
-                        ChildDetails.adrsLocalityNameMl +
+                        StillBirthChildDetails.adrsLocalityNameMl +
                         " , " +
-                        (ChildDetails.adrsStreetNameMl ? ChildDetails.adrsStreetNameMl : "CR_NOT_RECORDED") +
+                        (StillBirthChildDetails.adrsStreetNameMl ? StillBirthChildDetails.adrsStreetNameMl : "CR_NOT_RECORDED") +
                         " , " +
-                        ChildDetails.wardNo.namecmb +
+                        StillBirthChildDetails.wardNo.namecmb +
                         " , " +
-                        ChildDetails.adrsPostOffice.name +
+                        StillBirthChildDetails.adrsPostOffice.name +
                         " , " +
-                        ChildDetails.adrsPincode}
+                        StillBirthChildDetails.adrsPincode}
                     </CardText>
                   </div>
                 </div>
               )}
-              {ChildDetails.birthPlace.code === "VEHICLE" && (
+              {StillBirthChildDetails.birthPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -239,43 +239,43 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :
-                      {t(ChildDetails.vehicleType.name? ChildDetails.vehicleType.name : "CR_NOT_RECORDED") +
+                      {t(StillBirthChildDetails.vehicleType.name? StillBirthChildDetails.vehicleType.name : "CR_NOT_RECORDED") +
                         " , " +
-                        // ChildDetails.vehicleRegistrationNo +
+                        // StillBirthChildDetails.vehicleRegistrationNo +
                         // " , " +
-                        ChildDetails.vehicleFromEn +
+                        StillBirthChildDetails.vehicleFromEn +
                         " , " +
-                        ChildDetails.vehicleToEn 
-                        // ChildDetails.vehicleHaltPlace +
+                        StillBirthChildDetails.vehicleToEn 
+                        // StillBirthChildDetails.vehicleHaltPlace +
                         // " , " +
-                        // ChildDetails.vehicleDesDetailsEn +
+                        // StillBirthChildDetails.vehicleDesDetailsEn +
                         // " , " +
-                        // ChildDetails.setadmittedHospitalEn +
+                        // StillBirthChildDetails.setadmittedHospitalEn +
                         // " , " +
-                        // ChildDetails.wardNo +
+                        // StillBirthChildDetails.wardNo +
                         + " / " +
-                        t(ChildDetails.vehicleType.namelocal ? ChildDetails.vehicleType.namelocal : "CR_NOT_RECORDED") +
+                        t(StillBirthChildDetails.vehicleType.namelocal ? StillBirthChildDetails.vehicleType.namelocal : "CR_NOT_RECORDED") +
                         " , " +
-                        // ChildDetails.vehicleRegistrationNo +
+                        // StillBirthChildDetails.vehicleRegistrationNo +
                         // " , " +
-                        ChildDetails.vehicleFromMl +
+                        StillBirthChildDetails.vehicleFromMl +
                         " , " +
-                        ChildDetails.vehicleToMl
+                        StillBirthChildDetails.vehicleToMl
                         //  +
                         // " , " +
-                        // ChildDetails.vehicleHaltPlace +
+                        // StillBirthChildDetails.vehicleHaltPlace +
                         // " , " +
-                        // ChildDetails.vehicleDesDetailsEn +
+                        // StillBirthChildDetails.vehicleDesDetailsEn +
                         // " , " +
-                        // ChildDetails.setadmittedHospitalEn +
+                        // StillBirthChildDetails.setadmittedHospitalEn +
                         // " , " +
-                        // ChildDetails.wardNo
+                        // StillBirthChildDetails.wardNo
               }
                     </CardText>
                   </div>
                 </div>
               )}
-              {ChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
+              {StillBirthChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -283,26 +283,26 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :
-                      {t(ChildDetails.publicPlaceType ? ChildDetails.publicPlaceType : "CR_NOT_RECORDED") +
+                      {t(StillBirthChildDetails.publicPlaceType ? StillBirthChildDetails.publicPlaceType : "CR_NOT_RECORDED") +
                         // " , " +
-                        // ChildDetails.wardNo +
+                        // StillBirthChildDetails.wardNo +
                         " , " +
-                        ChildDetails.localityNameEn +
+                        StillBirthChildDetails.localityNameEn +
                         " , " +
-                        // ChildDetails.streetNameEn +
+                        // StillBirthChildDetails.streetNameEn +
                         // " , " +
-                        ChildDetails.publicPlaceDecpEn +
+                        StillBirthChildDetails.publicPlaceDecpEn +
                         " / " +
-                        t(ChildDetails.publicPlaceType ? ChildDetails.publicPlaceType : "CR_NOT_RECORDED") +
+                        t(StillBirthChildDetails.publicPlaceType ? StillBirthChildDetails.publicPlaceType : "CR_NOT_RECORDED") +
                         // " , " +
-                        // ChildDetails.wardNo +
+                        // StillBirthChildDetails.wardNo +
                         " , " +
-                        ChildDetails.localityNameMl +
+                        StillBirthChildDetails.localityNameMl +
                         // " , " +
-                        // ChildDetails.streetNameMl +
+                        // StillBirthChildDetails.streetNameMl +
                         // " , " +
 
-                        ChildDetails.publicPlaceDecpEn
+                        StillBirthChildDetails.publicPlaceDecpEn
                         }
                     </CardText>
                   </div>
@@ -320,9 +320,9 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
               {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(ParentsDetails.motherFirstNameEn ? ParentsDetails.motherFirstNameEn : "CR_NOT_RECORDED") +
+                {t(StillBirthParentsDetails.motherFirstNameEn ? StillBirthParentsDetails.motherFirstNameEn : "CR_NOT_RECORDED") +
                   " / " +
-                  t(ParentsDetails.motherFirstNameMl)}
+                  t(StillBirthParentsDetails.motherFirstNameMl)}
               </CardText>
             </div>
           </div>
@@ -333,9 +333,9 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(ParentsDetails.fatherFirstNameEn ? ParentsDetails.fatherFirstNameEn : "CR_NOT_RECORDED") +
+                {t(StillBirthParentsDetails.fatherFirstNameEn ? StillBirthParentsDetails.fatherFirstNameEn : "CR_NOT_RECORDED") +
                   " / " +
-                  t(ParentsDetails.fatherFirstNameMl)}
+                  t(StillBirthParentsDetails.fatherFirstNameMl)}
               </CardText>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/SBRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import StillBirthPlaceHospital from "../../pageComponents/stillBirthComponents/StillBirthPlaceHospital";
@@ -229,7 +229,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditBi
         setValue(placeOfBirth);
         // setActivity(cmbStructure.filter((cmbStructure) => cmbStructure.maincode.includes(placeOfBirth)));
         if (placeOfBirth === "HOSPITAL") {
-          <BirthPlaceHospital
+          <StillBirthPlaceHospital
             hospitalName={hospitalName}
             hospitalNameMl={hospitalNameMl}
           />;
@@ -1048,7 +1048,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditBi
           </div>
           {value === "HOSPITAL" && (
             <div>
-              <BirthPlaceHospital
+              <StillBirthPlaceHospital
                 selectHospitalName={selectHospitalName}
                 hospitalName={hospitalName}
                 hospitalNameMl={hospitalNameMl}
