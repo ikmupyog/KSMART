@@ -604,7 +604,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
           permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
           permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
         },
-        InformarHosInstDetails: {
+        StillBirthInformarHosInstDetails: {
           infomantFirstNameEn: data?.StillBirthInformarHosInstDetails?.infomantFirstNameEn,
           infomantAadhar: data?.StillBirthInformarHosInstDetails?.infomantAadhar,
           infomantMobile: data?.StillBirthInformarHosInstDetails?.infomantMobile,
