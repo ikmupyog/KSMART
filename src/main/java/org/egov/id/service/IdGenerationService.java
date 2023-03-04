@@ -24,8 +24,11 @@ import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+
+import com.jayway.jsonpath.ParseContext;
+
 import org.springframework.jdbc.core.JdbcTemplate;
-import sun.util.resources.cldr.chr.CalendarData_chr_US;
+//import sun.util.resources.cldr.chr.CalendarData_chr_US;
 
 /**
  * Description : IdGenerationService have methods related to the IdGeneration
@@ -109,27 +112,37 @@ public class IdGenerationService {
     private List generateIdFromIdRequest(IdRequest idRequest, RequestInfo requestInfo) throws Exception {
 
         List<String> generatedId = new LinkedList<>();
-        boolean autoCreateNewSeqFlag = false;
+        String idFormat = null;
+//        boolean autoCreateNewSeqFlag = false;
         if (!StringUtils.isEmpty(idRequest.getIdName()))
         {
             // If IDName is specified then check if it is defined in MDMS
-            String idFormat = getIdFormatFinal(idRequest, requestInfo);
-
+             idFormat = getIdFormatFinal(idRequest, requestInfo);
+            if (StringUtils.isEmpty(idFormat))
+                throw new CustomException("ID_NOT_FOUND",
+                        "No Format is available in the MDMS for the given name and tenant");
+            
             // If the idname is defined then the format should be used
             // else fallback to the format in the request itself
             if (!StringUtils.isEmpty(idFormat)){
                 idRequest.setFormat(idFormat);
-                autoCreateNewSeqFlag=true;
-            }else if(StringUtils.isEmpty(idFormat)){
-                autoCreateNewSeqFlag=false;
             }
         }
+//            autoCreateNewSeqFlag=false;            
+//            else if(StringUtils.isEmpty(idFormat)){
+//                autoCreateNewSeqFlag=true;
+//            }     
+        
+       
+        
 
-        if (StringUtils.isEmpty(idRequest.getFormat()))
-            throw new CustomException("ID_NOT_FOUND",
-                    "No Format is available in the MDMS for the given name and tenant");
+//        if (StringUtils.isEmpty(idRequest.getFormat()))
+//            throw new CustomException("ID_NOT_FOUND",
+//                    "No Format is available in the MDMS for the given name and tenant");
 
-        return getFormattedId(idRequest, requestInfo,autoCreateNewSeqFlag);
+        
+//        return getFormattedId(idRequest, requestInfo,autoCreateNewSeqFlag);
+        return getFormattedId(idRequest, requestInfo,idFormat);
     }
 
 
@@ -147,6 +160,7 @@ public class IdGenerationService {
         try{
             if (idFormatFromMDMS == true) {
                 idFormat = mdmsService.getIdFormat(requestInfo, idRequest); //from MDMS
+               
             } else {
                 idFormat = getIdFormatfromDB(idRequest, requestInfo); //from DB
             }
@@ -205,10 +219,16 @@ public class IdGenerationService {
      * @throws Exception
      */
 
-    private List getFormattedId(IdRequest idRequest, RequestInfo requestInfo, boolean autoCreateNewSeqFlag) throws Exception {
+    private List getFormattedId(IdRequest idRequest, RequestInfo requestInfo, String idFormat) throws Exception {
         List<String> idFormatList = new LinkedList();
-        String idFormat = idRequest.getFormat();
-
+        
+        //changes for seq number from function
+	        String tenantId = idRequest.getTenantId();
+	        String moduleCode = idRequest.getModuleCode();
+	        String fnType = idRequest.getFnType();
+	        int Year = Calendar.getInstance().get(Calendar.YEAR);
+        // End       
+     
         try{
             if (!StringUtils.isEmpty(idFormat.trim()) && !StringUtils.isEmpty(idRequest.getTenantId())) {
                 idFormat = idFormat.replace("[tenantid]", idRequest.getTenantId());
@@ -224,8 +244,7 @@ public class IdGenerationService {
         List<String> matchList = new ArrayList<String>();
 
         Pattern regExpPattern = Pattern.compile("\\[(.*?)\\]");
-        Matcher regExpMatcher = regExpPattern.matcher(idFormat);
-
+        Matcher regExpMatcher = regExpPattern.matcher(idFormat);        
         Integer count = getCount(idRequest);
 
         while (regExpMatcher.find()) {// Finds Matching Pattern in String
@@ -234,38 +253,104 @@ public class IdGenerationService {
 
         HashMap<String, List<String>> sequences = new HashMap<>();
         String idFormatTemplate = idFormat;
-        String cityName = null;
-
+        String cityName = null; 
+        String cityType = null;      
         for (int i = 0; i < count; i++) {
             idFormat = idFormatTemplate;
-
+       	  
             for (String attributeName : matchList) {
-
+            	 System.out.println("matchListvalue  :"+attributeName);
                 if (attributeName.substring(0, 3).equalsIgnoreCase("seq")) {
+                	
                     if (!sequences.containsKey(attributeName)) {
-                        sequences.put(attributeName, generateSequenceNumber(attributeName, requestInfo, idRequest,autoCreateNewSeqFlag));
+//                        sequences.put(attributeName, generateSequenceNumber(attributeName, requestInfo, idRequest,autoCreateNewSeqFlag));                        
+                  
+                    // new changes set sequence number from function 
+                    	 sequences.put(attributeName,getNewID(tenantId, Year, moduleCode, fnType));                 	 
+                    //End    
+                    	 
                     }
 					idFormat = idFormat.replace("[" + attributeName + "]", sequences.get(attributeName).get(i));
+					
                 } else if (attributeName.substring(0, 2).equalsIgnoreCase("fy")) {
                     idFormat = idFormat.replace("[" + attributeName + "]",
                             generateFinancialYearDateFormat(attributeName, requestInfo));
                 } else if (attributeName.substring(0, 2).equalsIgnoreCase("cy")) {
-                    idFormat = idFormat.replace("[" + attributeName + "]",
-                            generateCurrentYearDateFormat(attributeName, requestInfo));
-                } else if (attributeName.substring(0, 4).equalsIgnoreCase("city")) {
+                    idFormat = idFormat.replace("[" + attributeName + "]",String.valueOf(Year));
+
+                } else if (attributeName.substring(0, 4).equalsIgnoreCase("code")) {                	
+                    idFormat = idFormat.replace("[" + attributeName + "]",moduleCode);     
+                    
+                } else if (attributeName.substring(0, 4).equalsIgnoreCase("fnty")) {                	
+                    idFormat = idFormat.replace("[" + attributeName + "]",fnType);    
+                    
+                } else if (attributeName.substring(0, 4).equalsIgnoreCase("lbty")) { 
+                	
+                	if(cityType == null) {
+                		cityType = mdmsService.getCityType(requestInfo, idRequest);
+                	}
+                    idFormat = idFormat.replace("[" + attributeName + "]",cityType);  
+                    
+                }else if (attributeName.substring(0, 4).equalsIgnoreCase("city")) {
+                	 
                     if (cityName == null) {
                         cityName = mdmsService.getCity(requestInfo, idRequest);
                     }
                     idFormat = idFormat.replace("[" + attributeName + "]", cityName);
+                    
                 } else {
+                	
                     idFormat = idFormat.replace("[" + attributeName + "]", generateRandomText(attributeName, requestInfo));
                 }
             }
+            
             idFormatList.add(idFormat);
         }
-
+       
         return idFormatList;
     }
+    
+    /**
+     * Description : This method to generate sequence number against tenant for every fin year usng function
+     * format
+     *
+     * @param tennant,year,module and idType
+     * @return seqnumber(max number)
+     */
+    
+    public List<String> getNewID(String tenantId, int Year, String moduleCode, String idType) {
+
+    	String sequenceList ;
+         List<String> sequenceLists = new LinkedList<>();
+         
+         
+        List<Object> preparedStmtValues = new ArrayList<>();
+        preparedStmtValues.add(idType);
+        preparedStmtValues.add(moduleCode);
+        preparedStmtValues.add(tenantId);
+        preparedStmtValues.add(Year);
+        
+        
+        
+        StringBuffer idSelectQuery = new StringBuffer();
+        idSelectQuery.append("select fn_next_id(?,?,?,?)");
+
+       
+        List<Map<String, Object>> nextID = jdbcTemplate.queryForList(idSelectQuery.toString(), preparedStmtValues.toArray());
+       
+        sequenceList = String.valueOf(nextID.get(0).get("fn_next_id"));
+        
+        String seqNumber = String.format("%06d", Integer.parseInt(sequenceList)).toString();
+        sequenceLists.add(seqNumber.toString());
+        
+         
+        return sequenceLists;
+        
+       
+    }
+
+    
+    
 
     /**
      * Description : This method to generate current financial year in given
@@ -332,9 +417,11 @@ public class IdGenerationService {
             dateFormat = dateFormat.trim();
             dateFormat = dateFormat.substring(dateFormat.indexOf(":") + 1);
             dateFormat = dateFormat.trim();
+           
             SimpleDateFormat formatter = new SimpleDateFormat(dateFormat.trim());
             formatter.setTimeZone(TimeZone.getTimeZone(propertiesManager.getTimeZone()));
-            String formattedDate = formatter.format(date);
+            String formattedDate = formatter.format(date);        
+           
             return formattedDate;
 
         } catch (Exception e) {
@@ -344,7 +431,9 @@ public class IdGenerationService {
 
         }
     }
+ 
 
+    
     /**
      * Description : This method to generate random text
      *
@@ -416,41 +505,48 @@ public class IdGenerationService {
      *
      * @param sequenceName
      * @param requestInfo
-     * @return seqNumber
+     * @return seqNumbe
      */
-    private List<String> generateSequenceNumber(String sequenceName, RequestInfo requestInfo, IdRequest idRequest,boolean autoCreateNewSeqFlag) throws Exception {
-        Integer count = getCount(idRequest);
-        List<String> sequenceList = new LinkedList<>();
-        List<String> sequenceLists = new LinkedList<>();
-        // To generate a block of seq numbers
-
-        String sequenceSql = "SELECT NEXTVAL ('" + sequenceName + "') FROM GENERATE_SERIES(1,?)";
-        try {
-            sequenceList = jdbcTemplate.queryForList(sequenceSql, new Object[]{count}, String.class);
-        } catch (BadSqlGrammarException ex) {
-            if (ex.getSQLException().getSQLState().equals("42P01")){
-                try{
-                    if (sequenceList.isEmpty() && autoCreateNewSeqFlag && autoCreateNewSeq){
-                        createSequenceInDb(sequenceName);
-                        sequenceList = jdbcTemplate.queryForList(sequenceSql, new Object[]{count}, String.class);
-                    }
-                    else if(sequenceList.isEmpty() && !autoCreateNewSeqFlag)
-                        throw new CustomException("SEQ_DOES_NOT_EXIST","auto creation of seq is not allowed in DB");
-                }catch(Exception e) {
-                    throw new CustomException("ERROR_CREATING_SEQ","Error occurred while auto creating seq in DB");
-                }
-            }else{
-                throw new CustomException("SEQ_NUMBER_ERROR","Error in retrieving seq number from DB");
-            }
-        } catch (Exception ex) {
-            log.error("Error retrieving seq number from DB",ex);
-            throw new CustomException("SEQ_NUMBER_ERROR","Error retrieving seq number from existing seq in DB");
-        }
-        for (String seqId : sequenceList) {
-            String seqNumber = String.format("%06d", Integer.parseInt(seqId)).toString();
-            sequenceLists.add(seqNumber.toString());
-        }
-        return sequenceLists;
-    }
+//    private List<String> generateSequenceNumber(String sequenceName, RequestInfo requestInfo, IdRequest idRequest,boolean autoCreateNewSeqFlag) throws Exception {
+//        Integer count = getCount(idRequest);
+//        List<String> sequenceList = new LinkedList<>();
+//        List<String> sequenceLists = new LinkedList<>();
+//         
+//        
+//        String sequenceSql = "SELECT NEXTVAL ('" + sequenceName + "') FROM GENERATE_SERIES(1,?)";
+//        
+//        try {
+//            sequenceList = jdbcTemplate.queryForList(sequenceSql, new Object[]{count}, String.class);
+//            
+//          
+//        } catch (BadSqlGrammarException ex) {
+//            if (ex.getSQLException().getSQLState().equals("42P01")){
+//                try{
+//                    if (sequenceList.isEmpty() && autoCreateNewSeqFlag && autoCreateNewSeq){
+//                    	   
+//                        createSequenceInDb(sequenceName);
+//                        sequenceList = jdbcTemplate.queryForList(sequenceSql, new Object[]{count}, String.class);
+//                        
+//                    }
+//                    else if(sequenceList.isEmpty() && !autoCreateNewSeqFlag)
+//                        throw new CustomException("SEQ_DOES_NOT_EXIST","auto creation of seq is not allowed in DB");
+//                }catch(Exception e) {
+//                    throw new CustomException("ERROR_CREATING_SEQ","Error occurred while auto creating seq in DB");
+//                }
+//            }else{
+//                throw new CustomException("SEQ_NUMBER_ERROR","Error in retrieving seq number from DB");
+//            }
+//        } catch (Exception ex) {
+//            log.error("Error retrieving seq number from DB",ex);
+//            throw new CustomException("SEQ_NUMBER_ERROR","Error retrieving seq number from existing seq in DB");
+//        }
+//        
+//        for (String seqId : sequenceList) {
+//            String seqNumber = String.format("%06d", Integer.parseInt(seqId)).toString();
+//            sequenceLists.add(seqNumber.toString());
+//        }
+//       
+//        return sequenceLists;
+//    }
 
 }
