@@ -337,6 +337,7 @@ export const convertToBirthRegistration = (data = {}) => {
           motherAadhar: data?.ParentsDetails?.motherAadhar,
           motherMarriageAge: data?.ParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.ParentsDetails?.motherMarriageBirth,
+          motherMaritalStatus:data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code : null,
           motherEducation: data?.ParentsDetails?.motherEducation ? data?.ParentsDetails?.motherEducation.code : null,
           motherProfession: data?.ParentsDetails?.motherProfession ? data?.ParentsDetails?.motherProfession.code : null,
           motherNationality: data?.ParentsDetails?.motherNationality ? data?.ParentsDetails?.motherNationality.code : null,
