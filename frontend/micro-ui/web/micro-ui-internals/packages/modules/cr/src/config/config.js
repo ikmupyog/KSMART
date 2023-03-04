@@ -275,7 +275,7 @@ export const newConfig = [
         nextStep: "initiator-details",
         type: "component",
         hideInEmployee: false,
-      },   
+      },
       {
         route: "initiator-details",
         component: "InitiatorDetails",
@@ -292,7 +292,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
         hideInCitizen: false,
-      },  
+      },
       {
         route: "informer-details",
         component: "InformarHospitalInstitution",
@@ -309,7 +309,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
         hideInCitizen: true,
-      },  
+      },
       {
         route: "multiple-birth",
         component: "MultipleBirth",
@@ -325,14 +325,12 @@ export const newConfig = [
         nextStep: "hospital-details",
         type: "component",
         hideInEmployee: false,
-      },  
-      
+      },
     ],
   },
 
-
   {
-    head: "Birth Routing",
+    head: "StillBirth Routing",
     body: [
       {
         type: "component",
@@ -378,21 +376,30 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "AddressBirthDetails",
-        nextStep: "initiator-details",
+        nextStep: "stillbirth-initiator-details",
         type: "component",
         hideInEmployee: false,
-      },   
-      
-      
-      
-      
+      },
+
+      {
+        route: "stillbirth-initiator-details",
+        component: "StillBirthInitiatorDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "StillBirthInitiatorDetails",
+        nextStep: null,
+        type: "component",
+        hideInEmployee: true,
+        hideInCitizen: false,
+      },
     ],
   },
-
-
-
-
-
 
   {
     head: "Adoption Routing",
@@ -414,7 +421,6 @@ export const newConfig = [
         nextStep: "adopted-Parents-information",
       },
 
-     
       {
         route: "adopted-Parents-information",
         component: "AdoptiveParentsDetails",
@@ -445,8 +451,6 @@ export const newConfig = [
         hideInEmployee: false,
         nextStep: "birth-mother-information",
       },
-
-    
     ],
   },
 
@@ -558,8 +562,8 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-      ////////////////////Death-Stop//////////////////////// 
-     ////////////////////Death-Child-Pages-Stop////////////////////////
+      ////////////////////Death-Stop////////////////////////
+      ////////////////////Death-Child-Pages-Stop////////////////////////
       {
         route: "hospital",
         isMandatory: true,
@@ -667,12 +671,9 @@ export const newConfig = [
         type: "component",
         hideInEmployee: true,
       },
-    
     ],
   },
- ////////////////////Death-Stop//////////////////////// 
-
-
+  ////////////////////Death-Stop////////////////////////
 
   {
     head: "Marriage Routing",
