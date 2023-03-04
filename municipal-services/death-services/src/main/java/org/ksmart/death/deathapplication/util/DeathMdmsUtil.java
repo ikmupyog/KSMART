@@ -228,4 +228,99 @@ public class DeathMdmsUtil {
                
          return Arrays.asList(crDeathModuleDtls);
     }
+    //Rakhi S on 02.03.2023
+    public Object mDMSCallHospital(RequestInfo requestInfo  
+                                , String tenantId   
+                                , String deathPlace) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestHospital(requestInfo   
+                                                , tenantId
+                                                , deathPlace);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+       }
+    //Rakhi S on 02.03.2023
+    private MdmsCriteriaReq getMDMSRequestHospital(RequestInfo requestInfo    
+                                , String tenantId                       
+                                , String deathPlace) {
+
+                // ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+                ModuleDetail commonMasterRequest = getcommonMasterRequestHospial(
+                                tenantId
+                                ,deathPlace);    
+
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                // moduleDetails.add(tenantIdRequest);
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
+                        .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+      }	   
+      //Rakhi S on 02.03.2023
+      private ModuleDetail  getcommonMasterRequestHospial( String tenantId, String deathPlace ) {
+
+        // master details for death certificate
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
+        final String perAddrfilterCode = "$.[?(@.code=='"+deathPlace+"')].address";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.HOSPITAL_LIST).filter(perAddrfilterCode).build());  
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.TENANT_EGOV_LOCATION).build();
+               
+         return (crDeathModuleDtls);
+    }   
+
+      //Rakhi S on 02.03.2023
+    public Object mDMSCallHospitalMl(RequestInfo requestInfo  
+                        , String tenantId   
+                        , String deathPlace) {
+         MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestHospitalMl(requestInfo   
+                        , tenantId
+                        , deathPlace);
+         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+         return result;
+    }
+      //Rakhi S on 02.03.2023
+    private MdmsCriteriaReq getMDMSRequestHospitalMl(RequestInfo requestInfo    
+            , String tenantId                       
+            , String deathPlace) {
+
+        // ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        ModuleDetail commonMasterRequest = getcommonMasterRequestHospialMl(
+            tenantId
+            ,deathPlace);    
+
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        // moduleDetails.add(tenantIdRequest);
+        moduleDetails.add(commonMasterRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
+        .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+        .requestInfo(requestInfo).build();
+
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+     //Rakhi S on 02.03.2023
+    private ModuleDetail  getcommonMasterRequestHospialMl( String tenantId, String deathPlace ) {
+
+        // master details for death certificate
+        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
+        final String perAddrfilterCode = "$.[?(@.code=='"+deathPlace+"')].addressLocal";
+        crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.HOSPITAL_LIST).filter(perAddrfilterCode).build());  
+
+        ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.TENANT_EGOV_LOCATION).build();
+               
+         return (crDeathModuleDtls);
+    }
 }

@@ -135,4 +135,9 @@ public class DeathConstants {
     // public static final String DEATH_REGNO_UID= "CRDRNR";
     public static final String COUNTRY_CODE = "COUNTRY_INDIA";
     public static final String STATE_CODE_SMALL = "kl";
+
+    //Rakhi S on 02.03.2023
+    public static final String TENANT_EGOV_LOCATION= "egov-location";
+    public static final String EGOV_LOCATION_JSONPATH = "$.MdmsRes.egov-location";
+
 }
