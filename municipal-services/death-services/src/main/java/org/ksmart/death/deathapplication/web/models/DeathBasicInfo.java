@@ -10,12 +10,10 @@ import lombok.ToString;
 import javax.validation.constraints.Size;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
-
 /*
      * Creates main model class  
      * Jasmine on 4.02.2023      
 */
-
 @Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
 @Validated
 @Getter
@@ -157,121 +155,97 @@ public class DeathBasicInfo {
     @JsonProperty("DeathPlaceHomeId")
     private String deathPlaceHomeId  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathDtlId")
     private String  deathDtlId ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeAddrTypeId")
     private String deathPlaceHomeAddrTypeId  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeCountryId")
     private String  deathPlaceHomeCountryId ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeStateId")
     private String deathPlaceHomeStateId  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeDistrictId")
     private String  deathPlaceHomeDistrictId ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeTalukId")
     private String deathPlaceHomeTalukId   ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeVillageId")
     private String deathPlaceHomeVillageId  ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeLbType")
     private String deathPlaceHomeLbType  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeWardId")
     private String deathPlaceHomeWardId  ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomePostofficeId")
     private String deathPlaceHomePostofficeId  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomePincode")
     private String deathPlaceHomePincode  ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeLocalityEn")
     private String deathPlaceHomeLocalityEn  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeLocalityMl")
     private String deathPlaceHomeLocalityMl  ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeStreetNameEn")
     private String deathPlaceHomeStreetNameEn  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeStreetNameMl")
     private String deathPlaceHomeStreetNameMl  ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeHoueNameEn")
     private String deathPlaceHomeHoueNameEn  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeathPlaceHomeHoueNameMl")
     private String deathPlaceHomeHoueNameMl  ;
-
 
     @Schema(type = "Boolean", description= " " )
     @JsonProperty("DeceasedAadharNotAvailable")
     private Boolean deceasedAadharNotAvailable  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedAadharNumber")
     private String  deceasedAadharNumber ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedIdproofType")
     private String  deceasedIdproofType ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedIdproofNo")
     private String  deceasedIdproofNo ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedFirstNameEn")
     private String  deceasedFirstNameEn ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedMiddleNameEn")
     private String deceasedMiddleNameEn  ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedLastNameEn")
@@ -281,41 +255,33 @@ public class DeathBasicInfo {
     @JsonProperty("DeceasedFirstNameMl")
     private String deceasedFirstNameMl  ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedMiddleNameMl")
     private String deceasedMiddleNameMl  ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedLastNameMl")
     private String deceasedLastNameMl  ;
 
-
     @Schema(type = "Integer", description= " " )
     @JsonProperty("Age")
     private Integer age  ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("AgeUnit")
     private String  ageUnit ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedGender")
     private String  deceasedGender ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("Nationality")
     private String  nationality ;
 
-
     @Schema(type = "string", description= " " )
     @JsonProperty("Religion")
     private String  religion ;
-
 
     @Schema(type = "string", description= " " )
     @JsonProperty("Occupation")
@@ -333,7 +299,6 @@ public class DeathBasicInfo {
     @JsonProperty("DeathACKNo")
     private String deathACKNo = null;
 
-    //Rakhi S on 08.02.2023
     @Schema(type = "Long",description = "Death registration date ")
     @JsonProperty("RegistrationDate")
     private Long registrationDate ;
@@ -354,15 +319,12 @@ public class DeathBasicInfo {
     @JsonProperty("fileNo")
     private String fileNo = null;
 
-    //Jasmine 9.02.2023
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
 
-    //Jasmine 11.02.2023
-
-
     @JsonProperty("funcionUID")
     private String funcionUID;
+<<<<<<< HEAD
 
 
    //Rakhi S on 02.03.2023
@@ -418,5 +380,7 @@ public class DeathBasicInfo {
    @Schema(type = "string", description= "Description of the person")
    @JsonProperty("DeceasedDescription")
    private String deceasedDescription ;
+=======
+>>>>>>> f816bddfffb99557fd47c244facabfcb96e6d44e
     
 }
