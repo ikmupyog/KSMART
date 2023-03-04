@@ -73,9 +73,9 @@ public class DeathCorrectionBasicInfo {
     @JsonProperty("DeceasedLastNameMl")
     private String deceasedLastNameMl  ;
 
-    @Schema(type = "integer", description="1 for Yes /0 for No")
+    @Schema(type = "boolean", description="1 for Yes /0 for No")
     @JsonProperty("DeathDateUnavailable")
-    private Integer deathDateUnavailable ;
+    private boolean deathDateUnavailable ;
 
     @Schema(type = "Long",description = "Death date (If death date is not known enter the from date)")
     @JsonProperty("DateOfDeath")

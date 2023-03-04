@@ -1,0 +1,301 @@
+serviceMaps:
+  serviceName: death-services
+  mappings:   
+      
+  - version: 1.0
+    description: Persists death correction form details in eg_death_dtls,eg_death_address_dtls  table by Jasmine ikm on 04.03.2023
+    fromTopic: save-deathcorrection-topic
+    isTransaction: true
+    queryMaps:
+
+    - query: INSERT INTO public.eg_death_dtls(id, tenantid, dateofdeath, date_of_death_to, deceased_firstname_en, deceased_firstname_ml, deceased_middlename_en, 
+            deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml,death_place,  
+            death_place_inst_type, death_place_inst_id, deceased_aadhar_unavailable, deceased_aadhar_number, 
+            deceased_gender,  status, created_by, createdtime, lastmodifiedby, lastmodifiedtime, registration_no, male_dependent_name_en, male_dependent_name_ml, female_dependent_name_en, 
+            female_dependent_name_ml,  vehicle_hospital_en, vehicle_fromplace_ml, vehicle_fromplace_en, vehicle_toplace_ml, 
+            vehicle_toplace_en, vehicle_number, death_place_ward_id, ack_no, workflowcode,  businessservice, action, comment,  appl_type,  
+            vehicle_first_halt,vehicle_first_halt_ml,  spouse_name_en, spouse_name_ml, funcion_uid, ack_no_id,  
+            application_date, death_place_locality_en, death_place_locality_ml, death_place_street_en, death_place_street_ml, 
+            death_place_country, death_place_state, death_place_district, death_place_city, death_place_remarks_en,
+            death_place_remarks_ml, place_of_burial_en, place_of_burial_ml, death_home_locality_en, death_home_locality_ml,
+            death_home_street_en, death_home_street_ml, death_home_housename_en, death_home_housename_ml, death_home_postoffice_id, 
+            death_home_pincode, death_home_ward, death_home_taluk_id,assignee )
+            VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?	, ?, ?, ?, ?, ?, ?, ?, ? );
+
+
+      basePath: deathCorrection.*
+      jsonMaps:
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.Id
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.TenantId
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DateOfDeath
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DateOfDeath1
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedFirstNameEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedFirstNameMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedMiddleNameEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedMiddleNameMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedLastNameEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedLastNameMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlace
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceType
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceInstId
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedAadharNotAvailable
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedAadharNumber
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeceasedGender
+
+      - jsonPath: $.deathCorrection.*.applicationStatus
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathCorrection.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.registrationNo
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.FatherNameEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.FatherNameMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.MotherNameEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.MotherNameMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleHospitalEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleFromplaceMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleFromplaceEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleToPlaceMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleToPlaceEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleNumber
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceWardId
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathACKNo
+
+      - jsonPath: $.deathCorrection.*.workflowcode 
+
+      - jsonPath: $.deathCorrection.*.businessService
+
+      - jsonPath: $.deathCorrection.*.action
+
+      - jsonPath: $.deathCorrection.*.Comment
+
+      - jsonPath: $.deathCorrection.*.applicationType
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleFirstHaltEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleFirstHaltMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.SpouseNameEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.SpouseNameML
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.funcionUID
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.ackNoID--45
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.ApplicationDate
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceLocalityEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceLocalityMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceStreetEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceStreetMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceCountry
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceState
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceDistrict
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceCity
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceRemarksEn 
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceRemarksMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.PlaceOfBurialEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.PlaceOfBurialMl    
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeLocalityEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeLocalityMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeStreetNameEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeStreetNameMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeHoueNameEn
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeHoueNameMl
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomePostofficeId 
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomePincode
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeWardId
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeTalukId   
+
+      - jsonPath: $.deathCorrection.*.assignuser  
+
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathCorrection.*
+      jsonMaps:
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrId
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.Id
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.TenantId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrTypeId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrStreetNameEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrStreetNameMl
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrLocalityEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrLocalityMl
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrWardId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrTalukId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrVillageId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrPostofficeId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrPincode
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrDistrictId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrStateId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrCountryId
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathCorrection.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrLocationType
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrHoueNameMl
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrHoueNameEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrLbType
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrPostalCode
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.presentOutSideIndiaProvinceEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.presentOutSideIndiaProvinceMl
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrTownOrVillage
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PresentAddrCityOrVillageEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.presentInsideKeralaLBName
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.isPrsentAddress
+
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathCorrection.*
+      jsonMaps:
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrId
+      
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.Id
+
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.TenantId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrTypeId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrStreetNameEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrStreetNameMl
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrLocalityEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrLocalityMl
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrWardId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrTalukId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrVillageId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrPostofficeId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrPincode
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrDistrictId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrStateId
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrCountryId
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathCorrection.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCorrection.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrLocationType
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrHoueNameMl
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrHoueNameEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrLbType
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrPostalCode
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermntOutsideIndiaprovinceEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermntOutsideIndiaprovinceMl
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrTownOrVillage
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrCityOrVillageEn
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.permntInKeralaAdrLBName
+
+      - jsonPath: $.deathCorrection.*.AddressBirthDetails.isPrsentAddress
+
