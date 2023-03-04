@@ -324,7 +324,6 @@ public class DeathBasicInfo {
 
     @JsonProperty("funcionUID")
     private String funcionUID;
-<<<<<<< HEAD
 
 
    //Rakhi S on 02.03.2023
@@ -380,7 +379,5 @@ public class DeathBasicInfo {
    @Schema(type = "string", description= "Description of the person")
    @JsonProperty("DeceasedDescription")
    private String deceasedDescription ;
-=======
->>>>>>> f816bddfffb99557fd47c244facabfcb96e6d44e
     
 }
