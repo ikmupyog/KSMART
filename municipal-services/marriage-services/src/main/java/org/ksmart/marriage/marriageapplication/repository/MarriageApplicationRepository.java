@@ -1,6 +1,6 @@
 package org.ksmart.marriage.marriageapplication.repository;
 
-import lombok.extern.slf4j.Slf4j;
+// import lombok.extern.slf4j.Slf4j;
 //import org.ksmart.marriage.common.producer.BndProducer;
 
 import org.ksmart.marriage.common.producer.MarriageProducer;
@@ -15,6 +15,8 @@ import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageAppl
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -37,15 +37,15 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_details
         registration_date bigint,
         action character varying(64) COLLATE pg_catalog."default",
         status character varying(64) COLLATE pg_catalog."default",
-    createdtime bigint,
-    createdby character varying(64) COLLATE pg_catalog."default",
-    lastmodifiedtime bigint,
-    lastmodifiedby character varying(64) COLLATE pg_catalog."default",
-    CONSTRAINT eg_marriage_place_details_pkey PRIMARY KEY (id),
-    CONSTRAINT eg_marriage_place_details_applicationnumber_fkey UNIQUE (applicationnumber),
-    CONSTRAINT eg_marriage_place_details_fm_fileno_fkey UNIQUE (fileno, tenantid),
-    CONSTRAINT eg_marriage_place_details_registrationno_fkey UNIQUE (registrationno, tenantid)
-    );
+        createdtime bigint,
+        createdby character varying(64) COLLATE pg_catalog."default",
+        lastmodifiedtime bigint,
+        lastmodifiedby character varying(64) COLLATE pg_catalog."default",
+        CONSTRAINT eg_marriage_place_details_pkey PRIMARY KEY (id),
+        CONSTRAINT eg_marriage_place_details_applicationnumber_fkey UNIQUE (applicationnumber),
+        CONSTRAINT eg_marriage_place_details_fm_fileno_fkey UNIQUE (fileno, tenantid),
+        CONSTRAINT eg_marriage_place_details_registrationno_fkey UNIQUE (registrationno, tenantid)
+        );
 
 
 CREATE INDEX IF NOT EXISTS idx_eg_marriage_details_tenantid

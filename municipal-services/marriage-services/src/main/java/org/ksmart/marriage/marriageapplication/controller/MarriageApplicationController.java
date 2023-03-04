@@ -1,7 +1,7 @@
 package org.ksmart.marriage.marriageapplication.controller;
 
 
-import lombok.extern.slf4j.Slf4j;
+// import lombok.extern.slf4j.Slf4j;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationResponse;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
@@ -11,6 +11,8 @@ import org.ksmart.marriage.utils.ResponseInfoFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/cr/marriage")
+
 public class MarriageApplicationController {
     private final MarriageApplicationService crMarriageService;
     private final ResponseInfoFactory responseInfoFactory;

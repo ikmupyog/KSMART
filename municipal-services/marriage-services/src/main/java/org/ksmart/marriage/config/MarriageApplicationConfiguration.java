@@ -16,10 +16,11 @@ public class MarriageApplicationConfiguration {
     private String idGenHost;
     @Value("${egov.idgen.path}")
     private String idGenPath;
-    @Value("${persister.save.marriage.application.topic}")
-    private String saveMarriageApplicationTopic;
+   @Value("${persister.save.marriage.application.topic}")
+   private String saveMarriageApplicationTopic;
 
-
-    @Value("${persister.update.marriage.application.topic}")
-    private String updateMarriageApplicationTopic;
+//     @Value("persister.save.marriage.application.topic")
+//     private String saveMarriageApplicationTopic;
+     @Value("${persister.update.marriage.application.topic}")
+     private String updateMarriageApplicationTopic;
 }

@@ -17,6 +17,10 @@ import java.util.List;
 @Builder
 public class MarriageApplicationDetail {
 
+    @Size(max = 64)
+    @JsonProperty("id")
+    private String id;
+
     @JsonProperty("marraigeDOM")
     private Long dateofmarriage;
 
@@ -26,15 +30,16 @@ public class MarriageApplicationDetail {
 
 
     @Size(max = 64)
-    @JsonProperty("marraigeDistrictid")
+    @JsonProperty("districtid")
     private String districtid;
 
     @Size(max = 64)
-    @JsonProperty("marraigeLBtype")
+    @JsonProperty("lbtype")
     private String lbtype;
 
 
     @Size(max = 64)
+    @JsonProperty("tenantid")
     private String tenantid;
 
     @Size(max = 64)
@@ -140,21 +145,20 @@ public class MarriageApplicationDetail {
 
 
     @Size(max = 64)
-    @JsonProperty("marraigeApplicationType")
+    @JsonProperty("applicationtype")
     private String applicationtype;
 
     @Size(max = 64)
-    @JsonProperty("marraigeBusinessService")
+    @JsonProperty("businessservice")
     private String businessservice;
 
     @Size(max = 64)
-    @JsonProperty("marraigeWorkflowCode")
+    @JsonProperty("workflowcode")
     private String workflowcode;
 
     @Size(max = 64)
-    @JsonProperty("marraigeFileNo")
+    @JsonProperty("fileno")
     private String fileno;
-
 
 
     @JsonProperty("marraigeFileDate")
@@ -171,6 +175,19 @@ public class MarriageApplicationDetail {
     @Size(max = 64)
     @JsonProperty("marraigeStatus")
     private String status;
+
+    @Size(max = 64)
+    @JsonProperty("applicationnumber")
+    private String applicationnumber;
+    @JsonProperty("auditDetails")
+    private AuditDetails auditDetails;
+
+    @JsonProperty("brideDetails")
+    private BrideDetails brideDetails;
+
+    @JsonProperty("groomDetails")
+    private GroomDetails groomDetails;
+
 
 
 

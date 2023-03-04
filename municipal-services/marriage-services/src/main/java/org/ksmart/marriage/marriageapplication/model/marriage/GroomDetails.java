@@ -1,9 +1,14 @@
 package org.ksmart.marriage.marriageapplication.model.marriage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.validation.constraints.Size;
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class GroomDetails {
     @Size(max = 64)
     @JsonProperty("groomResidentShip")
