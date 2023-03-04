@@ -16,6 +16,8 @@ import org.ksmart.death.deathapplication.repository.DeathApplnRepository;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.validators.DeathApplnValidator;
 import org.ksmart.death.deathapplication.validators.DeathMDMSValidator;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
@@ -133,11 +135,17 @@ public class DeathApplnService {
                                  //  System.out.println("SearchResult"+result);
 
           return result.getDeathCertificateDtls();
-     }    
+     } 
+     //Jasmine 03.03.2023
+     public List<DeathCorrectionDtls> createcorrection(DeathCorrectionRequest request) {
+          //  Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
+
+            enrichmentService.setCorrectionPresentAddress(request);
+            enrichmentService.setCorrectionPermanentAddress(request);
+            enrichmentService.enrichCreateCorrection(request);
+            enrichmentService.setCorrectionACKNumber(request);                  
+            producer.push(deathConfig.getSaveDeathCorrectionTopic(), request);
+           // workflowIntegrator.callWorkFlow(request);
+            return request.getDeathCorrection();
+       }   
 }
-             /********************************************* */
-
- 
-
-
-/********************************************** */

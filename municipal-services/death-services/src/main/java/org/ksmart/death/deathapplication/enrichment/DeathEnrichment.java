@@ -20,6 +20,9 @@ import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathAddressInfo;
 import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionBasicInfo;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
@@ -125,46 +128,7 @@ public class DeathEnrichment implements BaseEnrichment{
 
         request.getDeathCertificateDtls()
         .forEach(deathdtls -> {    
-            // String ackNo=null;
-            // Long ackNoId=null;
-            // //Rakhi S on 08.02.2023 mdms call for tenand idgencode and lbtypecode
-            // Object mdmsData = util.mDMSCallRegNoFormating(request.getRequestInfo()
-            //                     , request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
-
-            // Map<String,List<String>> masterData = getAttributeValues(mdmsData);
-
-            // String idgenCode = masterData.get(DeathConstants.TENANTS).toString();
-            // idgenCode = idgenCode.replaceAll("[\\[\\]\\(\\)]", "");
-
-            // Object mdmsDataLBType = util.mDMSCallLBType(request.getRequestInfo()
-            //                 , request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
-
-            // Map<String,List<String>> masterDataLBType = getAttributeValues(mdmsDataLBType);
-
-            // String lbType = masterDataLBType.get(DeathConstants.TENANTS).toString();
-            // lbType = lbType.replaceAll("[\\[\\]\\(\\)]", "");
-
-            // String lbTypeCode = "";
-
-            // if(lbType.equals(DeathConstants.LB_TYPE_CORPORATION.toString())){
-            //     lbTypeCode=DeathConstants.LB_TYPE_CORPORATION_CAPTION.toString();
-            // }
-            // else if(lbType.equals(DeathConstants.LB_TYPE_MUNICIPALITY.toString())){
-            //     lbTypeCode=DeathConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
-            // }
-            // //end
-            // System.out.println("ackNo"+ackNoDetails);
-            // if (ackNoDetails.size()>=1) {
-            //     //Ackno new format decision by Domain team created by Rakhi S                       
-            //     ackNo=String.valueOf(DeathConstants.ACK_NUMBER_CAPTION+"-"+ackNoDetails.get(0).get("ackno"))+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathBasicInfo().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathConstants.STATE_CODE.toString();
-            //     ackNoId=Long.parseLong(String.valueOf(ackNoDetails.get(0).get("ackno")));
-            // }
-            // else{
-            //     ackNo=DeathConstants.ACK_NUMBER_CAPTION+"-"+DeathConstants.ACK_NUMBER_FIRST+"-"+String.valueOf(Year)+"-"+deathdtls.getDeathBasicInfo().getFuncionUID()+"-"+lbTypeCode+"-"+idgenCode+"-"+DeathConstants.STATE_CODE.toString();
-            //     ackNoId=Long.parseLong(DeathConstants.ACK_NUMBER_FIRST);
-            // }
-            //Jasmine 16/02/2023
-            String IDGenerated = null;
+               String IDGenerated = null;
                 IDGenerated = idGenerator.setIDGenerator(request, DeathConstants.FUN_MODULE_NEWAPPLN,
                                 DeathConstants.ACK_NUMBER_CAPTION);
             Long ackNoId=null;
@@ -349,5 +313,176 @@ public class DeathEnrichment implements BaseEnrichment{
                     }
                 });
         }
+
+        //Jasmine 03.03.2023
+        public void setCorrectionPresentAddress(DeathCorrectionRequest request) {
+            request.getDeathCorrection()
+                    .forEach(death -> {
+                    if (death.getDeathCorrAddressInfo() != null) {
+
+                     if (death.getDeathCorrAddressInfo().getPresentaddressCountry() != null && death.getDeathCorrAddressInfo().getPresentaddressStateName() != null) {
+                        if (death.getDeathCorrAddressInfo().getPresentaddressCountry().contains(DeathConstants.COUNTRY_CODE)) {
+                            if(death.getDeathCorrAddressInfo().getPresentaddressStateName().contains(DeathConstants.STATE_CODE_SMALL)) {
+
+                                death.getDeathCorrAddressInfo().setPresentAddrCountryId(death.getDeathCorrAddressInfo().getPresentaddressCountry());    
+                                death.getDeathCorrAddressInfo().setPresentAddrStateId(death.getDeathCorrAddressInfo().getPresentaddressStateName());    
+                                death.getDeathCorrAddressInfo().setPresentAddrDistrictId(death.getDeathCorrAddressInfo().getPresentInsideKeralaDistrict());
+                                death.getDeathCorrAddressInfo().setPresentAddrVillageId(death.getDeathCorrAddressInfo().getPresentInsideKeralaVillage());
+                                death.getDeathCorrAddressInfo().setPresentAddrTalukId(death.getDeathCorrAddressInfo().getPresentInsideKeralaTaluk());
+                                death.getDeathCorrAddressInfo().setPresentAddrWardId(death.getDeathCorrAddressInfo().getPresentWardNo());
+                                death.getDeathCorrAddressInfo().setPresentAddrPostofficeId(death.getDeathCorrAddressInfo().getPresentInsideKeralaPostOffice());
+                                death.getDeathCorrAddressInfo().setPresentAddrPincode(death.getDeathCorrAddressInfo().getPresentInsideKeralaPincode());
+                                death.getDeathCorrAddressInfo().setPresentAddrLocalityEn(death.getDeathCorrAddressInfo().getPresentInsideKeralaLocalityNameEn());
+                                death.getDeathCorrAddressInfo().setPresentAddrLocalityMl(death.getDeathCorrAddressInfo().getPresentInsideKeralaLocalityNameMl());
+                                death.getDeathCorrAddressInfo().setPresentAddrStreetNameEn(death.getDeathCorrAddressInfo().getPresentInsideKeralaStreetNameEn());
+                                death.getDeathCorrAddressInfo().setPresentAddrStreetNameMl(death.getDeathCorrAddressInfo().getPresentInsideKeralaStreetNameMl());
+                                death.getDeathCorrAddressInfo().setPresentAddrHoueNameEn(death.getDeathCorrAddressInfo().getPresentInsideKeralaHouseNameEn());
+                                death.getDeathCorrAddressInfo().setPresentAddrHoueNameMl(death.getDeathCorrAddressInfo().getPresentInsideKeralaHouseNameMl());
+                            } else{
+
+                                death.getDeathCorrAddressInfo().setPresentAddrCountryId(death.getDeathCorrAddressInfo().getPresentaddressCountry());
+                                death.getDeathCorrAddressInfo().setPresentAddrStateId(death.getDeathCorrAddressInfo().getPresentaddressStateName());    
+                                death.getDeathCorrAddressInfo().setPresentAddrDistrictId(death.getDeathCorrAddressInfo().getPresentOutsideKeralaDistrict());
+                                death.getDeathCorrAddressInfo().setPresentAddrCityOrVillageEn(death.getDeathCorrAddressInfo().getPresentOutsideKeralaVillageName());
+                                death.getDeathCorrAddressInfo().setPresentAddrTownOrVillage(death.getDeathCorrAddressInfo().getPresentOutsideKeralaCityVilgeEn());
+                                death.getDeathCorrAddressInfo().setPresentAddrTalukId(death.getDeathCorrAddressInfo().getPresentOutsideKeralaTalukName());
+                                death.getDeathCorrAddressInfo().setPresentAddrPincode(death.getDeathCorrAddressInfo().getPresentOutsideKeralaPincode());
+                                death.getDeathCorrAddressInfo().setPresentAddrLocalityEn(death.getDeathCorrAddressInfo().getPresentOutsideKeralaLocalityNameEn());
+                                death.getDeathCorrAddressInfo().setPresentAddrLocalityMl(death.getDeathCorrAddressInfo().getPresentOutsideKeralaLocalityNameMl());
+                                death.getDeathCorrAddressInfo().setPresentAddrStreetNameEn(death.getDeathCorrAddressInfo().getPresentOutsideKeralaStreetNameEn());
+                                death.getDeathCorrAddressInfo().setPresentAddrStreetNameMl(death.getDeathCorrAddressInfo().getPresentOutsideKeralaStreetNameMl());
+                                death.getDeathCorrAddressInfo().setPresentAddrHoueNameEn(death.getDeathCorrAddressInfo().getPresentOutsideKeralaHouseNameEn());
+                                death.getDeathCorrAddressInfo().setPresentAddrHoueNameMl(death.getDeathCorrAddressInfo().getPresentOutsideKeralaHouseNameMl());
+                               
+                            }
+                        } else{
+
+                            if (death.getDeathCorrAddressInfo().getPresentOutSideCountry() != null) {
+                                death.getDeathCorrAddressInfo().setPresentAddrCountryId(death.getDeathCorrAddressInfo().getPresentOutSideCountry());
+                                death.getDeathCorrAddressInfo().setPresentOutSideIndiaProvinceEn(death.getDeathCorrAddressInfo().getPresentOutSideIndiaProvinceEn());
+                                death.getDeathCorrAddressInfo().setPresentOutSideIndiaProvinceMl(death.getDeathCorrAddressInfo().getPresentOutSideIndiaProvinceMl());
+                                death.getDeathCorrAddressInfo().setPresentAddrTownOrVillage(death.getDeathCorrAddressInfo().getPresentOutSideIndiaadrsVillage());
+                                death.getDeathCorrAddressInfo().setPresentAddrCityOrVillageEn(death.getDeathCorrAddressInfo().getPresentOutSideIndiaadrsCityTown());
+                                death.getDeathCorrAddressInfo().setPresentAddrHoueNameEn(death.getDeathCorrAddressInfo().getPresentOutSideIndiaAdressEn());
+                                death.getDeathCorrAddressInfo().setPresentAddrHoueNameMl(death.getDeathCorrAddressInfo().getPresentOutSideIndiaAdressMl());
+                                death.getDeathCorrAddressInfo().setPresentAddrStreetNameEn(death.getDeathCorrAddressInfo().getPresentOutSideIndiaAdressEnB());
+                                death.getDeathCorrAddressInfo().setPresentAddrStreetNameMl(death.getDeathCorrAddressInfo().getPresentOutSideIndiaAdressMlB()); 
+                            }
+                        }
+                    }
+                }
+             });
+        }
+        public void setCorrectionPermanentAddress(DeathCorrectionRequest request) {
+            request.getDeathCorrection()
+                    .forEach(death -> {
+                    if (death.getDeathCorrAddressInfo() != null) {
+                        death.getDeathCorrAddressInfo().setIsPrsentAddressInt(death.getDeathCorrAddressInfo().getIsPrsentAddress() == true ? 1 : 0);
+
+                        if(death.getDeathCorrAddressInfo().getIsPrsentAddress()){
+                            death.getDeathCorrAddressInfo().setPermtaddressCountry(death.getDeathCorrAddressInfo().getPresentaddressCountry());
+                            death.getDeathCorrAddressInfo().setPermtaddressStateName(death.getDeathCorrAddressInfo().getPresentaddressStateName());                            
+                        }
+                        if (death.getDeathCorrAddressInfo().getPermtaddressCountry() != null && death.getDeathCorrAddressInfo().getPermtaddressStateName() != null) {
+
+                            if (death.getDeathCorrAddressInfo().getPermtaddressCountry().contains(DeathConstants.COUNTRY_CODE)) {
+                                if (death.getDeathCorrAddressInfo().getPermtaddressStateName().contains(DeathConstants.STATE_CODE_SMALL)) {
+
+                                    death.getDeathCorrAddressInfo().setPermanentAddrCountryId(death.getDeathCorrAddressInfo().getPermtaddressCountry());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrStateId(death.getDeathCorrAddressInfo().getPermtaddressStateName());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrDistrictId(death.getDeathCorrAddressInfo().getPermntInKeralaAdrDistrict());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrVillageId(death.getDeathCorrAddressInfo().getPermntInKeralaAdrVillage());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrTalukId(death.getDeathCorrAddressInfo().getPermntInKeralaAdrTaluk());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrLocalityEn(death.getDeathCorrAddressInfo().getPermntInKeralaAdrLocalityNameEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrLocalityMl(death.getDeathCorrAddressInfo().getPermntInKeralaAdrLocalityNameMl());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrStreetNameEn(death.getDeathCorrAddressInfo().getPermntInKeralaAdrStreetNameEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrStreetNameMl(death.getDeathCorrAddressInfo().getPermntInKeralaAdrStreetNameMl());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrHoueNameEn(death.getDeathCorrAddressInfo().getPermntInKeralaAdrHouseNameEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrHoueNameMl(death.getDeathCorrAddressInfo().getPermntInKeralaAdrHouseNameMl());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrPincode(death.getDeathCorrAddressInfo().getPermntInKeralaAdrPincode());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrWardId(death.getDeathCorrAddressInfo().getPermntInKeralaWardNo());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrPostofficeId(death.getDeathCorrAddressInfo().getPermntInKeralaAdrPostOffice());
+                                }else{
+                                    death.getDeathCorrAddressInfo().setPermanentAddrCountryId(death.getDeathCorrAddressInfo().getPermtaddressCountry());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrStateId(death.getDeathCorrAddressInfo().getPermtaddressStateName());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrCityOrVillageEn(death.getDeathCorrAddressInfo().getPermntOutsideKeralaCityVilgeEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrTownOrVillage(death.getDeathCorrAddressInfo().getPermntOutsideKeralaVillage());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrDistrictId(death.getDeathCorrAddressInfo().getPermntOutsideKeralaDistrict());
+                                    death.getDeathCorrAddressInfo().setPresentAddrTalukId(death.getDeathCorrAddressInfo().getPermntOutsideKeralaTaluk());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrLocalityEn(death.getDeathCorrAddressInfo().getPermntOutsideKeralaLocalityNameEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrLocalityMl(death.getDeathCorrAddressInfo().getPermntOutsideKeralaLocalityNameMl());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrStreetNameEn(death.getDeathCorrAddressInfo().getPermntOutsideKeralaStreetNameEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrStreetNameMl(death.getDeathCorrAddressInfo().getPermntOutsideKeralaStreetNameMl());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrHoueNameEn(death.getDeathCorrAddressInfo().getPermntOutsideKeralaHouseNameEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrHoueNameMl(death.getDeathCorrAddressInfo().getPermntOutsideKeralaHouseNameMl());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrPincode(death.getDeathCorrAddressInfo().getPermntOutsideKeralaPincode());
+                                }
+        
+                            } else{
+                                if (death.getDeathCorrAddressInfo().getPermntOutsideIndiaCountry() != null) {
+                                    death.getDeathCorrAddressInfo().setPermanentAddrCountryId(death.getDeathCorrAddressInfo().getPermntOutsideIndiaCountry());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrTownOrVillage(death.getDeathCorrAddressInfo().getPermntOutsideIndiaVillage());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrCityOrVillageEn(death.getDeathCorrAddressInfo().getPermntOutsideIndiaCityTown());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrHoueNameEn(death.getDeathCorrAddressInfo().getPermntOutsideIndiaLineoneEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrHoueNameMl(death.getDeathCorrAddressInfo().getPermntOutsideIndiaLineoneMl());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrStreetNameEn(death.getDeathCorrAddressInfo().getPermntOutsideIndiaLinetwoEn());
+                                    death.getDeathCorrAddressInfo().setPermanentAddrStreetNameMl(death.getDeathCorrAddressInfo().getPermntOutsideIndiaLinetwoMl()); 
+                                }
+                            }
+                        }
+                    }
+                });
+        }
+        public void setCorrectionACKNumber(DeathCorrectionRequest request) {
+            RequestInfo requestInfo = request.getRequestInfo();
+            int Year = Calendar.getInstance().get(Calendar.YEAR) ;
+            Long currentTime = Long.valueOf(System.currentTimeMillis());
+            String tenantId = requestInfo.getUserInfo().getTenantId();
+            List<Map<String, Object>> ackNoDetails = repository.getDeathACKDetails(tenantId, Year);
+    
+            request.getDeathCorrection()
+            .forEach(deathdtls -> {    
+                String IDGenerated = null;
+                    IDGenerated = idGenerator.setIDGeneratorCorrection(request, DeathConstants.FUN_MODULE_NEWAPPLN,
+                                    DeathConstants.ACK_NUMBER_CAPTION);
+                Long ackNoId=null;
+                String inputString = IDGenerated; 
+                String[] ackNoIdArray= inputString.split("-");
+                for (int i=0; i < 1; i++){
+                    ackNoId=Long.parseLong(ackNoIdArray[1]);
+                }
+                    deathdtls.getDeathCorrectionBasicInfo().setDeathACKNo(IDGenerated);
+                    deathdtls.getDeathCorrectionBasicInfo().setAckNoID(ackNoId);
+                    deathdtls.getDeathCorrectionBasicInfo().setApplicationDate(currentTime);
+            });
+    
+        }
+
+        //Jasmine 04.03.2023
+            //Rakhi S on 08.02.2023
+    public void enrichCreateCorrection(DeathCorrectionRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+        
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+        request.getDeathCorrection()
+               .forEach(deathdtls -> {
+                deathdtls.getDeathCorrectionBasicInfo().setId(UUID.randomUUID().toString());
+                deathdtls.setDeathCorrAuditDetails(auditDetails);               
+                //Rakhi S on 09.02.2023 //Validation Jasmine 11.02.2023
+                DeathAddressInfo  addressinfo = deathdtls.getDeathCorrAddressInfo();
+                if (addressinfo!=null){
+                    addressinfo.setPresentAddrId(UUID.randomUUID().toString());
+                    addressinfo.setPermanentAddrId(UUID.randomUUID().toString());
+                }
+                DeathCorrectionBasicInfo deathBasicDtls =deathdtls.getDeathCorrectionBasicInfo();
+                DeathCorrectionBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathCorrectionBasicInfo.class);
+                deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
+                // deathBasicDtls.setFatherAadharNo(deathBasicEnc.getFatherAadharNo());
+                // deathBasicDtls.setMotherAadharNo(deathBasicEnc.getMotherAadharNo());
+                // deathBasicDtls.setSpouseAadhaar(deathBasicEnc.getSpouseAadhaar());
+            });
+        }  
 
 }

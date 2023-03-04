@@ -51,5 +51,14 @@ public class DeathConfiguration {
        
      @Value("${egov.bnd.max.limit}")
      private Integer maxSearchLimit;
+
+     //Jasmine 04.03.2023
+
+     @Value("${persister.save.deathcorrection.topic}")
+     private String saveDeathCorrectionTopic;
+
+     @Value("${persister.update.deathcorrection.topic}")
+     private String updateDeathCorrectionTopic;
+     
     
 }
