@@ -12,7 +12,7 @@ import org.egov.tracer.model.CustomException;
 import org.ksmart.death.common.repository.ServiceRequestRepository;
 import org.ksmart.death.deathapplication.config.DeathConfiguration;
 import org.ksmart.death.deathapplication.repository.DeathApplnRepository;
-
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -87,7 +87,47 @@ public class IDGenerator {
                 + idgenCode + "-" + DeathConstants.STATE_CODE.toString();
              return idGenerated;
     }
+    public String setIDGeneratorCorrection(DeathCorrectionRequest request, String moduleCode, String idType) {
+        RequestInfo requestInfo = request.getRequestInfo();
+        int Year = Calendar.getInstance().get(Calendar.YEAR);
+        Long currentTime = Long.valueOf(System.currentTimeMillis());
+       // String tenantId = requestInfo.getUserInfo().getTenantId();
+        String tenantId = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId();
+        String nextID = deathApplnRepository.getNewID(tenantId, Year, moduleCode, idType);
+        String idGenerated = null;
+        Long ackNoId = null;
 
+             Object mdmsData = util.mDMSCallRegNoFormating(request.getRequestInfo()
+                                , request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId());
+
+            Map<String,List<String>> masterData = getAttributeValues(mdmsData);
+
+            String idgenCode = masterData.get(DeathConstants.TENANTS).toString();
+            idgenCode = idgenCode.replaceAll("[\\[\\]\\(\\)]", "");
+
+            Object mdmsDataLBType = util.mDMSCallLBType(request.getRequestInfo()
+                            , request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId());
+
+            Map<String,List<String>> masterDataLBType = getAttributeValues(mdmsDataLBType);
+
+            String lbType = masterDataLBType.get(DeathConstants.TENANTS).toString();
+            lbType = lbType.replaceAll("[\\[\\]\\(\\)]", "");
+
+            String lbTypeCode = "";
+
+            if(lbType.equals(DeathConstants.LB_TYPE_CORPORATION.toString())){
+                lbTypeCode=DeathConstants.LB_TYPE_CORPORATION_CAPTION.toString();
+            }
+            else if(lbType.equals(DeathConstants.LB_TYPE_MUNICIPALITY.toString())){
+                lbTypeCode=DeathConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
+            }
+            //end
+          //  System.out.println("ackNo"+ackNoDetails);
+             idGenerated = idType + "-" + nextID
+                + "-" + String.valueOf(Year) + "-" + moduleCode + "-" + lbTypeCode + "-"
+                + idgenCode + "-" + DeathConstants.STATE_CODE.toString();
+             return idGenerated;
+    }
    
         //Rakhi S ikm on 10.02.2023
         private Map<String, List<String>> getAttributeValues(Object mdmsdata){

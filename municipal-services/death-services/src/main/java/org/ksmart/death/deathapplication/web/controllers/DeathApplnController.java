@@ -7,6 +7,9 @@ import org.ksmart.death.common.contract.RequestInfoWrapper;
 import org.ksmart.death.deathapplication.service.DeathApplnService;
 import org.ksmart.death.deathapplication.service.DeathRegistryRequestService;
 import org.ksmart.death.deathapplication.util.DeathConstants;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionResponse;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtlResponse;
@@ -146,4 +149,19 @@ public class DeathApplnController {
 
     
 }
+    //Jasmine 03.03.2023- Death Create Correction Controller 
+
+    @PostMapping("/deathdetails/_createdeathcorrection")
+    public ResponseEntity<DeathCorrectionResponse> create(@Valid @RequestBody DeathCorrectionRequest request) {
+       
+        List<DeathCorrectionDtls> deathCorrDetails = deathService.createcorrection(request);
+
+        DeathCorrectionResponse response = DeathCorrectionResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                        .deathCorrection(deathCorrDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
+    }
+
 }
