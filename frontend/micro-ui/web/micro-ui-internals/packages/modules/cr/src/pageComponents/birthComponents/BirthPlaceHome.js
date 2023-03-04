@@ -188,74 +188,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
 
   const goNext = () => {
 
-    // if (adrsLocalityNameEn == null || adrsLocalityNameEn == "" || adrsLocalityNameEn == undefined) {
-    //   validFlag = false;
-    //   setAdsHomeLocalityNameEnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAdsHomeLocalityNameEnError(false);
-    // }
-
-    // if (adrsLocalityNameMl == null || adrsLocalityNameMl == "" || adrsLocalityNameMl == undefined) {
-    //   validFlag = false;
-    //   setAdsHomeLocalityNameMlError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAdsHomeLocalityNameMlError(false);
-    // }
-    // if (adrsHouseNameEn == null || adrsHouseNameEn == "" || adrsHouseNameEn == undefined) {
-    //   validFlag = false;
-    //   setAdsHomeHouseNameEnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAdsHomeHouseNameEnError(false);
-    // }
-    // if (adrsHouseNameMl == null || adrsHouseNameMl == "" || adrsHouseNameMl == undefined) {
-    //   validFlag = false;
-    //   setAdsHomeHouseNameMlError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAdsHomeHouseNameMlError(false);
-    // }
-
-
-
-    // if (validFlag == true) {
-
-    //   sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn  : null);
-    //   sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl  ? adrsHouseNameMl  : null);
-    //   sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn  ? adrsLocalityNameEn  : null);
-    //   sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl  ? adrsLocalityNameMl  : null);
-    //   sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn  ? adrsStreetNameEn  : null);
-    //   sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl  ? adrsStreetNameMl  : null);
-    //   sessionStorage.setItem("adrsPostOffice", adrsPostOffice  ? adrsPostOffice.code  : null);
-    //   sessionStorage.setItem("adrsPincode", adrsPincode  ? adrsPincode .code  : null);
-    //   sessionStorage.setItem(" wardNo",  wardNo.code);
-
-    //   onSelect(config.key, {
-    //     adrsHouseNameEn,
-    //     adrsHouseNameMl,
-    //     adrsLocalityNameEn,
-    //     adrsLocalityNameMl,
-    //     adrsStreetNameEn,
-    //     adrsStreetNameMl,
-    //     adrsPostOffice,
-    //     adrsPincode,
-
-    //   });
-    // }
+    
   };
 
   if (isPostOfficeLoading || isWardLoaded || islocalbodiesLoading) {
