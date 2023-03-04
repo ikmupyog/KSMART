@@ -68,10 +68,20 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   const onSkip = () => onSelect();
 
   function setSelectFatherNameEn(e) {
-    setFatherNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setFatherNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }     
   }
   function setSelectFatherNameMl(e) {
-    setFatherNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setFatherNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }   
   }
   function setSelectFatherAadharNo(e) {
     if (e.target.value != null || e.target.value != "") {
@@ -89,6 +99,65 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         return false;
       }
     }
+  }
+  
+ 
+  function setSelectSpouseType(value) {
+    setSpouseType(value);
+  }
+ 
+  function setSelectSpouseNameEN(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setSpouseNameEN(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }    
+  }
+  function setSelectSpouseNameMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setSpouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }
+  }
+
+  function setSelectSpouseAadhaar(e) {
+    // setSpouseAdharNo(e.target.value);
+    if (e.target.value != null || e.target.value != "") {
+      if (e.target.value.length <= 12) {
+        if (e.target.value < 12) {
+          setSpouseAadhaar(e.target.value);
+          // setMotherAgeMarriageError(true);
+          return false;
+        } else {
+          setSpouseAadhaar(e.target.value);
+          // setMotherAgeMarriageError(false);
+        }
+      } else {
+        console.log(e.target.value.length);
+        // setMotherAgeMarriageError(true);
+        return false;
+      }
+    }
+  }
+  
+  function setSelectMotherNameEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setMotherNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }     
+  }
+  function setSelectMotherNameMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setMotherNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }   
   }
   function setSelectMotherAadharNo(e) {
     if (e.target.value != null || e.target.value != "") {
@@ -127,59 +196,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   function setSelectFamilyEmailId(e) {
     setFamilyEmailId(e.target.value);
   }
-  function setSelectSpouseType(value) {
-    setSpouseType(value);
-  }
-  function setSelectFatherMobile(e) {
-    setFatherMobile(e.target.value);
-  }
-  function setSelectSpouseNameEN(e) {
-    setSpouseNameEN(e.target.value);
-  }
-  function setSelectSpouseNameMl(e) {
-    setSpouseNameMl(e.target.value);
-  }
-
-  function setSelectSpouseAadhaar(e) {
-    // setSpouseAdharNo(e.target.value);
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value.length <= 12) {
-        if (e.target.value < 12) {
-          setSpouseAadhaar(e.target.value);
-          // setMotherAgeMarriageError(true);
-          return false;
-        } else {
-          setSpouseAadhaar(e.target.value);
-          // setMotherAgeMarriageError(false);
-        }
-      } else {
-        console.log(e.target.value.length);
-        // setMotherAgeMarriageError(true);
-        return false;
-      }
-    }
-  }
-  // function setSelectSpouseEmail(e) {
-  //   setSpouseEmail(e.target.value);
-  // }
-  function setSelectSpouseMobile(e) {
-    setSpouseMobile(e.target.value);
-  }
-  function setSelectMotherNameEn(e) {
-    setMotherNameEn(e.target.value);
-  }
-  function setSelectMotherNameMl(e) {
-    setMotherNameMl(e.target.value);
-  }
-  function setSelectMotherAdharNo(e) {
-    setMotherAdharNo(e.target.value);
-  }
-  // function setSelectMotherEmail(e) {
-  //   setMotherEmail(e.target.value);
-  // }
-  // function setSelectMotherMobile(e) {
-  //   setMotherMobile(e.target.value);
-  // }
+ 
   const goNext = () => {
     sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
     // sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);

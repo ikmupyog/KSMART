@@ -156,7 +156,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntOutsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntOutsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectpermntOutsideKeralaHouseNameMl(e) {
@@ -164,7 +164,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntOutsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntOutsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectpermntOutsideKeralaLocalityNameEn(e) {
@@ -172,7 +172,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntOutsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntOutsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectpermntOutsideKeralaLocalityNameMl(e) {
@@ -180,7 +180,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntOutsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntOutsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectpermntOutsideKeralaStreetNameEn(e) {
@@ -188,7 +188,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntOutsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntOutsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectpermntOutsideKeralaStreetNameMl(e) {
@@ -196,7 +196,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntOutsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntOutsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectpermntOutsideKeralaCityVilgeEn(e) {
@@ -204,7 +204,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntOutsideKeralaCityVilgeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntOutsideKeralaCityVilgeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -366,7 +366,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
           </div>
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <CardLabel>
               {t("CS_COMMON_POST_OFFICE")}
               <span className="mandatorycss">*</span>
@@ -381,7 +381,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
-          </div>
+          </div> */}
         </div>
         <div className="row">
           <div className="col-md-6">

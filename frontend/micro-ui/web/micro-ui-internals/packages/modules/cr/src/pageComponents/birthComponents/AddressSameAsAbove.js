@@ -3,14 +3,14 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressSameAsAbove = ({ config, onSelect, userType, formData,isPrsentAddress, setIsPrsentAddress
- }) => {
+const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress
+}) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const [isInitialRender, setIsInitialRender] = useState(true);  
+  const [isInitialRender, setIsInitialRender] = useState(true);
   // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
-  
+
   const onSkip = () => onSelect();
 
   function setSameAsPresent(e) {
@@ -64,6 +64,13 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData,isPrsentAddre
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isPrsentAddress}>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
         <div>
           <div className="row">
             <div className="col-md-12" >

@@ -10,18 +10,25 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "hospital");
+  
+  const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.HospitalDetails?.DeathPlaceType);
   // const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.HospitalDetails?.HospitalNameMl);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [tenantboundary, setTenantboundary] = useState(false);
+  console.log(hospitalData);
+  if (tenantboundary) {
+    queryClient.removeQueries("CR_HOSPITALMASTER");
+    setTenantboundary(false);
+  }
   let cmbhospital = [];
   let cmbhospitalMl = [];
   hospitalData &&
-    hospitalData["egov-location"] &&
+    hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
-    });
+    }); 
 
   useEffect(() => {
     if (isInitialRender) {
@@ -53,7 +60,7 @@ const Hospital = ({ config, onSelect, userType, formData, DeathPlaceType, select
   };
   if (isLoading) {
     return <Loader></Loader>;
-  }
+  }else
   return (
     <React.Fragment>
       {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}

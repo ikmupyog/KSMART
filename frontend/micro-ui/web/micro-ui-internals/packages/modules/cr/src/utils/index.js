@@ -287,7 +287,7 @@ export const convertToBirthRegistration = (data = {}) => {
         childLastNameEn: data?.ChildDetails?.childLastNameEn,
         childLastNameMl: data?.ChildDetails?.childLastNameMl,
         hospitalCode: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.code : null,
-        birthPlace: data?.HospitalDetails?.birthPlace ? data?.HospitalDetails?.birthPlace.code : null,
+        birthPlace: data?.ChildDetails?.birthPlace ? data?.ChildDetails?.birthPlace.code : null,
         hospitalName: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalName : null,
         hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
         institutionTypeCode: data?.ChildDetails?.institutionTypeCode ? data?.ChildDetails?.institutionTypeCode.code : null,
@@ -307,7 +307,7 @@ export const convertToBirthRegistration = (data = {}) => {
         adrsStreetNameMl: data?.ChildDetails?.adrsStreetNameMl,
         adrsPostOffice: data?.ChildDetails?.adrsPostOffice ? data?.ChildDetails?.adrsPostOffice.code : null,
         adrsPincode: data?.ChildDetails?.adrsPincode ? data?.ChildDetails?.adrsPincode.code : null,
-        vehicleType: data?.ChildDetails?.vehicleType,
+        vehicleType: data?.ChildDetails?.vehicleType ? data?.ChildDetails?.vehicleType.code : null,
         vehicleHaltPlace: data?.ChildDetails?.vehicleHaltPlace,
         vehicleHaltPlaceMl: data?.ChildDetails?.vehicleHaltPlaceMl,
         vehicleRegistrationNo: data?.ChildDetails?.vehicleRegistrationNo,
@@ -324,9 +324,10 @@ export const convertToBirthRegistration = (data = {}) => {
         streetNameMl: data?.ChildDetails?.streetNameMl,
         publicPlaceDecpEn: data?.ChildDetails?.publicPlaceDecpEn,
         birthWeight: data?.ChildDetails?.birthWeight,
-        pregnancyDuration: data?.ChildDetails?.pregnancyDuration ? data?.ChildDetails?.pregnancyDuration.code : null,
+        pregnancyDuration: data?.ChildDetails?.pregnancyDuration ? data?.ChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.ChildDetails?.medicalAttensionSub ? data?.ChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
+        action:"INITIATE",
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.ChildDetails?.workFlowCode,
@@ -336,6 +337,7 @@ export const convertToBirthRegistration = (data = {}) => {
           motherAadhar: data?.ParentsDetails?.motherAadhar,
           motherMarriageAge: data?.ParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.ParentsDetails?.motherMarriageBirth,
+          motherMaritalStatus:data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code : null,
           motherEducation: data?.ParentsDetails?.motherEducation ? data?.ParentsDetails?.motherEducation.code : null,
           motherProfession: data?.ParentsDetails?.motherProfession ? data?.ParentsDetails?.motherProfession.code : null,
           motherNationality: data?.ParentsDetails?.motherNationality ? data?.ParentsDetails?.motherNationality.code : null,
@@ -425,7 +427,7 @@ export const convertToBirthRegistration = (data = {}) => {
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code : null,
           permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
-          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode ,
+          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
         },
         InformarHosInstDetails: {
           infomantFirstNameEn: data?.InformarHosInstDetails?.infomantFirstNameEn,
@@ -663,7 +665,7 @@ export const convertToDeathRegistration = (data = {}) => {
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code : null,
           permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
-          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode ,
+          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
         },
         FamilyInformationDeath: {
           SpouseUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
@@ -683,8 +685,7 @@ export const convertToDeathRegistration = (data = {}) => {
           MotherAadharNo: data?.FamilyInformationDeath?.MotherAadharNo ? data?.FamilyInformationDeath?.MotherAadharNo : null,
         },
         StatisticalInfo: {
-          StatisticalId: "id",
-          DeathDtlId: null,
+          StatisticalId: null,
           TenantId: data?.InformationDeath?.tenantId,
           MedicalAttentionType: data?.StatisticalInfo?.MedicalAttentionType ? data?.StatisticalInfo?.MedicalAttentionType.code : null,
           IsAutopsyPerformed: data?.StatisticalInfo?.IsAutopsyPerformed,
@@ -717,7 +718,7 @@ export const convertToDeathRegistration = (data = {}) => {
           InformantNameEn: data?.Informer?.InformantNameEn,
           DeathSignedOfficerDesignation: data?.Informer?.DeathSignedOfficerDesignation,
           InformantMobileNo: parseInt(data?.Informer?.InformantMobileNo),
-          InformantAddress: "Anupama,Souparnika,Kollam",
+          InformantAddress: data?.InformantDetails?.InformantAddress ? data?.InformantDetails?.InformantAddress : null,
           IsDeclarationInformant: data?.InformantDetails?.IsDeclarationInformant ? data?.InformantDetails?.IsDeclarationInformant : false,
           InformantDocumentId: null,
           InformantDocumentDeathDtlId: null,
@@ -727,36 +728,13 @@ export const convertToDeathRegistration = (data = {}) => {
           InformantDocumentUserType: null,
           InformantDocumentFileStoreId: null,
         },
-        InitiatorDetails: {
-          InitiatorRelation: data?.Initiater?.InitiatorRelation,
-          InitiatorAadhaar: data?.Initiater?.InitiatorAadhaar,
-          InitiatorName: data?.Initiater?.InitiatorName,
-          InitiatorMobile: parseInt(data?.Initiater?.InitiatorMobile),
-          InitiatorAadharSubmitted: null,
-          InitiatorAadharNo: null,
-          InitiatorAddrId: "id",
-          InitiatorAddrDeathDtlId: null,
-          InitiatorAddrTenantId: data?.InformationDeath?.tenantId,
-          InitiatorAddrTypeId: "I",
-          InitiatorAddrLocationType: "IN",
-          InitiatorAddrCountryId: "country_id",
-          InitiatorAddrStateId: "state_id",
-          InitiatorAddrDistrictId: "district_id",
-          InitiatorAddrTalukId: "taluk_id",
-          InitiatorAddrVillageId: "village_id",
-          InitiatorAddrLbType: "lbType",
-          InitiatorAddrWardId: "ward_id",
-          InitiatorAddrPostofficeId: "poid",
-          InitiatorAddrPincode: 695551,
-          InitiatorAddrLocalityEn: "locality_en",
-          InitiatorAddrLocalityMl: "locality_ml",
-          InitiatorAddrStreetNameEn: "street_en",
-          InitiatorAddrStreetNameMl: "street_ml",
-          InitiatorAddrHoueNameEn: "HouseNameEng",
-          InitiatorAddrHoueNameMl: "വീട്",
-          InitiatorAddrPostalCode: null,
-          InitiatorDocumentId: null,
-          InitiatorDocumentDeathDtlId: null,
+        Initiator: {
+          InitiatorRelation: data?.Initiator?.InitiatorRelation,
+          InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
+          InitiatorName: data?.Initiator?.InitiatorName,
+          InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
+          InitiatorAddress: data?.Initiator?.InitiatorAddress,  
+          InitiatorDocumentId: null,         
           InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
           InitiatorDocumentAckNo: null,
           InitiatorDocumentType: null,
@@ -774,7 +752,7 @@ export const convertToDeathRegistration = (data = {}) => {
         businessService: "death-services",
         action: "INITIATE",
         assignee: [],
-        workflowcode: "DEATHHOSP",
+        workflowcode: data?.InformationDeath?.workFlowCode,
       },
     ],
   };
@@ -992,8 +970,8 @@ export const convertToEditTrade = (data, fy = []) => {
           structureType: isDirectrenewal
             ? data.tradeLicenseDetail.structureType
             : data?.TradeDetails?.VehicleType
-            ? data?.TradeDetails?.VehicleType.code
-            : data?.TradeDetails?.BuildingType.code,
+              ? data?.TradeDetails?.VehicleType.code
+              : data?.TradeDetails?.BuildingType.code,
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
             : data?.ownershipCategory?.code,
@@ -1060,12 +1038,12 @@ export const convertToResubmitTrade = (data) => {
           id: data.tradeLicenseDetail.id,
           institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? {
-                designation: data?.owners?.owners?.[0]?.designation,
-                ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-                mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-                instituionName: data?.owners?.owners?.[0]?.institutionName,
-                name: data?.owners?.owners?.[0]?.name,
-              }
+              designation: data?.owners?.owners?.[0]?.designation,
+              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+              instituionName: data?.owners?.owners?.[0]?.institutionName,
+              name: data?.owners?.owners?.[0]?.name,
+            }
             : null,
         },
         calculation: null,
@@ -1254,10 +1232,10 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
 export const getQueryStringParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split("&").reduce((params, param) => {
-        let [key, value] = param.split("=");
-        params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
-        return params;
-      }, {})
+      let [key, value] = param.split("=");
+      params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
+      return params;
+    }, {})
     : {};
 };
 

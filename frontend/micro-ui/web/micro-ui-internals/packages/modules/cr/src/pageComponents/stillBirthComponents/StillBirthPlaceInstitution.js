@@ -3,7 +3,7 @@ import { FormStep, CardLabel, Dropdown, Loader } from "@egovernments/digit-ui-re
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
+const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
   institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId,
   InstitutionFilterList, setInstitutionFilterList, isInitialRenderInstitutionList, setIsInitialRenderInstitutionList,
   isEditBirth = false
@@ -25,6 +25,9 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     queryClient.removeQueries("CR_INSTITUTION_LIST");
     setTenantboundary(false);
   }
+  // const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
+  // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
+  // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
   let cmbInstitution = [];
   let cmbInstitutionList = [];
   institutionType &&
@@ -37,15 +40,6 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionList.push(ob);
     });
-    if (isEditBirth) {
-      if (formData?.ChildDetails?.institutionTypeCode != null) {
-        if (cmbInstitution.length > 0 && (institution === undefined || institution === "")) {
-          setInstitution(cmbInstitution.filter(cmbInstitution => cmbInstitution.code === formData?.ChildDetails?.institutionTypeCode)[0]);
-          // cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0];
-          // selectHospitalNameMl(cmbhospitalMl);
-        }
-      }
-    }
   useEffect(() => {
     if (isInitialRenderInstitutionList) {
       if (institution) {
@@ -125,4 +119,4 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
       </React.Fragment>
     );
 };
-export default BirthPlaceInstitution;
+export default StillBirthPlaceInstitution;

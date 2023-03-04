@@ -101,7 +101,7 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
       {
         Header: t("CR_COMMON_CHILD_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.fullName ? convertEpochToDateDMY(row.fullName) : "-"),
+        accessor: (row) => GetCell(row?.fullName? row?.fullName: "-"),
       },
       {
         Header: t("CR_COMMON_COL_APP_DATE"),
@@ -121,7 +121,7 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
       {
         Header: t("CR_COMMON_MOTHER_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.firstname_en || "-"),
+        accessor: (row) => GetCell(row?.registerBirthMother?.firstname_en || "-"),
       },
       {
         Header: t("CR_COMMON_GENDER"),

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader, TextArea, } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPlaceType, setpublicPlaceType,
+const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPlaceType, setpublicPlaceType,
   localityNameEn, setlocalityNameEn, localityNameMl, setlocalityNameMl, streetNameEn, setstreetNameEn,
   streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo
 }) => {
@@ -231,4 +231,4 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     </React.Fragment>
   );
 };
-export default BirthPlacePublicPlace;
+export default StillBirthPlacePublicPlace;

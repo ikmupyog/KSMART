@@ -84,13 +84,11 @@ const Informer = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 51) {
       return false;      
     } else {
-      setInformantNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setInformantNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
+    
   }
-  // function setSelectInformantNameEn(value) {
-  //   setInformantNameEn(value);    
-  // }
-
+ 
   function setSelectInformantMobileNo(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 10) {
@@ -107,16 +105,16 @@ const Informer = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectDeathSignedOfficerDesignation(e) {
     if (e.target.value.length === 51) {
-      return false;      
+      return false;
     } else {
-      setDeathSignedOfficerDesignation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-    }
+      setDeathSignedOfficerDesignation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }    
   } 
   function setSelectInformantAddress(e) {
     if (e.target.value.length === 251) {
       return false;      
     } else {
-      setInformantAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setInformantAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }  
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import Timeline from "../../components/SBRTimeline";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
+const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -44,7 +45,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setrelation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+      setrelation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
 
@@ -53,7 +54,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setinitiatorNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+      setinitiatorNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
   function setSelectinitiatorDesi(e) {
@@ -61,7 +62,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setinitiatorDesi(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+      setinitiatorDesi(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
     }
   }
   function setSelectinitiatorAddress(e) {
@@ -235,7 +236,10 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
   return (
     <React.Fragment>
        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile
+       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={
+        !isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile
         }>
         <div className="row">
           <div className="col-md-12">
@@ -329,7 +333,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
             </div>
             {isCaretaker === true && (
               <div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <CardLabel>
                     {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}
                     <span className="mandatorycss">*</span>
@@ -349,7 +353,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               </div>
             )}
  
-            <div className="col-md-6">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -421,4 +425,4 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     </React.Fragment>
   );
 };
-export default InitiatorDetails;
+export default StillBirthInitiatorDetails;

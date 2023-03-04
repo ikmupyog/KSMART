@@ -12,7 +12,6 @@ import {
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-
 const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   // const { DeceasedGender } = props;
 
@@ -435,6 +434,7 @@ const onSkip = () => onSelect();
   // if (isLoading || isLoadingA || isLoadingsub || isLoadingmanner || isLoadingPregnant || isLoadingBirthStatus) {
   //   return <Loader></Loader>;
   // } 
+
   return (
     <React.Fragment>
        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -767,7 +767,11 @@ const onSkip = () => onSelect();
             </div>
           </div>
         </div>
-        <div>
+      
+      {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" && (
+         console.log(formData?.InformationDeath?.DeceasedGender.code),
+
+        <div>          
         <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
@@ -819,7 +823,7 @@ const onSkip = () => onSelect();
             </div>
           </div>
         </div>
-
+      )};
         
             <div className="row">
               <div className="col-md-12">

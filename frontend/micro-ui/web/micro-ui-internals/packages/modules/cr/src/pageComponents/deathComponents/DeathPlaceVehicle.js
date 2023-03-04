@@ -41,10 +41,10 @@ const DeathPlaceVehicle = ({
   let validation = {};
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
 
-  const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+  const { data: hospital = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   // const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.DeathPlaceVehicle?.DeathPlaceType);
@@ -61,13 +61,24 @@ const DeathPlaceVehicle = ({
 
   // let naturetypecmbvalue = null;
   const [isInitialRender, setIsInitialRender] = useState(true);
-
+  const [tenantboundary, setTenantboundary] = useState(false);
+  if (tenantboundary) {
+    queryClient.removeQueries("CR_HOSPITALMASTER");
+    queryClient.removeQueries("TL_ZONAL_OFFICE");
+    setTenantboundary(false);
+  }
   let cmbhospital = [];
   hospital &&
-    hospital["egov-location"] &&
-    hospital["egov-location"].hospitalList.map((ob) => {
+  hospital["egov-location"] && hospital["egov-location"].hospitalList &&
+  hospital["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
+  // let cmbhospital = [];
+  // hospital &&
+  //   hospital["egov-location"] &&
+  //   hospital["egov-location"].hospitalList.map((ob) => {
+  //     cmbhospital.push(ob);
+  //   });
   // let cmbLBType = [];
   // LBType &&
   //   LBType["common-masters"] &&
@@ -79,20 +90,10 @@ const DeathPlaceVehicle = ({
     localbodies["tenant"] &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
-    });
-    let currentLB=[];
-  useEffect(() => {
-    if (isInitialRender) {
-      if (cmbLB.length > 0) {
-        currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-        setVehicleFirstHaltEn(currentLB[0].name);
-        setIsInitialRender(false);
-      }
-    }
-  }, [localbodies, isInitialRender]);
+    });  
   let cmbVehicle = [];
   Vehicle &&
-    Vehicle["birth-death-service"] &&
+    Vehicle["birth-death-service"] && Vehicle["birth-death-service"].VehicleType &&
     Vehicle["birth-death-service"].VehicleType.map((ob) => {
       cmbVehicle.push(ob);
     });
@@ -115,6 +116,18 @@ const DeathPlaceVehicle = ({
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
     cmbWardNoFinal.push(wardmst);
   });
+
+  let currentLB=[];
+  useEffect(() => {
+    if (isInitialRender) {
+      if (cmbLB.length > 0) {
+        currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+        setVehicleFirstHaltEn(currentLB[0].name);
+        setIsInitialRender(false);
+      }
+    }
+  }, [localbodies, isInitialRender]);
+
   const onSkip = () => onSelect();
 
   function setselectDeathPlaceType(value) {
@@ -127,14 +140,14 @@ const DeathPlaceVehicle = ({
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleFromplaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setVehicleFromplaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ""));
     }
   }
   function setSelectVehicleToPlaceEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleToPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setVehicleToPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ""));
     }
   }
 
@@ -142,14 +155,14 @@ const DeathPlaceVehicle = ({
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleFirstHaltEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setVehicleFirstHaltEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ""));
     }
   }
   function setSelectVehicleFirstHaltMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleFirstHaltMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setVehicleFirstHaltMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ""));
     }
   }
 
@@ -157,14 +170,14 @@ const DeathPlaceVehicle = ({
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleFromplaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setVehicleFromplaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ""));
     }
   }
   function setSelectVehicleToPlaceMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setVehicleToPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setVehicleToPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ""));
     }
   }
   function setSelectGeneralRemarks(e) {

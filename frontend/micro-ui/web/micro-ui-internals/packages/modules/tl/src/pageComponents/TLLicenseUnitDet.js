@@ -922,12 +922,13 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
         // || (value2 === "BUILDING"  ? (flgCheckDoor === true || flgCheck === false):false)
           }  
          >
-    
+  
           <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
-            <div className="row">
+      
+            {/* <div className="row">
               <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LB_DET_LABEL")}`}</span> </h1>
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-md-7" >
                 <div className="row">

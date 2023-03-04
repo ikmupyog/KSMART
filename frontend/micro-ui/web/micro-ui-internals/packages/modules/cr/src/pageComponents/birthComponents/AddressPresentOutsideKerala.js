@@ -182,7 +182,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setoutsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setoutsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setpermntOutsideKeralaHouseNameEn(presentOutsideKeralaHouseNameEn);
       } else {
@@ -195,7 +195,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setoutsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setoutsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setpermntOutsideKeralaHouseNameMl(presentOutsideKeralaHouseNameMl);
       } else {
@@ -208,7 +208,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setoutsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setoutsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setpermntOutsideKeralaLocalityNameEn(presentOutsideKeralaLocalityNameEn);
       } else {
@@ -221,7 +221,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setoutsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setoutsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setpermntOutsideKeralaLocalityNameMl(presentOutsideKeralaLocalityNameMl);
       } else {
@@ -234,7 +234,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setoutsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setoutsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setpermntOutsideKeralaStreetNameEn(presentOutsideKeralaStreetNameEn);
       } else {
@@ -247,7 +247,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setoutsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setoutsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setpermntOutsideKeralaStreetNameMl(presentOutsideKeralaStreetNameMl);
       } else {
@@ -260,7 +260,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setoutsideKeralaCityVilgeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setoutsideKeralaCityVilgeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
         setpermntOutsideKeralaCityVilgeEn(presentOutsideKeralaCityVilgeEn);
       } else {
@@ -426,7 +426,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
           </div>
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <CardLabel>
               {t("CS_COMMON_POST_OFFICE")}
               <span className="mandatorycss">*</span>
@@ -441,7 +441,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
               placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
-          </div>
+          </div> */}
         </div>
         <div className="row">
           <div className="col-md-6">

@@ -59,13 +59,13 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   const useCROtherDeathPlace = () => {
-    return useQuery("CR_RELIGION", () => MdmsService.getCROtherDeathPlace(tenantId, moduleCode), config);
+    return useQuery("CR_DEATH_PLACE_OTHER", () => MdmsService.getCROtherDeathPlace(tenantId, moduleCode), config);
   };
   const useCRMannerOfDeath = () => {
-    return useQuery("CR_RELIGION", () => MdmsService.getCRMannerOfDeath(tenantId, moduleCode), config);
+    return useQuery("CR_MANNEROF_DEATH", () => MdmsService.getCRMannerOfDeath(tenantId, moduleCode), config);
   };
   const useCRPregnantDeceased = () => {
-    return useQuery("CR_PREGNANT", () => MdmsService.getCRPregnantDeceased(tenantId, moduleCode), config);
+    return useQuery("CR_PREGNANTDECEASED", () => MdmsService.getCRPregnantDeceased(tenantId, moduleCode), config);
   };
   const useCRBirthStatus = () => {
     return useQuery("CR_PREGNANT", () => MdmsService.getCRBirthStatus(tenantId, moduleCode), config);
@@ -131,6 +131,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   // };
   const useIdProof = () => {
     return useQuery("CR_ID_DETAILS_OF_DECEASED", () => MdmsService.getCRIdProof(tenantId, moduleCode, type), config);
+  };
+  const useIdProofDetails = () => {
+    return useQuery("CR_ID_PROOF_DETAILS_OF_DECEASED", () => MdmsService.getCRIdProofDetails(tenantId, moduleCode, type), config);
   };
   const useMaleDependent = () => {
     return useQuery("CR_MALE_DEPENDENT", () => MdmsService.getCRMaleDependent(tenantId, moduleCode, type), config);
@@ -288,6 +291,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useDocumentTypeB();
     case "IdProof":
       return useIdProof();
+      case "IdProofDetails":
+        return useIdProofDetails();  
     case "DeathPlaceType":
       return useCRDeathPlaceType();
     case "VehicleType":

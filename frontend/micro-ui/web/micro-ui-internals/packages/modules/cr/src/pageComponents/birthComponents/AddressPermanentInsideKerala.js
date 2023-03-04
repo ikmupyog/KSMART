@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "react-query";
 
 const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict,
@@ -22,13 +23,23 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
+  const [tenantWard,setTenantWard]=useState(tenantId);
+  const [tenantboundary, setTenantboundary] = useState(false);
+  const queryClient = useQueryClient();
+  if (tenantboundary) {
+    queryClient.removeQueries("TL_ZONAL_OFFICE");
+    queryClient.removeQueries("CR_VILLAGE");
+    queryClient.removeQueries("CR_TALUK");
+    queryClient.removeQueries("CR_TALUK");
+    setTenantboundary(false);
+  }
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "cochin/egov-location", "boundary-data");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableStatus, setDisableStatus] = useState(true);
@@ -132,16 +143,30 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   const onSkip = () => onSelect();
 
   function setSelectpermntInKeralaAdrDistrict(value) {
-    setIsInitialRender(true);
+    // setIsInitialRender(true);
     setpermntInKeralaAdrDistrict(value);
     setpermntInKeralaAdrLBName(null);
     setLbs(null);
     districtid = value.districtid;
+    setTenantboundary(true);
+    if (cmbLB.length > 0) {
+      currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
+      setLbs(currentLB);
+      setpermntInKeralaAdrLBName(currentLB);
+      cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
+      setLbsTalukvalue(cmbFilterTaluk);
+      cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
+      setLbsVillagevalue(cmbFilterVillage);
+      cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid);
+      setPostOfficevalues(cmbFilterPostOffice);
+      setIsInitialRender(false);
+  }
   }
   function setSelectpermntInKeralaAdrLBTypeName(value) {
     setinsideKeralaLBTypeName(value);
   }
   function setSelectpermntInKeralaAdrLBName(value) {
+    setTenantWard(value.code);
     setpermntInKeralaAdrLBName(value);
   }
   function setSelectpermntInKeralaAdrVillage(value) {
@@ -173,7 +198,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntInKeralaAdrHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
@@ -181,7 +206,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntInKeralaAdrHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -190,7 +215,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntInKeralaAdrLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -199,7 +224,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntInKeralaAdrLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -208,7 +233,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setpermntInKeralaAdrStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -217,7 +242,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setpermntInKeralaAdrStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setpermntInKeralaAdrStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
 
@@ -343,7 +368,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               option={lbs}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
-              disable={isDisableStatus}
+              // disable={isDisableStatus}
               placeholder={`${t("CS_COMMON_LB_NAME")}`}
             />
           </div>
@@ -418,7 +443,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrLocalityNameEn}
               onChange={setSelectpermntInKeralaAdrLocalityNameEn}
               placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -431,7 +456,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrStreetNameEn}
               onChange={setSelectpermntInKeralaAdrStreetNameEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -447,7 +472,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrHouseNameEn}
               onChange={setSelectpermntInKeralaAdrHouseNameEn}
               placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
             />
           </div>
         </div>

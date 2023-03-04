@@ -76,7 +76,6 @@ const ApplicationDetails = () => {
         data.redirectionUrl = {
           pathname: `/digit-ui/employee/cr/cr-flow/child-details`,
           state: applicationDetails,
-          isEditBirth: true,
         },
           data.tenantId = stateId
       }

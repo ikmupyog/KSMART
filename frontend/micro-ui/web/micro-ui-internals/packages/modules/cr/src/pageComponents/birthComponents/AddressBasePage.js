@@ -34,6 +34,44 @@ const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = fa
     const [lbs, setLbs] = useState(0);
     const [toast, setToast] = useState(false);
 
+    let cmbLB = [];
+    let cmbCountry = [];
+    let cmbState = [];
+    let cmbDistrict = [];
+    let cmbTaluk = [];
+    let cmbVillage = [];
+
+    Country &&
+        Country["common-masters"] &&
+        Country["common-masters"].Country.map((ob) => {
+            cmbCountry.push(ob);
+        });
+    State &&
+        State["common-masters"] &&
+        State["common-masters"].State.map((ob) => {
+            cmbState.push(ob);
+        });
+    localbodies &&
+        localbodies["tenant"] &&
+        localbodies["tenant"].tenants.map((ob) => {
+            cmbLB.push(ob);
+        });
+    District &&
+        District["common-masters"] &&
+        District["common-masters"].District.map((ob) => {
+            cmbDistrict.push(ob);
+        });
+    Taluk &&
+        Taluk["common-masters"] &&
+        Taluk["common-masters"].Taluk.map((ob) => {
+            cmbTaluk.push(ob);
+        });
+    Village &&
+        Village["common-masters"] &&
+        Village["common-masters"].Village.map((ob) => {
+            cmbVillage.push(ob);
+        });
+
     //################################### Present Country State ############################################################################################
 
     const [presentaddressCountry, setaddressCountry] = useState(formData?.AddressBirthDetails?.presentaddressCountry ? formData?.AddressBirthDetails?.presentaddressCountry : null);
@@ -171,45 +209,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = fa
     const [PresentOutSideIndiaLineOneMlError, setPresentOutSideIndiaLineOneMlError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineOneMlError ? false : false);
     const [PresentOutSideIndiaLineTwoEnError, setPresentOutSideIndiaLineTwoEnError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineTwoEnError ? false : false);
     const [PresentOutSideIndiaLineTwoMlError, setPresentOutSideIndiaLineTwoMlError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineTwoMlError ? false : false);
-
-
-    let cmbLB = [];
-    let cmbCountry = [];
-    let cmbState = [];
-    let cmbDistrict = [];
-    let cmbTaluk = [];
-    let cmbVillage = [];
-
-    Country &&
-        Country["common-masters"] &&
-        Country["common-masters"].Country.map((ob) => {
-            cmbCountry.push(ob);
-        });
-    State &&
-        State["common-masters"] &&
-        State["common-masters"].State.map((ob) => {
-            cmbState.push(ob);
-        });
-    localbodies &&
-        localbodies["tenant"] &&
-        localbodies["tenant"].tenants.map((ob) => {
-            cmbLB.push(ob);
-        });
-    District &&
-        District["common-masters"] &&
-        District["common-masters"].District.map((ob) => {
-            cmbDistrict.push(ob);
-        });
-    Taluk &&
-        Taluk["common-masters"] &&
-        Taluk["common-masters"].Taluk.map((ob) => {
-            cmbTaluk.push(ob);
-        });
-    Village &&
-        Village["common-masters"] &&
-        Village["common-masters"].Village.map((ob) => {
-            cmbVillage.push(ob);
-        });
 
     const onSkip = () => onSelect();
 

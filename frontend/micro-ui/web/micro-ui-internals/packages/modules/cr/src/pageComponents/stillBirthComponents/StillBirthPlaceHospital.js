@@ -3,8 +3,8 @@ import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
-  selectHospitalNameMl, isEditBirth
+const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
+  selectHospitalNameMl, isEditBirth = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -16,8 +16,6 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
-
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
   if (tenantboundary) {
@@ -31,12 +29,11 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    
   if (isEditBirth) {
-    if (formData?.ChildDetails?.hospitalCode != null) {
+    if (formData?.StillBirthChildDetails?.hospitalCode != null) {
       if (cmbhospital.length > 0 && (hospitalName === undefined || hospitalName === "")) {
-        selectHospitalName(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0]);
-        cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0];
+        selectHospitalName(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode)[0]);
+        cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode)[0];
         selectHospitalNameMl(cmbhospitalMl);
       }
     }
@@ -45,7 +42,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   useEffect(() => {
 
     if (isInitialRender) {
-      if (formData?.ChildDetails?.hospitalName) {
+      if (formData?.StillBirthChildDetails?.hospitalName) {
         selectHospitalNameMl(hospitalNameMl);
         setIsInitialRender(false);
       } else {
@@ -96,7 +93,6 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
                 option={cmbhospital}
                 selected={hospitalName}
                 select={setselectHospitalName}
-                disable={isDisableEdit}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
             </div>
@@ -122,4 +118,4 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
       </React.Fragment>
     );
 };
-export default BirthPlaceHospital;
+export default StillBirthPlaceHospital;

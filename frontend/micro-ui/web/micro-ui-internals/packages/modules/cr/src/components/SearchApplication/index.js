@@ -28,7 +28,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         defaultValues: {
             offset: 0,
             limit: 10,
-            sortBy: "commencementDate",
+            sortBy: "applicationNumber",
             sortOrder: "DESC"
         }
     })
@@ -36,7 +36,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     useEffect(() => {
       register("offset", 0)
       register("limit", 10)
-      register("sortBy", "commencementDate")
+      register("sortBy", "applicationNumber")
       register("sortOrder", "DESC")
     },[register])
 
@@ -69,7 +69,8 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
       //console.log(finaldata);
       let temp={};
       temp.ChildDetails=finaldata;
-       Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);
+       Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);      
+       Digit.SessionStorage.set("CR_BIRTH_EDIT_FLAG", true); 
     }
 
     //need to get from workflow
