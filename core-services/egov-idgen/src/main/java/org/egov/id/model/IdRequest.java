@@ -30,6 +30,17 @@ public class IdRequest {
 	@Size(max=200)
 	@JsonProperty("tenantId")
 	private String tenantId;
+	
+	@NotNull
+	@Size(max=200)
+	@JsonProperty("moduleCode")
+	private String moduleCode;
+	
+	@NotNull
+	@Size(max=200)
+	@JsonProperty("fnType")
+	private String fnType;
+	
 
 	@Size(max = 200)
 	@JsonProperty("format")

@@ -35,6 +35,8 @@ public class MdmsService {
     //'IdFormat' is the JSON file in the Folder 'common-masters'.
     private static final String formatMaster = "IdFormat";
     private static final String formatModule = "common-masters";
+    private static final String tenantName = "tenantName";
+    private static final String tenantType = "tenantType";
 
 
     public MdmsResponse getMasterData(RequestInfo requestInfo, String tenantId,
@@ -61,22 +63,51 @@ public class MdmsService {
      */
 
     public String getCity(RequestInfo requestInfo, IdRequest idRequest) {
-        Map<String, String> getCity = doMdmsServiceCall(requestInfo, idRequest);
-        String cityCode = null;
+        Map<String, String> getCity = doMdmsServiceCall(requestInfo, idRequest); 
+        String cityName = null;      
+        
         try {
             if (getCity != null) {
-                cityCode = getCity.get(tenantMaster);
+                cityName = getCity.get("tenantName");               
             }
-            if(cityCode== null){
-                throw new CustomException("PARSING ERROR", "City code is Null/not valid");
+            if(cityName== null){
+                throw new CustomException("PARSING ERROR", "City name is Null/not valid");
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
             log.error("Error occurred while fetching city code", e);
             throw new CustomException("PARSING ERROR", "Failed to get citycode from MDMS");
-        }
-        return cityCode;
+        } 
+        return cityName;
     }
+    /**
+     * Description : This method to get CityType from Mdms
+     *
+     * @param idRequest
+     * @param requestInfo
+     * @return cityType
+     * @throws Exception
+     */
+
+    public String getCityType(RequestInfo requestInfo, IdRequest idRequest) {
+        Map<String, String> getCity = doMdmsServiceCall(requestInfo, idRequest);      
+        String cityType = null;
+        
+        try {
+            if (getCity != null) {               
+                cityType = getCity.get("tenantType");
+            }
+            if(cityType== null){
+                throw new CustomException("PARSING ERROR", "City Type is Null/not valid");
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            log.error("Error occurred while fetching city code", e);
+            throw new CustomException("PARSING ERROR", "Failed to get citycode from MDMS");
+        } 
+        return cityType;
+    }
+    
 
     /**
      * Description : This method to get IdFormat from Mdms
@@ -89,10 +120,13 @@ public class MdmsService {
 
     public String getIdFormat(RequestInfo requestInfo, IdRequest idRequest) {
         Map<String, String> getIdFormat = doMdmsServiceCall(requestInfo, idRequest);
+        
         String idFormat = null;
+     
         try {
             if (getIdFormat != null) {
                 idFormat = getIdFormat.get(formatMaster);
+               
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -108,7 +142,7 @@ public class MdmsService {
      * @param requestInfo
      * @return MAP
      */
-    private Map<String, String> doMdmsServiceCall(RequestInfo requestInfo, IdRequest idRequest) {
+    public Map<String, String> doMdmsServiceCall(RequestInfo requestInfo, IdRequest idRequest) {
 
 
         String idname = idRequest.getIdName();
@@ -116,6 +150,8 @@ public class MdmsService {
 
         String idFormatFromMdms = null;
         String cityCodeFromMdms = null;
+        String cityNameFromMdms = null;
+        String cityTypeFromMdms = null;
 
 
         Map<String, List<MasterDetail>> masterDetails = new HashMap<String, List<MasterDetail>>();
@@ -123,6 +159,7 @@ public class MdmsService {
         List<MasterDetail> masterDetailListCity = new LinkedList();
         List<MasterDetail> masterDetailListFormat = new LinkedList();
 
+        System.out.println("tenantId  :"+tenantId);
         MasterDetail masterDetailForCity = MasterDetail.builder().name(tenantMaster)
                 .filter("[?(@.code=='" + tenantId + "')]").build();
 
@@ -139,8 +176,8 @@ public class MdmsService {
         MdmsResponse mdmsResponse = null;
 
         try {
-            mdmsResponse = getMasterData(requestInfo, tenantId, masterDetails);
-
+        	 
+            mdmsResponse = getMasterData(requestInfo, tenantId, masterDetails);             
             if (mdmsResponse.getMdmsRes() != null && mdmsResponse.getMdmsRes().containsKey(tenantModule)
                     && mdmsResponse.getMdmsRes().get(tenantModule).containsKey(tenantMaster)
                     && mdmsResponse.getMdmsRes().get(tenantModule).get(tenantMaster).size() > 0
@@ -149,6 +186,8 @@ public class MdmsService {
                         .parse(mdmsResponse.getMdmsRes().get(tenantModule).get(tenantMaster).get(0));
 
                 cityCodeFromMdms = documentContext.read("$.city.code");
+                cityNameFromMdms = documentContext.read("$.city.ddrName");
+                cityTypeFromMdms = cityCodeFromMdms.substring(0,1);               
                 log.debug("Found city code as - " + cityCodeFromMdms);
             }
             if (mdmsResponse.getMdmsRes() != null && mdmsResponse.getMdmsRes().containsKey(formatModule)
@@ -158,6 +197,7 @@ public class MdmsService {
                 DocumentContext documentContext = JsonPath
                         .parse(mdmsResponse.getMdmsRes().get(formatModule).get(formatMaster).get(0));
                 idFormatFromMdms = documentContext.read("$.format");
+               
             }
 
         } catch (Exception e) {
@@ -168,7 +208,10 @@ public class MdmsService {
         Map<String, String> mdmsCallMap = new HashMap();
         mdmsCallMap.put(formatMaster, idFormatFromMdms);
         mdmsCallMap.put(tenantMaster, cityCodeFromMdms);
+        mdmsCallMap.put(tenantName, cityNameFromMdms);
+        mdmsCallMap.put(tenantType, cityTypeFromMdms);
 
+        
         return mdmsCallMap;
     }
 
