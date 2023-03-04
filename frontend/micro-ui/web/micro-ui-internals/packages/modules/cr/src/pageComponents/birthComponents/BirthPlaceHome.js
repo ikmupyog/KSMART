@@ -25,7 +25,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
-const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
+  const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -66,10 +66,10 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
     if (isInitialRender) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-       // cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid);
-       setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
-       setPostOfficevalues(cmbFilterPostOffice);
+        setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+        setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
         setIsInitialRender(false);
+        console.log(PostOfficevalues);
       }
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
@@ -117,13 +117,13 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
   });
 
   // if (pofilter){
-    
+
   //   setPostOfficevalues(potemp);
   //   setPofilter(false);
   //   console.log(JSON.stringify(PostOfficevalues));
   // }
 
-    //PostOfficevalues = potemp;
+  //PostOfficevalues = potemp;
   // const changesetPincode = (e => {()
   //   setPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
   //   setPostOffice(cmbPostOffice.filter((postoffice) => {
