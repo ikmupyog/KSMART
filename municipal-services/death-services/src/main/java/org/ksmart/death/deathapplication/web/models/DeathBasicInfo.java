@@ -313,7 +313,7 @@ public class DeathBasicInfo {
 
     @Schema(type = "Long",description = "Death Application Date  ")
     @JsonProperty("ApplicationDate")
-    private Long applicationDate ;
+    private Long ApplicationDate ;
 
     @Size(max = 64)
     @JsonProperty("fileNo")
@@ -324,19 +324,63 @@ public class DeathBasicInfo {
 
     @JsonProperty("funcionUID")
     private String funcionUID;
+<<<<<<< HEAD
 
-     //Jasmine 01.03.2023
-     @Schema(type = "long",description = "If death date is not known enter the todate" )
-     @JsonProperty("dateOfDeath1")
-     private Long dateOfDeath1;
- 
-     @Schema(type = "string", description= "time of death" )
-     @JsonProperty("timeOfDeath1")
-     private Integer timeOfDeath1 ;
- 
-     @Schema(type = "string", description= "am/pm" )
-     @Size(max = 64)
-     @JsonProperty("timeOfDeathUnit1")
-     private String timeOfDeathUnit1 ;
+
+   //Rakhi S on 02.03.2023
+   @Schema(type = "string", description= " " )
+   @JsonProperty("DeathPlaceHospitalNameEn")
+   private String  deathPlaceHospitalNameEn ;
+
+   @Schema(type = "string", description= " " )
+   @JsonProperty("DeathPlaceHospitalNameMl")
+   private String  deathPlaceHospitalNameMl ;
+
+//Rakhi S on 03.03.2023
+   @JsonProperty("DeathDateUnavailable")
+   private boolean deathDateUnavailable ;
+
+   @Schema(type = "Long",description = "Death date (If death date is not known enter the to date)")
+   @JsonProperty("DateOfDeath1")
+   private Long dateOfDeath1 ;
+
+   @Schema(type = "Integer", description= "time of death")
+   @JsonProperty("TimeOfDeath1")
+   private Integer  timeOfDeath1 ;
+
+   @Schema(type = "string", description= "am/pm")
+   @Size(max = 64)
+   @JsonProperty("TimeOfDeathUnit1")
+   private String timeOfDeathUnit1 ;
+
+   @Schema(type = "Integer", description= "Abandoned body flag")
+   @JsonProperty("DeceasedUnIdentified")
+   private Integer  deceasedUnIdentified ;
+
+   @Schema(type = "string", description= "Burial District")
+   @JsonProperty("BurialDistrict")
+   private String burialDistrict ;
+
+   @Schema(type = "string", description= "Burial LB Type")
+   @JsonProperty("BurialLBType")
+   private String burialLBType ;
+
+   @Schema(type = "string", description= "Burial LB Name")
+   @JsonProperty("BurialLBName")
+   private String burialLBName ;
+
+   @Schema(type = "string", description= "Burial LB Ward")
+   @JsonProperty("BurialLBWard")
+   private String burialLBWard ;
+
+   @Schema(type = "string", description= "Burial Description")
+   @JsonProperty("BurialDescription")
+   private String burialDescription ;
+
+   @Schema(type = "string", description= "Description of the person")
+   @JsonProperty("DeceasedDescription")
+   private String deceasedDescription ;
+=======
+>>>>>>> f816bddfffb99557fd47c244facabfcb96e6d44e
     
 }

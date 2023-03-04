@@ -110,5 +110,23 @@ public class DeathStatisticalInfo {
     //Jasmine 9.02.2023
     @JsonProperty("auditDetails")
     private AuditDetails  deathAuditDetails;
+
+    //Rakhi S on 03.03.2023
+    @JsonProperty("MPName")
+    private String mPName;
+
+    @JsonProperty("MPAadharNumber")
+    private String mPAadharNumber;
     
+    @JsonProperty("MPMobileNo")
+    private Long mPMobileNo;
+
+    @JsonProperty("MPRegistrationNumber")
+    private String mPRegistrationNumber;
+
+    @JsonProperty("MPDesignation")
+    private String mPDesignation;
+
+    @JsonProperty("MPAddress")
+    private String mPAddress;
 }
