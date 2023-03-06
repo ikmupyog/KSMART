@@ -16,7 +16,7 @@ const DeathInbox = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(searchParams);
+      // console.log(searchParams);
       // const applicationStatus = searchParams?.filters?.pgrfilters?.applicationStatus?.map(e => e.code).join(",")
       // let response = await Digit.PGRService.count(tenantId, applicationStatus?.length > 0  ? {applicationStatus} : {} );
       // if (response?.count) {
