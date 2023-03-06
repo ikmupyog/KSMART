@@ -54,7 +54,7 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
   const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   // const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "IdProof");
-  const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "IdProofDetails");
+  // const { data: documentType = {}, isdocmentLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "IdProofDetails");
   const { data: AgeUnitvalue = {}, isAgeUnitLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AgeUnit");
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   // const { data: OccupationMain = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Occupation");
@@ -199,12 +199,12 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
     religion["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
-  let cmbDocumentType = [];
-  documentType &&
-    documentType["birth-death-service"] &&
-    documentType["birth-death-service"].IdProofDetails.map((ob) => {
-      cmbDocumentType.push(ob);
-    });
+  // let cmbDocumentType = [];
+  // documentType &&
+  //   documentType["birth-death-service"] &&
+  //   documentType["birth-death-service"].IdProofDetails.map((ob) => {
+  //     cmbDocumentType.push(ob);
+  //   });
   let cmbAgeUnit = [];
   AgeUnitvalue &&
     AgeUnitvalue["birth-death-service"] &&
@@ -1016,7 +1016,7 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbDocumentType}
+                  option={cmbAgeUnit}
                   selected={DeceasedIdproofType}
                   select={selectDeceasedIdproofType}
                   disabled={isEdit}
