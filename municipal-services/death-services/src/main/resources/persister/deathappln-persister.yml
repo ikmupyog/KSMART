@@ -1114,8 +1114,453 @@ serviceMaps:
 
     #   - jsonPath: $.deathCertificateDtls.*.InformationDeath.TenantId
 
-    #   - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrTypeId             
+    #   - jsonPath: $.deathCertificateDtls.*.InitiatorDetails.InitiatorAddrTypeId   
+
+ # DEATH ABANDONED SAVE Rakhi S on 04.03.2023 
+  - version: 1.0
+    description: Persists death reporting form details in eg_death_dtls,eg_death_statistical_dtls,eg_death_address_dtls  table by rakhi s ikm on 06.02.2023
+    fromTopic: save-deathabandoned-topic
+    isTransaction: true
+    queryMaps:
 
 
 
+    - query: INSERT INTO public.eg_death_dtls(id, registrationunit, tenantid, dateofdeath, time_of_death, timeofdeath_unit, death_place, death_place_inst_type, death_place_inst_id, deceased_firstname_en, deceased_firstname_ml, deceased_middlename_en, deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml, deceased_aadhar_unavailable, deceased_aadhar_number, deceased_gender, age, age_unit, informant_name_en, informant_aadhar_no, informant_mobile_no, general_remarks, status, created_by, createdtime, lastmodifiedby, lastmodifiedtime, registration_no, male_dependent_name_en, male_dependent_name_ml, male_dependent_aadharno, female_dependent_name_en, female_dependent_name_ml, female_dependent_aadharno,  vehicle_hospital_en, vehicle_fromplace_ml, vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, death_place_ward_id, deceased_idprooftype, ack_no, workflowcode, businessservice, action, comment, registration_date, registration_no_id, appl_type, deceased_idproofno, vehicle_first_halt, vehicle_first_halt_ml, male_dependent_unavailable, female_dependent_unavailable, spouse_name_en, spouse_name_ml, spouse_unavailable, spouse_aadhaar, spouse_type, funcion_uid, ack_no_id, application_date, death_place_locality_en, death_place_locality_ml, death_place_street_en, death_place_street_ml, death_place_country, place_of_burial_en, place_of_burial_ml, death_home_locality_en, death_home_locality_ml, death_home_street_en, death_home_street_ml, death_home_housename_en, 
+          death_home_housename_ml, death_home_postoffice_id, death_home_pincode, death_home_ward, death_home_taluk_id,
+          family_mobile_no ,family_email, assignee ,informant_address ,
+          death_date_unavailable,date_of_death_to,time_of_death_to,timeofdeath_unit_to,deceased_unidentified,
+          burial_district,burial_lbtype,burial_lbname,burial_lb_ward,burial_description,deceased_description,
+          informant_office,informant_designation,informant_pen_no,informant_office_address)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?);
+     
+
+      basePath: deathAbandonedDtls.*
+      jsonMaps:
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.Id
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.RegistrationUnit
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TenantId
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DateOfDeath
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TimeOfDeath
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TimeOfDeathUnit
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlace
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceType
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceInstId
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedFirstNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedFirstNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedMiddleNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedMiddleNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedLastNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedLastNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedAadharNotAvailable
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedAadharNumber
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedGender
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.Age
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.AgeUnit
+
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantName
+
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantAadharNo
+
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantMobileNo
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.GeneralRemarks
+
+      - jsonPath: $.deathAbandonedDtls.*.applicationStatus
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.createdBy
       
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.registrationNo
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.FatherNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.FatherNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.FatherAadharNo
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.MotherNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.MotherNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.MotherAadharNo
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.VehicleHospitalEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.VehicleFromplaceMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.VehicleFromplaceEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.VehicleToPlaceMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.VehicleToPlaceEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.VehicleNumber
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceWardId
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedIdproofType
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathACKNo
+
+      - jsonPath: $.deathAbandonedDtls.*.workflowcode
+
+      - jsonPath: $.deathAbandonedDtls.*.businessService
+
+      - jsonPath: $.deathAbandonedDtls.*.action
+
+      - jsonPath: $.deathAbandonedDtls.*.Comment
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.RegistrationDate
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.registrationNoID
+
+      - jsonPath: $.deathAbandonedDtls.*.applicationType
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedIdproofNo
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.VehicleFirstHaltEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.VehicleFirstHaltMl
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.FatherUnavailable
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.MotherUnavailable
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.SpouseNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.SpouseNameML
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.SpouseUnavailable
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.SpouseAadhaar
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.SpouseType
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.funcionUID
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.ackNoID
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.ApplicationDate
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceLocalityEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceLocalityMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceStreetEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceStreetMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceCountry
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.PlaceOfBurialEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.PlaceOfBurialMl    
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomeLocalityEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomeLocalityMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomeStreetNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomeStreetNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomeHoueNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomeHoueNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomePostofficeId
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomePincode
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomeWardId
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathPlaceHomeTalukId
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.FamilyMobileNo
+
+      - jsonPath: $.deathAbandonedDtls.*.FamilyInfoDeathAbandoned.FamilyEmailId  
+      
+      - jsonPath: $.deathAbandonedDtls.*.assignuser 
+
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantAddress
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeathDateUnavailable
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DateOfDeath1
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TimeOfDeath1 
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TimeOfDeathUnit1    
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedUnIdentified   
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.BurialDistrict    
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.BurialLBType 
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.BurialLBName    
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.BurialLBWard 
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.BurialDescription  
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.DeceasedDescription
+
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantOfficeAuthority
+
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantDesignation
+
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantPENNo
+
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantOfficeAddress
+
+
+
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathAbandonedDtls.*
+      jsonMaps:
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrId
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrTypeId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrStreetNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrStreetNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrLocalityEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrLocalityMl
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrWardId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrTalukId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrVillageId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrPostofficeId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrPincode
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrDistrictId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrStateId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrCountryId
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrLocationType
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrHoueNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrHoueNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrLbType
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrPostalCode
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceMl
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrTownOrVillage
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrCityOrVillageEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.presentInsideKeralaLBName
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.isPrsentAddress
+
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathAbandonedDtls.*
+      jsonMaps:
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrId
+      
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrTypeId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrStreetNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrStreetNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrLocalityEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrLocalityMl
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrWardId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrTalukId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrVillageId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrPostofficeId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrPincode
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrDistrictId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrStateId
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrCountryId
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrLocationType
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrHoueNameMl
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrHoueNameEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrLbType
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrPostalCode
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceMl
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrTownOrVillage
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrCityOrVillageEn
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.permntInKeralaAdrLBName
+
+      - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.isPrsentAddress
+
+    
+    - query: INSERT INTO public.eg_death_statistical_dtls(id, death_dtl_id, tenantid, religion, occupation, medical_attention_type, death_medically_certified, death_cause_main, death_cause_sub, death_cause_other, death_during_delivery, createdby, createdtime, lastmodifiedby, lastmodifiedtime, nationality,  smoking_type, tobacco_type,  alcohol_type, autopsy_performed, autopsy_completed, manner_of_death, death_cause_main_custom, death_cause_main_interval, death_cause_main_timeunit, 
+          death_cause_sub_custom, death_cause_sub_interval, death_cause_sub_timeunit, death_cause_sub2, death_cause_sub2_custom, death_cause_sub2_interval, death_cause_sub2_timeunit, deceased_pregnant, is_delivery,
+          medical_practitioner_name, medical_practitioner_aadhaar, medical_practitioner_mobile, medical_practitioner_regno, medical_practitioner_desig, medical_practitioner_address)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathAbandonedDtls.*
+      jsonMaps:
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.StatisticalId
+      
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.Id
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TenantId
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.Religion
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.Occupation
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MedicalAttentionType
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathMedicallyCertified
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseMain
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseSub
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseOther
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathDuringDelivery
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathAbandonedDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.Nationality
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.SmokingType
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.TobaccoType
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.AlcoholType
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.IsAutopsyPerformed
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.IsAutopsyCompleted
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MannerOfDeath
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseMainCustom
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseMainInterval
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseMainTimeUnit
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseSubCustom
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseSubInterval
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseSubTimeUnit
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseSub2
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseSubCustom2
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseSubInterval2
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.DeathCauseSubTimeUnit2
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.IsdeceasedPregnant
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.IsDelivery
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MPName
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MPAadharNumber
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MPMobileNo
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MPRegistrationNumber
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MPDesignation
+
+      - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MPAddress

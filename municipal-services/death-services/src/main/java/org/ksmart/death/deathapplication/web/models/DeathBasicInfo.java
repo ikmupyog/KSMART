@@ -326,7 +326,7 @@ public class DeathBasicInfo {
     private String funcionUID;
 
 
-   //Rakhi S on 02.03.2023
+    //Rakhi S on 02.03.2023
    @Schema(type = "string", description= " " )
    @JsonProperty("DeathPlaceHospitalNameEn")
    private String  deathPlaceHospitalNameEn ;
