@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { TextInput, Label, SubmitBar, LinkLabel, ActionBar, CloseSvg } from "@egovernments/digit-ui-react-components";
 
-const BirthSearchInbox = ({ onSearch, type, onClose, searchParams }) => {
-  const [appNo, setAppNo] = useState(searchParams?.search?.serviceRequestId || "");
+const SearchComplaint = ({ onSearch, type, onClose, searchParams }) => {
+  const [complaintNo, setComplaintNo] = useState(searchParams?.search?.serviceRequestId || "");
   const [mobileNo, setMobileNo] = useState(searchParams?.search?.mobileNumber || "");
   const { register, errors, handleSubmit, reset } = useForm();
   const { t } = useTranslation();
@@ -12,7 +12,7 @@ const BirthSearchInbox = ({ onSearch, type, onClose, searchParams }) => {
   const onSubmitInput = (data) => {
     if (!Object.keys(errors).filter((i) => errors[i]).length) {
       if (data.serviceRequestId !== "") {
-        onSearch({ applicationNumber: data.applicationNumber });
+        onSearch({ serviceRequestId: data.serviceRequestId });
       } else if (data.mobileNumber !== "") {
         onSearch({ mobileNumber: data.mobileNumber });
       } else {
@@ -28,7 +28,7 @@ const BirthSearchInbox = ({ onSearch, type, onClose, searchParams }) => {
   function clearSearch() {
     reset();
     onSearch({});
-    setAppNo("");
+    setComplaintNo("");
     setMobileNo("");
   }
 
@@ -41,7 +41,7 @@ const BirthSearchInbox = ({ onSearch, type, onClose, searchParams }) => {
   };
 
   function setComplaint(e) {
-    setAppNo(e.target.value);
+    setComplaintNo(e.target.value);
   }
 
   function setMobile(e) {
@@ -63,10 +63,10 @@ const BirthSearchInbox = ({ onSearch, type, onClose, searchParams }) => {
             )}
             <div className="complaint-input-container">
               <span className="complaint-input">
-                <Label>{t("Application No")}.</Label>
+                <Label>{t("CS_COMMON_COMPLAINT_NO")}.</Label>
                 <TextInput
-                  name="applicationNumber"
-                  value={appNo}
+                  name="serviceRequestId"
+                  value={complaintNo}
                   onChange={setComplaint}
                   inputRef={register({
                     pattern: /(?!^$)([^\s])/,
@@ -107,4 +107,4 @@ const BirthSearchInbox = ({ onSearch, type, onClose, searchParams }) => {
   );
 };
 
-export default BirthSearchInbox;
+export default SearchComplaint;
