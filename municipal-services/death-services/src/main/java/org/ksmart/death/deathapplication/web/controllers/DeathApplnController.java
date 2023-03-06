@@ -15,6 +15,8 @@ import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtlResponse;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.ksmart.death.deathregistry.service.DeathRegistryService;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
 import org.ksmart.death.utils.ResponseInfoFactory;
@@ -163,5 +165,36 @@ public class DeathApplnController {
                                         .build();
         return ResponseEntity.ok(response);
     }
+//Jasmine
+        
+    @PostMapping("/deathdetails/_updatedeathcorrection")
+
+    public ResponseEntity<DeathCorrectionResponse> update(@RequestBody DeathCorrectionRequest request) {
+ 
+        List<DeathCorrectionDtls> deathDetails = deathService.updateCorrection(request);
+
+        String status=request.getDeathCorrection().get(0).getApplicationStatus();
+
+        String applicationType =request.getDeathCorrection().get(0).getApplicationType();
+
+        //System.out.println("status and applicationType"+status +" "+applicationType);
+
+        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCorrection().get(0).getApplicationType().equals(DeathConstants.APPLICATION_CORRECTION)){
+         
+            DeathRegistryCorrectionRequest registryRequest = deathRegistryRequestService.createRegistrycorrectionRequest(request);
+
+            List<DeathRegistryCorrectionDtls> registryDeathDetails =  deathRegistryService.update(registryRequest);
+
+        }
+
+        DeathCorrectionResponse response = DeathCorrectionResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                        .deathCorrection(deathDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
+
+    
+}
 
 }

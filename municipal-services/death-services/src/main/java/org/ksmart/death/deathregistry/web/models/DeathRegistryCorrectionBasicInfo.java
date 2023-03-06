@@ -1,4 +1,4 @@
-package org.ksmart.death.deathapplication.web.models;
+package org.ksmart.death.deathregistry.web.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -19,10 +19,10 @@ import org.springframework.validation.annotation.Validated;
 @Builder
 /*
      * Creates Correction model class  
-     * Jasmine on 01.03.2023      
+     * Jasmine on 04.03.2023      
 */
 
-public class DeathCorrectionBasicInfo {
+public class DeathRegistryCorrectionBasicInfo {
 
     @Schema(type = "string", format = "uuid", description = "death registration request id")
     @Size(max = 64)
@@ -146,42 +146,6 @@ public class DeathCorrectionBasicInfo {
     @JsonProperty("RegistrationNo")
     private String  registrationNo ;
 
-    // @Size(max = 64)
-    // @JsonProperty("fileNo")
-    // private String fileNo = null;
-
-    // @Size(max = 64)
-    // @JsonProperty("applicationType")
-    // private String applicationType;
-
-    // @JsonProperty("applicationStatus")
-    // private String applicationStatus;
-
-    // @JsonProperty("businessService")
-    // private String businessService;
-
-    // @JsonProperty("action")
-    // private String action;
-
-    // @JsonProperty("assignee")
-    // private List<String> assignees;
-
-    // @JsonProperty("workflowcode")
-    // private String workflowcode;
-
-    // private String assignuser;
-
-    // @Size(max = 128)
-    // @Html
-    // private String comment;
-
-    // @Valid
-    // @JsonProperty("wfDocuments")
-    // private List<Document> wfDocuments;
-
-    // public void setStatus(String s) {
-    // }
-
     //DeathPlace 
 
     @Schema(type = "string", description= " " )
@@ -284,15 +248,6 @@ public class DeathCorrectionBasicInfo {
     @JsonProperty("GeneralRemarks")
     private String  generalRemarks ;
 
-    //Rakhi S on 02.03.2023
-   @Schema(type = "string", description= " " )
-   @JsonProperty("DeathPlaceHospitalNameEn")
-   private String  deathPlaceHospitalNameEn ;
-
-   @Schema(type = "string", description= " " )
-   @JsonProperty("DeathPlaceHospitalNameMl")
-   private String  deathPlaceHospitalNameMl ;
-
       //HOME
     
 
@@ -358,6 +313,14 @@ public class DeathCorrectionBasicInfo {
     @JsonProperty("funcionUID")
     private String funcionUID;
 
+
+    @Schema(type = "string", description= " " )
+    @JsonProperty("DeathPlaceHospitalNameEn")
+    private String  deathPlaceHospitalNameEn ;
+ 
+    @Schema(type = "string", description= " " )
+    @JsonProperty("DeathPlaceHospitalNameMl")
+    private String  deathPlaceHospitalNameMl ;
 
 
 }

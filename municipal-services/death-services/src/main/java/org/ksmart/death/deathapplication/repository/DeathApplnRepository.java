@@ -8,9 +8,12 @@ import java.util.Map;
 
 import org.ksmart.death.deathapplication.repository.querybuilder.DeathApplnQueryBuilder;
 import org.ksmart.death.deathapplication.repository.rowmapper.DeathApplnRowMapper;
+import org.ksmart.death.deathapplication.repository.rowmapper.DeathCorrectionRowMapper;
 import org.ksmart.death.deathapplication.util.DeathConstants;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionBasicInfo;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
@@ -45,13 +48,16 @@ public class DeathApplnRepository {
     private final JdbcTemplate jdbcTemplate;
     private final DeathApplnQueryBuilder queryBuilder;
     private final DeathApplnRowMapper rowMapper;
+    private final DeathCorrectionRowMapper correctionRowMapper;
 
     @Autowired
     DeathApplnRepository(JdbcTemplate jdbcTemplate, DeathApplnQueryBuilder queryBuilder,
-                        DeathApplnRowMapper rowMapper) {
+                        DeathApplnRowMapper rowMapper ,DeathCorrectionRowMapper correctionRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
+        this.correctionRowMapper = correctionRowMapper;
+        
     }
      //Jasmine on 07.02.2023
     public List<DeathDtl> getDeathApplication(DeathSearchCriteria criteria,RequestInfo requestInfo) {
@@ -153,6 +159,47 @@ public class DeathApplnRepository {
         });
         // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
+    }
+
+       //Jasmine on 06.03.2023
+       public List<DeathCorrectionDtls> getDeathCorrection(DeathSearchCriteria criteria,RequestInfo requestInfo) {
+        
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        // System.out.println("Query:"+query);
+        List<DeathCorrectionDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), correctionRowMapper);
+        if(result != null) {
+			result.forEach(deathDtl -> {
+
+                DeathCorrectionBasicInfo deathBasicDtls =deathDtl.getDeathCorrectionBasicInfo();
+                //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
+                DeathCorrectionBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
+                deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
+                //Rakhi S on 02.03.2023 Mdms call  
+                if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathCorrectionBasicInfo().getDeathPlace())){
+                    Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    
+                                           , deathDtl.getDeathCorrectionBasicInfo().getTenantId()                           
+                                           , deathDtl.getDeathCorrectionBasicInfo().getDeathPlaceType());
+                   Map<String,List<String>> masterDataHospital = getAttributeValuesHospital(mdmsDataHospital);
+
+                   Object mdmsDataHospitalMl = util.mDMSCallHospitalMl(requestInfo  
+                                           , deathDtl.getDeathCorrectionBasicInfo().getTenantId()                           
+                                           , deathDtl.getDeathCorrectionBasicInfo().getDeathPlaceType());
+                   Map<String,List<String>> masterDataHospitalMl = getAttributeValuesHospital(mdmsDataHospitalMl);
+
+                   String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_LIST).toString();
+                   deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
+
+                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_LIST).toString();
+                   deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
+
+                deathDtl.getDeathCorrectionBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
+                deathDtl.getDeathCorrectionBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);
+               }
+
+			});
+        }
+        return result; 
     }
     
 }

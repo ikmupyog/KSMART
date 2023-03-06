@@ -459,18 +459,15 @@ public class DeathEnrichment implements BaseEnrichment{
         }
 
         //Jasmine 04.03.2023
-            //Rakhi S on 08.02.2023
     public void enrichCreateCorrection(DeathCorrectionRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
-        
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
         request.getDeathCorrection()
                .forEach(deathdtls -> {
                 deathdtls.getDeathCorrectionBasicInfo().setId(UUID.randomUUID().toString());
                 deathdtls.setDeathCorrAuditDetails(auditDetails);               
-                //Rakhi S on 09.02.2023 //Validation Jasmine 11.02.2023
                 DeathAddressInfo  addressinfo = deathdtls.getDeathCorrAddressInfo();
                 if (addressinfo!=null){
                     addressinfo.setPresentAddrId(UUID.randomUUID().toString());
@@ -479,10 +476,22 @@ public class DeathEnrichment implements BaseEnrichment{
                 DeathCorrectionBasicInfo deathBasicDtls =deathdtls.getDeathCorrectionBasicInfo();
                 DeathCorrectionBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathCorrectionBasicInfo.class);
                 deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
-                // deathBasicDtls.setFatherAadharNo(deathBasicEnc.getFatherAadharNo());
-                // deathBasicDtls.setMotherAadharNo(deathBasicEnc.getMotherAadharNo());
-                // deathBasicDtls.setSpouseAadhaar(deathBasicEnc.getSpouseAadhaar());
+                deathdtls.setDeathCorrAuditDetails(auditDetails);
             });
+        }  
+
+    //Jasmine 06.03.2023
+    public void enrichUpdateCorrection(DeathCorrectionRequest request) {
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+         request.getDeathCorrection()
+                 .forEach(deathDtls -> {
+                    DeathCorrectionBasicInfo deathBasicDtls = deathDtls.getDeathCorrectionBasicInfo();
+                    DeathCorrectionBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathCorrectionBasicInfo.class);
+                    deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
+                    deathDtls.setDeathCorrAuditDetails(auditDetails);
+                } ); 
         }  
 
 }

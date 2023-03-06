@@ -22,6 +22,8 @@ import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
 import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 
 
 import org.egov.tracer.model.CustomException;
@@ -38,6 +40,26 @@ public class DeathApplnValidator {
 
     public void validateUpdate(DeathDtlRequest request, List<DeathDtl> searchResult) {
         List<DeathDtl> deathdetails = request.getDeathCertificateDtls();
+
+        if (CollectionUtils.isEmpty(deathdetails)) {
+            throw new CustomException(DEATH_REG_REQUIRED.getCode(), "Death registration is required.");
+        }
+
+        if (deathdetails.size() > 1) { // NOPMD
+            throw new CustomException(DEATH_REG_INVALID_UPDATE.getCode(),
+                    "Supports only single Death registration update request.");
+        }
+
+        if (deathdetails.size() != searchResult.size()) {
+            throw new CustomException(DEATH_REG_INVALID_UPDATE.getCode(),
+                    "Death registration(s) not found in database.");
+        }
+  //IMP:Have to enable after URI submission
+        //validateCommonFields( request);
+    }
+//Jasmine 06.03.2023
+    public void validateCorrectionUpdate(DeathCorrectionRequest request, List<DeathCorrectionDtls> searchResult) {
+        List<DeathCorrectionDtls> deathdetails = request.getDeathCorrection();
 
         if (CollectionUtils.isEmpty(deathdetails)) {
             throw new CustomException(DEATH_REG_REQUIRED.getCode(), "Death registration is required.");

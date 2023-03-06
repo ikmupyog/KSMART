@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -93,22 +95,22 @@ public class DeathRegistryService {
    }
 
       //UPDATE BEGIN Jasmine 7.03.2023
-      public List<DeathRegistryDtl> update(DeathRegistryRequest request) {
+      // public List<DeathRegistryDtl> update(DeathRegistryRequest request) {
 
-       String regNo = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getRegistrationNo();
+      //  String regNo = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getRegistrationNo();
 
-       String tenantId = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId();
+      //  String tenantId = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId();
 
-        // List<DeathRegistryDtl> searchResult = repository.getDeathApplication(DeathRegistryCriteria
-        //                                                                       .builder()
-        //                                                                       .tenantId(tenantId)
-        //                                                                       .registrationNo(regNo)
-        //                                                                       .build());
+      //   // List<DeathRegistryDtl> searchResult = repository.getDeathApplication(DeathRegistryCriteria
+      //   //                                                                       .builder()
+      //   //                                                                       .tenantId(tenantId)
+      //   //                                                                       .registrationNo(regNo)
+      //   //                                                                       .build());
 
-        producer.push(deathConfig.getUpdateDeathRegistryTopic(), request);
+      //   producer.push(deathConfig.getUpdateDeathRegistryTopic(), request);
 
-        return request.getDeathCertificateDtls();
-      }
+      //   return request.getDeathCertificateDtls();
+      // }
     //Search  Jasmine 08.02.2023
      public List<DeathRegistryDtl> search(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
 
@@ -171,5 +173,22 @@ public class DeathRegistryService {
     List<DeathRegistryDtl> obj = repository.getDeathApplication(criteria);     
     return repository.searchCertificate(obj.get(0).getDeathBasicInfo().getId());
   }
+ //Jasmine .06.03.2023
+  public List<DeathRegistryCorrectionDtls> update(DeathRegistryCorrectionRequest request) {
+
+    String regNo = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getRegistrationNo();
+
+    String tenantId = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId();
+
+     // List<DeathRegistryDtl> searchResult = repository.getDeathApplication(DeathRegistryCriteria
+     //                                                                       .builder()
+     //                                                                       .tenantId(tenantId)
+     //                                                                       .registrationNo(regNo)
+     //                                                                       .build());
+
+     producer.push(deathConfig.getUpdateDeathRegistryTopic(), request);
+
+     return request.getDeathCorrection();
+   }
     
 }

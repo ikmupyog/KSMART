@@ -132,14 +132,11 @@ public class DeathApplnService {
                                    .requestInfo(request.getRequestInfo())
                                    .deathCertificateDtls(request.getDeathCertificateDtls())
                                    .build();
-                                 //  System.out.println("SearchResult"+result);
-
           return result.getDeathCertificateDtls();
      } 
      //Jasmine 03.03.2023
      public List<DeathCorrectionDtls> createcorrection(DeathCorrectionRequest request) {
           //  Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
-
             enrichmentService.setCorrectionPresentAddress(request);
             enrichmentService.setCorrectionPermanentAddress(request);
             enrichmentService.enrichCreateCorrection(request);
@@ -148,4 +145,28 @@ public class DeathApplnService {
            // workflowIntegrator.callWorkFlow(request);
             return request.getDeathCorrection();
        }   
+
+     //Jasmine  Update 07.02.2023
+     public List<DeathCorrectionDtls> updateCorrection(DeathCorrectionRequest request) {
+          
+          enrichmentService.setCorrectionPresentAddress(request);
+          enrichmentService.setCorrectionPermanentAddress(request);
+          String ackNumber = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getDeathACKNo();
+          DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
+                                        .deathACKNo(ackNumber)
+                                        .build());
+          List<DeathCorrectionDtls> searchResult = repository.getDeathCorrection(criteria,request.getRequestInfo());
+          validatorService.validateCorrectionUpdate(request, searchResult);
+         // mdmsValidator.validateMDMSData(request,mdmsData);                    
+          enrichmentService.enrichUpdateCorrection(request);
+         // workflowIntegrator.callWorkFlow(request);
+          producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+          List<DeathCorrectionDtls> response = new ArrayList<>();
+          DeathCorrectionRequest result = DeathCorrectionRequest
+                                   .builder()
+                                   .requestInfo(request.getRequestInfo())
+                                   .deathCorrection(request.getDeathCorrection())
+                                   .build();
+          return result.getDeathCorrection();
+     } 
 }
