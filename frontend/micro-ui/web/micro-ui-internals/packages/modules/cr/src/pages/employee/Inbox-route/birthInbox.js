@@ -16,7 +16,7 @@ const BirthInbox = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(searchParams);
+      // console.log(searchParams);
       // const applicationStatus = searchParams?.filters?.pgrfilters?.applicationStatus?.map(e => e.code).join(",")
       // let response = await Digit.PGRService.count(tenantId, applicationStatus?.length > 0  ? {applicationStatus} : {} );
       // if (response?.count) {
@@ -52,10 +52,10 @@ const BirthInbox = () => {
 let complaints=[]
 // let isLoading
   let isMobile = Digit.Utils.browser.isMobile();
-
+  // let { data: complaintsz, isLoading:load } = Digit.Hooks.cr.useInbox({   tenantId, ...searchParams, offset: pageOffset, limit: pageSize }) ;
   const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: searchParams?.search })
-// console.log(searchResult);
-let birthData = searchParams?.search? searchResult : []
+// console.log(complaintsz);
+let birthData = searchParams?.search? searchResult : searchParams?.filters?.wfFilters?.assignee?.length>0?searchParams?.filters?.wfFilters?.assignee[0].code==""?searchResult:[]:[]
 let Loading = searchParams?.search? isLoading : false
   if (complaints?.length !== null) {
     if (isMobile) {

@@ -59,7 +59,7 @@ let complaints=[]
 console.log('p',searchParams,filterParams); 
   const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchDeath({ tenantId, filters: filterParams  })
 // console.log(searchResult);
-let DeathData = searchParams?.search? searchResult : []
+let DeathData = searchParams?.search? searchResult : searchParams?.filters?.wfFilters?.assignee?.length>0?searchParams?.filters?.wfFilters?.assignee[0].code==""?searchResult:[]:[]
 let Loading = searchParams?.search? isLoading : false
   if (complaints?.length !== null) {
     if (isMobile) {
