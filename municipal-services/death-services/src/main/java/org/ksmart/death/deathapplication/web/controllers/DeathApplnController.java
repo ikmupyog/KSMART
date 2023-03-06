@@ -7,6 +7,9 @@ import org.ksmart.death.common.contract.RequestInfoWrapper;
 import org.ksmart.death.deathapplication.service.DeathApplnService;
 import org.ksmart.death.deathapplication.service.DeathRegistryRequestService;
 import org.ksmart.death.deathapplication.util.DeathConstants;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedDtls;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedRequest;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedResponse;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionResponse;
@@ -196,5 +199,19 @@ public class DeathApplnController {
 
     
 }
+
+    //Rakhi S on 06.03.2023 - Death Abandoned Create Controller 
+    @PostMapping("/deathdetails/_createdeathabandoned")
+    public ResponseEntity<DeathAbandonedResponse> create(@Valid @RequestBody DeathAbandonedRequest request) {
+       
+        List<DeathAbandonedDtls> deathDetails = deathService.createAbandoned(request);
+
+        DeathAbandonedResponse response = DeathAbandonedResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                        .deathAbandonedDtls(deathDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
+    }
 
 }
