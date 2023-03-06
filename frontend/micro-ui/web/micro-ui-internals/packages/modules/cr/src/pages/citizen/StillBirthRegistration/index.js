@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+// import StillBirthChildDetails from "../../../pageComponents/stillBirthComponents/StillBirthChildDetails";
 import StillBirthChildDetails from "../../../pageComponents/stillBirthComponents/StillBirthChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
-const CreateStillBirthRegistration = ({ parentUrl, isEditStillBirth }) => {
+const CreateStillBirthRegistration =({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
@@ -30,58 +31,6 @@ const CreateStillBirthRegistration = ({ parentUrl, isEditStillBirth }) => {
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled: enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
-    // if (typeof nextStep == "object" && nextStep != null) {
-    //   if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
-    //   {
-    //     nextStep = "property-details";
-    //   }
-    //   if (
-    //     nextStep[sessionStorage.getItem("isAccessories")] &&
-    //     (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
-    //   ) {
-    //     nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
-    //   } else if (
-    //     nextStep[sessionStorage.getItem("StructureType")] &&
-    //     (nextStep[sessionStorage.getItem("StructureType")] === "Building-type" ||
-    //       nextStep[sessionStorage.getItem("StructureType")] === "vehicle-type")
-    //   ) {
-    //     nextStep = `${nextStep[sessionStorage.getItem("setPlaceofActivity")]}`;
-    //     nextStep = `${nextStep[sessionStorage.getItem("StructureType")]}`;
-    //   } else if (
-    //     nextStep[sessionStorage.getItem("KnowProperty")] &&
-    //     (nextStep[sessionStorage.getItem("KnowProperty")] === "search-property" ||
-    //       nextStep[sessionStorage.getItem("KnowProperty")] === "create-property")
-    //   ) {
-    //       if(nextStep[sessionStorage.getItem("KnowProperty")] === "create-property" && !enableCreate)
-    //       {
-    //         nextStep = `map`;
-    //       }
-    //       else{
-    //      nextStep = `${nextStep[sessionStorage.getItem("KnowProperty")]}`;
-    //       }
-    //   }
-    // }
-    // if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
-    // { 
-    //   nextStep = "property-details";
-    // }
-    // let redirectWithHistory = history.push;
-    // if (skipStep) {
-    //   redirectWithHistory = history.replace;
-    // }
-    // if (isAddMultiple) {
-    //   nextStep = key;
-    // }
-    // if (nextStep === null) {
-    //   return redirectWithHistory(`${match.path}/check`);
-    // }
-    // if(isPTCreateSkip && nextStep === "acknowledge-create-property")
-    // {
-    //   nextStep = "map";
-    // }
     let redirectWithHistory = history.push;
     if (skipStep) {
       redirectWithHistory = history.replace;

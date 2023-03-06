@@ -35,6 +35,7 @@ import StillBirthPlacePublicPlace from "../src/pageComponents/stillBirthComponen
 import StillBirthPlaceInstitution from "../src/pageComponents/stillBirthComponents/StillBirthPlaceInstitution";
 import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHospital";
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
+import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -210,6 +211,7 @@ StillBirthPlaceHospital,
 StillBirthPlaceInstitution,
 StillBirthPlacePublicPlace,
 StillBirthPlaceVehicle,
+StillBirthInitiatorDetails,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
