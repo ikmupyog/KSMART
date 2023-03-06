@@ -117,6 +117,8 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.InformationDeath?.HospitalNameMl);
   const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
+  const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
+  const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   // Home
   const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId);
   const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode);
@@ -175,6 +177,7 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
   const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
   const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
   const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
+  const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
   let DeathPlaceTypecode = "";
   let institutionNameCode = "";
   let naturetypecmbvalue = null;
@@ -481,7 +484,8 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
           <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} />;
         }
         if (naturetype === "INSTITUTION") {
-          <Institution DeathPlaceType={DeathPlaceType} DeathPlaceInstId={DeathPlaceInstId} InstitutionIdMl={InstitutionIdMl} />;
+          <Institution DeathPlaceType={DeathPlaceType} DeathPlaceInstId={DeathPlaceInstId} InstitutionIdMl={InstitutionIdMl}  InstitutionFilterList={InstitutionFilterList}
+          isInitialRenderInstitutionList={isInitialRenderInstitutionList} />;
         }
         if (naturetype === "HOME") {
           <DeathPlaceHome
@@ -552,7 +556,7 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
         workFlowCode = "DEATHHOME";
       }
     }
-    if (sexError == null || sexError == "" || sexError == undefined) {
+    if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
       setsexError(true);
       setToast(true);
@@ -582,6 +586,16 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
     } else {
       setAgeError(false);
     }
+    // if (DeathPlaceWardId == null || DeathPlaceWardId == "" || DeathPlaceWardId == undefined) {
+    //   validFlag = false;
+    //   setWardNameError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setWardNameError(false);
+    // }
 
     if (DeathPlace.code == "HOSPITAL") {
       if (DeathPlaceType == null) {
@@ -595,7 +609,8 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
         DeathPlaceTypecode = DeathPlaceType.code;
         setHospitalError(false);
       }
-    } else if (DeathPlace.code === "INSTITUTION") {
+    }
+     else if (DeathPlace.code === "INSTITUTION") {
       if (DeathPlaceType == null) {
         setInstitutionError(true);
         validFlag = false;
@@ -618,7 +633,9 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
           setInstitutionNameError(false);
         }
       }
+      
     }
+    
 
     if (validFlag == true) {
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
@@ -885,6 +902,10 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
               setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
               InstitutionIdMl={InstitutionIdMl}
               setInstitutionIdMl={setInstitutionIdMl}
+              InstitutionFilterList={InstitutionFilterList}
+              setInstitutionFilterList={setInstitutionFilterList}
+              isInitialRenderInstitutionList={isInitialRenderInstitutionList}
+              setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
             />
           </div>
         )}
@@ -1299,7 +1320,7 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
                 isMandatory={false}
                 option={cmbOccupationMain}
                 selected={Occupation}
-                select={selectOccupation}
+                select={selectOccupation}WardNameError
                 disabled={isEdit}
                 placeholder={`${t("CR_OCCUPATION_MAIN_LEVEL")}`}
               />
@@ -1310,9 +1331,9 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
 
         {toast && (
           <Toast
-            error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError}
+            error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError}
             label={
-              DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError
+              DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError
                 ? DOBError
                   ? t(`CR_INVALID_DATE`)
                   : sexError
@@ -1324,9 +1345,11 @@ const InformationDeath = ({ config, onSelect, userType, formData ,isedit}) => {
                   : InstitutionError
                   ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
                   : InstitutionNameError
-                  ? t(`CR_ERROR_DECEASED_SEX_CHOOSE`)
+                  ? t(`CR_ERROR_INSTITUTION_NAME_CHOOSE`)
                   : AgeError
-                  ? t()
+                  ? t(`CR_ERROR_AGE_CHOOSE`)
+                  : WardNameError
+                  ? t(`CR_ERROR_WARD_CHOOSE`)
                   : setToast(false)
                 : setToast(false)
             }

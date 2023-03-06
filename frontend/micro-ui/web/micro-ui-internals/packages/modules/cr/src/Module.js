@@ -35,6 +35,7 @@ import StillBirthPlacePublicPlace from "../src/pageComponents/stillBirthComponen
 import StillBirthPlaceInstitution from "../src/pageComponents/stillBirthComponents/StillBirthPlaceInstitution";
 import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHospital";
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
+import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -100,7 +101,7 @@ import CitizenApp from "./pages/citizen";
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
-
+import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -210,6 +211,7 @@ StillBirthPlaceHospital,
 StillBirthPlaceInstitution,
 StillBirthPlacePublicPlace,
 StillBirthPlaceVehicle,
+StillBirthInitiatorDetails,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -261,6 +263,7 @@ StillBirthPlaceVehicle,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
+  BrideDetails,
 };
 
 export const initCRComponents = () => {

@@ -28,7 +28,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         defaultValues: {
             offset: 0,
             limit: 10,
-            sortBy: "commencementDate",
+            sortBy: "applicationNumber",
             sortOrder: "DESC"
         }
     })
@@ -36,7 +36,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     useEffect(() => {
       register("offset", 0)
       register("limit", 10)
-      register("sortBy", "commencementDate")
+      register("sortBy", "applicationNumber")
       register("sortOrder", "DESC")
     },[register])
 
