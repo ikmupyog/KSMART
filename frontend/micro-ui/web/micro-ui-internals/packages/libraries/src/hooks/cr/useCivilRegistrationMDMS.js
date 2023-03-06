@@ -2,6 +2,9 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+  const useWorkFlowBirth = () => {
+    return useQuery("CR_BIRTH_WORKFLOW", () => MdmsService.getWorkFlowBirthMaster(tenantId, moduleCode), config);
+  };
   const useLocalBodyMaster = () => {
     return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
   };
@@ -267,6 +270,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "WorkFlowBirth":
+      return useWorkFlowBirth();
     case "tenants":
       return useLocalBodyMaster();
     case "QualificationSub":

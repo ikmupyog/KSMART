@@ -64,6 +64,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getWorkFlowBirthMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "WorkFlowBirth",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getLocalBodyMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2253,6 +2268,9 @@ export const MdmsService = {
     const cacheSetting = getCacheSetting(mdmsDetails.details.moduleDetails[0].moduleName);
     // PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
+  },
+  getWorkFlowBirthMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getWorkFlowBirthMasterList(tenantId, moduleCode), moduleCode);
   },
   getLocalBodyMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getLocalBodyMasterList(tenantId, moduleCode), moduleCode);
