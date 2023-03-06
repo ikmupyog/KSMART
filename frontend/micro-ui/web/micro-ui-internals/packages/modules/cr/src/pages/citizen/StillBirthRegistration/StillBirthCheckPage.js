@@ -101,8 +101,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
   return (
     <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
         <div className="row">
@@ -127,7 +127,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
 
           <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_NAME")}`} </CardLabel>
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_STILL_BIRTH_CHILD_NAME")}`} </CardLabel>
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>

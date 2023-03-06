@@ -504,7 +504,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
       sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
       sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
-      sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
+      // sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
       sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
       sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
       sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
