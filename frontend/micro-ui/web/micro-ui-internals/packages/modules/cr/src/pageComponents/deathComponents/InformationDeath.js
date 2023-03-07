@@ -1020,6 +1020,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <Hospital
                 formData={formData}
+                iseditDeath={iseditDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 HospitalNameMl={HospitalNameMl}
