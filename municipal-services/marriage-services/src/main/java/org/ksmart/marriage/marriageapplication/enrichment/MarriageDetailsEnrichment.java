@@ -23,7 +23,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             marriage.setId(UUID.randomUUID().toString());
 
             marriage.setAuditDetails(auditDetails);
-
+            marriage.getBrideDetails().setId(UUID.randomUUID().toString());
+            marriage.getGroomDetails().setId(UUID.randomUUID().toString());
+            marriage.getPermanent().setId(UUID.randomUUID().toString());
+            marriage.getPresent().setId(UUID.randomUUID().toString());
+            marriage.getWitness().setId(UUID.randomUUID().toString());
           
         });
 
@@ -35,8 +39,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
 
-//        request.getMarriageDetails()
-//                .forEach(birth -> birth.setAuditDetails(auditDetails));
+        request.getMarriageDetails()
+                .forEach(marriage -> marriage.setAuditDetails(auditDetails));
     }
 
 }

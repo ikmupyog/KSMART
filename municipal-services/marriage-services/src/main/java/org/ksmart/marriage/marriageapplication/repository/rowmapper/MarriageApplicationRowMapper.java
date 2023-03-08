@@ -11,50 +11,58 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 @Component
-public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetail>>, BaseRowMapper{
+public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetail>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper,PermanentAddressRowMapper,PresentAddressRowMapper{
 
     @Override
     public List<MarriageApplicationDetail> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
         List<MarriageApplicationDetail> result = new ArrayList<>();
         while (rs.next()) {
-//            result.add(MarriageApplicationDetail.builder()
-//                    .id(rs.getString("id"))
-//                    .dateOfReport(Long.valueOf(rs.getLong("dateofreport")))
-//                    .dateOfMarriage(Long.valueOf(rs.getLong("dateofmarriage")))
-//                    .firstNameEn(rs.getString("firstname_bride_en"))
-//                    .firstNameMl(rs.getString("firstname_bride_ml"))
-//                    .middleNameEn(rs.getString("middlename_bride_en"))
-//                    .middleNameMl(rs.getString("middlename_bride_ml"))
-//                    .lastNameEn(rs.getString("lastname_bride_en"))
-//                    .lastNameMl(rs.getString("lastname_bride_ml"))
-//                    .firstNameGroomEn(rs.getString("firstname_groom_en"))
-//                     .firstNameGroomMl(rs.getString("firstname_groom_ml"))
-//                     .middleNameGroomEn(rs.getString("middlename_groom_en"))
-//                      .middleNameGroomMl(rs.getString("middlename_groom_ml"))
-//                       .lastNameGroomEn(rs.getString("lastname_groom_en"))
-//                        .lastNameGroomMl(rs.getString("lastname_groom_ml"))
-//                    .tenantId(rs.getString("tenantid"))
-//                    .remarksEn(rs.getString("remarks_en"))
-//                            .remarksMl(rs.getString("remarks_ml"))
-//                    .remarksMl(rs.getString("aadharno"))
-//                    .esignUserCode(rs.getString("esign_user_code"))
-//                    .esignUserDesigCode(rs.getString("esign_user_desig_code"))
-//                    //.noOfAliveBirth(Integer.valueOf(rs.getString("no_of_alive_birth")))
-//                    //.dateOfArrival(Long.valueOf(rs.getString("ot_dateofarrival")))
-//                    .applicationType(rs.getString("applicationtype"))
-//                    .businessService(rs.getString("businessservice"))
-//                    .workFlowCode(rs.getString("workflowcode"))
-//                    .fmFileNo(rs.getString("fm_fileno"))
-//                    .fileDate(Long.valueOf(rs.getString("file_date")))
-//                    .applicationNo(rs.getString("applicationno"))
-//                    .registrationNo(rs.getString("registrationno"))
-//                    .registrationDate(Long.valueOf(rs.getString("registration_date")))
-//                    .action(rs.getString("action"))
-//                    .status(rs.getString("status"))
-//                    .auditDetails(getAuditDetails(rs))
-//                    .build());
+            result.add(MarriageApplicationDetail.builder()
+                            .id(rs.getString("id"))
+                            .dateofreporting(rs.getLong("dateofreporting"))
+                            .dateofmarriage(rs.getLong("dateofmarriage"))
+                            .districtid(rs.getString("districtid"))
+                            .lbtype(rs.getString("lbtype"))
+                            .tenantid(rs.getString("tenantid"))
+                            .placetype(rs.getString("placetype"))
+                            .placeothers(rs.getString("placeothers"))
+                            .placeid(rs.getString("placeid"))
+                            .placenameEn(rs.getString("placename_en"))
+                            .placenameMl(rs.getString("placename_mal"))
+                            .street_name_en(rs.getString("street_name_en"))
+                            .street_name_ml(rs.getString("street_name_ml"))
+                            .ward_code(rs.getString("ward_code"))
+                            .talukid(rs.getString("talukid"))
+                            .village_name(rs.getString("village_name"))
+                            .marriage_type(rs.getString("marriage_type"))
+                            .oth_marriage_type(rs.getString("oth_marriage_type"))
+                            .landmark(rs.getString("landmark"))
+                            .locality_en(rs.getString("locality_en"))
+                            .locality_ml(rs.getString("locality_ml"))
+                            .othersspecify(rs.getString("othersspecify"))
+                            .applicationtype(rs.getString("applicationtype"))
+                            .businessservice(rs.getString("businessservice"))
+                            .workflowcode(rs.getString("workflowcode"))
+                            .fileno(rs.getString("fileno"))
+                            .file_date(rs.getLong("file_date"))
+                            .file_status(rs.getString("file_status"))
+                            .applicationnumber(rs.getString("applicationnumber"))
+                            //registrationno
+                            //registrstiondate
+                            .action(rs.getString("action"))
+                            .status(rs.getString("status"))
+                            .brideDetails(getBrideDetails(rs))
+                            .groomDetails(getgroomDetails(rs))
+                            .permanent(getPermanentAddress(rs))
+                            .present(getPresentAddress(rs))
+                           // .witnessDetails(getWitnessDetails(rs))
+                            .auditDetails(getAuditDetails(rs))
+
+                    .build());
+
 
         }
+
 
         return result;
     }

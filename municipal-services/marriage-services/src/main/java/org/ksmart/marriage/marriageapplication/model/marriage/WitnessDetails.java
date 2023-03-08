@@ -10,14 +10,17 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Builder
 public class WitnessDetails {
+
+    @Size(max = 64)
+    @JsonProperty("id")
+    private String id;
     @Size(max = 15)
-    @JsonProperty("WitnessDetails")
+    @JsonProperty("witnessAdharNo")
     private String adharno;
 
     @Size(max = 200)
     @JsonProperty("witnessNameEn")
     private String name_en;
-
 
 
     @Size(max = 200)
@@ -44,11 +47,19 @@ public class WitnessDetails {
     @JsonProperty("witnessISmessageReceived")
     private Boolean is_message_received;
 
-
-
-
     @JsonProperty("witnessISEsigned")
     private     Boolean is_esigned;
+    @Size(max = 64)
+    @JsonProperty("marriageid")
+    private String marriageid;
+
 
 
 }
+
+
+
+
+
+
+

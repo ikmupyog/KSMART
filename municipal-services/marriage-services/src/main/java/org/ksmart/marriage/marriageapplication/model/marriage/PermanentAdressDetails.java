@@ -10,6 +10,9 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Builder
 public class PermanentAdressDetails {
+    @Size(max = 64)
+    @JsonProperty("id")
+    private String id;
     @Size(max = 200)
     @JsonProperty("permanentHouseNo")
     private String houseno;
@@ -17,8 +20,6 @@ public class PermanentAdressDetails {
     @Size(max = 2500)
     @JsonProperty("permanentHouseNameEn")
     private String housename_no_en;
-
-
 
     @Size(max = 2500)
     @JsonProperty("permanentHouseNameMal")
@@ -48,7 +49,7 @@ public class PermanentAdressDetails {
 
 
     @JsonProperty("permanentDoorNO")
-    private     Integer doorno;
+    private Integer doorno;
 
     @Size(max = 1000)
     @JsonProperty("permanentLocalityEn")
@@ -89,6 +90,9 @@ public class PermanentAdressDetails {
     @Size(max = 64)
     @JsonProperty("permanentCountryId")
     private String countryid;
+    @Size(max = 64)
+    @JsonProperty("marriageid")
+    private String marriageid;
 
 
 }

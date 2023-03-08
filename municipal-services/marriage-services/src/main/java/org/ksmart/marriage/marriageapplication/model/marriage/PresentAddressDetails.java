@@ -10,6 +10,9 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Builder
 public class PresentAddressDetails {
+    @Size(max = 64)
+    @JsonProperty("id")
+    private String id;
     @Size(max = 200)
     @JsonProperty("presentHouseNo")
     private String houseno;
@@ -90,5 +93,8 @@ public class PresentAddressDetails {
     @JsonProperty("presentCountryId")
     private String countryid;
 
+    @Size(max = 64)
+    @JsonProperty("marriageid")
+    private String marriageid;
 
 }

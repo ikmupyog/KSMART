@@ -47,8 +47,11 @@ public class MarriageApplicationDetail {
     private String placetype;
 
     @Size(max = 1000)
-    @JsonProperty("marraigePlacename")
-    private String placename;
+    @JsonProperty("marraigePlacenameEn")
+    private String placenameEn;
+    @Size(max = 1000)
+    @JsonProperty("marraigePlacenameMal")
+    private String placenameMl;
 
     @Size(max = 64)
     @JsonProperty("marraigeWardCode")
@@ -61,8 +64,6 @@ public class MarriageApplicationDetail {
     @Size(max = 1000)
     @JsonProperty("marriageStreetMal")
     private String street_name_ml;
-
-
 
     @Size(max = 64)
     @JsonProperty("marraigeTalukID")
@@ -88,7 +89,6 @@ public class MarriageApplicationDetail {
     @JsonProperty("marraigeType")
     private String marriage_type;
 
-
     @Size(max = 64)
     @JsonProperty("marriagePlaceothers")
     private String placeothers;
@@ -108,8 +108,6 @@ public class MarriageApplicationDetail {
     @Size(max = 200)
     @JsonProperty("witnessNameEn")
     private String name_en;
-
-
 
     @Size(max = 200)
     @JsonProperty("witnessNameMal")
@@ -131,33 +129,27 @@ public class MarriageApplicationDetail {
     @JsonProperty("witnessMobile")
     private String mobile;
 
-
     @JsonProperty("witnessISmessageReceived")
     private Boolean is_message_received;
-
-
-
 
     @JsonProperty("witnessISEsigned")
     private     Boolean is_esigned;
 
 
-
-
     @Size(max = 64)
-    @JsonProperty("applicationtype")
+    @JsonProperty("marraigeApplicationType")
     private String applicationtype;
 
     @Size(max = 64)
-    @JsonProperty("businessservice")
+    @JsonProperty("marraigeBusinessService")
     private String businessservice;
 
     @Size(max = 64)
-    @JsonProperty("workflowcode")
+    @JsonProperty("marraigeWorkflowCode")
     private String workflowcode;
 
     @Size(max = 64)
-    @JsonProperty("fileno")
+    @JsonProperty("marraigeFileNo")
     private String fileno;
 
 
@@ -175,6 +167,11 @@ public class MarriageApplicationDetail {
     @Size(max = 64)
     @JsonProperty("marraigeStatus")
     private String status;
+    @Size(max = 1000)
+    @JsonProperty("placeid")
+    private String placeid;
+
+
 
     @Size(max = 64)
     @JsonProperty("applicationnumber")
@@ -182,13 +179,21 @@ public class MarriageApplicationDetail {
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
-    @JsonProperty("brideDetails")
+    @JsonProperty("BrideDetails")
     private BrideDetails brideDetails;
 
-    @JsonProperty("groomDetails")
+    @JsonProperty("GroomDetails")
     private GroomDetails groomDetails;
+    @JsonProperty("PermanentAddressDetails")
+    private PermanentAdressDetails permanent;
+    @JsonProperty("PresentAddressDetails")
+    private PresentAddressDetails present ;
 
+    @JsonProperty("WitnessDetail")
+    private WitnessDetails witness;
 
+//    @JsonProperty("WitnessDetails")
+//    private WitnessDetails witness;
 
 
 }
