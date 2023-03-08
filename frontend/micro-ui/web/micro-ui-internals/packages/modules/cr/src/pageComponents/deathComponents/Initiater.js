@@ -4,8 +4,11 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const Initiater = ({ config, onSelect, userType, formData }) => {
+const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
   const stateId = Digit.ULBService.getStateId();
+  console.log(iseditDeath);
+  console.log(formData);
+
   const { t } = useTranslation();
   let validation = {};
 

@@ -5,14 +5,14 @@ import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import { useTranslation } from "react-i18next";
 
-const CrFlow = ({ path }) => {
+const ScrFlow = ({ path }) => {
   const { t } = useTranslation();
   const cardMenuData = [
     {
-      title: "CR_BIRTH_REGISTRATION",
-      subTitle: "CR_BIRTH_NEW_REGISTRATION",
+      title: "CR_STILLBIRTH_REGISTRATION",
+      subTitle: "CR_STILLBIRTH_NEW_REGISTRATION",
       img: <BankIcon />,
-      link: `${path}/child-details`,
+      link: `${path}/stillbirth-child-details`,
     },
     // {
     //   title: "CR_BIRTH_ADOPTION",
@@ -43,8 +43,7 @@ const CrFlow = ({ path }) => {
   ];
   const ClassList = 
     {
-     'CR_BIRTH_REGISTRATION':  'crfilename',
-    //  'CR_BIRTH_NEW_REG':  'crfilename',
+     'CR_BIRTH_NEW_REG':  'crfilename',
      'CR_BIRTH_ADOPTION':  'crfileadoption', 
      'CR_STILL_BIRTH':  'crstillbirthfile',
      'CR_BIRTH_BORN_OUTSIDE':  'crfile',
@@ -90,4 +89,4 @@ const CrFlow = ({ path }) => {
   );
 };
 
-export default CrFlow;
+export default ScrFlow;

@@ -21,8 +21,8 @@ const DeathCrFlowApp = (props) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
-  const [isedit,setIsedit]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
-  console.log(isedit);
+  const [iseditDeath,setIseditDeath]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
+  console.log(iseditDeath);
   // let params1 = sessionStorage.getItem('CR_DEATH_CORRECTIONS')
   //death-emp-edit
   console.log('para',params);
@@ -265,7 +265,7 @@ const DeathCrFlowApp = (props) => {
                 formData={params}
                 onAdd={handleMultiple}
                 userType="employee"
-                isedit={isedit}
+                iseditDeath={iseditDeath}
               />
             </Route>
           );

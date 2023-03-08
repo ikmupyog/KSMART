@@ -50,7 +50,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
     StillBirthChildDetails,
     StillBirthParentsDetails,
     AddressBirthDetails,
-    StillBirthInitiatorinfoDetails,
+    StillBirthInitiatorDetails,
   //  InformarHosInstDetails,
     // BirthPlace,
     // HospitalDetails,
@@ -101,8 +101,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
   return (
     <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
         <div className="row">
@@ -123,31 +123,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             backgroundColor: "#f3f0ef",
           }}
         >
-          {/* class="site-wrap" */}
-
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_NAME")}`} </CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {/* {t(StillBirthStillBirthChildDetails.childFirstNameEn ? StillBirthChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(StillBirthChildDetails.childMiddleNameEn  )} {t(StillBirthChildDetails.childLastNameEn  )} */}
-                {t(StillBirthChildDetails.childFirstNameEn ? StillBirthChildDetails.childFirstNameEn : " CR_NOT_RECORDED") +
-                  " " +
-                  StillBirthChildDetails.childMiddleNameEn +
-                  " " +
-                  StillBirthChildDetails.childLastNameEn +
-                  " / " +
-                  t(StillBirthChildDetails.childFirstNameMl) +
-                  " " +
-                  StillBirthChildDetails.childMiddleNameMl +
-                  " " +
-                  StillBirthChildDetails.childLastNameMl}
-              </CardText>
-              {/* {t(StillBirthChildDetails.institutionId.institutionName) + " / " + t(StillBirthChildDetails.institutionId.institutionNamelocal)}  */}
-            </div>
-          </div>
+      
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
@@ -183,7 +159,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
               )}
 
-              {StillBirthChildDetails.birthPlace.code === "INSTITUTION" && (
+              {/* {StillBirthChildDetails.birthPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -194,9 +170,9 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )}
+              )} */}
 
-              {StillBirthChildDetails.birthPlace.code === "HOME" && (
+              {/* {StillBirthChildDetails.birthPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -230,8 +206,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )}
-              {StillBirthChildDetails.birthPlace.code === "VEHICLE" && (
+              )} */}
+              {/* {StillBirthChildDetails.birthPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -274,8 +250,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )}
-              {StillBirthChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
+              )} */}
+              {/* {StillBirthChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -307,7 +283,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
 
