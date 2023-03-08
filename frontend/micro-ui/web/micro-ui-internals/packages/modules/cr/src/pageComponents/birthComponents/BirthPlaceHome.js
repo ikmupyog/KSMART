@@ -188,7 +188,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
 
   const goNext = () => {
 
-    
+
   };
 
   if (isPostOfficeLoading || isWardLoaded || islocalbodiesLoading) {

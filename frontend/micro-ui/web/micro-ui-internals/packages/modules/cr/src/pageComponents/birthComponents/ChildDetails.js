@@ -13,6 +13,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   // console.log(JSON.stringify(formData));  
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [workFlowCode, setWorkFlowCode] = useState();
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -72,7 +73,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
-  let workFlowCode = "";
   let Difference_In_DaysRounded = "";
   // let workFlowCode = "BIRTHHOSP21";
   WorkFlowDetails &&
@@ -507,8 +507,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     setValue(value.code);
     let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= Difference_In_DaysRounded && workFlowData.enddateperiod >= Difference_In_DaysRounded));
     // console.log(currentWorgFlow[0].WorkflowCode);
-    workFlowCode=currentWorgFlow[0].WorkflowCode;
-    // console.log("workFlowCode" + workFlowCode);
+    // workFlowCode=currentWorgFlow[0].WorkflowCode;
+    setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    console.log("workFlowCode" + currentWorgFlow[0].WorkflowCode);
   }
   function setSelectBirthWeight(e) {
     if (e.target.value.length === 5) {
