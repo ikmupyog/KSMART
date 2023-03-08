@@ -12,6 +12,8 @@ const getAction = (flow) => {
       'CR_BIRTH_CHILD_DETAILS',
       'CR_PARENTS_DETAILS',
       'BIRTH_TIME_LINE_ADDRESS',
+      'BIRTH_INITIATOR_DETAILS',
+      
       // 'BIRTH_TIME_LINE_ADDRESS',      
       // 'BIRTH_TIME_LINE_STATSTICAL',
       'BIRTH_TIME_LINE_SUMMARY',
