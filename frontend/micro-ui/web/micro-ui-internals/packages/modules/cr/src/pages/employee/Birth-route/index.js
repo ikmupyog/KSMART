@@ -6,13 +6,15 @@ import CrFlow from "./CrFlow";
 import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
-const CrFlowApp = ({ parentUrl }) => {
+const CrFlowApp = ({ parentUrl}) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
   const { pathname } = useLocation();
-  const history = useHistory();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}); //? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+  const history = useHistory();  
+  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);
+  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
@@ -134,6 +136,7 @@ const CrFlowApp = ({ parentUrl }) => {
               formData={params}
               onAdd={handleMultiple}
               userType="employee"
+              isEditBirth={isEditBirth}
             />
            </Route>  
           
@@ -148,7 +151,7 @@ const CrFlowApp = ({ parentUrl }) => {
       <Route path={`${path}`} exact>
               <CrFlow  path={path}/>
              </Route>
-             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <ChildDetails parentUrl={path} />} />
+             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <ChildDetails parentUrl={path}  />} />
          
       </Switch>
     </React.Fragment>

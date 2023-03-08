@@ -231,19 +231,55 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
 
   const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
   let BusinessCategoryMenu = [];
-  //let TradeTypeMenu = [];
+  // let TradeTypeMenu = [];
+
+  // Data &&
+  //   Data.TradeLicense &&
+  //   Data.TradeLicense.TradeType.map((ob) => {
+  //     if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
+  //       BusinessCategoryMenu.push({ i18nKey: `TRADELICENSE_TRADETYPE_${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
+  //     }
+  //   });
+  // // const mutationboundary = [];
+  // // if((Localbody) && (isInitialRender)){
+  // //   mutationboundary = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, Localbody.code.split(".")[1]  + "/egov-location", "boundary-data");
+  // // }
+
+  // function getBusinessTypeMenu(BusinessCategory) {
+  //   let BusinessTypeMenu = [];
+  //   Data &&
+  //     Data.TradeLicense &&
+  //     Data.TradeLicense.TradeType.map((ob) => {
+  //       if (
+  //         ob.code.split(".")[0] === BusinessCategory.code &&
+  //         !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[1]}`)
+  //       ) {
+  //         BusinessTypeMenu.push({ i18nKey: `TRADELICENSE_TRADETYPE_${ob.code.split(".")[1]}`, code: `${ob.code.split(".")[1]}` });
+  //       }
+  //     });
+  //   return BusinessTypeMenu;
+  // }
+
+  // function getBusinessSubTypeMenu(BusinessType) {
+  //   let BusinessSubTypeMenu = [];
+  //   BusinessType &&
+  //     Data &&
+  //     Data.TradeLicense &&
+  //     Data.TradeLicense.TradeType.map((ob) => {
+  //       if (ob.code.split(".")[1] === BusinessType.code && !BusinessSubTypeMenu.some((BusinessSubTypeMenu) => BusinessSubTypeMenu.code === `${ob.code}`)) {
+  //         BusinessSubTypeMenu.push({ i18nKey: `TL_${ob.code}`, code: `${ob.code}` });
+  //       }
+  //     });
+  //   return BusinessSubTypeMenu;
+  // }
 
   Data &&
     Data.TradeLicense &&
     Data.TradeLicense.TradeType.map((ob) => {
       if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
-        BusinessCategoryMenu.push({ i18nKey: `TRADELICENSE_TRADETYPE_${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
+        BusinessCategoryMenu.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
       }
     });
-  // const mutationboundary = [];
-  // if((Localbody) && (isInitialRender)){
-  //   mutationboundary = Digit.Hooks.tl.useTradeLicenseMDMS(tenantId, Localbody.code.split(".")[1]  + "/egov-location", "boundary-data");
-  // }
 
   function getBusinessTypeMenu(BusinessCategory) {
     let BusinessTypeMenu = [];
@@ -252,9 +288,9 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       Data.TradeLicense.TradeType.map((ob) => {
         if (
           ob.code.split(".")[0] === BusinessCategory.code &&
-          !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[1]}`)
+          !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[0]+"."+ob.code.split(".")[1]}`)
         ) {
-          BusinessTypeMenu.push({ i18nKey: `TRADELICENSE_TRADETYPE_${ob.code.split(".")[1]}`, code: `${ob.code.split(".")[1]}` });
+          BusinessTypeMenu.push({ i18nKey: `${ob.code.split(".")[0]+"."+ob.code.split(".")[1]}`, code: `${ob.code.split(".")[0]+"."+ob.code.split(".")[1]}` });
         }
       });
     return BusinessTypeMenu;
@@ -266,8 +302,8 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       Data &&
       Data.TradeLicense &&
       Data.TradeLicense.TradeType.map((ob) => {
-        if (ob.code.split(".")[1] === BusinessType.code && !BusinessSubTypeMenu.some((BusinessSubTypeMenu) => BusinessSubTypeMenu.code === `${ob.code}`)) {
-          BusinessSubTypeMenu.push({ i18nKey: `TL_${ob.code}`, code: `${ob.code}` });
+        if (ob.code.split(".")[0]+"."+ob.code.split(".")[1] === BusinessType.code && !BusinessSubTypeMenu.some((BusinessSubTypeMenu) => BusinessSubTypeMenu.code === `${ob.code}`)) {
+          BusinessSubTypeMenu.push({ i18nKey: `${ob.code}`, code: `${ob.code}` });
         }
       });
     return BusinessSubTypeMenu;

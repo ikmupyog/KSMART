@@ -64,6 +64,36 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getWorkFlowBirthMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "WorkFlowBirth",
+          },
+        ],
+      },
+    ],
+  },
+});
+const getWorkFlowDeathMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "WorkFlowDeath",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getLocalBodyMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1373,6 +1403,22 @@ const getCRIdProofList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRIdProofDetailsList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "IdProofDetails",
+          },
+        ],
+      },
+    ],
+  },
+});
+
 const getCRDeathPlaceTypeList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2238,6 +2284,12 @@ export const MdmsService = {
     // PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
   },
+  getWorkFlowBirthMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getWorkFlowBirthMasterList(tenantId, moduleCode), moduleCode);
+  },
+  getWorkFlowDeathMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getWorkFlowDeathMasterList(tenantId, moduleCode), moduleCode);
+  },
   getLocalBodyMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getLocalBodyMasterList(tenantId, moduleCode), moduleCode);
   },
@@ -2387,6 +2439,9 @@ export const MdmsService = {
   getCRIdProof: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRIdProofList(tenantId, moduleCode), moduleCode);
   },
+  getCRIdProofDetails: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRIdProofDetailsList(tenantId, moduleCode), moduleCode);
+  }, 
   getCRDeathPlaceType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDeathPlaceTypeList(tenantId, moduleCode), moduleCode);
   },

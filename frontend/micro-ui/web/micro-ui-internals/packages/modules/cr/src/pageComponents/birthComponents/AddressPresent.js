@@ -75,7 +75,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         setaddressCountry(value);
         setCountryValue(value.countrycode);
         if (isPrsentAddress) {
-            setpermtaddressCountry(presentaddressCountry);
+            setpermtaddressCountry(value);
         } else {
             setpermtaddressCountry('');
         }
@@ -84,7 +84,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         setaddressStateName(value);
         setValue(value.statecode);
         if (isPrsentAddress) {
-            setpermtaddressStateName(presentaddressStateName);
+            setpermtaddressStateName(value);
         } else {
             setpermtaddressStateName('');
         }
@@ -101,14 +101,14 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;
-    }
+    } else
     return (
         <React.Fragment>
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}>
                 <div className="row">
                     <div className="col-md-12">
                         <h1 className="headingh1">
-                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PRESENT_ADDRESS")}`}</span>{" "}
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
                         </h1>
                     </div>
                 </div>

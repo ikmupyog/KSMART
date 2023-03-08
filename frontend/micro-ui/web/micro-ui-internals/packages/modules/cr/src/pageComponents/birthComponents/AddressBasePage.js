@@ -34,6 +34,44 @@ const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = fa
     const [lbs, setLbs] = useState(0);
     const [toast, setToast] = useState(false);
 
+    let cmbLB = [];
+    let cmbCountry = [];
+    let cmbState = [];
+    let cmbDistrict = [];
+    let cmbTaluk = [];
+    let cmbVillage = [];
+
+    Country &&
+        Country["common-masters"] &&
+        Country["common-masters"].Country.map((ob) => {
+            cmbCountry.push(ob);
+        });
+    State &&
+        State["common-masters"] &&
+        State["common-masters"].State.map((ob) => {
+            cmbState.push(ob);
+        });
+    localbodies &&
+        localbodies["tenant"] &&
+        localbodies["tenant"].tenants.map((ob) => {
+            cmbLB.push(ob);
+        });
+    District &&
+        District["common-masters"] &&
+        District["common-masters"].District.map((ob) => {
+            cmbDistrict.push(ob);
+        });
+    Taluk &&
+        Taluk["common-masters"] &&
+        Taluk["common-masters"].Taluk.map((ob) => {
+            cmbTaluk.push(ob);
+        });
+    Village &&
+        Village["common-masters"] &&
+        Village["common-masters"].Village.map((ob) => {
+            cmbVillage.push(ob);
+        });
+
     //################################### Present Country State ############################################################################################
 
     const [presentaddressCountry, setaddressCountry] = useState(formData?.AddressBirthDetails?.presentaddressCountry ? formData?.AddressBirthDetails?.presentaddressCountry : null);
@@ -43,20 +81,20 @@ const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = fa
 
     //################################# Present Inside Kerala #########################################################################################################
 
-    const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo);
-    const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentInsideKeralaDistrict);
-    const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName);
-    const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBName);
-    const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentInsideKeralaTaluk);
-    const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AddressBirthDetails?.presentInsideKeralaVillage);
-    const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPostOffice);
-    const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPincode);
-    const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn);
-    const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl);
-    const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn);
-    const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl);
-    const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn);
-    const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl);
+    const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo ? formData.AddressBirthDetails?.presentWardNo : null);
+    const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentInsideKeralaDistrict ? formData?.AddressBirthDetails?.presentInsideKeralaDistrict : null);
+    const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName ? formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName : null);
+    const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBName ? formData?.AddressBirthDetails?.presentInsideKeralaLBName : null);
+    const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentInsideKeralaTaluk ? formData?.AddressBirthDetails?.presentInsideKeralaTaluk : null);
+    const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AddressBirthDetails?.presentInsideKeralaVillage ? formData?.AddressBirthDetails?.presentInsideKeralaVillage : null);
+    const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPostOffice ? formData?.AddressBirthDetails?.presentInsideKeralaPostOffice : null);
+    const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPincode ? formData?.AddressBirthDetails?.presentInsideKeralaPincode : "");
+    const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn : "");
+    const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : "");
+    const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : "");
+    const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : "");
+    const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : "");
+    const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
@@ -171,45 +209,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = fa
     const [PresentOutSideIndiaLineOneMlError, setPresentOutSideIndiaLineOneMlError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineOneMlError ? false : false);
     const [PresentOutSideIndiaLineTwoEnError, setPresentOutSideIndiaLineTwoEnError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineTwoEnError ? false : false);
     const [PresentOutSideIndiaLineTwoMlError, setPresentOutSideIndiaLineTwoMlError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineTwoMlError ? false : false);
-
-
-    let cmbLB = [];
-    let cmbCountry = [];
-    let cmbState = [];
-    let cmbDistrict = [];
-    let cmbTaluk = [];
-    let cmbVillage = [];
-
-    Country &&
-        Country["common-masters"] &&
-        Country["common-masters"].Country.map((ob) => {
-            cmbCountry.push(ob);
-        });
-    State &&
-        State["common-masters"] &&
-        State["common-masters"].State.map((ob) => {
-            cmbState.push(ob);
-        });
-    localbodies &&
-        localbodies["tenant"] &&
-        localbodies["tenant"].tenants.map((ob) => {
-            cmbLB.push(ob);
-        });
-    District &&
-        District["common-masters"] &&
-        District["common-masters"].District.map((ob) => {
-            cmbDistrict.push(ob);
-        });
-    Taluk &&
-        Taluk["common-masters"] &&
-        Taluk["common-masters"].Taluk.map((ob) => {
-            cmbTaluk.push(ob);
-        });
-    Village &&
-        Village["common-masters"] &&
-        Village["common-masters"].Village.map((ob) => {
-            cmbVillage.push(ob);
-        });
 
     const onSkip = () => onSelect();
 

@@ -2,6 +2,12 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+  const useWorkFlowBirth = () => {
+    return useQuery("CR_BIRTH_WORKFLOW", () => MdmsService.getWorkFlowBirthMaster(tenantId, moduleCode), config);
+  };
+  const useWorkFlowDeath = () => {
+    return useQuery("CR_DEATH_WORKFLOW", () => MdmsService.getWorkFlowDeathMaster(tenantId, moduleCode), config);
+  };
   const useLocalBodyMaster = () => {
     return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
   };
@@ -131,6 +137,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   // };
   const useIdProof = () => {
     return useQuery("CR_ID_DETAILS_OF_DECEASED", () => MdmsService.getCRIdProof(tenantId, moduleCode, type), config);
+  };
+  const useIdProofDetails = () => {
+    return useQuery("CR_ID_PROOF_DETAILS_OF_DECEASED", () => MdmsService.getCRIdProofDetails(tenantId, moduleCode, type), config);
   };
   const useMaleDependent = () => {
     return useQuery("CR_MALE_DEPENDENT", () => MdmsService.getCRMaleDependent(tenantId, moduleCode, type), config);
@@ -264,6 +273,10 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "WorkFlowBirth":
+      return useWorkFlowBirth();
+    case "WorkFlowDeath":
+      return useWorkFlowDeath();
     case "tenants":
       return useLocalBodyMaster();
     case "QualificationSub":
@@ -288,6 +301,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useDocumentTypeB();
     case "IdProof":
       return useIdProof();
+    case "IdProofDetails":
+      return useIdProofDetails();
     case "DeathPlaceType":
       return useCRDeathPlaceType();
     case "VehicleType":

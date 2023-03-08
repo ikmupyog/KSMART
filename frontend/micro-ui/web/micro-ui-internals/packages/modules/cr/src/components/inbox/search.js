@@ -1,207 +1,105 @@
-import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { TextInput, Label, SubmitBar, LinkLabel, ActionBar, CloseSvg, DatePicker, MobileNumber } from "@egovernments/digit-ui-react-components";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-// import MobileNumber from "@egovernments/digit-ui-react-components/src/atoms/MobileNumber";
-// import _ from "lodash";
+import { TextInput, Label, SubmitBar, LinkLabel, ActionBar, CloseSvg } from "@egovernments/digit-ui-react-components";
 
-const fieldComponents = {
-  date: DatePicker,
-  mobileNumber: MobileNumber,
-};
-
-const SearchApplication = ({ onSearch, type, onClose, searchFields, searchParams, isInboxPage, defaultSearchParams, clearSearch: _clearSearch, setSearchFieldsBackToOriginalState, setSetSearchFieldsBackToOriginalState }) => {
+const BirthSearchInbox = ({ onSearch, type, onClose, searchParams }) => {
+  const [appNo, setAppNo] = useState(searchParams?.search?.serviceRequestId || "");
+  const [mobileNo, setMobileNo] = useState(searchParams?.search?.mobileNumber || "");
+  const { register, errors, handleSubmit, reset } = useForm();
   const { t } = useTranslation();
-  const { register, handleSubmit, reset, watch, control, setError, clearErrors, formState, setValue } = useForm({
-    defaultValues: searchParams,
-  });
-
-  const form = watch();
-
-  const mobileView = innerWidth <= 640;
-  const [justToResetSearchFieldsInCaseOfFilterTrigger, setSearchFieldsInCaseOfFilterTrigger] = useState([{applicationNumber: "", mobileNumber: ""}])
-
-  useEffect(()=>{
-    if(setSearchFieldsBackToOriginalState){
-      setNotRemovedStateToSearchFields()
-      setTimeout(setSetSearchFieldsBackToOriginalState(false), 1000)
-    }
-  },[setSearchFieldsBackToOriginalState])
-
-  const setNotRemovedStateToSearchFields = () => {
-    if(Array.isArray(justToResetSearchFieldsInCaseOfFilterTrigger))	
-    {	
-      let [{applicationNumber, mobileNumber}] = justToResetSearchFieldsInCaseOfFilterTrigger	
-      setValue("applicationNumber", applicationNumber)	
-      setValue("mobileNumber", mobileNumber)	
-    }	
-    else	
-    {	
-      let {applicationNumber, mobileNumber} = justToResetSearchFieldsInCaseOfFilterTrigger	
-      setValue("applicationNumber", applicationNumber)	
-      setValue("mobileNumber", mobileNumber)	
-    }
-  }
-
-  useEffect(() => {
-    searchFields.forEach(({ pattern, name, maxLength, minLength, errorMessages, ...el }) => {
-      const value = form[name];
-      const error = formState.errors[name];
-      if (pattern) {
-        if (!new RegExp(pattern).test(value) && !error)
-          setError(name, { type: "pattern", message: t(errorMessages?.pattern) || t(`PATTERN_${name.toUpperCase()}_FAILED`) });
-        else if (new RegExp(pattern).test(value) && error?.type === "pattern") clearErrors([name]);
-      }
-      if (minLength) {
-        if (value?.length < minLength && !error)
-          setError(name, { type: "minLength", message: t(errorMessages?.minLength || `MINLENGTH_${name.toUpperCase()}_FAILED`) });
-        else if (value?.length >= minLength && error?.type === "minLength") clearErrors([name]);
-      }
-      if (maxLength) {
-        if (value?.length > maxLength && !error)
-          setError(name, { type: "maxLength", message: t(errorMessages?.maxLength || `MAXLENGTH_${name.toUpperCase()}_FAILED`) });
-        else if (value?.length <= maxLength && error?.type === "maxLength") clearErrors([name]);
-      }
-    });
-  }, [form, formState, setError, clearErrors]);
 
   const onSubmitInput = (data) => {
-    if(data.mobileNumber.length==0||data.mobileNumber.length==10){
-    if (!data.mobileNumber) {
-      delete data.mobileNumber;
+    if (!Object.keys(errors).filter((i) => errors[i]).length) {
+      if (data.serviceRequestId !== "") {
+        onSearch({ applicationNumber: data.applicationNumber });
+      } else if (data.mobileNumber !== "") {
+        onSearch({ mobileNumber: data.mobileNumber });
+      } else {
+        onSearch({});
+      }
+
+      if (type === "mobile") {
+        onClose();
+      }
     }
-
-    const mobileNumber = data?.mobileNumber
-    const applicationNumber = data?.applicationNumber
-    setSearchFieldsInCaseOfFilterTrigger({mobileNumber, applicationNumber})
-    data.delete = [];
-
-    searchFields.forEach((field) => {
-      if (!data[field.name]) data.delete.push(field.name);
-    });
-
-    onSearch(data);
-    if (type === "mobile") {
-      onClose();
-    }
-  }
   };
 
   function clearSearch() {
-    const resetValues = searchFields.reduce((acc, field) => ({ ...acc, [field?.name]: "" }), {});
-    reset(resetValues);
-    if (isInboxPage) {
-      const _newParams = { ...searchParams };
-      _newParams.delete = [];
-      searchFields.forEach((e) => {
-        _newParams.delete.push(e?.name);
-      });
-      setSearchFieldsInCaseOfFilterTrigger({applicationNumber: "", mobileNumber: ""});
-      onSearch({ ..._newParams });
-    } else {
-      _clearSearch();
-    }
+    reset();
+    onSearch({});
+    setAppNo("");
+    setMobileNo("");
   }
 
-  const clearAll = (mobileView) => {
-    const mobileViewStyles = mobileView ? { margin: 0 } : {};
+  const clearAll = () => {
     return (
-      <LinkLabel style={{ display: "inline", ...mobileViewStyles }} onClick={clearSearch}>
+      <LinkLabel className="clear-search-label" onClick={clearSearch}>
         {t("ES_COMMON_CLEAR_SEARCH")}
       </LinkLabel>
     );
   };
 
+  function setComplaint(e) {
+    setAppNo(e.target.value);
+  }
+
+  function setMobile(e) {
+    setMobileNo(e.target.value);
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmitInput)}>
+    <form onSubmit={handleSubmit(onSubmitInput)} style={{ marginLeft: "24px" }}>
       <React.Fragment>
-        <div className="search-container" style={{ width: "auto", marginLeft: isInboxPage ? "24px" : "revert" }}>
+        <div className="search-container" style={{ width: "auto" }}>
           <div className="search-complaint-container">
-            {(type === "mobile" || mobileView) && (
+            {type === "mobile" && (
               <div className="complaint-header">
-                <h2>{t("ES_COMMON_SEARCH_BY")}</h2>
+                <h2> {t("CS_COMMON_SEARCH_BY")}:</h2>
                 <span onClick={onClose}>
                   <CloseSvg />
                 </span>
               </div>
             )}
-            <div className="complaint-input-container" style={{textAlign: "start"}}>
-              {searchFields
-                ?.filter((e) => true)
-                ?.map((input, index) => (
-                  <div key={input.name} className="input-fields">
-                    <span className={"complaint-input"}>
-                      <Label>{t(input.label)}</Label>
-                      {!input.type ? (
-                        <Controller
-                          render={(props) => {
-                            return <TextInput onChange={props.onChange} value={props.value} />;
-                          }}
-                          name={input.name}
-                          control={control}
-                          defaultValue={""}
-                        />
-                      ) : (
-                        <Controller
-                          render={(props) => {
-                            const Comp = fieldComponents?.[input.type];
-                            return <Comp onChange={props.onChange} value={props.value} />;
-                          }}
-                          name={input.name}
-                          control={control}
-                          defaultValue={""}
-                        />
-                      )}
-                    </span>
-                    {formState?.dirtyFields?.[input.name] ? (
-                      <span
-                        style={{ fontWeight: "700", color: "rgba(212, 53, 28)", paddingLeft: "8px", marginTop: "-20px", fontSize: "12px" }}
-                        className="inbox-search-form-error"
-                      >
-                        {formState?.errors?.[input.name]?.message}
-                      </span>
-                    ) : null}
-                  </div>
-                ))}
-              {type === "desktop" && !mobileView && !isInboxPage && (
-                <div className="search-action-wrapper">
-                  <SubmitBar
-                    className="submit-bar-search"
-                    label={t("ES_COMMON_SEARCH")}
-                    disabled={!!Object.keys(formState.errors).length || Object.keys(form).every((key) => !form?.[key])}
-                    submit
-                  />
-                  {/* style={{ paddingTop: "16px", textAlign: "center" }} className="clear-search" */}
-                  <div style={{ width: "100%", textAlign: "right", width: "240px", textAlign: "right", marginLeft: "96px", marginTop: "8px" }}>
-                    {clearAll()}
-                  </div>
-                </div>
-              )}
-              {isInboxPage && (
-                <div className="search-action-wrapper" style={{width: "100%"}}>
-                  {type === "desktop" && !mobileView && (
-                    <SubmitBar
-                      className="submit-bar-search"
-                      label={t("ES_COMMON_SEARCH")}
-                      submit
-                    />
-                  )}
-                  {type === "desktop" && !mobileView && (
-                    <span style={{ paddingTop: "9px" }} className="clear-search">
-                      {clearAll()}
-                    </span>
-                  )}
-                </div>
+            <div className="complaint-input-container">
+              <span className="complaint-input">
+                <Label>{t("Application No")}.</Label>
+                <TextInput
+                  name="applicationNumber"
+                  value={appNo}
+                  onChange={setComplaint}
+                  inputRef={register({
+                    pattern: /(?!^$)([^\s])/,
+                  })}
+                  style={{ marginBottom: "8px" }}
+                ></TextInput>
+              </span>
+              <span className="mobile-input">
+                <Label>{t("CS_COMMON_MOBILE_NO")}.</Label>
+                <TextInput
+                  name="mobileNumber"
+                  value={mobileNo}
+                  onChange={setMobile}
+                  inputRef={register({
+                    pattern: /^[6-9]\d{9}$/,
+                  })}
+                ></TextInput>
+              </span>
+              {type === "desktop" && (
+                <SubmitBar
+                  style={{ marginTop: 32, marginLeft: "16px", width: "calc( 100% - 16px )" }}
+                  label={t("ES_COMMON_SEARCH")}
+                  submit={true}
+                  disabled={Object.keys(errors).filter((i) => errors[i]).length}
+                />
               )}
             </div>
+            {type === "desktop" && <span className="clear-search">{clearAll()}</span>}
           </div>
         </div>
-        {(type === "mobile" || mobileView) && (
-          <ActionBar className="clear-search-container">
-            <button className="clear-search" style={{ flex: 1 }}>
-              {clearAll(mobileView)}
-            </button>
-            <SubmitBar disabled={!!Object.keys(formState.errors).length} label={t("ES_COMMON_SEARCH")} style={{ flex: 1 }} submit={true} />
+        {type === "mobile" && (
+          <ActionBar>
+            <SubmitBar label="Search" submit={true} />
           </ActionBar>
         )}
       </React.Fragment>
@@ -209,4 +107,4 @@ const SearchApplication = ({ onSearch, type, onClose, searchFields, searchParams
   );
 };
 
-export default SearchApplication;
+export default BirthSearchInbox;

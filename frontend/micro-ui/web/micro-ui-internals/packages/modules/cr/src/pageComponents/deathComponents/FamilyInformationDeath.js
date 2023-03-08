@@ -3,19 +3,47 @@ import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton } from "
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
+const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDeath }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+
   const { data: Spouse = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "SpouseType");
+  let cmbspouse = [];
+  Spouse &&
+    Spouse["birth-death-service"] &&
+    Spouse["birth-death-service"].SpouseType.map((ob) => {
+      cmbspouse.push(ob);
+    });
+    const [SpouseType, setSpouseType] = useState(formData?.FamilyInformationDeath?.SpouseType?.code ? formData?.FamilyInformationDeath?.SpouseType : formData?.FamilyInformationDeath?.SpouseType ?
+      (cmbspouse.filter(cmbspouse => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]) : "");
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
-    formData?.FamilyInformationDeath?.SpouseUnavailable ? formData?.FamilyInformationDeath?.SpouseUnavailable : false
+    formData?.FamilyInformationDeath?.SpouseUnavailable
+      ? formData?.FamilyInformationDeath?.SpouseUnavailable
+      : formData?.FamilyInformationDeath?.SpouseUnavailable
+      ? formData?.FamilyInformationDeath?.SpouseUnavailable
+      : false
   );
-  const [SpouseType, setSpouseType] = useState(formData?.FamilyInformationDeath?.SpouseType ? formData?.FamilyInformationDeath?.SpouseType : null);
-  const [SpouseNameEN, setSpouseNameEN] = useState(
-    formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
-  );
+  // const [Nationality, setSelectedNationality] = useState(
+  //   formData?.InformationDeath?.Nationality?.code
+  //     ? formData?.InformationDeath?.Nationality
+  //     : formData?.InformationDeath?.Nationality
+  //     ? cmbNation.filter((cmbNation) => cmbNation.code === formData?.InformationDeath?.Nationality)[0]
+  //     : ""
+  // );
+  // const [SpouseType, setSpouseType] = useState(
+  //   formData?.FamilyInformationDeath?.SpouseType?.code
+  //     ? formData?.FamilyInformationDeath?.SpouseType
+  //     : formData?.FamilyInformationDeath?.SpouseType
+  //     ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.InformationDeath?.SpouseType)[0]
+  //     : null
+  // );
+    const [SpouseNameEN, setSpouseNameEN] = useState(iseditDeath ? formData?.FamilyInformationDeath?.SpouseNameEN ?. formData?.FamilyInformationDeath?.SpouseNameEN : "");
+
+  // const [SpouseNameEN, setSpouseNameEN] = useState(
+  //   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
+  // );
   const [SpouseNameMl, setSpouseNameMl] = useState(
     formData?.FamilyInformationDeath?.SpouseNameMl ? formData?.FamilyInformationDeath?.SpouseNameMl : ""
   );
@@ -24,7 +52,11 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   );
 
   const [FatherUnavailable, setFatherUnavailable] = useState(
-    formData?.FamilyInformationDeath?.FatherUnavailable ? formData?.FamilyInformationDeath?.FatherUnavailable : false
+    formData?.FamilyInformationDeath?.FatherUnavailable
+      ? formData?.FamilyInformationDeath?.FatherUnavailable
+      : formData?.FamilyInformationDeath?.FatherUnavailable
+      ? formData?.FamilyInformationDeath?.FatherUnavailable
+      : false
   );
   const [FatherNameEn, setFatherNameEn] = useState(
     formData?.FamilyInformationDeath?.FatherNameEn ? formData?.FamilyInformationDeath?.FatherNameEn : ""
@@ -58,20 +90,31 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   let naturetypecmbvalue = null;
-  let cmbspouse = [];
-  Spouse &&
-    Spouse["birth-death-service"] &&
-    Spouse["birth-death-service"].SpouseType.map((ob) => {
-      cmbspouse.push(ob);
-    });
 
   const onSkip = () => onSelect();
 
   function setSelectFatherNameEn(e) {
-    setFatherNameEn(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setFatherNameEn(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
+    }
   }
   function setSelectFatherNameMl(e) {
-    setFatherNameMl(e.target.value);
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setFatherNameMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+      );
+    }
   }
   function setSelectFatherAadharNo(e) {
     if (e.target.value != null || e.target.value != "") {
@@ -88,6 +131,78 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
         // setMotherAgeMarriageError(true);
         return false;
       }
+    }
+  }
+
+  function setSelectSpouseType(value) {
+    setSpouseType(value);
+  }
+
+  function setSelectSpouseNameEN(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setSpouseNameEN(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
+    }
+  }
+  function setSelectSpouseNameMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setSpouseNameMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+      );
+    }
+  }
+
+  function setSelectSpouseAadhaar(e) {
+    // setSpouseAdharNo(e.target.value);
+    if (e.target.value != null || e.target.value != "") {
+      if (e.target.value.length <= 12) {
+        if (e.target.value < 12) {
+          setSpouseAadhaar(e.target.value);
+          // setMotherAgeMarriageError(true);
+          return false;
+        } else {
+          setSpouseAadhaar(e.target.value);
+          // setMotherAgeMarriageError(false);
+        }
+      } else {
+        console.log(e.target.value.length);
+        // setMotherAgeMarriageError(true);
+        return false;
+      }
+    }
+  }
+
+  function setSelectMotherNameEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setMotherNameEn(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
+    }
+  }
+  function setSelectMotherNameMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setMotherNameMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+      );
     }
   }
   function setSelectMotherAadharNo(e) {
@@ -127,59 +242,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   function setSelectFamilyEmailId(e) {
     setFamilyEmailId(e.target.value);
   }
-  function setSelectSpouseType(value) {
-    setSpouseType(value);
-  }
-  function setSelectFatherMobile(e) {
-    setFatherMobile(e.target.value);
-  }
-  function setSelectSpouseNameEN(e) {
-    setSpouseNameEN(e.target.value);
-  }
-  function setSelectSpouseNameMl(e) {
-    setSpouseNameMl(e.target.value);
-  }
 
-  function setSelectSpouseAadhaar(e) {
-    // setSpouseAdharNo(e.target.value);
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value.length <= 12) {
-        if (e.target.value < 12) {
-          setSpouseAadhaar(e.target.value);
-          // setMotherAgeMarriageError(true);
-          return false;
-        } else {
-          setSpouseAadhaar(e.target.value);
-          // setMotherAgeMarriageError(false);
-        }
-      } else {
-        console.log(e.target.value.length);
-        // setMotherAgeMarriageError(true);
-        return false;
-      }
-    }
-  }
-  // function setSelectSpouseEmail(e) {
-  //   setSpouseEmail(e.target.value);
-  // }
-  function setSelectSpouseMobile(e) {
-    setSpouseMobile(e.target.value);
-  }
-  function setSelectMotherNameEn(e) {
-    setMotherNameEn(e.target.value);
-  }
-  function setSelectMotherNameMl(e) {
-    setMotherNameMl(e.target.value);
-  }
-  function setSelectMotherAdharNo(e) {
-    setMotherAdharNo(e.target.value);
-  }
-  // function setSelectMotherEmail(e) {
-  //   setMotherEmail(e.target.value);
-  // }
-  // function setSelectMotherMobile(e) {
-  //   setMotherMobile(e.target.value);
-  // }
   const goNext = () => {
     sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
     // sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
@@ -205,7 +268,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
     sessionStorage.setItem("FamilyMobileNo", FamilyMobileNo);
     sessionStorage.setItem("FamilyEmailId", FamilyEmailId);
 
-
     onSelect(config.key, {
       SpouseType,
       SpouseNameEN,
@@ -224,6 +286,33 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
       FamilyEmailId,
     });
   };
+  
+  if (iseditDeath) {
+
+    if (formData?.FamilyInformationDeath?.SpouseType != null) {
+      if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
+        setSpouseType(cmbspouse.filter(cmbspouse => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
+      }
+    }
+  }
+    // if (formData?.ChildDetails?.medicalAttensionSub != null) {
+    //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
+    //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
+    //   }
+    // }
+    // if (formData?.ChildDetails?.pregnancyDuration != null) {
+    //   console.log("pregnancyDuration" + pregnancyDuration);
+    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
+    //   }
+    // }
+    // if (formData?.ChildDetails?.deliveryMethods != null) {
+    //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
+    //     // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
+    //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
+    //   }
+    // }
+  
   const [inputValue, setInputValue] = useState("");
 
   const handleBlur = (event) => {
@@ -236,19 +325,18 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
   };
   return (
     <React.Fragment>
-   <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-     
 
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-      <div className="row">
+        <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FAMILY_DETAILS")}`}</span>{" "}
             </h1>
           </div>
         </div>
-     
+
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -274,7 +362,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-3">
-                  <CardLabel>{`${t("CR_SPOUSE_TYPE_EN")}`} <span className="mandatorycss">*</span></CardLabel>
+                  <CardLabel>
+                    {`${t("CR_SPOUSE_TYPE_EN")}`} <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <Dropdown
                     t={t}
                     optionKey="name"
@@ -287,7 +377,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                   />
                 </div>
                 <div className="col-md-3">
-                  <CardLabel>{`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span></CardLabel>
+                  <CardLabel>
+                    {`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -302,7 +394,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                   />
                 </div>
                 <div className="col-md-3">
-                  <CardLabel>{`${t("CR_NAME_ML")}`}  <span className="mandatorycss">*</span></CardLabel>
+                  <CardLabel>
+                    {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -366,7 +460,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span></CardLabel>
+                  <CardLabel>
+                    {`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -381,7 +477,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData }) => {
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>{`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span></CardLabel>
+                  <CardLabel>
+                    {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
