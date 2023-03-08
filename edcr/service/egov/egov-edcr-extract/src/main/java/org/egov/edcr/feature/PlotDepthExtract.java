@@ -3,8 +3,10 @@ package org.egov.edcr.feature;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -303,4 +305,9 @@ public class PlotDepthExtract extends FeatureExtract {
 
         return lines;
     }
+    
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

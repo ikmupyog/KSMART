@@ -18,14 +18,22 @@ public class DxfFileConstants {
     public static final int FLOOR_EXTERIOR_WALL_COLOR = 5;
     public static final int FLOOR_OPENSPACE_COLOR = 6;
     public static final String SHADE_OVERHANG = "SHADE_OVERHANG";
-    public static final String OPENING_BELOW_2_1_ON_SIDE_LESS_1M = "OPENING_BELOW_2.1_ON_SIDE_LESS_1M_OR_LESS_EQUALTO_0.6M";
+    public static final String OPENING_BELOW_2_1_ON_SIDE_LESS_1M_OR_EQ_0_POINT_6 = "OPENING_BELOW_2.1_ON_SIDE_LESS_1M_OR_LESS_EQUALTO_0.6M";
+    public static final String OPENING_ABOVE_2_1_ON_SIDE_LESS_1M_OR_EQ_0_POINT_6 = "OPENING_ABOVE_2.1_ON_SIDE_LESS_1M_OR_LESS_EQUALTO_0.6M"; 
     public static final String OPENING_BELOW_2_1_ON_REAR_LESS_1M = "OPENING_BELOW_2.1_ON_REAR_LESS_1M";
-    public static final String OPENING_ABOVE_2_1_ON_SIDE_LESS_1M = "OPENING_ABOVE_2.1_ON_SIDE_LESS_1M_OR_LESS_EQUALTO_0.6M";
     public static final String OPENING_ABOVE_2_1_ON_REAR_LESS_1M = "OPENING_ABOVE_2.1_ON_REAR_LESS_1M";
+    public static final String OPENING_ABOVE_2_1_ON_REAR_LESS_1M_AS_PER_AMD_NOV19 = "OPENING_ABOVE_2.1_ON_REAR_LESS_1.5M_OR_LESS_1M";
+    public static final String OPENING_BELOW_2_1_ON_REAR_LESS_1M_AS_PER_AMD_NOV19 = "OPENING_BELOW_2.1_ON_REAR_LESS_1.5M_OR_LESS_1M";
+    public static final String OPENING_ABOVE_2_1_ON_SIDE_LESS_1M_AS_PER_AMD_NOV19 = "OPENING_ABOVE_2.1_ON_SIDE_LESS_1M_OR_LESS_0.6M";
+    public static final String OPENING_BELOW_2_1_ON_SIDE_LESS_1M_AS_PER_AMD_NOV19 = "OPENING_BELOW_2.1_ON_SIDE_LESS_1M_OR_LESS_0.6M";
+    public static final String OPENING_ABOVE_2_1_ON_REAR_LESS_1M_AS_PER_AMD_OCT20 = "OPENING_ABOVE_2.1_ON_REAR_LESS_1M_OR_LESS_0.6M";
+    public static final String OPENING_BELOW_2_1_ON_REAR_LESS_1M_AS_PER_AMD_OCT20 = "OPENING_BELOW_2.1_ON_REAR_LESS_1M_OR_LESS_0.6M";
     public static final String NOC_TO_ABUT_SIDE = "NOC_TO_ABUT_SIDE";
     public static final String NOC_TO_ABUT_REAR = "NOC_TO_REAR_SIDE";
     public static final String SINGLE_FAMILY_BLDG = "SINGLE_FAMILY_BLDG";
     public static final String SEATS_SP_RESI = "SEATS_SP_RESI";
+    public static final String POWER_USED_HP = "POWER_USED_HP";
+    public static final String NO_OF_WORKERS = "NO_OF_WORKERS";
     public static final int COLOUR_CODE_NOTIFIEDROAD = 1;
     public static final int COLOUR_CODE_NONNOTIFIEDROAD = 2;
     public static final int COLOUR_CODE_LANE = 5;
@@ -38,7 +46,7 @@ public class DxfFileConstants {
     public static final int OCCUPANCY_B1_COLOR_CODE = 4;
     public static final int OCCUPANCY_B2_COLOR_CODE = 14;
     public static final int OCCUPANCY_B3_COLOR_CODE = 15;
-    // public static final int OCCUPANCY_C_COLOR_CODE = 5;
+    public static final int OCCUPANCY_C_COLOR_CODE = 5;
     public static final int OCCUPANCY_D_COLOR_CODE = 6;
     public static final int OCCUPANCY_E_COLOR_CODE = 7;
     public static final int OCCUPANCY_F_COLOR_CODE = 8;
@@ -188,5 +196,9 @@ public class DxfFileConstants {
     public static final int DIMENSION_WIDTH_COLOR_CODE = 2;
     public static final int DIMENSION_HEIGHT_COLOR_CODE = 3;
     public static final int PORTICO_EXTERIOR_WALL_COLOR = 4;
-
+    public static final String ALTERED_AREA = "ALTERED_AREA_M2";
+    public static final String PLOT_IN_COMMERCIAL_ZONE="PLOT_IN_COMMERCIAL_ZONE";
+    public static final String COMMERCIAL_ZONE_BLDG_OPENING_ON_SIDE1="COMMERCIAL_ZONE_BLDG_OPENING_ON_SIDE1";
+    public static final String COMMERCIAL_ZONE_BLDG_OPENING_ON_SIDE2="COMMERCIAL_ZONE_BLDG_OPENING_ON_SIDE2";
+    
 }

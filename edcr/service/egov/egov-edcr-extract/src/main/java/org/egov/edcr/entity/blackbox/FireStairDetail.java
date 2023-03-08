@@ -45,82 +45,50 @@
  *  In case of any queries, you can reach eGovernments Foundation at contact@egovernments.org.
  */
 
-package org.egov.common.entity.edcr;
+package org.egov.edcr.entity.blackbox;
 
-import java.math.BigDecimal;
+import java.util.List;
 
-public class MezzanineFloor extends Measurement {
+import org.egov.common.entity.edcr.FireStair;
+import org.egov.common.entity.edcr.Measurement;
+import org.kabeja.dxf.DXFLWPolyline;
+import org.kabeja.dxf.DXFLine;
 
-    private static final long serialVersionUID = 32L;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-    private String number;
+public class FireStairDetail extends FireStair {
 
-    private BigDecimal builtUpArea;
+    private static final long serialVersionUID = 35L;
 
-    private BigDecimal deductions;
+    @JsonIgnore
+    private transient List<DXFLWPolyline> stairPolylines;
+    @JsonIgnore
+    private transient List<Measurement> flightPolyLines;
+    @JsonIgnore
+    private transient List<DXFLine> lines;
 
-    private BigDecimal carpetArea;
-
-    private BigDecimal floorArea;
-    
-    private OccupancyType occupancyType;
-    
-    private OccupancyTypeHelper typeHelper;
-
-    public String getNumber() {
-        return number;
+	public List<DXFLWPolyline> getStairPolylines() {
+        return stairPolylines;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setStairPolylines(List<DXFLWPolyline> stairPolylines) {
+        this.stairPolylines = stairPolylines;
     }
 
-    public BigDecimal getBuiltUpArea() {
-        return builtUpArea;
+    public List<Measurement> getFlightPolyLines() {
+        return flightPolyLines;
     }
 
-    public BigDecimal getDeductions() {
-        return deductions;
+    public void setFlightPolyLines(List<Measurement> flightPolyLines) {
+        this.flightPolyLines = flightPolyLines;
     }
 
-    public void setBuiltUpArea(BigDecimal builtUpArea) {
-        this.builtUpArea = builtUpArea;
+    public List<DXFLine> getLines() {
+        return lines;
     }
 
-    public void setDeductions(BigDecimal deductions) {
-        this.deductions = deductions;
+    public void setLines(List<DXFLine> lines) {
+        this.lines = lines;
     }
-
-	public BigDecimal getCarpetArea() {
-		return carpetArea;
-	}
-
-	public void setCarpetArea(BigDecimal carpetArea) {
-		this.carpetArea = carpetArea;
-	}
-
-	public BigDecimal getFloorArea() {
-		return floorArea;
-	}
-
-	public void setFloorArea(BigDecimal floorArea) {
-		this.floorArea = floorArea;
-	}
-
-	public OccupancyType getOccupancyType() {
-		return occupancyType;
-	}
-
-	public void setOccupancyType(OccupancyType occupancyType) {
-		this.occupancyType = occupancyType;
-	}
-
-	public OccupancyTypeHelper getTypeHelper() {
-		return typeHelper;
-	}
-
-	public void setTypeHelper(OccupancyTypeHelper typeHelper) {
-		this.typeHelper = typeHelper;
-	}
 
 }

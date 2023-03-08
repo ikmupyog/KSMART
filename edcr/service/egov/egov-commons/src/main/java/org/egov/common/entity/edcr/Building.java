@@ -110,6 +110,8 @@ public class Building extends Measurement {
 
     // This would be plain sum of occupancies without converting
     private List<Occupancy> totalArea = new ArrayList<>();
+    
+    private List<Occupancy> mezzanineOccupancies = new ArrayList<>();
 
     private Passage passage;
 
@@ -118,6 +120,8 @@ public class Building extends Measurement {
     private Boolean isHighRise = false;
 
     private BigDecimal totalConstructedArea = BigDecimal.ZERO;
+    
+    private BigDecimal totalFloorUnits = BigDecimal.ZERO;
     
     public List<Occupancy> getOccupancies() {
         return occupancies;
@@ -384,5 +388,21 @@ public class Building extends Measurement {
     public void setTotalConstructedArea(BigDecimal totalConstructedArea) {
         this.totalConstructedArea = totalConstructedArea;
     }
+
+	public List<Occupancy> getMezzanineOccupancies() {
+		return mezzanineOccupancies;
+	}
+
+	public void setMezzanineOccupancies(List<Occupancy> mezzanineOccupancies) {
+		this.mezzanineOccupancies = mezzanineOccupancies;
+	}
+
+	public BigDecimal getTotalFloorUnits() {
+		return totalFloorUnits;
+	}
+
+	public void setTotalFloorUnits(BigDecimal totalFloorUnits) {
+		this.totalFloorUnits = totalFloorUnits;
+	}
 
 }

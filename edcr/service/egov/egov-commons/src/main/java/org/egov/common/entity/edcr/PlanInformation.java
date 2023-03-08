@@ -54,6 +54,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.SafeHtml;
+
 //These are the declarations of the applicant in the plan using PLAN_INFO layer.
 public class PlanInformation implements Serializable {
 
@@ -84,6 +86,7 @@ public class PlanInformation implements Serializable {
     private BigDecimal demolitionArea = BigDecimal.ZERO;
     //Extracted from Plan info. Depth cutting more than 1.5 Meter flag. 
     private transient Boolean depthCutting;
+    private transient String depthCuttingDesc = NA;
     //YES/NO/NA.Extracted from Plan info. Is building of type government or aided school.
     private transient Boolean governmentOrAidedSchool;
     //YES/NO/NA.Extracted from Plan info. Is plot comes under security zone flag.
@@ -166,7 +169,25 @@ public class PlanInformation implements Serializable {
     private String district;
     //YES/NO/NA.Extracted from Plan info. Rain water declared in plan.
     private transient String rwhDeclared = NA;
+    
+    private transient String openingOnSideBelow2mtsDesc = NA;
 
+    private transient String openingOnSideAbove2mtsDesc = NA;
+
+    private transient String openingOnRearBelow2mtsDesc = NA;
+
+    private transient String openingOnRearAbove2mtsDesc = NA;
+    
+    private transient Integer powerUsedHp = 0;
+    private transient Integer numberOfWorkers = 0;
+    private BigDecimal alteredArea;
+    
+    @SafeHtml
+    private transient String plotInCommercialZone = NA;
+    @SafeHtml
+    private transient String commercialZoneBldgOpenOnSide1 = NA;
+    @SafeHtml
+    private transient String commercialZoneBldgOpenOnSide2 = NA;
 
     public Boolean getGovernmentOrAidedSchool() {
         return governmentOrAidedSchool;
@@ -177,6 +198,7 @@ public class PlanInformation implements Serializable {
     }
 
     public Boolean getCrzZoneArea() {
+    	
         return crzZoneArea;
     }
 
@@ -252,7 +274,15 @@ public class PlanInformation implements Serializable {
         this.depthCutting = depthCutting;
     }
 
-    public void setAccessWidth(BigDecimal accessWidth) {
+    public String getDepthCuttingDesc() {
+		return depthCuttingDesc;
+	}
+
+	public void setDepthCuttingDesc(String depthCuttingDesc) {
+		this.depthCuttingDesc = depthCuttingDesc;
+	}
+
+	public void setAccessWidth(BigDecimal accessWidth) {
         this.accessWidth = accessWidth;
     }
 
@@ -623,5 +653,85 @@ public class PlanInformation implements Serializable {
     public void setRwhDeclared(String rwhDeclared) {
         this.rwhDeclared = rwhDeclared;
     }
+
+	public Integer getPowerUsedHp() {
+		return powerUsedHp;
+	}
+
+	public void setPowerUsedHp(Integer powerUsedHp) {
+		this.powerUsedHp = powerUsedHp;
+	}
+
+	public Integer getNumberOfWorkers() {
+		return numberOfWorkers;
+	}
+
+	public void setNumberOfWorkers(Integer numberOfWorkers) {
+		this.numberOfWorkers = numberOfWorkers;
+	}
+
+	public BigDecimal getAlteredArea() {
+		return alteredArea;
+	}
+
+	public void setAlteredArea(BigDecimal alteredArea) {
+		this.alteredArea = alteredArea;
+	}
+
+	public String getOpeningOnSideBelow2mtsDesc() {
+		return openingOnSideBelow2mtsDesc;
+	}
+
+	public void setOpeningOnSideBelow2mtsDesc(String openingOnSideBelow2mtsDesc) {
+		this.openingOnSideBelow2mtsDesc = openingOnSideBelow2mtsDesc;
+	}
+
+	public String getOpeningOnSideAbove2mtsDesc() {
+		return openingOnSideAbove2mtsDesc;
+	}
+
+	public void setOpeningOnSideAbove2mtsDesc(String openingOnSideAbove2mtsDesc) {
+		this.openingOnSideAbove2mtsDesc = openingOnSideAbove2mtsDesc;
+	}
+
+	public String getOpeningOnRearBelow2mtsDesc() {
+		return openingOnRearBelow2mtsDesc;
+	}
+
+	public void setOpeningOnRearBelow2mtsDesc(String openingOnRearBelow2mtsDesc) {
+		this.openingOnRearBelow2mtsDesc = openingOnRearBelow2mtsDesc;
+	}
+
+	public String getOpeningOnRearAbove2mtsDesc() {
+		return openingOnRearAbove2mtsDesc;
+	}
+
+	public void setOpeningOnRearAbove2mtsDesc(String openingOnRearAbove2mtsDesc) {
+		this.openingOnRearAbove2mtsDesc = openingOnRearAbove2mtsDesc;
+	}
+
+	public String getPlotInCommercialZone() {
+		return plotInCommercialZone;
+	}
+
+	public void setPlotInCommercialZone(String plotInCommercialZone) {
+		this.plotInCommercialZone = plotInCommercialZone;
+	}
+
+	public String getCommercialZoneBldgOpenOnSide1() {
+		return commercialZoneBldgOpenOnSide1;
+	}
+
+	public void setCommercialZoneBldgOpenOnSide1(String commercialZoneBldgOpenOnSide1) {
+		this.commercialZoneBldgOpenOnSide1 = commercialZoneBldgOpenOnSide1;
+	}
+
+	public String getCommercialZoneBldgOpenOnSide2() {
+		return commercialZoneBldgOpenOnSide2;
+	}
+
+	public void setCommercialZoneBldgOpenOnSide2(String commercialZoneBldgOpenOnSide2) {
+		this.commercialZoneBldgOpenOnSide2 = commercialZoneBldgOpenOnSide2;
+	}
 
 }

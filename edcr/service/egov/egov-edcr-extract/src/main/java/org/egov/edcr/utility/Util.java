@@ -28,6 +28,7 @@ import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.OccupancyType;
 import org.egov.common.entity.edcr.OccupancyTypeHelper;
+import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Plot;
 import org.egov.common.entity.edcr.TypicalFloor;
 import org.egov.edcr.constants.DxfFileConstants;
@@ -53,6 +54,8 @@ import org.kabeja.dxf.helpers.StyledTextParagraph;
 import org.kabeja.math.MathUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static org.egov.edcr.constants.DxfFileConstants.*;
 
 @Service
 public class Util {
@@ -772,6 +775,56 @@ public class Util {
             else
                 occupancy = OccupancyType.OCCUPANCY_F;
         return occupancy;
+    }
+    
+    public static OccupancyTypeHelper getOccupancyAsPerFloorArea(OccupancyTypeHelper occupancy, BigDecimal floorArea, Plan pl) {
+        if ("B1".equals(occupancy.getType().getCode()) || "B2".equals(occupancy)
+                || "B3".equals(occupancy.getType().getCode())) {
+            if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0)
+                occupancy = getConvertedOccupancy(pl, OCCUPANCY_A2_COLOR_CODE);
+            else
+                occupancy = getConvertedOccupancy(pl, OCCUPANCY_B1_COLOR_CODE);
+        } else if ("C".equals(occupancy.getType().getCode()) || "C1".equals(occupancy.getType().getCode())
+                || "C2".equals(occupancy.getType().getCode()) || "C3".equals(occupancy.getType().getCode())) {
+            if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0)
+                occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
+            else
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_C_COLOR_CODE);
+            
+        } else if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0
+                && "D".equals(occupancy.getType().getCode()))
+        	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
+        else if ("D1".equals(occupancy.getType().getCode()) || "D2".equals(occupancy.getType().getCode()))
+        	occupancy = getConvertedOccupancy(pl, OCCUPANCY_D_COLOR_CODE);
+        else if ("E".equals(occupancy.getType().getCode())) {
+            if (floorArea != null && floorArea.compareTo(THREEHUNDRED) <= 0)
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
+            else
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_E_COLOR_CODE);
+        } else if ("H".equals(occupancy.getType().getCode())) {
+            if (floorArea != null && floorArea.compareTo(THREEHUNDRED) <= 0)
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
+            else
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_H_COLOR_CODE);
+        } else if ("A5".equals(occupancy.getType().getCode()))
+            if (floorArea != null && floorArea.compareTo(FIFTY) <= 0)
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_A1_COLOR_CODE);
+            else
+            	occupancy = getConvertedOccupancy(pl, OCCUPANCY_F_COLOR_CODE);
+        return occupancy;
+    }
+    
+    public static OccupancyTypeHelper getConvertedOccupancy(Plan pl, Integer colorCode) {
+    	OccupancyTypeHelper oth = new OccupancyTypeHelper();
+    	if (!pl.getOccupanciesMaster().isEmpty() && pl.getOccupanciesMaster().containsKey(colorCode)) {
+    		OccupancyHelperDetail occTypeDtl = new OccupancyHelperDetail();
+            org.egov.common.entity.bpa.Occupancy occ = pl.getOccupanciesMaster().get(colorCode);
+            occTypeDtl.setColor(colorCode);
+            occTypeDtl.setCode(occ.getCode());
+            occTypeDtl.setName(occ.getName());
+            oth.setType(occTypeDtl);
+        }
+    	return oth;
     }
 
     public Map<String, String> getPlanInfoProperties(DXFDocument doc) {
@@ -1594,7 +1647,7 @@ public class Util {
         return false;
     }
 
-    public static boolean isSmallPlot(PlanDetail pl) {
+    public static boolean isSmallPlot(Plan pl) {
         if (pl != null && !pl.getBlocks().isEmpty() && pl.getPlot() != null && pl.getVirtualBuilding() != null)
             if (checkAnyBlockHasFloorsGreaterThanThree(pl.getBlocks()) == false
                     && pl.getVirtualBuilding().getResidentialOrCommercialBuilding().equals(Boolean.TRUE)

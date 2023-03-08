@@ -6,9 +6,12 @@ import static org.egov.edcr.constants.DxfFileConstants.OCCUPANCY_A2_PARKING_WOAT
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
@@ -312,4 +315,9 @@ public class ParkingExtract extends FeatureExtract {
             pl.addError("Duplicate", "Duplicate/Overlaying of items found in  Parking");
         }
     }
+    
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

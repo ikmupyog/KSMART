@@ -1,5 +1,7 @@
 package org.egov.edcr.feature;
 
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
@@ -68,4 +70,8 @@ public class BasementExtract extends FeatureExtract {
         return pl;
     }
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

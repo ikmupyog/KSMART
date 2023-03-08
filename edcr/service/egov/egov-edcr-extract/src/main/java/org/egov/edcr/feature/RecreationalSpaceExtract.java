@@ -1,6 +1,9 @@
 package org.egov.edcr.feature;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -55,5 +58,10 @@ public class RecreationalSpaceExtract extends FeatureExtract {
     public PlanDetail validate(PlanDetail pl) {
         return pl;
     }
+    
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 
 }

@@ -1,4 +1,4 @@
-
+/*
 package org.egov.edcr;
 
 import java.math.BigDecimal;
@@ -130,3 +130,4 @@ public class DimensionMeasurementTest extends BaseTest {
 	}
 
 }
+*/

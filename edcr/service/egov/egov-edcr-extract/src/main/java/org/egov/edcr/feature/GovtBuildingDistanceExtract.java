@@ -1,7 +1,10 @@
 package org.egov.edcr.feature;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -34,4 +37,8 @@ public class GovtBuildingDistanceExtract extends FeatureExtract {
         return pl;
     }
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

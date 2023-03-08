@@ -3,7 +3,10 @@ package org.egov.edcr.feature;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.egov.common.entity.edcr.Block;
@@ -92,4 +95,9 @@ public class PorticoServiceExtract extends FeatureExtract {
         return pl;
 
    }
+    
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

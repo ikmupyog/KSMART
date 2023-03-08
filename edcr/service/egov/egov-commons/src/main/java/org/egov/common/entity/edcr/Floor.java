@@ -59,6 +59,7 @@ public class Floor extends Measurement {
     private List<Occupancy> occupancies = new ArrayList<>();
     private List<Occupancy> convertedOccupancies = new ArrayList<>();
     private List<FloorUnit> units = new ArrayList<>();
+    private List<Room> habitableRooms = new ArrayList<>();
     private List<DARoom> daRooms = new ArrayList<>();
     private List<Ramp> ramps = new ArrayList<>();
     private List<VehicleRamp> vehicleRamps = new ArrayList<>();
@@ -106,7 +107,13 @@ public class Floor extends Measurement {
 
     // From 2.0.0 version
     private List<BigDecimal> heightFromFloorToBottomOfBeam;
-
+    
+    private List<Measurement> washBasins = new ArrayList<>();
+    
+    private Boolean terrace = false;
+    
+    private Boolean upperMost = false;
+    
     public List<FireStair> getFireStairs() {
         return fireStairs;
     }
@@ -130,9 +137,6 @@ public class Floor extends Measurement {
     public void setSpiralStairs(List<SpiralStair> spiralStairs) {
         this.spiralStairs = spiralStairs;
     }
-
-    private List<Measurement> washBasins = new ArrayList<>();
-    private Boolean terrace = false;
 
     public void setExitWidthStair(List<BigDecimal> exitWidthStair) {
         this.exitWidthStair = exitWidthStair;
@@ -619,5 +623,21 @@ public class Floor extends Measurement {
     public void setHeightFromFloorToBottomOfBeam(List<BigDecimal> heightFromFloorToBottomOfBeam) {
         this.heightFromFloorToBottomOfBeam = heightFromFloorToBottomOfBeam;
     }
+
+	public List<Room> getHabitableRooms() {
+		return habitableRooms;
+	}
+
+	public void setHabitableRooms(List<Room> habitableRooms) {
+		this.habitableRooms = habitableRooms;
+	}
+
+	public Boolean getUpperMost() {
+		return upperMost;
+	}
+
+	public void setUpperMost(Boolean upperMost) {
+		this.upperMost = upperMost;
+	}
 
 }

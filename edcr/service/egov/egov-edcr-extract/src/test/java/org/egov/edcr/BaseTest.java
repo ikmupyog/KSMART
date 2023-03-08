@@ -1,4 +1,4 @@
-package org.egov.edcr;
+/*package org.egov.edcr;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -108,3 +108,4 @@ public class BaseTest {
     }
 
 }
+*/

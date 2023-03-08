@@ -1,17 +1,18 @@
 package org.egov.edcr.feature;
 
 import static org.egov.edcr.constants.DxfFileConstants.OPENING_ABOVE_2_1_ON_REAR_LESS_1M;
-import static org.egov.edcr.constants.DxfFileConstants.OPENING_ABOVE_2_1_ON_SIDE_LESS_1M;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.PlanInformation;
@@ -283,72 +284,94 @@ public class PlanInfoFeatureExtractLocalTest extends FeatureExtract {
 						DxfFileConstants.SECURITY_ZONE + " cannot be accepted , should be either YES/NO.");
 
 		// Labels changed check
-		String openingBelow2mside = planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_SIDE_LESS_1M);
-		if (StringUtils.isNotBlank(openingBelow2mside)) {
-			if (openingBelow2mside.equalsIgnoreCase(DcrConstants.YES)) {
-				// pi.setOpeningOnSideBelow2mts(true);
-				pi.setOpeningOnSide(true);
-				//pi.setOpeningOnSideBelow2mtsDesc(DcrConstants.YES);
-			} /*
-				 * else if (openingBelow2mside.equalsIgnoreCase(DcrConstants.NO)) //
-				 * pi.setOpeningOnSideBelow2mts(false);
-				 * pi.setOpeningOnSideBelow2mtsDesc(DcrConstants.NO); else //
-				 * pi.setOpeningOnSideBelow2mts(null);
-				 * pi.setOpeningOnSideBelow2mtsDesc(DcrConstants.NA);
-				 */
-		} /*
-			 * else // pi.setOpeningOnSideBelow2mts(null);
-			 * pi.setOpeningOnSideBelow2mtsDesc(DcrConstants.NA);
-			 */
-
-		// Labels changed check
-		/*
-		 * String openingAbove2mrear =
-		 * planInfoProperties.get(OPENING_ABOVE_2_1_ON_REAR_LESS_1M); if
-		 * (StringUtils.isNotBlank(openingAbove2mrear)) { if
-		 * (openingAbove2mrear.equalsIgnoreCase(DcrConstants.YES)) //
-		 * pi.setOpeningOnRearAbove2mts(true);
-		 * //pi.setOpeningOnRearAbove2mtsDesc(DcrConstants.YES); else if
-		 * (openingAbove2mrear.equalsIgnoreCase(DcrConstants.NO)) //
-		 * pi.setOpeningOnRearAbove2mts(false);
-		 * pi.setOpeningOnRearAbove2mtsDesc(DcrConstants.NO); else //
-		 * pi.setOpeningOnRearAbove2mts(null);
-		 * pi.setOpeningOnRearAbove2mtsDesc(DcrConstants.NA); } else //
-		 * pi.setOpeningOnRearAbove2mts(null);
-		 * pi.setOpeningOnRearAbove2mtsDesc(DcrConstants.NA);
-		 */
-
-		String openingAbove2mside = planInfoProperties.get(OPENING_ABOVE_2_1_ON_SIDE_LESS_1M);
-		if (StringUtils.isNotBlank(openingAbove2mside)) {
-			if (openingAbove2mside.equalsIgnoreCase(DcrConstants.YES)) {
-				// pi.setOpeningOnSideAbove2mts(true);
-				pi.setOpeningOnSide(true);
-				//pi.setOpeningOnSideAbove2mtsDesc(DcrConstants.YES);
-			} /*else if (openingAbove2mside.equalsIgnoreCase(DcrConstants.NO))
-				// pi.setOpeningOnSideAbove2mts(false);
-				pi.setOpeningOnSideAbove2mtsDesc(DcrConstants.NO);
-			else
-				// pi.setOpeningOnSideAbove2mts(null);
-				pi.setOpeningOnSideAbove2mtsDesc(DcrConstants.NA);*/
-		} /*else
-			// pi.setOpeningOnSideAbove2mts(null);
-			pi.setOpeningOnSideAbove2mtsDesc(DcrConstants.NA);
-*/
-		// Labels changed check
-		/*String openingBelow2mrear = planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_REAR_LESS_1M);
-		if (StringUtils.isNotBlank(openingBelow2mrear)) {
-			if (openingBelow2mrear.equalsIgnoreCase(DcrConstants.YES))
-				// pi.setOpeningOnRearBelow2mts(true);
-				pi.setOpeningOnRearBelow2mtsDesc(DcrConstants.YES);
-			else if (openingBelow2mrear.equalsIgnoreCase(DcrConstants.NO))
-				// pi.setOpeningOnRearBelow2mts(false);
-				pi.setOpeningOnRearBelow2mtsDesc(DcrConstants.NO);
-			else
-				// pi.setOpeningOnRearBelow2mts(null);
-				pi.setOpeningOnRearBelow2mtsDesc(DcrConstants.NA);
-		} else
-			// pi.setOpeningOnRearBelow2mts(null);
-			pi.setOpeningOnRearBelow2mtsDesc(DcrConstants.NA);*/
+        if (planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_SIDE_LESS_1M_OR_EQ_0_POINT_6) != null
+                || planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_SIDE_LESS_1M_AS_PER_AMD_NOV19) != null) {
+            String openingBelow2mside = planInfoProperties
+                    .get(DxfFileConstants.OPENING_BELOW_2_1_ON_SIDE_LESS_1M_OR_EQ_0_POINT_6);
+            if (StringUtils.isBlank(openingBelow2mside))
+                openingBelow2mside = planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_SIDE_LESS_1M_AS_PER_AMD_NOV19);
+            if (openingBelow2mside.equalsIgnoreCase(DcrConstants.YES)) {
+                // pi.setOpeningOnSideBelow2mts(true);
+                pi.setOpeningOnSide(true);
+                pi.setOpeningOnSideBelow2mtsDesc(DcrConstants.YES);
+            } else if (openingBelow2mside.equalsIgnoreCase(DcrConstants.NO)) {
+                // pi.setOpeningOnSideBelow2mts(false);
+                pi.setOpeningOnSideBelow2mtsDesc(DcrConstants.NO);
+            } else {
+                // pi.setOpeningOnSideBelow2mts(null);
+                pi.setOpeningOnSideBelow2mtsDesc(DcrConstants.NA);
+            }
+        } else {
+            // pi.setOpeningOnSideBelow2mts(null);
+            pi.setOpeningOnSideBelow2mtsDesc(DcrConstants.NA);
+        }
+        // Labels changed check
+        if (planInfoProperties.get(OPENING_ABOVE_2_1_ON_REAR_LESS_1M) != null
+                || planInfoProperties.get(DxfFileConstants.OPENING_ABOVE_2_1_ON_REAR_LESS_1M_AS_PER_AMD_NOV19) != null
+                || planInfoProperties.get(DxfFileConstants.OPENING_ABOVE_2_1_ON_REAR_LESS_1M_AS_PER_AMD_OCT20) != null) {
+            String openingAbove2mrear = planInfoProperties.get(OPENING_ABOVE_2_1_ON_REAR_LESS_1M);
+            if (StringUtils.isBlank(openingAbove2mrear))
+                openingAbove2mrear = planInfoProperties.get(DxfFileConstants.OPENING_ABOVE_2_1_ON_REAR_LESS_1M_AS_PER_AMD_OCT20);
+            if (StringUtils.isBlank(openingAbove2mrear))
+                openingAbove2mrear = planInfoProperties.get(DxfFileConstants.OPENING_ABOVE_2_1_ON_REAR_LESS_1M_AS_PER_AMD_NOV19);
+            if (openingAbove2mrear.equalsIgnoreCase(DcrConstants.YES)) {
+                // pi.setOpeningOnRearAbove2mts(true);
+                pi.setOpeningOnRearAbove2mtsDesc(DcrConstants.YES);
+            } else if (openingAbove2mrear.equalsIgnoreCase(DcrConstants.NO)) {
+                // pi.setOpeningOnRearAbove2mts(false);
+                pi.setOpeningOnRearAbove2mtsDesc(DcrConstants.NO);
+            } else {
+                // pi.setOpeningOnRearAbove2mts(null);
+                pi.setOpeningOnRearAbove2mtsDesc(DcrConstants.NA);
+            }
+        } else {
+            // pi.setOpeningOnRearAbove2mts(null);
+            pi.setOpeningOnRearAbove2mtsDesc(DcrConstants.NA);
+        }
+        if (planInfoProperties.get(DxfFileConstants.OPENING_ABOVE_2_1_ON_SIDE_LESS_1M_OR_EQ_0_POINT_6) != null
+                || planInfoProperties.get(DxfFileConstants.OPENING_ABOVE_2_1_ON_SIDE_LESS_1M_AS_PER_AMD_NOV19) != null) {
+            String openingAbove2mSide = planInfoProperties
+                    .get(DxfFileConstants.OPENING_ABOVE_2_1_ON_SIDE_LESS_1M_OR_EQ_0_POINT_6);
+            if (StringUtils.isBlank(openingAbove2mSide))
+                openingAbove2mSide = planInfoProperties.get(DxfFileConstants.OPENING_ABOVE_2_1_ON_SIDE_LESS_1M_AS_PER_AMD_NOV19);
+            if (openingAbove2mSide.equalsIgnoreCase(DcrConstants.YES)) {
+                // pi.setOpeningOnSideAbove2mts(true);
+                pi.setOpeningOnSide(true);
+                pi.setOpeningOnSideAbove2mtsDesc(DcrConstants.YES);
+            } else if (openingAbove2mSide.equalsIgnoreCase(DcrConstants.NO)) {
+                // pi.setOpeningOnSideAbove2mts(false);
+                pi.setOpeningOnSideAbove2mtsDesc(DcrConstants.NO);
+            } else {
+                // pi.setOpeningOnSideAbove2mts(null);
+                pi.setOpeningOnSideAbove2mtsDesc(DcrConstants.NA);
+            }
+        } else {
+            // pi.setOpeningOnSideAbove2mts(null);
+            pi.setOpeningOnSideAbove2mtsDesc(DcrConstants.NA);
+        }
+        // Labels changed check
+        if (planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_REAR_LESS_1M) != null
+                || planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_REAR_LESS_1M_AS_PER_AMD_NOV19) != null
+                || planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_REAR_LESS_1M_AS_PER_AMD_OCT20) != null) {
+            String openingBelow2mrear = planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_REAR_LESS_1M);
+            if (StringUtils.isBlank(openingBelow2mrear))
+                openingBelow2mrear = planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_REAR_LESS_1M_AS_PER_AMD_OCT20);
+            if (StringUtils.isBlank(openingBelow2mrear))
+                openingBelow2mrear = planInfoProperties.get(DxfFileConstants.OPENING_BELOW_2_1_ON_REAR_LESS_1M_AS_PER_AMD_NOV19);
+            if (openingBelow2mrear.equalsIgnoreCase(DcrConstants.YES)) {
+                // pi.setOpeningOnRearBelow2mts(true);
+                pi.setOpeningOnRearBelow2mtsDesc(DcrConstants.YES);
+            } else if (openingBelow2mrear.equalsIgnoreCase(DcrConstants.NO)) {
+                // pi.setOpeningOnRearBelow2mts(false);
+                pi.setOpeningOnRearBelow2mtsDesc(DcrConstants.NO);
+            } else {
+                // pi.setOpeningOnRearBelow2mts(null);
+                pi.setOpeningOnRearBelow2mtsDesc(DcrConstants.NA);
+            }
+        } else {
+            // pi.setOpeningOnRearBelow2mts(null);
+            pi.setOpeningOnRearBelow2mtsDesc(DcrConstants.NA);
+        }
 
 		// Labels changed check
 		String nocAbutSide = planInfoProperties.get(DxfFileConstants.NOC_TO_ABUT_SIDE);
@@ -702,4 +725,8 @@ public class PlanInfoFeatureExtractLocalTest extends FeatureExtract {
 		this.layerNames = layerNames;
 	}
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

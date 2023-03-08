@@ -194,5 +194,7 @@ public class DcrConstants {
     public static final String MDMS_EDCR_MODULE = "EDCR";
     public static final String PORTICO_DISTANCETO_EXTERIORWALL = "Block %s Portico %s Portico distance to exteriorwall";
     public static final String PDF_EXT = "application/pdf";
+    public static final String BLDG_WITHNAME_FOOT_PRINT_NOT_DEFINED = "Building footprint for the block %s";
 
+    
 }

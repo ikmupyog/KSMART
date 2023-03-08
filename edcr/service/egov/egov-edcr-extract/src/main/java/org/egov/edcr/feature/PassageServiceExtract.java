@@ -3,6 +3,8 @@ package org.egov.edcr.feature;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -106,5 +108,10 @@ public class PassageServiceExtract extends FeatureExtract {
 		LOG.info("****Passage -" + sub.getKey() + "- Dimension---->>>" + values);
 		Util.extractDimensionValue(pl, values, dim, layerName);
 		return values.isEmpty() ? (Arrays.asList(BigDecimal.ZERO)) : values;
+	}
+	
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
 	}
 }

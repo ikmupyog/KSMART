@@ -6,8 +6,11 @@ import static org.egov.edcr.utility.DcrConstants.SHORTESTDISTINACETOBUILDINGFOOT
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.logging.log4j.Logger;
@@ -154,5 +157,9 @@ public class BuildingHeightExtract extends FeatureExtract {
                 }
         return pl;
     }
-
+    
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

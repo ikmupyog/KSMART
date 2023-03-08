@@ -1,6 +1,9 @@
 package org.egov.edcr.feature;
 
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.egov.common.entity.edcr.Block;
@@ -70,4 +73,8 @@ public class DALiftExtract extends FeatureExtract {
             }
     }
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

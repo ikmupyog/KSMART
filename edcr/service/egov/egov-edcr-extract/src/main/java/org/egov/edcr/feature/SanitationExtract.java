@@ -5,6 +5,8 @@ import static org.egov.edcr.constants.DxfFileConstants.COLOR_KEY_FEMALE_WATER_CL
 import static org.egov.edcr.constants.DxfFileConstants.COLOR_KEY_MALE_WATER_CLOSET;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -200,4 +202,8 @@ public class SanitationExtract extends FeatureExtract {
         return pl;
     }
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

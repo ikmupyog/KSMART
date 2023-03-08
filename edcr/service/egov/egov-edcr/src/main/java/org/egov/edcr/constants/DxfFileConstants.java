@@ -6,19 +6,48 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DxfFileConstants {
 
+	public static final String A1 = "A1"; // Residential
+	public static final String A2 = "A2"; // Special Residential
+	public static final String A3 = "A3"; // Hostel Educational
+	public static final String A4 = "A4"; // Apartment/Flat
+	public static final String A5 = "A5"; // Professional Office
+	public static final String B1 = "B1"; // Educational
+	public static final String B2 = "B2"; // Educational HighSchool
+	public static final String B3 = "B3"; // Higher Educational Institute
+	public static final String C = "C"; // Residential
+	public static final String C1 = "C1"; // Medical IP
+	public static final String C2 = "C2"; // Medical OP
+	public static final String C3 = "C3"; // Medical Admin
+	public static final String D = "D"; // Assembly
+	public static final String D1 = "D1"; // Assembly Worship
+	public static final String D2 = "D2"; // Bus Terminal
+	public static final String E = "E"; // Office/Business
+	public static final String F = "F"; // Mercantile / Commercial
+	public static final String F1 = "F1"; // Commercial Parking Plaza
+	public static final String F2 = "F2"; // Commercial Parking Appurtenant
+	public static final String F3 = "F3"; // Hotels
+	public static final String F4 = "F4"; // Kiosk
+	public static final String G1 = "G1"; // Industrial
+	public static final String G2 = "G2"; // Small Industrial
+	public static final String H = "H"; // Storage
+	public static final String I1 = "I1"; // Hazardous (I1)
+	public static final String I2 = "I2"; //
+	
+	
+	//TODO: Need to cleanup below occupancies codes after all features conversion completed
     // occupancies code
     public static final String A = "A"; // Residential
     public static final String B = "B"; // Educational
-    public static final String C = "C"; // Medical/Hospital
-    public static final String D = "D"; // Assembly
-    public static final String E = "E"; // Office/Business
-    public static final String F = "F"; // Mercantile / Commercial
+    //public static final String C = "C"; // Medical/Hospital
+    //public static final String D = "D"; // Assembly
+    //public static final String E = "E"; // Office/Business
+    //public static final String F = "F"; // Mercantile / Commercial
     public static final String G = "G"; // Industrial
-    public static final String H = "H"; // Storage
+    //public static final String H = "H"; // Storage
     public static final String I = "I"; // Hazardous
 
     // sub occupancies code
-    public static final String A2 = "A2";// Old Age Home
+    //public static final String A2 = "A2";// Old Age Home
     public static final String A_R = "A-R"; // Single family Residential
     public static final String A_AF = "A-AF"; // Apartment/Flat
     public static final String A_FH = "A-FH"; // Farm House
@@ -28,7 +57,7 @@ public class DxfFileConstants {
     public static final String A_PO = "A-PO";// Professional Office
     public static final String A_AF_GH = "A-AF-GH";
 
-    public static final String B2 = "B2";// Educational HighSchool
+    //public static final String B2 = "B2";// Educational HighSchool
     public static final String B_HEI = "B-HEI";// Higher Educational Institute
     public static final String B_PS = "B-PS";// Primary school
 
@@ -68,8 +97,8 @@ public class DxfFileConstants {
     
     public static final String H_PP = "H-PP"; // Petrol Pump
 
-    public static final String I1 = "I-1";// Hazardous (I1)
-    public static final String I2 = "I-2";// Hazardous (I2)
+    //public static final String I1 = "I-1";// Hazardous (I1)
+    //public static final String I2 = "I-2";// Hazardous (I2)
 
     public static final String M_DFPAB = "M-DFPAB";// Dispensary for pet animals and birds
     public static final String M_OHF = "M-OHF";// Other Health Facilities

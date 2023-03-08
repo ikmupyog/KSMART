@@ -90,7 +90,8 @@ public class PlanService {
         Plan plan = extractService.extract(dcrApplication.getSavedDxfFile(), amd, asOnDate,
                 featureService.getFeatures());
         plan.setMdmsMasterData(dcrApplication.getMdmsMasterData());
-        plan = applyRules(plan, amd, cityDetails);
+        if (plan.getDrawingPreference().getInMeters() && plan.getDrawingPreference().getLengthFactor())
+        	plan = applyRules(plan, amd, cityDetails);
 
         String comparisonDcrNumber = dcrApplication.getEdcrApplicationDetails().get(0).getComparisonDcrNumber();
         if (ApplicationType.PERMIT.getApplicationTypeVal()
@@ -236,9 +237,8 @@ public class PlanService {
                 LOG.info("Completed Process " + rule.getClass().getSimpleName() + "  " + new Date());
             }
 
-            if (plan.getErrors().containsKey(DxfFileConstants.OCCUPANCY_ALLOWED_KEY)
-                    || plan.getErrors().containsKey("units not in meters")
-                    || plan.getErrors().containsKey(DxfFileConstants.OCCUPANCY_PO_NOT_ALLOWED_KEY))
+            if (plan.getErrors().containsKey("msg.error.occ.invalid")
+                    || plan.getErrors().containsKey("units not in meters"))
                 return plan;
         }
         return plan;

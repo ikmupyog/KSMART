@@ -2,7 +2,10 @@ package org.egov.edcr.feature;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.egov.common.entity.edcr.ElectricLine;
 import org.egov.edcr.entity.blackbox.PlanDetail;
@@ -75,4 +78,8 @@ public class OverheadElectricalLineServiceExtract extends FeatureExtract {
         return pl;
     }
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

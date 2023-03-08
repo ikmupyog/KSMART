@@ -1,5 +1,9 @@
 package org.egov.edcr.feature;
 
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +20,8 @@ public class CommonFeatureExtract extends FeatureExtract {
         return pl;
     }
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

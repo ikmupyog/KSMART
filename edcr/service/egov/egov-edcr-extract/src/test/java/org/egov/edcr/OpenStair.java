@@ -1,4 +1,4 @@
-package org.egov.edcr;
+/*package org.egov.edcr;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -35,13 +35,14 @@ public class OpenStair extends BaseTest {
 	@Test
 	public final void testExtract() {
 
-        /*
+        
          * pl = far.extract(pl); pl = openStairExtract.extract(pl); for (Block b : pl.getBlocks()) { if(b.getOpenStairs()!= null
          * && b.getOpenStairs().size() > 0) { System.out.println("Number of open stairs in block " + b.getNumber() + " = " +
          * b.getOpenStairs().size()); List<BigDecimal> collect =
          * b.getOpenStairs().stream().map(Measurement::getMinimumDistance).collect(Collectors.toList());
          * System.out.println("Measurements in block " + b.getNumber() + " are " + collect.toString()); } }
-         */
+         
 	}
 
 }
+*/

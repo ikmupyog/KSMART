@@ -1,8 +1,11 @@
 package org.egov.edcr.feature;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.kabeja.dxf.DXFBlock;
@@ -100,8 +103,11 @@ public class DimensionMeasurement extends FeatureExtract {
 
     @Override
     public PlanDetail validate(PlanDetail pl) {
-        // TODO Auto-generated method stub
-        return null;
+        return pl;
     }
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

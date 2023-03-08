@@ -1,6 +1,8 @@
 package org.egov.edcr.feature;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.entity.edcr.Plan;
@@ -20,6 +22,8 @@ public abstract class FeatureExtract {
     @Autowired
     @Qualifier("parentMessageSource")
     protected MessageSource edcrMessageSource;
+    
+    public abstract Map<String, Date> getAmendments();
 
     public MessageSource getEdcrMessageSource() {
         return edcrMessageSource;
@@ -44,5 +48,17 @@ public abstract class FeatureExtract {
         }
         return null;
     }
+    
+	public String getAmendmentsRefNumber(Date applicationDate) {
+		String refNumber = "";
+		Map<String, Date> amendments = getAmendments();
+		for (String key : amendments.keySet()) {
+			if (applicationDate != null && applicationDate.compareTo(amendments.get(key)) >= 0) {
+				refNumber = key;
+			}
+		}
+
+		return refNumber;
+	}
 
 }

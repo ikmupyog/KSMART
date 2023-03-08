@@ -6,7 +6,9 @@ import static org.egov.edcr.constants.DxfFileConstants.WIDTH_COLOR_CODE;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -128,4 +130,8 @@ public class GateServiceExtract extends FeatureExtract {
         return planDetail;
     }
 
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

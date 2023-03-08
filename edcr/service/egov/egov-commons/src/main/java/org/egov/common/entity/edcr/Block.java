@@ -71,7 +71,7 @@ public class Block extends Measurement {
     private List<BlockDistances> disBetweenBlocks = new ArrayList<>();
     private List<Hall> hallAreas = new ArrayList<>();
     private List<Measurement> diningSpaces = new ArrayList<>();
-    // private List<Balcony> balconyAreas = new ArrayList<>();
+    private List<Balcony> balconyAreas = new ArrayList<>();
     private SanityDetails sanityDetails = new SanityDetails();
     private transient Boolean singleFamilyBuilding = false;
     private transient Boolean residentialBuilding = false;
@@ -240,10 +240,14 @@ public class Block extends Measurement {
         this.diningSpaces = diningSpaces;
     }
 
-    /*
-     * public List<Balcony> getBalconyAreas() { return balconyAreas; } public void setBalconyAreas(List<Balcony> balconyAreas) {
-     * this.balconyAreas = balconyAreas; }
-     */
+	public List<Balcony> getBalconyAreas() {
+		return balconyAreas;
+	}
+
+	public void setBalconyAreas(List<Balcony> balconyAreas) {
+		this.balconyAreas = balconyAreas;
+	}
+     
 
     public SanityDetails getSanityDetails() {
         return sanityDetails;

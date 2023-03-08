@@ -1,6 +1,9 @@
 package org.egov.edcr.feature;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -42,4 +45,9 @@ public class MeanOfAccessExtract extends FeatureExtract {
             validateAccessWidth(pl);
         return pl;
     }
+    
+	@Override
+	public Map<String, Date> getAmendments() {
+		return new LinkedHashMap<>();
+	}
 }

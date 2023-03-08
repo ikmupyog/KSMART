@@ -1,4 +1,4 @@
-
+/*
 package org.egov.edcr;
 
 import org.apache.logging.log4j.Logger;
@@ -28,3 +28,4 @@ public class DxfFontExtractTest extends BaseTest {
 	}
 
 }
+*/

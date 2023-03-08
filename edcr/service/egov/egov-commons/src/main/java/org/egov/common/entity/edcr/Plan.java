@@ -123,8 +123,14 @@ public class Plan implements Serializable {
     // If canopy present, then distance from the plot boundary
     private transient List<BigDecimal> canopyDistanceFromPlotBoundary;
 
-    // List of occupancies present in the plot including all the blocks.
+    // List of occupancies present in the plot including all the blocks (Declared and Converted).
     private List<Occupancy> occupancies = new ArrayList<>();
+    
+    // Contains only declared occupancies
+    private List<Occupancy> declaredOccupancies = new ArrayList<>();
+    // Mezzanine occupancies
+    private List<Occupancy> mezzanineOccupancies = new ArrayList<>();
+    
     @JsonIgnore
     private transient Map<Integer, org.egov.common.entity.bpa.Occupancy> occupanciesMaster = new HashMap<>();
     @JsonIgnore
@@ -175,7 +181,9 @@ public class Plan implements Serializable {
     public StringBuffer additionsToDxf = new StringBuffer();
     @Transient
     private String dxfFileName;
-
+    
+    @Transient
+    @JsonIgnore
     private List<EdcrPdfDetail> edcrPdfDetails;
 
     @Transient
@@ -200,7 +208,8 @@ public class Plan implements Serializable {
     private transient Map<String, List<Object>> mdmsMasterData;
     private transient Boolean mainDcrPassed = false;
     private List<ICT> icts = new ArrayList<>();
-
+    private transient String applicationType;
+    
     public List<BigDecimal> getCanopyDistanceFromPlotBoundary() {
         return canopyDistanceFromPlotBoundary;
     }
@@ -646,5 +655,29 @@ public class Plan implements Serializable {
     public void setIcts(List<ICT> icts) {
         this.icts = icts;
     }
+
+	public List<Occupancy> getDeclaredOccupancies() {
+		return declaredOccupancies;
+	}
+
+	public void setDeclaredOccupancies(List<Occupancy> declaredOccupancies) {
+		this.declaredOccupancies = declaredOccupancies;
+	}
+
+	public List<Occupancy> getMezzanineOccupancies() {
+		return mezzanineOccupancies;
+	}
+
+	public void setMezzanineOccupancies(List<Occupancy> mezzanineOccupancies) {
+		this.mezzanineOccupancies = mezzanineOccupancies;
+	}
+
+	public String getApplicationType() {
+		return applicationType;
+	}
+
+	public void setApplicationType(String applicationType) {
+		this.applicationType = applicationType;
+	}
 
 }
