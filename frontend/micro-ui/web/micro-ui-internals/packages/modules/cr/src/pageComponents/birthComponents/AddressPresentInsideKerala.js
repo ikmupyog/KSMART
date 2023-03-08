@@ -158,7 +158,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setIsInitialRender(false);
         }
         if (isPrsentAddress) {
-            setpermntInKeralaAdrDistrict(presentInsideKeralaDistrict);
+            setpermntInKeralaAdrDistrict(value);
         } else {
             setpermntInKeralaAdrDistrict('');
         }
@@ -172,7 +172,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         setPresentWardNo(null);
         setTenantboundary(true)
         if (isPrsentAddress) {
-            setpermntInKeralaAdrLBName(presentInsideKeralaLBName);
+            setpermntInKeralaAdrLBName(value);
         } else {
             setpermntInKeralaAdrLBName('');
         }
@@ -180,7 +180,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     function setSelectinsideKeralaVillage(value) {
         setinsideKeralaVillage(value);
         if (isPrsentAddress) {
-            setpermntInKeralaAdrVillage(presentInsideKeralaVillage);
+            setpermntInKeralaAdrVillage(value);
         } else {
             setpermntInKeralaAdrVillage('');
         }
@@ -188,7 +188,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     function setSelectinsideKeralaTaluk(value) {
         setinsideKeralaTaluk(value);
         if (isPrsentAddress) {
-            setpermntInKeralaAdrTaluk(presentInsideKeralaTaluk);
+            setpermntInKeralaAdrTaluk(value);
         } else {
             setpermntInKeralaAdrTaluk('');
         }
@@ -198,9 +198,11 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         setinsideKeralaPostOffice(value);
         setinsideKeralaPincode(value.pincode);
         if (isPrsentAddress) {
-            setpermntInKeralaAdrPostOffice(presentInsideKeralaPostOffice);
+            setpermntInKeralaAdrPostOffice(value);
+            setpermntInKeralaAdrPincode(value.pincode);
         } else {
             setpermntInKeralaAdrPostOffice('');
+            setpermntInKeralaAdrPincode('');
         }
     }
     function setSelectinsideKeralaPincode(e) {
@@ -213,7 +215,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             } else {
                 setinsideKeralaPincode(e.target.value);
                 if (isPrsentAddress) {
-                    setpermntInKeralaAdrPincode(presentInsideKeralaPincode);
+                    setpermntInKeralaAdrPincode(e.target.value);
                 } else {
                     setpermntInKeralaAdrPincode('');
                 }
@@ -228,7 +230,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         } else {
             setinsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrHouseNameEn(presentInsideKeralaHouseNameEn);
+                setpermntInKeralaAdrHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
             } else {
                 setpermntInKeralaAdrHouseNameEn('');
             }
@@ -241,7 +243,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         } else {
             setinsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrHouseNameMl(presentInsideKeralaHouseNameMl);
+                setpermntInKeralaAdrHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
             } else {
                 setpermntInKeralaAdrHouseNameMl('');
             }
@@ -255,7 +257,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         } else {
             setinsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrLocalityNameEn(presentInsideKeralaLocalityNameEn);
+                setpermntInKeralaAdrLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
             } else {
                 setpermntInKeralaAdrLocalityNameEn('');
             }
@@ -269,7 +271,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         } else {
             setinsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrLocalityNameMl(presentInsideKeralaLocalityNameMl);
+                setpermntInKeralaAdrLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
             } else {
                 setpermntInKeralaAdrLocalityNameMl('');
             }
@@ -283,7 +285,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         } else {
             setinsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrStreetNameEn(presentInsideKeralaStreetNameEn);
+                setpermntInKeralaAdrStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
             } else {
                 setpermntInKeralaAdrStreetNameEn('');
             }
@@ -297,7 +299,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         } else {
             setinsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrStreetNameMl(presentInsideKeralaStreetNameMl);
+                setpermntInKeralaAdrStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
             } else {
                 setpermntInKeralaAdrStreetNameMl('');
             }
@@ -307,7 +309,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     function setSelectWard(value) {
         setPresentWardNo(value);
         if (isPrsentAddress) {
-            setpermntInKeralaWardNo(presentWardNo);
+            setpermntInKeralaWardNo(value);
         } else {
             setpermntInKeralaWardNo('');
         }

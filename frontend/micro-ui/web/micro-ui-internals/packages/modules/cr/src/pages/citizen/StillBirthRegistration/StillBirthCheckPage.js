@@ -14,7 +14,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
-import Timeline from "../../components/SBRTimeline";
+import Timeline from "../../../components/SBRTimeline";
 
 const ActionButton = ({ jumpTo }) => {
   const { t } = useTranslation();
@@ -51,13 +51,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
     StillBirthParentsDetails,
     AddressBirthDetails,
     StillBirthInitiatorDetails,
-  //  InformarHosInstDetails,
-    // BirthPlace,
-    // HospitalDetails,
-    // FatherInfoDetails,
-    // MotherInfoDetails,
-    // AddressDetails,
-    // StatisticalInfoDetails,
+  
     isEditProperty,
     cpt,
   } = value;
