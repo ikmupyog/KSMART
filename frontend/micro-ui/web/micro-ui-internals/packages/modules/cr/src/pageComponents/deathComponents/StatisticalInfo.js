@@ -286,15 +286,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
     formData?.StatisticalInfo?.DeathCauseOther ? formData?.StatisticalInfo?.DeathCauseOther : null
   );
   // const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : "");
-  // const [IsdeceasedPregnant, setIsdeceasedPregnant] = useState(
-  //   formData?.StatisticalInfo?.IsdeceasedPregnant
-  //     ? cmbDelivary.filter((cmbDelivary) => cmbDelivary.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]
-  //     : ""
-  // );
   const [IsdeceasedPregnant, setIsdeceasedPregnant] = useState(
-    formData?.StatisticalInfo?.IsdeceasedPregnant?.code
-      ? formData?.StatisticalInfo?.IsdeceasedPregnant
-      : formData?.StatisticalInfo?.IsdeceasedPregnant
+    formData?.StatisticalInfo?.IsdeceasedPregnant
       ? cmbDelivary.filter((cmbDelivary) => cmbDelivary.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]
       : ""
   );
@@ -368,11 +361,11 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
         setDeathCauseSubTimeUnit2(months.filter((months) => months.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit2)[0]);
       }
     }
-    if (formData?.StatisticalInfo?.IsdeceasedPregnant != null) {
-      if (cmbDelivary.length > 0 && (IsdeceasedPregnant === undefined || IsdeceasedPregnant === "")) {
-        setIsdeceasedPregnant(cmbDelivary.filter((cmbDelivary) => cmbDelivary.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]);
-      }
-    }
+    // if (formData?.StatisticalInfo?.IsdeceasedPregnant != null) {
+    //   if (cmbDelivary.length > 0 && (IsdeceasedPregnant === undefined || IsdeceasedPregnant === "")) {
+    //     setDeathCauseSubTimeUnit2(cmbDelivary.filter((cmbDelivary) => months.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]);
+    //   }
+    // }
     
   }
   let naturetypecmbvalue = null;
