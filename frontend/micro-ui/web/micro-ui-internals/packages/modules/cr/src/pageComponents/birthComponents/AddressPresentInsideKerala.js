@@ -22,6 +22,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
 
 }) => {
     const stateId = Digit.ULBService.getStateId();
+    const [pofilter, setPofilter] = useState(false);
     const { t } = useTranslation();
     let validation = {};
     let tenantId = "";
@@ -49,7 +50,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const [toast, setToast] = useState(false);
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [isDisableStatus, setDisableStatus] = useState(true);
-    
+    const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
     let cmbLB = [];
     let cmbTaluk = [];
     let cmbVillage = [];
@@ -60,7 +61,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     let cmbFilterDistrict = [];
     let cmbFilterTaluk = [];
     let cmbFilterVillage = [];
-    let cmbFilterPostOffice = [];
+    // let cmbFilterPostOffice = [];
 
     localbodies &&
         localbodies["tenant"] &&
@@ -118,7 +119,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 setinsideKeralaLBName(currentLB[0]);
-                setLbs(currentLB);
+                setLbs(cmbLB.filter((cmbLB) => cmbLB.code === tenantId));
                 setpermntInKeralaAdrLBName(currentLB[0]);
                 cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
                 setinsideKeralaDistrict(cmbFilterDistrict[0]);
@@ -127,8 +128,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 setLbsTalukvalue(cmbFilterTaluk);
                 cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
                 setLbsVillagevalue(cmbFilterVillage);
-                cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid);
-                setPostOfficevalues(cmbFilterPostOffice);
+                // cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid);
+                setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+                setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
                 setIsInitialRender(false);
             }
         }
@@ -154,7 +156,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
             setLbsVillagevalue(cmbFilterVillage);
             cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid);
-            setPostOfficevalues(cmbFilterPostOffice);
+            setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid));
             setIsInitialRender(false);
         }
         if (isPrsentAddress) {
@@ -205,24 +207,42 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setpermntInKeralaAdrPincode('');
         }
     }
-    function setSelectinsideKeralaPincode(e) {
-        if (e.target.value.length != 0) {
-            if (e.target.value.length > 6) {
-                return false;
-            } else if (e.target.value.length < 6) {
-                setinsideKeralaPincode(e.target.value);
-                return false;
-            } else {
-                setinsideKeralaPincode(e.target.value);
-                if (isPrsentAddress) {
-                    setpermntInKeralaAdrPincode(e.target.value);
-                } else {
-                    setpermntInKeralaAdrPincode('');
-                }
-                return true;
-            }
+    const setSelectinsideKeralaPincode = (e => {
+
+        if (e.target.value.length === 6) {
+          setPostOfficevalues(PostOfficevalues.filter((postoffice) =>
+            parseInt(postoffice.pincode) === parseInt(e.target.value)));
+          setPofilter(true);
+        } else {
+          setPostOfficevalues(cmbFilterPostOffice);
+          setPofilter(false);
         }
-    }
+        setinsideKeralaPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+        setinsideKeralaPostOffice(PostOfficevalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
+        if (isPrsentAddress) {
+            setpermntInKeralaAdrPincode(e.target.value);
+        } else {
+            setpermntInKeralaAdrPincode('');
+        }
+    });
+    // function setSelectinsideKeralaPincode(e) {
+    //     if (e.target.value.length != 0) {
+    //         if (e.target.value.length > 6) {
+    //             return false;
+    //         } else if (e.target.value.length < 6) {
+    //             setinsideKeralaPincode(e.target.value);
+    //             return false;
+    //         } else {
+    //             setinsideKeralaPincode(e.target.value);
+    //             if (isPrsentAddress) {
+    //                 setpermntInKeralaAdrPincode(e.target.value);
+    //             } else {
+    //                 setpermntInKeralaAdrPincode('');
+    //             }
+    //             return true;
+    //         }
+    //     }
+    // }
     function setSelectinsideKeralaHouseNameEn(e) {
         if (e.target.value.length === 51) {
             return false;
@@ -446,7 +466,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 name="presentInsideKeralaPincode"
                                 value={presentInsideKeralaPincode}
                                 onChange={setSelectinsideKeralaPincode}
-                                disable={isDisableStatus}
+                                // disable={isDisableStatus}
                                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                                 {...(validation = {
                                     pattern: "^[a-zA-Z-.`' ]*$",
