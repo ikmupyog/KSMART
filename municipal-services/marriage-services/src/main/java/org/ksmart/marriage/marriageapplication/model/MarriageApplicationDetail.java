@@ -30,16 +30,16 @@ public class MarriageApplicationDetail {
 
 
     @Size(max = 64)
-    @JsonProperty("districtid")
+    @JsonProperty("marraigeDistrictid")
     private String districtid;
 
     @Size(max = 64)
-    @JsonProperty("lbtype")
+    @JsonProperty("marraigeLBtype")
     private String lbtype;
 
 
     @Size(max = 64)
-    @JsonProperty("tenantid")
+    @JsonProperty("marraigeTenantid")
     private String tenantid;
 
     @Size(max = 64)
@@ -56,6 +56,7 @@ public class MarriageApplicationDetail {
     @Size(max = 64)
     @JsonProperty("marraigeWardCode")
     private String ward_code;
+
 
     @Size(max = 1000)
     @JsonProperty("marriageStreetEn")
@@ -101,41 +102,6 @@ public class MarriageApplicationDetail {
     @JsonProperty("marraigeOthersSpecify")
     private String othersspecify;
 
-    @Size(max = 15)
-    @JsonProperty("WitnessDetails")
-    private String adharno;
-
-    @Size(max = 200)
-    @JsonProperty("witnessNameEn")
-    private String name_en;
-
-    @Size(max = 200)
-    @JsonProperty("witnessNameMal")
-    private String name_mal;
-
-
-    @JsonProperty("witnessAge")
-    private Integer age;
-
-    @Size(max = 200)
-    @JsonProperty("witnessAddresSEn")
-    private String address_en;
-
-    @Size(max = 200)
-    @JsonProperty("witnessAddressMal")
-    private String address_mal;
-
-    @Size(max = 150)
-    @JsonProperty("witnessMobile")
-    private String mobile;
-
-    @JsonProperty("witnessISmessageReceived")
-    private Boolean is_message_received;
-
-    @JsonProperty("witnessISEsigned")
-    private     Boolean is_esigned;
-
-
     @Size(max = 64)
     @JsonProperty("marraigeApplicationType")
     private String applicationtype;
@@ -152,6 +118,13 @@ public class MarriageApplicationDetail {
     @JsonProperty("marraigeFileNo")
     private String fileno;
 
+
+    @Size(max = 64)
+    @JsonProperty("registrationno")
+    private String registrationno;
+
+    @JsonProperty("registration_date")
+    private Long registrationDate;
 
     @JsonProperty("marraigeFileDate")
     private long file_date;
