@@ -60,7 +60,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   function setSelectadrsVillage(value) {
     setadrsVillage(value);
     if (isPrsentAddress) {
-      setadrsPermntOutsideIndiaVillage(presentOutSideIndiaadrsVillage);
+      setadrsPermntOutsideIndiaVillage(value);
     } else {
       setadrsPermntOutsideIndiaVillage('');
     }
@@ -73,7 +73,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     } else {
       setadrsCityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaCityTown(presentOutSideIndiaadrsCityTown);
+        setadrsPermntOutsideIndiaCityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       } else {
         setadrsPermntOutsideIndiaCityTown('');
       }
@@ -87,7 +87,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     } else {
       setAdressEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneEn(presentOutSideIndiaAdressEn);
+        setadrsPermntOutsideIndiaLineoneEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       } else {
         setadrsPermntOutsideIndiaLineoneEn('');
       }
@@ -99,7 +99,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     }
     setAdressEnB(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     if (isPrsentAddress) {
-      setadrsPermntOutsideIndiaLinetwoEn(presentOutSideIndiaAdressEnB);
+      setadrsPermntOutsideIndiaLinetwoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     } else {
       setadrsPermntOutsideIndiaLinetwoEn('');
     }
@@ -111,7 +111,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     } else {
       setAdressMlB(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoMl(presentOutSideIndiaAdressMlB);
+        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       } else {
         setadrsPermntOutsideIndiaLinetwoMl('');
       }
@@ -123,7 +123,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     } else {
       setAdressMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneMl(presentOutSideIndiaAdressMl);
+        setadrsPermntOutsideIndiaLineoneMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       } else {
         setadrsPermntOutsideIndiaLinetwoEn('');
       }
@@ -137,7 +137,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     } else {
       setProvinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceEn(presentOutSideIndiaProvinceEn);
+        setPermntOutsideIndiaprovinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       } else {
         setPermntOutsideIndiaprovinceEn('');
       }
@@ -149,7 +149,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     } else {
       setProvinceMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceMl(presentOutSideIndiaProvinceEn);
+        setPermntOutsideIndiaprovinceMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
       } else {
         setPermntOutsideIndiaprovinceMl('');
       }
@@ -177,7 +177,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
       } else {
         setPostCode(e.target.value);
         if (isPrsentAddress) {
-          setPermantpostCode(presentOutSideIndiaPostCode);
+          setPermantpostCode(e.target.value);
         } else {
           setPermantpostCode('');
         }
@@ -185,23 +185,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     }
   }
   const goNext = () => {
-    // sessionStorage.setItem("presentOutSideIndiaAdressEn", presentOutSideIndiaAdressEn ? presentOutSideIndiaAdressEn  : null);
-    // sessionStorage.setItem("presentOutSideIndiaAdressMl", presentOutSideIndiaAdressMl  ? presentOutSideIndiaAdressMl  : null);
-    // sessionStorage.setItem("presentOutSideIndiaAdressEnB", presentOutSideIndiaAdressEnB  ? presentOutSideIndiaAdressEnB  : null);
-    // sessionStorage.setItem("presentOutSideIndiaAdressMlB", presentOutSideIndiaAdressMlB  ? presentOutSideIndiaAdressMlB  : null) ;
-    // sessionStorage.setItem("presentOutSideIndiaAdressMlB", presentOutSideIndiaAdressMlB  ? presentOutSideIndiaAdressMlB  : null);
-    // sessionStorage.setItem("presentOutSideIndiaLocalityMl", presentOutSideIndiaLocalityMl  ? presentOutSideIndiaLocalityMl  : null);
-    // sessionStorage.setItem("presentOutSideIndiaProvinceEn", presentOutSideIndiaProvinceEn  ? presentOutSideIndiaProvinceEn  : null);
-    // sessionStorage.setItem("presentOutSideIndiaProvinceMl", presentOutSideIndiaProvinceMl  ? presentOutSideIndiaProvinceMl  : null);
-    // sessionStorage.setItem("presentOutSideIndiaPostCode", presentOutSideIndiaPostCode  ? presentOutSideIndiaPostCode  : null);
-    // sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry ? presentOutSideCountry.code : null);
-    // sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry  ? presentOutSideCountry  : null);
-    // sessionStorage.setItem("presentOutSideIndiaResNoMl", presentOutSideIndiaResNoMl  ? presentOutSideIndiaResNoMl  : null);
-    // sessionStorage.setItem("presentOutSideIndiaHouseNameEn", presentOutSideIndiaHouseNameEn  ? presentOutSideIndiaHouseNameEn  : null);
-    // sessionStorage.setItem("presentOutSideIndiaHouseNameMl", presentOutSideIndiaHouseNameMl  ? presentOutSideIndiaHouseNameMl  : null);
-    // sessionStorage.setItem("presentOutSideIndiaadrsVillage", presentOutSideIndiaadrsVillage ? presentOutSideIndiaadrsVillage.code : null);
-    // sessionStorage.setItem("presentOutSideIndiaadrsCityTown", presentOutSideIndiaadrsCityTown ? presentOutSideIndiaadrsCityTown : null);
-    // onSelect(config.key, { presentOutSideIndiaadrsVillage,presentOutSideIndiaadrsCityTown, presentOutSideIndiaAdressEn, presentOutSideIndiaAdressEnB, presentOutSideIndiaAdressMlB, presentOutSideIndiaAdressMlB, presentOutSideIndiaProvinceEn,  presentOutSideCountry, });
+   
   };
   if (isCountryLoading) {
     return <Loader></Loader>;
