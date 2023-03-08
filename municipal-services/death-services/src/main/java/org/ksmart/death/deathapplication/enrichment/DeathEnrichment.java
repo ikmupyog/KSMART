@@ -683,5 +683,29 @@ public class DeathEnrichment implements BaseEnrichment{
         });
 
     }
+     //Rakhi S on 08.03.2023 Abandoned Update
+    public void enrichAbandonedUpdate(DeathAbandonedRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        request.getDeathAbandonedDtls()
+                 .forEach(deathDtls -> {
+                    DeathBasicInfo deathBasicDtls = deathDtls.getDeathBasicInfo();
+                    DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
+                    deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
+                    DeathFamilyInfo deathFamilyDtls =deathDtls.getDeathFamilyInfo() ;
+                    DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
+                    deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
+                    deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
+                    deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+                    DeathAbandonedInformantDtls deathInformant =deathDtls.getDeathInformantDtls() ;
+                    if (deathInformant!=null){
+                        DeathAbandonedInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathAbandonedInformantDtls.class);
+                    deathInformant.setInformantAadhaarNo(deathInformantEnc.getInformantAadhaarNo());
+                    }                    
+                    deathDtls.setDeathAuditDetails(auditDetails);
+                } );        
+    }//UPDATE END
 
 }

@@ -181,9 +181,34 @@ public class DeathApplnService {
           enrichmentService.setAbandonedACKNumber(request);         
              
           producer.push(deathConfig.getSaveDeathAbandonedTopic(), request);
-          // workflowIntegrator.callWorkFlow(request);
+          workflowIntegrator.callWorkFlowAbandoned(request);
           return request.getDeathAbandonedDtls();
      }
+     //RAkhi S ikm  on 08.03.2023 - Service to update Abandoned request
+     public List<DeathAbandonedDtls> updateAbandoned(DeathAbandonedRequest request) {
+          
+          enrichmentService.setAbandonedPresentAddress(request);
+          enrichmentService.setAbandonedPermanentAddress(request);
+          String ackNumber = request.getDeathAbandonedDtls().get(0).getDeathBasicInfo().getDeathACKNo();
+          DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
+                                        .deathACKNo(ackNumber)
+                                        .build());
+
+          List<DeathAbandonedDtls> searchResult = repository.getDeathAbandoned(criteria,request.getRequestInfo());
+          validatorService.validateAbandonedUpdate(request, searchResult);                   
+          enrichmentService.enrichAbandonedUpdate(request);
+          workflowIntegrator.callWorkFlowAbandoned(request);
+          producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+          
+          List<DeathAbandonedDtls> response = new ArrayList<>();
+          
+          DeathAbandonedRequest result = DeathAbandonedRequest
+                                   .builder()
+                                   .requestInfo(request.getRequestInfo())
+                                   .deathAbandonedDtls(request.getDeathAbandonedDtls())
+                                   .build();
+          return result.getDeathAbandonedDtls();
+     } 
 }
   /********************************************* */
 

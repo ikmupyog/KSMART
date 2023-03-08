@@ -139,5 +139,22 @@ public class DeathRegistryInformantDtls {
 
     @JsonProperty("DocumentFileStoreId")
     private String documentFileStoreId ;
+
+//Rakhi  S ikm on 08.03.2023
+    @JsonProperty("InformantOfficeAuthority")
+    private String informantOfficeAuthority ;
+
+    @JsonProperty("InformantDesignation")
+    private String informantDesignation ;
+
+    @JsonProperty("InformantName")
+    private String informantName ;
+
+    @JsonProperty("InformantPENNo")
+    private String informantPENNo ;
     
+    @JsonProperty("InformantOfficeAddress")
+    private String informantOfficeAddress ;
+
+  
 }

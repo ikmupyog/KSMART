@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.ksmart.death.deathapplication.repository.querybuilder.DeathApplnQueryBuilder;
+import org.ksmart.death.deathapplication.repository.rowmapper.DeathAbandonedRowMapper;
 import org.ksmart.death.deathapplication.repository.rowmapper.DeathApplnRowMapper;
 import org.ksmart.death.deathapplication.repository.rowmapper.DeathCorrectionRowMapper;
 import org.ksmart.death.deathapplication.util.DeathConstants;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedDtls;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
@@ -49,14 +52,18 @@ public class DeathApplnRepository {
     private final DeathApplnQueryBuilder queryBuilder;
     private final DeathApplnRowMapper rowMapper;
     private final DeathCorrectionRowMapper correctionRowMapper;
+    //rakhi S on 08.03.2023
+    private final DeathAbandonedRowMapper abandonedRowMapper;
 
     @Autowired
     DeathApplnRepository(JdbcTemplate jdbcTemplate, DeathApplnQueryBuilder queryBuilder,
-                        DeathApplnRowMapper rowMapper ,DeathCorrectionRowMapper correctionRowMapper) {
+                        DeathApplnRowMapper rowMapper ,DeathCorrectionRowMapper correctionRowMapper,
+                        DeathAbandonedRowMapper abandonedRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
         this.correctionRowMapper = correctionRowMapper;
+        this.abandonedRowMapper = abandonedRowMapper;
         
     }
      //Jasmine on 07.02.2023
@@ -195,6 +202,55 @@ public class DeathApplnRepository {
 
                 deathDtl.getDeathCorrectionBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
                 deathDtl.getDeathCorrectionBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);
+               }
+
+			});
+        }
+        return result; 
+    }
+
+    //Rakhi S on 08.03.2023
+    public List<DeathAbandonedDtls> getDeathAbandoned(DeathSearchCriteria criteria,RequestInfo requestInfo) {
+        
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<DeathAbandonedDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), abandonedRowMapper);
+        if(result != null) {
+			result.forEach(deathDtl -> {
+
+                DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();
+                //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
+                DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
+                deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
+                DeathFamilyInfo deathFamilyDtls =deathDtl.getDeathFamilyInfo() ;
+                DeathFamilyInfo deathFamilyDcr = encryptionDecryptionUtil.decryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class,requestInfo);
+                deathFamilyDtls.setFatherAadharNo(deathFamilyDcr.getFatherAadharNo());
+                deathFamilyDtls.setMotherAadharNo(deathFamilyDcr.getMotherAadharNo());
+                deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar()); 
+                DeathAbandonedInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
+                if (deathInformant!=null){
+                    DeathAbandonedInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
+                    deathInformant.setInformantAadhaarNo(deathInformantEnc.getInformantAadhaarNo());
+                }
+                if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
+                    Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    
+                                           , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                           , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                   Map<String,List<String>> masterDataHospital = getAttributeValuesHospital(mdmsDataHospital);
+
+                   Object mdmsDataHospitalMl = util.mDMSCallHospitalMl(requestInfo  
+                                           , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                           , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                   Map<String,List<String>> masterDataHospitalMl = getAttributeValuesHospital(mdmsDataHospitalMl);
+
+                   String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_LIST).toString();
+                   deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
+
+                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_LIST).toString();
+                   deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
+
+                deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
+                deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);
                }
 
 			});

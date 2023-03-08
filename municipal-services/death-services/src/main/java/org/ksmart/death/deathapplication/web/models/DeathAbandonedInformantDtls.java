@@ -41,7 +41,7 @@ public class DeathAbandonedInformantDtls {
     private String informantAadhaarNo ;
 
     @JsonProperty("InformantMobileNo")
-    private Long informantMobileNo;
+    private String informantMobileNo;
 
     @JsonProperty("InformantAddress")
     private String informantAddress;

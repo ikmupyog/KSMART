@@ -214,4 +214,25 @@ public class DeathApplnController {
         return ResponseEntity.ok(response);
     }
 
+    //Rakhi S on 08.03.2023 - Death Abandoned Update  
+    @PostMapping("/deathdetails/_updatedeathabandoned")
+    public ResponseEntity<DeathAbandonedResponse> update(@RequestBody DeathAbandonedRequest request) {
+ 
+        List<DeathAbandonedDtls> deathDetails = deathService.updateAbandoned(request);
+        String status=request.getDeathAbandonedDtls().get(0).getApplicationStatus();
+        String applicationType =request.getDeathAbandonedDtls().get(0).getApplicationType();
+
+        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathAbandonedDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){         
+            DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryAbandonedRequest(request);
+            List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
+        }  
+
+        DeathAbandonedResponse response = DeathAbandonedResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                        .deathAbandonedDtls(deathDetails)
+                                        .build();
+        return ResponseEntity.ok(response);    
+    }
+
 }
