@@ -858,6 +858,22 @@ export const newConfig = [
     head: "New IFTE & OS License Application",
     body: [
       {
+        type: "component",
+        route: "mapnewtrade",
+        component: "TLSelectGeolocation",
+        nextStep: "license-unit-det",
+        hideInEmployee: true,
+        key: "TradeDetails",
+        withoutLabel: true,
+        texts: {
+            header: "TL_GEOLOACTION_HEADER",
+            // cardText: "TL_GEOLOCATION_TEXT",
+            // nextText: "CS_COMMON_NEXT",
+            submitBarLabel: "CS_COMMON_NEXT",
+            skipAndContinueText: "CORE_COMMON_SKIP_CONTINUE"
+        }
+    },
+      {
         //if want to input index in url just pul @0 after route name owner-ship-details@0
         type: "component",
         route: "license-unit-det",

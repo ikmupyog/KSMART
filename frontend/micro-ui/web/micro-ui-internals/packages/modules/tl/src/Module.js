@@ -71,6 +71,7 @@ import SearchRenewalTrade from "./pages/citizen/SearchRenewalTrade";
 import SearchLicenseRenewal from "./components/SearchLicenseRenewal";
 import TLLicenseUnitDetRenewal from "./pageComponents/TLLicenseUnitDetRenewal";
 import TLLicenseApplicantDetRenewal from './pageComponents/TLLicenseApplicantDetRenewal';
+import TLLocationSearch from './pageComponents/TLLocationSearch';
 
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -184,7 +185,8 @@ const componentsToRegister = {
   TLSearchRenewalTrade : SearchRenewalTrade,
   SearchLicenseRenewal,
   TLLicenseUnitDetRenewal,
-  TLLicenseApplicantDetRenewal
+  TLLicenseApplicantDetRenewal,
+  TLLocationSearch
 };
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {
