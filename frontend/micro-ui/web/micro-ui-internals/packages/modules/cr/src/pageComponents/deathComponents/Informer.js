@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const Informer = ({ config, onSelect, userType, formData }) => {
+const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};

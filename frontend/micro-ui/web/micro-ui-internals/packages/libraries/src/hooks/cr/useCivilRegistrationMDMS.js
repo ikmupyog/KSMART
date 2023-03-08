@@ -5,6 +5,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useWorkFlowBirth = () => {
     return useQuery("CR_BIRTH_WORKFLOW", () => MdmsService.getWorkFlowBirthMaster(tenantId, moduleCode), config);
   };
+  const useWorkFlowDeath = () => {
+    return useQuery("CR_DEATH_WORKFLOW", () => MdmsService.getWorkFlowDeathMaster(tenantId, moduleCode), config);
+  };
   const useLocalBodyMaster = () => {
     return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
   };
@@ -272,6 +275,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   switch (type) {
     case "WorkFlowBirth":
       return useWorkFlowBirth();
+    case "WorkFlowDeath":
+      return useWorkFlowDeath();
     case "tenants":
       return useLocalBodyMaster();
     case "QualificationSub":
@@ -296,8 +301,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useDocumentTypeB();
     case "IdProof":
       return useIdProof();
-      case "IdProofDetails":
-        return useIdProofDetails();  
+    case "IdProofDetails":
+      return useIdProofDetails();
     case "DeathPlaceType":
       return useCRDeathPlaceType();
     case "VehicleType":
