@@ -7,32 +7,32 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData }) =>
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : false);
-  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : "");
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : "");
-  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : "");
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration : false);
+  const [isCaretaker, setIsCaretaker] = useState(formData?.StillBirthInitiatorDetails?.isCaretaker ? formData?.StillBirthInitiatorDetails?.isCaretaker : false);
+  const [relation, setrelation] = useState(formData?.StillBirthInitiatorDetails?.relation ? formData?.StillBirthInitiatorDetails?.relation : "");
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.StillBirthInitiatorDetails?.initiatorNameEn ? formData?.StillBirthInitiatorDetails?.initiatorNameEn : "");
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.StillBirthInitiatorDetails?.initiatorAadhar ? formData?.StillBirthInitiatorDetails?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.StillBirthInitiatorDetails?.initiatorMobile ? formData?.StillBirthInitiatorDetails?.initiatorMobile : "");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.StillBirthInitiatorDetails?.initiatorDesi ? formData?.StillBirthInitiatorDetails?.initiatorDesi : "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.StillBirthInitiatorDetails?.initiatorAddress ? formData?.StillBirthInitiatorDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
-  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
-  const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
-  const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
-  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
+  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.StillBirthInitiatorDetails?.initiatorNameEn ? false : false);
+  const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.StillBirthInitiatorDetails?.initiatorAadhar ? false : false);
+  const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.StillBirthInitiatorDetails?.initiatorMobile ? false : false);
+  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.StillBirthInitiatorDetails?.initiatorDesi ? false : false);
  
   const onSkip = () => onSelect();
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
+      if (formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration != null) {
         setIsInitialRender(false);
-        setisInitiatorDeclaration(formData?.InitiatorinfoDetails?.isInitiatorDeclaration);
+        setisInitiatorDeclaration(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration);
       }
-      if (formData?.InitiatorinfoDetails?.isCaretaker != null) {
+      if (formData?.StillBirthInitiatorDetails?.isCaretaker != null) {
         setIsInitialRender(false);
-        setIsCaretaker(formData?.InitiatorinfoDetails?.isCaretaker);
+        setIsCaretaker(formData?.StillBirthInitiatorDetails?.isCaretaker);
       }
     }
   }, [isInitialRender]);
