@@ -60,6 +60,8 @@ public class EmployeeSearchCriteria {
 	
 	public List<String> rolecodes;
 
+	public String hospitalcode;
+
 	public boolean isCriteriaEmpty(EmployeeSearchCriteria criteria) {
 		if(CollectionUtils.isEmpty(criteria.getCodes()) && CollectionUtils.isEmpty(criteria.getNames()) 
 				&& CollectionUtils.isEmpty(criteria.getDepartments()) && CollectionUtils.isEmpty(criteria.getDesignations())

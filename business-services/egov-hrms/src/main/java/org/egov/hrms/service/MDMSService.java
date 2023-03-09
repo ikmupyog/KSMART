@@ -2,7 +2,9 @@ package org.egov.hrms.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +46,7 @@ public class MDMSService {
 	 */
 	public Map<String, List<String>> getMDMSData(RequestInfo requestInfo, String tenantId){
 		MdmsResponse response = fetchMDMSData(requestInfo, tenantId);
+
 		Map<String, List<String>> masterData = new HashMap<>();
 		Map<String, List<String>> eachMasterMap = new HashMap<>();
 		if(null != response) {
@@ -181,10 +184,59 @@ public class MDMSService {
 			}
 			moduleDetail.setMasterDetails(masterDetails);
 			moduleDetails.add(moduleDetail);
+			System.out.println("mastr check" + masterDetails);
 		}
+
 		uri.append(mdmsHost).append(mdmsEndpoint);
 		MdmsCriteria mdmsCriteria = MdmsCriteria.builder().tenantId(tenantId).moduleDetails(moduleDetails).build();
 		return MdmsCriteriaReq.builder().requestInfo(requestInfo).mdmsCriteria(mdmsCriteria).build();
+
+	}
+
+	public Object mdmsLocCall(RequestInfo requestInfo, String tenantId) {
+		// Call MDMS microservice with MdmsCriteriaReq as params
+
+		MdmsCriteriaReq mdmsCriteriaReq = getLocRequest(requestInfo, tenantId);
+		String mdmsUri = String.format("%s%s", mdmsHost, mdmsEndpoint);
+		Object result = null;
+		try {
+			result = restTemplate.postForObject(mdmsUri, mdmsCriteriaReq, Map.class);
+		} catch (Exception e) {
+			log.error("Exception occurred while fetching MDMS data: ", e);
+		}
+		return result;
+	}
+
+	private MdmsCriteriaReq getLocRequest(RequestInfo requestInfo, String tenantId) {
+
+		List<ModuleDetail> moduleDetails = new LinkedList<>();
+
+		moduleDetails.addAll(getBoundaryDetails());
+
+		// Prepare MDMS Criteria wih all modules in hrms services and common services
+
+		MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId).build();
+		// Return MDMS criteria request for calling MDMS microservice
+		return MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria).requestInfo(requestInfo).build();
+	}
+
+	public List<ModuleDetail> getBoundaryDetails() {
+		// master details for Boundary
+
+		List<MasterDetail> hospitalMasterDetails = new LinkedList<>();
+
+		List<MasterDetail> masterHospital = Collections
+				.singletonList(MasterDetail.builder().name(HRMSConstants.LOCATION_MDMS_HOSPITAL).build());
+		hospitalMasterDetails.addAll(masterHospital);
+
+		List<MasterDetail> masterInstitution = Collections
+				.singletonList(MasterDetail.builder().name(HRMSConstants.LOCATION_MDMS_INSTITUTION).build());
+		hospitalMasterDetails.addAll(masterInstitution);
+
+		ModuleDetail crModuleDetail = ModuleDetail.builder().masterDetails(hospitalMasterDetails)
+				.moduleName(HRMSConstants.HRMS_MDMS_EGOV_LOCATION_MASTERS_CODE).build();
+
+		return Collections.singletonList(crModuleDetail);
 
 	}
 

@@ -92,6 +92,12 @@ public class Jurisdiction {
 
 	private String zoneCode;
 
+	private String hospitalCode;
+
+	private String hospitalName;
+
+	private String institutiontype;
+
 	@NotEmpty
 	private List<JurisdictionChild> jurisdictionChilds = new ArrayList<>();
 

@@ -29,6 +29,8 @@ public class EmployeeQueryBuilder {
 	public String getEmployeeSearchQuery(EmployeeSearchCriteria criteria,List <Object> preparedStmtList ) {
 		StringBuilder builder = new StringBuilder(EmployeeQueries.HRMS_GET_EMPLOYEES);
 		addWhereClause(criteria, builder, preparedStmtList);
+		System.out.println("query " + builder);
+		System.out.println("criteria " + criteria);
 		return paginationClause(criteria, builder);
 	}
 
@@ -87,6 +89,13 @@ public class EmployeeQueryBuilder {
 		}
 
 		// end
+		// enter hospital code filteration here
+
+		if (!StringUtils.isEmpty(criteria.getHospitalcode())) {
+			builder.append(" jurisdiction.hospitalcode = ?");
+			preparedStmtList.add(criteria.getHospitalcode());
+		}
+		//
 
 		if(!CollectionUtils.isEmpty(criteria.getIds())){
 			builder.append(" and employee.id IN (").append(createQuery(criteria.getIds())).append(")");

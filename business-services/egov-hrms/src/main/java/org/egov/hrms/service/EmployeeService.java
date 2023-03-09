@@ -85,6 +85,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmployeeService {
 
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
@@ -200,11 +201,12 @@ public class EmployeeService {
 		if(userChecked)
 			criteria.setTenantId(null);
         List <Employee> employees = new ArrayList<>();
-		System.out.println("mob" + criteria.getPhone());
+
 
 		if (!((!CollectionUtils.isEmpty(criteria.getRoles()) || !CollectionUtils.isEmpty(criteria.getNames())
 				|| !CollectionUtils.isEmpty(criteria.getRolecodes())
-				|| !StringUtils.isEmpty(criteria.getPhone()) || !CollectionUtils.isEmpty(criteria.getWardcodes()))
+				|| !StringUtils.isEmpty(criteria.getPhone()) || !StringUtils.isEmpty(criteria.getHospitalcode())
+				|| !CollectionUtils.isEmpty(criteria.getWardcodes()))
 				&& CollectionUtils.isEmpty(criteria.getUuids())))
         	 employees = repository.fetchEmployees(criteria, requestInfo);
         	//		{
@@ -426,7 +428,9 @@ public class EmployeeService {
 						.filter(jurisdictionData ->jurisdictionData.getId().equals(jurisdiction.getId() ))
 						.findFirst().orElse(null)
 						.equals(jurisdiction)){
-					jurisdiction.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+//					jurisdiction.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+
+					jurisdiction.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 					jurisdiction.getAuditDetails().setLastModifiedDate(new Date().getTime());
 				}
 			}
@@ -442,8 +446,9 @@ public class EmployeeService {
 				} else {
 
 
-					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
-					child.getAuditDetails().setLastModifiedDate(new Date().getTime());
+//					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+// 					child.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
+// 					child.getAuditDetails().setLastModifiedDate(new Date().getTime());
 				}
 			});
 		});
@@ -456,7 +461,8 @@ public class EmployeeService {
 						.filter(assignmentData -> assignmentData.getId().equals(assignment.getId()))
 						.findFirst().orElse(null)
 						.equals(assignment)){
-					assignment.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+//					assignment.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+					assignment.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 					assignment.getAuditDetails().setLastModifiedDate(new Date().getTime());
 				}
 			}
@@ -474,7 +480,8 @@ public class EmployeeService {
 							.filter(serviceHistoryData -> serviceHistoryData.getId().equals(serviceHistory.getId()))
 							.findFirst().orElse(null)
 							.equals(serviceHistory)){
-						serviceHistory.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+//						serviceHistory.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+						serviceHistory.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						serviceHistory.getAuditDetails().setLastModifiedDate(new Date().getTime());
 					}
 				}
@@ -495,7 +502,9 @@ public class EmployeeService {
 							.filter(educationalQualificationData -> educationalQualificationData.getId().equals(educationalQualification.getId()))
 							.findFirst().orElse(null)
 							.equals(educationalQualification)){
-						educationalQualification.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+//						educationalQualification.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+						educationalQualification.getAuditDetails()
+								.setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						educationalQualification.getAuditDetails().setLastModifiedDate(new Date().getTime());
 					}
 				}
@@ -516,7 +525,8 @@ public class EmployeeService {
 							.filter(departmentalTestData -> departmentalTestData.getId().equals(departmentalTest.getId()))
 							.findFirst().orElse(null)
 							.equals(departmentalTest)){
-						departmentalTest.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+//						departmentalTest.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+						departmentalTest.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						departmentalTest.getAuditDetails().setLastModifiedDate(new Date().getTime());
 					}
 				}
@@ -534,7 +544,8 @@ public class EmployeeService {
 							.filter(documentData -> documentData.getId().equals(document.getId()))
 							.findFirst().orElse(null)
 							.equals(document)){
-						document.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+//						document.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+						document.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						document.getAuditDetails().setLastModifiedDate(new Date().getTime());
 					}
 				}
@@ -555,7 +566,8 @@ public class EmployeeService {
 							.filter(deactivationDetailsData -> deactivationDetailsData.getId().equals(deactivationDetails.getId()))
 							.findFirst().orElse(null)
 							.equals(deactivationDetails)){
-						deactivationDetails.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+//						deactivationDetails.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+						deactivationDetails.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						deactivationDetails.getAuditDetails().setLastModifiedDate(new Date().getTime());
 					}
 				}
@@ -576,7 +588,8 @@ public class EmployeeService {
 							.filter(reactivationDetails1 -> reactivationDetails1.getId().equals(reactivationDetails.getId()))
 							.findFirst().orElse(null)
 							.equals(reactivationDetails)){
-						reactivationDetails.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+//						reactivationDetails.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUserName());
+						reactivationDetails.getAuditDetails().setLastModifiedBy(requestInfo.getUserInfo().getUuid());
 						reactivationDetails.getAuditDetails().setLastModifiedDate(new Date().getTime());
 					}
 				}
