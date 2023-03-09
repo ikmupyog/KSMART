@@ -23,4 +23,10 @@ public class MarriageApplicationConfiguration {
 //     private String saveMarriageApplicationTopic;
      @Value("${persister.update.marriage.application.topic}")
      private String updateMarriageApplicationTopic;
+
+    @Value("${egov.idgen.marriagehapp.name}")
+    private String marriageApplNumberIdName;
+
+    @Value("${egov.idgen.marriageapplnum.name}")
+    private String marriageApplNumberIdgenName;
 }
