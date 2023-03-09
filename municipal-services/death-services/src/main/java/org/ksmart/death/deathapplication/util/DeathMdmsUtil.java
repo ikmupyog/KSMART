@@ -268,7 +268,7 @@ public class DeathMdmsUtil {
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
         final String perAddrfilterCode = "$.[?(@.code=='"+deathPlace+"')].address";
         crDeathMasterDetails
-                .add(MasterDetail.builder().name(DeathConstants.HOSPITAL_LIST).filter(perAddrfilterCode).build());  
+                .add(MasterDetail.builder().name(DeathConstants.HOSPITAL_DATA).filter(perAddrfilterCode).build());  
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(DeathConstants.TENANT_EGOV_LOCATION).build();
@@ -316,7 +316,7 @@ public class DeathMdmsUtil {
         List<MasterDetail> crDeathMasterDetails = new ArrayList<>();      
         final String perAddrfilterCode = "$.[?(@.code=='"+deathPlace+"')].addressLocal";
         crDeathMasterDetails
-                .add(MasterDetail.builder().name(DeathConstants.HOSPITAL_LIST).filter(perAddrfilterCode).build());  
+                .add(MasterDetail.builder().name(DeathConstants.HOSPITAL_DATA).filter(perAddrfilterCode).build());  
 
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(DeathConstants.TENANT_EGOV_LOCATION).build();
