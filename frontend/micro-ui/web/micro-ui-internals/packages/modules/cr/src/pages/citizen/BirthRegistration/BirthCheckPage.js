@@ -283,7 +283,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :
-                      {t(ChildDetails.publicPlaceType ? ChildDetails.publicPlaceType : "CR_NOT_RECORDED") +
+                      {t(ChildDetails.publicPlaceType.name ? ChildDetails.publicPlaceType.name : "CR_NOT_RECORDED") +
                         // " , " +
                         // ChildDetails.wardNo +
                         " , " +
@@ -293,7 +293,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         // " , " +
                         ChildDetails.publicPlaceDecpEn +
                         " / " +
-                        t(ChildDetails.publicPlaceType ? ChildDetails.publicPlaceType : "CR_NOT_RECORDED") +
+                        t(ChildDetails.publicPlaceType.namelocal ? ChildDetails.publicPlaceType.namelocal : "CR_NOT_RECORDED") +
                         // " , " +
                         // ChildDetails.wardNo +
                         " , " +
