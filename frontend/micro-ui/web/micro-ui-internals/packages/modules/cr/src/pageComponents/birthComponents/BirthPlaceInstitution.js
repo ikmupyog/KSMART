@@ -101,7 +101,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}</CardLabel>
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>              
               <Dropdown
                 t={t}
                 optionKey="institutionName"
@@ -112,7 +112,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}</CardLabel>
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel> 
               <Dropdown
                 t={t}
                 optionKey="institutionNamelocal"

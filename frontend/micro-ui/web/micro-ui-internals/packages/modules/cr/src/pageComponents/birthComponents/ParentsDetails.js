@@ -462,7 +462,6 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     }
     if (fatherMobile != null || fatherMobile != "" || fatherMobile != undefined) {
       let mobileLength = fatherMobile;
-      console.log(mobileLength);
       if (mobileLength.length < 10 || mobileLength.length > 10) {
         validFlag = false;
         setFatherMobileError(true);
