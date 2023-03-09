@@ -425,6 +425,7 @@ public DeathRegistryCorrectionBasicInfo createCorrectionRegistryBasicInfo(DeathC
 }
 
 //Rakhi S ikm on 08.03.2023 Abandoned Registry Request create
+
 public DeathRegistryRequest createRegistryAbandonedRequest(DeathAbandonedRequest deathrequest ){
 
     RequestInfo requestInfo = deathrequest.getRequestInfo();
@@ -465,6 +466,7 @@ public DeathRegistryRequest createRegistryAbandonedRequest(DeathAbandonedRequest
 }
 
 //Rakhi S ikm on 08.03.2023 Abandoned Registry Basic info Request create
+
 public DeathRegistryBasicInfo createRegistryBasicInfoAbandoned(DeathAbandonedRequest deathrequest){
 
     DeathRegistryBasicInfo deathRegistryBasicInfo=new DeathRegistryBasicInfo();
@@ -543,6 +545,7 @@ public DeathRegistryBasicInfo createRegistryBasicInfoAbandoned(DeathAbandonedReq
 
 }
 //Rakhi S ikm on 08.03.2023 Abandoned Registry statistical info Request create
+
 public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(DeathAbandonedRequest deathrequest){
 
     DeathStatisticalInfo statisticalDtls = deathrequest.getDeathAbandonedDtls().get(0).getDeathStatisticalInfo();

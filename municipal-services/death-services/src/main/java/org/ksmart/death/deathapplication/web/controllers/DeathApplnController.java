@@ -172,7 +172,7 @@ public class DeathApplnController {
         
     @PostMapping("/deathdetails/_updatedeathcorrection")
     public ResponseEntity<DeathCorrectionResponse> update(@RequestBody DeathCorrectionRequest request) {
- System.out.println("HiCorrectionUpdate");
+
         List<DeathCorrectionDtls> deathDetails = deathService.updateCorrection(request);
 
         String status=request.getDeathCorrection().get(0).getApplicationStatus();

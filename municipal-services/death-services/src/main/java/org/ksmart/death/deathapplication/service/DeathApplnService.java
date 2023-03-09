@@ -211,7 +211,7 @@ public class DeathApplnService {
                                    .build();
           return result.getDeathAbandonedDtls();
      } 
-}
+
   /********************************************* */
 
 //   try {
@@ -225,3 +225,4 @@ public class DeathApplnService {
 
 
 /********************************************** */
+}
