@@ -1362,9 +1362,9 @@ serviceMaps:
       jsonMaps:
       - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrId
 
-      - jsonPath: $.deathAbandonedDtls.*.InformationDeath.Id
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.Id
 
-      - jsonPath: $.deathAbandonedDtls.*.InformationDeath.TenantId
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TenantId
 
       - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PresentAddrTypeId
 
@@ -1430,9 +1430,9 @@ serviceMaps:
       jsonMaps:
       - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrId
       
-      - jsonPath: $.deathAbandonedDtls.*.InformationDeath.Id
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.Id
 
-      - jsonPath: $.deathAbandonedDtls.*.InformationDeath.TenantId
+      - jsonPath: $.deathAbandonedDtls.*.InformationDeathAbandoned.TenantId
 
       - jsonPath: $.deathAbandonedDtls.*.AddressBirthDetails.PermanentAddrTypeId
 

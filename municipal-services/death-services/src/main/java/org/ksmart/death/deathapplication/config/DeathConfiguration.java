@@ -60,5 +60,9 @@ public class DeathConfiguration {
      @Value("${persister.update.deathcorrection.topic}")
      private String updateDeathCorrectionTopic;
      
+
+     //Persister Abandoned - Rakhi S on 06.03.2023
+     @Value("${persister.save.deathabandoned.topic}")
+     private String saveDeathAbandonedTopic;
     
 }

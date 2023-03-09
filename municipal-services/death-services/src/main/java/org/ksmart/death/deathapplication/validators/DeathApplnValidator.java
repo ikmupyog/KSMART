@@ -14,6 +14,8 @@ import static org.ksmart.death.deathapplication.web.enums.ErrorCodes.DEATH_REG_I
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.ksmart.death.deathapplication.util.DeathConstants;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedDtls;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedRequest;
 import org.ksmart.death.deathapplication.web.models.DeathAddressInfo;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
@@ -723,6 +725,24 @@ public void validateCommonFields(DeathDtlRequest request) {
 //         }
   
 //     });
+}
+//Rakhi S on 08.03.2023
+public void validateAbandonedUpdate(DeathAbandonedRequest request, List<DeathAbandonedDtls> searchResult) {
+    List<DeathAbandonedDtls> deathdetails = request.getDeathAbandonedDtls();
+
+    if (CollectionUtils.isEmpty(deathdetails)) {
+        throw new CustomException(DEATH_REG_REQUIRED.getCode(), "Death registration is required.");
+    }
+
+    if (deathdetails.size() > 1) { // NOPMD
+        throw new CustomException(DEATH_REG_INVALID_UPDATE.getCode(),
+                "Supports only single Death registration update request.");
+    }
+
+    if (deathdetails.size() != searchResult.size()) {
+        throw new CustomException(DEATH_REG_INVALID_UPDATE.getCode(),
+                "Death registration(s) not found in database.");
+    }
 }
     
 }

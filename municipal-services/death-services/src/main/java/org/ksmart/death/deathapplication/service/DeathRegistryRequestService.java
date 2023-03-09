@@ -3,6 +3,9 @@ package org.ksmart.death.deathapplication.service;
 import java.util.List;
 
 import org.egov.common.contract.request.RequestInfo;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedDtls;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedInformantDtls;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedRequest;
 import org.ksmart.death.deathapplication.web.models.DeathAddressInfo;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
@@ -272,9 +275,9 @@ public class DeathRegistryRequestService {
         DeathInformantDtls deathInformantDtls = deathrequest.getDeathCertificateDtls().get(0).getDeathInformantDtls();
         DeathRegistryInformantDtls registryInformantDtls = new DeathRegistryInformantDtls();
        registryInformantDtls.setInformantAadharNo(deathInformantDtls.getInformantAadharNo());
-       registryInformantDtls.setInformantNameEn(deathInformantDtls.getInformantAadharNo());
-       registryInformantDtls.setInformantMobileNo(deathInformantDtls.getInformantAadharNo());
-       registryInformantDtls.setDeathSignedOfficerDesignation(deathInformantDtls.getInformantAadharNo());
+       registryInformantDtls.setInformantNameEn(deathInformantDtls.getInformantNameEn());
+       registryInformantDtls.setInformantMobileNo(deathInformantDtls.getInformantMobileNo());
+       registryInformantDtls.setDeathSignedOfficerDesignation(deathInformantDtls.getDeathSignedOfficerDesignation());
        registryInformantDtls.setInformantAddress(deathInformantDtls.getInformantAddress());
        registryInformantDtls.setDeclarationInformant(deathInformantDtls.isDeclarationInformant());
         return registryInformantDtls;
@@ -421,4 +424,241 @@ public DeathRegistryCorrectionBasicInfo createCorrectionRegistryBasicInfo(DeathC
 
 }
 
+//Rakhi S ikm on 08.03.2023 Abandoned Registry Request create
+public DeathRegistryRequest createRegistryAbandonedRequest(DeathAbandonedRequest deathrequest ){
+
+    RequestInfo requestInfo = deathrequest.getRequestInfo();
+    DeathRegistryRequest request = new DeathRegistryRequest();
+    List<DeathAbandonedDtls> deathDtls = deathrequest.getDeathAbandonedDtls();
+    List<DeathRegistryDtl> deathRegistryDetails =  new LinkedList<>();
+    DeathRegistryDtl deathRegistryReading =  new DeathRegistryDtl();
+
+    deathDtls.forEach(deathdet->{  
+
+        if  (deathdet.getDeathBasicInfo()!=null){
+            deathRegistryReading.setDeathBasicInfo(createRegistryBasicInfoAbandoned(deathrequest));
+        } 
+        if  (deathdet.getDeathStatisticalInfo()!=null){
+            deathRegistryReading.setDeathStatisticalInfo(createRegistryStatisticalInfoAbandoned(deathrequest));
+        }
+
+        if  (deathdet.getDeathFamilyInfo()!=null){
+            deathRegistryReading.setDeathFamilyInfo(createRegistryFamilyInfoAbandoned(deathrequest));
+        }
+        if  (deathdet.getDeathAddressInfo()!=null){
+            deathRegistryReading.setDeathAddressInfo(createRegistryAddressAbandoned(deathrequest));
+        }
+        if  (deathdet.getDeathInformantDtls()!=null){
+            deathRegistryReading.setDeathInformantDtls(createRegistryInformantDtlsAbandoned(deathrequest));
+        }
+
+
+        deathRegistryDetails.add(deathRegistryReading);
+    });
+     request = DeathRegistryRequest
+                .builder()
+                .requestInfo(requestInfo)                                                            
+                .deathCertificateDtls(deathRegistryDetails)
+                .build();
+   
+    return  request;
+}
+
+//Rakhi S ikm on 08.03.2023 Abandoned Registry Basic info Request create
+public DeathRegistryBasicInfo createRegistryBasicInfoAbandoned(DeathAbandonedRequest deathrequest){
+
+    DeathRegistryBasicInfo deathRegistryBasicInfo=new DeathRegistryBasicInfo();
+    DeathBasicInfo deathBasicInfo = deathrequest.getDeathAbandonedDtls().get(0).getDeathBasicInfo();
+    deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
+    deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
+    deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
+    deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
+    deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
+    deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
+    deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
+    deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
+    deathRegistryBasicInfo.setTimeOfDeathUnit(deathBasicInfo.getTimeOfDeathUnit());
+    deathRegistryBasicInfo.setDeathPlace(deathBasicInfo.getDeathPlace());
+    deathRegistryBasicInfo.setDeathPlaceType(deathBasicInfo.getDeathPlaceType());
+    deathRegistryBasicInfo.setDeathPlaceInstId(deathBasicInfo.getDeathPlaceInstId());
+    deathRegistryBasicInfo.setVehicleNumber(deathBasicInfo.getVehicleNumber());
+    deathRegistryBasicInfo.setVehicleNumber(deathBasicInfo.getVehicleNumber());
+    deathRegistryBasicInfo.setVehicleNumber(deathBasicInfo.getVehicleNumber());
+    deathRegistryBasicInfo.setVehicleFromplaceMl(deathBasicInfo.getVehicleFromplaceMl());
+    deathRegistryBasicInfo.setVehicleToPlaceEn(deathBasicInfo.getVehicleToPlaceEn());
+    deathRegistryBasicInfo.setVehicleToPlaceMl(deathBasicInfo.getVehicleToPlaceMl());
+    deathRegistryBasicInfo.setVehicleFirstHaltEn(deathBasicInfo.getVehicleFirstHaltEn());
+    deathRegistryBasicInfo.setVehicleFirstHaltMl(deathBasicInfo.getVehicleFirstHaltMl());
+    deathRegistryBasicInfo.setVehicleHospitalEn(deathBasicInfo.getVehicleHospitalEn());
+    deathRegistryBasicInfo.setDeathPlaceCountry(deathBasicInfo.getDeathPlaceCountry());
+    deathRegistryBasicInfo.setDeathPlaceState(deathBasicInfo.getDeathPlaceState());
+    deathRegistryBasicInfo.setDeathPlaceDistrict(deathBasicInfo.getDeathPlaceDistrict());
+    deathRegistryBasicInfo.setDeathPlaceCity(deathBasicInfo.getDeathPlaceCity());
+    deathRegistryBasicInfo.setDeathPlaceRemarksEn(deathBasicInfo.getDeathPlaceRemarksEn());
+    deathRegistryBasicInfo.setDeathPlaceRemarksMl(deathBasicInfo.getDeathPlaceRemarksMl());
+    deathRegistryBasicInfo.setDeathPlaceWardId(deathBasicInfo.getDeathPlaceWardId());
+    deathRegistryBasicInfo.setPlaceOfBurialEn(deathBasicInfo.getPlaceOfBurialEn());
+    deathRegistryBasicInfo.setPlaceOfBurialMl(deathBasicInfo.getPlaceOfBurialMl());
+    deathRegistryBasicInfo.setDeathPlaceLocalityEn(deathBasicInfo.getDeathPlaceLocalityEn());
+    deathRegistryBasicInfo.setDeathPlaceLocalityMl(deathBasicInfo.getDeathPlaceLocalityMl());
+    deathRegistryBasicInfo.setDeathPlaceStreetEn(deathBasicInfo.getDeathPlaceStreetEn());
+    deathRegistryBasicInfo.setDeathPlaceStreetMl(deathBasicInfo.getDeathPlaceStreetMl());
+    deathRegistryBasicInfo.setGeneralRemarks(deathBasicInfo.getGeneralRemarks());
+    deathRegistryBasicInfo.setDeathPlaceHomeId(deathBasicInfo.getDeathPlaceHomeId());
+    deathRegistryBasicInfo.setDeathDtlId(deathBasicInfo.getDeathDtlId());
+    deathRegistryBasicInfo.setDeathPlaceHomeAddrTypeId(deathBasicInfo.getDeathPlaceHomeAddrTypeId());
+    deathRegistryBasicInfo.setDeathPlaceHomeCountryId(deathBasicInfo.getDeathPlaceHomeCountryId());
+    deathRegistryBasicInfo.setDeathPlaceHomeStateId(deathBasicInfo.getDeathPlaceHomeStateId());
+    deathRegistryBasicInfo.setDeathPlaceHomeDistrictId(deathBasicInfo.getDeathPlaceHomeDistrictId());
+    deathRegistryBasicInfo.setDeathPlaceHomeTalukId(deathBasicInfo.getDeathPlaceHomeTalukId());
+    deathRegistryBasicInfo.setDeathPlaceHomeVillageId(deathBasicInfo.getDeathPlaceHomeVillageId());
+    deathRegistryBasicInfo.setDeathPlaceHomeLbType(deathBasicInfo.getDeathPlaceHomeLbType());
+    deathRegistryBasicInfo.setDeathPlaceHomeWardId(deathBasicInfo.getDeathPlaceHomeWardId());
+    deathRegistryBasicInfo.setDeathPlaceHomePostofficeId(deathBasicInfo.getDeathPlaceHomePostofficeId());
+    deathRegistryBasicInfo.setDeathPlaceHomePincode(deathBasicInfo.getDeathPlaceHomePincode());
+    deathRegistryBasicInfo.setDeathPlaceHomeLocalityEn(deathBasicInfo.getDeathPlaceHomeLocalityEn());
+    deathRegistryBasicInfo.setDeathPlaceHomeLocalityMl(deathBasicInfo.getDeathPlaceHomeLocalityMl());
+    deathRegistryBasicInfo.setDeathPlaceHomeStreetNameEn(deathBasicInfo.getDeathPlaceHomeStreetNameEn());
+    deathRegistryBasicInfo.setDeathPlaceHomeStreetNameMl(deathBasicInfo.getDeathPlaceHomeStreetNameMl());
+    deathRegistryBasicInfo.setDeathPlaceHomeHoueNameEn(deathBasicInfo.getDeathPlaceHomeHoueNameEn());
+    deathRegistryBasicInfo.setDeathPlaceHomeHoueNameMl(deathBasicInfo.getDeathPlaceHomeHoueNameMl());
+    deathRegistryBasicInfo.setDeceasedAadharNotAvailable(deathBasicInfo.getDeceasedAadharNotAvailable());
+    deathRegistryBasicInfo.setDeceasedAadharNumber(deathBasicInfo.getDeceasedAadharNumber());
+    deathRegistryBasicInfo.setDeceasedIdproofType(deathBasicInfo.getDeceasedIdproofType());
+    deathRegistryBasicInfo.setDeceasedIdproofNo(deathBasicInfo.getDeceasedIdproofNo());
+    deathRegistryBasicInfo.setDeceasedFirstNameEn(deathBasicInfo.getDeceasedFirstNameEn());
+    deathRegistryBasicInfo.setDeceasedMiddleNameEn(deathBasicInfo.getDeceasedMiddleNameEn());
+    deathRegistryBasicInfo.setDeceasedLastNameEn(deathBasicInfo.getDeceasedLastNameEn());
+    deathRegistryBasicInfo.setDeceasedFirstNameMl(deathBasicInfo.getDeceasedFirstNameMl());
+    deathRegistryBasicInfo.setDeceasedMiddleNameMl(deathBasicInfo.getDeceasedMiddleNameMl());
+    deathRegistryBasicInfo.setDeceasedLastNameMl(deathBasicInfo.getDeceasedLastNameMl());
+    deathRegistryBasicInfo.setAge(deathBasicInfo.getAge());
+    deathRegistryBasicInfo.setAgeUnit(deathBasicInfo.getAgeUnit());
+    deathRegistryBasicInfo.setDeceasedGender(deathBasicInfo.getDeceasedGender());
+    deathRegistryBasicInfo.setNationality(deathBasicInfo.getNationality());
+    deathRegistryBasicInfo.setReligion(deathBasicInfo.getReligion());
+    deathRegistryBasicInfo.setOccupation(deathBasicInfo.getOccupation());
+    deathRegistryBasicInfo.setDeathACKNo(deathBasicInfo.getDeathACKNo());
+    return deathRegistryBasicInfo;
+
+}
+//Rakhi S ikm on 08.03.2023 Abandoned Registry statistical info Request create
+public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(DeathAbandonedRequest deathrequest){
+
+    DeathStatisticalInfo statisticalDtls = deathrequest.getDeathAbandonedDtls().get(0).getDeathStatisticalInfo();
+    DeathRegistryStatisticalInfo registryStatisticalInfo = new DeathRegistryStatisticalInfo();
+    registryStatisticalInfo.setDeathDtlId(statisticalDtls.getDeathDtlId());
+    registryStatisticalInfo.setTenantId(statisticalDtls.getTenantId());
+    registryStatisticalInfo.setMedicalAttentionType(statisticalDtls.getMedicalAttentionType());
+    registryStatisticalInfo.setIsAutopsyPerformed(statisticalDtls.getIsAutopsyPerformed());
+    registryStatisticalInfo.setIsAutopsyCompleted(statisticalDtls.getIsAutopsyCompleted());
+    registryStatisticalInfo.setMannerOfDeath(statisticalDtls.getMannerOfDeath());
+    registryStatisticalInfo.setDeathMedicallyCertified(statisticalDtls.getDeathMedicallyCertified());
+    registryStatisticalInfo.setDeathCauseMain(statisticalDtls.getDeathCauseMain());
+    registryStatisticalInfo.setDeathCauseMainCustom(statisticalDtls.getDeathCauseMainCustom());
+    registryStatisticalInfo.setDeathCauseMainInterval(statisticalDtls.getDeathCauseMainInterval());
+    registryStatisticalInfo.setDeathCauseMainTimeUnit(statisticalDtls.getDeathCauseMainTimeUnit());
+    registryStatisticalInfo.setDeathCauseSub(statisticalDtls.getDeathCauseSub());
+    registryStatisticalInfo.setDeathCauseSubCustom(statisticalDtls.getDeathCauseSubCustom());
+    registryStatisticalInfo.setDeathCauseSubInterval(statisticalDtls.getDeathCauseSubInterval());
+    registryStatisticalInfo.setDeathCauseSubTimeUnit(statisticalDtls.getDeathCauseSubTimeUnit());
+    registryStatisticalInfo.setDeathCauseSub2(statisticalDtls.getDeathCauseSub2());
+    registryStatisticalInfo.setDeathCauseSubCustom2(statisticalDtls.getDeathCauseSubCustom2());
+    registryStatisticalInfo.setDeathCauseSubInterval2(statisticalDtls.getDeathCauseSubInterval2());
+    registryStatisticalInfo.setDeathCauseSubTimeUnit2(statisticalDtls.getDeathCauseSubTimeUnit2());
+    registryStatisticalInfo.setDeathCauseOther(statisticalDtls.getDeathCauseOther());
+    registryStatisticalInfo.setIsdeceasedPregnant(statisticalDtls.getIsdeceasedPregnant());
+    registryStatisticalInfo.setIsDelivery(statisticalDtls.getIsDelivery());
+    registryStatisticalInfo.setDeathDuringDelivery(statisticalDtls.getDeathDuringDelivery());
+    registryStatisticalInfo.setSmokingType(statisticalDtls.getSmokingType());
+    registryStatisticalInfo.setTobaccoType(statisticalDtls.getTobaccoType());
+    registryStatisticalInfo.setAlcoholType(statisticalDtls.getAlcoholType());
+    return registryStatisticalInfo;    
+    }
+//Rakhi S ikm on 08.03.2023 Abandoned Registry family info Request create
+    public DeathRegistryFamilyInfo createRegistryFamilyInfoAbandoned(DeathAbandonedRequest deathrequest){
+
+        DeathFamilyInfo deathFamilyInfo = deathrequest.getDeathAbandonedDtls().get(0).getDeathFamilyInfo();
+        DeathRegistryFamilyInfo registryFamilyInfo = new DeathRegistryFamilyInfo();
+       // registryFamilyInfo.setSpouseUnavailable(deathFamilyInfo.getSpouseUnavailable());
+        registryFamilyInfo.setSpouseType(deathFamilyInfo.getSpouseType());
+        registryFamilyInfo.setSpouseNameEn(deathFamilyInfo.getSpouseNameEn());
+        registryFamilyInfo.setSpouseNameML(deathFamilyInfo.getSpouseNameML());
+        registryFamilyInfo.setSpouseAadhaar(deathFamilyInfo.getSpouseAadhaar());
+        registryFamilyInfo.setSpouseNameML(deathFamilyInfo.getSpouseNameML());
+       // registryFamilyInfo.setFatherUnavailable(deathFamilyInfo.getFatherUnavailable());
+        registryFamilyInfo.setFatherNameEn(deathFamilyInfo.getFatherNameEn());
+        registryFamilyInfo.setFatherNameMl(deathFamilyInfo.getFatherNameMl());
+        registryFamilyInfo.setFatherAadharNo(deathFamilyInfo.getFatherAadharNo());
+       // registryFamilyInfo.setMotherUnavailable(deathFamilyInfo.getMotherUnavailable());
+        registryFamilyInfo.setMotherNameEn(deathFamilyInfo.getMotherNameEn());
+        registryFamilyInfo.setMotherNameMl(deathFamilyInfo.getMotherNameMl());
+        registryFamilyInfo.setMotherAadharNo(deathFamilyInfo.getMotherAadharNo());
+        registryFamilyInfo.setFamilyMobileNo(deathFamilyInfo.getFamilyMobileNo());
+        registryFamilyInfo.setFamilyEmailId(deathFamilyInfo.getFamilyEmailId());
+        return registryFamilyInfo;
+    }
+//Rakhi S ikm on 08.03.2023 Abandoned Registry family info Request create
+    public DeathRegistryAddressInfo createRegistryAddressAbandoned(DeathAbandonedRequest deathrequest){
+
+        DeathAddressInfo deathAddress = deathrequest.getDeathAbandonedDtls().get(0).getDeathAddressInfo();
+        DeathRegistryAddressInfo registryAddress = new DeathRegistryAddressInfo();
+        registryAddress.setPresentAddrId(deathAddress.getPresentAddrId());
+        registryAddress.setPresentAddrDeathDtlId(deathAddress.getPresentAddrDeathDtlId());
+        registryAddress.setPresentAddrTenantId(deathAddress.getPresentAddrTenantId());
+        registryAddress.setPresentAddrTypeId(deathAddress.getPresentAddrTypeId());
+        registryAddress.setPresentAddrLocationType(deathAddress.getPresentAddrLocationType());
+        registryAddress.setPresentAddrCountryId(deathAddress.getPresentAddrCountryId());
+        registryAddress.setPresentAddrStateId(deathAddress.getPresentAddrStateId());
+        registryAddress.setPresentAddrDistrictId(deathAddress.getPresentAddrDistrictId());
+        registryAddress.setPresentAddrTalukId(deathAddress.getPresentAddrTalukId());
+        registryAddress.setPresentAddrVillageId(deathAddress.getPresentAddrVillageId());
+        registryAddress.setPresentAddrLbType(deathAddress.getPresentAddrLbType());
+        registryAddress.setPresentAddrWardId(deathAddress.getPresentAddrWardId());
+        registryAddress.setPresentAddrPostofficeId(deathAddress.getPresentAddrPostofficeId());
+        registryAddress.setPresentAddrPincode(deathAddress.getPresentAddrPincode());
+        registryAddress.setPresentAddrLocalityEn(deathAddress.getPresentAddrLocalityEn());
+        registryAddress.setPresentAddrLocalityMl(deathAddress.getPresentAddrLocalityMl());
+        registryAddress.setPresentAddrStreetNameEn(deathAddress.getPresentAddrStreetNameEn());
+        registryAddress.setPresentAddrStreetNameMl(deathAddress.getPresentAddrStreetNameMl());
+        registryAddress.setPresentAddrHoueNameEn(deathAddress.getPresentAddrHoueNameEn());
+        registryAddress.setPresentAddrHoueNameMl(deathAddress.getPresentAddrHoueNameMl());
+        registryAddress.setPresentAddrPostalCode(deathAddress.getPresentAddrPostalCode());
+        registryAddress.setPermanentAddrId(deathAddress.getPermanentAddrId());
+        registryAddress.setPermanentAddrDeathDtlId(deathAddress.getPermanentAddrDeathDtlId());
+        registryAddress.setPermanentAddrTenantId(deathAddress.getPermanentAddrTenantId());
+        registryAddress.setPermanentAddrTypeId(deathAddress.getPermanentAddrTypeId());
+        registryAddress.setPermanentAddrCountryId(deathAddress.getPermanentAddrCountryId());
+        registryAddress.setPermanentAddrStateId(deathAddress.getPermanentAddrStateId());
+        registryAddress.setPermanentAddrDistrictId(deathAddress.getPermanentAddrDistrictId());
+        registryAddress.setPermanentAddrTalukId(deathAddress.getPermanentAddrTalukId());
+        registryAddress.setPermanentAddrVillageId(deathAddress.getPermanentAddrVillageId());
+        registryAddress.setPermanentAddrLbType(deathAddress.getPermanentAddrLbType());
+        registryAddress.setPermanentAddrWardId(deathAddress.getPermanentAddrWardId());
+        registryAddress.setPermanentAddrPostofficeId(deathAddress.getPermanentAddrPostofficeId());
+        registryAddress.setPermanentAddrPincode(deathAddress.getPermanentAddrPincode());
+        registryAddress.setPermanentAddrLocalityEn(deathAddress.getPermanentAddrLocalityEn());
+        registryAddress.setPermanentAddrLocalityMl(deathAddress.getPermanentAddrLocalityMl());
+        registryAddress.setPermanentAddrStreetNameEn(deathAddress.getPermanentAddrStreetNameEn());
+        registryAddress.setPermanentAddrStreetNameMl(deathAddress.getPermanentAddrStreetNameMl());
+        registryAddress.setPermanentAddrHoueNameEn(deathAddress.getPermanentAddrHoueNameEn());
+        registryAddress.setPermanentAddrHoueNameMl(deathAddress.getPermanentAddrHoueNameMl());
+        registryAddress.setPermanentAddrPostalCode(deathAddress.getPermanentAddrPostalCode());
+        return registryAddress;
+    }
+    //Rakhi S ikm on 08.03.2023 Abandoned Registry informant details Request create
+    public DeathRegistryInformantDtls createRegistryInformantDtlsAbandoned(DeathAbandonedRequest deathrequest){
+
+        DeathAbandonedInformantDtls deathInformantDtls = deathrequest.getDeathAbandonedDtls().get(0).getDeathInformantDtls();
+        DeathRegistryInformantDtls registryInformantDtls = new DeathRegistryInformantDtls();
+       registryInformantDtls.setInformantAadharNo(deathInformantDtls.getInformantAadhaarNo());
+       registryInformantDtls.setInformantName(deathInformantDtls.getInformantName());
+       registryInformantDtls.setInformantMobileNo(deathInformantDtls.getInformantMobileNo());
+       registryInformantDtls.setInformantOfficeAuthority(deathInformantDtls.getInformantOfficeAuthority());
+       registryInformantDtls.setInformantAddress(deathInformantDtls.getInformantAddress());
+       registryInformantDtls.setInformantDesignation(deathInformantDtls.getInformantDesignation());
+       registryInformantDtls.setInformantOfficeAddress(deathInformantDtls.getInformantOfficeAddress());
+       registryInformantDtls.setInformantPENNo(deathInformantDtls.getInformantPENNo());
+        return registryInformantDtls;
+    }
 }
