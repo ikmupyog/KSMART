@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Loader, Card } from "@egovernments/digit-ui-react-components";
 import { CrCard } from "./inbox/CrCard";
 import ComplaintsLink from "./inbox/CrLinks";
-import { LOCALE } from "../components/constants/Localization";
 import PropTypes from "prop-types";
 
 const GetSlaCell = (value) => {
