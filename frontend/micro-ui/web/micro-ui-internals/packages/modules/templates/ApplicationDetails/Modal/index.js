@@ -14,10 +14,8 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("PT")) {
     return <PTActionModal {...props} />;
   }
-  if (props?.businessService.includes("BIRTHHOSP21")) {
-    return <BirthActionModal {...props} />;
-  }
-  if (props?.businessService.includes("NewBirthTwentyOne")) {
+  if (props?.businessService.includes("BIRTHHOSP21") || props?.businessService.includes("BIRTHHOSP30") || props?.businessService.includes("BIRTHHOSPONEYEAR")
+  || props?.businessService.includes("21BIRTHHOME") || props?.businessService.includes("BIRTHHOME30") || props?.businessService.includes("BIRTHHOMEONEYEAR")) {
     return <BirthActionModal {...props} />;
   }
   if (props?.businessService.includes("DEATHHOSP")) {

@@ -581,7 +581,7 @@ const CheckPage = ({ onSubmit, value }) => {
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Care Of</CardText>
                   </div>
                   <div className="col-md-2">
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.careOf} &nbsp&nbsp {applicant.careOfName}</CardText>
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{applicant.careOf} &nbsp;&nbsp; {applicant.careOfName}</CardText>
                   </div>
                   <div className="col-md-2">
                     <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_HOUSE_NO_NAME")}`}</CardText>

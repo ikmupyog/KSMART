@@ -37,12 +37,101 @@ const CRCard = () => {
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
-            role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "BND_DISTRICT_REGISTRAR" || "JHI" || "HOSPITAL_OPERATOR" || "HOSPITAL_APPROVER" || "INSTITUTION_OPERATOR" || "INSTITUTION_APPROVER"
+            role: "BND_CEMP"
+        
+        },
+        {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "BND_SUB_REGISTRAR"
+        
+        },
+        {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "BND_LOCAL_REGISTRAR"
+        
+        },
+        {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "BND_DISTRICT_REGISTRAR"
+        
+        },
+        {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "JHI"
+        
+        },
+        {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "HOSPITAL_OPERATOR"
+        
+        },
+        {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "HOSPITAL_APPROVER"
+        
+        },
+        {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "INSTITUTION_OPERATOR"
+        
+        },
+        {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "INSTITUTION_APPROVER"
+        
         },
         {
             label: t("CR_DEATH_REGISTRATION"),
             link: `/digit-ui/employee/cr/death-flow`,
-            role: "BND_CEMP" || "BND_SUB_REGISTRAR" || "BND_LOCAL_REGISTRAR" || "BND_DISTRICT_REGISTRAR" || "JHI" || "HOSPITAL_OPERATOR" || "HOSPITAL_APPROVER" || "INSTITUTION_OPERATOR" || "INSTITUTION_APPROVER"
+            role: "BND_CEMP"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "BND_SUB_REGISTRAR"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "BND_LOCAL_REGISTRAR"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "BND_DISTRICT_REGISTRAR"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "JHI"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "HOSPITAL_OPERATOR"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "HOSPITAL_APPROVER"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "INSTITUTION_OPERATOR"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "INSTITUTION_APPROVER"
         },
         {
             label: t("CR_SEARCH_APPLICATIONS"),
@@ -58,15 +147,15 @@ const CRCard = () => {
         moduleName: t("Civil Registration"),
         // TL_COMMON_TL
         kpis: [
-            {
-                count: isLoading ? "-" : inboxData?.totalCount,
-                label: t("TOTAL_TL"),
-                link: `/digit-ui/employee/cr/inbox`
-            },
-            {
-                label: t("TOTAL_NEARING_SLA"),
-                link: `/digit-ui/employee/cr/inbox`
-            }
+            // {
+            //     count: isLoading ? "-" : inboxData?.totalCount,
+            //     label: t("TOTAL_TL"),
+            //     link: `/digit-ui/employee/cr/inbox`
+            // },
+            // {
+            //     label: t("TOTAL_NEARING_SLA"),
+            //     link: `/digit-ui/employee/cr/inbox`
+            // }
         ],
         links: links
     }
