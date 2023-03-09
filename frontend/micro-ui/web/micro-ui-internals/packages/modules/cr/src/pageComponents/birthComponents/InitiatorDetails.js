@@ -21,7 +21,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
- 
+
   const onSkip = () => onSelect();
 
   useEffect(() => {
@@ -76,26 +76,28 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
 
 
   function setSelectinitiatorAadhar(e) {
-    setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setinitiatorAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setinitiatorAadharError(true);
-        setinitiatorAadhar(e.target.value);
-        return false;
-      } else {
-        setinitiatorAadharError(false);
-        setinitiatorAadhar(e.target.value);
-        return true;
-      }
-    } else {
-      setinitiatorAadharError(false);
-      setinitiatorAadhar(e.target.value);
-      return true;
+    if (e.target.value.trim().length != 0) {
+      setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setinitiatorAadharError(true);
+    //     return false;
+    //   } else if (e.target.value.length < 12) {
+    //     setinitiatorAadharError(true);
+    //     setinitiatorAadhar(e.target.value);
+    //     return false;
+    //   } else {
+    //     setinitiatorAadharError(false);
+    //     setinitiatorAadhar(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setinitiatorAadharError(false);
+    //   setinitiatorAadhar(e.target.value);
+    //   return true;
+    // }
   }
   // function setSelectinitiatorAadhar(e) {
 
@@ -145,7 +147,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
       setIsCaretaker(e.target.checked);
 
       setinitiatorDesi("");
-     
+
     } else {
       setIsCaretaker(e.target.checked);
     }
@@ -176,39 +178,59 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     if (isCaretaker === true) {
 
 
-    if (initiatorDesi == null || initiatorDesi == "" || initiatorDesi == undefined) {
-      validFlag = false;
-      setinitiatorDesiError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setinitiatorDesiError(false);
+      if (initiatorDesi == null || initiatorDesi == "" || initiatorDesi == undefined) {
+        validFlag = false;
+        setinitiatorDesiError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setinitiatorDesiError(false);
+      }
     }
-  }
-
-    if (initiatorAadhar == null || initiatorAadhar == "" || initiatorAadhar == undefined) {
+    if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
+      let adharLength = initiatorAadhar;
+      console.log(adharLength);
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setinitiatorAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setinitiatorAadharError(false);
+      }
+    } else {
       validFlag = false;
       setinitiatorAadharError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
-    } else {
-      setinitiatorAadharError(false);
     }
-    if (initiatorMobile == null || initiatorMobile == "" || initiatorMobile == undefined) {
+    if (initiatorMobile != null || initiatorMobile != "" || initiatorMobile != undefined) {
+      let mobileLength = initiatorMobile;
+      console.log(mobileLength);
+      if (mobileLength.length < 10 || mobileLength.length > 10) {
+        validFlag = false;
+        setinitiatorMobileError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setinitiatorMobileError(false);
+      }
+    } else {
       validFlag = false;
       setinitiatorMobileError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
-    } else {
-      setinitiatorMobileError(false);
     }
-
     if (validFlag == true) {
       sessionStorage.setItem("relation", relation ? relation : null);
       sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
@@ -235,12 +257,12 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
   console.log(formData);
   return (
     <React.Fragment>
-       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-       
-       {window.location.href.includes("/citizen") ? <Timeline  currentStep={4} /> : null}
-        {window.location.href.includes("/employee") ? <Timeline   currentStep={4}/> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile
-        }>
+      }>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -251,17 +273,17 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
 
         <div className="row">
           <div className="col-md-12">
-          <div className="col-md-12">
-            <CheckBox
-              label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-              onChange={setDeclarationInfo}
-              value={isInitiatorDeclaration}
-              checked={isInitiatorDeclaration}
-            />
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+              />
+            </div>
           </div>
         </div>
-        </div>
-        
+
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -271,7 +293,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
         </div>
 
         <div className="row">
-        <div className="col-md-12">
+          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
               <TextInput
@@ -319,17 +341,17 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
               />
             </div>
-        </div>
+          </div>
         </div>
 
-        <div className="row">  
-        <div className="col-md-12">    
+        <div className="row">
+          <div className="col-md-12">
             <div className="row">
-            <div className="col-md-12">
               <div className="col-md-12">
-                <CheckBox label={t("CR_INITIATOR_IS_CARETAKER")} onChange={setCaretaker} value={isCaretaker} checked={isCaretaker} />
+                <div className="col-md-12">
+                  <CheckBox label={t("CR_INITIATOR_IS_CARETAKER")} onChange={setCaretaker} value={isCaretaker} checked={isCaretaker} />
+                </div>
               </div>
-            </div>
             </div>
             {isCaretaker === true && (
               <div>
@@ -346,13 +368,13 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                     value={initiatorDesi}
                     onChange={setSelectinitiatorDesi}
                     placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
-                   //            disable={isCaretaker}
+                    //            disable={isCaretaker}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
                   />
                 </div>
               </div>
             )}
- 
+
             <div className="col-md-6">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
@@ -382,11 +404,11 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div> */}
+          </div>
         </div>
-        </div>    
-        <div className="row">  
-        <div className="col-md-12">    
-        <div className="col-md-6">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
               <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
@@ -399,8 +421,8 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
+          </div>
         </div>
-        </div>    
         {toast && (
           <Toast
             error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError}
@@ -409,12 +431,12 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 ? infomantFirstNmeEnError
                   ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                   : initiatorAadharError
-                  ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-                  : initiatorMobileError
-                  ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                  : initiatorDesiError
-                  ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-                  : setToast(false)
+                    ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+                    : initiatorMobileError
+                      ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                      : initiatorDesiError
+                        ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                        : setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
