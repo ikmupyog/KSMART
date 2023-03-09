@@ -155,7 +155,8 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setLbsTalukvalue(cmbFilterTaluk);
             cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
             setLbsVillagevalue(cmbFilterVillage);
-            cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid);
+            // cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid);
+            setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid));
             setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid));
             setIsInitialRender(false);
         }

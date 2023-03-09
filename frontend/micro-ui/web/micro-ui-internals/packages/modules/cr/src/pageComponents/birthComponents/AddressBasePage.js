@@ -10,7 +10,7 @@ import AddressPresentOutsideIndia from "./AddressPresentOutsideIndia";
 import AddressSameAsAbove from "./AddressSameAsAbove";
 import AddressPermanent from "./AddressPermanent";
 import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
-import AddressPermanentOutsideKerala from "./AddressPermanentInsideKerala";
+import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
 const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = false }) => {
@@ -211,8 +211,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = fa
     const [PresentOutSideIndiaLineTwoEnError, setPresentOutSideIndiaLineTwoEnError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineTwoEnError ? false : false);
     const [PresentOutSideIndiaLineTwoMlError, setPresentOutSideIndiaLineTwoMlError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineTwoMlError ? false : false);
 
-    const onSkip = () => onSelect();
-
+    const onSkip = () => onSelect();    
     let validFlag = true;
     const goNext = () => {
         if (isPrsentAddress === true || isPrsentAddress === false) {
@@ -1004,7 +1003,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = fa
                         />
                     </div>
                 )}
-                {countryvalue === "IND" && value === "KL" && isPrsentAddress === false && (
+               {countryvalue === "IND" && value === "KL" && isPrsentAddress === false && (
                     <div>
                         <AddressPermanentInsideKerala
                             permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}
@@ -1044,7 +1043,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData,isEditBirth = fa
                         />
                     </div>
                 )}
-                {countryvalue === "IND" && value != "KL" && isPrsentAddress === false && (
+                {countryvalue === "IND" && value !== "KL" && isPrsentAddress === false && (
                     <div>
                         <AddressPermanentOutsideKerala
                             permntOutsideKeralaDistrict={permntOutsideKeralaDistrict}
