@@ -31,7 +31,8 @@ const CRCard = () => {
         {
             count: isLoading ? "-" : inboxData?.totalCount,
             label: t("ES_COMMON_INBOX"),
-            link: `/digit-ui/employee/cr/inbox`,
+            link: `/digit-ui/employee/cr/inbox-flow`,
+            // link: `/digit-ui/employee/cr/inbox`,
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),

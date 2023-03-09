@@ -12,7 +12,7 @@ import {
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
+const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) => {
   // const { DeceasedGender } = props;
 
   const RadioButton = ({ selected, handleChange }) => {
@@ -169,13 +169,19 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     mannerOfDeath["birth-death-service"].MannerOfDeath.map((ob) => {
       cmbmannerofdeath.push(ob);
     });
-    console.log(mannerOfDeath);
+  console.log(mannerOfDeath);
 
-   
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   const [MedicalAttentionType, setMedicalAttentionType] = useState(
-    formData?.StatisticalInfo?.MedicalAttentionType ? formData?.StatisticalInfo?.MedicalAttentionType : null
+    formData?.StatisticalInfo?.MedicalAttentionType?.code
+      ? formData?.StatisticalInfo?.MedicalAttentionType
+      : formData?.StatisticalInfo?.MedicalAttentionType
+      ? cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfo?.MedicalAttentionType)[0]
+      : ""
   );
+  // const [MedicalAttentionType, setMedicalAttentionType] = useState(
+  //   formData?.StatisticalInfo?.MedicalAttentionType ? formData?.StatisticalInfo?.MedicalAttentionType : null
+  // );
   const [IsAutopsyPerformed, setIsAutopsyPerformed] = useState(
     formData?.StatisticalInfo?.IsAutopsyPerformed ? formData?.StatisticalInfo?.IsAutopsyPerformed : null
   );
@@ -188,11 +194,28 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const handleIsAutopsyCompleted = (e) => {
     selectIsIsAutopsyCompleted(e.target.value);
   };
-  const [MannerOfDeath, setMannerOfDeath] = useState(formData?.StatisticalInfo?.MannerOfDeath ? formData?.StatisticalInfo?.MannerOfDeath : null);
-  const [DeathMedicallyCertified, setDeathMedicallyCertified] = useState(
-    formData?.StatisticalInfo?.DeathMedicallyCertified ? formData?.StatisticalInfo?.DeathMedicallyCertified : null
+  const [MannerOfDeath, setMannerOfDeath] = useState(
+    formData?.StatisticalInfo?.MannerOfDeath?.code
+      ? formData?.StatisticalInfo?.MannerOfDeath
+      : formData?.StatisticalInfo?.MannerOfDeath
+      ? cmbmannerofdeath.filter((cmbmannerofdeath) => cmbmannerofdeath.code === formData?.StatisticalInfo?.MannerOfDeath)[0]
+      : ""
   );
-  const [DeathCauseMain, setDeathCauseMain] = useState(formData?.StatisticalInfo?.DeathCauseMain ? formData?.StatisticalInfo?.DeathCauseMain : null);
+  const [DeathMedicallyCertified, setDeathMedicallyCertified] = useState(
+    formData?.StatisticalInfo?.DeathMedicallyCertified?.code
+      ? formData?.StatisticalInfo?.DeathMedicallyCertified
+      : formData?.StatisticalInfo?.DeathMedicallyCertified
+      ? menub.filter((menub) => menub.code === formData?.StatisticalInfo?.DeathMedicallyCertified)[0]
+      : ""
+  );
+  const [DeathCauseMain, setDeathCauseMain] = useState(
+    formData?.StatisticalInfo?.DeathCauseMain?.code
+      ? formData?.StatisticalInfo?.DeathCauseMain
+      : formData?.StatisticalInfo?.DeathCauseMain
+      ? cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code === formData?.StatisticalInfo?.DeathCauseMain)[0]
+      : ""
+  );
+  // const [DeathCauseMain, setDeathCauseMain] = useState(formData?.StatisticalInfo?.DeathCauseMain ? formData?.StatisticalInfo?.DeathCauseMain : null);
   const [DeathCauseMainCustom, setDeathCauseMainCustom] = useState(
     formData?.StatisticalInfo?.DeathCauseMainCustom ? formData?.StatisticalInfo?.DeathCauseMainCustom : null
   );
@@ -200,9 +223,23 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     formData?.StatisticalInfo?.DeathCauseMainInterval ? formData?.StatisticalInfo?.DeathCauseMainInterval : null
   );
   const [DeathCauseMainTimeUnit, setDeathCauseMainTimeUnit] = useState(
-    formData?.StatisticalInfo?.DeathCauseMainTimeUnit ? formData?.StatisticalInfo?.DeathCauseMainTimeUnit : null
+    formData?.StatisticalInfo?.DeathCauseMainTimeUnit?.code
+      ? formData?.StatisticalInfo?.DeathCauseMainTimeUnit
+      : formData?.StatisticalInfo?.DeathCauseMainTimeUnit
+      ? minutes.filter((minutes) => minutes.code === formData?.StatisticalInfo?.DeathCauseMainTimeUnit)[0]
+      : ""
   );
-  const [DeathCauseSub, setDeathCauseSub] = useState(formData?.StatisticalInfo?.DeathCauseSub ? formData?.StatisticalInfo?.DeathCauseSub : null);
+  // const [DeathCauseMainTimeUnit, setDeathCauseMainTimeUnit] = useState(
+  //   formData?.StatisticalInfo?.DeathCauseMainTimeUnit ? formData?.StatisticalInfo?.DeathCauseMainTimeUnit : null
+  // );
+  const [DeathCauseSub, setDeathCauseSub] = useState(
+    formData?.StatisticalInfo?.DeathCauseSub?.code
+      ? formData?.StatisticalInfo?.DeathCauseSub
+      : formData?.StatisticalInfo?.DeathCauseSub
+      ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub)[0]
+      : ""
+  );
+  // const [DeathCauseSub, setDeathCauseSub] = useState(formData?.StatisticalInfo?.DeathCauseSub ? formData?.StatisticalInfo?.DeathCauseSub : null);
   const [DeathCauseSubCustom, setDeathCauseSubCustom] = useState(
     formData?.StatisticalInfo?.DeathCauseSubCustom ? formData?.StatisticalInfo?.DeathCauseSubCustom : null
   );
@@ -210,10 +247,24 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   const [DeathCauseSubInterval, setDeathCauseSubInterval] = useState(
     formData?.StatisticalInfo?.DeathCauseSubInterval ? formData?.StatisticalInfo?.DeathCauseSubInterval : null
   );
+  // const [DeathCauseSubTimeUnit, setDeathCauseSubTimeUnit] = useState(
+  //   formData?.StatisticalInfo?.DeathCauseSubTimeUnit ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit : null
+  // );
   const [DeathCauseSubTimeUnit, setDeathCauseSubTimeUnit] = useState(
-    formData?.StatisticalInfo?.DeathCauseSubTimeUnit ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit : null
+    formData?.StatisticalInfo?.DeathCauseSubTimeUnit?.code
+      ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit
+      : formData?.StatisticalInfo?.DeathCauseSubTimeUnit
+      ? days.filter((days) => days.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit)[0]
+      : ""
   );
-  const [DeathCauseSub2, setDeathCauseSub2] = useState(formData?.StatisticalInfo?.DeathCauseSub2 ? formData?.StatisticalInfo?.DeathCauseSub2 : null);
+  const [DeathCauseSub2, setDeathCauseSub2] = useState(
+    formData?.StatisticalInfo?.DeathCauseSub2?.code
+      ? formData?.StatisticalInfo?.DeathCauseSub2
+      : formData?.StatisticalInfo?.DeathCauseSub2
+      ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub2)[0]
+      : ""
+  );
+  // const [DeathCauseSub2, DeathCauseSub2] = useState(formData?.StatisticalInfo?.DeathCauseSub2 ? formData?.StatisticalInfo?.DeathCauseSub2 : null);
   const [DeathCauseSubCustom2, setDeathCauseSubCustom2] = useState(
     formData?.StatisticalInfo?.DeathCauseSubCustom2 ? formData?.StatisticalInfo?.DeathCauseSubCustom2 : null
   );
@@ -221,14 +272,25 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
     formData?.StatisticalInfo?.DeathCauseSubInterval2 ? formData?.StatisticalInfo?.DeathCauseSubInterval2 : null
   );
   const [DeathCauseSubTimeUnit2, setDeathCauseSubTimeUnit2] = useState(
-    formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 : null
+    formData?.StatisticalInfo?.DeathCauseSubTimeUnit2?.code
+      ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit2
+      : formData?.StatisticalInfo?.DeathCauseSubTimeUnit2
+      ? months.filter((months) => months.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit2)[0]
+      : ""
   );
+  // const [DeathCauseSubTimeUnit2, setDeathCauseSubTimeUnit2] = useState(
+  //   formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 : null
+  // );
 
   const [DeathCauseOther, setDeathCauseOther] = useState(
     formData?.StatisticalInfo?.DeathCauseOther ? formData?.StatisticalInfo?.DeathCauseOther : null
   );
   // const [pregnancyDuration, setPregnancyDuration] = useState(formData?.ChildDetails?.pregnancyDuration ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.ChildDetails?.pregnancyDuration)[0]) : "");
-  const [IsdeceasedPregnant, setIsdeceasedPregnant] = useState(formData?.StatisticalInfo?.IsdeceasedPregnant ? (cmbDelivary.filter(cmbDelivary => cmbDelivary.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]) : "" );
+  const [IsdeceasedPregnant, setIsdeceasedPregnant] = useState(
+    formData?.StatisticalInfo?.IsdeceasedPregnant
+      ? cmbDelivary.filter((cmbDelivary) => cmbDelivary.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]
+      : ""
+  );
 
   const [IsDelivery, setIsDelivery] = useState(formData?.StatisticalInfo?.IsdeceasedPregnant ? formData?.StatisticalInfo?.IsdeceasedPregnant : null);
   const [DeathDuringDelivery, setIsDeathDuringDelivery] = useState(
@@ -253,9 +315,60 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
 
   //////////////////////
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-
+  if (iseditDeath) {
+    if (formData?.StatisticalInfo?.MedicalAttentionType != null) {
+      if (cmbAttention.length > 0 && (MedicalAttentionType === undefined || MedicalAttentionType === "")) {
+        setMedicalAttentionType(cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfo?.MedicalAttentionType)[0]);
+      }
+    }
+    if (formData?.StatisticalInfo?.MannerOfDeath != null) {
+      if (cmbmannerofdeath.length > 0 && (MannerOfDeath === undefined || MannerOfDeath === "")) {
+        setMannerOfDeath(cmbmannerofdeath.filter((cmbmannerofdeath) => cmbmannerofdeath.code === formData?.StatisticalInfo?.MannerOfDeath)[0]);
+      }
+    }
+    if (formData?.StatisticalInfo?.DeathMedicallyCertified != null) {
+      if (menub.length > 0 && (DeathMedicallyCertified === undefined || DeathMedicallyCertified === "")) {
+        setDeathMedicallyCertified(menub.filter((menub) => menub.code === formData?.StatisticalInfo?.DeathMedicallyCertified)[0]);
+      }
+    }
+    if (formData?.StatisticalInfo?.DeathCauseMain != null) {
+      if (cmbDeathmain.length > 0 && (DeathCauseMain === undefined || DeathCauseMain === "")) {
+        setDeathCauseMain(cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code === formData?.StatisticalInfo?.DeathCauseMain)[0]);
+      }
+    }
+    if (formData?.StatisticalInfo?.DeathCauseMainTimeUnit != null) {
+      if (minutes.length > 0 && (DeathCauseMainTimeUnit === undefined || DeathCauseMainTimeUnit === "")) {
+        setDeathCauseMainTimeUnit(minutes.filter((minutes) => minutes.code === formData?.StatisticalInfo?.DeathCauseMainTimeUnit)[0]);
+      }
+    }
+    if (formData?.StatisticalInfo?.DeathCauseSub != null) {
+      if (cmbDeathsub.length > 0 && (DeathCauseSub === undefined || DeathCauseSub === "")) {
+        setDeathCauseSub(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub)[0]);
+      }
+    }
+    if (formData?.StatisticalInfo?.DeathCauseSubTimeUnit != null) {
+      if (days.length > 0 && (DeathCauseSubTimeUnit === undefined || DeathCauseSubTimeUnit === "")) {
+        setDeathCauseSubTimeUnit(days.filter((days) => days.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit)[0]);
+      }
+    }
+    if (formData?.StatisticalInfo?.DeathCauseSub2 != null) {
+      if (cmbDeathsub.length > 0 && (DeathCauseSub2 === undefined || DeathCauseSub2 === "")) {
+        setDeathCauseSub2(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub2)[0]);
+      }
+    }
+    if (formData?.StatisticalInfo?.DeathCauseSubTimeUnit2 != null) {
+      if (months.length > 0 && (DeathCauseSubTimeUnit2 === undefined || DeathCauseSubTimeUnit2 === "")) {
+        setDeathCauseSubTimeUnit2(months.filter((months) => months.code === formData?.StatisticalInfo?.DeathCauseSubTimeUnit2)[0]);
+      }
+    }
+    // if (formData?.StatisticalInfo?.IsdeceasedPregnant != null) {
+    //   if (cmbDelivary.length > 0 && (IsdeceasedPregnant === undefined || IsdeceasedPregnant === "")) {
+    //     setDeathCauseSubTimeUnit2(cmbDelivary.filter((cmbDelivary) => months.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]);
+    //   }
+    // }
+    
+  }
   let naturetypecmbvalue = null;
- 
 
   function selectMedicalAttentionDeath(value) {
     setMedicalAttentionType(value);
@@ -334,17 +447,15 @@ const StatisticalInfo = ({ config, onSelect, userType, formData }) => {
   let currentMainCause = [];
   let cmbFilterdeathsub = [];
   useEffect(() => {
-
     if (isInitialRender) {
-  currentMainCause = cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code);
-  cmbFilterdeathsub = cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === currentMainCause[0].code);
-  selectDeathCauseSub(cmbFilterdeathsub[0]);
-  setIsInitialRender(false);
-}
-}
-, [deathsub, isInitialRender,deathmain]);
+      currentMainCause = cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code);
+      cmbFilterdeathsub = cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === currentMainCause[0].code);
+      selectDeathCauseSub(cmbFilterdeathsub[0]);
+      setIsInitialRender(false);
+    }
+  }, [deathsub, isInitialRender, deathmain]);
 
-const onSkip = () => onSelect();
+  const onSkip = () => onSelect();
 
   // useEffect(() => {
   //   if (isInitialRender) {
@@ -428,18 +539,18 @@ const onSkip = () => onSelect();
       TobaccoType,
       AlcoholType,
     });
-
   };
+
   console.log(formData);
   // if (isLoading || isLoadingA || isLoadingsub || isLoadingmanner || isLoadingPregnant || isLoadingBirthStatus) {
   //   return <Loader></Loader>;
-  // } 
+  // }
 
   return (
     <React.Fragment>
-       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-     
+
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-12">
@@ -582,7 +693,7 @@ const onSkip = () => onSelect();
                     disable={isEdit}
                     placeholder={`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}`}
                   />
-                </div>                
+                </div>
                 <div className="col-md-4">
                   <CardLabel>{t("CR_APROXIMATE")}</CardLabel>
                   <TextInput
@@ -660,7 +771,7 @@ const onSkip = () => onSelect();
                     value={DeathCauseSubInterval}
                     onChange={selectDeathCauseSubInterval}
                     disable={isEdit}
-                    placeholder={`${t("CR_APROXIMATE")}`}                   
+                    placeholder={`${t("CR_APROXIMATE")}`}
                   />
                 </div>
                 <div className="col-md-2">
@@ -767,72 +878,70 @@ const onSkip = () => onSelect();
             </div>
           </div>
         </div>
-      
-      {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" && (
-         console.log(formData?.InformationDeath?.DeceasedGender.code),
-
-        <div>          
+        {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" &&
+          (console.log(formData?.InformationDeath?.DeceasedGender.code),
+          (
+            <div>
+              <div className="row">
+                <div className="col-md-12">
+                  <h1 className="headingh1">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PREGNANCY_STATUS_DECEASED")}`}</span>{" "}
+                  </h1>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-3">
+                    <CardLabel>{t("CR_DECEASED_PREGNANT")}</CardLabel>
+                    <Dropdown
+                      t={t}
+                      optionKey="name"
+                      isMandatory={false}
+                      option={cmbbirthstatus}
+                      selected={IsDelivery}
+                      select={selectIsDelivery}
+                      disabled={isEdit}
+                      placeholder={`${t("CR_DECEASED_PREGNANT")}`}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <CardLabel>{t("CR_WAS_THERE_DELIVARY")}</CardLabel>
+                    {/* <div className="col-md-6 "> */}
+                    <Dropdown
+                      t={t}
+                      optionKey="i18nKey"
+                      isMandatory={false}
+                      option={cmbDelivary}
+                      selected={IsdeceasedPregnant}
+                      select={selectIsdeceasedPregnant}
+                      disabled={isEdit}
+                      placeholder={`${t("CR_WAS_THERE_DELIVARY")}`}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <CardLabel>{t("CR_DURING_DELIVERY")}</CardLabel>
+                    <RadioButton
+                      t={t}
+                      // optionsKey="i18nKey"
+                      // onChange={setOptionkey}
+                      // isMandatory={config.isMandatory}
+                      selected={DeathDuringDelivery}
+                      Select={selectDeathDuringDelivery}
+                      handleChange={handleDeathDuringDelivery}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        ;
         <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PREGNANCY_STATUS_DECEASED")}`}</span>{" "}
-                </h1>
-              </div>
-            </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_DECEASED_PREGNANT")}</CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={false}
-                  option={cmbbirthstatus}
-                  selected={IsDelivery}
-                  select={selectIsDelivery}
-                  disabled={isEdit}
-                  placeholder={`${t("CR_DECEASED_PREGNANT")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_WAS_THERE_DELIVARY")}</CardLabel>
-                {/* <div className="col-md-6 "> */}
-                <Dropdown
-                  t={t}
-                  optionKey="i18nKey"
-                  isMandatory={false}
-                  option={cmbDelivary}
-                  selected={IsdeceasedPregnant}
-                  select={selectIsdeceasedPregnant}
-                  disabled={isEdit}
-                  placeholder={`${t("CR_WAS_THERE_DELIVARY")}`}
-                />
-              </div>
-              <div className="col-md-6">
-                <CardLabel>{t("CR_DURING_DELIVERY")}</CardLabel>
-                <RadioButton
-                  t={t}
-                  // optionsKey="i18nKey"
-                  // onChange={setOptionkey}
-                  // isMandatory={config.isMandatory}
-                  selected={DeathDuringDelivery}
-                  Select={selectDeathDuringDelivery}
-                  handleChange={handleDeathDuringDelivery}
-                />
-              </div>
-            </div>
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HABITS")}`}</span>{" "}
+            </h1>
           </div>
         </div>
-      )};
-        
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HABITS")}`}</span>{" "}
-                </h1>
-              </div>
-            </div>
-        
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -845,7 +954,7 @@ const onSkip = () => onSelect();
                 selected={SmokingType}
                 onSelect={selectSmokingType}
                 handleChange={handleSmokingType}
-              />             
+              />
             </div>
 
             <div className="col-md-6">
@@ -859,7 +968,7 @@ const onSkip = () => onSelect();
                 selected={TobaccoType}
                 onSelect={selectTobaccoType}
                 handleChange={handleTobaccoType}
-              />              
+              />
             </div>
           </div>
         </div>
@@ -875,7 +984,7 @@ const onSkip = () => onSelect();
                 selected={AlcoholType}
                 onSelect={selectAlcoholType}
                 handleChange={handleAlcoholType}
-              />              
+              />
             </div>
           </div>
         </div>

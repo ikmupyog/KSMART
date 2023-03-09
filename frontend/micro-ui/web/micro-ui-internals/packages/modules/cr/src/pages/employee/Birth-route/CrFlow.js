@@ -43,7 +43,8 @@ const CrFlow = ({ path }) => {
   ];
   const ClassList = 
     {
-     'CR_BIRTH_NEW_REG':  'crfilename',
+     'CR_BIRTH_REGISTRATION':  'crfilename',
+    //  'CR_BIRTH_NEW_REG':  'crfilename',
      'CR_BIRTH_ADOPTION':  'crfileadoption', 
      'CR_STILL_BIRTH':  'crstillbirthfile',
      'CR_BIRTH_BORN_OUTSIDE':  'crfile',

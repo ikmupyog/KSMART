@@ -64,7 +64,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.StillBirthParentsDetails?.motherFirstNameEn ? formData?.StillBirthParentsDetails?.motherFirstNameEn : "");
   const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.StillBirthParentsDetails?.motherFirstNameMl ? formData?.StillBirthParentsDetails?.motherFirstNameMl : "");
   const [motherAadhar, setMotherAadhar] = useState(formData?.StillBirthParentsDetails?.motherAadhar ? formData?.StillBirthParentsDetails?.motherAadhar : "");
-  const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.StillBirthParentsDetails?.motherMarriageAge ? formData?.StillBirthParentsDetails?.motherMarriageAge : "");
+  // const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.StillBirthParentsDetails?.motherMarriageAge ? formData?.StillBirthParentsDetails?.motherMarriageAge : "");
   const [motherEmail, setMotherEmail] = useState(formData?.StillBirthParentsDetails?.motherEmail ? formData?.StillBirthParentsDetails?.motherEmail : "");
   const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.StillBirthParentsDetails?.motherMarriageBirth ? formData?.StillBirthParentsDetails?.motherMarriageBirth : "");
   const [motherEducation, setMotherEducation] = useState(formData?.StillBirthParentsDetails?.motherEducation ? formData?.StillBirthParentsDetails?.motherEducation : null);
@@ -72,13 +72,14 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   // const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.StillBirthParentsDetails?.MotherAgeMarriage ? formData?.StillBirthParentsDetails?.MotherAgeMarriage : "");
   const [orderofChildren, setOrderofChildren] = useState(formData?.StillBirthParentsDetails?.orderofChildren ? formData?.StillBirthParentsDetails?.orderofChildren : "");
   const [motherNationality, setMotherNationality] = useState(formData?.StillBirthParentsDetails?.motherNationality ? formData?.StillBirthParentsDetails?.motherNationality : null);
-  const [motherMaritalStatus, setMotherMaritalStatus] = useState(formData?.StillBirthParentsDetails?.motherMaritalStatus ? formData?.StillBirthParentsDetails?.motherMaritalStatus : null);
+  // const [motherMaritalStatus, setMotherMaritalStatus] = useState(formData?.StillBirthParentsDetails?.motherMaritalStatus ? formData?.StillBirthParentsDetails?.motherMaritalStatus : null);
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.StillBirthParentsDetails?.isMotherInfo ? formData?.StillBirthParentsDetails?.isMotherInfo : false);
 
   const [fatherAadhar, setFatherAadhar] = useState(formData?.StillBirthParentsDetails?.fatherAadhar ? formData?.StillBirthParentsDetails?.fatherAadhar : "");
   const [toast, setToast] = useState(false);
   const [MotherAadharError, setMotherAadharError] = useState(formData?.StillBirthParentsDetails?.motherAadhar ? false : false);
-  const [MotherMarriageageError, setMotherMarriageageError] = useState(formData?.StillBirthParentsDetails?.motherMarriageAge ? false : false);
+  // const [MotherMarriageageError, setMotherMarriageageError] = useState(formData?.StillBirthParentsDetails?.motherMarriageAge ? false : false);
+  const [MotherBirthageError, setMotherBirthageError] = useState(formData?.StillBirthParentsDetails?.motherMarriageBirth ? false : false);
   const [MotherEducationError, setMotherEducationError] = useState(formData?.StillBirthParentsDetails?.motherEducation ? false : false);
   const [MotherProfessionError, setMotherProfessionError] = useState(formData?.StillBirthParentsDetails?.motherProfession ? false : false);
   const [MotherNationalityError, setMotherNationalityError] = useState(formData?.StillBirthParentsDetails?.motherNationality ? false : false);
@@ -101,8 +102,8 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const [FatherEduError, setFatherEduError] = useState(formData?.StillBirthParentsDetails?.fatherEducation ? false : false);
   const [FatherProfError, setFatherProfError] = useState(formData?.StillBirthParentsDetails?.fatherProfession ? false : false);
   const [ReligionError, setReligionError] = useState(formData?.StillBirthParentsDetails?.Religion ? false : false);
-  const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.StillBirthParentsDetails?.motherMaritalStatus ? false : false);
-  const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.StillBirthParentsDetails?.motherMaritalStatus ? formData?.StillBirthParentsDetails?.motherMaritalStatus : null);
+  // const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.StillBirthParentsDetails?.motherMaritalStatus ? false : false);
+  // const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.StillBirthParentsDetails?.motherMaritalStatus ? formData?.StillBirthParentsDetails?.motherMaritalStatus : null);
 
 
   const onSkip = () => onSelect();
@@ -217,14 +218,14 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   //   }
   // }
 
-  function setSelectMotherMarriageAge(e) {
-    if (e.target.value.trim().length === 3) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherMarriageAge(e.target.value);
-    }
-  }
+  // function setSelectMotherMarriageAge(e) {
+  //   if (e.target.value.trim().length === 3) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setMotherMarriageAge(e.target.value);
+  //   }
+  // }
   
 
   function setSelectMotherMarriageBirth(e) {
@@ -248,11 +249,11 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   function setSelectStateName(value) {
     setStateName(value);
   }
-  function setSelectMotherMaritalStatus(value) {
-    setMotherMaritalStatus(value);
-    setAgeMariageStatus(value.code);
+  // function setSelectMotherMaritalStatus(value) {
+  //   setMotherMaritalStatus(value);
+  //   setAgeMariageStatus(value.code);
 
-  }
+  // }
   function setSelectOrderofChildren(e) {
     if (e.target.value.trim().length === 3) {
       return false;
@@ -303,8 +304,8 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       setMotherFirstNameEn("");
       setMotherFirstNameMl("");
       setMotherAadhar("");
-      setMotherMaritalStatus(null);
-      setMotherMarriageAge("");
+      // setMotherMaritalStatus(null);
+      // setMotherMarriageAge("");
       setMotherMarriageBirth("");
       setMotherEducation(null);
       setMotherProfession(null);
@@ -373,30 +374,42 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
           setMotherAadharError(false);
         }
       }
-      if (motherMaritalStatus == null || motherMaritalStatus == '' || motherMaritalStatus == undefined) {
-        validFlag = false;
-        setMotherMaritalStatusError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setMotherMaritalStatusError(false);
-      }
-      if (motherMarriageAge == null || motherMarriageAge == '' || motherMarriageAge == undefined) {
-        if (MotherMarriageageError) {
+      // if (motherMaritalStatus == null || motherMaritalStatus == '' || motherMaritalStatus == undefined) {
+      //   validFlag = false;
+      //   setMotherMaritalStatusError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setMotherMaritalStatusError(false);
+      // }
+      // if (motherMarriageAge == null || motherMarriageAge == '' || motherMarriageAge == undefined) {
+      //   if (MotherMarriageageError) {
+      //     validFlag = false;
+      //     setMotherMarriageageError(true);
+      //     setToast(true);
+      //     setTimeout(() => {
+      //       setToast(false);
+      //     }, 2000);
+      //   } else {
+      //     setMotherMarriageageError(false);
+      //   }
+      // }
+
+    }
+    if (motherMarriageBirth == null || motherMarriageBirth == '' || motherMarriageBirth == undefined) {
+        if (MotherBirthageError) {
           validFlag = false;
-          setMotherMarriageageError(true);
+          setMotherBirthageError(true);
           setToast(true);
           setTimeout(() => {
             setToast(false);
           }, 2000);
         } else {
-          setMotherMarriageageError(false);
+          setMotherBirthageError(false);
         }
       }
-
-    }
     if (isFatherInfo === false) {
       if (fatherEducation == null || fatherEducation == '' || fatherEducation == undefined) {
         validFlag = false;
@@ -491,12 +504,12 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
       sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
       sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
-      sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
+      // sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
       sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
       sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
       sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
       sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);
-      sessionStorage.setItem("motherMaritalStatus", motherMaritalStatus ? motherMaritalStatus : null);
+      // sessionStorage.setItem("motherMaritalStatus", motherMaritalStatus ? motherMaritalStatus : null);
       // sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage ? MotherAgeMarriage : null);
 
       sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
@@ -516,8 +529,8 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
         motherFirstNameEn,
         motherFirstNameMl,
         motherAadhar,
-        motherMaritalStatus,
-        motherMarriageAge,
+        // motherMaritalStatus,
+        // motherMarriageAge,
         motherMarriageBirth,
         motherEducation,
         motherProfession,
@@ -552,7 +565,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
           isDisabled={!fatherMobile || 
             (isMotherInfo === false ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
-              || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
+              || motherMarriageBirth === "" || orderofChildren === ""
               || !motherEducation || !motherProfession) : false)
             || (isFatherInfo === false ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
             ) : false)
@@ -652,7 +665,22 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       placeholder={`${t("CR_NATIONALITY")}`}
                     />
                   </div>
-                  <div className="col-md-4" >
+                  <div className="col-md-5">
+                    <CardLabel>{`${t("CR_MOTHER_AGE_BIRTH")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"number"}
+                      optionKey="i18nKey"
+                      name="motherMarriageBirth"
+                      value={motherMarriageBirth}
+                      onChange={setSelectMotherMarriageBirth}
+                      // disable={isMotherInfo}
+                      placeholder={`${t("CR_MOTHER_AGE_BIRTH")}`}
+                      {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_BIRTH") })}
+                    />
+                  </div>
+                  {/* <div className="col-md-4" >
                     <CardLabel>{`${t("CR_MOTHER_MARITAL_STATUS")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
@@ -664,12 +692,12 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       //  disabled={isMotherInfo} 
                       placeholder={`${t("CR_MOTHER_MARITAL_STATUS")}`}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
-              <div className="row">
-                <div className="col-md-12">
-                  {ageMariageStatusHide === "MARRIED" && (
+              {/* <div className="row">
+                <div className="col-md-12"> */}
+                  {/* {ageMariageStatusHide === "MARRIED" && (
 
                     <div className="col-md-8">
                       <CardLabel>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} <span className="mandatorycss">*</span></CardLabel>
@@ -686,8 +714,8 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                         {...(validation = { pattern: "^[0-9]{3}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_MARRIAGE") })}
                       />
                     </div>
-                  )}
-
+                  )} */}
+{/* 
                   <div className="col-md-5">
                     <CardLabel>{`${t("CR_MOTHER_AGE_BIRTH")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
@@ -704,7 +732,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
@@ -937,8 +965,8 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
             <Toast
               error={
                 MotherAadharError ||
-                MotherMaritalStatusError ||
-                MotherMarriageageError ||
+              //  MotherMaritalStatusError ||
+                MotherBirthageError ||
                 MotherEducationError ||
                 MotherProfessionError ||
                 MotherNationalityError ||
@@ -954,8 +982,8 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
               }
               label={
                 MotherAadharError ||
-                  MotherMaritalStatusError ||
-                  MotherMarriageageError ||
+                  // MotherMaritalStatusError ||
+                  MotherBirthageError ||
                   MotherEducationError ||
                   MotherProfessionError ||
                   MotherNationalityError ||
@@ -969,9 +997,9 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                   OrderofChildrenError
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
-                    : MotherMarriageageError
-                      ? t(`CR_INVALID_MOTHER_AGE_AT_MARRIAGE`)
-                      : MotherMaritalStatusError ? t(`BIRTH_ERROR_MOTHER_MARITIAL_CHOOSE`)
+                    : MotherBirthageError
+                      ? t(`CR_INVALID_MOTHER_AGE_AT_BIRTH`)
+                      // : MotherMaritalStatusError ? t(`BIRTH_ERROR_MOTHER_MARITIAL_CHOOSE`)
                         : MotherEducationError
                           ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
                           : MotherProfessionError

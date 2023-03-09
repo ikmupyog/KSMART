@@ -35,6 +35,10 @@ import StillBirthPlacePublicPlace from "../src/pageComponents/stillBirthComponen
 import StillBirthPlaceInstitution from "../src/pageComponents/stillBirthComponents/StillBirthPlaceInstitution";
 import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHospital";
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
+import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
+import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
+
+import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -46,8 +50,6 @@ import BirthFatherInformation from "../src/pageComponents/adoptionComponents/Bir
 import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthParentsAddress";
 import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
 import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
-
-
 
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
@@ -75,7 +77,7 @@ import Initiater from "./pageComponents/deathComponents/Initiater";
 // import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
-import SearchRegistryDeath from "./components/SearchRegistryDeath"
+import SearchRegistryDeath from "./components/SearchRegistryDeath";
 import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails";
 // import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
@@ -90,7 +92,7 @@ import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageChec
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
-import BirthCertificate from './pages/citizen/Certificate/BirthCertificate'
+import BirthCertificate from "./pages/citizen/Certificate/BirthCertificate";
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
 // import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
 import CRCard from "./components/CRCard";
@@ -113,8 +115,7 @@ export const CRModule = ({ stateCode, userType, tenants }) => {
 
   if (userType === "employee") {
     return <EmployeeApp path={path} url={url} userType={userType} />;
-  }
-  else return <CitizenApp />;
+  } else return <CitizenApp />;
 };
 
 export const CRLinks = ({ matchPath, userType }) => {
@@ -162,8 +163,13 @@ export const CRLinks = ({ matchPath, userType }) => {
   ];
 
   return (
-    <CitizenHomeCard style={{ display: "flex", justifyContent: "space-evenly" }} header={t("ACTION_TEST_TRADE_LICENSE")} links={links} Icon={() => <CaseIcon className="fill-path-primary-main" />} />
-  )
+    <CitizenHomeCard
+      style={{ display: "flex", justifyContent: "space-evenly" }}
+      header={t("ACTION_TEST_TRADE_LICENSE")}
+      links={links}
+      Icon={() => <CaseIcon className="fill-path-primary-main" />}
+    />
+  );
 };
 
 const componentsToRegister = {
@@ -196,20 +202,22 @@ const componentsToRegister = {
   AddressPresent,
   AddressPresentInsideKerala,
   AddressPresentOutsideKerala,
-  AddressPresentOutsideIndia,   
+  AddressPresentOutsideIndia,
   AddressPermanentOutsideKerala,
   AddressPermanentOutsideIndia,
   AddressPermanentInsideKerala,
   InformarHospitalInstitution,
   InitiatorDetails,
-//////////////////
-StillBirthChildDetails,
-StillBirthParentsDetails,
-StillBirthPlaceHome,
-StillBirthPlaceHospital,
-StillBirthPlaceInstitution,
-StillBirthPlacePublicPlace,
-StillBirthPlaceVehicle,
+  //////////////////
+  StillBirthChildDetails,
+  StillBirthParentsDetails,
+  StillBirthPlaceHome,
+  StillBirthPlaceHospital,
+  StillBirthPlaceInstitution,
+  StillBirthPlacePublicPlace,
+  StillBirthPlaceVehicle,
+  StillBirthInitiatorDetails,
+  StillBirthCheckPage,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -220,7 +228,6 @@ StillBirthPlaceVehicle,
   BirthParentsAddress,
   AdoptionStatisticalInformation,
   AdoptionParentsAddress,
-
 
   //////////////////
   CRDeathcorrection,

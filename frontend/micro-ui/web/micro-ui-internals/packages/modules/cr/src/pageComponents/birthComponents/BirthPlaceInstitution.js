@@ -25,27 +25,30 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     queryClient.removeQueries("CR_INSTITUTION_LIST");
     setTenantboundary(false);
   }
-  let cmbInstitution = [];
+  let cmbInstitutionType = [];
   let cmbInstitutionList = [];
   institutionType &&
     institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
     institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
-      cmbInstitution.push(ob);
+      cmbInstitutionType.push(ob);
     });
   institutionidList &&
     institutionidList["egov-location"] && institutionidList["egov-location"].institutionList &&
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionList.push(ob);
     });
-    if (isEditBirth) {
-      if (formData?.ChildDetails?.institutionTypeCode != null) {
-        if (cmbInstitution.length > 0 && (institution === undefined || institution === "")) {
-          setInstitution(cmbInstitution.filter(cmbInstitution => cmbInstitution.code === formData?.ChildDetails?.institutionTypeCode)[0]);
-          // cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0];
-          // selectHospitalNameMl(cmbhospitalMl);
-        }
+  if (isEditBirth) {
+    if (formData?.ChildDetails?.institutionTypeCode != null) {
+      if (cmbInstitutionType.length > 0 && (institution === undefined || institution === "")) {
+        setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.ChildDetails?.institutionTypeCode)[0]);
+        // cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0];
+        // selectHospitalNameMl(cmbhospitalMl);
+      }
+      if (cmbInstitutionList.length > 0 && (institutionId === undefined || institutionId === "")) {
+        setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
       }
     }
+  }
   useEffect(() => {
     if (isInitialRenderInstitutionList) {
       if (institution) {
@@ -91,7 +94,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="name"
-                option={cmbInstitution}
+                option={cmbInstitutionType}
                 selected={institution}
                 select={setselectInstitution}
                 placeholder={`${t("CR_INSTITUTION_TYPE")}`}

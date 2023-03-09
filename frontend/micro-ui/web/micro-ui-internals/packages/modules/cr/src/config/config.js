@@ -400,6 +400,33 @@ export const newConfig = [
       },
     ],
   },
+  {
+    head: "BornOutsideIndia Routing",
+    body: [
+      {
+        type: "component",
+        route: "born-outside-child-details",
+        isMandatory: true,
+        component: "BornOutsideChildDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "BornOutsideChildDetails",
+        withoutLabel: true,
+        nextStep: null,
+        hideInEmployee: false,
+      },
+      
+  
+   
+    ],
+  },
+
+
+
 
   {
     head: "Adoption Routing",
@@ -690,7 +717,7 @@ export const newConfig = [
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
         },
-        key: "GroomKeyDetails",
+        key: "GroomDetails",
         withoutLabel: true,
         hideInEmployee: false,
         nextStep: "bride-details",

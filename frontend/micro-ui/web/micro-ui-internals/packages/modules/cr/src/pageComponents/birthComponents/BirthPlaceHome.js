@@ -69,7 +69,6 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
         setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
         setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
         setIsInitialRender(false);
-        console.log(PostOfficevalues);
       }
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
@@ -101,7 +100,6 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   //     }
   //   }
   // }
-  let potemp = [];
   const setSelectAdrsPincode = (e => {
 
     if (e.target.value.length === 6) {
@@ -116,20 +114,6 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     setAdrsPostOffice(PostOfficevalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
   });
 
-  // if (pofilter){
-
-  //   setPostOfficevalues(potemp);
-  //   setPofilter(false);
-  //   console.log(JSON.stringify(PostOfficevalues));
-  // }
-
-  //PostOfficevalues = potemp;
-  // const changesetPincode = (e => {()
-  //   setPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
-  //   setPostOffice(cmbPostOffice.filter((postoffice) => {
-  //     postoffice.pincode === e.target.value.pincode
-  //   }));
-  // });
   function setSelectAdrsHouseNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -188,7 +172,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
 
   const goNext = () => {
 
-    
+
   };
 
   if (isPostOfficeLoading || isWardLoaded || islocalbodiesLoading) {

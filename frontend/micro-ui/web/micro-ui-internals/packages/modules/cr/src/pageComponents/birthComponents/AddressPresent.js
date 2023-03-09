@@ -75,7 +75,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         setaddressCountry(value);
         setCountryValue(value.countrycode);
         if (isPrsentAddress) {
-            setpermtaddressCountry(presentaddressCountry);
+            setpermtaddressCountry(value);
         } else {
             setpermtaddressCountry('');
         }
@@ -84,7 +84,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         setaddressStateName(value);
         setValue(value.statecode);
         if (isPrsentAddress) {
-            setpermtaddressStateName(presentaddressStateName);
+            setpermtaddressStateName(value);
         } else {
             setpermtaddressStateName('');
         }
