@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
-    isPrsentAddress, setIsPrsentAddress
+    isPrsentAddress, setIsPrsentAddress,countryValuePermanent, setCountryValuePermanent,
+    valuePermanent, setValuePermanent
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -43,16 +44,30 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     let cmbFilterState = [];
     useEffect(() => {
 
-        if (isInitialRender) {
+        if (isInitialRender && isPrsentAddress) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setpermtaddressCountry(cmbFilterCountry[0]);
-                setCountryValue(cmbFilterCountry[0].countrycode)
+                setCountryValue(cmbFilterCountry[0].countrycode);
+                setCountryValuePermanent(cmbFilterCountry[0].countrycode);
                 cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
                 setpermtaddressStateName(cmbFilterState[0]);
                 setValue(cmbFilterState[0].statecode);
+                setValuePermanent(cmbFilterState[0].statecode);
+                setIsInitialRender(false);
+            }
+        } else {
+            if (cmbLB.length > 0) {
+                currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                // setAdrsLBName(currentLB[0]);
+                cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+                setpermtaddressCountry(cmbFilterCountry[0]);
+                setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+                setpermtaddressStateName(cmbFilterState[0]);
+                setValuePermanent(cmbFilterState[0].statecode);
                 setIsInitialRender(false);
             }
         }
@@ -62,25 +77,20 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
 
     function setSelectaddressCountry(value) {
         setpermtaddressCountry(value);
-        setCountryValue(value.countrycode);
+        // setCountryValue(value.countrycode);
+        setCountryValuePermanent(value.countrycode);
     }
     function setSelectaddressStateName(value) {
         setpermtaddressStateName(value);
-        setValue(value.statecode);
+        // setValue(value.statecode);
+        setValuePermanent(value.statecode);
     }
 
     const goNext = () => {
-        // sessionStorage.setItem("permtaddressCountry", permtaddressCountry.code);
-        // sessionStorage.setItem("permtaddressStateName", permtaddressStateName.code);
-
-        // onSelect(config.key, {
-        //     permtaddressCountry,
-        //     permtaddressStateName,
-        // });
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;
-    }
+    } else
     return (
         <React.Fragment>
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
@@ -100,7 +110,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                             select={setSelectaddressCountry}
                         />
                     </div>
-                    {countryvalue === "IND" && (
+                    {countryValuePermanent === "IND" && (
                         <div className="col-md-6">
                             <CardLabel>
                                 {`${t("CS_COMMON_STATE")}`}
