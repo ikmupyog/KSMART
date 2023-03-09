@@ -68,7 +68,7 @@ serviceMaps:
 
       - jsonPath: $.deathCorrection.*.AuditDetails.lastModifiedTime
 
-      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.registrationNo
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.RegistrationNo
 
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.FatherNameEn
 
@@ -364,7 +364,7 @@ serviceMaps:
 
       - jsonPath: $.deathCorrection.*.AuditDetails.lastModifiedTime
 
-      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.registrationNo
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.RegistrationNo
 
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.FatherNameEn
 

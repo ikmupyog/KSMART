@@ -420,6 +420,7 @@ public DeathRegistryCorrectionBasicInfo createCorrectionRegistryBasicInfo(DeathC
     deathRegistryBasicInfo.setDeceasedLastNameMl(deathBasicInfo.getDeceasedLastNameMl());
     deathRegistryBasicInfo.setDeceasedGender(deathBasicInfo.getDeceasedGender());
     deathRegistryBasicInfo.setDeathACKNo(deathBasicInfo.getDeathACKNo());
+    deathRegistryBasicInfo.setRegistrationNo(deathBasicInfo.getRegistrationNo());
     return deathRegistryBasicInfo;
 
 }

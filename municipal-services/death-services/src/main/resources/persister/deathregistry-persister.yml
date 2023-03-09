@@ -394,16 +394,17 @@ serviceMaps:
       - jsonPath: $.deathCorrection.*.Id
 
     - query: UPDATE public.eg_death_dtls_registry SET  dateofdeath = ? , date_of_death_to = ? , deceased_firstname_en = ? , deceased_firstname_ml = ? , deceased_middlename_en = ? , 
-            deceased_middlename_ml = ? , deceased_lastname_en = ? , deceased_lastname_ml = ? ,death_place = ? ,  death_place_inst_type = ? , death_place_inst_id = ? , 		    	    			deceased_aadhar_unavailable = ? , deceased_aadhar_number = ? , deceased_gender = ? ,  status = ? , lastmodifiedby = ? , lastmodifiedtime = ? , 
+            deceased_middlename_ml = ? , deceased_lastname_en = ? , deceased_lastname_ml = ? ,death_place = ? ,  death_place_inst_type = ? , death_place_inst_id = ? , 		    	    			
+            deceased_aadhar_unavailable = ? , deceased_aadhar_number = ? , deceased_gender = ? ,  application_status = ? , lastmodifiedby = ? , lastmodifiedtime = ? , 
             male_dependent_name_en = ? , male_dependent_name_ml = ? , female_dependent_name_en = ? , 
             female_dependent_name_ml = ? ,  vehicle_hospital_en = ? , vehicle_fromplace_ml = ? , vehicle_fromplace_en = ? , vehicle_toplace_ml = ? , 
-            vehicle_toplace_en = ? , vehicle_number = ? , death_place_ward_id = ? , ack_no = ? , workflowcode = ? ,  businessservice = ? , action = ? , comment = ? ,  appl_type = ? ,  
-            vehicle_first_halt = ? ,vehicle_first_halt_ml = ? ,  spouse_name_en = ? , spouse_name_ml = ? , funcion_uid = ? , ack_no_id = ? ,  
-            application_date = ? , death_place_locality_en = ? , death_place_locality_ml = ? , death_place_street_en = ? , death_place_street_ml = ? , 
+            vehicle_toplace_en = ? , vehicle_number = ? , death_place_ward_id = ? , ack_no = ?  ,  
+            vehicle_first_halt = ? ,vehicle_first_halt_ml = ? ,  spouse_name_en = ? , spouse_name_ml = ? , funcion_uid = ? ,  
+            death_place_locality_en = ? , death_place_locality_ml = ? , death_place_street_en = ? , death_place_street_ml = ? , 
             death_place_country = ? , death_place_state = ? , death_place_district = ? , death_place_city = ? , death_place_remarks_en = ? ,
             death_place_remarks_ml = ? , place_of_burial_en = ? , place_of_burial_ml = ? , death_home_locality_en = ? , death_home_locality_ml = ? ,
             death_home_street_en = ? , death_home_street_ml = ? , death_home_housename_en = ? , death_home_housename_ml = ? , death_home_postoffice_id = ? , 
-            death_home_pincode = ? , death_home_ward = ? , death_home_taluk_id = ? ,assignee  WHERE tenantid = ?  AND registration_no = ?
+            death_home_pincode = ? , death_home_ward = ? , death_home_taluk_id = ?   WHERE tenantid = ?  AND registration_no = ?
 
       basePath: deathCorrection.*
       jsonMaps:
@@ -466,16 +467,6 @@ serviceMaps:
 
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathACKNo
 
-      - jsonPath: $.deathCorrection.*.workflowcode 
-
-      - jsonPath: $.deathCorrection.*.businessService
-
-      - jsonPath: $.deathCorrection.*.action
-
-      - jsonPath: $.deathCorrection.*.Comment
-
-      - jsonPath: $.deathCorrection.*.applicationType
-
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleFirstHaltEn
 
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.VehicleFirstHaltMl
@@ -485,10 +476,6 @@ serviceMaps:
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.SpouseNameML
 
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.funcionUID
-
-      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.ackNoID--45
-
-      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.ApplicationDate
 
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceLocalityEn
 
@@ -534,11 +521,9 @@ serviceMaps:
 
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.DeathPlaceHomeTalukId   
 
-      - jsonPath: $.deathCorrection.*.assignuser  
-
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.TenantId
       
-      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.registrationNo
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.RegistrationNo
       
 
     - query: INSERT INTO public.eg_death_address_dtls_log SELECT * FROM  public.eg_death_address_dtls WHERE death_dtl_id = ? 
@@ -556,7 +541,7 @@ serviceMaps:
         ward_id = ? , taluk_id = ? , village_id = ? , postoffice_id = ? , pincode = ? , district_id = ? , state_id = ? , country_id = ? , 
         lastmodifiedby = ? , lastmodifiedtime = ? , location_type = ? , housename_ml = ? , 
         housename_en = ? , lbtype = ? , postal_code = ? , province_name_en = ? , province_name_ml = ? , city_town_village = ? , 
-        city_en = ? , addr_lb_name = ? , addr_sameas_present WHERE death_dtl_id = ? AND tenantid = ?  AND addr_typeid = ? ;
+        city_en = ? , addr_lb_name = ? , addr_sameas_present = ? WHERE death_dtl_id = ? AND tenantid = ?  AND addr_typeid = ? ;
      
 
       basePath: deathCorrection.*
@@ -635,7 +620,7 @@ serviceMaps:
         ward_id = ? , taluk_id = ? , village_id = ? , postoffice_id = ? , pincode = ? , district_id = ? , state_id = ? , country_id = ? , 
         lastmodifiedby = ? , lastmodifiedtime = ? , location_type = ? , housename_ml = ? , 
         housename_en = ? , lbtype = ? , postal_code = ? , province_name_en = ? , province_name_ml = ? , city_town_village = ? , 
-        city_en = ? , addr_lb_name = ? , addr_sameas_present WHERE death_dtl_id = ? AND tenantid = ?  AND addr_typeid = ? ;
+        city_en = ? , addr_lb_name = ? , addr_sameas_present = ? WHERE death_dtl_id = ? AND tenantid = ?  AND addr_typeid = ? ;
      
       basePath: deathCorrection.*
       jsonMaps:

@@ -19,7 +19,7 @@ public class DeathRegistryConfiguration {
     @Value("${persister.save.deathregistry.topic}")
     private String saveDeathRegistryDetailsTopic;
         // Jasmine 08.03.2023
-    @Value("${persister.update.deathcorrection.topic}")
+    @Value("${persister.update.registrycorrection.topic}")
     private String updateDeathRegistryTopic;
 
     // @Value("${persister.save.crdeathregistry.topic}")
