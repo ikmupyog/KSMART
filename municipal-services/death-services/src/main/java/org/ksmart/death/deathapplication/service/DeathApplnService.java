@@ -142,7 +142,7 @@ public class DeathApplnService {
             enrichmentService.enrichCreateCorrection(request);
             enrichmentService.setCorrectionACKNumber(request);                  
             producer.push(deathConfig.getSaveDeathCorrectionTopic(), request);
-           // workflowIntegrator.callWorkFlow(request);
+            workflowIntegrator.callCorrectionWorkFlow(request);
             return request.getDeathCorrection();
        }   
 
@@ -152,15 +152,17 @@ public class DeathApplnService {
           enrichmentService.setCorrectionPresentAddress(request);
           enrichmentService.setCorrectionPermanentAddress(request);
           String ackNumber = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getDeathACKNo();
-          DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
-                                        .deathACKNo(ackNumber)
-                                        .build());
-          List<DeathCorrectionDtls> searchResult = repository.getDeathCorrection(criteria,request.getRequestInfo());
-          validatorService.validateCorrectionUpdate(request, searchResult);
+          System.out.println("CorrectionackNumber"+ackNumber);
+          // DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
+          //                               .deathACKNo(ackNumber)
+          //                               .build());
+          // List<DeathCorrectionDtls> searchResult = repository.getDeathCorrection(criteria,request.getRequestInfo());
+          System.out.println("JasmineSearchResult");
+          // validatorService.validateCorrectionUpdate(request, searchResult);
          // mdmsValidator.validateMDMSData(request,mdmsData);                    
           enrichmentService.enrichUpdateCorrection(request);
-         // workflowIntegrator.callWorkFlow(request);
-          producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+          workflowIntegrator.callCorrectionWorkFlow(request);
+          producer.push(deathConfig.getUpdateDeathCorrectionTopic(), request);
           List<DeathCorrectionDtls> response = new ArrayList<>();
           DeathCorrectionRequest result = DeathCorrectionRequest
                                    .builder()

@@ -366,12 +366,12 @@ public DeathRegistryCorrectionBasicInfo createCorrectionRegistryBasicInfo(DeathC
     deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
     deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
     deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
-    deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
+    // deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
     deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
     deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
     deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
-    deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
-    deathRegistryBasicInfo.setTimeOfDeathUnit(deathBasicInfo.getTimeOfDeathUnit());
+    // deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
+    // deathRegistryBasicInfo.setTimeOfDeathUnit(deathBasicInfo.getTimeOfDeathUnit());
     deathRegistryBasicInfo.setDeathPlace(deathBasicInfo.getDeathPlace());
     deathRegistryBasicInfo.setDeathPlaceType(deathBasicInfo.getDeathPlaceType());
     deathRegistryBasicInfo.setDeathPlaceInstId(deathBasicInfo.getDeathPlaceInstId());

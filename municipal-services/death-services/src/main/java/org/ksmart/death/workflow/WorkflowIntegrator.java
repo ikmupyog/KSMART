@@ -13,6 +13,8 @@ import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.ksmart.death.deathapplication.util.DeathConstants;
 
 import org.egov.tracer.model.CustomException;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
+import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -186,6 +188,94 @@ public class WorkflowIntegrator {
 
                   request.getDeathCertificateDtls().forEach(
                     bndObj -> bndObj.setApplicationStatus(idStatusMap.get(bndObj.getDeathBasicInfo().getDeathACKNo())));
+
+        }
+
+    }
+//Jasmine 08.03.2023
+
+    public  void callCorrectionWorkFlow(DeathCorrectionRequest request) {
+      
+        List<DeathCorrectionDtls> currentFile = request.getDeathCorrection();     
+        JSONArray array = new JSONArray();
+        for (DeathCorrectionDtls deathDtl : request.getDeathCorrection()) {
+            String  businessServiceFromMDMS=deathDtl.getBusinessService();
+            if (businessServiceFromMDMS == null) {
+            businessServiceFromMDMS = DeathConstants.BUSINESS_SERVICE_BND;
+        }
+            if (businessServiceFromMDMS.equals(DeathConstants.BUSINESS_SERVICE_BND) || !request.getDeathCorrection()
+           .get(0).getAction().equalsIgnoreCase(DeathConstants.TRIGGER_NOWORKFLOW)) {
+
+                JSONObject obj = new JSONObject();
+                currentFile
+                .forEach(deathdtls -> {
+                obj.put(DeathConstants.BUSINESSIDKEY, deathdtls.getDeathCorrectionBasicInfo().getDeathACKNo());
+                obj.put(DeathConstants.TENANTIDKEY, deathdtls.getDeathCorrectionBasicInfo().getTenantId());
+                obj.put(DeathConstants.BUSINESSSERVICEKEY, deathdtls.getWorkflowcode());
+                List<Map<String, String>> uuidMaps = buildUUIDList(deathdtls.getAssignees());
+               // System.out.println("uuidMaps"+uuidMaps);
+                if (CollectionUtils.isNotEmpty(uuidMaps)) {
+                    obj.put(DeathConstants.ASSIGNEEKEY, uuidMaps.get(0).get("uuid"));
+                }
+            });
+
+                obj.put(DeathConstants.MODULENAMEKEY, DeathConstants.BNDMODULENAMEVALUE);
+                obj.put(DeathConstants.ACTIONKEY, deathDtl.getAction());
+                obj.put(DeathConstants.COMMENTKEY, deathDtl.getComment());
+                obj.put(DeathConstants.DOCUMENTSKEY, deathDtl.getWfDocuments());
+                array.add(obj);
+            }
+        }
+
+        if (!CollectionUtils.isEmpty(array)) {
+            JSONObject workFlowRequest = new JSONObject();
+            workFlowRequest.put(DeathConstants.REQUESTINFOKEY, request.getRequestInfo());
+            workFlowRequest.put(DeathConstants.WORKFLOWREQUESTARRAYKEY, array);
+            String response = null;
+            try {
+                response = restTemplate.postForObject(bndConfig.getWfHost().concat(bndConfig.getWfTransitionPath()),
+                        workFlowRequest, String.class);
+            } catch (HttpClientErrorException e) {
+                /*
+                 * extracting message from client error exception
+                 */
+                DocumentContext responseContext = JsonPath.parse(e.getResponseBodyAsString());
+                List<Object> errros = null;
+                try {
+                    errros = responseContext.read("$.Errors");
+                } catch (PathNotFoundException pnfe) {
+                    log.error("EG_BND_WF_ERROR_KEY_NOT_FOUND",
+                            " Unable to read the json path in error object : " + pnfe.getMessage());
+                    throw new CustomException("EG_BND_WF_ERROR_KEY_NOT_FOUND",
+                            " Unable to read the json path in error object : " + pnfe.getMessage());
+                }
+                throw new CustomException("EG_WF_ERROR", errros.toString());
+            } catch (Exception e) {
+                throw new CustomException("EG_WF_ERROR",
+                        " Exception occured while integrating with workflow : " + e.getMessage());
+            }
+
+            log.info("workflow integrator response " + response);
+
+            /*
+             * on success result from work-flow read the data and set the status back to TL
+             * object
+             */
+            System.out.println("response Check  :" + response);
+            DocumentContext responseContext = JsonPath.parse(response);
+            List<Map<String, Object>> responseArray = responseContext.read(DeathConstants.PROCESSINSTANCESJOSNKEY);
+            Map<String, String> idStatusMap = new HashMap<>();
+            responseArray.forEach(object -> {
+
+                DocumentContext instanceContext = JsonPath.parse(object);
+                idStatusMap.put(instanceContext.read(DeathConstants.BUSINESSIDJOSNKEY),
+                        instanceContext.read(DeathConstants.STATUSJSONKEY));
+            });
+            
+            // setting the status back to TL object from wf response
+
+                  request.getDeathCorrection().forEach(
+                    bndObj -> bndObj.setApplicationStatus(idStatusMap.get(bndObj.getDeathCorrectionBasicInfo().getDeathACKNo())));
 
         }
 

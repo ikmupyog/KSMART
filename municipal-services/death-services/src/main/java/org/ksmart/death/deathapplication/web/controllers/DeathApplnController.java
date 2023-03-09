@@ -168,16 +168,15 @@ public class DeathApplnController {
 //Jasmine
         
     @PostMapping("/deathdetails/_updatedeathcorrection")
-
     public ResponseEntity<DeathCorrectionResponse> update(@RequestBody DeathCorrectionRequest request) {
- 
+ System.out.println("HiCorrectionUpdate");
         List<DeathCorrectionDtls> deathDetails = deathService.updateCorrection(request);
 
         String status=request.getDeathCorrection().get(0).getApplicationStatus();
 
         String applicationType =request.getDeathCorrection().get(0).getApplicationType();
 
-        //System.out.println("status and applicationType"+status +" "+applicationType);
+        System.out.println("status"+status +" "+applicationType);
 
         if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCorrection().get(0).getApplicationType().equals(DeathConstants.APPLICATION_CORRECTION)){
          

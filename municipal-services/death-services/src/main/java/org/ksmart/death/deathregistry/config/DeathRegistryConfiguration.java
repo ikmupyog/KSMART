@@ -18,12 +18,16 @@ public class DeathRegistryConfiguration {
       //Persister Config  RAkhi S ikm on 10.02.2023    
     @Value("${persister.save.deathregistry.topic}")
     private String saveDeathRegistryDetailsTopic;
-
-    @Value("${persister.save.crdeathregistry.topic}")
-    private String saveDeathRegistryTopic;
-
-    @Value("${persister.update.crdeathregistry.topic}")
+        // Jasmine 08.03.2023
+    @Value("${persister.update.deathcorrection.topic}")
     private String updateDeathRegistryTopic;
+
+    // @Value("${persister.save.crdeathregistry.topic}")
+    // private String saveDeathRegistryTopic;
+
+    // @Value("${persister.update.crdeathregistry.topic}")
+    // private String updateDeathRegistryTopic;
+
 
     
     //MDMS

@@ -485,6 +485,7 @@ public class DeathEnrichment implements BaseEnrichment{
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        System.out.println("JasmineEnrichCorrection");
          request.getDeathCorrection()
                  .forEach(deathDtls -> {
                     DeathCorrectionBasicInfo deathBasicDtls = deathDtls.getDeathCorrectionBasicInfo();

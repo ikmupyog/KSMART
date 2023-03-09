@@ -81,27 +81,27 @@ public class DeathCorrectionBasicInfo {
     @JsonProperty("DateOfDeath")
     private Long dateOfDeath ;
 
-    @Schema(type = "string", description= "time of death" )
-    @JsonProperty("TimeOfDeath")
-    private Integer  timeOfDeath ;
+    // @Schema(type = "string", description= "time of death" )
+    // @JsonProperty("TimeOfDeath")
+    // private Integer  timeOfDeath ;
 
-    @Schema(type = "string", description= "am/pm" )
-    @Size(max = 64)
-    @JsonProperty("TimeOfDeathUnit")
-    private String timeOfDeathUnit ;
+    // @Schema(type = "string", description= "am/pm" )
+    // @Size(max = 64)
+    // @JsonProperty("TimeOfDeathUnit")
+    // private String timeOfDeathUnit ;
 
     @Schema(type = "long",description = "If death date is not known enter the todate" )
     @JsonProperty("DateOfDeath1")
     private Long dateOfDeath1;
 
-    @Schema(type = "string", description= "time of death" )
-    @JsonProperty("timeOfDeath1")
-    private Integer timeOfDeath1 ;
+    // @Schema(type = "string", description= "time of death" )
+    // @JsonProperty("timeOfDeath1")
+    // private Integer timeOfDeath1 ;
 
-    @Schema(type = "string", description= "AM/PM" )
-    @Size(max = 64)
-    @JsonProperty("timeOfDeathUnit1")
-    private String timeOfDeathUnit1 ;
+    // @Schema(type = "string", description= "AM/PM" )
+    // @Size(max = 64)
+    // @JsonProperty("timeOfDeathUnit1")
+    // private String timeOfDeathUnit1 ;
 
     @Schema(type = "string", description= " " )
     @JsonProperty("DeceasedGender")
