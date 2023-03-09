@@ -219,7 +219,6 @@ public class DeathApplnRepository {
         if(result != null) {
 			result.forEach(deathDtl -> {
 
-                System.out.println("hiiiiiiiiiiiii");
                 DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();
                 //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
                 DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
