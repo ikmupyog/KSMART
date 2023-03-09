@@ -140,4 +140,6 @@ public class DeathConstants {
     public static final String TENANT_EGOV_LOCATION= "egov-location";
     public static final String EGOV_LOCATION_JSONPATH = "$.MdmsRes.egov-location";
 
+    public static final String HOSPITAL_DATA="hospitalList";
+
 }

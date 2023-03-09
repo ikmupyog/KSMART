@@ -75,14 +75,16 @@ public class DeathApplnRepository {
         List<DeathDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
         if(result != null) {
 			result.forEach(deathDtl -> {
-
+              
                 DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();
                 //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
                 DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
                 deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
+                
                 DeathFamilyInfo deathFamilyDtls =deathDtl.getDeathFamilyInfo() ;
                 DeathFamilyInfo deathFamilyDcr = encryptionDecryptionUtil.decryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class,requestInfo);
                 deathFamilyDtls.setFatherAadharNo(deathFamilyDcr.getFatherAadharNo());
+
                 deathFamilyDtls.setMotherAadharNo(deathFamilyDcr.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar()); 
                 DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
@@ -95,7 +97,6 @@ public class DeathApplnRepository {
                     DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
                     deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
                 }
-
                 //Rakhi S on 02.03.2023 Mdms call  
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                     Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    
@@ -108,12 +109,12 @@ public class DeathApplnRepository {
                                            , deathDtl.getDeathBasicInfo().getDeathPlaceType());
                    Map<String,List<String>> masterDataHospitalMl = getAttributeValuesHospital(mdmsDataHospitalMl);
 
-                   String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_LIST).toString();
+                   String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_DATA).toString();
                    deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
 
-                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_LIST).toString();
+                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_DATA).toString();
                    deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
-
+                    
                 deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
                 deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);
                }
@@ -218,6 +219,7 @@ public class DeathApplnRepository {
         if(result != null) {
 			result.forEach(deathDtl -> {
 
+                System.out.println("hiiiiiiiiiiiii");
                 DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();
                 //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
                 DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
@@ -226,10 +228,10 @@ public class DeathApplnRepository {
                 DeathFamilyInfo deathFamilyDcr = encryptionDecryptionUtil.decryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class,requestInfo);
                 deathFamilyDtls.setFatherAadharNo(deathFamilyDcr.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyDcr.getMotherAadharNo());
-                deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar()); 
+                deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar());                 
                 DeathAbandonedInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
                 if (deathInformant!=null){
-                    DeathAbandonedInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
+                    DeathAbandonedInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathAbandonedInformantDtls.class,requestInfo);
                     deathInformant.setInformantAadhaarNo(deathInformantEnc.getInformantAadhaarNo());
                 }
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
@@ -243,10 +245,10 @@ public class DeathApplnRepository {
                                            , deathDtl.getDeathBasicInfo().getDeathPlaceType());
                    Map<String,List<String>> masterDataHospitalMl = getAttributeValuesHospital(mdmsDataHospitalMl);
 
-                   String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_LIST).toString();
+                   String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_DATA).toString();
                    deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
 
-                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_LIST).toString();
+                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_DATA).toString();
                    deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
 
                 deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
