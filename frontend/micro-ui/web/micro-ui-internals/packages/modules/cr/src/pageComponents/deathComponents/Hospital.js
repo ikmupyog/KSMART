@@ -43,10 +43,10 @@ const Hospital = ({
       cmbhospital.push(ob);
     });
     if (iseditDeath) {
-      if (formData?.InformationDeath?.DeathPlaceTypecode != null) {
+      if (formData?.InformationDeath?.DeathPlaceType != null) {
         if (cmbhospital.length > 0 && (DeathPlaceType === undefined || DeathPlaceType === "")) {
-          selectDeathPlaceType(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.InformationDeath?.DeathPlaceTypecode)[0]);
-          cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.InformationDeath ?.DeathPlaceTypecode)[0];
+          selectDeathPlaceType(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.InformationDeath?.DeathPlaceType)[0]);
+          cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.InformationDeath ?.DeathPlaceType)[0];
           selectHospitalNameMl(cmbhospitalMl);
         }
       }
