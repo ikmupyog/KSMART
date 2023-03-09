@@ -13,33 +13,51 @@
           {
             "direct": [
               {
-                "variable": "logoImage",
+                "variable": "tenantLogo",
                 "url": "https://ulb-logos.s3.ap-south-1.amazonaws.com/kerala_logo.jpg",
                 "type": "image"
               },
               {
-                "variable": "name",
-                "value": {
-                  "path": "$.name"
-                },
-                "type": "setEmpty"
+                "variable": "waterMarkImage",
+                "url": "https://ulb-logos.s3.ap-south-1.amazonaws.com/kerala_logo.jpg",
+                "type": "image"
               },
               {
-                "variable": "address",
-                "value": {
-                  "path": "$.address"
-                },
-                "type": "setEmpty"
-              },
-              {
-                "variable": "lbName",
+                "variable": "tenantName",
                 "value": {
                   "path": "$.lbName"
                 },
                 "type": "setEmpty"
               },
               {
-                "variable": "tenantName",
+                "variable": "tenantAddress",
+                "value": {
+                  "path": "$.lbAddressWithPinCode"
+                },
+                "type": "setEmpty"
+              },
+              {
+                "variable": "applicantName",
+                "value": {
+                  "path": "$.name"
+                }
+              },
+              {
+                "variable": "applicantAddress",
+                "value": {
+                  "path": "$.address"
+                },
+                "type": "setEmpty"
+              },
+              {
+                "variable": "embeddedUrl",
+                "value": {
+                  "path": "$.embeddedUrl"
+                },
+                "type": "setEmpty"
+              },
+              {
+                "variable": "tenantId",
                 "value": {
                   "path": "$.tenantId"
                 },
@@ -50,16 +68,20 @@
                 }
               },
               {
-                "variable": "logokerala",
-                "url": "https://ulb-logos.s3.ap-south-1.amazonaws.com/kerala_logo.jpg",
-                "type": "image"
-              },
-              {
-                "variable": "lbAddressWithPinCode",
+                "variable": "certificateDate",
                 "value": {
-                  "path": "$.lbAddressWithPinCode"
+                  "path": "$.dateOfIssue"
                 },
-                "type": "setEmpty"
+                "type": "date",
+                "format": "DD/MM/YYYY"
+              }
+            ]
+          },
+          {
+            "qrcodeConfig": [
+              {
+                "variable": "qrCodeImage",
+                "value": "{{embeddedUrl}}"
               }
             ]
           }

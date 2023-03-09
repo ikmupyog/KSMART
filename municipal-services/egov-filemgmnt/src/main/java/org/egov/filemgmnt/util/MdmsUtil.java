@@ -45,9 +45,18 @@ public class MdmsUtil {
     @Value("${egov.mdms.module.name}")
     private String moduleName;
 
-    public Object mdmsCall(final RequestInfo requestInfo, final String tenantId) {
-        final MdmsCriteriaReq mdmsCriteriaReq = getMdmsRequest(requestInfo, tenantId);
+    public Object mdmsCallForModuleDetails(final RequestInfo requestInfo, final String tenantId) {
+        final MdmsCriteriaReq mdmsCriteriaReq = getMdmsModuleDetailsRequest(requestInfo, tenantId);
 
+        return mdmsCall(mdmsCriteriaReq);
+    }
+
+    public Object mdmsCallForOfficeAddress(final RequestInfo requestInfo, final String tenantId) {
+        final MdmsCriteriaReq mdmsCriteriaReq = getMdmsOfficeAddressRequest(requestInfo, tenantId);
+        return mdmsCall(mdmsCriteriaReq);
+    }
+
+    private Object mdmsCall(final MdmsCriteriaReq mdmsCriteriaReq) {
         final String uri = String.format("%s%s", mdmsHost, mdmsUrl);
         Object result = null;
         try {
@@ -68,30 +77,7 @@ public class MdmsUtil {
         return result;
     }
 
-    public Object mdmsCallForOfficeAddress(final RequestInfo requestInfo, final String tenantId) {
-        final MdmsCriteriaReq mdmsCriteriaReq = getMdmsOfficeAddressRequest(requestInfo, tenantId);
-
-        final String mdmsUri = String.format("%s%s", mdmsHost, mdmsUrl);
-        Object result = null;
-        try {
-            if (log.isInfoEnabled()) {
-                log.info("Mdms URI: {}", mdmsUri);
-                log.info("Mdms request: \n{}", FMUtils.toJson(mdmsCriteriaReq));
-            }
-
-            result = restTemplate.postForObject(mdmsUri, mdmsCriteriaReq, Map.class);
-
-            if (log.isDebugEnabled()) {
-                log.debug("Mdms response: \n{}", FMUtils.toJson(result));
-            }
-        } catch (Exception e) {
-            log.error("Exception occurred while fetching category lists from mdms", e);
-        }
-
-        return result;
-    }
-
-    private MdmsCriteriaReq getMdmsRequest(final RequestInfo requestInfo, final String tenantId) {
+    private MdmsCriteriaReq getMdmsModuleDetailsRequest(final RequestInfo requestInfo, final String tenantId) {
 
         final List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.addAll(getFMModuleDetails());

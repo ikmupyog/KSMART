@@ -1,9 +1,8 @@
-package org.egov.filemgmnt.enrichment; // NOPMD
+package org.egov.filemgmnt.enrichment;
 
 import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
 
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
@@ -14,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
-import org.egov.filemgmnt.util.IdgenUtil;
 import org.egov.filemgmnt.web.enums.ErrorCodes;
 import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.ApplicantChild;
@@ -25,8 +23,6 @@ import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceDocument;
 import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.AuditDetails;
-import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
-import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
 import org.egov.filemgmnt.web.models.user.FMUser;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +31,10 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 @Component
-public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
+public class FileManagementEnrichment extends BaseEnrichment {
 
     @Autowired
     private FMConfiguration fmConfig;
-    @Autowired
-    private IdgenUtil idgenUtil;
 
     public void enrichApplicantPersonal(final ApplicantServiceRequest request,
                                         final ApplicantPersonal existingApplicant, final boolean create) {
@@ -336,46 +330,5 @@ public class FileManagementEnrichment implements BaseEnrichment { // NOPMD
             throw new CustomException(IDGEN_ERROR.getCode(),
                     "The number of file code(s) returned by idgen service is not equal to the request count");
         }
-    }
-
-    public void enrichCertificateCreate(final CertificateRequest request) {
-        final RequestInfo requestInfo = request.getRequestInfo();
-        final User userInfo = requestInfo.getUserInfo();
-
-        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-
-        request.getCertificateDetails()
-               .forEach(cert -> {
-                   cert.setId(UUID.randomUUID()
-                                  .toString());
-                   cert.setAuditDetails(auditDetails);
-               });
-
-        setCertificateNumber(request);
-    }
-
-    private void setCertificateNumber(final CertificateRequest request) {
-        final RequestInfo requestInfo = request.getRequestInfo();
-        final List<CertificateDetails> certDetails = request.getCertificateDetails();
-
-        final String tenantId = certDetails.get(0)
-                                           .getTenantId();
-
-        final List<String> certNumbers = generateIds(requestInfo,
-                                                     tenantId,
-                                                     fmConfig.getFilemgmntFileCodeName(),
-                                                     fmConfig.getFilemgmntFileCodeFormat(),
-                                                     certDetails.size());
-
-        final ListIterator<String> itr = certNumbers.listIterator();
-
-        request.getCertificateDetails()
-               .forEach(cert -> cert.setCertificateNo(itr.next()));
-
-    }
-
-    private List<String> generateIds(final RequestInfo requestInfo, final String tenantId, final String idKey,
-                                     final String idformat, final int count) {
-        return idgenUtil.getIdList(requestInfo, tenantId, idKey, idformat, count);
     }
 }

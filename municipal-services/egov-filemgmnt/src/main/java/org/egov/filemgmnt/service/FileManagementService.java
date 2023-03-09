@@ -5,8 +5,6 @@ import static org.egov.filemgmnt.web.enums.ErrorCodes.INVALID_UPDATE;
 import java.util.List;
 import java.util.Objects;
 
-import javax.validation.Valid;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
@@ -63,7 +61,7 @@ public class FileManagementService extends AbstractFileManagementService {
 
     public ApplicantServiceDetail create(final ApplicantServiceRequest request) {
         // Get mdms data
-        final Object mdmsData = mdmsUtil.mdmsCall(request.getRequestInfo(), fmConfig.getStateLevelTenantId());
+        final Object mdmsData = mdmsUtil.mdmsCallForModuleDetails(request.getRequestInfo(), fmConfig.getStateLevelTenantId());
 
         // validate applicant personal
         final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();
@@ -206,20 +204,6 @@ public class FileManagementService extends AbstractFileManagementService {
         }
 
         // producer.push(fmConfig.getSaveApplicantCertificateTopic(), request);
-
-        return request.getCertificateDetails();
-    }
-
-    @Deprecated
-    public List<CertificateDetails> download(@Valid final ApplicantSearchCriteria criteria,
-                                             final RequestInfo requestInfo) {
-        final CertificateRequest request = repository.getResidentialCertificate(criteria, requestInfo);
-
-        if (log.isDebugEnabled()) {
-            log.debug("Certificate request: \n{}", FMUtils.toJson(request));
-        }
-
-        producer.push(fmConfig.getSaveApplicantCertificateTopic(), request);
 
         return request.getCertificateDetails();
     }

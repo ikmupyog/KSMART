@@ -119,20 +119,4 @@ public class FileManagementController implements FileManagementBaseController {
                                                     .certificateDetails(certificateDetails)
                                                     .build());
     }
-
-    @Deprecated
-    @Override
-    @PostMapping("/applicantpersonals/_download") // value = { "/applicantpersonals/_download" }
-    public ResponseEntity<CertificateResponse> download(@RequestBody final RequestInfoWrapper request,
-                                                        @ModelAttribute final ApplicantSearchCriteria criteria) {
-
-        final List<CertificateDetails> certificateDetails = fmService.download(criteria, request.getRequestInfo());
-        final CertificateResponse response = CertificateResponse.builder()
-                                                                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                                    Boolean.TRUE))
-                                                                .certificateDetails(certificateDetails)
-                                                                .build();
-        return ResponseEntity.ok(response);
-    }
-
 }

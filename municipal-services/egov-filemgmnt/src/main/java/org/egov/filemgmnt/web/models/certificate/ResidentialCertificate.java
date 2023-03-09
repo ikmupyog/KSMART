@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 public class ResidentialCertificate {
 
-    private String id; // applicantId
+    private String id; // serviceDetailId
     private String buildingNo;
     private String durationYear;
     private String durationMonth;
@@ -22,4 +22,5 @@ public class ResidentialCertificate {
     private String ownerAddress;
     private String address;
     private String embeddedUrl;
+    private Long dateOfIssue;
 }

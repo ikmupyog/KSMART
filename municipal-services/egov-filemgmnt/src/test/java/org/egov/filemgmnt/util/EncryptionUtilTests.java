@@ -43,8 +43,8 @@ public class EncryptionUtilTests {
 
     @BeforeEach
     void init() {
-        overrideEncryptionPolicyConfig();
-        overrideAbacConfig();
+//        overrideEncryptionPolicyConfig();
+//        overrideAbacConfig();
     }
 
     @Test
@@ -60,27 +60,20 @@ public class EncryptionUtilTests {
             ApplicantPersonal result = encUtil.encryptObject(applicant,
                                                              FMConstants.FM_APPLICANT_ENC_KEY,
                                                              ApplicantPersonal.class);
+            // 9327|5gYTHHFoEUfKIlwkYXanjbRYYNB4hp3PIc0=
 
-            if (log.isDebugEnabled()) { // 9327|5gYTHHFoEUfKIlwkYXanjbRYYNB4hp3PIc0=
-                log.debug("*** Encrypted Value:\n{}", FMUtils.toJson(result));
-            }
-
-            ApplicantServiceDetail result2 = encUtil.decryptObject(ApplicantServiceDetail.builder()
-                                                                                         .applicant(result)
-                                                                                         .build(),
-                                                                   FMConstants.FM_APPLICANT_ENC_KEY,
-                                                                   ApplicantServiceDetail.class,
-                                                                   RequestInfo.builder()
-                                                                              .userInfo(User.builder()
-                                                                                            .roles(Collections.singletonList(Role.builder()
-                                                                                                                                 .code("EMPLOYEE")
-                                                                                                                                 .build()))
-                                                                                            .build())
-                                                                              .build());
-
-            if (log.isDebugEnabled()) {
-                log.debug("*** Decrypted Value:\n{}", FMUtils.toJson(result2));
-            }
+            encUtil.decryptObject(ApplicantServiceDetail.builder()
+                                                        .applicant(result)
+                                                        .build(),
+                                  FMConstants.FM_APPLICANT_ENC_KEY,
+                                  ApplicantServiceDetail.class,
+                                  RequestInfo.builder()
+                                             .userInfo(User.builder()
+                                                           .roles(Collections.singletonList(Role.builder()
+                                                                                                .code("EMPLOYEE")
+                                                                                                .build()))
+                                                           .build())
+                                             .build());
 
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
@@ -89,6 +82,7 @@ public class EncryptionUtilTests {
         }
     }
 
+    @SuppressWarnings("unused")
     private static void overrideAbacConfig() {
         try {
             final String roleAttributesJson = FMUtils.loadResourceAsString("DecryptionABAC.json");
@@ -105,7 +99,8 @@ public class EncryptionUtilTests {
             final Field field = abacConfig.getClass()
                                           .getDeclaredField("keyRoleAttributeAccessMap");
             field.setAccessible(true); // NOPMD
-            field.set(abacConfig, keyRoleAttributeAccessMap);
+//             field.set(abacConfig, keyRoleAttributeAccessMap);
+//             log.debug("abacConfig: \n{}", FMUtils.toJson(field.get(abacConfig)));
             field.setAccessible(false);
 
         } catch (Exception e) {
@@ -113,6 +108,7 @@ public class EncryptionUtilTests {
         }
     }
 
+    @SuppressWarnings("unused")
     private static void overrideEncryptionPolicyConfig() {
         try {
             final String encryptionPolicyJson = FMUtils.loadResourceAsString("EncryptionPolicy.json");
@@ -130,7 +126,8 @@ public class EncryptionUtilTests {
             final Field field = encPolicy.getClass()
                                          .getDeclaredField("keyAttributeMap");
             field.setAccessible(true); // NOPMD
-            field.set(encPolicy, keyAttributeMap);
+//             field.set(encPolicy, keyAttributeMap);
+//             log.debug("keyAttributeMap: \n{}", FMUtils.toJson(field.get(encPolicy)));
             field.setAccessible(false);
 
         } catch (Exception e) {

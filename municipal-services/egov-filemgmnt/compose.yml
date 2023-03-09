@@ -12,6 +12,12 @@ services:
       - './docker_data:/bitnami'
     networks:
       - ksmart
+    healthcheck:
+      test: sh nc -z -v localhost 2181 || exit 0
+      start_period: 10s
+      interval: 5s
+      timeout: 3s
+      retries: 2
   kafka:
     container_name: kafka
     image: 'bitnami/kafka:latest'
@@ -34,9 +40,9 @@ services:
     networks:
       - ksmart
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy 
     healthcheck:
-      #test: curl -v localhost:9093 || exit 0
       test: sh /opt/bitnami/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9093
       start_period: 10s
       interval: 5s

@@ -226,8 +226,4 @@ interface FileManagementBaseController {
                                                        schema = @Schema(implementation = ErrorRes.class))) })
     ResponseEntity<CertificateResponse> downloadCertificate(@Valid RequestInfoWrapper request,
                                                             @Valid ApplicantServiceSearchCriteria searchCriteria);
-
-    @Operation(deprecated = true, hidden = true)
-    ResponseEntity<CertificateResponse> download(@Valid RequestInfoWrapper request,
-                                                 @Valid ApplicantSearchCriteria criteria);
 }

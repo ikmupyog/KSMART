@@ -10,7 +10,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
-import org.egov.filemgmnt.enrichment.FileManagementEnrichment;
+import org.egov.filemgmnt.enrichment.CertificateEnrichment;
 import org.egov.filemgmnt.repository.FileManagementRepository;
 import org.egov.filemgmnt.repository.ServiceRequestRepository;
 import org.egov.filemgmnt.util.FMConstants;
@@ -44,9 +44,9 @@ public class CertificateService {
     private ServiceRequestRepository restRepo;
 
     private final FileManagementRepository repository;
-    private final FileManagementEnrichment enrichment;
+    private final CertificateEnrichment enrichment;
 
-    CertificateService(final FileManagementRepository repository, final FileManagementEnrichment enrichment) {
+    CertificateService(final FileManagementRepository repository, final CertificateEnrichment enrichment) {
         this.repository = repository;
         this.enrichment = enrichment;
     }
@@ -105,7 +105,7 @@ public class CertificateService {
                                                                         .certificateDetails(Collections.singletonList(certificate))
                                                                         .requestInfo(requestInfo)
                                                                         .build();
-        enrichment.enrichCertificateCreate(certificateRequest);
+        enrichment.enrichCreate(certificateRequest);
 
         return certificateRequest;
     }
@@ -156,6 +156,7 @@ public class CertificateService {
                                      .address(applicantAddress)
                                      .ownerName(details.getOwnerNameMal())
                                      .ownerAddress(details.getOwnerAddressMal())
+                                     .dateOfIssue(Long.valueOf(System.currentTimeMillis()))
                                      .build();
     }
 

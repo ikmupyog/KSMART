@@ -12,7 +12,24 @@
     "defaultStyle": {
       "font": "Thumba"
     },
+    "background": "(function(currentPage, pageSize) { return [{ image: 'https://ulb-logos.s3.ap-south-1.amazonaws.com/kerala_logo.jpg', fit: [300, 300], opacity: 0.1, margin: [(pageSize.width-300)/2,(pageSize.height-300)/2,0,0] }]; })",
+    "watermark": {
+      "text": "Watermark",
+      "color": "#cccccc",
+      "opacity": 0.3,
+      "bold": true,
+      "italics": false
+    },
     "content": [
+      {
+        "qr": "{{embeddedUrl}}",
+        "fit": 70,
+        "alignment": "right",
+        "absolutePosition": {
+          "x": 0,
+          "y": 70.86
+        }
+      },
       {
         "table": {
           "widths": ["*"],
@@ -114,7 +131,7 @@
         "layout": "noBorders"
       },
       {
-        "style": "certificate-signature-margin",
+        "style": "certificate-subtitle-margin",
         "table": {
           "widths": ["*"],
           "body": [
@@ -131,12 +148,6 @@
           ]
         },
         "layout": "noBorders"
-      },
-      {
-        "image": "{{qrCodeImage}}",
-        "fit": [70, 70],
-        "alignment": "left",
-        "margin": [0, 50, 0, 0]
       }
     ],
     "footer": "(function(currentPage, pageCount) { return [ {columns: [{text: currentPage.toString() + ' of ' + pageCount, alignment: 'right', margin: [0, 0, 70.86, 0] }]} ]; })",
@@ -187,9 +198,6 @@
       },
       "certificate-subtitle-margin": {
         "margin": [0, 45, 0, 45]
-      },
-      "certificate-signature-margin": {
-        "margin": [0, 45, 0, 0]
       },
       "certificate-body": {
         "color": "#000000",

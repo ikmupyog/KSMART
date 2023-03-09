@@ -11,7 +11,7 @@ import org.egov.filemgmnt.web.models.communication.CommunicationFileRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommunicationFileManagementEnrichment implements BaseEnrichment {
+public class CommunicationFileManagementEnrichment extends BaseEnrichment {
 
     private final FMConfiguration fmConfig;
     private final IdgenUtil idgenUtil;

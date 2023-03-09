@@ -1,10 +1,23 @@
 package org.egov.filemgmnt.enrichment;
 
+import java.util.List;
+
+import org.egov.common.contract.request.RequestInfo;
+import org.egov.filemgmnt.util.IdgenUtil;
 import org.egov.filemgmnt.web.models.AuditDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 
-interface BaseEnrichment {
+abstract class BaseEnrichment { // NOPMD
 
-    default AuditDetails buildAuditDetails(final String by, final Boolean create) {
+    @Autowired
+    private IdgenUtil idgenUtil;
+
+    @Autowired
+    public final void setIdgenUtil(final IdgenUtil idgenUtil) {
+        this.idgenUtil = idgenUtil;
+    }
+
+    protected AuditDetails buildAuditDetails(final String by, final Boolean create) {
         AuditDetails auditDetails;
 
         final Long currentTime = Long.valueOf(System.currentTimeMillis());
@@ -22,5 +35,10 @@ interface BaseEnrichment {
                                        .build();
         }
         return auditDetails;
+    }
+
+    protected List<String> generateIds(final RequestInfo requestInfo, final String tenantId, final String idKey,
+                                       final String idformat, final int count) {
+        return idgenUtil.getIdList(requestInfo, tenantId, idKey, idformat, count);
     }
 }
