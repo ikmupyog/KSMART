@@ -146,6 +146,15 @@ public class DeathRegistryController {
 
     public ResponseEntity<DeathRegistryCorrectionResponse> update(@RequestBody DeathRegistryCorrectionRequest request) {
         
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Object obj = request;
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+           System.out.println("JasmineRegistryCorrection "+ mapper.writeValueAsString(obj));
+    }catch(Exception e) {
+        log.error("Exception while fetching from searcher: ",e);
+    }
+
         List<DeathRegistryCorrectionDtls> deathDetails = deathService.update(request);
         
         DeathRegistryCorrectionResponse response = DeathRegistryCorrectionResponse

@@ -145,6 +145,7 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
                     String IDGenerated = null;
                     IDGenerated = idGenerator.setIDGenerator(request, DeathRegistryConstants.FUN_MODULE_NEWAPPLN,
                                 DeathRegistryConstants.REG_NUMBER_CAPTION);
+                    System.out.println("IDGenerated"+IDGenerated);
                     Long registrationNoId=null;
                     String inputString = IDGenerated; 
                     String[] registrationNoIdArray= inputString.split("-");

@@ -180,6 +180,8 @@ public class DeathRegistryService {
 
     String tenantId = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId();
 
+    System.out.println("regNo"+regNo);
+
      // List<DeathRegistryDtl> searchResult = repository.getDeathApplication(DeathRegistryCriteria
      //                                                                       .builder()
      //                                                                       .tenantId(tenantId)

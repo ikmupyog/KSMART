@@ -158,7 +158,19 @@ public class DeathApplnController {
 
     @PostMapping("/deathdetails/_createdeathcorrection")
     public ResponseEntity<DeathCorrectionResponse> create(@Valid @RequestBody DeathCorrectionRequest request) {
-       
+             // System.out.println("hai");
+           /********************************************* */
+
+    //        try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("JasmineCorrection "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
+
+    
         List<DeathCorrectionDtls> deathCorrDetails = deathService.createcorrection(request);
 
         DeathCorrectionResponse response = DeathCorrectionResponse
@@ -179,10 +191,11 @@ public class DeathApplnController {
 
         String applicationType =request.getDeathCorrection().get(0).getApplicationType();
 
-        System.out.println("status"+status +" "+applicationType);
+        System.out.println("statusApprove"+status +" "+applicationType);
 
         if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCorrection().get(0).getApplicationType().equals(DeathConstants.APPLICATION_CORRECTION)){
          
+            System.out.println("statusApproved"+status +" "+applicationType);
             DeathRegistryCorrectionRequest registryRequest = deathRegistryRequestService.createRegistrycorrectionRequest(request);
 
             List<DeathRegistryCorrectionDtls> registryDeathDetails =  deathRegistryService.update(registryRequest);
