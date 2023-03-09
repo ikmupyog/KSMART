@@ -10,6 +10,8 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
+import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
+
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -136,6 +138,10 @@ export const CRLinks = ({ matchPath, userType }) => {
       i18nKey: t("CR_STILL_BIRTH_REGISTRATION"),
     },
     {
+      link: `${matchPath}/cr-outsideindiabirth-creation`,
+      i18nKey: t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
+    },
+    {
       link: `${matchPath}/cr-death-creation`,
       i18nKey: t("CR_DEATH_REGISTRATION"),
     },
@@ -192,6 +198,7 @@ const componentsToRegister = {
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
+  CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
   ParentsDetails,
   BirthPlaceHospital,
   BirthPlaceInstitution,
@@ -218,6 +225,8 @@ const componentsToRegister = {
   StillBirthPlaceVehicle,
   StillBirthInitiatorDetails,
   StillBirthCheckPage,
+  //////////////////
+  BornOutsideChildDetails,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
