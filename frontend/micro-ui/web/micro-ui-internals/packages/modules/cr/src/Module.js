@@ -42,6 +42,7 @@ import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBir
 import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
 
 import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
+import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -145,6 +146,7 @@ export const CRLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/cr-outsideindiabirth-creation`,
       i18nKey: t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
+      section:'birth'
     },
     {
       link: `${matchPath}/cr-death-creation`,
@@ -235,6 +237,7 @@ const componentsToRegister = {
   StillBirthCheckPage,
   //////////////////
   BornOutsideChildDetails,
+  BornOutsideParentsDetails,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,

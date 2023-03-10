@@ -416,10 +416,26 @@ export const newConfig = [
         },
         key: "BornOutsideChildDetails",
         withoutLabel: true,
-        nextStep: null,
+        nextStep:" born-outside-parents-details",
         hideInEmployee: false,
       },
-      
+      {
+        route: "born-outside-parents-details",
+        component: "BornOutsideParentsDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "BornOutsideParentsDetails",
+        nextStep: null,
+        type: "component",
+        hideInEmployee: true,
+        hideInCitizen: false,
+      },
   
    
     ],

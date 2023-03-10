@@ -10,6 +10,7 @@ const getAction = (flow) => {
       break;
     default: actions = [
       'CR_BIRTH_CHILD_DETAILS',
+      'CR_PARENTS_DETAILS',
       'BIRTH_TIME_LINE_SUMMARY',
       
     ]
