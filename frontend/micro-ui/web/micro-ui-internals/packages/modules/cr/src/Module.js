@@ -39,6 +39,7 @@ import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
 import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
 import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
+import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
 
 import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 
