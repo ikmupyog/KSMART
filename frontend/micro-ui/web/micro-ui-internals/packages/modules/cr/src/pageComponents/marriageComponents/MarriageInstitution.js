@@ -302,6 +302,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
       sessionStorage.setItem("marraigeDistrictid", marraigeDistrictid ? marraigeDistrictid.code : null);
       sessionStorage.setItem("marraigeType", marraigeType ? marraigeType : null);
+      sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
+      sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
       sessionStorage.setItem("marriageReligiousInstitutionOtherNameMal", marriageReligiousInstitutionOtherNameMal ? marriageReligiousInstitutionOtherNameMal : null);
       sessionStorage.setItem("MarriageReligiousInstitutionOtherNameEn", MarriageReligiousInstitutionOtherNameEn ? MarriageReligiousInstitutionOtherNameEn : null);
       onSelect(config.key, {
@@ -314,15 +316,18 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
         marraigeWardCode,
         marriageReligiousInstitutionOther,
         marriageLocalityMal,
+        marriageLocalityEn,
         marraigeOthersSpecify,
         marraigeType,
         marriageLandmark,
         marriageReligiousInstitutionOtherNameMal,
-        MarriageReligiousInstitutionOtherNameEn
+        MarriageReligiousInstitutionOtherNameEn,
+        marriageStreetEn,
+        marriageStreetMal,
       });
     }
   };
-  if (isLoading || isProfessionLoading || isDistrictLoading || islocalbodiesLoading || isTalukLoading || isVillageLoading ) {
+  if (isLoading || isProfessionLoading || isDistrictLoading || islocalbodiesLoading || isTalukLoading || isVillageLoading ||isWardLoaded) {
     return <Loader></Loader>;
   } else
     return (
@@ -478,7 +483,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 value={marriageReligiousInstitutionOther}
                 onChange={setSelectMarriageReligiousInstitutionOther}
                 placeholder={`${t("CR_RELIGIOUS_INSTITUTION_OTHER")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELIGIOUS_INSTITUTION_OTHER") })}
+                
               />
             </div> 
             <div className="col-md-3">
@@ -492,7 +497,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 value={marriageReligiousInstitutionOtherNameEn}
                 onChange={setSelectMarriageReligiousInstitutionOtherNameEn}
                 placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELIGIOUS_INST_OTHER_NAME_EN") })}
+                
               />
             </div> 
             <div className="col-md-3">
@@ -506,7 +511,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 value={marriageReligiousInstitutionOtherNameMal}
                 onChange={setSelectMarriageReligiousInstitutionOtherNameMal}
                 placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELIGIOUS_INST_OTHER_NAME_ML") })}
+               
               />
             </div> 
             </div>
@@ -527,7 +532,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                         value={marriageLocalityEn}
                         onChange={setSelectMarriageLocalityEn}
                         placeholder={`${t("CR_LOCALITY_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+                        
                       />
                     </div>
                 <div className="col-md-3">
@@ -544,7 +549,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                         value={marriageLocalityMal}
                         onChange={setSelectMarriageLocalityMal}
                         placeholder={`${t("CR_LOCALITY_ML")}`}
-                        {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C \.\&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_LOCALITY_ML") })}
+                        
                       />
                     </div>
             <div className="col-md-3">
@@ -557,7 +562,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               value={marriageStreetEn}
               onChange={setSelectMarriageStreetEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              
             />
           </div>
           <div className="col-md-3">
@@ -570,12 +575,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               value={marriageStreetMal}
               onChange={setSelectmarriageStreetMal}
               placeholder={`${t("CR_STREET_NAME_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-                isRequired: false,
-                type: "text",
-                title: t("CR_INVALID_STREET_NAME_ML"),
-              })}
+              
             />
           </div>
           <div className="col-md-3">
@@ -592,7 +592,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                         value={marriageLandmark}
                         onChange={setSelectMarriageLandmark}
                         placeholder={`${t("CR_LANDMARK")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LANDMARK") })}
+                        
                       />
                     </div>
                 </div>
@@ -636,7 +636,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                         value={marraigeOthersSpecify}
                         onChange={setSelectMarraigeOthersSpecify}
                         placeholder={`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MARRIAGE_OTHER_SPECIFY") })}
+                        
                       />
                     </div>
             </div>

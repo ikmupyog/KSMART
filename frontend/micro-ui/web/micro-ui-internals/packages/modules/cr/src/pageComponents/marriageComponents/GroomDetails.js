@@ -166,10 +166,17 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     setGroomSocialSecurityNo(e.target.value);
   }
   function setSelectGroomMobile(e) {
-    setGroomMobile(e.target.value);
+    if (e.target.value.trim().length != 0) {
+      setGroomMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    }
   }
   function setSelectGroomEmailid(e) {
-    setGroomEmailid(e.target.value);
+    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomEmailid(e.target.value);
+    }
   }
   function setSelectGroomNoOfSpouse(e) {
     setGroomNoOfSpouse(e.target.value);
@@ -298,16 +305,24 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
 
   function setSelectGroomAadharNo(e) {
-    setGroomAadharNo(e.target.value);
+    if (e.target.value.trim().length != 0) {
+    setGroomAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    }
   }
   function setSelectGroomFatherAdharNo(e) {
-    setGroomFatherAdharNo(e.target.value);
+    if (e.target.value.trim().length != 0) {
+    setGroomFatherAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    }
   }
   function setSelectGroomGardianAdhar(e) {
-    setGroomGardianAdhar(e.target.value);
+    if (e.target.value.trim().length != 0) {
+    setGroomGardianAdhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    }
   }
   function setSelectGroomMotherAdharNo(e) {
-    setGroomMotherAdharNo(e.target.value);
+    if (e.target.value.trim().length != 0) {
+    setGroomMotherAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    }
   }
 
   let validFlag = true;
@@ -418,13 +433,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"number"}
                 optionKey="i18nKey"
                 name="groomAdharNo"
                 value={groomAdharNo}
                 onChange={setSelectGroomAadharNo}
                 placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_INVALID_AADHAR_NO") })}
+               
               />
             </div>
             <div className="col-md-3">
@@ -527,13 +542,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"number"}
                 optionKey="i18nKey"
                 name="groomMobile"
                 value={groomMobile}
                 onChange={setSelectGroomMobile}
                 placeholder={`${t("CR_GROOM_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_GROOM_MOBILE_NO") })}
+                
               />
             </div>
           </div>
@@ -626,18 +641,17 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-3">
               <CardLabel>
                   {`${t("CR_GROOM_AGE")}`}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"number"}
                 optionKey="i18nKey"
                 name="groomAge"
                 value={groomAge}
                 onChange={setSelectGroomAge}
                 placeholder={`${t("CR_GROOMN_AGE")}`}
-                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_GROOM_AGE") })}
+               
               />
             </div>
           </div>
@@ -742,13 +756,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"text"}
+                  type={"number"}
                   optionKey="i18nKey"
                   name="groomFatherAdharNo"
                   value={groomFatherAdharNo}
                   onChange={setSelectGroomFatherAdharNo}
                   placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_GROOM_FATHER_INVALID_AADHAR_NO") })}
+                  
                 />
               </div>
               <div className="col-md-3">
@@ -791,7 +805,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"text"}
+                  type={"number"}
                   optionKey="i18nKey"
                   name="groomMotherAdharNo"
                   value={groomMotherAdharNo}
@@ -839,7 +853,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"text"}
+                  type={"number"}
                   optionKey="i18nKey"
                   name="groomGardianAdhar"
                   value={groomGardianAdhar}
@@ -880,21 +894,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_ADDRESS_DETAILS")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              
-                <CardLabel>{t("CR_GROOM_PERMANENT_ADDRESS")}</CardLabel>
-              
-            </div>
-          </div>
-
+          
           {toast && (
             <Toast
               error={
