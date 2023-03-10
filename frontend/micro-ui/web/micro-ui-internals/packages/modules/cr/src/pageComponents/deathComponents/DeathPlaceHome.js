@@ -23,7 +23,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
   let cmbPostOffice = [];
@@ -150,27 +149,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
   let validFlag = true;
 
   const goNext = () => { 
-    
-      // sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn  : null);
-      // sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl  ? DeathPlaceHomehoueNameMl  : null);
-      // sessionStorage.setItem("DeathPlaceHomelocalityEn", DeathPlaceHomelocalityEn  ? DeathPlaceHomelocalityEn  : null);
-      // sessionStorage.setItem("DeathPlaceHomelocalityMl", DeathPlaceHomelocalityMl  ? DeathPlaceHomelocalityMl  : null);
-      // sessionStorage.setItem("DeathPlaceHomestreetNameEn", DeathPlaceHomestreetNameEn  ? DeathPlaceHomestreetNameEn  : null);
-      // sessionStorage.setItem("DeathPlaceHomestreetNameMl", DeathPlaceHomestreetNameMl  ? DeathPlaceHomestreetNameMl  : null);
-      // sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId  ? DeathPlaceHomepostofficeId.code  : null);
-      // sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode  ? DeathPlaceHomepincode .code  : null);
-      // sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code  : null);
 
       onSelect(config.key, {
-        // DeathPlaceHomehoueNameEn,
-        // DeathPlaceHomehoueNameMl,
-        // DeathPlaceHomelocalityEn,
-        // DeathPlaceHomelocalityMl,
-        // DeathPlaceHomestreetNameEn,
-        // DeathPlaceHomestreetNameMl,
-        // DeathPlaceHomepostofficeId,
-        // DeathPlaceHomepincode ,
-        // DeathPlaceWardId,    
       });    
   };
 
@@ -216,7 +196,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 option={PostOfficevalues}
                 selected={DeathPlaceHomepostofficeId}
                 select={setSelectDeathPlaceHomepostofficeId}
-                disabled={isEdit}
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
@@ -233,7 +212,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 name="DeathPlaceHomepincode"
                 value={DeathPlaceHomepincode}
                 onChange={setSelectDeathPlaceHomepincode}
-                disable={isEdit}
                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                 {...(validation = {
                   pattern: "^[0-9]{6}$",
@@ -264,7 +242,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 value={DeathPlaceHomelocalityEn}
                 onChange={setSelectDeathPlaceHomelocalityEn}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
-                disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
             </div>
@@ -280,7 +257,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 value={DeathPlaceHomestreetNameEn}
                 onChange={setSelectDeathPlaceHomestreetNameEn}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
-                disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
             </div>
@@ -299,7 +275,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 value={DeathPlaceHomehoueNameEn}
                 onChange={setSelectDeathPlaceHomehoueNameEn}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                disable={isEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
             </div>
@@ -320,7 +295,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 name="DeathPlaceHomelocalityMl"
                 value={DeathPlaceHomelocalityMl}
                 onChange={setSelectDeathPlaceHomelocalityMl}
-                disable={isEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -341,7 +315,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 value={DeathPlaceHomestreetNameMl}
                 onChange={setSelectDeathPlaceHomestreetNameMl}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
-                disable={isEdit}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                   isRequired: false,
@@ -364,7 +337,6 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 value={DeathPlaceHomehoueNameMl}
                 onChange={setSelectDeathPlaceHomehoueNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
-                disable={isEdit}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                   isRequired: false,

@@ -49,7 +49,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const { data: Profession = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   const { data: State = {} , isStateLoad} = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
  let workFlowData = [];
   let cmbAgeUnit = [];
   let cmbPlace = [];
@@ -909,7 +908,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   option={cmbPlace}
                   selected={DeathPlace}
                   select={selectDeathPlace}
-                  disabled={isEdit}
                   placeholder={`${t("CR_PLACE_OF_DEATH")}`}
                 />
               </div>
@@ -1082,7 +1080,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     option={cmbDocumentType}
                     selected={DeceasedIdproofType}
                     select={selectDeceasedIdproofType}
-                    disabled={isEdit}
                     placeholder={`${t("CR_ID_DETAILS_OF_DECEASED")}`}
                     // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
                   />
@@ -1097,7 +1094,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     name="DeceasedIdproofNo"
                     value={DeceasedIdproofNo}
                     onChange={setSelectDeceasedIdproofNo}
-                    disable={isEdit}
                     placeholder={`${t("CR_ID_NO")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
                   />
@@ -1119,7 +1115,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     name="DeceasedAadharNumber"
                     value={DeceasedAadharNumber}
                     onChange={setSelectDeceasedAadharNumber}
-                    disable={isEdit}
                     placeholder={`${t("CR_AADHAR")}`}
                     {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
@@ -1142,7 +1137,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   name="DeceasedFirstNameEn"
                   value={DeceasedFirstNameEn}
                   onChange={setSelectDeceasedFirstNameEn}
-                  disable={isEdit}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1157,7 +1151,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   name="DeceasedMiddleNameEn"
                   value={DeceasedMiddleNameEn}
                   onChange={setSelectDeceasedMiddleNameEn}
-                  disable={isEdit}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                 />
@@ -1172,7 +1165,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   name="DeceasedLastNameEn"
                   value={DeceasedLastNameEn}
                   onChange={setSelectDeceasedLastNameEn}
-                  disable={isEdit}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                 />
@@ -1194,7 +1186,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   name="DeceasedFirstNameMl"
                   value={DeceasedFirstNameMl}
                   onChange={setSelectDeceasedFirstNameMl}
-                  disable={isEdit}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1214,7 +1205,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   name="DeceasedMiddleNameMl"
                   value={DeceasedMiddleNameMl}
                   onChange={setSelectDeceasedMiddleNameMl}
-                  disable={isEdit}
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1234,7 +1224,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   name="DeceasedLastNameMl"
                   value={DeceasedLastNameMl}
                   onChange={setSelectDeceasedLastNameMl}
-                  disable={isEdit}
                   placeholder={`${t("CR_LAST_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1262,7 +1251,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   name="Age"
                   onChange={setSelectAge}
                   value={Age}
-                  disable={isEdit}
                   placeholder={`${t("CR_AGE")}`}
                   {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
                 />
@@ -1279,7 +1267,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   option={cmbAgeUnit}
                   selected={AgeUnit}
                   select={selectAgeUnit}
-                  disabled={isEdit}
                   placeholder={`${t("CR_AGE_UNIT")}`}
                 />
               </div>
@@ -1294,7 +1281,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   option={menu}
                   selected={DeceasedGender}
                   select={selectDeceasedGender}
-                  disabled={isEdit}
                   placeholder={`${t("CR_GENDER")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
@@ -1311,7 +1297,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   option={cmbNation}
                   selected={Nationality}
                   select={selectNationality}
-                  disabled={isEdit}
                   placeholder={`${t("CR_NATIONALITY")}`}
                 />
               </div>
@@ -1327,7 +1312,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   option={cmbReligion}
                   selected={Religion}
                   select={selectReligion}
-                  disabled={isEdit}
                   placeholder={`${t("CS_COMMON_RELIGION")}`}
                 />
               </div>
@@ -1340,36 +1324,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   option={cmbOccupationMain}
                   selected={Occupation}
                   select={selectOccupation}
-                  disabled={isEdit}
                   placeholder={`${t("CR_PROFESSIONAL")}`}
                 />
               </div>
             </div>
           </div>
-          {/* <div className="row">
-          <div className="col-md-12">
-            <CheckBox label={t("CR_OCCUPATION_DECEASED_NO")} onChange={() => setChecked((checked) => !checked)} value={checked} />
-          </div>
-        </div> */}
-          {/* <div className="row">
-          {checked ? null : (
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>{t("CR_OCCUPATION_MAIN_LEVEL")}<span className="mandatorycss">*</span></CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbOccupationMain}
-                selected={Occupation}
-                select={selectOccupation}WardNameError
-                disabled={isEdit}
-                placeholder={`${t("CR_OCCUPATION_MAIN_LEVEL")}`}
-              />
-            </div>
-          </div>
-           )}
-        </div> */}
+          
 
           {toast && (
             <Toast

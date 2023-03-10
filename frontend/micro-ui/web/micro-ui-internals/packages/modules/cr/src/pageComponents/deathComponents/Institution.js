@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, selectDeathPlaceType, DeathPlaceInstId, setSelectedDeathPlaceInstId,InstitutionIdMl, setInstitutionIdMl,InstitutionFilterList, setInstitutionFilterList,isInitialRenderInstitutionList, setIsInitialRenderInstitutionList
  }) => {
-  // console.log("stateId");
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -13,8 +12,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  // console.log(tenantId);
-  // tenantId = 'kl.cochin';
+
   const { t } = useTranslation();
   let validation = {};
   const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
@@ -25,14 +23,11 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
     queryClient.removeQueries("CR_INSTITUTION_LIST");
     setTenantboundary(false);
   }
-  // const { data: institution = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionType");
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [isInitialRender, setIsInitialRender] = useState(true);
   // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.Institution?.DeathPlaceType);
   // const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(formData?.Institution?.DeathPlaceInstId); 
   // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.Institution?.DeathPlaceInstId);
  
-  let naturetypecmbvalue = null;
   let cmbinstitutionType = [];
   institutionType &&
   institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
@@ -45,7 +40,6 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   institutionidList["egov-location"].institutionList.map((ob) => {
     cmbInstitutionList.push(ob);
   });
-  // let cmbInstitutionIdCode = [];  
 
   useEffect(() => {
     if (isInitialRenderInstitutionList) {
@@ -89,10 +83,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   // }, [cmbInstitutionIdMl, isInitialRender])
 
   const goNext = () => {
-    // sessionStorage.setItem("DeathPlaceType", DeathPlaceType.code);
-    // sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId.code);
-           
-    
+  
     onSelect(config.key, { 
       // DeathPlaceType,
       // DeathPlaceInstId,
@@ -104,8 +95,6 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   }
   return (
     <React.Fragment>
-      {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3}/> : null}
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!DeathPlaceType}>  
       <div className="row">
           <div className="col-md-12">
@@ -125,7 +114,6 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               option={cmbinstitutionType}
               selected={DeathPlaceType}
               select={setselectDeathPlaceType}
-              disabled={isEdit}
               placeholder={`${t("CR_INSTITUTION_TYPE")}`}
             />
           </div>
@@ -138,7 +126,6 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
               option={InstitutionFilterList}
               selected={DeathPlaceInstId}
               select={selectDeathPlaceInstId}
-              disabled={isEdit}
               placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
             />
           </div> 
