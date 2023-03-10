@@ -13,29 +13,13 @@ import {
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
-import { useQueryClient } from "react-query";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
-const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
+const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   let validation = {};
-  let tenantId = "";
-    tenantId = Digit.ULBService.getCurrentTenantId();
-    if (tenantId === "kl") {
-        tenantId = Digit.ULBService.getCitizenCurrentTenant();
-    }
-    const [tenantWard,setTenantWard]=useState(tenantId);
-    const [tenantboundary, setTenantboundary] = useState(false);
-    const queryClient = useQueryClient();
-    if (tenantboundary) {
-      queryClient.removeQueries("TL_ZONAL_OFFICE");
-      queryClient.removeQueries("CR_VILLAGE");
-      queryClient.removeQueries("CR_TALUK");
-      queryClient.removeQueries("CR_TALUK");
-      setTenantboundary(false);
-    }
-    console.log(tenantWard);
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
@@ -43,19 +27,14 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
-  
+  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   let cmbDistrict = [];
   District &&
     District["common-masters"] &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
   });
-  let menu = [];
-  Menu &&
-    Menu.map((groomGenderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`, code: `${groomGenderDetails.code}`, value: `${groomGenderDetails.code}` });
-    });
+  
    let cmbProfession = [];
      Profession &&
         Profession["birth-death-service"] &&
@@ -86,48 +65,28 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
-    let Zonal = [];
-    let cmbWardNo = [];
-    let cmbWardNoFinal = [];
-    let currentLB = [];
-    boundaryList &&
-        boundaryList["egov-location"] &&
-        boundaryList["egov-location"].TenantBoundary.map((ob) => {
-            // console.log(ob);
-            // if(ob?.boundary){
-            Zonal.push(...ob.boundary.children);
-            ob.boundary.children.map((obward) => {
-                cmbWardNo.push(...obward.children);
-            });
-            // }
-        });
-    cmbWardNo.map((wardmst) => {
-        wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
-        wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
-        cmbWardNoFinal.push(wardmst);
-    });
 
-  const [marraigeDistrictid, setMarraigeDistrictid] = useState(formData?.MarriageInstitution?.marraigeDistrictid ? formData?.MarriageInstitution?.marraigeDistrictid : null);
-  const [marraigeTenantid, setMarraigeTenantid] = useState(formData?.MarriageInstitution?.marraigeTenantid ? formData?.MarriageInstitution?.marraigeTenantid : null);
-  const [marraigeLBtype, setMarraigeLBtype] = useState(formData?.MarriageInstitution?.marraigeLBtype ? formData?.MarriageInstitution?.marraigeLBtype : null);
-  const [marraigeDOM, setMarraigeDOM] = useState(formData?.MarriageInstitution?.marraigeDOM ? formData?.MarriageInstitution?.marraigeDOM : "");
-  const [marraigeVillageName, setMarraigeVillageName] = useState(formData?.MarriageInstitution?.marraigeVillageName ? formData?.MarriageInstitution?.marraigeVillageName : null);
-  const [marraigeTalukID, setMarraigeTalukID] = useState(formData?.MarriageInstitution?.marraigeTalukID ? formData?.MarriageInstitution?.marraigeTalukID : null);
-  const [marraigeWardCode, setMarraigeWardCode] = useState(formData?.MarriageInstitution?.marraigeWardCode ? formData?.MarriageInstitution?.marraigeWardCode : "");
-  const [marriageLocalityEn, setMarriageLocalityEn] = useState(formData?.MarriageInstitution?.marriageLocalityEn ? formData?.MarriageInstitution?.marriageLocalityEn : "");
-  const [marraigeOthersSpecify, setMarraigeOthersSpecify] = useState(formData?.MarriageInstitution?.marraigeOthersSpecify ? formData?.MarriageInstitution?.marraigeOthersSpecify : "");
-  const [marriageLocalityMal, setMarriageLocalityMal] = useState(formData?.MarriageInstitution?.marriageLocalityMal ? formData?.MarriageInstitution?.marriageLocalityMal : "");
+  const [marraigeDistrictid, setMarraigeDistrictid] = useState(formData?.MarriagePublicPlace?.marraigeDistrictid ? formData?.MarriagePublicPlace?.marraigeDistrictid : null);
+  const [marraigeTenantid, setMarraigeTenantid] = useState(formData?.MarriagePublicPlace?.marraigeTenantid ? formData?.MarriagePublicPlace?.marraigeTenantid : null);
+  const [marraigeLBtype, setMarraigeLBtype] = useState(formData?.MarriagePublicPlace?.marraigeLBtype ? formData?.MarriagePublicPlace?.marraigeLBtype : null);
+  const [marraigeDOM, setMarraigeDOM] = useState(formData?.MarriagePublicPlace?.marraigeDOM ? formData?.MarriagePublicPlace?.marraigeDOM : "");
+  const [marraigeVillageName, setMarraigeVillageName] = useState(formData?.MarriagePublicPlace?.marraigeVillageName ? formData?.MarriagePublicPlace?.marraigeVillageName : null);
+  const [marraigeTalukID, setMarraigeTalukID] = useState(formData?.MarriagePublicPlace?.marraigeTalukID ? formData?.MarriagePublicPlace?.marraigeTalukID : null);
+  const [marraigeWardCode, setMarraigeWardCode] = useState(formData?.MarriagePublicPlace?.marraigeWardCode ? formData?.MarriagePublicPlace?.marraigeWardCode : "");
+  const [marriageLocalityEn, setMarriageLocalityEn] = useState(formData?.MarriagePublicPlace?.marriageLocalityEn ? formData?.MarriagePublicPlace?.marriageLocalityEn : "");
+  const [marraigeOthersSpecify, setMarraigeOthersSpecify] = useState(formData?.MarriagePublicPlace?.marraigeOthersSpecify ? formData?.MarriagePublicPlace?.marraigeOthersSpecify : "");
+  const [marriageLocalityMal, setMarriageLocalityMal] = useState(formData?.MarriagePublicPlace?.marriageLocalityMal ? formData?.MarriagePublicPlace?.marriageLocalityMal : "");
   const [marraigeType, setMarraigeType] = useState(
     formData?.GroomDetails?.marraigeType ? formData?.GroomDetails?.marraigeType : null
   );
   const [marriageReligiousInstitutionOther, setMarriageReligiousInstitutionOther] = useState(
-    formData?.MarriageInstitution?.marriageReligiousInstitutionOther ? formData?.MarriageInstitution?.marriageReligiousInstitutionOther : ""
+    formData?.MarriagePublicPlace?.marriageReligiousInstitutionOther ? formData?.MarriagePublicPlace?.marriageReligiousInstitutionOther : ""
   );
   const [marriageLandmark, setMarriageLandmark] = useState(
-    formData?.MarriageInstitution?.marriageLandmark ? formData?.MarriageInstitution?.marriageLandmark : ""
+    formData?.MarriagePublicPlace?.marriageLandmark ? formData?.MarriagePublicPlace?.marriageLandmark : ""
   );
   const [marriageStreetMal, setMarriageStreetMal] = useState(
-    formData?.MarriageInstitution?.marriageStreetMal ? formData?.MarriageInstitution?.marriageStreetMal : ""
+    formData?.MarriagePublicPlace?.marriageStreetMal ? formData?.MarriagePublicPlace?.marriageStreetMal : ""
   );
   const [marriageReligiousInstitutionOtherNameEn, setMarriageReligiousInstitutionOtherNameEn] = useState(
     formData?.GroomDetails?.marriageReligiousInstitutionOtherNameEn ? formData?.GroomDetails?.marriageReligiousInstitutionOtherNameEn : ""
@@ -136,10 +95,10 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     formData?.GroomDetails?.marriageReligiousInstitutionOtherNameMal ? formData?.GroomDetails?.marriageReligiousInstitutionOtherNameMal : ""
   );
   const [marriageStreetEn, setMarriageStreetEn] = useState(
-    formData?.MarriageInstitution?.marriageStreetEn ? formData?.MarriageInstitution?.marriageStreetEn : ""
+    formData?.MarriagePublicPlace?.marriageStreetEn ? formData?.MarriagePublicPlace?.marriageStreetEn : ""
   );
   const [marriageReligiousInstitution, setMarriageReligiousInstitution] = useState(
-    formData?.MarriageInstitution?.marriageReligiousInstitution ? formData?.MarriageInstitution?.marriageReligiousInstitution : null
+    formData?.MarriagePublicPlace?.marriageReligiousInstitution ? formData?.MarriagePublicPlace?.marriageReligiousInstitution : null
   );
   
   const [toast, setToast] = useState(false);
@@ -158,7 +117,30 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "Yes", code: "YES" },
     { i18nKey: "No", code: "NO" },
   ];
-  
+  let Zonal = [];
+   let cmbWardNo = [];
+   let cmbWardNoFinal = [];
+   boundaryList &&
+     boundaryList["egov-location"] &&
+     boundaryList["egov-location"].TenantBoundary.map((ob) => {
+       //  console.log(ob);
+       // if(ob?.boundary){
+       Zonal.push(...ob.boundary.children);
+       ob.boundary.children.map((obward) => {
+         cmbWardNo.push(...obward.children);
+       });
+       // }
+
+     });
+
+   //console.log(Zonal);
+   cmbWardNo.map((wardmst) => {
+     wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
+     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
+     cmbWardNoFinal.push(wardmst);
+   });
+
+
     function setSelectMarraigeLBtype(value) {
     setMarraigeLBtype(value);
     }
@@ -177,7 +159,6 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     setMarraigeVillageName(value);
   }
   function setSelectMarraigeWardCode(value) {
-    setTenantWard(value.code);
     setMarraigeWardCode(value);
   }
 
@@ -322,7 +303,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
       });
     }
   };
-  if (isLoading || isProfessionLoading || isDistrictLoading || islocalbodiesLoading || isTalukLoading || isVillageLoading ) {
+  if (isLoading || isProfessionLoading || isDistrictLoading || islocalbodiesLoading || isTalukLoading || isVillageLoading || isLoaded) {
     return <Loader></Loader>;
   } else
     return (
@@ -672,4 +653,4 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
       </React.Fragment>
     );
 };
-export default MarriageInstitution;
+export default MarriagePublicPlace;

@@ -740,6 +740,23 @@ export const newConfig = [
         nextStep: "place-of-death",
       },
       {
+        type: "component",
+        route: "marriage-institution",
+        isMandatory: true,
+        component: "MarriageInstitution",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "MarriageInstitution",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: "bride-details",
+      },
+      {
         route: "place-of-death",
         isMandatory: true,
         component: "PlaceOfDeath",
