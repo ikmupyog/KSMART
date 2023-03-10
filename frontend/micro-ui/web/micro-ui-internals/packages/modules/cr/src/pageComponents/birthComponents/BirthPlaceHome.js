@@ -119,7 +119,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setAdrsHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setAdrsHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
     }
   }
   function setSelectAdrsHouseNameMl(e) {
@@ -127,7 +127,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
     }
   }
 

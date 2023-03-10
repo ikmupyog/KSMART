@@ -11,6 +11,7 @@ import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPla
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
   // console.log(JSON.stringify(formData));  
+  console.log(formData);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
