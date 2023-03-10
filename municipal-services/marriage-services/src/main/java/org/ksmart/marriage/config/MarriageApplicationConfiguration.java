@@ -27,6 +27,10 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.idgen.marriagehapp.name}")
     private String marriageApplNumberIdName;
 
-    @Value("${egov.idgen.marriageapplnum.name}")
-    private String marriageApplNumberIdgenName;
+    @Value("${egov.idgen.marriagefile.name}")
+    private String marriageFileNumberName;
+
+    @Value("${egov.idgen.marriagereg.name}")
+    private String getMarriageRegisNumberName;
+
 }
