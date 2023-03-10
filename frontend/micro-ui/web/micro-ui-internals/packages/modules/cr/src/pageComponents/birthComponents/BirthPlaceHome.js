@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 const BirthPlaceHome = ({ config, onSelect, userType, formData,
   adrsPincode, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl,
   wardNo, setWardNo, adrsPostOffice, setAdrsPostOffice, setAdrsPincode, setAdrsHouseNameEn, setAdrsHouseNameMl, setAdrsLocalityNameEn,
-  setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues
+  setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues,
+  isEditBirth
 
 }) => {
   const [pofilter, setPofilter] = useState(false);
@@ -26,6 +27,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -73,7 +75,15 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
   const onSkip = () => onSelect();
-
+  if (isEditBirth) {
+    if (formData?.ChildDetails?.adrsPostOffice != null) {
+      if (cmbPostOffice.length > 0 && (adrsPostOffice === undefined || adrsPostOffice === "")) {
+        let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0];
+        setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0]);
+        setAdrsPincode(pin.pincode);
+      }
+    }
+  }
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
     setAdrsPincode(value.pincode);
@@ -216,6 +226,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 option={PostOfficevalues}
                 selected={adrsPostOffice}
                 select={setSelectAdrsPostOffice}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
@@ -231,6 +242,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsPincode"
                 value={adrsPincode}
                 onChange={setSelectAdrsPincode}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                 {...(validation = {
                   pattern: "^[0-9]{6}$",
@@ -256,6 +268,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsLocalityNameEn"
                 value={adrsLocalityNameEn}
                 onChange={setSelectAdrsLocalityNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
@@ -269,6 +282,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsStreetNameEn"
                 value={adrsStreetNameEn}
                 onChange={setSelectAdrsStreetNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
@@ -305,6 +319,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsLocalityNameMl"
                 value={adrsLocalityNameMl}
                 onChange={setSelectAdrsLocalityNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -323,6 +338,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsStreetNameMl"
                 value={adrsStreetNameMl}
                 onChange={setSelectAdrsStreetNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
