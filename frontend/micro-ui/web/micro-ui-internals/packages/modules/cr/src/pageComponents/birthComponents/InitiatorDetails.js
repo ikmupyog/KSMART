@@ -7,15 +7,18 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+  // console.log(Digit.UserService.getUser().info);
+  const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : false);
   const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : "");
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : "");
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : name);
   const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : "");
   const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : "");
   const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : "");
   const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
+
   const [toast, setToast] = useState(false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
@@ -37,8 +40,6 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     }
   }, [isInitialRender]);
 
-  let userInfo = window.localStorage.getItem("user-info");
-  console.log(JSON.stringify(userInfo).id);
 
   function setSelectrelation(e) {
     if (e.target.value.length === 51) {
@@ -212,7 +213,6 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
     }
     if (initiatorMobile != null || initiatorMobile != "" || initiatorMobile != undefined) {
       let mobileLength = initiatorMobile;
-      console.log(mobileLength);
       if (mobileLength.length < 10 || mobileLength.length > 10) {
         validFlag = false;
         setinitiatorMobileError(true);

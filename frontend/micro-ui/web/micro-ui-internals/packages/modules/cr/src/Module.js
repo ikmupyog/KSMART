@@ -130,14 +130,17 @@ export const CRLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/cr-birth-creation`,
       i18nKey: t("CR_BIRTH_REGISTRATION"),
+      section:'birth'
     },
     {
       link: `${matchPath}/cr-stillbirth-creation`,
       i18nKey: t("CR_STILL_BIRTH_REGISTRATION"),
+      section:'birth'
     },
     {
       link: `${matchPath}/cr-death-creation`,
       i18nKey: t("CR_DEATH_REGISTRATION"),
+      section:'death'
     },
     // {
     //   link: `${matchPath}/cr-marriage-creation`,
@@ -146,10 +149,12 @@ export const CRLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/create-birth-certificate`,
       i18nKey: t("CR_BIRTH_CERTIFICATE"),
+      section:'birth'
     },
     {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
+      section:'death'
     },
 
     // {
