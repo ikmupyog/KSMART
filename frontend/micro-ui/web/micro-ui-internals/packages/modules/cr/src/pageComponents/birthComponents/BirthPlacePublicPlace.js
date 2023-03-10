@@ -51,15 +51,11 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     setpublicPlaceType(value);
   }
   function setSelectWard(value) {
-    console.log(value);
     setWardNo(value);
   }
   function setSelectlocalityNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setlocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setlocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectlocalityNameMl(e) {
@@ -72,11 +68,8 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
 
   function setSelectstreetNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setstreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setstreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectstreetNameMl(e) {
@@ -88,11 +81,10 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setpublicPlaceDecpEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setpublicPlaceDecpEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    //setpublicPlaceDecpEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
   }
   let validFlag = true;
 
@@ -102,133 +94,133 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   if (isotherLoad || isWardLoaded) {
     return <Loader></Loader>;
   } else
-  return (
-    <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}>
-        <div className="row">
-          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
+    return (
+      <React.Fragment>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}>
+          <div className="row">
+            <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
+            </div>
           </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-6" >
-            <CardLabel>{`${t("CR_PUBLIC_PLACE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              option={cmbOtherplace}
-              selected={publicPlaceType}
-              select={setSelectpublicPlaceType}
-              placeholder={`${t("CR_PUBLIC_PLACE_TYPE")}`}
-            />
+          <div className="row">
+            <div className="col-md-6" >
+              <CardLabel>{`${t("CR_PUBLIC_PLACE_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                option={cmbOtherplace}
+                selected={publicPlaceType}
+                select={setSelectpublicPlaceType}
+                placeholder={`${t("CR_PUBLIC_PLACE_TYPE")}`}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {`${t("CS_COMMON_WARD")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="namecmb"
+                option={cmbWardNoFinal}
+                selected={wardNo}
+                select={setSelectWard}
+                placeholder={`${t("CS_COMMON_WARD")}`}
+                {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
+              />
+            </div>
           </div>
-          <div className="col-md-6">
-            <CardLabel>
-              {`${t("CS_COMMON_WARD")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="namecmb"
-              option={cmbWardNoFinal}
-              selected={wardNo}
-              select={setSelectWard}
-              placeholder={`${t("CS_COMMON_WARD")}`}
-              {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_LOCALITY_EN")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="localityNameEn"
+                value={localityNameEn}
+                onChange={setSelectlocalityNameEn}
+                placeholder={`${t("CR_LOCALITY_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {t("CR_LOCALITY_ML")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="localityNameMl"
+                value={localityNameMl}
+                onChange={setSelectlocalityNameMl}
+                placeholder={`${t("CR_LOCALITY_ML")}`}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_LOCALITY_ML"),
+                })}
+              />
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_LOCALITY_EN")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="localityNameEn"
-              value={localityNameEn}
-              onChange={setSelectlocalityNameEn}
-              placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
-            />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_LOCALITY_ML")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="localityNameMl"
-              value={localityNameMl}
-              onChange={setSelectlocalityNameMl}
-              placeholder={`${t("CR_LOCALITY_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
-                type: "text",
-                title: t("CR_INVALID_LOCALITY_ML"),
-              })}
-            />
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="streetNameEn"
-              value={streetNameEn}
-              onChange={setSelectstreetNameEn}
-              placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
-            />
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel>{t("CR_STREET_NAME_EN")} </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="streetNameEn"
+                value={streetNameEn}
+                onChange={setSelectstreetNameEn}
+                placeholder={`${t("CR_STREET_NAME_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>{t("CR_STREET_NAME_ML")} </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="streetNameMl"
+                value={streetNameMl}
+                onChange={setSelectstreetNameMl}
+                placeholder={`${t("CR_STREET_NAME_ML")}`}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: false,
+                  type: "text",
+                  title: t("CR_INVALID_STREET_NAME_ML"),
+                })}
+              />
+            </div>
           </div>
-          <div className="col-md-6">
-            <CardLabel>{t("CR_STREET_NAME_ML")} </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="streetNameMl"
-              value={streetNameMl}
-              onChange={setSelectstreetNameMl}
-              placeholder={`${t("CR_STREET_NAME_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: false,
-                type: "text",
-                title: t("CR_INVALID_STREET_NAME_ML"),
-              })}
-            />
+          <div className="row">
+            <div className="col-md-6" >
+              <CardLabel>{`${t("CR_DESCRIPTION")}`}</CardLabel>
+              <TextArea
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="publicPlaceDecpEn"
+                value={publicPlaceDecpEn}
+                onChange={setSelectVehicleOtherDetailsEn}
+                placeholder={`${t("CR_DESCRIPTION")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
+              />
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6" >
-            <CardLabel>{`${t("CR_DESCRIPTION")}`}</CardLabel>
-            <TextArea
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="publicPlaceDecpEn"
-              value={publicPlaceDecpEn}
-              onChange={setSelectVehicleOtherDetailsEn}
-              placeholder={`${t("CR_DESCRIPTION")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
-            />
-          </div>
-        </div>
 
-      </FormStep>
-    </React.Fragment>
-  );
+        </FormStep>
+      </React.Fragment>
+    );
 };
 export default BirthPlacePublicPlace;
