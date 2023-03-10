@@ -54,8 +54,10 @@ const Home = ({
     let Module_br = "Birth Certificate"
     let Module_dr = "Death Certificate"
     let crDeath = "cr-death"
+    let matchPath=`/digit-ui/citizen/${code.toLowerCase()}`
     // console.log(code);
     const history = useHistory();
+    
     const birthProps = {
       header: t(""),
       sideOption: {
@@ -64,7 +66,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("Birth Certificate"),
+          name: t("Birth Registration"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: '/digit-ui/citizen/cr-birth-home',
@@ -75,6 +77,70 @@ const Home = ({
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
+    const birthRegProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("CR_BIRTH_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-birth-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("CR_STILL_BIRTH_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-stillbirth-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("CR_BIRTH_CERTIFICATE"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname:`${matchPath}/create-birth-certificate`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const DearhRegProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("CR_DEATH_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-death-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("CR_DEATH_CERTIFICATE"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/create-death-certificate`,
+            state: { module: "cr-birth" }
+          }),
+        },    
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+
     const deathProps = {
       header: t(""),
       sideOption: {
@@ -83,7 +149,7 @@ const Home = ({
       },
       options: [
         {
-        name: t("ACTION_TEST_DEATH"),
+        name: t("Death Registration"),
         Icon: <OBPSIcon />,
         onClick: () => history.push({
           pathname: '/digit-ui/citizen/cr-death-home',
@@ -104,8 +170,11 @@ const Home = ({
               <BackButton className="moduleLinkHomePageBackButton" />
                 <h1>{t(Module_br.toUpperCase())}</h1>
             </div>
-            <div className="moduleLinkHomePageModuleLinks">
+            {/* <div className="moduleLinkHomePageModuleLinks">
               <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
+            </div> */}
+             <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
+                <CardBasedOptions {...birthRegProps} />
             </div>
           </Route>
         ) :
@@ -116,8 +185,11 @@ const Home = ({
               <BackButton className="moduleLinkHomePageBackButton" />
                 <h1>{t(Module_dr.toUpperCase())}</h1>
             </div>
-            <div className="moduleLinkHomePageModuleLinks">
+            {/* <div className="moduleLinkHomePageModuleLinks">
               <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
+            </div> */}
+            <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
+                <CardBasedOptions {...DearhRegProps} />
             </div>
           </Route>
         ) : 
