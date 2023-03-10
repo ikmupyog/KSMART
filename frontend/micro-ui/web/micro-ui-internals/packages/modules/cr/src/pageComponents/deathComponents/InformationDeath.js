@@ -15,6 +15,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(iseditDeath ? iseditDeath : false);  
   const stateId = Digit.ULBService.getStateId();
+  const [PostOfficevalues, setPostOfficevalues] = useState(null);
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -341,6 +342,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             DeathPlaceHomelocalityMl={DeathPlaceHomelocalityMl}
             DeathPlaceHomestreetNameEn={DeathPlaceHomestreetNameEn}
             DeathPlaceHomestreetNameMl={DeathPlaceHomestreetNameMl}
+            PostOfficevalues={PostOfficevalues}
           />;
         }
         if (naturetype === "VEHICLE") {
@@ -961,7 +963,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                 DeathPlaceHomestreetNameEn={DeathPlaceHomestreetNameEn}
                 setDeathPlaceHomestreetNameEn={setDeathPlaceHomestreetNameEn}
                 DeathPlaceHomestreetNameMl={DeathPlaceHomestreetNameMl}
-                setDeathPlaceHomestreetNameMl={setDeathPlaceHomestreetNameMl}
+                setDeathPlaceHomestreetNameMl={setDeathPlaceHomestreetNameMl} 
+                PostOfficevalues={PostOfficevalues}
+                setPostOfficevalues={setPostOfficevalues}
               />
             </div>
           )}
