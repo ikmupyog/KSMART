@@ -89,17 +89,13 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     }
   }
   function setSelectVehicleFromEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setvehicleFromEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setvehicleFromEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleToEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setvehicleToEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setvehicleToEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleFromMl(e) {
@@ -110,10 +106,8 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     }
   }
   function setSelectVehicleHaltPlace(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setvehicleHaltPlace(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setvehicleHaltPlace(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   // function setSelectVehicleHaltPlaceMl(e) {
@@ -131,10 +125,8 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setvehicleDesDetailsEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setvehicleDesDetailsEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function selectadmittedHospitalEn(value) {
@@ -142,7 +134,6 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   }
   function setSelectWard(value) {
     setWardNo(value);
-
   }
 
   let validFlag = true;
