@@ -85,7 +85,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("CR_BIRTH_REGISTRATION"),
+          name: t("New Registration"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-birth-creation`,
@@ -93,7 +93,7 @@ const Home = ({
           }),
         },
         {
-          name: t("CR_STILL_BIRTH_REGISTRATION"),
+          name: t("Still Birth Registration"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-stillbirth-creation`,
@@ -101,7 +101,7 @@ const Home = ({
           }),
         },
         {
-          name: t("CR_BIRTH_CERTIFICATE"),
+          name: t("Download Certificate"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname:`${matchPath}/create-birth-certificate`,
@@ -121,7 +121,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("CR_DEATH_REGISTRATION"),
+          name: t("New Registration"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-death-creation`,
@@ -129,7 +129,7 @@ const Home = ({
           }),
         },
         {
-          name: t("CR_DEATH_CERTIFICATE"),
+          name: t("Download Certificate"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/create-death-certificate`,
