@@ -5,10 +5,11 @@ import {
   TextInput,
   Dropdown,
   DatePicker,
-  CheckBox,
   BackButton,
   Loader,
   Toast,
+  LabelFieldPair,
+  RadioButtons,
   SubmitBar,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
@@ -20,16 +21,36 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
 
+  
+  const radiomenu = [
+    { i18nKey: "CR_GROOM_PARENTS", code: "PARENT" },
+    { i18nKey: "CR_GROOM_GUARDIAN", code: "GUARDIAN" },
+  ];
   let menu = [];
   Menu &&
     Menu.map((groomGenderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`, code: `${groomGenderDetails.code}`, value: `${groomGenderDetails.code}` });
     });
+    let cmbProfession = [];
+    Profession &&
+        Profession["birth-death-service"] &&
+        Profession["birth-death-service"].Profession.map((ob) => {
+            cmbProfession.push(ob);
+        });
+  const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
+  const [groomProfessionEn, setGroomProfessionEn] = useState(formData?.GroomDetails?.groomProfessionEn ? formData?.GroomDetails?.groomProfessionEn : null);
+  const [groomProfessionMal, setGroomProfessionMal] = useState(formData?.GroomDetails?.groomProfessionMal ? formData?.GroomDetails?.groomProfessionMal : null);
   const [groomGender, selectGroomGender] = useState(formData?.GroomDetails?.groomGender);
   const [groomDOB, setGroomDOB] = useState(formData?.GroomDetails?.groomDOB ? formData?.GroomDetails?.groomDOB : "");
   const [groomFathernameEn, setGroomFathernameEn] = useState(
     formData?.GroomDetails?.groomFathernameEn ? formData?.GroomDetails?.groomFathernameEn : ""
+  );const [groomGuardiannameEn, setGroomGuardiannameEn] = useState(
+    formData?.GroomDetails?.groomGuardiannameEn ? formData?.GroomDetails?.groomGuardiannameEn : ""
+  );
+  const [groomGuardiannameMal, setGroomGuardiannameMal] = useState(
+    formData?.GroomDetails?.groomGuardiannameMal ? formData?.GroomDetails?.groomGuardiannameMal : ""
   );
   const [groomFathernameMal, setGroomFathernameMal] = useState(
     formData?.GroomDetails?.groomFathernameMal ? formData?.GroomDetails?.groomFathernameMal : ""
@@ -45,6 +66,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const [groomFatherAdharNo, setGroomFatherAdharNo] = useState(
     formData?.GroomDetails?.groomFatherAdharNo ? formData?.GroomDetails?.groomFatherAdharNo : ""
   );
+  const [groomGardianAdhar, setGroomGardianAdhar] = useState(
+    formData?.GroomDetails?.groomGardianAdhar ? formData?.GroomDetails?.groomGardianAdhar : ""
+  );
   const [groomMotherAdharNo, setGroomMotherAdharNo] = useState(
     formData?.GroomDetails?.groomMotherAdharNo ? formData?.GroomDetails?.groomMotherAdharNo : ""
   );
@@ -53,11 +77,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   );
   
   const [toast, setToast] = useState(false);
-  const [AadharError, setAadharError] = useState(formData?.GroomDetails?.groomAdharNo ? false : false);
   const [DOBError, setDOBError] = useState(formData?.GroomDetails?.groomDOB ? false : false);
-  const [selectedOption, setSelectedOption] = useState(
-    formData?.GroomDetails?.selectedOption ? formData?.GroomDetails?.selectedOption : "INDIAN_NATIONAL"
-  );
+  
   const [groomSpouseLiving, setGroomSpouseLiving] = useState(
     formData?.GroomDetails?.groomSpouseLiving ? formData?.GroomDetails?.groomSpouseLiving : null
   );
@@ -85,8 +106,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const [groomEmailid, setGroomEmailid] = useState(formData?.GroomDetails?.groomEmailid ? formData?.GroomDetails?.groomEmailid : "");
   const [groomAge, setGroomAge] = useState(formData?.GroomDetails?.groomAge ? formData?.GroomDetails?.groomAge : "");
   const [groomNoOfSpouse, setGroomNoOfSpouse] = useState(formData?.GroomDetails?.groomNoOfSpouse ? formData?.GroomDetails?.groomNoOfSpouse : "");
-
-
+  const [selectedValueRadio, setSelectedValue] = useState(formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : "");
+  const [valueRad, setValueRad] = useState(formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : "");
   const [access, setAccess] = React.useState(true);
 
   const onSkip = () => onSelect();
@@ -102,6 +123,33 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "Yes", code: "YES" },
     { i18nKey: "No", code: "NO" },
   ];
+  function selectRadioButtons(value) {
+    console.log(value);
+    setSelectedValue(value);
+    setValueRad(value.code);
+    setisInitialRenderRadioButtons(true);
+  }
+  useEffect(() => {
+    if (isInitialRenderRadioButtons) {
+      setisInitialRenderRadioButtons(false);
+      if (selectedValueRadio) {
+        //setIsInitialRenderRadio(false);
+        setValueRad(selectedValueRadio.code);
+      }
+    }
+  }, [isInitialRenderRadioButtons]);
+  const rbmenu = [
+    { i18nKey: "CR_RESIDENT_INDIAN", code: "INDIAN" },
+    { i18nKey: "CR_NRI", code: "NRI" },
+    { i18nKey: "CR_FOREIGN_NATIONAL", code: "FOREIGN" },
+  ];
+  
+  function setSelectGroomProfessionEn(value) {
+    setGroomProfessionEn(value);
+  }
+  function setSelectGroomProfessionMal(value) {
+    setGroomProfessionMal(value);
+  }
   function setSelectGroomMaritalstatusID(value) {
     setGroomMaritalstatusID(value);
   }
@@ -111,41 +159,24 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   function setselectGroomGender(value) {
     selectGroomGender(value);
   }
-  function setSelectGroomFirstnameEn(e) {
-    setGroomFirstnameEn(e.target.value);
-  }
-  function setSelectGroomLastnameEn(e) {
-    setGroomLastnameEn(e.target.value);
-  }
   function setSelectGroomPassportNo(e) {
     setGroomPassportNo(e.target.value);
   }
   function setSelectGroomSocialSecurityNo(e) {
     setGroomSocialSecurityNo(e.target.value);
   }
-  function setSelectGroomMiddlenameEn(e) {
-    setGroomMiddlenameEn(e.target.value);
-  }
-  function setSelectGroomLastnameEn(e) {
-    setGroomLastnameEn(e.target.value);
-  }
-  function setSelectGroomLastnameEn(e) {
-    setGroomLastnameEn(e.target.value);
-  }
-  function setSelectGroomFirstnameMal(e) {
-    setGroomFirstnameMal(e.target.value);
-  }
-  function setSelectGroomMiddlenameMal(e) {
-    setGroomMiddlenameMal(e.target.value);
-  }
   function setSelectGroomMobile(e) {
-    setGroomMobile(e.target.value);
-  }
-  function setSelectGroomLastnameMal(e) {
-    setGroomLastnameMal(e.target.value);
+    if (e.target.value.trim().length != 0) {
+      setGroomMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    }
   }
   function setSelectGroomEmailid(e) {
-    setGroomEmailid(e.target.value);
+    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomEmailid(e.target.value);
+    }
   }
   function setSelectGroomNoOfSpouse(e) {
     setGroomNoOfSpouse(e.target.value);
@@ -173,22 +204,86 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     }
   }
-
+  function setSelectGroomFirstnameEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomFirstnameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }
+  }
+  function setSelectGroomLastnameEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomLastnameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }
+  }
+  function setSelectGroomMiddlenameEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomMiddlenameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    }
+  }
+  function setSelectGroomLastnameMal(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomLastnameMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    }
+  }
+  function setSelectGroomMiddlenameMal(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomMiddlenameMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    }
+  }
+  function setSelectGroomFirstnameMal(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomFirstnameMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    }
+  }
+  
+  function setSelectGroomFathernameMal(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomFathernameMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    }
+  }
+  function setSelectGroomGuardiannameMal(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomGuardiannameMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    }
+  }
   
   function setSelectGroomFathernameEn(e) {
     if (e.target.value.length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setGroomFathernameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setGroomFathernameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
-  function setSelectGroomFathernameMal(e) {
+  function setSelectGroomGuardiannameEn(e) {
     if (e.target.value.length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setGroomFathernameMal(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+      setGroomGuardiannameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
   function setSelectGroomMothernameMal(e) {
@@ -196,7 +291,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setGroomMothernameMal(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setGroomMothernameMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
   function setSelectGroomMothernameEn(e) {
@@ -205,18 +300,29 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setGroomMothernameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+      setGroomMothernameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     }
   }
 
   function setSelectGroomAadharNo(e) {
-    setGroomAadharNo(e.target.value);
+    if (e.target.value.trim().length != 0) {
+    setGroomAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    }
   }
   function setSelectGroomFatherAdharNo(e) {
-    setGroomFatherAdharNo(e.target.value);
+    if (e.target.value.trim().length != 0) {
+    setGroomFatherAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    }
+  }
+  function setSelectGroomGardianAdhar(e) {
+    if (e.target.value.trim().length != 0) {
+    setGroomGardianAdhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    }
   }
   function setSelectGroomMotherAdharNo(e) {
-    setGroomMotherAdharNo(e.target.value);
+    if (e.target.value.trim().length != 0) {
+    setGroomMotherAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    }
   }
 
   let validFlag = true;
@@ -230,13 +336,16 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("groomPassportNo", groomPassportNo ? groomPassportNo : null);
       sessionStorage.setItem("groomMotherAdharNo", groomMotherAdharNo ? groomMotherAdharNo : null);
       sessionStorage.setItem("groomFatherAdharNo", groomFatherAdharNo ? groomFatherAdharNo : null);
+      sessionStorage.setItem("groomGardianAdhar", groomGardianAdhar ? groomGardianAdhar : null);
       sessionStorage.setItem("groomFirstnameEn", groomFirstnameEn ? groomFirstnameEn : null);
       sessionStorage.setItem("groomMiddlenameEn", groomMiddlenameEn ? groomMiddlenameEn : null);
       sessionStorage.setItem("groomLastnameEn", groomLastnameEn ? groomLastnameEn : null);
       sessionStorage.setItem("groomMobile", groomMobile ? groomMobile : null);
       sessionStorage.setItem("groomEmailid", groomEmailid ? groomEmailid : null);
       sessionStorage.setItem("groomFathernameEn", groomFathernameEn ? groomFathernameEn : null);
+      sessionStorage.setItem("groomGuardiannameEn", groomGuardiannameEn ? groomGuardiannameEn : null);
       sessionStorage.setItem("groomFathernameMal", groomFathernameMal ? groomFathernameMal : null);
+      sessionStorage.setItem("groomGuardiannameMal", groomGuardiannameMal ? groomGuardiannameMal : null);
       sessionStorage.setItem("groomMothernameEn", groomMothernameEn ? groomMothernameEn : null);
       sessionStorage.setItem("groomMothernameMal", groomMothernameMal ? groomMothernameMal : null);
       sessionStorage.setItem("groomSocialSecurityNo", groomSocialSecurityNo ? groomSocialSecurityNo : null);
@@ -247,6 +356,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("groomNoOfSpouse", groomNoOfSpouse ? groomNoOfSpouse : null);
       sessionStorage.setItem("groomSpouseLiving", groomSpouseLiving ? groomSpouseLiving : null);
       sessionStorage.setItem("groomMaritalstatusID", groomMaritalstatusID ? groomMaritalstatusID : null);
+      sessionStorage.setItem("groomProfessionEn", groomProfessionEn ? groomProfessionEn.code : null);
+      sessionStorage.setItem("groomProfessionMal", groomProfessionMal ? groomProfessionMal.code : null);
       onSelect(config.key, {
         groomDOB,
         groomAdharNo,
@@ -270,11 +381,16 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         groomLastnameMal,
         groomNoOfSpouse,
         groomSpouseLiving,
-        groomMaritalstatusID
+        groomMaritalstatusID,
+        groomProfessionEn,
+        groomProfessionMal,
+        groomGardianAdhar,
+        groomGuardiannameEn,
+        groomGuardiannameMal
       });
     }
   };
-  if (isLoading) {
+  if (isLoading || isProfessionLoading) {
     return <Loader></Loader>;
   } else
     return (
@@ -286,57 +402,44 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_REGISTRATION_DETAILS")}`}</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_NATIONALITY_AND_RESIDENTSHIP")}`}</span>{" "}
               </h1>
-              {/* <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("NATIONALITY_AND_RESIDENTSHIP")}`}</span>{" "}
-              </h1> */}
-              <CardLabel>{t("NATIONALITY_AND_RESIDENTSHIP")}</CardLabel>
+              </div>
+              </div>
+              
+            <div className="row">
+            <div className="col-md-12">
+            <div className="radios">
+              <div className="radiobuttons">
+                <LabelFieldPair style={{ display: "flex" }}>
+                  <RadioButtons t={t} optionsKey="i18nKey" options={rbmenu} selectedOption={selectedValueRadio} onSelect={selectRadioButtons} style={{ marginTop: "15px", paddingLeft: "5px", height: "20px", display: "flex" }} />
+                </LabelFieldPair>
+              </div>
             </div>
-            <div className="col-md-2">
-              <input
-                type="radio"
-                name="options"
-                value="INDIAN_NATIONAL"
-                checked={selectedOption === "INDIAN_NATIONAL"}
-                onChange={handleOptionChange}
-              />   
-              {t(" INDIAN_NATIONAL")}
-            </div>
-            <div className="col-md-2">
-              <input type="radio" name="options" value="NRI" checked={selectedOption === "NRI"} onChange={handleOptionChange} />
-              {t(" NRI")}
-            </div>
-            <div className="col-md-2">
-              <input
-                type="radio" 
-                name="options"
-                value="FOREIN_NATIONAL"
-                checked={selectedOption === "FOREIN_NATIONAL"}
-                onChange={handleOptionChange}
-              />
-              {t(" FOREIN_NATIONAL")}
-            </div>
+          </div>
           </div>
           <div className="row">
             <div className="col-md-12">
             <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("AADHAR_AND_PASSPORT_NO")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_AADHAR_AND_PASSPORT_NO")}`}</span>{" "}
               </h1>
             </div>
+            </div>
+            <div className="row">
+            <div className="col-md-12">
             <div className="col-md-3">
               {" "}
               <CardLabel>{t("CR_GROOM_AADHAR_NO")}</CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"number"}
                 optionKey="i18nKey"
                 name="groomAdharNo"
                 value={groomAdharNo}
                 onChange={setSelectGroomAadharNo}
                 placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_INVALID_GROOM_AADHAR_NO") })}
+               
               />
             </div>
             <div className="col-md-3">
@@ -351,7 +454,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomPassportNo}
                 onChange={setSelectGroomPassportNo}
                 placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
-                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CR_INVALID_GROOM_PASSPORT_NO") })}
+                
               />
             </div>
 
@@ -366,11 +469,11 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 name="groomSocialSecurityNo"
                 value={groomSocialSecurityNo}
                 onChange={setSelectGroomSocialSecurityNo}
-                // disable={isChildName}
                 placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_GROOM_SOCIAL_SECURITY_NO") })}
+                
               />
             </div>
+          </div>
           </div>
           <div className="row">
             <div className="col-md-12">
@@ -379,15 +482,18 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               </h1>
             </div>
           </div>
-          <div className="col-md-row">
+          <div className="row">
             <div className="col-md-12">
+            <div className="col-md-3">
               <CardLabel>
                 {t("CR_GROOM_NAME")}
                 <span className="mandatorycss">*</span>
               </CardLabel>
             </div>
           </div>
-          <div className="col-md-row">
+          </div>
+          <div className="row">
+          <div className="col-md-12">
             <div className="col-md-3">
               <CardLabel>{t("CR_GROOM_FIRST_NAME_EN")}</CardLabel>
               <TextInput
@@ -399,7 +505,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomFirstnameEn}
                 onChange={setSelectGroomFirstnameEn}
                 placeholder={`${t("CR_GROOM_FIRST_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_GROOM_FIRST_NAME_EN") })}
+                
               />
             </div>
 
@@ -414,7 +520,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomMiddlenameEn}
                 onChange={setSelectGroomMiddlenameEn}
                 placeholder={`${t("CR_GROOM_MIDDLE_NAME_EN")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_GROOM_MIDDLE_NAME_EN") })}
+                
               />
             </div>
             <div className="col-md-3">
@@ -428,7 +534,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomLastnameEn}
                 onChange={setSelectGroomLastnameEn}
                 placeholder={`${t("CR_GROOM_LAST_NAME_EN")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_INVALID_GROOM_LAST_NAME_EN") })}
+                
               />
             </div>
             <div className="col-md-3">
@@ -436,16 +542,19 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"number"}
                 optionKey="i18nKey"
                 name="groomMobile"
                 value={groomMobile}
                 onChange={setSelectGroomMobile}
                 placeholder={`${t("CR_GROOM_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_GROOM_MOBILE_NO") })}
+                
               />
             </div>
-
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-12">
             <div className="col-md-3">
               <CardLabel>{t("CR_GROOM_FIRST_NAME_ML")}</CardLabel>
               <TextInput
@@ -457,7 +566,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomFirstnameMal}
                 onChange={setSelectGroomFirstnameMal}
                 placeholder={`${t("CR_GROOM_FIRST_NAME_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_ML") })}
+                
               />
             </div>
             <div className="col-md-3">
@@ -471,7 +580,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomMiddlenameMal}
                 onChange={setSelectGroomMiddlenameMal}
                 placeholder={`${t("CR_GROOM_MIDDLE_NAME_ML")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_GROOM_INVALID_MIDDLE_NAME_ML") })}
+                
               />
             </div>
             <div className="col-md-3">
@@ -485,7 +594,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomLastnameMal}
                 onChange={setSelectGroomLastnameMal}
                 placeholder={`${t("CR_GROOM_LAST_NAME_ML")}`}
-                {...(validation = { isRequired: true, type: "text", title: t("CR_GROOM_INVALID_LAST_NAME_ML") })}
+                
               />
             </div>
             <div className="col-md-3">
@@ -499,12 +608,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomEmailid}
                 onChange={setSelectGroomEmailid}
                 placeholder={`${t("CR_GROOM_EMAIL")}`}
-                {...(validation = { isRequired: false, title: t("CR_INVALID_GROOM_EMAIL") })}
+                
               />
             </div>
           </div>
-          <div className="col-md-row">
-            <div className="col-md-12">
+          </div>
+          <div className="row">
+          <div className="col-md-12">
               <div className="col-md-3">
               <CardLabel>
                   {`${t("CR_GROOM_GENDER")}`}
@@ -518,7 +628,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 selected={groomGender}
                 select={setselectGroomGender}
                 placeholder={`${t("CR_GROOM_GENDER")}`}
-                {...(validation = { isRequired: true, title: t("CR_INVALID_GROOM_GENDER") })}
+                
               />
             </div>
             <div className="col-md-3">
@@ -531,22 +641,54 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-3">
               <CardLabel>
                   {`${t("CR_GROOM_AGE")}`}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"text"}
+                type={"number"}
                 optionKey="i18nKey"
                 name="groomAge"
                 value={groomAge}
                 onChange={setSelectGroomAge}
                 placeholder={`${t("CR_GROOMN_AGE")}`}
-                {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_GROOM_AGE") })}
+               
               />
             </div>
           </div>
         </div>
+        <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-4">
+              <CardLabel>
+                  {`${t("CR_GROOM_PROFESSION_EN")}`}
+                </CardLabel>
+                <Dropdown
+                                        t={t}
+                                        optionKey="name"
+                                        isMandatory={false}
+                                        option={cmbProfession}
+                                        selected={groomProfessionEn}
+                                        select={setSelectGroomProfessionEn}
+                                        placeholder={`${t("CR_GROOM_PROFESSION_EN")}`}
+                                    />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                  {`${t("CR_GROOM_PROFESSION_ML")}`}
+                </CardLabel>
+                <Dropdown
+                                        t={t}
+                                        optionKey="namelocal"
+                                        isMandatory={false}
+                                        option={cmbProfession}
+                                        selected={groomProfessionMal}
+                                        select={setSelectGroomProfessionMal}
+                                        placeholder={`${t("CR_GROOM_PROFESSION_ML")}`}
+                                    />
+            </div>
+          </div>
+        </div>
+            
         <div className="row">
             <div className="col-md-12">
               <div className="col-md-3">
@@ -584,7 +726,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomNoOfSpouse}
                   onChange={setSelectGroomNoOfSpouse}
                   placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
-                  {...(validation = { pattern: "^[0-9]{1}$", type: "number", isRequired: true, title: t("CR_INVALID_NUMBER_OF_SPOUSE_LIVING") })}
+                  {...(validation = { pattern: "^[0-9]{2}$", type: "number", isRequired: true, title: t("CR_INVALID_NUMBER_OF_SPOUSE_LIVING") })}
                 />
               </div>
             </div>
@@ -592,39 +734,35 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_PARENT_DETAILS")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
               </h1>
             </div>
-            <div className="col-md-3">
-              <CardLabel>{t("CR_PARENTS_GUARDIAN_DETILS")}</CardLabel>
             </div>
-            <div className="col-md-3">
-              <input type="radio" name="options" value="CR_GROOM_PARENTS" checked={selectedOption === "CR_GROOM_PARENTS"} onChange={handleOptionChange} />
-              {t(" CR_GROOM_PARENTS")}
-            </div>
-            <div className="col-md-3">
-              <input type="radio" name="options" value="CR_GROOM_GUARDIAN" checked={selectedOption === "CR_GROOM_GUARDIAN"} onChange={handleOptionChange} />
-              {t(" CR_GROOM_GUARDIAN")}
+            <div className="row">
+            <div className="col-md-12">
+            <div className="radios">
+              <div className="radiobuttons">
+                <LabelFieldPair style={{ display: "flex" }}>
+                  <RadioButtons t={t} optionsKey="i18nKey" options={radiomenu} selectedOption={selectedValueRadio} onSelect={selectRadioButtons} style={{ marginTop: "10px", paddingLeft: "5px", height: "20px", display: "flex" }} />
+                </LabelFieldPair>
+              </div>
             </div>
           </div>
-
-          <div className="col-md-row">
+          </div>
+          <div className="row">
             <div className="col-md-12">
               <div className="col-md-3">
-                {" "}
-                <div className="col-md-3">
                 <CardLabel>{t("CR_GROOM_FATHER_AADHAR_NO")}</CardLabel>
-              </div>
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"text"}
+                  type={"number"}
                   optionKey="i18nKey"
                   name="groomFatherAdharNo"
                   value={groomFatherAdharNo}
                   onChange={setSelectGroomFatherAdharNo}
                   placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_GROOM_FATHER_INVALID_AADHAR_NO") })}
+                  
                 />
               </div>
               <div className="col-md-3">
@@ -638,9 +776,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   name="groomFathernameEn"
                   value={groomFathernameEn}
                   onChange={setSelectGroomFathernameEn}
-                  // disable={isChildName}
                   placeholder={`${t("CR_GROOM_FATHER_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_GROOM_FATHER_NAME_EN") })}
+                  
                 />
               </div>
               <div className="col-md-3">
@@ -655,17 +792,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomFathernameMal}
                   onChange={setSelectGroomFathernameMal}
                   placeholder={`${t("CR_GROOM_FATHER_NAME_ML")}`}
-                  {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: true,
-                    type: "text",
-                    title: t("CR_INVALID_GROOM_FATHER_NAME_ML"),
-                  })}
+                 
                 />
               </div>
             </div>
           </div>
-          <div className="col-md-row">
+          <div className="row">
             <div className="col-md-12">
               <div className="col-md-3">
                 {" "}
@@ -673,13 +805,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"text"}
+                  type={"number"}
                   optionKey="i18nKey"
                   name="groomMotherAdharNo"
                   value={groomMotherAdharNo}
                   onChange={setSelectGroomMotherAdharNo}
                   placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_GROOM_MOTHER_INVALID_AADHAR_NO") })}
+                  
                 />
               </div>
               <div className="col-md-3">
@@ -694,7 +826,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomMothernameEn}
                   onChange={setSelectGroomMothernameEn}
                   placeholder={`${t("CR_GROOM_MOTHER_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_GROOM_MOTHER_INVALID__NAME_EN") })}
+                  
                 />
               </div>
               <div className="col-md-3">
@@ -709,27 +841,60 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomMothernameMal}
                   onChange={setSelectGroomMothernameMal}
                   placeholder={`${t("CR_GROOM_MOTHER_NAME_ML")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_GROOM_MOTHER_NAME_ML") })}
+                  
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+                <div className="col-md-3">
+                <CardLabel>{t("CR_GROOM_GUARDIAN_AADHAR_NO")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"number"}
+                  optionKey="i18nKey"
+                  name="groomGardianAdhar"
+                  value={groomGardianAdhar}
+                  onChange={setSelectGroomGardianAdhar}
+                  placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
+                  
+                />
+              </div>
+              <div className="col-md-3">
+                {" "}
+                <CardLabel>{t("CR_GROOM_GUARDIAN_NAME_EN")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomGuardiannameEn"
+                  value={groomGuardiannameEn}
+                  onChange={setSelectGroomGuardiannameEn}
+                  placeholder={`${t("CR_GROOM_GUARDIAN_NAME_EN")}`}
+                 
+                />
+              </div>
+              <div className="col-md-3">
+                {" "}
+                <CardLabel>{t("CR_GROOM_GUARDIAN_NAME_ML")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="groomGuardiannameMal"
+                  value={groomGuardiannameMal}
+                  onChange={setSelectGroomGuardiannameMal}
+                  placeholder={`${t("CR_GROOM_GUARDIAN_NAME_ML")}`}
+                  
                 />
               </div>
             </div>
           </div>
           
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_ADDRESS_DETAILS")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_PERMANENT_ADDRESS")}</CardLabel>
-              </div>
-            </div>
-          </div>
-
           {toast && (
             <Toast
               error={

@@ -1,7 +1,7 @@
-import { BackButton } from "@egovernments/digit-ui-react-components";
+import { BackButton,CardBasedOptions,ComplaintIcon ,OBPSIcon,DropIcon} from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
+import { Route, Switch, useLocation, useRouteMatch, useHistory } from "react-router-dom";
 import ErrorBoundary from "../../components/ErrorBoundaries";
 import { AppHome } from "../../components/Home";
 import TopBarSideBar from "../../components/TopBarSideBar";
@@ -55,6 +55,46 @@ const Home = ({
     let Module_dr = "Death Certificate"
     let crDeath = "cr-death"
     // console.log(code);
+    const history = useHistory();
+    const birthProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("Birth Certificate"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: '/digit-ui/citizen/cr-birth-home',
+            state: { module: "cr-birth" }
+          }),
+        },
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const deathProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+        name: t("ACTION_TEST_DEATH"),
+        Icon: <OBPSIcon />,
+        onClick: () => history.push({
+          pathname: '/digit-ui/citizen/cr-death-home',
+          state: { module: "cr-death" }
+        }),
+
+      },
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
     return (
       <React.Fragment>
         {code === "CR" && location?.state?.module === crBirth ? (
@@ -80,7 +120,24 @@ const Home = ({
               <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
             </div>
           </Route>
-        ) :
+        ) : 
+        code === "CR"?
+        (
+          <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
+            <div className="moduleLinkHomePage">
+              <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+              <h1>{t("MODULE_" + code.toUpperCase())}</h1>
+            </div>
+            <div className="moduleLinkHomePageModuleLinks">
+            <div className="ServicesSection" style={{display:"flex"}}>
+                <CardBasedOptions {...birthProps} />
+                <CardBasedOptions {...deathProps} />
+         </div>
+            </div>
+          </Route>
+        )
+        :
          (
           <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
