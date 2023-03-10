@@ -16,7 +16,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
 
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
@@ -31,7 +31,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-    
+
   if (isEditBirth) {
     if (formData?.ChildDetails?.hospitalCode != null) {
       if (cmbhospital.length > 0 && (hospitalName === undefined || hospitalName === "")) {
