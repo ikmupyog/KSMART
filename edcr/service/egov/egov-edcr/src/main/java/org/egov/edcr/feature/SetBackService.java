@@ -47,6 +47,10 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
 import static org.egov.edcr.utility.DcrConstants.HEIGHTNOTDEFINED;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 import static org.egov.edcr.utility.DcrConstants.WRONGHEIGHTDEFINED;
@@ -75,6 +79,25 @@ public class SetBackService extends FeatureProcess {
 
     @Autowired
     private RearYardService rearYardService;
+    
+    @Autowired
+    private FrontYardService_Amend08Nov19 frontYardServiceAmendment2019Nov08;
+
+    @Autowired
+    private SideYardService_Amend08Nov19 sideYardServiceAmendment2019Nov08;
+
+    @Autowired
+    private RearYardService_Amend08Nov19 rearYardServiceAmendment2019Nov08;
+
+    @Autowired
+    private FrontYardService_Amend02Oct20 frontYardServiceAmend2020Oct02;
+
+    @Autowired
+    private SideYardService_Amend02Oct20 sideYardServiceAmendment2020Oct02;
+
+    @Autowired
+    private RearYardService_Amend02Oct20 rearYardServiceAmendment2020Oct02;
+
 
     @Override
     public Plan validate(Plan pl) {
@@ -150,27 +173,66 @@ public class SetBackService extends FeatureProcess {
 
         return pl;
     }
+    
+    public Plan validateAmendment2019Nov08(Plan pl) {
+        HashMap<String, String> errors = new HashMap<>();
+        for (Block block : pl.getBlocks()) {
+            if (!block.getCompletelyExisting()) {
+                for (SetBack setback : block.getSetBacks()) {
+                    // if height not defined other than 0 level , then throw error.
+                    if (setback.getLevel() == 0) {
+                        // for level 0, all the yards are mandatory. Else throw error.
+                        if (setback.getFrontYard() == null)
+                            errors.put("frontyardNodeDefined",
+                                    getLocaleMessage(OBJECTNOTDEFINED, " SetBack of " + block.getName() + "  at level zero "));
+                        if (setback.getRearYard() == null
+                                && !pl.getPlanInformation().getNocToAbutRearDesc().equalsIgnoreCase(DcrConstants.YES))
+                            errors.put("rearyardNodeDefined",
+                            		getLocaleMessage(OBJECTNOTDEFINED, " Rear Yard of  " + block.getName() + "  at level zero "));
+                        if (setback.getSideYard1() == null)
+                            errors.put("side1yardNodeDefined", getLocaleMessage(OBJECTNOTDEFINED,
+                                    " Side Yard 1 of block " + block.getName() + " at level zero"));
+                        if (setback.getSideYard2() == null
+                                && !pl.getPlanInformation().getNocToAbutSideDesc().equalsIgnoreCase(DcrConstants.YES))
+                            errors.put("side2yardNodeDefined", getLocaleMessage(OBJECTNOTDEFINED,
+                                    " Side Yard 2 of block " + block.getName() + " at level zero "));
+                    }
+                }
+            }
+        }
+        if (errors.size() > 0)
+            pl.addErrors(errors);
+        return pl;
+    }
 
     @Override
     public Plan process(Plan pl) {
-        validate(pl);
-        
-		BigDecimal depthOfPlot = pl.getPlanInformation().getDepthOfPlot();
-		if (depthOfPlot != null && depthOfPlot.compareTo(BigDecimal.ZERO) > 0) {
-			frontYardService.processFrontYard(pl);
-			rearYardService.processRearYard(pl);
-		}
+        String amendmentRefNumber = this.getAmendmentsRefNumber(pl.getAsOnDate());
 
-		BigDecimal widthOfPlot = pl.getPlanInformation().getWidthOfPlot();
-		if (widthOfPlot != null && widthOfPlot.compareTo(BigDecimal.ZERO) > 0) {
-			sideYardService.processSideYard(pl);
-		}
-
+        if (amendmentRefNumber != null && AMEND_OCT20.equals(amendmentRefNumber)) {
+            validate(pl);
+            frontYardServiceAmend2020Oct02.processFrontYard(pl);
+            sideYardServiceAmendment2020Oct02.processSideYard(pl);
+            rearYardServiceAmendment2020Oct02.processRearYard(pl);
+        } else if (amendmentRefNumber != null && AMEND_NOV19.equals(amendmentRefNumber)) {
+            validateAmendment2019Nov08(pl);
+            frontYardServiceAmendment2019Nov08.processFrontYard(pl);
+            sideYardServiceAmendment2019Nov08.processSideYard(pl);
+            rearYardServiceAmendment2019Nov08.processRearYard(pl);
+        } else {
+            validate(pl);
+            frontYardService.processFrontYard(pl);
+            sideYardService.processSideYard(pl);
+            rearYardService.processRearYard(pl);
+        }
         return pl;
     }
 
     @Override
     public Map<String, Date> getAmendments() {
-        return new LinkedHashMap<>();
+        Map<String, Date> setbackAmendments = new LinkedHashMap<>();
+        setbackAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
+        setbackAmendments.put(AMEND_OCT20, AMEND_DATE_011020);
+        return setbackAmendments;
     }
 }

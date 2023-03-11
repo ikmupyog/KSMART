@@ -145,7 +145,7 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 
 		List<DXFLWPolyline> polyLinesByLayer;
 		String basementFootPrint = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + "\\d+_"
-				+ layerNames.getLayerName("LAYER_NAME_LEVEL_NAME_PREFIX") + "-\\d+_"
+				//+ layerNames.getLayerName("LAYER_NAME_LEVEL_NAME_PREFIX") + "-\\d+_"
 				+ layerNames.getLayerName("LAYER_NAME_BSMNT_FOOT_PRINT");
 		List<String> layerNames = Util.getLayerNamesLike(pl.getDoc(), basementFootPrint);
 		for (String s : layerNames) {
@@ -162,7 +162,7 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 					block.setName(s.split("_")[1]);
 					block.setNumber(String.valueOf(s.split("_")[1]));
 					SetBack setBack = new SetBack();
-					setBack.setLevel(Integer.valueOf(String.valueOf(s.split("_")[3])));
+					setBack.setLevel(-1);
 					MeasurementDetail footPrint = new MeasurementDetail(polyLinesByLayer.get(0));
 					footPrint.setPresentInDxf(true);
 					setBack.setBuildingFootPrint(footPrint);
@@ -174,7 +174,7 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 					block.setNumber(String.valueOf(s.split("_")[1]));
 
 					SetBack setBack = new SetBack();
-					setBack.setLevel(Integer.valueOf(String.valueOf(s.split("_")[3])));
+					setBack.setLevel(-1);
 					Measurement footPrint = new MeasurementDetail(polyLinesByLayer.get(0));
 					footPrint.setPresentInDxf(true);
 					setBack.setBuildingFootPrint(footPrint);

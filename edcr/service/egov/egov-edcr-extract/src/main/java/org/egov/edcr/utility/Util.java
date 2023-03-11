@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -1782,5 +1783,116 @@ public class Util {
             LOG.info("returning layer name " + name);
             return name;
         }
+    }
+    
+    public static boolean isTwoPolygonAbutting(DXFLWPolyline pline1, DXFLWPolyline pline2) {
+		boolean isAbutting = false;
+
+		List<Point> polygon1Edges = Util.pointsOnPolygon(pline1);
+
+		// Find the points connecting the edges of Polygon2
+		List<Point> polygon1Points = Util.findPointsOnPolylines(polygon1Edges);
+
+		List<Point> polygon2Edges = Util.pointsOnPolygon(pline2);
+
+		// Find the points connecting the edges of Polygon2
+		List<Point> polygon2Points = Util.findPointsOnPolylines(polygon2Edges);
+
+		Set<Point> abuttingPoints = new HashSet<>();
+
+		Iterator polygon1VertexIterator = pline1.getVertexIterator();
+		while (polygon1VertexIterator.hasNext()) {
+			DXFVertex next = (DXFVertex) polygon1VertexIterator.next();
+			Point polygon1Edge = next.getPoint();
+			PrintUtil.print(polygon1Edge, "polygon1Edge");
+
+			Iterator polygon2Iterator = pline2.getVertexIterator();
+
+			// Vertex and coordinates of Polyline
+			boolean pointAdded = false;
+			outside: while (polygon2Iterator.hasNext()) {
+
+				DXFVertex dxfVertex = (DXFVertex) polygon2Iterator.next();
+				Point polygon2Edge = dxfVertex.getPoint();
+				PrintUtil.print(polygon2Edge, "polygon2Edge");
+
+				if (Util.pointsEquals(polygon2Edge, polygon1Edge)) {
+					pointAdded = true;
+					abuttingPoints.add(polygon1Edge);
+					LOG.debug("Adding yardEdge to outside points in direct compare");
+					break outside;
+				}
+
+				if (Util.pointsEqualsWith2PercentError(polygon2Edge, polygon1Edge)) {
+					pointAdded = true;
+					abuttingPoints.add(polygon1Edge);
+					LOG.debug("Adding yardEdge to outside points in  pointsEqualsWith2PercentError compare");
+					break outside;
+				}
+			}
+
+			// Now check polygon1 edge on the polygon2 points
+			if (!pointAdded && polygon2Points.contains(polygon1Edge)) {
+				abuttingPoints.add(polygon1Edge);
+				LOG.debug("Adding polygon1 to outside points in  Contains compare");
+				pointAdded = true;
+			}
+
+			if (!pointAdded) {
+				for (Point p : polygon2Points) {
+					if (Util.pointsEquals(p, polygon1Edge)) {
+						abuttingPoints.add(polygon1Edge);
+						LOG.debug("Adding polygon1 to outside points in  polygon2 pointsEquals");
+						pointAdded = true;
+						break;
+					}
+				}
+			}
+
+			if (!pointAdded) {
+				for (Point p : polygon2Points) {
+					if (Util.pointsEqualsWith2PercentError(p, polygon1Edge)) {
+						abuttingPoints.add(polygon1Edge);
+						LOG.debug("Adding polygon1 to outside points in  polygon2 pointsEqualsWith2PercentError");
+						break;
+					}
+				}
+			}
+
+		}
+
+		if (abuttingPoints.size() < 3)
+			for (Point p1 : polygon1Points) {
+				if (abuttingPoints.size() >= 3)
+					break;
+
+				for (Point p2 : polygon2Points) {
+					if (abuttingPoints.size() >= 3)
+						break;
+
+					if (Util.pointsEquals(p1, p2))
+						abuttingPoints.add(p1);
+				}
+			}
+
+		if (!abuttingPoints.isEmpty())
+			isAbutting = true;
+
+		return isAbutting;
+	}
+    
+    public static OccupancyTypeHelper getOccupancyByCode(Plan pl, String occupancyCode) {
+    	OccupancyTypeHelper occupancyTypeHelper = new OccupancyTypeHelper();
+    	for(Entry<Integer, org.egov.common.entity.bpa.Occupancy> occMasterMap : pl.getOccupanciesMaster().entrySet()) {
+    		org.egov.common.entity.bpa.Occupancy occupancy = occMasterMap.getValue();
+    		if(occupancyCode != null && occupancyCode.equalsIgnoreCase(occupancy.getCode())) {
+    			OccupancyHelperDetail occ = new OccupancyHelperDetail();
+    			occ.setCode(occupancy.getCode());
+    			occ.setName(occupancy.getName());
+    			occ.setColor(occ.getColor());
+    			occupancyTypeHelper.setType(occ);
+    		}
+    	}
+    	return occupancyTypeHelper;
     }
 }

@@ -43,12 +43,22 @@ public class CoverageExtract extends FeatureExtract {
             List<DXFLWPolyline> polylinesCoverageDeduct = Util.getPolyLinesByLayer(pl.getDoc(),
                     String.format(layerNames.getLayerName("LAYER_NAME_COVERAGE_DEDUCT"), block.getNumber()));
             for (DXFLWPolyline polyline : polylinesCoverage) {
-                Measurement measurement = new MeasurementDetail(polyline, false);
-                block.getCoverage().add(measurement);
+				if (!polyline.isClosed()) {
+					pl.addError("coverageAreaNotClosed" + block.getNumber(),
+							"Coverage area polygon not closed for the block " + block.getNumber() + " ");
+				} else {
+					Measurement measurement = new MeasurementDetail(polyline, false);
+					block.getCoverage().add(measurement);
+				}
             }
             for (DXFLWPolyline polyline : polylinesCoverageDeduct) {
-                Measurement measurement = new MeasurementDetail(polyline, false);
-                block.getCoverageDeductions().add(measurement);
+            	if (!polyline.isClosed()) {
+                    pl.addError("coverageAreadeductNotClosed" + block.getNumber(),
+                            "Coverage area deduction polygon not closed for the block " + block.getNumber() + " ");
+                } else {
+                    Measurement measurement = new MeasurementDetail(polyline, false);
+                    block.getCoverageDeductions().add(measurement);
+                }
             }
         }
         if (LOG.isDebugEnabled())

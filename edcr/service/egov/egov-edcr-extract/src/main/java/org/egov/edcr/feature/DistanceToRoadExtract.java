@@ -17,6 +17,7 @@ import org.egov.common.entity.edcr.NotifiedRoad;
 import org.egov.common.entity.edcr.RoadOutput;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.entity.blackbox.MeasurementDetail;
+import org.egov.edcr.entity.blackbox.NonNotifiedRoadDetail;
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.egov.edcr.service.LayerNames;
 import org.egov.edcr.utility.Util;
@@ -55,7 +56,7 @@ public class DistanceToRoadExtract extends FeatureExtract {
                 layerNames.getLayerName("LAYER_NAME_NON_NOTIFIED_ROAD"));
         for (DXFLWPolyline roadPline : nonNotifiedRoads) {
             Measurement measurement = new MeasurementDetail(roadPline, true);
-            NonNotifiedRoad road = new NonNotifiedRoad();
+            NonNotifiedRoadDetail road = new NonNotifiedRoadDetail();
             road.setArea(measurement.getArea());
             road.setColorCode(measurement.getColorCode());
             road.setHeight(measurement.getHeight());
@@ -63,6 +64,7 @@ public class DistanceToRoadExtract extends FeatureExtract {
             road.setLength(measurement.getLength());
             road.setInvalidReason(measurement.getInvalidReason());
             road.setPresentInDxf(true);
+            road.setPolyLine(roadPline);
             pl.getNonNotifiedRoads().add(road);
 
         }
