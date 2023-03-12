@@ -152,6 +152,7 @@ public class DcrConstants {
     public static final String HORIZONTAL_ELECTRICLINE_DISTANCE_NOC = "NOC from Chief Electrical Inspector or an officer authorized by him shall be obtained. ";
     public static final String NOTIFIED_ROAD = "Notified road, ";
     public static final String NONNOTIFIED_ROAD = "Non Notified road, ";
+    public static final String UNNOTIFIED_ROAD = "Un-Notified road, ";
     public static final String CULDESAC_ROAD = "Cul-de-sac road, ";
     public static final String LANE_ROAD = "Lane road, ";
     public static final String LEVEL = ", Level ";

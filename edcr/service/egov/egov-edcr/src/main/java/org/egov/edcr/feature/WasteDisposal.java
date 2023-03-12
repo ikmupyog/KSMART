@@ -47,19 +47,24 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
 import static org.egov.edcr.constants.DxfFileConstants.COLOUR_CODE_LEACHPIT_TO_PLOT_BNDRY;
 import static org.egov.edcr.utility.DcrConstants.IN_METER;
 import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
-import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED_DESC;
-import static org.egov.edcr.utility.DcrConstants.WASTEDISPOSAL;
 import static org.egov.edcr.utility.DcrConstants.WASTE_DISPOSAL_DISTANCE_FROMBOUNDARY;
 import static org.egov.edcr.utility.DcrConstants.WASTE_DISPOSAL_ERROR_COLOUR_CODE_DISTANCE_FROMBOUNDARY;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.egov.common.entity.edcr.Plan;
@@ -72,9 +77,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WasteDisposal extends FeatureProcess {
-    private static final String SUB_RULE_26A_DESCRIPTION = "Waste Disposal";
-    private static final String SUB_RULE_26A = "26-A";
-    private static final String SUB_RULE_104_4_WD = "104-4";
+	private static final String SUB_RULE_26A_DESCRIPTION = "Waste Disposal";
+    private static final String SUB_RULE_26A = "26(A)";
+    private static final String SUB_RULE_104_4_WD = "104(4)";
+    private static final String RULE_AMD19_79_1_WD = "79(1)";
+    private static final String WD_DISTANCE_RULE_AMD19_79_4 = "79(4)";
     private static final String SUB_RULE_104_4_PLOT_DESCRIPTION_WD = "Minimum distance from waste treatment facility like: leach pit,soak pit etc to nearest point on the plot boundary";
 
     @Override
@@ -90,23 +97,47 @@ public class WasteDisposal extends FeatureProcess {
     }
 
     @Override
-    public Plan process(Plan pl) {/*
-                                   * validate(pl); scrutinyDetail = new ScrutinyDetail(); scrutinyDetail.addColumnHeading(1,
-                                   * RULE_NO); scrutinyDetail.addColumnHeading(2, DESCRIPTION); scrutinyDetail.addColumnHeading(3,
-                                   * REQUIRED); scrutinyDetail.addColumnHeading(4, PROVIDED); scrutinyDetail.addColumnHeading(5,
-                                   * STATUS); scrutinyDetail.setKey("Common_Waste Disposal"); if
-                                   * (pl.getUtility().getLiquidWasteTreatementPlant().isEmpty()) { if
-                                   * (!pl.getUtility().getWasteDisposalUnits().isEmpty()) {
-                                   * setReportOutputDetailsWithoutOccupancy(pl, SUB_RULE_26A, SUB_RULE_26A_DESCRIPTION, "",
-                                   * OBJECTDEFINED_DESC, Result.Accepted.getResultVal()); if
-                                   * (pl.getUtility().getWells().isEmpty()) { for (org.egov.common.entity.edcr.WasteDisposal
-                                   * wasteDisposal : pl.getUtility().getWasteDisposalUnits()) { if
-                                   * (wasteDisposal.getType().equals(DcrConstants.PROPOSED)) {
-                                   * printOutputForProposedWasteDisposal(pl); } } } } else {
-                                   * setReportOutputDetailsWithoutOccupancy(pl, SUB_RULE_26A, SUB_RULE_26A_DESCRIPTION, "",
-                                   * OBJECTNOTDEFINED_DESC, Result.Not_Accepted.getResultVal()); } }
-                                   */
+    public Plan process(Plan pl) {
+
+        validate(pl);
+        scrutinyDetail = new ScrutinyDetail();
+        scrutinyDetail.addColumnHeading(1, RULE_NO);
+        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+        scrutinyDetail.addColumnHeading(3, REQUIRED);
+        scrutinyDetail.addColumnHeading(4, PROVIDED);
+        scrutinyDetail.addColumnHeading(5, STATUS);
+        scrutinyDetail.setKey("Common_Waste Disposal");
+        String subRule;
+        String description = SUB_RULE_26A_DESCRIPTION;
+        if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+            subRule = RULE_AMD19_79_1_WD;
+            description = "Provisions for segregation of waste";
+            pl.getFeatureAmendments().put(description, AMEND_DATE_081119.toString());
+        } else if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+            subRule = RULE_AMD19_79_1_WD;
+            pl.getFeatureAmendments().put(SUB_RULE_26A_DESCRIPTION, AMEND_DATE_081119.toString());
+        } else
+            subRule = SUB_RULE_26A;
+        if (pl.getUtility().getLiquidWasteTreatementPlant().isEmpty()) {
+            if (!pl.getUtility().getWasteDisposalUnits().isEmpty()) {
+                setReportOutputDetailsWithoutOccupancy(pl, subRule, description, "",
+                        OBJECTDEFINED_DESC, Result.Accepted.getResultVal());
+
+                if (pl.getUtility().getWells().isEmpty() && !pl.getUtility().getWasteDisposalUnits().isEmpty()) {
+                    boolean isProposed = pl.getUtility().getWasteDisposalUnits().stream()
+                            .anyMatch(wasteDisposal -> wasteDisposal.getType().equalsIgnoreCase(DcrConstants.PROPOSED));
+                    if (isProposed) {
+                        printOutputForProposedWasteDisposal(pl);
+                    }
+                }
+
+            } else {
+                setReportOutputDetailsWithoutOccupancy(pl, subRule, description, "",
+                        OBJECTNOTDEFINED_DESC, Result.Not_Accepted.getResultVal());
+            }
+        }
         return pl;
+    
     }
 
     private void setReportOutputDetailsWithoutOccupancy(Plan pl, String ruleNo, String ruleDesc, String expected, String actual,
@@ -125,17 +156,40 @@ public class WasteDisposal extends FeatureProcess {
         String subRule;
         String subRuleDesc;
         boolean valid = false;
+        List<RoadOutput> leachPitToBndryList = new ArrayList<>();
+        BigDecimal minimumDistance;
+
         for (RoadOutput roadOutput : pl.getUtility().getWellDistance()) {
-
-            BigDecimal minimumDistance;
             if (checkConditionForLeachPitToBoundary(roadOutput)) {
-                subRule = SUB_RULE_104_4_WD;
-                subRuleDesc = SUB_RULE_104_4_PLOT_DESCRIPTION_WD;
-                minimumDistance = BigDecimal.valueOf(1.2);
-            } else
-                continue;
-            printReportOutput(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
+                leachPitToBndryList.add(roadOutput);
+            }
+        }
 
+        if (!leachPitToBndryList.isEmpty()) {
+            minimumDistance = BigDecimal.valueOf(1.2);
+            if (AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+                subRule = WD_DISTANCE_RULE_AMD19_79_4;
+                pl.getFeatureAmendments().put("Leach pit to boundary", AMEND_DATE_011020.toString());
+                if (pl.getVirtualBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+                    minimumDistance = BigDecimal.valueOf(0.3);
+            } else if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+                subRule = WD_DISTANCE_RULE_AMD19_79_4;
+                pl.getFeatureAmendments().put("Leach pit to boundary", AMEND_DATE_081119.toString());
+            } else
+                subRule = SUB_RULE_104_4_WD;
+            subRuleDesc = SUB_RULE_104_4_PLOT_DESCRIPTION_WD;
+
+            RoadOutput roadOutput = leachPitToBndryList.stream()
+                    .min(Comparator.comparing(leachToBndry -> leachToBndry.distance)).orElse(null);
+
+            printReportOutput(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
+        } else {
+            HashMap<String, String> errors = new HashMap<>();
+            errors.put(WASTE_DISPOSAL_DISTANCE_FROMBOUNDARY + "not defined ",
+                    edcrMessageSource.getMessage(DcrConstants.OBJECTNOTDEFINED,
+                            new String[] { "Distance from the plot boundary to waste disposal" },
+                            LocaleContextHolder.getLocale()));
+            pl.addErrors(errors);
         }
     }
 
@@ -165,11 +219,14 @@ public class WasteDisposal extends FeatureProcess {
     }
 
     private boolean checkConditionForLeachPitToBoundary(RoadOutput roadOutput) {
-        return Integer.valueOf(roadOutput.colourCode) == COLOUR_CODE_LEACHPIT_TO_PLOT_BNDRY;
+        return Integer.valueOf(roadOutput.colourCode).equals(COLOUR_CODE_LEACHPIT_TO_PLOT_BNDRY);
     }
 
     @Override
     public Map<String, Date> getAmendments() {
-        return new LinkedHashMap<>();
+        Map<String, Date> meanofAccessAmendments = new LinkedHashMap<>();
+        meanofAccessAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
+        meanofAccessAmendments.put(AMEND_OCT20, AMEND_DATE_011020);
+        return meanofAccessAmendments;
     }
 }

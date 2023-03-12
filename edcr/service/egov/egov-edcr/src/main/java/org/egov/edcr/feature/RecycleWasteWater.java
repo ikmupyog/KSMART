@@ -47,6 +47,32 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.DxfFileConstants.A1;
+import static org.egov.edcr.constants.DxfFileConstants.A2;
+import static org.egov.edcr.constants.DxfFileConstants.A3;
+import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.constants.DxfFileConstants.A5;
+import static org.egov.edcr.constants.DxfFileConstants.B1;
+import static org.egov.edcr.constants.DxfFileConstants.B2;
+import static org.egov.edcr.constants.DxfFileConstants.B3;
+import static org.egov.edcr.constants.DxfFileConstants.C;
+import static org.egov.edcr.constants.DxfFileConstants.C1;
+import static org.egov.edcr.constants.DxfFileConstants.C2;
+import static org.egov.edcr.constants.DxfFileConstants.C3;
+import static org.egov.edcr.constants.DxfFileConstants.D;
+import static org.egov.edcr.constants.DxfFileConstants.D1;
+import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.F;
+import static org.egov.edcr.constants.DxfFileConstants.F1;
+import static org.egov.edcr.constants.DxfFileConstants.F2;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
+import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.G1;
+import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
+import static org.egov.edcr.constants.DxfFileConstants.I2;
 import static org.egov.edcr.utility.DcrConstants.OBJECTDEFINED_DESC;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED_DESC;
@@ -57,7 +83,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.egov.common.entity.edcr.OccupancyType;
+import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
@@ -68,47 +94,64 @@ import org.springframework.stereotype.Service;
 public class RecycleWasteWater extends FeatureProcess {
     private static final BigDecimal ONETHOUSANDFIVEHUNDER = BigDecimal.valueOf(1500);
     private static final String SUB_RULE_53_6_DESCRIPTION = "Recycling and reuse of waste water generated facility ";
-    private static final String SUB_RULE_53_6 = "53-6";
+    private static final String SUB_RULE_53_6 = "53(6)";
     private static final BigDecimal TWOTHOUSANDFIVEHUNDER = BigDecimal.valueOf(2500);
 
     @Override
-    public Plan validate(Plan pl) {/*
-                                    * HashMap<String, String> errors = new HashMap<>(); if (pl != null && pl.getUtility() != null)
-                                    * { // waste water recycle plant defined or not if (pl.getVirtualBuilding() != null &&
-                                    * !pl.getVirtualBuilding().getOccupancies().isEmpty()) { for (OccupancyType occupancyType :
-                                    * pl.getVirtualBuilding().getOccupancies()) { if
-                                    * (checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(occupancyType) &&
-                                    * pl.getUtility().getWasteWaterRecyclePlant().isEmpty()) {
-                                    * errors.put(SUB_RULE_53_6_DESCRIPTION, edcrMessageSource.getMessage(OBJECTNOTDEFINED, new
-                                    * String[] { SUB_RULE_53_6_DESCRIPTION }, LocaleContextHolder.getLocale()));
-                                    * pl.addErrors(errors); break; } else if
-                                    * (checkOccupancyTypeEqualsToConditionalOccupancyTypes(occupancyType) &&
-                                    * pl.getVirtualBuilding().getTotalBuitUpArea() != null &&
-                                    * pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(ONETHOUSANDFIVEHUNDER) > 0 &&
-                                    * pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(TWOTHOUSANDFIVEHUNDER) < 0 &&
-                                    * pl.getUtility().getWasteWaterRecyclePlant().isEmpty()) {
-                                    * errors.put(SUB_RULE_53_6_DESCRIPTION, edcrMessageSource.getMessage(OBJECTNOTDEFINED, new
-                                    * String[] { SUB_RULE_53_6_DESCRIPTION }, LocaleContextHolder.getLocale())); break; } } } }
-                                    */
+    public Plan validate(Plan pl) {
+        HashMap<String, String> errors = new HashMap<>();
+        if (pl != null && pl.getUtility() != null) {
+            // waste water recycle plant defined or not
+            if (!pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+                for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
+                    if (checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(occupancyType)
+                            && pl.getUtility().getWasteWaterRecyclePlant().isEmpty()) {
+                        errors.put(SUB_RULE_53_6_DESCRIPTION,
+                                edcrMessageSource.getMessage(OBJECTNOTDEFINED, new String[] {
+                                        SUB_RULE_53_6_DESCRIPTION }, LocaleContextHolder.getLocale()));
+                        pl.addErrors(errors);
+                        break;
+                    } else if (checkOccupancyTypeEqualsToConditionalOccupancyTypes(occupancyType)
+                            && pl.getVirtualBuilding().getTotalBuitUpArea() != null
+                            && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(ONETHOUSANDFIVEHUNDER) > 0
+                            && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(TWOTHOUSANDFIVEHUNDER) < 0
+                            && pl.getUtility().getWasteWaterRecyclePlant().isEmpty()) {
+                        errors.put(SUB_RULE_53_6_DESCRIPTION,
+                                edcrMessageSource.getMessage(OBJECTNOTDEFINED, new String[] {
+                                        SUB_RULE_53_6_DESCRIPTION }, LocaleContextHolder.getLocale()));
+                        break;
+                    }
+
+                }
+            }
+        }
         return pl;
     }
 
     @Override
-    public Plan process(Plan pl) {/*
-                                   * validate(pl); scrutinyDetail = new ScrutinyDetail(); scrutinyDetail.addColumnHeading(1,
-                                   * RULE_NO); scrutinyDetail.addColumnHeading(2, DESCRIPTION); scrutinyDetail.addColumnHeading(3,
-                                   * REQUIRED); scrutinyDetail.addColumnHeading(4, PROVIDED); scrutinyDetail.addColumnHeading(5,
-                                   * STATUS); scrutinyDetail.setKey("Common_Waste Water Recycle Plant"); if
-                                   * (pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancies().isEmpty()) {
-                                   * for (OccupancyType occupancyType : pl.getVirtualBuilding().getOccupancies()) { if
-                                   * (checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(occupancyType)) {
-                                   * processWasteWaterRecyclePlant(pl); break; } else if
-                                   * (checkOccupancyTypeEqualsToConditionalOccupancyTypes(occupancyType) &&
-                                   * pl.getVirtualBuilding().getTotalBuitUpArea() != null &&
-                                   * pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(ONETHOUSANDFIVEHUNDER) > 0 &&
-                                   * pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(TWOTHOUSANDFIVEHUNDER) < 0) {
-                                   * processWasteWaterRecyclePlant(pl); break; } } }
-                                   */
+    public Plan process(Plan pl) {
+        validate(pl);
+        scrutinyDetail = new ScrutinyDetail();
+        scrutinyDetail.addColumnHeading(1, RULE_NO);
+        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+        scrutinyDetail.addColumnHeading(3, REQUIRED);
+        scrutinyDetail.addColumnHeading(4, PROVIDED);
+        scrutinyDetail.addColumnHeading(5, STATUS);
+        scrutinyDetail.setKey("Common_Waste Water Recycle Plant");
+        if (!pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+            for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
+                if (checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(occupancyType)) {
+                    processWasteWaterRecyclePlant(pl);
+                    break;
+                } else if (checkOccupancyTypeEqualsToConditionalOccupancyTypes(occupancyType)
+                        && pl.getVirtualBuilding().getTotalBuitUpArea() != null
+                        && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(ONETHOUSANDFIVEHUNDER) > 0
+                        && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(TWOTHOUSANDFIVEHUNDER) < 0) {
+                    processWasteWaterRecyclePlant(pl);
+                    break;
+                }
+            }
+        }
 
         return pl;
     }
@@ -125,26 +168,20 @@ public class RecycleWasteWater extends FeatureProcess {
         }
     }
 
-    private boolean checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(OccupancyType occupancyType) {
-        return occupancyType.equals(OccupancyType.OCCUPANCY_B1) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_B2) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_B3) || occupancyType.equals(OccupancyType.OCCUPANCY_C) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_C1) || occupancyType.equals(OccupancyType.OCCUPANCY_C2) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_C3) || occupancyType.equals(OccupancyType.OCCUPANCY_D) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_D1) || occupancyType.equals(OccupancyType.OCCUPANCY_D2) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_G1) || occupancyType.equals(OccupancyType.OCCUPANCY_G2) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_H) || occupancyType.equals(OccupancyType.OCCUPANCY_I1) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_I2);
-    }
+	private boolean checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(OccupancyTypeHelper occupancyType) {
+		String occupCode = occupancyType.getType().getCode();
+		return occupCode.equals(B1) || occupCode.equals(B2) || occupCode.equals(B3) || occupCode.equals(C)
+				|| occupCode.equals(C1) || occupCode.equals(C2) || occupCode.equals(C3) || occupCode.equals(D)
+				|| occupCode.equals(D1) || occupCode.equals(D2) || occupCode.equals(G1) || occupCode.equals(G2)
+				|| occupCode.equals(H) || occupCode.equals(I1) || occupCode.equals(I2);
+	}
 
-    private boolean checkOccupancyTypeEqualsToConditionalOccupancyTypes(OccupancyType occupancyType) {
-        return occupancyType.equals(OccupancyType.OCCUPANCY_A1) || occupancyType.equals(OccupancyType.OCCUPANCY_A2) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_A3) || occupancyType.equals(OccupancyType.OCCUPANCY_A4) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_A5) || occupancyType.equals(OccupancyType.OCCUPANCY_E) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_F) || occupancyType.equals(OccupancyType.OCCUPANCY_F1) ||
-                occupancyType.equals(OccupancyType.OCCUPANCY_F2) || occupancyType.equals(OccupancyType.OCCUPANCY_F3)
-                || occupancyType.equals(OccupancyType.OCCUPANCY_F4);
-    }
+	private boolean checkOccupancyTypeEqualsToConditionalOccupancyTypes(OccupancyTypeHelper occupancyType) {
+		String occupCode = occupancyType.getType().getCode();
+		return occupCode.equals(A1) || occupCode.equals(A2) || occupCode.equals(A3) || occupCode.equals(A4)
+				|| occupCode.equals(A5) || occupCode.equals(E) || occupCode.equals(F) || occupCode.equals(F1)
+				|| occupCode.equals(F2) || occupCode.equals(F3) || occupCode.equals(F4);
+	}
 
     private void setReportOutputDetailsWithoutOccupancy(Plan pl, String ruleNo, String ruleDesc, String expected, String actual,
             String status) {

@@ -779,7 +779,7 @@ public class Util {
     }
     
     public static OccupancyTypeHelper getOccupancyAsPerFloorArea(OccupancyTypeHelper occupancy, BigDecimal floorArea, Plan pl) {
-        if ("B1".equals(occupancy.getType().getCode()) || "B2".equals(occupancy)
+        if ("B1".equals(occupancy.getType().getCode()) || "B2".equals(occupancy.getType().getCode())
                 || "B3".equals(occupancy.getType().getCode())) {
             if (floorArea != null && floorArea.compareTo(ONEHUNDREDFIFTY) <= 0)
                 occupancy = getConvertedOccupancy(pl, OCCUPANCY_A2_COLOR_CODE);
@@ -1649,13 +1649,15 @@ public class Util {
     }
 
     public static boolean isSmallPlot(Plan pl) {
-        if (pl != null && !pl.getBlocks().isEmpty() && pl.getPlot() != null && pl.getVirtualBuilding() != null)
-            if (checkAnyBlockHasFloorsGreaterThanThree(pl.getBlocks()) == false
-                    && pl.getVirtualBuilding().getResidentialOrCommercialBuilding().equals(Boolean.TRUE)
-                    && pl.getPlot().getSmallPlot().equals(Boolean.TRUE))
-                return true;
-        return false;
-    }
+		if (pl != null && !pl.getBlocks().isEmpty() && pl.getPlot() != null && pl.getVirtualBuilding() != null) {
+			if (checkAnyBlockHasFloorsGreaterThanThree(pl.getBlocks()) == false
+					&& pl.getVirtualBuilding().getResidentialOrCommercialBuilding().equals(Boolean.TRUE)
+					&& pl.getPlot().getSmallPlot().equals(Boolean.TRUE)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
     public static boolean checkAnyBlockHasFloorsGreaterThanThree(List<Block> blockList) {
         boolean isBlockFloorsGreaterThanThree = false;
