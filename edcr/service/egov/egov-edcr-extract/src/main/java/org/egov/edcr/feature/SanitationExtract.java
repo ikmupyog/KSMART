@@ -1,6 +1,5 @@
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.DxfFileConstants.COLOR_KEY_COMMON_WATER_CLOSET;
 import static org.egov.edcr.constants.DxfFileConstants.COLOR_KEY_FEMALE_WATER_CLOSET;
 import static org.egov.edcr.constants.DxfFileConstants.COLOR_KEY_MALE_WATER_CLOSET;
 
@@ -10,8 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.Measurement;
@@ -54,60 +53,60 @@ public class SanitationExtract extends FeatureExtract {
      */
     @Override
     public PlanDetail extract(PlanDetail pl) {
-        if (LOG.isInfoEnabled())
-            LOG.info("Starting of Sanitation Extract......");
-        for (Block b : pl.getBlocks()) {
-            String layerName1 = "BLK_" + b.getNumber() + "_FLR_" + "\\d+_";
-            collectSanityDetails(pl, pl.getDoc(), b, layerName1, 1);
-            if (!b.getTypicalFloor().isEmpty())
-                for (TypicalFloor typicalFloor : b.getTypicalFloor()) {
-                    String layerName = "BLK_" + b.getNumber() + "_FLR_" + typicalFloor.getModelFloorNo() + "_";
-                    collectSanityDetails(pl, pl.getDoc(), b, layerName, typicalFloor.getRepetitiveFloorNos().size());
-                }
-        }
+    	DXFDocument doc = pl.getDoc();
+        for (Block b : pl.getBlocks())
+            if (!b.getCompletelyExisting()) {
+                String layerName1 = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + b.getNumber() + "_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + "\\d+_";
+                collectSanityDetails(pl, doc, b, layerName1, 1);
+                if (!b.getTypicalFloor().isEmpty())
+                    for (TypicalFloor typicalFloor : b.getTypicalFloor()) {
+                        String layerName = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + b.getNumber() + "_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + typicalFloor.getModelFloorNo() + "_";
+                        collectSanityDetails(pl, doc, b, layerName, typicalFloor.getRepetitiveFloorNos().size());
+                    }
+            }
 
         // Special Water Closets for this will be added floor wise
 
         for (Block block : pl.getBlocks())
-            for (Floor f : block.getBuilding().getFloors()) {
-                String layerName1 = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_"
-                        + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + f.getNumber() + "_"
-                        + layerNames.getLayerName("LAYER_NAME_SPECIAL_WATER_CLOSET");
-                List<DXFLWPolyline> polyLinesByLayer = Util.getPolyLinesByLayer(pl.getDoc(), layerName1);
-                if (!polyLinesByLayer.isEmpty())
-                    for (DXFLWPolyline pline : polyLinesByLayer) {
-                        Measurement m = new MeasurementDetail(pline, true);
-                        f.getSpecialWaterClosets().add(m);
-                    }
-            }
+            if (!block.getCompletelyExisting())
+                for (Floor f : block.getBuilding().getFloors()) {
+                    String layerName1 = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_"
+                            + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + f.getNumber() + "_"
+                            + layerNames.getLayerName("LAYER_NAME_SPECIAL_WATER_CLOSET");
+                    List<DXFLWPolyline> polyLinesByLayer = Util.getPolyLinesByLayer(doc, layerName1);
+                    if (!polyLinesByLayer.isEmpty())
+                        for (DXFLWPolyline pline : polyLinesByLayer) {
+                            Measurement m = new MeasurementDetail(pline, true);
+                            f.getSpecialWaterClosets().add(m);
+                        }
+                }
 
         // Wash Basins for this will be added floor wise
 
         for (Block block : pl.getBlocks())
-            for (Floor f : block.getBuilding().getFloors()) {
-                String washBasinLayers = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber()
-                        + "_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + f.getNumber() + "_"
-                        + layerNames.getLayerName("LAYER_NAME_WASH");
-                List<DXFLWPolyline> polyLinesByLayer = Util.getPolyLinesByLayer(pl.getDoc(), washBasinLayers);
-                if (polyLinesByLayer.isEmpty()) {
-                    List<DXFCircle> washBasinCircles = Util.getPolyCircleByLayer(pl.getDoc(), washBasinLayers);
-                    for (DXFCircle dxfCircle : washBasinCircles) {
-                        Measurement m = new Measurement();
-                        double radius = dxfCircle.getRadius();
-                        double area = 3.14 * radius * radius;
-                        m.setArea(BigDecimal.valueOf(area));
-                        m.setLength(BigDecimal.valueOf(dxfCircle.getLength()));
-                        m.setPresentInDxf(true);
-                        f.getWashBasins().add(m);
-                    }
-                } else if (!polyLinesByLayer.isEmpty())
-                    for (DXFLWPolyline pline : polyLinesByLayer) {
-                        Measurement m = new MeasurementDetail(pline, true);
-                        f.getWashBasins().add(m);
-                    }
-            }
-        if (LOG.isInfoEnabled())
-            LOG.info("Starting of Sanitation Extract......");
+            if (!block.getCompletelyExisting())
+                for (Floor f : block.getBuilding().getFloors()) {
+                    String washBasinLayers = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber()
+                    + "_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + f.getNumber() + "_"
+                    + layerNames.getLayerName("LAYER_NAME_WASH");
+                    List<DXFLWPolyline> polyLinesByLayer = Util.getPolyLinesByLayer(doc, washBasinLayers);
+                    if (polyLinesByLayer.isEmpty()) {
+                        List<DXFCircle> washBasinCircles = Util.getPolyCircleByLayer(doc, washBasinLayers);
+                        for (DXFCircle dxfCircle : washBasinCircles) {
+                            Measurement m = new Measurement();
+                            double radius = dxfCircle.getRadius();
+                            double area = 3.14 * radius * radius;
+                            m.setArea(BigDecimal.valueOf(area));
+                            m.setLength(BigDecimal.valueOf(dxfCircle.getLength()));
+                            m.setPresentInDxf(true);
+                            f.getWashBasins().add(m);
+                        }
+                    } else if (!polyLinesByLayer.isEmpty())
+                        for (DXFLWPolyline pline : polyLinesByLayer) {
+                            Measurement m = new MeasurementDetail(pline, true);
+                            f.getWashBasins().add(m);
+                        }
+                }
         return pl;
     }
 

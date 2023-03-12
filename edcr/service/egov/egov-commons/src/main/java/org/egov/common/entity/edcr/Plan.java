@@ -496,7 +496,15 @@ public class Plan implements Serializable {
         this.reportOutput = reportOutput;
     }
 
-    public List<SepticTank> getSepticTanks() {
+    public Double getParkingRequired() {
+		return parkingRequired;
+	}
+
+	public void setParkingRequired(Double parkingRequired) {
+		this.parkingRequired = parkingRequired;
+	}
+
+	public List<SepticTank> getSepticTanks() {
         return septicTanks;
     }
 

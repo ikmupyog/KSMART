@@ -1669,6 +1669,16 @@ public class Util {
         return isBlockFloorsGreaterThanThree;
     }
 
+	public static Boolean isSingleFamilyWithLessThanThreeFloor(Block b) {
+		return !b.getSingleFamilyBuilding() && b.getBuilding() != null && b.getBuilding().getFloorsAboveGround() != null
+				&& b.getBuilding().getFloorsAboveGround().intValue() <= 3;
+	}
+
+	public static Boolean singleFamilyWithLessThanOrEqualToThreeFloor(Block b) {
+		return b.getSingleFamilyBuilding() && b.getBuilding() != null && b.getBuilding().getFloorsAboveGround() != null
+				&& b.getBuilding().getFloorsAboveGround().intValue() <= 3;
+	}
+	
     public static BigDecimal roundOffTwoDecimal(BigDecimal number) {
         return number != null
                 ? number.setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS, DcrConstants.ROUNDMODE_MEASUREMENTS)

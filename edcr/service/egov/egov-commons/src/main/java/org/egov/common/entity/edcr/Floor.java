@@ -114,6 +114,9 @@ public class Floor extends Measurement {
     
     private Boolean upperMost = false;
     
+    // Inside building declared parking area details
+    private List<ParkingArea> parkingProvidedInsideBuilding = new ArrayList<>();
+    
     public List<FireStair> getFireStairs() {
         return fireStairs;
     }
@@ -638,6 +641,14 @@ public class Floor extends Measurement {
 
 	public void setUpperMost(Boolean upperMost) {
 		this.upperMost = upperMost;
+	}
+
+	public List<ParkingArea> getParkingProvidedInsideBuilding() {
+		return parkingProvidedInsideBuilding;
+	}
+
+	public void setParkingProvidedInsideBuilding(List<ParkingArea> parkingProvidedInsideBuilding) {
+		this.parkingProvidedInsideBuilding = parkingProvidedInsideBuilding;
 	}
 
 }

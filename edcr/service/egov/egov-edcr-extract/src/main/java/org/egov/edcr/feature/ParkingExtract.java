@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.FloorUnit;
@@ -23,6 +23,7 @@ import org.egov.common.entity.edcr.Hall;
 import org.egov.common.entity.edcr.Measurement;
 import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.OccupancyType;
+import org.egov.common.entity.edcr.ParkingArea;
 import org.egov.common.entity.edcr.TypicalFloor;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.entity.blackbox.MeasurementDetail;
@@ -79,6 +80,41 @@ public class ParkingExtract extends FeatureExtract {
                 for (String s : stiltParkLayerNames)
                     Util.getPolyLinesByLayer(pl.getDoc(), s).forEach(
                             stiltPark -> floor.getParking().getStilts().add(new MeasurementDetail(stiltPark, true)));
+                
+
+                String layerParkArea = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + floor.getNumber()
+                        + "_" + layerNames.getLayerName("LAYER_NAME_PARKING_AREA_SUFFIX");
+                List<DXFLWPolyline> floorParkings = Util.getPolyLinesByLayer(pl.getDoc(), layerParkArea);
+                floorParkings.forEach(parkPline -> {
+                	ParkingArea parking = new ParkingArea();
+                    parking.setOccupancyType(Util.findOccupancyType(parkPline, pl));
+                    parking.setParkingArea(Util.getPolyLineArea(parkPline));
+                    floor.getParkingProvidedInsideBuilding().add(parking);
+                });
+
+                String layerExistParkArea = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + floor.getNumber()
+                + "_" + layerNames.getLayerName("EXIST_PARKING_AREA_SUFFIX");
+                List<DXFLWPolyline> existFloorParkings = Util.getPolyLinesByLayer(pl.getDoc(), layerExistParkArea);
+                existFloorParkings.forEach(parkPline -> {
+                    if (floor.getParkingProvidedInsideBuilding().isEmpty()) {
+                    	ParkingArea parking = new ParkingArea();
+                        parking.setOccupancyType(Util.findOccupancyType(parkPline, pl));
+                        parking.setExistParkingArea(Util.getPolyLineArea(parkPline));
+                        floor.getParkingProvidedInsideBuilding().add(parking);
+                    } else {
+                        for (ParkingArea p : floor.getParkingProvidedInsideBuilding()) {
+                            if (p.getOccupancyType().getType().getCode().equals(Util.findOccupancyType(parkPline, pl).getType().getCode())) {
+                                p.setExistParkingArea(Util.getPolyLineArea(parkPline));
+                            } else {
+                            	ParkingArea parking = new ParkingArea();
+                                parking.setOccupancyType(Util.findOccupancyType(parkPline, pl));
+                                parking.setExistParkingArea(Util.getPolyLineArea(parkPline));
+                                floor.getParkingProvidedInsideBuilding().add(parking);
+                            }
+                        }
+                    }
+                });
+            
             }
 
             String hallLayer = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_"
@@ -99,7 +135,7 @@ public class ParkingExtract extends FeatureExtract {
                     block.getHallAreas().add(hall);
                 }
             }
-
+            
             String dinningLayer = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_"
                     + layerNames.getLayerName("LAYER_NAME_UNITFA_DINING") + "_" + "\\d";
             List<String> layerNames2 = Util.getLayerNamesLike(pl.getDoc(), dinningLayer);
@@ -161,9 +197,7 @@ public class ParkingExtract extends FeatureExtract {
 
     @Override
     public PlanDetail validate(PlanDetail pl) {
-        if (pl.getStrictlyValidateDimension()) {
             validateDuplicate(pl);
-        }
         return pl;
     }
 
@@ -237,21 +271,6 @@ public class ParkingExtract extends FeatureExtract {
         all.addAll(pl.getParkingDetails().getLoadUnload());
         all.addAll(pl.getParkingDetails().getMechParking());
         all.addAll(pl.getParkingDetails().getTwoWheelers());
-        all.addAll(pl.getParkingDetails().getCars());
-        
-        all.addAll(pl.getParkingDetails().getOpenCars());
-        all.addAll(pl.getParkingDetails().getCoverCars());
-        all.addAll(pl.getParkingDetails().getBasementCars());
-        all.addAll(pl.getParkingDetails().getVisitors());
-        all.addAll(pl.getParkingDetails().getStilts());
-        all.addAll(pl.getParkingDetails().getMechanicalLifts());
-
-        /*
-         * for (Block block : pl.getBlocks()) { for (Floor floor : block.getBuilding().getFloors()) {
-         * all.addAll(floor.getParking().getOpenCars()); all.addAll(floor.getParking().getCoverCars());
-         * all.addAll(floor.getParking().getBasementCars()); all.addAll(floor.getParking().getVisitors());
-         * all.addAll(floor.getParking().getStilts()); all.addAll(floor.getParking().getMechanicalLifts()); } }
-         */
         Set<MeasurementDetail> duplicates = new HashSet<>();
 
         for (Measurement m : all) {
@@ -268,8 +287,8 @@ public class ParkingExtract extends FeatureExtract {
             }
 
             for (Measurement m1 : all) {
-                MeasurementDetail md1 = (MeasurementDetail) m1;
-                Iterator mVertexIterator = md1.getPolyLine().getVertexIterator();
+                MeasurementDetail md1 = (MeasurementDetail) m;
+                Iterator mVertexIterator = md.getPolyLine().getVertexIterator();
                 vertexIterator = md1.getPolyLine().getVertexIterator();
                 LOGGER.error("Points on the " + " Inside");
                 // LOG.debug("Max x: " + m1.getPolyLine().getBounds().getMaximumX() + " Min x:" +
@@ -295,7 +314,6 @@ public class ParkingExtract extends FeatureExtract {
                         Point m1Point = m1Next.getPoint();
 
                         if (Util.pointsEquals(mPoint, m1Point)) {
-                            System.out.println("duplicate points = " + mPoint + ", "+ m1Point);
                             duplicatePoint++;
                         }
 
@@ -303,7 +321,7 @@ public class ParkingExtract extends FeatureExtract {
 
                 }
                 if (duplicatePoint > 2) {
-                    duplicates.add(md);
+                    duplicates.add((MeasurementDetail) m);
                     LOGGER.error(" found duplicate for outside point ");
                 }
 

@@ -47,44 +47,84 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
+import static org.egov.edcr.constants.DxfFileConstants.A1;
+import static org.egov.edcr.constants.DxfFileConstants.A2;
+import static org.egov.edcr.constants.DxfFileConstants.A3;
+import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.constants.DxfFileConstants.A5;
+import static org.egov.edcr.constants.DxfFileConstants.B1;
+import static org.egov.edcr.constants.DxfFileConstants.B2;
+import static org.egov.edcr.constants.DxfFileConstants.B3;
+import static org.egov.edcr.constants.DxfFileConstants.C;
+import static org.egov.edcr.constants.DxfFileConstants.C1;
+import static org.egov.edcr.constants.DxfFileConstants.C2;
+import static org.egov.edcr.constants.DxfFileConstants.C3;
+import static org.egov.edcr.constants.DxfFileConstants.D;
+import static org.egov.edcr.constants.DxfFileConstants.D1;
+import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.F;
+import static org.egov.edcr.constants.DxfFileConstants.F1;
+import static org.egov.edcr.constants.DxfFileConstants.F2;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
+import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.G1;
+import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
+import static org.egov.edcr.constants.DxfFileConstants.I2;
+import static org.egov.edcr.utility.DcrConstants.DECIMALDIGITS_MEASUREMENTS;
+import static org.egov.edcr.utility.DcrConstants.ROUNDMODE_MEASUREMENTS;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.BlockDistances;
+import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
-import org.egov.common.entity.edcr.SetBack;
 import org.egov.edcr.utility.DcrConstants;
-import org.egov.infra.utils.StringUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BlockDistancesService extends FeatureProcess {
-	public static final String SUBRULE_54_3 = "54-3";
-	public static final String SUBRULE_55_2 = "55-2";
-	public static final String SUBRULE_57_4 = "57-4";
-	public static final String SUBRULE_58_3_A = "58-3-a";
-	public static final String SUBRULE_59_3 = "59-3";
-	public static final String SUBRULE_117_3 = "117-3";
-	public static final BigDecimal DIS_7_5 = BigDecimal.valueOf(7.5);
-	public static final String BLK_NUMBER = "blkNumber";
-	public static final String SUBRULE = "subrule";
-	public static final String MIN_DISTANCE = "minimumDistance";
-	public static final String OCCUPANCY = "occupancy";
-	private static final String SUBRULE_37_1 = "37-1";
-	private static final String SUB_RULE_DES = "Minimum distance between blocks %s and %s";
-	public static final String MINIMUM_DISTANCE_SETBACK = "Minimum distance should not be less than setback of tallest building or 3m";
-	public static final String MINIMUM_DISTANCE_BUILDING = "Minimum distance should not be less than 1/3 of height of tallest building or 18m";
-	private static final BigDecimal THREE = BigDecimal.valueOf(3);
+    public static final String SUBRULE_54_3 = "54-(3)";
+    public static final String SUBRULE_55_2 = "55-(2)";
+    public static final String SUBRULE_57_4 = "57-(4)";
+    public static final String SUBRULE_58_3_A = "58-(3-a)";
+    public static final String SUBRULE_59_3 = "59-(3)";
+    public static final String SUBRULE_117_3 = "117-(3)";
+    public static final BigDecimal DIS_7_5 = BigDecimal.valueOf(7.5);
+    public static final String BLK_NUMBER = "blkNumber";
+    public static final String SUBRULE = "subrule";
+    public static final String MIN_DISTANCE = "minimumDistance";
+    public static final String OCCUPANCY = "occupancy";
+    private static final String SUBRULE_24_2 = "24-(2)";
+    private static final String SUB_RULE_DESCRIPTION = "Minimum distance between blocks %s and %s for occupancy %s";
+    private static final String DIS_BTW_BLOCKS_DESCRIPTION = "Distance between block";
+    private static final double VALUE_0_5 = 0.5;
+    private static final BigDecimal DIS_THREE = BigDecimal.valueOf(3);
+    private static final BigDecimal DIS_1_5 = BigDecimal.valueOf(1.5);
+    private static final BigDecimal DIS_5 = BigDecimal.valueOf(5);
+    private static final BigDecimal DIS_2 = BigDecimal.valueOf(2);
+    private static final String SUB_RULE_DES = "Minimum distance between blocks %s and %s";
+    private static final String OCCPNCY = "Occupancy";
+    private static final String SUBRULE_AMD20_26_5 = "26-(5)";
 
 	@Override
 	public Plan validate(Plan pl) {
@@ -179,36 +219,317 @@ public class BlockDistancesService extends FeatureProcess {
 		if (pl.getBlocks().isEmpty())
 			return;
 		validateDistanceBetweenBlocks(pl);
+		List<Map<String, Object>> listOfMapOfLeadingOccupancyDtls = new ArrayList<>();
+		String rule = DIS_BTW_BLOCKS_DESCRIPTION;
+		String subRule = null;
+		for (Block block : pl.getBlocks()) {
+			if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
+				// creating list of map of subrule, minimum distance and occupancy for every
+				// occupancy for a block
+				List<Map<String, Object>> listOfAllDetailsMap = new ArrayList<>();
+				// iterating building level occupancies.
+				for (Occupancy occupancy : block.getBuilding().getOccupancies()) {
+					// creating map of subrule, minimum distance and occupancy for current occupancy
+					// for a block
+					Map<String, Object> mapOfAllDetails = new ConcurrentHashMap<>();
+					BigDecimal minimumDistanceToOtherBuildings = BigDecimal.ZERO;
+					if (occupancy.getTypeHelper().getType().getCode().equals(A1)
+							|| occupancy.getTypeHelper().getType().getCode().equals(A2)
+							|| occupancy.getTypeHelper().getType().getCode().equals(A3)
+							|| occupancy.getTypeHelper().getType().getCode().equals(A4)
+							|| occupancy.getTypeHelper().getType().getCode().equals(A5)
+							|| occupancy.getTypeHelper().getType().getCode().equals(F)
+							|| occupancy.getTypeHelper().getType().getCode().equals(F1)
+							|| occupancy.getTypeHelper().getType().getCode().equals(F2)
+							|| occupancy.getTypeHelper().getType().getCode().equals(F3)
+							|| occupancy.getTypeHelper().getType().getCode().equals(F4)) {
+						if (getHeightLessThanTenCondition(block)) {
+							subRule = SUBRULE_24_2;
+							if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
+									|| AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+								subRule = SUBRULE_AMD20_26_5;
+							minimumDistanceToOtherBuildings = DIS_2;
+						} else {
+							if (getHeightGreaterThanTenAndLessThanSixteenCondition(block)) {
+								subRule = SUBRULE_24_2;
+								if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))
+										|| AMEND_OCT20.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+									subRule = SUBRULE_AMD20_26_5;
+								minimumDistanceToOtherBuildings = DIS_THREE;
+							} else {
+								subRule = SUBRULE_117_3;
+								minimumDistanceToOtherBuildings = DIS_5;
+							}
+						}
+					} else if (occupancy.getTypeHelper().getType().getCode().equals(B1)
+							|| occupancy.getTypeHelper().getType().getCode().equals(B2)
+							|| occupancy.getTypeHelper().getType().getCode().equals(B3)
+							|| occupancy.getTypeHelper().getType().getCode().equals(C)
+							|| occupancy.getTypeHelper().getType().getCode().equals(C1)
+							|| occupancy.getTypeHelper().getType().getCode().equals(C2)
+							|| occupancy.getTypeHelper().getType().getCode().equals(C3)
+							|| occupancy.getTypeHelper().getType().getCode().equals(E)) {
+						if (getHeightLessThanTenCondition(block)) {
+							subRule = SUBRULE_54_3;
+							minimumDistanceToOtherBuildings = DIS_1_5;
+						} else {
+							if (getHeightGreaterThanTenAndLessThanSixteenCondition(block)) {
+								subRule = SUBRULE_54_3;
+								minimumDistanceToOtherBuildings = DIS_THREE;
+							} else {
+								subRule = SUBRULE_117_3;
+								minimumDistanceToOtherBuildings = DIS_5;
+
+							}
+						}
+					} else if (occupancy.getTypeHelper().getType().getCode().equals(D)
+							|| occupancy.getTypeHelper().getType().getCode().equals(D1)
+							|| occupancy.getTypeHelper().getType().getCode().equals(D2)) {
+						if (getHeightLessThanTenCondition(block)) {
+							subRule = SUBRULE_55_2;
+							minimumDistanceToOtherBuildings = DIS_1_5;
+						} else {
+							if (getHeightGreaterThanTenAndLessThanSixteenCondition(block)) {
+								subRule = SUBRULE_55_2;
+								minimumDistanceToOtherBuildings = DIS_THREE;
+							} else {
+								subRule = SUBRULE_117_3;
+								minimumDistanceToOtherBuildings = DIS_5;
+							}
+						}
+					} else if (occupancy.getTypeHelper().getType().getCode().equals(G1)
+							|| occupancy.getTypeHelper().getType().getCode().equals(G2)) {
+						if (getHeightLessThanTenCondition(block)) {
+							subRule = SUBRULE_57_4;
+							minimumDistanceToOtherBuildings = DIS_THREE;
+						} else {
+							if (getHeightGreaterThanTenAndLessThanSixteenCondition(block)) {
+								BigDecimal distanceIncrementBasedOnHeight = (BigDecimal.valueOf(VALUE_0_5)
+										.multiply(BigDecimal.valueOf(Math.ceil((block.getBuilding().getBuildingHeight()
+												.subtract(BigDecimal.TEN)
+												.divide(DIS_THREE, DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS))
+														.doubleValue()))));
+								subRule = SUBRULE_57_4;
+								minimumDistanceToOtherBuildings = DIS_THREE.add(distanceIncrementBasedOnHeight);
+							} else {
+								subRule = SUBRULE_117_3;
+								minimumDistanceToOtherBuildings = DIS_5;
+							}
+						}
+					} else if (occupancy.getTypeHelper().getType().getCode().equals(H)) {
+						if (getHeightLessThanTenCondition(block)) {
+							subRule = SUBRULE_58_3_A;
+							minimumDistanceToOtherBuildings = DIS_1_5;
+						} else {
+							if (getHeightGreaterThanTenAndLessThanSixteenCondition(block)) {
+								BigDecimal distanceIncrementBasedOnHeight = (BigDecimal.valueOf(VALUE_0_5)
+										.multiply(BigDecimal.valueOf(Math.ceil((block.getBuilding().getBuildingHeight()
+												.subtract(BigDecimal.TEN)
+												.divide(DIS_THREE, DECIMALDIGITS_MEASUREMENTS, ROUNDMODE_MEASUREMENTS))
+														.doubleValue()))));
+								subRule = SUBRULE_58_3_A;
+								minimumDistanceToOtherBuildings = DIS_1_5.add(distanceIncrementBasedOnHeight);
+							} else {
+								subRule = SUBRULE_117_3;
+								minimumDistanceToOtherBuildings = DIS_5;
+							}
+						}
+					} else if (occupancy.getTypeHelper().getType().getCode().equals(I1)) {
+						if (block.getBuilding().getBuildingHeight().compareTo(BigDecimal.valueOf(16)) < 0) {
+							subRule = SUBRULE_59_3;
+							minimumDistanceToOtherBuildings = DIS_THREE;
+						} else {
+							subRule = SUBRULE_117_3;
+							minimumDistanceToOtherBuildings = DIS_5;
+						}
+					} else if (occupancy.getTypeHelper().getType().getCode().equals(I2)) {
+						minimumDistanceToOtherBuildings = DIS_7_5;
+
+						if (block.getBuilding().getBuildingHeight().compareTo(BigDecimal.valueOf(16)) < 0) {
+							subRule = SUBRULE_59_3;
+						} else {
+							subRule = SUBRULE_117_3;
+						}
+					}
+					mapOfAllDetails.put(SUBRULE, subRule);
+					mapOfAllDetails.put(MIN_DISTANCE, minimumDistanceToOtherBuildings);
+					mapOfAllDetails.put(OCCUPANCY, occupancy.getTypeHelper().getType().getName());
+					listOfAllDetailsMap.add(mapOfAllDetails);
+				}
+				if (!listOfAllDetailsMap.isEmpty()) {
+					// iterate list of map for a particular block to get maximum of all minimum
+					// distances present in map.
+					// create a map for occupancy,subrule,minimum distance and blocknumber for
+					// maximum of all minimum distance
+					// values
+					Map<String, Object> maxOfMinDistanceMap = listOfAllDetailsMap.get(0);// map to hold that entry of
+																							// map which
+																							// has maximum minimum
+																							// distance, first
+																							// time holding 0 th entry
+																							// from map.
+					for (Map<String, Object> mapOfAllDtls : listOfAllDetailsMap) {
+						// if minimum distance is same in mapOfAllDtls entry and maxOfMinDistanceMap
+						// entry
+						if (((BigDecimal) mapOfAllDtls.get(MIN_DISTANCE))
+								.compareTo((BigDecimal) maxOfMinDistanceMap.get(MIN_DISTANCE)) == 0) {
+							// if subrules are same for any number of same minimum distances in map , show
+							// it only once,
+							// duplicates are not shown.
+							// if subrules are different for any number of same minimum distances in map,
+							// show all subrules by
+							// comma separated.
+							if (!mapOfAllDtls.get(SUBRULE).equals(maxOfMinDistanceMap.get(SUBRULE))) {
+								SortedSet<String> uniqueSubrules = new TreeSet<>();
+								String[] subRuleString = (mapOfAllDtls.get(SUBRULE) + " , "
+										+ maxOfMinDistanceMap.get(SUBRULE)).split(" , ");
+								for (String str : subRuleString) {
+									uniqueSubrules.add(str);
+								}
+								String subRuleStr = removeDuplicates(uniqueSubrules);
+								maxOfMinDistanceMap.put(SUBRULE, subRuleStr);
+							}
+							// if occupancy are same for any number of same minimum distances in map , show
+							// it only once,
+							// duplicates are not shown.
+							// if occupancy are different for any number of same minimum distances in map,
+							// show all occupancies by
+							// comma separated.
+							if (!(mapOfAllDtls.get(OCCUPANCY)).equals(maxOfMinDistanceMap.get(OCCUPANCY))) {
+								SortedSet<String> uniqueOccupancies = new TreeSet<>();
+								String[] occupancyString = (mapOfAllDtls.get(OCCUPANCY) + " , "
+										+ maxOfMinDistanceMap.get(OCCUPANCY)).split(" , ");
+								for (String str : occupancyString) {
+									uniqueOccupancies.add(str);
+								}
+								String occupancyStr = removeDuplicates(uniqueOccupancies);
+
+								maxOfMinDistanceMap.put(OCCUPANCY, occupancyStr);
+							}
+							maxOfMinDistanceMap.put(BLK_NUMBER, block.getNumber());
+							continue;
+						}
+						// if minimum distance is greater in mapOfAllDtls entry than maxOfMinDistanceMap
+						// entry
+						if (((BigDecimal) maxOfMinDistanceMap.get(MIN_DISTANCE))
+								.compareTo((BigDecimal) mapOfAllDtls.get(MIN_DISTANCE)) < 0) {
+							maxOfMinDistanceMap.putAll(mapOfAllDtls);
+						}
+						maxOfMinDistanceMap.put(BLK_NUMBER, block.getNumber());
+					}
+					listOfMapOfLeadingOccupancyDtls.add(maxOfMinDistanceMap);
+				}
+			}
+		}
 		scrutinyDetail = new ScrutinyDetail();
 		scrutinyDetail.setKey("Common_Distance Between Blocks");
 		scrutinyDetail.addColumnHeading(1, RULE_NO);
 		scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-		scrutinyDetail.addColumnHeading(3, REQUIRED);
-		scrutinyDetail.addColumnHeading(4, PROVIDED);
-		scrutinyDetail.addColumnHeading(5, STATUS);
+		scrutinyDetail.addColumnHeading(3, OCCPNCY);
+		scrutinyDetail.addColumnHeading(4, REQUIRED);
+		scrutinyDetail.addColumnHeading(5, PROVIDED);
+		scrutinyDetail.addColumnHeading(6, STATUS);
 		for (Block b : pl.getBlocks()) {
 			for (Block block : pl.getBlocks()) {
 				if (b.getNumber() != block.getNumber()) {
-					if (!b.getDistanceBetweenBlocks().isEmpty()) {
-						for (BlockDistances distanceBetweenBlock : b.getDistanceBetweenBlocks()) {
-							// if b is source block , checking that its destination block number is same as
-							// block
-							if (distanceBetweenBlock.getBlockNumber().equals(block.getNumber())) {
-								BigDecimal minimumDistance;
-								boolean valid1 = false;
-								boolean valid2 = false;
-								// calculate minimum of provided distances between source and destination
-								if (!distanceBetweenBlock.getDistances().isEmpty()) {
-									minimumDistance = distanceBetweenBlock.getDistances().get(0);
-									for (BigDecimal distance : distanceBetweenBlock.getDistances()) {
-										if (distance.compareTo(minimumDistance) < 0) {
-											minimumDistance = distance;
+					if (!block.getBuilding().getOccupancies().isEmpty()
+							&& !b.getBuilding().getOccupancies().isEmpty()) {
+						if (!b.getDistanceBetweenBlocks().isEmpty()) {
+							for (BlockDistances distanceBetweenBlock : b.getDistanceBetweenBlocks()) {
+								// if b is source block , checking that its destination block number is same as
+								// block
+								if (distanceBetweenBlock.getBlockNumber().equals(block.getNumber())) {
+									Map<String, Object> mapForSourceBlkDetails = new ConcurrentHashMap<>();
+									Map<String, Object> mapForDesBlkDetails = new ConcurrentHashMap<>();
+									for (Map<String, Object> mapOfLeadingDtlsForBlock : listOfMapOfLeadingOccupancyDtls) {
+										if (b.getNumber().equals(mapOfLeadingDtlsForBlock.get(BLK_NUMBER))) {
+											mapForSourceBlkDetails.putAll(mapOfLeadingDtlsForBlock);
+										}
+										if (block.getNumber().equals(mapOfLeadingDtlsForBlock.get(BLK_NUMBER))) {
+											mapForDesBlkDetails.putAll(mapOfLeadingDtlsForBlock);
 										}
 									}
-									validateMinimumDistance(pl, minimumDistance, b, block, valid1, valid2);
+									Map<String, Object> mapForLeadingBlkDetails = new HashMap<>();
+									// calculating maximum of minimum distance among source and destination blocks
+									// create a map and assign either source or destination map to it depending upon
+									// whose minimum
+									// distance is greater than other
+									if (((BigDecimal) mapForSourceBlkDetails.get(MIN_DISTANCE))
+											.compareTo((BigDecimal) mapForDesBlkDetails.get(MIN_DISTANCE)) > 0) {
+										mapForLeadingBlkDetails = mapForSourceBlkDetails;
+									} else if (((BigDecimal) mapForSourceBlkDetails.get(MIN_DISTANCE))
+											.compareTo((BigDecimal) mapForDesBlkDetails.get(MIN_DISTANCE)) < 0) {
+										mapForLeadingBlkDetails = mapForDesBlkDetails;
+									} else {
+										// if minimum distance is same for souce and destination maps
+										// combining subrules by comma if they are different , but if they are same not
+										// taking
+										// duplicates
+										if (!mapForSourceBlkDetails.get(SUBRULE)
+												.equals(mapForDesBlkDetails.get(SUBRULE))) {
+											SortedSet<String> uniqueSubrules = new TreeSet<>();
+											String[] subRuleString = (mapForSourceBlkDetails.get(SUBRULE) + " , "
+													+ mapForDesBlkDetails.get(SUBRULE)).split(" , ");
+											for (String str : subRuleString) {
+												uniqueSubrules.add(str);
+											}
+											String subRuleStr = removeDuplicates(uniqueSubrules);
+											mapForLeadingBlkDetails.put(SUBRULE, subRuleStr);
+										} else {
+											mapForLeadingBlkDetails.put(SUBRULE, mapForSourceBlkDetails.get(SUBRULE));
+										}
+										mapForLeadingBlkDetails.put(MIN_DISTANCE,
+												mapForDesBlkDetails.get(MIN_DISTANCE));
+										// combining occupancies by comma if they are different , but if they are same
+										// not taking
+										// duplicates
+										if (!(mapForSourceBlkDetails.get(OCCUPANCY))
+												.equals(mapForDesBlkDetails.get(OCCUPANCY))) {
+											SortedSet<String> uniqueOccupancies = new TreeSet<>();
+											String[] occupancyString = (mapForSourceBlkDetails.get(OCCUPANCY) + " , "
+													+ mapForDesBlkDetails.get(OCCUPANCY)).split(" , ");
+											for (String str : occupancyString) {
+												uniqueOccupancies.add(str);
+											}
+											String occupancyStr = removeDuplicates(uniqueOccupancies);
+											mapForLeadingBlkDetails.put(OCCUPANCY, occupancyStr);
+										} else {
+											mapForLeadingBlkDetails.put(OCCUPANCY,
+													mapForSourceBlkDetails.get(OCCUPANCY));
+										}
+									}
+									BigDecimal minimumDistance;
+									boolean valid = false;
+									// calculate minimum of provided distances between source and destination
+									if (!distanceBetweenBlock.getDistances().isEmpty()) {
+										minimumDistance = distanceBetweenBlock.getDistances().get(0);
+										for (BigDecimal distance : distanceBetweenBlock.getDistances()) {
+											if (distance.compareTo(minimumDistance) < 0) {
+												minimumDistance = distance;
+											}
+										}
+										valid = validateMinimumDistance(minimumDistance,
+												(BigDecimal) mapForLeadingBlkDetails.get(MIN_DISTANCE), valid);
+										if (valid) {
+											setReportOutputDetails(pl, (String) mapForLeadingBlkDetails.get(SUBRULE),
+													String.format(SUB_RULE_DES, b.getNumber(), block.getNumber()),
+													mapForLeadingBlkDetails.get(OCCUPANCY).toString(),
+													mapForLeadingBlkDetails.get(MIN_DISTANCE).toString()
+															+ DcrConstants.IN_METER,
+													minimumDistance.toString() + DcrConstants.IN_METER,
+													Result.Accepted.getResultVal());
+										} else {
+											setReportOutputDetails(pl, (String) mapForLeadingBlkDetails.get(SUBRULE),
+													String.format(SUB_RULE_DES, b.getNumber(), block.getNumber()),
+													mapForLeadingBlkDetails.get(OCCUPANCY).toString(),
+													mapForLeadingBlkDetails.get(MIN_DISTANCE).toString()
+															+ DcrConstants.IN_METER,
+													minimumDistance.toString() + DcrConstants.IN_METER,
+													Result.Not_Accepted.getResultVal());
+										}
+									}
 								}
 							}
-
 						}
 					}
 				}
@@ -216,13 +537,17 @@ public class BlockDistancesService extends FeatureProcess {
 		}
 	}
 
-	/*
-	 * private String removeDuplicates(SortedSet<String> uniqueData) { StringBuffer
-	 * str = new StringBuffer(); List<String> unqList = new ArrayList<>(uniqueData);
-	 * for (String unique : unqList) { str.append(unique); if
-	 * (!unique.equals(unqList.get(unqList.size() - 1))) { str.append(" , "); } }
-	 * return str.toString(); }
-	 */
+    private String removeDuplicates(SortedSet<String> uniqueData) {
+        StringBuffer str = new StringBuffer();
+        List<String> unqList = new ArrayList<>(uniqueData);
+        for (String unique : unqList) {
+            str.append(unique);
+            if (!unique.equals(unqList.get(unqList.size() - 1))) {
+                str.append(" , ");
+            }
+        }
+        return str.toString();
+    }
 
 	private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDesc, String occupancy, String expected,
 			String actual, String status) {
@@ -236,81 +561,28 @@ public class BlockDistancesService extends FeatureProcess {
 		pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
 	}
 
-	/*
-	 * private boolean getHeightGreaterThanTenAndLessThanSixteenCondition(Block
-	 * block) { return
-	 * block.getBuilding().getBuildingHeight().compareTo(BigDecimal.valueOf(10)) > 0
-	 * && block.getBuilding().getBuildingHeight().compareTo(BigDecimal.valueOf(16))
-	 * < 0; }
-	 * 
-	 * private boolean getHeightLessThanTenCondition(Block block) { return
-	 * block.getBuilding().getBuildingHeight().compareTo(BigDecimal.valueOf(10)) <=
-	 * 0; }
-	 */
+    private boolean getHeightGreaterThanTenAndLessThanSixteenCondition(Block block) {
+        return block.getBuilding().getBuildingHeight().compareTo(BigDecimal.valueOf(10)) > 0
+                && block.getBuilding().getBuildingHeight().compareTo(BigDecimal.valueOf(16)) < 0;
+    }
 
-	private void validateMinimumDistance(Plan pl, BigDecimal actualDistance, Block b, Block block, Boolean valid1,
-			Boolean valid2) {
-		BigDecimal bHeight = b.getBuilding().getBuildingHeight();
-		BigDecimal blockHeight = block.getBuilding().getBuildingHeight();
-		HashMap<BigDecimal, Block> blockMap = new HashMap();
-		blockMap.put(bHeight, b);
-		blockMap.put(blockHeight, block);
-		List<BigDecimal> blkHeights = Arrays.asList(bHeight, blockHeight);
-		BigDecimal maxHeight = blkHeights.stream().reduce(BigDecimal::max).get();
+    private boolean getHeightLessThanTenCondition(Block block) {
+        return block.getBuilding().getBuildingHeight().compareTo(BigDecimal.valueOf(10)) <= 0;
+    }
 
-		ArrayList<BigDecimal> setBacksValues = new ArrayList();
-		setBacksValues.add(THREE);
-		List<SetBack> setBacks = block.getSetBacks();
-		for (SetBack setback : setBacks) {
-			if (setback.getRearYard() != null)
-				setBacksValues.add(setback.getRearYard().getHeight());
-			if (setback.getSideYard1() != null)
-				setBacksValues.add(setback.getSideYard1().getHeight());
-			if (setback.getSideYard2() != null)
-				setBacksValues.add(setback.getSideYard2().getHeight());
-		}
-		
+    private Boolean validateMinimumDistance(BigDecimal actualDistance, BigDecimal minimumDistance, Boolean valid) {
+        if (actualDistance.compareTo(minimumDistance) >= 0) {
+            valid = true;
+        }
+        return valid;
+    }
 
-		BigDecimal dividedHeight = maxHeight.divide(THREE, DcrConstants.DECIMALDIGITS_MEASUREMENTS,
-				DcrConstants.ROUNDMODE_MEASUREMENTS);
-
-		
-		List<BigDecimal> heights = Arrays.asList(dividedHeight, BigDecimal.valueOf(18));
-		BigDecimal minHeight = heights.stream().reduce(BigDecimal::min).get();
-
-		if (actualDistance.compareTo(minHeight) >= 0) {
-			valid1 = true;
-		}
-
-		BigDecimal maxSetBack = setBacksValues.stream().reduce(BigDecimal::max).get();
-		if (actualDistance.compareTo(maxSetBack) >= 0) {
-			valid2 = true;
-		}
-
-		if (valid1) {
-			setReportOutputDetails(pl, SUBRULE_37_1, String.format(SUB_RULE_DES, b.getNumber(), block.getNumber()),
-					StringUtils.EMPTY, MINIMUM_DISTANCE_BUILDING, actualDistance.toString() + DcrConstants.IN_METER,
-					Result.Accepted.getResultVal());
-		} else {
-			setReportOutputDetails(pl, SUBRULE_37_1, String.format(SUB_RULE_DES, b.getNumber(), block.getNumber()),
-					StringUtils.EMPTY, MINIMUM_DISTANCE_BUILDING, actualDistance.toString() + DcrConstants.IN_METER,
-					Result.Not_Accepted.getResultVal());
-		}
-
-		if (valid2) {
-			setReportOutputDetails(pl, SUBRULE_37_1, String.format(SUB_RULE_DES, b.getNumber(), block.getNumber()),
-					StringUtils.EMPTY, MINIMUM_DISTANCE_SETBACK, actualDistance.toString() + DcrConstants.IN_METER,
-					Result.Accepted.getResultVal());
-		} else {
-			setReportOutputDetails(pl, SUBRULE_37_1, String.format(SUB_RULE_DES, b.getNumber(), block.getNumber()),
-					StringUtils.EMPTY, MINIMUM_DISTANCE_SETBACK, actualDistance.toString() + DcrConstants.IN_METER,
-					Result.Not_Accepted.getResultVal());
-		}
-
-	}
 
 	@Override
 	public Map<String, Date> getAmendments() {
-		return new LinkedHashMap<>();
-	}
+        Map<String, Date> wellAmendments = new LinkedHashMap<>();
+        wellAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
+        wellAmendments.put(AMEND_OCT20, AMEND_DATE_011020);
+        return wellAmendments;
+    }
 }
