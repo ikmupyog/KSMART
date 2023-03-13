@@ -108,7 +108,11 @@ import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
 import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
 import MarriageInstitution from "./pageComponents/marriageComponents/MarriageInstitution";
-import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace"
+import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
+import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
+import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
+import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
+
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -291,6 +295,9 @@ const componentsToRegister = {
   BrideDetails,
   MarriageInstitution,
   MarriagePublicPlace,
+  MarriageRegistration,
+  HouseMarriageRegistration,
+  witnessdetails,
 };
 
 export const initCRComponents = () => {

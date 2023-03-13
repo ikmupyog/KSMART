@@ -51,8 +51,8 @@ const Home = ({
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage,...others }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
     let crBirth = "cr-birth"
-    let Module_br = "Birth Certificate"
-    let Module_dr = "Death Certificate"
+    let Module_br = "Birth Registration"
+    let Module_dr = "Death Registration"
     let crDeath = "cr-death"
     let matchPath=`/digit-ui/citizen/${code.toLowerCase()}`
     // console.log(code);
@@ -97,6 +97,14 @@ const Home = ({
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-stillbirth-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name:t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-outsideindiabirth-creation`,
             state: { module: "cr-birth" }
           }),
         },
