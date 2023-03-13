@@ -36,7 +36,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ksmart.death.deathapplication.config.DeathConfiguration; 
 import org.ksmart.death.common.repository.IdGenRepository;
-import org.ksmart.death.common.Idgen.IdResponse;
 import org.ksmart.death.deathapplication.util.DeathApplicationUtil; 	
 //import org.ksmart.death.deathapplication.repository.IdGenRepository;
 //import org.ksmart.death.deathapplication.web.models.idgen.IdResponse;
@@ -57,8 +56,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class DeathEnrichment implements BaseEnrichment{
-    //Jasmine 16.02.2023
-    private IDGenerator idGenerator;
+    // //Jasmine 16.02.2023
+     private IDGenerator idGenerator;
+   //  private DeathApplicationUtil deathApplnUtil;
 
     //Rakhi S on 08.02.2023
     @Autowired
@@ -87,6 +87,7 @@ public class DeathEnrichment implements BaseEnrichment{
     public DeathEnrichment( IDGenerator idGenerator) {
 
         this.idGenerator = idGenerator;
+       // this.deathApplnUtil = deathApplnUtil;
     }
 
     //Rakhi S on 08.02.2023
@@ -110,7 +111,7 @@ public class DeathEnrichment implements BaseEnrichment{
                 if (statisticalInfo!=null){
                     statisticalInfo.setStatisticalId(UUID.randomUUID().toString()); 
                 } 
-                System.out.println("REQUEST"+request.getDeathCertificateDtls());
+                //System.out.println("REQUEST"+request.getDeathCertificateDtls());
                 //Jasmine informant and initiator 11.02.2023
                 // DeathInformantDtls  informantInfo = deathdtls.getDeathInformantDtls();
                 // if (informantInfo!=null){
@@ -143,84 +144,107 @@ public class DeathEnrichment implements BaseEnrichment{
             });
         }  
     //Rakhi S on 08.02.2023 ACK no formating
-    public void setACKNumber(DeathDtlRequest request) {
-        RequestInfo requestInfo = request.getRequestInfo();
-        int Year = Calendar.getInstance().get(Calendar.YEAR) ;
-        Long currentTime = Long.valueOf(System.currentTimeMillis());
-        String tenantId = requestInfo.getUserInfo().getTenantId();
-        List<Map<String, Object>> ackNoDetails = repository.getDeathACKDetails(tenantId, Year);
+    //Commented by jasmine on 13.03.2023
+    // public void setACKNumber(DeathDtlRequest request) {
+    //     RequestInfo requestInfo = request.getRequestInfo();
+    //     int Year = Calendar.getInstance().get(Calendar.YEAR) ;
+    //     Long currentTime = Long.valueOf(System.currentTimeMillis());
+    //     String tenantId = requestInfo.getUserInfo().getTenantId();
+    //     List<Map<String, Object>> ackNoDetails = repository.getDeathACKDetails(tenantId, Year);
 
-        request.getDeathCertificateDtls()
-        .forEach(deathdtls -> {    
-               String IDGenerated = null;
-                IDGenerated = idGenerator.setIDGenerator(request, DeathConstants.FUN_MODULE_NEWAPPLN,
-                                DeathConstants.ACK_NUMBER_CAPTION);
-            Long ackNoId=null;
-            String inputString = IDGenerated; 
-            String[] ackNoIdArray= inputString.split("-");
-            for (int i=0; i < 1; i++){
-                ackNoId=Long.parseLong(ackNoIdArray[1]);
-            }
-                deathdtls.getDeathBasicInfo().setDeathACKNo(IDGenerated);
-                deathdtls.getDeathBasicInfo().setAckNoID(ackNoId);
-                deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
-        });
+    //     request.getDeathCertificateDtls()
+    //     .forEach(deathdtls -> {    
+    //            String IDGenerated = null;
+    //             IDGenerated = idGenerator.setIDGenerator(request, DeathConstants.FUN_MODULE_NEWAPPLN,
+    //                             DeathConstants.ACK_NUMBER_CAPTION);
+    //         Long ackNoId=null;
+    //         String inputString = IDGenerated; 
+    //         String[] ackNoIdArray= inputString.split("-");
+    //         for (int i=0; i < 1; i++){
+    //             ackNoId=Long.parseLong(ackNoIdArray[1]);
+    //         }
+    //             deathdtls.getDeathBasicInfo().setDeathACKNo(IDGenerated);
+    //             deathdtls.getDeathBasicInfo().setAckNoID(ackNoId);
+    //             deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
+    //     });
 
-    }
+    // }
+        //Jasmine 13.03.2023
+        public void setACKNumber(DeathDtlRequest request) {
+            RequestInfo requestInfo = request.getRequestInfo();
+            List<DeathDtl> deathDtls = request.getDeathCertificateDtls();
+            Long currentTime = Long.valueOf(System.currentTimeMillis());
+            String tenantId = deathDtls.get(0).getDeathBasicInfo().getTenantId();
+            
+            List<String> ackNoDetails =idGenRepository.getIdList(requestInfo,
+                                        tenantId,
+                                        config.getDeathACKNumberIdName(),
+                                        request.getDeathCertificateDtls().get(0).getApplicationType(),
+                                        "AKNO",deathDtls.size());
+            // validateFileCodes(ackNoDetails, deathDtls.size());
+            ListIterator<String> itr = ackNoDetails.listIterator();
+            request.getDeathCertificateDtls()
+                    .forEach(deathdtls -> {
+                        deathdtls.getDeathBasicInfo().setDeathACKNo(itr.next());
+                        deathdtls.getDeathBasicInfo().setAckNoID(deathApplnUtil.setSeqId(ackNoDetails));
+                        deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
+
+                    });
+        }
+  
+
     //Rakhi S ikm on 08.02.2023
-    private Map<String, List<String>> getAttributeValues(Object mdmsdata){
-        List<String> modulepaths = Arrays.asList(DeathConstants.TENANT_JSONPATH);
-        final Map<String, List<String>> mdmsResMap = new HashMap<>();
-       
-        modulepaths.forEach(modulepath -> {
-            try {
-                mdmsResMap.putAll(JsonPath.read(mdmsdata,modulepath));
-                log.error("jsonpath1"+JsonPath.read(mdmsdata,modulepath));
-            } catch (Exception e) {
-                log.error("Error while fetching MDMS data",e);
-                throw new CustomException(DeathConstants.INVALID_TENANT_ID_MDMS_KEY,
-                    DeathConstants.INVALID_TENANT_ID_MDMS_MSG);
-            }
-           
-        });
-        // System.out.println("mdmsResMap"+mdmsResMap);
-        return mdmsResMap;
-    }
+        private Map<String, List<String>> getAttributeValues(Object mdmsdata){
+            List<String> modulepaths = Arrays.asList(DeathConstants.TENANT_JSONPATH);
+            final Map<String, List<String>> mdmsResMap = new HashMap<>();
+            modulepaths.forEach(modulepath -> {
+                try {
+                    mdmsResMap.putAll(JsonPath.read(mdmsdata,modulepath));
+                    log.error("jsonpath1"+JsonPath.read(mdmsdata,modulepath));
+                } catch (Exception e) {
+                    log.error("Error while fetching MDMS data",e);
+                    throw new CustomException(DeathConstants.INVALID_TENANT_ID_MDMS_KEY,
+                        DeathConstants.INVALID_TENANT_ID_MDMS_MSG);
+                }
+            
+            });
+            return mdmsResMap;
+        }
         //UPDATE  BEGIN Jasmine 8.02.2023
         public void enrichUpdate(DeathDtlRequest request) {
 
             RequestInfo requestInfo = request.getRequestInfo();
             User userInfo = requestInfo.getUserInfo();
             AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-//Jasmine Encryption 10.02.2023
-             request.getDeathCertificateDtls()
-                     .forEach(deathDtls -> {
-                        DeathBasicInfo deathBasicDtls = deathDtls.getDeathBasicInfo();
-                        DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
-                        deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
-                        DeathFamilyInfo deathFamilyDtls =deathDtls.getDeathFamilyInfo() ;
-                        DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
-                        deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
-                        deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
-                        deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
-                        DeathInformantDtls deathInformant =deathDtls.getDeathInformantDtls() ;
-                        if (deathInformant!=null){
+            //Jasmine Encryption 10.02.2023
+            request.getDeathCertificateDtls()
+                .forEach(deathDtls -> {
+                    DeathBasicInfo deathBasicDtls = deathDtls.getDeathBasicInfo();
+                    DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
+                    deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
+                    DeathFamilyInfo deathFamilyDtls =deathDtls.getDeathFamilyInfo() ;
+                    DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
+                    deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
+                    deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
+                    deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+                    DeathInformantDtls deathInformant =deathDtls.getDeathInformantDtls() ;
+                    if (deathInformant!=null){
                         DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathInformantDtls.class);
                         deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
-                        }
-                        DeathInitiatorDtls deathInitiator =deathDtls.getDeathInitiatorDtls() ;
-                        if (deathInitiator!=null){
+                    }
+                    DeathInitiatorDtls deathInitiator =deathDtls.getDeathInitiatorDtls() ;
+                    if (deathInitiator!=null){
                         DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.encryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class);
                         deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
-                        }
-                        deathDtls.setDeathAuditDetails(auditDetails);
-                    } );        
+                    }
+                    deathDtls.setDeathAuditDetails(auditDetails);
+                } );        
         }//UPDATE END
 
 //Rakhi S on 16.02.2023
         public void setPresentAddress(DeathDtlRequest request) {
             request.getDeathCertificateDtls()
-                    .forEach(death -> {
+                .forEach(death -> {
                     if (death.getDeathAddressInfo() != null) {
 
                      if (death.getDeathAddressInfo().getPresentaddressCountry() != null && death.getDeathAddressInfo().getPresentaddressStateName() != null) {
@@ -279,7 +303,7 @@ public class DeathEnrichment implements BaseEnrichment{
         //Rakhi S on 16.02.2023
         public void setPermanentAddress(DeathDtlRequest request) {
             request.getDeathCertificateDtls()
-                    .forEach(death -> {
+                .forEach(death -> {
                     if (death.getDeathAddressInfo() != null) {
                         death.getDeathAddressInfo().setIsPrsentAddressInt(death.getDeathAddressInfo().getIsPrsentAddress() == true ? 1 : 0);
 
@@ -465,13 +489,12 @@ public class DeathEnrichment implements BaseEnrichment{
             List<DeathCorrectionDtls> deathDtls = request.getDeathCorrection();
             Long currentTime = Long.valueOf(System.currentTimeMillis());
             String tenantId = deathDtls.get(0).getDeathCorrectionBasicInfo().getTenantId();
-            
-            List<String> ackNoDetails = getIdList(requestInfo,
+            List<String> ackNoDetails =idGenRepository.getIdList(requestInfo,
                                         tenantId,
                                         config.getDeathACKNumberIdName(),
                                         request.getDeathCorrection().get(0).getApplicationType(),
                                         "AKNO",deathDtls.size());
-            // validateFileCodes(filecodes, birthDetails.size());
+            // validateAckNo(ackNoDetails, deathDtls.size());
             ListIterator<String> itr = ackNoDetails.listIterator();
             request.getDeathCorrection()
                     .forEach(deathdtls -> {
@@ -482,48 +505,36 @@ public class DeathEnrichment implements BaseEnrichment{
                     });
         }
 
-        private List<String> getIdList(RequestInfo requestInfo, String tenantId, String idName, String moduleCode,String fnType, int count) {
-            List<IdResponse> idResponses = idGenRepository.getIdCorrection(requestInfo, tenantId, idName, moduleCode, fnType, count).getIdResponses();
-
-            if (CollectionUtils.isEmpty(idResponses))
-            throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
-
-            return idResponses.stream()
-            .map(IdResponse::getId).collect(Collectors.toList());
-            }
-
-
-
         //Jasmine 04.03.2023
-    public void enrichCreateCorrection(DeathCorrectionRequest request) {
+        public void enrichCreateCorrection(DeathCorrectionRequest request) {
 
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-        request.getDeathCorrection()
-               .forEach(deathdtls -> {
-                deathdtls.getDeathCorrectionBasicInfo().setId(UUID.randomUUID().toString());
-                deathdtls.setDeathCorrAuditDetails(auditDetails);               
-                DeathAddressInfo  addressinfo = deathdtls.getDeathCorrAddressInfo();
-                if (addressinfo!=null){
-                    addressinfo.setPresentAddrId(UUID.randomUUID().toString());
-                    addressinfo.setPermanentAddrId(UUID.randomUUID().toString());
-                }
-                DeathCorrectionBasicInfo deathBasicDtls =deathdtls.getDeathCorrectionBasicInfo();
-                DeathCorrectionBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathCorrectionBasicInfo.class);
-                deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
-                deathdtls.setDeathCorrAuditDetails(auditDetails);
-            });
+            RequestInfo requestInfo = request.getRequestInfo();
+            User userInfo = requestInfo.getUserInfo();
+            AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+            request.getDeathCorrection()
+                .forEach(deathdtls -> {
+                    deathdtls.getDeathCorrectionBasicInfo().setId(UUID.randomUUID().toString());
+                    deathdtls.setDeathCorrAuditDetails(auditDetails);               
+                    DeathAddressInfo  addressinfo = deathdtls.getDeathCorrAddressInfo();
+                    if (addressinfo!=null){
+                        addressinfo.setPresentAddrId(UUID.randomUUID().toString());
+                        addressinfo.setPermanentAddrId(UUID.randomUUID().toString());
+                    }
+                    DeathCorrectionBasicInfo deathBasicDtls =deathdtls.getDeathCorrectionBasicInfo();
+                    DeathCorrectionBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathCorrectionBasicInfo.class);
+                    deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
+                    deathdtls.setDeathCorrAuditDetails(auditDetails);
+                });
         }  
 
-    //Jasmine 06.03.2023
-    public void enrichUpdateCorrection(DeathCorrectionRequest request) {
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-        System.out.println("JasmineEnrichCorrection");
-         request.getDeathCorrection()
-                 .forEach(deathDtls -> {
+        //Jasmine 06.03.2023
+        public void enrichUpdateCorrection(DeathCorrectionRequest request) {
+            RequestInfo requestInfo = request.getRequestInfo();
+            User userInfo = requestInfo.getUserInfo();
+            AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+            System.out.println("JasmineEnrichCorrection");
+            request.getDeathCorrection()
+                .forEach(deathDtls -> {
                     DeathCorrectionBasicInfo deathBasicDtls = deathDtls.getDeathCorrectionBasicInfo();
                     DeathCorrectionBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathCorrectionBasicInfo.class);
                     deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
@@ -531,14 +542,14 @@ public class DeathEnrichment implements BaseEnrichment{
                 } ); 
         }  
 
-    //Rakhi S on 06.03.2023 
-    public void enrichCreateAbandoned(DeathAbandonedRequest request) {
+        //Rakhi S on 06.03.2023 
+        public void enrichCreateAbandoned(DeathAbandonedRequest request) {
 
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-        
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
-        request.getDeathAbandonedDtls()
+            RequestInfo requestInfo = request.getRequestInfo();
+            User userInfo = requestInfo.getUserInfo();
+            
+            AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+            request.getDeathAbandonedDtls()
                .forEach(deathdtls -> {
                 deathdtls.getDeathBasicInfo().setId(UUID.randomUUID().toString());
                 deathdtls.setDeathAuditDetails(auditDetails);                
@@ -694,38 +705,38 @@ public class DeathEnrichment implements BaseEnrichment{
         }
 
     //Rakhi S on 06.03.2023  ACK no formating
-    public void setAbandonedACKNumber(DeathAbandonedRequest request) {
-        RequestInfo requestInfo = request.getRequestInfo();
-        int Year = Calendar.getInstance().get(Calendar.YEAR) ;
-        Long currentTime = Long.valueOf(System.currentTimeMillis());
-        String tenantId = requestInfo.getUserInfo().getTenantId();
-        List<Map<String, Object>> ackNoDetails = repository.getDeathACKDetails(tenantId, Year);
+        public void setAbandonedACKNumber(DeathAbandonedRequest request) {
+            RequestInfo requestInfo = request.getRequestInfo();
+            int Year = Calendar.getInstance().get(Calendar.YEAR) ;
+            Long currentTime = Long.valueOf(System.currentTimeMillis());
+            String tenantId = requestInfo.getUserInfo().getTenantId();
+            List<Map<String, Object>> ackNoDetails = repository.getDeathACKDetails(tenantId, Year);
 
-        request.getDeathAbandonedDtls()
-        .forEach(deathdtls -> {    
-               String IDGenerated = null;
-                IDGenerated = idGenerator.setIDGeneratorAbandoned(request, DeathConstants.FUN_MODULE_NEWAPPLN,
-                                DeathConstants.ACK_NUMBER_CAPTION);
-            Long ackNoId=null;
-            String inputString = IDGenerated; 
-            String[] ackNoIdArray= inputString.split("-");
-            for (int i=0; i < 1; i++){
-                ackNoId=Long.parseLong(ackNoIdArray[1]);
-            }
-                deathdtls.getDeathBasicInfo().setDeathACKNo(IDGenerated);
-                deathdtls.getDeathBasicInfo().setAckNoID(ackNoId);
-                deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
-        });
+            request.getDeathAbandonedDtls()
+            .forEach(deathdtls -> {    
+                String IDGenerated = null;
+                    IDGenerated = idGenerator.setIDGeneratorAbandoned(request, DeathConstants.FUN_MODULE_NEWAPPLN,
+                                    DeathConstants.ACK_NUMBER_CAPTION);
+                Long ackNoId=null;
+                String inputString = IDGenerated; 
+                String[] ackNoIdArray= inputString.split("-");
+                for (int i=0; i < 1; i++){
+                    ackNoId=Long.parseLong(ackNoIdArray[1]);
+                }
+                    deathdtls.getDeathBasicInfo().setDeathACKNo(IDGenerated);
+                    deathdtls.getDeathBasicInfo().setAckNoID(ackNoId);
+                    deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
+            });
 
-    }
+        }
      //Rakhi S on 08.03.2023 Abandoned Update
 
-    public void enrichAbandonedUpdate(DeathAbandonedRequest request) {
+        public void enrichAbandonedUpdate(DeathAbandonedRequest request) {
 
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-        request.getDeathAbandonedDtls()
+            RequestInfo requestInfo = request.getRequestInfo();
+            User userInfo = requestInfo.getUserInfo();
+            AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+            request.getDeathAbandonedDtls()
                  .forEach(deathDtls -> {
                     DeathBasicInfo deathBasicDtls = deathDtls.getDeathBasicInfo();
                     DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
@@ -742,6 +753,6 @@ public class DeathEnrichment implements BaseEnrichment{
                     }                    
                     deathDtls.setDeathAuditDetails(auditDetails);
                 } );        
-    }//UPDATE END
+        }//UPDATE END
 
 }

@@ -98,5 +98,11 @@ public class DeathRegistryConfiguration {
 	
 	  @Value("${egov.bnd.max.limit}")
     private Integer maxSearchLimit;
+    //Jasmine 13.03.2023
+    @Value("${egov.idgen.deathapplnregno.name}")
+    private String deathRegNumberIdName;
+
+    @Value("${egov.idgen.deathapplncertno.name}")
+    private String deathCertNumberIdName;
 	
 }

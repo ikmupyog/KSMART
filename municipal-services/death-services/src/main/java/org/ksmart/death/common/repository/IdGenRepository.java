@@ -153,6 +153,7 @@ import java.util.Map;
 import org.ksmart.death.common.Idgen.IdGenerationRequest;
 import org.ksmart.death.common.Idgen.IdGenerationResponse;
 import org.ksmart.death.common.Idgen.IdRequest;
+import org.ksmart.death.common.Idgen.IdResponse;
 import org.ksmart.death.config.BirthDeathConfiguration;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
@@ -161,6 +162,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
 
 @Repository
 public class IdGenRepository {
@@ -190,9 +193,39 @@ public class IdGenRepository {
         }
         return response;
     }
+       //Jasmine  
+    public List<String> getIdList(RequestInfo requestInfo, String tenantId, String idName, String moduleCode,String fnType, int count) {
+        List<IdResponse> idResponses = getDeathIds(requestInfo, tenantId, idName, moduleCode, fnType, count).getIdResponses();
 
+        if (CollectionUtils.isEmpty(idResponses))
+        throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+
+        return idResponses.stream()
+        .map(IdResponse::getId).collect(Collectors.toList());
+        }
     
-    public IdGenerationResponse getIdCorrection(RequestInfo requestInfo, String tenantId, String Idname, String functionType,  String modulecode,int count) {
+    // public IdGenerationResponse getIdCorrection(RequestInfo requestInfo, String tenantId, String Idname, String functionType,  String modulecode,int count) {
+
+    //     List<IdRequest> reqList = new ArrayList<>();
+    //     for (int i = 0; i < count; i++) {
+    //         reqList.add(IdRequest.builder().idName(Idname).moduleCode(modulecode).tenantId(tenantId).fnType(functionType).build());
+    //     }
+    //     IdGenerationRequest req = IdGenerationRequest.builder().idRequests(reqList).requestInfo(requestInfo).build();
+    //     IdGenerationResponse response = null;
+    //     try {
+    //         response = restTemplate.postForObject( config.getIdGenHost()+ config.getIdGenPath(), req, IdGenerationResponse.class);
+    //     } catch (HttpClientErrorException e) {
+    //         throw new ServiceCallException(e.getResponseBodyAsString());
+    //     } catch (Exception e) {
+    //         Map<String, String> map = new HashMap<>();
+    //         map.put(e.getCause().getClass().getName(),e.getMessage());
+    //         throw new CustomException(map);
+    //     }
+    //     return response;
+    // }
+
+       //Jasmine  
+    public IdGenerationResponse getDeathIds(RequestInfo requestInfo, String tenantId, String Idname, String functionType,  String modulecode,int count) {
 
         List<IdRequest> reqList = new ArrayList<>();
         for (int i = 0; i < count; i++) {

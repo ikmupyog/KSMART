@@ -70,11 +70,11 @@ public class DeathConfiguration {
     @Value("${egov.idgen.deathapplnackno.name}")
     private String deathACKNumberIdName;
 
-    @Value("${egov.idgen.deathapplnregno.name}")
-    private String deathRegNumberIdName;
+//     @Value("${egov.idgen.deathapplnregno.name}")
+//     private String deathRegNumberIdName;
 
-    @Value("${egov.idgen.deathapplncertno.name}")
-    private String deathCertNumberIdName;
+//     @Value("${egov.idgen.deathapplncertno.name}")
+//     private String deathCertNumberIdName;
 
     
 
