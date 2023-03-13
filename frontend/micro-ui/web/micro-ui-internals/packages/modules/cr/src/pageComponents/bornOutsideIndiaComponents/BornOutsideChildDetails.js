@@ -152,8 +152,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
           // }
       }
 
-
-
   function setselectChildDOB(value) {
     setChildDOB(value);
   }
@@ -269,16 +267,16 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   }
   let validFlag = true;
   const goNext = () => {
-    if (AadharError) {
-      validFlag = false;
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setAadharError(false);
-    }
+    // if (AadharError) {
+    //   validFlag = false;
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setAadharError(false);
+    // }
 
     if (ChildPassportError) {
       validFlag = false;
@@ -319,10 +317,11 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("cityTown", cityTown ? cityTown : null);
       sessionStorage.setItem("postCode", postCode ? postCode : null);
       sessionStorage.setItem("outsideBirthPlace",  outsideBirthPlace ? outsideBirthPlace : null);
+      sessionStorage.setItem("country", country  ?  country.code : null);
 
       onSelect(config.key, {
-        stateId,
-        tenantId,
+        // stateId,
+        // tenantId,
         childDOB,
         birthDateTime,
         gender,
@@ -333,6 +332,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         cityTown,
         postCode,
         outsideBirthPlace,
+        country,
       });
     }
   };
@@ -359,7 +359,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !outsideBirthPlace}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childAadharNo}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-
 import BornOutsideChildDetails from "../../../pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
+//import BornOutsideChildDetails from "../../../pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
@@ -65,7 +65,7 @@ const CreateBornOutsideRegistration =({ parentUrl }) => {
   const handleSkip = () => { };
   const handleMultiple = () => { };
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("BornOutsideCheckPage");
-  const BornOutsideAcknowledgement = Digit?.ComponentRegistryService?.getComponent("ornOutsideAcknowledgement");
+  const BornOutsideAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BornOutsideAcknowledgement");
   return (
 
     <React.Fragment>
