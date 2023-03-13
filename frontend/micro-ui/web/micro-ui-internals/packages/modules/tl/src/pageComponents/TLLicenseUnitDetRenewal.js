@@ -648,7 +648,7 @@ const TLLicenseUnitDetRenewal = ({ t, config, onSelect, userType, formData }) =>
           searchReult = mutationDoor?.status === "success" && mutationDoor?.isSuccess && !mutationDoor?.isError ? mutationDoor.data.Licenses : "";
           if (searchReult?.length === 1) {
             setFlgCheckDoor(true);
-            setErrorMessage(t("Door No Already Entered entered Another Appln"));
+            setErrorMessage(t("Door No Already Entered in Another Appln"));
             setToast(true)
             setTimeout(() => {
               setToast(false);
