@@ -63,6 +63,26 @@ public class DeathConfiguration {
 
      //Persister Abandoned - Rakhi S on 06.03.2023
      @Value("${persister.save.deathabandoned.topic}")
-     private String saveDeathAbandonedTopic;
+     private String saveDeathAbandonedTopic;//Jasmine 10.03.2023
+
+    //Jasmine 10.03.2023
+     
+    @Value("${egov.idgen.deathapplnackno.name}")
+    private String deathACKNumberIdName;
+
+    @Value("${egov.idgen.deathapplnregno.name}")
+    private String deathRegNumberIdName;
+
+    @Value("${egov.idgen.deathapplncertno.name}")
+    private String deathCertNumberIdName;
+
+    
+
+    //Idgen Config
+    @Value("${egov.idgen.host}")
+    private String idGenHost;
+  
+    @Value("${egov.idgen.path}")
+    private String idGenPath;
     
 }

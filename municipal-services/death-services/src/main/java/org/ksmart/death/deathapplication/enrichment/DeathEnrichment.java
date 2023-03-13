@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.ListIterator;
+import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
@@ -31,6 +34,15 @@ import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
 import org.ksmart.death.common.contract.EncryptionDecryptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.ksmart.death.deathapplication.config.DeathConfiguration; 
+import org.ksmart.death.common.repository.IdGenRepository;
+import org.ksmart.death.common.Idgen.IdResponse;
+import org.ksmart.death.deathapplication.util.DeathApplicationUtil; 	
+//import org.ksmart.death.deathapplication.repository.IdGenRepository;
+//import org.ksmart.death.deathapplication.web.models.idgen.IdResponse;
+
+	
+
 
 
 import com.jayway.jsonpath.JsonPath;
@@ -60,6 +72,16 @@ public class DeathEnrichment implements BaseEnrichment{
     //Jasmine 8.02.2023
     @Autowired
     EncryptionDecryptionUtil encryptionDecryptionUtil;
+
+//Jasmine 10.03.2023
+    @Autowired
+    DeathConfiguration config;
+
+    @Autowired
+	IdGenRepository idGenRepository;
+
+    @Autowired
+	DeathApplicationUtil deathApplnUtil;
     
     @Autowired
     public DeathEnrichment( IDGenerator idGenerator) {
@@ -435,30 +457,42 @@ public class DeathEnrichment implements BaseEnrichment{
                     }
                 });
         }
+
+        //Jasmine 10.03.2023
+
         public void setCorrectionACKNumber(DeathCorrectionRequest request) {
             RequestInfo requestInfo = request.getRequestInfo();
-            int Year = Calendar.getInstance().get(Calendar.YEAR) ;
+            List<DeathCorrectionDtls> deathDtls = request.getDeathCorrection();
             Long currentTime = Long.valueOf(System.currentTimeMillis());
-            String tenantId = requestInfo.getUserInfo().getTenantId();
-            List<Map<String, Object>> ackNoDetails = repository.getDeathACKDetails(tenantId, Year);
-    
+            String tenantId = deathDtls.get(0).getDeathCorrectionBasicInfo().getTenantId();
+            
+            List<String> ackNoDetails = getIdList(requestInfo,
+                                        tenantId,
+                                        config.getDeathACKNumberIdName(),
+                                        request.getDeathCorrection().get(0).getApplicationType(),
+                                        "AKNO",deathDtls.size());
+            // validateFileCodes(filecodes, birthDetails.size());
+            ListIterator<String> itr = ackNoDetails.listIterator();
             request.getDeathCorrection()
-            .forEach(deathdtls -> {    
-                String IDGenerated = null;
-                    IDGenerated = idGenerator.setIDGeneratorCorrection(request, DeathConstants.FUN_MODULE_NEWAPPLN,
-                                    DeathConstants.ACK_NUMBER_CAPTION);
-                Long ackNoId=null;
-                String inputString = IDGenerated; 
-                String[] ackNoIdArray= inputString.split("-");
-                for (int i=0; i < 1; i++){
-                    ackNoId=Long.parseLong(ackNoIdArray[1]);
-                }
-                    deathdtls.getDeathCorrectionBasicInfo().setDeathACKNo(IDGenerated);
-                    deathdtls.getDeathCorrectionBasicInfo().setAckNoID(ackNoId);
-                    deathdtls.getDeathCorrectionBasicInfo().setApplicationDate(currentTime);
-            });
-    
+                    .forEach(deathdtls -> {
+                        deathdtls.getDeathCorrectionBasicInfo().setDeathACKNo(itr.next());
+                        deathdtls.getDeathCorrectionBasicInfo().setAckNoID(deathApplnUtil.setSeqId(ackNoDetails));
+                        deathdtls.getDeathCorrectionBasicInfo().setApplicationDate(currentTime);
+ 
+                    });
         }
+
+        private List<String> getIdList(RequestInfo requestInfo, String tenantId, String idName, String moduleCode,String fnType, int count) {
+            List<IdResponse> idResponses = idGenRepository.getIdCorrection(requestInfo, tenantId, idName, moduleCode, fnType, count).getIdResponses();
+
+            if (CollectionUtils.isEmpty(idResponses))
+            throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+
+            return idResponses.stream()
+            .map(IdResponse::getId).collect(Collectors.toList());
+            }
+
+
 
         //Jasmine 04.03.2023
     public void enrichCreateCorrection(DeathCorrectionRequest request) {
@@ -685,7 +719,7 @@ public class DeathEnrichment implements BaseEnrichment{
 
     }
      //Rakhi S on 08.03.2023 Abandoned Update
-     
+
     public void enrichAbandonedUpdate(DeathAbandonedRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();

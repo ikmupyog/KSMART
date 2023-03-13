@@ -31,8 +31,8 @@ import org.egov.common.contract.request.RequestInfo;
      * Jasmine on 06.02.2023
      * 
      */
-    import com.fasterxml.jackson.databind.ObjectMapper;
-    import com.fasterxml.jackson.databind.SerializationFeature;
+//     import com.fasterxml.jackson.databind.ObjectMapper;
+//     import com.fasterxml.jackson.databind.SerializationFeature;
     
     import lombok.extern.slf4j.Slf4j;
     
@@ -45,7 +45,7 @@ import org.egov.common.contract.request.RequestInfo;
     
 
     
-      @Slf4j
+     //  @Slf4j
 @Service
 public class DeathApplnService {
 
@@ -58,10 +58,10 @@ public class DeathApplnService {
      private final DeathApplnValidator validatorService;
      private final DeathApplnRepository repository;
      //RAkhi S on 14.02.2023
-     private final DeathMDMSValidator mdmsValidator;
+      private final DeathMDMSValidator mdmsValidator;
 
      //Rakhi S ikm on 08.02.2023
-     @Autowired
+
      DeathApplnService(DeathApplnRepository repository ,DeathProducer producer
                          ,DeathEnrichment enrichmentService,DeathApplnValidator validatorService,DeathConfiguration deathConfig
                          ,WorkflowIntegrator workflowIntegrator,DeathMdmsUtil util
@@ -127,7 +127,7 @@ public class DeathApplnService {
           workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
           
-          List<DeathDtl> response = new ArrayList<>();
+          // List<DeathDtl> response = new ArrayList<>();
           
           DeathDtlRequest result = DeathDtlRequest
                                    .builder()
@@ -165,7 +165,7 @@ public class DeathApplnService {
           enrichmentService.enrichUpdateCorrection(request);
           workflowIntegrator.callCorrectionWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathCorrectionTopic(), request);
-          List<DeathCorrectionDtls> response = new ArrayList<>();
+          // List<DeathCorrectionDtls> response = new ArrayList<>();
           DeathCorrectionRequest result = DeathCorrectionRequest
                                    .builder()
                                    .requestInfo(request.getRequestInfo())
@@ -203,7 +203,7 @@ public class DeathApplnService {
           workflowIntegrator.callWorkFlowAbandoned(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
           
-          List<DeathAbandonedDtls> response = new ArrayList<>();
+          // List<DeathAbandonedDtls> response = new ArrayList<>();
           
           DeathAbandonedRequest result = DeathAbandonedRequest
                                    .builder()

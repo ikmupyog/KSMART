@@ -53,11 +53,11 @@ public class DeathRegistryConfiguration {
     private String deathApplnFileCodeFormat;
 
 
-    @Value("${egov.idgen.deathackno.name}")
-    private String deathAckName;
+    // @Value("${egov.idgen.deathackno.name}")
+    // private String deathAckName;
 
-    @Value("${egov.idgen.deathackno.format}")
-    private String deathACKFormat;
+    // @Value("${egov.idgen.deathackno.format}")
+    // private String deathACKFormat;
 
      //Rakhi S on 16.12.2022
      @Value("${egov.ui.app.host}")
