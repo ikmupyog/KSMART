@@ -4,10 +4,10 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
 
-const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId,DeathPlaceHomepincode, 
-  setDeathPlaceHomepincode,DeathPlaceHomehoueNameEn, setDeathPlaceHomehoueNameEn,DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl,DeathPlaceHomelocalityEn, 
-  setDeathPlaceHomelocalityEn,DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl,DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn,
-  DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl,DeathPlaceWardId, setDeathPlaceWardId, PostOfficevalues, setPostOfficevalues,
+const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomePostofficeId, setDeathPlaceHomepostofficeId,DeathPlaceHomepincode, 
+  setDeathPlaceHomepincode,DeathPlaceHomeHoueNameEn, setDeathPlaceHomehoueNameEn,DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl,DeathPlaceHomeLocalityEn, 
+  setDeathPlaceHomelocalityEn,DeathPlaceHomeLocalityMl, setDeathPlaceHomelocalityMl,DeathPlaceHomeStreetNameEn, setDeathPlaceHomestreetNameEn,
+  DeathPlaceHomeStreetNameMl, setDeathPlaceHomestreetNameMl,DeathPlaceWardId, setDeathPlaceWardId, PostOfficevalues, setPostOfficevalues,
 }) => {
   const [pofilter, setPofilter] = useState(false);
   const stateId = Digit.ULBService.getStateId();
@@ -160,7 +160,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
 
   return (
     <React.Fragment>  
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceHomelocalityEn}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceHomeLocalityEn}>
       <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -194,7 +194,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 optionKey="name"
                 isMandatory={false}
                 option={PostOfficevalues}
-                selected={DeathPlaceHomepostofficeId}
+                selected={DeathPlaceHomePostofficeId}
                 select={setSelectDeathPlaceHomepostofficeId}
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
@@ -238,8 +238,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="DeathPlaceHomelocalityEn"
-                value={DeathPlaceHomelocalityEn}
+                name="DeathPlaceHomeLocalityEn"
+                value={DeathPlaceHomeLocalityEn}
                 onChange={setSelectDeathPlaceHomelocalityEn}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
@@ -253,8 +253,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="DeathPlaceHomestreetNameEn"
-                value={DeathPlaceHomestreetNameEn}
+                name="DeathPlaceHomeStreetNameEn"
+                value={DeathPlaceHomeStreetNameEn}
                 onChange={setSelectDeathPlaceHomestreetNameEn}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
@@ -271,8 +271,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="DeathPlaceHomehoueNameEn"
-                value={DeathPlaceHomehoueNameEn}
+                name="DeathPlaceHomeHoueNameEn"
+                value={DeathPlaceHomeHoueNameEn}
                 onChange={setSelectDeathPlaceHomehoueNameEn}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
@@ -292,8 +292,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="DeathPlaceHomelocalityMl"
-                value={DeathPlaceHomelocalityMl}
+                name="DeathPlaceHomeLocalityMl"
+                value={DeathPlaceHomeLocalityMl}
                 onChange={setSelectDeathPlaceHomelocalityMl}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
@@ -311,8 +311,8 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomepo
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="DeathPlaceHomestreetNameMl"
-                value={DeathPlaceHomestreetNameMl}
+                name="DeathPlaceHomeStreetNameMl"
+                value={DeathPlaceHomeStreetNameMl}
                 onChange={setSelectDeathPlaceHomestreetNameMl}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 {...(validation = {
