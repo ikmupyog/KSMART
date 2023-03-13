@@ -111,6 +111,7 @@ import MarriageInstitution from "./pageComponents/marriageComponents/MarriageIns
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
+import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -289,6 +290,7 @@ const componentsToRegister = {
   MarriagePublicPlace,
   MarriageRegistration,
   HouseMarriageRegistration,
+  witnessdetails,
 };
 
 export const initCRComponents = () => {

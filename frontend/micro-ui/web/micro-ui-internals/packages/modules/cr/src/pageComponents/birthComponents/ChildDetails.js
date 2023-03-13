@@ -404,12 +404,18 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     
   }
   function setSelectChildFirstNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    const RegExp = "/^[\u0D00-\u0D7F\u0020-\u0040\u200D\u200C\"]*$/g";
+    console.log(e.target.value.match(RegExp));
+    // const tempName = e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, '');
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match(RegExp) != null)) {
+      setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    // }
   }
   function setSelectChildMiddleNameMl(e) {
     if (e.target.value.length === 51) {
