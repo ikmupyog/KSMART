@@ -433,8 +433,7 @@ export const newConfig = [
         key: "BornOutsideParentsDetails",
         nextStep: null,
         type: "component",
-        hideInEmployee: true,
-        hideInCitizen: false,
+        hideInEmployee: false,
       },
   
    
