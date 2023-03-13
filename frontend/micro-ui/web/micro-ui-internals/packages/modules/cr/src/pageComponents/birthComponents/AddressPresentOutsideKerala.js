@@ -19,7 +19,8 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   setpermntOutsideKeralaHouseNameMl, permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn, permntOutsideKeralaLocalityNameMl,
   setpermntOutsideKeralaLocalityNameMl, permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn,
   permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl, permntOutsideKeralaPostOfficeEn,
-  setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl
+  setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
+  isEditBirth = false, isEditDeath = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -152,13 +153,10 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }
   function setSelectoutsideKeralaPostOfficeEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setoutsideKeralaPostOfficeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setoutsideKeralaPostOfficeEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setpermntoutsideKeralaPostOfficeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+        setpermntoutsideKeralaPostOfficeEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } else {
         setpermntoutsideKeralaPostOfficeEn('');
       }
@@ -178,13 +176,10 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }
   function setSelectoutsideKeralaHouseNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setoutsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setoutsideKeralaHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setpermntOutsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        setpermntOutsideKeralaHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } else {
         setpermntOutsideKeralaHouseNameEn('');
       }
@@ -204,13 +199,10 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }
   function setSelectoutsideKeralaLocalityNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setoutsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setoutsideKeralaLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setpermntOutsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        setpermntOutsideKeralaLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } else {
         setpermntOutsideKeralaLocalityNameEn('');
       }
@@ -230,13 +222,10 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }
   function setSelectoutsideKeralaStreetNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setoutsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setoutsideKeralaStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setpermntOutsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        setpermntOutsideKeralaStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } else {
         setpermntOutsideKeralaStreetNameEn('');
       }
@@ -256,13 +245,10 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }
   function setSelectoutsideKeralaCityVilgeEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setoutsideKeralaCityVilgeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setoutsideKeralaCityVilgeEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setpermntOutsideKeralaCityVilgeEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        setpermntOutsideKeralaCityVilgeEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } else {
         setpermntOutsideKeralaCityVilgeEn('');
       }

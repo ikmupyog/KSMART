@@ -772,6 +772,23 @@ export const newConfig = [
         nextStep: "bride-details",
       },
       {
+        type: "component",
+        route: "marriage-publicplace",
+        isMandatory: true,
+        component: "MarriagePublicPlace",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "MarriagePublicPlace",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: "bride-details",
+      },
+      {
         route: "place-of-death",
         isMandatory: true,
         component: "PlaceOfDeath",

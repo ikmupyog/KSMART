@@ -7,6 +7,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
   permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
   permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode,
+  isEditBirth = false, isEditDeath = false
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -48,27 +49,20 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   }
 
   function setSelectadrsPermntOutsideIndiaCityTown(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setadrsPermntOutsideIndiaCityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setadrsPermntOutsideIndiaCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectadrsPermntOutsideIndiaLineoneEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setadrsPermntOutsideIndiaLineoneEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
-  }
-}
-  function setSelectadrsPermntOutsideIndiaLinetwoEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setadrsPermntOutsideIndiaLineoneEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    setadrsPermntOutsideIndiaLinetwoEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+  }
+  function setSelectadrsPermntOutsideIndiaLinetwoEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setadrsPermntOutsideIndiaLinetwoEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
   }
 
   function setSelectadrsPermntOutsideIndiaLinetwoMl(e) {
@@ -84,10 +78,9 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
     setadrsPermntOutsideIndiaLineoneMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
   }
   function setSelectLocalityEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    setLocalityEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
   }
   function setSelectLocalityMl(e) {
     if (e.target.value.length === 51) {
@@ -110,10 +103,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   //   }
   // }
   function setSelectHouseNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectHouseNameMl(e) {
@@ -165,18 +156,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
     }
   }
   const goNext = () => {
-    // sessionStorage.setItem("permntOutsideIndiaLineoneEn", permntOutsideIndiaLineoneEn ? permntOutsideIndiaLineoneEn  : null);
-    // sessionStorage.setItem("permntOutsideIndiaLineoneMl", permntOutsideIndiaLineoneMl  ? permntOutsideIndiaLineoneMl  : null);
-    // sessionStorage.setItem("permntOutsideIndiaLinetwoEn", permntOutsideIndiaLinetwoEn  ? permntOutsideIndiaLinetwoEn  : null);
-    // sessionStorage.setItem("permntOutsideIndiaLinetwoMl", permntOutsideIndiaLinetwoMl  ? permntOutsideIndiaLinetwoMl  : null) ;
-    // sessionStorage.setItem("permntOutsideIndiaprovinceEn", permntOutsideIndiaprovinceEn  ? permntOutsideIndiaprovinceEn  : null);
-    // sessionStorage.setItem("permntOutsideIndiaVillage", permntOutsideIndiaVillage ? permntOutsideIndiaVillage.code : null);
-    // sessionStorage.setItem("permntOutsideIndiaCityTown", permntOutsideIndiaCityTown ? permntOutsideIndiaCityTown : null);
-    // sessionStorage.setItem("permanentOutsideIndiaPostCode", permanentOutsideIndiaPostCode  ? permanentOutsideIndiaPostCode  : null);
-    // sessionStorage.setItem("permntOutsideIndiaCountry", permntOutsideIndiaCountry ? permntOutsideIndiaCountry.code : null);
 
-    // onSelect(config.key, { permntOutsideIndiaLineoneEn,permntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn,permntOutsideIndiaLinetwoMl,
-    //   permntOutsideIndiaprovinceEn,permntOutsideIndiaVillage,permntOutsideIndiaCityTown,permanentOutsideIndiaPostCode,permntOutsideIndiaCountry});
   };
   if (isCountryLoading) {
     return <Loader></Loader>;
