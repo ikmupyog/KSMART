@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  FormStep,  CardLabel,  TextInput,  Dropdown,  DatePicker,  CheckBox,  BackButton,  Toast,  InputCard,} from "@egovernments/digit-ui-react-components";
+import {  FormStep,  CardLabel,  TextInput,  Dropdown,  DatePicker,  CheckBox,  BackButton,  Toast, } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -211,14 +211,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   // Home
-  const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId);
-  const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode);
-  const [DeathPlaceHomehoueNameEn, setDeathPlaceHomehoueNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameEn);
-  const [DeathPlaceHomelocalityEn, setDeathPlaceHomelocalityEn] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityEn);
-  const [DeathPlaceHomelocalityMl, setDeathPlaceHomelocalityMl] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl);
-  const [DeathPlaceHomestreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn);
-  const [DeathPlaceHomestreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl);
-  const [DeathPlaceHomehoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl);
+  const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId ? formData?.InformationDeath?.DeathPlaceHomepostofficeId : null);
+  const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode ? formData?.InformationDeath?.DeathPlaceHomepincode :null );
+
+  const [DeathPlaceHomeHoueNameEn, setDeathPlaceHomehoueNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomeHoueNameEn ?formData?.InformationDeath?.DeathPlaceHomeHoueNameEn : null );
+  const [DeathPlaceHomeLocalityEn, setDeathPlaceHomelocalityEn] = useState(formData?.InformationDeath?.DeathPlaceHomeLocalityEn ? formData?.InformationDeath?.DeathPlaceHomeLocalityEn : null );
+  const [DeathPlaceHomeLocalityMl, setDeathPlaceHomelocalityMl] = useState(formData?.InformationDeath?.DeathPlaceHomeLocalityMl ? formData?.InformationDeath?.DeathPlaceHomeLocalityMl : null );
+  const [DeathPlaceHomeStreetNameEn, setDeathPlaceHomestreetNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomeStreetNameEn ? formData?.InformationDeath?.DeathPlaceHomeStreetNameEn : null);
+  const [DeathPlaceHomeStreetNameMl, setDeathPlaceHomestreetNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomeStreetNameMl ? formData?.InformationDeath?.DeathPlaceHomeStreetNameMl : null );
+  const [DeathPlaceHomeHoueNameMl, setDeathPlaceHomehoueNameMl] = useState(formData?.InformationDeath?.DeathPlaceHomeHoueNameMl ?formData?.InformationDeath?.DeathPlaceHomeHoueNameMl : null );
   //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
   //
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
@@ -338,12 +339,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             DeathPlaceType={DeathPlaceType}
             DeathPlaceHomepostofficeId={DeathPlaceHomepostofficeId}
             DeathPlaceHomepincode={DeathPlaceHomepincode}
-            DeathPlaceHomehoueNameEn={DeathPlaceHomehoueNameEn}
-            DeathPlaceHomehoueNameMl={DeathPlaceHomehoueNameMl}
-            DeathPlaceHomelocalityEn={DeathPlaceHomelocalityEn}
-            DeathPlaceHomelocalityMl={DeathPlaceHomelocalityMl}
-            DeathPlaceHomestreetNameEn={DeathPlaceHomestreetNameEn}
-            DeathPlaceHomestreetNameMl={DeathPlaceHomestreetNameMl}
+            DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
+            DeathPlaceHomeHoueNameMl={DeathPlaceHomeHoueNameMl}
+            DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
+            DeathPlaceHomeLocalityMl={DeathPlaceHomeLocalityMl}
+            DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
+            DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
             PostOfficevalues={PostOfficevalues}
           />;
         }
@@ -683,12 +684,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       if (DeathPlace.code === "HOME") {
         sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
         sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-        sessionStorage.setItem("DeathPlaceHomehoueNameEn", DeathPlaceHomehoueNameEn ? DeathPlaceHomehoueNameEn : null);
-        sessionStorage.setItem("DeathPlaceHomehoueNameMl", DeathPlaceHomehoueNameMl ? DeathPlaceHomehoueNameMl : null);
-        sessionStorage.setItem("DeathPlaceHomelocalityEn", DeathPlaceHomelocalityEn ? DeathPlaceHomelocalityEn : null);
-        sessionStorage.setItem("DeathPlaceHomelocalityMl", DeathPlaceHomelocalityMl ? DeathPlaceHomelocalityMl : null);
-        sessionStorage.setItem("DeathPlaceHomestreetNameEn", DeathPlaceHomestreetNameEn ? DeathPlaceHomestreetNameEn : null);
-        sessionStorage.setItem("DeathPlaceHomestreetNameMl", DeathPlaceHomestreetNameMl ? DeathPlaceHomestreetNameMl : null);
+        sessionStorage.setItem("DeathPlaceHomeHoueNameEn", DeathPlaceHomeHoueNameEn ? DeathPlaceHomeHoueNameEn : null);
+        sessionStorage.setItem("DeathPlaceHomeHoueNameMl", DeathPlaceHomeHoueNameMl ? DeathPlaceHomeHoueNameMl : null);
+        sessionStorage.setItem("DeathPlaceHomeLocalityEn", DeathPlaceHomeLocalityEn ? DeathPlaceHomeLocalityEn : null);
+        sessionStorage.setItem("DeathPlaceHomeLocalityMl", DeathPlaceHomeLocalityMl ? DeathPlaceHomeLocalityMl : null);
+        sessionStorage.setItem("DeathPlaceHomeStreetNameEn", DeathPlaceHomeStreetNameEn ? DeathPlaceHomeStreetNameEn : null);
+        sessionStorage.setItem("DeathPlaceHomeStreetNameMl", DeathPlaceHomeStreetNameMl ? DeathPlaceHomeStreetNameMl : null);
         sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId ? DeathPlaceHomepostofficeId.code : null);
         sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
       }
@@ -759,12 +760,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         DeathPlaceInstId,
         InstitutionIdMl,
         institutionNameCode,
-        DeathPlaceHomehoueNameEn,
-        DeathPlaceHomehoueNameMl,
-        DeathPlaceHomelocalityEn,
-        DeathPlaceHomelocalityMl,
-        DeathPlaceHomestreetNameEn,
-        DeathPlaceHomestreetNameMl,
+        DeathPlaceHomeHoueNameEn,
+        DeathPlaceHomeHoueNameMl,
+        DeathPlaceHomeLocalityEn,
+        DeathPlaceHomeLocalityMl,
+        DeathPlaceHomeStreetNameEn,
+        DeathPlaceHomeStreetNameMl,
         DeathPlaceHomepostofficeId,
         DeathPlaceHomepincode,
         DeathPlaceType,
@@ -953,17 +954,17 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                 setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
                 DeathPlaceHomepincode={DeathPlaceHomepincode}
                 setDeathPlaceHomepincode={setDeathPlaceHomepincode}
-                DeathPlaceHomehoueNameEn={DeathPlaceHomehoueNameEn}
+                DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
                 setDeathPlaceHomehoueNameEn={setDeathPlaceHomehoueNameEn}
-                DeathPlaceHomehoueNameMl={DeathPlaceHomehoueNameMl}
+                DeathPlaceHomeHoueNameMl={DeathPlaceHomeHoueNameMl}
                 setDeathPlaceHomehoueNameMl={setDeathPlaceHomehoueNameMl}
-                DeathPlaceHomelocalityEn={DeathPlaceHomelocalityEn}
+                DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
                 setDeathPlaceHomelocalityEn={setDeathPlaceHomelocalityEn}
-                DeathPlaceHomelocalityMl={DeathPlaceHomelocalityMl}
+                DeathPlaceHomeLocalityMl={DeathPlaceHomeLocalityMl}
                 setDeathPlaceHomelocalityMl={setDeathPlaceHomelocalityMl}
-                DeathPlaceHomestreetNameEn={DeathPlaceHomestreetNameEn}
+                DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
                 setDeathPlaceHomestreetNameEn={setDeathPlaceHomestreetNameEn}
-                DeathPlaceHomestreetNameMl={DeathPlaceHomestreetNameMl}
+                DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
                 setDeathPlaceHomestreetNameMl={setDeathPlaceHomestreetNameMl} 
                 PostOfficevalues={PostOfficevalues}
                 setPostOfficevalues={setPostOfficevalues}

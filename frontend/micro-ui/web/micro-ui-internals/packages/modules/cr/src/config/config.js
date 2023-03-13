@@ -822,7 +822,23 @@ export const newConfig = [
         hideInEmployee: false,
         nextStep: "place-of-death",
       },
-     
+      {
+        type: "component",
+        route: "witness-details",
+        isMandatory: true,
+        component: "witnessdetails",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "witnessdetails",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: "place-of-death",
+      },
       
       {
         route: "place-of-death",
