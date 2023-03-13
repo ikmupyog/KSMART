@@ -218,7 +218,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                         "/" +
                         InformationDeath.DeathPlaceHomehoueNameEn +
                         "," +
-                        InformationDeath.DeathPlaceHomelocalityEn +
+                        InformationDeath.DeathPlaceHomeLocalityEn +
                         "," +
                         InformationDeath.DeathPlaceHomestreetNameEn +
                         "," +

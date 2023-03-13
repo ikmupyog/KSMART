@@ -403,13 +403,31 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     
   }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }
+    
+  }
   function setSelectChildFirstNameMl(e) {
-    const RegExp = "/^[\u0D00-\u0D7F\u0020-\u0040\u200D\u200C\"]*$/g";
-    console.log(e.target.value.match(RegExp));
-    // const tempName = e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, '');
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match(RegExp) != null)) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setChildFirstNameMl('');
+    }
+    else{
       setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    // const RegExp = "^[\u0D00-\u0D7F\u0020-\u0040\u200D\u200C\"]*$/g";
+    //let pattern = /^^[\u0D00-\u0D7F\u200D\u200C]/;
+    //console.log(e.target.value);
+    // console.log(e.target.value.match(RegExp));
+    // // const tempName = e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, '');
+    // if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match(pattern) != null)) {
+      // setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      
+    // }
     // if (e.target.value.length === 51) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
@@ -418,11 +436,13 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     // }
   }
   function setSelectChildMiddleNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildMiddleNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setChildMiddleNameMl('');
+    }
+    else{
+      setChildMiddleNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectChildLastNameMl(e) {
@@ -1272,6 +1292,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       optionKey="i18nKey"
                       name="childFirstNameMl"
                       value={childFirstNameMl}
+                      onKeyPress = {setCheckMalayalamInputField}
                       onChange={setSelectChildFirstNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_FIRST_NAME_ML")}`}
@@ -1292,6 +1313,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       optionKey="i18nKey"
                       name="childMiddleNameMl"
                       value={childMiddleNameMl}
+                      onKeyPress = {setCheckMalayalamInputField}
                       onChange={setSelectChildMiddleNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -1312,6 +1334,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       optionKey="i18nKey"
                       name="childLastNameMl"
                       value={childLastNameMl}
+                      onKeyPress = {setCheckMalayalamInputField}
                       onChange={setSelectChildLastNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_LAST_NAME_ML")}`}
