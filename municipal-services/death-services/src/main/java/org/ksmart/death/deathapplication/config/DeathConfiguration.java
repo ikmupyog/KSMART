@@ -63,7 +63,13 @@ public class DeathConfiguration {
 
      //Persister Abandoned - Rakhi S on 06.03.2023
      @Value("${persister.save.deathabandoned.topic}")
-     private String saveDeathAbandonedTopic;//Jasmine 10.03.2023
+     private String saveDeathAbandonedTopic;
+     
+     //Persister Abandoned Update - Rakhi S on 13.03.2023
+     @Value("${persister.update.deathabandoned.topic}")
+     private String updateDeathAbandonedTopic;
+
+     //Jasmine 10.03.2023
 
     //Jasmine 10.03.2023
      

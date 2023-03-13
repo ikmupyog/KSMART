@@ -197,11 +197,11 @@ public class DeathApplnService {
                                         .build());
 
           List<DeathAbandonedDtls> searchResult = repository.getDeathAbandoned(criteria,request.getRequestInfo());
-          System.out.println("searchresult:"+searchResult);
+          // System.out.println("searchresult:"+searchResult);
           validatorService.validateAbandonedUpdate(request, searchResult);                   
           enrichmentService.enrichAbandonedUpdate(request);
           workflowIntegrator.callWorkFlowAbandoned(request);
-          producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
+          producer.push(deathConfig.getUpdateDeathAbandonedTopic(), request);
           
           // List<DeathAbandonedDtls> response = new ArrayList<>();
           
