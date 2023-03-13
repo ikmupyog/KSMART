@@ -3,7 +3,8 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress
+const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress,
+  isEditBirth = false, isEditDeath = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();

@@ -74,10 +74,10 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     (cmbNation.filter(cmbNation => cmbNation.code === formData?.ChildDetails?.ParentsDetails?.motherNationality)[0]) : "");
   const [motherMaritalStatus, setMotherMaritalStatus] = useState(formData?.ParentsDetails?.motherMaritalStatus?.code ? formData?.ParentsDetails?.motherMaritalStatus : formData?.ChildDetails?.ParentsDetails?.motherMaritalStatus ?
     (cmbMaritalStatus.filter(cmbMaritalStatus => cmbMaritalStatus.code === formData?.ChildDetails?.ParentsDetails?.motherMaritalStatus)[0]) : "");
-    const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.ParentsDetails?.motherMaritalStatus?.code ? formData?.ParentsDetails?.motherMaritalStatus.code : formData?.ChildDetails?.ParentsDetails?.motherMaritalStatus ?
-      formData?.ChildDetails?.ParentsDetails?.motherMaritalStatus : "");
-  
-    const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.ParentsDetails?.motherMarriageAge ? formData?.ParentsDetails?.motherMarriageAge :
+  const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.ParentsDetails?.motherMaritalStatus?.code ? formData?.ParentsDetails?.motherMaritalStatus.code : formData?.ChildDetails?.ParentsDetails?.motherMaritalStatus ?
+    formData?.ChildDetails?.ParentsDetails?.motherMaritalStatus : "");
+
+  const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.ParentsDetails?.motherMarriageAge ? formData?.ParentsDetails?.motherMarriageAge :
     formData?.ChildDetails?.ParentsDetails?.motherMarriageAge ? formData?.ChildDetails?.ParentsDetails?.motherMarriageAge : "");
   const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.ParentsDetails?.motherMarriageBirth ? formData?.ParentsDetails?.motherMarriageBirth :
     formData?.ChildDetails?.ParentsDetails?.motherMarriageBirth ? formData?.ChildDetails?.ParentsDetails?.motherMarriageBirth : "");
@@ -154,11 +154,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''['  0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -266,11 +263,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   }
 
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.trim().length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setFatherFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectFatherFirstNameMl(e) {

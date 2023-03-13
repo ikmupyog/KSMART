@@ -13,7 +13,7 @@ import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
+const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();
@@ -798,6 +798,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             setpermtaddressStateName={setpermtaddressStateName}
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
+                            isEditBirth={isEditBirth}
+                            isEditDeath={isEditDeath}
                         />
                     </div>
                     {countryvalue === "IND" && value === "KL" && (
@@ -866,6 +868,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
                                 permntInKeralaWardNo={permntInKeralaWardNo}
                                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
+                                isEditBirth={isEditBirth}
+                                isEditDeath={isEditDeath}
                             />
                         </div>
                     )}
@@ -928,6 +932,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
                                 permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
                                 setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
+                                isEditBirth={isEditBirth}
+                                isEditDeath={isEditDeath}
                             />
                         </div>
                     )}
@@ -976,8 +982,10 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
                                 permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
                                 setPermantpostCode={setPermantpostCode}
-                            // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                            // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                                // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                                // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                                isEditBirth={isEditBirth}
+                                isEditDeath={isEditDeath}
                             />
                         </div>
                     )}
@@ -985,6 +993,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                         <AddressSameAsAbove
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
+                            isEditBirth={isEditBirth}
+                            isEditDeath={isEditDeath}
                         />
                     </div>
                     {isPrsentAddress === false && (
@@ -1004,7 +1014,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setCountryValuePermanent={setCountryValuePermanent}
                                 valuePermanent={valuePermanent}
                                 setValuePermanent={setValuePermanent}
-                                
+                                isEditBirth={isEditBirth}
+                                isEditDeath={isEditDeath}
                             />
                         </div>
                     )}
@@ -1045,6 +1056,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setLbsVillagevalue={setLbsVillagevalue}
                                 PostOfficevalues={PostOfficevalues}
                                 setPostOfficevalues={setPostOfficevalues}
+                                isEditBirth={isEditBirth}
+                                isEditDeath={isEditDeath}
                             />
                         </div>
                     )}
@@ -1079,6 +1092,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
                                 value={value}
                                 setValue={setValue}
+                                isEditBirth={isEditBirth}
+                                isEditDeath={isEditDeath}
                             />
                         </div>
                     )}
@@ -1105,6 +1120,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                                 countryvalue={countryvalue}
                                 setCountryValue={setCountryValue}
+                                isEditBirth={isEditBirth}
+                                isEditDeath={isEditDeath}
                             />
                         </div>
                     )}
