@@ -136,7 +136,17 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     //     }
     //   }
     // }
-
+    const handleTimeChange = (value, cb) => {
+      if (typeof value === "string") {
+        cb(value);
+        console.log(cb);
+        console.log(value);
+        let hour = value;
+        let period = hour > 12 ? "PM" : "AM";
+        console.log(period);
+        setbirthDateTime(value);
+      }
+    };
     function setSelectpostCode(e) {
           // if (e.target.value.length != 0) {
           //     if (e.target.value.length > 7) {
@@ -151,6 +161,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
           //     }
           // }
       }
+
+
 
   function setselectChildDOB(value) {
     setChildDOB(value);

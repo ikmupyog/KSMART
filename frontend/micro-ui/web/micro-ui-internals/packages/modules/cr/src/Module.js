@@ -10,7 +10,6 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
-//import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg"
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
@@ -41,9 +40,9 @@ import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponen
 import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
 
 
-import BornOutsideChildDetails from "./pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
-import BornOutsideParentsDetails from "./pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
-import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
+import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
+import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
+import BornOutsideCheckPage from "../src/pages/citizen/BornOutsideReg/BornOutsideCheckPage";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
