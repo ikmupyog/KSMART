@@ -87,7 +87,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     formData?.BornOutsideChildDetails?.childPassportNo ? formData?.BornOutsideChildDetails?.childPassportNo : ""
   );
   const [childArrivalDate, setchildArrivalDate] = useState( formData?.BornOutsideChildDetails?.childArrivalDate ? formData?.BornOutsideChildDetails?.childArrivalDate : "" );
-  const [outsideBirthPlace, selectoutsideBirthPlace] = useState(
+  const [outsideBirthPlace, setoutsideBirthPlace] = useState(
     formData?.BornOutsideChildDetails?.outsideBirthPlace ? formData?.BornOutsideChildDetails?.outsideBirthPlace : null
   );
   const [country, setcountry] = useState(formData?.BornOutsideChildDetails?.country ? formData?.BornOutsideChildDetails?.country  : null
@@ -123,24 +123,42 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       
       }
     }
-    function setSelectpostCode(e) {
-      if (e.target.value.length != 0) {
-        if (e.target.value.length > 6) {
-          return false;
-        } else if (e.target.value.length < 6) {
-          setpostCode(e.target.value);
-          return false;
-        } else {
-          setpostCode(e.target.value);
+    // function setSelectpostCode(e) {
+    //   if (e.target.value.length != 0) {
+    //     if (e.target.value.length > 6) {
+    //       return false;
+    //     } else if (e.target.value.length < 6) {
+    //       setpostCode(e.target.value);
+    //       return false;
+    //     } else {
+    //       setpostCode(e.target.value);
          
-        }
+    //     }
+    //   }
+    // }
+
+    function setSelectpostCode(e) {
+          // if (e.target.value.length != 0) {
+          //     if (e.target.value.length > 7) {
+          //         return false;
+          //     } else if (e.target.value.length < 6) {
+          //       setpostCode(e.target.value);
+          //         return false;
+          //     } else {
+                setpostCode(e.target.value);
+                
+          //         return true;
+          //     }
+          // }
       }
-    }
+
+
+
   function setselectChildDOB(value) {
     setChildDOB(value);
   }
-  function setSelectArrivalDate(e) {
-    setchildArrivalDate(e.target.value);
+  function setselectchildArrivalDate(value) {
+    setchildArrivalDate(value);
   }
   function setSelectChildFirstNameEn(e) {
     if (e.target.value.length === 51) {
@@ -236,7 +254,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setProvinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+      setprovinceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
      
     }
   }
@@ -397,11 +415,11 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <DatePicker
-                  date={childDOB}
-                  name="childDOB"
+                  date={childArrivalDate}
+                  name="childArrivalDate"
                   max={convertEpochToDate(new Date())}
                   // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
-                  onChange={setselectChildDOB}
+                  onChange={setselectchildArrivalDate}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_ARRIVAL")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_ARRIVAL") })}
@@ -647,8 +665,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                 pattern: "^[a-zA-Z-.0-9`' ]*$",
                 isRequired: true,
                 type: "number",
-                max: 6,
-                min: 6,
+                // max: 6,
+                // min: 6,
                 title: t("CR_INVALID_ZIP_CODE"),
               })}
             />

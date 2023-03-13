@@ -61,48 +61,48 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     ReligionList["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
-  const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn : "");
-  const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.ParentsDetails?.motherFirstNameMl ? formData?.ParentsDetails?.motherFirstNameMl : "");
-  const [motherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.motherAadhar ? formData?.ParentsDetails?.motherAadhar : "");
-  const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.ParentsDetails?.motherMarriageAge ? formData?.ParentsDetails?.motherMarriageAge : "");
-  const [motherEmail, setMotherEmail] = useState(formData?.ParentsDetails?.motherEmail ? formData?.ParentsDetails?.motherEmail : "");
-  const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.ParentsDetails?.motherMarriageBirth ? formData?.ParentsDetails?.motherMarriageBirth : "");
-  const [motherEducation, setMotherEducation] = useState(formData?.ParentsDetails?.motherEducation ? formData?.ParentsDetails?.motherEducation : null);
-  const [motherProfession, setMotherProfession] = useState(formData?.ParentsDetails?.motherProfession ? formData?.ParentsDetails?.motherProfession : null);
-  // const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.ParentsDetails?.MotherAgeMarriage ? formData?.ParentsDetails?.MotherAgeMarriage : "");
-  const [orderofChildren, setOrderofChildren] = useState(formData?.ParentsDetails?.orderofChildren ? formData?.ParentsDetails?.orderofChildren : "");
-  const [motherNationality, setMotherNationality] = useState(formData?.ParentsDetails?.motherNationality ? formData?.ParentsDetails?.motherNationality : null);
-  const [motherMaritalStatus, setMotherMaritalStatus] = useState(formData?.ParentsDetails?.motherMaritalStatus ? formData?.ParentsDetails?.motherMaritalStatus : null);
-  const [isMotherInfo, setIsMotherInfo] = useState(formData?.ParentsDetails?.isMotherInfo ? formData?.ParentsDetails?.isMotherInfo : false);
+  const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.BornOutsideParentsDetails?.motherFirstNameEn ? formData?.BornOutsideParentsDetails?.motherFirstNameEn : "");
+  const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.BornOutsideParentsDetails?.motherFirstNameMl ? formData?.BornOutsideParentsDetails?.motherFirstNameMl : "");
+  //const [motherAadhar, setMotherAadhar] = useState(formData?.BornOutsideParentsDetails?.motherAadhar ? formData?.BornOutsideParentsDetails?.motherAadhar : "");
+  const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.BornOutsideParentsDetails?.motherMarriageAge ? formData?.BornOutsideParentsDetails?.motherMarriageAge : "");
+  const [motherEmail, setMotherEmail] = useState(formData?.BornOutsideParentsDetails?.motherEmail ? formData?.BornOutsideParentsDetails?.motherEmail : "");
+  const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.BornOutsideParentsDetails?.motherMarriageBirth ? formData?.BornOutsideParentsDetails?.motherMarriageBirth : "");
+  const [motherEducation, setMotherEducation] = useState(formData?.BornOutsideParentsDetails?.motherEducation ? formData?.BornOutsideParentsDetails?.motherEducation : null);
+  const [motherProfession, setMotherProfession] = useState(formData?.BornOutsideParentsDetails?.motherProfession ? formData?.BornOutsideParentsDetails?.motherProfession : null);
+  // const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.BornOutsideParentsDetails?.MotherAgeMarriage ? formData?.BornOutsideParentsDetails?.MotherAgeMarriage : "");
+  const [orderofChildren, setOrderofChildren] = useState(formData?.BornOutsideParentsDetails?.orderofChildren ? formData?.BornOutsideParentsDetails?.orderofChildren : "");
+  const [motherNationality, setMotherNationality] = useState(formData?.BornOutsideParentsDetails?.motherNationality ? formData?.BornOutsideParentsDetails?.motherNationality : null);
+  const [motherMaritalStatus, setMotherMaritalStatus] = useState(formData?.BornOutsideParentsDetails?.motherMaritalStatus ? formData?.BornOutsideParentsDetails?.motherMaritalStatus : null);
+  // const [isMotherInfo, setIsMotherInfo] = useState(formData?.BornOutsideParentsDetails?.isMotherInfo ? formData?.BornOutsideParentsDetails?.isMotherInfo : false);
 
-  const [fatherAadhar, setFatherAadhar] = useState(formData?.ParentsDetails?.fatherAadhar ? formData?.ParentsDetails?.fatherAadhar : "");
+ // const [fatherAadhar, setFatherAadhar] = useState(formData?.BornOutsideParentsDetails?.fatherAadhar ? formData?.BornOutsideParentsDetails?.fatherAadhar : "");
   const [toast, setToast] = useState(false);
-  const [MotherAadharError, setMotherAadharError] = useState(formData?.ParentsDetails?.motherAadhar ? false : false);
-  const [MotherMarriageageError, setMotherMarriageageError] = useState(formData?.ParentsDetails?.motherMarriageAge ? false : false);
-  const [MotherEducationError, setMotherEducationError] = useState(formData?.ParentsDetails?.motherEducation ? false : false);
-  const [MotherProfessionError, setMotherProfessionError] = useState(formData?.ParentsDetails?.motherProfession ? false : false);
-  const [MotherNationalityError, setMotherNationalityError] = useState(formData?.ParentsDetails?.motherNationality ? false : false);
+ // const [MotherAadharError, setMotherAadharError] = useState(formData?.BornOutsideParentsDetails?.motherAadhar ? false : false);
+  const [MotherMarriageageError, setMotherMarriageageError] = useState(formData?.BornOutsideParentsDetails?.motherMarriageAge ? false : false);
+  const [MotherEducationError, setMotherEducationError] = useState(formData?.BornOutsideParentsDetails?.motherEducation ? false : false);
+  const [MotherProfessionError, setMotherProfessionError] = useState(formData?.BornOutsideParentsDetails?.motherProfession ? false : false);
+  const [MotherNationalityError, setMotherNationalityError] = useState(formData?.BornOutsideParentsDetails?.motherNationality ? false : false);
 
-  const [FatherAadharError, setFatherAadharError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
-  const [isFatherInfo, setIsFatherInfo] = useState(formData?.ParentsDetails?.isFatherInfo ? formData?.ParentsDetails?.isFatherInfo : false);
-  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? formData?.ParentsDetails?.fatherFirstNameEn : "");
-  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.ParentsDetails?.fatherFirstNameMl ? formData?.ParentsDetails?.fatherFirstNameMl : "");
-  const [fatherNationality, setFatherNationality] = useState(formData?.ParentsDetails?.fatherNationality ? formData?.ParentsDetails?.fatherNationality : null);
-  const [fatherEducation, setFatherEducation] = useState(formData?.ParentsDetails?.fatherEducation ? formData?.ParentsDetails?.fatherEducation : null);
-  const [fatherProfession, setFatherProfession] = useState(formData?.ParentsDetails?.fatherProfession ? formData?.ParentsDetails?.fatherProfession : null);
-  const [Religion, setReligion] = useState(formData?.ParentsDetails?.Religion ? formData?.ParentsDetails?.Religion : null);
-  const [fatherEmail, setFatherEmail] = useState(formData?.ParentsDetails?.fatherEmail ? formData?.ParentsDetails?.fatherEmail : "");
-  const [fatherMobile, setFatherMobile] = useState(formData?.ParentsDetails?.fatherMobile ? formData?.ParentsDetails?.fatherMobile : "");
+ // const [FatherAadharError, setFatherAadharError] = useState(formData?.BornOutsideParentsDetails?.fatherAadhar ? false : false);
+  // const [isFatherInfo, setIsFatherInfo] = useState(formData?.BornOutsideParentsDetails?.isFatherInfo ? formData?.BornOutsideParentsDetails?.isFatherInfo : false);
+  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameEn ? formData?.BornOutsideParentsDetails?.fatherFirstNameEn : "");
+  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameMl ? formData?.BornOutsideParentsDetails?.fatherFirstNameMl : "");
+  const [fatherNationality, setFatherNationality] = useState(formData?.BornOutsideParentsDetails?.fatherNationality ? formData?.BornOutsideParentsDetails?.fatherNationality : null);
+  const [fatherEducation, setFatherEducation] = useState(formData?.BornOutsideParentsDetails?.fatherEducation ? formData?.BornOutsideParentsDetails?.fatherEducation : null);
+  const [fatherProfession, setFatherProfession] = useState(formData?.BornOutsideParentsDetails?.fatherProfession ? formData?.BornOutsideParentsDetails?.fatherProfession : null);
+  const [Religion, setReligion] = useState(formData?.BornOutsideParentsDetails?.Religion ? formData?.BornOutsideParentsDetails?.Religion : null);
+  const [fatherEmail, setFatherEmail] = useState(formData?.BornOutsideParentsDetails?.fatherEmail ? formData?.BornOutsideParentsDetails?.fatherEmail : "");
+  const [fatherMobile, setFatherMobile] = useState(formData?.BornOutsideParentsDetails?.fatherMobile ? formData?.BornOutsideParentsDetails?.fatherMobile : "");
 
-  const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.ParentsDetails?.orderofChildren ? false : false);
-  const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? false : false);
-  const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.ParentsDetails?.fatherFirstNameMl ? false : false);
-  const [FatherMobileError, setFatherMobileError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
-  const [FatherEduError, setFatherEduError] = useState(formData?.ParentsDetails?.fatherEducation ? false : false);
-  const [FatherProfError, setFatherProfError] = useState(formData?.ParentsDetails?.fatherProfession ? false : false);
-  const [ReligionError, setReligionError] = useState(formData?.ParentsDetails?.Religion ? false : false);
-  const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.ParentsDetails?.motherMaritalStatus ? false : false);
-  const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.ParentsDetails?.motherMaritalStatus ? formData?.ParentsDetails?.motherMaritalStatus : null);
+  const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.BornOutsideParentsDetails?.orderofChildren ? false : false);
+  const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameEn ? false : false);
+  const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameMl ? false : false);
+  const [FatherMobileError, setFatherMobileError] = useState(formData?.BornOutsideParentsDetails?.fatherAadhar ? false : false);
+  const [FatherEduError, setFatherEduError] = useState(formData?.BornOutsideParentsDetails?.fatherEducation ? false : false);
+  const [FatherProfError, setFatherProfError] = useState(formData?.BornOutsideParentsDetails?.fatherProfession ? false : false);
+  const [ReligionError, setReligionError] = useState(formData?.BornOutsideParentsDetails?.Religion ? false : false);
+  const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.BornOutsideParentsDetails?.motherMaritalStatus ? false : false);
+  const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.BornOutsideParentsDetails?.motherMaritalStatus ? formData?.BornOutsideParentsDetails?.motherMaritalStatus : null);
 
 
   const onSkip = () => onSelect();
@@ -117,17 +117,17 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
 
 
   useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.ParentsDetails?.ismotherInfo != null) {
-        setIsInitialRender(false);
-        setIsMotherInfo(formData?.ParentsDetails?.ismotherInfo);
-      }
-    }
+    // if (isInitialRender) {
+    //   if (formData?.BornOutsideParentsDetails?.ismotherInfo != null) {
+    //     setIsInitialRender(false);
+    //     setIsMotherInfo(formData?.BornOutsideParentsDetails?.ismotherInfo);
+    //   }
+    // }
 
-    if (formData?.ParentsDetails?.isfatherInfo != null) {
-      setIsInitialRender(false);
-      setIsfatherInfo(formData?.ParentsDetails?.isfatherInfo);
-    }
+    // if (formData?.BornOutsideParentsDetails?.isfatherInfo != null) {
+    //   setIsInitialRender(false);
+    //   setIsfatherInfo(formData?.BornOutsideParentsDetails?.isfatherInfo);
+    // }
 
   }, [isInitialRender]);
 
@@ -149,52 +149,52 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       setMotherFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
-  function setSelectMotherAadhar(e) {
-    setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setMotherAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setMotherAadharError(true);
-        setMotherAadhar(e.target.value);
-        return false;
-      } else {
-        setMotherAadharError(false);
-        setMotherAadhar(e.target.value);
-        return true;
-      }
-    } else {
-      setMotherAadharError(false);
-      setMotherAadhar(e.target.value);
-      return true;
-    }
-  }
+  // function setSelectMotherAadhar(e) {
+  //   setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 12) {
+  //       // setChildAadharNo(e.target.value);
+  //       setMotherAadharError(true);
+  //       return false;
+  //     } else if (e.target.value.length < 12) {
+  //       setMotherAadharError(true);
+  //       setMotherAadhar(e.target.value);
+  //       return false;
+  //     } else {
+  //       setMotherAadharError(false);
+  //       setMotherAadhar(e.target.value);
+  //       return true;
+  //     }
+  //   } else {
+  //     setMotherAadharError(false);
+  //     setMotherAadhar(e.target.value);
+  //     return true;
+  //   }
+  // }
   
 
-  function setSelectFatherAadhar(e) {
-    setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setFatherAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setFatherAadharError(true);
-        setFatherAadhar(e.target.value);
-        return false;
-      } else {
-        setFatherAadharError(false);
-        setFatherAadhar(e.target.value);
-        return true;
-      }
-    } else {
-      setFatherAadharError(false);
-      setFatherAadhar(e.target.value);
-      return true;
-    }
-  }
+  // function setSelectFatherAadhar(e) {
+  //   setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 12) {
+  //       // setChildAadharNo(e.target.value);
+  //       setFatherAadharError(true);
+  //       return false;
+  //     } else if (e.target.value.length < 12) {
+  //       setFatherAadharError(true);
+  //       setFatherAadhar(e.target.value);
+  //       return false;
+  //     } else {
+  //       setFatherAadharError(false);
+  //       setFatherAadhar(e.target.value);
+  //       return true;
+  //     }
+  //   } else {
+  //     setFatherAadharError(false);
+  //     setFatherAadhar(e.target.value);
+  //     return true;
+  //   }
+  // }
  
   
   function setSelectFatherMobile(e) {
@@ -297,47 +297,47 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     }
   }
 
-  function setMotherInfo(e) {
-    if (e.target.checked == true) {
-      setIsMotherInfo(e.target.checked);
-      setMotherFirstNameEn("");
-      setMotherFirstNameMl("");
-      setMotherAadhar("");
-      setMotherMaritalStatus(null);
-      setMotherMarriageAge("");
-      setMotherMarriageBirth("");
-      setMotherEducation(null);
-      setMotherProfession(null);
+  // function setMotherInfo(e) {
+  //   if (e.target.checked == true) {
+  //     setIsMotherInfo(e.target.checked);
+  //     setMotherFirstNameEn("");
+  //     setMotherFirstNameMl("");
+  //     setMotherAadhar("");
+  //     setMotherMaritalStatus(null);
+  //     setMotherMarriageAge("");
+  //     setMotherMarriageBirth("");
+  //     setMotherEducation(null);
+  //     setMotherProfession(null);
 
-      setOrderofChildren("");
-      // setMotherNationality(null);
-    } else {
+  //     setOrderofChildren("");
+  //     // setMotherNationality(null);
+  //   } else {
 
-      setIsMotherInfo(e.target.checked);
-    }
-  }
-  function setFatherInfo(e) {
-    if (e.target.checked == true) {
-      setIsFatherInfo(e.target.checked);
-      setFatherAadhar("");
-      setFatherFirstNameEn("");
+  //     setIsMotherInfo(e.target.checked);
+  //   }
+  // }
+  // function setFatherInfo(e) {
+  //   if (e.target.checked == true) {
+  //     setIsFatherInfo(e.target.checked);
+  //     setFatherAadhar("");
+  //     setFatherFirstNameEn("");
 
-      setFatherFirstNameMl("");
+  //     setFatherFirstNameMl("");
 
-      // setFatherNationality(null);
+  //     // setFatherNationality(null);
 
-      setFatherEducation(null);
-      setFatherProfession(null);
-      // setFatherMobile("");
-      // setFatherEmail("");
-    } else {
-      setIsFatherInfo(e.target.checked);
-    }
-  }
+  //     setFatherEducation(null);
+  //     setFatherProfession(null);
+  //     // setFatherMobile("");
+  //     // setFatherEmail("");
+  //   } else {
+  //     setIsFatherInfo(e.target.checked);
+  //   }
+  // }
 
   let validFlag = true;
   const goNext = () => {
-    if (isMotherInfo === false) {
+   
       if (motherEducation == null || motherEducation == '' || motherEducation == undefined) {
         validFlag = false;
         setMotherEducationError(true);
@@ -359,20 +359,20 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       } else {
         setMotherProfessionError(false);
       }
-      if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
-        if (MotherAadharError) {
-          validFlag = false;
-          setMotherAadharError(true);
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-          // return false;
-          // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-          setMotherAadharError(false);
-        }
-      }
+      // if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
+      //   if (MotherAadharError) {
+      //     validFlag = false;
+      //     setMotherAadharError(true);
+      //     setToast(true);
+      //     setTimeout(() => {
+      //       setToast(false);
+      //     }, 2000);
+      //     // return false;
+      //     // window.alert("Username shouldn't exceed 10 characters")
+      //   } else {
+      //     setMotherAadharError(false);
+      //   }
+      // }
       if (motherMaritalStatus == null || motherMaritalStatus == '' || motherMaritalStatus == undefined) {
         validFlag = false;
         setMotherMaritalStatusError(true);
@@ -395,9 +395,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
           setMotherMarriageageError(false);
         }
       }
-
-    }
-    if (isFatherInfo === false) {
+    
+   
       if (fatherEducation == null || fatherEducation == '' || fatherEducation == undefined) {
         validFlag = false;
         setFatherEduError(true);
@@ -419,22 +418,22 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       } else {
         setFatherProfError(false);
       }
-      if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
-        if (FatherAadharError) {
-          validFlag = false;
-          setFatherAadharError(true);
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-          // return false;
-          // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-          setFatherAadharError(false);
-        }
-      }
+      // if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
+      //   if (FatherAadharError) {
+      //     validFlag = false;
+      //     setFatherAadharError(true);
+      //     setToast(true);
+      //     setTimeout(() => {
+      //       setToast(false);
+      //     }, 2000);
+      //     // return false;
+      //     // window.alert("Username shouldn't exceed 10 characters")
+      //   } else {
+      //     setFatherAadharError(false);
+      //   }
+      // }
 
-    }
+    
 
     // if (fatherFirstNameEn != null || fatherFirstNameEn != "" || fatherFirstNameEn != undefined) {
     //   if (FatherFirstNmeEnError) {
@@ -490,7 +489,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     if (validFlag == true) {
       sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
       sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
-      sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
+      //sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
       sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
       sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
       sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
@@ -500,9 +499,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       // sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage ? MotherAgeMarriage : null);
 
       sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
-      sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
-      sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
-      sessionStorage.setItem("fatherAadhar", fatherAadhar ? fatherAadhar : null);
+      //sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
+     // sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
+      //sessionStorage.setItem("fatherAadhar", fatherAadhar ? fatherAadhar : null);
       sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
       sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
       sessionStorage.setItem("fatherNationality", fatherNationality ? fatherNationality.code : null);
@@ -515,7 +514,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       onSelect(config.key, {
         motherFirstNameEn,
         motherFirstNameMl,
-        motherAadhar,
+      // motherAadhar,
         motherMaritalStatus,
         motherMarriageAge,
         motherMarriageBirth,
@@ -523,9 +522,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
         motherProfession,
         motherNationality,
         orderofChildren,
-        fatherAadhar,
-        isMotherInfo,
-        isFatherInfo,
+        //fatherAadhar,
+        // isMotherInfo,
+      //  isFatherInfo,
         fatherFirstNameEn,
         fatherFirstNameMl,
         fatherNationality,
@@ -551,21 +550,16 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
         {/* isDisabled={!motherFirstNameEn} */}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
           isDisabled={!fatherMobile || 
-            (isMotherInfo === false ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
+            (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
               || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
-              || !motherEducation || !motherProfession) : false)
-            || (isFatherInfo === false ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
-            ) : false)
+              || !motherEducation || !motherProfession)
+            || (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
+            ) 
             || !Religion || fatherMobile === ""
           }>
 
-          <div className="row">
-            <div className="col-md-12">
-              {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
-              <CheckBox label={t("CR_MOTHER_INFORMATION_MISSING")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
-            </div>
-          </div>
-          {isMotherInfo === false && (
+          
+         
             <div>
               <div className="row">
                 <div className="col-md-12">
@@ -576,7 +570,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-4">
+                  {/* <div className="col-md-4">
                     <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
                     <TextInput
                       t={t}
@@ -590,7 +584,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
                       {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="col-md-4">
                     <CardLabel>
@@ -751,15 +745,15 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 </div>
               </div>
             </div>
-          )}
+        
 
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12">
               <CheckBox label={t("CR_FATHER_INFORMATION_MISSING")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
             </div>
-          </div>
+          </div> */}
 
-          {isFatherInfo === false && (
+       
             <div>
               <div className="row">
                 <div className="col-md-12">
@@ -771,7 +765,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
 
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-4">
+                  {/* <div className="col-md-4">
                     <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
                     <TextInput
                       t={t}
@@ -785,7 +779,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
                       {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="col-md-4">
                     <CardLabel>
@@ -874,7 +868,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 </div>
               </div>
             </div>
-          )}
+          
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -936,13 +930,13 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
           {toast && (
             <Toast
               error={
-                MotherAadharError ||
+                // MotherAadharError ||
                 MotherMaritalStatusError ||
                 MotherMarriageageError ||
                 MotherEducationError ||
                 MotherProfessionError ||
                 MotherNationalityError ||
-                FatherAadharError ||
+                // FatherAadharError ||
                 FatherFirstNmeEnError ||
                 FatherEduError ||
                 FatherProfError ||
@@ -953,13 +947,13 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 OrderofChildrenError
               }
               label={
-                MotherAadharError ||
+                // MotherAadharError ||
                   MotherMaritalStatusError ||
                   MotherMarriageageError ||
                   MotherEducationError ||
                   MotherProfessionError ||
                   MotherNationalityError ||
-                  FatherAadharError ||
+                  // FatherAadharError ||
                   FatherFirstNmeEnError ||
                   FatherEduError ||
                   FatherProfError ||
@@ -967,9 +961,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                   FatherMobileError ||
                   ReligionError ||
                   OrderofChildrenError
-                  ? MotherAadharError
-                    ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
-                    : MotherMarriageageError
+                  // ? MotherAadharError
+                  //   ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
+                     ? MotherMarriageageError
                       ? t(`CR_INVALID_MOTHER_AGE_AT_MARRIAGE`)
                       : MotherMaritalStatusError ? t(`BIRTH_ERROR_MOTHER_MARITIAL_CHOOSE`)
                         : MotherEducationError
@@ -981,8 +975,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                               :
                               OrderofChildrenError
                                 ? t(`BIRTH_ERROR_ORDER_OF_CHILDREN`)
-                                : FatherAadharError
-                                  ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
+                                // : FatherAadharError
+                                //   ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
                                   : FatherFirstNmeEnError
                                     ? t(`CR_INVALID_FATHER_NAME_EN`)
                                     : FatherEduError

@@ -101,6 +101,14 @@ const Home = ({
           }),
         },
         {
+          name:t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-outsideindiabirth-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
           name: t("Download Certificate"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
